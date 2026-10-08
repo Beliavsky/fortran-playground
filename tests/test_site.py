@@ -11,6 +11,40 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class SiteTests(unittest.TestCase):
+    def test_source_and_results_share_responsive_workspace(self):
+        from html.parser import HTMLParser
+
+        class Panes(HTMLParser):
+            def __init__(self):
+                super().__init__()
+                self.stack = []
+                self.ancestors = {}
+
+            def handle_starttag(self, tag, attrs):
+                attrs = dict(attrs)
+                if attrs.get('id') in {'fortran', 'output', 'diagnostics'}:
+                    self.ancestors[attrs['id']] = list(self.stack)
+                if tag not in {'input', 'link', 'meta', 'br'}:
+                    self.stack.append(attrs.get('id') or attrs.get('class') or tag)
+
+            def handle_endtag(self, tag):
+                if self.stack:
+                    self.stack.pop()
+
+        html = (ROOT / 'site/index.html').read_text(encoding='utf-8')
+        panes = Panes()
+        panes.feed(html)
+        self.assertIn('source-pane', panes.ancestors['fortran'])
+        for target in ('output', 'diagnostics'):
+            self.assertIn('results-pane', panes.ancestors[target])
+            self.assertIn('workspace', panes.ancestors[target])
+        self.assertIn('workspace', panes.ancestors['fortran'])
+        self.assertLess(html.index('id="run"'), html.index('class="workspace"'))
+        css = (ROOT / 'site/app.css').read_text()
+        self.assertIn('minmax(0, 3fr) minmax(0, 2fr)', css)
+        self.assertIn('@media (max-width: 760px)', css)
+        self.assertIn('overflow: auto', css)
+
     def test_build_versions_assets_and_preserves_configuration(self):
         with tempfile.TemporaryDirectory() as directory:
             destination = Path(directory) / 'site'

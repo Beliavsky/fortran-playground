@@ -29,10 +29,6 @@
     <button id="connect" type="button">Reconnect</button>
   </div>
   <p id="file-status" class="version" role="status">Files are read locally; only running sends source to the service.</p>
-  <section class="panel">
-    <label for="fortran">Fortran input <span id="fortran-lines" class="line-count">0 lines</span></label>
-    <textarea id="fortran" spellcheck="false"></textarea>
-  </section>
   <div class="toolbar">
     <label for="compiler">Compiler</label>
     <select id="compiler" disabled><option value="gfortran">GNU Fortran</option><option value="ifx" disabled>Intel Fortran</option><option value="flang" disabled>LLVM Flang</option><option value="lfortran" disabled>LFortran</option></select>
@@ -48,8 +44,16 @@
   </div>
   <p id="options-note" class="version">Helpers keep fixed build options.</p>
   <p id="freshness" class="version">No results yet.</p>
-  <section class="diagnostics"><h2>Program output <span id="run-time" class="line-count"></span></h2><pre id="output">Not run.</pre></section>
-  <section class="diagnostics"><h2>Compilation <span id="build-time" class="line-count"></span></h2><pre id="diagnostics">Not compiled.</pre></section>
+  <div class="workspace">
+    <section id="source-pane" class="panel">
+      <label for="fortran">Fortran input <span id="fortran-lines" class="line-count">0 lines</span></label>
+      <textarea id="fortran" spellcheck="false"></textarea>
+    </section>
+    <div id="results-pane" class="results-pane">
+      <section class="diagnostics"><h2>Program output <span id="run-time" class="line-count"></span></h2><pre id="output">Not run.</pre></section>
+      <section class="diagnostics"><h2>Compilation <span id="build-time" class="line-count"></span></h2><pre id="diagnostics">Not compiled.</pre></section>
+    </div>
+  </div>
   <footer>
     <p id="editor-note">Plain-text editor available; loading syntax coloring…</p>
     <p>Code runs only when you click Compile and Run. Existing python_mod helpers are available automatically. No Python code is submitted or translated.</p>

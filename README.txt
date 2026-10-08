@@ -8,6 +8,9 @@ Features: editable Fortran with syntax coloring and line counts; four examples;
 file loading and downloading; compiler selection and supported option presets;
 compile/run timings, diagnostics and output; cancellation and reconnect.
 No Python is submitted or translated. Code runs only on an explicit Run click.
+The editor and results appear side by side (60/40) on wide screens, with output
+above compilation diagnostics on the right. Each pane scrolls independently;
+narrow screens stack the editor before the results.
 ofort is not integrated yet: adding it requires backend support, not only a menu.
 
 Local preview (Windows)
