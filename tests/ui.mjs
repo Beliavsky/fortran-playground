@@ -3,7 +3,8 @@ const elements = new Map();
 globalThis.document = {
   getElementById(id) {
     if (!elements.has(id)) elements.set(id, {value: '', textContent: '', disabled: false,
-      options: [], listeners: {}, addEventListener(name, fn) {this.listeners[name] = fn;}, focus() {}, click() {}});
+      options: [], listeners: {}, addEventListener(name, fn) {this.listeners[name] = fn;}, focus() {}, click() {},
+      setSelectionRange(from, to) {this.selection = [from, to];}});
     return elements.get(id);
   },
   createElement() {return {click() {}};},
@@ -15,7 +16,7 @@ get('preset').value = 'default';
 get('preset').options = ['default','debug','optimized','strict'].map(value => ({value}));
 get('example').value = 'sum';
 globalThis.confirm = () => true;
-let submissions = 0, payload, state = 'done', sessionFails = false, cancelled = 0, legacy = false, expired = false, buildOK = true;
+let submissions = 0, payload, state = 'done', sessionFails = false, cancelled = 0, legacy = false, expired = false, buildOK = true, buildError = '';
 globalThis.fetch = async (url, options = {}) => {
   let result;
   if (url === './service.json') result = {url: 'https://test.modal.run'};
@@ -29,7 +30,7 @@ globalThis.fetch = async (url, options = {}) => {
   } else if (url.endsWith('/cancel')) {cancelled++; state = 'done'; result = {};}
   else result = {state, result: {ok: buildOK, compiler: 'gfortran', seconds: 0.3,
     ...(payload?.mode === 'fortran-run' ? {reused_executable: true} : {
-      build: {ok: buildOK, stdout: buildOK ? 'Build: PASS' : 'Build: FAIL', stderr: '', seconds: 0.2},
+      build: {ok: buildOK, stdout: buildOK ? 'Build: PASS' : 'Build: FAIL', stderr: buildError, seconds: 0.2},
       ...(buildOK ? {artifact: {id: 'private-id', expires_at: Date.now()/1000 + (expired ? -1 : 300)}} : {})}),
     ...(payload?.mode === 'fortran-compile' ? {} : {execution: {stdout: '385\n', stderr: '', seconds: 0.1}})}};
   return {ok: true, json: async () => result};
@@ -114,10 +115,23 @@ assert.equal(get('run').disabled, false);
 await get('compile').onclick();
 assert.equal(get('rerun').disabled, false);
 buildOK = false;
+buildError = 'input_p.f90:2:5:\nError: Expected comma\n';
 await get('compile').onclick();
 assert.equal(get('rerun').disabled, true);
 assert.match(get('diagnostics').textContent, /Build: FAIL/);
+assert.equal(get('first-error').disabled, false);
+assert.match(get('error-note').textContent, /line 2: Error: Expected comma/);
+get('first-error').onclick();
+assert.equal(get('fortran').value.slice(...get('fortran').selection), 'end program');
+get('fortran').listeners.input();
+assert.equal(get('first-error').disabled, true);
+assert.equal(get('error-note').textContent, '');
+await get('compile').onclick();
+assert.equal(get('first-error').disabled, false);
+get('preset').onchange();
+assert.equal(get('first-error').disabled, true);
 buildOK = true;
+buildError = '';
 expired = true;
 await get('compile').onclick();
 assert.equal(get('rerun').disabled, true);

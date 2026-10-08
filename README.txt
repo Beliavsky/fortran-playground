@@ -18,6 +18,16 @@ previous run are not carried over. Reruns count toward the usual usage limits.
 The editor and results appear side by side (60/40) on wide screens, with output
 above compilation diagnostics on the right. Each pane scrolls independently;
 narrow screens stack the editor before the results.
+Compiler errors referring to the submitted input_p.f90 source are highlighted
+with a red line background and gutter marker; reported columns are underlined.
+Hover over a marker or highlighted text to read the diagnostic. Click a marker
+or Go to first error to navigate. Source/option changes and a new compilation
+clear stale markers. Warnings and helper-file errors remain in the compilation
+log without source markers. Recognized formats include GNU, Intel, LLVM Flang
+and LFortran; diagnostics without recognized locations still appear in the log.
+If syntax coloring cannot load, Go to first error selects the line in the
+plain-text editor instead. This feature needs only a frontend push, not a
+Modal redeployment.
 ofort is not integrated yet: adding it requires backend support, not only a menu.
 
 Local preview (Windows)

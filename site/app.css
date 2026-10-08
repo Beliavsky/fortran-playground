@@ -18,6 +18,11 @@
 .diagnostics h2 { flex: none; }
 .diagnostics pre { flex: 1; min-height: 0; overflow: auto; }
 #connection { font-size: 14px; }
+.CodeMirror .p2f-error-line { background: rgba(190, 30, 45, 0.13); }
+.CodeMirror .p2f-error-column { text-decoration: underline wavy #b51d30; text-underline-offset: 3px; }
+.CodeMirror-gutter.p2f-errors { width: 20px; }
+.p2f-error-marker { color: #b51d30; background: transparent; border: 0; border-radius: 0; padding: 0 4px; font-weight: bold; cursor: pointer; }
+#error-note { overflow-wrap: anywhere; }
 @media (max-width: 760px) {
   .workspace { grid-template-columns: minmax(0, 1fr); height: auto; }
   #source-pane { height: 420px; }

@@ -1,5 +1,6 @@
 import {createEditor} from './editors.mjs';
 import {examples} from './examples.mjs';
+import {parseCompilerErrors} from './diagnostics.mjs';
 
 const get = id => document.getElementById(id);
 let token = '', service = '', catalog = {}, active = null, connecting = false, revision = 0;
@@ -12,9 +13,16 @@ function invalidateBuild() {
 const editor = createEditor(get('fortran'), get('fortran-lines'), () => {
   revision++;
   invalidateBuild();
+  clearErrorInfo();
   get('freshness').textContent = 'Input changed; previous results are retained.';
   controls();
 });
+
+function clearErrorInfo() {
+  editor.clearDiagnostics();
+  get('first-error').disabled = true;
+  get('error-note').textContent = '';
+}
 
 function controls() {
   const busy = Boolean(active);
@@ -90,6 +98,13 @@ async function connect() {
 }
 
 function show(result) {
+  if (result.build) {
+    const errors = parseCompilerErrors(`${result.build.stdout || ''}\n${result.build.stderr || ''}`, editor.getValue());
+    clearErrorInfo();
+    editor.setDiagnostics(errors);
+    get('first-error').disabled = !errors.length;
+    get('error-note').textContent = errors.length ? `${errors.length} source error${errors.length === 1 ? '' : 's'}; first at line ${errors[0].line}: ${errors[0].message}` : '';
+  }
   for (const [key, outputId, timeId] of [['build', 'diagnostics', 'build-time'], ['execution', 'output', 'run-time']]) {
     const stage = result[key];
     get(outputId).textContent = stage ? `${stage.stdout || ''}${stage.stderr ? '\n' + stage.stderr : ''}` || '(No output)' : 'Not run for this operation.';
@@ -118,7 +133,7 @@ async function run(mode = 'fortran-edit') {
   }
   const job = active = {id: null, revision, stopping: false};
   const artifactId = retained?.id;
-  if (mode !== 'fortran-run') invalidateBuild();
+  if (mode !== 'fortran-run') { invalidateBuild(); clearErrorInfo(); }
   controls(); get('status').textContent = mode === 'fortran-run' ? 'Running retained build…' : mode === 'fortran-compile' ? 'Compiling…' : 'Compiling and running…';
   try {
     const created = await api('jobs', 'POST', {
@@ -155,6 +170,7 @@ async function run(mode = 'fortran-edit') {
 get('run').onclick = () => run();
 get('compile').onclick = () => run('fortran-compile');
 get('rerun').onclick = () => run('fortran-run');
+get('first-error').onclick = () => editor.goToDiagnostic();
 get('connect').onclick = connect;
 get('stop').onclick = async () => {
   if (!active) return;
@@ -196,6 +212,7 @@ get('download').onclick = () => {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 };
 for (const id of ['compiler', 'preset', 'warnings', 'fast-math']) get(id).onchange = () => {
+  clearErrorInfo();
   invalidateBuild();
   revision++; controls(); get('freshness').textContent = 'Options changed; previous results are retained.';
 };

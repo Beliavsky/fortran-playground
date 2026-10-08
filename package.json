@@ -2,6 +2,6 @@
   "name": "fortran-playground",
   "private": true,
   "type": "module",
-  "scripts": { "test": "node tests/ui.mjs" },
+  "scripts": { "test": "node tests/diagnostics.mjs && node tests/ui.mjs" },
   "devDependencies": { "codemirror": "5.65.20" }
 }
