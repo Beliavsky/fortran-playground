@@ -61,7 +61,9 @@ class SiteTests(unittest.TestCase):
         self.assertNotIn('id="python"', html)
         self.assertNotIn('pyodide', client)
         self.assertNotIn('manifest.json', client)
-        self.assertIn("mode: 'fortran-edit'", client)
+        self.assertIn("mode = 'fortran-edit'", client)
+        for identifier in ('compile', 'run', 'rerun'):
+            self.assertIn(f'id="{identifier}"', html)
         self.assertIn("source: ''", client)
 
     def test_configuration_is_public_origin_only(self):

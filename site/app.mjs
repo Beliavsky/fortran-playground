@@ -4,8 +4,14 @@ import {examples} from './examples.mjs';
 const get = id => document.getElementById(id);
 let token = '', service = '', catalog = {}, active = null, connecting = false, revision = 0;
 let filename = 'main.f90';
+let features = {}, retained = null, expiryTimer = null;
+function invalidateBuild() {
+  retained = null;
+  clearTimeout(expiryTimer);
+}
 const editor = createEditor(get('fortran'), get('fortran-lines'), () => {
   revision++;
+  invalidateBuild();
   get('freshness').textContent = 'Input changed; previous results are retained.';
   controls();
 });
@@ -13,6 +19,9 @@ const editor = createEditor(get('fortran'), get('fortran-lines'), () => {
 function controls() {
   const busy = Boolean(active);
   get('run').disabled = !token || busy || !editor.getValue().trim();
+  get('compile').disabled = get('run').disabled || !features.compile_only;
+  get('rerun').disabled = !token || busy || !features.run_again || !retained || retained.expires_at * 1000 <= Date.now();
+  get('build-note').textContent = !features.compile_only ? 'Compile-only and Run Again require an updated execution service.' : retained ? 'Run Again reuses this executable until it expires (up to five minutes). Editing source or options requires recompilation.' : 'Compile to enable Run Again. Each run starts a fresh process.';
   get('stop').disabled = !active || active.stopping;
   get('connect').disabled = connecting || busy;
   get('compiler').disabled = !token || busy;
@@ -48,7 +57,7 @@ async function api(path, method = 'GET', payload) {
 
 async function connect() {
   if (active || connecting) return;
-  connecting = true; token = ''; controls();
+  connecting = true; token = ''; features = {}; invalidateBuild(); controls();
   try {
     const response = await fetch('./service.json', {cache: 'no-store'});
     if (!response.ok) throw new Error('Execution service configuration is unavailable.');
@@ -69,6 +78,7 @@ async function connect() {
     }
     token = session.token;
     catalog = session.compiler_options || {};
+    features = session.features || {};
     get('connection').textContent = `Connected · ${compilers.join(' / ')} · ${session.timeout ?? '?'} s run limit · runtime ${(session.commit || '').slice(0,7)}`;
     get('status').textContent = 'Ready';
     // No transpiler pin is needed: this site submits only edited Fortran.
@@ -86,21 +96,34 @@ function show(result) {
     get(timeId).textContent = stage ? `${Number(stage.seconds || 0).toFixed(2)} s` : '';
   }
   if (result.error) get('diagnostics').textContent = result.error;
+  if (result.reused_executable) get('diagnostics').textContent = 'Compilation skipped — reused the retained executable.';
+  if (result.artifact_note) get('diagnostics').textContent += '\n' + result.artifact_note;
+  if (result.artifact) {
+    retained = result.artifact;
+    clearTimeout(expiryTimer);
+    expiryTimer = setTimeout(() => { invalidateBuild(); controls(); }, Math.max(0, retained.expires_at * 1000 - Date.now()));
+    expiryTimer.unref?.();
+  }
   get('status').textContent = `${result.ok ? 'Completed' : 'Failed'} · ${result.compiler || get('compiler').value} · ${Number(result.seconds || 0).toFixed(2)} s total`;
   get('freshness').textContent = 'Results for the submitted source and options. Program time includes process startup; compilation is shown separately.';
 }
 
-async function run() {
+async function run(mode = 'fortran-edit') {
   if (!token || active) return;
+  if (mode === 'fortran-compile' && !features.compile_only) return;
+  if (mode === 'fortran-run' && (!features.run_again || !retained || retained.expires_at * 1000 <= Date.now())) { invalidateBuild(); controls(); return; }
   const source = editor.getValue();
   if (!source.trim() || new TextEncoder().encode(source).length > 100000) {
     get('status').textContent = 'Enter between 1 byte and 100 KB of Fortran.'; return;
   }
   const job = active = {id: null, revision, stopping: false};
-  controls(); get('status').textContent = 'Compiling and running…';
+  const artifactId = retained?.id;
+  if (mode !== 'fortran-run') invalidateBuild();
+  controls(); get('status').textContent = mode === 'fortran-run' ? 'Running retained build…' : mode === 'fortran-compile' ? 'Compiling…' : 'Compiling and running…';
   try {
     const created = await api('jobs', 'POST', {
-      source: '', mode: 'fortran-edit', automatic: false, fortran_source: source,
+      source: '', mode, automatic: false,
+      ...(mode === 'fortran-run' ? {artifact_id: artifactId} : {fortran_source: source, ...(features.run_again ? {retain_executable: true} : {})}),
       compiler: get('compiler').value,
       ...(catalog[get('compiler').value] ? {compiler_options: {
         preset: get('preset').value, warnings: Boolean(get('warnings').checked), fast_math: Boolean(get('fast-math').checked),
@@ -108,7 +131,7 @@ async function run() {
     });
     job.id = created.id;
     if (job.stopping) await api(`jobs/${job.id}/cancel`, 'POST', {});
-    const deadline = Date.now() + 180000;
+    const deadline = Date.now() + 300000;
     while (active === job) {
       const state = await api(`jobs/${job.id}`);
       if (state.state === 'done') {
@@ -121,6 +144,7 @@ async function run() {
       await new Promise(resolve => setTimeout(resolve, 500));
     }
   } catch (error) {
+    if (mode === 'fortran-run' && error.status === 404) invalidateBuild();
     if (job.id) api(`jobs/${job.id}/cancel`, 'POST', {}).catch(() => {});
     get('diagnostics').textContent = String(error);
     get('status').textContent = 'Execution request failed';
@@ -128,7 +152,9 @@ async function run() {
   } finally { active = null; controls(); }
 }
 
-get('run').onclick = run;
+get('run').onclick = () => run();
+get('compile').onclick = () => run('fortran-compile');
+get('rerun').onclick = () => run('fortran-run');
 get('connect').onclick = connect;
 get('stop').onclick = async () => {
   if (!active) return;
@@ -170,6 +196,7 @@ get('download').onclick = () => {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 };
 for (const id of ['compiler', 'preset', 'warnings', 'fast-math']) get(id).onchange = () => {
+  invalidateBuild();
   revision++; controls(); get('freshness').textContent = 'Options changed; previous results are retained.';
 };
 editor.setValue(examples.sum);

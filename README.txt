@@ -2,12 +2,19 @@ Fortran playground
 ==================
 
 A standalone Fortran-only frontend for the existing Python-to-Fortran execution
-service. The original playground and backend are unchanged.
+service. The original playground pages are unchanged; the shared backend now
+also supports compile-only jobs and retained builds for this frontend.
 
 Features: editable Fortran with syntax coloring and line counts; four examples;
 file loading and downloading; compiler selection and supported option presets;
 compile/run timings, diagnostics and output; cancellation and reconnect.
-No Python is submitted or translated. Code runs only on an explicit Run click.
+No Python is submitted or translated. Compile builds without execution;
+Compile and Run builds and executes; Run Again reuses the executable without
+recompiling, in a fresh isolated environment. Execution requires an explicit click.
+Retained builds expire after at most five minutes, are private to the session,
+and are discarded by the frontend when source/compiler/options change or when
+reconnecting. A failed compilation cannot enable Run Again. Files created by a
+previous run are not carried over. Reruns count toward the usual usage limits.
 The editor and results appear side by side (60/40) on wide screens, with output
 above compilation diagnostics on the right. Each pane scrolls independently;
 narrow screens stack the editor before the results.
@@ -34,7 +41,10 @@ Create a GitHub repository named fortran-playground, push the files to main,
 and select GitHub Actions under Settings > Pages. The included workflow tests,
 bundles CodeMirror, versions assets with xsite.py, and deploys _site.
 The resulting entry point is https://beliavsky.github.io/fortran-playground/ .
-No Modal redeployment is needed if the existing service supports fortran-edit.
+Redeploy the shared service from C:\python\python-to-fortran-playground:
+  .venv-execution\Scripts\python.exe xdeploy_service.py
+Then push this frontend. Against an older service, Compile and Run still works,
+but Compile and Run Again stay disabled until the service advertises support.
 No deployment or GitHub repository creation has been performed by this setup.
 
 Architecture
@@ -57,5 +67,5 @@ Provenance
 ----------
 The editor wrapper, shared styles, asset builder, bundling script and public
 service URL were copied from C:\python\python-to-fortran-playground.
-The Fortran-only page and client are separate; the original files were not edited.
+The Fortran-only page and client are separate; the original frontend was not edited.
 CodeMirror is MIT-licensed; xeditor.py includes its LICENSE in the built assets.

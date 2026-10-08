@@ -15,25 +15,30 @@ get('preset').value = 'default';
 get('preset').options = ['default','debug','optimized','strict'].map(value => ({value}));
 get('example').value = 'sum';
 globalThis.confirm = () => true;
-let submissions = 0, payload, state = 'done', sessionFails = false, cancelled = 0;
+let submissions = 0, payload, state = 'done', sessionFails = false, cancelled = 0, legacy = false, expired = false, buildOK = true;
 globalThis.fetch = async (url, options = {}) => {
   let result;
   if (url === './service.json') result = {url: 'https://test.modal.run'};
   else if (url.endsWith('/api/session')) {
     if (sessionFails) throw new Error('Offline');
     result = {token: 'session', commit: 'abcd1234', timeout: 30, compilers: ['gfortran'],
+      features: legacy ? {} : {compile_only: true, run_again: true},
       compiler_options: {gfortran: {presets: {default: [], debug: ['-g']}, extras: {warnings: ['-Wall']}}}};
   } else if (url.endsWith('/api/jobs')) {
     submissions++; payload = JSON.parse(options.body); result = {id: 'job'};
   } else if (url.endsWith('/cancel')) {cancelled++; state = 'done'; result = {};}
-  else result = {state, result: {ok: true, compiler: 'gfortran', seconds: 0.3,
-    build: {stdout: 'Build: PASS', stderr: '', seconds: 0.2},
-    execution: {stdout: '385\n', stderr: '', seconds: 0.1}}};
+  else result = {state, result: {ok: buildOK, compiler: 'gfortran', seconds: 0.3,
+    ...(payload?.mode === 'fortran-run' ? {reused_executable: true} : {
+      build: {ok: buildOK, stdout: buildOK ? 'Build: PASS' : 'Build: FAIL', stderr: '', seconds: 0.2},
+      ...(buildOK ? {artifact: {id: 'private-id', expires_at: Date.now()/1000 + (expired ? -1 : 300)}} : {})}),
+    ...(payload?.mode === 'fortran-compile' ? {} : {execution: {stdout: '385\n', stderr: '', seconds: 0.1}})}};
   return {ok: true, json: async () => result};
 };
 await import('../site/app.mjs');
 assert.equal(submissions, 0); // Connecting/loading never executes a program.
 assert.equal(get('run').disabled, false);
+assert.equal(get('compile').disabled, false);
+assert.equal(get('rerun').disabled, true);
 assert.equal(get('fortran-lines').textContent, '9 lines');
 assert.equal(get('compiler').options[1].disabled, true);
 assert.equal(get('preset').options[2].disabled, true);
@@ -48,7 +53,26 @@ assert.equal(get('output').textContent, '385\n');
 assert.equal(get('build-time').textContent, '0.20 s');
 assert.equal(get('run-time').textContent, '0.10 s');
 assert.match(get('status').textContent, /0.30 s total/);
+assert.equal(payload.retain_executable, true);
+assert.equal(get('rerun').disabled, false);
+await get('rerun').onclick();
+assert.equal(payload.mode, 'fortran-run');
+assert.equal(payload.artifact_id, 'private-id');
+assert.equal(payload.fortran_source, undefined);
+assert.match(get('diagnostics').textContent, /Compilation skipped/);
+await get('compile').onclick();
+assert.equal(payload.mode, 'fortran-compile');
+assert.equal(get('run-time').textContent, '');
+assert.match(get('output').textContent, /Not run/);
+assert.equal(get('rerun').disabled, false);
+for (const id of ['compiler', 'preset', 'warnings', 'fast-math']) {
+  get(id).onchange();
+  assert.equal(get('rerun').disabled, true);
+  await get('compile').onclick();
+}
+const beforeClear = submissions;
 get('clear').onclick();
+assert.equal(get('rerun').disabled, true);
 assert.equal(get('fortran').value, '');
 assert.equal(get('fortran-lines').textContent, '0 lines');
 assert.equal(get('run').disabled, true);
@@ -56,14 +80,14 @@ get('file').files = [{name: 'custom.f90', size: 30, text: async () => 'program c
 await get('file').onchange();
 assert.equal(get('fortran-lines').textContent, '2 lines');
 assert.match(get('file-status').textContent, /loaded locally/);
-assert.equal(submissions, 1);
+assert.equal(submissions, beforeClear);
 get('file').files = [{name: 'big.f90', size: 100001}];
 await get('file').onchange();
 assert.match(get('file-status').textContent, /exceeds/);
 assert.match(get('fortran').value, /program custom/);
 get('fortran').value = 'x'.repeat(100001); get('fortran').listeners.input();
 await get('run').onclick();
-assert.equal(submissions, 1);
+assert.equal(submissions, beforeClear);
 assert.match(get('status').textContent, /100 KB/);
 get('load').onclick();
 state = 'running';
@@ -87,4 +111,23 @@ assert.match(get('connection').textContent, /unavailable/);
 sessionFails = false;
 await get('connect').onclick();
 assert.equal(get('run').disabled, false);
+await get('compile').onclick();
+assert.equal(get('rerun').disabled, false);
+buildOK = false;
+await get('compile').onclick();
+assert.equal(get('rerun').disabled, true);
+assert.match(get('diagnostics').textContent, /Build: FAIL/);
+buildOK = true;
+expired = true;
+await get('compile').onclick();
+assert.equal(get('rerun').disabled, true);
+const beforeExpiredRun = submissions;
+await get('rerun').onclick();
+assert.equal(submissions, beforeExpiredRun);
+legacy = true;
+await get('connect').onclick();
+assert.equal(get('run').disabled, false);
+assert.equal(get('compile').disabled, true);
+assert.equal(get('rerun').disabled, true);
+assert.match(get('build-note').textContent, /updated execution service/);
 console.log('Fortran-only UI tests passed (no hosted jobs submitted).');
