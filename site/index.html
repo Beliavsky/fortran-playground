@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; connect-src 'self' https://*.modal.run; style-src 'self'; object-src 'none'; base-uri 'none'">
+  <title>Fortran playground</title>
+  <link rel="stylesheet" href="editor-vendor/codemirror.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">EDIT · COMPILE · RUN</p>
+    <h1>Fortran playground</h1>
+    <p>Write and run a single-file Fortran program with your chosen compiler.</p>
+    <p><a href="https://beliavsky.github.io/python-to-fortran-playground/">Python-to-Fortran playground</a></p>
+    <p id="connection" role="status">Connecting to the execution service…</p>
+  </header>
+  <div class="toolbar">
+    <label for="example">Example</label>
+    <select id="example"><option value="sum">Sum of squares</option><option value="matrix">Matrix multiplication</option><option value="roots">Quadratic roots</option><option value="helper">python_mod mean</option></select>
+    <button id="load" type="button">Load example</button>
+    <button id="clear" type="button">Clear</button>
+    <button id="load-file" type="button">Load Fortran file</button>
+    <input id="file" type="file" accept=".f90,.f95,.f03,.f08,text/plain" hidden>
+    <button id="download" type="button">Download Fortran</button>
+    <button id="connect" type="button">Reconnect</button>
+  </div>
+  <p id="file-status" class="version" role="status">Files are read locally; only running sends source to the service.</p>
+  <section class="panel">
+    <label for="fortran">Fortran input <span id="fortran-lines" class="line-count">0 lines</span></label>
+    <textarea id="fortran" spellcheck="false"></textarea>
+  </section>
+  <div class="toolbar">
+    <label for="compiler">Compiler</label>
+    <select id="compiler" disabled><option value="gfortran">GNU Fortran</option><option value="ifx" disabled>Intel Fortran</option><option value="flang" disabled>LLVM Flang</option><option value="lfortran" disabled>LFortran</option></select>
+    <button id="run" class="primary" type="button" disabled>Compile and Run</button>
+    <button id="stop" type="button" disabled>Stop</button>
+    <span id="status" role="status" aria-live="polite">Connecting…</span>
+  </div>
+  <div class="toolbar" aria-label="User-code compiler options">
+    <label for="preset">User-code options</label>
+    <select id="preset" disabled><option value="default">Default</option><option value="debug">Debug</option><option value="optimized">Optimized</option><option value="strict">Strict</option></select>
+    <label><input id="warnings" type="checkbox" disabled> Extra warnings</label>
+    <label><input id="fast-math" type="checkbox" disabled> Fast math (may change results)</label>
+  </div>
+  <p id="options-note" class="version">Helpers keep fixed build options.</p>
+  <p id="freshness" class="version">No results yet.</p>
+  <section class="diagnostics"><h2>Program output <span id="run-time" class="line-count"></span></h2><pre id="output">Not run.</pre></section>
+  <section class="diagnostics"><h2>Compilation <span id="build-time" class="line-count"></span></h2><pre id="diagnostics">Not compiled.</pre></section>
+  <footer>
+    <p id="editor-note">Plain-text editor available; loading syntax coloring…</p>
+    <p>Code runs only when you click Compile and Run. Existing python_mod helpers are available automatically. No Python code is submitted or translated.</p>
+    <p>100 KB source limit · 200 KB per output stream · no interactive input · every run starts afresh.</p>
+    <p>Hosted runs use the shared Python-to-Fortran execution service and its workload limits. Programs run in isolated environments without network access. Running a local preview still sends execution jobs to that hosted service.</p>
+    <p>Compiler availability is reported by the service. Failures are reported without silently switching compilers. ofort is not connected yet.</p>
+  </footer>
+</main>
+<script type="module" src="app.mjs"></script>
+</body>
+</html>
