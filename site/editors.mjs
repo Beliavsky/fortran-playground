@@ -87,6 +87,12 @@ export function createEditor(textarea, counter, onChange = () => {}) {
         changed();
       }
     },
+    applyEdit(start, end, replacement) {
+      if (!cm) throw new Error('Undoable edits require the enhanced editor.');
+      cm.getDoc().changeGeneration(true);
+      cm.replaceRange(replacement, cm.posFromIndex(start), cm.posFromIndex(end), '+quickfix');
+      cm.getDoc().changeGeneration(true);
+    },
     setReadOnly(value) {
       textarea.readOnly = value;
       cm?.setOption('readOnly', value);

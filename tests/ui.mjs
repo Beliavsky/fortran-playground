@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {playgroundConfig} from '../site/config.mjs';
 const elements = new Map();
 globalThis.document = {
   getElementById(id) {
@@ -138,6 +139,22 @@ assert.equal(get('first-error').disabled, true);
 buildOK = true;
 buildError = '';
 expired = true;
+// Feature-off leaves compile/error navigation intact and never offers an edit.
+playgroundConfig.enableQuickFixes = false;
+get('fortran').value = 'program main\nprint "(i0)" 7\nend program main\n';
+get('fortran').listeners.input();
+buildOK = false;
+buildError = 'input_p.f90:2:14:\nError: Expected comma in PRINT statement at (1)\n';
+await get('compile').onclick();
+assert.equal(get('first-error').hidden, false);
+assert.equal(get('fix-error').hidden, true);
+assert.equal(get('fix-note').hidden, true);
+const unchanged = get('fortran').value, beforeFix = submissions;
+get('fix-error').onclick();
+assert.equal(get('fortran').value, unchanged);
+assert.equal(submissions, beforeFix);
+playgroundConfig.enableQuickFixes = true;
+buildOK = true; buildError = '';
 await get('compile').onclick();
 assert.equal(get('rerun').disabled, true);
 const beforeExpiredRun = submissions;

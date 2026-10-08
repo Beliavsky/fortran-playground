@@ -1,6 +1,8 @@
 import {createEditor} from './editors.mjs';
 import {examples} from './examples.mjs';
 import {parseCompilerErrors} from './diagnostics.mjs';
+import {playgroundConfig} from './config.mjs';
+import {createQuickFixControls} from './quick_fix_controls.mjs';
 
 const get = id => document.getElementById(id);
 let token = '', service = '', catalog = {}, active = null, connecting = false, revision = 0;
@@ -18,7 +20,13 @@ const editor = createEditor(get('fortran'), get('fortran-lines'), () => {
   controls();
 });
 
+const quickFix = createQuickFixControls({editor, button: get('fix-error'),
+  note: get('fix-note'), config: playgroundConfig,
+  onApplied(fix) { get('status').textContent = `Fixed: ${fix.description} Compile when ready.`; },
+});
+
 function clearErrorInfo() {
+  quickFix.clear();
   editor.clearDiagnostics();
   get('first-error').disabled = true;
   get('first-error').hidden = true;
@@ -28,6 +36,7 @@ function clearErrorInfo() {
 
 function controls() {
   const busy = Boolean(active);
+  quickFix.setBusy(busy);
   get('run').disabled = !token || busy || !editor.getValue().trim();
   get('compile').disabled = get('run').disabled || !features.compile_only;
   get('rerun').disabled = !token || busy || !features.run_again || !retained || retained.expires_at * 1000 <= Date.now();
@@ -67,7 +76,7 @@ async function api(path, method = 'GET', payload) {
 
 async function connect() {
   if (active || connecting) return;
-  connecting = true; token = ''; features = {}; invalidateBuild(); controls();
+  connecting = true; token = ''; features = {}; invalidateBuild(); quickFix.clear(); controls();
   try {
     const response = await fetch('./service.json', {cache: 'no-store'});
     if (!response.ok) throw new Error('Execution service configuration is unavailable.');
@@ -108,6 +117,8 @@ function show(result) {
     get('first-error').hidden = !errors.length;
     get('error-note').hidden = !errors.length;
     get('error-note').textContent = errors.length ? `${errors.length} source error${errors.length === 1 ? '' : 's'}; first at line ${errors[0].line}: ${errors[0].message}` : '';
+    quickFix.update(editor.getValue(), `${result.build.stdout || ''}\n${result.build.stderr || ''}`,
+      result.compiler || get('compiler').value, result.build.ok === false);
   }
   for (const [key, outputId, timeId] of [['build', 'diagnostics', 'build-time'], ['execution', 'output', 'run-time']]) {
     const stage = result[key];
@@ -227,6 +238,7 @@ if (typeof window !== 'undefined') {
     await import('./editor-vendor/fortran.js');
     editor.enhance(globalThis.CodeMirror, 'text/x-fortran', 'Fortran input');
     editor.refresh();
+    quickFix.refresh();
     get('editor-note').textContent = 'Syntax coloring enabled · Tab: indentation · Ctrl+Z: undo · Esc: leave editor.';
   })().catch(() => { get('editor-note').textContent = 'Plain-text editor available.'; });
 }

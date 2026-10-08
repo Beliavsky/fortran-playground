@@ -33,11 +33,20 @@ If syntax coloring cannot load, Go to first error selects the line in the
 plain-text editor instead. This feature needs only a frontend push, not a
 Modal redeployment.
 
-Experimental quick-fix validation (local only)
----------------------------------------------
-No Fix error button is connected to the web interface yet. site/fixes.mjs
-contains an isolated detector, off by default (enableQuickFixes: false), and
-an edit applicator that refuses stale source. Two independently switchable rules
+Experimental syntax quick fixes
+-------------------------------
+Fix error appears beside the execution buttons after a failed gfortran build
+when its first source error has a supported repair. Its tooltip and the text
+above the panes describe the edit. Clicking applies one undoable edit, clears
+stale markers and invalidates the retained executable. It never compiles or
+runs automatically. Use Ctrl+Z to undo, then Compile when ready.
+If the enhanced editor cannot load, quick fixes remain hidden: the plain-text
+fallback cannot guarantee native undo. Diagnostics and navigation still work.
+Set enableQuickFixes to false in site/config.mjs to disable detection and hide
+the controls, leaving the ordinary playground behavior unchanged. Push this
+frontend to publish configuration changes; no Modal redeployment is needed.
+site/fixes.mjs contains the detector and an applicator that refuses stale source.
+Two independently switchable rules
 are available: print-format-comma inserts a missing comma after a quoted PRINT
 format; closing-unit-name corrects an END PROGRAM, END MODULE, END SUBROUTINE
 or END FUNCTION name. Both require a matching gfortran source diagnostic.
@@ -46,7 +55,8 @@ conservative source-scope scan, preserves the opening name's capitalization,
 and changes only the closing identifier. Simple procedure headers, CONTAINS,
 and balanced IF/DO constructs are supported. Interfaces, other unsupported
 structures, continuations, multiple statements and incomplete scopes are refused.
-Use disabledRules: ['closing-unit-name'] or ['print-format-comma'] to disable
+Set disabledQuickFixRules to ['closing-unit-name'] or ['print-format-comma']
+in site/config.mjs to disable
 either rule independently, or list both to disable both.
 Other compiler adapters are not implemented yet.
 

@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node tests/diagnostics.mjs && node tests/fixes.mjs && node tests/ui.mjs",
+    "test": "node tests/diagnostics.mjs && node tests/fixes.mjs && node tests/quick_fix_controls.mjs && node tests/ui.mjs",
     "test:fixes": "node xcheck_fixes.mjs"
   },
   "devDependencies": { "codemirror": "5.65.20" }

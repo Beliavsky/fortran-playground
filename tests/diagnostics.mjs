@@ -57,6 +57,30 @@ editor.setDiagnostics([]);
 assert.equal(lines.size, 0);
 assert.equal(gutters.size, 0);
 
+// A quick fix changes only its range and creates one isolated undo transaction.
+const history = [], generations = [], origins = [];
+cm.getDoc = () => ({changeGeneration(close) { generations.push(close); }});
+cm.posFromIndex = index => {
+  const prefix = textarea.value.slice(0, index).split('\n');
+  return {line: prefix.length - 1, ch: prefix.at(-1).length};
+};
+cm.replaceRange = (replacement, from, to, origin) => {
+  const offset = pos => textarea.value.split('\n').slice(0, pos.line)
+    .reduce((total, line) => total + line.length + 1, 0) + pos.ch;
+  const start = offset(from), end = offset(to);
+  history.push(textarea.value); origins.push(origin);
+  textarea.value = textarea.value.slice(0, start) + replacement + textarea.value.slice(end);
+  cm.change();
+};
+const insertion = source.indexOf('" n') + 1;
+editor.applyEdit(insertion, insertion, ',');
+assert.equal(textarea.value, source.replace('" n', '", n'));
+assert.deepEqual(origins, ['+quickfix']);
+assert.deepEqual(generations, [true, true]);
+assert.equal(history.length, 1);
+textarea.value = history.pop(); cm.change();
+assert.equal(editor.getValue(), source);
+
 // Compare against a real GNU diagnostic when the compiler is installed.
 if (spawnSync('gfortran', ['--version']).status === 0) {
   const directory = mkdtempSync(join(tmpdir(), 'fortran-diagnostic-'));

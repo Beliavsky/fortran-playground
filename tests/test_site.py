@@ -22,7 +22,7 @@ class SiteTests(unittest.TestCase):
 
             def handle_starttag(self, tag, attrs):
                 attrs = dict(attrs)
-                if attrs.get('id') in {'fortran', 'output', 'diagnostics', 'compile', 'run', 'rerun', 'stop', 'first-error', 'compiler', 'preset'}:
+                if attrs.get('id') in {'fortran', 'output', 'diagnostics', 'compile', 'run', 'rerun', 'stop', 'first-error', 'fix-error', 'compiler', 'preset'}:
                     self.ancestors[attrs['id']] = list(self.stack)
                 if tag not in {'input', 'link', 'meta', 'br'}:
                     self.stack.append(attrs.get('id') or attrs.get('class') or tag)
@@ -39,7 +39,7 @@ class SiteTests(unittest.TestCase):
             self.assertIn('results-pane', panes.ancestors[target])
             self.assertIn('workspace', panes.ancestors[target])
         self.assertIn('workspace', panes.ancestors['fortran'])
-        for target in ('compile', 'run', 'rerun', 'stop', 'first-error'):
+        for target in ('compile', 'run', 'rerun', 'stop', 'first-error', 'fix-error'):
             self.assertIn('source-header', panes.ancestors[target])
             self.assertIn('source-pane', panes.ancestors[target])
             self.assertEqual(html.count(f'id="{target}"'), 1)
@@ -58,6 +58,10 @@ class SiteTests(unittest.TestCase):
             version = build_site(ROOT / 'site', destination)
             self.assertIn(f'app.mjs?v={version}', (destination / 'index.html').read_text(encoding='utf-8'))
             self.assertIn(f'editors.mjs?v={version}', (destination / 'app.mjs').read_text(encoding='utf-8'))
+            self.assertIn(f'config.mjs?v={version}', (destination / 'app.mjs').read_text(encoding='utf-8'))
+            self.assertIn(f'quick_fix_controls.mjs?v={version}', (destination / 'app.mjs').read_text(encoding='utf-8'))
+            self.assertIn(f'fixes.mjs?v={version}', (destination / 'quick_fix_controls.mjs').read_text(encoding='utf-8'))
+            self.assertEqual((destination / 'config.mjs').read_text(), (ROOT / 'site/config.mjs').read_text())
             self.assertEqual(json.loads((destination / 'service.json').read_text()),
                              json.loads((ROOT / 'site/service.json').read_text()))
             self.assertTrue((destination / 'run/index.html').is_file())

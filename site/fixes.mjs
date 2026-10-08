@@ -122,7 +122,7 @@ function closingName(source, error) {
   return null;
 }
 
-// Off by default; no callers in the web interface yet. Individual rules can
+// Off by default for callers; the web interface explicitly uses its configuration. Individual rules can
 // also be disabled without changing diagnostics, compilation or execution.
 export function findQuickFix(source, output, {enableQuickFixes = false, compiler = 'gfortran', disabledRules = []} = {}) {
   if (!enableQuickFixes || compiler !== 'gfortran') return null;

@@ -31,7 +31,7 @@ assert.equal(findQuickFix(source.replace('integer :: n = 7', 'integer :: n = &')
 const continued = source.replace('integer :: n = 7', 'integer :: n = &\n! continuation comment\n');
 assert.equal(findQuickFix(continued, diagnostic.replace('4:13', '6:13'), enabled), null);
 const app = readFileSync(new URL('../site/app.mjs', import.meta.url), 'utf8');
-assert.equal(app.includes('fixes.mjs'), false); // Feature is not wired into the web page.
+assert.ok(app.includes('quick_fix_controls.mjs')); // Optional controls use the tested engine.
 
 const endSource = readFileSync(new URL('./cases/quick_fixes/end_program.bad.f90', import.meta.url), 'utf8');
 const endExpected = readFileSync(new URL('./cases/quick_fixes/end_program.fixed.f90', import.meta.url), 'utf8');
