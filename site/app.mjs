@@ -38,13 +38,17 @@ function clearErrorInfo() {
 
 function controls() {
   const busy = Boolean(active);
+  const interpreted = get('compiler').value === 'ofort';
+  get('compile').textContent = interpreted ? 'Check syntax' : 'Compile';
+  get('run').textContent = interpreted ? 'Run' : 'Compile and Run';
   quickFix.setBusy(busy);
   get('run').disabled = !token || busy || !editor.getValue().trim();
   get('compile').disabled = get('run').disabled || !features.compile_only;
   get('format').disabled = get('run').disabled || !features.format || !editor.undoableClear;
   get('check').disabled = get('run').disabled || !features.check;
-  get('rerun').disabled = !token || busy || !features.run_again || !retained || retained.expires_at * 1000 <= Date.now();
+  get('rerun').disabled = interpreted || !token || busy || !features.run_again || !retained || retained.expires_at * 1000 <= Date.now();
   get('build-note').textContent = !features.compile_only ? 'Compile-only and Run Again require an updated execution service.' : retained ? 'Run Again reuses this executable until it expires (up to five minutes). Editing source or options requires recompilation.' : 'Compile to enable Run Again. Each run starts a fresh process.';
+  if (interpreted) get('build-note').textContent = 'ofort checks syntax or interprets standalone source. Run starts a fresh process each time; no executable or compiled helpers are used.';
   get('stop').disabled = !active || active.stopping;
   get('connect').disabled = connecting || busy;
   get('compiler').disabled = !token || busy;
@@ -55,10 +59,10 @@ function controls() {
   get('standard').disabled = !token || busy || !Object.keys(spec?.standards || {}).length;
   get('standard-note').textContent = `Standard selection applies only to user code. ${spec?.standard_note || 'Standard selection is unavailable from this service.'}`;
   for (const option of get('compiler').options) option.title = compilerVersions[option.value] || 'Version unavailable';
-  get('compiler-version').textContent = `Compiler version: ${compilerVersions[get('compiler').value] || 'unavailable from this service.'}`;
+  get('compiler-version').textContent = `${interpreted ? 'Interpreter' : 'Compiler'} version: ${compilerVersions[get('compiler').value] || 'unavailable from this service.'}`;
   for (const option of get('preset').options) option.disabled = !spec?.presets?.[option.value];
   if (!spec?.presets?.[get('preset').value]) get('preset').value = 'default';
-  get('preset').disabled = !token || busy || !spec;
+  get('preset').disabled = interpreted || !token || busy || !spec;
   for (const [id, key] of [['warnings', 'warnings'], ['fast-math', 'fast_math']]) {
     if (!spec?.extras?.[key]) get(id).checked = false;
     get(id).disabled = !token || busy || !spec?.extras?.[key];
@@ -68,6 +72,7 @@ function controls() {
     ...(get('warnings').checked ? spec.extras.warnings : []),
     ...(get('fast-math').checked ? spec.extras.fast_math : [])] : [];
   get('options-note').textContent = `User-code flags: ${flags.join(' ') || '(compiler default)'}. Helpers keep fixed build options.${get('fast-math').checked ? ' Fast math can change numerical results.' : ''}`;
+  if (interpreted) get('options-note').textContent = 'ofort default checks are enabled, including reads of uninitialized variables. Unsupported language features may be rejected.';
 }
 
 async function api(path, method = 'GET', payload) {
@@ -121,9 +126,10 @@ async function connect() {
 }
 
 function show(result) {
+  get('build-title').textContent = result.interpreter ? 'Syntax checking' : 'Compilation';
   const version = result.compiler_version;
   get('result-compiler-version').hidden = !(result.build || result.reused_executable);
-  get('result-compiler-version').textContent = `Compiler version: ${version || 'unavailable from this service.'}`;
+  get('result-compiler-version').textContent = `${result.interpreter ? 'Interpreter' : 'Compiler'} version: ${version || 'unavailable from this service.'}`;
   if (result.build) {
     const errors = parseCompilerErrors(`${result.build.stdout || ''}\n${result.build.stderr || ''}`, editor.getValue());
     clearErrorInfo();
@@ -167,10 +173,13 @@ async function run(mode = 'fortran-edit') {
   const artifactId = retained?.id;
   if (!['fortran-run', 'check'].includes(mode)) { invalidateBuild(); clearErrorInfo(); }
   controls(); get('status').textContent = mode === 'check' ? 'Checking with Fortitude…' : mode === 'format' ? 'Formatting…' : mode === 'fortran-run' ? 'Running retained build…' : mode === 'fortran-compile' ? 'Compiling…' : 'Compiling and running…';
+  if (get('compiler').value === 'ofort' && !['format', 'check'].includes(mode)) {
+    get('status').textContent = mode === 'fortran-compile' ? 'Checking syntax…' : 'Interpreting…';
+  }
   try {
     const created = await api('jobs', 'POST', {
       source: ['format', 'check'].includes(mode) ? source : '', mode, automatic: false,
-      ...(['format', 'check'].includes(mode) ? {} : mode === 'fortran-run' ? {artifact_id: artifactId} : {fortran_source: source, ...(features.run_again ? {retain_executable: true} : {})}),
+      ...(['format', 'check'].includes(mode) ? {} : mode === 'fortran-run' ? {artifact_id: artifactId} : {fortran_source: source, ...(features.run_again && get('compiler').value !== 'ofort' ? {retain_executable: true} : {})}),
       compiler: ['format', 'check'].includes(mode) ? 'gfortran' : get('compiler').value,
       ...(!['format', 'check'].includes(mode) && catalog[get('compiler').value] ? {compiler_options: {
         preset: get('preset').value, warnings: Boolean(get('warnings').checked), fast_math: Boolean(get('fast-math').checked),

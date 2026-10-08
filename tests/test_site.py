@@ -11,6 +11,12 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class SiteTests(unittest.TestCase):
+    def test_interpreter_choice_is_explicit(self):
+        html = (ROOT / 'site/index.html').read_text(encoding='utf-8')
+        self.assertIn('ofort (interpreter, experimental)', html)
+        self.assertIn('Compiler / interpreter', html)
+        self.assertIn('no compiled python_mod helpers', html)
+
     def test_source_and_results_share_responsive_workspace(self):
         from html.parser import HTMLParser
 

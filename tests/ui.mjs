@@ -12,7 +12,7 @@ globalThis.document = {
 };
 const get = id => document.getElementById(id);
 get('compiler').value = 'gfortran';
-get('compiler').options = ['gfortran','ifx','flang','lfortran'].map(value => ({value}));
+get('compiler').options = ['gfortran','ifx','flang','lfortran','ofort'].map(value => ({value}));
 get('preset').value = 'default';
 get('standard').value = 'default';
 get('standard').options = ['default', '1995', '2003', '2008', '2018', '2023'].map(value => ({value}));
@@ -26,23 +26,25 @@ globalThis.fetch = async (url, options = {}) => {
   if (url === './service.json') result = {url: 'https://test.modal.run'};
   else if (url.endsWith('/api/session')) {
     if (sessionFails) throw new Error('Offline');
-    result = {token: 'session', commit: 'abcd1234', timeout: 30, compilers: ['gfortran'],
+    result = {token: 'session', commit: 'abcd1234', timeout: 30, compilers: ['gfortran', 'ofort'],
       features: legacy ? {} : {compile_only: true, run_again: true, format: true, check: true},
       ...(legacy ? {} : {compiler_versions: {gfortran: 'GNU Fortran (GCC) 15.2.0', ifx: 'Intel Fortran 2026.0'}}),
       compiler_options: {gfortran: {presets: {default: [], debug: ['-g']}, extras: {warnings: ['-Wall']},
         ...(legacy ? {} : {standards: {'2008': ['-std=f2008'], '2018': ['-std=f2018']},
-          standard_note: 'GNU rejects extensions beyond the selected standard.'})}}};
+          standard_note: 'GNU rejects extensions beyond the selected standard.'})},
+        ofort: {presets: {default: []}, extras: {}, standards: {}, interpreter: true}}};
   } else if (url.endsWith('/api/jobs')) {
     submissions++; payload = JSON.parse(options.body); result = {id: 'job'};
   } else if (url.endsWith('/cancel')) {cancelled++; state = 'done'; result = {};}
   else if (payload?.mode === 'check') result = {state, result: {ok: checkOK, findings, seconds: 0.1,
     checking: {stdout: findings ? 'input.f90:2:1: C001 implicit typing' : 'All checks passed!', stderr: ''},
     error: checkOK ? null : 'Fortitude unavailable'}};
-  else result = {state, result: {ok: buildOK, compiler: 'gfortran', seconds: 0.3,
+  else result = {state, result: {ok: buildOK, compiler: payload?.compiler || 'gfortran', seconds: 0.3,
+    ...(payload?.compiler === 'ofort' ? {interpreter: true} : {}),
     ...(legacy ? {} : {compiler_version: 'GNU Fortran (GCC) 15.2.0'}),
     ...(payload?.mode === 'fortran-run' ? {reused_executable: true} : {
       build: {ok: buildOK, stdout: buildOK ? 'Build: PASS' : 'Build: FAIL', stderr: buildError, seconds: 0.2},
-      ...(buildOK ? {artifact: {id: 'private-id', expires_at: Date.now()/1000 + (expired ? -1 : 300)}} : {})}),
+      ...(buildOK && payload?.compiler !== 'ofort' ? {artifact: {id: 'private-id', expires_at: Date.now()/1000 + (expired ? -1 : 300)}} : {})}),
     ...(payload?.mode === 'fortran-compile' ? {} : {execution: {stdout: '385\n', stderr: '', seconds: 0.1}})}};
   return {ok: true, json: async () => result};
 };
@@ -223,6 +225,25 @@ assert.equal(get('rerun').disabled, true);
 const beforeExpiredRun = submissions;
 await get('rerun').onclick();
 assert.equal(submissions, beforeExpiredRun);
+get('compiler').value = 'ofort'; get('compiler').onchange();
+assert.equal(get('compile').textContent, 'Check syntax');
+assert.equal(get('run').textContent, 'Run');
+assert.equal(get('standard').disabled, true);
+assert.equal(get('preset').disabled, true);
+assert.equal(get('warnings').disabled, true);
+assert.equal(get('fast-math').disabled, true);
+await get('compile').onclick();
+assert.equal(payload.mode, 'fortran-compile');
+assert.equal(payload.compiler, 'ofort');
+assert.equal(payload.retain_executable, undefined);
+assert.equal(get('build-title').textContent, 'Syntax checking');
+assert.equal(get('rerun').disabled, true);
+await get('run').onclick();
+assert.equal(payload.mode, 'fortran-edit');
+assert.equal(payload.retain_executable, undefined);
+get('compiler').value = 'gfortran'; get('compiler').onchange();
+assert.equal(get('compile').textContent, 'Compile');
+assert.equal(get('run').textContent, 'Compile and Run');
 legacy = true;
 await get('connect').onclick();
 assert.equal(get('run').disabled, false);

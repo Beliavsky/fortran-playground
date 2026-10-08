@@ -14,6 +14,13 @@ code, but hosted formatting jobs count toward service usage limits. Failed,
 cancelled, or stale formatting results never replace the source.
 Formatting is not syntax validation or an automatic syntax repair; compile
 after formatting to check validity.
+ofort (interpreter, experimental) is an optional execution-service choice.
+It changes Compile to Check syntax and Compile and Run to Run. Compiler flags
+and Run Again are disabled: click Run again to start a fresh interpretation.
+Only standalone source is supported; compiled python_mod helpers cannot be
+linked into ofort. The default interpreter detects reads of uninitialized
+variables during execution, not necessarily during its syntax check.
+
 Check invokes Fortitude without fixes or execution, using default rules and its
 Fortran 2018 target (independent of the compiler's Standard selection). Results
 appear in a separate Fortitude checks panel. Checking preserves the source,
