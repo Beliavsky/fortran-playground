@@ -2,6 +2,102 @@ import {parseCompilerErrors} from './diagnostics.mjs';
 
 const PRINT_COMMA = 'print-format-comma';
 const END_NAME = 'closing-unit-name';
+const USE_ORDER = 'use-before-implicit-none';
+const CONTAINS = 'missing-contains';
+
+const procedurePattern = /^(?:(?:pure|impure|elemental|recursive|non_recursive)\s+)*(?:(?:integer|real|logical|complex|character)(?:\s*\([^()]*\)|\s*\*\s*\d+)?\s+|double\s+precision\s+)?(subroutine|function)\s+([a-z]\w*)\s*\([^()]*\)\s*(?:result\s*\(\s*[a-z]\w*\s*\))?\s*$/i;
+const physicalLines = source => [...source.matchAll(/[^\r\n]*(?:\r\n|\r|\n|$)/g)];
+
+// Small conservative scope scanner, not a general Fortran parser. Refuse
+// interfaces, derived-type definitions, directives and unsupported constructs.
+function scanScopes(lines, limit, stack = []) {
+  for (let i = 0; i < limit; i++) {
+    const code = codePart(lines[i][0].replace(/[\r\n]+$/, ''));
+    if (code === null) return null;
+    const line = code.trim();
+    if (!line) continue;
+    const unit = /^(program|module)\s+([a-z]\w*)$/i.exec(line);
+    if (unit) {
+      if (stack.length) return null;
+      stack.push({kind: unit[1].toLowerCase(), name: unit[2], contains: false}); continue;
+    }
+    const procedure = procedurePattern.exec(line);
+    if (procedure) {
+      const parent = stack.at(-1);
+      if (parent && (!['program', 'module'].includes(parent.kind) || !parent.contains)) return null;
+      stack.push({kind: procedure[1].toLowerCase(), name: procedure[2], contains: false}); continue;
+    }
+    if (/^contains$/i.test(line)) {
+      const parent = stack.at(-1);
+      if (!parent || !['program', 'module'].includes(parent.kind) || parent.contains) return null;
+      parent.contains = true; continue;
+    }
+    const end = /^end\s*(program|module|subroutine|function|if|do)(?:\s+([a-z]\w*))?$/i.exec(line);
+    if (end || /^end$/i.test(line)) {
+      const top = stack.at(-1);
+      if (!top || (!end && !top.name) || (end && (end[1].toLowerCase() !== top.kind
+          || (end[2] && end[2].toLowerCase() !== (top.name || top.label || '').toLowerCase())))) return null;
+      if (end && ['if', 'do'].includes(top.kind) && (end[2]?.toLowerCase() || '') !== (top.label?.toLowerCase() || '')) return null;
+      stack.pop(); continue;
+    }
+    const construct = /^(?:([a-z]\w*)\s*:\s*)?(if\s*\(.*\)\s*then|do(?:\s+while\s*\(.*\)|\s+[a-z]\w*\s*=.+)?)$/i.exec(line);
+    if (construct) {
+      if (!stack.length || stack.at(-1).kind === 'module') return null;
+      stack.push({kind: /^if/i.test(construct[2]) ? 'if' : 'do', label: construct[1]}); continue;
+    }
+    const structural = line.replace(/'(?:''|[^'])*'|"(?:""|[^"])*"/g, ' ');
+    if (/^(?:\d+\s+|[a-z]\w*\s*:\s*)?(?:end\b|end\w*\b|program\b|module\b|submodule\b|subroutine\b|function\b|do\b|select\b|block\b|associate\b|interface\b|abstract\s+interface\b|enum\b|type(?:\s|,|::)|where\b|forall\b|entry\b)/i.test(structural)
+        || /\b(?:subroutine|function)\s+[a-z]\w*\s*\(/i.test(structural)) return null;
+    // Do not infer a scope for an implicit main program or stray statements.
+    if (!stack.length || (stack.at(-1).contains && ['program', 'module'].includes(stack.at(-1).kind))) return null;
+  }
+  return stack;
+}
+
+function useBeforeImplicit(source, error) {
+  if (!/^Error:\s*USE statement at \(1\) cannot follow IMPLICIT NONE statement at \(2\)/i.test(error.message)) return null;
+  const lines = physicalLines(source), index = error.line - 1;
+  if (index < 1 || !lines[index]) return null;
+  const preceding = codePart(lines[index - 1][0].replace(/[\r\n]+$/, ''));
+  if (preceding === null || !/^\s*implicit\s+none\s*$/i.test(preceding)) return null;
+  const scopes = scanScopes(lines, index);
+  const parent = scopes?.at(-1);
+  if (!parent?.name || parent.contains) return null;
+  const use = /^\s*use(?:\s*,\s*(?:non_)?intrinsic\s*::|\s*::|\s+)\s*[a-z]\w*(?:\s*,.*)?\s*$/i;
+  let last = index;
+  while (last < lines.length) {
+    const code = codePart(lines[last][0].replace(/[\r\n]+$/, ''));
+    if (code === null) return null;
+    if (!use.test(code)) break;
+    last++;
+  }
+  if (last === index || !/[\r\n]$/.test(lines[last - 1][0])) return null;
+  const start = lines[index - 1].index, end = lines[last - 1].index + lines[last - 1][0].length;
+  return Object.freeze({ruleId: USE_ORDER, description: 'Move the adjacent USE statements before IMPLICIT NONE.',
+    start, end, replacement: lines.slice(index, last).map(line => line[0]).join('') + lines[index - 1][0],
+    originalSource: source, line: error.line});
+}
+
+function missingContains(source, error) {
+  // GNU messages vary by procedure header and host. An exact header, explicit
+  // host and balanced complete scope scan must corroborate these broad messages.
+  if (!/^Error:\s*(?:Unclassifiable statement|Syntax error in data declaration|Unexpected (?:SUBROUTINE|FUNCTION) statement in MODULE)\b/i.test(error.message)) return null;
+  const lines = physicalLines(source), index = error.line - 1;
+  if (!lines[index]) return null;
+  const code = codePart(lines[index][0].replace(/[\r\n]+$/, ''));
+  if (code === null || !procedurePattern.test(code.trim())) return null;
+  const scopes = scanScopes(lines, index), parent = scopes?.at(-1);
+  if (!parent || !['program', 'module'].includes(parent.kind) || parent.contains || scopes.length !== 1) return null;
+  const newline = /\r\n|\r|\n/.exec(lines[index][0])?.[0];
+  if (!newline) return null;
+  const indentation = /^\s*/.exec(code)[0];
+  const start = lines[index].index, replacement = `${indentation}contains${newline}`;
+  const corrected = source.slice(0, start) + replacement + source.slice(start);
+  const balanced = scanScopes(physicalLines(corrected), physicalLines(corrected).length);
+  if (!balanced || balanced.length) return null;
+  return Object.freeze({ruleId: CONTAINS, description: `Insert CONTAINS before the ${parent.kind.toUpperCase()}'s procedure definitions.`,
+    start, end: start, replacement, originalSource: source, line: error.line});
+}
 
 // Inspect a single physical statement, respecting doubled quotes and comments.
 // Continuations, preprocessor lines and multiple statements are deliberately
@@ -129,7 +225,9 @@ export function findQuickFix(source, output, {enableQuickFixes = false, compiler
   const error = parseCompilerErrors(output, source)[0];
   if (!error) return null;
   return (!disabledRules.includes(PRINT_COMMA) ? printComma(source, error) : null)
-    || (!disabledRules.includes(END_NAME) ? closingName(source, error) : null);
+    || (!disabledRules.includes(END_NAME) ? closingName(source, error) : null)
+    || (!disabledRules.includes(USE_ORDER) ? useBeforeImplicit(source, error) : null)
+    || (!disabledRules.includes(CONTAINS) ? missingContains(source, error) : null);
 }
 
 export function applyQuickFix(source, fix) {

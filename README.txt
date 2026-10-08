@@ -46,10 +46,20 @@ Set enableQuickFixes to false in site/config.mjs to disable detection and hide
 the controls, leaving the ordinary playground behavior unchanged. Push this
 frontend to publish configuration changes; no Modal redeployment is needed.
 site/fixes.mjs contains the detector and an applicator that refuses stale source.
-Two independently switchable rules
+Four independently switchable rules
 are available: print-format-comma inserts a missing comma after a quoted PRINT
 format; closing-unit-name corrects an END PROGRAM, END MODULE, END SUBROUTINE
 or END FUNCTION name. Both require a matching gfortran source diagnostic.
+use-before-implicit-none moves an adjacent block of complete USE statements
+before IMPLICIT NONE, keeping their text, indentation and inline comments.
+Separate intervening comments, continuations, directives and interface scopes
+are refused. The supported enclosing scopes are explicit programs, modules
+and simple procedures.
+missing-contains inserts CONTAINS before the first complete procedure definition
+in an explicit program or module. It requires a matching gfortran diagnostic
+and a balanced conservative scan of the corrected source. Existing CONTAINS,
+interface bodies, derived-type definitions, implicit main programs, nested
+internal procedures and unsupported/incomplete constructs are refused.
 The closing-name rule cross-checks the diagnostic's expected name against a
 conservative source-scope scan, preserves the opening name's capitalization,
 and changes only the closing identifier. Simple procedure headers, CONTAINS,
@@ -57,7 +67,8 @@ and balanced IF/DO constructs are supported. Interfaces, other unsupported
 structures, continuations, multiple statements and incomplete scopes are refused.
 Set disabledQuickFixRules to ['closing-unit-name'] or ['print-format-comma']
 in site/config.mjs to disable
-either rule independently, or list both to disable both.
+either rule independently. Add 'use-before-implicit-none' or 'missing-contains'
+to disable the corresponding new rule, or list all four to disable all rules.
 Other compiler adapters are not implemented yet.
 
 Run the JavaScript unit tests, then the real compiler fixture tests:

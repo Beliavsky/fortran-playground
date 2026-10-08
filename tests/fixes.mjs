@@ -68,3 +68,47 @@ for (const text of malformed) {
 const quoted = 'program main\nprint *, "subroutine fake()"\nend program wrong\n';
 assert.ok(findQuickFix(quoted, "input_p.f90:3:1:\nError: Expected label 'main' for END PROGRAM statement at (1)\n", enabled));
 console.log('Quick-fix gates, source guards and conservative refusal tests passed.');
+
+// Statement-order and missing-CONTAINS rules preserve complete physical lines.
+const useDiagnostic = 'input_p.f90:3:1:\nError: USE statement at (1) cannot follow IMPLICIT NONE statement at (2)\n';
+const containsDiagnostic = 'input_p.f90:4:1:\nError: Unclassifiable statement at (1)\n';
+for (const [name, diagnostic, rule] of [
+  ['use_order', useDiagnostic, 'use-before-implicit-none'],
+  ['contains_program', containsDiagnostic, 'missing-contains'],
+]) {
+  const bad = readFileSync(new URL(`./cases/quick_fixes/${name}.bad.f90`, import.meta.url), 'utf8');
+  const good = readFileSync(new URL(`./cases/quick_fixes/${name}.fixed.f90`, import.meta.url), 'utf8');
+  const proposal = findQuickFix(bad, diagnostic, enabled);
+  assert.equal(proposal.ruleId, rule);
+  assert.equal(applyQuickFix(bad, proposal), good);
+  const crlf = bad.replaceAll('\n', '\r\n');
+  assert.equal(applyQuickFix(crlf, findQuickFix(crlf, diagnostic, enabled)), good.replaceAll('\n', '\r\n'));
+  assert.equal(findQuickFix(bad, diagnostic, {enableQuickFixes: true, disabledRules: [rule]}), null);
+  assert.equal(findQuickFix(bad, diagnostic, {enableQuickFixes: false}), null);
+  assert.equal(findQuickFix(bad, diagnostic, {enableQuickFixes: true, compiler: 'ifx'}), null);
+  assert.equal(findQuickFix(bad, diagnostic.replace('Error:', 'Warning:'), enabled), null);
+  assert.equal(findQuickFix(bad, diagnostic.replace('input_p.f90', 'python.f90'), enabled), null);
+  assert.throws(() => applyQuickFix(bad + '! edit\n', proposal), /Source changed/);
+}
+const containsRefusals = [
+  // Already has CONTAINS; missing one inside a procedure is not covered.
+  'program main\ncontains\nsubroutine work()\nend subroutine work\nend program main\n',
+  'module main\ninterface\nsubroutine work()\nend subroutine work\nend interface\nend module main\n',
+  'module main\ntype :: t\nsubroutine work()\nend subroutine work\nend type t\nend module main\n',
+  'program main\ndo\nsubroutine work()\nend subroutine work\nend program main\n',
+  'program main\nimplicit none\nsubroutine work()\nend subroutine wrong\nend program main\n',
+  'program main\nimplicit none\nsubroutine work()\nif (.true.) then\nend subroutine work\nend program main\n',
+  'program main\nimplicit none\nsubroutine work()\nend subroutine work\nprint *, 7\nend program main\n',
+  'print *, 7\nsubroutine work()\nend subroutine work\nend\n',
+  'program main\nimplicit none\nsubroutine work() &\nend subroutine work\nend program main\n',
+  'program main\nimplicit none\nsubroutine work(); print *, 7\nend subroutine work\nend program main\n',
+  'program main\n#define SOMETHING\nsubroutine work()\nend subroutine work\nend program main\n',
+];
+for (const text of containsRefusals) {
+  const line = text.split('\n').findIndex(line => line.startsWith('subroutine')) + 1;
+  const output = `input_p.f90:${line}:1:\nError: Unclassifiable statement at (1)\n`;
+  assert.equal(findQuickFix(text, output, enabled), null, text);
+}
+assert.equal(findQuickFix('program main\nimplicit none\nprint *, 7\nend program main\n',
+  useDiagnostic, enabled), null);
+console.log('USE ordering and missing CONTAINS safety tests passed.');

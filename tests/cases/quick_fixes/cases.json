@@ -22,5 +22,19 @@
   {"name":"end_interface", "compiles":false},
   {"name":"end_valid_case", "compiles":true},
   {"name":"valid_string_and_comment", "compiles":true},
-  {"name":"warning_only", "compiles":true, "warning":true}
+  {"name":"warning_only", "compiles":true, "warning":true},
+  {"name":"use_order", "fix":true, "stdout":"7"},
+  {"name":"use_order_module", "fix":true, "stdout":"7"},
+  {"name":"contains_program", "fix":true, "stdout":"7"},
+  {"name":"contains_module", "fix":true, "stdout":"7"},
+  {"name":"use_order_multiple", "fix":true, "stdout":"7 8"},
+  {"name":"use_order_procedure", "fix":true, "stdout":"7"},
+  {"name":"contains_module_subroutine", "fix":true, "stdout":"7"},
+  {"name":"contains_program_function", "fix":true, "stdout":"7"},
+  {"name":"use_order_interface", "compiles":false},
+  {"name":"use_order_continued", "compiles":false},
+  {"name":"use_order_separated", "compiles":false},
+  {"name":"contains_unclosed_do", "compiles":false},
+  {"name":"contains_derived_type", "compiles":false},
+  {"name":"contains_interface_valid", "compiles":true}
 ]

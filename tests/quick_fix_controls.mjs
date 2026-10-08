@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
 import {createQuickFixControls} from '../site/quick_fix_controls.mjs';
 import {findQuickFix} from '../site/fixes.mjs';
 
@@ -70,4 +71,21 @@ button.onclick();
 assert.equal(source, 'program main\nprint *, 7\nend program main\n');
 assert.equal(edits, 2); assert.equal(applied, 2);
 assert.equal(button.hidden, true);
+for (const [name, line, message] of [
+  ['use_order', 3, 'USE statement at (1) cannot follow IMPLICIT NONE statement at (2)'],
+  ['contains_program', 4, 'Unclassifiable statement at (1)'],
+]) {
+  const before = readFileSync(new URL(`./cases/quick_fixes/${name}.bad.f90`, import.meta.url), 'utf8');
+  const after = readFileSync(new URL(`./cases/quick_fixes/${name}.fixed.f90`, import.meta.url), 'utf8');
+  source = before;
+  const previousEdits = edits;
+  controls.update(source, `input_p.f90:${line}:1:\nError: ${message}\n`, 'gfortran', true);
+  assert.equal(button.hidden, false);
+  button.onclick();
+  assert.equal(source, after);
+  assert.equal(edits, previousEdits + 1); // One editor transaction even when moving several lines.
+  assert.equal(button.hidden, true);
+  source = history.pop();
+  assert.equal(source, before);
+}
 console.log('Optional quick-fix controls, stale-source guards and disabling passed.');
