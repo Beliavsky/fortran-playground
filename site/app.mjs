@@ -3,6 +3,7 @@ import {examples} from './examples.mjs';
 import {parseCompilerErrors} from './diagnostics.mjs';
 import {playgroundConfig} from './config.mjs';
 import {createQuickFixControls} from './quick_fix_controls.mjs';
+import {applyFormatting} from './formatting.mjs';
 
 const get = id => document.getElementById(id);
 let token = '', service = '', catalog = {}, active = null, connecting = false, revision = 0;
@@ -40,6 +41,7 @@ function controls() {
   quickFix.setBusy(busy);
   get('run').disabled = !token || busy || !editor.getValue().trim();
   get('compile').disabled = get('run').disabled || !features.compile_only;
+  get('format').disabled = get('run').disabled || !features.format || !editor.undoableClear;
   get('rerun').disabled = !token || busy || !features.run_again || !retained || retained.expires_at * 1000 <= Date.now();
   get('build-note').textContent = !features.compile_only ? 'Compile-only and Run Again require an updated execution service.' : retained ? 'Run Again reuses this executable until it expires (up to five minutes). Editing source or options requires recompilation.' : 'Compile to enable Run Again. Each run starts a fresh process.';
   get('stop').disabled = !active || active.stopping;
@@ -153,6 +155,7 @@ function show(result) {
 async function run(mode = 'fortran-edit') {
   if (!token || active) return;
   if (mode === 'fortran-compile' && !features.compile_only) return;
+  if (mode === 'format' && (!features.format || !editor.undoableClear)) return;
   if (mode === 'fortran-run' && (!features.run_again || !retained || retained.expires_at * 1000 <= Date.now())) { invalidateBuild(); controls(); return; }
   const source = editor.getValue();
   if (!source.trim() || new TextEncoder().encode(source).length > 100000) {
@@ -161,13 +164,13 @@ async function run(mode = 'fortran-edit') {
   const job = active = {id: null, revision, stopping: false};
   const artifactId = retained?.id;
   if (mode !== 'fortran-run') { invalidateBuild(); clearErrorInfo(); }
-  controls(); get('status').textContent = mode === 'fortran-run' ? 'Running retained build…' : mode === 'fortran-compile' ? 'Compiling…' : 'Compiling and running…';
+  controls(); get('status').textContent = mode === 'format' ? 'Formatting…' : mode === 'fortran-run' ? 'Running retained build…' : mode === 'fortran-compile' ? 'Compiling…' : 'Compiling and running…';
   try {
     const created = await api('jobs', 'POST', {
-      source: '', mode, automatic: false,
-      ...(mode === 'fortran-run' ? {artifact_id: artifactId} : {fortran_source: source, ...(features.run_again ? {retain_executable: true} : {})}),
-      compiler: get('compiler').value,
-      ...(catalog[get('compiler').value] ? {compiler_options: {
+      source: mode === 'format' ? source : '', mode, automatic: false,
+      ...(mode === 'format' ? {} : mode === 'fortran-run' ? {artifact_id: artifactId} : {fortran_source: source, ...(features.run_again ? {retain_executable: true} : {})}),
+      compiler: mode === 'format' ? 'gfortran' : get('compiler').value,
+      ...(mode !== 'format' && catalog[get('compiler').value] ? {compiler_options: {
         preset: get('preset').value, warnings: Boolean(get('warnings').checked), fast_math: Boolean(get('fast-math').checked),
         ...(catalog[get('compiler').value]?.standards ? {standard: get('standard').value} : {}),
       }} : {}),
@@ -179,6 +182,17 @@ async function run(mode = 'fortran-edit') {
       const state = await api(`jobs/${job.id}`);
       if (state.state === 'done') {
         if (job.stopping) get('status').textContent = 'Stopped';
+        else if (revision === job.revision && mode === 'format') {
+          const result = state.result;
+          try {
+            const changed = applyFormatting(editor, source, result);
+            get('status').textContent = `Formatted with fprettify · ${Number(result.seconds || 0).toFixed(2)} s. Ctrl+Z to undo.`;
+            if (!changed) get('status').textContent = 'Already formatted; source unchanged.';
+          } catch (error) {
+            get('status').textContent = 'Formatting failed; source unchanged';
+            get('diagnostics').textContent = String(error);
+          }
+        }
         else if (revision === job.revision) show(state.result);
         else get('status').textContent = 'Previous result discarded — source or options changed';
         break;
@@ -197,6 +211,7 @@ async function run(mode = 'fortran-edit') {
 
 get('run').onclick = () => run();
 get('compile').onclick = () => run('fortran-compile');
+get('format').onclick = () => run('format');
 get('rerun').onclick = () => run('fortran-run');
 get('first-error').onclick = () => editor.goToDiagnostic();
 get('connect').onclick = connect;
@@ -253,6 +268,7 @@ if (typeof window !== 'undefined') {
     editor.enhance(globalThis.CodeMirror, 'text/x-fortran', 'Fortran input');
     editor.refresh();
     quickFix.refresh();
+    controls();
     get('editor-note').textContent = 'Syntax coloring enabled · Tab: indentation · Ctrl+Z: undo · Esc: leave editor.';
   })().catch(() => { get('editor-note').textContent = 'Plain-text editor available.'; });
 }

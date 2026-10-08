@@ -78,7 +78,8 @@ class SiteTests(unittest.TestCase):
         self.assertIn('id="standard"', html)
         self.assertIn('>Compiler default</option>', html)
         self.assertIn('id="standard-note"', html)
-        self.assertIn("source: ''", client)
+        self.assertIn("source: mode === 'format' ? source : ''", client)
+        self.assertIn('id="format"', html)
 
     def test_configuration_is_public_origin_only(self):
         from urllib.parse import urlparse

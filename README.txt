@@ -7,6 +7,13 @@ also supports compile-only jobs and retained builds for this frontend.
 
 Features: editable Fortran with syntax coloring and line counts; four examples;
 file loading and downloading; compiler selection and supported option presets;
+Format (fprettify) on the Fortran input line: three-space indentation and
+whitespace-only formatting, applied as one undoable edit (Ctrl+Z). Requires
+the enhanced editor and updated service. Formatting does not compile or execute
+code, but hosted formatting jobs count toward service usage limits. Failed,
+cancelled, or stale formatting results never replace the source.
+Formatting is not syntax validation or an automatic syntax repair; compile
+after formatting to check validity.
 compile/run timings, diagnostics and output; cancellation and reconnect.
 The selected compiler's version is shown below its menu (and in option tooltips).
 Compilation results preserve the actual job's version separately, so changing

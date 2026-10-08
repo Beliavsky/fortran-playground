@@ -26,7 +26,7 @@ globalThis.fetch = async (url, options = {}) => {
   else if (url.endsWith('/api/session')) {
     if (sessionFails) throw new Error('Offline');
     result = {token: 'session', commit: 'abcd1234', timeout: 30, compilers: ['gfortran'],
-      features: legacy ? {} : {compile_only: true, run_again: true},
+      features: legacy ? {} : {compile_only: true, run_again: true, format: true},
       ...(legacy ? {} : {compiler_versions: {gfortran: 'GNU Fortran (GCC) 15.2.0', ifx: 'Intel Fortran 2026.0'}}),
       compiler_options: {gfortran: {presets: {default: [], debug: ['-g']}, extras: {warnings: ['-Wall']},
         ...(legacy ? {} : {standards: {'2008': ['-std=f2008'], '2018': ['-std=f2018']},
@@ -46,6 +46,7 @@ await import('../site/app.mjs');
 assert.equal(submissions, 0); // Connecting/loading never executes a program.
 assert.equal(get('run').disabled, false);
 assert.equal(get('compile').disabled, false);
+assert.equal(get('format').disabled, true); // Plain-text fallback cannot guarantee Undo.
 assert.equal(get('rerun').disabled, true);
 assert.equal(get('fortran-lines').textContent, '9 lines');
 assert.equal(get('first-error').hidden, true);
