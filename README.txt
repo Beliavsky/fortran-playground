@@ -14,6 +14,11 @@ code, but hosted formatting jobs count toward service usage limits. Failed,
 cancelled, or stale formatting results never replace the source.
 Formatting is not syntax validation or an automatic syntax repair; compile
 after formatting to check validity.
+Check invokes Fortitude without fixes or execution, using default rules and its
+Fortran 2018 target (independent of the compiler's Standard selection). Results
+appear in a separate Fortitude checks panel. Checking preserves the source,
+compiler output, and any retained executable. It requires the updated service
+but works with either the enhanced editor or the plain-text fallback.
 compile/run timings, diagnostics and output; cancellation and reconnect.
 The selected compiler's version is shown below its menu (and in option tooltips).
 Compilation results preserve the actual job's version separately, so changing

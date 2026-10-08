@@ -20,13 +20,14 @@ get('preset').options = ['default','debug','optimized','strict'].map(value => ({
 get('example').value = 'sum';
 globalThis.confirm = () => true;
 let submissions = 0, payload, state = 'done', sessionFails = false, cancelled = 0, legacy = false, expired = false, buildOK = true, buildError = '';
+let checkOK = true, findings = true;
 globalThis.fetch = async (url, options = {}) => {
   let result;
   if (url === './service.json') result = {url: 'https://test.modal.run'};
   else if (url.endsWith('/api/session')) {
     if (sessionFails) throw new Error('Offline');
     result = {token: 'session', commit: 'abcd1234', timeout: 30, compilers: ['gfortran'],
-      features: legacy ? {} : {compile_only: true, run_again: true, format: true},
+      features: legacy ? {} : {compile_only: true, run_again: true, format: true, check: true},
       ...(legacy ? {} : {compiler_versions: {gfortran: 'GNU Fortran (GCC) 15.2.0', ifx: 'Intel Fortran 2026.0'}}),
       compiler_options: {gfortran: {presets: {default: [], debug: ['-g']}, extras: {warnings: ['-Wall']},
         ...(legacy ? {} : {standards: {'2008': ['-std=f2008'], '2018': ['-std=f2018']},
@@ -34,6 +35,9 @@ globalThis.fetch = async (url, options = {}) => {
   } else if (url.endsWith('/api/jobs')) {
     submissions++; payload = JSON.parse(options.body); result = {id: 'job'};
   } else if (url.endsWith('/cancel')) {cancelled++; state = 'done'; result = {};}
+  else if (payload?.mode === 'check') result = {state, result: {ok: checkOK, findings, seconds: 0.1,
+    checking: {stdout: findings ? 'input.f90:2:1: C001 implicit typing' : 'All checks passed!', stderr: ''},
+    error: checkOK ? null : 'Fortitude unavailable'}};
   else result = {state, result: {ok: buildOK, compiler: 'gfortran', seconds: 0.3,
     ...(legacy ? {} : {compiler_version: 'GNU Fortran (GCC) 15.2.0'}),
     ...(payload?.mode === 'fortran-run' ? {reused_executable: true} : {
@@ -84,6 +88,39 @@ get('compiler').value = 'gfortran'; get('compiler').onchange();
 await get('compile').onclick(); // Compiler changes invalidated the retained build.
 assert.equal(payload.retain_executable, true);
 assert.equal(get('rerun').disabled, false);
+const beforeCheck = get('fortran').value;
+const compilationBeforeCheck = get('diagnostics').textContent;
+await get('check').onclick();
+assert.equal(payload.mode, 'check');
+assert.equal(payload.source, beforeCheck);
+assert.equal(payload.fortran_source, undefined);
+assert.equal(payload.retain_executable, undefined);
+assert.equal(payload.compiler_options, undefined);
+assert.equal(get('fortran').value, beforeCheck);
+assert.equal(get('diagnostics').textContent, compilationBeforeCheck);
+assert.equal(get('rerun').disabled, false);
+assert.match(get('checks').textContent, /C001/);
+assert.equal(get('check-time').textContent, '0.10 s');
+assert.match(get('status').textContent, /reported issues/);
+findings = false;
+await get('check').onclick();
+assert.match(get('status').textContent, /check passed/);
+checkOK = false;
+await get('check').onclick();
+assert.match(get('checks').textContent, /unavailable/);
+assert.equal(get('fortran').value, beforeCheck);
+checkOK = true;
+state = 'running';
+const previousChecks = get('checks').textContent;
+const checking = get('check').onclick();
+await new Promise(resolve => setTimeout(resolve, 10));
+assert.equal(get('check').disabled, true);
+get('fortran').value = 'program changed\nend program changed\n'; get('fortran').listeners.input();
+state = 'done'; await checking;
+assert.match(get('status').textContent, /discarded/);
+assert.equal(get('checks').textContent, previousChecks);
+get('fortran').value = beforeCheck; get('fortran').listeners.input();
+await get('compile').onclick(); // Restore a retained build for the following tests.
 await get('rerun').onclick();
 assert.equal(payload.mode, 'fortran-run');
 assert.equal(payload.artifact_id, 'private-id');
@@ -190,6 +227,7 @@ legacy = true;
 await get('connect').onclick();
 assert.equal(get('run').disabled, false);
 assert.equal(get('compile').disabled, true);
+assert.equal(get('check').disabled, true);
 assert.equal(get('rerun').disabled, true);
 assert.match(get('build-note').textContent, /updated execution service/);
 assert.equal(get('standard').disabled, true);

@@ -42,6 +42,7 @@ function controls() {
   get('run').disabled = !token || busy || !editor.getValue().trim();
   get('compile').disabled = get('run').disabled || !features.compile_only;
   get('format').disabled = get('run').disabled || !features.format || !editor.undoableClear;
+  get('check').disabled = get('run').disabled || !features.check;
   get('rerun').disabled = !token || busy || !features.run_again || !retained || retained.expires_at * 1000 <= Date.now();
   get('build-note').textContent = !features.compile_only ? 'Compile-only and Run Again require an updated execution service.' : retained ? 'Run Again reuses this executable until it expires (up to five minutes). Editing source or options requires recompilation.' : 'Compile to enable Run Again. Each run starts a fresh process.';
   get('stop').disabled = !active || active.stopping;
@@ -156,6 +157,7 @@ async function run(mode = 'fortran-edit') {
   if (!token || active) return;
   if (mode === 'fortran-compile' && !features.compile_only) return;
   if (mode === 'format' && (!features.format || !editor.undoableClear)) return;
+  if (mode === 'check' && !features.check) return;
   if (mode === 'fortran-run' && (!features.run_again || !retained || retained.expires_at * 1000 <= Date.now())) { invalidateBuild(); controls(); return; }
   const source = editor.getValue();
   if (!source.trim() || new TextEncoder().encode(source).length > 100000) {
@@ -163,14 +165,14 @@ async function run(mode = 'fortran-edit') {
   }
   const job = active = {id: null, revision, stopping: false};
   const artifactId = retained?.id;
-  if (mode !== 'fortran-run') { invalidateBuild(); clearErrorInfo(); }
-  controls(); get('status').textContent = mode === 'format' ? 'Formatting…' : mode === 'fortran-run' ? 'Running retained build…' : mode === 'fortran-compile' ? 'Compiling…' : 'Compiling and running…';
+  if (!['fortran-run', 'check'].includes(mode)) { invalidateBuild(); clearErrorInfo(); }
+  controls(); get('status').textContent = mode === 'check' ? 'Checking with Fortitude…' : mode === 'format' ? 'Formatting…' : mode === 'fortran-run' ? 'Running retained build…' : mode === 'fortran-compile' ? 'Compiling…' : 'Compiling and running…';
   try {
     const created = await api('jobs', 'POST', {
-      source: mode === 'format' ? source : '', mode, automatic: false,
-      ...(mode === 'format' ? {} : mode === 'fortran-run' ? {artifact_id: artifactId} : {fortran_source: source, ...(features.run_again ? {retain_executable: true} : {})}),
-      compiler: mode === 'format' ? 'gfortran' : get('compiler').value,
-      ...(mode !== 'format' && catalog[get('compiler').value] ? {compiler_options: {
+      source: ['format', 'check'].includes(mode) ? source : '', mode, automatic: false,
+      ...(['format', 'check'].includes(mode) ? {} : mode === 'fortran-run' ? {artifact_id: artifactId} : {fortran_source: source, ...(features.run_again ? {retain_executable: true} : {})}),
+      compiler: ['format', 'check'].includes(mode) ? 'gfortran' : get('compiler').value,
+      ...(!['format', 'check'].includes(mode) && catalog[get('compiler').value] ? {compiler_options: {
         preset: get('preset').value, warnings: Boolean(get('warnings').checked), fast_math: Boolean(get('fast-math').checked),
         ...(catalog[get('compiler').value]?.standards ? {standard: get('standard').value} : {}),
       }} : {}),
@@ -182,6 +184,13 @@ async function run(mode = 'fortran-edit') {
       const state = await api(`jobs/${job.id}`);
       if (state.state === 'done') {
         if (job.stopping) get('status').textContent = 'Stopped';
+        else if (revision === job.revision && mode === 'check') {
+          const result = state.result;
+          get('checks').textContent = result.error || `${result.checking?.stdout || ''}${result.checking?.stderr || ''}` || 'No findings.';
+          get('check-time').textContent = `${Number(result.seconds || 0).toFixed(2)} s`;
+          get('status').textContent = !result.ok ? 'Fortitude check failed; source unchanged' : result.findings ? 'Fortitude reported issues; source unchanged' : 'Fortitude check passed; source unchanged';
+          get('freshness').textContent = 'Fortitude results for the submitted source. Compilation and program output are retained.';
+        }
         else if (revision === job.revision && mode === 'format') {
           const result = state.result;
           try {
@@ -212,6 +221,7 @@ async function run(mode = 'fortran-edit') {
 get('run').onclick = () => run();
 get('compile').onclick = () => run('fortran-compile');
 get('format').onclick = () => run('format');
+get('check').onclick = () => run('check');
 get('rerun').onclick = () => run('fortran-run');
 get('first-error').onclick = () => editor.goToDiagnostic();
 get('connect').onclick = connect;
@@ -228,7 +238,7 @@ get('load').onclick = () => {
 get('clear').onclick = () => {
   if (editor.getValue() && !editor.undoableClear && !confirm('Clear the Fortran input?')) return;
   editor.setValue('', true); editor.focus();
-  for (const id of ['output', 'diagnostics', 'run-time', 'build-time']) get(id).textContent = '';
+  for (const id of ['output', 'diagnostics', 'run-time', 'build-time', 'checks', 'check-time']) get(id).textContent = '';
   get('result-compiler-version').textContent = ''; get('result-compiler-version').hidden = true;
 };
 get('load-file').onclick = () => get('file').click();
