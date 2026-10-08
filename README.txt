@@ -18,6 +18,10 @@ previous run are not carried over. Reruns count toward the usual usage limits.
 The editor and results appear side by side (60/40) on wide screens, with output
 above compilation diagnostics on the right. Each pane scrolls independently;
 narrow screens stack the editor before the results.
+Compile, Compile and Run, Run Again and Stop sit to the right of the Fortran
+input label and line count. This header remains visible while the editor
+scrolls; its buttons wrap when space is limited. Compiler/options stay above
+the panes. Go to first error appears in the same header only for source errors.
 Compiler errors referring to the submitted input_p.f90 source are highlighted
 with a red line background and gutter marker; reported columns are underlined.
 Hover over a marker or highlighted text to read the diagnostic. Click a marker

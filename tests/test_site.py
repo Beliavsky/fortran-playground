@@ -22,7 +22,7 @@ class SiteTests(unittest.TestCase):
 
             def handle_starttag(self, tag, attrs):
                 attrs = dict(attrs)
-                if attrs.get('id') in {'fortran', 'output', 'diagnostics'}:
+                if attrs.get('id') in {'fortran', 'output', 'diagnostics', 'compile', 'run', 'rerun', 'stop', 'first-error', 'compiler', 'preset'}:
                     self.ancestors[attrs['id']] = list(self.stack)
                 if tag not in {'input', 'link', 'meta', 'br'}:
                     self.stack.append(attrs.get('id') or attrs.get('class') or tag)
@@ -39,11 +39,18 @@ class SiteTests(unittest.TestCase):
             self.assertIn('results-pane', panes.ancestors[target])
             self.assertIn('workspace', panes.ancestors[target])
         self.assertIn('workspace', panes.ancestors['fortran'])
-        self.assertLess(html.index('id="run"'), html.index('class="workspace"'))
+        for target in ('compile', 'run', 'rerun', 'stop', 'first-error'):
+            self.assertIn('source-header', panes.ancestors[target])
+            self.assertIn('source-pane', panes.ancestors[target])
+            self.assertEqual(html.count(f'id="{target}"'), 1)
+        for target in ('compiler', 'preset'):
+            self.assertNotIn('workspace', panes.ancestors[target])
         css = (ROOT / 'site/app.css').read_text()
         self.assertIn('minmax(0, 3fr) minmax(0, 2fr)', css)
         self.assertIn('@media (max-width: 760px)', css)
         self.assertIn('overflow: auto', css)
+        self.assertIn('flex: none; padding: 12px 16px', css)
+        self.assertIn('flex-wrap: wrap', css)
 
     def test_build_versions_assets_and_preserves_configuration(self):
         with tempfile.TemporaryDirectory() as directory:

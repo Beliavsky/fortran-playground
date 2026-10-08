@@ -21,7 +21,9 @@ const editor = createEditor(get('fortran'), get('fortran-lines'), () => {
 function clearErrorInfo() {
   editor.clearDiagnostics();
   get('first-error').disabled = true;
+  get('first-error').hidden = true;
   get('error-note').textContent = '';
+  get('error-note').hidden = true;
 }
 
 function controls() {
@@ -103,6 +105,8 @@ function show(result) {
     clearErrorInfo();
     editor.setDiagnostics(errors);
     get('first-error').disabled = !errors.length;
+    get('first-error').hidden = !errors.length;
+    get('error-note').hidden = !errors.length;
     get('error-note').textContent = errors.length ? `${errors.length} source error${errors.length === 1 ? '' : 's'}; first at line ${errors[0].line}: ${errors[0].message}` : '';
   }
   for (const [key, outputId, timeId] of [['build', 'diagnostics', 'build-time'], ['execution', 'output', 'run-time']]) {

@@ -5,7 +5,20 @@
   height: clamp(480px, 65vh, 760px);
 }
 #source-pane { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
-#source-pane > label { flex: none; }
+.source-header {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+  flex: none; padding: 12px 16px; background: #e6eeea;
+}
+.panel .source-header > label {
+  display: flex; align-items: center; gap: 8px;
+  padding: 0; background: transparent; white-space: nowrap;
+}
+.source-header .line-count { float: none; }
+.source-actions {
+  display: flex; flex-wrap: wrap; justify-content: flex-end;
+  align-items: center; gap: 6px; margin-left: auto; min-width: 0;
+}
+.source-actions button { padding: 6px 8px; font-size: 12px; white-space: nowrap; }
 #source-pane > textarea, #source-pane .CodeMirror {
   flex: 1;
   height: 0;
