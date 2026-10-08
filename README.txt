@@ -32,6 +32,44 @@ and LFortran; diagnostics without recognized locations still appear in the log.
 If syntax coloring cannot load, Go to first error selects the line in the
 plain-text editor instead. This feature needs only a frontend push, not a
 Modal redeployment.
+
+Experimental quick-fix validation (local only)
+---------------------------------------------
+No Fix error button is connected to the web interface yet. site/fixes.mjs
+contains an isolated detector, off by default (enableQuickFixes: false), and
+an edit applicator that refuses stale source. Two independently switchable rules
+are available: print-format-comma inserts a missing comma after a quoted PRINT
+format; closing-unit-name corrects an END PROGRAM, END MODULE, END SUBROUTINE
+or END FUNCTION name. Both require a matching gfortran source diagnostic.
+The closing-name rule cross-checks the diagnostic's expected name against a
+conservative source-scope scan, preserves the opening name's capitalization,
+and changes only the closing identifier. Simple procedure headers, CONTAINS,
+and balanced IF/DO constructs are supported. Interfaces, other unsupported
+structures, continuations, multiple statements and incomplete scopes are refused.
+Use disabledRules: ['closing-unit-name'] or ['print-format-comma'] to disable
+either rule independently, or list both to disable both.
+Other compiler adapters are not implemented yet.
+
+Run the JavaScript unit tests, then the real compiler fixture tests:
+  npm test
+  node xcheck_fixes.mjs
+To save compiler diagnostics and validation outcomes as JSON:
+  node xcheck_fixes.mjs --report reports\quick_fixes_gfortran.json
+The compiler test requires gfortran on PATH. It is also run by GitHub Actions.
+
+tests/cases/quick_fixes/cases.json defines the fixture suite: malformed PRINT
+and closing-name statements have exact .fixed.f90 counterparts, alongside
+refusal/control cases for ambiguous or unsupported syntax, valid code and warnings.
+For every supported repair, the harness confirms original compilation fails,
+the real diagnostic yields the expected edit, corrected source matches exactly,
+recompilation succeeds, and the executable's output matches the expected output.
+Refusal cases include other syntax errors, valid code, and real warnings.
+Unit tests additionally cover helper-file errors, stale source, CRLF endings,
+feature/rule disabling, diagnostic/opening-name disagreement, nested scopes,
+and unknown first errors. Original fixtures are never
+overwritten. Temporary builds stay outside the repository and are cleaned up.
+Future compiler support should reuse these source fixtures with compiler-specific
+diagnostic adapters. Compilation success alone does not establish correctness.
 ofort is not integrated yet: adding it requires backend support, not only a menu.
 
 Local preview (Windows)

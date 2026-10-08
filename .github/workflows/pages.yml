@@ -22,7 +22,9 @@ jobs:
           node-version: '22'
       - run: npm ci
       - run: python xeditor.py
+      - run: sudo apt-get update && sudo apt-get install -y gfortran
       - run: npm test
+      - run: npm run test:fixes
       - run: python -m unittest discover -s tests
       - run: python xsite.py
       - uses: actions/upload-pages-artifact@v4
