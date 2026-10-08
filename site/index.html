@@ -32,8 +32,12 @@
   <div class="toolbar">
     <label for="compiler">Compiler</label>
     <select id="compiler" disabled><option value="gfortran">GNU Fortran</option><option value="ifx" disabled>Intel Fortran</option><option value="flang" disabled>LLVM Flang</option><option value="lfortran" disabled>LFortran</option></select>
+    <label for="standard">Standard</label>
+    <select id="standard" disabled><option value="default">Compiler default</option><option value="1995" disabled>1995</option><option value="2003" disabled>2003</option><option value="2008" disabled>2008</option><option value="2018" disabled>2018</option><option value="2023" disabled>2023</option></select>
     <span id="status" role="status" aria-live="polite">Connecting…</span>
   </div>
+  <p id="compiler-version" class="version" role="status">Compiler version: waiting for service.</p>
+  <p id="standard-note" class="version">Standard selection applies only to user code.</p>
   <div class="toolbar" aria-label="User-code compiler options">
     <label for="preset">User-code options</label>
     <select id="preset" disabled><option value="default">Default</option><option value="debug">Debug</option><option value="optimized">Optimized</option><option value="strict">Strict</option></select>
@@ -62,7 +66,7 @@
     </section>
     <div id="results-pane" class="results-pane">
       <section class="diagnostics"><h2>Program output <span id="run-time" class="line-count"></span></h2><pre id="output">Not run.</pre></section>
-      <section class="diagnostics"><h2>Compilation <span id="build-time" class="line-count"></span></h2><pre id="diagnostics">Not compiled.</pre></section>
+      <section class="diagnostics"><h2>Compilation <span id="build-time" class="line-count"></span></h2><p id="result-compiler-version" class="version" hidden></p><pre id="diagnostics">Not compiled.</pre></section>
     </div>
   </div>
   <footer>

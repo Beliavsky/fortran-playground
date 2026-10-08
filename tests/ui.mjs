@@ -14,6 +14,8 @@ const get = id => document.getElementById(id);
 get('compiler').value = 'gfortran';
 get('compiler').options = ['gfortran','ifx','flang','lfortran'].map(value => ({value}));
 get('preset').value = 'default';
+get('standard').value = 'default';
+get('standard').options = ['default', '1995', '2003', '2008', '2018', '2023'].map(value => ({value}));
 get('preset').options = ['default','debug','optimized','strict'].map(value => ({value}));
 get('example').value = 'sum';
 globalThis.confirm = () => true;
@@ -25,11 +27,15 @@ globalThis.fetch = async (url, options = {}) => {
     if (sessionFails) throw new Error('Offline');
     result = {token: 'session', commit: 'abcd1234', timeout: 30, compilers: ['gfortran'],
       features: legacy ? {} : {compile_only: true, run_again: true},
-      compiler_options: {gfortran: {presets: {default: [], debug: ['-g']}, extras: {warnings: ['-Wall']}}}};
+      ...(legacy ? {} : {compiler_versions: {gfortran: 'GNU Fortran (GCC) 15.2.0', ifx: 'Intel Fortran 2026.0'}}),
+      compiler_options: {gfortran: {presets: {default: [], debug: ['-g']}, extras: {warnings: ['-Wall']},
+        ...(legacy ? {} : {standards: {'2008': ['-std=f2008'], '2018': ['-std=f2018']},
+          standard_note: 'GNU rejects extensions beyond the selected standard.'})}}};
   } else if (url.endsWith('/api/jobs')) {
     submissions++; payload = JSON.parse(options.body); result = {id: 'job'};
   } else if (url.endsWith('/cancel')) {cancelled++; state = 'done'; result = {};}
   else result = {state, result: {ok: buildOK, compiler: 'gfortran', seconds: 0.3,
+    ...(legacy ? {} : {compiler_version: 'GNU Fortran (GCC) 15.2.0'}),
     ...(payload?.mode === 'fortran-run' ? {reused_executable: true} : {
       build: {ok: buildOK, stdout: buildOK ? 'Build: PASS' : 'Build: FAIL', stderr: buildError, seconds: 0.2},
       ...(buildOK ? {artifact: {id: 'private-id', expires_at: Date.now()/1000 + (expired ? -1 : 300)}} : {})}),
@@ -44,18 +50,37 @@ assert.equal(get('rerun').disabled, true);
 assert.equal(get('fortran-lines').textContent, '9 lines');
 assert.equal(get('first-error').hidden, true);
 assert.equal(get('compiler').options[1].disabled, true);
+assert.match(get('compiler-version').textContent, /GNU Fortran \(GCC\) 15.2.0/);
+assert.equal(get('compiler').options[0].title, 'GNU Fortran (GCC) 15.2.0');
 assert.equal(get('preset').options[2].disabled, true);
 assert.equal(get('fast-math').disabled, true);
+assert.equal(get('standard').disabled, false);
+assert.equal(get('standard').options[3].disabled, false);
+assert.equal(get('standard').options[5].disabled, true);
+get('standard').value = '2008'; get('standard').onchange();
+assert.match(get('options-note').textContent, /-std=f2008/);
+assert.match(get('standard-note').textContent, /GNU rejects extensions/);
 get('preset').value = 'debug'; get('preset').onchange();
 await get('run').onclick();
 assert.equal(payload.source, '');
 assert.equal(payload.mode, 'fortran-edit');
 assert.match(payload.fortran_source, /program main/);
 assert.equal(payload.compiler_options.preset, 'debug');
+assert.equal(payload.compiler_options.standard, '2008');
 assert.equal(get('output').textContent, '385\n');
 assert.equal(get('build-time').textContent, '0.20 s');
 assert.equal(get('run-time').textContent, '0.10 s');
 assert.match(get('status').textContent, /0.30 s total/);
+assert.equal(get('result-compiler-version').hidden, false);
+assert.match(get('result-compiler-version').textContent, /GNU Fortran \(GCC\) 15.2.0/);
+const compiledVersion = get('result-compiler-version').textContent;
+get('compiler').value = 'ifx'; get('compiler').onchange();
+assert.equal(get('standard').disabled, true);
+assert.equal(get('standard').value, 'default');
+assert.match(get('compiler-version').textContent, /Intel Fortran 2026.0/);
+assert.equal(get('result-compiler-version').textContent, compiledVersion);
+get('compiler').value = 'gfortran'; get('compiler').onchange();
+await get('compile').onclick(); // Compiler changes invalidated the retained build.
 assert.equal(payload.retain_executable, true);
 assert.equal(get('rerun').disabled, false);
 await get('rerun').onclick();
@@ -68,7 +93,7 @@ assert.equal(payload.mode, 'fortran-compile');
 assert.equal(get('run-time').textContent, '');
 assert.match(get('output').textContent, /Not run/);
 assert.equal(get('rerun').disabled, false);
-for (const id of ['compiler', 'preset', 'warnings', 'fast-math']) {
+for (const id of ['compiler', 'standard', 'preset', 'warnings', 'fast-math']) {
   get(id).onchange();
   assert.equal(get('rerun').disabled, true);
   await get('compile').onclick();
@@ -166,4 +191,8 @@ assert.equal(get('run').disabled, false);
 assert.equal(get('compile').disabled, true);
 assert.equal(get('rerun').disabled, true);
 assert.match(get('build-note').textContent, /updated execution service/);
+assert.equal(get('standard').disabled, true);
+assert.match(get('compiler-version').textContent, /unavailable/);
+await get('run').onclick();
+assert.match(get('result-compiler-version').textContent, /unavailable/);
 console.log('Fortran-only UI tests passed (no hosted jobs submitted).');

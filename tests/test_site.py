@@ -75,6 +75,9 @@ class SiteTests(unittest.TestCase):
         self.assertIn("mode = 'fortran-edit'", client)
         for identifier in ('compile', 'run', 'rerun'):
             self.assertIn(f'id="{identifier}"', html)
+        self.assertIn('id="standard"', html)
+        self.assertIn('>Compiler default</option>', html)
+        self.assertIn('id="standard-note"', html)
         self.assertIn("source: ''", client)
 
     def test_configuration_is_public_origin_only(self):

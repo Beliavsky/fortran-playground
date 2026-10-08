@@ -8,6 +8,18 @@ also supports compile-only jobs and retained builds for this frontend.
 Features: editable Fortran with syntax coloring and line counts; four examples;
 file loading and downloading; compiler selection and supported option presets;
 compile/run timings, diagnostics and output; cancellation and reconnect.
+The selected compiler's version is shown below its menu (and in option tooltips).
+Compilation results preserve the actual job's version separately, so changing
+the selection does not relabel old results. Older services show version unavailable
+without disabling compilation. Publishing this feature requires redeploying the
+shared execution service as well as pushing this frontend.
+The Standard dropdown beside Compiler offers Compiler default and verified
+year selections. Unsupported years are disabled; changing the year discards
+the retained executable. GNU rejects extensions beyond the selected standard;
+Intel reports conformance warnings instead. Strict adds diagnostics but no
+longer selects a year. Standard flags apply only to user code, never helpers.
+GNU/Intel year flags are tested during image construction and the results are
+cached; Flang and LFortran currently offer only Compiler default.
 No Python is submitted or translated. Compile builds without execution;
 Compile and Run builds and executes; Run Again reuses the executable without
 recompiling, in a fresh isolated environment. Execution requires an explicit click.

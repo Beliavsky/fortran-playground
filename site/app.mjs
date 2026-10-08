@@ -8,6 +8,7 @@ const get = id => document.getElementById(id);
 let token = '', service = '', catalog = {}, active = null, connecting = false, revision = 0;
 let filename = 'main.f90';
 let features = {}, retained = null, expiryTimer = null;
+let compilerVersions = {};
 function invalidateBuild() {
   retained = null;
   clearTimeout(expiryTimer);
@@ -46,6 +47,12 @@ function controls() {
   get('compiler').disabled = !token || busy;
   get('download').disabled = !editor.getValue().trim();
   const spec = catalog[get('compiler').value];
+  for (const option of get('standard').options) option.disabled = option.value !== 'default' && !spec?.standards?.[option.value];
+  if (get('standard').value !== 'default' && !spec?.standards?.[get('standard').value]) get('standard').value = 'default';
+  get('standard').disabled = !token || busy || !Object.keys(spec?.standards || {}).length;
+  get('standard-note').textContent = `Standard selection applies only to user code. ${spec?.standard_note || 'Standard selection is unavailable from this service.'}`;
+  for (const option of get('compiler').options) option.title = compilerVersions[option.value] || 'Version unavailable';
+  get('compiler-version').textContent = `Compiler version: ${compilerVersions[get('compiler').value] || 'unavailable from this service.'}`;
   for (const option of get('preset').options) option.disabled = !spec?.presets?.[option.value];
   if (!spec?.presets?.[get('preset').value]) get('preset').value = 'default';
   get('preset').disabled = !token || busy || !spec;
@@ -54,6 +61,7 @@ function controls() {
     get(id).disabled = !token || busy || !spec?.extras?.[key];
   }
   const flags = spec ? [...(spec.presets[get('preset').value] || []),
+    ...(spec.standards?.[get('standard').value] || []),
     ...(get('warnings').checked ? spec.extras.warnings : []),
     ...(get('fast-math').checked ? spec.extras.fast_math : [])] : [];
   get('options-note').textContent = `User-code flags: ${flags.join(' ') || '(compiler default)'}. Helpers keep fixed build options.${get('fast-math').checked ? ' Fast math can change numerical results.' : ''}`;
@@ -76,7 +84,7 @@ async function api(path, method = 'GET', payload) {
 
 async function connect() {
   if (active || connecting) return;
-  connecting = true; token = ''; features = {}; invalidateBuild(); quickFix.clear(); controls();
+  connecting = true; token = ''; features = {}; compilerVersions = {}; invalidateBuild(); quickFix.clear(); controls();
   try {
     const response = await fetch('./service.json', {cache: 'no-store'});
     if (!response.ok) throw new Error('Execution service configuration is unavailable.');
@@ -97,6 +105,7 @@ async function connect() {
     }
     token = session.token;
     catalog = session.compiler_options || {};
+    compilerVersions = session.compiler_versions || {};
     features = session.features || {};
     get('connection').textContent = `Connected · ${compilers.join(' / ')} · ${session.timeout ?? '?'} s run limit · runtime ${(session.commit || '').slice(0,7)}`;
     get('status').textContent = 'Ready';
@@ -109,6 +118,9 @@ async function connect() {
 }
 
 function show(result) {
+  const version = result.compiler_version;
+  get('result-compiler-version').hidden = !(result.build || result.reused_executable);
+  get('result-compiler-version').textContent = `Compiler version: ${version || 'unavailable from this service.'}`;
   if (result.build) {
     const errors = parseCompilerErrors(`${result.build.stdout || ''}\n${result.build.stderr || ''}`, editor.getValue());
     clearErrorInfo();
@@ -157,6 +169,7 @@ async function run(mode = 'fortran-edit') {
       compiler: get('compiler').value,
       ...(catalog[get('compiler').value] ? {compiler_options: {
         preset: get('preset').value, warnings: Boolean(get('warnings').checked), fast_math: Boolean(get('fast-math').checked),
+        ...(catalog[get('compiler').value]?.standards ? {standard: get('standard').value} : {}),
       }} : {}),
     });
     job.id = created.id;
@@ -201,6 +214,7 @@ get('clear').onclick = () => {
   if (editor.getValue() && !editor.undoableClear && !confirm('Clear the Fortran input?')) return;
   editor.setValue('', true); editor.focus();
   for (const id of ['output', 'diagnostics', 'run-time', 'build-time']) get(id).textContent = '';
+  get('result-compiler-version').textContent = ''; get('result-compiler-version').hidden = true;
 };
 get('load-file').onclick = () => get('file').click();
 get('file').onchange = async () => {
@@ -226,7 +240,7 @@ get('download').onclick = () => {
   link.href = url; link.download = filename; link.click();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 };
-for (const id of ['compiler', 'preset', 'warnings', 'fast-math']) get(id).onchange = () => {
+for (const id of ['compiler', 'standard', 'preset', 'warnings', 'fast-math']) get(id).onchange = () => {
   clearErrorInfo();
   invalidateBuild();
   revision++; controls(); get('freshness').textContent = 'Options changed; previous results are retained.';
