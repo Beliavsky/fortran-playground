@@ -20,6 +20,8 @@ and Run Again are disabled: click Run again to start a fresh interpretation.
 Only standalone source is supported; compiled python_mod helpers cannot be
 linked into ofort. The default interpreter detects reads of uninitialized
 variables during execution, not necessarily during its syntax check.
+Run directly invokes ofort --fast, without a separate preliminary check.
+Check syntax invokes ofort --fast --check. Both use compact-array fast mode.
 
 Check invokes Fortitude without fixes or execution, using default rules and its
 Fortran 2018 target (independent of the compiler's Standard selection). Results
@@ -122,7 +124,7 @@ and unknown first errors. Original fixtures are never
 overwritten. Temporary builds stay outside the repository and are cleaned up.
 Future compiler support should reuse these source fixtures with compiler-specific
 diagnostic adapters. Compilation success alone does not establish correctness.
-ofort is not integrated yet: adding it requires backend support, not only a menu.
+ofort support requires the updated shared backend; it is not a frontend-only feature.
 
 Local preview (Windows)
 -----------------------

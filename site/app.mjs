@@ -126,25 +126,29 @@ async function connect() {
 }
 
 function show(result) {
-  get('build-title').textContent = result.interpreter ? 'Syntax checking' : 'Compilation';
+  get('build-title').textContent = result.interpreter ? (result.build ? 'Syntax checking' : 'Interpreter diagnostics') : 'Compilation';
   const version = result.compiler_version;
-  get('result-compiler-version').hidden = !(result.build || result.reused_executable);
+  get('result-compiler-version').hidden = !(result.build || result.reused_executable || (result.interpreter && result.execution));
   get('result-compiler-version').textContent = `${result.interpreter ? 'Interpreter' : 'Compiler'} version: ${version || 'unavailable from this service.'}`;
-  if (result.build) {
-    const errors = parseCompilerErrors(`${result.build.stdout || ''}\n${result.build.stderr || ''}`, editor.getValue());
+  const diagnosticStage = result.build || (result.interpreter ? result.execution : null);
+  if (diagnosticStage) {
+    const errors = parseCompilerErrors(`${diagnosticStage.stdout || ''}\n${diagnosticStage.stderr || ''}`, editor.getValue());
     clearErrorInfo();
     editor.setDiagnostics(errors);
     get('first-error').disabled = !errors.length;
     get('first-error').hidden = !errors.length;
     get('error-note').hidden = !errors.length;
     get('error-note').textContent = errors.length ? `${errors.length} source error${errors.length === 1 ? '' : 's'}; first at line ${errors[0].line}: ${errors[0].message}` : '';
-    quickFix.update(editor.getValue(), `${result.build.stdout || ''}\n${result.build.stderr || ''}`,
-      result.compiler || get('compiler').value, result.build.ok === false);
+    quickFix.update(editor.getValue(), `${diagnosticStage.stdout || ''}\n${diagnosticStage.stderr || ''}`,
+      result.compiler || get('compiler').value, diagnosticStage.ok === false);
   }
   for (const [key, outputId, timeId] of [['build', 'diagnostics', 'build-time'], ['execution', 'output', 'run-time']]) {
     const stage = result[key];
     get(outputId).textContent = stage ? `${stage.stdout || ''}${stage.stderr ? '\n' + stage.stderr : ''}` || '(No output)' : 'Not run for this operation.';
     get(timeId).textContent = stage ? `${Number(stage.seconds || 0).toFixed(2)} s` : '';
+  }
+  if (result.interpreter && !result.build && result.execution) {
+    get('diagnostics').textContent = result.execution.stderr || 'No separate syntax check: ofort parses and runs source directly with --fast.';
   }
   if (result.error) get('diagnostics').textContent = result.error;
   if (result.reused_executable) get('diagnostics').textContent = 'Compilation skipped — reused the retained executable.';

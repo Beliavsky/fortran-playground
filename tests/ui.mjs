@@ -42,7 +42,7 @@ globalThis.fetch = async (url, options = {}) => {
   else result = {state, result: {ok: buildOK, compiler: payload?.compiler || 'gfortran', seconds: 0.3,
     ...(payload?.compiler === 'ofort' ? {interpreter: true} : {}),
     ...(legacy ? {} : {compiler_version: 'GNU Fortran (GCC) 15.2.0'}),
-    ...(payload?.mode === 'fortran-run' ? {reused_executable: true} : {
+    ...(payload?.mode === 'fortran-run' ? {reused_executable: true} : payload?.compiler === 'ofort' && payload?.mode === 'fortran-edit' ? {} : {
       build: {ok: buildOK, stdout: buildOK ? 'Build: PASS' : 'Build: FAIL', stderr: buildError, seconds: 0.2},
       ...(buildOK && payload?.compiler !== 'ofort' ? {artifact: {id: 'private-id', expires_at: Date.now()/1000 + (expired ? -1 : 300)}} : {})}),
     ...(payload?.mode === 'fortran-compile' ? {} : {execution: {stdout: '385\n', stderr: '', seconds: 0.1}})}};
@@ -241,6 +241,10 @@ assert.equal(get('rerun').disabled, true);
 await get('run').onclick();
 assert.equal(payload.mode, 'fortran-edit');
 assert.equal(payload.retain_executable, undefined);
+assert.equal(get('build-title').textContent, 'Interpreter diagnostics');
+assert.match(get('diagnostics').textContent, /No separate syntax check/);
+assert.equal(get('build-time').textContent, '');
+assert.equal(get('result-compiler-version').hidden, false);
 get('compiler').value = 'gfortran'; get('compiler').onchange();
 assert.equal(get('compile').textContent, 'Compile');
 assert.equal(get('run').textContent, 'Compile and Run');
