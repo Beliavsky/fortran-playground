@@ -86,7 +86,7 @@ Use [`xplayground_links.py`](xplayground_links.py) to create a standalone HTML p
 python xplayground_links.py site/examples --output playground-links.html
 
 # Scan another repository, including its subdirectories:
-python xplayground_links.py C:/projects/my-fortran/examples --recursive --output docs/index.html --title "My Fortran examples"
+python xplayground_links.py ../my-fortran/examples --recursive --output docs/index.html --title "My Fortran examples"
 ```
 
 The generator scans `.f90`, `.f95`, `.f03`, and `.f08` files case-insensitively. Links appear in relative-path order, with filenames displayed to distinguish examples in different subdirectories. A file's optional `! Example:` comment supplies its link label; otherwise the filename stem is used. UTF-8 source, including Unicode and line endings, is embedded directly in the link. A UTF-8 byte-order mark is removed.
@@ -216,10 +216,10 @@ To create an independent playground with your own examples and execution service
 
 The repository's [Pages workflow](.github/workflows/pages.yml) tests the frontend and compiler fixtures, bundles CodeMirror, builds versioned assets, and deploys `_site/` when changes reach `main`. GitHub Pages should use **GitHub Actions** as its publishing source.
 
-Frontend changes such as examples, shared links, layout, and quick-fix configuration require only a frontend push. Backend changes belong in the existing execution-service project. For service changes, redeploy from `C:\python\python-to-fortran-playground`:
+Frontend changes such as examples, shared links, layout, and quick-fix configuration require only a frontend push. Backend changes belong in your checkout of the [execution-service repository](https://github.com/Beliavsky/python-to-fortran-playground). To redeploy, run from that checkout using the Python environment configured for Modal:
 
-```powershell
-.venv-execution\Scripts\python.exe xdeploy_service.py
+```text
+python -X utf8 xdeploy_service.py
 ```
 
 Then push any related frontend changes. Compile-only, retained builds, compiler-version reporting, standard selection, formatting, checking, and ofort depend on the corresponding service support. Older services can still provide Compile and Run while newer controls remain unavailable.
@@ -238,4 +238,4 @@ Then push any related frontend changes. Compile-only, retained builds, compiler-
 
 Session tokens are acquired at runtime and kept in memory. The frontend has no duplicate compiler/backend code, browser Python runtime, or transpiler pin. The service advertises compiler availability, presets, limits, and runtime revision, and enforces source limits and sandbox restrictions. Compiled helpers retain fixed build options and are not portable to ofort; future library or interpreter capabilities need explicit backend support and tests.
 
-The editor wrapper, shared styles, asset builder, bundling script, and public service URL originated in `C:\python\python-to-fortran-playground`. This Fortran frontend is separate from the original playground. CodeMirror is MIT-licensed; the bundler includes its license in the built assets.
+The editor wrapper, shared styles, asset builder, bundling script, and public service URL originated in the [Python-to-Fortran playground repository](https://github.com/Beliavsky/python-to-fortran-playground). This Fortran frontend is separate from the original playground. CodeMirror is MIT-licensed; the bundler includes its license in the built assets.
