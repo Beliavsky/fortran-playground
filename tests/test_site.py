@@ -139,8 +139,9 @@ class SiteTests(unittest.TestCase):
         self.assertEqual(set(config), {'url'})
         url = urlparse(config['url'])
         self.assertEqual(url.scheme, 'https')
-        self.assertTrue(url.hostname.endswith('.modal.run'))
-        self.assertFalse(url.username or url.password or url.query)
+        self.assertTrue(url.hostname)
+        self.assertIn(url.path, ('', '/'))
+        self.assertFalse(url.username or url.password or url.query or url.fragment)
 
     @unittest.skipUnless(shutil.which('node') and shutil.which('gfortran'), 'node and gfortran required')
     def test_standalone_examples_compile_and_run(self):

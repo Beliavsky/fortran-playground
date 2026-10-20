@@ -212,6 +212,8 @@ The four rule names in the table can be disabled independently. Push frontend co
 
 ## Publishing and the execution service
 
+To create an independent playground with your own examples and execution service, follow the [forking and self-hosting guide](docs/self-hosting.md). It documents Modal deployment and explains the requirements for other hosting platforms.
+
 The repository's [Pages workflow](.github/workflows/pages.yml) tests the frontend and compiler fixtures, bundles CodeMirror, builds versioned assets, and deploys `_site/` when changes reach `main`. GitHub Pages should use **GitHub Actions** as its publishing source.
 
 Frontend changes such as examples, shared links, layout, and quick-fix configuration require only a frontend push. Backend changes belong in the existing execution-service project. For service changes, redeploy from `C:\python\python-to-fortran-playground`:

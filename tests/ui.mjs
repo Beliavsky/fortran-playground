@@ -33,8 +33,9 @@ let submissions = 0, payload, state = 'done', sessionFails = false, cancelled = 
 let checkOK = true, findings = true;
 globalThis.fetch = async (url, options = {}) => {
   let result;
-  if (url === './service.json') result = {url: 'https://test.modal.run'};
+  if (url === './service.json') result = {url: 'https://execute.example.org'};
   else if (url.endsWith('/api/session')) {
+    assert.equal(url, 'https://execute.example.org/api/session');
     if (sessionFails) throw new Error('Offline');
     result = {token: 'session', commit: 'abcd1234', timeout: 30, compilers: ['gfortran', 'ofort'],
       features: legacy ? {} : {compile_only: true, run_again: true, format: true, check: true},

@@ -5,6 +5,7 @@ import {playgroundConfig} from './config.mjs';
 import {createQuickFixControls} from './quick_fix_controls.mjs';
 import {applyFormatting} from './formatting.mjs';
 import {sourceFromHash, createShareLink} from './sharing.mjs';
+import {serviceOrigin} from './service_config.mjs';
 
 const get = id => document.getElementById(id);
 let token = '', service = '', catalog = {}, active = null, connecting = false, revision = 0;
@@ -99,11 +100,7 @@ async function connect() {
     const response = await fetch('./service.json', {cache: 'no-store'});
     if (!response.ok) throw new Error('Execution service configuration is unavailable.');
     const config = await response.json();
-    const url = new URL(config.url);
-    if (url.protocol !== 'https:' || !url.hostname.endsWith('.modal.run') || url.username || url.password || url.search || url.hash || url.pathname !== '/') {
-      throw new Error('Expected the HTTPS origin of the deployed Modal service.');
-    }
-    service = url.origin;
+    service = serviceOrigin(config.url);
     const session = await api('session');
     if (!session.token) throw new Error('The service did not provide a session token.');
     const compilers = session.compilers || ['gfortran'];
