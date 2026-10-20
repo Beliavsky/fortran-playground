@@ -1,10 +1,11 @@
 import assert from 'node:assert/strict';
 import {playgroundConfig} from '../site/config.mjs';
+import {examples, exampleLabels} from '../site/examples.generated.mjs';
 const elements = new Map();
 globalThis.document = {
   getElementById(id) {
     if (!elements.has(id)) elements.set(id, {value: '', textContent: '', disabled: false,
-      options: [], listeners: {}, addEventListener(name, fn) {this.listeners[name] = fn;}, focus() {}, click() {},
+      options: [], appendChild(option) {this.options.push(option);}, listeners: {}, addEventListener(name, fn) {this.listeners[name] = fn;}, focus() {}, click() {},
       setSelectionRange(from, to) {this.selection = [from, to];}});
     return elements.get(id);
   },
@@ -17,7 +18,6 @@ get('preset').value = 'default';
 get('standard').value = 'default';
 get('standard').options = ['default', '1995', '2003', '2008', '2018', '2023'].map(value => ({value}));
 get('preset').options = ['default','debug','optimized','strict'].map(value => ({value}));
-get('example').value = 'sum';
 globalThis.confirm = () => true;
 let submissions = 0, payload, state = 'done', sessionFails = false, cancelled = 0, legacy = false, expired = false, buildOK = true, buildError = '';
 let checkOK = true, findings = true;
@@ -50,11 +50,24 @@ globalThis.fetch = async (url, options = {}) => {
 };
 await import('../site/app.mjs');
 assert.equal(submissions, 0); // Connecting/loading never executes a program.
+const firstExample = Object.keys(examples)[0];
+assert.equal(get('example').value, firstExample || '');
+assert.deepEqual(get('example').options.map(({value, textContent}) => [value, textContent]), Object.entries(exampleLabels));
+assert.equal(get('load').disabled, !firstExample);
+assert.equal(get('fortran').value, firstExample ? examples[firstExample] : '');
+for (const [name, source] of Object.entries(examples)) {
+  get('example').value = name;
+  get('load').onclick();
+  assert.equal(get('fortran').value, source);
+}
+// The remaining service tests use fixed input, independent of the example catalog.
+get('fortran').value = 'program main\nprint *, 385\nend program main\n';
+get('fortran').listeners.input();
 assert.equal(get('run').disabled, false);
 assert.equal(get('compile').disabled, false);
 assert.equal(get('format').disabled, true); // Plain-text fallback cannot guarantee Undo.
 assert.equal(get('rerun').disabled, true);
-assert.equal(get('fortran-lines').textContent, '9 lines');
+assert.equal(get('fortran-lines').textContent, '3 lines');
 assert.equal(get('first-error').hidden, true);
 assert.equal(get('compiler').options[1].disabled, true);
 assert.match(get('compiler-version').textContent, /GNU Fortran \(GCC\) 15.2.0/);

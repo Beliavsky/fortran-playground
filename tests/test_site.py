@@ -6,11 +6,55 @@ import tempfile
 import unittest
 
 from xsite import build_site
+from xexamples import generate_examples
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 class SiteTests(unittest.TestCase):
+    def test_example_files_drive_catalog_and_asset_version(self):
+        with tempfile.TemporaryDirectory() as directory:
+            site = Path(directory) / 'source'
+            examples = site / 'examples'
+            examples.mkdir(parents=True)
+            destination = Path(directory) / 'built'
+            (site / 'app.mjs').write_text("import {examples} from './examples.generated.mjs';", encoding='utf-8')
+            first = examples / '01_first.f90'
+            original = '! Example: First <example>\nprint *, "quotes ` ${literal} \\"\n'
+            first.write_text(original, encoding='utf-8')
+            (examples / 'README.txt').write_text('ignored', encoding='utf-8')
+            version = build_site(site, destination)
+
+            def catalog():
+                module = (destination / 'examples.generated.mjs').read_text(encoding='utf-8')
+                codes, labels = module.split('export const examples = ', 1)[1].split(';\nexport const exampleLabels = ')
+                return json.loads(codes), json.loads(labels.removesuffix(';\n'))
+
+            self.assertEqual(catalog(), ({'01_first': original}, {'01_first': 'First <example>'}))
+            self.assertIn(f'examples.generated.mjs?v={version}', (destination / 'app.mjs').read_text())
+            first.write_text('print *, 2\n', encoding='utf-8')
+            (examples / '02_second_example.F08').write_text('print *, 3\n', encoding='utf-8')
+            changed = build_site(site, destination)
+            self.assertNotEqual(version, changed)
+            self.assertEqual(catalog(), ({'01_first': 'print *, 2\n', '02_second_example': 'print *, 3\n'},
+                                         {'01_first': 'first', '02_second_example': 'second example'}))
+            first.unlink()
+            self.assertNotEqual(changed, build_site(site, destination))
+            self.assertEqual(list(catalog()[0]), ['02_second_example'])
+            (examples / '02_second_example.F08').unlink()
+            build_site(site, destination)
+            self.assertEqual(catalog(), ({}, {}))
+
+    def test_duplicate_example_stems_are_rejected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            site = Path(directory)
+            examples = site / 'examples'
+            examples.mkdir()
+            for extension in ('.f90', '.f08'):
+                (examples / ('same' + extension)).write_text('end\n')
+            with self.assertRaisesRegex(ValueError, 'Duplicate example name'):
+                generate_examples(site)
+
     def test_interpreter_choice_is_explicit(self):
         html = (ROOT / 'site/index.html').read_text(encoding='utf-8')
         self.assertIn('ofort (interpreter, experimental)', html)
@@ -99,22 +143,23 @@ class SiteTests(unittest.TestCase):
 
     @unittest.skipUnless(shutil.which('node') and shutil.which('gfortran'), 'node and gfortran required')
     def test_standalone_examples_compile_and_run(self):
+        generate_examples(ROOT / 'site')
         proc = subprocess.run(['node', '--input-type=module', '-e',
-            "import {examples} from './site/examples.mjs'; console.log(JSON.stringify(examples));"],
+            "import {examples} from './site/examples.generated.mjs'; console.log(JSON.stringify(examples));"],
             cwd=ROOT, capture_output=True, text=True, check=True)
         examples = json.loads(proc.stdout)
-        expected = {'sum': [385], 'matrix': [2, 6, 4, 8], 'roots': [2, 1]}
         with tempfile.TemporaryDirectory() as directory:
-            for name, values in expected.items():
+            for name, code in examples.items():
+                if 'use python_mod' in code.lower():
+                    continue  # This helper is provided only by the hosted service.
                 with self.subTest(example=name):
                     source = Path(directory) / (name + '.f90')
                     executable = Path(directory) / (name + '.exe')
-                    source.write_text(examples[name], encoding='utf-8')
+                    source.write_text(code, encoding='utf-8')
                     subprocess.run(['gfortran', str(source), '-o', str(executable)],
                                    capture_output=True, text=True, check=True, timeout=30)
-                    output = subprocess.run([str(executable)], capture_output=True, text=True,
-                                            check=True, timeout=10).stdout
-                    self.assertEqual([float(value) for value in output.split()], values)
+                    subprocess.run([str(executable)], capture_output=True, text=True,
+                                   check=True, timeout=10)
 
 
 if __name__ == '__main__':

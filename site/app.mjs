@@ -1,5 +1,5 @@
 import {createEditor} from './editors.mjs';
-import {examples} from './examples.mjs';
+import {examples, exampleLabels} from './examples.generated.mjs';
 import {parseCompilerErrors} from './diagnostics.mjs';
 import {playgroundConfig} from './config.mjs';
 import {createQuickFixControls} from './quick_fix_controls.mjs';
@@ -245,6 +245,7 @@ get('stop').onclick = async () => {
   catch (error) { get('diagnostics').textContent = String(error); }
 };
 get('load').onclick = () => {
+  if (!Object.hasOwn(examples, get('example').value)) return;
   if (editor.getValue().trim() && !confirm('Replace the Fortran input with this example?')) return;
   editor.setValue(examples[get('example').value], true); filename = 'main.f90'; editor.focus();
 };
@@ -283,7 +284,17 @@ for (const id of ['compiler', 'standard', 'preset', 'warnings', 'fast-math']) ge
   invalidateBuild();
   revision++; controls(); get('freshness').textContent = 'Options changed; previous results are retained.';
 };
-editor.setValue(examples.sum);
+for (const [value, label] of Object.entries(exampleLabels)) {
+  const option = document.createElement('option');
+  option.value = value;
+  option.textContent = label;
+  get('example').appendChild(option);
+}
+const firstExample = Object.keys(examples)[0];
+get('example').disabled = !firstExample;
+get('load').disabled = !firstExample;
+get('example').value = firstExample || '';
+editor.setValue(firstExample ? examples[firstExample] : '');
 if (typeof window !== 'undefined') {
   (async () => {
     await import('./editor-vendor/codemirror.js');

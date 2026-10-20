@@ -5,7 +5,7 @@ A standalone Fortran-only frontend for the existing Python-to-Fortran execution
 service. The original playground pages are unchanged; the shared backend now
 also supports compile-only jobs and retained builds for this frontend.
 
-Features: editable Fortran with syntax coloring and line counts; four examples;
+Features: editable Fortran with syntax coloring and line counts; directory-based examples;
 file loading and downloading; compiler selection and supported option presets;
 Format (fprettify) on the Fortran input line: three-space indentation and
 whitespace-only formatting, applied as one undoable edit (Ctrl+Z). Requires
@@ -140,6 +140,31 @@ This is a static preview: execution still uses the hosted service configured in
 site/service.json. Running jobs there uses the owner's Modal resources and
 shares the existing service's usage limits. Use port 8766 for its allowed local
 origin. Do not publish the Python preview server as an execution sandbox.
+
+Managing examples
+-----------------
+Add, edit, or delete single-file Fortran programs in site/examples/.
+Supported extensions are .f90, .f95, .f03 and .f08 (case-insensitive).
+Only files directly in that directory are included. Each filename stem must
+be unique. Files appear in filename order; use prefixes such as 01_ and 02_
+to control the order. The first example is loaded when the page opens.
+
+Use an optional Fortran comment to set the dropdown label:
+  ! Example: Sum of squares
+Without that comment, the label comes from the filename, with a numeric prefix
+removed and underscores/hyphens replaced by spaces. Each example should be
+a complete program that can run without interactive input.
+
+xexamples.py generates site/examples.generated.mjs from these files. Do not edit that
+generated, ignored module. xsite.py generates it before building and versioning
+the Pages assets, and npm test generates it before frontend tests. Push changes
+to main to publish them through the existing GitHub Actions deployment; no
+backend deployment is needed. GitHub Pages updates after that workflow succeeds.
+
+For local preview, python xserve.py generates the catalog at startup and on
+each request for it. Refresh the page after changing examples. If serving site/
+with another static server, run python xexamples.py after changes first.
+An empty examples directory leaves the editor blank and disables example loading.
 
 Publishing
 ----------
