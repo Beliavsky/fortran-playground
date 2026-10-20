@@ -1,0 +1,152 @@
+{
+  "01_arithmetic": {
+    "output": [
+      "Integer division: 3",
+      "Real division: 3.50",
+      "Remainder: 1"
+    ]
+  },
+  "02_sum": {
+    "output": [
+      "Sum of squares: 385",
+      "Even squares: 220"
+    ]
+  },
+  "03_precision": {
+    "output": [
+      "Decimal precision real32: 6",
+      "Decimal precision real64: 15",
+      "Machine epsilon real32: 1.192093e-7",
+      "Machine epsilon real64: 2.220446e-16",
+      "real32 widened to real64: 0.100000001490116119",
+      "real64 literal: 0.100000000000000006"
+    ],
+    "abs_tol": 1e-22
+  },
+  "04_slices": {
+    "output": [
+      "Squares: 1 4 9 16 25 36",
+      "Every other element: 1 9 25",
+      "Reversed: 36 25 16 9 4 1"
+    ]
+  },
+  "05_array_expressions": {
+    "output": [
+      "Array expression: 4 9 16 25",
+      "Loop: 4 9 16 25",
+      "Results agree: T"
+    ]
+  },
+  "06_reductions": {
+    "output": [
+      "Minimum and maximum: 1 9",
+      "Sum and product: 14 36",
+      "Positions of minimum and maximum: 2 3",
+      "Positions of 9 and missing 8: 3 0"
+    ]
+  },
+  "07_masks": {
+    "output": [
+      "Positive values: 1 9",
+      "Positive count: 2",
+      "Positive sum: 10",
+      "Any positive, all positive: T F",
+      "Negative values replaced by zero: 1 0 9"
+    ]
+  },
+  "08_matrix": {
+    "output": [
+      "A row 1: 1 3",
+      "A row 2: 2 4",
+      "Transpose row 1: 1 2",
+      "Transpose row 2: 3 4",
+      "Product row 1: 2 6",
+      "Product row 2: 4 8"
+    ]
+  },
+  "09_allocatable": {
+    "output": [
+      "Initially allocated: F",
+      "First size: 2",
+      "New size: 4",
+      "Values: 4 9 16 25",
+      "Allocated after deallocate: F"
+    ]
+  },
+  "10_internal_function": {
+    "output": [
+      "Root mean square: 2.738613"
+    ]
+  },
+  "11_optional_arguments": {
+    "output": [
+      "Defaults: 3",
+      "Scale only: 6",
+      "Keywords in a different order: 7"
+    ]
+  },
+  "12_elemental": {
+    "output": [
+      "Scalar arguments: 12",
+      "Scalar and array: 12 15",
+      "Two arrays: 12 20"
+    ]
+  },
+  "13_particles": {
+    "output": [
+      "Particle 1 position: 1 0.5",
+      "Particle 2 position: 0.5 3"
+    ]
+  },
+  "14_internal_io": {
+    "output": [
+      "Parsed number: 12340",
+      "Greeting: Hello, Fortran!",
+      "Substring: Fort"
+    ]
+  },
+  "15_statistics": {
+    "output": [
+      "Mean x: 3",
+      "Sample standard deviation x: 1.58113883",
+      "Slope: 0.6",
+      "Intercept: 2.2"
+    ]
+  },
+  "16_bisection": {
+    "output": [
+      "Root of cos(x)-x: 0.7390851332",
+      "Residual: 0"
+    ],
+    "abs_tol": 1e-10
+  },
+  "17_integration": {
+    "output": [
+      "Integral of sin from 0 to pi: 1.9998355039",
+      "Exact integral: 2",
+      "Absolute error: 1.644961e-04"
+    ]
+  },
+  "18_runge_kutta": {
+    "output": [
+      "RK4 y(1): 0.3678797744",
+      "Exact y(1): 0.3678794412",
+      "Absolute error: 3.332411e-07"
+    ]
+  },
+  "19_heat": {
+    "output": [
+      "Elapsed time: 0.0390625",
+      "Center temperature: 0.6783889838",
+      "Exact PDE center temperature: 0.6800891259",
+      "Boundary temperatures: 0 0"
+    ]
+  },
+  "20_complex_step": {
+    "output": [
+      "Complex-step derivative of exp at 0: 1",
+      "Central-difference derivative: 1",
+      "Exact derivative: 1"
+    ]
+  }
+}

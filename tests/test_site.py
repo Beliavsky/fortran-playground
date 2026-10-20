@@ -1,4 +1,5 @@
 import json
+import math
 from pathlib import Path
 import shutil
 import subprocess
@@ -148,18 +149,40 @@ class SiteTests(unittest.TestCase):
             "import {examples} from './site/examples.generated.mjs'; console.log(JSON.stringify(examples));"],
             cwd=ROOT, capture_output=True, text=True, check=True)
         examples = json.loads(proc.stdout)
+        checks = json.loads((ROOT / 'tests/example_results.json').read_text(encoding='utf-8'))
+        self.assertEqual(set(examples), set(checks), 'Every dropdown example needs expected results')
         with tempfile.TemporaryDirectory() as directory:
             for name, code in examples.items():
-                if 'use python_mod' in code.lower():
-                    continue  # This helper is provided only by the hosted service.
-                with self.subTest(example=name):
-                    source = Path(directory) / (name + '.f90')
-                    executable = Path(directory) / (name + '.exe')
-                    source.write_text(code, encoding='utf-8')
-                    subprocess.run(['gfortran', str(source), '-o', str(executable)],
-                                   capture_output=True, text=True, check=True, timeout=30)
-                    subprocess.run([str(executable)], capture_output=True, text=True,
-                                   check=True, timeout=10)
+                work = Path(directory) / name
+                work.mkdir()
+                source = work / 'example.f90'
+                executable = work / 'example.exe'
+                source.write_text(code, encoding='utf-8')
+                for mode, flags in [('default', []), ('checked', [
+                        '-std=f2018', '-Wall', '-Wextra', '-Werror', '-pedantic', '-fcheck=all'])]:
+                    with self.subTest(example=name, mode=mode):
+                        compilation = subprocess.run(['gfortran', *flags, str(source), '-o', str(executable)],
+                                                     cwd=work, capture_output=True, text=True, timeout=30)
+                        self.assertEqual(compilation.returncode, 0, compilation.stdout + compilation.stderr)
+                        result = subprocess.run([str(executable)], cwd=work, stdin=subprocess.DEVNULL,
+                                                capture_output=True, text=True, timeout=10)
+                        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+                        self.assertEqual(result.stderr.strip(), '')
+                        actual_lines = result.stdout.strip().splitlines()
+                        expected_lines = checks[name]['output']
+                        self.assertEqual(len(actual_lines), len(expected_lines), result.stdout)
+                        for actual, expected in zip(actual_lines, expected_lines):
+                            actual_tokens, expected_tokens = actual.split(), expected.split()
+                            self.assertEqual(len(actual_tokens), len(expected_tokens), actual)
+                            for got, wanted in zip(actual_tokens, expected_tokens):
+                                try:
+                                    expected_number = float(wanted)
+                                except ValueError:
+                                    self.assertEqual(got, wanted, actual)
+                                else:
+                                    self.assertTrue(math.isclose(float(got), expected_number,
+                                        rel_tol=5e-7, abs_tol=checks[name].get('abs_tol', 1e-11)),
+                                        f'{actual!r}: expected {wanted}, got {got}')
 
 
 if __name__ == '__main__':

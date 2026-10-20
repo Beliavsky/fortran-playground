@@ -166,6 +166,26 @@ each request for it. Refresh the page after changing examples. If serving site/
 with another static server, run python xexamples.py after changes first.
 An empty examples directory leaves the editor blank and disables example loading.
 
+The starter collection has 14 language demonstrations and six numerical
+calculations: statistics/regression, bisection, trapezoidal integration, RK4,
+heat diffusion and complex-step differentiation. Each program is standalone,
+prints labeled results, and suggests something to change. Adaptations from
+FortranTip retain a source URL and any original attribution in comments.
+The service-specific python_mod example has been replaced so every dropdown
+program can also run with a locally installed gfortran and no helper library.
+
+Validate all examples with:
+  python -m unittest discover -s tests -v
+Node and gfortran must be on PATH for the compiler test (otherwise it is skipped).
+The existing Pages workflow installs both and runs this test before deployment.
+Every generated dropdown entry is compiled and run twice: with compiler defaults,
+then with Fortran 2018 conformance, warnings as errors and runtime checks.
+Builds run in temporary directories; runs have closed stdin and a timeout.
+tests/example_results.json specifies expected labeled output for every example,
+with floating-point tolerances. Add or update its entry when changing a program;
+new files without expected results fail the compiler test. Numerical references
+use known roots, exact solutions or independently derived discrete formulas.
+
 Publishing
 ----------
 Create a GitHub repository named fortran-playground, push the files to main,
