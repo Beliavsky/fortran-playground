@@ -26,9 +26,15 @@
     <button id="load-file" type="button">Load Fortran file</button>
     <input id="file" type="file" accept=".f90,.f95,.f03,.f08,text/plain" hidden>
     <button id="download" type="button">Download Fortran</button>
+    <button id="share" type="button">Copy share link</button>
     <button id="connect" type="button">Reconnect</button>
   </div>
   <p id="file-status" class="version" role="status">Files are read locally; compiling sends source to the service.</p>
+  <p id="share-status" class="version" role="status"></p>
+  <div id="share-link-field" hidden>
+    <label for="share-link">Share link (select and copy)</label>
+    <input id="share-link" type="text" readonly>
+  </div>
   <div class="toolbar">
     <label for="compiler">Compiler / interpreter</label>
     <select id="compiler" disabled><option value="gfortran">GNU Fortran</option><option value="ifx" disabled>Intel Fortran</option><option value="flang" disabled>LLVM Flang</option><option value="lfortran" disabled>LFortran</option><option value="ofort" disabled>ofort (interpreter, experimental)</option></select>

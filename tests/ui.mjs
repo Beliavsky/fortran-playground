@@ -1,12 +1,21 @@
 import assert from 'node:assert/strict';
 import {playgroundConfig} from '../site/config.mjs';
 import {examples, exampleLabels} from '../site/examples.generated.mjs';
+import {createShareLink, sourceFromHash} from '../site/sharing.mjs';
 const elements = new Map();
+const startupSource = 'program shared\nprint *, "shared + café"\nend program shared\n';
+globalThis.location = new URL(createShareLink('https://example.org/fortran-playground/', startupSource));
+const pageListeners = {};
+globalThis.addEventListener = (name, handler) => {pageListeners[name] = handler;};
+let copiedLink = '', clipboardFails = false;
+Object.defineProperty(globalThis, 'navigator', {configurable: true, value: {
+  clipboard: {async writeText(text) {if (clipboardFails) throw new Error('Denied'); copiedLink = text;}},
+}});
 globalThis.document = {
   getElementById(id) {
     if (!elements.has(id)) elements.set(id, {value: '', textContent: '', disabled: false,
       options: [], appendChild(option) {this.options.push(option);}, listeners: {}, addEventListener(name, fn) {this.listeners[name] = fn;}, focus() {}, click() {},
-      setSelectionRange(from, to) {this.selection = [from, to];}});
+      select() {this.selected = true;}, setSelectionRange(from, to) {this.selection = [from, to];}});
     return elements.get(id);
   },
   createElement() {return {click() {}};},
@@ -18,7 +27,8 @@ get('preset').value = 'default';
 get('standard').value = 'default';
 get('standard').options = ['default', '1995', '2003', '2008', '2018', '2023'].map(value => ({value}));
 get('preset').options = ['default','debug','optimized','strict'].map(value => ({value}));
-globalThis.confirm = () => true;
+let allowReplace = true, confirmations = 0;
+globalThis.confirm = () => {confirmations++; return allowReplace;};
 let submissions = 0, payload, state = 'done', sessionFails = false, cancelled = 0, legacy = false, expired = false, buildOK = true, buildError = '';
 let checkOK = true, findings = true;
 globalThis.fetch = async (url, options = {}) => {
@@ -54,7 +64,32 @@ const firstExample = Object.keys(examples)[0];
 assert.equal(get('example').value, firstExample || '');
 assert.deepEqual(get('example').options.map(({value, textContent}) => [value, textContent]), Object.entries(exampleLabels));
 assert.equal(get('load').disabled, !firstExample);
-assert.equal(get('fortran').value, firstExample ? examples[firstExample] : '');
+assert.equal(get('fortran').value, startupSource);
+assert.equal(confirmations, 0); // Initial links load without a replacement prompt.
+assert.match(get('share-status').textContent, /Code loaded from a shared link/);
+await get('share').onclick();
+assert.equal(sourceFromHash(new URL(copiedLink).hash), startupSource);
+assert.equal(get('share-link-field').hidden, true);
+clipboardFails = true;
+await get('share').onclick();
+assert.equal(get('share-link-field').hidden, false);
+assert.equal(get('share-link').selected, true);
+assert.equal(get('share-link').value, copiedLink);
+clipboardFails = false;
+get('fortran').value = 'my unsaved changes';
+get('fortran').listeners.input();
+location.hash = '#code=' + encodeURIComponent('print *, 42\nend\n');
+allowReplace = false;
+pageListeners.hashchange();
+assert.equal(get('fortran').value, 'my unsaved changes');
+allowReplace = true;
+pageListeners.hashchange();
+assert.equal(get('fortran').value, 'print *, 42\nend\n');
+location.hash = '#code=%broken';
+pageListeners.hashchange();
+assert.equal(get('fortran').value, 'print *, 42\nend\n');
+assert.match(get('share-status').textContent, /invalid URL encoding/);
+assert.equal(submissions, 0); // Sharing, loading and hash changes never submit jobs.
 for (const [name, source] of Object.entries(examples)) {
   get('example').value = name;
   get('load').onclick();

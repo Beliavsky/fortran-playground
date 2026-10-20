@@ -4,6 +4,7 @@ import {parseCompilerErrors} from './diagnostics.mjs';
 import {playgroundConfig} from './config.mjs';
 import {createQuickFixControls} from './quick_fix_controls.mjs';
 import {applyFormatting} from './formatting.mjs';
+import {sourceFromHash, createShareLink} from './sharing.mjs';
 
 const get = id => document.getElementById(id);
 let token = '', service = '', catalog = {}, active = null, connecting = false, revision = 0;
@@ -53,6 +54,7 @@ function controls() {
   get('connect').disabled = connecting || busy;
   get('compiler').disabled = !token || busy;
   get('download').disabled = !editor.getValue().trim();
+  get('share').disabled = !editor.getValue().trim();
   const spec = catalog[get('compiler').value];
   for (const option of get('standard').options) option.disabled = option.value !== 'default' && !spec?.standards?.[option.value];
   if (get('standard').value !== 'default' && !spec?.standards?.[get('standard').value]) get('standard').value = 'default';
@@ -279,6 +281,37 @@ get('download').onclick = () => {
   link.href = url; link.download = filename; link.click();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 };
+get('share').onclick = async () => {
+  get('share-link-field').hidden = true;
+  try {
+    const link = createShareLink(location.href, editor.getValue());
+    get('share-link').value = link;
+    try {
+      await navigator.clipboard.writeText(link);
+      get('share-status').textContent = 'Share link copied. Anyone with the link can read the code; opening it does not run it.';
+    } catch {
+      get('share-link-field').hidden = false;
+      get('share-link').focus();
+      get('share-link').select();
+      get('share-status').textContent = 'Copy the selected link. Anyone with the link can read the code; opening it does not run it.';
+    }
+    if (link.length > 8000) get('share-status').textContent += ' This long link may be truncated by some sites.';
+  } catch (error) { get('share-status').textContent = String(error); }
+};
+
+function loadSharedCode(initial = false) {
+  try {
+    const source = sourceFromHash(location.hash);
+    if (source === null || source === editor.getValue()) return;
+    if (!initial && editor.getValue().trim() && !confirm('Replace the Fortran input with code from this shared link?')) {
+      get('share-status').textContent = 'Shared code was not loaded; your input is unchanged.';
+      return;
+    }
+    editor.setValue(source, !initial);
+    filename = 'main.f90';
+    get('share-status').textContent = 'Code loaded from a shared link. Choose Compile or Compile and Run when ready.';
+  } catch (error) { get('share-status').textContent = String(error); }
+}
 for (const id of ['compiler', 'standard', 'preset', 'warnings', 'fast-math']) get(id).onchange = () => {
   clearErrorInfo();
   invalidateBuild();
@@ -295,6 +328,10 @@ get('example').disabled = !firstExample;
 get('load').disabled = !firstExample;
 get('example').value = firstExample || '';
 editor.setValue(firstExample ? examples[firstExample] : '');
+if (typeof location !== 'undefined') {
+  loadSharedCode(true);
+  globalThis.addEventListener?.('hashchange', () => loadSharedCode());
+}
 if (typeof window !== 'undefined') {
   (async () => {
     await import('./editor-vendor/codemirror.js');
