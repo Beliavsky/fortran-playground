@@ -77,6 +77,33 @@ The source is embedded after `#`; opening the link does not fetch an external so
 
 Empty, incorrectly encoded, or oversized shared source is rejected with a message. Changing to another shared-code fragment in the same tab asks before replacing nonempty input. Opening a shared link never automatically submits a job. Long links may be truncated by browsers, messaging tools, or forums; sharing is best suited to short examples even though the source limit remains 100 KB.
 
+### Generate a page of links from a repository
+
+Use [`xplayground_links.py`](xplayground_links.py) to create a standalone HTML page from a directory of Fortran programs. It requires Python only and works with a local checkout of any repository; the source files do not have to be in this playground's repository.
+
+```powershell
+# Generate links for this playground's examples:
+python xplayground_links.py site/examples --output playground-links.html
+
+# Scan another repository, including its subdirectories:
+python xplayground_links.py C:/projects/my-fortran/examples --recursive --output docs/index.html --title "My Fortran examples"
+```
+
+The generator scans `.f90`, `.f95`, `.f03`, and `.f08` files case-insensitively. Links appear in relative-path order, with filenames displayed to distinguish examples in different subdirectories. A file's optional `! Example:` comment supplies its link label; otherwise the filename stem is used. UTF-8 source, including Unicode and line endings, is embedded directly in the link. A UTF-8 byte-order mark is removed.
+
+Empty, non-UTF-8, unreadable, and oversized files are skipped with warnings. Links longer than 8,000 characters also produce warnings because some sites truncate long URLs. The generator does not compile programs or resolve dependencies: choose short standalone programs that need no interactive input or external files.
+
+Open the generated HTML file locally or publish it through GitHub Pages. Visitors use the existing playground, so publishing the link page requires no Modal account or separate execution service. Runs still use the playground's shared service and its limits. To target a separately hosted playground supporting the same fragment format, pass `--playground-url https://example.org/fortran-playground/`.
+
+Regenerate the page whenever source files change. To automate this, add a step to your repository's existing Pages build before its artifact is uploaded, adjusting the paths to match your repository:
+
+```yaml
+- name: Generate playground links
+  run: python path/to/fortran-playground/xplayground_links.py examples --recursive --output _site/playground-links.html
+```
+
+Copy the script into your repository or make this playground's checkout available at the path shown. It uses only the Python standard library. The generated HTML is self-contained and contains snapshots of all included source; publish only code you intend to share.
+
 ## Examples
 
 The starter collection contains **14 language demonstrations** and **six numerical calculations**. Every program is standalone, prints labeled results, and includes a suggested change to try. FortranTip adaptations retain source URLs and original attribution in comments.
@@ -202,6 +229,7 @@ Then push any related frontend changes. Compile-only, retained builds, compiler-
 | `site/` | Static HTML, CSS, JavaScript, and Fortran examples |
 | `xeditor.py` | Bundles pinned CodeMirror assets and its MIT license |
 | `xexamples.py` | Generates the example catalog from Fortran files |
+| `xplayground_links.py` | Generates a standalone HTML page of shared-code links |
 | `xsite.py` | Builds the Pages artifact and versions browser assets |
 | `xserve.py` | Serves a trusted local preview |
 | `site/service.json` | Public execution-service URL; contains no credential |
