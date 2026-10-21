@@ -19,6 +19,13 @@
     <p id="connection" role="status">Connecting to the execution service…</p>
   </header>
   <div class="toolbar">
+    <label for="interface-mode">Interface</label>
+    <select id="interface-mode"><option value="simple">Simple</option><option value="advanced" selected>Advanced</option></select>
+    <span id="simple-compiler" class="version" hidden>GNU Fortran</span>
+    <button id="advanced-options" type="button" hidden>Advanced options</button>
+    <span id="status" role="status" aria-live="polite">Connecting…</span>
+  </div>
+  <div class="toolbar">
     <label for="example">Example</label>
     <select id="example"></select>
     <button id="load" type="button">Load example</button>
@@ -35,16 +42,15 @@
     <label for="share-link">Share link (select and copy)</label>
     <input id="share-link" type="text" readonly>
   </div>
-  <div class="toolbar">
+  <div id="compiler-controls" class="toolbar">
     <label for="compiler">Compiler / interpreter</label>
     <select id="compiler" disabled><option value="gfortran">GNU Fortran</option><option value="ifx" disabled>Intel Fortran</option><option value="flang" disabled>LLVM Flang</option><option value="lfortran" disabled>LFortran</option><option value="ofort" disabled>ofort (interpreter, experimental)</option></select>
     <label for="standard">Standard</label>
     <select id="standard" disabled><option value="default">Compiler default</option><option value="1995" disabled>1995</option><option value="2003" disabled>2003</option><option value="2008" disabled>2008</option><option value="2018" disabled>2018</option><option value="2023" disabled>2023</option></select>
-    <span id="status" role="status" aria-live="polite">Connecting…</span>
   </div>
   <p id="compiler-version" class="version" role="status">Compiler version: waiting for service.</p>
   <p id="standard-note" class="version">Standard selection applies only to user code.</p>
-  <div class="toolbar" aria-label="User-code compiler options">
+  <div id="option-controls" class="toolbar" aria-label="User-code compiler options">
     <label for="preset">User-code options</label>
     <select id="preset" disabled><option value="default">Default</option><option value="debug">Debug</option><option value="optimized">Optimized</option><option value="strict">Strict</option></select>
     <label><input id="warnings" type="checkbox" disabled> Extra warnings</label>
@@ -54,7 +60,7 @@
   <p id="build-note" class="version">Compile to enable Run Again.</p>
   <p id="freshness" class="version">No results yet.</p>
   <p id="error-note" class="version" role="status" hidden></p>
-  <p id="fix-note" class="version" role="status" hidden></p>
+  <div id="quick-fix-details"><p id="fix-note" class="version" role="status" hidden></p></div>
   <div class="workspace">
     <section id="source-pane" class="panel">
       <div class="source-header">
@@ -67,14 +73,14 @@
           <button id="rerun" type="button" disabled>Run Again</button>
           <button id="stop" type="button" disabled>Stop</button>
           <button id="first-error" type="button" disabled hidden>Go to first error</button>
-          <button id="fix-error" type="button" disabled hidden>Fix error</button>
+          <span id="quick-fix-controls"><button id="fix-error" type="button" disabled hidden>Fix error</button></span>
         </div>
       </div>
       <textarea id="fortran" spellcheck="false"></textarea>
     </section>
     <div id="results-pane" class="results-pane">
       <section class="diagnostics"><h2>Program output <span id="run-time" class="line-count"></span></h2><pre id="output">Not run.</pre></section>
-      <section class="diagnostics"><h2><span id="build-title">Compilation</span> <span id="build-time" class="line-count"></span></h2><p id="result-compiler-version" class="version" hidden></p><pre id="diagnostics">Not compiled.</pre></section>
+      <section id="compilation-pane" class="diagnostics"><h2><span id="build-title">Compilation</span> <span id="build-time" class="line-count"></span></h2><p id="result-compiler-version" class="version" hidden></p><pre id="diagnostics">Not compiled.</pre></section>
       <section id="checks-pane" class="diagnostics" hidden>
         <div class="checks-header">
           <h2>Fortitude checks <span id="check-time" class="line-count"></span></h2>
@@ -87,10 +93,11 @@
   </div>
   <footer>
     <p id="editor-note">Plain-text editor available; loading syntax coloring…</p>
-    <p>Compile checks and builds without running. Compile and Run builds and executes; Run Again executes the retained build without recompiling. With ofort, Check syntax validates without execution and Run interprets source afresh. Existing python_mod helpers are available automatically with compilers, not ofort. No Python code is submitted or translated.</p>
+    <p id="simple-help" hidden>Run compiles and executes your program using GNU Fortran with default options. Compilation errors appear below Program output.</p>
+    <div id="advanced-help"><p>Compile checks and builds without running. Compile and Run builds and executes; Run Again executes the retained build without recompiling. With ofort, Check syntax validates without execution and Run interprets source afresh. Existing python_mod helpers are available automatically with compilers, not ofort. No Python code is submitted or translated.</p>
+    <p>Compiler/interpreter availability is reported by the service. Failures never silently switch tools. ofort is experimental: standalone source only, no compiled python_mod helpers. Its syntax check does not execute code; uninitialized-variable checks occur during execution.</p></div>
     <p>100 KB source limit · 200 KB per output stream · no interactive input · every run starts afresh.</p>
     <p>Hosted runs use the shared Python-to-Fortran execution service and its workload limits. Programs run in isolated environments without network access. Running a local preview still sends execution jobs to that hosted service.</p>
-    <p>Compiler/interpreter availability is reported by the service. Failures never silently switch tools. ofort is experimental: standalone source only, no compiled python_mod helpers. Its syntax check does not execute code; uninitialized-variable checks occur during execution.</p>
   </footer>
 </main>
 <script type="module" src="app.mjs"></script>

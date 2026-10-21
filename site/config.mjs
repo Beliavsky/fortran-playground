@@ -1,5 +1,6 @@
-// Set false to restore the playground without syntax-fix controls.
+// Frontend defaults; forks can customize these settings.
 export const playgroundConfig = {
-  enableQuickFixes: true,
+  interfaceMode: 'advanced', // 'simple' uses GNU Fortran with compiler defaults.
+  enableQuickFixes: true, // Set false to disable experimental syntax-fix controls.
   disabledQuickFixRules: [], // e.g. ['closing-unit-name']
 };

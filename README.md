@@ -13,6 +13,16 @@ Explore Fortran in your browser with short examples, an editable source pane, an
 
 The editor provides syntax coloring, line counts, undo, and navigation to recognized source errors. A plain-text fallback remains available if the enhanced editor cannot load. Wide screens show the editor and results side by side; narrow screens stack them. Execution controls stay visible above the source pane.
 
+### Simple and Advanced interfaces
+
+Use the **Interface** menu to choose **Simple** or **Advanced**. The default is Advanced; educational forks can set `interfaceMode: 'simple'` in [`site/config.mjs`](site/config.mjs) to start with Simple. Reloading uses the configured default. Shared-code links contain source only and do not change the interface mode.
+
+Simple uses **GNU Fortran with compiler defaults**. Its primary **Run** button compiles and executes the program. Examples, file loading, downloading, sharing, Format, Stop, and error navigation remain available. Compiler/standard/flag selectors, Compile-only, Run Again, Fortitude Check, and experimental quick-fix controls are hidden. **Advanced options** switches to the full interface to access those controls.
+
+Program output fills the results area in Simple until a compilation or execution failure reveals the Compilation pane. A subsequent successful run hides that pane again. Switching interfaces preserves source and results. Entering Simple resets the compiler, standard, preset, warnings, and fast-math settings; execution-setting changes invalidate retained builds. Returning to Advanced keeps the current settings rather than restoring hidden older choices. Interface switching is disabled during a job or connection attempt.
+
+If the service does not advertise gfortran, Simple disables Run and explains how to switch to Advanced to select another available compiler. It never substitutes another compiler silently.
+
 ### Compilers, standards, and execution
 
 The service reports which tools are available: GNU Fortran, Intel Fortran, LLVM Flang, LFortran, and the experimental ofort interpreter. The selected tool's version appears below its menu; results retain the version used for that particular job. Older services can show ?version unavailable? while still allowing compilation.

@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "pretest": "python xexamples.py",
-    "test": "node tests/diagnostics.mjs && node tests/fixes.mjs && node tests/quick_fix_controls.mjs && node tests/formatting.mjs && node tests/sharing.mjs && node tests/service_config.mjs && node tests/ui.mjs",
+    "test": "node tests/diagnostics.mjs && node tests/fixes.mjs && node tests/quick_fix_controls.mjs && node tests/formatting.mjs && node tests/sharing.mjs && node tests/service_config.mjs && node tests/ui.mjs && node tests/ui.mjs --simple-default",
     "test:fixes": "node xcheck_fixes.mjs"
   },
   "devDependencies": { "codemirror": "5.65.20" }

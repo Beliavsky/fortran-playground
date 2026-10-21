@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import {playgroundConfig} from '../site/config.mjs';
 import {examples, exampleLabels} from '../site/examples.generated.mjs';
 import {createShareLink, sourceFromHash} from '../site/sharing.mjs';
+if (process.argv.includes('--simple-default')) playgroundConfig.interfaceMode = 'simple';
 const elements = new Map();
 const startupSource = 'program shared\nprint *, "shared + café"\nend program shared\n';
 globalThis.location = new URL(createShareLink('https://example.org/fortran-playground/', startupSource));
@@ -33,13 +34,14 @@ let allowReplace = true, confirmations = 0;
 globalThis.confirm = () => {confirmations++; return allowReplace;};
 let submissions = 0, payload, state = 'done', sessionFails = false, cancelled = 0, legacy = false, expired = false, buildOK = true, buildError = '';
 let checkOK = true, findings = true, checkRequestFails = false;
+let serviceCompilers = ['gfortran', 'ofort'];
 globalThis.fetch = async (url, options = {}) => {
   let result;
   if (url === './service.json') result = {url: 'https://execute.example.org'};
   else if (url.endsWith('/api/session')) {
     assert.equal(url, 'https://execute.example.org/api/session');
     if (sessionFails) throw new Error('Offline');
-    result = {token: 'session', commit: 'abcd1234', timeout: 30, compilers: ['gfortran', 'ofort'],
+    result = {token: 'session', commit: 'abcd1234', timeout: 30, compilers: serviceCompilers,
       features: legacy ? {} : {compile_only: true, run_again: true, format: true, check: true},
       ...(legacy ? {} : {compiler_versions: {gfortran: 'GNU Fortran (GCC) 15.2.0', ifx: 'Intel Fortran 2026.0'}}),
       compiler_options: {gfortran: {presets: {default: [], debug: ['-g']}, extras: {warnings: ['-Wall']},
@@ -58,11 +60,19 @@ globalThis.fetch = async (url, options = {}) => {
     ...(legacy ? {} : {compiler_version: 'GNU Fortran (GCC) 15.2.0'}),
     ...(payload?.mode === 'fortran-run' ? {reused_executable: true} : payload?.compiler === 'ofort' && payload?.mode === 'fortran-edit' ? {} : {
       build: {ok: buildOK, stdout: buildOK ? 'Build: PASS' : 'Build: FAIL', stderr: buildError, seconds: 0.2},
-      ...(buildOK && payload?.compiler !== 'ofort' ? {artifact: {id: 'private-id', expires_at: Date.now()/1000 + (expired ? -1 : 300)}} : {})}),
+      ...(buildOK && payload?.retain_executable && payload?.compiler !== 'ofort' ? {artifact: {id: 'private-id', expires_at: Date.now()/1000 + (expired ? -1 : 300)}} : {})}),
     ...(payload?.mode === 'fortran-compile' ? {} : {execution: {stdout: '385\n', stderr: '', seconds: 0.1}})}};
   return {ok: true, json: async () => result};
 };
 await import('../site/app.mjs');
+assert.equal(get('interface-mode').value, playgroundConfig.interfaceMode);
+assert.equal(get('compiler-controls').hidden, playgroundConfig.interfaceMode === 'simple');
+if (playgroundConfig.interfaceMode === 'simple') {
+  assert.equal(get('run').textContent, 'Run');
+  assert.equal(get('compilation-pane').hidden, true);
+  get('advanced-options').onclick();
+  assert.equal(get('interface-mode').value, 'advanced');
+}
 assert.equal(submissions, 0); // Connecting/loading never executes a program.
 assert.equal(get('checks-pane').hidden, true);
 const firstExample = Object.keys(examples)[0];
@@ -323,6 +333,75 @@ assert.equal(get('result-compiler-version').hidden, false);
 get('compiler').value = 'gfortran'; get('compiler').onchange();
 assert.equal(get('compile').textContent, 'Compile');
 assert.equal(get('run').textContent, 'Compile and Run');
+// Simple mode resets execution options and preserves source and old results.
+expired = false;
+get('compiler').value = 'ofort'; get('compiler').onchange();
+get('standard').value = '2018';
+get('preset').value = 'optimized';
+get('warnings').checked = true;
+get('fast-math').checked = true;
+const modeSource = get('fortran').value, modeOutput = get('output').textContent;
+const modeDiagnostics = get('diagnostics').textContent;
+const beforeModeChange = submissions;
+get('interface-mode').value = 'simple'; get('interface-mode').onchange();
+assert.equal(submissions, beforeModeChange);
+assert.equal(get('compiler').value, 'gfortran');
+assert.equal(get('standard').value, 'default');
+assert.equal(get('preset').value, 'default');
+assert.equal(get('warnings').checked, false);
+assert.equal(get('fast-math').checked, false);
+assert.equal(get('run').textContent, 'Run');
+for (const id of ['compiler-controls', 'option-controls', 'compile', 'rerun', 'check', 'checks-pane']) {
+  assert.equal(get(id).hidden, true, id);
+}
+assert.equal(get('fortran').value, modeSource);
+assert.equal(get('output').textContent, modeOutput);
+assert.equal(get('diagnostics').textContent, modeDiagnostics);
+assert.equal(get('rerun').disabled, true);
+await get('run').onclick();
+assert.equal(payload.compiler, 'gfortran');
+assert.deepEqual(payload.compiler_options, {preset: 'default', warnings: false, fast_math: false, standard: 'default'});
+assert.equal(payload.retain_executable, undefined);
+assert.equal(get('compilation-pane').hidden, true);
+const beforeHiddenActions = submissions;
+await get('compile').onclick(); await get('rerun').onclick(); await get('check').onclick();
+assert.equal(submissions, beforeHiddenActions);
+buildOK = false; buildError = 'A compiler error';
+await get('run').onclick();
+assert.equal(get('compilation-pane').hidden, false);
+assert.match(get('diagnostics').textContent, /A compiler error/);
+buildOK = true; buildError = '';
+await get('run').onclick();
+assert.equal(get('compilation-pane').hidden, true);
+state = 'running';
+const simpleRun = get('run').onclick();
+assert.equal(get('interface-mode').disabled, true);
+get('advanced-options').onclick();
+assert.equal(get('interface-mode').value, 'simple');
+await new Promise(resolve => setTimeout(resolve, 10));
+state = 'done'; await simpleRun;
+get('advanced-options').onclick();
+get('preset').value = 'debug'; get('preset').onchange();
+await get('compile').onclick();
+assert.equal(get('rerun').disabled, false);
+get('interface-mode').value = 'simple'; get('interface-mode').onchange();
+assert.equal(get('preset').value, 'default');
+assert.equal(get('rerun').disabled, true); // Resetting actual build options invalidates reuse.
+serviceCompilers = ['ofort'];
+await get('connect').onclick();
+assert.equal(get('run').disabled, true);
+assert.equal(get('compiler').value, 'gfortran');
+assert.match(get('simple-compiler').textContent, /unavailable/);
+const unavailableSubmissions = submissions;
+await get('run').onclick();
+assert.equal(submissions, unavailableSubmissions);
+get('advanced-options').onclick();
+assert.equal(get('compiler-controls').hidden, false);
+assert.equal(get('compilation-pane').hidden, false);
+assert.equal(get('compiler').value, 'ofort');
+serviceCompilers = ['gfortran', 'ofort'];
+get('compiler').value = 'gfortran';
+await get('connect').onclick();
 legacy = true;
 await get('connect').onclick();
 assert.equal(get('run').disabled, false);

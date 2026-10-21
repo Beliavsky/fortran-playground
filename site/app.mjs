@@ -12,6 +12,19 @@ let token = '', service = '', catalog = {}, active = null, connecting = false, r
 let filename = 'main.f90';
 let features = {}, retained = null, expiryTimer = null;
 let compilerVersions = {};
+let interfaceMode = playgroundConfig.interfaceMode === 'simple' ? 'simple' : 'advanced';
+let availableCompilers = [], compilationFailed = false;
+const isSimple = () => interfaceMode === 'simple';
+function resetSimpleSettings() {
+  const changed = get('compiler').value !== 'gfortran' || get('standard').value !== 'default' ||
+    get('preset').value !== 'default' || get('warnings').checked || get('fast-math').checked;
+  get('compiler').value = 'gfortran';
+  get('standard').value = 'default';
+  get('preset').value = 'default';
+  get('warnings').checked = false;
+  get('fast-math').checked = false;
+  return changed;
+}
 function invalidateBuild() {
   retained = null;
   clearTimeout(expiryTimer);
@@ -39,12 +52,24 @@ function clearErrorInfo() {
 }
 
 function controls() {
+  if (isSimple()) resetSimpleSettings();
   const busy = Boolean(active);
   const interpreted = get('compiler').value === 'ofort';
   get('compile').textContent = interpreted ? 'Check syntax' : 'Compile';
-  get('run').textContent = interpreted ? 'Run' : 'Compile and Run';
+  get('run').textContent = isSimple() || interpreted ? 'Run' : 'Compile and Run';
   quickFix.setBusy(busy);
-  get('run').disabled = !token || busy || !editor.getValue().trim();
+  get('run').disabled = !token || busy || !editor.getValue().trim() || !availableCompilers.includes(get('compiler').value);
+  get('interface-mode').value = interfaceMode;
+  get('interface-mode').disabled = busy || connecting;
+  get('advanced-options').disabled = busy || connecting;
+  for (const id of ['compiler-controls', 'option-controls', 'compiler-version', 'standard-note',
+    'options-note', 'build-note', 'connection', 'check', 'compile', 'rerun', 'quick-fix-controls', 'quick-fix-details', 'advanced-help']) {
+    get(id).hidden = isSimple();
+  }
+  for (const id of ['simple-compiler', 'advanced-options', 'simple-help']) get(id).hidden = !isSimple();
+  get('simple-compiler').textContent = token && !availableCompilers.includes('gfortran') ?
+    'GNU Fortran unavailable. Choose Advanced options to select another compiler.' : 'GNU Fortran';
+  get('compilation-pane').hidden = isSimple() && !compilationFailed;
   get('compile').disabled = get('run').disabled || !features.compile_only;
   get('format').disabled = get('run').disabled || !features.format || !editor.undoableClear;
   get('check').disabled = get('run').disabled || !features.check;
@@ -105,7 +130,8 @@ async function connect() {
     if (!session.token) throw new Error('The service did not provide a session token.');
     const compilers = session.compilers || ['gfortran'];
     for (const option of get('compiler').options) option.disabled = !compilers.includes(option.value);
-    if (!compilers.includes(get('compiler').value)) {
+    availableCompilers = compilers;
+    if (!isSimple() && !compilers.includes(get('compiler').value)) {
       const supported = [...get('compiler').options].find(option => !option.disabled);
       if (!supported) throw new Error('No supported compiler is available.');
       get('compiler').value = supported.value;
@@ -118,6 +144,7 @@ async function connect() {
     get('status').textContent = 'Ready';
     // No transpiler pin is needed: this site submits only edited Fortran.
   } catch (error) {
+    compilationFailed = true;
     get('connection').textContent = 'Execution service unavailable. Editing and downloading still work; try Reconnect.';
     get('diagnostics').textContent = String(error);
     get('status').textContent = 'Not connected';
@@ -125,6 +152,7 @@ async function connect() {
 }
 
 function show(result) {
+  compilationFailed = result.build?.ok === false || result.ok === false || Boolean(result.error);
   get('build-title').textContent = result.interpreter ? (result.build ? 'Syntax checking' : 'Interpreter diagnostics') : 'Compilation';
   const version = result.compiler_version;
   get('result-compiler-version').hidden = !(result.build || result.reused_executable || (result.interpreter && result.execution));
@@ -164,6 +192,11 @@ function show(result) {
 
 async function run(mode = 'fortran-edit') {
   if (!token || active) return;
+  if (isSimple()) {
+    resetSimpleSettings();
+    if (!availableCompilers.includes('gfortran') || !['fortran-edit', 'format'].includes(mode)) return;
+  }
+  if (!availableCompilers.includes(get('compiler').value)) return;
   if (mode === 'fortran-compile' && !features.compile_only) return;
   if (mode === 'format' && (!features.format || !editor.undoableClear)) return;
   if (mode === 'check' && !features.check) return;
@@ -187,7 +220,7 @@ async function run(mode = 'fortran-edit') {
   try {
     const created = await api('jobs', 'POST', {
       source: ['format', 'check'].includes(mode) ? source : '', mode, automatic: false,
-      ...(['format', 'check'].includes(mode) ? {} : mode === 'fortran-run' ? {artifact_id: artifactId} : {fortran_source: source, ...(features.run_again && get('compiler').value !== 'ofort' ? {retain_executable: true} : {})}),
+      ...(['format', 'check'].includes(mode) ? {} : mode === 'fortran-run' ? {artifact_id: artifactId} : {fortran_source: source, ...(features.run_again && !isSimple() && get('compiler').value !== 'ofort' ? {retain_executable: true} : {})}),
       compiler: ['format', 'check'].includes(mode) ? 'gfortran' : get('compiler').value,
       ...(!['format', 'check'].includes(mode) && catalog[get('compiler').value] ? {compiler_options: {
         preset: get('preset').value, warnings: Boolean(get('warnings').checked), fast_math: Boolean(get('fast-math').checked),
@@ -219,6 +252,7 @@ async function run(mode = 'fortran-edit') {
             get('status').textContent = `Formatted with fprettify · ${Number(result.seconds || 0).toFixed(2)} s. Ctrl+Z to undo.`;
             if (!changed) get('status').textContent = 'Already formatted; source unchanged.';
           } catch (error) {
+            compilationFailed = true;
             get('status').textContent = 'Formatting failed; source unchanged';
             get('diagnostics').textContent = String(error);
           }
@@ -234,6 +268,7 @@ async function run(mode = 'fortran-edit') {
       await new Promise(resolve => setTimeout(resolve, 500));
     }
   } catch (error) {
+    if (mode !== 'check') compilationFailed = true;
     if (mode === 'fortran-run' && error.status === 404) invalidateBuild();
     if (job.id) api(`jobs/${job.id}/cancel`, 'POST', {}).catch(() => {});
     if (mode === 'check') get('check-status').textContent = `Fortitude check failed: ${error}`;
@@ -243,6 +278,29 @@ async function run(mode = 'fortran-edit') {
   } finally { active = null; controls(); }
 }
 
+function changeInterface(mode) {
+  if (active || connecting) { get('interface-mode').value = interfaceMode; return; }
+  interfaceMode = mode === 'simple' ? 'simple' : 'advanced';
+  let settingsChanged = false;
+  if (isSimple()) {
+    settingsChanged = resetSimpleSettings();
+    get('checks-pane').hidden = true;
+    get('check').setAttribute('aria-expanded', 'false');
+  } else if (token && availableCompilers.length && !availableCompilers.includes(get('compiler').value)) {
+    get('compiler').value = availableCompilers[0];
+    settingsChanged = true;
+  }
+  if (settingsChanged) {
+    invalidateBuild();
+    clearErrorInfo();
+    revision++;
+  }
+  controls();
+  editor.refresh();
+  get('interface-mode').focus();
+}
+get('interface-mode').onchange = () => changeInterface(get('interface-mode').value);
+get('advanced-options').onclick = () => changeInterface('advanced');
 get('run').onclick = () => run();
 get('compile').onclick = () => run('fortran-compile');
 get('format').onclick = () => run('format');
@@ -271,6 +329,8 @@ get('clear').onclick = () => {
   if (editor.getValue() && !editor.undoableClear && !confirm('Clear the Fortran input?')) return;
   editor.setValue('', true); editor.focus();
   for (const id of ['output', 'diagnostics', 'run-time', 'build-time', 'checks', 'check-time']) get(id).textContent = '';
+  compilationFailed = false;
+  controls();
   get('result-compiler-version').textContent = ''; get('result-compiler-version').hidden = true;
 };
 get('load-file').onclick = () => get('file').click();
