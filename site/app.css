@@ -28,6 +28,11 @@
 #source-pane > textarea { resize: none; }
 .results-pane { display: flex; flex-direction: column; gap: 18px; min-width: 0; min-height: 0; }
 .results-pane .diagnostics { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+.results-pane .diagnostics[hidden] { display: none; }
+.checks-header { display: flex; flex: none; align-items: center; justify-content: space-between; gap: 8px; }
+.checks-header h2 { min-width: 0; }
+#hide-checks { flex: none; padding: 4px 8px; font-size: 12px; }
+#check-status { flex: none; }
 .diagnostics h2 { flex: none; }
 .diagnostics pre { flex: 1; min-height: 0; overflow: auto; }
 #connection { font-size: 14px; }

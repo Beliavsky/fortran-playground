@@ -32,6 +32,8 @@ With **ofort**, **Compile** becomes **Check syntax**, and **Compile and Run** be
 | **Go to first error** | Navigates to the first recognized source error, including in the plain-text fallback. |
 | **Fix error** | Applies a supported experimental syntax repair as one undoable edit; see below. |
 
+The Fortitude pane is hidden initially so Program output and Compilation fill the results column. Clicking **Check** reveals it immediately with a progress message; findings, successful checks, and errors remain visible afterward. **Hide checks** reclaims the space without discarding the results. Clicking **Check** again reveals the pane and starts a new check.
+
 Formatting is not syntax validation or automatic repair. Failed, cancelled, or stale formatting results never replace the source. Fortitude checking preserves source, compiler output, and any retained executable. Hosted formatting and checking use the shared service and its limits.
 
 Recognized errors in the submitted `input_p.f90` source receive a red line background and gutter marker; reported columns are underlined. Hover to read the message, or click a marker to navigate. Source or option changes and new compilations clear stale markers. Warnings and helper-file errors remain in the compilation log without source markers. GNU, Intel, LLVM Flang, and LFortran diagnostic formats are recognized; other diagnostics still appear in the log.

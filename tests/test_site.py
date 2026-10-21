@@ -70,9 +70,12 @@ class SiteTests(unittest.TestCase):
                 super().__init__()
                 self.stack = []
                 self.ancestors = {}
+                self.attributes = {}
 
             def handle_starttag(self, tag, attrs):
                 attrs = dict(attrs)
+                if attrs.get('id'):
+                    self.attributes[attrs['id']] = attrs
                 if attrs.get('id') in {'fortran', 'output', 'diagnostics', 'compile', 'run', 'rerun', 'stop', 'first-error', 'fix-error', 'compiler', 'preset'}:
                     self.ancestors[attrs['id']] = list(self.stack)
                 if tag not in {'input', 'link', 'meta', 'br'}:
@@ -85,6 +88,10 @@ class SiteTests(unittest.TestCase):
         html = (ROOT / 'site/index.html').read_text(encoding='utf-8')
         panes = Panes()
         panes.feed(html)
+        self.assertIn('hidden', panes.attributes['checks-pane'])
+        self.assertEqual(panes.attributes['check']['aria-controls'], 'checks-pane')
+        self.assertEqual(panes.attributes['check']['aria-expanded'], 'false')
+        self.assertEqual(panes.attributes['hide-checks']['aria-controls'], 'checks-pane')
         self.assertIn('source-pane', panes.ancestors['fortran'])
         for target in ('output', 'diagnostics'):
             self.assertIn('results-pane', panes.ancestors[target])

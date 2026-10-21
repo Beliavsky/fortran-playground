@@ -173,6 +173,11 @@ async function run(mode = 'fortran-edit') {
     get('status').textContent = 'Enter between 1 byte and 100 KB of Fortran.'; return;
   }
   const job = active = {id: null, revision, stopping: false};
+  if (mode === 'check') {
+    get('checks-pane').hidden = false;
+    get('check').setAttribute('aria-expanded', 'true');
+    get('check-status').textContent = 'Checking with Fortitude…';
+  }
   const artifactId = retained?.id;
   if (!['fortran-run', 'check'].includes(mode)) { invalidateBuild(); clearErrorInfo(); }
   controls(); get('status').textContent = mode === 'check' ? 'Checking with Fortitude…' : mode === 'format' ? 'Formatting…' : mode === 'fortran-run' ? 'Running retained build…' : mode === 'fortran-compile' ? 'Compiling…' : 'Compiling and running…';
@@ -195,9 +200,13 @@ async function run(mode = 'fortran-edit') {
     while (active === job) {
       const state = await api(`jobs/${job.id}`);
       if (state.state === 'done') {
-        if (job.stopping) get('status').textContent = 'Stopped';
+        if (job.stopping) {
+          get('status').textContent = 'Stopped';
+          if (mode === 'check') get('check-status').textContent = 'Check stopped; previous results are retained.';
+        }
         else if (revision === job.revision && mode === 'check') {
           const result = state.result;
+          get('check-status').textContent = '';
           get('checks').textContent = result.error || `${result.checking?.stdout || ''}${result.checking?.stderr || ''}` || 'No findings.';
           get('check-time').textContent = `${Number(result.seconds || 0).toFixed(2)} s`;
           get('status').textContent = !result.ok ? 'Fortitude check failed; source unchanged' : result.findings ? 'Fortitude reported issues; source unchanged' : 'Fortitude check passed; source unchanged';
@@ -215,7 +224,10 @@ async function run(mode = 'fortran-edit') {
           }
         }
         else if (revision === job.revision) show(state.result);
-        else get('status').textContent = 'Previous result discarded — source or options changed';
+        else {
+          get('status').textContent = 'Previous result discarded — source or options changed';
+          if (mode === 'check') get('check-status').textContent = 'Check result discarded because source or options changed; previous results are retained.';
+        }
         break;
       }
       if (Date.now() > deadline) throw new Error('Job response timed out. Try Reconnect.');
@@ -224,7 +236,8 @@ async function run(mode = 'fortran-edit') {
   } catch (error) {
     if (mode === 'fortran-run' && error.status === 404) invalidateBuild();
     if (job.id) api(`jobs/${job.id}/cancel`, 'POST', {}).catch(() => {});
-    get('diagnostics').textContent = String(error);
+    if (mode === 'check') get('check-status').textContent = `Fortitude check failed: ${error}`;
+    else get('diagnostics').textContent = String(error);
     get('status').textContent = 'Execution request failed';
     if (!error.status || error.status === 401 || error.status === 403) token = '';
   } finally { active = null; controls(); }
@@ -234,6 +247,12 @@ get('run').onclick = () => run();
 get('compile').onclick = () => run('fortran-compile');
 get('format').onclick = () => run('format');
 get('check').onclick = () => run('check');
+get('hide-checks').onclick = () => {
+  get('checks-pane').hidden = true;
+  get('check').setAttribute('aria-expanded', 'false');
+  if (get('check').disabled) editor.focus();
+  else get('check').focus();
+};
 get('rerun').onclick = () => run('fortran-run');
 get('first-error').onclick = () => editor.goToDiagnostic();
 get('connect').onclick = connect;

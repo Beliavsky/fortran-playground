@@ -61,7 +61,7 @@
         <label for="fortran">Fortran input <span id="fortran-lines" class="line-count">0 lines</span></label>
         <div class="source-actions" role="group" aria-label="Fortran execution controls">
           <button id="format" type="button" title="Format Fortran with fprettify (Undo restores the original)" disabled>Format</button>
-          <button id="check" type="button" title="Check Fortran with Fortitude; no changes or execution" disabled>Check</button>
+          <button id="check" type="button" title="Check Fortran with Fortitude; no changes or execution" aria-controls="checks-pane" aria-expanded="false" disabled>Check</button>
           <button id="compile" type="button" disabled>Compile</button>
           <button id="run" class="primary" type="button" disabled>Compile and Run</button>
           <button id="rerun" type="button" disabled>Run Again</button>
@@ -75,7 +75,14 @@
     <div id="results-pane" class="results-pane">
       <section class="diagnostics"><h2>Program output <span id="run-time" class="line-count"></span></h2><pre id="output">Not run.</pre></section>
       <section class="diagnostics"><h2><span id="build-title">Compilation</span> <span id="build-time" class="line-count"></span></h2><p id="result-compiler-version" class="version" hidden></p><pre id="diagnostics">Not compiled.</pre></section>
-      <section class="diagnostics"><h2>Fortitude checks <span id="check-time" class="line-count"></span></h2><pre id="checks">Not checked. Uses Fortitude's default rules and Fortran 2018 target; not a substitute for compilation.</pre></section>
+      <section id="checks-pane" class="diagnostics" hidden>
+        <div class="checks-header">
+          <h2>Fortitude checks <span id="check-time" class="line-count"></span></h2>
+          <button id="hide-checks" type="button" aria-controls="checks-pane">Hide checks</button>
+        </div>
+        <p id="check-status" class="version" role="status"></p>
+        <pre id="checks">Not checked. Uses Fortitude's default rules and Fortran 2018 target; not a substitute for compilation.</pre>
+      </section>
     </div>
   </div>
   <footer>

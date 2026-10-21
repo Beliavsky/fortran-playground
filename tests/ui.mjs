@@ -14,6 +14,7 @@ Object.defineProperty(globalThis, 'navigator', {configurable: true, value: {
 globalThis.document = {
   getElementById(id) {
     if (!elements.has(id)) elements.set(id, {value: '', textContent: '', disabled: false,
+      attributes: {}, setAttribute(name, value) {this.attributes[name] = value;},
       options: [], appendChild(option) {this.options.push(option);}, listeners: {}, addEventListener(name, fn) {this.listeners[name] = fn;}, focus() {}, click() {},
       select() {this.selected = true;}, setSelectionRange(from, to) {this.selection = [from, to];}});
     return elements.get(id);
@@ -21,6 +22,7 @@ globalThis.document = {
   createElement() {return {click() {}};},
 };
 const get = id => document.getElementById(id);
+get('checks-pane').hidden = true; // Initial HTML state.
 get('compiler').value = 'gfortran';
 get('compiler').options = ['gfortran','ifx','flang','lfortran','ofort'].map(value => ({value}));
 get('preset').value = 'default';
@@ -30,7 +32,7 @@ get('preset').options = ['default','debug','optimized','strict'].map(value => ({
 let allowReplace = true, confirmations = 0;
 globalThis.confirm = () => {confirmations++; return allowReplace;};
 let submissions = 0, payload, state = 'done', sessionFails = false, cancelled = 0, legacy = false, expired = false, buildOK = true, buildError = '';
-let checkOK = true, findings = true;
+let checkOK = true, findings = true, checkRequestFails = false;
 globalThis.fetch = async (url, options = {}) => {
   let result;
   if (url === './service.json') result = {url: 'https://execute.example.org'};
@@ -45,6 +47,7 @@ globalThis.fetch = async (url, options = {}) => {
           standard_note: 'GNU rejects extensions beyond the selected standard.'})},
         ofort: {presets: {default: []}, extras: {}, standards: {}, interpreter: true}}};
   } else if (url.endsWith('/api/jobs')) {
+    if (checkRequestFails && JSON.parse(options.body).mode === 'check') throw new Error('Check request offline');
     submissions++; payload = JSON.parse(options.body); result = {id: 'job'};
   } else if (url.endsWith('/cancel')) {cancelled++; state = 'done'; result = {};}
   else if (payload?.mode === 'check') result = {state, result: {ok: checkOK, findings, seconds: 0.1,
@@ -61,6 +64,7 @@ globalThis.fetch = async (url, options = {}) => {
 };
 await import('../site/app.mjs');
 assert.equal(submissions, 0); // Connecting/loading never executes a program.
+assert.equal(get('checks-pane').hidden, true);
 const firstExample = Object.keys(examples)[0];
 assert.equal(get('example').value, firstExample || '');
 assert.deepEqual(get('example').options.map(({value, textContent}) => [value, textContent]), Object.entries(exampleLabels));
@@ -141,7 +145,11 @@ assert.equal(payload.retain_executable, true);
 assert.equal(get('rerun').disabled, false);
 const beforeCheck = get('fortran').value;
 const compilationBeforeCheck = get('diagnostics').textContent;
-await get('check').onclick();
+const firstCheck = get('check').onclick();
+assert.equal(get('checks-pane').hidden, false);
+assert.equal(get('check').attributes['aria-expanded'], 'true');
+assert.match(get('check-status').textContent, /Checking/);
+await firstCheck;
 assert.equal(payload.mode, 'check');
 assert.equal(payload.source, beforeCheck);
 assert.equal(payload.fortran_source, undefined);
@@ -153,11 +161,19 @@ assert.equal(get('rerun').disabled, false);
 assert.match(get('checks').textContent, /C001/);
 assert.equal(get('check-time').textContent, '0.10 s');
 assert.match(get('status').textContent, /reported issues/);
+const savedChecks = get('checks').textContent;
+get('hide-checks').onclick();
+assert.equal(get('checks-pane').hidden, true);
+assert.equal(get('check').attributes['aria-expanded'], 'false');
+assert.equal(get('checks').textContent, savedChecks);
 findings = false;
 await get('check').onclick();
+assert.equal(get('checks-pane').hidden, false);
 assert.match(get('status').textContent, /check passed/);
+get('hide-checks').onclick();
 checkOK = false;
 await get('check').onclick();
+assert.equal(get('checks-pane').hidden, false);
 assert.match(get('checks').textContent, /unavailable/);
 assert.equal(get('fortran').value, beforeCheck);
 checkOK = true;
@@ -166,10 +182,20 @@ const previousChecks = get('checks').textContent;
 const checking = get('check').onclick();
 await new Promise(resolve => setTimeout(resolve, 10));
 assert.equal(get('check').disabled, true);
+get('hide-checks').onclick(); // Hiding is allowed during a pending check.
 get('fortran').value = 'program changed\nend program changed\n'; get('fortran').listeners.input();
 state = 'done'; await checking;
 assert.match(get('status').textContent, /discarded/);
 assert.equal(get('checks').textContent, previousChecks);
+assert.equal(get('checks-pane').hidden, true); // Completion does not override hiding.
+assert.match(get('check-status').textContent, /discarded/);
+checkRequestFails = true;
+await get('check').onclick();
+assert.equal(get('checks-pane').hidden, false);
+assert.match(get('check-status').textContent, /Check request offline/);
+assert.equal(get('diagnostics').textContent, compilationBeforeCheck);
+checkRequestFails = false;
+await get('connect').onclick();
 get('fortran').value = beforeCheck; get('fortran').listeners.input();
 await get('compile').onclick(); // Restore a retained build for the following tests.
 await get('rerun').onclick();
