@@ -47,7 +47,7 @@ Update `tests/example_results.json` to match your set of programs. Every example
 
 Update the title, introductory text, and repository link in `site/index.html`, and adjust the README for your site. Keep attribution for adapted examples and dependencies. Relative frontend asset URLs support a different repository name or project path.
 
-For a beginner-focused site, set `interfaceMode: 'simple'` in `site/config.mjs`. This starts the reduced interface with gfortran and compiler defaults; visitors can switch to Advanced. The repository's default is `advanced`. See [the interface descriptions](../README.md#simple-and-advanced-interfaces). Your backend must advertise gfortran for Simple to run programs.
+For a beginner-focused site, set `interfaceMode: 'simple'` in `site/config.mjs`. This starts the reduced interface with gfortran and compiler defaults; visitors can switch to Advanced. The repository's default is `advanced`. Shared-code links override that default: they open Simple unless they include `&interface=advanced`. Copied share links preserve the selected interface. See [the interface descriptions](../README.md#simple-and-advanced-interfaces). Your backend must advertise gfortran for Simple to run programs.
 
 ## 2. Obtain the backend and configure Modal
 

@@ -4,7 +4,7 @@ import {parseCompilerErrors} from './diagnostics.mjs';
 import {playgroundConfig} from './config.mjs';
 import {createQuickFixControls} from './quick_fix_controls.mjs';
 import {applyFormatting} from './formatting.mjs';
-import {sourceFromHash, createShareLink} from './sharing.mjs';
+import {sharedCodeFromHash, createShareLink} from './sharing.mjs';
 import {serviceOrigin} from './service_config.mjs';
 
 const get = id => document.getElementById(id);
@@ -360,7 +360,7 @@ get('download').onclick = () => {
 get('share').onclick = async () => {
   get('share-link-field').hidden = true;
   try {
-    const link = createShareLink(location.href, editor.getValue());
+    const link = createShareLink(location.href, editor.getValue(), interfaceMode);
     get('share-link').value = link;
     try {
       await navigator.clipboard.writeText(link);
@@ -377,15 +377,19 @@ get('share').onclick = async () => {
 
 function loadSharedCode(initial = false) {
   try {
-    const source = sourceFromHash(location.hash);
-    if (source === null || source === editor.getValue()) return;
+    const shared = sharedCodeFromHash(location.hash);
+    if (shared === null) return;
+    const {source, interfaceMode: sharedMode} = shared;
+    if (source === editor.getValue() && sharedMode === interfaceMode) return;
+    if (active || connecting) throw new Error('Wait for the current operation to finish before opening shared code.');
     if (!initial && editor.getValue().trim() && !confirm('Replace the Fortran input with code from this shared link?')) {
       get('share-status').textContent = 'Shared code was not loaded; your input is unchanged.';
       return;
     }
-    editor.setValue(source, !initial);
+    changeInterface(sharedMode);
+    if (source !== editor.getValue()) editor.setValue(source, !initial);
     filename = 'main.f90';
-    get('share-status').textContent = 'Code loaded from a shared link. Choose Compile or Compile and Run when ready.';
+    get('share-status').textContent = `Code loaded from a shared link. Choose ${isSimple() ? 'Run' : 'Compile or Compile and Run'} when ready.`;
   } catch (error) { get('share-status').textContent = String(error); }
 }
 for (const id of ['compiler', 'standard', 'preset', 'warnings', 'fast-math']) get(id).onchange = () => {

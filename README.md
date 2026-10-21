@@ -15,7 +15,7 @@ The editor provides syntax coloring, line counts, undo, and navigation to recogn
 
 ### Simple and Advanced interfaces
 
-Use the **Interface** menu to choose **Simple** or **Advanced**. The default is Advanced; educational forks can set `interfaceMode: 'simple'` in [`site/config.mjs`](site/config.mjs) to start with Simple. Reloading uses the configured default. Shared-code links contain source only and do not change the interface mode.
+Use the **Interface** menu to choose **Simple** or **Advanced**. Ordinary visits default to Advanced; educational forks can set `interfaceMode: 'simple'` in [`site/config.mjs`](site/config.mjs) to start with Simple. Shared-code links default to Simple and can explicitly request Advanced, overriding the site's configured default. Reloading follows the link's mode when shared code is present, otherwise the configured default.
 
 Simple uses **GNU Fortran with compiler defaults**. Its primary **Run** button compiles and executes the program. Examples, file loading, downloading, sharing, Format, Stop, and error navigation remain available. Compiler/standard/flag selectors, Compile-only, Run Again, Fortitude Check, and experimental quick-fix controls are hidden. **Advanced options** switches to the full interface to access those controls.
 
@@ -58,13 +58,15 @@ Recognized errors in the submitted `input_p.f90` source receive a red line backg
 
 ## Sharing code with a link
 
-Click **Copy share link** to create a link containing the current source. If clipboard access is unavailable, a selected text field lets you copy it manually. Anyone opening the link sees the code in the editor and chooses when to compile or run it. The link includes source only, without compiler settings, results, or session tokens.
+Click **Copy share link** to create a link containing the current source and selected interface mode. If clipboard access is unavailable, a selected text field lets you copy it manually. Anyone opening the link sees the code in the editor and chooses when to compile or run it. The link does not include compiler selections, flags, results, or session tokens.
 
 The public format is:
 
 ```text
 https://beliavsky.github.io/fortran-playground/#code=URL_ENCODED_FORTRAN
 ```
+
+This format, including existing generated links, opens Simple. Append `&interface=advanced` to request Advanced, or `&interface=simple` to select Simple explicitly. **Copy share link** writes the selected mode explicitly. Percent-encode the complete source before appending the interface parameter; literal ampersands in the program must be encoded as `%26`. An Advanced link exposes the controls but does not carry compiler settings.
 
 For example, [open a short Hello program](https://beliavsky.github.io/fortran-playground/#code=print%20*%2C%20%22Hello%22%0Aend%0A).
 
@@ -87,7 +89,7 @@ link = 'https://beliavsky.github.io/fortran-playground/#code=' + quote(source, s
 
 The source is embedded after `#`; opening the link does not fetch an external source file or require a storage service. The fragment is not sent to GitHub Pages in the page request. Anyone with the link can read the code, and the link can remain in browser history. Explicit compilation, execution, formatting, or checking sends source to the execution service as usual.
 
-Empty, incorrectly encoded, or oversized shared source is rejected with a message. Changing to another shared-code fragment in the same tab asks before replacing nonempty input. Opening a shared link never automatically submits a job. Long links may be truncated by browsers, messaging tools, or forums; sharing is best suited to short examples even though the source limit remains 100 KB.
+Empty, incorrectly encoded, or oversized shared source and invalid interface options are rejected with a message. Changing to another shared-code fragment in the same tab asks before replacing nonempty input or changing its interface. Cancelling preserves both. Shared links cannot be loaded while a job or connection attempt is running; retry the link afterward. Opening a shared link never automatically submits a job. Long links may be truncated by browsers, messaging tools, or forums; sharing is best suited to short examples even though the source limit remains 100 KB.
 
 ### Generate a page of links from a repository
 
