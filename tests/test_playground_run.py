@@ -1,0 +1,207 @@
+from contextlib import redirect_stderr, redirect_stdout
+from io import BytesIO, StringIO
+import json
+from pathlib import Path
+import shutil
+import subprocess
+import sys
+import tempfile
+import unittest
+from unittest.mock import Mock, patch
+from urllib.error import HTTPError
+
+import xplayground_run as runner
+
+
+ROOT = Path(__file__).resolve().parents[1]
+MODULE = 'module greeting_mod\ncontains\nsubroutine hello()\nprint *, 42\nend subroutine\nend module\n'
+MAIN = 'program main\nuse greeting_mod\ncall hello()\nend program\n'
+
+
+def session():
+    return {'token': 'private-token', 'compilers': ['gfortran', 'ifx'],
+            'features': {'compile_only': True},
+            'compiler_versions': {'gfortran': 'GNU test', 'ifx': 'Intel test'},
+            'compiler_options': {name: {'presets': {'default': [], 'debug': ['-g']},
+                'standards': {'2018': ['-std=f2018']},
+                'extras': {'preprocess': ['-cpp'], 'warnings': ['-Wall']}}
+                for name in ['gfortran', 'ifx']}}
+
+
+class SourceTests(unittest.TestCase):
+    def test_order_boundaries_bom_and_line_locations(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            first, second = root / 'module.f90', root / 'main.f90'
+            first.write_bytes(b'\xef\xbb\xbf' + MODULE.rstrip('\n').replace('\n', '\r\n').encode())
+            second.write_bytes(MAIN.encode())
+            source, sections = runner.combine_sources([first, second])
+            self.assertLess(source.index('module greeting_mod'), source.index('program main'))
+            self.assertIn('end module\n! --- Source:', source)
+            self.assertNotIn('\r', source)
+            self.assertNotIn('\ufeff', source)
+            line = sections[1].first_line + 1
+            notes = runner.diagnostic_locations(f'input_p.f90:{line}:4: error\ninput_p.f90({line}): error', sections)
+            self.assertEqual(notes, [f'input_p.f90:{line} -> {second}:2'])
+            self.assertEqual(runner.combine_sources([second])[0], MAIN)
+
+    def test_input_errors_and_combined_byte_limit(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            first, second = root / 'a.f90', root / 'b.f90'
+            first.write_bytes(('! ' + '\u03bb'*49998 + '\n').encode())
+            self.assertLessEqual(len(runner.combine_sources([first])[0].encode()), 100000)
+            second.write_text('end\n')
+            with self.assertRaisesRegex(ValueError, 'Combined source'):
+                runner.combine_sources([first, second])
+            with self.assertRaisesRegex(ValueError, 'more than once'):
+                runner.combine_sources([second, second])
+            first.write_bytes(b'\xff')
+            with self.assertRaisesRegex(ValueError, 'UTF-8'):
+                runner.combine_sources([first])
+            first.write_text(' \n')
+            with self.assertRaisesRegex(ValueError, 'empty'):
+                runner.combine_sources([first])
+            first.write_bytes(b'x'*100004)
+            with self.assertRaisesRegex(ValueError, '100 KB'):
+                runner.combine_sources([first])
+
+    @unittest.skipUnless(shutil.which('gfortran'), 'gfortran required')
+    def test_concatenated_module_and_main_compile_and_run(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            paths = [root / 'module.f90', root / 'main.f90']
+            for path, text in zip(paths, [MODULE, MAIN]):
+                path.write_text(text, encoding='utf-8')
+            source, _ = runner.combine_sources(paths)
+            (root / 'combined.f90').write_text(source, encoding='utf-8')
+            executable = root / 'program.exe'
+            compilation = subprocess.run(['gfortran', '-std=f2018', 'combined.f90', '-o', str(executable)],
+                cwd=root, capture_output=True, text=True, timeout=30)
+            self.assertEqual(compilation.returncode, 0, compilation.stderr)
+            output = subprocess.run([str(executable)], cwd=root, stdin=subprocess.DEVNULL,
+                capture_output=True, text=True, check=True, timeout=10).stdout
+            self.assertEqual(output.strip(), '42')
+
+
+class ClientTests(unittest.TestCase):
+    def client(self):
+        return runner.PlaygroundClient('https://execute.example.org', 'https://my-site.example.org')
+
+    def test_requests_use_application_token_and_explicit_origin(self):
+        client = self.client()
+        response = Mock()
+        response.__enter__ = Mock(side_effect=lambda: BytesIO(json.dumps(session()).encode()))
+        response.__exit__ = Mock(return_value=False)
+        with patch.object(runner, 'urlopen', return_value=response) as open_url:
+            client.connect()
+            request = open_url.call_args.args[0]
+            self.assertEqual(request.get_header('Origin'), 'https://my-site.example.org')
+            client.request('jobs', {'compiler': 'gfortran'})
+            request = open_url.call_args.args[0]
+            self.assertEqual(request.get_header('X-p2f-token'), 'private-token')
+            self.assertEqual(request.get_header('Content-type'), 'application/json')
+            self.assertEqual(json.loads(request.data), {'compiler': 'gfortran'})
+
+    def test_quota_error_is_not_retried(self):
+        client = self.client()
+        error = HTTPError('https://execute.example.org/api/jobs', 429, 'Too many', {},
+                          BytesIO(b'{"error":"Daily allowance reached"}'))
+        with patch.object(runner, 'urlopen', side_effect=error) as request:
+            with self.assertRaisesRegex(runner.ServiceError, 'HTTP 429: Daily allowance reached'):
+                client.request('jobs', {})
+            request.assert_called_once()
+
+    def test_polling_payload_and_compile_only(self):
+        client = self.client()
+        result = {'ok': True, 'build': {'ok': True}}
+        with patch.object(client, 'request', side_effect=[{'id': 'job'}, {'state': 'running'},
+                {'state': 'done', 'result': result}]) as request, patch.object(runner.time, 'sleep'):
+            returned, elapsed = client.run_job('end\n', 'gfortran', {'preprocess': True}, compile_only=True)
+        self.assertEqual(returned, result)
+        self.assertGreaterEqual(elapsed, 0)
+        self.assertEqual(request.call_args_list[0].args, ('jobs', {
+            'source': '', 'fortran_source': 'end\n', 'mode': 'fortran-compile',
+            'compiler': 'gfortran', 'automatic': False, 'compiler_options': {'preprocess': True}}))
+        self.assertEqual(request.call_count, 3)
+
+    def test_ctrl_c_and_timeout_cancel_pending_job(self):
+        client = self.client()
+        with patch.object(client, 'request', side_effect=[{'id': 'job'}, KeyboardInterrupt(), {}]) as request:
+            with self.assertRaises(KeyboardInterrupt):
+                client.run_job('end\n', 'gfortran', {})
+            self.assertEqual(request.call_args.args, ('jobs/job/cancel', {}))
+        with patch.object(client, 'request', side_effect=[{'id': 'job'}, {}]) as request, \
+                patch.object(runner.time, 'monotonic', side_effect=[0, 0, 2]):
+            with self.assertRaisesRegex(runner.ServiceError, 'timed out'):
+                client.run_job('end\n', 'gfortran', {}, timeout=1)
+            self.assertEqual(request.call_args.args, ('jobs/job/cancel', {}))
+
+    def test_service_origin_validation(self):
+        self.assertEqual(runner.origin_url('https://example.org:8443/'), 'https://example.org:8443')
+        for url in ['http://example.org', 'https://example.org/api', 'https://user:secret@example.org',
+                    'https://example.org/?key=value', 'https://example.org/#x', 'https://example.org:bad']:
+            with self.assertRaises(ValueError):
+                runner.origin_url(url)
+
+
+class CommandTests(unittest.TestCase):
+    def invoke(self, root, client, *options):
+        first, second = root / 'module.f90', root / 'main.f90'
+        first.write_text(MODULE)
+        second.write_text(MAIN)
+        stdout, stderr = StringIO(), StringIO()
+        with patch.object(runner, 'PlaygroundClient', return_value=client), redirect_stdout(stdout), redirect_stderr(stderr):
+            status = runner.main([str(first), str(second), '--service-url', 'https://execute.example.org', *options])
+        return status, stdout.getvalue(), stderr.getvalue()
+
+    def client(self):
+        client = Mock(service_url='https://execute.example.org')
+        client.connect.return_value = session()
+        client.run_job.side_effect = [({'ok': False, 'error': 'Compilation failed'}, 1.0),
+                                      ({'ok': True, 'execution': {'stdout': '42\n', 'seconds': 0.1}}, 1.1)]
+        return client
+
+    def test_multiple_compilers_continue_after_compilation_failure(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            client = self.client()
+            status, stdout, stderr = self.invoke(Path(temporary), client, '--compilers', 'gfortran', 'ifx', '--preprocess')
+            self.assertEqual(status, 1)
+            self.assertIn('Summary:', stdout)
+            self.assertIn('Compilation failed', stderr)
+            self.assertEqual([call.args[1] for call in client.run_job.call_args_list], ['gfortran', 'ifx'])
+            for call in client.run_job.call_args_list:
+                self.assertLess(call.args[0].index('module greeting_mod'), call.args[0].index('program main'))
+                self.assertTrue(call.args[2]['preprocess'])
+            self.assertNotIn('private-token', stdout + stderr)
+
+    def test_all_options_validated_before_submission(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            client = self.client()
+            status, _, stderr = self.invoke(Path(temporary), client, '--compilers', 'gfortran', 'lfortran')
+            self.assertEqual(status, 2)
+            self.assertIn('unavailable', stderr)
+            client.run_job.assert_not_called()
+            status, _, stderr = self.invoke(Path(temporary), client, '--fast-math')
+            self.assertEqual(status, 2)
+            self.assertIn('does not support', stderr)
+            client.run_job.assert_not_called()
+
+    def test_service_failure_stops_remaining_compilers(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            client = self.client()
+            client.run_job.side_effect = runner.ServiceError('HTTP 429: quota reached')
+            status, _, stderr = self.invoke(Path(temporary), client, '--compilers', 'gfortran', 'ifx')
+            self.assertEqual(status, 2)
+            self.assertIn('quota reached', stderr)
+            client.run_job.assert_called_once()
+
+    def test_help_needs_no_credentials_or_network(self):
+        result = subprocess.run([sys.executable, str(ROOT / 'xplayground_run.py'), '--help'],
+                                capture_output=True, text=True, check=True)
+        self.assertIn('--compilers', result.stdout)
+        self.assertIn('compilation order', result.stdout)
+
+
+if __name__ == '__main__':
+    unittest.main()

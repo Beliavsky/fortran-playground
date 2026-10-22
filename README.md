@@ -188,6 +188,51 @@ Without that comment, the label comes from the filename, with a numeric prefix r
 
 For local preview, `python xserve.py` generates the catalog at startup and whenever the browser requests it. Refresh after changing examples. With another static server, run `python xexamples.py` after changes first. An empty examples directory leaves the editor blank and disables example loading.
 
+## Python command-line client
+
+[`xplayground_run.py`](xplayground_run.py) submits local Fortran source to the hosted execution service and displays the compiler/version, build diagnostics, program output, and timings. It uses only Python's standard library; no local compiler, Modal account, or Modal credentials are required. Execution is remote and uses the same shared resources and server-enforced quotas as the website.
+
+```powershell
+# Compile and run with gfortran:
+python xplayground_run.py hello.f90
+
+# Compile and run sequentially with several compilers:
+python xplayground_run.py hello.f90 --compilers gfortran ifx flang lfortran
+
+# Combine a module and its caller, in the order supplied:
+python xplayground_run.py kinds.f90 solver.f90 main.f90 --compilers gfortran ifx
+
+# Other supported options:
+python xplayground_run.py example.f90 --compiler lfortran --preprocess
+python xplayground_run.py example.f90 --standard 2018 --preset debug --warnings
+python xplayground_run.py example.f90 --compile-only
+python xplayground_run.py --help
+```
+
+Put source filenames before `--compilers`; that option takes a list of compiler names. The default is gfortran, with compiler defaults and preprocessing off. Available options also include `--fast-math` and `--timeout SECONDS` (300 seconds per compiler by default). Compile-only performs a syntax check when selecting ofort. All compiler choices and requested options are checked against the service session before any jobs are submitted.
+
+### Multiple source files
+
+Multiple files are **concatenated into one submitted free-form source**, in argument order, with a newline and a `! --- Source: filename ---` comment at each boundary. Put modules before code that uses them. This is not separate compilation: all files must form one complete program and use compatible free-form syntax and compiler options. Preprocessor macro state extends across file boundaries. Additional include files, object files, external libraries, and per-file compiler options are not uploaded or resolved.
+
+Files must contain UTF-8 text. UTF-8 byte-order marks are stripped, line endings are normalized, and a final newline is supplied when needed. The combined source, including separator comments and added newlines, must fit the service's 100,000-byte limit. Duplicate input paths and empty files are rejected.
+
+The compiler sees `input_p.f90`. The client prints the combined-source line ranges and maps recognized GNU/Flang/LFortran and Intel diagnostic references back to original filenames and lines. Original diagnostic text is preserved. Other diagnostic formats and locations pointing to a separator comment remain in their original form.
+
+### Results, cancellation, and service configuration
+
+Each compiler gets a separate sequential job with a fresh build environment; files within a combined program do not consume separate jobs. Compilation or program failures are reported, and the client continues to the next requested compiler. It displays outputs individually without assuming differences imply incorrect results. HTTP/service failures, including quota errors, stop further submissions. Submissions are never automatically retried, since a request may have been accepted before a connection failure.
+
+The final summary lists completed compilers and total client times. Exit codes are **0** for all successful jobs, **1** for any completed job failure, **2** for local input/options or service failures, and **130** for Ctrl+C. On timeout or interruption, the client attempts to cancel a known pending job. Cancellation cannot be confirmed if the service is unreachable; a submission interrupted before its ID is received cannot be cancelled by the client. The total per-compiler timeout includes submission and polling, while an individual HTTP request is bounded to at most 30 seconds (five seconds for best-effort cancellation).
+
+By default, the client reads `site/service.json` beside the script, independently of the current working directory. To use an independently hosted service, supply its HTTPS origin and a frontend origin permitted by that backend:
+
+```powershell
+python xplayground_run.py hello.f90 --service-url https://execute.example.org --origin https://my-site.example.org
+```
+
+The Origin header identifies the configured frontend origin; it does not authenticate a site owner or bypass workload limits. The client requests a short-lived application session token and never needs the owner's Modal credentials. Keep experiments small; public-service access is subject to its current shared allowances and availability.
+
 ## Local development
 
 You need Python and Node/npm to build and preview. Install gfortran to run the compiler tests; a compiler is not needed merely to preview the frontend.
@@ -216,6 +261,7 @@ python xsite.py
 - **JavaScript tests** cover editor behavior, diagnostics, quick fixes, formatting, shared links, and UI interactions without submitting hosted jobs.
 - **Python tests** cover catalog generation, asset versioning, and frontend structure. With Node and gfortran on PATH, they compile and run every generated dropdown example twice: with compiler defaults, then with Fortran 2018 conformance, warnings as errors, and runtime checks. Expected labeled output is checked with floating-point tolerances.
 - **Quick-fix compiler tests** use real gfortran diagnostics to verify repairs and refusals.
+- **Command-line client tests** use mocked API requests for validation, polling, cancellation, quotas, and sequential compilers. A local gfortran test checks concatenated module/main sources. These automated tests submit no hosted jobs.
 - **The site build** generates `_site/` with content-versioned asset URLs.
 
 [`tests/example_results.json`](tests/example_results.json) specifies expected output for every example. Add or update its entry when changing a program. A new dropdown example without expected results fails the compiler test. Numerical references use known roots, exact solutions, or independently derived discrete formulas. Compiler builds use temporary directories; runs have closed stdin and timeouts. Compiler-dependent tests are skipped locally when their required tools are absent. The Pages workflow installs the tools before running them.
@@ -277,6 +323,7 @@ Then push any related frontend changes. Compile-only, retained builds, compiler-
 | `xeditor.py` | Bundles pinned CodeMirror assets and its MIT license |
 | `xexamples.py` | Generates the example catalog from Fortran files |
 | `xplayground_links.py` | Generates a standalone HTML page of shared-code links |
+| `xplayground_run.py` | Runs ordered local Fortran sources through the hosted execution API |
 | `xsite.py` | Builds the Pages artifact and versions browser assets |
 | `xserve.py` | Serves a trusted local preview |
 | `site/service.json` | Public execution-service URL; contains no credential |
