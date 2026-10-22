@@ -202,6 +202,9 @@ python xplayground_run.py hello.f90 --compilers gfortran ifx flang lfortran
 # Stop after the first compilation or execution failure:
 python xplayground_run.py hello.f90 --compilers gfortran ifx flang --fail-fast
 
+# Show program output, diagnostics, and the final timing summary:
+python xplayground_run.py hello.f90 --compilers gfortran ifx --terse
+
 # Combine a module and its caller, in the order supplied:
 python xplayground_run.py kinds.f90 solver.f90 main.f90 --compilers gfortran ifx
 
@@ -224,9 +227,13 @@ The compiler sees `input_p.f90`. The client prints the combined-source line rang
 
 ### Results, cancellation, and service configuration
 
+Use `--terse` to keep compiler-labeled PASS/FAIL results, program stdout and stderr, compilation diagnostics (including warnings on successful builds), and the final timing summary. It suppresses the service URL, source-range listing, submission messages, compiler versions, routine successful build logs, and individual timing lines. Diagnostic mappings to original source files, service errors, and `--fail-fast` stopping messages remain visible.
+
 Each compiler gets a separate sequential job with a fresh build environment; files within a combined program do not consume separate jobs. Compilation or program failures are reported, and by default the client continues to the next requested compiler. Add `--fail-fast` to stop after the first compilation or execution failure, keeping the completed results and returning exit code 1. It displays outputs individually without assuming differences imply incorrect results. HTTP/service failures, including quota errors, always stop further submissions regardless of `--fail-fast`. Submissions are never automatically retried, since a request may have been accepted before a connection failure.
 
-The final summary lists completed compilers and total client times. Exit codes are **0** for all successful jobs, **1** for any completed job failure, **2** for local input/options or service failures, and **130** for Ctrl+C. On timeout or interruption, the client attempts to cancel a known pending job. Cancellation cannot be confirmed if the service is unreachable; a submission interrupted before its ID is received cannot be cancelled by the client. The total per-compiler timeout includes submission and polling, while an individual HTTP request is bounded to at most 30 seconds (five seconds for best-effort cancellation).
+The final summary lists completed compilers with **Total**, **Compile**, **Run**, and **Other** times, all in seconds. Total is the client elapsed time, including submission and polling; Compile and Run are the times reported by the service. Other is Total minus Compile and Run, covering network requests, polling delays, queueing, and service overhead. A dash indicates an unavailable time, such as Run for a compile-only job or a compilation failure. A skipped run counts as zero when calculating Other; if an expected timing is missing, Other is also a dash. For an ofort run without a compilation stage, Other is Total minus Run and Compile displays a dash. For ofort compile-only jobs, Compile measures the syntax check.
+
+Exit codes are **0** for all successful jobs, **1** for any completed job failure, **2** for local input/options or service failures, and **130** for Ctrl+C. On timeout or interruption, the client attempts to cancel a known pending job. Cancellation cannot be confirmed if the service is unreachable; a submission interrupted before its ID is received cannot be cancelled by the client. The total per-compiler timeout includes submission and polling, while an individual HTTP request is bounded to at most 30 seconds (five seconds for best-effort cancellation).
 
 By default, the client reads `site/service.json` beside the script, independently of the current working directory. To use an independently hosted service, supply its HTTPS origin and a frontend origin permitted by that backend:
 

@@ -198,18 +198,25 @@ def selections(session, compilers, args):
     return result
 
 
-def print_result(compiler, result, sections, elapsed):
+def print_result(compiler, result, sections, elapsed, *, terse=False):
     print(f'\n=== {compiler}: {"PASS" if result["ok"] else "FAIL"} ===', flush=True)
-    if result.get('compiler_version'):
+    if not terse and result.get('compiler_version'):
         print(result['compiler_version'], flush=True)
     for key, title in [('build', 'Syntax check' if result.get('interpreter') else 'Compilation'),
                        ('execution', 'Program output')]:
         stage = result.get(key)
         if not stage:
             continue
-        print(f'{title} ({stage.get("seconds", 0):.3f} s):', flush=True)
+        seconds = stage.get('seconds')
+        timing = f'{seconds:.3f}' if seconds is not None else '-'
+        if not terse:
+            print(f'{title} ({timing}):', flush=True)
         for stream in ('stdout', 'stderr'):
             text = stage.get(stream, '')
+            if terse and key == 'build' and stage.get('ok') and stream == 'stdout':
+                # Suppress wrapper build chatter; preserve compiler diagnostics, including warnings.
+                text = ''.join(line for line in text.splitlines(keepends=True)
+                               if not line.startswith('Build:'))
             if text:
                 print(text, end='' if text.endswith('\n') else '\n',
                       file=sys.stderr if stream == 'stderr' else sys.stdout, flush=True)
@@ -218,7 +225,8 @@ def print_result(compiler, result, sections, elapsed):
                 print('Source location: ' + location, flush=True)
     if result.get('error'):
         print('Error: ' + str(result['error']), file=sys.stderr, flush=True)
-    print(f'Total client time: {elapsed:.3f} s', flush=True)
+    if not terse:
+        print(f'Total client time: {elapsed:.3f}', flush=True)
 
 
 def positive_seconds(value):
@@ -230,9 +238,14 @@ def positive_seconds(value):
 
 def print_summary(rows):
     if rows:
-        print('\nSummary:')
-        for compiler, ok, elapsed in rows:
-            print(f'  {compiler:10} {"PASS" if ok else "FAIL":4} {elapsed:.3f} s')
+        print('\nSummary: times in seconds')
+        print(f'  {"Compiler":10} {"Result":6} {"Total":>9} {"Compile":>9} {"Run":>9} {"Other":>9}')
+        for compiler, ok, elapsed, compile_seconds, run_seconds, other_seconds in rows:
+            compile_time = f'{compile_seconds:.3f}' if compile_seconds is not None else '-'
+            run_time = f'{run_seconds:.3f}' if run_seconds is not None else '-'
+            other_time = f'{other_seconds:.3f}' if other_seconds is not None else '-'
+            print(f'  {compiler:10} {"PASS" if ok else "FAIL":6} {elapsed:9.3f} '
+                  f'{compile_time:>9} {run_time:>9} {other_time:>9}')
 
 
 def main(argv=None):
@@ -243,6 +256,7 @@ def main(argv=None):
     group.add_argument('--compilers', choices=COMPILERS, nargs='+', help='Compilers to invoke sequentially')
     parser.add_argument('--compile-only', action='store_true', help='Compile without execution (syntax check for ofort)')
     parser.add_argument('--fail-fast', action='store_true', help='Stop after the first compilation or execution failure')
+    parser.add_argument('--terse', action='store_true', help='Show program output, diagnostics, and the final summary only')
     parser.add_argument('--standard', default='default', help='Language standard year, or default')
     parser.add_argument('--preset', default='default', choices=('default', 'debug', 'optimized', 'strict'))
     parser.add_argument('--warnings', action='store_true')
@@ -260,17 +274,29 @@ def main(argv=None):
         compilers = args.compilers or [args.compiler or 'gfortran']
         session = client.connect()
         options = selections(session, compilers, args)
-        print(f'Service: {client.service_url}\nCombined source: {len(source.encode("utf-8"))} bytes', flush=True)
-        if len(sections) > 1:
-            for section in sections:
-                print(f'  input_p.f90 lines {section.first_line}-{section.last_line}: {section.filename}', flush=True)
+        if not args.terse:
+            print(f'Service: {client.service_url}\nCombined source: {len(source.encode("utf-8"))} bytes', flush=True)
+            if len(sections) > 1:
+                for section in sections:
+                    print(f'  input_p.f90 lines {section.first_line}-{section.last_line}: {section.filename}', flush=True)
+            print('Times in seconds.', flush=True)
         for compiler in compilers:
-            version = session.get('compiler_versions', {}).get(compiler) or 'version unavailable'
-            print(f'\nSubmitting {compiler} ({version})...', flush=True)
+            if not args.terse:
+                version = session.get('compiler_versions', {}).get(compiler) or 'version unavailable'
+                print(f'\nSubmitting {compiler} ({version})...', flush=True)
             result, elapsed = client.run_job(source, compiler, options[compiler],
                                              compile_only=args.compile_only, timeout=args.timeout)
-            print_result(compiler, result, sections, elapsed)
-            rows.append((compiler, result['ok'], elapsed))
+            print_result(compiler, result, sections, elapsed, terse=args.terse)
+            build = result.get('build') or {}
+            execution = result.get('execution') or {}
+            compile_seconds = build.get('seconds')
+            run_seconds = execution.get('seconds')
+            compile_skipped = compiler == 'ofort' and not args.compile_only and not build
+            run_skipped = not execution and (args.compile_only or build.get('ok') is False)
+            other_seconds = None
+            if (compile_seconds is not None or compile_skipped) and (run_seconds is not None or run_skipped):
+                other_seconds = elapsed - (compile_seconds or 0) - (run_seconds or 0)
+            rows.append((compiler, result['ok'], elapsed, compile_seconds, run_seconds, other_seconds))
             if args.fail_fast and not result['ok']:
                 print('Stopping after failure (--fail-fast); remaining compilers were not submitted.', flush=True)
                 break
@@ -283,7 +309,7 @@ def main(argv=None):
         print_summary(rows)
         return 2
     print_summary(rows)
-    return 0 if all(ok for _, ok, _ in rows) else 1
+    return 0 if all(row[1] for row in rows) else 1
 
 
 if __name__ == '__main__':

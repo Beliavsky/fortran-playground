@@ -175,6 +175,52 @@ class CommandTests(unittest.TestCase):
                 self.assertTrue(call.args[2]['preprocess'])
             self.assertNotIn('private-token', stdout + stderr)
 
+    def test_terse_keeps_output_warnings_and_summary(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            client = self.client()
+            client.run_job.side_effect = [({'ok': True, 'compiler_version': 'GNU test',
+                'build': {'ok': True, 'seconds': 0.2,
+                          'stdout': 'Build: gfortran input_p.f90\nWarning: stdout diagnostic\nBuild: PASS\n',
+                          'stderr': 'input_p.f90:3: Warning: unused variable\n'},
+                'execution': {'ok': True, 'seconds': 0.1, 'stdout': '42\n', 'stderr': 'program stderr\n'}}, 1.0)]
+            status, stdout, stderr = self.invoke(Path(temporary), client, '--terse')
+            self.assertEqual(status, 0)
+            for text in ['=== gfortran: PASS ===', '42\n', 'Warning: stdout diagnostic',
+                         'Source location:', 'Summary: times in seconds']:
+                self.assertIn(text, stdout)
+            for text in ['Service:', 'Combined source:', 'input_p.f90 lines', 'Submitting',
+                         'GNU test', 'Build:', 'Compilation (', 'Program output (', 'Total client time:']:
+                self.assertNotIn(text, stdout)
+            self.assertIn('Warning: unused variable', stderr)
+            self.assertIn('program stderr', stderr)
+
+    def test_terse_keeps_failure_diagnostics_and_stops(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            client = self.client()
+            client.run_job.side_effect = [({'ok': False, 'error': 'Compilation failed',
+                'build': {'ok': False, 'stdout': 'Build: FAIL\n',
+                          'stderr': 'input_p.f90:3: Error: invalid code\n', 'seconds': 0.2}}, 1.0)]
+            status, stdout, stderr = self.invoke(Path(temporary), client, '--terse', '--fail-fast',
+                                                 '--compilers', 'gfortran', 'ifx')
+            self.assertEqual(status, 1)
+            self.assertIn('=== gfortran: FAIL ===', stdout)
+            self.assertIn('Build: FAIL', stdout)
+            self.assertIn('Source location:', stdout)
+            self.assertIn('Stopping after failure (--fail-fast)', stdout)
+            self.assertIn('Summary:', stdout)
+            self.assertIn('Error: invalid code', stderr)
+            self.assertIn('Compilation failed', stderr)
+            client.run_job.assert_called_once()
+
+    def test_terse_keeps_service_errors(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            client = self.client()
+            client.run_job.side_effect = runner.ServiceError('HTTP 429: quota reached')
+            status, stdout, stderr = self.invoke(Path(temporary), client, '--terse')
+            self.assertEqual(status, 2)
+            self.assertEqual(stdout, '')
+            self.assertIn('HTTP 429: quota reached', stderr)
+
     def test_all_options_validated_before_submission(self):
         with tempfile.TemporaryDirectory() as temporary:
             client = self.client()
@@ -186,6 +232,67 @@ class CommandTests(unittest.TestCase):
             self.assertEqual(status, 2)
             self.assertIn('does not support', stderr)
             client.run_job.assert_not_called()
+
+    def test_summary_reports_total_compile_and_run_in_seconds(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            client = self.client()
+            client.run_job.side_effect = [
+                ({'ok': True, 'build': {'seconds': 0.276},
+                  'execution': {'stdout': '42\n', 'seconds': 0.031}}, 1.904),
+                ({'ok': True, 'build': {'seconds': 0.791},
+                  'execution': {'seconds': 0.032}}, 2.619)]
+            status, stdout, _ = self.invoke(Path(temporary), client, '--compilers', 'gfortran', 'ifx')
+            self.assertEqual(status, 0)
+            self.assertIn('Times in seconds.', stdout)
+            self.assertIn('Compilation (0.276):', stdout)
+            self.assertIn('Program output (0.031):', stdout)
+            self.assertIn('Total client time: 1.904\n', stdout)
+            summary = stdout.split('Summary: times in seconds\n')[1]
+            self.assertEqual([line.split() for line in summary.splitlines()], [
+                ['Compiler', 'Result', 'Total', 'Compile', 'Run', 'Other'],
+                ['gfortran', 'PASS', '1.904', '0.276', '0.031', '1.597'],
+                ['ifx', 'PASS', '2.619', '0.791', '0.032', '1.796']])
+
+    def test_summary_marks_unavailable_stage_times(self):
+        for ok, options in [(False, ()), (True, ('--compile-only',))]:
+            with self.subTest(ok=ok), tempfile.TemporaryDirectory() as temporary:
+                client = self.client()
+                client.run_job.side_effect = [({'ok': ok, 'build': {'ok': ok, 'seconds': 0.0}}, 1.0)]
+                status, stdout, _ = self.invoke(Path(temporary), client, *options)
+                self.assertEqual(status, 0 if ok else 1)
+                row = stdout.splitlines()[-1].split()
+                self.assertEqual(row, ['gfortran', 'PASS' if ok else 'FAIL', '1.000', '0.000', '-', '1.000'])
+
+    def test_ofort_other_without_compilation_stage(self):
+        cases = [
+            ({'ok': True, 'interpreter': True, 'execution': {'seconds': 0.125}},
+             (), ['ofort', 'PASS', '1.000', '-', '0.125', '0.875']),
+            ({'ok': True, 'interpreter': True, 'build': {'ok': True, 'seconds': 0.2}},
+             ('--compile-only',), ['ofort', 'PASS', '1.000', '0.200', '-', '0.800']),
+            ({'ok': True, 'interpreter': True, 'execution': {'ok': True}},
+             (), ['ofort', 'PASS', '1.000', '-', '-', '-']),
+            ({'ok': True, 'interpreter': True, 'build': {'ok': True}},
+             ('--compile-only',), ['ofort', 'PASS', '1.000', '-', '-', '-'])]
+        for result, options, expected in cases:
+            with self.subTest(result=result), tempfile.TemporaryDirectory() as temporary:
+                client = self.client()
+                client.connect.return_value['compilers'].append('ofort')
+                client.run_job.side_effect = [(result, 1.0)]
+                status, stdout, _ = self.invoke(Path(temporary), client, '--compiler', 'ofort', *options)
+                self.assertEqual(status, 0)
+                self.assertEqual(stdout.splitlines()[-1].split(), expected)
+
+    def test_other_requires_all_expected_timings(self):
+        for stages in [
+                {'build': {'ok': True, 'seconds': 0.2}},
+                {'build': {'ok': True, 'seconds': 0.2}, 'execution': {'ok': True}},
+                {'build': {'ok': True}, 'execution': {'ok': True, 'seconds': 0.1}}]:
+            with self.subTest(stages=stages), tempfile.TemporaryDirectory() as temporary:
+                client = self.client()
+                client.run_job.side_effect = [({'ok': True, **stages}, 1.0)]
+                status, stdout, _ = self.invoke(Path(temporary), client)
+                self.assertEqual(status, 0)
+                self.assertEqual(stdout.splitlines()[-1].split()[-1], '-')
 
     def test_fail_fast_stops_on_build_or_execution_failure(self):
         for stage in ('build', 'execution'):
@@ -222,6 +329,7 @@ class CommandTests(unittest.TestCase):
                                 capture_output=True, text=True, check=True)
         self.assertIn('--compilers', result.stdout)
         self.assertIn('--fail-fast', result.stdout)
+        self.assertIn('--terse', result.stdout)
         self.assertIn('compilation order', result.stdout)
 
 
