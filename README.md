@@ -272,7 +272,16 @@ Mappings come from the service catalog:
 | `--bounds-check` | `-fcheck=bounds` | `-check bounds` | Unavailable |
 | `--backtrace` | `-fbacktrace` | `-traceback` | Unavailable |
 
-LFortran and ofort have no mappings for these requests in the current catalog. Comparable options do not guarantee identical optimization or diagnostics. If any selected compiler or an older service lacks a requested mapping, the runner names it and stops before submitting any jobs. False check settings request no flags and need no mapping. The existing `--warnings`, `--preprocess`, `--fast-math`, and `--preset` controls remain available. Redeploy the shared backend to advertise the new mappings; translating them requires no additional API requests or sandbox launches.
+Optimization requests also have approximate mappings for LFortran and ofort:
+
+| Request | LFortran | ofort |
+| --- | --- | --- |
+| `--O 0` | Default mode (no extra flags) | Default interpreter mode |
+| `--O 1`, `--O 2`, `--O 3` | `--fast` | Default interpreter mode |
+
+The runner prints a note for every approximate or ignored optimization request, including with `--terse`. LFortran's `--fast` relaxes strict standard compliance and does not distinguish levels 1, 2, and 3. ofort ignores numbered optimization requests because its interpreter has no equivalent. Notes and mappings come from the service catalog. A LFortran `--O 0` request conflicts with an explicitly supplied `--fast`.
+
+Comparable options do not guarantee identical optimization or diagnostics. Unsupported bounds checks and backtraces remain errors. If any selected compiler or an older service lacks a requested mapping, the runner names it and stops before submitting any jobs. False check settings request no flags and need no mapping. The existing `--warnings`, `--preprocess`, `--fast-math`, and `--preset` controls remain available. Redeploy the shared backend to advertise the new mappings and notes; translating them requires no additional API requests or sandbox launches.
 
 ### Multiple source files
 

@@ -201,7 +201,7 @@ def additional_flags(spec, flags, additional):
     return flags + additional
 
 
-def portable_arguments(spec, common, compiler):
+def portable_arguments(spec, common, compiler, notes=None):
     """Translate intentions using service-owned mappings, without compiler probes."""
     arguments = []
     for key, value in common.items():
@@ -212,10 +212,13 @@ def portable_arguments(spec, common, compiler):
         if flags is None:
             raise ValueError(f'{compiler} does not support portable option {key}={choice} on this service')
         arguments.extend(flags)
+        note = spec.get('portable_option_notes', {}).get(key, {}).get(choice)
+        if note and notes is not None:
+            notes.append(f'Note: {compiler}: {note}')
     return arguments
 
 
-def selections(session, compilers, args):
+def selections(session, compilers, args, notes=None):
     """Validate every compiler before spending any job allowance."""
     if len(set(compilers)) != len(compilers):
         raise ValueError('List each compiler only once')
@@ -262,9 +265,14 @@ def selections(session, compilers, args):
                 if key not in spec.get('extras', {}):
                     raise ValueError(f'{compiler} does not support {key}')
                 options[key] = True
-        extra = portable_arguments(spec, common, compiler) + configured.get(compiler, [])
+        extra = portable_arguments(spec, common, compiler, notes) + configured.get(compiler, [])
         try:
-            effective_flags(spec, options, extra)
+            flags = effective_flags(spec, options, extra)
+            levels = spec.get('portable_options', {}).get('optimization', {})
+            if common.get('optimization') == 0 and levels.get('0') == []:
+                for choice in levels.values():
+                    if choice and any(flags[index:index + len(choice)] == choice for index in range(len(flags))):
+                        raise ValueError('Conflicting optimization options: default mode and ' + ' '.join(choice))
         except ValueError as error:
             raise ValueError(f'{compiler}: {error}') from error
         if extra:
@@ -364,13 +372,16 @@ def main(argv=None):
         client = PlaygroundClient(service_url, args.origin)
         compilers = args.compilers or [args.compiler or 'gfortran']
         session = client.connect()
-        options = selections(session, compilers, args)
+        notes = []
+        options = selections(session, compilers, args, notes)
         if not args.terse:
             print(f'Service: {client.service_url}\nCombined source: {len(source.encode("utf-8"))} bytes', flush=True)
             if len(sections) > 1:
                 for section in sections:
                     print(f'  input_p.f90 lines {section.first_line}-{section.last_line}: {section.filename}', flush=True)
             print('Times in seconds.', flush=True)
+        for note in notes:
+            print(note, flush=True)
         for compiler in compilers:
             if not args.terse:
                 version = session.get('compiler_versions', {}).get(compiler) or 'version unavailable'

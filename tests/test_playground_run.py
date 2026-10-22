@@ -261,6 +261,87 @@ class CommandTests(unittest.TestCase):
                 self.assertEqual(client.run_job.call_args_list[1].args[2]['additional'],
                                  ['-O3', '-check', 'bounds', '-traceback'])
 
+    def fallback_client(self):
+        client = self.client()
+        catalog = client.connect.return_value['compiler_options']
+        client.connect.return_value['compilers'] += ['flang', 'lfortran', 'ofort']
+        catalog['flang'] = {'presets': {'default': []},
+            'additional_options': {'optimization': [[f'-O{level}'] for level in range(4)]},
+            'portable_options': {'optimization': {str(level): [f'-O{level}'] for level in range(4)}}}
+        catalog['lfortran'] = {'presets': {'default': []},
+            'additional_options': {'fast_math': [['--fast']]},
+            'portable_options': {'optimization': {str(level): ['--fast'] if level else [] for level in range(4)}},
+            'portable_option_notes': {'optimization': {
+                str(level): f'optimization level {level} mapped to --fast; strict standard compliance is relaxed.'
+                    if level else 'optimization level 0 uses default mode; numbered levels are unavailable.'
+                for level in range(4)}}}
+        catalog['ofort'] = {'presets': {'default': []},
+            'portable_options': {'optimization': {str(level): [] for level in range(4)}},
+            'portable_option_notes': {'optimization': {
+                str(level): f'optimization level {level} ignored; interpreter has no equivalent.'
+                for level in range(4)}}}
+        client.run_job.side_effect = [({'ok': True}, 1.0)] * 5
+        return client
+
+    def test_optimization_fallbacks_and_notes_including_terse(self):
+        compilers = ['gfortran', 'ifx', 'flang', 'lfortran', 'ofort']
+        for level in range(4):
+            for terse in [False, True]:
+                with self.subTest(level=level, terse=terse), tempfile.TemporaryDirectory() as temporary:
+                    client = self.fallback_client()
+                    status, stdout, stderr = self.invoke(Path(temporary), client,
+                        '--compilers', *compilers, '--O', str(level), *(['--terse'] if terse else []))
+                    self.assertEqual(status, 0, stderr)
+                    self.assertEqual(client.run_job.call_count, 5)
+                    calls = client.run_job.call_args_list
+                    for call in calls[:3]:
+                        self.assertEqual(call.args[2]['additional'], [f'-O{level}'])
+                    self.assertEqual(calls[3].args[2].get('additional', []), ['--fast'] if level else [])
+                    self.assertNotIn('additional', calls[4].args[2])
+                    self.assertIn(f'Note: ofort: optimization level {level} ignored', stdout)
+                    self.assertIn(f'Note: lfortran: optimization level {level}', stdout)
+                    self.assertIn('compliance is relaxed' if level else 'default mode', stdout)
+                    self.assertEqual(stdout.count('Note:'), 2)
+                    self.assertNotIn('portable_option_notes', str(calls))
+
+    def test_common_optimization_uses_advertised_fallbacks(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            config = root / 'options.json'
+            config.write_text('{"common": {"optimization": 3}}')
+            client = self.fallback_client()
+            status, stdout, _ = self.invoke(root, client, '--compilers', 'lfortran', 'ofort',
+                                            '--options-file', str(config), '--terse')
+            self.assertEqual(status, 0)
+            self.assertEqual(client.run_job.call_args_list[0].args[2]['additional'], ['--fast'])
+            self.assertIn('Note: lfortran:', stdout)
+            self.assertIn('Note: ofort:', stdout)
+
+    def test_diagnostic_options_still_require_exact_support(self):
+        for compiler in ['lfortran', 'ofort']:
+            for option in ['--bounds-check', '--backtrace']:
+                with self.subTest(compiler=compiler, option=option), tempfile.TemporaryDirectory() as temporary:
+                    client = self.fallback_client()
+                    status, stdout, stderr = self.invoke(Path(temporary), client, '--compilers', 'gfortran', compiler,
+                                                         '--O', '3', option)
+                    self.assertEqual(status, 2)
+                    self.assertIn(f'{compiler} does not support portable option', stderr)
+                    self.assertNotIn('Note:', stdout)  # No fallback claims when preflight fails.
+                    client.run_job.assert_not_called()
+
+    def test_default_optimization_fallback_conflicts_with_fast_option(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            config = root / 'options.json'
+            config.write_text('{"lfortran": ["--fast"]}')
+            client = self.fallback_client()
+            status, stdout, stderr = self.invoke(root, client, '--compiler', 'lfortran',
+                                                 '--O', '0', '--options-file', str(config))
+            self.assertEqual(status, 2)
+            self.assertIn('lfortran: Conflicting optimization options', stderr)
+            self.assertNotIn('Note:', stdout)
+            client.run_job.assert_not_called()
+
     def test_common_options_cli_overrides_and_specific_arguments(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
