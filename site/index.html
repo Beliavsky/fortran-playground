@@ -36,6 +36,13 @@
     <button id="connect" type="button">Reconnect</button>
   </div>
   <p id="file-status" class="version" role="status">Files are read locally; compiling sends source to the service.</p>
+  <details id="owner-access" hidden>
+    <summary>Owner access</summary>
+    <label for="owner-key">Private owner key</label>
+    <input id="owner-key" type="password" maxlength="256" autocomplete="off" spellcheck="false" aria-describedby="owner-status">
+    <button id="clear-owner-key" type="button">Clear owner key</button>
+    <p id="owner-status" class="version" role="status">Owner requests bypass usage quotas. The key is kept only in this page.</p>
+  </details>
   <p id="share-status" class="version" role="status"></p>
   <div id="share-link-field" hidden>
     <label for="share-link">Share link (select and copy)</label>
@@ -43,7 +50,7 @@
   </div>
   <div id="compiler-controls" class="toolbar">
     <label for="compiler">Compiler / interpreter</label>
-    <select id="compiler" disabled><option value="gfortran">GNU Fortran</option><option value="ifx" disabled>Intel Fortran</option><option value="flang" disabled>LLVM Flang</option><option value="lfortran" disabled>LFortran</option><option value="ofort" disabled>ofort (interpreter, experimental)</option></select>
+    <select id="compiler" disabled><option value="gfortran">GNU Fortran (stable)</option><option value="gfortran17" disabled>GNU Fortran 17 (experimental, 2026-10-18)</option><option value="ifx" disabled>Intel Fortran</option><option value="flang" disabled>LLVM Flang</option><option value="lfortran" disabled>LFortran</option><option value="ofort" disabled>ofort (interpreter, experimental)</option></select>
     <label for="standard">Standard</label>
     <select id="standard" disabled><option value="default">Compiler default</option><option value="1995" disabled>1995</option><option value="2003" disabled>2003</option><option value="2008" disabled>2008</option><option value="2018" disabled>2018</option><option value="2023" disabled>2023</option></select>
     <label for="additional-options">Additional options</label>
@@ -59,7 +66,10 @@
     <label><input id="warnings" type="checkbox" disabled> Extra warnings</label>
     <label><input id="fast-math" type="checkbox" disabled> Fast math (may change results)</label>
     <label><input id="preprocess" type="checkbox" disabled> Enable preprocessing</label>
+    <label for="images">Coarrays</label>
+    <select id="images" disabled aria-describedby="coarray-note"><option value="0">Off</option><option value="1" disabled>1 image</option><option value="2" disabled>2 images</option><option value="4" disabled>4 images</option></select>
   </div>
+  <p id="coarray-note" class="version"></p>
   <p id="options-note" class="version">Helpers keep fixed build options.</p>
   <p id="build-note" class="version">Compile to enable Run Again.</p>
   <p id="freshness" class="version">No results yet.</p>

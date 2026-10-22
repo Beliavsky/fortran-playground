@@ -168,6 +168,8 @@ class SiteTests(unittest.TestCase):
                 source.write_text(code, encoding='utf-8')
                 for mode, flags in [('default', []), ('checked', [
                         '-std=f2018', '-Wall', '-Wextra', '-Werror', '-pedantic', '-fcheck=all'])]:
+                    if '! Coarray images:' in code:
+                        flags = [*flags, '-fcoarray=single']
                     with self.subTest(example=name, mode=mode):
                         compilation = subprocess.run(['gfortran', *flags, str(source), '-o', str(executable)],
                                                      cwd=work, capture_output=True, text=True, timeout=30)

@@ -19,4 +19,8 @@ for (const args of [['-warn'], ['-warn', 'none'], ['-o', 'other.exe'], ['@respon
 }
 assert.throws(() => compilerArguments({}, {}, ['-O2']), /unavailable/);
 assert.deepEqual(compilerArguments({}, {}, []), []);
+const intelCoarrays = {...spec, coarray_images: {'2': ['-coarray=shared', '-coarray-num-images=2']}};
+assert.deepEqual(compilerArguments(intelCoarrays, {images: 2}, ['-O2']),
+  ['-coarray=shared', '-coarray-num-images=2', '-O2']);
+assert.throws(() => compilerArguments(intelCoarrays, {images: 4}, []), /verified/);
 console.log('Compiler option token validation, multi-part flags, and conflicts passed.');

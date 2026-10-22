@@ -6,6 +6,13 @@ export function compilerArguments(spec, selection, additional = []) {
   }
   const flags = [...(spec?.presets?.[selection.preset || 'default'] || []),
     ...(spec?.standards?.[selection.standard || 'default'] || [])];
+  if (selection.images !== undefined) {
+    const coarrayFlags = spec?.coarray_images?.[String(selection.images)];
+    if (![1, 2, 4].includes(selection.images) || !coarrayFlags) {
+      throw new Error('This compiler/service has not verified the requested coarray image count.');
+    }
+    flags.push(...coarrayFlags);
+  }
   for (const key of ['warnings', 'fast_math', 'preprocess']) {
     if (selection[key]) flags.push(...(spec?.extras?.[key] || []));
   }

@@ -45,3 +45,12 @@ assert.throws(() => sourceFromHash('#code=' + encodeURIComponent('λ'.repeat(500
 assert.throws(() => createShareLink(base, 'λ'.repeat(50001)), /100 KB/);
 assert.throws(() => createShareLink(base, ' '), /empty/);
 console.log('Shared-code URL round trips, Unicode, malformed input and size limits passed.');
+for (const images of [1, 2, 4]) {
+  assert.deepEqual(sharedCodeFromHash(new URL(createShareLink(base, 'end', 'advanced', false, images)).hash),
+    {source: 'end', interfaceMode: 'advanced', preprocess: false, images});
+  assert.equal(sharedCodeFromHash(`#code=end&images=${images}`).interfaceMode, 'advanced');
+}
+for (const suffix of ['&images=3', '&images=true', '&images=2&images=4', '&images=2&interface=simple']) {
+  assert.throws(() => sharedCodeFromHash('#code=end' + suffix));
+}
+assert.throws(() => createShareLink(base, 'end', 'simple', false, 2), /Advanced/);

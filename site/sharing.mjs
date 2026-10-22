@@ -17,6 +17,7 @@ export function sharedCodeFromHash(hash) {
   let source;
   let interfaceMode = 'simple';
   let preprocess = false;
+  let images = 0;
   const seen = new Set();
   try {
     source = decodeURIComponent(encodedSource);
@@ -24,10 +25,13 @@ export function sharedCodeFromHash(hash) {
       const separator = option.indexOf('=');
       const key = option.slice(0, separator);
       const value = decodeURIComponent(option.slice(separator + 1));
-      if (separator < 0 || seen.has(key) || !['interface', 'preprocess'].includes(key)) throw new Error('Unknown or duplicate shared-link option.');
+      if (separator < 0 || seen.has(key) || !['interface', 'preprocess', 'images'].includes(key)) throw new Error('Unknown or duplicate shared-link option.');
       seen.add(key);
       if (key === 'interface') interfaceMode = value;
-      else {
+      else if (key === 'images') {
+        if (!['0', '1', '2', '4'].includes(value)) throw new Error('Shared-link images must be 0, 1, 2, or 4.');
+        images = Number(value);
+      } else {
         if (!['0', '1'].includes(value)) throw new Error('Shared-link preprocess must be 0 or 1.');
         preprocess = value === '1';
       }
@@ -42,21 +46,27 @@ export function sharedCodeFromHash(hash) {
     if (seen.has('interface') && interfaceMode === 'simple') throw new Error('Preprocessing requires the Advanced interface.');
     interfaceMode = 'advanced';
   }
+  if (images) {
+    if (seen.has('interface') && interfaceMode === 'simple') throw new Error('Coarrays require the Advanced interface.');
+    interfaceMode = 'advanced';
+  }
   validateSource(source);
-  return {source, interfaceMode, preprocess};
+  return {source, interfaceMode, preprocess, ...(images ? {images} : {})};
 }
 
 export function sourceFromHash(hash) {
   return sharedCodeFromHash(hash)?.source ?? null;
 }
 
-export function createShareLink(href, source, interfaceMode = 'simple', preprocess = false) {
+export function createShareLink(href, source, interfaceMode = 'simple', preprocess = false, images = 0) {
   validateSource(source);
   if (typeof preprocess !== 'boolean') throw new Error('Preprocessing must be a boolean.');
   if (preprocess && interfaceMode === 'simple') throw new Error('Preprocessing requires the Advanced interface.');
+  if (![0, 1, 2, 4].includes(images)) throw new Error('Coarray images must be 0, 1, 2, or 4.');
+  if (images && interfaceMode === 'simple') throw new Error('Coarrays require the Advanced interface.');
   if (!['simple', 'advanced'].includes(interfaceMode)) throw new Error('Shared-link interface must be simple or advanced.');
   const url = new URL(href);
   url.search = '';
-  url.hash = `code=${encodeURIComponent(source)}&interface=${interfaceMode}${preprocess ? '&preprocess=1' : ''}`;
+  url.hash = `code=${encodeURIComponent(source)}&interface=${interfaceMode}${preprocess ? '&preprocess=1' : ''}${images ? `&images=${images}` : ''}`;
   return url.href;
 }

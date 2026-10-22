@@ -31,9 +31,11 @@ globalThis.document = {
 const get = id => document.getElementById(id);
 get('checks-pane').hidden = true; // Initial HTML state.
 get('compiler').value = 'gfortran';
-get('compiler').options = ['gfortran','ifx','flang','lfortran','ofort'].map(value => ({value}));
+get('compiler').options = ['gfortran','gfortran17','ifx','flang','lfortran','ofort'].map(value => ({value}));
 get('preset').value = 'default';
 get('standard').value = 'default';
+get('images').value = '0';
+get('images').options = ['0', '1', '2', '4'].map(value => ({value}));
 get('standard').options = ['default', '1995', '2003', '2008', '2018', '2023'].map(value => ({value}));
 get('preset').options = ['default','debug','optimized','strict'].map(value => ({value}));
 let allowReplace = true, confirmations = 0;
@@ -42,6 +44,9 @@ let submissions = 0, payload, state = 'done', sessionFails = false, cancelled = 
 let checkOK = true, findings = true, checkRequestFails = false;
 let serviceCompilers = ['gfortran', 'ofort'];
 let preprocessingSupported = true;
+let ownerSupported = false, jobHeaders = {};
+let coarraySupport = {};
+let intelCoarraySupport = {};
 globalThis.fetch = async (url, options = {}) => {
   let result;
   if (url === './service.json') result = {url: 'https://execute.example.org'};
@@ -49,15 +54,24 @@ globalThis.fetch = async (url, options = {}) => {
     assert.equal(url, 'https://execute.example.org/api/session');
     if (sessionFails) throw new Error('Offline');
     result = {token: 'session', commit: 'abcd1234', timeout: 30, compilers: serviceCompilers,
-      features: legacy ? {} : {compile_only: true, run_again: true, format: true, check: true},
+      features: legacy ? {} : {compile_only: true, run_again: true, format: true, check: true, owner_access: ownerSupported},
       ...(legacy ? {} : {compiler_versions: {gfortran: 'GNU Fortran (GCC) 15.2.0', ifx: 'Intel Fortran 2026.0'}}),
       compiler_options: {gfortran: {presets: {default: [], debug: ['-g']}, extras: {warnings: ['-Wall'], ...(preprocessingSupported ? {preprocess: ['-cpp']} : {})},
+        coarray_images: coarraySupport,
         ...(legacy ? {} : {additional_options: {optimization: [['-O0'], ['-O2'], ['-O3']],
           debug: [['-g']], warnings: [['-Wall']]}}),
         ...(legacy ? {} : {standards: {'2008': ['-std=f2008'], '2018': ['-std=f2018']},
           standard_note: 'GNU rejects extensions beyond the selected standard.'})},
         ofort: {presets: {default: []}, extras: {}, standards: {}, interpreter: true}}};
+    result.compiler_options.gfortran17 = structuredClone(result.compiler_options.gfortran);
+    result.compiler_options.ifx = {presets: {default: []}, extras: {}, standards: {},
+      coarray_images: intelCoarraySupport};
+    for (const [name, flag] of [['flang', '-fcoarray'], ['lfortran', '--coarray=true']]) {
+      result.compiler_options[name] = {presets: {default: []}, extras: {}, standards: {},
+        coarray_images: {'2': [flag]}, coarray_note: 'Experimental coarrays via Caffeine.'};
+    }
   } else if (url.endsWith('/api/jobs')) {
+    jobHeaders = options.headers;
     if (checkRequestFails && JSON.parse(options.body).mode === 'check') throw new Error('Check request offline');
     submissions++; payload = JSON.parse(options.body); result = {id: 'job'};
   } else if (url.endsWith('/cancel')) {cancelled++; state = 'done'; result = {};}
@@ -138,6 +152,8 @@ for (const [name, source] of Object.entries(examples)) {
   assert.equal(get('fortran').value, source);
 }
 // The remaining service tests use fixed input, independent of the example catalog.
+get('example').value = firstExample;
+get('images').value = '0'; get('images').onchange();
 get('fortran').value = 'program main\nprint *, 385\nend program main\n';
 get('fortran').listeners.input();
 assert.equal(get('run').disabled, false);
@@ -517,4 +533,102 @@ assert.equal(get('standard').disabled, true);
 assert.match(get('compiler-version').textContent, /unavailable/);
 await get('run').onclick();
 assert.match(get('result-compiler-version').textContent, /unavailable/);
+assert.equal(get('owner-access').hidden, true);
+legacy = false; ownerSupported = true;
+await get('connect').onclick();
+assert.equal(get('owner-access').hidden, false);
+const privateKey = 'test-owner-' + 'x'.repeat(32);
+get('owner-key').value = 'incomplete'; get('owner-key').oninput();
+assert.equal(get('run').disabled, true);
+const beforeOwner = submissions;
+await get('run').onclick();
+assert.equal(submissions, beforeOwner);
+get('owner-key').value = privateKey; get('owner-key').oninput();
+assert.equal(get('run').disabled, false);
+await get('run').onclick();
+assert.equal(jobHeaders['X-P2F-Owner-Key'], privateKey);
+assert.equal(JSON.stringify(payload).includes(privateKey), false);
+await get('share').onclick();
+assert.equal(copiedLink.includes(privateKey), false);
+assert.equal(get('owner-status').textContent.includes(privateKey), false);
+ownerSupported = false;
+await get('connect').onclick();
+assert.equal(get('owner-access').hidden, false); // Key can be cleared after service changes.
+assert.equal(get('run').disabled, true);
+get('clear-owner-key').onclick();
+assert.equal(get('owner-key').value, '');
+assert.equal(get('owner-access').hidden, true);
+await get('run').onclick();
+assert.equal(jobHeaders['X-P2F-Owner-Key'], undefined);
+assert.equal(get('compiler').options.find(option => option.value === 'gfortran17').disabled, true);
+serviceCompilers.push('gfortran17');
+await get('connect').onclick();
+assert.equal(get('compiler').value, 'gfortran');
+assert.equal(get('compiler').options.find(option => option.value === 'gfortran17').disabled, false);
+get('compiler').value = 'gfortran17'; get('compiler').onchange();
+await get('run').onclick();
+assert.equal(payload.compiler, 'gfortran17');
+coarraySupport = {'1': ['-fcoarray=single'], '2': ['-fcoarray=lib'], '4': ['-fcoarray=lib']};
+await get('connect').onclick();
+get('example').value = '22_coarray_exchange';
+const beforeCoarrayExample = submissions;
+get('load').onclick();
+assert.equal(get('interface-mode').value, 'advanced');
+assert.equal(get('images').value, '2');
+assert.equal(submissions, beforeCoarrayExample);
+get('compiler').value = 'gfortran'; get('compiler').onchange();
+get('images').value = '2'; get('images').onchange();
+await get('compile').onclick();
+assert.equal(payload.compiler_options.images, 2);
+assert.equal(get('rerun').disabled, false);
+get('images').value = '4'; get('images').onchange();
+assert.equal(get('rerun').disabled, true);
+assert.match(get('options-note').textContent, /-fcoarray=lib/);
+await get('share').onclick();
+assert.equal(sharedCodeFromHash(new URL(copiedLink).hash).images, 4);
+serviceCompilers.push('ifx');
+intelCoarraySupport = {'1': ['-coarray=single'], '2': ['-coarray=shared', '-coarray-num-images=2']};
+await get('connect').onclick();
+get('compiler').value = 'ifx'; get('compiler').onchange();
+assert.equal(get('run').disabled, true); // Four images were not verified for Intel.
+get('images').value = '2'; get('images').onchange();
+assert.match(get('options-note').textContent, /-coarray=shared -coarray-num-images=2/);
+await get('compile').onclick();
+assert.equal(payload.compiler, 'ifx');
+assert.equal(payload.compiler_options.images, 2);
+await get('rerun').onclick();
+assert.equal(payload.mode, 'fortran-run');
+assert.equal(payload.compiler, 'ifx');
+get('compiler').value = 'gfortran'; get('compiler').onchange();
+serviceCompilers.push('flang', 'lfortran');
+await get('connect').onclick();
+for (const compiler of ['flang', 'lfortran']) {
+  get('compiler').value = compiler; get('compiler').onchange();
+  get('images').value = '2'; get('images').onchange();
+  assert.match(get('coarray-note').textContent, /Experimental.*Caffeine/);
+  await get('compile').onclick();
+  assert.equal(payload.compiler, compiler);
+  assert.equal(payload.compiler_options.images, 2);
+  await get('rerun').onclick();
+  assert.equal(payload.mode, 'fortran-run');
+  assert.equal(payload.compiler, compiler);
+}
+get('compiler').value = 'gfortran'; get('compiler').onchange();
+get('images').value = '4'; get('images').onchange();
+coarraySupport = {'1': ['-fcoarray=single']};
+await get('connect').onclick();
+assert.equal(get('images').value, '4');
+assert.equal(get('run').disabled, true);
+assert.match(get('options-error').textContent, /coarray image count/);
+const beforeUnverified = submissions;
+await get('run').onclick();
+assert.equal(submissions, beforeUnverified);
+location.hash = new URL(createShareLink(base, 'program shared_coarray\nend program\n', 'advanced', false, 2)).hash;
+pageListeners.hashchange();
+assert.equal(get('images').value, '2');
+assert.equal(get('interface-mode').value, 'advanced');
+assert.equal(submissions, beforeUnverified);
+get('interface-mode').value = 'simple'; get('interface-mode').onchange();
+assert.equal(get('images').value, '0');
+assert.equal(get('coarray-note').hidden, true);
 console.log('Fortran-only UI tests passed (no hosted jobs submitted).');

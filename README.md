@@ -27,6 +27,18 @@ If the service does not advertise gfortran, Simple disables Run and explains how
 
 The service reports which tools are available: GNU Fortran, Intel Fortran, LLVM Flang, LFortran, and the experimental ofort interpreter. The selected tool's version appears below its menu; results retain the version used for that particular job. Older services can show ?version unavailable? while still allowing compilation.
 
+The updated service pins the default **GNU Fortran (stable)** to **16.2.0**, using the official GCC container image by immutable digest. Advanced mode also offers **GNU Fortran 17 (experimental, 2026-10-18)** when its separately verified snapshot image is available. Simple mode continues using the stable `gfortran` choice. Actual versions are reported by the deployed service; these labels do not upgrade an older backend automatically.
+
+The experimental compiler uses the ID `gfortran17` in the Python runner and options files:
+
+```powershell
+python xplayground_run.py example.f90 --compilers gfortran gfortran17 --O 3 --list
+```
+
+GNU 17 shares the GNU option vocabulary and portable mappings, but has its own executable, image, helper-module cache, and retained executables. The snapshot is downloaded from GNU's release server and verified against a pinned SHA-512 checksum during the image build. It is never updated during a user job. Snapshot failures do not silently fall back to stable GNU.
+
+Redeploy the shared backend with `.venv-execution\Scripts\python.exe -X utf8 xdeploy_service.py --owner-secret p2f-owner`, then publish the frontends. The first deployment builds the snapshot compiler from source and rebuilds GNU helper modules; it can take substantially longer than later deployments, which reuse cached compiler layers. `--without-gnu17` skips the optional snapshot image. If that image cannot be built or verified, GNU 16.2 remains the default and GNU 17 stays unavailable. GNU 16.2 build/verification failures stop deployment. Deployment verification checks compiler identity, preprocessing and options, diagnostics, helper reuse, and retained execution. LLVM Flang is pinned to 23.1.5 for experimental coarray support; Intel, LFortran, and ofort keep their existing compiler installations.
+
 The **Standard** menu offers **Compiler default** and years verified by the service. Unsupported years are disabled. GNU rejects extensions beyond the selected standard; Intel reports conformance warnings. The **Strict** option adds diagnostics without choosing a standard year. Standard flags apply only to submitted code, while helpers retain their own fixed build options. GNU and Intel year flags are checked during service image construction and cached; Flang and LFortran currently offer only **Compiler default**.
 
 **Run Again** reuses a successfully compiled executable for up to five minutes. It starts a fresh isolated process without recompiling. Source or option changes, reconnecting, failed compilation, and expiration invalidate the retained build. Files from a previous run are not carried over, and reruns count toward service usage limits. Retained builds are private to the session.
@@ -87,7 +99,7 @@ Recognized errors in the submitted `input_p.f90` source receive a red line backg
 
 ## Sharing code with a link
 
-Click **Copy share link** to create a link containing the current source, selected interface mode, and preprocessing setting. If clipboard access is unavailable, a selected text field lets you copy it manually. Anyone opening the link sees the code in the editor and chooses when to compile or run it. The link does not include compiler selections, other compiler flags, results, or session tokens.
+Click **Copy share link** to create a link containing the current source, selected interface mode, preprocessing setting, and coarray image count when enabled. If clipboard access is unavailable, a selected text field lets you copy it manually. Anyone opening the link sees the code in the editor and chooses when to compile or run it. The link does not include compiler selections, other compiler flags, results, or session tokens.
 
 The public format is:
 
@@ -205,6 +217,9 @@ python xplayground_run.py hello.f90 --compilers gfortran ifx flang --fail-fast
 # Show program output, diagnostics, and the final timing summary:
 python xplayground_run.py hello.f90 --compilers gfortran ifx --terse
 
+# Include the submitted source once before compiler results:
+python xplayground_run.py kinds.f90 solver.f90 main.f90 --compilers gfortran ifx --list --terse
+
 # Combine a module and its caller, in the order supplied:
 python xplayground_run.py kinds.f90 solver.f90 main.f90 --compilers gfortran ifx
 
@@ -216,6 +231,38 @@ python xplayground_run.py --help
 ```
 
 Put source filenames before `--compilers`; that option takes a list of compiler names. The default is gfortran, with compiler defaults and preprocessing off. Available options also include `--fast-math` and `--timeout SECONDS` (300 seconds per compiler by default). Compile-only performs a syntax check when selecting ofort. All compiler choices and requested options are checked against the service session before any jobs are submitted.
+
+### Coarrays
+
+In Advanced mode, select **Coarrays: Off, 1 image, 2 images, or 4 images**. Only counts verified for the selected deployed compiler are enabled. Off is the default, and Simple mode resets coarrays to Off.
+
+| Compiler | Coarray implementation |
+| --- | --- |
+| GNU Fortran | `-fcoarray=single` for one image; `-fcoarray=lib` with the native `-lcaf_shmem` library for two or four |
+| Intel ifx | `-coarray=single`, or `-coarray=shared -coarray-num-images=N` with Intel MPI shared-memory communication |
+| LLVM Flang 23.1.5 | Caffeine runtime prepared, but the exchange probe currently fails; coarray controls remain disabled |
+| LFortran 0.66.0 | Experimental `--coarray=true` with its own Caffeine/GASNet shared-memory runtime |
+| ofort | Unavailable |
+
+Flang and LFortran coarrays are incomplete language implementations. The browser and runner display an experimental note when using them. Passing the deployment probe establishes basic image-to-image exchange, not support for every coarray feature. LFortran 0.66 passed sandbox exchange tests with 1, 2, and 4 images and both two-image examples, including Run Again. It may print `STOP` for each image on normal termination; these messages are preserved in program output and do not by themselves indicate failure.
+
+The pinned Flang 23.1.5 can run the identify-images example, but rejects references to coarray variables with a compiler "not yet implemented" error. It therefore advertises no coarray image counts. Its runtime wiring and deployment probe are in place for a future compiler upgrade; ordinary Flang compilation remains available. Caffeine installation failures likewise leave ordinary compilation available and coarrays disabled for that compiler. See [Caffeine](https://github.com/BerkeleyLab/caffeine) and [LFortran's Caffeine tests](https://github.com/lfortran/lfortran/blob/v0.66.0/ci/test_caffeine.sh).
+
+The examples **Coarrays: identify images** and **Coarrays: exchange values around a ring** demonstrate image numbering, synchronization, and coindexed reads. Loading one switches to Advanced, selects stable GNU, and requests two images. If the service has not verified two-image execution, a clear error blocks submission; select an available count. Their `! Coarray images: 2` comment supplies this example setting. Output is ordered using synchronization and `FLUSH`; arbitrary multi-image programs may print in a different order on each run.
+
+The runner supports the same feature:
+
+```powershell
+python xplayground_run.py site/examples/22_coarray_exchange.f90 --compiler gfortran --images 4 --list
+python xplayground_run.py site/examples/22_coarray_exchange.f90 --compilers gfortran ifx --images 2 --terse
+python xplayground_run.py site/examples/22_coarray_exchange.f90 --compiler lfortran --images 2 --terse
+```
+
+An options file may include `"common": {"images": 2}`. `--images` overrides that default. Every selected compiler must advertise the requested count before any jobs are submitted. Copy share link preserves enabled images using `&images=1`, `&images=2`, or `&images=4`; these links require Advanced and select stable GNU when loaded. As with preprocessing, an unsupported request is blocked rather than silently dropped. Old code links still open Simple by default.
+
+All images execute inside **one sandbox and count as one job**, sharing its existing CPU, memory, wall-time, output, and concurrency limits. For GNU, the backend sets `GFORTRAN_NUM_IMAGES` to the requested count, a **64 MB** shared-memory segment, and a bounded image-restart limit. For Intel, it initializes the installed MPI environment, sets `FOR_COARRAY_NUM_IMAGES`, selects the `shm` fabric, disables CPU pinning, and enables MPI wait mode. Flang and LFortran launch their executable with `GASNET_PSHM_NODES` set to the bounded image count and a 64 MB maximum GASNet segment per image. Network access remains blocked. Run Again preserves the compiled build's image count; changing the selector invalidates it. These runs demonstrate parallel language behavior, not parallel speedup under the current CPU allocation. No arbitrary environment variables or raw coarray flags are accepted from clients.
+
+Redeploy the shared service to activate support. Deployment compiles and executes an image-to-image exchange separately for 1, 2, and 4 images in each available GNU, Intel, Flang, and LFortran image **inside a network-blocked gVisor sandbox with the job CPU/memory settings**. Only successful counts are advertised in the session's `coarray_images` catalog. A failed probe disables the corresponding counts and leaves ordinary compilation available. There are no extra probes or sandbox launches during normal user jobs. Caffeine and GASNet are built once in cached compiler-specific image layers; the first deployment takes longer. Local example tests exercise both examples with one GNU image; deployment verifies multi-image runtime behavior. See the [GNU shared-memory coarray documentation](https://gcc.gnu.org/onlinedocs/gfortran/Shared-memory-Coarrays.html) and [Intel coarray options](https://www.intel.com/content/www/us/en/docs/fortran-compiler/developer-guide-reference/2025-1/coarray-qcoarray.html).
 
 ### Additional compiler options
 
@@ -291,7 +338,28 @@ Files must contain UTF-8 text. UTF-8 byte-order marks are stripped, line endings
 
 The compiler sees `input_p.f90`. The client prints the combined-source line ranges and maps recognized GNU/Flang/LFortran and Intel diagnostic references back to original filenames and lines. Original diagnostic text is preserved. Other diagnostic formats and locations pointing to a separator comment remain in their original form.
 
+### Private owner access
+
+The shared service's daily limit applies to all public users combined. Its owner can configure a private key to bypass the daily and per-address quotas. Owner jobs are counted separately and do not consume public job allowance. The two-job concurrency limit, session ownership/expiry, source and option validation, sandbox isolation, time limits, and output limits still apply. Ordinary users keep the existing limits.
+
+Configure this once in the `python-to-fortran-playground` backend repository:
+
+1. Generate a random key on your own machine with `python -c "import secrets; print(secrets.token_urlsafe(32))"`. Keep it private; do not put it in Git, an options file, a URL, or a share link.
+2. In the [Modal dashboard](https://modal.com/secrets), create a secret named `p2f-owner` containing a variable named `P2F_OWNER_KEY` with that value. The key must contain 32 to 256 characters.
+3. Redeploy using `.venv-execution\Scripts\python.exe -X utf8 xdeploy_service.py --owner-secret p2f-owner`. Use `--owner-secret p2f-owner` on subsequent deployments too, or set the nonsecret deployment variable `P2F_OWNER_SECRET_NAME=p2f-owner`. Forks need no owner secret unless they enable this feature. The secret is injected only into the API function, using [Modal Secrets](https://modal.com/docs/guide/secrets), and never into job sandboxes or build images.
+4. Publish the frontend changes. Open **Owner access**, enter the key, and submit normally. The password field holds it only in the current page; reloading clears it. **Clear owner key** restores public access. Keys are checked for every submitted job; a wrong key rejects the job rather than falling back to public access.
+
+For the Python runner:
+
+```powershell
+python xplayground_run.py primes.f90 xprimes.f90 --compilers gfortran ifx --owner
+```
+
+`--owner` prompts for the key without echoing it. For repeated runs, supply `P2F_OWNER_KEY` in your process environment instead; `--owner` is still required. The key goes only in an HTTPS job-request header, never in source, output, command-line arguments, or job JSON. Polling and cancellation use the ordinary session token. An older or unconfigured service rejects owner mode before submission. Rotate the key by updating the Modal secret and redeploying; remove owner-secret configuration and redeploy to disable the exemption. No public counters need to be reset, even if today's allowance is already exhausted.
+
 ### Results, cancellation, and service configuration
+
+Add `--list` to print the exact combined source submitted to every compiler, once before the compiler results, between `=== Submitted source ===` and `=== End submitted source ===` markers. The listing includes filename separator comments for multiple files, with no added line numbers, so it can be copied as source. It reflects the normal UTF-8 BOM removal, line-ending normalization, and final newline; it is the source before compiler preprocessing. Listing stays visible with `--terse` and does not change compilation, execution, or job count.
 
 Use `--terse` to keep compiler-labeled PASS/FAIL results, program stdout and stderr, compilation diagnostics (including warnings on successful builds), and the final timing summary. It suppresses the service URL, source-range listing, submission messages, compiler versions, routine successful build logs, and individual timing lines. Diagnostic mappings to original source files, service errors, and `--fail-fast` stopping messages remain visible.
 

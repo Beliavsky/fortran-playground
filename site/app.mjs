@@ -21,18 +21,20 @@ function selectedOptions() {
   return {preset: get('preset').value, standard: get('standard').value,
     warnings: Boolean(get('warnings').checked), fast_math: Boolean(get('fast-math').checked),
     ...(get('preprocess').checked ? {preprocess: true} : {}),
+    ...(Number(get('images').value) ? {images: Number(get('images').value)} : {}),
     ...(get('additional-options').value.trim() ? {additional: optionTokens(get('additional-options').value)} : {})};
 }
 const isSimple = () => interfaceMode === 'simple';
 function resetSimpleSettings() {
   const changed = get('compiler').value !== 'gfortran' || get('standard').value !== 'default' ||
-    get('preset').value !== 'default' || get('warnings').checked || get('fast-math').checked || get('preprocess').checked || get('additional-options').value.trim();
+    get('preset').value !== 'default' || get('warnings').checked || get('fast-math').checked || get('preprocess').checked || get('additional-options').value.trim() || Number(get('images').value);
   get('compiler').value = 'gfortran';
   get('standard').value = 'default';
   get('preset').value = 'default';
   get('warnings').checked = false;
   get('fast-math').checked = false;
   get('preprocess').checked = false;
+  get('images').value = '0';
   get('additional-options').value = '';
   for (const name of Object.keys(additionalByCompiler)) delete additionalByCompiler[name];
   return changed;
@@ -80,7 +82,7 @@ function controls() {
   get('interface-mode').disabled = busy || connecting;
   get('advanced-options').disabled = busy || connecting;
   for (const id of ['compiler-controls', 'option-controls', 'compiler-version', 'standard-note',
-    'options-note', 'additional-options-help', 'build-note', 'connection', 'check', 'compile', 'rerun', 'quick-fix-controls', 'quick-fix-details', 'advanced-help']) {
+    'options-note', 'additional-options-help', 'coarray-note', 'build-note', 'connection', 'check', 'compile', 'rerun', 'quick-fix-controls', 'quick-fix-details', 'advanced-help']) {
     get(id).hidden = isSimple();
   }
   for (const id of ['simple-compiler', 'advanced-options', 'simple-help']) get(id).hidden = !isSimple();
@@ -114,6 +116,10 @@ function controls() {
   }
   // A shared link's request must not be silently ignored by an older service.
   get('preprocess').disabled = !token || busy || (!spec?.extras?.preprocess && !get('preprocess').checked);
+  for (const option of get('images').options) option.disabled = option.value !== '0' && !spec?.coarray_images?.[option.value];
+  get('images').disabled = !token || busy || (!Object.keys(spec?.coarray_images || {}).length && !Number(get('images').value));
+  get('coarray-note').textContent = (spec?.coarray_note || 'Only sandbox-verified coarray image counts are offered.') +
+    ' All images run in one sandbox and count as one job. Output order may vary; CPU limits still apply.';
   const choices = Object.values(spec?.additional_options || {}).flat();
   get('additional-options').disabled = !token || busy || interpreted || (!choices.length && !get('additional-options').value.trim());
   get('additional-options-help').textContent = choices.length ?
@@ -131,16 +137,27 @@ function controls() {
   }
   const fastMath = flags.includes('-ffast-math') || flags.includes('--fast') ||
     flags.some((arg, index) => arg === '-fp-model' && flags[index + 1] === 'fast');
-  get('options-note').textContent = optionError ? 'Resolve additional options before compiling.' :
+  get('options-note').textContent = optionError ? 'Resolve compiler options before compiling.' :
     `User-code flags: ${flags.join(' ') || '(compiler default)'}. Helpers keep fixed build options.${fastMath ? ' Fast math can change numerical results.' : ''}`;
   if (interpreted) get('options-note').textContent = 'ofort default checks are enabled, including reads of uninitialized variables. Unsupported language features may be rejected.';
   if (preprocessingUnavailable) get('options-note').textContent += ' Preprocessing is requested but unavailable for this compiler/service. Choose a supported compiler or turn preprocessing off.';
+  const ownerKey = get('owner-key').value;
+  const ownerError = ownerKey && (!features.owner_access ? 'Owner access is not configured on this service. Clear the key to use public access.' :
+    !/^[A-Za-z0-9_-]{32,256}$/.test(ownerKey) ? 'Enter the complete owner key (32 to 256 letters, digits, underscores, or hyphens), or clear it to use public access.' : '');
+  get('owner-access').hidden = !features.owner_access && !ownerKey;
+  get('owner-key').disabled = busy || connecting;
+  get('clear-owner-key').disabled = busy || connecting || !ownerKey;
+  get('owner-status').textContent = ownerError || (ownerKey ?
+    'Owner key will be verified when you submit a job. Valid owner requests bypass daily and address quotas; concurrency limits still apply.' :
+    'Optional owner access. The key is kept only in this page and is not included in share links.');
+  if (ownerError) for (const id of ['run', 'compile', 'rerun', 'format', 'check']) get(id).disabled = true;
 }
 
 async function api(path, method = 'GET', payload) {
   const response = await fetch(`${service}/api/${path}`, {
     method, cache: 'no-store', signal: AbortSignal.timeout(30000),
-    headers: {'X-P2F-Token': token, ...(payload === undefined ? {} : {'Content-Type': 'application/json'})},
+    headers: {'X-P2F-Token': token, ...(payload === undefined ? {} : {'Content-Type': 'application/json'}),
+      ...(path === 'jobs' && method === 'POST' && get('owner-key').value ? {'X-P2F-Owner-Key': get('owner-key').value} : {})},
     ...(payload === undefined ? {} : {body: JSON.stringify(payload)}),
   });
   const result = await response.json();
@@ -226,6 +243,10 @@ function show(result) {
 
 async function run(mode = 'fortran-edit') {
   if (!token || active) return;
+  if (get('owner-key').value && (!features.owner_access || !/^[A-Za-z0-9_-]{32,256}$/.test(get('owner-key').value))) {
+    get('status').textContent = 'Enter a valid owner key for this service, or clear it to use public access.';
+    return;
+  }
   if (isSimple()) {
     resetSimpleSettings();
     if (!availableCompilers.includes('gfortran') || !['fortran-edit', 'format'].includes(mode)) return;
@@ -264,6 +285,7 @@ async function run(mode = 'fortran-edit') {
       ...(!['format', 'check'].includes(mode) && catalog[get('compiler').value] ? {compiler_options: {
         preset: get('preset').value, warnings: Boolean(get('warnings').checked), fast_math: Boolean(get('fast-math').checked),
         ...(get('preprocess').checked ? {preprocess: true} : {}),
+        ...(Number(get('images').value) ? {images: Number(get('images').value)} : {}),
         ...(get('additional-options').value.trim() ? {additional: optionTokens(get('additional-options').value)} : {}),
         ...(catalog[get('compiler').value]?.standards ? {standard: get('standard').value} : {}),
       }} : {}),
@@ -355,6 +377,8 @@ get('hide-checks').onclick = () => {
 get('rerun').onclick = () => run('fortran-run');
 get('first-error').onclick = () => editor.goToDiagnostic();
 get('connect').onclick = connect;
+get('owner-key').oninput = controls;
+get('clear-owner-key').onclick = () => { get('owner-key').value = ''; controls(); };
 get('stop').onclick = async () => {
   if (!active) return;
   active.stopping = true; controls(); get('status').textContent = 'Stopping…';
@@ -365,6 +389,14 @@ get('load').onclick = () => {
   if (!Object.hasOwn(examples, get('example').value)) return;
   if (editor.getValue().trim() && !confirm('Replace the Fortran input with this example?')) return;
   editor.setValue(examples[get('example').value], true); filename = 'main.f90'; editor.focus();
+  const coarrays = examples[get('example').value].match(/^!\s*Coarray images:\s*([124])\s*$/m);
+  if (coarrays) {
+    changeInterface('advanced');
+    get('compiler').value = 'gfortran';
+    get('images').value = coarrays[1];
+    invalidateBuild(); revision++; controls();
+    get('status').textContent = 'Coarray example loaded. Select a verified image count and run when ready.';
+  }
 };
 get('clear').onclick = () => {
   if (editor.getValue() && !editor.undoableClear && !confirm('Clear the Fortran input?')) return;
@@ -401,7 +433,7 @@ get('download').onclick = () => {
 get('share').onclick = async () => {
   get('share-link-field').hidden = true;
   try {
-    const link = createShareLink(location.href, editor.getValue(), interfaceMode, Boolean(get('preprocess').checked));
+    const link = createShareLink(location.href, editor.getValue(), interfaceMode, Boolean(get('preprocess').checked), Number(get('images').value));
     get('share-link').value = link;
     try {
       await navigator.clipboard.writeText(link);
@@ -420,14 +452,19 @@ function loadSharedCode(initial = false) {
   try {
     const shared = sharedCodeFromHash(location.hash);
     if (shared === null) return;
-    const {source, interfaceMode: sharedMode, preprocess} = shared;
-    if (source === editor.getValue() && sharedMode === interfaceMode && preprocess === Boolean(get('preprocess').checked)) return;
+    const {source, interfaceMode: sharedMode, preprocess, images = 0} = shared;
+    if (source === editor.getValue() && sharedMode === interfaceMode && preprocess === Boolean(get('preprocess').checked) && images === Number(get('images').value)) return;
     if (active || connecting) throw new Error('Wait for the current operation to finish before opening shared code.');
     if (!initial && editor.getValue().trim() && !confirm('Replace the Fortran input with code from this shared link?')) {
       get('share-status').textContent = 'Shared code was not loaded; your input is unchanged.';
       return;
     }
     changeInterface(sharedMode);
+    if (images !== Number(get('images').value)) {
+      get('images').value = String(images);
+      if (images) get('compiler').value = 'gfortran';
+      invalidateBuild(); clearErrorInfo(); revision++; controls();
+    }
     if (preprocess !== Boolean(get('preprocess').checked)) {
       get('preprocess').checked = preprocess;
       invalidateBuild(); clearErrorInfo(); revision++;
@@ -438,7 +475,7 @@ function loadSharedCode(initial = false) {
     get('share-status').textContent = `Code loaded from a shared link. Choose ${isSimple() ? 'Run' : 'Compile or Compile and Run'} when ready.`;
   } catch (error) { get('share-status').textContent = String(error); }
 }
-for (const id of ['compiler', 'standard', 'preset', 'warnings', 'fast-math', 'preprocess']) get(id).onchange = () => {
+for (const id of ['compiler', 'standard', 'preset', 'warnings', 'fast-math', 'preprocess', 'images']) get(id).onchange = () => {
   if (id === 'compiler') get('additional-options').value = additionalByCompiler[get('compiler').value] || '';
   clearErrorInfo();
   invalidateBuild();

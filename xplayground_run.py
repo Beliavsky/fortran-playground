@@ -1,7 +1,9 @@
 """Compile and run ordered Fortran source files through the hosted playground API."""
 import argparse
+import getpass
 from dataclasses import dataclass
 import json
+import os
 from pathlib import Path
 import re
 import sys
@@ -14,7 +16,7 @@ from urllib.request import Request, urlopen
 ROOT = Path(__file__).resolve().parent
 MAX_SOURCE_BYTES = 100000
 DEFAULT_ORIGIN = 'https://beliavsky.github.io'
-COMPILERS = ('gfortran', 'ifx', 'flang', 'lfortran', 'ofort')
+COMPILERS = ('gfortran', 'gfortran17', 'ifx', 'flang', 'lfortran', 'ofort')
 
 
 @dataclass(frozen=True)
@@ -94,15 +96,20 @@ class ServiceError(Exception):
 
 
 class PlaygroundClient:
-    def __init__(self, service_url, origin=DEFAULT_ORIGIN):
+    def __init__(self, service_url, origin=DEFAULT_ORIGIN, *, owner_key=''):
         self.service_url = origin_url(service_url)
         self.origin = origin_url(origin, https_only=False)
         self.token = ''
+        if owner_key and not re.fullmatch(r'[A-Za-z0-9_-]{32,256}', owner_key):
+            raise ValueError('Owner key must contain 32 to 256 letters, digits, underscores, or hyphens')
+        self.owner_key = owner_key
 
     def request(self, path, payload=None, *, timeout=30):
         headers = {'Origin': self.origin, 'User-Agent': 'fortran-playground-python-client'}
         if self.token:
             headers['X-P2F-Token'] = self.token
+        if path == 'jobs' and payload is not None and self.owner_key:
+            headers['X-P2F-Owner-Key'] = self.owner_key
         data = None
         if payload is not None:
             headers['Content-Type'] = 'application/json'
@@ -224,6 +231,8 @@ def selections(session, compilers, args, notes=None):
         raise ValueError('List each compiler only once')
     if args.compile_only and not session.get('features', {}).get('compile_only'):
         raise ValueError('This service does not advertise compile-only jobs')
+    if args.owner and not session.get('features', {}).get('owner_access'):
+        raise ValueError('Owner access is not configured on this service')
     configured = {}
     if args.options_file:
         if args.options_file.stat().st_size > 65536:
@@ -232,8 +241,13 @@ def selections(session, compilers, args, notes=None):
         if not isinstance(configured, dict) or set(configured) - (set(COMPILERS) | {'common'}):
             raise ValueError('Options file must map compiler names to argument lists, with an optional common object')
     common = configured.pop('common', {})
-    if not isinstance(common, dict) or set(common) - {'optimization', 'bounds_check', 'backtrace'}:
-        raise ValueError('common must be an object with optimization, bounds_check, and/or backtrace settings')
+    if not isinstance(common, dict) or set(common) - {'optimization', 'bounds_check', 'backtrace', 'images'}:
+        raise ValueError('common must be an object with optimization, bounds_check, backtrace, and/or images settings')
+    if 'images' in common and (type(common['images']) is not int or common['images'] not in (1, 2, 4)):
+        raise ValueError('common.images must be 1, 2, or 4')
+    if args.images is not None:
+        common['images'] = args.images
+    images = common.pop('images', None)
     if 'optimization' in common and (type(common['optimization']) is not int or common['optimization'] not in range(4)):
         raise ValueError('common.optimization must be an integer from 0 through 3')
     for key in ('bounds_check', 'backtrace'):
@@ -260,6 +274,12 @@ def selections(session, compilers, args, notes=None):
         options = {'preset': args.preset} if spec else {}
         if args.standard != 'default':
             options['standard'] = args.standard
+        if images is not None:
+            if str(images) not in spec.get('coarray_images', {}):
+                raise ValueError(f'{compiler} does not support {images} coarray images on this service')
+            options['images'] = images
+            if spec.get('coarray_note') and notes is not None:
+                notes.append(f'Note: {compiler}: {spec["coarray_note"]}')
         for key in ('warnings', 'fast_math', 'preprocess'):
             if getattr(args, key):
                 if key not in spec.get('extras', {}):
@@ -284,6 +304,8 @@ def selections(session, compilers, args, notes=None):
 def effective_flags(spec, options, additional=None):
     flags = list(spec.get('presets', {}).get(options.get('preset', 'default'), []))
     flags += spec.get('standards', {}).get(options.get('standard', 'default'), [])
+    if 'images' in options:
+        flags += spec.get('coarray_images', {}).get(str(options['images']), [])
     for key in ('warnings', 'fast_math', 'preprocess'):
         if options.get(key):
             flags += spec.get('extras', {}).get(key, [])
@@ -349,6 +371,9 @@ def main(argv=None):
     parser.add_argument('--compile-only', action='store_true', help='Compile without execution (syntax check for ofort)')
     parser.add_argument('--fail-fast', action='store_true', help='Stop after the first compilation or execution failure')
     parser.add_argument('--terse', action='store_true', help='Show program output, diagnostics, and the final summary only')
+    parser.add_argument('--list', action='store_true', help='Print the exact submitted source once, including with --terse')
+    parser.add_argument('--owner', action='store_true', help='Use private owner access; read P2F_OWNER_KEY or prompt without echo')
+    parser.add_argument('--images', type=int, choices=(1, 2, 4), help='Enable coarrays with an image count verified by the service')
     parser.add_argument('--options-file', type=Path, help='JSON file mapping compiler names to additional argument lists')
     parser.add_argument('--optimization', '--O', '-O', type=int, choices=range(4), default=None,
                         help='Portable optimization level (0-3); overrides common.optimization in the options file')
@@ -369,7 +394,15 @@ def main(argv=None):
     try:
         source, sections = combine_sources(args.files)
         service_url = args.service_url or json.loads((ROOT / 'site/service.json').read_text(encoding='utf-8'))['url']
-        client = PlaygroundClient(service_url, args.origin)
+        owner_key = ''
+        if args.owner:
+            try:
+                owner_key = os.environ.get('P2F_OWNER_KEY') or getpass.getpass('Owner key: ')
+            except EOFError as error:
+                raise ValueError('Owner key input unavailable; set P2F_OWNER_KEY in your environment') from error
+            if not 32 <= len(owner_key) <= 256:
+                raise ValueError('Owner key must contain 32 to 256 characters')
+        client = PlaygroundClient(service_url, args.origin, owner_key=owner_key)
         compilers = args.compilers or [args.compiler or 'gfortran']
         session = client.connect()
         notes = []
@@ -380,6 +413,10 @@ def main(argv=None):
                 for section in sections:
                     print(f'  input_p.f90 lines {section.first_line}-{section.last_line}: {section.filename}', flush=True)
             print('Times in seconds.', flush=True)
+        if args.list:
+            print('\n=== Submitted source ===', flush=True)
+            print(source, end='', flush=True)
+            print('=== End submitted source ===', flush=True)
         for note in notes:
             print(note, flush=True)
         for compiler in compilers:

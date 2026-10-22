@@ -114,6 +114,27 @@ class SourceTests(unittest.TestCase):
 
 
 class ClientTests(unittest.TestCase):
+    def test_owner_key_sent_only_in_job_headers(self):
+        key = 'test-owner-' + 'x' * 32
+        client = runner.PlaygroundClient('https://execute.example.org', owner_key=key)
+        response = Mock()
+        response.__enter__ = Mock(side_effect=lambda: BytesIO(b'{}'))
+        response.__exit__ = Mock(return_value=False)
+        with patch.object(runner, 'urlopen', return_value=response) as open_url:
+            for path, payload in [('session', None), ('jobs', {'source': 'end'}),
+                                  ('jobs/job', None), ('jobs/job/cancel', {})]:
+                client.request(path, payload)
+                request = open_url.call_args.args[0]
+                self.assertEqual(request.get_header('X-p2f-owner-key'), key if path == 'jobs' else None)
+                self.assertNotIn(key, request.full_url)
+                self.assertNotIn(key, str(request.data))
+
+    def test_invalid_owner_key_rejected_without_echoing_it(self):
+        invalid = 'private-test-' + 'x' * 32 + '\n'
+        with self.assertRaises(ValueError) as context:
+            runner.PlaygroundClient('https://execute.example.org', owner_key=invalid)
+        self.assertNotIn(invalid, str(context.exception))
+
     def client(self):
         return runner.PlaygroundClient('https://execute.example.org', 'https://my-site.example.org')
 
@@ -175,6 +196,105 @@ class ClientTests(unittest.TestCase):
 
 
 class CommandTests(unittest.TestCase):
+    def test_images_use_verified_capabilities_and_preflight_all_compilers(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            client = self.client()
+            client.connect.return_value['compiler_options']['gfortran']['coarray_images'] = {'2': ['-fcoarray=lib']}
+            status, stdout, _ = self.invoke(Path(temporary), client, '--images', '2')
+            self.assertEqual(status, 1)
+            self.assertEqual(client.run_job.call_args.args[2]['images'], 2)
+            self.assertIn('-fcoarray=lib', stdout)
+            client.reset_mock()
+            status, _, stderr = self.invoke(Path(temporary), client, '--images', '2', '--compilers', 'gfortran', 'ifx')
+            self.assertEqual(status, 2)
+            self.assertIn('ifx does not support 2 coarray images', stderr)
+            client.run_job.assert_not_called()
+
+    def test_gnu_and_intel_images_submit_successively_with_their_own_flags(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            client = self.client()
+            client.connect.return_value['compiler_options']['gfortran']['coarray_images'] = {'2': ['-fcoarray=lib']}
+            client.connect.return_value['compiler_options']['ifx']['coarray_images'] = {
+                '2': ['-coarray=shared', '-coarray-num-images=2']}
+            status, stdout, _ = self.invoke(Path(temporary), client, '--images', '2',
+                                            '--compilers', 'gfortran', 'ifx')
+            self.assertEqual(status, 1)  # Continue after the simulated GNU failure.
+            self.assertEqual([call.args[1] for call in client.run_job.call_args_list], ['gfortran', 'ifx'])
+            self.assertTrue(all(call.args[2]['images'] == 2 for call in client.run_job.call_args_list))
+            self.assertIn('-fcoarray=lib', stdout)
+            self.assertIn('-coarray=shared -coarray-num-images=2', stdout)
+
+    def test_experimental_caffeine_compilers_use_advertised_flags_and_notes(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            client = self.client()
+            catalog = client.connect.return_value
+            catalog['compilers'] += ['flang', 'lfortran']
+            for compiler, flag in [('flang', '-fcoarray'), ('lfortran', '--coarray=true')]:
+                catalog['compiler_options'][compiler] = {'presets': {'default': []},
+                    'coarray_images': {'2': [flag]}, 'coarray_note': 'Experimental Caffeine coarrays.'}
+            status, stdout, _ = self.invoke(Path(temporary), client, '--images', '2',
+                                            '--compilers', 'lfortran', 'flang', '--terse')
+            self.assertEqual(status, 1)
+            self.assertEqual([call.args[1] for call in client.run_job.call_args_list], ['lfortran', 'flang'])
+            self.assertTrue(all(call.args[2]['images'] == 2 for call in client.run_job.call_args_list))
+            self.assertIn('Note: lfortran: Experimental Caffeine coarrays.', stdout)
+            self.assertIn('Note: flang: Experimental Caffeine coarrays.', stdout)
+
+    def test_common_images_and_cli_override(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            config = root / 'options.json'
+            config.write_text('{"common": {"images": 2}}')
+            client = self.client()
+            client.connect.return_value['compiler_options']['gfortran']['coarray_images'] = {'1': ['-fcoarray=single']}
+            status, _, _ = self.invoke(root, client, '--options-file', str(config), '--images', '1')
+            self.assertEqual(status, 1)
+            self.assertEqual(client.run_job.call_args.args[2]['images'], 1)
+            for invalid in [True, '2', 0, 3, 8, None]:
+                config.write_text(json.dumps({'common': {'images': invalid}}))
+                client = self.client()
+                status, _, _ = self.invoke(root, client, '--options-file', str(config))
+                self.assertEqual(status, 2)
+                client.run_job.assert_not_called()
+
+    def test_stable_and_development_gnu_are_separate_choices(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            client = self.client()
+            client.connect.return_value['compilers'].append('gfortran17')
+            client.connect.return_value['compiler_options']['gfortran17'] = client.connect.return_value['compiler_options']['gfortran']
+            self.invoke(Path(temporary), client, '--compilers', 'gfortran', 'gfortran17', '--O', '3')
+            self.assertEqual([call.args[1] for call in client.run_job.call_args_list], ['gfortran', 'gfortran17'])
+            for call in client.run_job.call_args_list:
+                self.assertEqual(call.args[2]['additional'], ['-O3'])
+
+    def test_owner_credential_from_environment_or_hidden_prompt(self):
+        key = 'test-owner-' + 'x' * 32
+        for environment_value in [key, '']:
+            with self.subTest(environment=bool(environment_value)), tempfile.TemporaryDirectory() as temporary:
+                source = Path(temporary) / 'main.f90'
+                source.write_text(MAIN)
+                client = self.client()
+                client.connect.return_value['features']['owner_access'] = True
+                stdout, stderr = StringIO(), StringIO()
+                with patch.dict(runner.os.environ, {'P2F_OWNER_KEY': environment_value}), \
+                        patch.object(runner.getpass, 'getpass', return_value=key) as prompt, \
+                        patch.object(runner, 'PlaygroundClient', return_value=client) as factory, \
+                        redirect_stdout(stdout), redirect_stderr(stderr):
+                    status = runner.main([str(source), '--owner', '--terse'])
+                self.assertEqual(status, 1)
+                self.assertEqual(factory.call_args.kwargs['owner_key'], key)
+                self.assertEqual(prompt.call_count, 0 if environment_value else 1)
+                self.assertNotIn(key, stdout.getvalue() + stderr.getvalue())
+
+    def test_owner_does_not_fall_back_to_public_on_unsupported_service(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            client = self.client()
+            with patch.dict(runner.os.environ, {'P2F_OWNER_KEY': 'test-owner-' + 'x' * 32}):
+                status, _, stderr = self.invoke(Path(temporary), client, '--owner')
+            self.assertEqual(status, 2)
+            self.assertIn('Owner access is not configured', stderr)
+            client.run_job.assert_not_called()
+
     def invoke(self, root, client, *options):
         first, second = root / 'module.f90', root / 'main.f90'
         first.write_text(MODULE)
@@ -203,6 +323,44 @@ class CommandTests(unittest.TestCase):
                 self.assertLess(call.args[0].index('module greeting_mod'), call.args[0].index('program main'))
                 self.assertTrue(call.args[2]['preprocess'])
             self.assertNotIn('private-token', stdout + stderr)
+
+    def test_list_prints_exact_combined_source_once_including_terse(self):
+        for terse in [False, True]:
+            with self.subTest(terse=terse), tempfile.TemporaryDirectory() as temporary:
+                client = self.client()
+                status, stdout, _ = self.invoke(Path(temporary), client, '--compilers', 'gfortran', 'ifx',
+                                                '--list', *(['--terse'] if terse else []))
+                self.assertEqual(status, 1)
+                start = '=== Submitted source ===\n'
+                end = '=== End submitted source ===\n'
+                self.assertEqual(stdout.count(start), 1)
+                self.assertEqual(stdout.count(end), 1)
+                listed = stdout.split(start, 1)[1].split(end, 1)[0]
+                for call in client.run_job.call_args_list:
+                    self.assertEqual(listed, call.args[0])
+                self.assertIn('! --- Source:', listed)
+                self.assertLess(listed.index('module greeting_mod'), listed.index('program main'))
+                self.assertLess(stdout.index(end), stdout.index('=== gfortran: FAIL ==='))
+
+    def test_list_prints_normalized_single_file_without_added_headers(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            source = Path(temporary) / 'single.f90'
+            source.write_bytes(b'\xef\xbb\xbf! caf\xc3\xa9\r\nprint *, 42\r\nend')
+            client = self.client()
+            stdout = StringIO()
+            with patch.object(runner, 'PlaygroundClient', return_value=client), \
+                    redirect_stdout(stdout), redirect_stderr(StringIO()):
+                runner.main([str(source), '--list', '--terse'])
+            listed = stdout.getvalue().split('=== Submitted source ===\n')[1].split('=== End submitted source ===\n')[0]
+            self.assertEqual(listed, '! caf\u00e9\nprint *, 42\nend\n')
+            self.assertEqual(listed, client.run_job.call_args.args[0])
+            self.assertNotIn('! --- Source:', listed)
+
+    def test_listing_is_off_by_default(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            _, stdout, _ = self.invoke(Path(temporary), self.client())
+            self.assertNotIn('=== Submitted source ===', stdout)
+            self.assertNotIn(MODULE, stdout)
 
     def test_terse_keeps_output_warnings_and_summary(self):
         with tempfile.TemporaryDirectory() as temporary:
@@ -562,6 +720,7 @@ class CommandTests(unittest.TestCase):
         self.assertIn('--compilers', result.stdout)
         self.assertIn('--fail-fast', result.stdout)
         self.assertIn('--terse', result.stdout)
+        self.assertIn('--list', result.stdout)
         self.assertIn('--options-file', result.stdout)
         self.assertIn('--O', result.stdout)
         self.assertIn('--bounds-check', result.stdout)
