@@ -15,17 +15,26 @@ for (const source of [
 }
 assert.equal(sourceFromHash(''), null);
 assert.equal(sourceFromHash('#some-section'), null);
-assert.deepEqual(sharedCodeFromHash('#code=print%20*%2C42'), {source: 'print *,42', interfaceMode: 'simple'});
+assert.deepEqual(sharedCodeFromHash('#code=print%20*%2C42'), {source: 'print *,42', interfaceMode: 'simple', preprocess: false});
 for (const interfaceMode of ['simple', 'advanced']) {
   const source = '! Literal text: &interface=advanced + 50%\nend\n';
   const link = createShareLink(base, source, interfaceMode);
-  assert.deepEqual(sharedCodeFromHash(new URL(link).hash), {source, interfaceMode});
+  assert.deepEqual(sharedCodeFromHash(new URL(link).hash), {source, interfaceMode, preprocess: false});
 }
 for (const options of ['&interface=unknown', '&interface=', '&interface=%GG',
   '&interface=advanced&interface=simple', '&other=value']) {
   assert.throws(() => sharedCodeFromHash('#code=end' + options));
 }
 assert.throws(() => createShareLink(base, 'end', 'unknown'), /interface/);
+assert.deepEqual(sharedCodeFromHash('#code=end&preprocess=1'), {source: 'end', interfaceMode: 'advanced', preprocess: true});
+assert.deepEqual(sharedCodeFromHash('#code=end&preprocess=0'), {source: 'end', interfaceMode: 'simple', preprocess: false});
+assert.deepEqual(sharedCodeFromHash(new URL(createShareLink(base, 'end', 'advanced', true)).hash),
+  {source: 'end', interfaceMode: 'advanced', preprocess: true});
+for (const options of ['&preprocess=yes', '&preprocess=2', '&preprocess=1&preprocess=0', '&preprocess=1&interface=simple']) {
+  assert.throws(() => sharedCodeFromHash('#code=end' + options));
+}
+assert.throws(() => createShareLink(base, 'end', 'simple', true), /Advanced/);
+assert.throws(() => createShareLink(base, 'end', 'advanced', 1), /boolean/);
 assert.equal(sourceFromHash('#code=print%20*%2C%20%22a+b%22'), 'print *, "a+b"');
 for (const hash of ['#code=%', '#code=%GG', '#code=%C3%28']) {
   assert.throws(() => sourceFromHash(hash), /invalid URL encoding/);

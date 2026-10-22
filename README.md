@@ -17,9 +17,9 @@ The editor provides syntax coloring, line counts, undo, and navigation to recogn
 
 Use the **Interface** menu to choose **Simple** or **Advanced**. Ordinary visits default to Advanced; educational forks can set `interfaceMode: 'simple'` in [`site/config.mjs`](site/config.mjs) to start with Simple. Shared-code links default to Simple and can explicitly request Advanced, overriding the site's configured default. Reloading follows the link's mode when shared code is present, otherwise the configured default.
 
-Simple uses **GNU Fortran with compiler defaults**. Its primary **Run** button compiles and executes the program. Examples, file loading, downloading, sharing, Format, Stop, and error navigation remain available. Compiler/standard/flag selectors, Compile-only, Run Again, Fortitude Check, and experimental quick-fix controls are hidden. **Advanced options** switches to the full interface to access those controls.
+Simple uses **GNU Fortran with compiler defaults**, with preprocessing off. Its primary **Run** button compiles and executes the program. Examples, file loading, downloading, sharing, Format, Stop, and error navigation remain available. Compiler/standard/flag selectors, Compile-only, Run Again, Fortitude Check, and experimental quick-fix controls are hidden. **Advanced options** switches to the full interface to access those controls.
 
-Program output fills the results area in Simple until a compilation or execution failure reveals the Compilation pane. A subsequent successful run hides that pane again. Switching interfaces preserves source and results. Entering Simple resets the compiler, standard, preset, warnings, and fast-math settings; execution-setting changes invalidate retained builds. Returning to Advanced keeps the current settings rather than restoring hidden older choices. Interface switching is disabled during a job or connection attempt.
+Program output fills the results area in Simple until a compilation or execution failure reveals the Compilation pane. A subsequent successful run hides that pane again. Switching interfaces preserves source and results. Entering Simple resets the compiler, standard, preset, warnings, fast-math, and preprocessing settings; execution-setting changes invalidate retained builds. Returning to Advanced keeps the current settings rather than restoring hidden older choices. Interface switching is disabled during a job or connection attempt.
 
 If the service does not advertise gfortran, Simple disables Run and explains how to switch to Advanced to select another available compiler. It never substitutes another compiler silently.
 
@@ -32,6 +32,35 @@ The **Standard** menu offers **Compiler default** and years verified by the serv
 **Run Again** reuses a successfully compiled executable for up to five minutes. It starts a fresh isolated process without recompiling. Source or option changes, reconnecting, failed compilation, and expiration invalidate the retained build. Files from a previous run are not carried over, and reruns count toward service usage limits. Retained builds are private to the session.
 
 With **ofort**, **Compile** becomes **Check syntax**, and **Compile and Run** becomes **Run**. Compiler flags and **Run Again** are disabled. Each Run starts a fresh interpretation using `ofort --fast`; Check syntax uses `ofort --fast --check`. Both use compact-array fast mode. Only standalone source is supported; compiled `python_mod` helpers cannot be linked into ofort. Its execution detects reads of uninitialized variables that its syntax check may not detect. Unsupported features can be rejected, and failures never silently switch tools.
+
+### Preprocessing
+
+In Advanced mode, **Enable preprocessing** supports macros and conditional compilation. It is off by default and changes only the submitted source's compiler flags; helper libraries keep their fixed build options. The source filename remains `input_p.f90`. Toggling the option invalidates retained executables.
+
+| Compiler | Preprocessing flag |
+| --- | --- |
+| GNU Fortran | [`-cpp`](https://gcc.gnu.org/onlinedocs/gfortran/Preprocessing-Options.html) |
+| Intel ifx on the Linux service | [`-fpp`](https://www.intel.com/content/www/us/en/docs/fortran-compiler/developer-guide-reference/2026-0/fpp.html) |
+| LLVM Flang | [`-cpp`](https://flang.llvm.org/docs/FlangCommandLineReference.html) |
+| LFortran | [`--cpp`](https://docs.lfortran.org/en/usage/) |
+
+For example, enable preprocessing and run:
+
+```fortran
+#define VALUE 42
+program preprocessing_example
+   implicit none
+#if VALUE > 0
+   print *, VALUE
+#else
+   print *, 0
+#endif
+end program preprocessing_example
+```
+
+The checkbox depends on the service's advertised options. ofort does not offer preprocessing. If a shared link requests it but the compiler or service does not support it, compilation is blocked with an explanation; choose a supporting compiler or turn the option off. A new request is never silently sent without required preprocessing. Older services continue working with preprocessing off because the frontend omits the new option in that case.
+
+This feature requires redeploying the shared backend as well as publishing the frontend. Image verification tests preprocessing with macros, conditionals, and cached helpers. Format and Fortitude Check still receive the original source, without running the compiler's preprocessor. The playground remains a single-file environment; it does not upload additional include files or provide arbitrary include paths or command-line macro definitions. Use `#define` in the source for small experiments.
 
 ### Formatting, checks, and diagnostics
 
@@ -58,7 +87,7 @@ Recognized errors in the submitted `input_p.f90` source receive a red line backg
 
 ## Sharing code with a link
 
-Click **Copy share link** to create a link containing the current source and selected interface mode. If clipboard access is unavailable, a selected text field lets you copy it manually. Anyone opening the link sees the code in the editor and chooses when to compile or run it. The link does not include compiler selections, flags, results, or session tokens.
+Click **Copy share link** to create a link containing the current source, selected interface mode, and preprocessing setting. If clipboard access is unavailable, a selected text field lets you copy it manually. Anyone opening the link sees the code in the editor and chooses when to compile or run it. The link does not include compiler selections, other compiler flags, results, or session tokens.
 
 The public format is:
 
@@ -66,7 +95,9 @@ The public format is:
 https://beliavsky.github.io/fortran-playground/#code=URL_ENCODED_FORTRAN
 ```
 
-This format, including existing generated links, opens Simple. Append `&interface=advanced` to request Advanced, or `&interface=simple` to select Simple explicitly. **Copy share link** writes the selected mode explicitly. Percent-encode the complete source before appending the interface parameter; literal ampersands in the program must be encoded as `%26`. An Advanced link exposes the controls but does not carry compiler settings.
+This format, including existing generated links, opens Simple. Append `&interface=advanced` to request Advanced, or `&interface=simple` to select Simple explicitly. **Copy share link** writes the selected mode explicitly. Percent-encode the complete source before appending options; literal ampersands in the program must be encoded as `%26`.
+
+Append `&preprocess=1` to request preprocessing. It opens Advanced automatically when the interface is unspecified. An explicit `interface=simple` combined with `preprocess=1` is rejected because Simple always turns preprocessing off. Copied links preserve preprocessing when enabled; it defaults to off when absent. `preprocess=0` explicitly requests off. Other compiler settings are not included.
 
 For example, [open a short Hello program](https://beliavsky.github.io/fortran-playground/#code=print%20*%2C%20%22Hello%22%0Aend%0A).
 

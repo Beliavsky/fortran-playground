@@ -5,11 +5,12 @@ import {createShareLink, sourceFromHash, sharedCodeFromHash} from '../site/shari
 if (process.argv.includes('--simple-default')) playgroundConfig.interfaceMode = 'simple';
 const plainVisit = process.argv.includes('--plain-default');
 const advancedLink = process.argv.includes('--advanced-link');
+const preprocessingLink = process.argv.includes('--preprocess-link');
 if (advancedLink) playgroundConfig.interfaceMode = 'simple';
 const elements = new Map();
 const startupSource = 'program shared\nprint *, "shared + café"\nend program shared\n';
 const base = 'https://example.org/fortran-playground/';
-globalThis.location = new URL(plainVisit ? base : advancedLink ? createShareLink(base, startupSource, 'advanced') :
+globalThis.location = new URL(plainVisit ? base : preprocessingLink ? createShareLink(base, startupSource, 'advanced', true) : advancedLink ? createShareLink(base, startupSource, 'advanced') :
   base + '#code=' + encodeURIComponent(startupSource)); // Existing links have no interface parameter.
 const pageListeners = {};
 globalThis.addEventListener = (name, handler) => {pageListeners[name] = handler;};
@@ -40,6 +41,7 @@ globalThis.confirm = () => {confirmations++; return allowReplace;};
 let submissions = 0, payload, state = 'done', sessionFails = false, cancelled = 0, legacy = false, expired = false, buildOK = true, buildError = '';
 let checkOK = true, findings = true, checkRequestFails = false;
 let serviceCompilers = ['gfortran', 'ofort'];
+let preprocessingSupported = true;
 globalThis.fetch = async (url, options = {}) => {
   let result;
   if (url === './service.json') result = {url: 'https://execute.example.org'};
@@ -49,7 +51,7 @@ globalThis.fetch = async (url, options = {}) => {
     result = {token: 'session', commit: 'abcd1234', timeout: 30, compilers: serviceCompilers,
       features: legacy ? {} : {compile_only: true, run_again: true, format: true, check: true},
       ...(legacy ? {} : {compiler_versions: {gfortran: 'GNU Fortran (GCC) 15.2.0', ifx: 'Intel Fortran 2026.0'}}),
-      compiler_options: {gfortran: {presets: {default: [], debug: ['-g']}, extras: {warnings: ['-Wall']},
+      compiler_options: {gfortran: {presets: {default: [], debug: ['-g']}, extras: {warnings: ['-Wall'], ...(preprocessingSupported ? {preprocess: ['-cpp']} : {})},
         ...(legacy ? {} : {standards: {'2008': ['-std=f2008'], '2018': ['-std=f2018']},
           standard_note: 'GNU rejects extensions beyond the selected standard.'})},
         ofort: {presets: {default: []}, extras: {}, standards: {}, interpreter: true}}};
@@ -70,8 +72,9 @@ globalThis.fetch = async (url, options = {}) => {
   return {ok: true, json: async () => result};
 };
 await import('../site/app.mjs');
-const expectedInitialMode = plainVisit ? playgroundConfig.interfaceMode : advancedLink ? 'advanced' : 'simple';
+const expectedInitialMode = plainVisit ? playgroundConfig.interfaceMode : advancedLink || preprocessingLink ? 'advanced' : 'simple';
 assert.equal(get('interface-mode').value, expectedInitialMode);
+assert.equal(Boolean(get('preprocess').checked), preprocessingLink);
 assert.equal(get('compiler-controls').hidden, expectedInitialMode === 'simple');
 if (expectedInitialMode === 'simple') {
   assert.equal(get('run').textContent, 'Run');
@@ -92,6 +95,7 @@ if (!plainVisit) assert.match(get('share-status').textContent, /Code loaded from
 await get('share').onclick();
 assert.equal(sourceFromHash(new URL(copiedLink).hash), loadedSource);
 assert.equal(sharedCodeFromHash(new URL(copiedLink).hash).interfaceMode, 'advanced');
+assert.equal(sharedCodeFromHash(new URL(copiedLink).hash).preprocess, preprocessingLink);
 assert.equal(get('share-link-field').hidden, true);
 clipboardFails = true;
 await get('share').onclick();
@@ -145,6 +149,7 @@ assert.match(get('compiler-version').textContent, /GNU Fortran \(GCC\) 15.2.0/);
 assert.equal(get('compiler').options[0].title, 'GNU Fortran (GCC) 15.2.0');
 assert.equal(get('preset').options[2].disabled, true);
 assert.equal(get('fast-math').disabled, true);
+assert.equal(get('preprocess').disabled, false);
 assert.equal(get('standard').disabled, false);
 assert.equal(get('standard').options[3].disabled, false);
 assert.equal(get('standard').options[5].disabled, true);
@@ -174,6 +179,16 @@ get('compiler').value = 'gfortran'; get('compiler').onchange();
 await get('compile').onclick(); // Compiler changes invalidated the retained build.
 assert.equal(payload.retain_executable, true);
 assert.equal(get('rerun').disabled, false);
+get('preprocess').checked = true; get('preprocess').onchange();
+assert.equal(get('rerun').disabled, true);
+assert.match(get('options-note').textContent, /-cpp/);
+await get('compile').onclick();
+assert.equal(payload.compiler_options.preprocess, true);
+await get('share').onclick();
+assert.equal(sharedCodeFromHash(new URL(copiedLink).hash).preprocess, true);
+get('preprocess').checked = false; get('preprocess').onchange();
+await get('compile').onclick();
+assert.equal(Object.hasOwn(payload.compiler_options, 'preprocess'), false); // Older services accept off.
 const beforeCheck = get('fortran').value;
 const compilationBeforeCheck = get('diagnostics').textContent;
 const firstCheck = get('check').onclick();
@@ -338,6 +353,7 @@ assert.equal(get('standard').disabled, true);
 assert.equal(get('preset').disabled, true);
 assert.equal(get('warnings').disabled, true);
 assert.equal(get('fast-math').disabled, true);
+assert.equal(get('preprocess').disabled, true);
 await get('compile').onclick();
 assert.equal(payload.mode, 'fortran-compile');
 assert.equal(payload.compiler, 'ofort');
@@ -361,6 +377,7 @@ get('standard').value = '2018';
 get('preset').value = 'optimized';
 get('warnings').checked = true;
 get('fast-math').checked = true;
+get('preprocess').checked = true;
 const modeSource = get('fortran').value, modeOutput = get('output').textContent;
 const modeDiagnostics = get('diagnostics').textContent;
 const beforeModeChange = submissions;
@@ -371,6 +388,7 @@ assert.equal(get('standard').value, 'default');
 assert.equal(get('preset').value, 'default');
 assert.equal(get('warnings').checked, false);
 assert.equal(get('fast-math').checked, false);
+assert.equal(get('preprocess').checked, false);
 assert.equal(get('run').textContent, 'Run');
 for (const id of ['compiler-controls', 'option-controls', 'compile', 'rerun', 'check', 'checks-pane']) {
   assert.equal(get(id).hidden, true, id);
@@ -429,6 +447,19 @@ assert.equal(get('compiler').value, 'ofort');
 serviceCompilers = ['gfortran', 'ofort'];
 get('compiler').value = 'gfortran';
 await get('connect').onclick();
+get('preprocess').checked = true; get('preprocess').onchange();
+preprocessingSupported = false;
+await get('connect').onclick();
+assert.equal(get('preprocess').checked, true);
+assert.equal(get('run').disabled, true);
+assert.match(get('options-note').textContent, /Preprocessing is requested but unavailable/);
+const blockedSubmissions = submissions;
+await get('run').onclick();
+assert.equal(submissions, blockedSubmissions);
+get('preprocess').checked = false; get('preprocess').onchange();
+assert.equal(get('preprocess').disabled, true);
+assert.equal(get('run').disabled, false);
+preprocessingSupported = true;
 legacy = true;
 await get('connect').onclick();
 assert.equal(get('run').disabled, false);

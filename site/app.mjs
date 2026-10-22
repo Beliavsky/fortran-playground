@@ -17,12 +17,13 @@ let availableCompilers = [], compilationFailed = false;
 const isSimple = () => interfaceMode === 'simple';
 function resetSimpleSettings() {
   const changed = get('compiler').value !== 'gfortran' || get('standard').value !== 'default' ||
-    get('preset').value !== 'default' || get('warnings').checked || get('fast-math').checked;
+    get('preset').value !== 'default' || get('warnings').checked || get('fast-math').checked || get('preprocess').checked;
   get('compiler').value = 'gfortran';
   get('standard').value = 'default';
   get('preset').value = 'default';
   get('warnings').checked = false;
   get('fast-math').checked = false;
+  get('preprocess').checked = false;
   return changed;
 }
 function invalidateBuild() {
@@ -58,7 +59,8 @@ function controls() {
   get('compile').textContent = interpreted ? 'Check syntax' : 'Compile';
   get('run').textContent = isSimple() || interpreted ? 'Run' : 'Compile and Run';
   quickFix.setBusy(busy);
-  get('run').disabled = !token || busy || !editor.getValue().trim() || !availableCompilers.includes(get('compiler').value);
+  const preprocessingUnavailable = get('preprocess').checked && !catalog[get('compiler').value]?.extras?.preprocess;
+  get('run').disabled = !token || busy || !editor.getValue().trim() || !availableCompilers.includes(get('compiler').value) || preprocessingUnavailable;
   get('interface-mode').value = interfaceMode;
   get('interface-mode').disabled = busy || connecting;
   get('advanced-options').disabled = busy || connecting;
@@ -95,12 +97,16 @@ function controls() {
     if (!spec?.extras?.[key]) get(id).checked = false;
     get(id).disabled = !token || busy || !spec?.extras?.[key];
   }
+  // A shared link's request must not be silently ignored by an older service.
+  get('preprocess').disabled = !token || busy || (!spec?.extras?.preprocess && !get('preprocess').checked);
   const flags = spec ? [...(spec.presets[get('preset').value] || []),
     ...(spec.standards?.[get('standard').value] || []),
     ...(get('warnings').checked ? spec.extras.warnings : []),
+    ...(get('preprocess').checked ? spec.extras.preprocess || [] : []),
     ...(get('fast-math').checked ? spec.extras.fast_math : [])] : [];
   get('options-note').textContent = `User-code flags: ${flags.join(' ') || '(compiler default)'}. Helpers keep fixed build options.${get('fast-math').checked ? ' Fast math can change numerical results.' : ''}`;
   if (interpreted) get('options-note').textContent = 'ofort default checks are enabled, including reads of uninitialized variables. Unsupported language features may be rejected.';
+  if (preprocessingUnavailable) get('options-note').textContent += ' Preprocessing is requested but unavailable for this compiler/service. Choose a supported compiler or turn preprocessing off.';
 }
 
 async function api(path, method = 'GET', payload) {
@@ -197,6 +203,7 @@ async function run(mode = 'fortran-edit') {
     if (!availableCompilers.includes('gfortran') || !['fortran-edit', 'format'].includes(mode)) return;
   }
   if (!availableCompilers.includes(get('compiler').value)) return;
+  if (get('preprocess').checked && !catalog[get('compiler').value]?.extras?.preprocess) return;
   if (mode === 'fortran-compile' && !features.compile_only) return;
   if (mode === 'format' && (!features.format || !editor.undoableClear)) return;
   if (mode === 'check' && !features.check) return;
@@ -224,6 +231,7 @@ async function run(mode = 'fortran-edit') {
       compiler: ['format', 'check'].includes(mode) ? 'gfortran' : get('compiler').value,
       ...(!['format', 'check'].includes(mode) && catalog[get('compiler').value] ? {compiler_options: {
         preset: get('preset').value, warnings: Boolean(get('warnings').checked), fast_math: Boolean(get('fast-math').checked),
+        ...(get('preprocess').checked ? {preprocess: true} : {}),
         ...(catalog[get('compiler').value]?.standards ? {standard: get('standard').value} : {}),
       }} : {}),
     });
@@ -360,7 +368,7 @@ get('download').onclick = () => {
 get('share').onclick = async () => {
   get('share-link-field').hidden = true;
   try {
-    const link = createShareLink(location.href, editor.getValue(), interfaceMode);
+    const link = createShareLink(location.href, editor.getValue(), interfaceMode, Boolean(get('preprocess').checked));
     get('share-link').value = link;
     try {
       await navigator.clipboard.writeText(link);
@@ -379,20 +387,25 @@ function loadSharedCode(initial = false) {
   try {
     const shared = sharedCodeFromHash(location.hash);
     if (shared === null) return;
-    const {source, interfaceMode: sharedMode} = shared;
-    if (source === editor.getValue() && sharedMode === interfaceMode) return;
+    const {source, interfaceMode: sharedMode, preprocess} = shared;
+    if (source === editor.getValue() && sharedMode === interfaceMode && preprocess === Boolean(get('preprocess').checked)) return;
     if (active || connecting) throw new Error('Wait for the current operation to finish before opening shared code.');
     if (!initial && editor.getValue().trim() && !confirm('Replace the Fortran input with code from this shared link?')) {
       get('share-status').textContent = 'Shared code was not loaded; your input is unchanged.';
       return;
     }
     changeInterface(sharedMode);
+    if (preprocess !== Boolean(get('preprocess').checked)) {
+      get('preprocess').checked = preprocess;
+      invalidateBuild(); clearErrorInfo(); revision++;
+      controls();
+    }
     if (source !== editor.getValue()) editor.setValue(source, !initial);
     filename = 'main.f90';
     get('share-status').textContent = `Code loaded from a shared link. Choose ${isSimple() ? 'Run' : 'Compile or Compile and Run'} when ready.`;
   } catch (error) { get('share-status').textContent = String(error); }
 }
-for (const id of ['compiler', 'standard', 'preset', 'warnings', 'fast-math']) get(id).onchange = () => {
+for (const id of ['compiler', 'standard', 'preset', 'warnings', 'fast-math', 'preprocess']) get(id).onchange = () => {
   clearErrorInfo();
   invalidateBuild();
   revision++; controls(); get('freshness').textContent = 'Options changed; previous results are retained.';
