@@ -187,6 +187,27 @@ class CommandTests(unittest.TestCase):
             self.assertIn('does not support', stderr)
             client.run_job.assert_not_called()
 
+    def test_fail_fast_stops_on_build_or_execution_failure(self):
+        for stage in ('build', 'execution'):
+            with self.subTest(stage=stage), tempfile.TemporaryDirectory() as temporary:
+                client = self.client()
+                client.run_job.side_effect = [({'ok': False, stage: {'ok': False, 'stderr': 'failed'}}, 1.0)]
+                status, stdout, _ = self.invoke(Path(temporary), client, '--compilers', 'gfortran', 'ifx', '--fail-fast')
+                self.assertEqual(status, 1)
+                client.run_job.assert_called_once()
+                self.assertIn('Stopping after failure (--fail-fast)', stdout)
+                self.assertIn('Summary:', stdout)
+                self.assertNotIn('Submitting ifx', stdout)
+
+    def test_fail_fast_continues_after_success(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            client = self.client()
+            client.run_job.side_effect = [({'ok': True}, 1.0), ({'ok': True}, 1.1)]
+            status, stdout, _ = self.invoke(Path(temporary), client, '--compilers', 'gfortran', 'ifx', '--fail-fast')
+            self.assertEqual(status, 0)
+            self.assertEqual(client.run_job.call_count, 2)
+            self.assertNotIn('Stopping after failure', stdout)
+
     def test_service_failure_stops_remaining_compilers(self):
         with tempfile.TemporaryDirectory() as temporary:
             client = self.client()
@@ -200,6 +221,7 @@ class CommandTests(unittest.TestCase):
         result = subprocess.run([sys.executable, str(ROOT / 'xplayground_run.py'), '--help'],
                                 capture_output=True, text=True, check=True)
         self.assertIn('--compilers', result.stdout)
+        self.assertIn('--fail-fast', result.stdout)
         self.assertIn('compilation order', result.stdout)
 
 

@@ -242,6 +242,7 @@ def main(argv=None):
     group.add_argument('--compiler', choices=COMPILERS, help='Compiler (default: gfortran)')
     group.add_argument('--compilers', choices=COMPILERS, nargs='+', help='Compilers to invoke sequentially')
     parser.add_argument('--compile-only', action='store_true', help='Compile without execution (syntax check for ofort)')
+    parser.add_argument('--fail-fast', action='store_true', help='Stop after the first compilation or execution failure')
     parser.add_argument('--standard', default='default', help='Language standard year, or default')
     parser.add_argument('--preset', default='default', choices=('default', 'debug', 'optimized', 'strict'))
     parser.add_argument('--warnings', action='store_true')
@@ -270,6 +271,9 @@ def main(argv=None):
                                              compile_only=args.compile_only, timeout=args.timeout)
             print_result(compiler, result, sections, elapsed)
             rows.append((compiler, result['ok'], elapsed))
+            if args.fail_fast and not result['ok']:
+                print('Stopping after failure (--fail-fast); remaining compilers were not submitted.', flush=True)
+                break
     except KeyboardInterrupt:
         print('\nInterrupted; cancellation requested for any known pending job.', file=sys.stderr)
         print_summary(rows)

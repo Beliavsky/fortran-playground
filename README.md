@@ -199,6 +199,9 @@ python xplayground_run.py hello.f90
 # Compile and run sequentially with several compilers:
 python xplayground_run.py hello.f90 --compilers gfortran ifx flang lfortran
 
+# Stop after the first compilation or execution failure:
+python xplayground_run.py hello.f90 --compilers gfortran ifx flang --fail-fast
+
 # Combine a module and its caller, in the order supplied:
 python xplayground_run.py kinds.f90 solver.f90 main.f90 --compilers gfortran ifx
 
@@ -221,7 +224,7 @@ The compiler sees `input_p.f90`. The client prints the combined-source line rang
 
 ### Results, cancellation, and service configuration
 
-Each compiler gets a separate sequential job with a fresh build environment; files within a combined program do not consume separate jobs. Compilation or program failures are reported, and the client continues to the next requested compiler. It displays outputs individually without assuming differences imply incorrect results. HTTP/service failures, including quota errors, stop further submissions. Submissions are never automatically retried, since a request may have been accepted before a connection failure.
+Each compiler gets a separate sequential job with a fresh build environment; files within a combined program do not consume separate jobs. Compilation or program failures are reported, and by default the client continues to the next requested compiler. Add `--fail-fast` to stop after the first compilation or execution failure, keeping the completed results and returning exit code 1. It displays outputs individually without assuming differences imply incorrect results. HTTP/service failures, including quota errors, always stop further submissions regardless of `--fail-fast`. Submissions are never automatically retried, since a request may have been accepted before a connection failure.
 
 The final summary lists completed compilers and total client times. Exit codes are **0** for all successful jobs, **1** for any completed job failure, **2** for local input/options or service failures, and **130** for Ctrl+C. On timeout or interruption, the client attempts to cancel a known pending job. Cancellation cannot be confirmed if the service is unreachable; a submission interrupted before its ID is received cannot be cancelled by the client. The total per-compiler timeout includes submission and polling, while an individual HTTP request is bounded to at most 30 seconds (five seconds for best-effort cancellation).
 
