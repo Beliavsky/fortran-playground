@@ -29,7 +29,6 @@
     <label for="example">Example</label>
     <select id="example"></select>
     <button id="load" type="button">Load example</button>
-    <button id="clear" type="button">Clear</button>
     <button id="load-file" type="button">Load Fortran file</button>
     <input id="file" type="file" accept=".f90,.f95,.f03,.f08,text/plain" hidden>
     <button id="download" type="button">Download Fortran</button>
@@ -66,7 +65,7 @@
     <section id="source-pane" class="panel">
       <div class="source-header">
         <label for="fortran">Fortran input <span id="fortran-lines" class="line-count">0 lines</span></label>
-        <div class="source-actions" role="group" aria-label="Fortran execution controls">
+        <div class="source-actions" role="group" aria-label="Fortran input controls">
           <button id="format" type="button" title="Format Fortran with fprettify (Undo restores the original)" disabled>Format</button>
           <button id="check" type="button" title="Check Fortran with Fortitude; no changes or execution" aria-controls="checks-pane" aria-expanded="false" disabled>Check</button>
           <button id="compile" type="button" disabled>Compile</button>
@@ -75,6 +74,7 @@
           <button id="stop" type="button" disabled>Stop</button>
           <button id="first-error" type="button" disabled hidden>Go to first error</button>
           <span id="quick-fix-controls"><button id="fix-error" type="button" disabled hidden>Fix error</button></span>
+          <button id="clear" type="button">Clear</button>
         </div>
       </div>
       <textarea id="fortran" spellcheck="false"></textarea>

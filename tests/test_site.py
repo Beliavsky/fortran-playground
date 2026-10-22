@@ -76,7 +76,7 @@ class SiteTests(unittest.TestCase):
                 attrs = dict(attrs)
                 if attrs.get('id'):
                     self.attributes[attrs['id']] = attrs
-                if attrs.get('id') in {'fortran', 'output', 'diagnostics', 'compile', 'run', 'rerun', 'stop', 'first-error', 'fix-error', 'compiler', 'preset'}:
+                if attrs.get('id') in {'fortran', 'output', 'diagnostics', 'compile', 'run', 'rerun', 'stop', 'first-error', 'fix-error', 'compiler', 'preset', 'clear'}:
                     self.ancestors[attrs['id']] = list(self.stack)
                 if tag not in {'input', 'link', 'meta', 'br'}:
                     self.stack.append(attrs.get('id') or attrs.get('class') or tag)
@@ -97,7 +97,7 @@ class SiteTests(unittest.TestCase):
             self.assertIn('results-pane', panes.ancestors[target])
             self.assertIn('workspace', panes.ancestors[target])
         self.assertIn('workspace', panes.ancestors['fortran'])
-        for target in ('compile', 'run', 'rerun', 'stop', 'first-error', 'fix-error'):
+        for target in ('compile', 'run', 'rerun', 'stop', 'first-error', 'fix-error', 'clear'):
             self.assertIn('source-header', panes.ancestors[target])
             self.assertIn('source-pane', panes.ancestors[target])
             self.assertEqual(html.count(f'id="{target}"'), 1)
