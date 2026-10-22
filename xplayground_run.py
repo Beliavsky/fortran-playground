@@ -171,12 +171,53 @@ class PlaygroundClient:
             raise
 
 
+def additional_flags(spec, flags, additional):
+    """Validate bounded token lists against the same catalog advertised to clients."""
+    if (not isinstance(additional, list) or len(additional) > 32 or
+            any(not isinstance(arg, str) or not arg or len(arg) > 128 for arg in additional)):
+        raise ValueError('Additional options must be a list of at most 32 short argument strings.')
+    if not additional:
+        return flags
+    groups = spec.get('additional_options', {})
+    if not groups:
+        raise ValueError('Additional options are unavailable for this compiler/service.')
+    choices = [(group, choice) for group, values in groups.items() for choice in values]
+    seen = {}
+    for arguments, strict in [(flags, False), (additional, True)]:
+        index = 0
+        while index < len(arguments):
+            match = next(((group, choice) for group, choice in choices
+                          if arguments[index:index + len(choice)] == choice), None)
+            if match is None:
+                if strict:
+                    raise ValueError(f'Unsupported additional option: {arguments[index]}. Choose an advertised option.')
+                index += 1
+                continue
+            group, choice = match
+            if group in seen and seen[group] != choice:
+                raise ValueError(f'Conflicting {group} options: {" ".join(seen[group])} and {" ".join(choice)}.')
+            seen[group] = choice
+            index += len(choice)
+    return flags + additional
+
+
 def selections(session, compilers, args):
     """Validate every compiler before spending any job allowance."""
     if len(set(compilers)) != len(compilers):
         raise ValueError('List each compiler only once')
     if args.compile_only and not session.get('features', {}).get('compile_only'):
         raise ValueError('This service does not advertise compile-only jobs')
+    configured = {}
+    if args.options_file:
+        if args.options_file.stat().st_size > 65536:
+            raise ValueError('Options file exceeds the 64 KB limit')
+        configured = json.loads(args.options_file.read_text(encoding='utf-8-sig'))
+        if not isinstance(configured, dict) or set(configured) - set(COMPILERS):
+            raise ValueError('Options file must be an object mapping compiler names to argument lists')
+        for compiler, arguments in configured.items():
+            if (not isinstance(arguments, list) or len(arguments) > 32 or
+                    any(not isinstance(arg, str) or not arg or len(arg) > 128 for arg in arguments)):
+                raise ValueError(f'{compiler}: options file entries must be lists of at most 32 short argument strings')
     result = {}
     for compiler in compilers:
         if compiler not in session.get('compilers', ['gfortran']):
@@ -194,8 +235,21 @@ def selections(session, compilers, args):
                 if key not in spec.get('extras', {}):
                     raise ValueError(f'{compiler} does not support {key}')
                 options[key] = True
+        extra = configured.get(compiler, [])
+        effective_flags(spec, options, extra)
+        if extra:
+            options['additional'] = extra
         result[compiler] = options
     return result
+
+
+def effective_flags(spec, options, additional=None):
+    flags = list(spec.get('presets', {}).get(options.get('preset', 'default'), []))
+    flags += spec.get('standards', {}).get(options.get('standard', 'default'), [])
+    for key in ('warnings', 'fast_math', 'preprocess'):
+        if options.get(key):
+            flags += spec.get('extras', {}).get(key, [])
+    return additional_flags(spec, flags, options.get('additional', []) if additional is None else additional)
 
 
 def print_result(compiler, result, sections, elapsed, *, terse=False):
@@ -257,6 +311,7 @@ def main(argv=None):
     parser.add_argument('--compile-only', action='store_true', help='Compile without execution (syntax check for ofort)')
     parser.add_argument('--fail-fast', action='store_true', help='Stop after the first compilation or execution failure')
     parser.add_argument('--terse', action='store_true', help='Show program output, diagnostics, and the final summary only')
+    parser.add_argument('--options-file', type=Path, help='JSON file mapping compiler names to additional argument lists')
     parser.add_argument('--standard', default='default', help='Language standard year, or default')
     parser.add_argument('--preset', default='default', choices=('default', 'debug', 'optimized', 'strict'))
     parser.add_argument('--warnings', action='store_true')
@@ -284,6 +339,8 @@ def main(argv=None):
             if not args.terse:
                 version = session.get('compiler_versions', {}).get(compiler) or 'version unavailable'
                 print(f'\nSubmitting {compiler} ({version})...', flush=True)
+                flags = effective_flags(session.get('compiler_options', {}).get(compiler, {}), options[compiler])
+                print('User-code options: ' + (' '.join(flags) or '(compiler default)'), flush=True)
             result, elapsed = client.run_job(source, compiler, options[compiler],
                                              compile_only=args.compile_only, timeout=args.timeout)
             print_result(compiler, result, sections, elapsed, terse=args.terse)

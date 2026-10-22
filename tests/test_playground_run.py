@@ -24,6 +24,8 @@ def session():
             'compiler_versions': {'gfortran': 'GNU test', 'ifx': 'Intel test'},
             'compiler_options': {name: {'presets': {'default': [], 'debug': ['-g']},
                 'standards': {'2018': ['-std=f2018']},
+                'additional_options': {'optimization': [['-O0'], ['-O2'], ['-O3']],
+                    'debug': [['-g']], 'warnings': [['-Wall']] if name == 'gfortran' else [['-warn', 'all']]},
                 'extras': {'preprocess': ['-cpp'], 'warnings': ['-Wall']}}
                 for name in ['gfortran', 'ifx']}}
 
@@ -221,6 +223,61 @@ class CommandTests(unittest.TestCase):
             self.assertEqual(stdout, '')
             self.assertIn('HTTP 429: quota reached', stderr)
 
+    def test_options_file_sends_each_compilers_arguments(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            config = root / 'options.json'
+            config.write_text(json.dumps({'gfortran': ['-O2', '-Wall'], 'ifx': ['-O2', '-warn', 'all']}))
+            client = self.client()
+            status, stdout, _ = self.invoke(root, client, '--compilers', 'gfortran', 'ifx', '--options-file', str(config))
+            self.assertEqual(status, 1)
+            self.assertEqual(client.run_job.call_args_list[0].args[2]['additional'], ['-O2', '-Wall'])
+            self.assertEqual(client.run_job.call_args_list[1].args[2]['additional'], ['-O2', '-warn', 'all'])
+            self.assertIn('User-code options: -O2 -warn all', stdout)
+            client = self.client()
+            _, stdout, _ = self.invoke(root, client, '--terse', '--options-file', str(config))
+            self.assertNotIn('User-code options:', stdout)
+
+    def test_options_file_missing_entry_uses_defaults(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            config = root / 'options.json'
+            config.write_text('{"ifx": ["-O2"]}')
+            client = self.client()
+            self.invoke(root, client, '--options-file', str(config))
+            self.assertNotIn('additional', client.run_job.call_args.args[2])
+
+    def test_invalid_options_prevent_all_submissions(self):
+        for config_value in [[], {'typo': []}, {'ifx': '-O2'}, {'ifx': ['-warn']},
+                             {'ifx': ['-o', 'other.exe']}, {'ifx': ['-O2', '-O3']},
+                             {'ifx': ['@options']}, {'ifx': ['-O2;echo bad']}]:
+            with self.subTest(config=config_value), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                config = root / 'options.json'
+                config.write_text(json.dumps(config_value))
+                client = self.client()
+                status, _, _ = self.invoke(root, client, '--compilers', 'gfortran', 'ifx', '--options-file', str(config))
+                self.assertEqual(status, 2)
+                client.run_job.assert_not_called()
+
+    def test_options_rejected_by_older_service_and_against_preset(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            config = root / 'options.json'
+            config.write_text('{"gfortran": ["-O2"]}')
+            client = self.client()
+            client.connect.return_value['compiler_options']['gfortran'].pop('additional_options')
+            status, _, stderr = self.invoke(root, client, '--options-file', str(config))
+            self.assertEqual(status, 2)
+            self.assertIn('unavailable', stderr)
+            client.run_job.assert_not_called()
+            client = self.client()
+            client.connect.return_value['compiler_options']['gfortran']['presets']['debug'] = ['-O0', '-g']
+            status, _, stderr = self.invoke(root, client, '--options-file', str(config), '--preset', 'debug')
+            self.assertEqual(status, 2)
+            self.assertIn('Conflicting optimization', stderr)
+            client.run_job.assert_not_called()
+
     def test_all_options_validated_before_submission(self):
         with tempfile.TemporaryDirectory() as temporary:
             client = self.client()
@@ -330,6 +387,7 @@ class CommandTests(unittest.TestCase):
         self.assertIn('--compilers', result.stdout)
         self.assertIn('--fail-fast', result.stdout)
         self.assertIn('--terse', result.stdout)
+        self.assertIn('--options-file', result.stdout)
         self.assertIn('compilation order', result.stdout)
 
 

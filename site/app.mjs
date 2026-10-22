@@ -6,6 +6,7 @@ import {createQuickFixControls} from './quick_fix_controls.mjs';
 import {applyFormatting} from './formatting.mjs';
 import {sharedCodeFromHash, createShareLink} from './sharing.mjs';
 import {serviceOrigin} from './service_config.mjs';
+import {compilerArguments, optionTokens} from './compiler_arguments.mjs';
 
 const get = id => document.getElementById(id);
 let token = '', service = '', catalog = {}, active = null, connecting = false, revision = 0;
@@ -14,16 +15,26 @@ let features = {}, retained = null, expiryTimer = null;
 let compilerVersions = {};
 let interfaceMode = playgroundConfig.interfaceMode === 'simple' ? 'simple' : 'advanced';
 let availableCompilers = [], compilationFailed = false;
+const additionalByCompiler = {};
+let additionalCompiler = 'gfortran';
+function selectedOptions() {
+  return {preset: get('preset').value, standard: get('standard').value,
+    warnings: Boolean(get('warnings').checked), fast_math: Boolean(get('fast-math').checked),
+    ...(get('preprocess').checked ? {preprocess: true} : {}),
+    ...(get('additional-options').value.trim() ? {additional: optionTokens(get('additional-options').value)} : {})};
+}
 const isSimple = () => interfaceMode === 'simple';
 function resetSimpleSettings() {
   const changed = get('compiler').value !== 'gfortran' || get('standard').value !== 'default' ||
-    get('preset').value !== 'default' || get('warnings').checked || get('fast-math').checked || get('preprocess').checked;
+    get('preset').value !== 'default' || get('warnings').checked || get('fast-math').checked || get('preprocess').checked || get('additional-options').value.trim();
   get('compiler').value = 'gfortran';
   get('standard').value = 'default';
   get('preset').value = 'default';
   get('warnings').checked = false;
   get('fast-math').checked = false;
   get('preprocess').checked = false;
+  get('additional-options').value = '';
+  for (const name of Object.keys(additionalByCompiler)) delete additionalByCompiler[name];
   return changed;
 }
 function invalidateBuild() {
@@ -54,6 +65,10 @@ function clearErrorInfo() {
 
 function controls() {
   if (isSimple()) resetSimpleSettings();
+  if (additionalCompiler !== get('compiler').value) {
+    additionalCompiler = get('compiler').value;
+    get('additional-options').value = additionalByCompiler[additionalCompiler] || '';
+  }
   const busy = Boolean(active);
   const interpreted = get('compiler').value === 'ofort';
   get('compile').textContent = interpreted ? 'Check syntax' : 'Compile';
@@ -65,7 +80,7 @@ function controls() {
   get('interface-mode').disabled = busy || connecting;
   get('advanced-options').disabled = busy || connecting;
   for (const id of ['compiler-controls', 'option-controls', 'compiler-version', 'standard-note',
-    'options-note', 'build-note', 'connection', 'check', 'compile', 'rerun', 'quick-fix-controls', 'quick-fix-details', 'advanced-help']) {
+    'options-note', 'additional-options-help', 'build-note', 'connection', 'check', 'compile', 'rerun', 'quick-fix-controls', 'quick-fix-details', 'advanced-help']) {
     get(id).hidden = isSimple();
   }
   for (const id of ['simple-compiler', 'advanced-options', 'simple-help']) get(id).hidden = !isSimple();
@@ -99,12 +114,25 @@ function controls() {
   }
   // A shared link's request must not be silently ignored by an older service.
   get('preprocess').disabled = !token || busy || (!spec?.extras?.preprocess && !get('preprocess').checked);
-  const flags = spec ? [...(spec.presets[get('preset').value] || []),
-    ...(spec.standards?.[get('standard').value] || []),
-    ...(get('warnings').checked ? spec.extras.warnings : []),
-    ...(get('preprocess').checked ? spec.extras.preprocess || [] : []),
-    ...(get('fast-math').checked ? spec.extras.fast_math : [])] : [];
-  get('options-note').textContent = `User-code flags: ${flags.join(' ') || '(compiler default)'}. Helpers keep fixed build options.${get('fast-math').checked ? ' Fast math can change numerical results.' : ''}`;
+  const choices = Object.values(spec?.additional_options || {}).flat();
+  get('additional-options').disabled = !token || busy || interpreted || (!choices.length && !get('additional-options').value.trim());
+  get('additional-options-help').textContent = choices.length ?
+    `Supported additional options (separate arguments with spaces): ${choices.map(args => args.join(' ')).join('; ')}. Conflicting settings are rejected.` :
+    'Additional options are unavailable for this compiler/service.';
+  let flags = [], optionError = '';
+  try { flags = compilerArguments(spec, selectedOptions(), optionTokens(get('additional-options').value)); }
+  catch (error) { optionError = error.message; }
+  get('options-error').textContent = optionError;
+  get('options-error').hidden = isSimple() || !optionError;
+  if (optionError) {
+    get('run').disabled = true;
+    get('compile').disabled = true;
+    get('rerun').disabled = true;
+  }
+  const fastMath = flags.includes('-ffast-math') || flags.includes('--fast') ||
+    flags.some((arg, index) => arg === '-fp-model' && flags[index + 1] === 'fast');
+  get('options-note').textContent = optionError ? 'Resolve additional options before compiling.' :
+    `User-code flags: ${flags.join(' ') || '(compiler default)'}. Helpers keep fixed build options.${fastMath ? ' Fast math can change numerical results.' : ''}`;
   if (interpreted) get('options-note').textContent = 'ofort default checks are enabled, including reads of uninitialized variables. Unsupported language features may be rejected.';
   if (preprocessingUnavailable) get('options-note').textContent += ' Preprocessing is requested but unavailable for this compiler/service. Choose a supported compiler or turn preprocessing off.';
 }
@@ -204,6 +232,10 @@ async function run(mode = 'fortran-edit') {
   }
   if (!availableCompilers.includes(get('compiler').value)) return;
   if (get('preprocess').checked && !catalog[get('compiler').value]?.extras?.preprocess) return;
+  if (!['format', 'check'].includes(mode)) {
+    try { compilerArguments(catalog[get('compiler').value], selectedOptions(), optionTokens(get('additional-options').value)); }
+    catch (error) { get('status').textContent = error.message; return; }
+  }
   if (mode === 'fortran-compile' && !features.compile_only) return;
   if (mode === 'format' && (!features.format || !editor.undoableClear)) return;
   if (mode === 'check' && !features.check) return;
@@ -232,6 +264,7 @@ async function run(mode = 'fortran-edit') {
       ...(!['format', 'check'].includes(mode) && catalog[get('compiler').value] ? {compiler_options: {
         preset: get('preset').value, warnings: Boolean(get('warnings').checked), fast_math: Boolean(get('fast-math').checked),
         ...(get('preprocess').checked ? {preprocess: true} : {}),
+        ...(get('additional-options').value.trim() ? {additional: optionTokens(get('additional-options').value)} : {}),
         ...(catalog[get('compiler').value]?.standards ? {standard: get('standard').value} : {}),
       }} : {}),
     });
@@ -406,9 +439,15 @@ function loadSharedCode(initial = false) {
   } catch (error) { get('share-status').textContent = String(error); }
 }
 for (const id of ['compiler', 'standard', 'preset', 'warnings', 'fast-math', 'preprocess']) get(id).onchange = () => {
+  if (id === 'compiler') get('additional-options').value = additionalByCompiler[get('compiler').value] || '';
   clearErrorInfo();
   invalidateBuild();
   revision++; controls(); get('freshness').textContent = 'Options changed; previous results are retained.';
+};
+get('additional-options').oninput = () => {
+  additionalByCompiler[get('compiler').value] = get('additional-options').value;
+  clearErrorInfo(); invalidateBuild(); revision++; controls();
+  get('freshness').textContent = 'Options changed; previous results are retained.';
 };
 for (const [value, label] of Object.entries(exampleLabels)) {
   const option = document.createElement('option');

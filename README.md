@@ -217,6 +217,32 @@ python xplayground_run.py --help
 
 Put source filenames before `--compilers`; that option takes a list of compiler names. The default is gfortran, with compiler defaults and preprocessing off. Available options also include `--fast-math` and `--timeout SECONDS` (300 seconds per compiler by default). Compile-only performs a syntax check when selecting ofort. All compiler choices and requested options are checked against the service session before any jobs are submitted.
 
+### Additional compiler options
+
+In Advanced mode, the **Additional options** field to the right of Standard accepts space-separated arguments such as `-O2 -Wall -fcheck=all` for GNU Fortran or `-O2 -warn all` for Intel. The supported choices for the selected compiler appear below the field. Entries are kept separately for each compiler during the page session. ofort has no additional options. Entering Simple clears these entries; shared links do not include them.
+
+The effective user-code flags appear below the controls. Additional options supplement the preset, standard, and checkboxes. Conflicting choices, such as Debug's `-O0` plus `-O2`, are rejected; select Default or remove the conflicting option. Identical repeated flags are accepted. Standards use the existing Standard selector. Helpers retain their fixed build options.
+
+The Python runner accepts the same options through a JSON file, using separate strings for each command argument:
+
+```json
+{
+  "gfortran": ["-O2", "-Wall", "-fcheck=all"],
+  "ifx": ["-O2", "-warn", "all"],
+  "flang": ["-O2"]
+}
+```
+
+```powershell
+python xplayground_run.py primes.f90 xprimes.f90 --compilers gfortran ifx --options-file compiler-options.example.json
+```
+
+Copy and edit [compiler-options.example.json](compiler-options.example.json) for your experiments. The file selects additional options; `--compiler` or `--compilers` selects which tools run. A missing compiler entry means no additional options. Normal output shows effective user-code options; `--terse` suppresses them. All requested compilers' options are validated against the session catalog before the first job is submitted.
+
+Both clients use the service's advertised allowlist, and the server validates again before launching a sandbox or charging job quota. Options that name files, change output locations, load plugins, or alter helper compatibility are not accepted. Each entry is limited to 32 arguments of at most 128 characters. Validation adds no sandbox launches or compiler probes. Selected optimization and checking flags can affect compilation and execution times. Supported choices build on the [GNU Fortran documentation](https://gcc.gnu.org/onlinedocs/gfortran/Debugging-Options.html) and [Intel compiler documentation](https://www.intel.com/content/www/us/en/developer/articles/guide/porting-guide-for-ifort-to-ifx.html).
+
+This feature requires redeploying the shared execution service from the `python-to-fortran-playground` repository with `python xdeploy_service.py`, then publishing the frontend. Against an older service, the field is disabled and the runner rejects nonempty additional options before submitting jobs.
+
 ### Multiple source files
 
 Multiple files are **concatenated into one submitted free-form source**, in argument order, with a newline and a `! --- Source: filename ---` comment at each boundary. Put modules before code that uses them. This is not separate compilation: all files must form one complete program and use compatible free-form syntax and compiler options. Preprocessor macro state extends across file boundaries. Additional include files, object files, external libraries, and per-file compiler options are not uploaded or resolved.

@@ -52,6 +52,8 @@ globalThis.fetch = async (url, options = {}) => {
       features: legacy ? {} : {compile_only: true, run_again: true, format: true, check: true},
       ...(legacy ? {} : {compiler_versions: {gfortran: 'GNU Fortran (GCC) 15.2.0', ifx: 'Intel Fortran 2026.0'}}),
       compiler_options: {gfortran: {presets: {default: [], debug: ['-g']}, extras: {warnings: ['-Wall'], ...(preprocessingSupported ? {preprocess: ['-cpp']} : {})},
+        ...(legacy ? {} : {additional_options: {optimization: [['-O0'], ['-O2'], ['-O3']],
+          debug: [['-g']], warnings: [['-Wall']]}}),
         ...(legacy ? {} : {standards: {'2008': ['-std=f2008'], '2018': ['-std=f2018']},
           standard_note: 'GNU rejects extensions beyond the selected standard.'})},
         ofort: {presets: {default: []}, extras: {}, standards: {}, interpreter: true}}};
@@ -460,8 +462,52 @@ get('preprocess').checked = false; get('preprocess').onchange();
 assert.equal(get('preprocess').disabled, true);
 assert.equal(get('run').disabled, false);
 preprocessingSupported = true;
+get('preset').value = 'default';
+get('warnings').checked = false;
+get('standard').value = 'default';
+await get('connect').onclick();
+get('additional-options').value = '-O2 -Wall'; get('additional-options').oninput();
+assert.equal(get('run').disabled, false);
+assert.match(get('options-note').textContent, /-O2 -Wall/);
+await get('compile').onclick();
+assert.deepEqual(payload.compiler_options.additional, ['-O2', '-Wall']);
+assert.equal(get('rerun').disabled, false);
+get('additional-options').value = '-O3'; get('additional-options').oninput();
+assert.equal(get('rerun').disabled, true);
+get('compiler').value = 'ofort'; get('compiler').onchange();
+assert.equal(get('additional-options').value, '');
+assert.equal(get('additional-options').disabled, true);
+get('compiler').value = 'gfortran'; get('compiler').onchange();
+assert.equal(get('additional-options').value, '-O3');
+serviceCompilers = ['ofort'];
+await get('connect').onclick();
+assert.equal(get('compiler').value, 'ofort');
+assert.equal(get('additional-options').value, ''); // Reconnection's compiler fallback also switches entries.
+assert.equal(get('additional-options').disabled, true);
+serviceCompilers = ['gfortran', 'ofort'];
+await get('connect').onclick();
+get('compiler').value = 'gfortran'; get('compiler').onchange();
+assert.equal(get('additional-options').value, '-O3');
+get('additional-options').value = '-O2 -O3'; get('additional-options').oninput();
+assert.equal(get('run').disabled, true);
+assert.match(get('options-error').textContent, /Conflicting optimization/);
+const invalidSubmissions = submissions;
+await get('run').onclick();
+assert.equal(submissions, invalidSubmissions);
+get('additional-options').value = '-o other.exe'; get('additional-options').oninput();
+assert.match(get('options-error').textContent, /Unsupported additional option/);
+get('interface-mode').value = 'simple'; get('interface-mode').onchange();
+assert.equal(get('additional-options').value, '');
+assert.equal(get('options-error').hidden, true);
+get('advanced-options').onclick();
+assert.equal(get('additional-options').value, '');
+get('additional-options').value = '-O2'; get('additional-options').oninput();
 legacy = true;
 await get('connect').onclick();
+assert.equal(get('additional-options').disabled, false); // Allow clearing a pending unsupported request.
+assert.equal(get('run').disabled, true); // A pending request cannot silently lose its options.
+assert.match(get('options-error').textContent, /unavailable/);
+get('additional-options').value = ''; get('additional-options').oninput();
 assert.equal(get('run').disabled, false);
 assert.equal(get('compile').disabled, true);
 assert.equal(get('check').disabled, true);
