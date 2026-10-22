@@ -243,6 +243,37 @@ Both clients use the service's advertised allowlist, and the server validates ag
 
 This feature requires redeploying the shared execution service from the `python-to-fortran-playground` repository with `python xdeploy_service.py`, then publishing the frontend. Against an older service, the field is disabled and the runner rejects nonempty additional options before submitting jobs.
 
+### Portable options in the Python runner
+
+Use `--optimization 0|1|2|3` (aliases `--O` and `-O`), `--bounds-check`, and `--backtrace` to request comparable settings across compilers:
+
+```powershell
+python xplayground_run.py primes.f90 xprimes.f90 --compilers gfortran ifx --O 3 --bounds-check --backtrace
+python xplayground_run.py example.f90 --compilers gfortran ifx flang --optimization 2
+```
+
+The optional `common` object in an options file supplies defaults for these settings:
+
+```json
+{
+  "common": {"optimization": 3, "bounds_check": true, "backtrace": true},
+  "gfortran": ["-Wall"],
+  "ifx": ["-warn", "all"]
+}
+```
+
+Command-line values override `common`; `--no-bounds-check` and `--no-backtrace` turn off the corresponding common request. They do not remove flags supplied by a preset or compiler-specific entry. Optimization must be an integer from 0 through 3, and the two check settings must be JSON booleans. Compiler-specific arguments supplement the translated common settings; conflicting values are rejected rather than overriding one another. For example, `--preset debug --O 3` conflicts with Debug's `-O0`.
+
+Mappings come from the service catalog:
+
+| Request | GNU Fortran | Intel ifx | LLVM Flang |
+| --- | --- | --- | --- |
+| `--O 0` through `--O 3` | `-O0` through `-O3` | `-O0` through `-O3` | `-O0` through `-O3` |
+| `--bounds-check` | `-fcheck=bounds` | `-check bounds` | Unavailable |
+| `--backtrace` | `-fbacktrace` | `-traceback` | Unavailable |
+
+LFortran and ofort have no mappings for these requests in the current catalog. Comparable options do not guarantee identical optimization or diagnostics. If any selected compiler or an older service lacks a requested mapping, the runner names it and stops before submitting any jobs. False check settings request no flags and need no mapping. The existing `--warnings`, `--preprocess`, `--fast-math`, and `--preset` controls remain available. Redeploy the shared backend to advertise the new mappings; translating them requires no additional API requests or sandbox launches.
+
 ### Multiple source files
 
 Multiple files are **concatenated into one submitted free-form source**, in argument order, with a newline and a `! --- Source: filename ---` comment at each boundary. Put modules before code that uses them. This is not separate compilation: all files must form one complete program and use compatible free-form syntax and compiler options. Preprocessor macro state extends across file boundaries. Additional include files, object files, external libraries, and per-file compiler options are not uploaded or resolved.

@@ -1,7 +1,8 @@
 {
-  "gfortran": ["-O2", "-Wall", "-fcheck=all"],
-  "ifx": ["-O2", "-warn", "all"],
-  "flang": ["-O2"],
+  "common": {"optimization": 2},
+  "gfortran": ["-Wall", "-fcheck=all"],
+  "ifx": ["-warn", "all"],
+  "flang": [],
   "lfortran": [],
   "ofort": []
 }

@@ -201,6 +201,20 @@ def additional_flags(spec, flags, additional):
     return flags + additional
 
 
+def portable_arguments(spec, common, compiler):
+    """Translate intentions using service-owned mappings, without compiler probes."""
+    arguments = []
+    for key, value in common.items():
+        if value is False:
+            continue
+        choice = str(value).lower()
+        flags = spec.get('portable_options', {}).get(key, {}).get(choice)
+        if flags is None:
+            raise ValueError(f'{compiler} does not support portable option {key}={choice} on this service')
+        arguments.extend(flags)
+    return arguments
+
+
 def selections(session, compilers, args):
     """Validate every compiler before spending any job allowance."""
     if len(set(compilers)) != len(compilers):
@@ -212,8 +226,21 @@ def selections(session, compilers, args):
         if args.options_file.stat().st_size > 65536:
             raise ValueError('Options file exceeds the 64 KB limit')
         configured = json.loads(args.options_file.read_text(encoding='utf-8-sig'))
-        if not isinstance(configured, dict) or set(configured) - set(COMPILERS):
-            raise ValueError('Options file must be an object mapping compiler names to argument lists')
+        if not isinstance(configured, dict) or set(configured) - (set(COMPILERS) | {'common'}):
+            raise ValueError('Options file must map compiler names to argument lists, with an optional common object')
+    common = configured.pop('common', {})
+    if not isinstance(common, dict) or set(common) - {'optimization', 'bounds_check', 'backtrace'}:
+        raise ValueError('common must be an object with optimization, bounds_check, and/or backtrace settings')
+    if 'optimization' in common and (type(common['optimization']) is not int or common['optimization'] not in range(4)):
+        raise ValueError('common.optimization must be an integer from 0 through 3')
+    for key in ('bounds_check', 'backtrace'):
+        if key in common and type(common[key]) is not bool:
+            raise ValueError(f'common.{key} must be a boolean')
+    for key in ('optimization', 'bounds_check', 'backtrace'):
+        value = getattr(args, key)
+        if value is not None:
+            common[key] = value
+    if args.options_file:
         for compiler, arguments in configured.items():
             if (not isinstance(arguments, list) or len(arguments) > 32 or
                     any(not isinstance(arg, str) or not arg or len(arg) > 128 for arg in arguments)):
@@ -235,8 +262,11 @@ def selections(session, compilers, args):
                 if key not in spec.get('extras', {}):
                     raise ValueError(f'{compiler} does not support {key}')
                 options[key] = True
-        extra = configured.get(compiler, [])
-        effective_flags(spec, options, extra)
+        extra = portable_arguments(spec, common, compiler) + configured.get(compiler, [])
+        try:
+            effective_flags(spec, options, extra)
+        except ValueError as error:
+            raise ValueError(f'{compiler}: {error}') from error
         if extra:
             options['additional'] = extra
         result[compiler] = options
@@ -312,6 +342,12 @@ def main(argv=None):
     parser.add_argument('--fail-fast', action='store_true', help='Stop after the first compilation or execution failure')
     parser.add_argument('--terse', action='store_true', help='Show program output, diagnostics, and the final summary only')
     parser.add_argument('--options-file', type=Path, help='JSON file mapping compiler names to additional argument lists')
+    parser.add_argument('--optimization', '--O', '-O', type=int, choices=range(4), default=None,
+                        help='Portable optimization level (0-3); overrides common.optimization in the options file')
+    parser.add_argument('--bounds-check', action=argparse.BooleanOptionalAction, default=None,
+                        help='Request bounds checks using the selected compilers\' advertised flags')
+    parser.add_argument('--backtrace', action=argparse.BooleanOptionalAction, default=None,
+                        help='Request runtime backtraces using the selected compilers\' advertised flags')
     parser.add_argument('--standard', default='default', help='Language standard year, or default')
     parser.add_argument('--preset', default='default', choices=('default', 'debug', 'optimized', 'strict'))
     parser.add_argument('--warnings', action='store_true')

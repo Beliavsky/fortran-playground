@@ -24,13 +24,40 @@ def session():
             'compiler_versions': {'gfortran': 'GNU test', 'ifx': 'Intel test'},
             'compiler_options': {name: {'presets': {'default': [], 'debug': ['-g']},
                 'standards': {'2018': ['-std=f2018']},
-                'additional_options': {'optimization': [['-O0'], ['-O2'], ['-O3']],
-                    'debug': [['-g']], 'warnings': [['-Wall']] if name == 'gfortran' else [['-warn', 'all']]},
+                'additional_options': {'optimization': [[f'-O{level}'] for level in range(4)],
+                    'debug': [['-g']], 'warnings': [['-Wall']] if name == 'gfortran' else [['-warn', 'all']],
+                    'checks': [['-fcheck=bounds']] if name == 'gfortran' else [['-check', 'bounds']],
+                    'backtrace': [['-fbacktrace']] if name == 'gfortran' else [['-traceback']]},
+                'portable_options': {'optimization': {str(level): [f'-O{level}'] for level in range(4)},
+                    'bounds_check': {'true': ['-fcheck=bounds'] if name == 'gfortran' else ['-check', 'bounds']},
+                    'backtrace': {'true': ['-fbacktrace'] if name == 'gfortran' else ['-traceback']}},
                 'extras': {'preprocess': ['-cpp'], 'warnings': ['-Wall']}}
                 for name in ['gfortran', 'ifx']}}
 
 
 class SourceTests(unittest.TestCase):
+    @unittest.skipUnless(shutil.which('gfortran'), 'GNU compiler required')
+    def test_portable_gnu_flags_enable_bounds_checks(self):
+        flags = runner.portable_arguments(session()['compiler_options']['gfortran'],
+            {'optimization': 3, 'bounds_check': True, 'backtrace': True}, 'gfortran')
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / 'bounds.f90'
+            source.write_text('program bounds\nimplicit none\ninteger :: a(1) = [42], i\n'
+                              'i = command_argument_count() + 1\nprint *, a(i)\nend program bounds\n')
+            executable = root / 'bounds.exe'
+            build = subprocess.run(['gfortran', *flags, str(source), '-o', str(executable)],
+                                   capture_output=True, text=True, timeout=30)
+            self.assertEqual(build.returncode, 0, build.stdout + build.stderr)
+            valid = subprocess.run([str(executable)], capture_output=True, text=True, timeout=10)
+            self.assertEqual(valid.returncode, 0, valid.stderr)
+            self.assertEqual(valid.stdout.strip(), '42')
+            invalid = subprocess.run([str(executable), 'trigger-bounds-error'],
+                                     capture_output=True, text=True, timeout=10)
+            self.assertNotEqual(invalid.returncode, 0)
+            self.assertIn('above upper bound', invalid.stderr)
+            self.assertIn('backtrace', invalid.stderr.lower())
+
     def test_order_boundaries_bom_and_line_locations(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
@@ -223,6 +250,73 @@ class CommandTests(unittest.TestCase):
             self.assertEqual(stdout, '')
             self.assertIn('HTTP 429: quota reached', stderr)
 
+    def test_portable_options_and_optimization_aliases(self):
+        for alias in ('--optimization', '--O', '-O'):
+            with self.subTest(alias=alias), tempfile.TemporaryDirectory() as temporary:
+                client = self.client()
+                self.invoke(Path(temporary), client, '--compilers', 'gfortran', 'ifx',
+                            alias, '3', '--bounds-check', '--backtrace')
+                self.assertEqual(client.run_job.call_args_list[0].args[2]['additional'],
+                                 ['-O3', '-fcheck=bounds', '-fbacktrace'])
+                self.assertEqual(client.run_job.call_args_list[1].args[2]['additional'],
+                                 ['-O3', '-check', 'bounds', '-traceback'])
+
+    def test_common_options_cli_overrides_and_specific_arguments(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            config = root / 'options.json'
+            config.write_text(json.dumps({'common': {'optimization': 0, 'bounds_check': True, 'backtrace': True},
+                                          'gfortran': ['-Wall'], 'ifx': ['-warn', 'all']}))
+            client = self.client()
+            self.invoke(root, client, '--compilers', 'gfortran', 'ifx', '--options-file', str(config),
+                        '--O', '2', '--no-bounds-check', '--no-backtrace')
+            self.assertEqual(client.run_job.call_args_list[0].args[2]['additional'], ['-O2', '-Wall'])
+            self.assertEqual(client.run_job.call_args_list[1].args[2]['additional'], ['-O2', '-warn', 'all'])
+            client = self.client()
+            self.invoke(root, client, '--options-file', str(config))
+            self.assertEqual(client.run_job.call_args.args[2]['additional'],
+                             ['-O0', '-fcheck=bounds', '-fbacktrace', '-Wall'])
+
+    def test_invalid_common_options_prevent_all_submissions(self):
+        for common in [[], {'optimization': True}, {'optimization': '3'}, {'optimization': 4},
+                       {'optimization': None}, {'bounds_check': 1}, {'backtrace': 'yes'}, {'typo': True}]:
+            with self.subTest(common=common), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                config = root / 'options.json'
+                config.write_text(json.dumps({'common': common}))
+                client = self.client()
+                status, _, _ = self.invoke(root, client, '--options-file', str(config))
+                self.assertEqual(status, 2)
+                client.run_job.assert_not_called()
+
+    def test_unsupported_portable_options_prevent_all_submissions(self):
+        for key, option in [('optimization', ('--O', '3')), ('bounds_check', ('--bounds-check',)),
+                            ('backtrace', ('--backtrace',))]:
+            with self.subTest(key=key), tempfile.TemporaryDirectory() as temporary:
+                client = self.client()
+                client.connect.return_value['compiler_options']['ifx']['portable_options'].pop(key)
+                status, _, stderr = self.invoke(Path(temporary), client, '--compilers', 'gfortran', 'ifx', *option)
+                self.assertEqual(status, 2)
+                self.assertIn(f'ifx does not support portable option {key}', stderr)
+                client.run_job.assert_not_called()
+
+    def test_portable_options_conflict_with_presets_and_specific_flags(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            client = self.client()
+            client.connect.return_value['compiler_options']['gfortran']['presets']['debug'] = ['-O0', '-g']
+            status, _, stderr = self.invoke(root, client, '--preset', 'debug', '--O', '3')
+            self.assertEqual(status, 2)
+            self.assertIn('gfortran: Conflicting optimization', stderr)
+            client.run_job.assert_not_called()
+            config = root / 'options.json'
+            config.write_text('{"common": {"optimization": 2}, "ifx": ["-O3"]}')
+            client = self.client()
+            status, _, stderr = self.invoke(root, client, '--compilers', 'gfortran', 'ifx', '--options-file', str(config))
+            self.assertEqual(status, 2)
+            self.assertIn('ifx: Conflicting optimization', stderr)
+            client.run_job.assert_not_called()
+
     def test_options_file_sends_each_compilers_arguments(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
@@ -388,6 +482,9 @@ class CommandTests(unittest.TestCase):
         self.assertIn('--fail-fast', result.stdout)
         self.assertIn('--terse', result.stdout)
         self.assertIn('--options-file', result.stdout)
+        self.assertIn('--O', result.stdout)
+        self.assertIn('--bounds-check', result.stdout)
+        self.assertIn('--backtrace', result.stdout)
         self.assertIn('compilation order', result.stdout)
 
 
