@@ -9,6 +9,7 @@ import {serviceOrigin} from './service_config.mjs';
 import {compilerArguments, optionTokens} from './compiler_arguments.mjs';
 
 const get = id => document.getElementById(id);
+const ownerAccessRequested = new URLSearchParams(location.search).get('owner') === '1';
 let token = '', service = '', catalog = {}, active = null, connecting = false, revision = 0;
 let filename = 'main.f90';
 let features = {}, retained = null, expiryTimer = null;
@@ -144,7 +145,7 @@ function controls() {
   const ownerKey = get('owner-key').value;
   const ownerError = ownerKey && (!features.owner_access ? 'Owner access is not configured on this service. Clear the key to use public access.' :
     !/^[A-Za-z0-9_-]{32,256}$/.test(ownerKey) ? 'Enter the complete owner key (32 to 256 letters, digits, underscores, or hyphens), or clear it to use public access.' : '');
-  get('owner-access').hidden = !features.owner_access && !ownerKey;
+  get('owner-access').hidden = !ownerAccessRequested || (!features.owner_access && !ownerKey);
   get('owner-key').disabled = busy || connecting;
   get('clear-owner-key').disabled = busy || connecting || !ownerKey;
   get('owner-status').textContent = ownerError || (ownerKey ?

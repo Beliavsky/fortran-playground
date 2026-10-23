@@ -6,12 +6,14 @@ if (process.argv.includes('--simple-default')) playgroundConfig.interfaceMode = 
 const plainVisit = process.argv.includes('--plain-default');
 const advancedLink = process.argv.includes('--advanced-link');
 const preprocessingLink = process.argv.includes('--preprocess-link');
+const ownerLink = process.argv.includes('--owner-link');
 if (advancedLink) playgroundConfig.interfaceMode = 'simple';
 const elements = new Map();
 const startupSource = 'program shared\nprint *, "shared + café"\nend program shared\n';
 const base = 'https://example.org/fortran-playground/';
 globalThis.location = new URL(plainVisit ? base : preprocessingLink ? createShareLink(base, startupSource, 'advanced', true) : advancedLink ? createShareLink(base, startupSource, 'advanced') :
   base + '#code=' + encodeURIComponent(startupSource)); // Existing links have no interface parameter.
+if (ownerLink) location.search = '?owner=1';
 const pageListeners = {};
 globalThis.addEventListener = (name, handler) => {pageListeners[name] = handler;};
 let copiedLink = '', clipboardFails = false;
@@ -536,7 +538,7 @@ assert.match(get('result-compiler-version').textContent, /unavailable/);
 assert.equal(get('owner-access').hidden, true);
 legacy = false; ownerSupported = true;
 await get('connect').onclick();
-assert.equal(get('owner-access').hidden, false);
+assert.equal(get('owner-access').hidden, !ownerLink);
 const privateKey = 'test-owner-' + 'x'.repeat(32);
 get('owner-key').value = 'incomplete'; get('owner-key').oninput();
 assert.equal(get('run').disabled, true);
@@ -550,10 +552,11 @@ assert.equal(jobHeaders['X-P2F-Owner-Key'], privateKey);
 assert.equal(JSON.stringify(payload).includes(privateKey), false);
 await get('share').onclick();
 assert.equal(copiedLink.includes(privateKey), false);
+assert.equal(new URL(copiedLink).searchParams.has('owner'), false);
 assert.equal(get('owner-status').textContent.includes(privateKey), false);
 ownerSupported = false;
 await get('connect').onclick();
-assert.equal(get('owner-access').hidden, false); // Key can be cleared after service changes.
+assert.equal(get('owner-access').hidden, !ownerLink); // Owner links allow clearing a key after service changes.
 assert.equal(get('run').disabled, true);
 get('clear-owner-key').onclick();
 assert.equal(get('owner-key').value, '');
