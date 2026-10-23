@@ -139,7 +139,7 @@ class PlaygroundClient:
         self.token = session['token']
         return session
 
-    def run_job(self, source, compiler, options, *, compile_only=False, timeout=300):
+    def run_job(self, source, compiler, options, *, compile_only=False, timeout=300, stdin=None):
         started = time.monotonic()
         deadline = started + timeout
         identifier = None
@@ -148,6 +148,8 @@ class PlaygroundClient:
                    'compiler': compiler, 'automatic': False}
         if options:
             payload['compiler_options'] = options
+        if stdin is not None:
+            payload['stdin'] = stdin
 
         def remaining():
             seconds = deadline - time.monotonic()
@@ -369,6 +371,7 @@ def main(argv=None):
     group.add_argument('--compiler', choices=COMPILERS, help='Compiler (default: gfortran)')
     group.add_argument('--compilers', choices=COMPILERS, nargs='+', help='Compilers to invoke sequentially')
     parser.add_argument('--compile-only', action='store_true', help='Compile without execution (syntax check for ofort)')
+    parser.add_argument('--stdin-file', type=Path, help='UTF-8 program input file (up to 100 KB), reused for every compiler')
     parser.add_argument('--fail-fast', action='store_true', help='Stop after the first compilation or execution failure')
     parser.add_argument('--terse', action='store_true', help='Show program output, diagnostics, and the final summary only')
     parser.add_argument('--list', action='store_true', help='Print the exact submitted source once, including with --terse')
@@ -393,6 +396,18 @@ def main(argv=None):
     rows = []
     try:
         source, sections = combine_sources(args.files)
+        stdin = None
+        if args.stdin_file is not None:
+            if args.compile_only:
+                raise ValueError('--stdin-file requires execution; remove --compile-only')
+            with args.stdin_file.open('rb') as stream:
+                data = stream.read(100004)  # Include space for an optional UTF-8 BOM.
+            try:
+                stdin = data.decode('utf-8-sig').replace('\r\n', '\n').replace('\r', '\n')
+            except UnicodeError as error:
+                raise ValueError(f'{args.stdin_file}: expected UTF-8 program input') from error
+            if len(data) > 100003 or len(stdin.encode('utf-8')) > 100000:
+                raise ValueError('Program input exceeds the 100 KB limit')
         service_url = args.service_url or json.loads((ROOT / 'site/service.json').read_text(encoding='utf-8'))['url']
         owner_key = ''
         if args.owner:
@@ -405,6 +420,11 @@ def main(argv=None):
         client = PlaygroundClient(service_url, args.origin, owner_key=owner_key)
         compilers = args.compilers or [args.compiler or 'gfortran']
         session = client.connect()
+        if stdin is not None:
+            if not session.get('features', {}).get('stdin'):
+                raise ValueError('This service does not advertise standard input; update the execution service')
+            if len(stdin.encode('utf-8')) > session['features'].get('max_stdin_bytes', 100000):
+                raise ValueError('Program input exceeds this service\'s input limit')
         notes = []
         options = selections(session, compilers, args, notes)
         if not args.terse:
@@ -426,7 +446,8 @@ def main(argv=None):
                 flags = effective_flags(session.get('compiler_options', {}).get(compiler, {}), options[compiler])
                 print('User-code options: ' + (' '.join(flags) or '(compiler default)'), flush=True)
             result, elapsed = client.run_job(source, compiler, options[compiler],
-                                             compile_only=args.compile_only, timeout=args.timeout)
+                                             compile_only=args.compile_only, timeout=args.timeout,
+                                             **({'stdin': stdin} if stdin is not None else {}))
             print_result(compiler, result, sections, elapsed, terse=args.terse)
             build = result.get('build') or {}
             execution = result.get('execution') or {}

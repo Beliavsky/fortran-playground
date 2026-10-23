@@ -181,11 +181,19 @@ class ClientTests(unittest.TestCase):
             with self.assertRaises(KeyboardInterrupt):
                 client.run_job('end\n', 'gfortran', {})
             self.assertEqual(request.call_args.args, ('jobs/job/cancel', {}))
+
         with patch.object(client, 'request', side_effect=[{'id': 'job'}, {}]) as request, \
                 patch.object(runner.time, 'monotonic', side_effect=[0, 0, 2]):
             with self.assertRaisesRegex(runner.ServiceError, 'timed out'):
                 client.run_job('end\n', 'gfortran', {}, timeout=1)
             self.assertEqual(request.call_args.args, ('jobs/job/cancel', {}))
+
+    def test_program_input_is_in_job_payload(self):
+        client = self.client()
+        with patch.object(client, 'request', side_effect=[{'id': 'job'},
+                {'state': 'done', 'result': {'ok': True}}]) as request:
+            client.run_job('end\n', 'gfortran', {}, stdin='2 3\n')
+        self.assertEqual(request.call_args_list[0].args[1]['stdin'], '2 3\n')
 
     def test_service_origin_validation(self):
         self.assertEqual(runner.origin_url('https://example.org:8443/'), 'https://example.org:8443')
@@ -196,6 +204,32 @@ class ClientTests(unittest.TestCase):
 
 
 class CommandTests(unittest.TestCase):
+    def test_stdin_file_is_normalized_and_reused_for_all_compilers(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            data = root / 'input.txt'
+            data.write_bytes(b'\xef\xbb\xbf2 3\r\ncaf\xc3\xa9\r\n')
+            client = self.client()
+            client.connect.return_value['features']['stdin'] = True
+            self.invoke(root, client, '--stdin-file', str(data), '--compilers', 'gfortran', 'ifx')
+            self.assertEqual(client.run_job.call_count, 2)
+            for call in client.run_job.call_args_list:
+                self.assertEqual(call.kwargs['stdin'], '2 3\ncafé\n')
+
+    def test_stdin_file_errors_prevent_submission(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            data = root / 'input.txt'
+            for contents, arguments, feature in [
+                    (b'1\n', (), False), (b'1\n', ('--compile-only',), True),
+                    (b'\xff', (), True), ('é'.encode() * 50001, (), True)]:
+                data.write_bytes(contents)
+                client = self.client()
+                client.connect.return_value['features']['stdin'] = feature
+                status, _, _ = self.invoke(root, client, '--stdin-file', str(data), *arguments)
+                self.assertEqual(status, 2)
+                client.run_job.assert_not_called()
+
     def test_images_use_verified_capabilities_and_preflight_all_compilers(self):
         with tempfile.TemporaryDirectory() as temporary:
             client = self.client()

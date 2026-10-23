@@ -44,6 +44,15 @@
     <p id="owner-status" class="version" role="status">Owner requests bypass usage quotas. The key is kept only in this page.</p>
   </details>
   <p id="share-status" class="version" role="status"></p>
+  <details id="program-input">
+    <summary>Program input (stdin)</summary>
+    <p class="version">Optional UTF-8 text, up to 100 KB. The program receives all input followed by end-of-file. Input is sent only when running and is omitted from share links.</p>
+    <label for="stdin">Input for read(*,*)</label>
+    <textarea id="stdin" rows="4" spellcheck="false" aria-describedby="stdin-status"></textarea>
+    <button id="load-stdin" type="button">Load input file</button>
+    <input id="stdin-file" type="file" accept="text/plain,.txt,.dat,.csv" hidden>
+    <p id="stdin-status" class="version" role="status"></p>
+  </details>
   <div id="share-link-field" hidden>
     <label for="share-link">Share link (select and copy)</label>
     <input id="share-link" type="text" readonly>

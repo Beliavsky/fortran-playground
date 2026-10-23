@@ -47,6 +47,7 @@ let checkOK = true, findings = true, checkRequestFails = false;
 let serviceCompilers = ['gfortran', 'ofort'];
 let preprocessingSupported = true;
 let ownerSupported = false, jobHeaders = {};
+let stdinSupported = true;
 let coarraySupport = {};
 let intelCoarraySupport = {};
 globalThis.fetch = async (url, options = {}) => {
@@ -56,7 +57,7 @@ globalThis.fetch = async (url, options = {}) => {
     assert.equal(url, 'https://execute.example.org/api/session');
     if (sessionFails) throw new Error('Offline');
     result = {token: 'session', commit: 'abcd1234', timeout: 30, compilers: serviceCompilers,
-      features: legacy ? {} : {compile_only: true, run_again: true, format: true, check: true, owner_access: ownerSupported},
+      features: legacy ? {} : {compile_only: true, run_again: true, format: true, check: true, owner_access: ownerSupported, stdin: stdinSupported, max_stdin_bytes: 100000},
       ...(legacy ? {} : {compiler_versions: {gfortran: 'GNU Fortran (GCC) 15.2.0', ifx: 'Intel Fortran 2026.0'}}),
       compiler_options: {gfortran: {presets: {default: [], debug: ['-g']}, extras: {warnings: ['-Wall'], ...(preprocessingSupported ? {preprocess: ['-cpp']} : {})},
         coarray_images: coarraySupport,
@@ -199,6 +200,40 @@ get('compiler').value = 'gfortran'; get('compiler').onchange();
 await get('compile').onclick(); // Compiler changes invalidated the retained build.
 assert.equal(payload.retain_executable, true);
 assert.equal(get('rerun').disabled, false);
+get('stdin').value = '2 3\n'; get('stdin').oninput();
+assert.equal(get('rerun').disabled, false); // Input does not invalidate the executable.
+await get('rerun').onclick();
+assert.equal(payload.mode, 'fortran-run');
+assert.equal(payload.stdin, '2 3\n');
+await get('share').onclick();
+assert.equal(copiedLink.includes(encodeURIComponent('2 3\n')), false);
+await get('compile').onclick();
+assert.equal(Object.hasOwn(payload, 'stdin'), false);
+get('stdin').value = 'é'.repeat(50001); get('stdin').oninput();
+assert.equal(get('run').disabled, true);
+assert.equal(get('compile').disabled, false);
+const beforeInvalidInput = submissions;
+await get('run').onclick();
+assert.equal(submissions, beforeInvalidInput);
+get('stdin').value = '7 8\n'; get('stdin').oninput();
+stdinSupported = false;
+await get('connect').onclick();
+assert.equal(get('run').disabled, true);
+assert.match(get('stdin-status').textContent, /updated execution service/);
+await get('run').onclick();
+assert.equal(submissions, beforeInvalidInput);
+stdinSupported = true;
+await get('connect').onclick();
+get('stdin-file').files = [{size: 8, async arrayBuffer() {return new TextEncoder().encode('9 10\r\n').buffer;}}];
+await get('stdin-file').onchange();
+assert.equal(get('stdin').value, '9 10\n');
+await get('run').onclick();
+assert.equal(payload.stdin, '9 10\n');
+get('stdin-file').files = [{size: 1, async arrayBuffer() {return new Uint8Array([255]).buffer;}}];
+await get('stdin-file').onchange();
+assert.equal(get('stdin').value, '9 10\n'); // Invalid UTF-8 does not replace input.
+get('stdin').value = ''; get('stdin').oninput();
+await get('compile').onclick();
 get('preprocess').checked = true; get('preprocess').onchange();
 assert.equal(get('rerun').disabled, true);
 assert.match(get('options-note').textContent, /-cpp/);

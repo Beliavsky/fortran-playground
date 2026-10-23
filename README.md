@@ -93,7 +93,7 @@ Recognized errors in the submitted `input_p.f90` source receive a red line backg
 
 - Source limit: **100 KB** (100,000 UTF-8 bytes).
 - Output limit: **200 KB per output stream**.
-- No interactive stdin or arbitrary compiler-flag input.
+- Program input can be supplied before execution; there is no interactive terminal.
 - Programs run in isolated environments without network access.
 - Compilation, execution, formatting, and checking require an explicit button click.
 
@@ -229,6 +229,16 @@ python xplayground_run.py example.f90 --standard 2018 --preset debug --warnings
 python xplayground_run.py example.f90 --compile-only
 python xplayground_run.py --help
 ```
+
+Use `--stdin-file data.txt` to supply UTF-8 program input to `read(*,*)`:
+
+```powershell
+python xplayground_run.py example.f90 --stdin-file data.txt --compilers gfortran ifx
+```
+
+The same input is supplied to each compiler's run, followed by end-of-file. Input is limited to 100 KB of UTF-8 text; an optional BOM is removed and line endings are normalized. `--stdin-file` cannot be combined with `--compile-only`. The service must advertise stdin support; older services report an error before any job is submitted.
+
+In the browser, expand **Program input (stdin)** to type input or load a text file. **Run Again** uses the current input without recompiling. **Compile**, formatting, and checks omit program input. Input is kept only in the current page and is omitted from share links; it is sent to the service when running. Empty input produces immediate end-of-file. For coarray programs, read input on image 1 and distribute values to other images.
 
 Put source filenames before `--compilers`; that option takes a list of compiler names. The default is gfortran, with compiler defaults and preprocessing off. Available options also include `--fast-math` and `--timeout SECONDS` (300 seconds per compiler by default). Compile-only performs a syntax check when selecting ofort. All compiler choices and requested options are checked against the service session before any jobs are submitted.
 

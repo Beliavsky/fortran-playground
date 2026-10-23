@@ -10,6 +10,11 @@ import {compilerArguments, optionTokens} from './compiler_arguments.mjs';
 
 const get = id => document.getElementById(id);
 const ownerAccessRequested = new URLSearchParams(location.search).get('owner') === '1';
+function stdinError() {
+  const input = get('stdin').value;
+  if (new TextEncoder().encode(input).length > Math.min(100000, features.max_stdin_bytes ?? 100000)) return 'Program input exceeds the 100 KB limit or this service\'s input limit.';
+  return input && !features.stdin ? 'Standard input requires an updated execution service. Clear the input to run without it.' : '';
+}
 let token = '', service = '', catalog = {}, active = null, connecting = false, revision = 0;
 let filename = 'main.f90';
 let features = {}, retained = null, expiryTimer = null;
@@ -97,6 +102,10 @@ function controls() {
   get('build-note').textContent = !features.compile_only ? 'Compile-only and Run Again require an updated execution service.' : retained ? 'Run Again reuses this executable until it expires (up to five minutes). Editing source or options requires recompilation.' : 'Compile to enable Run Again. Each run starts a fresh process.';
   if (interpreted) get('build-note').textContent = 'ofort checks syntax or interprets standalone source. Run starts a fresh process each time; no executable or compiled helpers are used.';
   get('stop').disabled = !active || active.stopping;
+  for (const id of ['stdin', 'load-stdin', 'stdin-file']) get(id).disabled = busy || connecting;
+  const inputError = stdinError();
+  get('stdin-status').textContent = inputError || 'Changing input keeps the compiled program available for Run Again.';
+  if (inputError) for (const id of ['run', 'rerun']) get(id).disabled = true;
   get('connect').disabled = connecting || busy;
   get('compiler').disabled = !token || busy;
   get('download').disabled = !editor.getValue().trim();
@@ -263,6 +272,8 @@ async function run(mode = 'fortran-edit') {
   if (mode === 'check' && !features.check) return;
   if (mode === 'fortran-run' && (!features.run_again || !retained || retained.expires_at * 1000 <= Date.now())) { invalidateBuild(); controls(); return; }
   const source = editor.getValue();
+  const executes = ['fortran-edit', 'fortran-run'].includes(mode);
+  if (executes && stdinError()) { get('status').textContent = stdinError(); return; }
   if (!source.trim() || new TextEncoder().encode(source).length > 100000) {
     get('status').textContent = 'Enter between 1 byte and 100 KB of Fortran.'; return;
   }
@@ -281,6 +292,7 @@ async function run(mode = 'fortran-edit') {
   try {
     const created = await api('jobs', 'POST', {
       source: ['format', 'check'].includes(mode) ? source : '', mode, automatic: false,
+      ...(executes && get('stdin').value ? {stdin: get('stdin').value} : {}),
       ...(['format', 'check'].includes(mode) ? {} : mode === 'fortran-run' ? {artifact_id: artifactId} : {fortran_source: source, ...(features.run_again && !isSimple() && get('compiler').value !== 'ofort' ? {retain_executable: true} : {})}),
       compiler: ['format', 'check'].includes(mode) ? 'gfortran' : get('compiler').value,
       ...(!['format', 'check'].includes(mode) && catalog[get('compiler').value] ? {compiler_options: {
@@ -379,6 +391,27 @@ get('rerun').onclick = () => run('fortran-run');
 get('first-error').onclick = () => editor.goToDiagnostic();
 get('connect').onclick = connect;
 get('owner-key').oninput = controls;
+get('stdin').oninput = () => {
+  revision++;
+  get('freshness').textContent = 'Program input changed; previous results are retained.';
+  controls();
+};
+get('load-stdin').onclick = () => get('stdin-file').click();
+get('stdin-file').onchange = async () => {
+  const file = get('stdin-file').files?.[0];
+  if (!file || active) return;
+  const initialInput = get('stdin').value;
+  try {
+    if (file.size > 100003) throw new Error('Input file exceeds the 100 KB limit.');
+    const bytes = await file.arrayBuffer();
+    const text = new TextDecoder('utf-8', {fatal: true}).decode(bytes).replace(/\r\n?/g, '\n');
+    if (new TextEncoder().encode(text).length > 100000) throw new Error('Program input exceeds the 100 KB limit.');
+    if (active || ((initialInput || get('stdin').value !== initialInput) && !confirm('Replace the current program input with this file?'))) return;
+    get('stdin').value = text;
+    get('stdin').oninput();
+  } catch (error) { get('stdin-status').textContent = String(error); }
+  finally { get('stdin-file').value = ''; }
+};
 get('clear-owner-key').onclick = () => { get('owner-key').value = ''; controls(); };
 get('stop').onclick = async () => {
   if (!active) return;
