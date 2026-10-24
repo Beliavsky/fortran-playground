@@ -104,11 +104,21 @@ Up to five UTF-8 free-form source files are supported. All external sources, edi
 
 External loading requires the updated hosted backend. The service fetches public HTTPS URLs with bounded sizes, redirects, and timeouts; private-network destinations are rejected. Loading has a separate limit of 30 downloads per address per ten minutes and at most two concurrent downloads. It does not consume execution jobs. Compilation and execution retain the existing sandbox isolation and job quotas.
 
+### Editor indentation
+
+Automatic indentation is enabled by default with **three spaces** per level. The **Indent** menu offers 2, 3, or 4 spaces; **Auto-indent** switches automatic indentation on or off. Both preferences are saved in this browser, apply in every interface, and are not included in share links. Changing a preference does not rewrite source or invalidate a compiled executable.
+
+Enter after a recognized loop, block IF, SELECT, program, module, or procedure indents the next line. Closing statements align with their opening statement; ELSE/ELSE IF align with IF, and CASE branches indent under SELECT. Tab inserts spaces or indents selected lines; Shift+Tab unindents. Escape leaves the editor. These controls also work in the plain-text fallback.
+
+Loading or pasting source preserves its indentation. The indentation helper recognizes comments, quoted strings, and common continued statements. Ambiguous constructs such as labeled DO loops and multiple statements separated by semicolons retain existing indentation rather than guessing. This is editing assistance, not a Fortran parser or syntax check.
+
+**Format** uses the selected width, even when Auto-indent is off. Widths other than three require the updated execution service; until it is redeployed, automatic indentation works at any offered width but Format is disabled at two or four spaces with an explanatory message. Redeploy the shared backend and publish the frontend to enable all formatter widths.
+
 ### Formatting, checks, and diagnostics
 
 | Control | Behavior |
 | --- | --- |
-| **Format** | Uses fprettify for whitespace-only formatting with three-space indentation. One undo restores the previous source. Requires the enhanced editor and service formatting support. |
+| **Format** | Uses fprettify for whitespace-only formatting with the selected indentation width (three spaces by default). One undo restores the previous source. Requires the enhanced editor and service formatting support. |
 | **Check** | Runs Fortitude without fixes or execution. Uses its default rules and Fortran 2018 target, independently of the selected compiler standard. Findings appear in a separate panel. |
 | **Go to first error** | Navigates to the first recognized source error, including in the plain-text fallback. |
 | **Fix error** | Applies a supported experimental syntax repair as one undoable edit; see below. |

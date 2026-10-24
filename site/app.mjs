@@ -9,6 +9,7 @@ import {serviceOrigin} from './service_config.mjs';
 import {compilerArguments, optionTokens} from './compiler_arguments.mjs';
 import {sourceURL, combinedSource, mappedErrors} from './external_source.mjs';
 import {comparisonPlan, executeComparison} from './comparison.mjs';
+import {loadIndentation, saveIndentation} from './indentation.mjs';
 
 const get = id => document.getElementById(id);
 const ownerAccessRequested = new URLSearchParams(location.search).get('owner') === '1';
@@ -90,6 +91,10 @@ const editor = createEditor(get('fortran'), get('fortran-lines'), () => {
   get('freshness').textContent = 'Input changed; previous results are retained.';
   controls();
 });
+let indentation = loadIndentation();
+get('indent-width').value = String(indentation.width);
+get('auto-indent').checked = indentation.automatic;
+editor.setIndentation(indentation);
 
 const quickFix = createQuickFixControls({editor, button: get('fix-error'),
   note: get('fix-note'), config: playgroundConfig,
@@ -147,6 +152,11 @@ function controls() {
   get('compile').disabled = get('run').disabled || !features.compile_only;
   const sourceToolsUnavailable = isCompare() ? !token || busy || !editor.getValue().trim() : get('run').disabled;
   get('format').disabled = sourceToolsUnavailable || !features.format || !editor.undoableClear;
+  const formatWidthSupported = indentation.width === 3 || features.format_indents?.includes(indentation.width);
+  if (!formatWidthSupported) get('format').disabled = true;
+  get('indent-note').textContent = formatWidthSupported ? 'Preferences are saved in this browser. Format uses the selected width.' : 'Auto-indent works with this width. Format requires an updated service to use it.';
+  get('indent-width').disabled = busy || connecting;
+  get('auto-indent').disabled = busy || connecting;
   get('check').disabled = sourceToolsUnavailable || !features.check;
   get('rerun').hidden = isSimple() || isCompare();
   get('rerun').disabled = isCompare() || interpreted || !token || busy || !features.run_again || !retained || retained.expires_at * 1000 <= Date.now();
@@ -457,6 +467,7 @@ async function run(mode = 'fortran-edit') {
   }
   if (mode === 'fortran-compile' && !features.compile_only) return;
   if (mode === 'format' && (!features.format || !editor.undoableClear)) return;
+  if (mode === 'format' && indentation.width !== 3 && !features.format_indents?.includes(indentation.width)) return;
   if (mode === 'check' && !features.check) return;
   if (mode === 'fortran-run' && (!features.run_again || !retained || retained.expires_at * 1000 <= Date.now())) { invalidateBuild(); controls(); return; }
   const source = editor.getValue();
@@ -486,6 +497,7 @@ async function run(mode = 'fortran-edit') {
   try {
     const created = await api('jobs', 'POST', {
       source: ['format', 'check'].includes(mode) ? source : '', mode, automatic: false,
+      ...(mode === 'format' && features.format_indents?.includes(indentation.width) ? {format_indent: indentation.width} : {}),
       ...(executes && get('stdin').value ? {stdin: get('stdin').value} : {}),
       ...(['format', 'check'].includes(mode) ? {} : mode === 'fortran-run' ? {artifact_id: artifactId} : {fortran_source: compilation.source, ...(features.run_again && !isSimple() && get('compiler').value !== 'ofort' ? {retain_executable: true} : {})}),
       compiler: ['format', 'check'].includes(mode) ? 'gfortran' : get('compiler').value,
@@ -584,6 +596,12 @@ get('compare-all').onclick = () => {
 };
 get('compile').onclick = () => isCompare() ? runComparison('fortran-compile') : run('fortran-compile');
 get('format').onclick = () => run('format');
+for (const id of ['indent-width', 'auto-indent']) get(id).onchange = () => {
+  indentation = {width: Number(get('indent-width').value), automatic: Boolean(get('auto-indent').checked)};
+  editor.setIndentation(indentation);
+  saveIndentation(undefined, indentation);
+  controls();
+};
 get('check').onclick = () => run('check');
 get('hide-checks').onclick = () => {
   get('checks-pane').hidden = true;

@@ -1,3 +1,5 @@
+import {indentationSettings, indentationForLine} from './indentation.mjs';
+
 export function countLines(text) {
   if (!text) return 0;
   const normalized = text.replace(/\r\n?/g, '\n');
@@ -7,6 +9,7 @@ export function countLines(text) {
 // Keep a working textarea until the optional editor finishes loading.
 export function createEditor(textarea, counter, onChange = () => {}) {
   let cm = null;
+  let indentation = indentationSettings();
   let diagnostics = [], errorLines = [], errorMarks = [];
   function clearMarkers() {
     for (const handle of errorLines) {
@@ -53,7 +56,56 @@ export function createEditor(textarea, counter, onChange = () => {}) {
     counter.textContent = `${count} ${count === 1 ? 'line' : 'lines'}`;
     onChange();
   }
-  textarea.addEventListener('input', changed);
+  function closingIndent(value, offset, allowBare = false) {
+    const lines = value.slice(0, offset).split('\n');
+    if (!/^\s*(?:end|else|case|class|type\s+is|rank|contains)/i.test(lines.at(-1))) return null;
+    return indentationForLine(lines, lines.length - 1, indentation.width, allowBare).current;
+  }
+  function plainReplace(start, end, text, cursor = start + text.length) {
+    textarea.setRangeText(text, start, end, 'end');
+    textarea.setSelectionRange(cursor, cursor);
+    changed();
+  }
+  textarea.addEventListener('input', event => {
+    if (!cm && indentation.automatic && event?.inputType === 'insertText' && !event.isComposing) {
+      const offset = textarea.selectionStart, start = textarea.value.lastIndexOf('\n', offset - 1) + 1;
+      const desired = closingIndent(textarea.value, offset);
+      if (desired !== null) {
+        const old = /^\s*/.exec(textarea.value.slice(start, offset))[0].length;
+        textarea.setRangeText(' '.repeat(desired), start, start + old, 'preserve');
+      }
+    }
+    changed();
+  });
+  textarea.addEventListener('keydown', event => {
+    if (cm || textarea.readOnly || event.isComposing || event.ctrlKey || event.metaKey || event.altKey) return;
+    if (event.key === 'Escape') {textarea.blur?.(); return;}
+    const start = textarea.selectionStart, end = textarea.selectionEnd;
+    if (event.key === 'Enter' && indentation.automatic && start === end) {
+      event.preventDefault();
+      const lines = textarea.value.slice(0, start).split('\n');
+      const hint = indentationForLine(lines, lines.length - 1, indentation.width);
+      const lineStart = start - lines.at(-1).length, old = /^\s*/.exec(lines.at(-1))[0].length;
+      const prefix = hint.current === null ? lines.at(-1) : ' '.repeat(hint.current) + lines.at(-1).slice(old);
+      plainReplace(lineStart, end, prefix + '\n' + ' '.repeat(hint.next));
+    } else if (event.key === 'Tab') {
+      event.preventDefault();
+      const first = textarea.value.lastIndexOf('\n', start - 1) + 1;
+      if (!event.shiftKey && start === end) {
+        plainReplace(start, end, ' '.repeat(indentation.width - (start - first) % indentation.width));
+      } else {
+        const last = textarea.value.indexOf('\n', end > start && textarea.value[end - 1] === '\n' ? end - 1 : end);
+        const stop = last < 0 ? textarea.value.length : last;
+        const text = textarea.value.slice(first, stop).split('\n').map(line => event.shiftKey ? line.replace(new RegExp(`^ {1,${indentation.width}}`), '') : ' '.repeat(indentation.width) + line).join('\n');
+        textarea.setRangeText(text, first, stop, 'select');
+        if (start === end) {
+          const cursor = Math.max(first, start - (stop - first - text.length));
+          textarea.setSelectionRange(cursor, cursor);
+        }
+        changed();
+      }
+    }
+  });
   const api = {
     getValue: () => cm ? cm.getValue() : textarea.value,
     clearDiagnostics() { clearMarkers(); diagnostics = []; },
@@ -99,17 +151,36 @@ export function createEditor(textarea, counter, onChange = () => {}) {
     },
     focus() { if (cm) cm.focus(); else textarea.focus(); },
     refresh() { cm?.refresh(); },
+    setIndentation(value) {
+      indentation = indentationSettings(value);
+      cm?.setOption('indentUnit', indentation.width);
+      cm?.setOption('tabSize', indentation.width);
+    },
     get undoableClear() { return cm !== null; },
     enhance(CodeMirror, mode, label) {
       cm = CodeMirror.fromTextArea(textarea, {
-        mode, lineNumbers: true, gutters: ['CodeMirror-linenumbers', 'p2f-errors'], indentUnit: 4, tabSize: 4,
+        mode, lineNumbers: true, gutters: ['CodeMirror-linenumbers', 'p2f-errors'], indentUnit: indentation.width, tabSize: indentation.width,
         indentWithTabs: false, readOnly: textarea.readOnly,
         viewportMargin: 10,
         extraKeys: {
+          Enter(editor) {
+            if (editor.getOption('readOnly')) return CodeMirror.Pass;
+            if (!indentation.automatic) {editor.replaceSelection('\n', 'end', '+input'); return;}
+            if (editor.somethingSelected() || editor.listSelections().length !== 1) return CodeMirror.Pass;
+            const cursor = editor.getCursor(), lines = editor.getValue().slice(0, editor.indexFromPos(cursor)).split('\n');
+            const hint = indentationForLine(lines, lines.length - 1, indentation.width);
+            editor.operation(() => {
+              if (hint.current !== null) {
+                const old = /^\s*/.exec(lines.at(-1))[0].length;
+                editor.replaceRange(' '.repeat(hint.current), {line: cursor.line, ch: 0}, {line: cursor.line, ch: old}, '+input');
+              }
+              editor.replaceSelection('\n' + ' '.repeat(hint.next), 'end', '+input');
+            });
+          },
           Tab(editor) {
             if (editor.getOption('readOnly')) return CodeMirror.Pass;
             if (editor.somethingSelected()) editor.indentSelection('add');
-            else editor.replaceSelection(' '.repeat(4 - editor.getCursor().ch % 4), 'end', '+input');
+            else editor.replaceSelection(' '.repeat(indentation.width - editor.getCursor().ch % indentation.width), 'end', '+input');
           },
           'Shift-Tab': 'indentLess',
           Esc(editor) { editor.getInputField().blur(); },
@@ -118,6 +189,13 @@ export function createEditor(textarea, counter, onChange = () => {}) {
       cm.getInputField().setAttribute('aria-label', label);
       textarea.labels?.[0]?.addEventListener('click', event => { event.preventDefault(); cm.focus(); });
       cm.on('change', changed);
+      cm.on('inputRead', (editor, change) => {
+        if (!indentation.automatic || editor.getOption('readOnly') || change.origin !== '+input' || change.text.length !== 1 || editor.listSelections().length !== 1) return;
+        const cursor = editor.getCursor(), desired = closingIndent(editor.getValue(), editor.indexFromPos(cursor));
+        if (desired === null) return;
+        const old = /^\s*/.exec(editor.getLine(cursor.line))[0].length;
+        if (old !== desired) editor.replaceRange(' '.repeat(desired), {line: cursor.line, ch: 0}, {line: cursor.line, ch: old}, '+input');
+      });
       renderDiagnostics();
     },
   };

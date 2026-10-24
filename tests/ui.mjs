@@ -11,6 +11,9 @@ const preprocessingLink = process.argv.includes('--preprocess-link');
 const ownerLink = process.argv.includes('--owner-link');
 if (advancedLink) playgroundConfig.interfaceMode = 'simple';
 const elements = new Map();
+const savedPreferences = new Map();
+globalThis.localStorage = {getItem: key => savedPreferences.get(key) ?? null,
+  setItem: (key, value) => savedPreferences.set(key, value)};
 const html = readFileSync(new URL('../site/index.html', import.meta.url), 'utf8');
 const htmlIds = new Set([...html.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]));
 const startupSource = 'program shared\nprint *, "shared + café"\nend program shared\n';
@@ -30,7 +33,8 @@ globalThis.document = {
     if (!elements.has(id)) elements.set(id, {value: '', textContent: '', disabled: false,
       attributes: {}, setAttribute(name, value) {this.attributes[name] = value;},
       options: [], appendChild(option) {this.options.push(option);}, listeners: {}, addEventListener(name, fn) {this.listeners[name] = fn;}, focus() {}, click() {},
-      select() {this.selected = true;}, setSelectionRange(from, to) {this.selection = [from, to];}});
+      select() {this.selected = true;}, setSelectionRange(from, to) {this.selection = [from, to]; this.selectionStart = from; this.selectionEnd = to;},
+      setRangeText(text, start, end) {this.value = this.value.slice(0, start) + text + this.value.slice(end); this.selectionStart = this.selectionEnd = start + text.length;}});
     return elements.get(id);
   },
   createElement() {return {click() {}};},
@@ -109,6 +113,8 @@ globalThis.fetch = async (url, options = {}) => {
 await import('../site/app.mjs');
 const expectedInitialMode = plainVisit ? playgroundConfig.interfaceMode : compareLink ? 'compare' : advancedLink || preprocessingLink ? 'advanced' : 'simple';
 assert.equal(get('interface-mode').value, expectedInitialMode);
+assert.equal(get('indent-width').value, '3');
+assert.equal(get('auto-indent').checked, true);
 assert.equal(Boolean(get('preprocess').checked), preprocessingLink);
 assert.equal(get('compiler-controls').hidden, expectedInitialMode === 'simple');
 assert.equal(get('external-controls').hidden, expectedInitialMode === 'simple');
@@ -871,4 +877,17 @@ get('interface-mode').value = 'advanced'; get('interface-mode').onchange();
 assert.equal(get('comparison-controls').hidden, true);
 assert.equal(get('comparison-results').hidden, true);
 assert.equal(get('rerun').hidden, false);
+const beforeIndentSettings = submissions;
+get('indent-width').value = '2'; get('indent-width').onchange();
+get('auto-indent').checked = false; get('auto-indent').onchange();
+assert.deepEqual(JSON.parse(savedPreferences.get('fortran-playground.indentation')), {width: 2, automatic: false});
+assert.match(get('indent-note').textContent, /updated service/);
+get('auto-indent').checked = true; get('auto-indent').onchange();
+get('fortran').value = 'do i=1,10'; get('fortran').listeners.input();
+get('fortran').setSelectionRange(9, 9);
+get('fortran').listeners.keydown({key: 'Enter', preventDefault() {}});
+assert.equal(get('fortran').value, 'do i=1,10\n  ');
+get('indent-width').value = '3'; get('indent-width').onchange();
+assert.match(get('indent-note').textContent, /Format uses the selected width/);
+assert.equal(submissions, beforeIndentSettings);
 console.log('Fortran-only UI tests passed (no hosted jobs submitted).');
