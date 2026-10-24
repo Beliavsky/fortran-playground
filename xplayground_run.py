@@ -1,6 +1,8 @@
 """Compile and run ordered Fortran source files through the hosted playground API."""
 import argparse
 import getpass
+import hashlib
+import http.client
 from dataclasses import dataclass
 import json
 import os
@@ -8,8 +10,10 @@ from pathlib import Path
 import re
 import sys
 import time
+import socket
+import threading
 from urllib.error import HTTPError, URLError
-from urllib.parse import quote, urlsplit
+from urllib.parse import quote, urlsplit, urljoin
 from urllib.request import Request, urlopen
 
 
@@ -24,6 +28,116 @@ class SourceSection:
     filename: str
     first_line: int
     last_line: int
+    url: str = ''
+    sha256: str = ''
+    requested_url: str = ''
+
+
+def source_url(value):
+    """Only anonymous, ordinary HTTPS source downloads; no service credentials."""
+    try:
+        parsed = urlsplit(value)
+        valid = (len(value) <= 2048 and value.isascii() and
+                 not re.search(r'[\s\x00-\x1f\x7f]', value) and
+                 parsed.scheme == 'https' and parsed.hostname and parsed.port in (None, 443)
+                 and not (parsed.username or parsed.password or parsed.fragment))
+    except (ValueError, TypeError):
+        valid = False
+    if not valid:
+        raise ValueError('Source URLs must be complete HTTPS URLs without credentials, fragments, whitespace, or custom ports')
+    return parsed.geturl()
+
+
+class SourceConnection(http.client.HTTPSConnection):
+    def connect(self):
+        super().connect()
+        self.connected_socket = self.sock
+
+    def abort(self):
+        connection_socket = getattr(self, 'connected_socket', None)
+        if connection_socket is not None:
+            try:
+                connection_socket.shutdown(socket.SHUT_RDWR)
+            except OSError:
+                pass
+
+
+def download_source(value):
+    """Fetch one bounded snapshot, revalidating every redirect and TLS peer."""
+    url = source_url(value)
+    deadline = time.monotonic() + 15
+    for hop in range(6):
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            raise ValueError('Source download timed out')
+        parsed = urlsplit(url)
+        connection = SourceConnection(parsed.hostname, port=443, timeout=min(5, remaining))
+        response = None
+        timer = threading.Timer(remaining, connection.abort)
+        timer.daemon = True
+        timer.start()
+        try:
+            path = parsed.path or '/'
+            if parsed.query:
+                path += '?' + parsed.query
+            connection.request('GET', path, headers={'Accept': 'text/plain', 'Accept-Encoding': 'identity',
+                                                     'User-Agent': 'fortran-playground-python-client'})
+            response = connection.getresponse()
+            if response.status in (301, 302, 303, 307, 308):
+                destination = response.getheader('Location')
+                if not destination:
+                    raise ValueError('Source redirect has no destination')
+                if hop == 5:
+                    raise ValueError('Source download has too many redirects (maximum five)')
+                url = source_url(urljoin(url, destination))
+                continue
+            if response.status != 200:
+                raise ValueError(f'Source download returned HTTP {response.status}; use a direct raw-source URL')
+            if 'html' in response.getheader('Content-Type', '').lower():
+                raise ValueError('Source URL returned HTML; use the raw Fortran source URL')
+            if response.getheader('Content-Encoding', 'identity').lower() not in ('', 'identity'):
+                raise ValueError('Source URL returned compressed content; use an uncompressed raw-source URL')
+            declared = response.getheader('Content-Length')
+            if declared is not None:
+                try:
+                    declared = int(declared)
+                except ValueError:
+                    raise ValueError('Source download returned an invalid Content-Length') from None
+                if not 0 <= declared <= MAX_SOURCE_BYTES + 3:
+                    raise ValueError('Downloaded source exceeds the 100 KB limit')
+            data = bytearray()
+            while True:
+                if time.monotonic() >= deadline:
+                    raise ValueError('Source download timed out')
+                chunk = response.read1(min(8192, MAX_SOURCE_BYTES + 4 - len(data)))
+                if not chunk:
+                    break
+                data.extend(chunk)
+                if len(data) > MAX_SOURCE_BYTES + 3:
+                    raise ValueError('Downloaded source exceeds the 100 KB limit')
+            if time.monotonic() >= deadline:
+                raise ValueError('Source download timed out')
+            if declared is not None and len(data) != declared:
+                raise ValueError('Source download was incomplete')
+            try:
+                source = data.decode('utf-8-sig').replace('\r\n', '\n').replace('\r', '\n')
+            except UnicodeError:
+                raise ValueError('Downloaded source must be UTF-8 text') from None
+            if not source.strip() or '\0' in source:
+                raise ValueError('Downloaded source must be nonempty text without NUL bytes')
+            if re.match(r'\s*<(?:!doctype|html|head|body)\b', source, re.I):
+                raise ValueError('Source URL returned HTML; use the raw Fortran source URL')
+            if len(source.encode('utf-8')) > MAX_SOURCE_BYTES:
+                raise ValueError('Downloaded source exceeds the 100 KB limit')
+            return source, url, hashlib.sha256(source.encode('utf-8')).hexdigest()
+        except (OSError, http.client.HTTPException) as error:
+            message = 'Source download timed out' if time.monotonic() >= deadline else 'Source HTTPS download failed'
+            raise ValueError(message) from error
+        finally:
+            timer.cancel()
+            if response is not None:
+                response.close()
+            connection.close()
 
 
 def combine_sources(paths):
@@ -31,27 +145,41 @@ def combine_sources(paths):
     chunks, sections, seen = [], [], set()
     line, size = 1, 0
     for path in paths:
-        path = Path(path)
-        if path.resolve() in seen:
+        # Do not mistake a Windows drive prefix for a URL scheme.
+        remote = isinstance(path, str) and bool(re.match(r'^[a-zA-Z][a-zA-Z0-9+.-]+:', path))
+        identity = source_url(path) if remote else Path(path).resolve()
+        if identity in seen:
             raise ValueError(f'Source file supplied more than once: {path}')
-        seen.add(path.resolve())
-        if path.stat().st_size > MAX_SOURCE_BYTES + 3:
-            raise ValueError(f'{path}: source exceeds the 100 KB limit')
-        try:
-            source = path.read_bytes().decode('utf-8-sig').replace('\r\n', '\n').replace('\r', '\n')
-        except UnicodeError as error:
-            raise ValueError(f'{path}: expected UTF-8 source') from error
+        seen.add(identity)
+        url = sha256 = requested_url = ''
+        if remote:
+            requested_url = identity
+            source, url, sha256 = download_source(identity)
+            if url != identity and url in seen:
+                raise ValueError(f'Source file supplied more than once after redirect: {url}')
+            seen.add(url)
+            filename = url
+        else:
+            path = Path(path)
+            if path.stat().st_size > MAX_SOURCE_BYTES + 3:
+                raise ValueError(f'{path}: source exceeds the 100 KB limit')
+            try:
+                source = path.read_bytes().decode('utf-8-sig').replace('\r\n', '\n').replace('\r', '\n')
+            except UnicodeError as error:
+                raise ValueError(f'{path}: expected UTF-8 source') from error
+            filename = str(path).replace('\n', ' ').replace('\r', ' ')
         if not source.strip():
             raise ValueError(f'{path}: source is empty')
         if not source.endswith('\n'):
             source += '\n'
-        filename = str(path).replace('\n', ' ').replace('\r', ' ')
-        if len(paths) > 1:
+        if len(paths) > 1 or remote:
             header = f'! --- Source: {filename} ---\n'
+            if remote:
+                header += f'! SHA-256: {sha256}\n'
             chunks.append(header)
             size += len(header.encode('utf-8'))
-            line += 1
-        sections.append(SourceSection(filename, line, line + source.count('\n') - 1))
+            line += header.count('\n')
+        sections.append(SourceSection(filename, line, line + source.count('\n') - 1, url, sha256, requested_url))
         chunks.append(source)
         size += len(source.encode('utf-8'))
         if size > MAX_SOURCE_BYTES:
@@ -368,7 +496,7 @@ def print_summary(rows):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('files', type=Path, nargs='+', help='UTF-8 free-form sources, in compilation order')
+    parser.add_argument('files', nargs='+', help='Local paths or raw HTTPS URLs for UTF-8 free-form sources, in compilation order')
     group = parser.add_mutually_exclusive_group()
     group.add_argument('--compiler', choices=COMPILERS, help='Compiler (default: gfortran)')
     group.add_argument('--compilers', choices=COMPILERS, nargs='+', help='Compilers to invoke sequentially')
@@ -431,9 +559,13 @@ def main(argv=None):
         options = selections(session, compilers, args, notes)
         if not args.terse:
             print(f'Service: {client.service_url}\nCombined source: {len(source.encode("utf-8"))} bytes', flush=True)
-            if len(sections) > 1:
+            if len(sections) > 1 or any(section.url for section in sections):
                 for section in sections:
                     print(f'  input_p.f90 lines {section.first_line}-{section.last_line}: {section.filename}', flush=True)
+                    if section.url:
+                        if section.requested_url != section.url:
+                            print(f'    Requested URL: {section.requested_url}', flush=True)
+                        print(f'    SHA-256: {section.sha256}', flush=True)
             print('Times in seconds.', flush=True)
         if args.list:
             print('\n=== Submitted source ===', flush=True)

@@ -242,7 +242,7 @@ For local preview, `python xserve.py` generates the catalog at startup and whene
 
 ## Python command-line client
 
-[`xplayground_run.py`](xplayground_run.py) submits local Fortran source to the hosted execution service and displays the compiler/version, build diagnostics, program output, and timings. It uses only Python's standard library; no local compiler, Modal account, or Modal credentials are required. Execution is remote and uses the same shared resources and server-enforced quotas as the website.
+[`xplayground_run.py`](xplayground_run.py) submits Fortran source from local files or raw HTTPS URLs to the hosted execution service and displays the compiler/version, build diagnostics, program output, and timings. It uses only Python's standard library; no local compiler, Modal account, or Modal credentials are required. Execution is remote and uses the same shared resources and server-enforced quotas as the website.
 
 ```powershell
 # Compile and run with gfortran:
@@ -263,6 +263,9 @@ python xplayground_run.py kinds.f90 solver.f90 main.f90 --compilers gfortran ifx
 # Combine a module and its caller, in the order supplied:
 python xplayground_run.py kinds.f90 solver.f90 main.f90 --compilers gfortran ifx
 
+# Download a module and combine it with a local main program:
+python xplayground_run.py https://jblevins.org/mirror/amiller/luxury.f90 main.f90 --compilers gfortran ifx --list
+
 # Other supported options:
 python xplayground_run.py example.f90 --compiler lfortran --preprocess
 python xplayground_run.py example.f90 --standard 2018 --preset debug --warnings
@@ -280,7 +283,11 @@ The same input is supplied to each compiler's run, followed by end-of-file. Inpu
 
 In the browser, expand **Program input (stdin)** to type input or load a text file. **Run Again** uses the current input without recompiling. **Compile**, formatting, and checks omit program input. Input is kept only in the current page and is omitted from share links; it is sent to the service when running. Empty input produces immediate end-of-file. For coarray programs, read input on image 1 and distribute values to other images.
 
-Put source filenames before `--compilers`; that option takes a list of compiler names. The default is gfortran, with compiler defaults and preprocessing off. Available options also include `--fast-math` and `--timeout SECONDS` (300 seconds per compiler by default). Compile-only performs a syntax check when selecting ofort. All compiler choices and requested options are checked against the service session before any jobs are submitted.
+Source arguments can mix local paths and raw HTTPS URLs in compilation order, with modules before their callers. Each URL is downloaded once into client memory before contacting the execution service; all selected compilers receive the same combined snapshot. Downloads use verified HTTPS on port 443, timeouts, at most five redirects, and bounded sizes. HTTP URLs, URL credentials/fragments, compressed responses, HTML pages, empty content, NUL bytes, and invalid UTF-8 are rejected. Use raw-code links rather than GitHub file-view pages. Sources are not downloaded by the backend, and downloading does not consume Modal jobs.
+
+Normal output includes the final URL, requested URL if redirected, SHA-256 hash, and combined-source line range for each remote source. The hash covers UTF-8 source after removing an optional BOM and normalizing line endings, before adding any missing final newline. Remote-source separator comments include the URL and hash, so `--list` includes provenance even with `--terse`. All source text and separator comments count toward the existing **100 KB** combined limit. Repository cloning, fpm dependencies, include files, and libraries are not fetched automatically. `--stdin-file` still accepts local files only.
+
+Put source paths and URLs before `--compilers`; that option takes a list of compiler names. The default is gfortran, with compiler defaults and preprocessing off. Available options also include `--fast-math` and `--timeout SECONDS` (300 seconds per compiler by default). Compile-only performs a syntax check when selecting ofort. All compiler choices and requested options are checked against the service session before any jobs are submitted.
 
 ### Coarrays
 
