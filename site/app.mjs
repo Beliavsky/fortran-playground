@@ -7,6 +7,7 @@ import {applyFormatting} from './formatting.mjs';
 import {sharedCodeFromHash, createShareLink} from './sharing.mjs';
 import {serviceOrigin} from './service_config.mjs';
 import {compilerArguments, optionTokens} from './compiler_arguments.mjs';
+import {sourceURL, combinedSource, mappedErrors} from './external_source.mjs';
 
 const get = id => document.getElementById(id);
 const ownerAccessRequested = new URLSearchParams(location.search).get('owner') === '1';
@@ -18,6 +19,20 @@ function stdinError() {
 let token = '', service = '', catalog = {}, active = null, connecting = false, revision = 0;
 let filename = 'main.f90';
 let features = {}, retained = null, expiryTimer = null;
+let externalSource = null, externalLoading = false, externalMessage = '';
+function externalError() {
+  if (externalLoading) return 'Loading external source…';
+  if (!get('external-url').value.trim() && !externalSource) return '';
+  try {
+    if (!externalSource || sourceURL(get('external-url').value) !== externalSource.requestUrl) return 'Load the external source URL, or remove it, before compiling.';
+    combinedSource(editor.getValue(), externalSource);
+    return '';
+  } catch (error) { return error.message; }
+}
+function clearExternal() {
+  externalSource = null; externalMessage = '';
+  get('external-url').value = ''; get('external-source').value = '';
+}
 let compilerVersions = {};
 let interfaceMode = playgroundConfig.interfaceMode === 'simple' ? 'simple' : 'advanced';
 let availableCompilers = [], compilationFailed = false;
@@ -33,7 +48,8 @@ function selectedOptions() {
 const isSimple = () => interfaceMode === 'simple';
 function resetSimpleSettings() {
   const changed = get('compiler').value !== 'gfortran' || get('standard').value !== 'default' ||
-    get('preset').value !== 'default' || get('warnings').checked || get('fast-math').checked || get('preprocess').checked || get('additional-options').value.trim() || Number(get('images').value);
+    get('preset').value !== 'default' || get('warnings').checked || get('fast-math').checked || get('preprocess').checked || get('additional-options').value.trim() || Number(get('images').value) || Boolean(externalSource || get('external-url').value);
+  clearExternal();
   get('compiler').value = 'gfortran';
   get('standard').value = 'default';
   get('preset').value = 'default';
@@ -77,7 +93,17 @@ function controls() {
     additionalCompiler = get('compiler').value;
     get('additional-options').value = additionalByCompiler[additionalCompiler] || '';
   }
-  const busy = Boolean(active);
+  const busy = Boolean(active) || externalLoading;
+  get('external-controls').hidden = isSimple();
+  get('external-details').hidden = isSimple();
+  get('external-url').disabled = busy || connecting;
+  get('load-external').disabled = busy || connecting || !token || !features.external_source || !get('external-url').value.trim();
+  get('remove-external').disabled = busy || connecting || !(externalSource || get('external-url').value);
+  get('external-preview').hidden = !externalSource;
+  get('external-status').textContent = externalMessage || externalError() || (externalSource ?
+    `${externalSource.filename} loaded from ${externalSource.url} · SHA-256 ${externalSource.sha256}. This snapshot is compiled before the editor code; Load refreshes it.` :
+    features.external_source ? 'Optional: load one public UTF-8 free-form source file containing modules or procedures. Loading does not run code. Downloads and share links include the loaded source.' :
+    'External source loading requires an updated execution service.');
   const interpreted = get('compiler').value === 'ofort';
   get('compile').textContent = interpreted ? 'Check syntax' : 'Compile';
   get('run').textContent = isSimple() || interpreted ? 'Run' : 'Compile and Run';
@@ -161,6 +187,7 @@ function controls() {
     'Owner key will be verified when you submit a job. Valid owner requests bypass daily and address quotas; concurrency limits still apply.' :
     'Optional owner access. The key is kept only in this page and is not included in share links.');
   if (ownerError) for (const id of ['run', 'compile', 'rerun', 'format', 'check']) get(id).disabled = true;
+  if (externalError()) for (const id of ['run', 'compile', 'rerun', 'share', 'download']) get(id).disabled = true;
 }
 
 async function api(path, method = 'GET', payload) {
@@ -212,7 +239,7 @@ async function connect() {
   } finally { connecting = false; controls(); }
 }
 
-function show(result) {
+function show(result, compilation = combinedSource(editor.getValue(), null)) {
   compilationFailed = result.build?.ok === false || result.ok === false || Boolean(result.error);
   get('build-title').textContent = result.interpreter ? (result.build ? 'Syntax checking' : 'Interpreter diagnostics') : 'Compilation';
   const version = result.compiler_version;
@@ -220,14 +247,16 @@ function show(result) {
   get('result-compiler-version').textContent = `${result.interpreter ? 'Interpreter' : 'Compiler'} version: ${version || 'unavailable from this service.'}`;
   const diagnosticStage = result.build || (result.interpreter ? result.execution : null);
   if (diagnosticStage) {
-    const errors = parseCompilerErrors(`${diagnosticStage.stdout || ''}\n${diagnosticStage.stderr || ''}`, editor.getValue());
+    const parsed = parseCompilerErrors(`${diagnosticStage.stdout || ''}\n${diagnosticStage.stderr || ''}`, compilation.source);
+    const {main: errors, external: externalErrors} = mappedErrors(parsed, compilation);
     clearErrorInfo();
     editor.setDiagnostics(errors);
     get('first-error').disabled = !errors.length;
     get('first-error').hidden = !errors.length;
-    get('error-note').hidden = !errors.length;
-    get('error-note').textContent = errors.length ? `${errors.length} source error${errors.length === 1 ? '' : 's'}; first at line ${errors[0].line}: ${errors[0].message}` : '';
-    quickFix.update(editor.getValue(), `${diagnosticStage.stdout || ''}\n${diagnosticStage.stderr || ''}`,
+    get('error-note').hidden = !(errors.length || externalErrors.length);
+    get('error-note').textContent = externalErrors.length ? `External source ${compilation.filename}, line ${externalErrors[0].line}: ${externalErrors[0].message}` :
+      errors.length ? `${errors.length} source error${errors.length === 1 ? '' : 's'}; first at line ${errors[0].line}: ${errors[0].message}` : '';
+    if (!compilation.mainOffset) quickFix.update(editor.getValue(), `${diagnosticStage.stdout || ''}\n${diagnosticStage.stderr || ''}`,
       result.compiler || get('compiler').value, diagnosticStage.ok === false);
   }
   for (const [key, outputId, timeId] of [['build', 'diagnostics', 'build-time'], ['execution', 'output', 'run-time']]) {
@@ -239,6 +268,11 @@ function show(result) {
     get('diagnostics').textContent = result.execution.stderr || 'No separate syntax check: ofort parses and runs source directly with --fast.';
   }
   if (result.error) get('diagnostics').textContent = result.error;
+  if (compilation.mainOffset && diagnosticStage) {
+    const mapped = mappedErrors(parseCompilerErrors(`${diagnosticStage.stdout || ''}\n${diagnosticStage.stderr || ''}`, compilation.source), compilation);
+    for (const error of mapped.main) get('diagnostics').textContent += `\nSource location: editor main.f90:${error.line}`;
+    for (const error of mapped.external) get('diagnostics').textContent += `\nSource location: ${compilation.filename}:${error.line}`;
+  }
   if (result.reused_executable) get('diagnostics').textContent = 'Compilation skipped — reused the retained executable.';
   if (result.artifact_note) get('diagnostics').textContent += '\n' + result.artifact_note;
   if (result.artifact) {
@@ -252,7 +286,7 @@ function show(result) {
 }
 
 async function run(mode = 'fortran-edit') {
-  if (!token || active) return;
+  if (!token || active || externalLoading) return;
   if (get('owner-key').value && (!features.owner_access || !/^[A-Za-z0-9_-]{32,256}$/.test(get('owner-key').value))) {
     get('status').textContent = 'Enter a valid owner key for this service, or clear it to use public access.';
     return;
@@ -272,12 +306,18 @@ async function run(mode = 'fortran-edit') {
   if (mode === 'check' && !features.check) return;
   if (mode === 'fortran-run' && (!features.run_again || !retained || retained.expires_at * 1000 <= Date.now())) { invalidateBuild(); controls(); return; }
   const source = editor.getValue();
+  if (!['format', 'check'].includes(mode) && externalError()) { get('status').textContent = externalError(); return; }
+  let compilation;
+  try { compilation = combinedSource(source, externalSource); }
+  catch (error) {
+    if (!['format', 'check'].includes(mode)) { get('status').textContent = error.message; return; }
+  }
   const executes = ['fortran-edit', 'fortran-run'].includes(mode);
   if (executes && stdinError()) { get('status').textContent = stdinError(); return; }
   if (!source.trim() || new TextEncoder().encode(source).length > 100000) {
     get('status').textContent = 'Enter between 1 byte and 100 KB of Fortran.'; return;
   }
-  const job = active = {id: null, revision, stopping: false};
+  const job = active = {id: null, revision, stopping: false, compilation};
   if (mode === 'check') {
     get('checks-pane').hidden = false;
     get('check').setAttribute('aria-expanded', 'true');
@@ -293,7 +333,7 @@ async function run(mode = 'fortran-edit') {
     const created = await api('jobs', 'POST', {
       source: ['format', 'check'].includes(mode) ? source : '', mode, automatic: false,
       ...(executes && get('stdin').value ? {stdin: get('stdin').value} : {}),
-      ...(['format', 'check'].includes(mode) ? {} : mode === 'fortran-run' ? {artifact_id: artifactId} : {fortran_source: source, ...(features.run_again && !isSimple() && get('compiler').value !== 'ofort' ? {retain_executable: true} : {})}),
+      ...(['format', 'check'].includes(mode) ? {} : mode === 'fortran-run' ? {artifact_id: artifactId} : {fortran_source: compilation.source, ...(features.run_again && !isSimple() && get('compiler').value !== 'ofort' ? {retain_executable: true} : {})}),
       compiler: ['format', 'check'].includes(mode) ? 'gfortran' : get('compiler').value,
       ...(!['format', 'check'].includes(mode) && catalog[get('compiler').value] ? {compiler_options: {
         preset: get('preset').value, warnings: Boolean(get('warnings').checked), fast_math: Boolean(get('fast-math').checked),
@@ -333,7 +373,7 @@ async function run(mode = 'fortran-edit') {
             get('diagnostics').textContent = String(error);
           }
         }
-        else if (revision === job.revision) show(state.result);
+        else if (revision === job.revision) show(state.result, job.compilation);
         else {
           get('status').textContent = 'Previous result discarded — source or options changed';
           if (mode === 'check') get('check-status').textContent = 'Check result discarded because source or options changed; previous results are retained.';
@@ -355,7 +395,7 @@ async function run(mode = 'fortran-edit') {
 }
 
 function changeInterface(mode) {
-  if (active || connecting) { get('interface-mode').value = interfaceMode; return; }
+  if (active || connecting || externalLoading) { get('interface-mode').value = interfaceMode; return; }
   interfaceMode = mode === 'simple' ? 'simple' : 'advanced';
   let settingsChanged = false;
   if (isSimple()) {
@@ -391,6 +431,37 @@ get('rerun').onclick = () => run('fortran-run');
 get('first-error').onclick = () => editor.goToDiagnostic();
 get('connect').onclick = connect;
 get('owner-key').oninput = controls;
+get('external-url').oninput = () => {
+  if (!get('external-url').value.trim()) clearExternal();
+  externalMessage = ''; invalidateBuild(); clearErrorInfo(); revision++; controls();
+};
+get('remove-external').onclick = () => {
+  if (active || externalLoading) return;
+  clearExternal(); invalidateBuild(); clearErrorInfo(); revision++; controls();
+};
+get('load-external').onclick = async () => {
+  if (active || connecting || externalLoading || !token || !features.external_source) return;
+  let requested;
+  try { requested = sourceURL(get('external-url').value); }
+  catch (error) { externalMessage = error.message; controls(); return; }
+  externalSource = null; get('external-source').value = '';
+  invalidateBuild(); clearErrorInfo(); revision++;
+  externalLoading = true; externalMessage = 'Loading external source…'; controls();
+  try {
+    const loaded = await api('external-source', 'POST', {url: requested});
+    if (typeof loaded.source !== 'string' || !loaded.source.trim() ||
+        new TextEncoder().encode(loaded.source).length > 100000 ||
+        typeof loaded.filename !== 'string' || !/^[A-Za-z0-9_.-]{1,100}$/.test(loaded.filename) ||
+        typeof loaded.sha256 !== 'string' || !/^[a-f0-9]{64}$/.test(loaded.sha256)) throw new Error('The service returned invalid external source metadata.');
+    sourceURL(loaded.url);
+    if (isSimple() || sourceURL(get('external-url').value) !== requested) throw new Error('The URL changed while loading; load it again.');
+    externalSource = {...loaded, requestUrl: requested};
+    get('external-source').value = loaded.source;
+    externalMessage = ''; invalidateBuild(); clearErrorInfo(); revision++;
+    get('status').textContent = `${loaded.filename} loaded. Compile when ready.`;
+  } catch (error) { externalMessage = error.message; }
+  finally { externalLoading = false; controls(); }
+};
 get('stdin').oninput = () => {
   revision++;
   get('freshness').textContent = 'Program input changed; previous results are retained.';
@@ -459,15 +530,21 @@ get('file').onchange = async () => {
 };
 get('download').onclick = () => {
   if (!editor.getValue().trim()) return;
-  const url = URL.createObjectURL(new Blob([editor.getValue()], {type: 'text/plain;charset=utf-8'}));
+  let source;
+  try {
+    if (externalError()) throw new Error(externalError());
+    source = combinedSource(editor.getValue(), externalSource).source;
+  } catch (error) { get('file-status').textContent = error.message; return; }
+  const url = URL.createObjectURL(new Blob([source], {type: 'text/plain;charset=utf-8'}));
   const link = document.createElement('a');
-  link.href = url; link.download = filename; link.click();
+  link.href = url; link.download = externalSource ? 'playground_combined.f90' : filename; link.click();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 };
 get('share').onclick = async () => {
   get('share-link-field').hidden = true;
   try {
-    const link = createShareLink(location.href, editor.getValue(), interfaceMode, Boolean(get('preprocess').checked), Number(get('images').value));
+    if (externalError()) throw new Error(externalError());
+    const link = createShareLink(location.href, combinedSource(editor.getValue(), externalSource).source, interfaceMode, Boolean(get('preprocess').checked), Number(get('images').value));
     get('share-link').value = link;
     try {
       await navigator.clipboard.writeText(link);
@@ -487,13 +564,16 @@ function loadSharedCode(initial = false) {
     const shared = sharedCodeFromHash(location.hash);
     if (shared === null) return;
     const {source, interfaceMode: sharedMode, preprocess, images = 0} = shared;
-    if (source === editor.getValue() && sharedMode === interfaceMode && preprocess === Boolean(get('preprocess').checked) && images === Number(get('images').value)) return;
-    if (active || connecting) throw new Error('Wait for the current operation to finish before opening shared code.');
+    if (!externalSource && !get('external-url').value.trim() && source === editor.getValue() && sharedMode === interfaceMode && preprocess === Boolean(get('preprocess').checked) && images === Number(get('images').value)) return;
+    if (active || connecting || externalLoading) throw new Error('Wait for the current operation to finish before opening shared code.');
     if (!initial && editor.getValue().trim() && !confirm('Replace the Fortran input with code from this shared link?')) {
       get('share-status').textContent = 'Shared code was not loaded; your input is unchanged.';
       return;
     }
     changeInterface(sharedMode);
+    if (externalSource || get('external-url').value) {
+      clearExternal(); invalidateBuild(); clearErrorInfo(); revision++; controls();
+    }
     if (images !== Number(get('images').value)) {
       get('images').value = String(images);
       if (images) get('compiler').value = 'gfortran';

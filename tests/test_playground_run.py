@@ -204,6 +204,16 @@ class ClientTests(unittest.TestCase):
 
 
 class CommandTests(unittest.TestCase):
+    def test_failed_process_exit_is_visible_even_without_output(self):
+        for terse in (False, True):
+            stdout, stderr = StringIO(), StringIO()
+            with redirect_stdout(stdout), redirect_stderr(stderr):
+                runner.print_result('gfortran17', {'ok': False, 'execution': {
+                    'ok': False, 'exit_code': -25, 'stdout': '', 'stderr': '', 'seconds': 0.03}},
+                    [], 1.0, terse=terse)
+            self.assertIn('FAIL', stdout.getvalue())
+            self.assertIn('process exit code -25', stderr.getvalue())
+
     def test_stdin_file_is_normalized_and_reused_for_all_compilers(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

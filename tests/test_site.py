@@ -13,6 +13,28 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class SiteTests(unittest.TestCase):
+    @unittest.skipUnless(shutil.which('node') and shutil.which('gfortran'), 'node and gfortran required')
+    def test_external_module_is_compiled_before_the_editor_program(self):
+        external = {'source': 'module external_demo\ncontains\ninteger function answer()\nanswer=42\nend function\nend module\n',
+                    'filename': 'external.f90', 'url': 'https://example.org/external.f90', 'sha256': 'a' * 64}
+        main = 'program demo\nuse external_demo, only: answer\nimplicit none\nprint *, answer()\nend program\n'
+        script = ("import {combinedSource} from './site/external_source.mjs'; "
+                  "import fs from 'node:fs'; const data=JSON.parse(fs.readFileSync(0,'utf8')); "
+                  "process.stdout.write(combinedSource(data.main,data.external).source);")
+        combined = subprocess.run(['node', '--input-type=module', '-e', script], cwd=ROOT,
+            input=json.dumps({'main': main, 'external': external}), text=True, capture_output=True, check=True).stdout
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = Path(temporary)
+            source = directory / 'combined.f90'
+            source.write_text(combined, encoding='utf-8')
+            executable = directory / 'program.exe'
+            build = subprocess.run(['gfortran', '-std=f2018', '-fcheck=all', str(source), '-o', str(executable)],
+                                   cwd=directory, text=True, capture_output=True, timeout=30)
+            self.assertEqual(build.returncode, 0, build.stdout + build.stderr)
+            result = subprocess.run([str(executable)], text=True, capture_output=True, timeout=10)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(result.stdout.strip(), '42')
+
     def test_example_files_drive_catalog_and_asset_version(self):
         with tempfile.TemporaryDirectory() as directory:
             site = Path(directory) / 'source'

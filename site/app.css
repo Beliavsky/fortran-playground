@@ -50,3 +50,9 @@
 #share-link { display: block; width: 100%; box-sizing: border-box; }
 #program-input { margin-bottom: 1rem; }
 #stdin { display: block; width: 100%; height: auto; box-sizing: border-box; resize: vertical; }
+.external-controls { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.external-controls[hidden] { display: none; }
+#external-url { width: min(340px, 65vw); }
+#external-details { margin-bottom: 1rem; }
+#external-status { overflow-wrap: anywhere; }
+#external-source { display: block; width: 100%; height: auto; box-sizing: border-box; resize: vertical; }

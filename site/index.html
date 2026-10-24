@@ -21,9 +21,21 @@
   <div class="toolbar">
     <label for="interface-mode">Interface</label>
     <select id="interface-mode"><option value="simple">Simple</option><option value="advanced" selected>Advanced</option></select>
+    <span id="external-controls" class="external-controls" hidden>
+      <label for="external-url">External source URL</label>
+      <input id="external-url" type="url" maxlength="2048" placeholder="https://example.org/module.f90" autocomplete="off" spellcheck="false" aria-describedby="external-status">
+      <button id="load-external" type="button" disabled>Load</button>
+      <button id="remove-external" type="button" disabled>Remove</button>
+    </span>
     <span id="simple-compiler" class="version" hidden>GNU Fortran</span>
     <button id="advanced-options" type="button" hidden>Advanced options</button>
     <span id="status" role="status" aria-live="polite">Connecting…</span>
+  </div>
+  <div id="external-details" hidden>
+    <p id="external-status" class="version" role="status"></p>
+    <details id="external-preview"><summary>External source preview</summary>
+      <textarea id="external-source" rows="8" readonly spellcheck="false" aria-label="Loaded external Fortran source"></textarea>
+    </details>
   </div>
   <div class="toolbar">
     <label for="example">Example</label>

@@ -48,6 +48,8 @@ let serviceCompilers = ['gfortran', 'ofort'];
 let preprocessingSupported = true;
 let ownerSupported = false, jobHeaders = {};
 let stdinSupported = true;
+let externalLoads = 0, externalFails = false;
+const externalText = 'module external_demo\ncontains\ninteger function answer()\nanswer=42\nend function\nend module\n';
 let coarraySupport = {};
 let intelCoarraySupport = {};
 globalThis.fetch = async (url, options = {}) => {
@@ -57,7 +59,7 @@ globalThis.fetch = async (url, options = {}) => {
     assert.equal(url, 'https://execute.example.org/api/session');
     if (sessionFails) throw new Error('Offline');
     result = {token: 'session', commit: 'abcd1234', timeout: 30, compilers: serviceCompilers,
-      features: legacy ? {} : {compile_only: true, run_again: true, format: true, check: true, owner_access: ownerSupported, stdin: stdinSupported, max_stdin_bytes: 100000},
+      features: legacy ? {} : {compile_only: true, run_again: true, format: true, check: true, owner_access: ownerSupported, stdin: stdinSupported, max_stdin_bytes: 100000, external_source: true},
       ...(legacy ? {} : {compiler_versions: {gfortran: 'GNU Fortran (GCC) 15.2.0', ifx: 'Intel Fortran 2026.0'}}),
       compiler_options: {gfortran: {presets: {default: [], debug: ['-g']}, extras: {warnings: ['-Wall'], ...(preprocessingSupported ? {preprocess: ['-cpp']} : {})},
         coarray_images: coarraySupport,
@@ -73,6 +75,12 @@ globalThis.fetch = async (url, options = {}) => {
       result.compiler_options[name] = {presets: {default: []}, extras: {}, standards: {},
         coarray_images: {'2': [flag]}, coarray_note: 'Experimental coarrays via Caffeine.'};
     }
+  } else if (url.endsWith('/api/external-source')) {
+    externalLoads++;
+    assert.equal(options.headers['X-P2F-Token'], 'session');
+    assert.equal(options.headers['X-P2F-Owner-Key'], undefined);
+    if (externalFails) return {ok: false, status: 400, json: async () => ({error: 'Download failed'})};
+    result = {source: externalText, filename: 'external.f90', sha256: 'a'.repeat(64), url: JSON.parse(options.body).url};
   } else if (url.endsWith('/api/jobs')) {
     jobHeaders = options.headers;
     if (checkRequestFails && JSON.parse(options.body).mode === 'check') throw new Error('Check request offline');
@@ -95,6 +103,7 @@ const expectedInitialMode = plainVisit ? playgroundConfig.interfaceMode : advanc
 assert.equal(get('interface-mode').value, expectedInitialMode);
 assert.equal(Boolean(get('preprocess').checked), preprocessingLink);
 assert.equal(get('compiler-controls').hidden, expectedInitialMode === 'simple');
+assert.equal(get('external-controls').hidden, expectedInitialMode === 'simple');
 if (expectedInitialMode === 'simple') {
   assert.equal(get('run').textContent, 'Run');
   assert.equal(get('compilation-pane').hidden, true);
@@ -200,6 +209,50 @@ get('compiler').value = 'gfortran'; get('compiler').onchange();
 await get('compile').onclick(); // Compiler changes invalidated the retained build.
 assert.equal(payload.retain_executable, true);
 assert.equal(get('rerun').disabled, false);
+const beforeExternal = submissions;
+get('external-url').value = 'https://example.org/external.f90'; get('external-url').oninput();
+assert.equal(get('run').disabled, true);
+await get('load-external').onclick();
+assert.equal(externalLoads, 1);
+assert.equal(submissions, beforeExternal); // Loading source never submits execution.
+assert.equal(get('external-source').value, externalText);
+assert.equal(get('run').disabled, false);
+await get('compile').onclick();
+assert.ok(payload.fortran_source.indexOf(externalText) < payload.fortran_source.indexOf('program main'));
+await get('share').onclick();
+assert.ok(sourceFromHash(new URL(copiedLink).hash).includes(externalText));
+assert.ok(sourceFromHash(new URL(copiedLink).hash).includes('SHA-256: '));
+const combinedMainOffset = payload.fortran_source.split('\n').findIndex(line => line === 'program main');
+buildOK = false; buildError = 'input_p.f90:4:1:\nError: invalid external module\n';
+await get('compile').onclick();
+assert.match(get('error-note').textContent, /External source external.f90, line 1/);
+assert.equal(get('first-error').hidden, true);
+buildError = `input_p.f90:${combinedMainOffset + 2}:1:\nError: invalid editor line\n`;
+await get('compile').onclick();
+assert.match(get('error-note').textContent, /first at line 2/);
+assert.equal(get('first-error').hidden, false);
+assert.equal(get('fix-error').hidden, true);
+buildOK = true; buildError = '';
+get('external-url').value = 'https://example.org/changed.f90'; get('external-url').oninput();
+assert.equal(get('rerun').disabled, true);
+assert.equal(get('run').disabled, true);
+externalFails = true;
+await get('load-external').onclick();
+assert.equal(get('run').disabled, true);
+assert.match(get('external-status').textContent, /Download failed/);
+externalFails = false;
+get('remove-external').onclick();
+assert.equal(get('external-url').value, '');
+assert.equal(get('external-source').value, '');
+assert.equal(get('run').disabled, false);
+get('external-url').value = 'https://example.org/external.f90'; get('external-url').oninput();
+await get('load-external').onclick();
+location.hash = '#code=' + encodeURIComponent(get('fortran').value) + '&interface=advanced';
+pageListeners.hashchange();
+assert.equal(get('external-url').value, ''); // A shared snapshot replaces external-source state too.
+assert.equal(get('external-preview').hidden, true);
+await get('compile').onclick();
+assert.equal(payload.fortran_source.includes(externalText), false);
 get('stdin').value = '2 3\n'; get('stdin').oninput();
 assert.equal(get('rerun').disabled, false); // Input does not invalidate the executable.
 await get('rerun').onclick();

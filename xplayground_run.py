@@ -327,6 +327,8 @@ def print_result(compiler, result, sections, elapsed, *, terse=False):
         timing = f'{seconds:.3f}' if seconds is not None else '-'
         if not terse:
             print(f'{title} ({timing}):', flush=True)
+        if stage.get('ok') is False and stage.get('exit_code') is not None:
+            print(f'{title}: process exit code {stage["exit_code"]}', file=sys.stderr, flush=True)
         for stream in ('stdout', 'stderr'):
             text = stage.get(stream, '')
             if terse and key == 'build' and stage.get('ok') and stream == 'stdout':
