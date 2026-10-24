@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
 import {playgroundConfig} from '../site/config.mjs';
 import {examples, exampleLabels} from '../site/examples.generated.mjs';
 import {createShareLink, sourceFromHash, sharedCodeFromHash} from '../site/sharing.mjs';
@@ -10,6 +11,8 @@ const preprocessingLink = process.argv.includes('--preprocess-link');
 const ownerLink = process.argv.includes('--owner-link');
 if (advancedLink) playgroundConfig.interfaceMode = 'simple';
 const elements = new Map();
+const html = readFileSync(new URL('../site/index.html', import.meta.url), 'utf8');
+const htmlIds = new Set([...html.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]));
 const startupSource = 'program shared\nprint *, "shared + café"\nend program shared\n';
 const base = 'https://example.org/fortran-playground/';
 globalThis.location = new URL(plainVisit ? base : compareLink ? createShareLink(base, startupSource, 'compare') : preprocessingLink ? createShareLink(base, startupSource, 'advanced', true) : advancedLink ? createShareLink(base, startupSource, 'advanced') :
@@ -23,6 +26,7 @@ Object.defineProperty(globalThis, 'navigator', {configurable: true, value: {
 }});
 globalThis.document = {
   getElementById(id) {
+    if (!htmlIds.has(id)) return null;
     if (!elements.has(id)) elements.set(id, {value: '', textContent: '', disabled: false,
       attributes: {}, setAttribute(name, value) {this.attributes[name] = value;},
       options: [], appendChild(option) {this.options.push(option);}, listeners: {}, addEventListener(name, fn) {this.listeners[name] = fn;}, focus() {}, click() {},
