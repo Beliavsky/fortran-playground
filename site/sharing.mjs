@@ -41,14 +41,14 @@ export function sharedCodeFromHash(hash) {
     if (error instanceof URIError) throw new Error('The shared-code link contains invalid URL encoding.');
     throw error;
   }
-  if (!['simple', 'advanced'].includes(interfaceMode)) throw new Error('Shared-link interface must be simple or advanced.');
+  if (!['simple', 'advanced', 'compare'].includes(interfaceMode)) throw new Error('Shared-link interface must be simple, advanced, or compare.');
   if (preprocess) {
     if (seen.has('interface') && interfaceMode === 'simple') throw new Error('Preprocessing requires the Advanced interface.');
-    interfaceMode = 'advanced';
+    if (interfaceMode !== 'compare') interfaceMode = 'advanced';
   }
   if (images) {
     if (seen.has('interface') && interfaceMode === 'simple') throw new Error('Coarrays require the Advanced interface.');
-    interfaceMode = 'advanced';
+    if (interfaceMode !== 'compare') interfaceMode = 'advanced';
   }
   validateSource(source);
   return {source, interfaceMode, preprocess, ...(images ? {images} : {})};
@@ -64,7 +64,7 @@ export function createShareLink(href, source, interfaceMode = 'simple', preproce
   if (preprocess && interfaceMode === 'simple') throw new Error('Preprocessing requires the Advanced interface.');
   if (![0, 1, 2, 4].includes(images)) throw new Error('Coarray images must be 0, 1, 2, or 4.');
   if (images && interfaceMode === 'simple') throw new Error('Coarrays require the Advanced interface.');
-  if (!['simple', 'advanced'].includes(interfaceMode)) throw new Error('Shared-link interface must be simple or advanced.');
+  if (!['simple', 'advanced', 'compare'].includes(interfaceMode)) throw new Error('Shared-link interface must be simple, advanced, or compare.');
   const url = new URL(href);
   url.search = '';
   url.hash = `code=${encodeURIComponent(source)}&interface=${interfaceMode}${preprocess ? '&preprocess=1' : ''}${images ? `&images=${images}` : ''}`;

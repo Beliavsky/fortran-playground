@@ -16,7 +16,7 @@ for (const source of [
 assert.equal(sourceFromHash(''), null);
 assert.equal(sourceFromHash('#some-section'), null);
 assert.deepEqual(sharedCodeFromHash('#code=print%20*%2C42'), {source: 'print *,42', interfaceMode: 'simple', preprocess: false});
-for (const interfaceMode of ['simple', 'advanced']) {
+for (const interfaceMode of ['simple', 'advanced', 'compare']) {
   const source = '! Literal text: &interface=advanced + 50%\nend\n';
   const link = createShareLink(base, source, interfaceMode);
   assert.deepEqual(sharedCodeFromHash(new URL(link).hash), {source, interfaceMode, preprocess: false});
@@ -54,3 +54,5 @@ for (const suffix of ['&images=3', '&images=true', '&images=2&images=4', '&image
   assert.throws(() => sharedCodeFromHash('#code=end' + suffix));
 }
 assert.throws(() => createShareLink(base, 'end', 'simple', false, 2), /Advanced/);
+assert.deepEqual(sharedCodeFromHash(new URL(createShareLink(base, 'end', 'compare', true, 2)).hash),
+  {source: 'end', interfaceMode: 'compare', preprocess: true, images: 2});

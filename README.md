@@ -13,15 +13,29 @@ Explore Fortran in your browser with short examples, an editable source pane, an
 
 The editor provides syntax coloring, line counts, undo, and navigation to recognized source errors. A plain-text fallback remains available if the enhanced editor cannot load. Wide screens show the editor and results side by side; narrow screens stack them. Execution controls stay visible above the source pane.
 
-### Simple and Advanced interfaces
+### Simple, Advanced, and Compare compilers interfaces
 
-Use the **Interface** menu to choose **Simple** or **Advanced**. Ordinary visits default to Advanced; educational forks can set `interfaceMode: 'simple'` in [`site/config.mjs`](site/config.mjs) to start with Simple. Shared-code links default to Simple and can explicitly request Advanced, overriding the site's configured default. Reloading follows the link's mode when shared code is present, otherwise the configured default.
+Use the **Interface** menu to choose **Simple**, **Advanced**, or **Compare compilers**. Ordinary visits default to Advanced; educational forks can set `interfaceMode: 'simple'` in [`site/config.mjs`](site/config.mjs) to start with Simple. Shared-code links default to Simple and can explicitly request Advanced or Compare compilers, overriding the site's configured default. Reloading follows the link's mode when shared code is present, otherwise the configured default.
 
 Simple uses **GNU Fortran with compiler defaults**, with preprocessing off. Its primary **Run** button compiles and executes the program. Examples, file loading, downloading, sharing, Format, Stop, and error navigation remain available. Compiler/standard/flag selectors, Compile-only, Run Again, Fortitude Check, and experimental quick-fix controls are hidden. **Advanced options** switches to the full interface to access those controls.
 
 Program output fills the results area in Simple until a compilation or execution failure reveals the Compilation pane. A subsequent successful run hides that pane again. Switching interfaces preserves source and results. Entering Simple resets the compiler, standard, preset, warnings, fast-math, and preprocessing settings; execution-setting changes invalidate retained builds. Returning to Advanced keeps the current settings rather than restoring hidden older choices. Interface switching is disabled during a job or connection attempt.
 
 If the service does not advertise gfortran, Simple disables Run and explains how to switch to Advanced to select another available compiler. It never substitutes another compiler silently.
+
+### Comparing compilers
+
+Choose **Interface → Compare compilers** to compile or run the same program with several compilers. GNU Fortran is checked initially; check other available tools or use **Select all available**. The editor, ordered external source files, stdin, formatting, and Fortitude checks work as in Advanced mode.
+
+**Compile** checks/builds with each selected compiler without executing. **Compile and Run** builds and runs with each one, sequentially in checkbox order. ofort checks syntax or interprets the source. Each submitted compiler counts as a separate job under the existing usage limits; the number of jobs appears beside the action buttons. Unsupported settings show a reason beside the compiler and produce **SKIP** without submitting a job. A compiler failure does not prevent later compilers from running unless **Stop on first failure** is checked. **Stop** cancels the current job and skips all remaining submissions. Authentication or quota errors stop further submissions automatically.
+
+Standard, preset, warnings, fast math, preprocessing, and coarray image count are shared settings. Use **Options for** to edit additional options separately for each compiler; switching that dropdown preserves each compiler's additional options. A setting unsupported by a compiler skips that compiler rather than silently changing the request. The service remains the authority on allowed options.
+
+The summary table reports **Total**, **Compile**, **Run**, and **Other**, all in seconds. Total measures client elapsed time from submission through receipt of the result, including polling. Other is Total minus the reported compilation and execution times, covering waiting, service overhead, and transfers. Missing stages appear as `-`; an interpreter can still have an Other time. These hosted times include startup and resource sharing and are not controlled compiler benchmarks.
+
+Select a compiler's name in the table to inspect its build log, version, and output in the existing results panes. Every job in a comparison uses the source, external snapshots, stdin, and options captured at its start. If the editor or settings change during a comparison, earlier results remain available and are marked as such; their errors are not placed on the changed editor source. Automatic quick fixes and retained **Run Again** executables are disabled for comparisons. Use Advanced for Run Again.
+
+Share links preserve the combined source, interface, preprocessing, and coarray image count. Compiler checkbox selections, additional options, other compiler settings, and stdin are not embedded. Opening a comparison link never submits jobs; the recipient chooses compilers and settings before running. The comparison interface uses the existing backend API and needs no backend redeployment.
 
 ### Compilers, standards, and execution
 

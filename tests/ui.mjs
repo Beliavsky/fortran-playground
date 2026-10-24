@@ -5,13 +5,14 @@ import {createShareLink, sourceFromHash, sharedCodeFromHash} from '../site/shari
 if (process.argv.includes('--simple-default')) playgroundConfig.interfaceMode = 'simple';
 const plainVisit = process.argv.includes('--plain-default');
 const advancedLink = process.argv.includes('--advanced-link');
+const compareLink = process.argv.includes('--compare-link');
 const preprocessingLink = process.argv.includes('--preprocess-link');
 const ownerLink = process.argv.includes('--owner-link');
 if (advancedLink) playgroundConfig.interfaceMode = 'simple';
 const elements = new Map();
 const startupSource = 'program shared\nprint *, "shared + café"\nend program shared\n';
 const base = 'https://example.org/fortran-playground/';
-globalThis.location = new URL(plainVisit ? base : preprocessingLink ? createShareLink(base, startupSource, 'advanced', true) : advancedLink ? createShareLink(base, startupSource, 'advanced') :
+globalThis.location = new URL(plainVisit ? base : compareLink ? createShareLink(base, startupSource, 'compare') : preprocessingLink ? createShareLink(base, startupSource, 'advanced', true) : advancedLink ? createShareLink(base, startupSource, 'advanced') :
   base + '#code=' + encodeURIComponent(startupSource)); // Existing links have no interface parameter.
 if (ownerLink) location.search = '?owner=1';
 const pageListeners = {};
@@ -43,6 +44,7 @@ get('preset').options = ['default','debug','optimized','strict'].map(value => ({
 let allowReplace = true, confirmations = 0;
 globalThis.confirm = () => {confirmations++; return allowReplace;};
 let submissions = 0, payload, state = 'done', sessionFails = false, cancelled = 0, legacy = false, expired = false, buildOK = true, buildError = '';
+let submittedPayloads = [], onSubmission = null;
 let checkOK = true, findings = true, checkRequestFails = false;
 let serviceCompilers = ['gfortran', 'ofort'];
 let preprocessingSupported = true;
@@ -84,7 +86,9 @@ globalThis.fetch = async (url, options = {}) => {
   } else if (url.endsWith('/api/jobs')) {
     jobHeaders = options.headers;
     if (checkRequestFails && JSON.parse(options.body).mode === 'check') throw new Error('Check request offline');
-    submissions++; payload = JSON.parse(options.body); result = {id: 'job'};
+    submissions++; payload = JSON.parse(options.body); submittedPayloads.push(payload);
+    if (onSubmission) await onSubmission(payload);
+    result = {id: 'job'};
   } else if (url.endsWith('/cancel')) {cancelled++; state = 'done'; result = {};}
   else if (payload?.mode === 'check') result = {state, result: {ok: checkOK, findings, seconds: 0.1,
     checking: {stdout: findings ? 'input.f90:2:1: C001 implicit typing' : 'All checks passed!', stderr: ''},
@@ -99,7 +103,7 @@ globalThis.fetch = async (url, options = {}) => {
   return {ok: true, json: async () => result};
 };
 await import('../site/app.mjs');
-const expectedInitialMode = plainVisit ? playgroundConfig.interfaceMode : advancedLink || preprocessingLink ? 'advanced' : 'simple';
+const expectedInitialMode = plainVisit ? playgroundConfig.interfaceMode : compareLink ? 'compare' : advancedLink || preprocessingLink ? 'advanced' : 'simple';
 assert.equal(get('interface-mode').value, expectedInitialMode);
 assert.equal(Boolean(get('preprocess').checked), preprocessingLink);
 assert.equal(get('compiler-controls').hidden, expectedInitialMode === 'simple');
@@ -109,6 +113,11 @@ if (expectedInitialMode === 'simple') {
   assert.equal(get('compilation-pane').hidden, true);
   get('advanced-options').onclick();
   assert.equal(get('interface-mode').value, 'advanced');
+}
+if (compareLink) {
+  assert.equal(get('comparison-controls').hidden, false);
+  assert.equal(get('compare-gfortran').checked, true);
+  get('interface-mode').value = 'advanced'; get('interface-mode').onchange();
 }
 assert.equal(submissions, 0); // Connecting/loading never executes a program.
 assert.equal(get('checks-pane').hidden, true);
@@ -771,4 +780,91 @@ assert.equal(submissions, beforeUnverified);
 get('interface-mode').value = 'simple'; get('interface-mode').onchange();
 assert.equal(get('images').value, '0');
 assert.equal(get('coarray-note').hidden, true);
+// Browser comparisons share the Advanced source/options pipeline.
+get('interface-mode').value = 'compare'; get('interface-mode').onchange();
+assert.equal(get('comparison-controls').hidden, false);
+assert.equal(get('compiler-label').textContent, 'Options for');
+assert.equal(get('compare-gfortran').checked, true);
+assert.equal(get('rerun').hidden, true);
+assert.match(get('compare-job-count').textContent, /1 compiler job/);
+get('compare-ofort').checked = true; get('compare-ofort').onchange();
+get('stdin').value = '7 8\n'; get('stdin').oninput();
+get('additional-options').value = '-O2'; get('additional-options').oninput();
+get('add-external').onclick();
+get('external-url').value = 'https://example.org/external.f90'; get('external-url').oninput();
+await get('load-external').onclick();
+submittedPayloads = [];
+await get('run').onclick();
+assert.deepEqual(submittedPayloads.map(item => item.compiler), ['gfortran', 'ofort']);
+assert.deepEqual(submittedPayloads[0].compiler_options.additional, ['-O2']);
+assert.deepEqual(submittedPayloads[1].compiler_options.additional, []);
+assert.ok(submittedPayloads.every(item => item.stdin === '7 8\n'));
+assert.ok(submittedPayloads.every(item => item.fortran_source.includes(externalText)));
+assert.ok(submittedPayloads.every(item => !item.retain_executable));
+assert.equal(get('compare-result-gfortran').textContent, 'PASS');
+assert.equal(get('compare-result-ofort').textContent, 'PASS');
+assert.equal(get('compare-compile-ofort').textContent, '-');
+assert.match(get('compare-other-ofort').textContent, /^\d+\.\d{3}$/);
+get('compare-view-ofort').onclick();
+assert.match(get('comparison-detail').textContent, /Showing ofort: PASS/);
+assert.equal(get('compare-view-ofort').attributes['aria-pressed'], 'true');
+await get('share').onclick();
+assert.equal(sharedCodeFromHash(new URL(copiedLink).hash).interfaceMode, 'compare');
+get('remove-external').onclick(); get('remove-external').onclick();
+get('additional-options').value = ''; get('additional-options').oninput();
+get('standard').value = '2018'; get('standard').onchange();
+assert.equal(get('run').disabled, false);
+assert.match(get('compare-note-ofort').textContent, /standard is unsupported/);
+submittedPayloads = [];
+await get('compile').onclick();
+assert.deepEqual(submittedPayloads.map(item => item.compiler), ['gfortran']);
+assert.ok(submittedPayloads.every(item => item.mode === 'fortran-compile' && !item.stdin));
+assert.equal(get('compare-result-ofort').textContent, 'SKIP');
+get('standard').value = 'default'; get('standard').onchange();
+// Shared settings survive changing Options for to a compiler that lacks them.
+get('preprocess').checked = true; get('preprocess').onchange();
+get('compiler').value = 'ofort'; get('compiler').onchange();
+assert.equal(get('preprocess').checked, true);
+assert.equal(get('run').disabled, false);
+assert.match(get('compare-note-ofort').textContent, /Preprocessing is unsupported/);
+await get('check').onclick();
+assert.equal(payload.mode, 'check');
+assert.equal(payload.compiler, 'gfortran');
+get('preprocess').checked = false; get('preprocess').onchange();
+buildOK = false; submittedPayloads = [];
+await get('compile').onclick();
+assert.deepEqual(submittedPayloads.map(item => item.compiler), ['gfortran', 'ofort']);
+assert.equal(get('compare-result-ofort').textContent, 'FAIL');
+get('compare-stop-failure').checked = true;
+submittedPayloads = []; await get('compile').onclick();
+assert.deepEqual(submittedPayloads.map(item => item.compiler), ['gfortran']);
+assert.equal(get('compare-result-ofort').textContent, 'SKIP');
+get('compare-stop-failure').checked = false; buildOK = true;
+// A source edit during submission cannot change the next compiler's input.
+const snapshotSource = get('fortran').value;
+onSubmission = async () => {
+  if (submittedPayloads.length === 1) {
+    get('fortran').value = 'program edited_during_comparison\nend program\n';
+    get('fortran').listeners.input();
+  }
+};
+submittedPayloads = []; await get('run').onclick(); onSubmission = null;
+assert.ok(submittedPayloads.every(item => item.fortran_source === snapshotSource));
+get('compare-view-gfortran').onclick();
+assert.match(get('comparison-detail').textContent, /changed since this comparison/);
+assert.equal(get('first-error').hidden, true);
+// Stop during the POST: cancel its eventual ID and skip the rest.
+onSubmission = async () => {await get('stop').onclick();};
+submittedPayloads = []; const previousCancels = cancelled;
+await get('run').onclick(); onSubmission = null;
+assert.equal(submittedPayloads.length, 1);
+assert.equal(cancelled, previousCancels + 1);
+assert.equal(get('compare-result-gfortran').textContent, 'STOPPED');
+assert.equal(get('compare-result-ofort').textContent, 'SKIP');
+get('compare-all').onclick();
+assert.ok(serviceCompilers.every(name => get(`compare-${name}`).checked));
+get('interface-mode').value = 'advanced'; get('interface-mode').onchange();
+assert.equal(get('comparison-controls').hidden, true);
+assert.equal(get('comparison-results').hidden, true);
+assert.equal(get('rerun').hidden, false);
 console.log('Fortran-only UI tests passed (no hosted jobs submitted).');

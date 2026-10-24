@@ -20,7 +20,7 @@
   </header>
   <div class="toolbar">
     <label for="interface-mode">Interface</label>
-    <select id="interface-mode"><option value="simple">Simple</option><option value="advanced" selected>Advanced</option></select>
+    <select id="interface-mode"><option value="simple">Simple</option><option value="advanced" selected>Advanced</option><option value="compare">Compare compilers</option></select>
     <div id="external-controls" class="external-controls" hidden>
       <div id="external-row" class="external-row">
         <div class="external-buttons">
@@ -94,6 +94,21 @@
     <button id="advanced-options" type="button" hidden>Advanced options</button>
     <span id="status" role="status" aria-live="polite">Connecting…</span>
   </div>
+  <section id="comparison-controls" hidden aria-label="Compare compilers">
+    <fieldset><legend>Compilers to compare</legend>
+      <div class="compiler-choice"><label><input id="compare-gfortran" type="checkbox" checked> GNU Fortran (stable)</label> <span id="compare-note-gfortran" class="version"></span></div>
+      <div class="compiler-choice"><label><input id="compare-gfortran17" type="checkbox"> GNU Fortran 17</label> <span id="compare-note-gfortran17" class="version"></span></div>
+      <div class="compiler-choice"><label><input id="compare-ifx" type="checkbox"> Intel Fortran</label> <span id="compare-note-ifx" class="version"></span></div>
+      <div class="compiler-choice"><label><input id="compare-flang" type="checkbox"> LLVM Flang</label> <span id="compare-note-flang" class="version"></span></div>
+      <div class="compiler-choice"><label><input id="compare-lfortran" type="checkbox"> LFortran</label> <span id="compare-note-lfortran" class="version"></span></div>
+      <div class="compiler-choice"><label><input id="compare-ofort" type="checkbox"> ofort (interpreter)</label> <span id="compare-note-ofort" class="version"></span></div>
+    </fieldset>
+    <div class="toolbar"><button id="compare-all" type="button">Select all available</button>
+      <label><input id="compare-stop-failure" type="checkbox"> Stop on first failure</label>
+      <span id="compare-job-count" role="status"></span>
+    </div>
+    <p class="version">Jobs run sequentially. Each submitted compiler counts as one job under the existing usage limits. Shared settings apply to every compiler; unsupported settings skip that compiler. Use Options for to edit additional options separately.</p>
+  </section>
   <div class="toolbar">
     <label for="example">Example</label>
     <select id="example"></select>
@@ -153,6 +168,20 @@
   <p id="freshness" class="version">No results yet.</p>
   <p id="error-note" class="version" role="status" hidden></p>
   <div id="quick-fix-details"><p id="fix-note" class="version" role="status" hidden></p></div>
+  <section id="comparison-results" hidden aria-label="Compiler comparison results">
+    <h2>Compiler comparison</h2>
+    <p id="comparison-status" role="status"></p>
+    <p class="version">Times in seconds. Total includes submission, waiting, and transfer; Other is Total minus Compile and Run. Run includes process startup. Select a compiler to view its build log and output below.</p>
+    <div class="comparison-scroll"><table><thead><tr><th scope="col">Compiler</th><th scope="col">Result</th><th scope="col">Total</th><th scope="col">Compile</th><th scope="col">Run</th><th scope="col">Other</th><th scope="col">Note</th></tr></thead><tbody>
+      <tr id="compare-row-gfortran" hidden><th scope="row"><button id="compare-view-gfortran" type="button" aria-pressed="false">GNU Fortran (stable)</button></th><td id="compare-result-gfortran"></td><td id="compare-total-gfortran"></td><td id="compare-compile-gfortran"></td><td id="compare-run-gfortran"></td><td id="compare-other-gfortran"></td><td id="compare-reason-gfortran"></td></tr>
+      <tr id="compare-row-gfortran17" hidden><th scope="row"><button id="compare-view-gfortran17" type="button" aria-pressed="false">GNU Fortran 17</button></th><td id="compare-result-gfortran17"></td><td id="compare-total-gfortran17"></td><td id="compare-compile-gfortran17"></td><td id="compare-run-gfortran17"></td><td id="compare-other-gfortran17"></td><td id="compare-reason-gfortran17"></td></tr>
+      <tr id="compare-row-ifx" hidden><th scope="row"><button id="compare-view-ifx" type="button" aria-pressed="false">Intel Fortran</button></th><td id="compare-result-ifx"></td><td id="compare-total-ifx"></td><td id="compare-compile-ifx"></td><td id="compare-run-ifx"></td><td id="compare-other-ifx"></td><td id="compare-reason-ifx"></td></tr>
+      <tr id="compare-row-flang" hidden><th scope="row"><button id="compare-view-flang" type="button" aria-pressed="false">LLVM Flang</button></th><td id="compare-result-flang"></td><td id="compare-total-flang"></td><td id="compare-compile-flang"></td><td id="compare-run-flang"></td><td id="compare-other-flang"></td><td id="compare-reason-flang"></td></tr>
+      <tr id="compare-row-lfortran" hidden><th scope="row"><button id="compare-view-lfortran" type="button" aria-pressed="false">LFortran</button></th><td id="compare-result-lfortran"></td><td id="compare-total-lfortran"></td><td id="compare-compile-lfortran"></td><td id="compare-run-lfortran"></td><td id="compare-other-lfortran"></td><td id="compare-reason-lfortran"></td></tr>
+      <tr id="compare-row-ofort" hidden><th scope="row"><button id="compare-view-ofort" type="button" aria-pressed="false">ofort (interpreter)</button></th><td id="compare-result-ofort"></td><td id="compare-total-ofort"></td><td id="compare-compile-ofort"></td><td id="compare-run-ofort"></td><td id="compare-other-ofort"></td><td id="compare-reason-ofort"></td></tr>
+    </tbody></table></div>
+    <p id="comparison-detail" class="version" role="status"></p>
+  </section>
   <div class="workspace">
     <section id="source-pane" class="panel">
       <div class="source-header">
@@ -160,6 +189,7 @@
         <div class="source-actions" role="group" aria-label="Fortran input controls">
           <button id="format" type="button" title="Format Fortran with fprettify (Undo restores the original)" disabled>Format</button>
           <button id="check" type="button" title="Check Fortran with Fortitude; no changes or execution" aria-controls="checks-pane" aria-expanded="false" disabled>Check</button>
+          <span id="compare-action-count" class="version" hidden></span>
           <button id="compile" type="button" disabled>Compile</button>
           <button id="run" class="primary" type="button" disabled>Compile and Run</button>
           <button id="rerun" type="button" disabled>Run Again</button>

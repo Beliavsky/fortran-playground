@@ -8,6 +8,7 @@ import {sharedCodeFromHash, createShareLink} from './sharing.mjs';
 import {serviceOrigin} from './service_config.mjs';
 import {compilerArguments, optionTokens} from './compiler_arguments.mjs';
 import {sourceURL, combinedSource, mappedErrors} from './external_source.mjs';
+import {comparisonPlan, executeComparison} from './comparison.mjs';
 
 const get = id => document.getElementById(id);
 const ownerAccessRequested = new URLSearchParams(location.search).get('owner') === '1';
@@ -46,7 +47,12 @@ function clearExternal() {
   externalRows.forEach(resetExternalRow); externalCount = 1;
 }
 let compilerVersions = {};
-let interfaceMode = playgroundConfig.interfaceMode === 'simple' ? 'simple' : 'advanced';
+let interfaceMode = ['simple', 'compare'].includes(playgroundConfig.interfaceMode) ? playgroundConfig.interfaceMode : 'advanced';
+const compareNames = [...get('compiler').options].map(option => option.value);
+get('compare-gfortran').checked = true;
+let comparisonRows = [], comparisonSnapshot = null, comparisonSelected = '';
+const isCompare = () => interfaceMode === 'compare';
+const selectedCompilers = () => compareNames.filter(name => get(`compare-${name}`).checked && availableCompilers.includes(name));
 let availableCompilers = [], compilationFailed = false;
 const additionalByCompiler = {};
 let additionalCompiler = 'gfortran';
@@ -121,12 +127,12 @@ function controls() {
       features.external_source ? '' : 'External source loading requires an updated execution service.');
   });
   get('external-summary').textContent = externalError();
-  const interpreted = get('compiler').value === 'ofort';
+  const interpreted = !isCompare() && get('compiler').value === 'ofort';
   get('compile').textContent = interpreted ? 'Check syntax' : 'Compile';
   get('run').textContent = isSimple() || interpreted ? 'Run' : 'Compile and Run';
   quickFix.setBusy(busy);
   const preprocessingUnavailable = get('preprocess').checked && !catalog[get('compiler').value]?.extras?.preprocess;
-  get('run').disabled = !token || busy || !editor.getValue().trim() || !availableCompilers.includes(get('compiler').value) || preprocessingUnavailable;
+  get('run').disabled = !token || busy || !editor.getValue().trim() || (isCompare() ? !selectedCompilers().length : !availableCompilers.includes(get('compiler').value) || preprocessingUnavailable);
   get('interface-mode').value = interfaceMode;
   get('interface-mode').disabled = busy || connecting;
   get('advanced-options').disabled = busy || connecting;
@@ -139,9 +145,11 @@ function controls() {
     'GNU Fortran unavailable. Choose Advanced options to select another compiler.' : 'GNU Fortran';
   get('compilation-pane').hidden = isSimple() && !compilationFailed;
   get('compile').disabled = get('run').disabled || !features.compile_only;
-  get('format').disabled = get('run').disabled || !features.format || !editor.undoableClear;
-  get('check').disabled = get('run').disabled || !features.check;
-  get('rerun').disabled = interpreted || !token || busy || !features.run_again || !retained || retained.expires_at * 1000 <= Date.now();
+  const sourceToolsUnavailable = isCompare() ? !token || busy || !editor.getValue().trim() : get('run').disabled;
+  get('format').disabled = sourceToolsUnavailable || !features.format || !editor.undoableClear;
+  get('check').disabled = sourceToolsUnavailable || !features.check;
+  get('rerun').hidden = isSimple() || isCompare();
+  get('rerun').disabled = isCompare() || interpreted || !token || busy || !features.run_again || !retained || retained.expires_at * 1000 <= Date.now();
   get('build-note').textContent = !features.compile_only ? 'Compile-only and Run Again require an updated execution service.' : retained ? 'Run Again reuses this executable until it expires (up to five minutes). Editing source or options requires recompilation.' : 'Compile to enable Run Again. Each run starts a fresh process.';
   if (interpreted) get('build-note').textContent = 'ofort checks syntax or interprets standalone source. Run starts a fresh process each time; no executable or compiled helpers are used.';
   get('stop').disabled = !active || active.stopping;
@@ -154,27 +162,29 @@ function controls() {
   get('download').disabled = !editor.getValue().trim();
   get('share').disabled = !editor.getValue().trim();
   const spec = catalog[get('compiler').value];
-  for (const option of get('standard').options) option.disabled = option.value !== 'default' && !spec?.standards?.[option.value];
-  if (get('standard').value !== 'default' && !spec?.standards?.[get('standard').value]) get('standard').value = 'default';
-  get('standard').disabled = !token || busy || !Object.keys(spec?.standards || {}).length;
+  const specs = isCompare() ? availableCompilers.map(name => catalog[name]).filter(Boolean) : [spec];
+  const supports = predicate => specs.some(item => item && predicate(item));
+  for (const option of get('standard').options) option.disabled = option.value !== 'default' && !supports(item => item.standards?.[option.value]);
+  if (get('standard').value !== 'default' && !supports(item => item.standards?.[get('standard').value])) get('standard').value = 'default';
+  get('standard').disabled = !token || busy || !supports(item => Object.keys(item.standards || {}).length);
   get('standard-note').textContent = `Standard selection applies only to user code. ${spec?.standard_note || 'Standard selection is unavailable from this service.'}`;
   for (const option of get('compiler').options) option.title = compilerVersions[option.value] || 'Version unavailable';
   get('compiler-version').textContent = `${interpreted ? 'Interpreter' : 'Compiler'} version: ${compilerVersions[get('compiler').value] || 'unavailable from this service.'}`;
-  for (const option of get('preset').options) option.disabled = !spec?.presets?.[option.value];
-  if (!spec?.presets?.[get('preset').value]) get('preset').value = 'default';
+  for (const option of get('preset').options) option.disabled = !supports(item => item.presets?.[option.value]);
+  if (!supports(item => item.presets?.[get('preset').value])) get('preset').value = 'default';
   get('preset').disabled = interpreted || !token || busy || !spec;
   for (const [id, key] of [['warnings', 'warnings'], ['fast-math', 'fast_math']]) {
-    if (!spec?.extras?.[key]) get(id).checked = false;
-    get(id).disabled = !token || busy || !spec?.extras?.[key];
+    if (!supports(item => item.extras?.[key])) get(id).checked = false;
+    get(id).disabled = !token || busy || !supports(item => item.extras?.[key]);
   }
   // A shared link's request must not be silently ignored by an older service.
-  get('preprocess').disabled = !token || busy || (!spec?.extras?.preprocess && !get('preprocess').checked);
-  for (const option of get('images').options) option.disabled = option.value !== '0' && !spec?.coarray_images?.[option.value];
-  get('images').disabled = !token || busy || (!Object.keys(spec?.coarray_images || {}).length && !Number(get('images').value));
+  get('preprocess').disabled = !token || busy || (!supports(item => item.extras?.preprocess) && !get('preprocess').checked);
+  for (const option of get('images').options) option.disabled = option.value !== '0' && !supports(item => item.coarray_images?.[option.value]);
+  get('images').disabled = !token || busy || (!supports(item => Object.keys(item.coarray_images || {}).length) && !Number(get('images').value));
   get('coarray-note').textContent = (spec?.coarray_note || 'Only sandbox-verified coarray image counts are offered.') +
     ' All images run in one sandbox and count as one job. Output order may vary; CPU limits still apply.';
   const choices = Object.values(spec?.additional_options || {}).flat();
-  get('additional-options').disabled = !token || busy || interpreted || (!choices.length && !get('additional-options').value.trim());
+  get('additional-options').disabled = !token || busy || get('compiler').value === 'ofort' || (!choices.length && !get('additional-options').value.trim());
   get('additional-options-help').textContent = choices.length ?
     `Supported additional options (separate arguments with spaces): ${choices.map(args => args.join(' ')).join('; ')}. Conflicting settings are rejected.` :
     'Additional options are unavailable for this compiler/service.';
@@ -183,7 +193,7 @@ function controls() {
   catch (error) { optionError = error.message; }
   get('options-error').textContent = optionError;
   get('options-error').hidden = isSimple() || !optionError;
-  if (optionError) {
+  if (optionError && !isCompare()) {
     get('run').disabled = true;
     get('compile').disabled = true;
     get('rerun').disabled = true;
@@ -204,7 +214,134 @@ function controls() {
     'Owner key will be verified when you submit a job. Valid owner requests bypass daily and address quotas; concurrency limits still apply.' :
     'Optional owner access. The key is kept only in this page and is not included in share links.');
   if (ownerError) for (const id of ['run', 'compile', 'rerun', 'format', 'check']) get(id).disabled = true;
+  comparisonControls(busy);
   if (externalError()) for (const id of ['run', 'compile', 'rerun', 'share', 'download']) get(id).disabled = true;
+}
+
+function currentComparisonPlan() {
+  return comparisonPlan(selectedCompilers(), catalog, selectedOptions(), additionalByCompiler);
+}
+
+function comparisonControls(busy) {
+  get('comparison-controls').hidden = !isCompare();
+  get('comparison-results').hidden = !isCompare() || !comparisonSnapshot;
+  get('compiler-label').textContent = isCompare() ? 'Options for' : 'Compiler';
+  get('compare-all').disabled = busy || connecting || !token;
+  get('compare-stop-failure').disabled = busy || connecting;
+  const plan = isCompare() ? currentComparisonPlan() : [];
+  for (const name of compareNames) {
+    get(`compare-${name}`).disabled = busy || connecting || !token || !availableCompilers.includes(name);
+    get(`compare-note-${name}`).textContent = !availableCompilers.includes(name) ? 'Unavailable on this service.' :
+      plan.find(item => item.compiler === name)?.reason || compilerVersions[name] || '';
+  }
+  const jobs = plan.filter(item => !item.reason).length;
+  get('compare-job-count').textContent = `${jobs} compiler job${jobs === 1 ? '' : 's'} will be submitted${plan.length > jobs ? `; ${plan.length - jobs} skipped for unsupported settings` : ''}.`;
+  get('compare-action-count').hidden = !isCompare();
+  get('compare-action-count').textContent = `${jobs} compiler job${jobs === 1 ? '' : 's'}`;
+  if (isCompare()) {
+    get('standard-note').textContent = 'Shared standard and preset selections apply to all checked compilers. Unsupported settings skip that compiler; defaults are never substituted silently.';
+    get('build-note').textContent = 'Compile and Compile and Run compare the checked compilers sequentially. Run Again is available in Advanced mode.';
+    get('options-note').textContent = 'Common settings apply to all checked compilers; additional options apply only to Options for. See each compiler above for incompatible settings.';
+    if (comparisonSnapshot && comparisonSnapshot.revision !== revision) {
+      get('comparison-detail').textContent = 'Source or settings have changed since this comparison; the table and logs retain earlier results.';
+    }
+  }
+}
+
+function renderComparison() {
+  get('comparison-results').hidden = !isCompare() || !comparisonSnapshot;
+  for (const name of compareNames) {
+    const row = comparisonRows.find(item => item.compiler === name);
+    get(`compare-row-${name}`).hidden = !row;
+    get(`compare-view-${name}`).disabled = !row || ['QUEUED', 'RUNNING'].includes(row.status);
+    get(`compare-view-${name}`).setAttribute('aria-pressed', String(name === comparisonSelected));
+    if (!row) continue;
+    get(`compare-result-${name}`).textContent = row.status;
+    for (const field of ['total', 'compile', 'run', 'other']) {
+      const seconds = row.times?.[field];
+      get(`compare-${field}-${name}`).textContent = Number.isFinite(seconds) ? seconds.toFixed(3) : '-';
+    }
+    get(`compare-reason-${name}`).textContent = row.reason || '';
+  }
+}
+
+function viewComparison(name) {
+  const row = comparisonRows.find(item => item.compiler === name);
+  if (!row || ['QUEUED', 'RUNNING'].includes(row.status)) return;
+  comparisonSelected = name;
+  const current = comparisonSnapshot.revision === revision;
+  if (row.result) show(row.result, comparisonSnapshot.compilation, false, current);
+  else {
+    clearErrorInfo();
+    get('diagnostics').textContent = row.reason || row.status;
+    get('output').textContent = 'Not run.';
+    for (const id of ['build-time', 'run-time', 'result-compiler-version']) get(id).textContent = '';
+  }
+  invalidateBuild();
+  get('comparison-detail').textContent = `Showing ${name}: ${row.status}.${current ? '' : ' Source or settings have changed since this comparison; these are earlier results.'}`;
+  get('freshness').textContent = current ? 'Comparison results for the submitted source snapshot and settings.' : 'Comparison results are retained from an earlier source snapshot or settings.';
+  renderComparison();
+}
+
+async function runComparison(mode) {
+  if (!isCompare() || !token || active || connecting || externalLoading || !selectedCompilers().length) return;
+  if (mode === 'fortran-compile' && !features.compile_only) return;
+  if (externalError()) { get('status').textContent = externalError(); return; }
+  if (mode === 'fortran-edit' && stdinError()) { get('status').textContent = stdinError(); return; }
+  const ownerKey = get('owner-key').value;
+  if (ownerKey && (!features.owner_access || !/^[A-Za-z0-9_-]{32,256}$/.test(ownerKey))) {
+    get('status').textContent = 'Enter a valid owner key for this service, or clear it to use public access.'; return;
+  }
+  if (!editor.getValue().trim()) return;
+  let compilation;
+  try { compilation = combinedSource(editor.getValue(), loadedSources()); }
+  catch (error) { get('status').textContent = error.message; return; }
+  const plan = currentComparisonPlan();
+  const stdin = get('stdin').value;
+  const stopOnFailure = Boolean(get('compare-stop-failure').checked);
+  const batch = active = {id: null, stopping: false, cancelled: new Set()};
+  batch.cancel = async id => {
+    if (!batch.cancelled.has(id)) {
+      batch.cancelled.add(id);
+      try { await api(`jobs/${id}/cancel`, 'POST', {}); }
+      catch (error) { batch.cancelled.delete(id); throw error; }
+    }
+  };
+  comparisonSnapshot = {compilation, revision, mode}; comparisonSelected = '';
+  comparisonRows = plan.map(item => ({...item, status: 'QUEUED'}));
+  invalidateBuild(); clearErrorInfo();
+  get('comparison-detail').textContent = '';
+  get('comparison-status').textContent = 'Comparing compilers...';
+  renderComparison(); controls();
+  try {
+    await executeComparison({plan, stopOnFailure, stopped: () => batch.stopping,
+      cancel: batch.cancel,
+      submit: async item => {
+        batch.id = null;
+        const created = await api('jobs', 'POST', {source: '', mode, automatic: false,
+          fortran_source: compilation.source, compiler: item.compiler, compiler_options: item.options,
+          ...(mode === 'fortran-edit' && stdin ? {stdin} : {})});
+        batch.id = created.id;
+        return created;
+      },
+      poll: id => api(`jobs/${id}`),
+      update: row => {
+        comparisonRows[comparisonRows.findIndex(item => item.compiler === row.compiler)] = row;
+        if (row.status === 'RUNNING') get('status').textContent = `Comparing: ${row.compiler}...`;
+        if (row.result && !comparisonSelected) viewComparison(row.compiler);
+        renderComparison();
+      },
+    });
+  } finally {
+    active = null; invalidateBuild();
+    const counts = ['PASS', 'FAIL', 'ERROR', 'STOPPED', 'SKIP'].map(status => {
+      const count = comparisonRows.filter(row => row.status === status).length;
+      return count ? `${count} ${status}` : '';
+    }).filter(Boolean).join(', ');
+    get('status').textContent = batch.stopping ? 'Comparison stopped' : 'Comparison finished';
+    get('comparison-status').textContent = counts + '. Results use the source and settings captured when the comparison started.';
+    controls(); renderComparison();
+  }
 }
 
 async function api(path, method = 'GET', payload) {
@@ -256,7 +393,7 @@ async function connect() {
   } finally { connecting = false; controls(); }
 }
 
-function show(result, compilation = combinedSource(editor.getValue(), null)) {
+function show(result, compilation = combinedSource(editor.getValue(), null), allowFix = true, sourceCurrent = true) {
   compilationFailed = result.build?.ok === false || result.ok === false || Boolean(result.error);
   get('build-title').textContent = result.interpreter ? (result.build ? 'Syntax checking' : 'Interpreter diagnostics') : 'Compilation';
   const version = result.compiler_version;
@@ -267,13 +404,13 @@ function show(result, compilation = combinedSource(editor.getValue(), null)) {
     const parsed = parseCompilerErrors(`${diagnosticStage.stdout || ''}\n${diagnosticStage.stderr || ''}`, compilation.source);
     const {main: errors, external: externalErrors} = mappedErrors(parsed, compilation);
     clearErrorInfo();
-    editor.setDiagnostics(errors);
-    get('first-error').disabled = !errors.length;
-    get('first-error').hidden = !errors.length;
+    editor.setDiagnostics(sourceCurrent ? errors : []);
+    get('first-error').disabled = !sourceCurrent || !errors.length;
+    get('first-error').hidden = !sourceCurrent || !errors.length;
     get('error-note').hidden = !(errors.length || externalErrors.length);
     get('error-note').textContent = externalErrors.length ? `External source ${externalErrors[0].filename}, line ${externalErrors[0].line}: ${externalErrors[0].message}` :
       errors.length ? `${errors.length} source error${errors.length === 1 ? '' : 's'}; first at line ${errors[0].line}: ${errors[0].message}` : '';
-    if (!compilation.mainOffset) quickFix.update(editor.getValue(), `${diagnosticStage.stdout || ''}\n${diagnosticStage.stderr || ''}`,
+    if (allowFix && !compilation.mainOffset) quickFix.update(editor.getValue(), `${diagnosticStage.stdout || ''}\n${diagnosticStage.stderr || ''}`,
       result.compiler || get('compiler').value, diagnosticStage.ok === false);
   }
   for (const [key, outputId, timeId] of [['build', 'diagnostics', 'build-time'], ['execution', 'output', 'run-time']]) {
@@ -312,8 +449,8 @@ async function run(mode = 'fortran-edit') {
     resetSimpleSettings();
     if (!availableCompilers.includes('gfortran') || !['fortran-edit', 'format'].includes(mode)) return;
   }
-  if (!availableCompilers.includes(get('compiler').value)) return;
-  if (get('preprocess').checked && !catalog[get('compiler').value]?.extras?.preprocess) return;
+  if (!['format', 'check'].includes(mode) && !availableCompilers.includes(get('compiler').value)) return;
+  if (!['format', 'check'].includes(mode) && get('preprocess').checked && !catalog[get('compiler').value]?.extras?.preprocess) return;
   if (!['format', 'check'].includes(mode)) {
     try { compilerArguments(catalog[get('compiler').value], selectedOptions(), optionTokens(get('additional-options').value)); }
     catch (error) { get('status').textContent = error.message; return; }
@@ -413,7 +550,8 @@ async function run(mode = 'fortran-edit') {
 
 function changeInterface(mode) {
   if (active || connecting || externalLoading) { get('interface-mode').value = interfaceMode; return; }
-  interfaceMode = mode === 'simple' ? 'simple' : 'advanced';
+  interfaceMode = ['simple', 'compare'].includes(mode) ? mode : 'advanced';
+  invalidateBuild(); clearErrorInfo();
   let settingsChanged = false;
   if (isSimple()) {
     settingsChanged = resetSimpleSettings();
@@ -434,8 +572,17 @@ function changeInterface(mode) {
 }
 get('interface-mode').onchange = () => changeInterface(get('interface-mode').value);
 get('advanced-options').onclick = () => changeInterface('advanced');
-get('run').onclick = () => run();
-get('compile').onclick = () => run('fortran-compile');
+get('run').onclick = () => isCompare() ? runComparison('fortran-edit') : run();
+for (const name of compareNames) {
+  get(`compare-${name}`).onchange = controls;
+  get(`compare-view-${name}`).onclick = () => viewComparison(name);
+}
+get('compare-all').onclick = () => {
+  if (active || connecting || externalLoading) return;
+  for (const name of compareNames) get(`compare-${name}`).checked = availableCompilers.includes(name);
+  controls();
+};
+get('compile').onclick = () => isCompare() ? runComparison('fortran-compile') : run('fortran-compile');
 get('format').onclick = () => run('format');
 get('check').onclick = () => run('check');
 get('hide-checks').onclick = () => {
@@ -524,7 +671,7 @@ get('clear-owner-key').onclick = () => { get('owner-key').value = ''; controls()
 get('stop').onclick = async () => {
   if (!active) return;
   active.stopping = true; controls(); get('status').textContent = 'Stopping…';
-  try { if (active.id) await api(`jobs/${active.id}/cancel`, 'POST', {}); }
+  try { if (active.id) await (active.cancel ? active.cancel(active.id) : api(`jobs/${active.id}/cancel`, 'POST', {})); }
   catch (error) { get('diagnostics').textContent = String(error); }
 };
 get('load').onclick = () => {
