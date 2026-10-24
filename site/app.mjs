@@ -19,19 +19,31 @@ function stdinError() {
 let token = '', service = '', catalog = {}, active = null, connecting = false, revision = 0;
 let filename = 'main.f90';
 let features = {}, retained = null, expiryTimer = null;
-let externalSource = null, externalLoading = false, externalMessage = '';
+let externalLoading = false, externalCount = 1;
+const externalRows = Array.from({length: 5}, (_, index) => {
+  const element = name => get(name + (index ? `-${index}` : ''));
+  return {element, source: null, message: ''};
+});
+const loadedSources = () => externalRows.slice(0, externalCount).map(row => row.source).filter(Boolean);
+const hasExternal = () => externalRows.slice(0, externalCount).some(row => row.source || row.element('external-url').value.trim());
 function externalError() {
-  if (externalLoading) return 'Loading external source…';
-  if (!get('external-url').value.trim() && !externalSource) return '';
+  if (externalLoading) return 'Loading external source...';
   try {
-    if (!externalSource || sourceURL(get('external-url').value) !== externalSource.requestUrl) return 'Load the external source URL, or remove it, before compiling.';
-    combinedSource(editor.getValue(), externalSource);
+    for (const row of externalRows.slice(0, externalCount)) {
+      const url = row.element('external-url').value.trim();
+      if (url && (!row.source || sourceURL(url) !== row.source.requestUrl)) return 'Load every external source URL, or remove it, before compiling.';
+    }
+    combinedSource(editor.getValue(), loadedSources());
     return '';
   } catch (error) { return error.message; }
 }
+function resetExternalRow(row) {
+  row.source = null; row.message = '';
+  row.element('external-url').value = ''; row.element('external-source').value = '';
+  row.element('external-preview').open = false;
+}
 function clearExternal() {
-  externalSource = null; externalMessage = '';
-  get('external-url').value = ''; get('external-source').value = '';
+  externalRows.forEach(resetExternalRow); externalCount = 1;
 }
 let compilerVersions = {};
 let interfaceMode = playgroundConfig.interfaceMode === 'simple' ? 'simple' : 'advanced';
@@ -48,7 +60,7 @@ function selectedOptions() {
 const isSimple = () => interfaceMode === 'simple';
 function resetSimpleSettings() {
   const changed = get('compiler').value !== 'gfortran' || get('standard').value !== 'default' ||
-    get('preset').value !== 'default' || get('warnings').checked || get('fast-math').checked || get('preprocess').checked || get('additional-options').value.trim() || Number(get('images').value) || Boolean(externalSource || get('external-url').value);
+    get('preset').value !== 'default' || get('warnings').checked || get('fast-math').checked || get('preprocess').checked || get('additional-options').value.trim() || Number(get('images').value) || hasExternal();
   clearExternal();
   get('compiler').value = 'gfortran';
   get('standard').value = 'default';
@@ -95,15 +107,20 @@ function controls() {
   }
   const busy = Boolean(active) || externalLoading;
   get('external-controls').hidden = isSimple();
-  get('external-details').hidden = isSimple();
-  get('external-url').disabled = busy || connecting;
-  get('load-external').disabled = busy || connecting || !token || !features.external_source || !get('external-url').value.trim();
-  get('remove-external').disabled = busy || connecting || !(externalSource || get('external-url').value);
-  get('external-preview').hidden = !externalSource;
-  get('external-status').textContent = externalMessage || externalError() || (externalSource ?
-    `${externalSource.filename} loaded from ${externalSource.url} · SHA-256 ${externalSource.sha256}. This snapshot is compiled before the editor code; Load refreshes it.` :
-    features.external_source ? 'Optional: load one public UTF-8 free-form source file containing modules or procedures. Loading does not run code. Downloads and share links include the loaded source.' :
-    'External source loading requires an updated execution service.');
+  externalRows.forEach((row, index) => {
+    const element = row.element;
+    element('external-row').hidden = index >= externalCount;
+    element('external-url').disabled = busy || connecting;
+    element('load-external').disabled = busy || connecting || !token || !features.external_source || !element('external-url').value.trim();
+    element('remove-external').disabled = busy || connecting || (externalCount === 1 && !(row.source || element('external-url').value));
+    element('add-external').hidden = index !== externalCount - 1;
+    element('add-external').disabled = busy || connecting || externalCount >= 5;
+    element('external-preview').hidden = !row.source;
+    element('external-status').textContent = row.message || (row.source ?
+      `${row.source.filename} loaded from ${row.source.url}; SHA-256 ${row.source.sha256}. Load refreshes this snapshot.` :
+      features.external_source ? '' : 'External source loading requires an updated execution service.');
+  });
+  get('external-summary').textContent = externalError();
   const interpreted = get('compiler').value === 'ofort';
   get('compile').textContent = interpreted ? 'Check syntax' : 'Compile';
   get('run').textContent = isSimple() || interpreted ? 'Run' : 'Compile and Run';
@@ -254,7 +271,7 @@ function show(result, compilation = combinedSource(editor.getValue(), null)) {
     get('first-error').disabled = !errors.length;
     get('first-error').hidden = !errors.length;
     get('error-note').hidden = !(errors.length || externalErrors.length);
-    get('error-note').textContent = externalErrors.length ? `External source ${compilation.filename}, line ${externalErrors[0].line}: ${externalErrors[0].message}` :
+    get('error-note').textContent = externalErrors.length ? `External source ${externalErrors[0].filename}, line ${externalErrors[0].line}: ${externalErrors[0].message}` :
       errors.length ? `${errors.length} source error${errors.length === 1 ? '' : 's'}; first at line ${errors[0].line}: ${errors[0].message}` : '';
     if (!compilation.mainOffset) quickFix.update(editor.getValue(), `${diagnosticStage.stdout || ''}\n${diagnosticStage.stderr || ''}`,
       result.compiler || get('compiler').value, diagnosticStage.ok === false);
@@ -271,7 +288,7 @@ function show(result, compilation = combinedSource(editor.getValue(), null)) {
   if (compilation.mainOffset && diagnosticStage) {
     const mapped = mappedErrors(parseCompilerErrors(`${diagnosticStage.stdout || ''}\n${diagnosticStage.stderr || ''}`, compilation.source), compilation);
     for (const error of mapped.main) get('diagnostics').textContent += `\nSource location: editor main.f90:${error.line}`;
-    for (const error of mapped.external) get('diagnostics').textContent += `\nSource location: ${compilation.filename}:${error.line}`;
+    for (const error of mapped.external) get('diagnostics').textContent += `\nSource location: ${error.filename}:${error.line} (${error.url})`;
   }
   if (result.reused_executable) get('diagnostics').textContent = 'Compilation skipped — reused the retained executable.';
   if (result.artifact_note) get('diagnostics').textContent += '\n' + result.artifact_note;
@@ -308,7 +325,7 @@ async function run(mode = 'fortran-edit') {
   const source = editor.getValue();
   if (!['format', 'check'].includes(mode) && externalError()) { get('status').textContent = externalError(); return; }
   let compilation;
-  try { compilation = combinedSource(source, externalSource); }
+  try { compilation = combinedSource(source, loadedSources()); }
   catch (error) {
     if (!['format', 'check'].includes(mode)) { get('status').textContent = error.message; return; }
   }
@@ -431,37 +448,57 @@ get('rerun').onclick = () => run('fortran-run');
 get('first-error').onclick = () => editor.goToDiagnostic();
 get('connect').onclick = connect;
 get('owner-key').oninput = controls;
-get('external-url').oninput = () => {
-  if (!get('external-url').value.trim()) clearExternal();
-  externalMessage = ''; invalidateBuild(); clearErrorInfo(); revision++; controls();
-};
-get('remove-external').onclick = () => {
-  if (active || externalLoading) return;
-  clearExternal(); invalidateBuild(); clearErrorInfo(); revision++; controls();
-};
-get('load-external').onclick = async () => {
-  if (active || connecting || externalLoading || !token || !features.external_source) return;
-  let requested;
-  try { requested = sourceURL(get('external-url').value); }
-  catch (error) { externalMessage = error.message; controls(); return; }
-  externalSource = null; get('external-source').value = '';
-  invalidateBuild(); clearErrorInfo(); revision++;
-  externalLoading = true; externalMessage = 'Loading external source…'; controls();
-  try {
-    const loaded = await api('external-source', 'POST', {url: requested});
-    if (typeof loaded.source !== 'string' || !loaded.source.trim() ||
-        new TextEncoder().encode(loaded.source).length > 100000 ||
-        typeof loaded.filename !== 'string' || !/^[A-Za-z0-9_.-]{1,100}$/.test(loaded.filename) ||
-        typeof loaded.sha256 !== 'string' || !/^[a-f0-9]{64}$/.test(loaded.sha256)) throw new Error('The service returned invalid external source metadata.');
-    sourceURL(loaded.url);
-    if (isSimple() || sourceURL(get('external-url').value) !== requested) throw new Error('The URL changed while loading; load it again.');
-    externalSource = {...loaded, requestUrl: requested};
-    get('external-source').value = loaded.source;
-    externalMessage = ''; invalidateBuild(); clearErrorInfo(); revision++;
-    get('status').textContent = `${loaded.filename} loaded. Compile when ready.`;
-  } catch (error) { externalMessage = error.message; }
-  finally { externalLoading = false; controls(); }
-};
+function externalChanged() {
+  invalidateBuild(); clearErrorInfo(); revision++; controls();
+}
+externalRows.forEach((row, index) => {
+  const element = row.element;
+  element('external-url').oninput = () => {
+    row.source = null; row.message = ''; element('external-source').value = '';
+    externalChanged();
+  };
+  element('add-external').onclick = () => {
+    if (active || connecting || externalLoading || externalCount >= 5) return;
+    externalCount++; controls();
+    externalRows[externalCount - 1].element('external-url').focus();
+  };
+  element('remove-external').onclick = () => {
+    if (active || connecting || externalLoading) return;
+    for (let i = index; i < externalCount - 1; i++) {
+      const target = externalRows[i], next = externalRows[i + 1];
+      target.source = next.source; target.message = next.message;
+      target.element('external-url').value = next.element('external-url').value;
+      target.element('external-source').value = next.element('external-source').value;
+      target.element('external-preview').open = false;
+    }
+    resetExternalRow(externalRows[externalCount - 1]);
+    externalCount = Math.max(1, externalCount - 1);
+    externalChanged();
+  };
+  element('load-external').onclick = async () => {
+    if (active || connecting || externalLoading || !token || !features.external_source) return;
+    let requested;
+    try { requested = sourceURL(element('external-url').value); }
+    catch (error) { row.message = error.message; controls(); return; }
+    row.source = null; element('external-source').value = '';
+    invalidateBuild(); clearErrorInfo(); revision++;
+    externalLoading = true; row.message = 'Loading external source...'; controls();
+    try {
+      const loaded = await api('external-source', 'POST', {url: requested});
+      if (typeof loaded.source !== 'string' || !loaded.source.trim() ||
+          new TextEncoder().encode(loaded.source).length > 100000 ||
+          typeof loaded.filename !== 'string' || !/^[A-Za-z0-9_.-]{1,100}$/.test(loaded.filename) ||
+          typeof loaded.sha256 !== 'string' || !/^[a-f0-9]{64}$/.test(loaded.sha256)) throw new Error('The service returned invalid external source metadata.');
+      sourceURL(loaded.url);
+      if (isSimple() || sourceURL(element('external-url').value) !== requested) throw new Error('The URL changed while loading; load it again.');
+      row.source = {...loaded, requestUrl: requested};
+      element('external-source').value = loaded.source;
+      row.message = ''; invalidateBuild(); clearErrorInfo(); revision++;
+      get('status').textContent = `${loaded.filename} loaded. Compile when ready.`;
+    } catch (error) { row.message = error.message; }
+    finally { externalLoading = false; controls(); }
+  };
+});
 get('stdin').oninput = () => {
   revision++;
   get('freshness').textContent = 'Program input changed; previous results are retained.';
@@ -533,18 +570,18 @@ get('download').onclick = () => {
   let source;
   try {
     if (externalError()) throw new Error(externalError());
-    source = combinedSource(editor.getValue(), externalSource).source;
+    source = combinedSource(editor.getValue(), loadedSources()).source;
   } catch (error) { get('file-status').textContent = error.message; return; }
   const url = URL.createObjectURL(new Blob([source], {type: 'text/plain;charset=utf-8'}));
   const link = document.createElement('a');
-  link.href = url; link.download = externalSource ? 'playground_combined.f90' : filename; link.click();
+  link.href = url; link.download = loadedSources().length ? 'playground_combined.f90' : filename; link.click();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 };
 get('share').onclick = async () => {
   get('share-link-field').hidden = true;
   try {
     if (externalError()) throw new Error(externalError());
-    const link = createShareLink(location.href, combinedSource(editor.getValue(), externalSource).source, interfaceMode, Boolean(get('preprocess').checked), Number(get('images').value));
+    const link = createShareLink(location.href, combinedSource(editor.getValue(), loadedSources()).source, interfaceMode, Boolean(get('preprocess').checked), Number(get('images').value));
     get('share-link').value = link;
     try {
       await navigator.clipboard.writeText(link);
@@ -564,14 +601,14 @@ function loadSharedCode(initial = false) {
     const shared = sharedCodeFromHash(location.hash);
     if (shared === null) return;
     const {source, interfaceMode: sharedMode, preprocess, images = 0} = shared;
-    if (!externalSource && !get('external-url').value.trim() && source === editor.getValue() && sharedMode === interfaceMode && preprocess === Boolean(get('preprocess').checked) && images === Number(get('images').value)) return;
+    if (!hasExternal() && source === editor.getValue() && sharedMode === interfaceMode && preprocess === Boolean(get('preprocess').checked) && images === Number(get('images').value)) return;
     if (active || connecting || externalLoading) throw new Error('Wait for the current operation to finish before opening shared code.');
     if (!initial && editor.getValue().trim() && !confirm('Replace the Fortran input with code from this shared link?')) {
       get('share-status').textContent = 'Shared code was not loaded; your input is unchanged.';
       return;
     }
     changeInterface(sharedMode);
-    if (externalSource || get('external-url').value) {
+    if (hasExternal()) {
       clearExternal(); invalidateBuild(); clearErrorInfo(); revision++; controls();
     }
     if (images !== Number(get('images').value)) {

@@ -50,9 +50,9 @@
 #share-link { display: block; width: 100%; box-sizing: border-box; }
 #program-input { margin-bottom: 1rem; }
 #stdin { display: block; width: 100%; height: auto; box-sizing: border-box; resize: vertical; }
-.external-controls { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-.external-controls[hidden] { display: none; }
-#external-url { width: min(340px, 65vw); }
-#external-details { margin-bottom: 1rem; }
-#external-status { overflow-wrap: anywhere; }
-#external-source { display: block; width: 100%; height: auto; box-sizing: border-box; resize: vertical; }
+.external-controls { display: inline-flex; flex-direction: column; align-items: stretch; gap: 8px; min-width: 0; max-width: 100%; }
+.external-controls[hidden], .external-row[hidden] { display: none; }
+.external-buttons { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.external-row input { width: min(340px, 65vw); }
+.external-controls .version { overflow-wrap: anywhere; margin: 4px 0; }
+.external-row textarea { display: block; width: 100%; height: auto; box-sizing: border-box; resize: vertical; }

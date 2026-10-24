@@ -17,12 +17,13 @@ class SiteTests(unittest.TestCase):
     def test_external_module_is_compiled_before_the_editor_program(self):
         external = {'source': 'module external_demo\ncontains\ninteger function answer()\nanswer=42\nend function\nend module\n',
                     'filename': 'external.f90', 'url': 'https://example.org/external.f90', 'sha256': 'a' * 64}
-        main = 'program demo\nuse external_demo, only: answer\nimplicit none\nprint *, answer()\nend program\n'
+        dependent = {**external, 'filename': 'dependent.f90', 'source': 'module dependent\nuse external_demo, only: answer\nend module\n'}
+        main = 'program demo\nuse dependent, only: answer\nimplicit none\nprint *, answer()\nend program\n'
         script = ("import {combinedSource} from './site/external_source.mjs'; "
                   "import fs from 'node:fs'; const data=JSON.parse(fs.readFileSync(0,'utf8')); "
                   "process.stdout.write(combinedSource(data.main,data.external).source);")
         combined = subprocess.run(['node', '--input-type=module', '-e', script], cwd=ROOT,
-            input=json.dumps({'main': main, 'external': external}), text=True, capture_output=True, check=True).stdout
+            input=json.dumps({'main': main, 'external': [external, dependent]}), text=True, capture_output=True, check=True).stdout
         with tempfile.TemporaryDirectory() as temporary:
             directory = Path(temporary)
             source = directory / 'combined.f90'

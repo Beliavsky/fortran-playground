@@ -21,21 +21,78 @@
   <div class="toolbar">
     <label for="interface-mode">Interface</label>
     <select id="interface-mode"><option value="simple">Simple</option><option value="advanced" selected>Advanced</option></select>
-    <span id="external-controls" class="external-controls" hidden>
-      <label for="external-url">External source URL</label>
-      <input id="external-url" type="url" maxlength="2048" placeholder="https://example.org/module.f90" autocomplete="off" spellcheck="false" aria-describedby="external-status">
-      <button id="load-external" type="button" disabled>Load</button>
-      <button id="remove-external" type="button" disabled>Remove</button>
-    </span>
+    <div id="external-controls" class="external-controls" hidden>
+      <div id="external-row" class="external-row">
+        <div class="external-buttons">
+          <label for="external-url">External source URL 1</label>
+          <input id="external-url" type="url" maxlength="2048" placeholder="https://example.org/module.f90" autocomplete="off" spellcheck="false" aria-describedby="external-status">
+          <button id="load-external" type="button" disabled>Load</button>
+          <button id="remove-external" type="button" disabled>Remove</button>
+          <button id="add-external" type="button">Add another</button>
+        </div>
+        <p id="external-status" class="version" role="status"></p>
+        <details id="external-preview" hidden><summary>External source 1 preview</summary>
+          <textarea id="external-source" rows="8" readonly spellcheck="false" aria-label="Loaded external Fortran source 1"></textarea>
+        </details>
+      </div>
+      <div id="external-row-1" class="external-row" hidden>
+        <div class="external-buttons">
+          <label for="external-url-1">External source URL 2</label>
+          <input id="external-url-1" type="url" maxlength="2048" placeholder="https://example.org/module.f90" autocomplete="off" spellcheck="false" aria-describedby="external-status-1">
+          <button id="load-external-1" type="button" disabled>Load</button>
+          <button id="remove-external-1" type="button" disabled>Remove</button>
+          <button id="add-external-1" type="button">Add another</button>
+        </div>
+        <p id="external-status-1" class="version" role="status"></p>
+        <details id="external-preview-1" hidden><summary>External source 2 preview</summary>
+          <textarea id="external-source-1" rows="8" readonly spellcheck="false" aria-label="Loaded external Fortran source 2"></textarea>
+        </details>
+      </div>
+      <div id="external-row-2" class="external-row" hidden>
+        <div class="external-buttons">
+          <label for="external-url-2">External source URL 3</label>
+          <input id="external-url-2" type="url" maxlength="2048" placeholder="https://example.org/module.f90" autocomplete="off" spellcheck="false" aria-describedby="external-status-2">
+          <button id="load-external-2" type="button" disabled>Load</button>
+          <button id="remove-external-2" type="button" disabled>Remove</button>
+          <button id="add-external-2" type="button">Add another</button>
+        </div>
+        <p id="external-status-2" class="version" role="status"></p>
+        <details id="external-preview-2" hidden><summary>External source 3 preview</summary>
+          <textarea id="external-source-2" rows="8" readonly spellcheck="false" aria-label="Loaded external Fortran source 3"></textarea>
+        </details>
+      </div>
+      <div id="external-row-3" class="external-row" hidden>
+        <div class="external-buttons">
+          <label for="external-url-3">External source URL 4</label>
+          <input id="external-url-3" type="url" maxlength="2048" placeholder="https://example.org/module.f90" autocomplete="off" spellcheck="false" aria-describedby="external-status-3">
+          <button id="load-external-3" type="button" disabled>Load</button>
+          <button id="remove-external-3" type="button" disabled>Remove</button>
+          <button id="add-external-3" type="button">Add another</button>
+        </div>
+        <p id="external-status-3" class="version" role="status"></p>
+        <details id="external-preview-3" hidden><summary>External source 4 preview</summary>
+          <textarea id="external-source-3" rows="8" readonly spellcheck="false" aria-label="Loaded external Fortran source 4"></textarea>
+        </details>
+      </div>
+      <div id="external-row-4" class="external-row" hidden>
+        <div class="external-buttons">
+          <label for="external-url-4">External source URL 5</label>
+          <input id="external-url-4" type="url" maxlength="2048" placeholder="https://example.org/module.f90" autocomplete="off" spellcheck="false" aria-describedby="external-status-4">
+          <button id="load-external-4" type="button" disabled>Load</button>
+          <button id="remove-external-4" type="button" disabled>Remove</button>
+          <button id="add-external-4" type="button">Add another</button>
+        </div>
+        <p id="external-status-4" class="version" role="status"></p>
+        <details id="external-preview-4" hidden><summary>External source 5 preview</summary>
+          <textarea id="external-source-4" rows="8" readonly spellcheck="false" aria-label="Loaded external Fortran source 5"></textarea>
+        </details>
+      </div>
+      <p id="external-summary" class="version" role="status"></p>
+      <p class="version">Optional: up to five public UTF-8 free-form source files, compiled from top to bottom, then the editor code. Load every nonempty row before compiling. Combined limit: 100 KB.</p>
+    </div>
     <span id="simple-compiler" class="version" hidden>GNU Fortran</span>
     <button id="advanced-options" type="button" hidden>Advanced options</button>
     <span id="status" role="status" aria-live="polite">Connecting…</span>
-  </div>
-  <div id="external-details" hidden>
-    <p id="external-status" class="version" role="status"></p>
-    <details id="external-preview"><summary>External source preview</summary>
-      <textarea id="external-source" rows="8" readonly spellcheck="false" aria-label="Loaded external Fortran source"></textarea>
-    </details>
   </div>
   <div class="toolbar">
     <label for="example">Example</label>
