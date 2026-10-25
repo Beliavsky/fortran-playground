@@ -9,6 +9,7 @@ import {serviceOrigin} from './service_config.mjs';
 import {compilerArguments, optionTokens} from './compiler_arguments.mjs';
 import {sourceURL, combinedSource, mappedErrors} from './external_source.mjs';
 import {comparisonPlan, executeComparison} from './comparison.mjs';
+import {loadAllOutputs, saveAllOutputs, comparisonOutput, comparisonReport} from './comparison_output.mjs';
 import {loadIndentation, saveIndentation} from './indentation.mjs';
 
 const get = id => document.getElementById(id);
@@ -52,6 +53,9 @@ let interfaceMode = ['simple', 'compare'].includes(playgroundConfig.interfaceMod
 const compareNames = [...get('compiler').options].map(option => option.value);
 get('compare-gfortran').checked = true;
 let comparisonRows = [], comparisonSnapshot = null, comparisonSelected = '';
+let showAllOutputs = loadAllOutputs();
+get('show-all-outputs').checked = showAllOutputs;
+const renderedOutputRows = new Map();
 const isCompare = () => interfaceMode === 'compare';
 const selectedCompilers = () => compareNames.filter(name => get(`compare-${name}`).checked && availableCompilers.includes(name));
 let availableCompilers = [], compilationFailed = false;
@@ -256,6 +260,18 @@ function comparisonControls(busy) {
       get('comparison-detail').textContent = 'Source or settings have changed since this comparison; the table and logs retain earlier results.';
     }
   }
+  comparisonLayout();
+}
+
+function comparisonLayout() {
+  const all = isCompare() && showAllOutputs && Boolean(comparisonSnapshot);
+  get('all-comparison-outputs').hidden = !all;
+  get('program-output-pane').hidden = all;
+  get('compilation-pane').hidden = all || (isSimple() && !compilationFailed);
+  const fullEditor = all && get('checks-pane').hidden;
+  get('results-pane').hidden = fullEditor;
+  get('workspace').setAttribute('class', fullEditor ? 'workspace comparison-full-editor' : 'workspace');
+  get('copy-comparison').disabled = !comparisonSnapshot || !comparisonRows.some(row => !['QUEUED', 'RUNNING'].includes(row.status));
 }
 
 function renderComparison() {
@@ -265,6 +281,8 @@ function renderComparison() {
     get(`compare-row-${name}`).hidden = !row;
     get(`compare-view-${name}`).disabled = !row || ['QUEUED', 'RUNNING'].includes(row.status);
     get(`compare-view-${name}`).setAttribute('aria-pressed', String(name === comparisonSelected));
+    get(`compare-output-${name}`).hidden = !row;
+    if (!row) renderedOutputRows.delete(name);
     if (!row) continue;
     get(`compare-result-${name}`).textContent = row.status;
     for (const field of ['total', 'compile', 'run', 'other']) {
@@ -272,7 +290,19 @@ function renderComparison() {
       get(`compare-${field}-${name}`).textContent = Number.isFinite(seconds) ? seconds.toFixed(3) : '-';
     }
     get(`compare-reason-${name}`).textContent = row.reason || '';
+    if (renderedOutputRows.get(name) !== row) {
+      const output = comparisonOutput(row, comparisonSnapshot.mode);
+      for (const field of ['title', 'version', 'reason', 'stdout', 'stderr', 'build']) {
+        get(`compare-output-${field}-${name}`).textContent = output[field];
+      }
+      get(`compare-output-stderr-section-${name}`).hidden = !output.stderr;
+      get(`compare-output-build-error-${name}`).textContent = output.buildError;
+      get(`compare-output-build-error-section-${name}`).hidden = !output.buildError;
+      get(`compare-output-build-details-${name}`).open = output.failed;
+      renderedOutputRows.set(name, row);
+    }
   }
+  comparisonLayout();
 }
 
 function viewComparison(name) {
@@ -306,7 +336,8 @@ async function runComparison(mode) {
   let compilation;
   try { compilation = combinedSource(editor.getValue(), loadedSources()); }
   catch (error) { get('status').textContent = error.message; return; }
-  const plan = currentComparisonPlan();
+  const plan = currentComparisonPlan().map(item => ({...item, version: compilerVersions[item.compiler],
+    flags: item.reason ? [] : compilerArguments(catalog[item.compiler], item.options, item.options.additional)}));
   const stdin = get('stdin').value;
   const stopOnFailure = Boolean(get('compare-stop-failure').checked);
   const batch = active = {id: null, stopping: false, cancelled: new Set()};
@@ -321,6 +352,9 @@ async function runComparison(mode) {
   comparisonRows = plan.map(item => ({...item, status: 'QUEUED'}));
   invalidateBuild(); clearErrorInfo();
   get('comparison-detail').textContent = '';
+  get('comparison-copy-field').hidden = true;
+  get('comparison-copy-text').value = '';
+  get('comparison-copy-status').textContent = '';
   get('comparison-status').textContent = 'Comparing compilers...';
   renderComparison(); controls();
   try {
@@ -594,6 +628,26 @@ get('compare-all').onclick = () => {
   for (const name of compareNames) get(`compare-${name}`).checked = availableCompilers.includes(name);
   controls();
 };
+get('show-all-outputs').onchange = () => {
+  showAllOutputs = Boolean(get('show-all-outputs').checked);
+  saveAllOutputs(showAllOutputs);
+  renderComparison();
+};
+get('copy-comparison').onclick = async () => {
+  if (!comparisonSnapshot) return;
+  const report = comparisonReport(comparisonRows, comparisonSnapshot, comparisonSnapshot.revision !== revision);
+  get('comparison-copy-field').hidden = true;
+  get('comparison-copy-text').value = report;
+  try {
+    await navigator.clipboard.writeText(report);
+    get('comparison-copy-status').textContent = 'Comparison results copied.';
+  } catch {
+    get('comparison-copy-field').hidden = false;
+    get('comparison-copy-text').focus();
+    get('comparison-copy-text').select();
+    get('comparison-copy-status').textContent = 'Copy the selected comparison results.';
+  }
+};
 get('compile').onclick = () => isCompare() ? runComparison('fortran-compile') : run('fortran-compile');
 get('format').onclick = () => run('format');
 for (const id of ['indent-width', 'auto-indent']) get(id).onchange = () => {
@@ -608,6 +662,7 @@ get('hide-checks').onclick = () => {
   get('check').setAttribute('aria-expanded', 'false');
   if (get('check').disabled) editor.focus();
   else get('check').focus();
+  controls();
 };
 get('rerun').onclick = () => run('fortran-run');
 get('first-error').onclick = () => editor.goToDiagnostic();
