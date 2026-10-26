@@ -13,6 +13,27 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class SiteTests(unittest.TestCase):
+    def test_plot_images_allowed_by_hosted_content_security_policies(self):
+        from html.parser import HTMLParser
+
+        class PolicyParser(HTMLParser):
+            policy = ''
+
+            def handle_starttag(self, tag, attrs):
+                attrs = dict(attrs)
+                if tag == 'meta' and attrs.get('http-equiv', '').lower() == 'content-security-policy':
+                    self.policy = attrs['content']
+
+        for name in ('index.html', 'fpm/index.html'):
+            with self.subTest(page=name):
+                parser = PolicyParser()
+                parser.feed((ROOT / 'site' / name).read_text(encoding='utf-8'))
+                directives = {parts[0]: parts[1:] for directive in parser.policy.split(';')
+                              if (parts := directive.strip().split())}
+                self.assertEqual(directives['img-src'], ["'self'", 'data:'])
+                self.assertEqual(directives['script-src'], ["'self'"])
+                self.assertEqual(directives['object-src'], ["'none'"])
+
     @unittest.skipUnless(shutil.which('node') and shutil.which('gfortran'), 'node and gfortran required')
     def test_external_module_is_compiled_before_the_editor_program(self):
         external = {'source': 'module external_demo\ncontains\ninteger function answer()\nanswer=42\nend function\nend module\n',

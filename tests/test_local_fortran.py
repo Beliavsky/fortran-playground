@@ -202,6 +202,9 @@ class ServerTests(unittest.TestCase):
         connection = http.client.HTTPConnection('127.0.0.1', self.server.server_port, timeout=10)
         connection.request('POST' if payload is not None else 'GET', path, json.dumps(payload) if payload is not None else None, headers)
         response = connection.getresponse(); body = response.read(); status = response.status; response_headers = dict(response.getheaders()); connection.close()
+        policy = response_headers['Content-Security-Policy']
+        self.assertIn("img-src 'self' data:;", policy)
+        self.assertIn("script-src 'self';", policy)
         return status, json.loads(body) if response_headers['Content-Type'].startswith('application/json') else body
 
     def test_loopback_token_origin_host_and_asset_restrictions(self):

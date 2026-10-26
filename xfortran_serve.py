@@ -268,7 +268,7 @@ class Handler(BaseHTTPRequestHandler):
         # CodeMirror measures and positions editor elements with inline styles.
         for key, value in {'Content-Type': content_type, 'Content-Length': str(len(body)), 'Cache-Control': 'no-store',
             'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'no-referrer',
-            'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'"}.items():
+            'Content-Security-Policy': "default-src 'self'; script-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'"}.items():
             self.send_header(key, value)
         self.end_headers()
         try:
