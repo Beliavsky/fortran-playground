@@ -1,5 +1,6 @@
 """Build the independent FPM sandbox image, then deploy its separate API."""
 import argparse
+import json
 import os
 from pathlib import Path
 import subprocess
@@ -21,7 +22,11 @@ def main():
         runtime_image.build(modal.App.lookup(APP_NAME, create_if_missing=True)).publish(IMAGE_NAME)
     subprocess.run([sys.executable, '-X', 'utf8', '-m', 'modal', 'deploy', 'xfpm_modal.py'],
                    cwd=Path(__file__).resolve().parent, check=True)
-    print('Set the deployed API URL in site/fpm/service.json, then publish the static site.')
+    url = modal.Function.from_name(APP_NAME, 'api').get_web_url()
+    print('Execution API URL (use this, not the Modal dashboard URL):', url)
+    print('Set site/fpm/service.json to:')
+    print(json.dumps({'url': url}))
+    print('Then commit the configuration and publish the static site.')
 
 
 if __name__ == '__main__':
