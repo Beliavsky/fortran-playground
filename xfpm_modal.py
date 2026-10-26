@@ -120,7 +120,7 @@ class Runner:
     async def poll(self, identifier):
         try:
             return await modal.FunctionCall.from_id(identifier).get.aio(timeout=0)
-        except modal.exception.TimeoutError:
+        except TimeoutError:
             return None
         except Exception:
             return {'ok': False, 'error': 'FPM preparation or execution stopped at a service limit.', 'stages': []}

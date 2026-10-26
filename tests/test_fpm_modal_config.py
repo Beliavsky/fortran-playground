@@ -1,5 +1,6 @@
 """Reimport the deployment module as its containers do, without Modal credentials."""
 import os
+import asyncio
 from pathlib import Path
 import runpy
 import types
@@ -76,6 +77,17 @@ class ModalConfigTests(unittest.TestCase):
             response.read.return_value = b'{"ok":false}'
             with self.assertRaisesRegex(ValueError, 'healthy FPM'):
                 verify_api('https://test.modal.run', 'https://example.org')
+
+    def test_pending_call_uses_builtin_timeout_then_returns_completed_result(self):
+        from unittest.mock import AsyncMock
+        module = self.load(True, {})
+        getter = AsyncMock(side_effect=[TimeoutError(), {'ok': True, 'stages': []}])
+        module['modal'].FunctionCall = types.SimpleNamespace(from_id=lambda identifier:
+            types.SimpleNamespace(get=types.SimpleNamespace(aio=getter)))
+        runner = module['Runner']()
+        self.assertIsNone(asyncio.run(runner.poll('pending-call')))
+        self.assertEqual(asyncio.run(runner.poll('pending-call')), {'ok': True, 'stages': []})
+        getter.assert_called_with(timeout=0)
 
 
 if __name__ == '__main__':
