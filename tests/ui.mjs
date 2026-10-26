@@ -9,6 +9,15 @@ const advancedLink = process.argv.includes('--advanced-link');
 const compareLink = process.argv.includes('--compare-link');
 const preprocessingLink = process.argv.includes('--preprocess-link');
 const ownerLink = process.argv.includes('--owner-link');
+const queryCase = process.argv.find(argument => argument.startsWith('--settings='))?.slice(11);
+const settingsQueries = {
+  compare: '?interface=compare&compilers=gfortran,ofort&example=01_arithmetic',
+  advanced: '?compiler=gfortran&standard=2018&preprocess=1',
+  simple: '?interface=simple&compiler=ofort',
+  unavailable: '?compilers=ifx,flang&standard=2023&example=missing',
+  invalid: '?interface=invalid&preprocess=yes',
+  shared: '?interface=compare&preprocess=1',
+};
 if (advancedLink) playgroundConfig.interfaceMode = 'simple';
 const elements = new Map();
 const savedPreferences = new Map();
@@ -21,6 +30,10 @@ const base = 'https://example.org/fortran-playground/';
 globalThis.location = new URL(plainVisit ? base : compareLink ? createShareLink(base, startupSource, 'compare') : preprocessingLink ? createShareLink(base, startupSource, 'advanced', true) : advancedLink ? createShareLink(base, startupSource, 'advanced') :
   base + '#code=' + encodeURIComponent(startupSource)); // Existing links have no interface parameter.
 if (ownerLink) location.search = '?owner=1';
+if (queryCase) {
+  location = new URL(base + settingsQueries[queryCase]);
+  if (queryCase === 'shared') location.hash = '#code=' + encodeURIComponent(startupSource);
+}
 const pageListeners = {};
 globalThis.addEventListener = (name, handler) => {pageListeners[name] = handler;};
 let copiedLink = '', clipboardFails = false;
@@ -112,6 +125,39 @@ globalThis.fetch = async (url, options = {}) => {
   return {ok: true, json: async () => result};
 };
 await import('../site/app.mjs');
+if (queryCase) {
+  assert.equal(submissions, 0);
+  if (queryCase === 'compare') {
+    assert.equal(get('interface-mode').value, 'compare');
+    assert.equal(get('compare-gfortran').checked, true);
+    assert.equal(get('compare-ofort').checked, true);
+    assert.equal(get('fortran').value, examples['01_arithmetic']);
+    assert.equal(get('example').value, '01_arithmetic');
+  }
+  if (queryCase === 'advanced') {
+    assert.equal(get('interface-mode').value, 'advanced');
+    assert.equal(get('standard').value, '2018');
+    assert.equal(get('preprocess').checked, true);
+  }
+  if (queryCase === 'simple' || queryCase === 'shared') {
+    assert.equal(get('interface-mode').value, 'simple');
+    assert.equal(get('compiler').value, 'gfortran');
+    assert.equal(Boolean(get('preprocess').checked), false);
+    assert.equal(get('url-settings-status').hidden, false);
+  }
+  if (queryCase === 'shared') assert.equal(get('fortran').value, startupSource);
+  if (queryCase === 'unavailable') {
+    assert.equal(get('interface-mode').value, 'compare');
+    assert.equal(get('run').disabled, true);
+    assert.match(get('url-settings-status').textContent, /No requested compiler is available/);
+    assert.match(get('url-settings-status').textContent, /example missing/);
+    get('compare-gfortran').checked = true; get('compare-gfortran').onchange();
+    assert.equal(get('run').disabled, false);
+  }
+  if (queryCase === 'invalid') assert.match(get('url-settings-status').textContent, /Invalid URL setting/);
+  console.log(`Settings-only URL UI passed: ${queryCase}; no jobs submitted.`);
+  process.exit(0);
+}
 const expectedInitialMode = plainVisit ? playgroundConfig.interfaceMode : compareLink ? 'compare' : advancedLink || preprocessingLink ? 'advanced' : 'simple';
 assert.equal(get('interface-mode').value, expectedInitialMode);
 assert.equal(get('indent-width').value, '3');

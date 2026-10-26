@@ -1,5 +1,24 @@
 # Fortran playground
 
+### Open the playground with URL settings
+
+Links can configure the playground without embedding code or running a job. For example, [open Compare compilers](https://beliavsky.github.io/fortran-playground/?interface=compare), or [select GNU Fortran and Intel](https://beliavsky.github.io/fortran-playground/?interface=compare&compilers=gfortran,ifx).
+
+| Query parameter | Supported values / example |
+| --- | --- |
+| `interface` | `simple`, `advanced`, `compare` |
+| `compiler` | `gfortran`, `gfortran17`, `ifx`, `flang`, `lfortran`, `ofort` |
+| `compilers` | Comma-separated compiler IDs for Compare, e.g. `gfortran,ifx,flang` |
+| `example` | Filename stem from `site/examples/`, e.g. `01_arithmetic` |
+| `standard` | `default`, `1995`, `2003`, `2008`, `2018`, `2023`, subject to compiler/service support |
+| `preprocess` | `1` to enable, `0` to disable |
+
+For example: `?compiler=gfortran&standard=2018&preprocess=1&example=01_arithmetic`. With no explicit interface, `compilers` selects Compare, while `compiler`, `standard`, or `preprocess` selects Advanced. Simple keeps its GNU defaults and reports incompatible query settings as ignored. In Compare, `compiler` chooses the compiler displayed in **Options for**, while `compilers` chooses the checked compilers.
+
+Settings are applied on page load, override corresponding defaults, and leave unspecified choices alone. Compiler capabilities are checked after connecting. Unavailable compilers and unsupported settings produce visible messages; if every requested comparison compiler is unavailable, select one before running. Invalid values and duplicate recognized parameters are ignored with a message. Other query parameters, including existing `owner=1` links, retain their existing behavior.
+
+Existing `#code=...&interface=...` shared-code links still work. When combined with query settings, the shared fragment determines the source, interface, preprocessing, and image settings; query compiler and standard choices apply when compatible with that interface. Opening a link never compiles or runs code. These query settings apply to the ordinary playground; FPM URL settings are not included yet.
+
 The separate [FPM package playground](https://beliavsky.github.io/fortran-playground/fpm/) supports a custom main program using a package, or the package's own Build, Run, and Test actions, initially with gfortran 16.2.0. It builds from scratch in its own sandbox service. See [FPM usage, limits, and deployment](docs/fpm-mode.md); the new service must be deployed and its URL configured before the page can submit jobs.
 
 [Open the playground](https://beliavsky.github.io/fortran-playground/) ? [GitHub repository](https://github.com/Beliavsky/fortran-playground) ? [Python-to-Fortran playground](https://beliavsky.github.io/python-to-fortran-playground/)

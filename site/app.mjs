@@ -12,10 +12,54 @@ import {comparisonPlan, executeComparison} from './comparison.mjs';
 import {loadAllOutputs, saveAllOutputs, comparisonOutput, comparisonReport} from './comparison_output.mjs';
 import {loadIndentation, saveIndentation} from './indentation.mjs';
 import {createOutputComparison} from './output_diff_ui.mjs';
+import {parseURLSettings} from './url_settings.mjs';
 
 const get = id => document.getElementById(id);
 const outputComparison = createOutputComparison(get);
 const ownerAccessRequested = new URLSearchParams(location.search).get('owner') === '1';
+const {settings: urlSettings, warnings: urlWarnings} = parseURLSettings(location.search);
+let urlSettingsPending = true, sharedLinkLoaded = false;
+function showURLWarnings() {
+  get('url-settings-status').textContent = urlWarnings.join(' ');
+  get('url-settings-status').hidden = !urlWarnings.length;
+}
+function applyURLServiceSettings() {
+  if (!urlSettingsPending) return;
+  urlSettingsPending = false;
+  const settings = {...urlSettings};
+  if (sharedLinkLoaded && Object.hasOwn(settings, 'preprocess')) {
+    urlWarnings.push('The shared-code link takes precedence over query preprocessing.');
+    delete settings.preprocess;
+  }
+  if (isSimple()) {
+    for (const key of ['compiler', 'compilers', 'standard', 'preprocess']) {
+      if (Object.hasOwn(settings, key)) urlWarnings.push(`URL setting ${key} is ignored in the Simple interface.`);
+    }
+    showURLWarnings(); return;
+  }
+  if (settings.compiler) {
+    if (availableCompilers.includes(settings.compiler)) get('compiler').value = settings.compiler;
+    else urlWarnings.push(`Requested compiler ${settings.compiler} is unavailable; the current compiler is retained.`);
+  }
+  if (settings.compilers) {
+    if (isCompare()) {
+      for (const name of compareNames) get(`compare-${name}`).checked = settings.compilers.includes(name) && availableCompilers.includes(name);
+      const missing = settings.compilers.filter(name => !availableCompilers.includes(name));
+      if (missing.length) urlWarnings.push(`Requested compilers unavailable: ${missing.join(', ')}.`);
+      if (!selectedCompilers().length) urlWarnings.push('No requested compiler is available. Select a compiler before running.');
+    } else urlWarnings.push('The shared-code interface overrides the query compiler comparison selection.');
+  }
+  const names = isCompare() ? selectedCompilers() : [get('compiler').value];
+  if (settings.standard) {
+    if (settings.standard === 'default' || names.some(name => catalog[name]?.standards?.[settings.standard])) get('standard').value = settings.standard;
+    else urlWarnings.push(`Requested standard ${settings.standard} is unavailable for the selected compilers; the current standard is retained.`);
+  }
+  if (Object.hasOwn(settings, 'preprocess')) {
+    if (!settings.preprocess || names.some(name => catalog[name]?.extras?.preprocess)) get('preprocess').checked = settings.preprocess;
+    else urlWarnings.push('Requested preprocessing is unavailable for the selected compilers; the current setting is retained.');
+  }
+  showURLWarnings();
+}
 function stdinError() {
   const input = get('stdin').value;
   if (new TextEncoder().encode(input).length > Math.min(100000, features.max_stdin_bytes ?? 100000)) return 'Program input exceeds the 100 KB limit or this service\'s input limit.';
@@ -429,6 +473,7 @@ async function connect() {
     catalog = session.compiler_options || {};
     compilerVersions = session.compiler_versions || {};
     features = session.features || {};
+    applyURLServiceSettings();
     get('connection').textContent = `Connected · ${compilers.join(' / ')} · ${session.timeout ?? '?'} s run limit · runtime ${(session.commit || '').slice(0,7)}`;
     get('status').textContent = 'Ready';
     // No transpiler pin is needed: this site submits only edited Fortran.
@@ -824,7 +869,9 @@ function loadSharedCode(initial = false) {
     const shared = sharedCodeFromHash(location.hash);
     if (shared === null) return;
     const {source, interfaceMode: sharedMode, preprocess, images = 0} = shared;
-    if (!hasExternal() && source === editor.getValue() && sharedMode === interfaceMode && preprocess === Boolean(get('preprocess').checked) && images === Number(get('images').value)) return;
+    if (!hasExternal() && source === editor.getValue() && sharedMode === interfaceMode && preprocess === Boolean(get('preprocess').checked) && images === Number(get('images').value)) {
+      sharedLinkLoaded = true; return;
+    }
     if (active || connecting || externalLoading) throw new Error('Wait for the current operation to finish before opening shared code.');
     if (!initial && editor.getValue().trim() && !confirm('Replace the Fortran input with code from this shared link?')) {
       get('share-status').textContent = 'Shared code was not loaded; your input is unchanged.';
@@ -846,6 +893,7 @@ function loadSharedCode(initial = false) {
     }
     if (source !== editor.getValue()) editor.setValue(source, !initial);
     filename = 'main.f90';
+    sharedLinkLoaded = true;
     get('share-status').textContent = `Code loaded from a shared link. Choose ${isSimple() ? 'Run' : 'Compile or Compile and Run'} when ready.`;
   } catch (error) { get('share-status').textContent = String(error); }
 }
@@ -871,6 +919,14 @@ get('example').disabled = !firstExample;
 get('load').disabled = !firstExample;
 get('example').value = firstExample || '';
 editor.setValue(firstExample ? examples[firstExample] : '');
+if (urlSettings.interface) interfaceMode = urlSettings.interface;
+if (urlSettings.example) {
+  if (Object.hasOwn(examples, urlSettings.example)) {
+    get('example').value = urlSettings.example;
+    editor.setValue(examples[urlSettings.example]);
+  } else urlWarnings.push(`Requested example ${urlSettings.example} was not found; the current example is retained.`);
+}
+showURLWarnings();
 if (typeof location !== 'undefined') {
   loadSharedCode(true);
   globalThis.addEventListener?.('hashchange', () => loadSharedCode());
