@@ -5,6 +5,17 @@ import os
 from pathlib import Path
 import subprocess
 import sys
+from urllib.request import Request, urlopen
+
+
+def verify_api(url, origin):
+    request = Request(url + '/api/health', headers={'Origin': origin})
+    with urlopen(request, timeout=45) as response:
+        data = json.loads(response.read(10000))
+        if response.status != 200 or data.get('ok') is not True or data.get('fpm') != '0.12.0':
+            raise ValueError('The deployed endpoint did not return a healthy FPM response.')
+        if response.headers.get('Access-Control-Allow-Origin') != origin:
+            raise ValueError('The deployed endpoint does not allow the configured browser origin.')
 
 
 def main():
@@ -26,6 +37,14 @@ def main():
     print('Execution API URL (use this, not the Modal dashboard URL):', url)
     print('Set site/fpm/service.json to:')
     print(json.dumps({'url': url}))
+    print('Checking the deployed HTTP endpoint and browser access...', flush=True)
+    origin = os.environ.get('FPM_ORIGINS', 'https://beliavsky.github.io').split(',')[0]
+    try:
+        verify_api(url, origin)
+    except Exception as error:
+        raise SystemExit(f'Deployment completed, but the API is not ready: {error}\n'
+                         f'Inspect startup logs with: {sys.executable} -m modal app logs {APP_NAME}') from error
+    print('HTTP health and browser access: PASS')
     print('Then commit the configuration and publish the static site.')
 
 

@@ -54,6 +54,8 @@ On Linux/macOS, create and activate a virtual environment, install the same requ
 
 Use the exact **Execution API URL** printed by the deployment script, including a regional component such as `.us-east.modal.run` if present. The `https://modal.com/apps/...` link is the management dashboard and cannot be used as the execution endpoint.
 
+The script checks the deployed HTTP health endpoint and browser-origin access before reporting `HTTP health and browser access: PASS`. If deployment succeeds but this check fails, the app exists but is not ready to use; inspect the startup logs with `python -m modal app logs fortran-playground-fpm`. Owner-secret configuration is carried into both container environments so their Modal dependency definitions match the deployment; the secret value remains attached to the API only.
+
 Then commit that configuration and publish the static site using the usual Pages workflow. Until the URL is configured and reachable, the page displays an explanation and disables submission while keeping examples and editing available. After worker changes, rerun `xdeploy_fpm.py`; API-only changes can also use that command, reusing cached image layers.
 
 For a fork, pass your allowed browser origin when deploying:

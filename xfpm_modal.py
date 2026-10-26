@@ -18,6 +18,7 @@ state = modal.Dict.from_name(APP_NAME + '-state', create_if_missing=True)
 GNU_IMAGE = 'gcc:16.2.0-trixie@sha256:43978d7710a803d1c3d32f4117c1528ec7285a4ce2c0a51e982ec1a6e3d87d95'
 FPM_URL = 'https://github.com/fortran-lang/fpm/releases/download/v0.12.0/fpm-0.12.0-linux-x86_64-gcc-12'
 FPM_SHA256 = '576fc54fb829263b32d0e288535a2a3edc9d0478dffec84ba70445446f6d6abf'
+OWNER_SECRET_NAME = os.environ.get('FPM_OWNER_SECRET', '')
 if modal.is_local():
     digest = hashlib.sha256()
     for filename in ('xfpm_modal.py', 'xfpm_worker.py', 'fpm_sources.py'):
@@ -36,10 +37,11 @@ runtime_image = (modal.Image.from_registry(GNU_IMAGE, add_python='3.12')
     .add_local_file(ROOT / 'xfpm_worker.py', '/opt/fpm/xfpm_worker.py', copy=True))
 
 broker_image = (modal.Image.debian_slim(python_version='3.12').pip_install('tomli-w==1.2.0')
-    .env({'FPM_IMAGE_NAME': IMAGE_NAME})
+    .env({'FPM_IMAGE_NAME': IMAGE_NAME, 'FPM_OWNER_SECRET': OWNER_SECRET_NAME})
     .add_local_file(ROOT / 'fpm_sources.py', '/root/fpm_sources.py', copy=True))
 api_image = (modal.Image.debian_slim(python_version='3.12').pip_install('fastapi==0.142.2')
-    .env({'FPM_IMAGE_NAME': IMAGE_NAME, 'FPM_ORIGINS': os.environ.get('FPM_ORIGINS',
+    .env({'FPM_IMAGE_NAME': IMAGE_NAME, 'FPM_OWNER_SECRET': OWNER_SECRET_NAME,
+          'FPM_ORIGINS': os.environ.get('FPM_ORIGINS',
           'https://beliavsky.github.io,http://127.0.0.1:8766,http://localhost:8766')})
     .add_local_file(ROOT / 'fpm_sources.py', '/root/fpm_sources.py', copy=True)
     .add_local_file(ROOT / 'fpm_api.py', '/root/fpm_api.py', copy=True))
@@ -125,8 +127,8 @@ class Runner:
 
 
 @app.function(image=api_image, max_containers=1, cpu=(0.125, 0.5), memory=(256, 512), timeout=60,
-    secrets=[modal.Secret.from_name(os.environ['FPM_OWNER_SECRET'], required_keys=['P2F_OWNER_KEY'])]
-    if os.environ.get('FPM_OWNER_SECRET') else [])
+    secrets=[modal.Secret.from_name(OWNER_SECRET_NAME, required_keys=['P2F_OWNER_KEY'])]
+    if OWNER_SECRET_NAME else [])
 @modal.concurrent(max_inputs=16)
 @modal.asgi_app()
 def api():
