@@ -56,7 +56,7 @@ The module, helper Python file, and vendored files must accompany a standalone c
 Using upstream's original source:
 
 ```text
-gfortran vendor/pyplot-fortran/src/pyplot_module.F90 docs/examples/plot_trig.f90 -o plot_trig
+gfortran -ffree-line-length-none vendor/pyplot-fortran/src/pyplot_module.F90 docs/examples/plot_trig.f90 -o plot_trig
 ```
 
 Run the resulting executable from your terminal (`.\plot_trig.exe` on Windows, or `./plot_trig` on Linux). Python with NumPy and Matplotlib must be available as `python` on PATH, or pass the Python executable using the library's `savefig(..., python=...)` argument. The executable writes `trig.png`, which can be opened in any image viewer. Other compilers require their own preprocessing option for the upstream `.F90` file. In the playground, the pinned default-real64 source is prepared without preprocessor directives before compilation.

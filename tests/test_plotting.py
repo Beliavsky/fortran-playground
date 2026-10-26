@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 import shutil
 import struct
+import subprocess
 import tempfile
 import unittest
 import zlib
@@ -21,6 +22,17 @@ def png():
 
 
 class PlotTests(unittest.TestCase):
+    @unittest.skipUnless(shutil.which('gfortran'), 'GNU Fortran required')
+    def test_module_compiles_with_132_column_limit(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = plotting.install_module(root)
+            # GNU 17 permits longer lines by default; reproduce older GNU defaults.
+            result = subprocess.run(['gfortran', '-ffree-line-length-132', '-Werror=line-truncation',
+                                     '-fsyntax-only', str(source)], cwd=root,
+                                    capture_output=True, text=True, timeout=30)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
     def test_source_pin_and_default_kind(self):
         source = plotting.module_source()
         self.assertNotIn('#ifdef', source)
