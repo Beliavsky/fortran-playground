@@ -69,6 +69,6 @@ The main-program editor provides syntax highlighting, configurable indentation (
 
 The local API retains the existing loopback Host/Origin/session-token checks. The session fragment is carried between local pages, while session storage supports reloads. Unrelated websites cannot submit jobs through the browser. The local tools themselves run with your normal permissions, so use packages you trust.
 
-To copy the local tools into a separate project, take `xfortran_run.py`, `xfortran_serve.py`, `fortran_fpm.py`, `fpm_runner.py`, `fortran_output_diff.py`, and `local_site/` together. No hosted backend modules or Modal SDK are needed for local FPM operation. Standalone hosted FPM use additionally needs `xplayground_run.py`, `fpm_sources.py`, `fpm_compilers.py`, and a package-service configuration or `--service-url`.
+To copy the local tools into a separate project, take `xfortran_run.py`, `xfortran_serve.py`, `fortran_fpm.py`, `fpm_runner.py`, `fortran_output_diff.py`, `fortran_plot.py`, `vendor/pyplot-fortran/`, and `local_site/` together. No hosted backend modules or Modal SDK are needed for local FPM operation. Standalone hosted FPM use additionally needs `xplayground_run.py`, `fpm_sources.py`, `fpm_compilers.py`, and a package-service configuration or `--service-url`. See [plotting](plotting.md) for PNG examples, required local Python packages, and `--plot-dir`.
 
 For package options, run `python xfortran_run.py --fpm . --help` or `python xplayground_run.py --fpm URL --help`.

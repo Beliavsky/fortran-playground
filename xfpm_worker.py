@@ -12,6 +12,7 @@ import tomllib
 
 from fpm_sources import extract_archive, validate_request
 from fpm_compilers import COMPILERS, compiler_flags
+from fortran_plot import uses_pyplot, install_module, collect_plots, plotting_environment, provides_pyplot
 
 
 def stage(command, directory, timeout, stdin=''):
@@ -61,6 +62,7 @@ def targets(project, kind):
 
 
 def execute(message):
+    os.environ.update(plotting_environment())
     payload = validate_request(message['request'])
     compiler = payload['compiler']
     if compiler != os.environ.get('FPM_COMPILER', 'gfortran'):
@@ -75,11 +77,14 @@ def execute(message):
         project = Path('/work/consumer')
         (project / 'app').mkdir(parents=True)
         (project / 'app/main.f90').write_text(payload['source'], encoding='utf-8')
+        if uses_pyplot(payload['source']) and not provides_pyplot(bundle):
+            install_module(project / 'src')
         name = tomllib.loads((package / 'fpm.toml').read_text(encoding='utf-8'))['name']
         dependency_path = Path(os.path.relpath(package, project)).as_posix()
         (project / 'fpm.toml').write_text('name = "playground-main"\n[build]\nauto-tests = false\n'
             'auto-examples = false\n[dependencies]\n' + json.dumps(name) + ' = { path = ' +
             json.dumps(dependency_path) + ' }\n', encoding='utf-8')
+    os.environ.update(plotting_environment(directory=project))
     flags = compiler_flags(compiler)
     version = subprocess.check_output([COMPILERS[compiler]['command'], '--version'], text=True, timeout=10).splitlines()[0]
     if COMPILERS[compiler]['version'] not in version:
@@ -108,6 +113,7 @@ def execute(message):
     command = ['fpm', payload['action'], *flags] + (['--target', target] if target else [])
     run = stage(command, project, 30, payload['stdin'])
     result['stages'].append({'name': 'Test' if kind == 'test' else 'Run', **run})
+    result.update(collect_plots(project))
     result['ok'] = run['ok']
     return result
 

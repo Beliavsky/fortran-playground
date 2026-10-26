@@ -275,6 +275,8 @@ def build_and_run(files, name, settings=None, extra=None, *, overrides=None, can
     result = {'compiler': name, 'compiler_version': version, 'ok': False, 'status': 'FAIL'}
     try:
         paths = source_paths(files)
+        from fortran_plot import uses_pyplot, install_module, plotting_environment, snapshot, collect_plots
+        plotting = any(uses_pyplot(path.read_text(encoding='utf-8-sig', errors='replace')) for path in paths)
         executable = compiler_executable(name, overrides)
         compile_flags, link_flags = flags_for(name, settings or {}, extra)
         result['notes'] = option_notes(name, settings or {})
@@ -287,17 +289,23 @@ def build_and_run(files, name, settings=None, extra=None, *, overrides=None, can
             result['interpreter'] = True
             with tempfile.TemporaryDirectory(prefix='fortran_ofort_') as temporary:
                 inputs = paths
-                if compile_only and len(paths) > 1:
-                    fixed = [path.suffix.lower() in ('.f', '.for', '.ftn') for path in paths]
+                if plotting:
+                    inputs = [install_module(Path(temporary) / 'plotting'), *paths]
+                if compile_only and len(inputs) > 1:
+                    fixed = [path.suffix.lower() in ('.f', '.for', '.ftn') for path in inputs]
                     if any(fixed) and not all(fixed):
                         raise UnsupportedOption('ofort syntax checking cannot combine fixed-form and free-form sources.')
                     combined = Path(temporary) / ('combined.f' if all(fixed) else 'combined.f90')
-                    combined.write_text('\n'.join(path.read_text(encoding='utf-8-sig').rstrip() + '\n' for path in paths), encoding='utf-8')
+                    combined.write_text('\n'.join(path.read_text(encoding='utf-8-sig').rstrip() + '\n' for path in inputs), encoding='utf-8')
                     inputs = [combined]
                     result['notes'].append('ofort --check uses combined source in the supplied order; its line numbers refer to combined source.')
+                workdir = cwd or Path.cwd()
+                before = snapshot(workdir)
                 stage = run_process([executable, *compile_flags, *(['--check'] if compile_only else []), *map(str, inputs)],
                                     cwd or Path.cwd(), cancel, compile_timeout if compile_only else run_timeout,
-                                    '' if compile_only else stdin, output_limit)
+                                    '' if compile_only else stdin, output_limit, env=plotting_environment() if plotting else None)
+                if not compile_only:
+                    result.update(collect_plots(workdir, before))
             if compile_only:
                 result['build'] = {**stage, 'commands': [stage['command']]}
             else:
@@ -308,6 +316,8 @@ def build_and_run(files, name, settings=None, extra=None, *, overrides=None, can
         windows = name == 'ifx' and os.name == 'nt'
         with tempfile.TemporaryDirectory(prefix=f'fortran_{name}_') as temporary:
             directory = Path(temporary)
+            if plotting and not any(re.search(r'^\s*module\s+pyplot_module\b', path.read_text(encoding='utf-8-sig', errors='replace'), re.I | re.M) for path in paths):
+                paths = [install_module(directory / 'plotting'), *paths]
             objects = []
             include_flags = [argument for parent in dict.fromkeys([directory, *(path.parent for path in paths), *(include_dirs or [])])
                              for argument in (['/I' + str(parent)] if windows else ['-I', str(parent)])]
@@ -337,7 +347,11 @@ def build_and_run(files, name, settings=None, extra=None, *, overrides=None, can
                     build[stream] += stage[stream]
                 build['seconds'] += stage['seconds']; build['ok'] = stage['ok']
                 if stage['ok'] and not compile_only:
-                    result['execution'] = run_process([str(program)], cwd or Path.cwd(), cancel, run_timeout, stdin, output_limit)
+                    workdir = cwd or Path.cwd()
+                    before = snapshot(workdir)
+                    result['execution'] = run_process([str(program)], workdir, cancel, run_timeout, stdin, output_limit,
+                                                      env=plotting_environment() if plotting else None)
+                    result.update(collect_plots(workdir, before))
             result['ok'] = build['ok'] and (compile_only or result.get('execution', {}).get('ok', False))
             result['status'] = 'STOPPED' if cancel.is_set() else 'PASS' if result['ok'] else 'FAIL'
     except (OSError, ValueError) as error:
@@ -418,6 +432,7 @@ def main(argv=None):
     parser.add_argument('--max-output-mb', type=int, default=4, help='Captured bytes per stream in MiB')
     parser.add_argument('--fail-fast', action='store_true')
     parser.add_argument('--list', action='store_true')
+    parser.add_argument('--plot-dir', type=Path, default=Path('playground-plots'), help='Save returned PNGs under DIR/COMPILER (default: playground-plots)')
     parser.add_argument('--terse', action='store_true')
     add_diff_arguments(parser)
     args = parser.parse_args(argv)
@@ -462,6 +477,12 @@ def main(argv=None):
             cwd=args.cwd.resolve(strict=True), compile_timeout=args.compile_timeout, run_timeout=args.run_timeout,
             output_limit=args.max_output_mb * 1024 * 1024,
             fail_fast=args.fail_fast, update=lambda row: print_result(row, args.terse) if row['status'] != 'RUNNING' else None)
+        from fortran_plot import save_plots
+        for row in rows:
+            for path in save_plots(row, args.plot_dir, row['compiler']):
+                print('Plot: ' + str(path))
+            for note in row.get('plot_notes', []):
+                print('Plot: ' + note)
         print('\nSummary: times in seconds\nCompiler   Result      Total   Compile       Run     Other')
         for row in rows:
             times = ['-' if row.get('times', {}).get(key) is None else f'{row["times"][key]:.3f}' for key in ['total', 'compile', 'run', 'other']]

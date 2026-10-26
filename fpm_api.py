@@ -113,7 +113,7 @@ def create_api(service, origins):
 
     @api.get('/api/health')
     async def health():
-        return {'ok': True, 'compiler': COMPILERS['gfortran']['label'], 'fpm': '0.12.0', 'clean_builds': True,
+        return {'ok': True, 'compiler': COMPILERS['gfortran']['label'], 'fpm': '0.12.0', 'clean_builds': True, 'plotting': True,
                 'compilers': {name: COMPILERS[name]['label'] for name in service.compilers}}
 
     @api.post('/api/jobs')

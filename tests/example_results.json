@@ -143,16 +143,25 @@
     ]
   },
   "21_coarray_images": {
-    "output": ["Image 1 of 1"]
+    "output": [
+      "Image 1 of 1"
+    ]
   },
   "22_coarray_exchange": {
-    "output": ["Image 1 received 100"]
+    "output": [
+      "Image 1 received 100"
+    ]
   },
   "20_complex_step": {
     "output": [
       "Complex-step derivative of exp at 0: 1",
       "Central-difference derivative: 1",
       "Exact derivative: 1"
+    ]
+  },
+  "23_plot_trig": {
+    "output": [
+      "Saved trig.png"
     ]
   }
 }

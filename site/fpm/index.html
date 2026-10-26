@@ -69,11 +69,13 @@ end program main
       <div class="output-buttons"><button id="copy" type="button">Copy results</button></div>
     </section>
   </div>
+  <div id="plot-results"></div>
   <section id="stdin-pane" class="stdin-panel">
     <label for="stdin">Standard input (optional)</label>
     <textarea id="stdin" rows="4" spellcheck="false" aria-label="Standard input"></textarea>
   </section>
   <footer>
+<p>Plotting: <code>use pyplot_module</code> and save a PNG with <code>savefig</code>. See <a href="https://github.com/Beliavsky/fortran-playground/blob/main/docs/plotting.md">examples and setup</a>. Local rendering requires Python, NumPy, and Matplotlib.</p>
     <p>Public GitHub repositories with a root fpm.toml. GitHub git dependencies and paths within a repository are supported; registry dependencies and metapackages are not yet supported.</p>
     <p>Each submission builds from scratch. Build limit: 180 seconds; run/test limit: 30 seconds total. Execution has no network access. Missing libraries, unsupported features, and larger packages may fail.</p>
     <p>FPM has a separate job queue and usage allowance: 30 jobs per address per ten minutes and 100 public jobs per day. See <a href="https://github.com/Beliavsky/fortran-playground/blob/main/docs/fpm-mode.md">instructions and limitations</a>.</p>

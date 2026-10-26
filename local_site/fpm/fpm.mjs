@@ -1,3 +1,4 @@
+import {renderPlots} from '../plots.mjs';
 import {createEditor} from '../editors.mjs';
 import {loadIndentation, saveIndentation} from '../indentation.mjs';
 import {createOutputComparison} from '../output_diff_ui.mjs';
@@ -80,7 +81,7 @@ function render() {
     const pre = document.createElement('pre');
     pre.textContent = [row.compiler + ': ' + row.status, row.compiler_version || '', row.error || '', ...(row.notes || []).map(note => 'Note: ' + note),
       ...((row.stages ?? []).flatMap(stage => ['$ ' + stage.command.join(' '), stage.stdout || '', stage.stderr || '']))].filter(Boolean).join('\n');
-    section.appendChild(pre); get('results').appendChild(section);
+    section.appendChild(pre); renderPlots(section, row); get('results').appendChild(section);
     for (const name of row.targets ?? []) targets.add(name);
   }
   get('targets').replaceChildren(...[...targets].map(value => {const option = document.createElement('option'); option.value = value; return option;}));

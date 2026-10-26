@@ -1,3 +1,4 @@
+import {renderPlots} from '../plots.mjs';
 import {createEditor} from '../editors.mjs';
 import {serviceOrigin} from '../service_config.mjs';
 
@@ -71,6 +72,7 @@ async function submit() {
   controls();
   get('status').textContent = 'Submitting…';
   get('output').value = '';
+  get('plot-results').replaceChildren();
   let terminal = false;
   try {
     const payload = {url: get('package-url').value.trim(), revision: get('revision').value.trim(),
@@ -89,6 +91,7 @@ async function submit() {
       terminal = true;
       const result = response.result;
       get('output').value = resultText(result);
+      renderPlots(get('plot-results'), result);
       get('status').textContent = result.needs_target ? 'Choose a target' : result.ok ? 'PASS' : 'FAIL';
       get('targets').replaceChildren(...(result.targets ?? []).map(name => {
         const option = document.createElement('option'); option.value = name; return option;

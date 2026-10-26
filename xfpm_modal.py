@@ -23,7 +23,8 @@ OWNER_SECRET_NAME = os.environ.get('FPM_OWNER_SECRET', '')
 ENABLED_COMPILERS = tuple(json.loads(os.environ.get('FPM_ENABLED_COMPILERS', '["gfortran"]')))
 if modal.is_local():
     digest = hashlib.sha256()
-    for filename in ('xfpm_modal.py', 'xfpm_worker.py', 'fpm_sources.py', 'fpm_compilers.py',
+    for filename in ('xfpm_modal.py', 'xfpm_worker.py', 'fpm_sources.py', 'fpm_compilers.py', 'fortran_plot.py',
+                     'vendor/pyplot-fortran/src/pyplot_module.F90', 'vendor/pyplot-fortran/upstream.json',
                      'fpm_toolchains/xinstall_gnu17.sh', 'fpm_toolchains/xinstall_intel.sh', 'fpm_toolchains/xinstall_flang.sh'):
         digest.update((ROOT / filename).read_bytes())
     IMAGE_NAME = 'fortran-fpm-' + digest.hexdigest()[:20]
@@ -36,6 +37,9 @@ def image_name(compiler):
 
 def with_fpm(base, compiler):
     return (base
+    .pip_install('matplotlib==3.10.8')
+    .add_local_file(ROOT / 'fortran_plot.py', '/opt/fpm/fortran_plot.py', copy=True)
+    .add_local_dir(ROOT / 'vendor/pyplot-fortran', '/opt/fpm/vendor/pyplot-fortran', copy=True)
     .run_commands(
         "python -c \"import urllib.request,hashlib,pathlib; b=urllib.request.urlopen('" + FPM_URL + "').read(); "
         "assert hashlib.sha256(b).hexdigest() == '" + FPM_SHA256 + "'; pathlib.Path('/usr/local/bin/fpm').write_bytes(b)\"",

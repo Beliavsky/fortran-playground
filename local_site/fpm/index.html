@@ -39,5 +39,6 @@ end program main
 <label for="diff-atol">Absolute tolerance</label><input id="diff-atol" value="0" size="9"><label for="diff-rtol">Relative tolerance</label><input id="diff-rtol" value="0" size="9"></div><pre id="diff-results" hidden></pre>
 <button id="copy">Copy all results</button><textarea id="copy-text" rows="8" readonly hidden aria-label="Results to copy"></textarea>
 <div class="scroll"><table><thead><tr><th>Compiler</th><th>Result</th><th>Total</th><th>Compile</th><th>Run</th><th>Other</th></tr></thead><tbody id="summary"></tbody></table></div><div id="results"></div></section>
-<footer>FPM resolves dependencies normally, using its local cache and network. No hosted playground requests or usage quotas apply. Initialize Intel's compiler environment before starting the server if using ifx.</footer>
+<footer>
+<p>Plotting: <code>use pyplot_module</code> and save a PNG with <code>savefig</code>. See <a href="https://github.com/Beliavsky/fortran-playground/blob/main/docs/plotting.md">examples and setup</a>. Local rendering requires Python, NumPy, and Matplotlib.</p>FPM resolves dependencies normally, using its local cache and network. No hosted playground requests or usage quotas apply. Initialize Intel's compiler environment before starting the server if using ifx.</footer>
 </main><script src="../editor-vendor/codemirror.js"></script><script src="../editor-vendor/fortran.js"></script><script type="module" src="fpm.mjs"></script></body></html>

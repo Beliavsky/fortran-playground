@@ -314,7 +314,7 @@ class Handler(BaseHTTPRequestHandler):
                 self.reply(200 if value else 404, value or {'error': 'Unknown job'})
             elif parsed.path in ('/', '/index.html', '/app.mjs', '/style.css', '/editors.mjs', '/indentation.mjs',
                                  '/fpm/', '/fpm/index.html', '/fpm/fpm.mjs',
-                                 '/output_diff.mjs', '/output_diff_ui.mjs',
+                                 '/output_diff.mjs', '/output_diff_ui.mjs', '/plots.mjs',
                                  '/editor-vendor/codemirror.js', '/editor-vendor/fortran.js',
                                  '/editor-vendor/codemirror.css', '/editor-vendor/LICENSE'):
                 name = 'index.html' if parsed.path == '/' else 'fpm/index.html' if parsed.path == '/fpm/' else parsed.path[1:]

@@ -1,0 +1,116 @@
+{
+  "verified_utc": "2026-10-26T19:52:28.493504+00:00",
+  "note": "Ephemeral network-blocked hosted sandboxes; neither production API was deployed. Source: docs/examples/plot_trig.f90. PNGs validated by the collector.",
+  "upstream": {
+    "repository": "https://github.com/jacobwilliams/pyplot-fortran",
+    "revision": "217d0c97a12812ff5c5aca00e5439237e866bc91",
+    "sha256": {
+      "src/pyplot_module.F90": "f1d3de3e2aca70e23c8463467f045d9659ea168135a61317ee6cfb6f2da69ab1",
+      "LICENSE": "784d23d2b30e28074da94c749eb1f9994580ab9e3db3ddcebe93df9ef8f3fc71"
+    }
+  },
+  "hosted_source": [
+    {
+      "compiler": "gfortran",
+      "compiler_version": "GNU Fortran (GCC) 16.2.0",
+      "ok": true,
+      "compile_seconds": 0.70881583,
+      "run_seconds": 0.803798937,
+      "plots": [
+        {
+          "name": "trig.png",
+          "base64_bytes": 56016
+        }
+      ]
+    },
+    {
+      "compiler": "ifx",
+      "compiler_version": "ifx (IFX) 2025.3.3 20260319",
+      "ok": true,
+      "compile_seconds": 2.003838428,
+      "run_seconds": 0.6433165359999999,
+      "plots": [
+        {
+          "name": "trig.png",
+          "base64_bytes": 56036
+        }
+      ]
+    },
+    {
+      "compiler": "flang",
+      "compiler_version": "Debian flang version 23.1.5 (++20261020014245+93acfd24c599-1~exp1~20261020134308.90)",
+      "ok": true,
+      "compile_seconds": 1.892608007,
+      "run_seconds": 0.9596762999999999,
+      "plots": [
+        {
+          "name": "trig.png",
+          "base64_bytes": 56016
+        }
+      ]
+    },
+    {
+      "compiler": "lfortran",
+      "compiler_version": "LFortran version: 0.66.0",
+      "ok": true,
+      "compile_seconds": 5.377062759,
+      "run_seconds": 0.8845812500000001,
+      "plots": [
+        {
+          "name": "trig.png",
+          "base64_bytes": 56016
+        }
+      ]
+    },
+    {
+      "compiler": "ofort",
+      "compiler_version": "ofort 0.1.0 (commit 77301d0ca146, built on 2022-01-01 05:00 by gcc -O2)",
+      "ok": false,
+      "compile_seconds": null,
+      "run_seconds": 0.24780827900000002,
+      "plots": [],
+      "diagnostic": "input.f90:140: Array reference target is not an array\nline 140:             me%str(me%str_len+1:me%str_len+len(str)) = str\n"
+    },
+    {
+      "compiler": "gfortran17",
+      "compiler_version": "GNU Fortran (GCC) 17.0.0 20261018 (experimental)",
+      "ok": true,
+      "compile_seconds": 1.561799487,
+      "run_seconds": 0.8273750359999998,
+      "plots": [
+        {
+          "name": "trig.png",
+          "base64_bytes": 56016
+        }
+      ]
+    }
+  ],
+  "local_windows": [
+    {
+      "compiler": "ifx",
+      "ok": true,
+      "plots": 1,
+      "diagnostic": ""
+    },
+    {
+      "compiler": "flang",
+      "ok": true,
+      "plots": 1,
+      "diagnostic": ""
+    },
+    {
+      "compiler": "lfortran",
+      "ok": false,
+      "plots": 0,
+      "diagnostic": "Module compilation succeeded; the local Windows linker/environment failed (exit code 10)."
+    },
+    {
+      "compiler": "ofort",
+      "ok": false,
+      "plots": 0,
+      "diagnostic": "pyplot_module.f90:140: Array reference target is not an array (derived-type string substring)."
+    }
+  ],
+  "local_gnu": "Source and FPM consumer tests passed with valid returned PNGs.",
+  "hosted_fpm_report": "plotting-fpm-validation.json"
+}

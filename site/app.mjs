@@ -1,3 +1,4 @@
+import {renderPlots} from './plots.mjs';
 import {createEditor} from './editors.mjs';
 import {examples, exampleLabels} from './examples.generated.mjs';
 import {parseCompilerErrors} from './diagnostics.mjs';
@@ -346,6 +347,8 @@ function renderComparison() {
       get(`compare-output-build-error-${name}`).textContent = output.buildError;
       get(`compare-output-build-error-section-${name}`).hidden = !output.buildError;
       get(`compare-output-build-details-${name}`).open = output.failed;
+      const plots = get(`compare-output-plots-${name}`);
+      plots.replaceChildren(); renderPlots(plots, row.result);
       renderedOutputRows.set(name, row);
     }
   }
@@ -486,6 +489,7 @@ async function connect() {
 }
 
 function show(result, compilation = combinedSource(editor.getValue(), null), allowFix = true, sourceCurrent = true) {
+  get('plot-results').replaceChildren(); renderPlots(get('plot-results'), result);
   compilationFailed = result.build?.ok === false || result.ok === false || Boolean(result.error);
   get('build-title').textContent = result.interpreter ? (result.build ? 'Syntax checking' : 'Interpreter diagnostics') : 'Compilation';
   const version = result.compiler_version;

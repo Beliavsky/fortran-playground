@@ -1,0 +1,608 @@
+{
+  "compilers": [
+    "gfortran",
+    "gfortran17",
+    "ifx",
+    "flang"
+  ],
+  "fpm": "0.12.0",
+  "network": "blocked",
+  "build_timeout": 180,
+  "run_timeout": 30,
+  "sandbox_timeout": 250,
+  "runs": [
+    {
+      "name": "plotting-consumer",
+      "compiler": "gfortran",
+      "verified": true,
+      "expected_ok": true,
+      "seconds": 44.42,
+      "packages": [],
+      "result": {
+        "ok": true,
+        "compiler": "GNU Fortran (GCC) 16.2.0",
+        "compiler_id": "gfortran",
+        "fpm": "0.12.0",
+        "stages": [
+          {
+            "name": "Build",
+            "command": [
+              "fpm",
+              "build",
+              "--profile",
+              "debug",
+              "--compiler",
+              "gfortran",
+              "--c-compiler",
+              "gcc",
+              "--cxx-compiler",
+              "g++",
+              "--no-prune"
+            ],
+            "seconds": 1.033,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": " + mkdir -p build/dependencies\n[  0%]              pyplot_module.f90\n[ 20%]              pyplot_module.f90  done.\n[ 20%]                       math.f90\n[ 40%]                       math.f90  done.\n[ 40%]           libplayground-main.a\n[ 60%]           libplayground-main.a  done.\n[ 60%]                       main.f90\n[ 80%]                       main.f90  done.\n[ 80%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+            "stderr": ""
+          },
+          {
+            "name": "Run",
+            "command": [
+              "fpm",
+              "run",
+              "--profile",
+              "debug",
+              "--compiler",
+              "gfortran",
+              "--c-compiler",
+              "gcc",
+              "--cxx-compiler",
+              "g++",
+              "--no-prune"
+            ],
+            "seconds": 0.83,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": "Saved trig.png\n",
+            "stderr": "Project is up to date\n"
+          }
+        ],
+        "targets": [
+          "playground-main"
+        ],
+        "plots": [
+          {
+            "name": "trig.png",
+            "mime": "image/png",
+            "base64_bytes": 56016
+          }
+        ],
+        "plot_notes": []
+      }
+    },
+    {
+      "name": "plotting-upstream-library",
+      "compiler": "gfortran",
+      "verified": true,
+      "expected_ok": true,
+      "seconds": 9.878,
+      "packages": [
+        {
+          "repository": "jacobwilliams/pyplot-fortran",
+          "revision": "217d0c97a12812ff5c5aca00e5439237e866bc91",
+          "sha256": "59bd9a52503d77d51b6d962c983bd31854aea844c99ab7fafd1b09923ed22956"
+        }
+      ],
+      "result": {
+        "ok": true,
+        "compiler": "GNU Fortran (GCC) 16.2.0",
+        "compiler_id": "gfortran",
+        "fpm": "0.12.0",
+        "stages": [
+          {
+            "name": "Build",
+            "command": [
+              "fpm",
+              "build",
+              "--profile",
+              "debug",
+              "--compiler",
+              "gfortran",
+              "--c-compiler",
+              "gcc",
+              "--cxx-compiler",
+              "g++",
+              "--no-prune"
+            ],
+            "seconds": 2.896,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": " + mkdir -p build/dependencies\n[  0%]              pyplot_module.F90\n[ 25%]              pyplot_module.F90  done.\n[ 25%]           libplayground-main.a\n[ 50%]           libplayground-main.a  done.\n[ 50%]                       main.f90\n[ 75%]                       main.f90  done.\n[ 75%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+            "stderr": ""
+          },
+          {
+            "name": "Run",
+            "command": [
+              "fpm",
+              "run",
+              "--profile",
+              "debug",
+              "--compiler",
+              "gfortran",
+              "--c-compiler",
+              "gcc",
+              "--cxx-compiler",
+              "g++",
+              "--no-prune"
+            ],
+            "seconds": 0.895,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": "Saved trig.png\n",
+            "stderr": "Project is up to date\n"
+          }
+        ],
+        "targets": [
+          "playground-main"
+        ],
+        "plots": [
+          {
+            "name": "trig.png",
+            "mime": "image/png",
+            "base64_bytes": 56016
+          }
+        ],
+        "plot_notes": []
+      }
+    },
+    {
+      "name": "plotting-consumer",
+      "compiler": "gfortran17",
+      "verified": true,
+      "expected_ok": true,
+      "seconds": 64.087,
+      "packages": [],
+      "result": {
+        "ok": true,
+        "compiler": "GNU Fortran (GCC) 17.0.0 20261018 (experimental)",
+        "compiler_id": "gfortran17",
+        "fpm": "0.12.0",
+        "stages": [
+          {
+            "name": "Build",
+            "command": [
+              "fpm",
+              "build",
+              "--profile",
+              "debug",
+              "--compiler",
+              "/opt/fpm/bin/gfortran",
+              "--c-compiler",
+              "gcc",
+              "--cxx-compiler",
+              "g++",
+              "--no-prune"
+            ],
+            "seconds": 1.921,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": " + mkdir -p build/dependencies\n[  0%]              pyplot_module.f90\n[ 20%]              pyplot_module.f90  done.\n[ 20%]                       math.f90\n[ 40%]                       math.f90  done.\n[ 40%]           libplayground-main.a\n[ 60%]           libplayground-main.a  done.\n[ 60%]                       main.f90\n[ 80%]                       main.f90  done.\n[ 80%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+            "stderr": ""
+          },
+          {
+            "name": "Run",
+            "command": [
+              "fpm",
+              "run",
+              "--profile",
+              "debug",
+              "--compiler",
+              "/opt/fpm/bin/gfortran",
+              "--c-compiler",
+              "gcc",
+              "--cxx-compiler",
+              "g++",
+              "--no-prune"
+            ],
+            "seconds": 0.914,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": "Saved trig.png\n",
+            "stderr": "Project is up to date\n"
+          }
+        ],
+        "targets": [
+          "playground-main"
+        ],
+        "plots": [
+          {
+            "name": "trig.png",
+            "mime": "image/png",
+            "base64_bytes": 56016
+          }
+        ],
+        "plot_notes": []
+      }
+    },
+    {
+      "name": "plotting-upstream-library",
+      "compiler": "gfortran17",
+      "verified": true,
+      "expected_ok": true,
+      "seconds": 6.813,
+      "packages": [
+        {
+          "repository": "jacobwilliams/pyplot-fortran",
+          "revision": "217d0c97a12812ff5c5aca00e5439237e866bc91",
+          "sha256": "59bd9a52503d77d51b6d962c983bd31854aea844c99ab7fafd1b09923ed22956"
+        }
+      ],
+      "result": {
+        "ok": true,
+        "compiler": "GNU Fortran (GCC) 17.0.0 20261018 (experimental)",
+        "compiler_id": "gfortran17",
+        "fpm": "0.12.0",
+        "stages": [
+          {
+            "name": "Build",
+            "command": [
+              "fpm",
+              "build",
+              "--profile",
+              "debug",
+              "--compiler",
+              "/opt/fpm/bin/gfortran",
+              "--c-compiler",
+              "gcc",
+              "--cxx-compiler",
+              "g++",
+              "--no-prune"
+            ],
+            "seconds": 2.345,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": " + mkdir -p build/dependencies\n[  0%]              pyplot_module.F90\n[ 25%]              pyplot_module.F90  done.\n[ 25%]           libplayground-main.a\n[ 50%]           libplayground-main.a  done.\n[ 50%]                       main.f90\n[ 75%]                       main.f90  done.\n[ 75%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+            "stderr": ""
+          },
+          {
+            "name": "Run",
+            "command": [
+              "fpm",
+              "run",
+              "--profile",
+              "debug",
+              "--compiler",
+              "/opt/fpm/bin/gfortran",
+              "--c-compiler",
+              "gcc",
+              "--cxx-compiler",
+              "g++",
+              "--no-prune"
+            ],
+            "seconds": 0.968,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": "Saved trig.png\n",
+            "stderr": "Project is up to date\n"
+          }
+        ],
+        "targets": [
+          "playground-main"
+        ],
+        "plots": [
+          {
+            "name": "trig.png",
+            "mime": "image/png",
+            "base64_bytes": 56016
+          }
+        ],
+        "plot_notes": []
+      }
+    },
+    {
+      "name": "plotting-consumer",
+      "compiler": "ifx",
+      "verified": true,
+      "expected_ok": true,
+      "seconds": 43.159,
+      "packages": [],
+      "result": {
+        "ok": true,
+        "compiler": "ifx (IFX) 2025.3.3 20260319",
+        "compiler_id": "ifx",
+        "fpm": "0.12.0",
+        "stages": [
+          {
+            "name": "Build",
+            "command": [
+              "fpm",
+              "build",
+              "--profile",
+              "debug",
+              "--compiler",
+              "/opt/fpm/bin/ifx",
+              "--c-compiler",
+              "gcc",
+              "--cxx-compiler",
+              "g++",
+              "--no-prune"
+            ],
+            "seconds": 2.898,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": " + mkdir -p build/dependencies\n[  0%]              pyplot_module.f90\n[ 20%]              pyplot_module.f90  done.\n[ 20%]                       math.f90\n[ 40%]                       math.f90  done.\n[ 40%]           libplayground-main.a\n[ 60%]           libplayground-main.a  done.\n[ 60%]                       main.f90\n[ 80%]                       main.f90  done.\n[ 80%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+            "stderr": ""
+          },
+          {
+            "name": "Run",
+            "command": [
+              "fpm",
+              "run",
+              "--profile",
+              "debug",
+              "--compiler",
+              "/opt/fpm/bin/ifx",
+              "--c-compiler",
+              "gcc",
+              "--cxx-compiler",
+              "g++",
+              "--no-prune"
+            ],
+            "seconds": 0.79,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": "Saved trig.png\n",
+            "stderr": "Project is up to date\n"
+          }
+        ],
+        "targets": [
+          "playground-main"
+        ],
+        "plots": [
+          {
+            "name": "trig.png",
+            "mime": "image/png",
+            "base64_bytes": 56016
+          }
+        ],
+        "plot_notes": []
+      }
+    },
+    {
+      "name": "plotting-upstream-library",
+      "compiler": "ifx",
+      "verified": true,
+      "expected_ok": true,
+      "seconds": 5.768,
+      "packages": [
+        {
+          "repository": "jacobwilliams/pyplot-fortran",
+          "revision": "217d0c97a12812ff5c5aca00e5439237e866bc91",
+          "sha256": "59bd9a52503d77d51b6d962c983bd31854aea844c99ab7fafd1b09923ed22956"
+        }
+      ],
+      "result": {
+        "ok": true,
+        "compiler": "ifx (IFX) 2025.3.3 20260319",
+        "compiler_id": "ifx",
+        "fpm": "0.12.0",
+        "stages": [
+          {
+            "name": "Build",
+            "command": [
+              "fpm",
+              "build",
+              "--profile",
+              "debug",
+              "--compiler",
+              "/opt/fpm/bin/ifx",
+              "--c-compiler",
+              "gcc",
+              "--cxx-compiler",
+              "g++",
+              "--no-prune"
+            ],
+            "seconds": 1.869,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": " + mkdir -p build/dependencies\n[  0%]              pyplot_module.F90\n[ 25%]              pyplot_module.F90  done.\n[ 25%]           libplayground-main.a\n[ 50%]           libplayground-main.a  done.\n[ 50%]                       main.f90\n[ 75%]                       main.f90  done.\n[ 75%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+            "stderr": ""
+          },
+          {
+            "name": "Run",
+            "command": [
+              "fpm",
+              "run",
+              "--profile",
+              "debug",
+              "--compiler",
+              "/opt/fpm/bin/ifx",
+              "--c-compiler",
+              "gcc",
+              "--cxx-compiler",
+              "g++",
+              "--no-prune"
+            ],
+            "seconds": 0.644,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": "Saved trig.png\n",
+            "stderr": "Project is up to date\n"
+          }
+        ],
+        "targets": [
+          "playground-main"
+        ],
+        "plots": [
+          {
+            "name": "trig.png",
+            "mime": "image/png",
+            "base64_bytes": 56016
+          }
+        ],
+        "plot_notes": []
+      }
+    },
+    {
+      "name": "plotting-consumer",
+      "compiler": "flang",
+      "verified": true,
+      "expected_ok": true,
+      "seconds": 43.951,
+      "packages": [],
+      "result": {
+        "ok": true,
+        "compiler": "Debian flang version 23.1.5 (++20261020014245+93acfd24c599-1~exp1~20261020134308.90)",
+        "compiler_id": "flang",
+        "fpm": "0.12.0",
+        "stages": [
+          {
+            "name": "Build",
+            "command": [
+              "fpm",
+              "build",
+              "--profile",
+              "debug",
+              "--compiler",
+              "/opt/fpm/bin/flang-new",
+              "--c-compiler",
+              "gcc",
+              "--cxx-compiler",
+              "g++",
+              "--no-prune"
+            ],
+            "seconds": 1.119,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": " + mkdir -p build/dependencies\n[  0%]              pyplot_module.f90\n[ 20%]              pyplot_module.f90  done.\n[ 20%]                       math.f90\n[ 40%]                       math.f90  done.\n[ 40%]           libplayground-main.a\n[ 60%]           libplayground-main.a  done.\n[ 60%]                       main.f90\n[ 80%]                       main.f90  done.\n[ 80%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+            "stderr": ""
+          },
+          {
+            "name": "Run",
+            "command": [
+              "fpm",
+              "run",
+              "--profile",
+              "debug",
+              "--compiler",
+              "/opt/fpm/bin/flang-new",
+              "--c-compiler",
+              "gcc",
+              "--cxx-compiler",
+              "g++",
+              "--no-prune"
+            ],
+            "seconds": 0.742,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": "Saved trig.png\n",
+            "stderr": "Project is up to date\n"
+          }
+        ],
+        "targets": [
+          "playground-main"
+        ],
+        "plots": [
+          {
+            "name": "trig.png",
+            "mime": "image/png",
+            "base64_bytes": 56016
+          }
+        ],
+        "plot_notes": []
+      }
+    },
+    {
+      "name": "plotting-upstream-library",
+      "compiler": "flang",
+      "verified": true,
+      "expected_ok": true,
+      "seconds": 5.495,
+      "packages": [
+        {
+          "repository": "jacobwilliams/pyplot-fortran",
+          "revision": "217d0c97a12812ff5c5aca00e5439237e866bc91",
+          "sha256": "59bd9a52503d77d51b6d962c983bd31854aea844c99ab7fafd1b09923ed22956"
+        }
+      ],
+      "result": {
+        "ok": true,
+        "compiler": "Debian flang version 23.1.5 (++20261020014245+93acfd24c599-1~exp1~20261020134308.90)",
+        "compiler_id": "flang",
+        "fpm": "0.12.0",
+        "stages": [
+          {
+            "name": "Build",
+            "command": [
+              "fpm",
+              "build",
+              "--profile",
+              "debug",
+              "--compiler",
+              "/opt/fpm/bin/flang-new",
+              "--c-compiler",
+              "gcc",
+              "--cxx-compiler",
+              "g++",
+              "--no-prune"
+            ],
+            "seconds": 1.79,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": " + mkdir -p build/dependencies\n[  0%]              pyplot_module.F90\n[ 25%]              pyplot_module.F90  done.\n[ 25%]           libplayground-main.a\n[ 50%]           libplayground-main.a  done.\n[ 50%]                       main.f90\n[ 75%]                       main.f90  done.\n[ 75%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+            "stderr": ""
+          },
+          {
+            "name": "Run",
+            "command": [
+              "fpm",
+              "run",
+              "--profile",
+              "debug",
+              "--compiler",
+              "/opt/fpm/bin/flang-new",
+              "--c-compiler",
+              "gcc",
+              "--cxx-compiler",
+              "g++",
+              "--no-prune"
+            ],
+            "seconds": 0.972,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": "Saved trig.png\n",
+            "stderr": "Project is up to date\n"
+          }
+        ],
+        "targets": [
+          "playground-main"
+        ],
+        "plots": [
+          {
+            "name": "trig.png",
+            "mime": "image/png",
+            "base64_bytes": 56016
+          }
+        ],
+        "plot_notes": []
+      }
+    }
+  ],
+  "writable_cache_recheck": "GNU consumer and upstream-package cases passed after configuring per-job Matplotlib/font caches."
+}

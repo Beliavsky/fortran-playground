@@ -56,5 +56,6 @@
 <button id="copy" disabled>Copy all results</button><p id="copy-status" role="status"></p><textarea id="copy-text" rows="8" readonly hidden aria-label="Results to copy"></textarea>
 <div class="scroll"><table><thead><tr><th>Compiler</th><th>Result</th><th>Total</th><th>Compile</th><th>Run</th><th>Other</th></tr></thead><tbody id="summary"></tbody></table></div>
 <div id="results"></div></section>
-<footer>Local Fortran uses Python's standard library and your installed compilers. Nothing is submitted to the online playground. Close this server with Ctrl+C.</footer>
+<footer>
+<p>Plotting: <code>use pyplot_module</code> and save a PNG with <code>savefig</code>. See <a href="https://github.com/Beliavsky/fortran-playground/blob/main/docs/plotting.md">examples and setup</a>. Local rendering requires Python, NumPy, and Matplotlib.</p>Local Fortran uses Python's standard library and your installed compilers. Nothing is submitted to the online playground. Close this server with Ctrl+C.</footer>
 </main><script src="editor-vendor/codemirror.js"></script><script src="editor-vendor/fortran.js"></script><script type="module" src="app.mjs"></script></body></html>

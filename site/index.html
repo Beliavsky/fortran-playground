@@ -227,7 +227,7 @@
       <textarea id="fortran" spellcheck="false"></textarea>
     </section>
     <div id="results-pane" class="results-pane">
-      <section id="program-output-pane" class="diagnostics"><h2>Program output <span id="run-time" class="line-count"></span></h2><pre id="output">Not run.</pre></section>
+      <section id="program-output-pane" class="diagnostics"><h2>Program output <span id="run-time" class="line-count"></span></h2><pre id="output">Not run.</pre><div id="plot-results"></div></section>
       <section id="compilation-pane" class="diagnostics"><h2><span id="build-title">Compilation</span> <span id="build-time" class="line-count"></span></h2><p id="result-compiler-version" class="version" hidden></p><pre id="diagnostics">Not compiled.</pre></section>
       <section id="checks-pane" class="diagnostics" hidden>
         <div class="checks-header">
@@ -244,7 +244,7 @@
         <h3 id="compare-output-title-gfortran"></h3>
         <p id="compare-output-version-gfortran" class="version"></p>
         <p id="compare-output-reason-gfortran" class="version"></p>
-        <h4>Program output</h4><pre id="compare-output-stdout-gfortran"></pre>
+        <h4>Program output</h4><pre id="compare-output-stdout-gfortran"></pre><div id="compare-output-plots-gfortran"></div>
         <div id="compare-output-stderr-section-gfortran" hidden><h4>Program standard error</h4><pre id="compare-output-stderr-gfortran"></pre></div>
         <details id="compare-output-build-details-gfortran"><summary>Compilation log</summary>
           <pre id="compare-output-build-gfortran"></pre>
@@ -255,7 +255,7 @@
         <h3 id="compare-output-title-gfortran17"></h3>
         <p id="compare-output-version-gfortran17" class="version"></p>
         <p id="compare-output-reason-gfortran17" class="version"></p>
-        <h4>Program output</h4><pre id="compare-output-stdout-gfortran17"></pre>
+        <h4>Program output</h4><pre id="compare-output-stdout-gfortran17"></pre><div id="compare-output-plots-gfortran17"></div>
         <div id="compare-output-stderr-section-gfortran17" hidden><h4>Program standard error</h4><pre id="compare-output-stderr-gfortran17"></pre></div>
         <details id="compare-output-build-details-gfortran17"><summary>Compilation log</summary>
           <pre id="compare-output-build-gfortran17"></pre>
@@ -266,7 +266,7 @@
         <h3 id="compare-output-title-ifx"></h3>
         <p id="compare-output-version-ifx" class="version"></p>
         <p id="compare-output-reason-ifx" class="version"></p>
-        <h4>Program output</h4><pre id="compare-output-stdout-ifx"></pre>
+        <h4>Program output</h4><pre id="compare-output-stdout-ifx"></pre><div id="compare-output-plots-ifx"></div>
         <div id="compare-output-stderr-section-ifx" hidden><h4>Program standard error</h4><pre id="compare-output-stderr-ifx"></pre></div>
         <details id="compare-output-build-details-ifx"><summary>Compilation log</summary>
           <pre id="compare-output-build-ifx"></pre>
@@ -277,7 +277,7 @@
         <h3 id="compare-output-title-flang"></h3>
         <p id="compare-output-version-flang" class="version"></p>
         <p id="compare-output-reason-flang" class="version"></p>
-        <h4>Program output</h4><pre id="compare-output-stdout-flang"></pre>
+        <h4>Program output</h4><pre id="compare-output-stdout-flang"></pre><div id="compare-output-plots-flang"></div>
         <div id="compare-output-stderr-section-flang" hidden><h4>Program standard error</h4><pre id="compare-output-stderr-flang"></pre></div>
         <details id="compare-output-build-details-flang"><summary>Compilation log</summary>
           <pre id="compare-output-build-flang"></pre>
@@ -288,7 +288,7 @@
         <h3 id="compare-output-title-lfortran"></h3>
         <p id="compare-output-version-lfortran" class="version"></p>
         <p id="compare-output-reason-lfortran" class="version"></p>
-        <h4>Program output</h4><pre id="compare-output-stdout-lfortran"></pre>
+        <h4>Program output</h4><pre id="compare-output-stdout-lfortran"></pre><div id="compare-output-plots-lfortran"></div>
         <div id="compare-output-stderr-section-lfortran" hidden><h4>Program standard error</h4><pre id="compare-output-stderr-lfortran"></pre></div>
         <details id="compare-output-build-details-lfortran"><summary>Compilation log</summary>
           <pre id="compare-output-build-lfortran"></pre>
@@ -299,7 +299,7 @@
         <h3 id="compare-output-title-ofort"></h3>
         <p id="compare-output-version-ofort" class="version"></p>
         <p id="compare-output-reason-ofort" class="version"></p>
-        <h4>Program output</h4><pre id="compare-output-stdout-ofort"></pre>
+        <h4>Program output</h4><pre id="compare-output-stdout-ofort"></pre><div id="compare-output-plots-ofort"></div>
         <div id="compare-output-stderr-section-ofort" hidden><h4>Program standard error</h4><pre id="compare-output-stderr-ofort"></pre></div>
         <details id="compare-output-build-details-ofort"><summary>Compilation log</summary>
           <pre id="compare-output-build-ofort"></pre>
@@ -308,6 +308,7 @@
       </section>
     </div>
   <footer>
+<p>Plotting: <code>use pyplot_module</code> and save a PNG with <code>savefig</code>. See <a href="https://github.com/Beliavsky/fortran-playground/blob/main/docs/plotting.md">examples and setup</a>. Local rendering requires Python, NumPy, and Matplotlib.</p>
     <p id="editor-note">Plain-text editor available; loading syntax coloring…</p>
     <p id="simple-help" hidden>Run compiles and executes your program using GNU Fortran with default options. Compilation errors appear below Program output.</p>
     <div id="advanced-help"><p>Compile checks and builds without running. Compile and Run builds and executes; Run Again executes the retained build without recompiling. With ofort, Check syntax validates without execution and Run interprets source afresh. Existing python_mod helpers are available automatically with compilers, not ofort. No Python code is submitted or translated.</p>

@@ -511,6 +511,7 @@ def main(argv=None):
     parser.add_argument('--fail-fast', action='store_true', help='Stop after the first compilation or execution failure')
     parser.add_argument('--terse', action='store_true', help='Show program output, diagnostics, and the final summary only')
     parser.add_argument('--list', action='store_true', help='Print the exact submitted source once, including with --terse')
+    parser.add_argument('--plot-dir', type=Path, default=Path('playground-plots'), help='Save returned PNGs under DIR/COMPILER (default: playground-plots)')
     parser.add_argument('--owner', action='store_true', help='Use private owner access; read P2F_OWNER_KEY or prompt without echo')
     parser.add_argument('--images', type=int, choices=(1, 2, 4), help='Enable coarrays with an image count verified by the service')
     parser.add_argument('--options-file', type=Path, help='JSON file mapping compiler names to additional argument lists')
@@ -599,6 +600,11 @@ def main(argv=None):
                                              **({'stdin': stdin} if stdin is not None else {}))
             outputs.append({'compiler': compiler, 'status': 'PASS' if result['ok'] else 'FAIL', 'result': result})
             print_result(compiler, result, sections, elapsed, terse=args.terse)
+            from fortran_plot import save_plots
+            for path in save_plots(result, args.plot_dir, compiler):
+                print('Plot: ' + str(path))
+            for note in result.get('plot_notes', []):
+                print('Plot: ' + note)
             build = result.get('build') or {}
             execution = result.get('execution') or {}
             compile_seconds = build.get('seconds')

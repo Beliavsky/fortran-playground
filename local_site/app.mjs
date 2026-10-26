@@ -1,3 +1,4 @@
+import {renderPlots} from './plots.mjs';
 import {createEditor} from './editors.mjs';
 import {loadIndentation, saveIndentation} from './indentation.mjs';
 import {createOutputComparison} from './output_diff_ui.mjs';
@@ -172,6 +173,7 @@ function render() {
       element('h4', 'Program output', section);
       element('pre', row.execution ? row.execution.stdout || '(No standard output)' : row.build?.ok === false ? 'Not run because compilation failed.' : row.status === 'ERROR' ? 'No execution result received.' : 'Not run.', section);
       if (row.execution?.stderr) {element('h4', 'Program standard error', section); element('pre', row.execution.stderr, section);}
+      renderPlots(section, row);
       const details = element('details', undefined, section); details.open = ['FAIL', 'ERROR'].includes(row.status);
       element('summary', 'Compilation log', details);
       for (const command of row.build?.commands || []) element('pre', command.map(arg => JSON.stringify(arg)).join(' '), details);

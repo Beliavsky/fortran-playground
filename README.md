@@ -1,6 +1,10 @@
 # Fortran playground
 
-### Open the playground with URL settings
+### Plotting
+
+Programs can `use pyplot_module` and call `savefig` to generate PNGs using [pyplot-fortran](https://github.com/jacobwilliams/pyplot-fortran). The hosted and local source/FPM pages display returned images with download links; Compare mode keeps each compiler's plots separate. Python runners save returned images under `playground-plots/COMPILER/`, configurable with `--plot-dir`. Local plotting requires NumPy and Matplotlib. Hosted plotting requires redeploying both execution services. See [examples, local use, limits, and deployment](docs/plotting.md).
+
+## Open the playground with URL settings
 
 Links can configure the playground without embedding code or running a job. For example, [open Compare compilers](https://beliavsky.github.io/fortran-playground/?interface=compare), or [select GNU Fortran and Intel](https://beliavsky.github.io/fortran-playground/?interface=compare&compilers=gfortran,ifx).
 
@@ -230,7 +234,7 @@ Copy the script into your repository or make this playground's checkout availabl
 
 ## Examples
 
-The starter collection contains **14 language demonstrations** and **six numerical calculations**. Every program is standalone, prints labeled results, and includes a suggested change to try. FortranTip adaptations retain source URLs and original attribution in comments.
+The starter collection contains **14 language demonstrations** and **six numerical calculations**. The core programs are standalone, print labeled results, and include a suggested change to try. Additional examples demonstrate coarrays and plotting; the plotting example uses the supplied pyplot-fortran module. FortranTip adaptations retain source URLs and original attribution in comments.
 
 | Language demonstrations | Numerical calculations |
 | --- | --- |
@@ -269,7 +273,7 @@ For local preview, `python xserve.py` generates the catalog at startup and whene
 
 ## Python command-line client
 
-[`xplayground_run.py`](xplayground_run.py) submits Fortran source from local files or raw HTTPS URLs to the hosted execution service and displays the compiler/version, build diagnostics, program output, and timings. Keep `fortran_output_diff.py` beside the script when copying it elsewhere. It uses only Python's standard library; no local compiler, Modal account, or Modal credentials are required. Execution is remote and uses the same shared resources and server-enforced quotas as the website.
+[`xplayground_run.py`](xplayground_run.py) submits Fortran source from local files or raw HTTPS URLs to the hosted execution service and displays the compiler/version, build diagnostics, program output, and timings. Keep `fortran_output_diff.py` and `fortran_plot.py` beside the script when copying it elsewhere. It uses only Python's standard library; no local compiler, Modal account, or Modal credentials are required. Execution is remote and uses the same shared resources and server-enforced quotas as the website.
 
 ```powershell
 # Compile and run with gfortran:
@@ -485,7 +489,7 @@ The [FPM feasibility audit](docs/fpm-feasibility/README.md) found five packages 
 
 ## Local compiler tools
 
-The independent local tools use **installed gfortran, gfortran17, ifx, LLVM Flang, LFortran, and/or ofort**, with Python's standard library. They do not contact the hosted playground, require Modal, or consume hosted quotas. Source-file mode accepts local files; package mode uses installed FPM, which may download dependencies normally. To move the complete local tools to a separate project, copy `xfortran_run.py`, `fortran_output_diff.py`, `fortran_fpm.py`, `fpm_runner.py`, `xfortran_serve.py`, and the `local_site/` directory together. Source-only command-line use needs just `xfortran_run.py` and `fortran_output_diff.py`.
+The independent local tools use **installed gfortran, gfortran17, ifx, LLVM Flang, LFortran, and/or ofort**, with Python's standard library. They do not contact the hosted playground, require Modal, or consume hosted quotas. Source-file mode accepts local files; package mode uses installed FPM, which may download dependencies normally. To move the complete local tools to a separate project, copy `xfortran_run.py`, `fortran_output_diff.py`, `fortran_plot.py`, `fortran_fpm.py`, `fpm_runner.py`, `xfortran_serve.py`, `vendor/pyplot-fortran/`, and the `local_site/` directory together. Source-only command-line use needs `xfortran_run.py`, `fortran_output_diff.py`, and `fortran_plot.py`; plotting also needs the vendored module, NumPy, and Matplotlib.
 
 ### Local command-line runner
 

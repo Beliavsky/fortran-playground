@@ -18,7 +18,8 @@ ROOT = Path(__file__).resolve().parent
 def hosted_row(compiler, result, elapsed):
     row = {'compiler': compiler, 'ok': result['ok'], 'status': 'PASS' if result['ok'] else 'FAIL',
            'compiler_version': result.get('compiler', ''), 'stages': result.get('stages', []),
-           'error': result.get('error', ''), 'targets': result.get('targets', []), 'packages': result.get('packages', [])}
+           'error': result.get('error', ''), 'targets': result.get('targets', []), 'packages': result.get('packages', []),
+           'plots': result.get('plots', []), 'plot_notes': result.get('plot_notes', [])}
     for stage in row['stages']:
         row['build' if stage['name'] == 'Build' else 'execution'] = {**stage, 'commands': [stage['command']]}
     build = row.get('build', {}).get('seconds')
@@ -98,6 +99,14 @@ def print_summary(rows):
         print(f'{row["compiler"]:<10} {row["status"]:<7} ' + ' '.join(f'{value:>9}' for value in values))
 
 
+def print_plots(row, directory):
+    from fortran_plot import save_plots
+    for path in save_plots(row, directory, row['compiler']):
+        print('Plot: ' + str(path))
+    for note in row.get('plot_notes', []):
+        print('Plot: ' + note)
+
+
 def main(argv, *, hosted):
     names = ('gfortran', 'gfortran17', 'ifx', 'flang') if hosted else ('gfortran', 'gfortran17', 'ifx', 'flang', 'lfortran')
     parser = argparse.ArgumentParser(description=('Hosted' if hosted else 'Local') + ' FPM package operations')
@@ -113,6 +122,7 @@ def main(argv, *, hosted):
     parser.add_argument('--fail-fast', action='store_true')
     parser.add_argument('--terse', action='store_true')
     parser.add_argument('--list', action='store_true', help='List the custom main program, when supplied')
+    parser.add_argument('--plot-dir', type=Path, default=Path('playground-plots'), help='Save returned PNGs under DIR/COMPILER (default: playground-plots)')
     if hosted:
         parser.add_argument('--revision', default='')
         parser.add_argument('--service-url', help='Defaults to site/fpm/service.json')
@@ -171,7 +181,7 @@ def main(argv, *, hosted):
                 if 'compilers' not in health:
                     submitted.pop('compiler')  # Compatible with the original GNU-only API.
                 row = run_hosted_job(client, submitted, args.timeout)
-                rows.append(row); print_row(row, args.terse)
+                rows.append(row); print_row(row, args.terse); print_plots(row, args.plot_dir)
                 if args.fail_fast and not row['ok']:
                     break
         else:
@@ -185,8 +195,12 @@ def main(argv, *, hosted):
             options = {'action': action, 'target': args.target, 'source': source, 'stdin': stdin,
                        'profile': args.profile, 'compile_timeout': args.compile_timeout, 'run_timeout': args.run_timeout,
                        'output_limit': args.max_output_mb * 1024 * 1024, 'fail_fast': args.fail_fast}
+            def update(row):
+                if row['status'] != 'RUNNING':
+                    print_row(row, args.terse)
+                    print_plots(row, args.plot_dir)
             rows = compare_projects(args.fpm, selected, options=options, overrides=overrides, cancel=cancel,
-                fpm_path=args.fpm_path, update=lambda row: print_row(row, args.terse) if row['status'] != 'RUNNING' else None)
+                fpm_path=args.fpm_path, update=update)
         print_summary(rows)
         if args.diff:
             print('\n' + comparison_report(rows, args.diff, args.diff_atol, args.diff_rtol, args.diff_reference))

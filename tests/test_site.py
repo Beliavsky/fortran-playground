@@ -194,11 +194,20 @@ class SiteTests(unittest.TestCase):
                     if '! Coarray images:' in code:
                         flags = [*flags, '-fcoarray=single']
                     with self.subTest(example=name, mode=mode):
-                        compilation = subprocess.run(['gfortran', *flags, str(source), '-o', str(executable)],
+                        from fortran_plot import uses_pyplot, install_module, plotting_environment
+                        plotting = uses_pyplot(code)
+                        helper = [str(install_module(work))] if plotting else []
+                        # Library warnings are independent of the example's strict flags.
+                        if helper:
+                            module = subprocess.run(['gfortran', '-c', *helper], cwd=work, capture_output=True, text=True, timeout=30)
+                            self.assertEqual(module.returncode, 0, module.stderr)
+                            helper = [str(work / 'pyplot_module.o')]
+                        compilation = subprocess.run(['gfortran', *flags, *helper, str(source), '-o', str(executable)],
                                                      cwd=work, capture_output=True, text=True, timeout=30)
                         self.assertEqual(compilation.returncode, 0, compilation.stdout + compilation.stderr)
                         result = subprocess.run([str(executable)], cwd=work, stdin=subprocess.DEVNULL,
-                                                capture_output=True, text=True, timeout=10)
+                                                capture_output=True, text=True, timeout=30 if plotting else 10,
+                                                env=plotting_environment() if plotting else None)
                         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
                         self.assertEqual(result.stderr.strip(), '')
                         actual_lines = result.stdout.strip().splitlines()

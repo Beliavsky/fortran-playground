@@ -22,6 +22,7 @@ class Image:
     def pip_install(self, *args, **kwargs): return self
     def run_commands(self, *args, **kwargs): return self
     def add_local_file(self, *args, **kwargs): return self
+    def add_local_dir(self, *args, **kwargs): return self
     def env(self, environment):
         self.environment.update(environment)
         return self

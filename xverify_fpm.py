@@ -23,6 +23,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--compilers', nargs='+', choices=['gfortran', 'gfortran17', 'ifx', 'flang'], default=['gfortran'])
     parser.add_argument('--report', default='docs/fpm-validation.json')
+    parser.add_argument('--plotting-only', action='store_true', help='Verify PNG results with the fixture and upstream pyplot-fortran')
     args = parser.parse_args()
     import modal
     from fpm_sources import Preparer, validate_request
@@ -33,7 +34,7 @@ def main():
     images = runtime_images(args.compilers)
     current_compiler = args.compilers[0]
 
-    def trial(name, payload, *, use_fixture=False, expected_ok=True, marker='', needs_target=False, known_failure=''):
+    def trial(name, payload, *, use_fixture=False, expected_ok=True, marker='', needs_target=False, known_failure='', expected_plot=False):
         started = time.monotonic()
         payload = validate_request({**payload, 'compiler': current_compiler})
         with tempfile.TemporaryDirectory() as temporary:
@@ -61,10 +62,16 @@ def main():
             checked = result.get('ok') == expected_ok and sandbox.returncode == 0
             checked = checked and (not marker or marker in json.dumps(result))
             checked = checked and (not needs_target or result.get('needs_target'))
+            if expected_plot:
+                import base64
+                from fortran_plot import valid_png
+                checked = checked and bool(result.get('plots')) and all(valid_png(base64.b64decode(plot['data'])) for plot in result.get('plots', []))
             limitation = bool(known_failure and not result.get('ok') and known_failure in json.dumps(result))
             checked = checked or limitation
             record = {'name': name, 'compiler': current_compiler, 'verified': bool(checked), 'expected_ok': expected_ok,
                       'seconds': round(time.monotonic() - started, 3), 'packages': packages, 'result': deepcopy(result)}
+            for plot in record['result'].get('plots', []):
+                plot['base64_bytes'] = len(plot.pop('data'))
             if limitation:
                 record['known_failure'] = 'GNU 17 internal compiler error in test-drive: ' + known_failure
             # Keep the committed evidence compact, including output-limit probes.
@@ -81,6 +88,13 @@ def main():
             sandbox.terminate()
 
     def compiler_trials():
+        if args.plotting_only:
+            source = (ROOT / 'docs/examples/plot_trig.f90').read_text()
+            trial('plotting-consumer', {'url': 'https://github.com/example/fixture', 'source': source},
+                  use_fixture=True, expected_plot=True)
+            pin = json.loads((ROOT / 'vendor/pyplot-fortran/upstream.json').read_text())
+            trial('plotting-upstream-library', {'url': pin['repository'], 'revision': pin['revision'], 'source': source}, expected_plot=True)
+            return
         for package in json.loads((ROOT / 'site/fpm/examples.json').read_text()):
             trial('consumer-' + package['name'], {'url': 'https://github.com/' + package['repository'],
                 'revision': package['revision'], 'source': package['source']}, marker='PASS ' + package['name'])

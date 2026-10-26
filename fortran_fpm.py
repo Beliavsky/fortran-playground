@@ -125,6 +125,11 @@ def execute_project(project, name, *, options=None, overrides=None, cancel=None,
                 (workdir / 'fpm.toml').write_text('name="local-playground-main"\n[build]\nauto-tests=false\nauto-examples=false\n'
                     '[dependencies]\n' + json.dumps(dependency) + '={path="../.."}\n', encoding='utf-8')
                 (workdir / 'app/main.f90').write_text(options['source'], encoding='utf-8')
+                from fortran_plot import uses_pyplot, install_module, provides_pyplot
+                if uses_pyplot(options['source']) and not provides_pyplot(root):
+                    install_module(workdir / 'src')
+            from fortran_plot import plotting_environment, snapshot, collect_plots
+            environment = plotting_environment(environment)
             row['working_directory'] = str(workdir)
             flags = ['--profile', options['profile'], '--compiler', command, '--no-prune']
 
@@ -150,8 +155,10 @@ def execute_project(project, name, *, options=None, overrides=None, cancel=None,
                            error='Choose an available target: ' + ', '.join(names) if names else
                                  'No application/test targets found. Use Build or supply a main program.')
                 return finish_result(row, started)
+            before = snapshot(workdir)
             run = stage([options['action'], *flags, *(['--target', target] if target else [])],
                         options['run_timeout'], options['stdin'])
+            row.update(collect_plots(workdir, before))
             row['execution'] = run
             row.update(ok=run['ok'], status='PASS' if run['ok'] else 'STOPPED' if run.get('cancelled') else 'FAIL')
     except (ValueError, OSError) as error:
