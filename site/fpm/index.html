@@ -29,8 +29,21 @@
       <option value="ifx" disabled>Intel ifx</option>
       <option value="flang" disabled>LLVM Flang</option>
     </select>
-    <span>FPM 0.12.0 &middot; Clean builds</span>
+    <span>FPM 0.12.0</span>
   </div>
+  <div class="toolbar package-filters">
+    <label for="package-search">Find a package</label>
+    <input id="package-search" type="search" placeholder="Name, topic, or description" maxlength="120">
+    <label for="package-category">Category</label>
+    <select id="package-category"><option value="">All categories</option></select>
+    <span id="package-count" aria-live="polite"></span>
+  </div>
+  <div class="toolbar">
+    <label for="available-package">Available packages (GNU Fortran 16)</label>
+    <select id="available-package"><option value="">Choose a precompiled package&hellip;</option></select>
+    <button id="load-package" type="button" disabled>Load package</button>
+  </div>
+  <p id="package-note">Loading the available package catalog&hellip;</p>
   <div class="package-fields">
     <label for="package-url">Package GitHub URL</label>
     <input id="package-url" type="url" placeholder="https://github.com/owner/package" maxlength="2048" autocomplete="off" spellcheck="false">
@@ -77,7 +90,7 @@ end program main
   <footer>
 <p>Plotting: <code>use pyplot_module</code> and save a PNG with <code>savefig</code>. See <a href="https://github.com/Beliavsky/fortran-playground/blob/main/docs/plotting.md">examples and setup</a>. Local rendering requires Python, NumPy, and Matplotlib.</p>
     <p>Public GitHub repositories with a root fpm.toml. GitHub git dependencies and paths within a repository are supported; registry dependencies and metapackages are not yet supported.</p>
-    <p>Each submission builds from scratch. Build limit: 180 seconds; run/test limit: 30 seconds total. Execution has no network access. Missing libraries, unsupported features, and larger packages may fail.</p>
+    <p>Available packages reuse verified GNU 16 libraries for your main program at the listed revision. Other submissions build from scratch. Build limit: 180 seconds; run/test limit: 30 seconds total. Execution has no network access. Missing libraries, unsupported features, and larger packages may fail.</p>
     <p>FPM has a separate job queue and usage allowance: 30 jobs per address per ten minutes and 100 public jobs per day. See <a href="https://github.com/Beliavsky/fortran-playground/blob/main/docs/fpm-mode.md">instructions and limitations</a>.</p>
   </footer>
 </main>

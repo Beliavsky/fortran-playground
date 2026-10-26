@@ -23,6 +23,7 @@ get('action').value = 'run';
 get('compiler').options = ['gfortran', 'gfortran17', 'ifx', 'flang'].map(value => ({value}));
 const legacyService = process.argv.includes('--legacy');
 const examples = JSON.parse(readFileSync(new URL('../site/fpm/examples.json', import.meta.url), 'utf8'));
+const packages = JSON.parse(readFileSync(new URL('../site/fpm/packages.json', import.meta.url), 'utf8'));
 const unconfigured = process.argv.includes('--unconfigured');
 let submissions = [], fail = false, cancellations = 0, transportFailure = false;
 let result = {ok: true, packages: [{repository: 'test/package', revision: 'a'.repeat(40)}],
@@ -30,9 +31,11 @@ let result = {ok: true, packages: [{repository: 'test/package', revision: 'a'.re
 globalThis.fetch = async (url, options = {}) => {
   let value;
   if (url === './examples.json') value = examples;
+  else if (url === './packages.json') value = packages;
   else if (url === './service.json') value = {url: unconfigured ? '' : 'https://fpm.modal.run'};
   else if (url.endsWith('/api/health')) value = {ok: true, compiler: 'GNU Fortran 16.2.0', fpm: '0.12.0',
-    ...(legacyService ? {} : {compilers: {gfortran: 'GNU Fortran 16.2.0', ifx: 'Intel ifx'}})};
+    ...(legacyService ? {} : {compilers: {gfortran: 'GNU Fortran 16.2.0', ifx: 'Intel ifx'},
+      precompiled: {[packages[0].id]: {revision: packages[0].revision, compiler: 'gfortran'}}})};
   else if (url.endsWith('/cancel')) {cancellations++; value = {state: 'cancelling'};}
   else if (url.endsWith('/api/jobs')) {
     if (fail) return {ok: false, async json() {return {error: 'Both FPM job slots are busy.'};}};
@@ -65,6 +68,37 @@ assert.equal(get('source-pane').hidden, false);
 assert.equal(get('test-action').disabled, true);
 assert.equal(get('example').options.length, 5);
 assert.equal(submissions.length, 0, 'Initialization must not submit a job');
+get('package-search').value = 'lapack';
+get('package-search').listeners.input();
+assert.deepEqual(get('available-package').options.map(p => p.value), ['', 'fortran-lapack']);
+get('package-search').value = '';
+get('package-search').listeners.input();
+get('package-category').value = 'Interpolation';
+get('package-category').listeners.change();
+assert.ok(get('available-package').options.length > 1);
+assert.ok(get('available-package').options.slice(1).every(option =>
+  packages.find(p => p.id === option.value).category === 'Interpolation'));
+get('package-category').value = '';
+get('package-category').listeners.change();
+assert.equal(submissions.length, 0, 'Filtering must not submit jobs or edit the program');
+get('available-package').value = packages[0].id;
+get('available-package').listeners.change();
+assert.equal(get('load-package').disabled, legacyService);
+assert.match(get('package-note').textContent, /linear algebra/);
+if (!legacyService) {
+  get('compiler').value = 'ifx';
+  get('compiler').listeners.change();
+  get('load-package').listeners.click();
+  assert.equal(get('compiler').value, 'gfortran');
+  assert.match(get('connection').textContent, /GNU Fortran 16/);
+  assert.equal(get('source').value, packages[0].source);
+  assert.equal(get('revision').value, packages[0].revision);
+  assert.equal(submissions.length, 0, 'Loading a cached package must not submit a job');
+}
+get('available-package').value = packages[1].id;
+get('available-package').listeners.change();
+assert.equal(get('load-package').disabled, true, 'An unverified catalog entry cannot be loaded');
+assert.match(resultText({ok: true, cache: {package: 'fortran-lapack', compiler: 'GNU 16', library_reused: true}}), /library reused/);
 
 get('example').value = examples[0].name;
 get('example').listeners.change();

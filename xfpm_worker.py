@@ -12,6 +12,7 @@ import tomllib
 
 from fpm_sources import extract_archive, validate_request
 from fpm_compilers import COMPILERS, compiler_flags
+from fpm_cache import consumer_project, cached_request_matches, library_inventory
 from fortran_plot import uses_pyplot, install_module, collect_plots, plotting_environment, provides_pyplot
 
 
@@ -67,23 +68,23 @@ def execute(message):
     compiler = payload['compiler']
     if compiler != os.environ.get('FPM_COMPILER', 'gfortran'):
         raise ValueError('Requested compiler does not match this sandbox image.')
-    bundle = extract_archive(base64.b64decode(message['bundle'], validate=True), Path('/work/sources'),
-                             require_manifest=False)
-    package = (bundle / message['root']).resolve()
+    cached = None
+    if message.get('cache_key'):
+        cached = json.loads(Path('/work/precompiled.json').read_text())
+        if not cached_request_matches(payload, cached) or cached['key'] != message['cache_key']:
+            raise ValueError('Precompiled package does not match the request.')
+        bundle = Path('/work/sources/bundle')
+        root = cached['root']
+    else:
+        bundle = extract_archive(base64.b64decode(message['bundle'], validate=True), Path('/work/sources'),
+                                 require_manifest=False)
+        root = message['root']
+    package = (bundle / root).resolve()
     if not package.is_relative_to(bundle.resolve()) or not (package / 'fpm.toml').is_file():
         raise ValueError('Invalid staged package root.')
     project = package
     if payload['workflow'] == 'consumer':
-        project = Path('/work/consumer')
-        (project / 'app').mkdir(parents=True)
-        (project / 'app/main.f90').write_text(payload['source'], encoding='utf-8')
-        if uses_pyplot(payload['source']) and not provides_pyplot(bundle):
-            install_module(project / 'src')
-        name = tomllib.loads((package / 'fpm.toml').read_text(encoding='utf-8'))['name']
-        dependency_path = Path(os.path.relpath(package, project)).as_posix()
-        (project / 'fpm.toml').write_text('name = "playground-main"\n[build]\nauto-tests = false\n'
-            'auto-examples = false\n[dependencies]\n' + json.dumps(name) + ' = { path = ' +
-            json.dumps(dependency_path) + ' }\n', encoding='utf-8')
+        project = consumer_project(package, payload['source'])
     os.environ.update(plotting_environment(directory=project))
     flags = compiler_flags(compiler)
     version = subprocess.check_output([COMPILERS[compiler]['command'], '--version'], text=True, timeout=10).splitlines()[0]
@@ -93,6 +94,14 @@ def execute(message):
     build_command = ['fpm', 'build', *flags] + (['--tests'] if payload['action'] == 'test' else [])
     build = stage(build_command, project, 180)
     result['stages'].append({'name': 'Build', **build})
+    if cached:
+        inventory = library_inventory(main_modules=cached.get('main_modules', []))
+        changes = [path for path, stat in cached['inventory'].items() if inventory.get(path) != stat]
+        result['cache'] = {'package': cached['id'], 'compiler': 'GNU Fortran 16.2.0',
+                           'key': cached['key'], 'library_reused': inventory == cached['inventory'],
+                           'changed_artifacts': [{'path': p, 'before': cached['inventory'][p],
+                                                  'after': inventory.get(p)} for p in changes[:3]]}
+        result['packages'] = cached['records']
     if not build['ok']:
         return result
     kind = 'test' if payload['action'] == 'test' else 'app'

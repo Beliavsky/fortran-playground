@@ -1,4 +1,5 @@
 import asyncio
+import hashlib
 from copy import deepcopy
 from io import BytesIO
 import json
@@ -27,6 +28,28 @@ PAYLOAD = {'url': 'https://github.com/example/library', 'source': 'program main\
 
 
 class SourceTests(unittest.TestCase):
+    def test_catalog_lock_prevents_floating_dependencies_and_checks_archives(self):
+        root = archive({'fpm.toml': 'name="library"\n[dependencies]\nhelper={git="https://github.com/example/helper"}'})
+        helper = archive({'fpm.toml': 'name="helper"'})
+        pins = [{'repository': 'example/library', 'revision': 'a'*40, 'sha256': hashlib.sha256(root).hexdigest()},
+                {'repository': 'example/helper', 'revision': 'b'*40, 'sha256': hashlib.sha256(helper).hexdigest()}]
+        urls = []
+        def download(url, **kwargs):
+            urls.append(url)
+            self.assertNotIn('/commits/', url, 'Locked builds must not resolve HEAD again')
+            return helper if '/example/helper/' in url else root
+        with tempfile.TemporaryDirectory() as temporary:
+            preparer = Preparer(temporary, downloader=download, pins=pins,
+                                writer=lambda value: 'name=' + json.dumps(value['name']))
+            _, records = preparer.prepare(PAYLOAD)
+            self.assertEqual([p['revision'] for p in records], ['a'*40, 'b'*40])
+        with tempfile.TemporaryDirectory() as temporary:
+            with self.assertRaisesRegex(ValueError, 'checksum mismatch'):
+                Preparer(temporary, downloader=download, pins=[{**pins[0], 'sha256': 'f'*64}]).prepare(PAYLOAD)
+        with tempfile.TemporaryDirectory() as temporary:
+            with self.assertRaisesRegex(ValueError, 'missing from the catalog lock'):
+                Preparer(temporary, downloader=download, pins=pins[:1], writer=lambda value: '').prepare(PAYLOAD)
+
     def test_urls_and_requests(self):
         self.assertEqual(github_repository('https://github.com/owner/repo.git/'), 'owner/repo')
         for value in ['http://github.com/a/b', 'https://github.com@127.0.0.1/a/b',

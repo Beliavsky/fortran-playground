@@ -73,6 +73,16 @@ class LocalTests(unittest.TestCase):
 
 
 class HostedTests(unittest.TestCase):
+    def test_precompiled_result_is_reported_in_terse_output(self):
+        result = {'ok': True, 'cache': {'package': 'fortran-lapack',
+                  'compiler': 'GNU Fortran 16.2.0', 'library_reused': True}}
+        row = fpm_runner.hosted_row('gfortran', result, 1.0)
+        output = StringIO()
+        with redirect_stdout(output):
+            fpm_runner.print_row(row, terse=True)
+        self.assertIn('Precompiled package: fortran-lapack', output.getvalue())
+        self.assertIn('library reused', output.getvalue())
+
     def client(self, *, fail=False, legacy=False):
         client = Mock()
         self.submissions = []

@@ -13,8 +13,12 @@ class HttpTests(unittest.TestCase):
         from test_fpm_service import MemoryStore, Runner, PAYLOAD
 
         store, runner = MemoryStore(), Runner()
-        with TestClient(create_api(Service(store, runner), ['https://play.example'])) as client:
+        cached = {'fortran-lapack': {'revision': 'a'*40, 'image': 'private-image-name', 'key': 'internal'}}
+        with TestClient(create_api(Service(store, runner, precompiled=cached), ['https://play.example'])) as client:
             self.assertEqual(client.get('/api/health').json()['fpm'], '0.12.0')
+            self.assertEqual(client.get('/api/health').json()['precompiled'],
+                             {'fortran-lapack': {'revision': 'a'*40, 'compiler': 'gfortran'}})
+            self.assertFalse(client.get('/api/health').json()['clean_builds'])
             self.assertEqual(client.post('/api/jobs', json=PAYLOAD).status_code, 403)
             headers = {'Origin': 'https://play.example'}
             preflight = client.options('/api/jobs', headers={**headers, 'Access-Control-Request-Method': 'POST',

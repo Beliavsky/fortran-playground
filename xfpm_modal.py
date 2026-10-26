@@ -16,20 +16,26 @@ ROOT = Path(__file__).resolve().parent
 APP_NAME = 'fortran-playground-fpm'
 app = modal.App(APP_NAME)
 state = modal.Dict.from_name(APP_NAME + '-state', create_if_missing=True)
-GNU_IMAGE = 'gcc:16.2.0-trixie@sha256:43978d7710a803d1c3d32f4117c1528ec7285a4ce2c0a51e982ec1a6e3d87d95'
-FPM_URL = 'https://github.com/fortran-lang/fpm/releases/download/v0.12.0/fpm-0.12.0-linux-x86_64-gcc-12'
-FPM_SHA256 = '576fc54fb829263b32d0e288535a2a3edc9d0478dffec84ba70445446f6d6abf'
+RECIPE = json.loads((ROOT / 'fpm_build_recipe.json').read_text(encoding='utf-8'))
+GNU_IMAGE = RECIPE['compiler_image']
+FPM_URL = RECIPE['fpm_url']
+FPM_SHA256 = RECIPE['fpm_sha256']
 OWNER_SECRET_NAME = os.environ.get('FPM_OWNER_SECRET', '')
 ENABLED_COMPILERS = tuple(json.loads(os.environ.get('FPM_ENABLED_COMPILERS', '["gfortran"]')))
+PRECOMPILED = json.loads(os.environ.get('FPM_PRECOMPILED', '{}'))
 if modal.is_local():
+    from fpm_cache import recipe_identity
+    RECIPE_ID = recipe_identity()
     digest = hashlib.sha256()
     for filename in ('xfpm_modal.py', 'xfpm_worker.py', 'fpm_sources.py', 'fpm_compilers.py', 'fortran_plot.py',
+                     'fpm_cache.py', 'fpm_build.py', 'fpm_build_recipe.json', 'xfpm_prebuild.py', 'fpm_catalog.json',
                      'vendor/pyplot-fortran/src/pyplot_module.F90', 'vendor/pyplot-fortran/upstream.json',
                      'fpm_toolchains/xinstall_gnu17.sh', 'fpm_toolchains/xinstall_intel.sh', 'fpm_toolchains/xinstall_flang.sh'):
         digest.update((ROOT / filename).read_bytes())
     IMAGE_NAME = 'fortran-fpm-' + digest.hexdigest()[:20]
 else:
     IMAGE_NAME = os.environ['FPM_IMAGE_NAME']
+    RECIPE_ID = os.environ['FPM_BUILD_RECIPE']
 
 def image_name(compiler):
     return IMAGE_NAME if compiler == 'gfortran' else IMAGE_NAME + '-' + compiler
@@ -37,7 +43,7 @@ def image_name(compiler):
 
 def with_fpm(base, compiler):
     return (base
-    .pip_install('matplotlib==3.10.8')
+    .pip_install('matplotlib==' + RECIPE['matplotlib_version'])
     .add_local_file(ROOT / 'fortran_plot.py', '/opt/fpm/fortran_plot.py', copy=True)
     .add_local_dir(ROOT / 'vendor/pyplot-fortran', '/opt/fpm/vendor/pyplot-fortran', copy=True)
     .run_commands(
@@ -48,9 +54,13 @@ def with_fpm(base, compiler):
     .env({'FPM_COMPILER': compiler})
     .add_local_file(ROOT / 'fpm_sources.py', '/opt/fpm/fpm_sources.py', copy=True)
     .add_local_file(ROOT / 'fpm_compilers.py', '/opt/fpm/fpm_compilers.py', copy=True)
+    .add_local_file(ROOT / 'fpm_cache.py', '/opt/fpm/fpm_cache.py', copy=True)
+    .add_local_file(ROOT / 'fpm_build.py', '/opt/fpm/fpm_build.py', copy=True)
+    .add_local_file(ROOT / 'fpm_catalog.json', '/opt/fpm/fpm_catalog.json', copy=True)
+    .add_local_file(ROOT / 'xfpm_prebuild.py', '/opt/fpm/xfpm_prebuild.py', copy=True)
     .add_local_file(ROOT / 'xfpm_worker.py', '/opt/fpm/xfpm_worker.py', copy=True))
 
-runtime_image = with_fpm(modal.Image.from_registry(GNU_IMAGE, add_python='3.12')
+runtime_image = with_fpm(modal.Image.from_registry(GNU_IMAGE, add_python=RECIPE['python_version'])
                          .run_commands('test "$(gfortran -dumpfullversion)" = 16.2.0'), 'gfortran')
 
 
@@ -82,10 +92,16 @@ def runtime_images(compilers):
     return {compiler: images[compiler] for compiler in compilers}
 
 container_settings = {'FPM_IMAGE_NAME': IMAGE_NAME, 'FPM_OWNER_SECRET': OWNER_SECRET_NAME,
+                      'FPM_BUILD_RECIPE': RECIPE_ID,
+                      'FPM_PRECOMPILED': json.dumps(PRECOMPILED),
                       'FPM_ENABLED_COMPILERS': json.dumps(ENABLED_COMPILERS)}
 broker_image = (modal.Image.debian_slim(python_version='3.12').pip_install('tomli-w==1.2.0')
     .env(container_settings)
     .add_local_file(ROOT / 'fpm_compilers.py', '/root/fpm_compilers.py', copy=True)
+    .add_local_file(ROOT / 'fpm_cache.py', '/root/fpm_cache.py', copy=True)
+    .add_local_file(ROOT / 'fpm_build.py', '/root/fpm_build.py', copy=True)
+    .add_local_file(ROOT / 'fpm_build_recipe.json', '/root/fpm_build_recipe.json', copy=True)
+    .add_local_file(ROOT / 'fpm_catalog.json', '/root/fpm_catalog.json', copy=True)
     .add_local_file(ROOT / 'fpm_sources.py', '/root/fpm_sources.py', copy=True))
 api_image = (modal.Image.debian_slim(python_version='3.12').pip_install('fastapi==0.142.2')
     .env({**container_settings,
@@ -93,6 +109,10 @@ api_image = (modal.Image.debian_slim(python_version='3.12').pip_install('fastapi
           'https://beliavsky.github.io,http://127.0.0.1:8766,http://localhost:8766')})
     .add_local_file(ROOT / 'fpm_sources.py', '/root/fpm_sources.py', copy=True)
     .add_local_file(ROOT / 'fpm_compilers.py', '/root/fpm_compilers.py', copy=True)
+    .add_local_file(ROOT / 'fpm_cache.py', '/root/fpm_cache.py', copy=True)
+    .add_local_file(ROOT / 'fpm_build.py', '/root/fpm_build.py', copy=True)
+    .add_local_file(ROOT / 'fpm_build_recipe.json', '/root/fpm_build_recipe.json', copy=True)
+    .add_local_file(ROOT / 'fpm_catalog.json', '/root/fpm_catalog.json', copy=True)
     .add_local_file(ROOT / 'fpm_api.py', '/root/fpm_api.py', copy=True))
 
 
@@ -116,14 +136,23 @@ def execute_job(identifier, payload, *, sandbox_image=None, sandbox_app=None, ca
         payload = validate_request(payload)
         if payload['compiler'] not in ENABLED_COMPILERS and sandbox_image is None:
             raise ValueError('Requested FPM compiler is not enabled.')
-        with tempfile.TemporaryDirectory() as temporary:
-            root, records = Preparer(temporary).prepare(payload)
-            message = {'request': payload, 'root': root, 'bundle': bundle_sources(temporary)}
+        from fpm_cache import match_package, cache_identity
+        selected = match_package(payload)
+        cache = PRECOMPILED.get(selected['id']) if selected and sandbox_image is None else None
+        if cache and cache.get('key') != cache_identity(selected, RECIPE_ID):
+            raise ValueError('Precompiled image is stale; rebuild the package catalog before deploying.')
+        if cache:
+            records = cache['records']
+            message = {'request': payload, 'cache_key': cache['key']}
+        else:
+            with tempfile.TemporaryDirectory() as temporary:
+                root, records = Preparer(temporary).prepare(payload)
+                message = {'request': payload, 'root': root, 'bundle': bundle_sources(temporary)}
         prepare_seconds = time.monotonic() - started
         if cancelled():
             return {'ok': False, 'error': 'Cancelled.', 'stages': []}
         sandbox = modal.Sandbox.create('python', '/opt/fpm/xfpm_worker.py', app=sandbox_app or app,
-            image=sandbox_image or modal.Image.from_name(image_name(payload['compiler'])), runtime='gvisor', workdir='/work', timeout=250,
+            image=sandbox_image or modal.Image.from_name(cache['image'] if cache else image_name(payload['compiler'])), runtime='gvisor', workdir='/work', timeout=250,
             cpu=(0.5, 1.0), memory=(512, 1024), block_network=True, secrets=[], volumes={},
             include_oidc_identity_token=False, env={'OMP_NUM_THREADS': '1', 'HOME': '/work'})
         sandbox.stdin.write((json.dumps(message) + '\n').encode())
@@ -186,5 +215,6 @@ class Runner:
 @modal.asgi_app()
 def api():
     from fpm_api import Service, create_api
-    return create_api(Service(Store(), Runner(), owner_key=os.environ.get('P2F_OWNER_KEY', ''), compilers=ENABLED_COMPILERS),
+    return create_api(Service(Store(), Runner(), owner_key=os.environ.get('P2F_OWNER_KEY', ''), compilers=ENABLED_COMPILERS,
+                              precompiled=PRECOMPILED),
                       os.environ['FPM_ORIGINS'].split(','))

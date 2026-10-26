@@ -8,22 +8,31 @@ import sys
 from urllib.request import Request, urlopen
 
 
-def verify_api(url, origin, compilers=None):
+def verify_api(url, origin, compilers=None, precompiled=None):
     request = Request(url + '/api/health', headers={'Origin': origin})
     with urlopen(request, timeout=45) as response:
-        data = json.loads(response.read(10000))
+        data = json.loads(response.read(65536))
         if response.status != 200 or data.get('ok') is not True or data.get('fpm') != '0.12.0':
             raise ValueError('The deployed endpoint did not return a healthy FPM response.')
         if response.headers.get('Access-Control-Allow-Origin') != origin:
             raise ValueError('The deployed endpoint does not allow the configured browser origin.')
         if compilers is not None and set(data.get('compilers', {})) != set(compilers):
             raise ValueError('The deployed compiler catalog does not match the verified images.')
+        if precompiled is not None:
+            expected = {name: {'revision': entry['revision'], 'compiler': 'gfortran'}
+                        for name, entry in precompiled.items()}
+            if data.get('precompiled', {}) != expected:
+                raise ValueError('The deployed precompiled catalog does not match the verified images.')
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--owner-secret', help='Optional Modal secret containing P2F_OWNER_KEY (API only).')
     parser.add_argument('--origins', help='Comma-separated allowed browser origins, for forks.')
+    parser.add_argument('--without-precompiled', action='store_true', help='Deploy only clean package builds.')
+    from fpm_cache import catalog
+    parser.add_argument('--packages', nargs='+', choices=[p['id'] for p in catalog()],
+                        help='Precompile only these catalog package IDs; default: all.')
     parser.add_argument('--compilers', nargs='+', choices=['gfortran', 'gfortran17', 'ifx', 'flang'],
                         default=['gfortran', 'gfortran17', 'ifx', 'flang'],
                         help='Toolchains to build and verify; GNU 16 is always included.')
@@ -33,7 +42,7 @@ def main():
     if args.origins:
         os.environ['FPM_ORIGINS'] = args.origins
     import modal
-    from xfpm_modal import APP_NAME, image_name, runtime_images
+    from xfpm_modal import APP_NAME, IMAGE_NAME, image_name, runtime_images
     from fpm_probe import verify_image
     compilers = list(dict.fromkeys(['gfortran', *args.compilers]))
     images = runtime_images(compilers)
@@ -46,11 +55,18 @@ def main():
                 verify_image(build_app, image, compiler)
                 image.publish(image_name(compiler))
                 enabled.append(compiler)
+                if compiler == 'gfortran' and not args.without_precompiled:
+                    from xprecompile_fpm import build_catalog
+                    precompiled = build_catalog(build_app, image, IMAGE_NAME, args.packages)
             except Exception as error:
                 if compiler == 'gfortran':
                     raise
                 print(f'WARNING: {compiler} remains unavailable: {error}', flush=True)
     os.environ['FPM_ENABLED_COMPILERS'] = json.dumps(enabled)
+    # Containers need routing information, not the larger operator build report.
+    routing = {name: {k: entry[k] for k in ('key', 'image', 'revision', 'records')}
+               for name, entry in precompiled.items()} if not args.without_precompiled else {}
+    os.environ['FPM_PRECOMPILED'] = json.dumps(routing)
     subprocess.run([sys.executable, '-X', 'utf8', '-m', 'modal', 'deploy', 'xfpm_modal.py'],
                    cwd=Path(__file__).resolve().parent, check=True)
     url = modal.Function.from_name(APP_NAME, 'api').get_web_url()
@@ -60,7 +76,7 @@ def main():
     print('Checking the deployed HTTP endpoint and browser access...', flush=True)
     origin = os.environ.get('FPM_ORIGINS', 'https://beliavsky.github.io').split(',')[0]
     try:
-        verify_api(url, origin, enabled)
+        verify_api(url, origin, enabled, precompiled if not args.without_precompiled else {})
     except Exception as error:
         raise SystemExit(f'Deployment completed, but the API is not ready: {error}\n'
                          f'Inspect startup logs with: {sys.executable} -m modal app logs {APP_NAME}') from error

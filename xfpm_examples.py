@@ -12,6 +12,10 @@ def generate_fpm_examples(site):
     path = site / 'fpm/examples.json'
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(examples, indent=2) + '\n', encoding='utf-8')
+    from fpm_cache import catalog
+    packages = [{**package, 'source': (audit.parents[1] / 'fpm_catalog/demos' /
+                 (package['id'] + '.f90')).read_text(encoding='utf-8')} for package in catalog()]
+    (site / 'fpm/packages.json').write_text(json.dumps(packages, indent=2) + '\n', encoding='utf-8')
 
 
 if __name__ == '__main__':

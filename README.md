@@ -485,6 +485,8 @@ Reports distinguish Exact match, Formatting only, Numeric match, Within toleranc
 
 ## FPM package feasibility
 
+The FPM page also offers a [searchable catalog of 35 precompiled GNU Fortran 16 packages](docs/fpm-precompiled.md) in 18 categories: numerical methods, interpolation, differential equations, plotting, data formats, dates, containers, files, and command-line utilities. Each has a one-line description and an editable example. Catalog and service edits preserve compatible compiled libraries; other compilers and custom package URLs retain clean builds.
+
 The [FPM feasibility audit](docs/fpm-feasibility/README.md) found five packages that build and run short consumer programs within the configured public sandbox limits. It includes pinned package revisions, tested main programs, measurements, and a callback compatibility limitation. The separate [FPM mode](docs/fpm-mode.md) builds on these examples and also supports package Build, Run, and Test actions; it requires its own service deployment.
 
 ## Local compiler tools

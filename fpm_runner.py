@@ -20,6 +20,10 @@ def hosted_row(compiler, result, elapsed):
            'compiler_version': result.get('compiler', ''), 'stages': result.get('stages', []),
            'error': result.get('error', ''), 'targets': result.get('targets', []), 'packages': result.get('packages', []),
            'plots': result.get('plots', []), 'plot_notes': result.get('plot_notes', [])}
+    if result.get('cache'):
+        cache = result['cache']
+        row['notes'] = [f'Precompiled package: {cache["package"]} ({cache["compiler"]}); '
+                        + ('library reused' if cache['library_reused'] else 'library required rebuilding')]
     for stage in row['stages']:
         row['build' if stage['name'] == 'Build' else 'execution'] = {**stage, 'commands': [stage['command']]}
     build = row.get('build', {}).get('seconds')

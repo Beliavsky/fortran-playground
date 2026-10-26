@@ -1,0 +1,216 @@
+{
+  "checked_utc": "2026-10-26T21:49:56.720306+00:00",
+  "repositories_listed": 430,
+  "manifests_read": 400,
+  "users": {
+    "perazz/fortran-lapack": [],
+    "fortran-lang/test-drive": [
+      "CriticalSoilModels/Strain_Rate_Mohr_Coulomb",
+      "EdHone/oolong",
+      "Minard-Jules/NAFPack",
+      "St-Maxwell/ryu_fortran",
+      "St-Maxwell/utf8-f",
+      "awvwgk/nlopt-wrap",
+      "degawa/enclose",
+      "degawa/enumul",
+      "degawa/fassert",
+      "degawa/flavanaly",
+      "degawa/orbs",
+      "degawa/par-funnel",
+      "degawa/repot",
+      "degawa/testdrive_util",
+      "fedebenelli/yaeos",
+      "fortran-lang/fftpack",
+      "fortran-lang/stdlib",
+      "freevryheid/fpq",
+      "freevryheid/fwalk",
+      "freevryheid/scanner",
+      "furstj/interpolation",
+      "irukoa/MAC",
+      "irukoa/WannInt",
+      "jalvesz/FSPARSE",
+      "jalvesz/fast_math",
+      "khaors/KohonenF08",
+      "kjelljorner/libconeangle",
+      "perazz/fortran-lapack",
+      "tueda/paramcard",
+      "zoziha/Auto-Diff",
+      "zoziha/PlPlotLib",
+      "zoziha/fortsa",
+      "zoziha/rkf45"
+    ],
+    "jacobwilliams/pyplot-fortran": [
+      "QcmPlab/HoneyTools",
+      "jacobwilliams/Fortran-Astrodynamics-Toolkit",
+      "jacobwilliams/NumDiff",
+      "jacobwilliams/bspline-fortran",
+      "jacobwilliams/conmin",
+      "jacobwilliams/ddeabm",
+      "jacobwilliams/dop853",
+      "jacobwilliams/halo",
+      "jacobwilliams/optgra",
+      "jacobwilliams/polyroots-fortran",
+      "jacobwilliams/rklib",
+      "jacobwilliams/roots-fortran",
+      "jacobwilliams/splpak"
+    ],
+    "jacobwilliams/json-fortran": [
+      "14NGiestas/fortran-requests",
+      "degawa/repot_examples",
+      "fedebenelli/yaeos",
+      "gha3mi/forcompile",
+      "gha3mi/foropenai",
+      "ipqa-research/forsus",
+      "jacobwilliams/halo",
+      "jacobwilliams/json-fortran-benchmarks",
+      "jacobwilliams/pikaia",
+      "rajkumardongre/github-org-analyzer",
+      "urbanjost/fpm-search",
+      "xframes-project/xframes-fortran"
+    ],
+    "toml-f/toml-f": [
+      "fortran-lang/fpm",
+      "grimme-lab/mctc-lib",
+      "jacobwilliams/json-fortran-benchmarks",
+      "khaors/KohonenF08",
+      "khaors/hydroanalyzer_fortran",
+      "lewisfish/signedMCRT",
+      "toml-f/jonquil"
+    ],
+    "fortran-lang/fftpack": [
+      "nakib/elphbolt"
+    ],
+    "jacobwilliams/roots-fortran": [
+      "jacobwilliams/ddeabm",
+      "jacobwilliams/halo",
+      "jacobwilliams/rklib"
+    ],
+    "urbanjost/M_strings": [
+      "urbanjost/M_intrinsics",
+      "urbanjost/M_matrix",
+      "urbanjost/M_msg",
+      "urbanjost/M_sort",
+      "urbanjost/fpm-search",
+      "urbanjost/prep"
+    ],
+    "fortran-lang/stdlib": [
+      "CriticalSoilModels/Strain_Rate_Mohr_Coulomb",
+      "HugoMVale/pbepack",
+      "Konrad1991/pso",
+      "degawa/flop",
+      "degawa/repot_examples",
+      "degawa/testdrive_util",
+      "fedebenelli/yaeos",
+      "freevryheid/fwalk",
+      "freevryheid/scanner",
+      "kjelljorner/libconeangle",
+      "renatomatz/econ-toolchain"
+    ],
+    "jacobwilliams/bspline-fortran": [
+      "jacobwilliams/halo"
+    ],
+    "jacobwilliams/PCHIP": [],
+    "jacobwilliams/finterp": [
+      "fedebenelli/yaeos",
+      "jacobwilliams/bspline-fortran"
+    ],
+    "jacobwilliams/quadpack": [],
+    "jacobwilliams/quadrature-fortran": [],
+    "jacobwilliams/dop853": [
+      "jacobwilliams/rklib"
+    ],
+    "jacobwilliams/minpack": [],
+    "jacobwilliams/mersenne-twister-fortran": [
+      "jacobwilliams/pikaia",
+      "jacobwilliams/polyroots-fortran"
+    ],
+    "jacobwilliams/fortran-search-and-sort": [
+      "jacobwilliams/halo"
+    ],
+    "jacobwilliams/stringsort": [],
+    "jacobwilliams/flist": [],
+    "jacobwilliams/daglib": [],
+    "jacobwilliams/argv-fortran": [
+      "jacobwilliams/halo"
+    ],
+    "jacobwilliams/popen-fortran": [
+      "gha3mi/forclust"
+    ],
+    "jacobwilliams/fortran_function_parser": [],
+    "jacobwilliams/NumDiff": [
+      "fedebenelli/ForTimize",
+      "jacobwilliams/halo"
+    ],
+    "jacobwilliams/csv-fortran": [
+      "khaors/hydroanalyzer_fortran"
+    ],
+    "wavebitscientific/datetime-fortran": [
+      "14NGiestas/fortran-requests"
+    ],
+    "urbanjost/M_io": [
+      "urbanjost/M_intrinsics",
+      "urbanjost/M_matrix",
+      "urbanjost/M_sort",
+      "urbanjost/prep"
+    ],
+    "urbanjost/M_time": [
+      "urbanjost/M_fixedform",
+      "urbanjost/M_matrix",
+      "urbanjost/M_msg",
+      "urbanjost/M_system"
+    ],
+    "urbanjost/M_sets": [
+      "urbanjost/M_matrix"
+    ],
+    "urbanjost/M_sort": [],
+    "urbanjost/M_CLI2": [
+      "MilanSkocic/ciaaw",
+      "MilanSkocic/ecx",
+      "MilanSkocic/iapws",
+      "degawa/repot_examples",
+      "fortran-lang/fpm",
+      "gha3mi/forclust",
+      "urbanjost/M_intrinsics",
+      "urbanjost/M_matrix",
+      "urbanjost/M_sort",
+      "urbanjost/fpm-search",
+      "urbanjost/prep"
+    ],
+    "urbanjost/M_attr": [
+      "urbanjost/M_intrinsics",
+      "urbanjost/prep"
+    ],
+    "toml-f/jonquil": [
+      "fortran-lang/fpm",
+      "grimme-lab/mctc-lib",
+      "jacobwilliams/json-fortran-benchmarks"
+    ],
+    "urbanjost/orderpack": [
+      "urbanjost/M_matrix",
+      "urbanjost/M_sets"
+    ]
+  },
+  "excluded_candidates": [
+    {
+      "repository": "szaghi/FACE",
+      "revision": "da7b7407b51e56257a09970099997098e3a52d99",
+      "error": "Package archive contains an unsafe path, link, or special file."
+    },
+    {
+      "repository": "szaghi/PENF",
+      "revision": "592259d24ff39fa5e4b387d46286120ee60e7cff",
+      "error": "Package archive contains an unsafe path, link, or special file."
+    },
+    {
+      "repository": "jacobwilliams/polyroots-fortran",
+      "revision": "165ed6fbec98cc23d9ed4784fbc4708adb5e0bcf",
+      "error": "The pinned library links BLAS and LAPACK, which are not installed as external system libraries in this sandbox image."
+    }
+  ],
+  "selection_notes": "Prioritize reuse and popularity, then broaden numerical methods and practical utilities; require a checked GNU 16 consumer example and successful cached-main verification.",
+  "dependency_sample_aliases": {
+    "urbanjost/orderpack": [
+      "urbanjost/M_orderpack"
+    ]
+  }
+}

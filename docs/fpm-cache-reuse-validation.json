@@ -1,0 +1,26 @@
+{
+  "changes": [
+    "package description, stars, and category",
+    "unrelated catalog entry added",
+    "runtime image identity changed"
+  ],
+  "library_build_calls": 0,
+  "same_library_image": true,
+  "recovered_without_local_report": true,
+  "artifact_image": "fortran-fpm-lib-36977d864c5ce65d2b2f9479",
+  "recipe": "c5a4381ee9e2eae85215f045",
+  "verification": {
+    "seconds": 2.862,
+    "build_seconds": 0.381,
+    "library_reused": true,
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "all_packages_worker_refresh": {
+    "packages": 35,
+    "library_build_calls": 0,
+    "worker": "5428e791d7d2b178"
+  }
+}

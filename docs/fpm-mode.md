@@ -2,13 +2,15 @@
 
 The separate [FPM page](https://beliavsky.github.io/fortran-playground/fpm/) uses **FPM 0.12.0**, with **GNU Fortran 16.2.0** as the default. The Compiler selector also supports **GNU Fortran 17 experimental (2026-10-18)**, **Intel ifx 2025.3.3**, and **LLVM Flang 23.1.5** when their separate images have been built and verified by the service. It requires its own service deployment; publishing the page alone does not start that service.
 
-The page enables only compilers advertised by the service. Changing compilers clears target suggestions; it does not submit a job. Old pages continue using GNU 16 when no compiler is specified. The updated page also works with an older GNU-only API. Each selected compiler builds the whole dependency tree in a fresh sandbox; `.mod` files and libraries are never shared across compilers. LFortran and ofort are not included in this package interface.
+The page enables only compilers advertised by the service. Changing compilers clears target suggestions; it does not submit a job. Old pages continue using GNU 16 when no compiler is specified. The updated page also works with an older GNU-only API. Each submission uses a fresh sandbox. Verified [precompiled GNU 16 packages](fpm-precompiled.md) can reuse their libraries for a custom main program; other submissions build the whole dependency tree. `.mod` files and libraries are never shared across compilers. LFortran and ofort are not included in this package interface.
 
 ## Using a package
 
 For Python clients and a local browser analog, see [FPM runners and the local package page](fpm-runners.md). The hosted runner uses this package service; local operations use installed FPM and compilers.
 
 Select a starter example, or enter a public GitHub repository URL with an `fpm.toml` at its root. Enter a branch, tag, or commit separately, or leave the revision blank for the repository's default HEAD. Each repository is resolved to a commit, and results show all downloaded repositories, commit IDs, build commands, diagnostics, and output.
+
+The **Available packages (GNU Fortran 16)** list additionally offers pinned, verified libraries with one-line descriptions and example main programs. Selecting one reuses its precompiled library when you submit with GNU 16 and the selected revision. See [the catalog, selection evidence, and deployment instructions](fpm-precompiled.md).
 
 Choose **My main program** to edit a program that uses the package's modules. **Compile and Run** creates a temporary FPM consumer project with the downloaded library as a path dependency. **Build only** compiles without executing the main program. The five starter examples come from the audited programs in [fpm-feasibility/demos](fpm-feasibility/demos); `xfpm_examples.py` regenerates their page catalog when the site is built.
 

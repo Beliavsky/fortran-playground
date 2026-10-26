@@ -103,10 +103,12 @@ def fetch(url, limit=MAX_ARCHIVE, timeout=15):
 
 
 class Preparer:
-    def __init__(self, directory, *, downloader=fetch, writer=None):
+    def __init__(self, directory, *, downloader=fetch, writer=None, pins=None):
         self.directory = Path(directory).resolve()
         self.downloader = downloader
         self.writer = writer
+        # Operator-owned catalog locks only; never accepted from visitor payloads.
+        self.pins = {p['repository'].lower(): p for p in pins} if pins is not None else None
         self.records = []
         self.repositories = {}
         self.visiting = set()
@@ -126,6 +128,13 @@ class Preparer:
 
     def repository(self, url, revision='', *, development=False):
         repo = github_repository(url)
+        pin = self.pins.get(repo.lower()) if self.pins is not None else None
+        if self.pins is not None:
+            if pin is None:
+                raise ValueError(f'{repo}: dependency is missing from the catalog lock.')
+            if re.fullmatch('[a-f0-9]{40}', revision) and revision != pin['revision']:
+                raise ValueError(f'{repo}: dependency revision conflicts with the catalog lock.')
+            revision = pin['revision']
         key = (repo.lower(), revision)
         if key in self.repositories:
             root = self.repositories[key]
@@ -139,6 +148,10 @@ class Preparer:
         if not re.fullmatch('[a-f0-9]{40}', commit):
             raise ValueError('GitHub returned an invalid commit.')
         data = self.download(f'https://codeload.github.com/{repo}/tar.gz/{commit}')
+        if pin is not None:
+            import hashlib
+            if hashlib.sha256(data).hexdigest() != pin['sha256']:
+                raise ValueError(f'{repo}: catalog dependency checksum mismatch.')
         container = self.directory / 'packages' / str(len(self.records))
         root = extract_archive(data, container).resolve()
         paths = list(self.directory.rglob('*'))

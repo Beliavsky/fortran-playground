@@ -8,6 +8,7 @@ editor.setIndentation({width: 3, automatic: true});
 let origin = '', examples = [], busy = false, job = '', targetsKey = '', ready = false;
 let compilerLabels = {gfortran: 'GNU Fortran 16.2.0'};
 let compilerSelection = false;
+let packages = [], precompiled = {};
 get('compiler').value = 'gfortran';
 
 function controls() {
@@ -28,9 +29,39 @@ function controls() {
   for (const id of ['workflow', 'action', 'package-url', 'revision', 'target', 'example']) get(id).disabled = busy;
   get('compiler').disabled = busy || !ready || !compilerSelection;
   get('load-example').disabled = busy || !get('example').value;
+  get('available-package').disabled = busy;
+  get('package-search').disabled = busy;
+  get('package-category').disabled = busy;
+  const selected = packages.find(p => p.id === get('available-package').value);
+  get('load-package').disabled = busy || !ready || !selected
+    || precompiled[selected.id]?.revision !== selected.revision;
   editor.setReadOnly(busy);
   editor.refresh();
 }
+
+function renderPackages() {
+  const previous = get('available-package').value;
+  const query = get('package-search').value.trim().toLowerCase();
+  const category = get('package-category').value;
+  const visible = packages.filter(p => (!category || p.category === category)
+    && `${p.id} ${p.repository} ${p.description} ${p.category}`.toLowerCase().includes(query));
+  const placeholder = document.createElement('option');
+  placeholder.value = ''; placeholder.textContent = 'Choose a precompiled package…';
+  get('available-package').replaceChildren(placeholder);
+  for (const item of visible) {
+    const option = document.createElement('option');
+    option.value = item.id;
+    option.textContent = `${item.id} — ${item.description}`;
+    option.disabled = precompiled[item.id]?.revision !== item.revision;
+    get('available-package').appendChild(option);
+  }
+  get('available-package').value = visible.some(p => p.id === previous) ? previous : '';
+  get('package-count').textContent = `${visible.length} of ${packages.length} packages`;
+  controls();
+}
+
+get('package-search').addEventListener('input', renderPackages);
+get('package-category').addEventListener('change', renderPackages);
 
 function resetTargets() {
   const key = [get('package-url').value, get('revision').value, get('action').value, get('compiler').value].join('\n');
@@ -46,6 +77,8 @@ export function resultText(result) {
   if (result.error) lines.push(result.error);
   for (const pkg of result.packages ?? []) lines.push(`Package: ${pkg.repository} @ ${pkg.revision}`);
   if (result.compiler) lines.push(`Compiler: ${result.compiler}; FPM ${result.fpm}`);
+  if (result.cache) lines.push(`Precompiled package: ${result.cache.package} (${result.cache.compiler}); `
+    + (result.cache.library_reused ? 'library reused' : 'library required rebuilding'));
   if (result.prepare_seconds !== undefined) lines.push(`Prepare: ${result.prepare_seconds.toFixed(3)} seconds`);
   for (const stage of result.stages ?? []) {
     lines.push('', `${stage.name}: ${stage.ok ? 'PASS' : 'FAIL'} (${stage.seconds.toFixed(3)} seconds)`,
@@ -128,6 +161,27 @@ get('compiler').addEventListener('change', () => {
 });
 for (const id of ['package-url', 'revision']) get(id).addEventListener('input', resetTargets);
 get('example').addEventListener('change', controls);
+get('available-package').addEventListener('change', () => {
+  const selected = packages.find(p => p.id === get('available-package').value);
+  get('package-note').textContent = selected
+    ? `${selected.description} Source: https://github.com/${selected.repository} @ ${selected.revision}. `
+      + (precompiled[selected.id]?.revision === selected.revision ? 'Verified precompiled GNU 16 library.'
+        : 'Precompiled build is not available on this service yet.')
+    : 'Choose a package to load its pinned revision and a working main program. Loading does not run a job.';
+  controls();
+});
+get('load-package').addEventListener('click', () => {
+  const selected = packages.find(p => p.id === get('available-package').value);
+  if (!selected || get('load-package').disabled) return;
+  get('package-url').value = `https://github.com/${selected.repository}`;
+  get('revision').value = selected.revision;
+  get('compiler').value = 'gfortran';
+  get('connection').textContent = `${compilerLabels.gfortran} · FPM 0.12.0 · Separate package service`;
+  get('workflow').value = 'consumer';
+  get('action').value = 'run';
+  editor.setValue(selected.source);
+  resetTargets(); controls();
+});
 get('load-example').addEventListener('click', () => {
   const example = examples.find(item => item.name === get('example').value);
   if (!example) return;
@@ -157,6 +211,17 @@ async function initialize() {
       get('example').appendChild(option);
     }
   }).catch(error => {get('workflow-note').textContent = error.message;});
+  const available = fetch('./packages.json', {cache: 'no-store'}).then(response => {
+    if (!response.ok) throw new Error('Cannot load the precompiled package catalog.');
+    return response.json();
+  }).then(data => {
+    packages = data;
+    for (const category of [...new Set(packages.map(p => p.category))].sort()) {
+      const option = document.createElement('option');
+      option.value = category; option.textContent = category;
+      get('package-category').appendChild(option);
+    }
+  }).catch(error => {get('package-note').textContent = error.message;});
   try {
     const response = await fetch('./service.json', {cache: 'no-store'});
     if (!response.ok) throw new Error('Cannot load FPM service configuration.');
@@ -167,6 +232,7 @@ async function initialize() {
     if (!health.ok || typeof health.fpm !== 'string') throw new Error('FPM service unavailable or incompatible.');
     compilerSelection = Boolean(health.compilers);
     compilerLabels = health.compilers ?? {gfortran: health.compiler};
+    precompiled = health.precompiled ?? {};
     for (const option of get('compiler').options) {
       option.disabled = !Object.hasOwn(compilerLabels, option.value);
       if (!option.disabled) option.textContent = compilerLabels[option.value];
@@ -178,7 +244,11 @@ async function initialize() {
     get('connection').textContent = error.message;
     get('status').textContent = 'Service unavailable';
   }
-  await catalog;
+  await Promise.all([catalog, available]);
+  renderPackages();
+  get('package-note').textContent = Object.keys(precompiled).length
+    ? 'Choose a package to load its pinned revision and a working main program. Loading does not run a job.'
+    : 'Precompiled packages have not been deployed on this service yet. The existing examples and custom URLs remain available.';
   controls();
 }
 

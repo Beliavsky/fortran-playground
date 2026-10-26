@@ -16,10 +16,11 @@ class ServiceError(Exception):
 
 
 class Service:
-    def __init__(self, store, runner, *, clock=time.time, owner_key='', compilers=('gfortran',)):
+    def __init__(self, store, runner, *, clock=time.time, owner_key='', compilers=('gfortran',), precompiled=None):
         self.store, self.runner, self.clock, self.owner_key = store, runner, clock, owner_key
         self.lock = asyncio.Lock()
         self.compilers = tuple(compilers)
+        self.precompiled = precompiled or {}
 
     async def board(self):
         now = self.clock()
@@ -113,8 +114,11 @@ def create_api(service, origins):
 
     @api.get('/api/health')
     async def health():
-        return {'ok': True, 'compiler': COMPILERS['gfortran']['label'], 'fpm': '0.12.0', 'clean_builds': True, 'plotting': True,
-                'compilers': {name: COMPILERS[name]['label'] for name in service.compilers}}
+        return {'ok': True, 'compiler': COMPILERS['gfortran']['label'], 'fpm': '0.12.0',
+                'clean_builds': not bool(service.precompiled), 'plotting': True,
+                'compilers': {name: COMPILERS[name]['label'] for name in service.compilers},
+                'precompiled': {name: {'revision': entry['revision'], 'compiler': 'gfortran'}
+                                for name, entry in service.precompiled.items()}}
 
     @api.post('/api/jobs')
     async def submit(request: Request):

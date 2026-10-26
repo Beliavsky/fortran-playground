@@ -50,13 +50,16 @@ class ModalConfigTests(unittest.TestCase):
     def test_owner_secret_dependencies_match_in_local_and_container_imports(self):
         for secret in ('', 'p2f-owner'):
             with self.subTest(secret=secret):
-                local = self.load(True, {'FPM_OWNER_SECRET': secret, 'FPM_ENABLED_COMPILERS': '["gfortran","ifx","flang"]'})
+                local = self.load(True, {'FPM_OWNER_SECRET': secret, 'FPM_ENABLED_COMPILERS': '["gfortran","ifx","flang"]',
+                    'FPM_PRECOMPILED': '{"fortran-lapack":{"image":"pinned-cache","revision":"abc"}}'})
                 for image_name in ('api_image', 'broker_image'):
                     environment = local[image_name].environment
                     self.assertEqual(environment['FPM_OWNER_SECRET'], secret)
                     remote = self.load(False, environment)
                     self.assertEqual(remote['IMAGE_NAME'], local['IMAGE_NAME'])
+                    self.assertEqual(remote['RECIPE_ID'], local['RECIPE_ID'])
                     self.assertEqual(remote['ENABLED_COMPILERS'], local['ENABLED_COMPILERS'])
+                    self.assertEqual(remote['PRECOMPILED'], local['PRECOMPILED'])
                     self.assertEqual(remote['api'].deployment_spec['secrets'],
                                      local['api'].deployment_spec['secrets'])
                     self.assertEqual(remote['run_job'].deployment_spec['secrets']
@@ -92,6 +95,32 @@ class ModalConfigTests(unittest.TestCase):
         self.assertIsNone(asyncio.run(runner.poll('pending-call')))
         self.assertEqual(asyncio.run(runner.poll('pending-call')), {'ok': True, 'stages': []})
         getter.assert_called_with(timeout=0)
+
+    def test_exact_cached_consumer_skips_all_downloads(self):
+        import json
+        from unittest.mock import MagicMock
+        from fpm_cache import catalog, cache_identity
+        module = self.load(True, {})
+        package = catalog()[0]
+        function = module['execute_job']
+        entry = {'key': cache_identity(package, module['RECIPE_ID']), 'image': 'verified-image',
+                 'revision': package['revision'], 'records': [{'repository': package['repository']}]}
+        sandbox = MagicMock()
+        sandbox.poll.return_value = 0
+        sandbox.stdout.read.return_value = '{"ok":true,"stages":[]}'
+        module['modal'].Sandbox = types.SimpleNamespace(create=MagicMock(return_value=sandbox))
+        module['modal'].Image.from_name = MagicMock(return_value='selected-image')
+        request = {'url': 'https://github.com/' + package['repository'], 'revision': package['revision'],
+                   'source': 'program main\nend program'}
+        with patch.dict(function.__globals__, {'PRECOMPILED': {package['id']: entry}}), \
+             patch('fpm_sources.Preparer.prepare', side_effect=AssertionError('Cache hit must not download')):
+            result = function('test-job', request, cancelled=lambda: False)
+        self.assertTrue(result['ok'], result)
+        message = json.loads(sandbox.stdin.write.call_args.args[0])
+        self.assertEqual(message['cache_key'], entry['key'])
+        self.assertNotIn('bundle', message)
+        module['modal'].Image.from_name.assert_called_once_with('verified-image')
+        sandbox.terminate.assert_called_once()
 
 
 if __name__ == '__main__':

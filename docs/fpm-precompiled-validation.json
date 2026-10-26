@@ -1,0 +1,879 @@
+{
+  "verified_at": "2026-10-26T23:11:44.273114+00:00",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "compiler_image": "gcc:16.2.0-trixie@sha256:43978d7710a803d1c3d32f4117c1528ec7285a4ce2c0a51e982ec1a6e3d87d95",
+  "recipe": "c5a4381ee9e2eae85215f045",
+  "worker": "5428e791d7d2b178",
+  "sandbox": {
+    "runtime": "gvisor",
+    "cpu": [
+      0.5,
+      1
+    ],
+    "memory_mib": [
+      512,
+      1024
+    ],
+    "network": false,
+    "secrets": false,
+    "build_limit_seconds": 180,
+    "run_limit_seconds": 30,
+    "new_file_limit_mib": 16
+  },
+  "check": "Each edited main ran successfully; library artifacts were unchanged and FPM rebuilt only the main and executable. Plotting returned a PNG.",
+  "artifact_size_note": "Logical object/module/archive bytes including FPM flag variants; excludes compiler images, sources, main executables. Not compressed storage or billing.",
+  "total_artifact_bytes": 715975101,
+  "packages": [
+    {
+      "id": "fortran-lapack",
+      "repository": "perazz/fortran-lapack",
+      "revision": "e5e45fdd5a38bfab06d1f703f12b787937aa33bb",
+      "records": [
+        {
+          "repository": "perazz/fortran-lapack",
+          "revision": "e5e45fdd5a38bfab06d1f703f12b787937aa33bb",
+          "sha256": "42a5cc095c28818d597c92b94e72715d5bb620be8068866f0efba26cc2454d1b"
+        }
+      ],
+      "prebuild_seconds": 205.919,
+      "artifact_bytes": 302485404,
+      "verification": {
+        "seconds": 4.742,
+        "build_seconds": 1.8,
+        "library_reused": true,
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "demo_sha256": "66c6d1b1edbe1b6da10d6bf41a0aff2975d6ccbe0d2b220c04292162189987fb"
+      }
+    },
+    {
+      "id": "test-drive",
+      "repository": "fortran-lang/test-drive",
+      "revision": "791484a79a24cbc00be6f74e53c6e030cb75efe2",
+      "records": [
+        {
+          "repository": "fortran-lang/test-drive",
+          "revision": "791484a79a24cbc00be6f74e53c6e030cb75efe2",
+          "sha256": "2daf91d24909cce2bca3a3dfcd27e775b8897cfd889d7f51e291a51b737c6557"
+        }
+      ],
+      "prebuild_seconds": 1.0,
+      "artifact_bytes": 979870,
+      "verification": {
+        "seconds": 3.128,
+        "build_seconds": 0.528,
+        "library_reused": true,
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "demo_sha256": "16cedb750b0a6fe26fd3a02c3c94376126364ba0abb5665a49416f602fdc0d91"
+      }
+    },
+    {
+      "id": "pyplot-fortran",
+      "repository": "jacobwilliams/pyplot-fortran",
+      "revision": "217d0c97a12812ff5c5aca00e5439237e866bc91",
+      "records": [
+        {
+          "repository": "jacobwilliams/pyplot-fortran",
+          "revision": "217d0c97a12812ff5c5aca00e5439237e866bc91",
+          "sha256": "59bd9a52503d77d51b6d962c983bd31854aea844c99ab7fafd1b09923ed22956"
+        }
+      ],
+      "prebuild_seconds": 1.003,
+      "artifact_bytes": 545594,
+      "verification": {
+        "seconds": 3.174,
+        "build_seconds": 0.394,
+        "library_reused": true,
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "demo_sha256": "99e12d83c262c7326668f5351724e445f452b4b5d233a6a61a92e2502ebad61d"
+      }
+    },
+    {
+      "id": "json-fortran",
+      "repository": "jacobwilliams/json-fortran",
+      "revision": "d9ed2e4ee53745f4ed98d7536e17bee5198aa3b0",
+      "records": [
+        {
+          "repository": "jacobwilliams/json-fortran",
+          "revision": "d9ed2e4ee53745f4ed98d7536e17bee5198aa3b0",
+          "sha256": "90b9ca281e74c98cee5f344f5d0d72e486a5377b025741d01aef352b2d5a8703"
+        }
+      ],
+      "prebuild_seconds": 2.64,
+      "artifact_bytes": 1912453,
+      "verification": {
+        "seconds": 2.434,
+        "build_seconds": 0.535,
+        "library_reused": true,
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "demo_sha256": "88ebfa11741e99ef4c64f912d15255f79fe1c6bd0892235d6c5143fd03661ac0"
+      }
+    },
+    {
+      "id": "toml-f",
+      "repository": "toml-f/toml-f",
+      "revision": "f9ff54793b2d1a3edca7d6890548d18d48c98e36",
+      "records": [
+        {
+          "repository": "toml-f/toml-f",
+          "revision": "f9ff54793b2d1a3edca7d6890548d18d48c98e36",
+          "sha256": "d80caa24f3ac72f76eab5799344cb67d6203623af0cfeb1ef45ef56b01de178c"
+        }
+      ],
+      "prebuild_seconds": 2.706,
+      "artifact_bytes": 2673051,
+      "verification": {
+        "seconds": 4.329,
+        "build_seconds": 0.44,
+        "library_reused": true,
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "demo_sha256": "e83d6c5167577c76eeb027e879ce88e38a7838a2c8680ec0b5f5d4c5da0e44f9"
+      }
+    },
+    {
+      "id": "fftpack",
+      "repository": "fortran-lang/fftpack",
+      "revision": "0fffe7c05a918363a7cc12ae138a695afd115f36",
+      "records": [
+        {
+          "repository": "fortran-lang/fftpack",
+          "revision": "0fffe7c05a918363a7cc12ae138a695afd115f36",
+          "sha256": "c59bc81695ca599ae41a9a83593517bc6aca65478111c3a08c0fc36179133629"
+        }
+      ],
+      "prebuild_seconds": 8.108,
+      "artifact_bytes": 4540298,
+      "verification": {
+        "seconds": 3.113,
+        "build_seconds": 0.557,
+        "library_reused": true,
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "demo_sha256": "006e98c5fbf26c767ee99fbac472a69d8876d09671ce48d34a465110d58d9689"
+      }
+    },
+    {
+      "id": "roots-fortran",
+      "repository": "jacobwilliams/roots-fortran",
+      "revision": "85dc6b98404a61d49944939414f7f56c3f32edd1",
+      "records": [
+        {
+          "repository": "jacobwilliams/roots-fortran",
+          "revision": "85dc6b98404a61d49944939414f7f56c3f32edd1",
+          "sha256": "77e3839b1df2500887afbba0924a36fc6265c705f5189c2c8a6c48f169cb8228"
+        }
+      ],
+      "prebuild_seconds": 0.95,
+      "artifact_bytes": 729926,
+      "verification": {
+        "seconds": 2.195,
+        "build_seconds": 0.436,
+        "library_reused": true,
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "demo_sha256": "5cbbf582739e7cca634550ad33aebf2cbcfc1c093bc43bceff2a61148ac71632"
+      }
+    },
+    {
+      "id": "m_strings",
+      "repository": "urbanjost/M_strings",
+      "revision": "928e1576d4b3e7cd41ef4117227a8a4d2d88871a",
+      "records": [
+        {
+          "repository": "urbanjost/M_strings",
+          "revision": "928e1576d4b3e7cd41ef4117227a8a4d2d88871a",
+          "sha256": "8ab11482ab52406520fd63a251573538290b2edd68ba25a1824fa814a38c9ab3"
+        }
+      ],
+      "prebuild_seconds": 3.623,
+      "artifact_bytes": 4457090,
+      "verification": {
+        "seconds": 2.37,
+        "build_seconds": 0.498,
+        "library_reused": true,
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "demo_sha256": "4523737fbe04fb871a900181ebb3bb6300cfdab0a7c78f39c569841f239a2a65"
+      }
+    },
+    {
+      "id": "stdlib",
+      "repository": "fortran-lang/stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "records": [
+        {
+          "repository": "fortran-lang/stdlib",
+          "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+        }
+      ],
+      "prebuild_seconds": 160.386,
+      "artifact_bytes": 344981000,
+      "verification": {
+        "seconds": 4.515,
+        "build_seconds": 1.728,
+        "library_reused": true,
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "demo_sha256": "bd9f6d28306dcb78af5cc2350b11f42682e31eec2972bb2e1667ddd9b973b114"
+      }
+    },
+    {
+      "id": "bspline-fortran",
+      "repository": "jacobwilliams/bspline-fortran",
+      "revision": "047c724451aeee7f883c0d5acba3f7bd22a5de01",
+      "records": [
+        {
+          "repository": "jacobwilliams/bspline-fortran",
+          "revision": "047c724451aeee7f883c0d5acba3f7bd22a5de01",
+          "sha256": "08cb59a93ad6af98bd9ecc97704e2da6fd158df8ff044eb99ff4970b46e7289f"
+        }
+      ],
+      "prebuild_seconds": 3.064,
+      "artifact_bytes": 3377867,
+      "verification": {
+        "seconds": 2.507,
+        "build_seconds": 0.402,
+        "library_reused": true,
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "demo_sha256": "1d975d9374e16f24b444cd4c1825967b49d2f5b94419d0a413cf3fc8c80c776c"
+      }
+    },
+    {
+      "id": "pchip",
+      "repository": "jacobwilliams/PCHIP",
+      "revision": "8f5350565072622a2344dd0ec75193832b31eb10",
+      "records": [
+        {
+          "repository": "jacobwilliams/PCHIP",
+          "revision": "8f5350565072622a2344dd0ec75193832b31eb10",
+          "sha256": "22a2fb25220452a409363a8d8a2c039491fe62df0b91fc89141b28d3dcc115c6"
+        }
+      ],
+      "prebuild_seconds": 1.006,
+      "artifact_bytes": 806484,
+      "verification": {
+        "seconds": 2.66,
+        "build_seconds": 0.434,
+        "library_reused": true,
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "demo_sha256": "db49fe3937cd2abccb2c0e5f49216ac47043e9436df7fcebcc3490b8441fd8cb"
+      }
+    },
+    {
+      "id": "finterp",
+      "repository": "jacobwilliams/finterp",
+      "revision": "95aaceaf86f5d4d49328b783c5dff9b006b0bfc9",
+      "records": [
+        {
+          "repository": "jacobwilliams/finterp",
+          "revision": "95aaceaf86f5d4d49328b783c5dff9b006b0bfc9",
+          "sha256": "22e8a4ddd74b62f06606107703579db2d04d55f0df70d3d31b43b8c380b10244"
+        }
+      ],
+      "prebuild_seconds": 1.788,
+      "artifact_bytes": 1558310,
+      "verification": {
+        "seconds": 3.201,
+        "build_seconds": 0.48,
+        "library_reused": true,
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "demo_sha256": "9281b42993ac1ca33ca107a94a5dde5c7144151d26595766baaa0b166700d3d2"
+      }
+    },
+    {
+      "id": "quadpack",
+      "repository": "jacobwilliams/quadpack",
+      "revision": "ab42d50794280a8e7996f2ee4cda1f8753dfde5b",
+      "records": [
+        {
+          "repository": "jacobwilliams/quadpack",
+          "revision": "ab42d50794280a8e7996f2ee4cda1f8753dfde5b",
+          "sha256": "973158fce8508717b04496a0546c3ad1c7a2408ac1d7d5822b0331e116fab7f0"
+        }
+      ],
+      "prebuild_seconds": 6.161,
+      "artifact_bytes": 8014050,
+      "verification": {
+        "seconds": 3.225,
+        "build_seconds": 0.55,
+        "library_reused": true,
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "demo_sha256": "915ba6b25315da0c1b5bacbc209e41e7de24e8b5e983411aa467829fb855144b"
+      }
+    },
+    {
+      "id": "quadrature-fortran",
+      "repository": "jacobwilliams/quadrature-fortran",
+      "revision": "1d208fc59569a97b1c2abf9c45f7c352dcc7b318",
+      "records": [
+        {
+          "repository": "jacobwilliams/quadrature-fortran",
+          "revision": "1d208fc59569a97b1c2abf9c45f7c352dcc7b318",
+          "sha256": "b099c2ee3e5c9c993e888cff0724fd7035dfb36559b09bc516ac94c45a610a34"
+        }
+      ],
+      "prebuild_seconds": 1.12,
+      "artifact_bytes": 634653,
+      "verification": {
+        "seconds": 2.906,
+        "build_seconds": 0.52,
+        "library_reused": true,
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "demo_sha256": "8f7b5ba97eff8093f0324e9db518f7f21946df21ca16ca01814b31887044d22b"
+      }
+    },
+    {
+      "id": "dop853",
+      "repository": "jacobwilliams/dop853",
+      "revision": "1e9d0dbf4dcbc692ca557c0467629112dd1f0ce6",
+      "records": [
+        {
+          "repository": "jacobwilliams/dop853",
+          "revision": "1e9d0dbf4dcbc692ca557c0467629112dd1f0ce6",
+          "sha256": "79f073b1502f9cc7bae134f926cd6a492aa62aad3d99db0ee9a488308304828b"
+        }
+      ],
+      "prebuild_seconds": 1.26,
+      "artifact_bytes": 928402,
+      "verification": {
+        "seconds": 3.159,
+        "build_seconds": 0.534,
+        "library_reused": true,
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "demo_sha256": "dab90f237637ce5e97cd0cd14c40aa0682de13fd5535eebb1203fa51da6b88dd"
+      }
+    },
+    {
+      "id": "minpack",
+      "repository": "jacobwilliams/minpack",
+      "revision": "c0b5aea9fcd2b83865af921a7a7e881904f8d3c2",
+      "records": [
+        {
+          "repository": "jacobwilliams/minpack",
+          "revision": "c0b5aea9fcd2b83865af921a7a7e881904f8d3c2",
+          "sha256": "7da3f3ef43bf7fa10c518829263b041472022fb75b5a3c5cb85481397390a7b9"
+        }
+      ],
+      "prebuild_seconds": 2.433,
+      "artifact_bytes": 2200554,
+      "verification": {
+        "seconds": 2.197,
+        "build_seconds": 0.403,
+        "library_reused": true,
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "demo_sha256": "cf0693ed8c2d2e864525dd4d354666d235a0fbbdaf16ed202990e12c99b2d0ea"
+      }
+    },
+    {
+      "id": "mersenne-twister-fortran",
+      "repository": "jacobwilliams/mersenne-twister-fortran",
+      "revision": "1e3e364f4c022eab3fcd5d07b10a2c2be77a822b",
+      "records": [
+        {
+          "repository": "jacobwilliams/mersenne-twister-fortran",
+          "revision": "1e3e364f4c022eab3fcd5d07b10a2c2be77a822b",
+          "sha256": "95d5fa39dc727f587d4b4881cd606d5ea28f41ced883d493eb3576fe23eb1671"
+        }
+      ],
+      "prebuild_seconds": 0.587,
+      "artifact_bytes": 570782,
+      "verification": {
+        "seconds": 2.445,
+        "build_seconds": 0.444,
+        "library_reused": true,
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "demo_sha256": "163e3483e21efbecabd772c417a660c0eebb63389356d32fca1873a946c87915"
+      }
+    },
+    {
+      "id": "fortran-search-and-sort",
+      "repository": "jacobwilliams/fortran-search-and-sort",
+      "revision": "f5a62cece0291ee553b1354bc22de28bbc134478",
+      "records": [
+        {
+          "repository": "jacobwilliams/fortran-search-and-sort",
+          "revision": "f5a62cece0291ee553b1354bc22de28bbc134478",
+          "sha256": "0ce9d1e8d965c133e5437e62c877cbc9ed60ed38eb94f7423c5d43be6b6ae4b2"
+        }
+      ],
+      "prebuild_seconds": 1.772,
+      "artifact_bytes": 778577,
+      "verification": {
+        "seconds": 2.466,
+        "build_seconds": 0.78,
+        "library_reused": true,
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "demo_sha256": "f89ec5d7342ef5683198abc7a5bfa42889cd443a1927b071872af902165cda07"
+      }
+    },
+    {
+      "id": "stringsort",
+      "repository": "jacobwilliams/stringsort",
+      "revision": "4b074d4930f6d7dcb402609085e7c301437d8699",
+      "records": [
+        {
+          "repository": "jacobwilliams/stringsort",
+          "revision": "4b074d4930f6d7dcb402609085e7c301437d8699",
+          "sha256": "b93adcf9f63952f987d2302ed76ae702042441c21984b0df3a3ce399b9224d1b"
+        }
+      ],
+      "prebuild_seconds": 1.306,
+      "artifact_bytes": 701904,
+      "verification": {
+        "seconds": 2.475,
+        "build_seconds": 0.351,
+        "library_reused": true,
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "demo_sha256": "fe0d76725dc7c4bb161dcd69983c0407f972a20cdb11257f8cfe0b6bf21bf2de"
+      }
+    },
+    {
+      "id": "flist",
+      "repository": "jacobwilliams/flist",
+      "revision": "84ced24bccf894921a36ccc56721e53420c744c4",
+      "records": [
+        {
+          "repository": "jacobwilliams/flist",
+          "revision": "84ced24bccf894921a36ccc56721e53420c744c4",
+          "sha256": "c9e7497558c91c22785c8e59bcd0e487fd96e3a87ff28d5a6de871fb1b8f75e0"
+        }
+      ],
+      "prebuild_seconds": 0.795,
+      "artifact_bytes": 600629,
+      "verification": {
+        "seconds": 2.542,
+        "build_seconds": 0.404,
+        "library_reused": true,
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "demo_sha256": "b27870bafbe5562d5d48a7d8dddba4df102f35fff782f9de7c15e914cfcffd25"
+      }
+    },
+    {
+      "id": "daglib",
+      "repository": "jacobwilliams/daglib",
+      "revision": "68fa83ebfd33fd6521327918b1d8e5084250a8ff",
+      "records": [
+        {
+          "repository": "jacobwilliams/daglib",
+          "revision": "68fa83ebfd33fd6521327918b1d8e5084250a8ff",
+          "sha256": "914c562ceb1ae8bad0487aecb437d8c5181159faa02af061a2eb7c69484113a6"
+        }
+      ],
+      "prebuild_seconds": 1.361,
+      "artifact_bytes": 956969,
+      "verification": {
+        "seconds": 2.122,
+        "build_seconds": 0.416,
+        "library_reused": true,
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "demo_sha256": "5ae1a2418d6e95e68e4724f1ad2f31804b0e4d5a36c2afd135ade22dff572e40"
+      }
+    },
+    {
+      "id": "argv-fortran",
+      "repository": "jacobwilliams/argv-fortran",
+      "revision": "8135f30876162714e7632d7665a30642f89d5ce1",
+      "records": [
+        {
+          "repository": "jacobwilliams/argv-fortran",
+          "revision": "8135f30876162714e7632d7665a30642f89d5ce1",
+          "sha256": "700b95a0ec62a578dbb393d52f3f1afbb436bdf44884e5d67c943d8ef106b7e3"
+        }
+      ],
+      "prebuild_seconds": 1.314,
+      "artifact_bytes": 540479,
+      "verification": {
+        "seconds": 2.241,
+        "build_seconds": 0.287,
+        "library_reused": true,
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "demo_sha256": "66a8a8725ff4ae0f91b98b256a44662a5397e6cf273a466edc55d98bcf6ae218"
+      }
+    },
+    {
+      "id": "popen-fortran",
+      "repository": "jacobwilliams/popen-fortran",
+      "revision": "574076fff90dcfa9a16b2b2a21d92448ca6cd40b",
+      "records": [
+        {
+          "repository": "jacobwilliams/popen-fortran",
+          "revision": "574076fff90dcfa9a16b2b2a21d92448ca6cd40b",
+          "sha256": "0d55b6bc43857a02b0da67268458666b778a453659a9f67b85a8eed3b1534077"
+        }
+      ],
+      "prebuild_seconds": 0.791,
+      "artifact_bytes": 547948,
+      "verification": {
+        "seconds": 2.737,
+        "build_seconds": 0.376,
+        "library_reused": true,
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "demo_sha256": "3607babd42189d98ba4e9d47efc4cb1d863af9a8382baab2cd55af4d869b608e"
+      }
+    },
+    {
+      "id": "fortran_function_parser",
+      "repository": "jacobwilliams/fortran_function_parser",
+      "revision": "4c977c925506bea3fb1ee44aac08114c5fa68a71",
+      "records": [
+        {
+          "repository": "jacobwilliams/fortran_function_parser",
+          "revision": "4c977c925506bea3fb1ee44aac08114c5fa68a71",
+          "sha256": "88a21855bfa2002d480468c73c72f971dd1ab01caf8c23828a390bc1b3691a36"
+        }
+      ],
+      "prebuild_seconds": 1.356,
+      "artifact_bytes": 1001767,
+      "verification": {
+        "seconds": 2.927,
+        "build_seconds": 0.534,
+        "library_reused": true,
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "demo_sha256": "064649d549884d8e3c2c3cfa4b527ceb0acd07d964f454873c8578078c55abac"
+      }
+    },
+    {
+      "id": "numdiff",
+      "repository": "jacobwilliams/NumDiff",
+      "revision": "687157df8d2dec072b5484974bab71f7b14b0e9f",
+      "records": [
+        {
+          "repository": "jacobwilliams/NumDiff",
+          "revision": "687157df8d2dec072b5484974bab71f7b14b0e9f",
+          "sha256": "b51fd9daad66ba3579c231266806cc0855dfbbe184959dd68a08c9e69a1fe6e1"
+        }
+      ],
+      "prebuild_seconds": 2.385,
+      "artifact_bytes": 2293231,
+      "verification": {
+        "seconds": 2.417,
+        "build_seconds": 0.413,
+        "library_reused": true,
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "demo_sha256": "50a55c4c34c6c8bd0e78813af9918b448029f07b7b9a64ed63ba925b4bbe96bb"
+      }
+    },
+    {
+      "id": "csv-fortran",
+      "repository": "jacobwilliams/csv-fortran",
+      "revision": "7c6c04a3df1c44083ba1a2a0a96d2c0ff18ebef2",
+      "records": [
+        {
+          "repository": "jacobwilliams/csv-fortran",
+          "revision": "7c6c04a3df1c44083ba1a2a0a96d2c0ff18ebef2",
+          "sha256": "eccbf593601616d66cfa9f7f98a31034903942a6ce89d6e1c8a41da25939ee17"
+        }
+      ],
+      "prebuild_seconds": 1.169,
+      "artifact_bytes": 866604,
+      "verification": {
+        "seconds": 2.026,
+        "build_seconds": 0.217,
+        "library_reused": true,
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "demo_sha256": "fc9b5cf13bcabc1a568c5ad977708312ec7bcb73579247d0d4071829bd1d5b9d"
+      }
+    },
+    {
+      "id": "datetime-fortran",
+      "repository": "wavebitscientific/datetime-fortran",
+      "revision": "c49fcfcc54364db8235130149c4480b2bd0a72a0",
+      "records": [
+        {
+          "repository": "wavebitscientific/datetime-fortran",
+          "revision": "c49fcfcc54364db8235130149c4480b2bd0a72a0",
+          "sha256": "62252a2f8dc0a6192792641cd919659eee8a247a1b9326417715f93ed46b2ac8"
+        }
+      ],
+      "prebuild_seconds": 1.196,
+      "artifact_bytes": 720550,
+      "verification": {
+        "seconds": 2.04,
+        "build_seconds": 0.525,
+        "library_reused": true,
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "demo_sha256": "f4f5ebd1215bee07dae37d8de2d4679e21f2f08da404b2a2266e98a2c34b50d0"
+      }
+    },
+    {
+      "id": "m_io",
+      "repository": "urbanjost/M_io",
+      "revision": "f7b53819ade14f3e53470929dac3e55bc695cf0e",
+      "records": [
+        {
+          "repository": "urbanjost/M_io",
+          "revision": "f7b53819ade14f3e53470929dac3e55bc695cf0e",
+          "sha256": "bef465978d1aa1e35321d5bd90787cd60f3e0b95a387ad28af3d5dc3eeac73d8"
+        }
+      ],
+      "prebuild_seconds": 1.668,
+      "artifact_bytes": 1271048,
+      "verification": {
+        "seconds": 1.9,
+        "build_seconds": 0.447,
+        "library_reused": true,
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "demo_sha256": "85e04b68f945638605b22ff738e316386345f971d531fc7dddcce6ea0fa0090a"
+      }
+    },
+    {
+      "id": "m_time",
+      "repository": "urbanjost/M_time",
+      "revision": "e3e5dde125388c30dd54e225cbc14816984ab776",
+      "records": [
+        {
+          "repository": "urbanjost/M_time",
+          "revision": "e3e5dde125388c30dd54e225cbc14816984ab776",
+          "sha256": "e66d53b4e95d34f08062140d8a78eb478b1e1c88b41da9cb03789f2736972386"
+        }
+      ],
+      "prebuild_seconds": 2.424,
+      "artifact_bytes": 1486535,
+      "verification": {
+        "seconds": 2.63,
+        "build_seconds": 0.445,
+        "library_reused": true,
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "demo_sha256": "28c73e93ad55bf79b211f2e616df6a8f385a70d2090d5a1618d0e6196946a965"
+      }
+    },
+    {
+      "id": "m_sets",
+      "repository": "urbanjost/M_sets",
+      "revision": "0c00adef65781ba0cd979236ed25eedab8fb48c4",
+      "records": [
+        {
+          "repository": "urbanjost/M_sets",
+          "revision": "0c00adef65781ba0cd979236ed25eedab8fb48c4",
+          "sha256": "d799347fd7c9b4ae18a2263a56922d72ddbb475f069a1aea1110848ef4886cd4"
+        },
+        {
+          "repository": "urbanjost/M_orderpack",
+          "revision": "9696eee2670beae1601ae59e125ff9f10e6c88a7",
+          "sha256": "54a5156b7b9e10267d742316c42eb87fa05bb7dbe8cad68820fc7e1d59c8e244"
+        }
+      ],
+      "prebuild_seconds": 3.712,
+      "artifact_bytes": 8454691,
+      "verification": {
+        "seconds": 3.031,
+        "build_seconds": 0.578,
+        "library_reused": true,
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "demo_sha256": "b75c6c035576c4144133ea87d63652d04a3a370987c8672fac88fcf7f5e3ce89"
+      }
+    },
+    {
+      "id": "m_sort",
+      "repository": "urbanjost/M_sort",
+      "revision": "0a1dfd05a642590d4b02af9242fe0b03dfe9b3a5",
+      "records": [
+        {
+          "repository": "urbanjost/M_sort",
+          "revision": "0a1dfd05a642590d4b02af9242fe0b03dfe9b3a5",
+          "sha256": "d9a504e03a0325c659bed764cc05af5f5a9ab665a938a3b0f09f74228aa754f0"
+        }
+      ],
+      "prebuild_seconds": 1.714,
+      "artifact_bytes": 1783298,
+      "verification": {
+        "seconds": 2.355,
+        "build_seconds": 0.257,
+        "library_reused": true,
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "demo_sha256": "060eae02913a585a01593d76ea1a4e53b2b8d3e6742c1cc78ed1051ce35289be"
+      }
+    },
+    {
+      "id": "m_cli2",
+      "repository": "urbanjost/M_CLI2",
+      "revision": "a6934890178377cd92444d290aa3d3198ba9954d",
+      "records": [
+        {
+          "repository": "urbanjost/M_CLI2",
+          "revision": "a6934890178377cd92444d290aa3d3198ba9954d",
+          "sha256": "55f4bdd7c3be3466f838eae12ed2409b44fe0bd6cc0118bb5194b1d7d578ee28"
+        }
+      ],
+      "prebuild_seconds": 1.927,
+      "artifact_bytes": 1645766,
+      "verification": {
+        "seconds": 2.64,
+        "build_seconds": 0.414,
+        "library_reused": true,
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "demo_sha256": "441887cf9fabc705700021c82b6bd83a9886f2e1cd58c43ec85edc476c25b329"
+      }
+    },
+    {
+      "id": "m_attr",
+      "repository": "urbanjost/M_attr",
+      "revision": "5a2b6332332530fe371481314a5013b070ebb798",
+      "records": [
+        {
+          "repository": "urbanjost/M_attr",
+          "revision": "5a2b6332332530fe371481314a5013b070ebb798",
+          "sha256": "ef9990a50c8d478dbf837b670b76d97d81afd1490cb03020a700d8dbb2d257b1"
+        }
+      ],
+      "prebuild_seconds": 1.105,
+      "artifact_bytes": 913564,
+      "verification": {
+        "seconds": 2.345,
+        "build_seconds": 0.252,
+        "library_reused": true,
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "demo_sha256": "5af6ab0ffcdcab0047650b74e1fcf18d24f15645946e95d8f4a53d5a7ff687ea"
+      }
+    },
+    {
+      "id": "jonquil",
+      "repository": "toml-f/jonquil",
+      "revision": "191b6d8e4007b2d15f428aed26fe9d9a32aca3ca",
+      "records": [
+        {
+          "repository": "toml-f/jonquil",
+          "revision": "191b6d8e4007b2d15f428aed26fe9d9a32aca3ca",
+          "sha256": "bd183a1e2784f6038312d4775e290b0b725a0638fd42f78ea94fc543b85c949d"
+        },
+        {
+          "repository": "toml-f/toml-f",
+          "revision": "51a26158c6d52bbc59cb482bdd13f00d7fd032a3",
+          "sha256": "2f910f4fb002243c502fb1435782f18c3ea163ebfc78afd5a597cac99a535e80"
+        }
+      ],
+      "prebuild_seconds": 5.964,
+      "artifact_bytes": 3076445,
+      "verification": {
+        "seconds": 1.796,
+        "build_seconds": 0.264,
+        "library_reused": true,
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "demo_sha256": "7c5ae8e23c1bcd20c8bde9c608f99cfcc22abd8b3fe3e42fd7d5bff3d1b36eef"
+      }
+    },
+    {
+      "id": "orderpack",
+      "repository": "urbanjost/orderpack",
+      "revision": "9696eee2670beae1601ae59e125ff9f10e6c88a7",
+      "records": [
+        {
+          "repository": "urbanjost/orderpack",
+          "revision": "9696eee2670beae1601ae59e125ff9f10e6c88a7",
+          "sha256": "54a5156b7b9e10267d742316c42eb87fa05bb7dbe8cad68820fc7e1d59c8e244"
+        }
+      ],
+      "prebuild_seconds": 4.894,
+      "artifact_bytes": 6939308,
+      "verification": {
+        "seconds": 13.54,
+        "build_seconds": 5.483,
+        "library_reused": true,
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "demo_sha256": "c8dd69f84ff91a5bdf7030b73747a992373f8b345f12f49ca1e79ce242db62f5"
+      }
+    }
+  ]
+}
