@@ -1,0 +1,827 @@
+{
+  "compiler": "gfortran 16.2.0",
+  "fpm": "0.12.0",
+  "network": "blocked",
+  "build_timeout": 180,
+  "run_timeout": 30,
+  "sandbox_timeout": 250,
+  "runs": [
+    {
+      "name": "consumer-quadrature",
+      "verified": true,
+      "expected_ok": true,
+      "seconds": 3.614,
+      "packages": [
+        {
+          "repository": "jacobwilliams/quadrature-fortran",
+          "revision": "1d208fc59569a97b1c2abf9c45f7c352dcc7b318",
+          "sha256": "b099c2ee3e5c9c993e888cff0724fd7035dfb36559b09bc516ac94c45a610a34"
+        }
+      ],
+      "result": {
+        "ok": true,
+        "compiler": "GNU Fortran 16.2.0",
+        "fpm": "0.12.0",
+        "stages": [
+          {
+            "name": "Build",
+            "command": [
+              "fpm",
+              "build",
+              "--profile",
+              "debug",
+              "--compiler",
+              "gfortran",
+              "--no-prune"
+            ],
+            "seconds": 0.578,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": " + mkdir -p build/dependencies\n[  0%]          quadrature_module.F90\n[ 25%]          quadrature_module.F90  done.\n[ 25%]           libplayground-main.a\n[ 50%]           libplayground-main.a  done.\n[ 50%]                       main.f90\n[ 75%]                       main.f90  done.\n[ 75%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+            "stderr": ""
+          },
+          {
+            "name": "Run",
+            "command": [
+              "fpm",
+              "run",
+              "--profile",
+              "debug",
+              "--compiler",
+              "gfortran",
+              "--no-prune"
+            ],
+            "seconds": 0.019,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": "PASS quadrature integral= 0.333333333333 status=1\n",
+            "stderr": "Project is up to date\n"
+          }
+        ],
+        "targets": [
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "name": "consumer-roots",
+      "verified": true,
+      "expected_ok": true,
+      "seconds": 5.093,
+      "packages": [
+        {
+          "repository": "jacobwilliams/roots-fortran",
+          "revision": "85dc6b98404a61d49944939414f7f56c3f32edd1",
+          "sha256": "77e3839b1df2500887afbba0924a36fc6265c705f5189c2c8a6c48f169cb8228"
+        }
+      ],
+      "result": {
+        "ok": true,
+        "compiler": "GNU Fortran 16.2.0",
+        "fpm": "0.12.0",
+        "stages": [
+          {
+            "name": "Build",
+            "command": [
+              "fpm",
+              "build",
+              "--profile",
+              "debug",
+              "--compiler",
+              "gfortran",
+              "--no-prune"
+            ],
+            "seconds": 2.163,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": " + mkdir -p build/dependencies\n[  0%]                root_module.F90\n[ 25%]                root_module.F90  done.\n[ 25%]           libplayground-main.a\n[ 50%]           libplayground-main.a  done.\n[ 50%]                       main.f90\n[ 75%]                       main.f90  done.\n[ 75%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+            "stderr": ""
+          },
+          {
+            "name": "Run",
+            "command": [
+              "fpm",
+              "run",
+              "--profile",
+              "debug",
+              "--compiler",
+              "gfortran",
+              "--no-prune"
+            ],
+            "seconds": 0.023,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": "PASS roots sqrt(2)= 1.414213562373\n",
+            "stderr": "Project is up to date\n"
+          }
+        ],
+        "targets": [
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "name": "consumer-pchip",
+      "verified": true,
+      "expected_ok": true,
+      "seconds": 3.029,
+      "packages": [
+        {
+          "repository": "jacobwilliams/PCHIP",
+          "revision": "8f5350565072622a2344dd0ec75193832b31eb10",
+          "sha256": "22a2fb25220452a409363a8d8a2c039491fe62df0b91fc89141b28d3dcc115c6"
+        }
+      ],
+      "result": {
+        "ok": true,
+        "compiler": "GNU Fortran 16.2.0",
+        "fpm": "0.12.0",
+        "stages": [
+          {
+            "name": "Build",
+            "command": [
+              "fpm",
+              "build",
+              "--profile",
+              "debug",
+              "--compiler",
+              "gfortran",
+              "--no-prune"
+            ],
+            "seconds": 0.627,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": " + mkdir -p build/dependencies\n[  0%]               pchip_module.f90\n[ 25%]               pchip_module.f90  done.\n[ 25%]           libplayground-main.a\n[ 50%]           libplayground-main.a  done.\n[ 50%]                       main.f90\n[ 75%]                       main.f90  done.\n[ 75%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+            "stderr": ""
+          },
+          {
+            "name": "Run",
+            "command": [
+              "fpm",
+              "run",
+              "--profile",
+              "debug",
+              "--compiler",
+              "gfortran",
+              "--no-prune"
+            ],
+            "seconds": 0.021,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": "PASS pchip value=  2.0000\n",
+            "stderr": "Project is up to date\n"
+          }
+        ],
+        "targets": [
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "name": "consumer-toml",
+      "verified": true,
+      "expected_ok": true,
+      "seconds": 6.727,
+      "packages": [
+        {
+          "repository": "toml-f/toml-f",
+          "revision": "f9ff54793b2d1a3edca7d6890548d18d48c98e36",
+          "sha256": "d80caa24f3ac72f76eab5799344cb67d6203623af0cfeb1ef45ef56b01de178c"
+        }
+      ],
+      "result": {
+        "ok": true,
+        "compiler": "GNU Fortran 16.2.0",
+        "fpm": "0.12.0",
+        "stages": [
+          {
+            "name": "Build",
+            "command": [
+              "fpm",
+              "build",
+              "--profile",
+              "debug",
+              "--compiler",
+              "gfortran",
+              "--no-prune"
+            ],
+            "seconds": 2.992,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": " + mkdir -p build/dependencies\n[  0%]                  constants.f90\n[  2%]                  constants.f90  done.\n[  2%]                    version.f90\n[  5%]                    version.f90  done.\n[  5%]                      token.f90\n[  7%]                      token.f90  done.\n[  7%]                   datetime.f90\n[ 10%]                   datetime.f90  done.\n[ 10%]                      error.f90\n[ 13%]                      error.f90  done.\n[ 13%]                         io.f90\n[ 15%]                         io.f90  done.\n[ 15%]                      utils.f90\n[ 18%]                      utils.f90  done.\n[ 18%]                        abc.f90\n[ 21%]                        abc.f90  done.\n[ 21%]                   terminal.f90\n[ 23%]                   terminal.f90  done.\n[ 23%]                      value.f90\n[ 26%]                      value.f90  done.\n[ 26%]                 diagnostic.f90\n[ 28%]                 diagnostic.f90  done.\n[ 28%]                       list.f90\n[ 31%]                       list.f90  done.\n[ 31%]                        map.f90\n[ 34%]                        map.f90  done.\n[ 34%]                       node.f90\n[ 36%]                       node.f90  done.\n[ 36%]                     keyval.f90\n[ 39%]                     keyval.f90  done.\n[ 39%]                       sort.f90\n[ 42%]                       sort.f90  done.\n[ 42%]                    context.f90\n[ 44%]                    context.f90  done.\n[ 44%]                 array_list.f90\n[ 47%]                 array_list.f90  done.\n[ 47%]                ordered_map.f90\n[ 50%]                ordered_map.f90  done.\n[ 50%]                  structure.f90\n[ 52%]                  structure.f90  done.\n[ 52%]                      lexer.f90\n[ 55%]                      lexer.f90  done.\n[ 55%]                      array.f90\n[ 57%]                      array.f90  done.\n[ 57%]                      table.f90\n[ 60%]                      table.f90  done.\n[ 60%]                       type.f90\n[ 63%]                       type.f90  done.\n[ 63%]                        ser.f90\n[ 65%]                        ser.f90  done.\n[ 65%]                     keyval.f90\n[ 68%]                     keyval.f90  done.\n[ 68%]                      merge.f90\n[ 71%]                      merge.f90  done.\n[ 71%]                     parser.f90\n[ 73%]                     parser.f90  done.\n[ 73%]                         de.f90\n[ 76%]                         de.f90  done.\n[ 76%]                      array.f90\n[ 78%]                      array.f90  done.\n[ 78%]                      table.f90\n[ 81%]                      table.f90  done.\n[ 81%]                       path.f90\n[ 84%]                       path.f90  done.\n[ 84%]                      build.f90\n[ 86%]                      build.f90  done.\n[ 86%]                      tomlf.f90\n[ 89%]                      tomlf.f90  done.\n[ 89%]                        all.f90\n[ 92%]                        all.f90  done.\n[ 92%]           libplayground-main.a\n[ 94%]           libplayground-main.a  done.\n[ 94%]                       main.f90\n[ 97%]                       main.f90  done.\n[ 97%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+            "stderr": ""
+          },
+          {
+            "name": "Run",
+            "command": [
+              "fpm",
+              "run",
+              "--profile",
+              "debug",
+              "--compiler",
+              "gfortran",
+              "--no-prune"
+            ],
+            "seconds": 0.039,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": "PASS toml answer=42\n",
+            "stderr": "Project is up to date\n"
+          }
+        ],
+        "targets": [
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "name": "consumer-datetime",
+      "verified": true,
+      "expected_ok": true,
+      "seconds": 4.037,
+      "packages": [
+        {
+          "repository": "milancurcic/datetime-fortran",
+          "revision": "c49fcfcc54364db8235130149c4480b2bd0a72a0",
+          "sha256": "62252a2f8dc0a6192792641cd919659eee8a247a1b9326417715f93ed46b2ac8"
+        }
+      ],
+      "result": {
+        "ok": true,
+        "compiler": "GNU Fortran 16.2.0",
+        "fpm": "0.12.0",
+        "stages": [
+          {
+            "name": "Build",
+            "command": [
+              "fpm",
+              "build",
+              "--profile",
+              "debug",
+              "--compiler",
+              "gfortran",
+              "--no-prune"
+            ],
+            "seconds": 1.392,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": " + mkdir -p build/dependencies\n[  0%]            datetime_module.f90\n[ 20%]            datetime_module.f90  done.\n[ 20%]                   strptime.cpp\n[ 40%]                   strptime.cpp  done.\n[ 40%]           libplayground-main.a\n[ 60%]           libplayground-main.a  done.\n[ 60%]                       main.f90\n[ 80%]                       main.f90  done.\n[ 80%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+            "stderr": ""
+          },
+          {
+            "name": "Run",
+            "command": [
+              "fpm",
+              "run",
+              "--profile",
+              "debug",
+              "--compiler",
+              "gfortran",
+              "--no-prune"
+            ],
+            "seconds": 0.028,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": "PASS datetime date=2024-03-01T00:00:00.000\n",
+            "stderr": "Project is up to date\n"
+          }
+        ],
+        "targets": [
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "name": "package-build",
+      "verified": true,
+      "expected_ok": true,
+      "seconds": 1.9,
+      "packages": [],
+      "result": {
+        "ok": true,
+        "compiler": "GNU Fortran 16.2.0",
+        "fpm": "0.12.0",
+        "stages": [
+          {
+            "name": "Build",
+            "command": [
+              "fpm",
+              "build",
+              "--profile",
+              "debug",
+              "--compiler",
+              "gfortran",
+              "--no-prune"
+            ],
+            "seconds": 0.409,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": " + mkdir -p build/dependencies\n[  0%]                       math.f90\n[ 16%]                       math.f90  done.\n[ 16%]                      alpha.f90\n[ 33%]                      alpha.f90  done.\n[ 33%]                       beta.f90\n[ 50%]                       beta.f90  done.\n[ 50%]      libverification-fixture.a\n[ 66%]      libverification-fixture.a  done.\n[ 66%]                          alpha\n[ 83%]                          alpha  done.\n[ 83%]                           beta\n[100%]                           beta  done.\n[100%] Project compiled successfully.\n",
+            "stderr": ""
+          }
+        ],
+        "targets": [
+          "alpha",
+          "beta"
+        ]
+      }
+    },
+    {
+      "name": "target-discovery",
+      "verified": true,
+      "expected_ok": false,
+      "seconds": 2.137,
+      "packages": [],
+      "result": {
+        "ok": false,
+        "compiler": "GNU Fortran 16.2.0",
+        "fpm": "0.12.0",
+        "stages": [
+          {
+            "name": "Build",
+            "command": [
+              "fpm",
+              "build",
+              "--profile",
+              "debug",
+              "--compiler",
+              "gfortran",
+              "--no-prune"
+            ],
+            "seconds": 0.511,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": " + mkdir -p build/dependencies\n[  0%]                       math.f90\n[ 16%]                       math.f90  done.\n[ 16%]                      alpha.f90\n[ 33%]                      alpha.f90  done.\n[ 33%]                       beta.f90\n[ 50%]                       beta.f90  done.\n[ 50%]      libverification-fixture.a\n[ 66%]      libverification-fixture.a  done.\n[ 66%]                          alpha\n[ 83%]                          alpha  done.\n[ 83%]                           beta\n[100%]                           beta  done.\n[100%] Project compiled successfully.\n",
+            "stderr": ""
+          }
+        ],
+        "targets": [
+          "alpha",
+          "beta"
+        ],
+        "error": "Choose an application target, then submit again.",
+        "needs_target": true
+      }
+    },
+    {
+      "name": "target-and-stdin",
+      "verified": true,
+      "expected_ok": true,
+      "seconds": 1.465,
+      "packages": [],
+      "result": {
+        "ok": true,
+        "compiler": "GNU Fortran 16.2.0",
+        "fpm": "0.12.0",
+        "stages": [
+          {
+            "name": "Build",
+            "command": [
+              "fpm",
+              "build",
+              "--profile",
+              "debug",
+              "--compiler",
+              "gfortran",
+              "--no-prune"
+            ],
+            "seconds": 0.441,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": " + mkdir -p build/dependencies\n[  0%]                       math.f90\n[ 16%]                       math.f90  done.\n[ 16%]                      alpha.f90\n[ 33%]                      alpha.f90  done.\n[ 33%]                       beta.f90\n[ 50%]                       beta.f90  done.\n[ 50%]      libverification-fixture.a\n[ 66%]      libverification-fixture.a  done.\n[ 66%]                          alpha\n[ 83%]                          alpha  done.\n[ 83%]                           beta\n[100%]                           beta  done.\n[100%] Project compiled successfully.\n",
+            "stderr": ""
+          },
+          {
+            "name": "Run",
+            "command": [
+              "fpm",
+              "run",
+              "--profile",
+              "debug",
+              "--compiler",
+              "gfortran",
+              "--no-prune",
+              "--target",
+              "alpha"
+            ],
+            "seconds": 0.015,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": "          42\n",
+            "stderr": "Project is up to date\n"
+          }
+        ],
+        "targets": [
+          "alpha",
+          "beta"
+        ]
+      }
+    },
+    {
+      "name": "package-test",
+      "verified": true,
+      "expected_ok": true,
+      "seconds": 2.623,
+      "packages": [],
+      "result": {
+        "ok": true,
+        "compiler": "GNU Fortran 16.2.0",
+        "fpm": "0.12.0",
+        "stages": [
+          {
+            "name": "Build",
+            "command": [
+              "fpm",
+              "build",
+              "--profile",
+              "debug",
+              "--compiler",
+              "gfortran",
+              "--no-prune",
+              "--tests"
+            ],
+            "seconds": 0.707,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": " + mkdir -p build/dependencies\n[  0%]                       math.f90\n[ 12%]                       math.f90  done.\n[ 12%]                      alpha.f90\n[ 25%]                      alpha.f90  done.\n[ 25%]                       beta.f90\n[ 37%]                       beta.f90  done.\n[ 37%]      libverification-fixture.a\n[ 50%]      libverification-fixture.a  done.\n[ 50%]                      check.f90\n[ 62%]                      check.f90  done.\n[ 62%]                          alpha\n[ 75%]                          alpha  done.\n[ 75%]                           beta\n[ 87%]                           beta  done.\n[ 87%]                          check\n[100%]                          check  done.\n[100%] Project compiled successfully.\n",
+            "stderr": ""
+          },
+          {
+            "name": "Test",
+            "command": [
+              "fpm",
+              "test",
+              "--profile",
+              "debug",
+              "--compiler",
+              "gfortran",
+              "--no-prune"
+            ],
+            "seconds": 0.018,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": " TEST PASS\n",
+            "stderr": "Project is up to date\n"
+          }
+        ],
+        "targets": [
+          "check"
+        ]
+      }
+    },
+    {
+      "name": "compile-failure",
+      "verified": true,
+      "expected_ok": false,
+      "seconds": 2.148,
+      "packages": [],
+      "result": {
+        "ok": false,
+        "compiler": "GNU Fortran 16.2.0",
+        "fpm": "0.12.0",
+        "stages": [
+          {
+            "name": "Build",
+            "command": [
+              "fpm",
+              "build",
+              "--profile",
+              "debug",
+              "--compiler",
+              "gfortran",
+              "--no-prune"
+            ],
+            "seconds": 0.226,
+            "ok": false,
+            "exit_code": 1,
+            "error": "",
+            "stdout": " + mkdir -p build/dependencies\n[  0%]                       main.f90\n[ 25%]                       main.f90  done.\n\napp/main.f90:1:1:\n\n    1 | this is not Fortran\n      | 1\nError: Unclassifiable statement at (1)\n",
+            "stderr": "<ERROR> Compilation failed for object \" app_main.f90.o \"\n<ERROR> stopping due to failed compilation\nSTOP 1\n"
+          }
+        ]
+      }
+    },
+    {
+      "name": "output-bound",
+      "verified": true,
+      "expected_ok": false,
+      "seconds": 2.289,
+      "packages": [],
+      "result": {
+        "ok": false,
+        "compiler": "GNU Fortran 16.2.0",
+        "fpm": "0.12.0",
+        "stages": [
+          {
+            "name": "Build",
+            "command": [
+              "fpm",
+              "build",
+              "--profile",
+              "debug",
+              "--compiler",
+              "gfortran",
+              "--no-prune"
+            ],
+            "seconds": 0.46,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": " + mkdir -p build/dependencies\n[  0%]                       main.f90\n[ 25%]                       main.f90  done.\n[ 25%]                       math.f90\n[ 50%]                       math.f90  done.\n[ 50%]           libplayground-main.a\n[ 75%]           libplayground-main.a  done.\n[ 75%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+            "stderr": ""
+          },
+          {
+            "name": "Run",
+            "command": [
+              "fpm",
+              "run",
+              "--profile",
+              "debug",
+              "--compiler",
+              "gfortran",
+              "--no-prune"
+            ],
+            "seconds": 0.022,
+            "ok": false,
+            "exit_code": -9,
+            "error": "Output exceeded the 200000-byte stage limit.",
+            "stdout": " XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n XXXXXXXXXXXXXXXXXXXXX\n[verification report excerpt]\n",
+            "stderr": "Project is up to date\n"
+          }
+        ],
+        "targets": [
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "name": "upstream-tests-datetime",
+      "verified": true,
+      "expected_ok": true,
+      "seconds": 3.621,
+      "packages": [
+        {
+          "repository": "milancurcic/datetime-fortran",
+          "revision": "c49fcfcc54364db8235130149c4480b2bd0a72a0",
+          "sha256": "62252a2f8dc0a6192792641cd919659eee8a247a1b9326417715f93ed46b2ac8"
+        }
+      ],
+      "result": {
+        "ok": true,
+        "compiler": "GNU Fortran 16.2.0",
+        "fpm": "0.12.0",
+        "stages": [
+          {
+            "name": "Build",
+            "command": [
+              "fpm",
+              "build",
+              "--profile",
+              "debug",
+              "--compiler",
+              "gfortran",
+              "--no-prune",
+              "--tests"
+            ],
+            "seconds": 1.525,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": " + mkdir -p build/dependencies\n[  0%]            datetime_module.f90\n[ 14%]            datetime_module.f90  done.\n[ 14%]                   strptime.cpp\n[ 28%]                   strptime.cpp  done.\n[ 28%]                  libdatetime.a\n[ 42%]                  libdatetime.a  done.\n[ 42%]           add_and_subtract.f90\n[ 57%]           add_and_subtract.f90  done.\n[ 57%]             datetime_tests.f90\n[ 71%]             datetime_tests.f90  done.\n[ 71%]               add_and_subtract\n[ 85%]               add_and_subtract  done.\n[ 85%]                 datetime_tests\n[100%]                 datetime_tests  done.\n[100%] Project compiled successfully.\n",
+            "stderr": ""
+          },
+          {
+            "name": "Test",
+            "command": [
+              "fpm",
+              "test",
+              "--profile",
+              "debug",
+              "--compiler",
+              "gfortran",
+              "--no-prune"
+            ],
+            "seconds": 0.035,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": "\n test empty datetime() constructor                                : \u001b[32mPASS\u001b[0m\n test semi-empty datetime() constructor                           : \u001b[32mPASS\u001b[0m\n test datetime + timedelta(milliseconds = 100)                    : \u001b[32mPASS\u001b[0m\n test datetime + timedelta(milliseconds = -100)                   : \u001b[32mPASS\u001b[0m\n test datetime + timedelta(seconds = 1)                           : \u001b[32mPASS\u001b[0m\n test datetime + timedelta(seconds = -1)                          : \u001b[32mPASS\u001b[0m\n test datetime + timedelta(minutes = 1)                           : \u001b[32mPASS\u001b[0m\n test datetime + timedelta(minutes = -1)                          : \u001b[32mPASS\u001b[0m\n test datetime + timedelta(hours = 1)                             : \u001b[32mPASS\u001b[0m\n test datetime + timedelta(hours = -1)                            : \u001b[32mPASS\u001b[0m\n test datetime + timedelta(days = 1)                              : \u001b[32mPASS\u001b[0m\n test datetime + timedelta(days = -1)                             : \u001b[32mPASS\u001b[0m\n test Seconds overflow in addMilliseconds (3000 milliseconds)     : \u001b[32mPASS\u001b[0m\n test Seconds overflow in addMilliseconds (-3000 milliseconds)    : \u001b[32mPASS\u001b[0m\n test Minutes overflow in addSeconds (360 seconds)                : \u001b[32mPASS\u001b[0m\n test Minutes overflow in addSeconds (-360 seconds)               : \u001b[32mPASS\u001b[0m\n test Hours overflow in addMinutes (360 minutes)                  : \u001b[32mPASS\u001b[0m\n test Hours overflow in addMinutes (-360 minutes)                 : \u001b[32mPASS\u001b[0m\n test Days overflow in addHours (72 hours)                        : \u001b[32mPASS\u001b[0m\n test Days overflow in addHours (-72 hours)                       : \u001b[32mPASS\u001b[0m\n-----------------------------------------------------------------------\n test decrement datetime into January                             : \u001b[32mPASS\u001b[0m\n test decrement datetime into February                            : \u001b[32mPASS\u001b[0m\n test decrement datetime into March                               : \u001b[32mPASS\u001b[0m\n test decrement datetime into April                               : \u001b[32mPASS\u001b[0m\n test decrement datetime into May                                 : \u001b[32mPASS\u001b[0m\n test decrement datetime into June                                : \u001b[32mPASS\u001b[0m\n test decrement datetime into July                                : \u001b[32mPASS\u001b[0m\n test decrement datetime into August                              : \u001b[32mPASS\u001b[0m\n test decrement datetime into September                           : \u001b[32mPASS\u001b[0m\n test decrement datetime into October                             : \u001b[32mPASS\u001b[0m\n test decrement datetime into November                            : \u001b[32mPASS\u001b[0m\n test decrement datetime into December                            : \u001b[32mPASS\u001b[0m\n-----------------------------------------------------------------------\n test datetime-datetime == timedelta(days = 1)                    : \u001b[32mPASS\u001b[0m\n test datetime-datetime == timedelta(hours = 1)                   : \u001b[32mPASS\u001b[0m\n test datetime-datetime == timedelta(minutes = 1)                 : \u001b[32mPASS\u001b[0m\n test datetime-datetime == timedelta(seconds = 1)                 : \u001b[32mPASS\u001b[0m\n test datetime-datetime == timedelta(milliseconds = 1)            : \u001b[32mPASS\u001b[0m\n-----------------------------------------------------------------------\n test datetime == datetime                                        : \u001b[32mPASS\u001b[0m\n test datetime == datetime,  timezone test 1                      : \u001b[32mPASS\u001b[0m\n test datetime == datetime,  timezone test 2                      : \u001b[32mPASS\u001b[0m\n test datetime /= datetime                                        : \u001b[32mPASS\u001b[0m\n test datetime > datetime                                         : \u001b[32mPASS\u001b[0m\n test datetime >= datetime (greater)                              : \u001b[32mPASS\u001b[0m\n test datetime >= datetime (equal)                                : \u001b[32mPASS\u001b[0m\n test datetime < datetime                                         : \u001b[32mPASS\u001b[0m\n test datetime <= datetime (less)                                 : \u001b[32mPASS\u001b[0m\n test datet\n[verification report excerpt]\n",
+            "stderr": "Project is up to date\n"
+          }
+        ],
+        "targets": [
+          "datetime_tests"
+        ]
+      }
+    },
+    {
+      "name": "upstream-tests-pchip",
+      "verified": true,
+      "expected_ok": true,
+      "seconds": 3.13,
+      "packages": [
+        {
+          "repository": "jacobwilliams/PCHIP",
+          "revision": "8f5350565072622a2344dd0ec75193832b31eb10",
+          "sha256": "22a2fb25220452a409363a8d8a2c039491fe62df0b91fc89141b28d3dcc115c6"
+        }
+      ],
+      "result": {
+        "ok": true,
+        "compiler": "GNU Fortran 16.2.0",
+        "fpm": "0.12.0",
+        "stages": [
+          {
+            "name": "Build",
+            "command": [
+              "fpm",
+              "build",
+              "--profile",
+              "debug",
+              "--compiler",
+              "gfortran",
+              "--no-prune",
+              "--tests"
+            ],
+            "seconds": 0.86,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": " + mkdir -p build/dependencies\n[  0%]               pchip_module.f90\n[ 25%]               pchip_module.f90  done.\n[ 25%]                     libpchip.a\n[ 50%]                     libpchip.a  done.\n[ 50%]                 pchip_test.f90\n[ 75%]                 pchip_test.f90  done.\n[ 75%]                     pchip_test\n[100%]                     pchip_test  done.\n[100%] Project compiled successfully.\n",
+            "stderr": ""
+          },
+          {
+            "name": "Test",
+            "command": [
+              "fpm",
+              "test",
+              "--profile",
+              "debug",
+              "--compiler",
+              "gfortran",
+              "--no-prune"
+            ],
+            "seconds": 0.025,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": "\n ------------ DPCHIP QUICK CHECK OUTPUT ------------\n\n                    ( KPRINT = 5 )\n\n\n          DEVCHK RESULTS\n          --------------\n\n          DCHFDV ACCURACY TEST\n\n\n          X1 = -1.5000000000D+00     X2 =  2.5000000000D+00\n          F1 = -2.6250000000D+00     F2 =  4.3750000000D+00\n          D1 =  7.7500000000D+00     D2 =  1.1750000000D+01\n\n          INTERVAL = (-1.50000D+00, 2.50000D+00 ):\n\n ERRORS AT ENDPOINTS:                                        (NEXT =  0  0)\n\n    F1:  0.00000D+00    F2:  0.00000D+00    D1:  0.00000D+00    D2:  0.00000D+00\n         0.00000D+00         0.00000D+00         0.00000D+00         0.00000D+00\n\n ERRORS AT   990 INTERIOR POINTS + 10 OUTSIDE:               (NEXT =  4  6)\n\n                              FUNCTION                 DERIVATIVE\n                          ABS         REL           ABS         REL\n\n     MINIMUM ERROR:   -1.9984D-15 -7.6130D-16   -5.3291D-15 -5.7302D-16\n     LOCATED AT X =    1.7016D+00  1.7016D+00    2.3903D+00  1.8758D+00\n\n     MAXIMUM ERROR:    2.6645D-15  9.6252D-16    5.3291D-15  6.8762D-16\n     LOCATED AT X =    2.4835D+00  1.9990D+00    1.9990D+00  1.9990D+00\n\n DCHFDV RESULTS OK.\n\n DCHFEV AGREES WITH DCHFDV.\n\n\n          X1 =  2.0000000000D-10     X2 =  3.0000000000D-10\n          F1 = -4.0000000004D-10     F2 = -6.0000000009D-10\n          D1 = -2.0000000004D+00     D2 = -2.0000000006D+00\n\n          INTERVAL = ( 2.00000D-10, 3.00000D-10 ):\n\n ERRORS AT ENDPOINTS:                                        (NEXT =  0  0)\n\n    F1:  0.00000D+00    F2:  0.00000D+00    D1:  0.00000D+00    D2:  0.00000D+00\n         0.00000D+00         0.00000D+00         0.00000D+00         0.00000D+00\n\n ERRORS AT   990 INTERIOR POINTS + 10 OUTSIDE:               (NEXT =  4  6)\n\n                              FUNCTION                 DERIVATIVE\n                          ABS         REL           ABS         REL\n\n     MINIMUM ERROR:   -1.0340D-25 -1.9753D-16   -4.4409D-16 -2.2204D-16\n     LOCATED AT X =    2.6172D-10  2.6172D-10    1.9962D-10  1.9962D-10\n\n     MAXIMUM ERROR:    2.0680D-25  3.9440D-16    8.8818D-16  4.4409D-16\n     LOCATED AT X =    2.6217D-10  2.6217D-10    2.2546D-10  2.2546D-10\n\n DCHFDV RESULTS OK.\n\n DCHFEV AGREES WITH DCHFDV.\n\n\n          X1 =  1.0000000000D+00     X2 =  1.0000000000D+08\n          F1 = -2.0000000000D+00     F2 =  9.9999999000D+23\n          D1 = -1.0000000000D+00     D2 =  2.9999999800D+16\n\n          INTERVAL = ( 1.00000D+00, 1.00000D+08 ):\n\n ERRORS AT ENDPOINTS:                                        (NEXT =  0  0)\n\n    F1:  0.00000D+00    F2:  1.34218D+08    D1:  0.00000D+00    D2:  0.00000D+00\n         0.00000D+00         1.34218D-16         0.00000D+00         0.00000D+00\n\n ERRORS AT   990 INTERIOR POINTS + 10 OUTSIDE:               (NEXT =  4  6)\n\n                              FUNCTION                 DERIVATIVE\n                          ABS         REL           ABS         REL\n\n     MINIMUM ERROR:   -1.3422D+08 -1.5264D-16   -4.0000D+00 -5.9932D-13\n     LOCATED AT X =    9.5804D+07  9.5804D+07    9.7465D+07 -3.3167D+04\n\n     MAXIMUM ERROR:    4.0265D+08  8.9885D-13    8.0000D+00  2.0894D-13\n     LOCATED AT X =    9.6282D+07 -3.3167D+04    8.2792D+07  9.5034D+04\n\n DCHFDV RESULTS OK.\n\n DCHFEV AGREES WITH DCHFDV.\n1\n\n          TEST DPCHFE AND DPCHFD\n\n\n          DEVPCK RESULTS\n          --------------\n\n\n                    DPCHFD INCREMENT TEST -- INCFD =  1\n               ON J-LINE  1,  Y = -0.7500  --  IERR = 13\n\n   XE          F        FE         DIFF             D        DE         DIFF\n   0.00     0.00000   0.00000    0.00000D+00     0.56250   0.56250    0.00000D+00\n   0.02     0.01125   0.01125    1.73472D-18     0.56318   0.56317   -1.11022D-16\n   0.04     0.02254   0.02254    0.00000D+00     0.56520   0.56520    1.11022D-16\n   0.06     0.03387   0.03387   -2.08167D-17     0.56857   0.56857    0.00000D+00\n   0.08     0.04529   0.04529    1.38778D-17     0.57330   0.57330    0.00000D+00\n   0.10     0.05681   0.05681    0.00000D+00     0.57937 \n[verification report excerpt]\n",
+            "stderr": "Project is up to date\nError -1 in PCHIP : dchfev : number of evaluation points less than one\nError -2 in PCHIP : dchfev : interval endpoints equal\nError -1 in PCHIP : dchfdv : number of evaluation points less than one\nError -2 in PCHIP : dchfdv : interval endpoints equal\nError -1 in PCHIP : dpchfe : number of data points less than two\nError -3 in PCHIP : dpchfe : x-array not strictly increasing\nError -4 in PCHIP : dpchfe : number of evaluation points less than one\nError -1 in PCHIP : dpchfd : number of data points less than two\nError -3 in PCHIP : dpchfd : x-array not strictly increasing\nError -4 in PCHIP : dpchfd : number of evaluation points less than one\n"
+          }
+        ],
+        "targets": [
+          "pchip_test"
+        ]
+      }
+    },
+    {
+      "name": "upstream-tests-toml",
+      "verified": true,
+      "expected_ok": true,
+      "seconds": 12.094,
+      "packages": [
+        {
+          "repository": "toml-f/toml-f",
+          "revision": "f9ff54793b2d1a3edca7d6890548d18d48c98e36",
+          "sha256": "d80caa24f3ac72f76eab5799344cb67d6203623af0cfeb1ef45ef56b01de178c"
+        },
+        {
+          "repository": "fortran-lang/test-drive",
+          "revision": "791484a79a24cbc00be6f74e53c6e030cb75efe2",
+          "sha256": "2daf91d24909cce2bca3a3dfcd27e775b8897cfd889d7f51e291a51b737c6557"
+        }
+      ],
+      "result": {
+        "ok": true,
+        "compiler": "GNU Fortran 16.2.0",
+        "fpm": "0.12.0",
+        "stages": [
+          {
+            "name": "Build",
+            "command": [
+              "fpm",
+              "build",
+              "--profile",
+              "debug",
+              "--compiler",
+              "gfortran",
+              "--no-prune",
+              "--tests"
+            ],
+            "seconds": 7.21,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": " + mkdir -p build/dependencies\n[  0%]                  constants.f90\n[  1%]                  constants.f90  done.\n[  1%]                    version.f90\n[  3%]                    version.f90  done.\n[  3%]                      token.f90\n[  5%]                      token.f90  done.\n[  5%]                  testdrive.F90\n[  7%]                  testdrive.F90  done.\n[  7%]          testdrive_version.f90\n[  9%]          testdrive_version.f90  done.\n[  9%]                   datetime.f90\n[ 11%]                   datetime.f90  done.\n[ 11%]                      error.f90\n[ 13%]                      error.f90  done.\n[ 13%]                         io.f90\n[ 15%]                         io.f90  done.\n[ 15%]                      utils.f90\n[ 16%]                      utils.f90  done.\n[ 16%]                        abc.f90\n[ 18%]                        abc.f90  done.\n[ 18%]                   terminal.f90\n[ 20%]                   terminal.f90  done.\n[ 20%]                      value.f90\n[ 22%]                      value.f90  done.\n[ 22%]                 json_lexer.f90\n[ 24%]                 json_lexer.f90  done.\n[ 24%]                      utils.f90\n[ 26%]                      utils.f90  done.\n[ 26%]                 diagnostic.f90\n[ 28%]                 diagnostic.f90  done.\n[ 28%]                       list.f90\n[ 30%]                       list.f90  done.\n[ 30%]                        map.f90\n[ 32%]                        map.f90  done.\n[ 32%]                       node.f90\n[ 33%]                       node.f90  done.\n[ 33%]                     keyval.f90\n[ 35%]                     keyval.f90  done.\n[ 35%]                       sort.f90\n[ 37%]                       sort.f90  done.\n[ 37%]                    context.f90\n[ 39%]                    context.f90  done.\n[ 39%]                 array_list.f90\n[ 41%]                 array_list.f90  done.\n[ 41%]                ordered_map.f90\n[ 43%]                ordered_map.f90  done.\n[ 43%]                  structure.f90\n[ 45%]                  structure.f90  done.\n[ 45%]                      lexer.f90\n[ 47%]                      lexer.f90  done.\n[ 47%]                      array.f90\n[ 49%]                      array.f90  done.\n[ 49%]                      table.f90\n[ 50%]                      table.f90  done.\n[ 50%]                      lexer.f90\n[ 52%]                      lexer.f90  done.\n[ 52%]                       type.f90\n[ 54%]                       type.f90  done.\n[ 54%]                        ser.f90\n[ 56%]                        ser.f90  done.\n[ 56%]                     keyval.f90\n[ 58%]                     keyval.f90  done.\n[ 58%]                      merge.f90\n[ 60%]                      merge.f90  done.\n[ 60%]                     parser.f90\n[ 62%]                     parser.f90  done.\n[ 62%]                   json_ser.f90\n[ 64%]                   json_ser.f90  done.\n[ 64%]                         de.f90\n[ 66%]                         de.f90  done.\n[ 66%]                      array.f90\n[ 67%]                      array.f90  done.\n[ 67%]                      table.f90\n[ 69%]                      table.f90  done.\n[ 69%]                       path.f90\n[ 71%]                       path.f90  done.\n[ 71%]                      build.f90\n[ 73%]                      build.f90  done.\n[ 73%]                      tomlf.f90\n[ 75%]                      tomlf.f90  done.\n[ 75%]                        all.f90\n[ 77%]                        all.f90  done.\n[ 77%]                json_parser.f90\n[ 79%]                json_parser.f90  done.\n[ 79%]                     parser.f90\n[ 81%]                     parser.f90  done.\n[ 81%]                        ser.f90\n[ 83%]                        ser.f90  done.\n[ 83%]                    libtoml-f.a\n[ 84%]                    libtoml-f.a  done.\n[ 84%]                  json2toml.f90\n[ 86%]                  json2toml.f90  done.\n[ 86%]                  toml2json.f90\n[ 88%]                  toml2json.f90  done.\n[ 88%]                      build.f90\n[ 90%]                      bu\n[verification report excerpt]\n",
+            "stderr": ""
+          },
+          {
+            "name": "Test",
+            "command": [
+              "fpm",
+              "test",
+              "--profile",
+              "debug",
+              "--compiler",
+              "gfortran",
+              "--no-prune"
+            ],
+            "seconds": 0.085,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": "",
+            "stderr": "Project is up to date\n# Testing: build\n  Starting array-real-sp ... (1/23)\n       ... array-real-sp [PASSED]\n  Starting array-real-dp ... (2/23)\n       ... array-real-dp [PASSED]\n  Starting array-int-i1 ... (3/23)\n       ... array-int-i1 [PASSED]\n  Starting array-int-i2 ... (4/23)\n       ... array-int-i2 [PASSED]\n  Starting array-int-i4 ... (5/23)\n       ... array-int-i4 [PASSED]\n  Starting array-int-i8 ... (6/23)\n       ... array-int-i8 [PASSED]\n  Starting array-bool ... (7/23)\n       ... array-bool [PASSED]\n  Starting array-datetime ... (8/23)\n       ... array-datetime [PASSED]\n  Starting array-string ... (9/23)\n       ... array-string [PASSED]\n  Starting array-merge ... (10/23)\n       ... array-merge [PASSED]\n  Starting table-table ... (11/23)\n       ... table-table [PASSED]\n  Starting table-array ... (12/23)\n       ... table-array [PASSED]\n  Starting table-real-sp ... (13/23)\n       ... table-real-sp [PASSED]\n  Starting table-real-dp ... (14/23)\n       ... table-real-dp [PASSED]\n  Starting table-int-i1 ... (15/23)\n       ... table-int-i1 [PASSED]\n  Starting table-int-i2 ... (16/23)\n       ... table-int-i2 [PASSED]\n  Starting table-int-i4 ... (17/23)\n       ... table-int-i4 [PASSED]\n  Starting table-int-i8 ... (18/23)\n       ... table-int-i8 [PASSED]\n  Starting table-bool ... (19/23)\n       ... table-bool [PASSED]\n  Starting table-dateime ... (20/23)\n       ... table-dateime [PASSED]\n  Starting table-string ... (21/23)\n       ... table-string [PASSED]\n  Starting table-merge-append ... (22/23)\n       ... table-merge-append [PASSED]\n  Starting table-merge-overwrite ... (23/23)\n       ... table-merge-overwrite [PASSED]\n# Testing: lexer\n  Starting bool-true ... (1/160)\n       ... bool-true [PASSED]\n  Starting bool-true-or-not ... (2/160)\n       ... bool-true-or-not [PASSED]\n  Starting bool-false ... (3/160)\n       ... bool-false [PASSED]\n  Starting bool-falsey ... (4/160)\n       ... bool-falsey [PASSED]\n  Starting brace ... (5/160)\n       ... brace [PASSED]\n  Starting brace-left ... (6/160)\n       ... brace-left [PASSED]\n  Starting brace-right ... (7/160)\n       ... brace-right [PASSED]\n  Starting brace-unclosed ... (8/160)\n       ... brace-unclosed [PASSED]\n  Starting bracket ... (9/160)\n       ... bracket [PASSED]\n  Starting bracket-left ... (10/160)\n       ... bracket-left [PASSED]\n  Starting bracket-right ... (11/160)\n       ... bracket-right [PASSED]\n  Starting bracket-unclosed ... (12/160)\n       ... bracket-unclosed [PASSED]\n  Starting comma ... (13/160)\n       ... comma [PASSED]\n  Starting comment ... (14/160)\n       ... comment [PASSED]\n  Starting comment-eof ... (15/160)\n       ... comment-eof [PASSED]\n  Starting datetime ... (16/160)\n       ... datetime [PASSED]\n  Starting datetime-comment ... (17/160)\n       ... datetime-comment [PASSED]\n  Starting datetime-local-date ... (18/160)\n       ... datetime-local-date [PASSED]\n  Starting datetime-local-time ... (19/160)\n       ... datetime-local-time [PASSED]\n  Starting datetime-local ... (20/160)\n       ... datetime-local [PASSED]\n  Starting datetime-milliseconds ... (21/160)\n       ... datetime-milliseconds [PASSED]\n  Starting datetime-timezone ... (22/160)\n       ... datetime-timezone [PASSED]\n  Starting datetime-hour-over ... (23/160)\n       ... datetime-hour-over [PASSED]\n  Starting datetime-mday-over ... (24/160)\n       ... datetime-mday-over [PASSED]\n  Starting datetime-mday-under ... (25/160)\n       ... datetime-mday-under [PASSED]\n  Starting datetime-mday-leap ... (26/160)\n       ... datetime-mday-leap [PASSED]\n  Starting datetime-minute-over ... (27/160)\n       ... datetime-minute-over [PASSED]\n  Starting datetime-month-over ... (28/160)\n       ... datetime-month-over [PASSED]\n  Starting datetime-month-under ... (29/160)\n       ... datetime-month-under [PASSED]\n  Starting datetime-no-leading-zeros ... (30/160)\n       ... datetime-no-leading-zeros [PASSED]\n  Starting datetime-no-seconds ... (31/160)\n       ... datetime-no-seconds [PASSED]\n  Starting datetime-no-se\n[verification report excerpt]\n"
+          }
+        ],
+        "targets": [
+          "tftest"
+        ]
+      }
+    },
+    {
+      "name": "coordinator-complete",
+      "verified": true,
+      "result": {
+        "ok": true,
+        "compiler": "GNU Fortran 16.2.0",
+        "fpm": "0.12.0",
+        "stages": [
+          {
+            "name": "Build",
+            "command": [
+              "fpm",
+              "build",
+              "--profile",
+              "debug",
+              "--compiler",
+              "gfortran",
+              "--no-prune"
+            ],
+            "seconds": 0.609,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": " + mkdir -p build/dependencies\n[  0%]               pchip_module.f90\n[ 25%]               pchip_module.f90  done.\n[ 25%]           libplayground-main.a\n[ 50%]           libplayground-main.a  done.\n[ 50%]                       main.f90\n[ 75%]                       main.f90  done.\n[ 75%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+            "stderr": ""
+          },
+          {
+            "name": "Run",
+            "command": [
+              "fpm",
+              "run",
+              "--profile",
+              "debug",
+              "--compiler",
+              "gfortran",
+              "--no-prune"
+            ],
+            "seconds": 0.022,
+            "ok": true,
+            "exit_code": 0,
+            "error": "",
+            "stdout": "PASS pchip value=  2.0000\n",
+            "stderr": "Project is up to date\n"
+          }
+        ],
+        "targets": [
+          "playground-main"
+        ],
+        "packages": [
+          {
+            "repository": "jacobwilliams/PCHIP",
+            "revision": "8f5350565072622a2344dd0ec75193832b31eb10",
+            "sha256": "22a2fb25220452a409363a8d8a2c039491fe62df0b91fc89141b28d3dcc115c6"
+          }
+        ],
+        "prepare_seconds": 0.545,
+        "total_seconds": 2.786
+      }
+    },
+    {
+      "name": "coordinator-cancel",
+      "verified": true,
+      "result": {
+        "ok": false,
+        "error": "Cancelled.",
+        "stages": []
+      }
+    }
+  ]
+}

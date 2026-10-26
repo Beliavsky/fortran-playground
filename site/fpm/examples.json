@@ -1,0 +1,37 @@
+[
+  {
+    "name": "quadrature",
+    "repository": "jacobwilliams/quadrature-fortran",
+    "revision": "1d208fc59569a97b1c2abf9c45f7c352dcc7b318",
+    "category": "Numerical integration",
+    "source": "! Integrate x**2 over [0,1]; verify the result rather than only printing it.\n! Module callbacks avoid executable-stack trampolines for internal procedures.\nmodule audit_functions\n   use iso_fortran_env, only: wp => real64\n   use quadrature_module, only: integration_class_1d\n   implicit none\ncontains\n   function square(me, x) result(y)\n      class(integration_class_1d), intent(inout) :: me\n      real(wp), intent(in) :: x\n      real(wp) :: y\n      y = x*x\n   end function square\nend module audit_functions\n\nprogram demo\n   use iso_fortran_env, only: wp => real64\n   use ieee_arithmetic, only: ieee_is_finite\n   use quadrature_module, only: integration_class_1d\n   use audit_functions, only: square\n   implicit none\n   type(integration_class_1d) :: integral\n   real(wp) :: answer, estimate\n   integer :: status\n   call integral%initialize(fx=square, xl=0.0_wp, xu=1.0_wp, tolx=1.0e-10_wp, methodx=8)\n   call integral%integrate(answer, status, estimate)\n   if (.not. ieee_is_finite(answer)) error stop 'nonfinite integral'\n   if (abs(answer - 1.0_wp/3.0_wp) > 1.0e-9_wp) error stop 'incorrect integral'\n   print '(a,f15.12,a,i0)', 'PASS quadrature integral=', answer, ' status=', status\nend program demo\n"
+  },
+  {
+    "name": "roots",
+    "repository": "jacobwilliams/roots-fortran",
+    "revision": "85dc6b98404a61d49944939414f7f56c3f32edd1",
+    "category": "Root finding",
+    "source": "! Solve x**2 - 2 = 0 with Brent's method.\n! Module callbacks avoid executable-stack trampolines for internal procedures.\nmodule audit_functions\n   use iso_fortran_env, only: wp => real64\n   use root_module, only: root_solver\n   implicit none\ncontains\n   function equation(me, x) result(y)\n      class(root_solver), intent(inout) :: me\n      real(wp), intent(in) :: x\n      real(wp) :: y\n      y = x*x - 2.0_wp\n   end function equation\nend module audit_functions\n\nprogram demo\n   use iso_fortran_env, only: wp => real64\n   use root_module, only: brent_solver\n   use audit_functions, only: equation\n   use ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   real(wp) :: x, residual\n   integer :: status\n   type(brent_solver) :: solver\n   call solver%initialize(equation, rtol=1.0e-12_wp)\n   call solver%solve(0.0_wp, 2.0_wp, x, residual, status)\n   if (.not. ieee_is_finite(x)) error stop 'nonfinite root'\n   if (status /= 0 .or. abs(x - sqrt(2.0_wp)) > 1.0e-9_wp) error stop 'incorrect root'\n   print '(a,f15.12)', 'PASS roots sqrt(2)=', x\nend program demo\n"
+  },
+  {
+    "name": "pchip",
+    "repository": "jacobwilliams/PCHIP",
+    "revision": "8f5350565072622a2344dd0ec75193832b31eb10",
+    "category": "Interpolation",
+    "source": "! Interpolate linear data and verify an interior value.\nprogram demo\n   use iso_fortran_env, only: wp => real64\n   use ieee_arithmetic, only: ieee_is_finite\n   use pchip_module, only: dpchim, dpchfe\n   implicit none\n   real(wp) :: x(3), f(1,3), d(1,3), query(1), answer(1)\n   integer :: status\n   logical :: skip\n   x = [0.0_wp, 1.0_wp, 2.0_wp]\n   f(1,:) = 2*x + 1\n   call dpchim(3, x, f, d, 1, status)\n   if (status < 0) error stop 'derivative calculation failed'\n   skip = .false.\n   query = 0.5_wp\n   call dpchfe(3, x, f, d, 1, skip, 1, query, answer, status)\n   if (.not. ieee_is_finite(answer(1))) error stop 'nonfinite interpolation'\n   if (status < 0 .or. abs(answer(1) - 2.0_wp) > 1.0e-12_wp) error stop 'incorrect interpolation'\n   print '(a,f8.4)', 'PASS pchip value=', answer(1)\nend program demo\n"
+  },
+  {
+    "name": "toml",
+    "repository": "toml-f/toml-f",
+    "revision": "f9ff54793b2d1a3edca7d6890548d18d48c98e36",
+    "category": "TOML parsing",
+    "source": "! Parse a small TOML document and retrieve its integer value.\nprogram demo\n   use tomlf, only: toml_table, toml_error, toml_parse, get_value\n   implicit none\n   type(toml_table), allocatable :: table\n   type(toml_error), allocatable :: error\n   integer :: answer, status\n   call toml_parse(table, 'answer = 42', error=error)\n   if (allocated(error)) error stop 'TOML parsing failed'\n   call get_value(table, 'answer', answer, stat=status)\n   if (status /= 0 .or. answer /= 42) error stop 'incorrect TOML value'\n   print '(a,i0)', 'PASS toml answer=', answer\nend program demo\n"
+  },
+  {
+    "name": "datetime",
+    "repository": "milancurcic/datetime-fortran",
+    "revision": "c49fcfcc54364db8235130149c4480b2bd0a72a0",
+    "category": "Date/time arithmetic",
+    "source": "! Advance across a leap-year day and check the resulting calendar date.\nprogram demo\n   use datetime_module\n   implicit none\n   type(datetime) :: start, finish\n   start = datetime(2024, 2, 28)\n   finish = start + timedelta(days=2)\n   if (finish%getYear() /= 2024 .or. finish%getMonth() /= 3 .or. finish%getDay() /= 1) &\n      error stop 'incorrect calendar arithmetic'\n   print '(a,a)', 'PASS datetime date=', finish%isoformat()\nend program demo\n"
+  }
+]

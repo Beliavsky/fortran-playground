@@ -1,0 +1,67 @@
+[
+  {
+    "name": "quadrature",
+    "repository": "jacobwilliams/quadrature-fortran",
+    "listed_repository": "jacobwilliams/quadrature-fortran",
+    "dependency_name": "quadrature-fortran",
+    "category": "Numerical integration",
+    "revision": "1d208fc59569a97b1c2abf9c45f7c352dcc7b318",
+    "download_seconds": 0.154,
+    "archive_bytes": 55111,
+    "sha256": "b099c2ee3e5c9c993e888cff0724fd7035dfb36559b09bc516ac94c45a610a34",
+    "archive": "quadrature-1d208fc59569a97b1c2abf9c45f7c352dcc7b318.tar.gz",
+    "demo_sha256": "b0e264b74905d68747e063f8468b008c53fea4b4aadbbcf5a5270d9b22a8f21d"
+  },
+  {
+    "name": "roots",
+    "repository": "jacobwilliams/roots-fortran",
+    "listed_repository": "jacobwilliams/roots-fortran",
+    "dependency_name": "roots-fortran",
+    "category": "Root finding",
+    "revision": "85dc6b98404a61d49944939414f7f56c3f32edd1",
+    "download_seconds": 0.129,
+    "archive_bytes": 61615,
+    "sha256": "77e3839b1df2500887afbba0924a36fc6265c705f5189c2c8a6c48f169cb8228",
+    "archive": "roots-85dc6b98404a61d49944939414f7f56c3f32edd1.tar.gz",
+    "demo_sha256": "98852416f984217aa2b5566e8db8b12547e60118a5223e0ddaec6c462e8bb472"
+  },
+  {
+    "name": "pchip",
+    "repository": "jacobwilliams/PCHIP",
+    "listed_repository": "jacobwilliams/PCHIP",
+    "dependency_name": "pchip",
+    "category": "Interpolation",
+    "revision": "8f5350565072622a2344dd0ec75193832b31eb10",
+    "download_seconds": 0.137,
+    "archive_bytes": 78033,
+    "sha256": "22a2fb25220452a409363a8d8a2c039491fe62df0b91fc89141b28d3dcc115c6",
+    "archive": "pchip-8f5350565072622a2344dd0ec75193832b31eb10.tar.gz",
+    "demo_sha256": "db49fe3937cd2abccb2c0e5f49216ac47043e9436df7fcebcc3490b8441fd8cb"
+  },
+  {
+    "name": "toml",
+    "repository": "toml-f/toml-f",
+    "listed_repository": "toml-f/toml-f",
+    "dependency_name": "toml-f",
+    "category": "TOML parsing",
+    "revision": "f9ff54793b2d1a3edca7d6890548d18d48c98e36",
+    "download_seconds": 0.278,
+    "archive_bytes": 454889,
+    "sha256": "d80caa24f3ac72f76eab5799344cb67d6203623af0cfeb1ef45ef56b01de178c",
+    "archive": "toml-f9ff54793b2d1a3edca7d6890548d18d48c98e36.tar.gz",
+    "demo_sha256": "31b3d79cc55c1f8ac2c41efba8d9c182f463884830681bee6b62dee4d3267cdb"
+  },
+  {
+    "name": "datetime",
+    "repository": "milancurcic/datetime-fortran",
+    "listed_repository": "milancurcic/datetime-fortran",
+    "dependency_name": "datetime",
+    "category": "Date/time arithmetic",
+    "revision": "c49fcfcc54364db8235130149c4480b2bd0a72a0",
+    "download_seconds": 0.186,
+    "archive_bytes": 30349,
+    "sha256": "62252a2f8dc0a6192792641cd919659eee8a247a1b9326417715f93ed46b2ac8",
+    "archive": "datetime-c49fcfcc54364db8235130149c4480b2bd0a72a0.tar.gz",
+    "demo_sha256": "383acfc87f0fa76616c50e568e3c2d36555229e29ceab4ac484a3a119363c802"
+  }
+]

@@ -1,5 +1,7 @@
 # Fortran playground
 
+The separate [FPM package playground](https://beliavsky.github.io/fortran-playground/fpm/) supports a custom main program using a package, or the package's own Build, Run, and Test actions, initially with gfortran 16.2.0. It builds from scratch in its own sandbox service. See [FPM usage, limits, and deployment](docs/fpm-mode.md); the new service must be deployed and its URL configured before the page can submit jobs.
+
 [Open the playground](https://beliavsky.github.io/fortran-playground/) ? [GitHub repository](https://github.com/Beliavsky/fortran-playground) ? [Python-to-Fortran playground](https://beliavsky.github.io/python-to-fortran-playground/)
 
 Explore Fortran in your browser with short examples, an editable source pane, and a choice of compilers or an interpreter. No local compiler is needed to use the site. The playground submits Fortran directly to the shared Python-to-Fortran execution service; it does not translate or submit Python.
@@ -455,6 +457,10 @@ python xfortran_run.py main.f90 --compilers gfortran ifx --diff numeric --diff-a
 `--diff` alone ignores whitespace, including line wrapping. Exact mode normalizes CRLF/CR line endings only and retains final-newline differences. Numeric-aware comparison retains text, punctuation, quoted strings, and token order; it recognizes decimal numbers with E/D exponents, complex components, and T/F versus .TRUE./.FALSE. Both tolerances default to **zero**. Two integer tokens must agree exactly, including values larger than binary floating-point can represent. Other numeric pairs match when `abs(a-b) <= max(atol, rtol * max(abs(a), abs(b)))`; decimal arithmetic avoids binary rounding during comparison. Signed zeros compare equally in numeric mode.
 
 Reports distinguish Exact match, Formatting only, Numeric match, Within tolerance, Different, and Not comparable, and identify the first differing line/token or unequal token counts. Stdout alone is compared; compiler logs and stderr remain separate. Failed/cancelled/timed-out runs, missing executions (including compile-only jobs), and known truncated streams are not comparable. Numeric mode flags NaNs, infinities, and `*****` overflow fields for inspection. To bound work in the browser, comparisons are limited to 1,000,000 characters per stream and numeric mode to 20,000 tokens, 2,000 digits per number, and exponent magnitude 2,000; larger cases are reported as Not comparable. Numeric-aware comparison is a text heuristic, not a general parser for arbitrary output or a proof of program correctness. Printed timings and random values are not removed automatically. CLI exit codes continue to reflect compilation/execution success; output differences are reported separately.
+
+## FPM package feasibility
+
+The [FPM feasibility audit](docs/fpm-feasibility/README.md) found five packages that build and run short consumer programs within the configured public sandbox limits. It includes pinned package revisions, tested main programs, measurements, and a callback compatibility limitation. The separate [FPM mode](docs/fpm-mode.md) builds on these examples and also supports package Build, Run, and Test actions; it requires its own service deployment.
 
 ## Local compiler tools
 

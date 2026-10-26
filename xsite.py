@@ -4,6 +4,7 @@ from pathlib import Path
 import re
 import shutil
 from xexamples import generate_examples
+from xfpm_examples import generate_fpm_examples
 
 
 ASSET_SUFFIXES = {".mjs", ".js", ".css", ".py"}
@@ -12,6 +13,7 @@ QUOTED_URL = re.compile(r"(?P<quote>['\"])(?P<url>[^'\"\s]+)(?P=quote)")
 
 def build_site(source: Path, destination: Path) -> str:
     generate_examples(source)
+    generate_fpm_examples(source)
     # Include paths as well as contents; a renamed or changed dependency must
     # invalidate its importers too. Runtime ZIPs retain their own integrity check.
     files = sorted(p for p in source.rglob("*") if p.is_file()
