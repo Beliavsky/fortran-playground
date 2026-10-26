@@ -120,7 +120,7 @@ class SiteTests(unittest.TestCase):
                 attrs = dict(attrs)
                 if attrs.get('id'):
                     self.attributes[attrs['id']] = attrs
-                if attrs.get('id') in {'fortran', 'output', 'diagnostics', 'compile', 'run', 'rerun', 'stop', 'first-error', 'fix-error', 'compiler', 'preset', 'clear'}:
+                if attrs.get('id') in {'fortran', 'output', 'plot-results', 'diagnostics', 'compile', 'run', 'rerun', 'stop', 'first-error', 'fix-error', 'compiler', 'preset', 'clear'}:
                     self.ancestors[attrs['id']] = list(self.stack)
                 if tag not in {'input', 'link', 'meta', 'br'}:
                     self.stack.append(attrs.get('id') or attrs.get('class') or tag)
@@ -141,6 +141,8 @@ class SiteTests(unittest.TestCase):
             self.assertIn('results-pane', panes.ancestors[target])
             self.assertIn('workspace', panes.ancestors[target])
         self.assertIn('workspace', panes.ancestors['fortran'])
+        self.assertNotIn('workspace', panes.ancestors['plot-results'])
+        self.assertNotIn('results-pane', panes.ancestors['plot-results'])
         for target in ('compile', 'run', 'rerun', 'stop', 'first-error', 'fix-error', 'clear'):
             self.assertIn('source-header', panes.ancestors[target])
             self.assertIn('source-pane', panes.ancestors[target])

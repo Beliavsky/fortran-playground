@@ -314,6 +314,7 @@ function comparisonLayout() {
   const all = isCompare() && showAllOutputs && Boolean(comparisonSnapshot);
   get('all-comparison-outputs').hidden = !all;
   get('program-output-pane').hidden = all;
+  get('plot-results').hidden = all;
   get('compilation-pane').hidden = all || (isSimple() && !compilationFailed);
   const fullEditor = all && get('checks-pane').hidden;
   get('results-pane').hidden = fullEditor;
@@ -816,6 +817,7 @@ get('clear').onclick = () => {
   if (editor.getValue() && !editor.undoableClear && !confirm('Clear the Fortran input?')) return;
   editor.setValue('', true); editor.focus();
   for (const id of ['output', 'diagnostics', 'run-time', 'build-time', 'checks', 'check-time']) get(id).textContent = '';
+  get('plot-results').replaceChildren();
   compilationFailed = false;
   controls();
   get('result-compiler-version').textContent = ''; get('result-compiler-version').hidden = true;

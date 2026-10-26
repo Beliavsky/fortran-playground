@@ -35,6 +35,9 @@
 #check-status { flex: none; }
 .diagnostics h2 { flex: none; }
 .diagnostics pre { flex: 1; min-height: 0; overflow: auto; }
+#plot-results:not(:empty) { margin-top: 18px; }
+#plot-results > section { padding: 14px 18px; border: 1px solid #c4d1cc; border-radius: 8px; background: white; }
+#plot-results figure { margin: 12px 0; }
 #connection { font-size: 14px; }
 .CodeMirror .p2f-error-line { background: rgba(190, 30, 45, 0.13); }
 .CodeMirror .p2f-error-column { text-decoration: underline wavy #b51d30; text-underline-offset: 3px; }
