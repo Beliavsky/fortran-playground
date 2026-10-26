@@ -49,12 +49,13 @@ class ModalConfigTests(unittest.TestCase):
     def test_owner_secret_dependencies_match_in_local_and_container_imports(self):
         for secret in ('', 'p2f-owner'):
             with self.subTest(secret=secret):
-                local = self.load(True, {'FPM_OWNER_SECRET': secret})
+                local = self.load(True, {'FPM_OWNER_SECRET': secret, 'FPM_ENABLED_COMPILERS': '["gfortran","ifx","flang"]'})
                 for image_name in ('api_image', 'broker_image'):
                     environment = local[image_name].environment
                     self.assertEqual(environment['FPM_OWNER_SECRET'], secret)
                     remote = self.load(False, environment)
                     self.assertEqual(remote['IMAGE_NAME'], local['IMAGE_NAME'])
+                    self.assertEqual(remote['ENABLED_COMPILERS'], local['ENABLED_COMPILERS'])
                     self.assertEqual(remote['api'].deployment_spec['secrets'],
                                      local['api'].deployment_spec['secrets'])
                     self.assertEqual(remote['run_job'].deployment_spec['secrets']
@@ -69,6 +70,8 @@ class ModalConfigTests(unittest.TestCase):
         response.__enter__.return_value = response
         with patch('xdeploy_fpm.urlopen', return_value=response) as open_url:
             verify_api('https://test.modal.run', 'https://example.org')
+            with self.assertRaisesRegex(ValueError, 'compiler catalog'):
+                verify_api('https://test.modal.run', 'https://example.org', ['gfortran', 'ifx'])
             self.assertEqual(open_url.call_args.args[0].full_url, 'https://test.modal.run/api/health')
             response.headers = {}
             with self.assertRaisesRegex(ValueError, 'browser origin'):

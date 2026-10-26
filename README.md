@@ -19,13 +19,15 @@ Settings are applied on page load, override corresponding defaults, and leave un
 
 Existing `#code=...&interface=...` shared-code links still work. When combined with query settings, the shared fragment determines the source, interface, preprocessing, and image settings; query compiler and standard choices apply when compatible with that interface. Opening a link never compiles or runs code. These query settings apply to the ordinary playground; FPM URL settings are not included yet.
 
-The separate [FPM package playground](https://beliavsky.github.io/fortran-playground/fpm/) supports a custom main program using a package, or the package's own Build, Run, and Test actions, initially with gfortran 16.2.0. It builds from scratch in its own sandbox service. See [FPM usage, limits, and deployment](docs/fpm-mode.md); the new service must be deployed and its URL configured before the page can submit jobs.
+The separate [FPM package playground](https://beliavsky.github.io/fortran-playground/fpm/) supports a custom main program using a package, or the package's own Build, Run, and Test actions. GNU Fortran 16.2.0 remains the default; a compiler selector also offers GNU 17 experimental, Intel ifx, and LLVM Flang when the service has built and verified their separate images. It builds from scratch in its own sandbox service. See [FPM usage, limits, and deployment](docs/fpm-mode.md), including the GNU 17 test-drive compiler limitation; the service must be deployed and its URL configured before the page can submit jobs.
 
 [Open the playground](https://beliavsky.github.io/fortran-playground/) ? [GitHub repository](https://github.com/Beliavsky/fortran-playground) ? [Python-to-Fortran playground](https://beliavsky.github.io/python-to-fortran-playground/)
 
 Explore Fortran in your browser with short examples, an editable source pane, and a choice of compilers or an interpreter. No local compiler is needed to use the site. The playground submits Fortran directly to the shared Python-to-Fortran execution service; it does not translate or submit Python.
 
 ## Using the playground
+
+FPM packages can also be used from the command line: `python xplayground_run.py --fpm GITHUB_URL --action test` uses the hosted package service, while `python xfortran_run.py --fpm DIRECTORY --action test` uses installed compilers and FPM. Start the local package page with `python xfortran_serve.py --workspace DIRECTORY --fpm`. See [hosted/local FPM runner and browser instructions](docs/fpm-runners.md) for custom main programs, comparisons, targets, limits, and working directories.
 
 1. Choose an example, load a local Fortran file, or write your own program.
 2. Select an available compiler or interpreter and, optionally, a language standard and compiler options.
@@ -483,7 +485,7 @@ The [FPM feasibility audit](docs/fpm-feasibility/README.md) found five packages 
 
 ## Local compiler tools
 
-The independent local tools use **installed gfortran, gfortran17, ifx, LLVM Flang, LFortran, and/or ofort**, with Python's standard library. They do not contact the hosted playground, download sources, require Modal, or consume hosted quotas. To move them to a separate project, copy `xfortran_run.py`, `fortran_output_diff.py`, `xfortran_serve.py`, and the `local_site/` directory together. The command-line runner needs only its companion `fortran_output_diff.py`, without the server or browser assets.
+The independent local tools use **installed gfortran, gfortran17, ifx, LLVM Flang, LFortran, and/or ofort**, with Python's standard library. They do not contact the hosted playground, require Modal, or consume hosted quotas. Source-file mode accepts local files; package mode uses installed FPM, which may download dependencies normally. To move the complete local tools to a separate project, copy `xfortran_run.py`, `fortran_output_diff.py`, `fortran_fpm.py`, `fpm_runner.py`, `xfortran_serve.py`, and the `local_site/` directory together. Source-only command-line use needs just `xfortran_run.py` and `fortran_output_diff.py`.
 
 ### Local command-line runner
 
@@ -513,7 +515,7 @@ Pass it with `--options-file local-options.json`. A compiler's plain argument li
 
 **ofort is an interpreter:** it receives the source files in the supplied order, without generating objects or linking. `--compile-only` (or the browser's Compile button) uses `ofort --check`. Multiple sources are combined temporarily for this syntax check, with line numbers referring to the combined source; mixing fixed and free source forms in one syntax check is rejected. During an interpreted run, Compile time is unavailable and Run time includes parsing and execution; Other time is still reported. ofort argument lists apply to the interpreter, and separate linker arguments are rejected. Its language support differs from the native compilers.
 
-Programs run in the current directory unless `--cwd PATH` is given. `--stdin-file` supplies text followed by EOF. Default timeouts are 120 seconds for compilation/linking and 30 seconds for execution; set `--compile-timeout` or `--run-timeout`, with 0 meaning unlimited. `--max-output-mb` sets captured output per stream per process (default 4 MiB); excess output is drained and marked as truncated. Coarray/MPI launchers and build systems such as fpm are not managed by this first version.
+In source-file mode, programs run in the current directory unless `--cwd PATH` is given. `--stdin-file` supplies text followed by EOF. Default timeouts are 120 seconds for compilation/linking and 30 seconds for execution; set `--compile-timeout` or `--run-timeout`, with 0 meaning unlimited. `--max-output-mb` sets captured output per stream per process (default 4 MiB); excess output is drained and marked as truncated. Coarray/MPI launchers are not managed. FPM packages use the separate `--fpm` mode described in [FPM runner instructions](docs/fpm-runners.md).
 
 ### Local browser interface
 

@@ -9,6 +9,7 @@ import time
 import tomllib
 from urllib.parse import quote, urlsplit
 from urllib.request import Request, urlopen
+from fpm_compilers import COMPILERS
 
 MAX_ARCHIVE = 16 * 1024 * 1024
 MAX_EXPANDED = 64 * 1024 * 1024
@@ -31,16 +32,18 @@ def github_repository(value):
 
 
 def validate_request(payload):
-    if not isinstance(payload, dict) or set(payload) - {'url', 'revision', 'workflow', 'action', 'target', 'source', 'stdin'}:
+    if not isinstance(payload, dict) or set(payload) - {'url', 'revision', 'workflow', 'action', 'target', 'source', 'stdin', 'compiler'}:
         raise ValueError('Invalid FPM request.')
     github_repository(payload.get('url'))
-    defaults = {'revision': '', 'workflow': 'consumer', 'action': 'run', 'target': '', 'source': '', 'stdin': ''}
+    defaults = {'revision': '', 'workflow': 'consumer', 'action': 'run', 'target': '', 'source': '', 'stdin': '', 'compiler': 'gfortran'}
     result = {**defaults, **payload}
     for key in defaults:
         if not isinstance(result[key], str):
             raise ValueError(f'{key} must be text.')
     if result['workflow'] not in {'consumer', 'package'} or result['action'] not in {'build', 'run', 'test'}:
         raise ValueError('Choose a supported workflow and action.')
+    if result['compiler'] not in COMPILERS:
+        raise ValueError('Choose a supported FPM compiler.')
     if result['workflow'] == 'consumer' and result['action'] == 'test':
         raise ValueError('Test applies to the package workflow.')
     if not re.fullmatch(r'[A-Za-z0-9_./-]{0,200}', result['revision']):
@@ -131,7 +134,8 @@ class Preparer:
         if len(self.records) >= MAX_PACKAGES:
             raise ValueError('Dependency graph exceeds 12 repositories.')
         ref = quote(revision or 'HEAD', safe='')
-        commit = json.loads(self.download(f'https://api.github.com/repos/{repo}/commits/{ref}', 1024 * 1024))['sha']
+        commit = revision if re.fullmatch('[a-f0-9]{40}', revision) else json.loads(
+            self.download(f'https://api.github.com/repos/{repo}/commits/{ref}', 1024 * 1024))['sha']
         if not re.fullmatch('[a-f0-9]{40}', commit):
             raise ValueError('GitHub returned an invalid commit.')
         data = self.download(f'https://codeload.github.com/{repo}/tar.gz/{commit}')

@@ -11,6 +11,7 @@ import time
 import tomllib
 
 from fpm_sources import extract_archive, validate_request
+from fpm_compilers import COMPILERS, compiler_flags
 
 
 def stage(command, directory, timeout, stdin=''):
@@ -55,12 +56,15 @@ def stage(command, directory, timeout, stdin=''):
 
 
 def targets(project, kind):
-    return sorted({path.name for path in (project / 'build').glob(f'gfortran_*/{kind}/*')
+    return sorted({path.name for path in (project / 'build').glob(f'*/{kind}/*')
                    if path.is_file() and os.access(path, os.X_OK)})
 
 
 def execute(message):
     payload = validate_request(message['request'])
+    compiler = payload['compiler']
+    if compiler != os.environ.get('FPM_COMPILER', 'gfortran'):
+        raise ValueError('Requested compiler does not match this sandbox image.')
     bundle = extract_archive(base64.b64decode(message['bundle'], validate=True), Path('/work/sources'),
                              require_manifest=False)
     package = (bundle / message['root']).resolve()
@@ -76,8 +80,11 @@ def execute(message):
         (project / 'fpm.toml').write_text('name = "playground-main"\n[build]\nauto-tests = false\n'
             'auto-examples = false\n[dependencies]\n' + json.dumps(name) + ' = { path = ' +
             json.dumps(dependency_path) + ' }\n', encoding='utf-8')
-    flags = ['--profile', 'debug', '--compiler', 'gfortran', '--no-prune']
-    result = {'ok': False, 'compiler': 'GNU Fortran 16.2.0', 'fpm': '0.12.0', 'stages': []}
+    flags = compiler_flags(compiler)
+    version = subprocess.check_output([COMPILERS[compiler]['command'], '--version'], text=True, timeout=10).splitlines()[0]
+    if COMPILERS[compiler]['version'] not in version:
+        raise ValueError('Installed compiler version does not match the selected toolchain.')
+    result = {'ok': False, 'compiler': version, 'compiler_id': compiler, 'fpm': '0.12.0', 'stages': []}
     build_command = ['fpm', 'build', *flags] + (['--tests'] if payload['action'] == 'test' else [])
     build = stage(build_command, project, 180)
     result['stages'].append({'name': 'Build', **build})

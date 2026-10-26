@@ -8,7 +8,7 @@ import sys
 from urllib.request import Request, urlopen
 
 
-def verify_api(url, origin):
+def verify_api(url, origin, compilers=None):
     request = Request(url + '/api/health', headers={'Origin': origin})
     with urlopen(request, timeout=45) as response:
         data = json.loads(response.read(10000))
@@ -16,21 +16,41 @@ def verify_api(url, origin):
             raise ValueError('The deployed endpoint did not return a healthy FPM response.')
         if response.headers.get('Access-Control-Allow-Origin') != origin:
             raise ValueError('The deployed endpoint does not allow the configured browser origin.')
+        if compilers is not None and set(data.get('compilers', {})) != set(compilers):
+            raise ValueError('The deployed compiler catalog does not match the verified images.')
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--owner-secret', help='Optional Modal secret containing P2F_OWNER_KEY (API only).')
     parser.add_argument('--origins', help='Comma-separated allowed browser origins, for forks.')
+    parser.add_argument('--compilers', nargs='+', choices=['gfortran', 'gfortran17', 'ifx', 'flang'],
+                        default=['gfortran', 'gfortran17', 'ifx', 'flang'],
+                        help='Toolchains to build and verify; GNU 16 is always included.')
     args = parser.parse_args()
     if args.owner_secret:
         os.environ['FPM_OWNER_SECRET'] = args.owner_secret
     if args.origins:
         os.environ['FPM_ORIGINS'] = args.origins
     import modal
-    from xfpm_modal import APP_NAME, IMAGE_NAME, runtime_image
+    from xfpm_modal import APP_NAME, image_name, runtime_images
+    from fpm_probe import verify_image
+    compilers = list(dict.fromkeys(['gfortran', *args.compilers]))
+    images = runtime_images(compilers)
+    enabled = []
+    build_app = modal.App.lookup(APP_NAME, create_if_missing=True)
     with modal.enable_output():
-        runtime_image.build(modal.App.lookup(APP_NAME, create_if_missing=True)).publish(IMAGE_NAME)
+        for compiler in compilers:
+            try:
+                image = images[compiler].build(build_app)
+                verify_image(build_app, image, compiler)
+                image.publish(image_name(compiler))
+                enabled.append(compiler)
+            except Exception as error:
+                if compiler == 'gfortran':
+                    raise
+                print(f'WARNING: {compiler} remains unavailable: {error}', flush=True)
+    os.environ['FPM_ENABLED_COMPILERS'] = json.dumps(enabled)
     subprocess.run([sys.executable, '-X', 'utf8', '-m', 'modal', 'deploy', 'xfpm_modal.py'],
                    cwd=Path(__file__).resolve().parent, check=True)
     url = modal.Function.from_name(APP_NAME, 'api').get_web_url()
@@ -40,11 +60,12 @@ def main():
     print('Checking the deployed HTTP endpoint and browser access...', flush=True)
     origin = os.environ.get('FPM_ORIGINS', 'https://beliavsky.github.io').split(',')[0]
     try:
-        verify_api(url, origin)
+        verify_api(url, origin, enabled)
     except Exception as error:
         raise SystemExit(f'Deployment completed, but the API is not ready: {error}\n'
                          f'Inspect startup logs with: {sys.executable} -m modal app logs {APP_NAME}') from error
     print('HTTP health and browser access: PASS')
+    print('Verified FPM compilers:', ', '.join(enabled))
     print('Then commit the configuration and publish the static site.')
 
 

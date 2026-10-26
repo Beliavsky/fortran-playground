@@ -35,8 +35,10 @@ class SourceTests(unittest.TestCase):
             with self.subTest(value=value), self.assertRaises(ValueError):
                 github_repository(value)
         self.assertEqual(validate_request(PAYLOAD)['action'], 'run')
+        self.assertEqual(validate_request(PAYLOAD)['compiler'], 'gfortran')
         for change in [{'source': ''}, {'source': 'x' * 100001}, {'stdin': '\0'},
-                       {'action': 'install'}, {'target': '--runner'}, {'source': 42}, {'extra': 1}]:
+                       {'action': 'install'}, {'target': '--runner'}, {'source': 42}, {'extra': 1},
+                       {'compiler': 'ofort'}, {'compiler': '/bin/sh'}]:
             with self.subTest(change=change), self.assertRaises(ValueError):
                 validate_request({**PAYLOAD, **change})
         self.assertEqual(validate_request({**PAYLOAD, 'workflow': 'package', 'action': 'test', 'source': ''})['action'], 'test')
@@ -137,6 +139,15 @@ class AdmissionTests(unittest.IsolatedAsyncioTestCase):
         result = await self.service.job(second['id'])
         self.assertEqual(result['state'], 'done')
         await self.service.submit('c', PAYLOAD)
+
+    async def test_unavailable_compiler_is_rejected_before_launch(self):
+        with self.assertRaises(ServiceError) as error:
+            await self.service.submit('a', {**PAYLOAD, 'compiler': 'ifx'})
+        self.assertEqual(error.exception.status, 400)
+        self.assertFalse(self.runner.calls)
+        self.service.compilers = ('gfortran', 'ifx')
+        await self.service.submit('a', {**PAYLOAD, 'compiler': 'ifx'})
+        self.assertEqual(next(iter(self.runner.calls.values()))['compiler'], 'ifx')
 
     async def test_address_and_daily_limits_owner_and_expiration(self):
         self.runner.result = {'ok': True, 'stages': []}

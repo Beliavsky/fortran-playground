@@ -1,8 +1,12 @@
 # FPM package playground
 
-The separate [FPM page](https://beliavsky.github.io/fortran-playground/fpm/) uses **GNU Fortran 16.2.0** and **FPM 0.12.0**. It requires its own service deployment; publishing the page alone does not start that service.
+The separate [FPM page](https://beliavsky.github.io/fortran-playground/fpm/) uses **FPM 0.12.0**, with **GNU Fortran 16.2.0** as the default. The Compiler selector also supports **GNU Fortran 17 experimental (2026-10-18)**, **Intel ifx 2025.3.3**, and **LLVM Flang 23.1.5** when their separate images have been built and verified by the service. It requires its own service deployment; publishing the page alone does not start that service.
+
+The page enables only compilers advertised by the service. Changing compilers clears target suggestions; it does not submit a job. Old pages continue using GNU 16 when no compiler is specified. The updated page also works with an older GNU-only API. Each selected compiler builds the whole dependency tree in a fresh sandbox; `.mod` files and libraries are never shared across compilers. LFortran and ofort are not included in this package interface.
 
 ## Using a package
+
+For Python clients and a local browser analog, see [FPM runners and the local package page](fpm-runners.md). The hosted runner uses this package service; local operations use installed FPM and compilers.
 
 Select a starter example, or enter a public GitHub repository URL with an `fpm.toml` at its root. Enter a branch, tag, or commit separately, or leave the revision blank for the repository's default HEAD. Each repository is resolved to a commit, and results show all downloaded repositories, commit IDs, build commands, diagnostics, and output.
 
@@ -16,7 +20,7 @@ Choose **Package's own programs and tests** to work with the repository itself:
 | Compile and Run | Build, then `fpm run`: run the sole application, or the named target. |
 | Test | `fpm build --tests`, then `fpm test`: run all tests or the named test. |
 
-Every command uses `--profile debug --compiler gfortran --no-prune`. Test compilation gets the build allowance; executing the entire selected test suite gets one shared run allowance. Run/Test accept an optional target name. If Run finds several applications, it lists their names without running them; choose a name in the Target field and submit again. This second submission also builds from scratch. Library-only packages can use Build or a custom main program. Running `example/` targets and passing command-line arguments are outside this first version.
+Every command uses `--profile debug --no-prune`, with an explicit compiler executable and GNU C/C++ compilers. GNU 17 uses a `gfortran` shim selecting the pinned snapshot; Intel uses an `ifx` wrapper that initializes its environment. LLVM Flang uses the name `flang-new` so FPM 0.12 selects its LLVM flags rather than classic-Flang flags. Test compilation gets the build allowance; executing the entire selected test suite gets one shared run allowance. Run/Test accept an optional target name. If Run finds several applications, it lists their names without running them; choose a name in the Target field and submit again. This second submission also builds from scratch. Library-only packages can use Build or a custom main program. Running `example/` targets and passing command-line arguments are outside this version.
 
 Standard input is supplied from the optional text box; there is no interactive terminal. Copy results preserves the captured output, diagnostics, timings, and resolved commits. Loading an example never submits a job automatically.
 
@@ -33,6 +37,12 @@ The preparation service downloads sources as data and rewrites supported depende
 
 The callback restriction described in the [feasibility audit](fpm-feasibility/README.md#callback-limitation-found) still applies: some internal-procedure callbacks crash in this sandbox. The quadrature and roots starter programs use the working module-callback / object-oriented approaches.
 
+### Compiler validation and known package limitations
+
+All five starter consumer programs passed with GNU 17, ifx, and LLVM Flang. Package Build, application target selection, stdin, tests, compilation failure handling, output bounds, and coordinator completion/cancellation were also exercised. The upstream datetime-fortran, PCHIP, and toml-f test suites passed with ifx and Flang. GNU 17 passed datetime/PCHIP tests, but hit an internal compiler error (`gfc_get_location_with_offset`) while compiling toml-f's test-drive dependency under FPM's debug flags. The toml-f consumer example still passes with GNU 17. This is retained as a known experimental-compiler failure, with diagnostics shown to the user; no flags or package sources are silently changed to bypass it.
+
+See [the package/worker matrix](fpm-multicompiler-validation.json) and [HTTP validation](fpm-http-validation.json). Supporting a compiler does not guarantee support for every package. The deployment smoke checks additionally exercise a Fortran module calling a C function under Build, Run, and Test, with the normal sandbox bounds.
+
 ## Independent hosting on Modal
 
 This service lives in this repository and does not require the Python-to-Fortran project or its service. Create a Modal account and authenticate an environment with `requirements-fpm.txt` installed. For example, from the repository root on Windows:
@@ -46,7 +56,9 @@ python -m venv .venv-fpm
 
 On Linux/macOS, create and activate a virtual environment, install the same requirements, authenticate with `python -m modal setup`, and run `python xdeploy_fpm.py`. An existing authenticated environment with Modal 1.6.0 can also be used.
 
-`xdeploy_fpm.py` first builds and publishes the immutable GNU/FPM sandbox image, with a verified FPM binary checksum. It then deploys the separate `fortran-playground-fpm` app. Image construction happens during deployment, not during user submissions. Wait for the final successful deployment message and copy the URL of its `api` function into [site/fpm/service.json](../site/fpm/service.json):
+`xdeploy_fpm.py` builds separate immutable sandbox images for GNU 16, GNU 17, ifx, and Flang, with a verified FPM binary checksum. Before publishing each image, it verifies mixed C/Fortran package Build, Run, and Test inside network-blocked sandboxes. GNU 16 failure stops deployment; an optional compiler that fails construction or verification is reported and omitted from the advertised compiler list. It then deploys the separate `fortran-playground-fpm` app. No compiler installation or image construction occurs during a user's submission.
+
+Pinned installer scripts are included in `fpm_toolchains/`; a fork needs no files or service from the Python-to-Fortran repository. A first GNU 17 build compiles GCC from source and can take considerably longer than later deployments, which reuse cached compiler layers. To deploy only selected compilers, use `python xdeploy_fpm.py --compilers gfortran ifx`; GNU 16 is always included. Wait for the final successful deployment message and copy the URL of its `api` function into [site/fpm/service.json](../site/fpm/service.json):
 
 ```json
 {"url": "https://YOUR-WORKSPACE--fortran-playground-fpm-api.modal.run"}
@@ -90,6 +102,10 @@ For live validation with an authenticated Modal environment, run:
 
 ```powershell
 python -X utf8 xverify_fpm.py
+python -X utf8 xverify_fpm.py --compilers gfortran17 ifx flang --report docs/fpm-multicompiler-validation.json
+python -X utf8 xverify_fpm_http.py
 ```
 
-This creates an ephemeral app, not a production API deployment. It exercises the five starter programs, package build/test/run workflows, target discovery/selection, standard input, compilation failure, output limits, and upstream datetime/PCHIP/toml-f test suites. It also runs the preparation/coordinator path through completion and cancellation. It writes [fpm-validation.json](fpm-validation.json) with the results. The live check currently requires `tomli-w` in the invoking environment. Downloading mutable dependency branches may resolve to newer commits on a later verification run; the report records the resolved commits.
+These commands create ephemeral apps, not production API deployments. `xverify_fpm.py` exercises the five starter programs, package build/test/run workflows, target discovery/selection, standard input, compilation failure, output limits, and upstream datetime/PCHIP/toml-f test suites for the requested compilers. It also runs the preparation/coordinator path through completion and cancellation. Its default report is [fpm-validation.json](fpm-validation.json). The specific known GNU 17 internal compiler error described above is recorded as a known failure, with `result.ok` remaining false; other unexpected failures make verification fail.
+
+`xverify_fpm_http.py` verifies and publishes the immutable images, then checks the temporary HTTP API's compiler catalog and submits a starter program with each of the four compilers, polling until completion. It writes [fpm-http-validation.json](fpm-http-validation.json). The live checks require `tomli-w` in the invoking environment. Downloading mutable dependency branches may resolve to newer commits on a later verification run; the package reports record the resolved commits.

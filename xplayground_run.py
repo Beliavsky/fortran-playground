@@ -496,7 +496,12 @@ def print_summary(rows):
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(description=__doc__)
+    arguments = list(sys.argv[1:] if argv is None else argv)
+    if any(item == '--fpm' or item.startswith('--fpm=') for item in arguments):
+        from fpm_runner import main as fpm_main
+        return fpm_main(arguments, hosted=True)
+    parser = argparse.ArgumentParser(description=__doc__,
+        epilog='FPM package mode: --fpm GITHUB_URL --action build|run|test. Use --fpm URL --help for its options.')
     parser.add_argument('files', nargs='+', help='Local paths or raw HTTPS URLs for UTF-8 free-form sources, in compilation order')
     group = parser.add_mutually_exclusive_group()
     group.add_argument('--compiler', choices=COMPILERS, help='Compiler (default: gfortran)')

@@ -25,12 +25,13 @@ MAX_BODY = 16 * 1024 * 1024
 class LocalServer(ThreadingHTTPServer):
     daemon_threads = True
 
-    def __init__(self, workspace, port=8766, overrides=None):
+    def __init__(self, workspace, port=8766, overrides=None, fpm_path=None):
         self.workspace = Path(workspace).resolve(strict=True)
         if not self.workspace.is_dir():
             raise ValueError('Workspace must be a directory')
         self.overrides = overrides or {}
         self.compilers = discover(self.overrides)
+        self.fpm_path = shutil.which(fpm_path or 'fpm')
         self.token = secrets.token_urlsafe(32)
         self.jobs = {}
         self.lock = threading.Lock()
@@ -153,6 +154,71 @@ class LocalServer(ThreadingHTTPServer):
             if thread and thread.is_alive():
                 thread.join(timeout=8)
 
+    def project_path(self, value):
+        from fortran_fpm import project_directory
+        if not isinstance(value, str) or not value or '\0' in value or ':' in value or '\\' in value:
+            raise ValueError('Use a workspace-relative package directory with forward slashes')
+        relative = Path(value)
+        path = (self.workspace / relative).resolve()
+        if relative.is_absolute() or '..' in relative.parts or not path.is_relative_to(self.workspace):
+            raise ValueError('Package directory must remain within the workspace')
+        return project_directory(path)
+
+    def project_list(self):
+        import os
+        projects = []
+        for count, (directory, folders, files) in enumerate(os.walk(self.workspace, followlinks=False)):
+            if count >= 10000 or len(projects) >= 256:
+                break
+            folders[:] = [name for name in folders if not name.startswith('.') and name not in ('build', 'node_modules', '__pycache__')]
+            path = Path(directory).resolve()
+            if not path.is_relative_to(self.workspace):
+                folders.clear()
+                continue
+            if 'fpm.toml' in files:
+                projects.append(path.relative_to(self.workspace).as_posix())
+        return sorted(projects, key=str.lower)
+
+    def submit_fpm(self, data):
+        from fortran_fpm import COMPILERS as FPM_COMPILERS, compare_projects, validate_options
+        if not isinstance(data, dict) or set(data) - {'project', 'compilers', 'options'}:
+            raise ValueError('Invalid FPM job request')
+        project = self.project_path(data.get('project'))
+        names = data.get('compilers')
+        if not isinstance(names, list) or not names or any(not isinstance(name, str) or name not in FPM_COMPILERS or not self.compilers[name].get('path') for name in names) or len(set(names)) != len(names):
+            raise ValueError('Choose distinct available FPM compilers')
+        options = validate_options(data.get('options', {}))
+        if not self.fpm_path:
+            raise ValueError('fpm is not on PATH; restart the server with --fpm-path PATH')
+        with self.lock:
+            if any(job['state'] == 'running' for job in self.jobs.values()):
+                return None
+            for identifier in list(self.jobs)[:-19]:
+                self.jobs.pop(identifier)
+            identifier = secrets.token_urlsafe(16)
+            job = {'state': 'running', 'rows': [], 'cancel': threading.Event()}
+            self.jobs[identifier] = job
+
+        def work():
+            def update(row):
+                with self.lock:
+                    job['rows'] = [item for item in job['rows'] if item['compiler'] != row['compiler']] + [row]
+            try:
+                rows = compare_projects(project, names, options=options, overrides=self.overrides,
+                                        fpm_path=self.fpm_path, cancel=job['cancel'], update=update)
+                with self.lock:
+                    job['rows'] = rows
+            except Exception as error:
+                with self.lock:
+                    job['error'] = str(error)
+                    job['rows'] = [{'compiler': name, 'status': 'ERROR', 'ok': False, 'error': str(error)} for name in names]
+            finally:
+                with self.lock:
+                    job['state'] = 'done'
+        job['thread'] = threading.Thread(target=work, daemon=True)
+        job['thread'].start()
+        return identifier
+
     def source_tool(self, action, data):
         if not isinstance(data, dict) or set(data) - {'path', 'source', 'indent'}:
             raise ValueError('Invalid editor tool request')
@@ -228,6 +294,11 @@ class Handler(BaseHTTPRequestHandler):
         try:
             if parsed.path == '/api/session':
                 self.reply(200, {'workspace': str(self.server.workspace), 'compilers': self.server.compilers})
+            elif parsed.path == '/api/fpm/session':
+                from fortran_fpm import COMPILERS as FPM_COMPILERS
+                self.reply(200, {'workspace': str(self.server.workspace), 'fpm': self.server.fpm_path,
+                    'projects': self.server.project_list(),
+                    'compilers': {name: value for name, value in self.server.compilers.items() if name in FPM_COMPILERS}})
             elif parsed.path == '/api/files':
                 self.reply(200, {'files': self.server.file_list()})
             elif parsed.path == '/api/source':
@@ -242,10 +313,11 @@ class Handler(BaseHTTPRequestHandler):
                     value = {key: job[key] for key in ('state', 'rows', 'error') if key in job} if job else None
                 self.reply(200 if value else 404, value or {'error': 'Unknown job'})
             elif parsed.path in ('/', '/index.html', '/app.mjs', '/style.css', '/editors.mjs', '/indentation.mjs',
+                                 '/fpm/', '/fpm/index.html', '/fpm/fpm.mjs',
                                  '/output_diff.mjs', '/output_diff_ui.mjs',
                                  '/editor-vendor/codemirror.js', '/editor-vendor/fortran.js',
                                  '/editor-vendor/codemirror.css', '/editor-vendor/LICENSE'):
-                name = 'index.html' if parsed.path == '/' else parsed.path[1:]
+                name = 'index.html' if parsed.path == '/' else 'fpm/index.html' if parsed.path == '/fpm/' else parsed.path[1:]
                 self.reply(200, (ASSETS / name).read_bytes(), {'html': 'text/html; charset=utf-8', 'mjs': 'text/javascript; charset=utf-8',
                     'js': 'text/javascript; charset=utf-8', 'css': 'text/css; charset=utf-8'}.get(name.rsplit('.', 1)[-1], 'text/plain; charset=utf-8'))
             else:
@@ -269,6 +341,9 @@ class Handler(BaseHTTPRequestHandler):
             elif path == '/api/jobs':
                 identifier = self.server.submit(data)
                 self.reply(202 if identifier else 409, {'id': identifier} if identifier else {'error': 'A local comparison is already active'})
+            elif path == '/api/fpm/jobs':
+                identifier = self.server.submit_fpm(data)
+                self.reply(202 if identifier else 409, {'id': identifier} if identifier else {'error': 'A local job is already active'})
             elif path.startswith('/api/jobs/') and path.endswith('/cancel'):
                 identifier = path[len('/api/jobs/'):-len('/cancel')]
                 with self.server.lock:
@@ -288,6 +363,8 @@ def main(argv=None):
     parser.add_argument('--port', type=int, default=8766, help='Loopback port; 0 selects a free port')
     parser.add_argument('--compiler-path', action='append', default=[], metavar='COMPILER=PATH')
     parser.add_argument('--no-browser', action='store_true')
+    parser.add_argument('--fpm', action='store_true', help='Open the local FPM package page')
+    parser.add_argument('--fpm-path', help='FPM executable override')
     args = parser.parse_args(argv)
     overrides = {}
     for item in args.compiler_path:
@@ -296,10 +373,10 @@ def main(argv=None):
             parser.error('Use --compiler-path COMPILER=PATH')
         overrides[name] = value
     try:
-        server = LocalServer(args.workspace, args.port, overrides)
+        server = LocalServer(args.workspace, args.port, overrides, fpm_path=args.fpm_path)
     except (OSError, ValueError) as error:
         parser.error(str(error))
-    url = server.origin + '/#session=' + server.token
+    url = server.origin + ('/fpm/' if args.fpm else '/') + '#session=' + server.token
     print(f'Local Fortran workspace: {server.workspace}\nOpen {url}\nPrograms run with your permissions. Press Ctrl+C to stop.', flush=True)
     if not args.no_browser:
         webbrowser.open(url)

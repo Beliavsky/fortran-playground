@@ -7,6 +7,7 @@ import secrets
 import time
 
 from fpm_sources import validate_request
+from fpm_compilers import COMPILERS
 
 
 class ServiceError(Exception):
@@ -15,9 +16,10 @@ class ServiceError(Exception):
 
 
 class Service:
-    def __init__(self, store, runner, *, clock=time.time, owner_key=''):
+    def __init__(self, store, runner, *, clock=time.time, owner_key='', compilers=('gfortran',)):
         self.store, self.runner, self.clock, self.owner_key = store, runner, clock, owner_key
         self.lock = asyncio.Lock()
+        self.compilers = tuple(compilers)
 
     async def board(self):
         now = self.clock()
@@ -47,6 +49,8 @@ class Service:
             payload = validate_request(payload)
         except (ValueError, UnicodeError) as error:
             raise ServiceError(400, str(error)) from error
+        if payload['compiler'] not in self.compilers:
+            raise ServiceError(400, f'FPM compiler {payload["compiler"]} is unavailable on this service.')
         async with self.lock:
             board = await self.board()
             exempt = bool(self.owner_key and hmac.compare_digest(owner_key.encode(), self.owner_key.encode()))
@@ -109,7 +113,8 @@ def create_api(service, origins):
 
     @api.get('/api/health')
     async def health():
-        return {'ok': True, 'compiler': 'GNU Fortran 16.2.0', 'fpm': '0.12.0', 'clean_builds': True}
+        return {'ok': True, 'compiler': COMPILERS['gfortran']['label'], 'fpm': '0.12.0', 'clean_builds': True,
+                'compilers': {name: COMPILERS[name]['label'] for name in service.compilers}}
 
     @api.post('/api/jobs')
     async def submit(request: Request):

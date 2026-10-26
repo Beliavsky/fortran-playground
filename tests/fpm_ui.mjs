@@ -20,6 +20,8 @@ globalThis.document = {
 const get = id => document.getElementById(id);
 get('workflow').value = 'consumer';
 get('action').value = 'run';
+get('compiler').options = ['gfortran', 'gfortran17', 'ifx', 'flang'].map(value => ({value}));
+const legacyService = process.argv.includes('--legacy');
 const examples = JSON.parse(readFileSync(new URL('../site/fpm/examples.json', import.meta.url), 'utf8'));
 const unconfigured = process.argv.includes('--unconfigured');
 let submissions = [], fail = false, cancellations = 0, transportFailure = false;
@@ -29,7 +31,8 @@ globalThis.fetch = async (url, options = {}) => {
   let value;
   if (url === './examples.json') value = examples;
   else if (url === './service.json') value = {url: unconfigured ? '' : 'https://fpm.modal.run'};
-  else if (url.endsWith('/api/health')) value = {ok: true, compiler: 'GNU Fortran 16.2.0', fpm: '0.12.0'};
+  else if (url.endsWith('/api/health')) value = {ok: true, compiler: 'GNU Fortran 16.2.0', fpm: '0.12.0',
+    ...(legacyService ? {} : {compilers: {gfortran: 'GNU Fortran 16.2.0', ifx: 'Intel ifx'}})};
   else if (url.endsWith('/cancel')) {cancellations++; value = {state: 'cancelling'};}
   else if (url.endsWith('/api/jobs')) {
     if (fail) return {ok: false, async json() {return {error: 'Both FPM job slots are busy.'};}};
@@ -55,6 +58,9 @@ if (unconfigured) {
   process.exit(0);
 }
 assert.equal(get('submit').disabled, false);
+assert.equal(get('compiler').value, 'gfortran');
+assert.equal(get('compiler').options.find(option => option.value === 'flang').disabled, true);
+assert.equal(get('compiler').options.find(option => option.value === 'ifx').disabled, legacyService);
 assert.equal(get('source-pane').hidden, false);
 assert.equal(get('test-action').disabled, true);
 assert.equal(get('example').options.length, 5);
@@ -68,6 +74,7 @@ assert.equal(get('revision').value, examples[0].revision);
 await get('submit').listeners.click();
 assert.equal(submissions.length, 1);
 assert.equal(submissions[0].workflow, 'consumer');
+assert.equal(submissions[0].compiler, legacyService ? undefined : 'gfortran');
 assert.equal(submissions[0].source, examples[0].source);
 assert.match(get('output').value, /<script>42<\/script>/, 'Output is plain text, not inserted as HTML');
 assert.equal(get('status').textContent, 'PASS');
@@ -77,6 +84,12 @@ get('workflow').listeners.change();
 assert.equal(get('source-pane').hidden, true);
 assert.equal(get('target-controls').hidden, false);
 assert.equal(get('test-action').disabled, false);
+if (!legacyService) {
+  get('target').value = 'old-target';
+  get('compiler').value = 'ifx'; get('compiler').listeners.change();
+  assert.equal(get('target').value, '');
+  assert.match(get('connection').textContent, /Intel ifx/);
+}
 result = {ok: false, needs_target: true, error: 'Choose an application target', targets: ['alpha', 'beta'], stages: []};
 await get('submit').listeners.click();
 assert.equal(get('status').textContent, 'Choose a target');
@@ -86,6 +99,7 @@ get('stdin').value = '41\n';
 result = {ok: true, stages: []};
 await get('submit').listeners.click();
 assert.equal(submissions.at(-1).target, 'alpha');
+assert.equal(submissions.at(-1).compiler, legacyService ? undefined : 'ifx');
 assert.equal(submissions.at(-1).stdin, '41\n');
 
 get('action').value = 'test';

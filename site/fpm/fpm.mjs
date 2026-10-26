@@ -5,6 +5,9 @@ const get = id => document.getElementById(id);
 const editor = createEditor(get('source'), get('line-count'));
 editor.setIndentation({width: 3, automatic: true});
 let origin = '', examples = [], busy = false, job = '', targetsKey = '', ready = false;
+let compilerLabels = {gfortran: 'GNU Fortran 16.2.0'};
+let compilerSelection = false;
+get('compiler').value = 'gfortran';
 
 function controls() {
   const consumer = get('workflow').value === 'consumer';
@@ -22,13 +25,14 @@ function controls() {
   get('submit').disabled = busy || !ready;
   get('cancel').disabled = !busy || !job;
   for (const id of ['workflow', 'action', 'package-url', 'revision', 'target', 'example']) get(id).disabled = busy;
+  get('compiler').disabled = busy || !ready || !compilerSelection;
   get('load-example').disabled = busy || !get('example').value;
   editor.setReadOnly(busy);
   editor.refresh();
 }
 
 function resetTargets() {
-  const key = [get('package-url').value, get('revision').value, get('action').value].join('\n');
+  const key = [get('package-url').value, get('revision').value, get('action').value, get('compiler').value].join('\n');
   if (targetsKey !== key) {
     targetsKey = key;
     get('target').value = '';
@@ -70,6 +74,7 @@ async function submit() {
   let terminal = false;
   try {
     const payload = {url: get('package-url').value.trim(), revision: get('revision').value.trim(),
+      ...(compilerSelection ? {compiler: get('compiler').value} : {}),
       workflow: get('workflow').value, action: get('action').value, target: get('target').value.trim(),
       source: editor.getValue(), stdin: get('stdin').value};
     const submitted = await request('/api/jobs', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload)});
@@ -113,6 +118,11 @@ get('cancel').addEventListener('click', async () => {
   catch (error) {get('status').textContent = error.message; get('cancel').disabled = false;}
 });
 for (const id of ['workflow', 'action']) get(id).addEventListener('change', () => {resetTargets(); controls();});
+get('compiler').addEventListener('change', () => {
+  resetTargets();
+  get('connection').textContent = `${compilerLabels[get('compiler').value]} · FPM 0.12.0 · Separate package service`;
+  controls();
+});
 for (const id of ['package-url', 'revision']) get(id).addEventListener('input', resetTargets);
 get('example').addEventListener('change', controls);
 get('load-example').addEventListener('click', () => {
@@ -152,6 +162,12 @@ async function initialize() {
     origin = serviceOrigin(configuration.url);
     const health = await request('/api/health');
     if (!health.ok || typeof health.fpm !== 'string') throw new Error('FPM service unavailable or incompatible.');
+    compilerSelection = Boolean(health.compilers);
+    compilerLabels = health.compilers ?? {gfortran: health.compiler};
+    for (const option of get('compiler').options) {
+      option.disabled = !Object.hasOwn(compilerLabels, option.value);
+      if (!option.disabled) option.textContent = compilerLabels[option.value];
+    }
     ready = true;
     get('connection').textContent = `${health.compiler} · FPM ${health.fpm} · Separate package service`;
     get('status').textContent = 'Ready';

@@ -1,0 +1,274 @@
+[
+  {
+    "compiler": "gfortran",
+    "pending_polls": 6,
+    "result": {
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "compiler_id": "gfortran",
+      "fpm": "0.12.0",
+      "stages": [
+        {
+          "name": "Build",
+          "command": [
+            "fpm",
+            "build",
+            "--profile",
+            "debug",
+            "--compiler",
+            "gfortran",
+            "--c-compiler",
+            "gcc",
+            "--cxx-compiler",
+            "g++",
+            "--no-prune"
+          ],
+          "seconds": 0.567,
+          "ok": true,
+          "exit_code": 0,
+          "error": "",
+          "stdout": " + mkdir -p build/dependencies\n[  0%]          quadrature_module.F90\n[ 25%]          quadrature_module.F90  done.\n[ 25%]           libplayground-main.a\n[ 50%]           libplayground-main.a  done.\n[ 50%]                       main.f90\n[ 75%]                       main.f90  done.\n[ 75%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": ""
+        },
+        {
+          "name": "Run",
+          "command": [
+            "fpm",
+            "run",
+            "--profile",
+            "debug",
+            "--compiler",
+            "gfortran",
+            "--c-compiler",
+            "gcc",
+            "--cxx-compiler",
+            "g++",
+            "--no-prune"
+          ],
+          "seconds": 0.02,
+          "ok": true,
+          "exit_code": 0,
+          "error": "",
+          "stdout": "PASS quadrature integral= 0.333333333333 status=1\n",
+          "stderr": "Project is up to date\n"
+        }
+      ],
+      "targets": [
+        "playground-main"
+      ],
+      "packages": [
+        {
+          "repository": "jacobwilliams/quadrature-fortran",
+          "revision": "1d208fc59569a97b1c2abf9c45f7c352dcc7b318",
+          "sha256": "b099c2ee3e5c9c993e888cff0724fd7035dfb36559b09bc516ac94c45a610a34"
+        }
+      ],
+      "prepare_seconds": 0.425,
+      "total_seconds": 3.116
+    }
+  },
+  {
+    "compiler": "gfortran17",
+    "pending_polls": 3,
+    "result": {
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 17.0.0 20261018 (experimental)",
+      "compiler_id": "gfortran17",
+      "fpm": "0.12.0",
+      "stages": [
+        {
+          "name": "Build",
+          "command": [
+            "fpm",
+            "build",
+            "--profile",
+            "debug",
+            "--compiler",
+            "/opt/fpm/bin/gfortran",
+            "--c-compiler",
+            "gcc",
+            "--cxx-compiler",
+            "g++",
+            "--no-prune"
+          ],
+          "seconds": 0.631,
+          "ok": true,
+          "exit_code": 0,
+          "error": "",
+          "stdout": " + mkdir -p build/dependencies\n[  0%]          quadrature_module.F90\n[ 25%]          quadrature_module.F90  done.\n[ 25%]           libplayground-main.a\n[ 50%]           libplayground-main.a  done.\n[ 50%]                       main.f90\n[ 75%]                       main.f90  done.\n[ 75%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": ""
+        },
+        {
+          "name": "Run",
+          "command": [
+            "fpm",
+            "run",
+            "--profile",
+            "debug",
+            "--compiler",
+            "/opt/fpm/bin/gfortran",
+            "--c-compiler",
+            "gcc",
+            "--cxx-compiler",
+            "g++",
+            "--no-prune"
+          ],
+          "seconds": 0.017,
+          "ok": true,
+          "exit_code": 0,
+          "error": "",
+          "stdout": "PASS quadrature integral= 0.333333333333 status=1\n",
+          "stderr": "Project is up to date\n"
+        }
+      ],
+      "targets": [
+        "playground-main"
+      ],
+      "packages": [
+        {
+          "repository": "jacobwilliams/quadrature-fortran",
+          "revision": "1d208fc59569a97b1c2abf9c45f7c352dcc7b318",
+          "sha256": "b099c2ee3e5c9c993e888cff0724fd7035dfb36559b09bc516ac94c45a610a34"
+        }
+      ],
+      "prepare_seconds": 0.231,
+      "total_seconds": 2.624
+    }
+  },
+  {
+    "compiler": "ifx",
+    "pending_polls": 5,
+    "result": {
+      "ok": true,
+      "compiler": "ifx (IFX) 2025.3.3 20260319",
+      "compiler_id": "ifx",
+      "fpm": "0.12.0",
+      "stages": [
+        {
+          "name": "Build",
+          "command": [
+            "fpm",
+            "build",
+            "--profile",
+            "debug",
+            "--compiler",
+            "/opt/fpm/bin/ifx",
+            "--c-compiler",
+            "gcc",
+            "--cxx-compiler",
+            "g++",
+            "--no-prune"
+          ],
+          "seconds": 2.284,
+          "ok": true,
+          "exit_code": 0,
+          "error": "",
+          "stdout": " + mkdir -p build/dependencies\n[  0%]          quadrature_module.F90\n[ 25%]          quadrature_module.F90  done.\n[ 25%]           libplayground-main.a\n[ 50%]           libplayground-main.a  done.\n[ 50%]                       main.f90\n[ 75%]                       main.f90  done.\n[ 75%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": ""
+        },
+        {
+          "name": "Run",
+          "command": [
+            "fpm",
+            "run",
+            "--profile",
+            "debug",
+            "--compiler",
+            "/opt/fpm/bin/ifx",
+            "--c-compiler",
+            "gcc",
+            "--cxx-compiler",
+            "g++",
+            "--no-prune"
+          ],
+          "seconds": 0.038,
+          "ok": true,
+          "exit_code": 0,
+          "error": "",
+          "stdout": "PASS quadrature integral= 0.333333333333 status=1\n",
+          "stderr": "Project is up to date\n"
+        }
+      ],
+      "targets": [
+        "playground-main"
+      ],
+      "packages": [
+        {
+          "repository": "jacobwilliams/quadrature-fortran",
+          "revision": "1d208fc59569a97b1c2abf9c45f7c352dcc7b318",
+          "sha256": "b099c2ee3e5c9c993e888cff0724fd7035dfb36559b09bc516ac94c45a610a34"
+        }
+      ],
+      "prepare_seconds": 0.215,
+      "total_seconds": 5.134
+    }
+  },
+  {
+    "compiler": "flang",
+    "pending_polls": 3,
+    "result": {
+      "ok": true,
+      "compiler": "Debian flang version 23.1.5 (++20261020014245+93acfd24c599-1~exp1~20261020134308.90)",
+      "compiler_id": "flang",
+      "fpm": "0.12.0",
+      "stages": [
+        {
+          "name": "Build",
+          "command": [
+            "fpm",
+            "build",
+            "--profile",
+            "debug",
+            "--compiler",
+            "/opt/fpm/bin/flang-new",
+            "--c-compiler",
+            "gcc",
+            "--cxx-compiler",
+            "g++",
+            "--no-prune"
+          ],
+          "seconds": 0.616,
+          "ok": true,
+          "exit_code": 0,
+          "error": "",
+          "stdout": " + mkdir -p build/dependencies\n[  0%]          quadrature_module.F90\n[ 25%]          quadrature_module.F90  done.\n[ 25%]           libplayground-main.a\n[ 50%]           libplayground-main.a  done.\n[ 50%]                       main.f90\n[ 75%]                       main.f90  done.\n[ 75%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": ""
+        },
+        {
+          "name": "Run",
+          "command": [
+            "fpm",
+            "run",
+            "--profile",
+            "debug",
+            "--compiler",
+            "/opt/fpm/bin/flang-new",
+            "--c-compiler",
+            "gcc",
+            "--cxx-compiler",
+            "g++",
+            "--no-prune"
+          ],
+          "seconds": 0.015,
+          "ok": true,
+          "exit_code": 0,
+          "error": "",
+          "stdout": "PASS quadrature integral= 0.333333333333 status=1\n",
+          "stderr": "Project is up to date\n"
+        }
+      ],
+      "targets": [
+        "playground-main"
+      ],
+      "packages": [
+        {
+          "repository": "jacobwilliams/quadrature-fortran",
+          "revision": "1d208fc59569a97b1c2abf9c45f7c352dcc7b318",
+          "sha256": "b099c2ee3e5c9c993e888cff0724fd7035dfb36559b09bc516ac94c45a610a34"
+        }
+      ],
+      "prepare_seconds": 0.216,
+      "total_seconds": 2.639
+    }
+  }
+]

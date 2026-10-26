@@ -11,6 +11,7 @@ try {
   else token = sessionStorage.getItem('local-fortran-session') || '';
   history.replaceState(null, '', location.pathname);
 } catch {} // With blocked storage, retain the fragment so reloading still works.
+get('fpm-link').href = '/fpm/#session=' + encodeURIComponent(token);
 let sources = [], index = -1, catalog = {}, busy = false, loading = false, stopping = false, jobId = '', rows = [], names = [], report = '';
 const cards = new Map();
 let indentation = loadIndentation();

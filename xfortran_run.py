@@ -1,8 +1,9 @@
-"""Run ordered local Fortran files with installed compilers; no network or Modal.
+"""Run local Fortran sources or FPM projects with installed tools; no hosted service.
 
 Examples:
   python xfortran_run.py module.f90 main.f90 --compilers gfortran ifx --O 3
   python xfortran_run.py main.f90 --stdin-file input.txt --list --terse
+  python xfortran_run.py --fpm . --action test --compilers gfortran ifx
 """
 import argparse
 import json
@@ -46,13 +47,13 @@ def stop_process(process):
             pass
 
 
-def run_process(command, cwd, cancel, timeout=30, stdin='', output_limit=4 * 1024 * 1024):
+def run_process(command, cwd, cancel, timeout=30, stdin='', output_limit=4 * 1024 * 1024, env=None):
     started = time.perf_counter()
     stage = {'ok': False, 'command': [str(arg) for arg in command], 'stdout': '', 'stderr': '', 'seconds': 0}
     if cancel.is_set():
         return {**stage, 'cancelled': True, 'stderr': 'Cancelled before launch.'}
     try:
-        process = subprocess.Popen(stage['command'], cwd=cwd, stdin=subprocess.PIPE,
+        process = subprocess.Popen(stage['command'], cwd=cwd, stdin=subprocess.PIPE, env=env,
             stdout=subprocess.PIPE, stderr=subprocess.PIPE, start_new_session=os.name != 'nt',
             creationflags=subprocess.CREATE_NEW_PROCESS_GROUP | subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0)
     except OSError as error:
@@ -392,7 +393,12 @@ def print_result(row, terse=False):
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    arguments = list(sys.argv[1:] if argv is None else argv)
+    if any(item == '--fpm' or item.startswith('--fpm=') for item in arguments):
+        from fpm_runner import main as fpm_main
+        return fpm_main(arguments, hosted=False)
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog='FPM package mode: --fpm DIRECTORY --action build|run|test. Use --fpm . --help for its options.')
     parser.add_argument('files', nargs='+', help='Local source files in compilation order')
     group = parser.add_mutually_exclusive_group()
     group.add_argument('--compiler', choices=COMPILERS)

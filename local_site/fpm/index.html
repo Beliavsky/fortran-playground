@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Local FPM playground</title><link rel="stylesheet" href="../editor-vendor/codemirror.css"><link rel="stylesheet" href="../style.css"></head>
+<body><main>
+<header><p class="eyebrow">LOCAL FORTRAN PACKAGES</p><h1>Local FPM playground</h1>
+<p>Use your installed FPM and compilers. Builds create files in the package's build directory; applications and tests run with your permissions and can access files and the network.</p>
+<p><a id="source-link" href="/">Local source-file playground</a></p><p id="workspace" class="note"></p><p id="status" role="status">Connecting…</p></header>
+<div class="toolbar"><label for="project">Package directory</label><input id="project" list="projects" value="." spellcheck="false"><datalist id="projects"></datalist><button id="refresh">Refresh packages</button></div>
+<p class="note">Enter a directory relative to the workspace above, containing fpm.toml. Use . for the workspace itself. Clone or download packages yourself before opening them here.</p>
+<div class="toolbar"><label for="workflow">Use</label><select id="workflow"><option value="package">Package's own programs and tests</option><option value="consumer">My main program</option></select>
+<label for="action">Action</label><select id="action"><option value="run">Compile and Run</option><option value="build">Build only</option><option id="test-action" value="test">Test</option></select>
+<label for="profile">Profile</label><select id="profile"><option value="debug">Debug</option><option value="release">Release</option></select>
+<span id="target-controls"><label for="target">Target (optional)</label><input id="target" list="targets" spellcheck="false"><datalist id="targets"></datalist></span></div>
+<div class="toolbar"><label for="interface">Interface</label><select id="interface"><option value="single">Single compiler</option><option value="compare">Compare compilers</option></select>
+<span id="single-compiler"><label for="compiler">Compiler</label><select id="compiler"></select></span>
+<fieldset id="compiler-choices" hidden><legend>Compilers</legend>
+<label><input id="compiler-gfortran" type="checkbox"> gfortran</label><label><input id="compiler-gfortran17" type="checkbox"> gfortran17</label>
+<label><input id="compiler-ifx" type="checkbox"> ifx</label><label><input id="compiler-flang" type="checkbox"> flang</label><label><input id="compiler-lfortran" type="checkbox"> lfortran</label></fieldset>
+<button id="submit" class="primary" disabled>Compile and Run</button><button id="stop" disabled>Stop</button></div>
+<p id="versions" class="note"></p>
+<section id="source-pane" hidden><h2>Fortran main program</h2><p class="note">Edits are built in a temporary consumer project using your package as a dependency. Package source files are not overwritten. The temporary directory is removed after the job.</p>
+<div class="toolbar"><button id="format">Format</button><button id="check">Check</button><label for="main-file">Load main program</label><input id="main-file" type="file">
+<label for="indent-width">Indent spaces</label><select id="indent-width"><option>2</option><option selected>3</option><option>4</option></select><label><input id="auto-indent" type="checkbox" checked> Auto-indent</label><span id="line-count"></span></div>
+<textarea id="source" rows="20" spellcheck="false" aria-label="Fortran main program">program main
+   implicit none
+   ! Add USE statements above IMPLICIT NONE for your package's modules.
+   print *, "Hello from local FPM"
+end program main
+</textarea><pre id="checks" hidden></pre></section>
+<section id="stdin-pane"><h2>Standard input (optional)</h2><textarea id="stdin" rows="4" spellcheck="false" aria-label="Standard input"></textarea><label for="stdin-file">Load input file</label><input id="stdin-file" type="file"></section>
+<details><summary>Limits and comparison settings</summary><div class="toolbar">
+<label for="compile-timeout">Build timeout</label><input id="compile-timeout" type="number" min="0" value="120"><label for="run-timeout">Run/test timeout</label><input id="run-timeout" type="number" min="0" value="30"><span class="note">Seconds; 0 means unlimited.</span>
+<label><input id="fail-fast" type="checkbox"> Stop on first failure</label></div></details>
+<section><h2>Results</h2><p class="note">Times in seconds. FPM run/test timing includes its up-to-date check. Multiple compilers are invoked successively. Leave the application target blank to discover available names.</p>
+<label><input id="diff-enabled" type="checkbox"> Compare outputs</label><div id="diff-controls" class="toolbar" hidden>
+<label for="diff-mode">Comparison</label><select id="diff-mode"><option value="whitespace">Ignore whitespace</option><option value="exact">Exact</option><option value="numeric">Numeric-aware</option></select>
+<label for="diff-reference">Reference</label><select id="diff-reference"><option value="">Automatic</option></select>
+<label for="diff-atol">Absolute tolerance</label><input id="diff-atol" value="0" size="9"><label for="diff-rtol">Relative tolerance</label><input id="diff-rtol" value="0" size="9"></div><pre id="diff-results" hidden></pre>
+<button id="copy">Copy all results</button><textarea id="copy-text" rows="8" readonly hidden aria-label="Results to copy"></textarea>
+<div class="scroll"><table><thead><tr><th>Compiler</th><th>Result</th><th>Total</th><th>Compile</th><th>Run</th><th>Other</th></tr></thead><tbody id="summary"></tbody></table></div><div id="results"></div></section>
+<footer>FPM resolves dependencies normally, using its local cache and network. No hosted playground requests or usage quotas apply. Initialize Intel's compiler environment before starting the server if using ifx.</footer>
+</main><script src="../editor-vendor/codemirror.js"></script><script src="../editor-vendor/fortran.js"></script><script type="module" src="fpm.mjs"></script></body></html>
