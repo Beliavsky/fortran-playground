@@ -33,6 +33,7 @@ globalThis.document = {
     if (!elements.has(id)) elements.set(id, {value: '', textContent: '', disabled: false,
       attributes: {}, setAttribute(name, value) {this.attributes[name] = value;},
       options: [], appendChild(option) {this.options.push(option);}, listeners: {}, addEventListener(name, fn) {this.listeners[name] = fn;}, focus() {}, click() {},
+      replaceChildren(...children) {this.options = children;},
       select() {this.selected = true;}, setSelectionRange(from, to) {this.selection = [from, to]; this.selectionStart = from; this.selectionEnd = to;},
       setRangeText(text, start, end) {this.value = this.value.slice(0, start) + text + this.value.slice(end); this.selectionStart = this.selectionEnd = start + text.length;}});
     return elements.get(id);
@@ -818,6 +819,18 @@ assert.equal(get('compare-result-ofort').textContent, 'PASS');
 assert.equal(get('compare-compile-ofort').textContent, '-');
 assert.match(get('compare-other-ofort').textContent, /^\d+\.\d{3}$/);
 const beforeAllOutputControls = submissions;
+assert.equal(get('diff-enabled').checked, false);
+get('diff-enabled').checked = true; get('diff-enabled').onchange();
+assert.match(get('diff-results').textContent, /Reference: gfortran/);
+assert.match(get('diff-results').textContent, /ofort: Exact match/);
+get('diff-mode').value = 'numeric'; get('diff-mode').onchange();
+get('diff-reference').value = 'ofort'; get('diff-reference').onchange();
+assert.match(get('diff-results').textContent, /Reference: ofort/);
+await get('copy-comparison').onclick();
+assert.match(copiedLink, /Output comparison: numeric/);
+get('diff-enabled').checked = false; get('diff-enabled').onchange();
+assert.equal(get('diff-results').hidden, true);
+assert.equal(submissions, beforeAllOutputControls);
 get('show-all-outputs').checked = true; get('show-all-outputs').onchange();
 assert.equal(savedPreferences.get('fortran-playground.show-all-outputs'), 'true');
 assert.equal(get('all-comparison-outputs').hidden, false);

@@ -15,6 +15,7 @@ import threading
 from urllib.error import HTTPError, URLError
 from urllib.parse import quote, urlsplit, urljoin
 from urllib.request import Request, urlopen
+from fortran_output_diff import add_diff_arguments, validate_diff_arguments, comparison_report
 
 
 ROOT = Path(__file__).resolve().parent
@@ -522,9 +523,18 @@ def main(argv=None):
     parser.add_argument('--service-url', help='HTTPS service origin; defaults to site/service.json beside this script')
     parser.add_argument('--origin', default=DEFAULT_ORIGIN, help='Frontend origin permitted by your service')
     parser.add_argument('--timeout', type=positive_seconds, default=300, help='Total seconds per compiler, including polling')
+    add_diff_arguments(parser)
     args = parser.parse_args(argv)
     rows = []
+    outputs, diff_ready = [], False
+    def finish():
+        print_summary(rows)
+        if args.diff and diff_ready:
+            print('\n' + comparison_report(outputs, args.diff, args.diff_atol, args.diff_rtol, args.diff_reference))
     try:
+        compilers = args.compilers or [args.compiler or 'gfortran']
+        validate_diff_arguments(args, compilers)
+        diff_ready = True
         source, sections = combine_sources(args.files)
         stdin = None
         if args.stdin_file is not None:
@@ -582,6 +592,7 @@ def main(argv=None):
             result, elapsed = client.run_job(source, compiler, options[compiler],
                                              compile_only=args.compile_only, timeout=args.timeout,
                                              **({'stdin': stdin} if stdin is not None else {}))
+            outputs.append({'compiler': compiler, 'status': 'PASS' if result['ok'] else 'FAIL', 'result': result})
             print_result(compiler, result, sections, elapsed, terse=args.terse)
             build = result.get('build') or {}
             execution = result.get('execution') or {}
@@ -598,13 +609,13 @@ def main(argv=None):
                 break
     except KeyboardInterrupt:
         print('\nInterrupted; cancellation requested for any known pending job.', file=sys.stderr)
-        print_summary(rows)
+        finish()
         return 130
     except (OSError, ValueError, KeyError, ServiceError) as error:
         print(f'Error: {error}\nStopping; remaining compilers were not submitted.', file=sys.stderr)
-        print_summary(rows)
+        finish()
         return 2
-    print_summary(rows)
+    finish()
     return 0 if all(row[1] for row in rows) else 1
 
 

@@ -11,8 +11,10 @@ import {sourceURL, combinedSource, mappedErrors} from './external_source.mjs';
 import {comparisonPlan, executeComparison} from './comparison.mjs';
 import {loadAllOutputs, saveAllOutputs, comparisonOutput, comparisonReport} from './comparison_output.mjs';
 import {loadIndentation, saveIndentation} from './indentation.mjs';
+import {createOutputComparison} from './output_diff_ui.mjs';
 
 const get = id => document.getElementById(id);
+const outputComparison = createOutputComparison(get);
 const ownerAccessRequested = new URLSearchParams(location.search).get('owner') === '1';
 function stdinError() {
   const input = get('stdin').value;
@@ -275,6 +277,7 @@ function comparisonLayout() {
 }
 
 function renderComparison() {
+  outputComparison.update(comparisonRows);
   get('comparison-results').hidden = !isCompare() || !comparisonSnapshot;
   for (const name of compareNames) {
     const row = comparisonRows.find(item => item.compiler === name);
@@ -635,7 +638,7 @@ get('show-all-outputs').onchange = () => {
 };
 get('copy-comparison').onclick = async () => {
   if (!comparisonSnapshot) return;
-  const report = comparisonReport(comparisonRows, comparisonSnapshot, comparisonSnapshot.revision !== revision);
+  const report = comparisonReport(comparisonRows, comparisonSnapshot, comparisonSnapshot.revision !== revision) + outputComparison.report();
   get('comparison-copy-field').hidden = true;
   get('comparison-copy-text').value = report;
   try {

@@ -178,6 +178,7 @@
     <h2>Compiler comparison</h2>
     <div class="toolbar">
       <label><input id="show-all-outputs" type="checkbox"> Show all outputs</label>
+      <label><input id="diff-enabled" type="checkbox"> Compare outputs</label>
       <button id="copy-comparison" type="button" disabled>Copy all results</button>
       <span id="comparison-copy-status" class="version" role="status"></span>
     </div>
@@ -186,6 +187,13 @@
       <textarea id="comparison-copy-text" rows="8" readonly spellcheck="false"></textarea>
     </div>
     <p id="comparison-status" role="status"></p>
+    <div id="diff-controls" class="toolbar" hidden>
+      <label for="diff-mode">Comparison</label><select id="diff-mode"><option value="whitespace">Ignore whitespace</option><option value="exact">Exact</option><option value="numeric">Numeric-aware</option></select>
+      <label for="diff-reference">Reference</label><select id="diff-reference"><option value="">Automatic (first successful)</option></select>
+      <label for="diff-atol">Absolute tolerance</label><input id="diff-atol" type="text" value="0" size="9" disabled>
+      <label for="diff-rtol">Relative tolerance</label><input id="diff-rtol" type="text" value="0" size="9" disabled>
+      <span class="version">Compares captured stdout only. Numeric-aware retains text and token order; tolerances start at zero. Raw output is preserved.</span>
+    </div><pre id="diff-results" aria-label="Output comparison" hidden></pre>
     <p class="version">Times in seconds. Total includes submission, waiting, and transfer; Other is Total minus Compile and Run. Run includes process startup. Select a compiler to view its build log and output below.</p>
     <div class="comparison-scroll"><table><thead><tr><th scope="col">Compiler</th><th scope="col">Result</th><th scope="col">Total</th><th scope="col">Compile</th><th scope="col">Run</th><th scope="col">Other</th><th scope="col">Note</th></tr></thead><tbody>
       <tr id="compare-row-gfortran" hidden><th scope="row"><button id="compare-view-gfortran" type="button" aria-pressed="false">GNU Fortran (stable)</button></th><td id="compare-result-gfortran"></td><td id="compare-total-gfortran"></td><td id="compare-compile-gfortran"></td><td id="compare-run-gfortran"></td><td id="compare-other-gfortran"></td><td id="compare-reason-gfortran"></td></tr>

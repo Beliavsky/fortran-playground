@@ -246,7 +246,7 @@ For local preview, `python xserve.py` generates the catalog at startup and whene
 
 ## Python command-line client
 
-[`xplayground_run.py`](xplayground_run.py) submits Fortran source from local files or raw HTTPS URLs to the hosted execution service and displays the compiler/version, build diagnostics, program output, and timings. It uses only Python's standard library; no local compiler, Modal account, or Modal credentials are required. Execution is remote and uses the same shared resources and server-enforced quotas as the website.
+[`xplayground_run.py`](xplayground_run.py) submits Fortran source from local files or raw HTTPS URLs to the hosted execution service and displays the compiler/version, build diagnostics, program output, and timings. Keep `fortran_output_diff.py` beside the script when copying it elsewhere. It uses only Python's standard library; no local compiler, Modal account, or Modal credentials are required. Execution is remote and uses the same shared resources and server-enforced quotas as the website.
 
 ```powershell
 # Compile and run with gfortran:
@@ -439,6 +439,74 @@ python xplayground_run.py hello.f90 --service-url https://execute.example.org --
 ```
 
 The Origin header identifies the configured frontend origin; it does not authenticate a site owner or bypass workload limits. The client requests a short-lived application session token and never needs the owner's Modal credentials. Keep experiments small; public-service access is subject to its current shared allowances and availability.
+
+## Optional output comparison
+
+Output diffing is **off by default**. In either browser's comparison interface, select **Compare outputs** after or before running compilers. Choose Ignore whitespace (the initial mode), Exact, or Numeric-aware, and optionally select a reference compiler. The default reference is the first successful complete execution. Changing comparison controls uses captured results and never submits another job. Copy all results includes the comparison report when enabled. Raw program output is preserved, and no display rounding is used for comparisons.
+
+Both Python runners accept the same options:
+
+```powershell
+python xplayground_run.py main.f90 --compilers gfortran ifx --diff
+python xfortran_run.py main.f90 --compilers gfortran flang --diff exact
+python xfortran_run.py main.f90 --compilers gfortran ifx --diff numeric --diff-atol 1e-12 --diff-rtol 1e-6 --diff-reference gfortran
+```
+
+`--diff` alone ignores whitespace, including line wrapping. Exact mode normalizes CRLF/CR line endings only and retains final-newline differences. Numeric-aware comparison retains text, punctuation, quoted strings, and token order; it recognizes decimal numbers with E/D exponents, complex components, and T/F versus .TRUE./.FALSE. Both tolerances default to **zero**. Two integer tokens must agree exactly, including values larger than binary floating-point can represent. Other numeric pairs match when `abs(a-b) <= max(atol, rtol * max(abs(a), abs(b)))`; decimal arithmetic avoids binary rounding during comparison. Signed zeros compare equally in numeric mode.
+
+Reports distinguish Exact match, Formatting only, Numeric match, Within tolerance, Different, and Not comparable, and identify the first differing line/token or unequal token counts. Stdout alone is compared; compiler logs and stderr remain separate. Failed/cancelled/timed-out runs, missing executions (including compile-only jobs), and known truncated streams are not comparable. Numeric mode flags NaNs, infinities, and `*****` overflow fields for inspection. To bound work in the browser, comparisons are limited to 1,000,000 characters per stream and numeric mode to 20,000 tokens, 2,000 digits per number, and exponent magnitude 2,000; larger cases are reported as Not comparable. Numeric-aware comparison is a text heuristic, not a general parser for arbitrary output or a proof of program correctness. Printed timings and random values are not removed automatically. CLI exit codes continue to reflect compilation/execution success; output differences are reported separately.
+
+## Local compiler tools
+
+The independent local tools use **installed gfortran, gfortran17, ifx, LLVM Flang, LFortran, and/or ofort**, with Python's standard library. They do not contact the hosted playground, download sources, require Modal, or consume hosted quotas. To move them to a separate project, copy `xfortran_run.py`, `fortran_output_diff.py`, `xfortran_serve.py`, and the `local_site/` directory together. The command-line runner needs only its companion `fortran_output_diff.py`, without the server or browser assets.
+
+### Local command-line runner
+
+```powershell
+python xfortran_run.py kinds.f90 solver.f90 main.f90 --compilers gfortran ifx --O 3
+python xfortran_run.py main.f90 --preset debug --stdin-file input.txt --list --terse
+python xfortran_run.py module.f90 main.f90 --compile-only
+python xfortran_run.py main.f90 --compilers gfortran gfortran17 ifx flang lfortran ofort
+python xfortran_run.py main.f90 --compiler flang --compiler-path "flang=C:\Programs\LLVM\bin\flang.exe"
+```
+
+Supply local source files in dependency order, before `--compilers`. Each source is compiled separately, then its objects are linked into a complete program; Compile-only includes linking but omits execution. Filenames and extensions are preserved, including preprocessing behavior for `.F90`. Each compiler gets an isolated temporary object/module directory, which is removed afterward. Versions, diagnostics, program output, and Total/Compile/Run/Other times are reported. A failure normally allows the next compiler to proceed; `--fail-fast` stops further submissions. Ctrl+C stops the active process. These tools run with your permissions, and programs can read/write files and use the network.
+
+Compiler executables are discovered on `PATH`. GNU 17 discovery tries `gfortran17`, `gfortran-17`, then `gfortran`, accepting only a version reporting GNU 17. Thus a single installed GNU 17 can appear under both GNU choices; installing this tool does not install a second compiler. Flang discovery tries `flang`, `flang-new`, and versioned `flang-23`, `flang-22`, or `flang-21`. Use an Intel compiler/developer terminal when ifx needs its environment initialized, or override any executable with `--compiler-path "gfortran=C:\path\to\gfortran.exe"` (substitute the chosen compiler name). Overrides work in both the runner and server. They do not initialize compiler environments. On Windows, LFortran also needs a suitable Microsoft linker environment; a GNU `link.exe` earlier on PATH is not a substitute. Initialize Visual Studio or your Intel setup before starting the tools. On Windows, ifx receives native Windows options; on Linux it receives Unix options. Missing compilers are reported, without substituting another compiler.
+
+Portable settings include `--O 0..3`, `--standard`, `--preset`, `--warnings`, `--bounds-check`, `--backtrace`, `--preprocess`, and `--fast-math`. Positive optimization levels map to `--fast` for LFortran and ofort, with a note explaining that numbered levels are unavailable. The verified explicit standard selections are 2018 for LLVM Flang and 2023 for LFortran/ofort; Compiler default works for comparisons without requiring equivalent standard switches. Other common settings without a supported mapping produce an ERROR for that compiler while comparisons continue by default. Native flags remain available in the options file or browser extra-argument boxes. The options file supports common settings and per-compiler argument lists, or separate compilation/linking lists:
+
+```json
+{
+  "common": {"optimization": 2, "warnings": true},
+  "gfortran": {"compile": ["-fcheck=bounds"], "link": []},
+  "ifx": []
+}
+```
+
+Pass it with `--options-file local-options.json`. A compiler's plain argument list is used in both compilation and linking; object entries separate these phases. Common command-line settings override common options-file settings; additional compiler flags follow the common flags. Use native flags for each operating system and absolute paths for additional include/library directories, since compilation runs in a temporary build directory. Output/object/module paths, response files, and the compile-only switch are managed by the runner.
+
+**ofort is an interpreter:** it receives the source files in the supplied order, without generating objects or linking. `--compile-only` (or the browser's Compile button) uses `ofort --check`. Multiple sources are combined temporarily for this syntax check, with line numbers referring to the combined source; mixing fixed and free source forms in one syntax check is rejected. During an interpreted run, Compile time is unavailable and Run time includes parsing and execution; Other time is still reported. ofort argument lists apply to the interpreter, and separate linker arguments are rejected. Its language support differs from the native compilers.
+
+Programs run in the current directory unless `--cwd PATH` is given. `--stdin-file` supplies text followed by EOF. Default timeouts are 120 seconds for compilation/linking and 30 seconds for execution; set `--compile-timeout` or `--run-timeout`, with 0 meaning unlimited. `--max-output-mb` sets captured output per stream per process (default 4 MiB); excess output is drained and marked as truncated. Coarray/MPI launchers and build systems such as fpm are not managed by this first version.
+
+### Local browser interface
+
+```powershell
+python xfortran_serve.py --workspace C:\fortran\test
+```
+
+This starts a loopback server and opens the session URL in your browser. Type or paste directly into the empty Fortran pane to create an in-memory `main.f90` source. The page also lists Fortran files within the chosen workspace. Add sources, arrange their compilation order with Up/Down, and edit their in-memory copies. **New program** creates a temporary source buffer containing a Hello World program. Original sources are never overwritten by the editor; **Download current source** saves an edited copy through the browser. Fortran INCLUDE searches include original source directories and the workspace as well as temporary source/module directories.
+
+Choose **Single compiler** or **Compare compilers**, then Compile or Compile and Run. Both interfaces include Fortran syntax highlighting and line numbers using locally bundled CodeMirror 5 (MIT license in `local_site/editor-vendor/LICENSE`); no CDN or npm installation is needed. The interface supports common settings, additional native compiler arguments, stdin text or file loading, configurable timeouts, Stop, failure handling, per-compiler output/build logs, a timing table, and Copy all results. Comparisons run sequentially from one snapshot. Programs use the workspace as their working directory; their own file operations can modify it. The browser editor accepts UTF-8 sources, with a 16 MiB request bound; use the command-line runner for larger jobs. Submission, connection, and server errors appear in the status message and affected compiler results instead of leaving them marked QUEUED. After updating these local tools, restart `xfortran_serve.py` and reload its printed session URL.
+
+Both local interfaces use the hosted editor's auto-indentation, with **3 spaces** by default, selectable 2/3/4-space indentation, automatic dedenting, and Tab/Shift+Tab support. Preferences are saved in the browser. **Format** runs installed `fprettify` on the current source using the selected indentation width; **Check** runs installed `fortitude` and opens a checks pane with clickable findings and editor markers. Editing or switching sources clears old findings. **Clear** and formatting can be undone with Ctrl+Z in the enhanced editor. Put both tools on PATH before starting the server, just as with compilers. These actions run against temporary copies of the selected source, using the tools' defaults and any applicable user configuration; they never rewrite workspace source files. Editor tool requests have a 30-second process timeout. No hosted service is used.
+
+The local bundle contains copies of `site/editors.mjs`, `site/indentation.mjs`, and `site/output_diff*.mjs` so it can be moved to an independent project. Keep those copies synchronized when changing editor or comparison behavior; `tests/local_ui.mjs` verifies they match.
+
+Use `--no-browser` to open the printed URL yourself, `--port 0` for an automatically chosen port, or `--compiler-path COMPILER=PATH` for executable overrides. Use the full printed session URL, including its fragment, when opening a new tab. The page retains its temporary session token in per-tab session storage so reloading works, and removes the fragment when storage is available. Restarting the server creates a new session; open its new printed URL. Ctrl+C shuts down the server and cancels active work.
+
+The service binds only to `127.0.0.1`, checks Host and Origin, requires an unpredictable session token for API access, and restricts source-file browsing to the selected workspace. It does not expose an endpoint for saving arbitrary workspace files. Local program execution is **not sandboxed**; use it for code you choose to run on your machine. Do not expose this server through a public proxy or port forward.
 
 ## Local development
 

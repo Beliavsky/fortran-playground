@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Local Fortran</title><link rel="stylesheet" href="editor-vendor/codemirror.css"><link rel="stylesheet" href="style.css"></head>
+<body><main>
+<header><p class="eyebrow">EDIT · BUILD · COMPARE</p><h1>Local Fortran</h1>
+<p>Use compilers installed on this computer. Programs run with your permissions and can access your files and network.</p>
+<p id="workspace" class="note"></p><p id="status" role="status">Connecting to the local server…</p></header>
+<div class="toolbar"><label for="interface">Interface</label><select id="interface"><option value="single">Single compiler</option><option value="compare">Compare compilers</option></select>
+<span id="single-compiler"><label for="compiler">Compiler</label> <select id="compiler"></select></span>
+<fieldset id="compiler-choices" hidden><legend>Compilers</legend><label><input id="gfortran" type="checkbox"> gfortran</label> <label><input id="gfortran17" type="checkbox"> gfortran17</label> <label><input id="ifx" type="checkbox"> ifx</label> <label><input id="flang" type="checkbox"> flang</label> <label><input id="lfortran" type="checkbox"> lfortran</label> <label><input id="ofort" type="checkbox"> ofort</label></fieldset>
+<button id="compile" disabled>Compile</button><button id="run" class="primary" disabled>Compile and Run</button><button id="stop" disabled>Stop</button></div>
+<div class="toolbar"><button id="format" disabled>Format</button><button id="check" disabled>Check</button><button id="clear">Clear</button>
+<label for="indent-width">Indent spaces</label><select id="indent-width"><option>2</option><option selected>3</option><option>4</option></select>
+<label><input id="auto-indent" type="checkbox" checked> Auto-indent</label><span id="line-count" class="note"></span></div>
+<p id="versions" class="note"></p>
+<div class="workspace">
+<aside><h2>Workspace files</h2><button id="refresh">Refresh list</button>
+<label for="files">Select local Fortran files</label><select id="files" multiple size="8"></select><button id="add">Add selected</button>
+<h2>Compilation order</h2><p class="note">Modules before files that use them. Compilers build files separately; ofort interprets them in order.</p>
+<label for="sources">Sources in this job</label><select id="sources" size="6"></select>
+<div class="toolbar"><button id="up">Up</button><button id="down">Down</button><button id="remove">Remove</button></div>
+<button id="new">New program</button></aside>
+<section><h2 id="source-title">Fortran input</h2><p class="note">Edits stay in this page and are compiled from temporary copies. Original source files are not overwritten.</p>
+<textarea id="editor" rows="24" spellcheck="false" aria-label="Fortran source"></textarea>
+<button id="download">Download current source</button>
+<details><summary>Program input (stdin)</summary><textarea id="stdin" rows="4" aria-label="Program input" spellcheck="false"></textarea>
+<label for="stdin-file">Load input file</label><input id="stdin-file" type="file"></details></section></div>
+<section id="checks-pane" class="result" hidden><h2>Fortitude checks</h2><p id="check-status" role="status"></p><div id="check-results"></div></section>
+<details class="settings"><summary>Compiler and run settings</summary><div class="toolbar">
+<label for="preset">Preset</label><select id="preset"><option value="default">Default</option><option value="debug">Debug</option><option value="optimized">Optimized</option><option value="strict">Strict</option></select>
+<label for="optimization">Optimization</label><select id="optimization"><option value="">Default</option><option>0</option><option>1</option><option>2</option><option>3</option></select>
+<label for="standard">Standard</label><select id="standard"><option value="default">Compiler default</option><option>1995</option><option>2003</option><option>2008</option><option>2018</option><option>2023</option></select>
+<label><input id="warnings" type="checkbox"> Extra warnings</label><label><input id="bounds_check" type="checkbox"> Bounds checks</label><label><input id="backtrace" type="checkbox"> Backtrace</label><label><input id="preprocess" type="checkbox"> Preprocess</label><label><input id="fast_math" type="checkbox"> Fast math</label></div>
+<p class="note">Extra arguments are JSON string arrays, for example ["-O2", "-Wall"]. Use each compiler's native options. These arguments apply during compilation and linking.</p>
+<label for="gfortran-options">gfortran extra arguments</label><input id="gfortran-options" value="[]" spellcheck="false">
+<label for="ifx-options">ifx extra arguments</label><input id="ifx-options" value="[]" spellcheck="false">
+<label for="gfortran17-options">gfortran17 extra arguments</label><input id="gfortran17-options" value="[]" spellcheck="false">
+<label for="flang-options">flang extra arguments</label><input id="flang-options" value="[]" spellcheck="false">
+<label for="lfortran-options">lfortran extra arguments</label><input id="lfortran-options" value="[]" spellcheck="false">
+<label for="ofort-options">ofort extra arguments</label><input id="ofort-options" value="[]" spellcheck="false">
+<p class="note">ofort interprets sources; Compile checks syntax. Unsupported common settings produce a result for that compiler; comparisons continue unless Stop on first failure is selected. LFortran and ofort map positive optimization levels to --fast.</p>
+<div class="toolbar"><label for="compile-timeout">Compile/link timeout (seconds)</label><input id="compile-timeout" type="number" min="0" value="120">
+<label for="run-timeout">Run timeout (seconds)</label><input id="run-timeout" type="number" min="0" value="30"><span class="note">0 means unlimited.</span>
+<label><input id="fail-fast" type="checkbox"> Stop on first failure</label></div></details>
+<section><h2>Results</h2><p class="note">Times in seconds. Each comparison uses one source snapshot. Program working directory is the workspace shown above.</p>
+<label><input id="diff-enabled" type="checkbox"> Compare outputs</label>
+<div id="diff-controls" class="toolbar" hidden>
+<label for="diff-mode">Comparison</label><select id="diff-mode"><option value="whitespace">Ignore whitespace</option><option value="exact">Exact</option><option value="numeric">Numeric-aware</option></select>
+<label for="diff-reference">Reference</label><select id="diff-reference"><option value="">Automatic (first successful)</option></select>
+<label for="diff-atol">Absolute tolerance</label><input id="diff-atol" type="text" value="0" size="9" disabled>
+<label for="diff-rtol">Relative tolerance</label><input id="diff-rtol" type="text" value="0" size="9" disabled>
+<span class="note">Captured stdout only; numeric-aware retains text and token order. Raw output is preserved.</span>
+</div><pre id="diff-results" aria-label="Output comparison" hidden></pre>
+<button id="copy" disabled>Copy all results</button><p id="copy-status" role="status"></p><textarea id="copy-text" rows="8" readonly hidden aria-label="Results to copy"></textarea>
+<div class="scroll"><table><thead><tr><th>Compiler</th><th>Result</th><th>Total</th><th>Compile</th><th>Run</th><th>Other</th></tr></thead><tbody id="summary"></tbody></table></div>
+<div id="results"></div></section>
+<footer>Local Fortran uses Python's standard library and your installed compilers. Nothing is submitted to the online playground. Close this server with Ctrl+C.</footer>
+</main><script src="editor-vendor/codemirror.js"></script><script src="editor-vendor/fortran.js"></script><script type="module" src="app.mjs"></script></body></html>

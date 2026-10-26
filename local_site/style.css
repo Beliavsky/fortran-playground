@@ -1,0 +1,28 @@
+:root { font-family: system-ui, sans-serif; color: #183b39; background: #f3f6f4; }
+* { box-sizing: border-box; } body { margin: 0; } main { max-width: 1400px; margin: auto; padding: 28px; }
+header { border-bottom: 1px solid #c8d6cd; } h1 { font-size: 40px; margin: 8px 0; } h2 { font-size: 20px; } .eyebrow { letter-spacing: 2px; font-size: 12px; }
+.note, footer { color: #4f6862; font-size: 13px; overflow-wrap: anywhere; } footer { margin-top: 28px; }
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 14px 0; }
+button, select, input { font: inherit; color: inherit; padding: 7px 10px; border: 1px solid #a9c2b6; border-radius: 5px; background: white; }
+button { cursor: pointer; } button:disabled { opacity: .5; cursor: default; } .primary { color: white; background: #146d54; }
+:focus-visible { outline: 3px solid #ce8c28; outline-offset: 2px; }
+.workspace { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 24px; margin: 20px 0; }
+aside { background: #e8efea; border-radius: 8px; padding: 16px; } aside select { width: 100%; margin: 8px 0; }
+section { min-width: 0; } textarea { width: 100%; resize: vertical; padding: 12px; font: 14px/1.5 Consolas, monospace; border: 1px solid #a9c2b6; border-radius: 5px; tab-size: 3; white-space: pre; }
+label { display: inline-block; } aside > label, .settings > label { display: block; margin-top: 12px; }
+.settings > input { width: 100%; margin: 8px 0; } .settings { padding: 14px; background: white; border: 1px solid #c8d6cd; border-radius: 8px; }
+summary { cursor: pointer; padding: 6px 0; } .scroll { overflow-x: auto; } table { border-collapse: collapse; width: 100%; margin: 14px 0; font-variant-numeric: tabular-nums; }
+th, td { text-align: right; padding: 8px; border-bottom: 1px solid #c8d6cd; } th:first-child, td:first-child { text-align: left; }
+.result { background: white; padding: 14px 18px; margin: 16px 0; border: 1px solid #c8d6cd; border-radius: 8px; }
+pre { white-space: pre; overflow: auto; max-height: 360px; padding: 12px; background: #f3f6f4; font: 14px/1.5 Consolas, monospace; }
+fieldset { border: 1px solid #c8d6cd; } [hidden] { display: none !important; }
+.CodeMirror { height: 510px; border: 1px solid #a9c2b6; border-radius: 5px; font: 14px/1.5 Consolas, monospace; color: #183b39; }
+.CodeMirror textarea { width: auto; padding: 0; border: 0; }
+.CodeMirror-gutters { background: #e8efea; border-right: 1px solid #c8d6cd; }
+.CodeMirror[aria-readonly="true"] { background: #f3f6f4; }
+.p2f-error-line { background: #fff0e4; }
+.p2f-errors { width: 20px; }
+.p2f-error-marker { color: #a33316; padding: 0 4px; border: 0; background: transparent; }
+.p2f-error-column { text-decoration: underline wavy #a33316; }
+.diagnostic { display: block; text-align: left; width: 100%; margin: 6px 0; white-space: pre-wrap; }
+@media (max-width: 760px) { main { padding: 16px; } .workspace { grid-template-columns: minmax(0, 1fr); } }
