@@ -101,3 +101,5 @@ python xfortran_run.py --fpm DIRECTORY --action example --target "demo*"
 `
 
 Successful compilation with no executed program is displayed as **BUILD PASS — nothing run**. Its machine-readable status is NOT_RUN and the requested operation remains incomplete. Consumer main programs support Build and Run; examples and tests operate on the package itself.
+
+Use `--preprocess` with either Python FPM runner to enable preprocessing alongside the chosen build profile. Hosted use requires the updated backend. Downloaded projects preserve this setting. Standalone local FPM use with this option also needs `fpm_compilers.py`.

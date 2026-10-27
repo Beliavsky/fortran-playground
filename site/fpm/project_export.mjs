@@ -19,7 +19,7 @@ export function pinnedSource(packageEntry) {
       + (packageEntry.subdirectory ? '/' + encodeURIComponent(packageEntry.subdirectory) : '') : '';
 }
 
-export function projectFiles({source, stdin = '', url, revision, subdirectory = '', packages, runtime}) {
+export function projectFiles({source, stdin = '', url, revision, subdirectory = '', preprocess = false, packages, runtime}) {
   const repository = githubRepository(url);
   if (!repository || !/^[A-Za-z0-9_./-]{0,200}$/.test(revision)) throw new Error('Enter a valid GitHub repository and revision.');
   if (!source.trim()) throw new Error('Enter a main program before downloading a project.');
@@ -30,6 +30,7 @@ export function projectFiles({source, stdin = '', url, revision, subdirectory = 
     && /^[a-f0-9]{40}$/.test(p.revision) && /^[a-f0-9]{64}$/.test(p.archive_sha256));
   const {source: exampleSource, ...packageSettings} = packageEntry ?? {};
   const settings = {schema: 1, request: {url: `https://github.com/${repository}`, revision,
+    ...(preprocess ? {preprocess: true} : {}),
     ...(subdirectory ? {subdirectory} : {})},
     ...(packageEntry ? {package: packageSettings} : {})};
   const system = packageSettings.catalog_build?.apt_packages ?? [];

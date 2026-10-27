@@ -17,7 +17,13 @@
       "fortran",
       "modern-fortran",
       "oop"
-    ]
+    ],
+    "audit": {
+      "revision": "435cc1676d6064162a3c36b91f1aa50d926fdd45",
+      "tested_at": "2026-10-27T21:26:02.669004+00:00",
+      "outcome": "build_pass",
+      "summary": "build passed"
+    }
   },
   {
     "id": "0382/time-f",
@@ -309,7 +315,13 @@
     ],
     "fpm_status": "available",
     "checked_at": "2026-10-27T20:48:36.534674+00:00",
-    "topics": []
+    "topics": [],
+    "audit": {
+      "revision": "a1c381777f893d656018366cfabfa4cc7531e4dd",
+      "tested_at": "2026-10-27T21:26:02.669004+00:00",
+      "outcome": "build_pass",
+      "summary": "build passed"
+    }
   },
   {
     "id": "arjenmarkus/specfunc-fullerton",
@@ -406,7 +418,13 @@
     ],
     "fpm_status": "available",
     "checked_at": "2026-10-27T20:48:36.534674+00:00",
-    "topics": []
+    "topics": [],
+    "audit": {
+      "revision": "552a2e6a41443843003216fedad6419af55f8e35",
+      "tested_at": "2026-10-27T21:26:02.669004+00:00",
+      "outcome": "build_pass",
+      "summary": "build passed"
+    }
   },
   {
     "id": "awvwgk/fortty",
@@ -518,7 +536,13 @@
     ],
     "fpm_status": "available",
     "checked_at": "2026-10-27T20:48:36.534674+00:00",
-    "topics": []
+    "topics": [],
+    "audit": {
+      "revision": "76fb9e4203c6ce73c31bed85b69af920893b033e",
+      "tested_at": "2026-10-27T21:26:02.669004+00:00",
+      "outcome": "build_pass",
+      "summary": "build passed"
+    }
   },
   {
     "id": "certik/minpack",
@@ -634,7 +658,13 @@
       "fortran",
       "fortran-package-manager",
       "subprocess"
-    ]
+    ],
+    "audit": {
+      "revision": "afd9592b6f38d696be2c52f614b5346fbc0c55b2",
+      "tested_at": "2026-10-27T21:26:02.669004+00:00",
+      "outcome": "platform_specific_source",
+      "summary": "platform-specific source error"
+    }
   },
   {
     "id": "degawa/any",
@@ -1074,7 +1104,13 @@
       "gauss-legendre-integration",
       "numerical-integration",
       "quadrature"
-    ]
+    ],
+    "audit": {
+      "revision": "5281426a7407aa8cef7f684ff8cf1f7e4a4df906",
+      "tested_at": "2026-10-27T21:26:02.669004+00:00",
+      "outcome": "build_pass",
+      "summary": "build passed"
+    }
   },
   {
     "id": "euler-37/linalg_fortran",
@@ -1274,7 +1310,13 @@
     "topics": [
       "fortran",
       "string-manipulation"
-    ]
+    ],
+    "audit": {
+      "revision": "ea66eebf0d06ae588fc84be7ed6dd621f2d520cc",
+      "tested_at": "2026-10-27T21:26:02.669004+00:00",
+      "outcome": "preparation_failure",
+      "summary": "source preparation failed"
+    }
   },
   {
     "id": "everythingfunctional/veggies",
@@ -1618,7 +1660,13 @@
       "bindings",
       "csv-parser",
       "fortran"
-    ]
+    ],
+    "audit": {
+      "revision": "ce19ebe6b08c58f1014527d27f27bdd97b38c835",
+      "tested_at": "2026-10-27T21:26:02.669004+00:00",
+      "outcome": "build_pass",
+      "summary": "build passed"
+    }
   },
   {
     "id": "freevryheid/fpq",
@@ -1707,7 +1755,13 @@
     "topics": [
       "fortran",
       "interpolation"
-    ]
+    ],
+    "audit": {
+      "revision": "bf6d22ad931855d510dcfb5bdd6870cce8924b22",
+      "tested_at": "2026-10-27T21:26:02.669004+00:00",
+      "outcome": "unsupported_dependency",
+      "summary": "unsupported dependency"
+    }
   },
   {
     "id": "gasinan/fdata2pyplot",
@@ -1743,7 +1797,13 @@
       "fortran",
       "hdf5",
       "object-oriented-fortran"
-    ]
+    ],
+    "audit": {
+      "revision": "9c7fe2f404b68ea0836c39f4bea67919c07f25bb",
+      "tested_at": "2026-10-27T21:26:02.669004+00:00",
+      "outcome": "unsupported_dependency",
+      "summary": "unsupported dependency"
+    }
   },
   {
     "id": "geospace-code/maptran3d",
@@ -1817,7 +1877,13 @@
       "blas",
       "fortran",
       "fortran-package-manager"
-    ]
+    ],
+    "audit": {
+      "revision": "faa485b7fe6916ead3b30f0f371a6abe8628f272",
+      "tested_at": "2026-10-27T21:26:02.669004+00:00",
+      "outcome": "missing_source",
+      "summary": "missing source file"
+    }
   },
   {
     "id": "gha3mi/forcad",
@@ -2526,7 +2592,33 @@
       "odr",
       "regression",
       "statistics"
-    ]
+    ],
+    "audit": {
+      "revision": "12597b20812a76a4b702f985f6adc82632a18f60",
+      "tested_at": "2026-10-27T21:26:02.669004+00:00",
+      "outcome": "missing_library_or_module",
+      "summary": "missing external library or module",
+      "verification": {
+        "repository": "HugoMVale/odrpack95",
+        "revision": "12597b20812a76a4b702f985f6adc82632a18f60",
+        "tested_at": "2026-10-27T21:33:56.846937+00:00",
+        "outcome": "build_pass",
+        "preprocess": false,
+        "compiler": "GNU Fortran (GCC) 16.2.0",
+        "target_groups": {
+          "app": [],
+          "example": [
+            "example1",
+            "example2",
+            "example3",
+            "example4",
+            "example5"
+          ],
+          "test": []
+        },
+        "build_seconds": 3.269
+      }
+    }
   },
   {
     "id": "hugomvale/pbepack",
@@ -3670,7 +3762,13 @@
       "gauss-kronrod",
       "gauss-kronrod-quadrature",
       "quadpack"
-    ]
+    ],
+    "audit": {
+      "revision": "312278846b6e403fdea410a823d88ef4fb92a3cc",
+      "tested_at": "2026-10-27T21:26:02.669004+00:00",
+      "outcome": "build_pass",
+      "summary": "build passed"
+    }
   },
   {
     "id": "lbfgsb",
@@ -3968,7 +4066,13 @@
       "ode",
       "ode-solver",
       "odepack"
-    ]
+    ],
+    "audit": {
+      "revision": "94bbe0d5a9dd007dc9e07788ec9c8316417619c8",
+      "tested_at": "2026-10-27T21:26:02.669004+00:00",
+      "outcome": "implicit_interface_error",
+      "summary": "implicit-interface compilation error"
+    }
   },
   {
     "id": "jacobwilliams/optgra",
@@ -5307,7 +5411,29 @@
     "topics": [
       "automatic-differentiation",
       "fortran"
-    ]
+    ],
+    "audit": {
+      "revision": "32db0bd122ce1dae290e9cf4c1fda4ab8f3de6f1",
+      "tested_at": "2026-10-27T21:26:02.669004+00:00",
+      "outcome": "missing_library_or_module",
+      "summary": "missing external library or module",
+      "verification": {
+        "repository": "lauvergn/AD_dnSVM",
+        "revision": "32db0bd122ce1dae290e9cf4c1fda4ab8f3de6f1",
+        "tested_at": "2026-10-27T21:34:13.678535+00:00",
+        "outcome": "build_pass",
+        "preprocess": false,
+        "compiler": "GNU Fortran (GCC) 16.2.0",
+        "target_groups": {
+          "app": [
+            "Exa_dnS"
+          ],
+          "example": [],
+          "test": []
+        },
+        "build_seconds": 9.582
+      }
+    }
   },
   {
     "id": "lauvergn/qdutillib",
@@ -6496,7 +6622,27 @@
       "ode",
       "ode-events",
       "runge-kutta"
-    ]
+    ],
+    "audit": {
+      "revision": "b6322037cb751b11fa64ea66cf23173ae572fff6",
+      "tested_at": "2026-10-27T21:26:02.669004+00:00",
+      "outcome": "preprocessing_required",
+      "summary": "preprocessing required",
+      "verification": {
+        "repository": "princemahajan/FLINT",
+        "revision": "b6322037cb751b11fa64ea66cf23173ae572fff6",
+        "tested_at": "2026-10-27T21:34:34.820868+00:00",
+        "outcome": "build_pass",
+        "preprocess": true,
+        "compiler": "GNU Fortran (GCC) 16.2.0",
+        "target_groups": {
+          "app": [],
+          "example": [],
+          "test": []
+        },
+        "build_seconds": 1.349
+      }
+    }
   },
   {
     "id": "qcmplab/honeytools",
@@ -6835,7 +6981,13 @@
     ],
     "fpm_status": "available",
     "checked_at": "2026-10-27T20:48:36.534674+00:00",
-    "topics": []
+    "topics": [],
+    "audit": {
+      "revision": "056740db259fc3599dca0d8858f04e94845a6769",
+      "tested_at": "2026-10-27T21:26:02.669004+00:00",
+      "outcome": "build_pass",
+      "summary": "build passed"
+    }
   },
   {
     "id": "sgeard/hp",
@@ -8143,7 +8295,13 @@
       "fortran-package-manager",
       "midi",
       "music"
-    ]
+    ],
+    "audit": {
+      "revision": "db97a3bbc716c8050bcf8bb35a55dcddb8478c85",
+      "tested_at": "2026-10-27T21:26:02.669004+00:00",
+      "outcome": "build_pass",
+      "summary": "build passed"
+    }
   },
   {
     "id": "vmagnin/forsudoku",
@@ -8313,7 +8471,13 @@
       "random",
       "random-number-generator",
       "rng"
-    ]
+    ],
+    "audit": {
+      "revision": "3fa553608324913eed6cb178b398e7f661e4f63a",
+      "tested_at": "2026-10-27T21:26:02.669004+00:00",
+      "outcome": "build_pass",
+      "summary": "build passed"
+    }
   },
   {
     "id": "wcota/tictoc_fortran",
@@ -8412,7 +8576,13 @@
       "fpm",
       "modern-fortran",
       "sigmoid"
-    ]
+    ],
+    "audit": {
+      "revision": "35e62246675cbe6dcd04ce25a81f7885653feabe",
+      "tested_at": "2026-10-27T21:26:02.669004+00:00",
+      "outcome": "build_pass",
+      "summary": "build passed"
+    }
   },
   {
     "id": "zoziha/forlab",

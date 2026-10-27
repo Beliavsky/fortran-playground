@@ -378,7 +378,7 @@ class Handler(BaseHTTPRequestHandler):
                 self.reply(200, (HOSTED_ASSETS / parsed.path[1:]).read_bytes())
             elif parsed.path.startswith('/fpm/ui/'):
                 name = parsed.path.removeprefix('/fpm/ui/')
-                allowed = {'style.css', 'plots.mjs', 'editors.mjs', 'indentation.mjs', 'service_config.mjs',
+                allowed = {'style.css', 'plots.mjs', 'editors.mjs', 'indentation.mjs', 'service_config.mjs', 'config.mjs',
                            'fpm/fpm.mjs', 'fpm/project_export.mjs', 'fpm/fpm.css',
                            'editor-vendor/codemirror.js', 'editor-vendor/fortran.js', 'editor-vendor/codemirror.css'}
                 if name not in allowed:

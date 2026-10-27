@@ -5,6 +5,7 @@ import json
 from pathlib import Path, PurePosixPath
 import re
 import threading
+import tomllib
 from urllib.parse import quote, urlsplit
 from urllib.request import Request, urlopen
 
@@ -17,6 +18,8 @@ R_REPOSITORY = 'Beliavsky/Fortran-from-R-packages'
 def validate_request(payload):
     if not isinstance(payload, dict):
         return base_validate(payload)
+    if type(payload.get('preprocess', False)) is not bool:
+        raise ValueError('Preprocess must be a boolean.')
     subdirectory = payload.get('subdirectory', '')
     if (not isinstance(subdirectory, str) or len(subdirectory) > 200
             or (subdirectory and (not re.fullmatch(r'[A-Za-z0-9_.-]+', subdirectory)
@@ -28,10 +31,12 @@ def validate_request(payload):
     example = action == 'example'
     if example and payload.get('workflow', 'consumer') != 'package':
         raise ValueError('Run examples applies to the package workflow, not a custom main.')
-    result = base_validate({**{k: v for k, v in payload.items() if k != 'subdirectory'}, 'target': '',
+    result = base_validate({**{k: v for k, v in payload.items() if k not in ('subdirectory', 'preprocess')}, 'target': '',
                             **({'action': 'run'} if example else {})})
     result['target'] = target
     result['action'] = action
+    if payload.get('preprocess'):
+        result['preprocess'] = True
     if subdirectory:
         if github_repository(result['url']).lower() != R_REPOSITORY.lower():
             raise ValueError('Package subdirectories are currently supported for the translated R collection only.')
@@ -49,7 +54,48 @@ def raw_fetch(url, *, limit, timeout):
     return data
 
 
-class TranslatedRPreparer(Preparer):
+class PortablePreparer(Preparer):
+    """Stage source dependencies, retaining FPM's offline OpenMP/BLAS discovery."""
+    def manifest(self, root, *, development=False):
+        root = Path(root).resolve()
+        if (root, development) in self.prepared or (root, True) in self.prepared:
+            return
+        path = root / 'fpm.toml'
+        text = path.read_text(encoding='utf-8')
+        if len(text.encode()) > 1000000:
+            raise ValueError('Package manifest is too large.')
+        manifest = tomllib.loads(text)
+        tables = [(('dependencies',), manifest.get('dependencies', {}))]
+        if development:
+            tables.append((('dev-dependencies',), manifest.get('dev-dependencies', {})))
+            for kind in ('test', 'executable', 'example'):
+                tables.extend(((kind, i, 'dependencies'), target.get('dependencies', {}))
+                              for i, target in enumerate(manifest.get(kind, [])))
+        retained = []
+        for location, table in tables:
+            if isinstance(table, dict):
+                for name, spec in list(table.items()):
+                    if name in {'openmp', 'blas'} and spec == '*':
+                        retained.append((location, name))
+                        del table[name]
+        if not retained:
+            return super().manifest(root, development=development)
+        import tomli_w
+        # Let the ordinary preparer validate/download every source dependency.
+        # These two built-ins inspect local compilers/libraries inside the sandbox
+        # and do not fetch code. Registry, stdlib, MPI, HDF5, etc. remain rejected.
+        path.write_text(tomli_w.dumps(manifest), encoding='utf-8')
+        super().manifest(root, development=development)
+        rewritten = tomllib.loads(path.read_text(encoding='utf-8'))
+        for location, name in retained:
+            table = rewritten
+            for key in location:
+                table = table[key]
+            table[name] = '*'
+        path.write_text(tomli_w.dumps(rewritten), encoding='utf-8')
+
+
+class TranslatedRPreparer(PortablePreparer):
     """Fetch Git trees and verified blobs, without executing repository scripts."""
     def __init__(self, *args, raw_downloader=raw_fetch, **kwargs):
         super().__init__(*args, **kwargs)
@@ -143,4 +189,4 @@ class TranslatedRPreparer(Preparer):
 
 
 def source_preparer(directory, payload, **kwargs):
-    return (TranslatedRPreparer if payload.get('subdirectory') else Preparer)(directory, **kwargs)
+    return (TranslatedRPreparer if payload.get('subdirectory') else PortablePreparer)(directory, **kwargs)

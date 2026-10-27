@@ -37,7 +37,7 @@
   <div class="toolbar package-filters">
     <div class="package-filter">
       <label for="package-collection">Collection</label>
-      <select id="package-collection"><option value="general">Selected Fortran packages</option><option value="all">All Fortran packages</option><option value="translated-r">Translated R packages</option></select>
+      <select id="package-collection"><option value="general">Selected Fortran packages</option><option value="translated-r">Translated R packages</option></select>
     </div>
     <div class="package-filter package-search-filter">
       <label for="package-search">Find a package</label>
@@ -78,12 +78,22 @@
       <label for="target">Targets</label>
       <input id="target" type="text" list="targets" placeholder="demo_* or name1 name2" maxlength="2048" spellcheck="false">
       <datalist id="targets"></datalist>
+      <select id="target-picker" aria-label="Choose a discovered target" hidden><option value="">Choose a target…</option></select>
     </span>
+    <label><input id="preprocess" type="checkbox"> Preprocess</label>
     <button id="submit" class="primary" type="button" disabled>Compile and Run</button>
     <button id="cancel" type="button" disabled>Cancel</button>
     <span id="status" role="status" aria-live="polite">Connecting…</span>
   </div>
   <p id="workflow-note">The package is built as a dependency of your main program. Examples include working main programs.</p>
+  <div id="target-discovery" hidden>
+    <p id="target-summary" role="status"></p>
+    <div class="toolbar">
+      <button id="use-app-targets" type="button" hidden>Choose an application</button>
+      <button id="use-example-targets" type="button" hidden>Choose an example</button>
+      <button id="use-test-targets" type="button" hidden>Choose a test</button>
+    </div>
+  </div>
   <div id="workspace" data-focus-panel class="editors">
     <section id="source-pane" class="panel">
       <label for="source">Fortran main program <span id="line-count" class="line-count"></span></label>

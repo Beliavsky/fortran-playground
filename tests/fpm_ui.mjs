@@ -1,5 +1,10 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
+import {playgroundConfig} from '../site/config.mjs';
+const allEnabled = process.argv.includes('--all-enabled')
+  || (!process.argv.includes('--all-link') && playgroundConfig.enableAllFpmPackages === true);
+playgroundConfig.enableAllFpmPackages = allEnabled;
+if (process.argv.includes('--all-link')) globalThis.location = new URL('https://example.test/fpm/?collection=all');
 
 const html = readFileSync(new URL('../site/fpm/index.html', import.meta.url), 'utf8');
 const ids = new Set([...html.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]));
@@ -72,7 +77,7 @@ globalThis.fetch = async (url, options = {}) => {
   else if (url === './translated-r.json') {translatedFetches++; value = translated;}
   else if (url === './service.json') value = {url: unconfigured ? '' : 'https://fpm.modal.run'};
   else if (url.endsWith('/api/health')) value = {ok: true, compiler: 'GNU Fortran 16.2.0', fpm: '0.12.0',
-    ...(legacyService ? {} : {features: {translated_r: true, run_examples: true}}),
+    ...(legacyService ? {} : {features: {translated_r: true, run_examples: true, preprocess: true}}),
     ...(legacyService ? {} : {compilers: {gfortran: 'GNU Fortran 16.2.0', ifx: 'Intel ifx',
       ...(localExecution ? {lfortran: 'LFortran local'} : {})},
       precompiled: localExecution ? {} : {[packages[0].id]: {revision: packages[0].revision, compiler: 'gfortran'}}}),
@@ -329,48 +334,91 @@ assert.equal(get('subdirectory').value, '', 'Loading a general example clears th
 assert.equal(get('submit').disabled, false, 'General examples stay usable with an older service');
 assert.equal(translatedFetches, 1);
 
-// Full discovery catalog reuses selected pins, but new entries build on demand.
-const beforeAll = submissions.length;
-get('package-collection').value = 'all';
-await get('package-collection').listeners.change();
-assert.equal(allFetches, 1);
-assert.equal(translatedFetches, 1);
-assert.equal(submissions.length, beforeAll);
-assert.equal(get('subdirectory').hidden, true);
-const cold = allPackages.find(p => p.fpm_status === 'available' && !p.source);
-get('package-search').value = cold.repository.split('/')[0];
-get('package-search').listeners.input();
-assert.ok(get('available-package').options.some(p => p.value === cold.id), 'Owner search includes full catalog entries');
-get('available-package').value = cold.id; get('available-package').listeners.change();
-assert.equal(get('load-package').disabled, false, 'No precompiled image is required for discovery entries');
-get('load-package').listeners.click();
-assert.equal(get('package-url').value, `https://github.com/${cold.repository}`);
-assert.equal(get('revision').value, '');
-assert.equal(get('workflow').value, 'package');
-assert.equal(get('package-source').href, `https://github.com/${cold.repository}`);
+if (allEnabled) {
+  // Full discovery catalog reuses selected pins, but new entries build on demand.
+  const beforeAll = submissions.length;
+  get('package-collection').value = 'all';
+  await get('package-collection').listeners.change();
+  assert.equal(allFetches, 1);
+  assert.equal(translatedFetches, 1);
+  assert.equal(submissions.length, beforeAll);
+  assert.equal(get('subdirectory').hidden, true);
+  const cold = allPackages.find(p => p.fpm_status === 'available' && !p.source);
+  get('package-search').value = cold.repository.split('/')[0];
+  get('package-search').listeners.input();
+  assert.ok(get('available-package').options.some(p => p.value === cold.id), 'Owner search includes full catalog entries');
+  get('available-package').value = cold.id; get('available-package').listeners.change();
+  assert.equal(get('load-package').disabled, false, 'No precompiled image is required for discovery entries');
+  get('load-package').listeners.click();
+  assert.equal(get('package-url').value, `https://github.com/${cold.repository}`);
+  assert.equal(get('revision').value, '');
+  assert.equal(get('workflow').value, 'package');
+  assert.equal(get('package-source').href, `https://github.com/${cold.repository}`);
+  assert.equal(get('action').value, 'build', 'Discovery entries start with Build, not an assumed application');
+  get('action').value = 'build'; get('action').listeners.change();
+  await get('submit').listeners.click();
+  assert.equal(submissions.at(-1).url, `https://github.com/${cold.repository}`);
+  assert.equal(submissions.at(-1).revision, '');
+  assert.equal(submissions.at(-1).workflow, 'package');
+  assert.equal(submissions.at(-1).action, 'build');
+  assert.ok(!Object.hasOwn(submissions.at(-1), 'subdirectory'));
+  get('workflow').value = 'consumer'; get('workflow').listeners.change();
+  await get('download-project').listeners.click();
+  const discoveryZip = Buffer.from(await downloads.at(-1).blob.arrayBuffer()).toString('utf8');
+  assert.ok(!discoveryZip.includes('"package": {'), 'Unpinned discovery metadata is not an audited build recipe');
+  const missing = allPackages.find(p => p.fpm_status === 'missing');
+  get('package-search').value = ''; get('package-search').listeners.input();
+  get('available-package').value = missing.id; get('available-package').listeners.change();
+  assert.equal(get('load-package').disabled, true);
+  assert.match(get('package-note').options.at(-1).textContent, /No root fpm.toml/);
+  assert.equal(get('package-source').href, `https://github.com/${missing.repository}`);
+  get('available-package').value = packages[0].id; get('available-package').listeners.change();
+  get('load-package').listeners.click();
+  assert.equal(get('revision').value, packages[0].revision, 'Selected pins survive in All');
+  assert.equal(get('source').value, packages[0].source);
+  get('package-collection').value = 'general'; await get('package-collection').listeners.change();
+  get('package-collection').value = 'all'; await get('package-collection').listeners.change();
+  assert.equal(allFetches, 1, 'Full catalog is cached for this page session');
+
+} else {
+  assert.ok(!get('package-collection').options.some(o => o.value === 'all'));
+  assert.equal(allFetches, 0);
+  get('package-collection').value = 'all'; await get('package-collection').listeners.change();
+  assert.equal(get('package-collection').value, 'general');
+  assert.equal(allFetches, 0, 'Disabled collection cannot be fetched through collection-change events');
+  get('package-search').value = 'no-such-package-12345'; get('package-search').listeners.input();
+  assert.ok(get('package-search-results').options.some(o => o.textContent === 'Search Translated R packages'));
+  assert.ok(!get('package-search-results').options.some(o => o.textContent === 'Search All Fortran packages'));
+}
+
+// A successful build can reveal examples without running anything automatically.
+get('workflow').value = 'package'; get('workflow').listeners.change();
+get('action').value = 'build'; get('action').listeners.change();
+result = {ok: true, build_ok: true, targets: [], target_groups: {app: [], example: ['demo_a', 'demo_b'], test: []}, stages: []};
+await get('submit').listeners.click();
+assert.equal(get('target-discovery').hidden, false);
+assert.equal(get('use-app-targets').hidden, true);
+assert.equal(get('use-example-targets').hidden, legacyService);
+const beforeChoosing = submissions.length;
+if (!legacyService) {
+  get('use-example-targets').listeners.click();
+  assert.equal(get('action').value, 'example');
+  assert.equal(get('target-picker').hidden, false);
+  assert.deepEqual(get('targets').options.map(o => o.value), ['demo_a', 'demo_b']);
+  get('target-picker').value = 'demo_b'; get('target-picker').listeners.change();
+  assert.equal(get('target').value, 'demo_b');
+  assert.equal(submissions.length, beforeChoosing);
+}
+get('preprocess').checked = true; get('preprocess').listeners.change();
+assert.equal(get('target-discovery').hidden, true, 'Changing build options invalidates target suggestions');
 get('action').value = 'build'; get('action').listeners.change();
 await get('submit').listeners.click();
-assert.equal(submissions.at(-1).url, `https://github.com/${cold.repository}`);
-assert.equal(submissions.at(-1).revision, '');
-assert.equal(submissions.at(-1).workflow, 'package');
-assert.equal(submissions.at(-1).action, 'build');
-assert.ok(!Object.hasOwn(submissions.at(-1), 'subdirectory'));
-get('workflow').value = 'consumer'; get('workflow').listeners.change();
+if (legacyService) {
+  assert.equal(submissions.length, beforeChoosing, 'Old services must not receive unsupported preprocessing requests');
+  assert.match(get('workflow-note').textContent, /backend deployment/);
+} else assert.equal(submissions.at(-1).preprocess, true);
 await get('download-project').listeners.click();
-const discoveryZip = Buffer.from(await downloads.at(-1).blob.arrayBuffer()).toString('utf8');
-assert.ok(!discoveryZip.includes('"package": {'), 'Unpinned discovery metadata is not an audited build recipe');
-const missing = allPackages.find(p => p.fpm_status === 'missing');
-get('package-search').value = ''; get('package-search').listeners.input();
-get('available-package').value = missing.id; get('available-package').listeners.change();
-assert.equal(get('load-package').disabled, true);
-assert.match(get('package-note').options.at(-1).textContent, /No root fpm.toml/);
-assert.equal(get('package-source').href, `https://github.com/${missing.repository}`);
-get('available-package').value = packages[0].id; get('available-package').listeners.change();
-get('load-package').listeners.click();
-assert.equal(get('revision').value, packages[0].revision, 'Selected pins survive in All');
-assert.equal(get('source').value, packages[0].source);
-get('package-collection').value = 'general'; await get('package-collection').listeners.change();
-get('package-collection').value = 'all'; await get('package-collection').listeners.change();
-assert.equal(allFetches, 1, 'Full catalog is cached for this page session');
+const preprocessedZip = Buffer.from(await downloads.at(-1).blob.arrayBuffer()).toString('utf8');
+assert.ok(preprocessedZip.includes('"preprocess": true'));
 globalThis.setTimeout = originalTimeout;
 console.log('FPM UI: workflows, targets, stdin, results, no automatic submissions, and error recovery passed.');

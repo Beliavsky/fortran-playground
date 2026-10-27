@@ -176,7 +176,7 @@ class CatalogHTTPTests(unittest.TestCase):
         self.assertIn('Local FPM projects', self.request('/fpm/projects/')[1])
         self.assertIn('id="compiler-choices"', self.request('/fpm/projects/')[1])
         for name in ('fpm/fpm.mjs', 'fpm/project_export.mjs', 'fpm/fpm.css', 'editors.mjs',
-                     'indentation.mjs', 'plots.mjs', 'service_config.mjs', 'style.css'):
+                     'indentation.mjs', 'plots.mjs', 'service_config.mjs', 'config.mjs', 'style.css'):
             self.assertEqual(self.request('/fpm/ui/' + name)[0], 200)
         from fpm_cache import catalog
         self.assertEqual(len(self.request('/fpm/packages.json')[1]), len(catalog()))

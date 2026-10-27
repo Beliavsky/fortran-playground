@@ -23,11 +23,13 @@ def project_directory(value):
 
 def validate_options(options):
     if not isinstance(options, dict) or set(options) - {
-        'action', 'target', 'source', 'stdin', 'profile', 'compile_timeout', 'run_timeout', 'output_limit', 'fail_fast'}:
+        'action', 'target', 'source', 'stdin', 'profile', 'compile_timeout', 'run_timeout', 'output_limit', 'fail_fast', 'preprocess'}:
         raise ValueError('Invalid local FPM options')
     defaults = {'action': 'run', 'target': '', 'source': None, 'stdin': '', 'profile': 'debug',
                 'compile_timeout': 120, 'run_timeout': 30, 'output_limit': 4 * 1024 * 1024, 'fail_fast': False}
     result = {**defaults, **options}
+    if type(result.get('preprocess', False)) is not bool:
+        raise ValueError('Preprocess must be a boolean.')
     if result['action'] not in ('build', 'run', 'test', 'example') or result['profile'] not in ('debug', 'release'):
         raise ValueError('Choose Build, Run, Run examples, or Test and a debug or release profile')
     parse_targets(result['target'])
@@ -132,6 +134,9 @@ def execute_project(project, name, *, options=None, overrides=None, cancel=None,
             environment = plotting_environment(environment)
             row['working_directory'] = str(workdir)
             flags = ['--profile', options['profile'], '--compiler', command, '--no-prune']
+            if options.get('preprocess'):
+                from fpm_compilers import preprocessing_flag
+                flags += ['--flag', (environment.get('FPM_FFLAGS', '') + ' ' + preprocessing_flag(name, windows=os.name == 'nt')).strip()]
 
             def stage(args, timeout, stdin=''):
                 value = run_process([fpm, *args], workdir, cancel, timeout=timeout, stdin=stdin,
@@ -145,8 +150,9 @@ def execute_project(project, name, *, options=None, overrides=None, cancel=None,
                 row['status'] = 'STOPPED' if build.get('cancelled') else 'FAIL'
                 return finish_result(row, started)
             row['build_ok'] = True
+            row['target_groups'] = {kind: target_names(workdir, kind) for kind in ('app', 'example', 'test')}
             kind = {'test': 'test', 'example': 'example'}.get(options['action'], 'app')
-            row['targets'] = names = target_names(workdir, kind)
+            row['targets'] = names = row['target_groups'][kind]
             if options['action'] == 'build':
                 row.update(ok=True, status='PASS')
                 return finish_result(row, started)

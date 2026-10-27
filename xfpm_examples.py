@@ -30,6 +30,23 @@ def generate_fpm_examples(site):
                          'categories': sorted(set(entry['categories'] + ([pinned['category']] if pinned else [])))}
     for key, entry in selected.items():
         combined.setdefault(key, {**entry, 'fpm_status': 'available', 'categories': [entry['category']]})
+    audit_path = audit.parents[1] / 'docs/fpm-discovery-audit.json'
+    if audit_path.exists():
+        report = json.loads(audit_path.read_text(encoding='utf-8'))
+        labels = {'build_pass': 'build passed', 'missing_library_or_module': 'missing external library or module',
+                  'preprocessing_required': 'preprocessing required', 'implicit_interface_error': 'implicit-interface compilation error',
+                  'platform_specific_source': 'platform-specific source error', 'missing_source': 'missing source file',
+                  'unsupported_dependency': 'unsupported dependency', 'preparation_failure': 'source preparation failed',
+                  'service_limit': 'service limit exceeded', 'build_failure': 'compilation failed'}
+        for result in report['packages']:
+            entry = combined.get(result['repository'].lower())
+            if entry is not None:
+                entry['audit'] = {'revision': result['revision'], 'tested_at': report['tested_at'],
+                                  'outcome': result['outcome'], 'summary': labels[result['outcome']]}
+        for verification in report.get('fix_verifications', []):
+            entry = combined.get(verification['repository'].lower())
+            if entry is not None and entry.get('audit'):
+                entry['audit']['verification'] = verification
     (site / 'fpm/all-packages.json').write_text(json.dumps(
         sorted(combined.values(), key=lambda p: p['repository'].lower()), indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
     # Small local-export tools only; package archives are fetched by the user's

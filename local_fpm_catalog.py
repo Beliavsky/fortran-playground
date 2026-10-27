@@ -39,7 +39,7 @@ def health(server):
     return {'ok': not error, 'error': error, 'local': True, 'fpm': 'local installation',
             'compiler': available.get('gfortran', next(iter(available.values()), 'not found')),
             'compilers': available, 'workspace': str(server.workspace), 'precompiled': {},
-            'features': {'translated_r': True, 'run_examples': True}}
+            'features': {'translated_r': True, 'run_examples': True, 'preprocess': True, 'target_groups': True}}
 
 
 def compact_sources(sources, repositories):
@@ -108,7 +108,7 @@ def execute_catalog(workspace, data, *, overrides=None, fpm_path=None, cancel=No
                     if settings else source_preparer(sources, request, pins=pins, downloader=download))
         preparer.deadline = time.monotonic() + 600
         # Compiler choice does not change the downloaded source tree.
-        relative, records = preparer.prepare({**request, 'compiler': 'gfortran', 'target': '',
+        relative, records = preparer.prepare({**{k: v for k, v in request.items() if k != 'preprocess'}, 'compiler': 'gfortran', 'target': '',
                                              'action': 'run' if request['action'] == 'example' else request['action']})
         root = sources / relative
         if package:
@@ -127,6 +127,7 @@ def execute_catalog(workspace, data, *, overrides=None, fpm_path=None, cancel=No
                 'source': request['source'] if consumer else None,
                 'stdin': request['stdin'] if request['action'] != 'build' else '',
                 'target': request['target'] if not consumer and request['action'] != 'build' else '',
+                'preprocess': request.get('preprocess', False),
                 'compile_timeout': 0, 'run_timeout': 0})
         stages = [{**stage, 'name': 'Build' if index == 0 else request['action'].capitalize()}
                   for index, stage in enumerate(row.get('stages', []))]
@@ -139,6 +140,7 @@ def execute_catalog(workspace, data, *, overrides=None, fpm_path=None, cancel=No
                 'compiler': row.get('compiler_version', compiler), 'compiler_id': compiler,
                 'fpm': 'local installation', 'local': True, 'build_mode': 'from-scratch',
                 'packages': records, 'stages': stages, 'targets': row.get('targets', []),
+                'target_groups': row.get('target_groups', {}),
                 'needs_target': row.get('needs_target', False), 'notes': notes,
                 'nothing_run': row.get('nothing_run', False), 'build_ok': row.get('build_ok', False),
                 'plots': row.get('plots', []), 'plot_notes': row.get('plot_notes', []),

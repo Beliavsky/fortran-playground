@@ -12,7 +12,7 @@ import tomllib
 
 from fpm_sources import extract_archive, validate_request
 from fpm_targets import parse_targets, select_targets, discover_targets
-from fpm_compilers import COMPILERS, compiler_flags
+from fpm_compilers import COMPILERS, compiler_flags, preprocessing_flag
 from fpm_cache import consumer_project, cached_request_matches, library_inventory
 from fortran_plot import uses_pyplot, install_module, collect_plots, plotting_environment, provides_pyplot
 
@@ -67,9 +67,12 @@ def execute(message):
     target_text = message['request'].get('target', '')
     parse_targets(target_text)
     action = message['request'].get('action', 'run')
+    preprocess = message['request'].get('preprocess', False)
+    if type(preprocess) is not bool:
+        raise ValueError('Preprocess must be a boolean.')
     if action == 'example' and message['request'].get('workflow', 'consumer') != 'package':
         raise ValueError('Run examples requires the package workflow.')
-    payload = validate_request({**message['request'], 'target': '',
+    payload = validate_request({**{k: v for k, v in message['request'].items() if k != 'preprocess'}, 'target': '',
                                 **({'action': 'run'} if action == 'example' else {})})
     payload['target'] = target_text
     payload['action'] = action
@@ -95,6 +98,8 @@ def execute(message):
         project = consumer_project(package, payload['source'])
     os.environ.update(plotting_environment(directory=project))
     flags = compiler_flags(compiler)
+    if preprocess:
+        flags += ['--flag', preprocessing_flag(compiler)]
     version = subprocess.check_output([COMPILERS[compiler]['command'], '--version'], text=True, timeout=10).splitlines()[0]
     if COMPILERS[compiler]['version'] not in version:
         raise ValueError('Installed compiler version does not match the selected toolchain.')
@@ -113,8 +118,9 @@ def execute(message):
     if not build['ok']:
         return result
     result['build_ok'] = True
+    result['target_groups'] = {kind: targets(project, kind) for kind in ('app', 'example', 'test')}
     kind = {'test': 'test', 'example': 'example'}.get(payload['action'], 'app')
-    result['targets'] = available = targets(project, kind)
+    result['targets'] = available = result['target_groups'][kind]
     if payload['action'] == 'build':
         result['ok'] = True
         return result

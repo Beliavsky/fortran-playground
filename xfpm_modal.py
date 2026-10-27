@@ -67,9 +67,16 @@ runtime_image = with_fpm(modal.Image.from_registry(GNU_IMAGE, add_python=RECIPE[
                          .run_commands('test "$(gfortran -dumpfullversion)" = 16.2.0'), 'gfortran')
 
 
+def with_numerical_libraries(image):
+    # Extend clean-build images only. Existing immutable package images and
+    # their library cache identities keep their original native dependencies.
+    return image.apt_install('libopenblas-serial-dev=0.3.29+ds-3', 'libopenblas-dev=0.3.29+ds-3').env(
+        {'OPENBLAS_NUM_THREADS': '1', 'OMP_NUM_THREADS': '1'})
+
+
 def runtime_images(compilers):
     """Build optional toolchains independently; all installer sources are in this repo."""
-    images = {'gfortran': runtime_image}
+    images = {'gfortran': with_numerical_libraries(runtime_image)}
     for compiler in compilers:
         if compiler == 'gfortran':
             continue
@@ -92,6 +99,8 @@ def runtime_images(compilers):
             else:
                 base = base.run_commands('mkdir -p /opt/fpm/bin && ln -s /usr/bin/flang-23 /opt/fpm/bin/flang-new')
         images[compiler] = with_fpm(base, compiler)
+        if compiler == 'gfortran17':
+            images[compiler] = with_numerical_libraries(images[compiler])
     return {compiler: images[compiler] for compiler in compilers}
 
 container_settings = {'FPM_IMAGE_NAME': IMAGE_NAME, 'FPM_OWNER_SECRET': OWNER_SECRET_NAME,
@@ -150,7 +159,7 @@ def execute_job(identifier, payload, *, sandbox_image=None, sandbox_app=None, ca
         if payload['compiler'] not in ENABLED_COMPILERS and sandbox_image is None:
             raise ValueError('Requested FPM compiler is not enabled.')
         from fpm_cache import match_package, cache_identity
-        selected = None if payload.get('subdirectory') else match_package(payload)
+        selected = None if payload.get('subdirectory') or payload.get('preprocess') else match_package(payload)
         cache = PRECOMPILED.get(selected['id']) if selected and sandbox_image is None else None
         if cache and cache.get('key') != cache_identity(selected, RECIPE_ID):
             raise ValueError('Precompiled image is stale; rebuild the package catalog before deploying.')
@@ -160,7 +169,7 @@ def execute_job(identifier, payload, *, sandbox_image=None, sandbox_app=None, ca
         else:
             with tempfile.TemporaryDirectory() as temporary:
                 # Target selection is an execution setting, not source input.
-                root, records = source_preparer(temporary, payload).prepare({**payload, 'target': '',
+                root, records = source_preparer(temporary, payload).prepare({**{k: v for k, v in payload.items() if k != 'preprocess'}, 'target': '',
                     'action': 'run' if payload['action'] == 'example' else payload['action']})
                 # Workers receive an already selected source root. Preserve the
                 # protocol used by existing precompiled images.

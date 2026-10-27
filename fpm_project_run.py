@@ -42,7 +42,7 @@ def prepare(project, settings, *, downloader=None):
                     else source_preparer(sources, settings['request'], **kwargs))
         # These are local downloads, rather than a public preparation job.
         preparer.deadline = time.monotonic() + 600
-        relative, records = preparer.prepare({**settings['request'],
+        relative, records = preparer.prepare({**{k: v for k, v in settings['request'].items() if k != 'preprocess'},
                                              'source': 'program main\nend program main\n'})
         if package:
             apply_patches(package, sources / relative)
@@ -89,6 +89,10 @@ def run(project, args):
     action = 'build' if args.build_only else 'run'
     command = ['fpm', action, '--profile', 'debug', '--compiler', args.compiler,
                '--c-compiler', 'gcc', '--cxx-compiler', 'g++', '--no-prune']
+    if settings['request'].get('preprocess'):
+        from fpm_compilers import preprocessing_flag
+        name = Path(args.compiler).name.lower().removesuffix('.exe')
+        command += ['--flag', (environment.get('FPM_FFLAGS', '') + ' ' + preprocessing_flag(name, windows=os.name == 'nt')).strip()]
     stdin = project / 'stdin.txt'
     print('Running:', ' '.join(command), flush=True)
     return subprocess.run(command, cwd=project, env=environment,

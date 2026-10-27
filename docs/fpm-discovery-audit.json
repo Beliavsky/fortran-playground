@@ -1,0 +1,802 @@
+{
+  "schema": 1,
+  "tested_at": "2026-10-27T21:26:02.669004+00:00",
+  "environment": "Hosted Linux sandbox, GNU Fortran 16.2.0, FPM 0.12.0",
+  "action": "build",
+  "selection": "Twenty non-precompiled packages across numerical, string, I/O, and utility categories; not a random estimate of the whole catalog.",
+  "service": "https://beliavsky--fortran-playground-fpm-api.us-east.modal.run",
+  "packages": [
+    {
+      "repository": "awvwgk/blas-interface",
+      "revision": "552a2e6a41443843003216fedad6419af55f8e35",
+      "category": "Linear Algebra",
+      "outcome": "build_pass",
+      "build_ok": true,
+      "application_targets": [],
+      "error": "",
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "times": {
+        "total": 7.044727399945259,
+        "compile": 0.926,
+        "run": null,
+        "other": 6.118727399945259
+      },
+      "stages": [
+        {
+          "name": "Build",
+          "command": [
+            "fpm",
+            "build",
+            "--profile",
+            "debug",
+            "--compiler",
+            "gfortran",
+            "--c-compiler",
+            "gcc",
+            "--cxx-compiler",
+            "g++",
+            "--no-prune"
+          ],
+          "seconds": 0.926,
+          "ok": true,
+          "exit_code": 0,
+          "error": "",
+          "stdout_tail": " + mkdir -p build/dependencies\n[  0%]                      kinds.F90\n[ 14%]                      kinds.F90  done.\n[ 14%]                     level1.f90\n[ 28%]                     level1.f90  done.\n[ 28%]                     level2.f90\n[ 42%]                     level2.f90  done.\n[ 42%]                     level3.f90\n[ 57%]                     level3.f90  done.\n[ 57%]                      utils.f90\n[ 71%]                      utils.f90  done.\n[ 71%]                       blas.f90\n[ 85%]                       blas.f90  done.\n[ 85%]            libblas-interface.a\n[100%]            libblas-interface.a  done.\n[100%] Project compiled successfully.\n",
+          "stderr_tail": ""
+        }
+      ]
+    },
+    {
+      "repository": "gha3mi/forblas",
+      "revision": "faa485b7fe6916ead3b30f0f371a6abe8628f272",
+      "category": "Linear Algebra",
+      "outcome": "missing_source",
+      "build_ok": false,
+      "application_targets": [],
+      "error": "",
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "times": {
+        "total": 2.787582000019029,
+        "compile": 0.02,
+        "run": null,
+        "other": 2.7675820000190288
+      },
+      "stages": [
+        {
+          "name": "Build",
+          "command": [
+            "fpm",
+            "build",
+            "--profile",
+            "debug",
+            "--compiler",
+            "gfortran",
+            "--c-compiler",
+            "gcc",
+            "--cxx-compiler",
+            "g++",
+            "--no-prune"
+          ],
+          "seconds": 0.02,
+          "ok": false,
+          "exit_code": 1,
+          "error": "",
+          "stdout_tail": " + mkdir -p build/dependencies\n",
+          "stderr_tail": "<ERROR> *cmd_build* Model error: 'src/BLAS/TESTING/cblat1.f' could not be found, check if the file exists\nSTOP 1\n"
+        }
+      ]
+    },
+    {
+      "repository": "HugoMVale/odrpack95",
+      "revision": "12597b20812a76a4b702f985f6adc82632a18f60",
+      "category": "Statistics",
+      "outcome": "missing_library_or_module",
+      "build_ok": false,
+      "application_targets": [],
+      "error": "",
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "times": {
+        "total": 4.2587315000128,
+        "compile": 1.551,
+        "run": null,
+        "other": 2.7077315000128
+      },
+      "stages": [
+        {
+          "name": "Build",
+          "command": [
+            "fpm",
+            "build",
+            "--profile",
+            "debug",
+            "--compiler",
+            "gfortran",
+            "--c-compiler",
+            "gcc",
+            "--cxx-compiler",
+            "g++",
+            "--no-prune"
+          ],
+          "seconds": 1.551,
+          "ok": false,
+          "exit_code": 1,
+          "error": "",
+          "stdout_tail": " + mkdir -p build/dependencies\n[  0%]              odrpack_kinds.f90\n[  5%]              odrpack_kinds.f90  done.\n[  5%]            blas_interfaces.f90\n[ 11%]            blas_interfaces.f90  done.\n[ 11%]                      linpack.f\n[ 16%]                      linpack.f  done.\n[ 16%]               odrpack_core.f90\n[ 22%]               odrpack_core.f90  done.\n[ 22%]            odrpack_reports.f90\n[ 27%]            odrpack_reports.f90  done.\n[ 27%]                    odrpack.f90\n[ 33%]                    odrpack.f90  done.\n[ 33%]               odrpack_capi.f90\n[ 38%]               odrpack_capi.f90  done.\n[ 38%]                   example1.f90\n[ 44%]                   example1.f90  done.\n[ 44%]                   example2.f90\n[ 50%]                   example2.f90  done.\n[ 50%]                   example3.f90\n[ 55%]                   example3.f90  done.\n[ 55%]                   example4.f90\n[ 61%]                   example4.f90  done.\n[ 61%]                   example5.f90\n[ 66%]                   example5.f90  done.\n[ 66%]                 libodrpack95.a\n[ 72%]                 libodrpack95.a  done.\n[ 72%]                       example1\n[ 77%]                       example1  done.\n\n/usr/bin/ld: cannot find -lopenblas: No such file or directory\ncollect2: error: ld returned 1 exit status\n",
+          "stderr_tail": "<ERROR> Compilation failed for object \" example1 \"\n<ERROR> stopping due to failed compilation\nSTOP 1\n"
+        }
+      ]
+    },
+    {
+      "repository": "sebastiandyrda/lib_statistics",
+      "revision": "056740db259fc3599dca0d8858f04e94845a6769",
+      "category": "Statistics",
+      "outcome": "build_pass",
+      "build_ok": true,
+      "application_targets": [],
+      "error": "",
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "times": {
+        "total": 4.159782900009304,
+        "compile": 0.581,
+        "run": null,
+        "other": 3.5787829000093043
+      },
+      "stages": [
+        {
+          "name": "Build",
+          "command": [
+            "fpm",
+            "build",
+            "--profile",
+            "debug",
+            "--compiler",
+            "gfortran",
+            "--c-compiler",
+            "gcc",
+            "--cxx-compiler",
+            "g++",
+            "--no-prune"
+          ],
+          "seconds": 0.581,
+          "ok": true,
+          "exit_code": 0,
+          "error": "",
+          "stdout_tail": " + mkdir -p build/dependencies\n[  0%]                  mod_types.f90\n[ 25%]                  mod_types.f90  done.\n[ 25%]                    mod_lsq.f90\n[ 50%]                    mod_lsq.f90  done.\n[ 50%]               mod_logistic.f90\n[ 75%]               mod_logistic.f90  done.\n[ 75%]                libstatistics.a\n[100%]                libstatistics.a  done.\n[100%] Project compiled successfully.\n",
+          "stderr_tail": ""
+        }
+      ]
+    },
+    {
+      "repository": "jacobwilliams/odepack",
+      "revision": "94bbe0d5a9dd007dc9e07788ec9c8316417619c8",
+      "category": "Ordinary Differential Equations",
+      "outcome": "implicit_interface_error",
+      "build_ok": false,
+      "application_targets": [],
+      "error": "",
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "times": {
+        "total": 4.952251799870282,
+        "compile": 0.655,
+        "run": null,
+        "other": 4.297251799870282
+      },
+      "stages": [
+        {
+          "name": "Build",
+          "command": [
+            "fpm",
+            "build",
+            "--profile",
+            "debug",
+            "--compiler",
+            "gfortran",
+            "--c-compiler",
+            "gcc",
+            "--cxx-compiler",
+            "g++",
+            "--no-prune"
+          ],
+          "seconds": 0.655,
+          "ok": false,
+          "exit_code": 1,
+          "error": "",
+          "stdout_tail": " + mkdir -p build/dependencies\n[  0%]                  M_odepack.f90\n[  5%]                  M_odepack.f90  done.\n\nM_matrix/dnrm2.inc:170:50:\n\nWarning: Inequality comparison for REAL(8) at (1) [-Wcompare-reals]\nM_matrix/dnrm2.inc:179:50:\n\nWarning: Inequality comparison for REAL(8) at (1) [-Wcompare-reals]\nM_matrix/dgbfa.inc:178:10:\n\nWarning: Equality comparison for REAL(8) at (1) [-Wcompare-reals]\nM_matrix/daxpy.inc:95:14:\n\nWarning: Equality comparison for REAL(8) at (1) [-Wcompare-reals]\nM_matrix/dgbfa.inc:215:4:\n\nWarning: Equality comparison for REAL(8) at (1) [-Wcompare-reals]\nM_matrix/dgefa.inc:109:13:\n\nWarning: Equality comparison for REAL(8) at (1) [-Wcompare-reals]\nM_matrix/dgefa.inc:140:7:\n\nWarning: Equality comparison for REAL(8) at (1) [-Wcompare-reals]\nM_main/dlsodar.inc:1465:14:\n\nWarning: Equality comparison for REAL(8) at (1) [-Wcompare-reals]\nM_main/dlsodar.inc:1736:28:\n\nWarning: Inequality comparison for REAL(8) at (1) [-Wcompare-reals]\nM_main/dlsodar.inc:1753:47:\n\nError: Procedure \u2018f\u2019 called with an implicit interface at (1) [-Werror=implicit-interface]\ncompilation terminated due to -fmax-errors=1.\n",
+          "stderr_tail": "<ERROR> Compilation failed for object \" src_M_odepack.f90.o \"\n<ERROR> stopping due to failed compilation\nSTOP 1\n"
+        }
+      ]
+    },
+    {
+      "repository": "princemahajan/FLINT",
+      "revision": "b6322037cb751b11fa64ea66cf23173ae572fff6",
+      "category": "Ordinary Differential Equations",
+      "outcome": "preprocessing_required",
+      "build_ok": false,
+      "application_targets": [],
+      "error": "",
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "times": {
+        "total": 5.521088999928907,
+        "compile": 0.214,
+        "run": null,
+        "other": 5.307088999928906
+      },
+      "stages": [
+        {
+          "name": "Build",
+          "command": [
+            "fpm",
+            "build",
+            "--profile",
+            "debug",
+            "--compiler",
+            "gfortran",
+            "--c-compiler",
+            "gcc",
+            "--cxx-compiler",
+            "g++",
+            "--no-prune"
+          ],
+          "seconds": 0.214,
+          "ok": false,
+          "exit_code": 1,
+          "error": "",
+          "stdout_tail": " + mkdir -p build/dependencies\n[  0%]                 FLINTUtils.f90\n[  9%]                 FLINTUtils.f90  done.\n\n././src/FLINTUtils.f90:37:2:\n\n   37 | #ifdef _REAL32\n      |  1\nWarning: Illegal preprocessor directive\n././src/FLINTUtils.f90:39:2:\n\n   39 | #elif _REAL128\n      |  1\nWarning: Illegal preprocessor directive\n././src/FLINTUtils.f90:41:2:\n\n   41 | #else\n      |  1\nWarning: Illegal preprocessor directive\n././src/FLINTUtils.f90:43:2:\n\n   43 | #endif\n      |  1\nWarning: Illegal preprocessor directive\n././src/FLINTUtils.f90:40:35:\n\n   40 |     integer, parameter, public :: FLINT_WP = FLINT_QP\n      |                                   1~~~~~~~\nError: Symbol \u2018flint_wp\u2019 at (1) already has basic type of INTEGER\ncompilation terminated due to -fmax-errors=1.\n",
+          "stderr_tail": "<ERROR> Compilation failed for object \" src_FLINTUtils.f90.o \"\n<ERROR> stopping due to failed compilation\nSTOP 1\n"
+        }
+      ]
+    },
+    {
+      "repository": "arjenmarkus/pointsets",
+      "revision": "a1c381777f893d656018366cfabfa4cc7531e4dd",
+      "category": "Random Number Generation",
+      "outcome": "build_pass",
+      "build_ok": true,
+      "application_targets": [],
+      "error": "",
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "times": {
+        "total": 3.444137000013143,
+        "compile": 0.656,
+        "run": null,
+        "other": 2.7881370000131427
+      },
+      "stages": [
+        {
+          "name": "Build",
+          "command": [
+            "fpm",
+            "build",
+            "--profile",
+            "debug",
+            "--compiler",
+            "gfortran",
+            "--c-compiler",
+            "gcc",
+            "--cxx-compiler",
+            "g++",
+            "--no-prune"
+          ],
+          "seconds": 0.656,
+          "ok": true,
+          "exit_code": 0,
+          "error": "",
+          "stdout_tail": " + mkdir -p build/dependencies\n[  0%]            enumerate_space.f90\n[ 14%]            enumerate_space.f90  done.\n[ 14%]                quasirandom.f90\n[ 28%]                quasirandom.f90  done.\n[ 28%]        random_permutations.f90\n[ 42%]        random_permutations.f90  done.\n[ 42%]           select_precision.f90\n[ 57%]           select_precision.f90  done.\n[ 57%]            latin_hypercube.f90\n[ 71%]            latin_hypercube.f90  done.\n[ 71%]                  pointsets.f90\n[ 85%]                  pointsets.f90  done.\n[ 85%]                 libpointsets.a\n[100%]                 libpointsets.a  done.\n[100%] Project compiled successfully.\n",
+          "stderr_tail": ""
+        }
+      ]
+    },
+    {
+      "repository": "wcota/rndgen-fortran",
+      "revision": "3fa553608324913eed6cb178b398e7f661e4f63a",
+      "category": "Random Number Generation",
+      "outcome": "build_pass",
+      "build_ok": true,
+      "application_targets": [],
+      "error": "",
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "times": {
+        "total": 4.1217380000744015,
+        "compile": 0.776,
+        "run": null,
+        "other": 3.3457380000744017
+      },
+      "stages": [
+        {
+          "name": "Build",
+          "command": [
+            "fpm",
+            "build",
+            "--profile",
+            "debug",
+            "--compiler",
+            "gfortran",
+            "--c-compiler",
+            "gcc",
+            "--cxx-compiler",
+            "g++",
+            "--no-prune"
+          ],
+          "seconds": 0.776,
+          "ok": true,
+          "exit_code": 0,
+          "error": "",
+          "stdout_tail": " + mkdir -p build/dependencies\n[  0%]                     rndgen.f90\n[  5%]                     rndgen.f90  done.\n[  5%]                   rndgenPL.f90\n[ 10%]                   rndgenPL.f90  done.\n[ 10%]                2gen-invert.f90\n[ 15%]                2gen-invert.f90  done.\n[ 15%]                       2gen.f90\n[ 21%]                       2gen.f90  done.\n[ 21%]                     arrays.f90\n[ 26%]                     arrays.f90  done.\n[ 26%]                       save.f90\n[ 31%]                       save.f90  done.\n[ 31%]                     simple.f90\n[ 36%]                     simple.f90  done.\n[ 36%]                      vojta.f90\n[ 42%]                      vojta.f90  done.\n[ 42%]            librndgen-fortran.a\n[ 47%]            librndgen-fortran.a  done.\n[ 47%]                  PL-arrays.f90\n[ 52%]                  PL-arrays.f90  done.\n[ 52%]                         PL.f90\n[ 57%]                         PL.f90  done.\n[ 57%]                    2gen-invert\n[ 63%]                    2gen-invert  done.\n[ 63%]                           2gen\n[ 68%]                           2gen  done.\n[ 68%]                      PL-arrays\n[ 73%]                      PL-arrays  done.\n[ 73%]                             PL\n[ 78%]                             PL  done.\n[ 78%]                         arrays\n[ 84%]                         arrays  done.\n[ 84%]                           save\n[ 89%]                           save  done.\n[ 89%]                         simple\n[ 94%]                         simple  done.\n[ 94%]                          vojta\n[100%]                          vojta  done.\n[100%] Project compiled successfully.\n",
+          "stderr_tail": ""
+        }
+      ]
+    },
+    {
+      "repository": "everythingfunctional/strff",
+      "revision": "ea66eebf0d06ae588fc84be7ed6dd621f2d520cc",
+      "category": "Strings",
+      "outcome": "preparation_failure",
+      "build_ok": false,
+      "application_targets": [],
+      "error": "ValueError: Use https://github.com/OWNER/REPOSITORY and enter the revision separately.",
+      "compiler": "",
+      "times": {
+        "total": 0.5277211000211537,
+        "compile": null,
+        "run": null,
+        "other": 0.5277211000211537
+      },
+      "stages": []
+    },
+    {
+      "repository": "Carltoffel/Fortran-String-to-Real",
+      "revision": "76fb9e4203c6ce73c31bed85b69af920893b033e",
+      "category": "Strings",
+      "outcome": "build_pass",
+      "build_ok": true,
+      "application_targets": [],
+      "error": "",
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "times": {
+        "total": 2.620036100037396,
+        "compile": 0.104,
+        "run": null,
+        "other": 2.516036100037396
+      },
+      "stages": [
+        {
+          "name": "Build",
+          "command": [
+            "fpm",
+            "build",
+            "--profile",
+            "debug",
+            "--compiler",
+            "gfortran",
+            "--c-compiler",
+            "gcc",
+            "--cxx-compiler",
+            "g++",
+            "--no-prune"
+          ],
+          "seconds": 0.104,
+          "ok": true,
+          "exit_code": 0,
+          "error": "",
+          "stdout_tail": " + mkdir -p build/dependencies\n[  0%]                 str2real_m.f90\n[ 50%]                 str2real_m.f90  done.\n[ 50%]                  libstr2real.a\n[100%]                  libstr2real.a  done.\n[100%] Project compiled successfully.\n",
+          "stderr_tail": ""
+        }
+      ]
+    },
+    {
+      "repository": "0382/argparse-f",
+      "revision": "435cc1676d6064162a3c36b91f1aa50d926fdd45",
+      "category": "General Purpose",
+      "outcome": "build_pass",
+      "build_ok": true,
+      "application_targets": [],
+      "error": "",
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "times": {
+        "total": 1.9002697002142668,
+        "compile": 0.266,
+        "run": null,
+        "other": 1.6342697002142668
+      },
+      "stages": [
+        {
+          "name": "Build",
+          "command": [
+            "fpm",
+            "build",
+            "--profile",
+            "debug",
+            "--compiler",
+            "gfortran",
+            "--c-compiler",
+            "gcc",
+            "--cxx-compiler",
+            "g++",
+            "--no-prune"
+          ],
+          "seconds": 0.266,
+          "ok": true,
+          "exit_code": 0,
+          "error": "",
+          "stdout_tail": " + mkdir -p build/dependencies\n[  0%]                 argparse-f.f90\n[ 50%]                 argparse-f.f90  done.\n[ 50%]                libargparse-f.a\n[100%]                libargparse-f.a  done.\n[100%] Project compiled successfully.\n",
+          "stderr_tail": ""
+        }
+      ]
+    },
+    {
+      "repository": "davidpfister/subprocess.f",
+      "revision": "afd9592b6f38d696be2c52f614b5346fbc0c55b2",
+      "category": "General Purpose",
+      "outcome": "platform_specific_source",
+      "build_ok": false,
+      "application_targets": [],
+      "error": "",
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "times": {
+        "total": 4.140848800074309,
+        "compile": 0.406,
+        "run": null,
+        "other": 3.734848800074309
+      },
+      "stages": [
+        {
+          "name": "Build",
+          "command": [
+            "fpm",
+            "build",
+            "--profile",
+            "debug",
+            "--compiler",
+            "gfortran",
+            "--c-compiler",
+            "gcc",
+            "--cxx-compiler",
+            "g++",
+            "--no-prune"
+          ],
+          "seconds": 0.406,
+          "ok": false,
+          "exit_code": 1,
+          "error": "",
+          "stdout_tail": " + mkdir -p build/dependencies\n[  0%]           subprocess_sleep.f90\n[ 16%]           subprocess_sleep.f90  done.\n[ 16%]          subprocess_string.f90\n[ 33%]          subprocess_string.f90  done.\n[ 33%]                 processlib.cpp\n[ 50%]                 processlib.cpp  done.\n\n./././/lib/src/processlib.cpp:1:10: fatal error: ..\\include\\processlib.h: No such file or directory\n    1 | #include \"..\\include\\processlib.h\"\n      |          ^~~~~~~~~~~~~~~~~~~~~~~~~\ncompilation terminated.\n",
+          "stderr_tail": "<ERROR> Compilation failed for object \" lib_src_processlib.cpp.o \"\n<ERROR> stopping due to failed compilation\nSTOP 1\n"
+        }
+      ]
+    },
+    {
+      "repository": "lauvergn/AD_dnSVM",
+      "revision": "32db0bd122ce1dae290e9cf4c1fda4ab8f3de6f1",
+      "category": "Automatic Differentiation",
+      "outcome": "missing_library_or_module",
+      "build_ok": false,
+      "application_targets": [],
+      "error": "",
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "times": {
+        "total": 18.911260899854824,
+        "compile": 15.566,
+        "run": null,
+        "other": 3.3452608998548232
+      },
+      "stages": [
+        {
+          "name": "Build",
+          "command": [
+            "fpm",
+            "build",
+            "--profile",
+            "debug",
+            "--compiler",
+            "gfortran",
+            "--c-compiler",
+            "gcc",
+            "--cxx-compiler",
+            "g++",
+            "--no-prune"
+          ],
+          "seconds": 15.566,
+          "ok": false,
+          "exit_code": 1,
+          "error": "",
+          "stdout_tail": "_Rk8_m.f90\n[ 61%]            RW_MatVec_Rk8_m.f90  done.\n[ 61%]                RW_MatVec_m.f90\n[ 63%]                RW_MatVec_m.f90  done.\n[ 63%]                DiagoRk16_m.f90\n[ 65%]                DiagoRk16_m.f90  done.\n[ 65%]                    Diago_m.f90\n[ 67%]                    Diago_m.f90  done.\n[ 67%]                   IntVec_m.f90\n[ 69%]                   IntVec_m.f90  done.\n[ 69%]                   Matrix_m.f90\n[ 71%]                   Matrix_m.f90  done.\n[ 71%]                  RealVec_m.f90\n[ 73%]                  RealVec_m.f90  done.\n[ 73%]                   Vector_m.f90\n[ 75%]                   Vector_m.f90  done.\n[ 75%]          Quadrature_Rk16_m.f90\n[ 76%]          Quadrature_Rk16_m.f90  done.\n[ 76%]               Quadrature_m.f90\n[ 78%]               Quadrature_m.f90  done.\n[ 78%]                   QDUtil_m.f90\n[ 80%]                   QDUtil_m.f90  done.\n[ 80%]                      dnS_m.f90\n[ 82%]                      dnS_m.f90  done.\n[ 82%]                    dnMat_m.f90\n[ 84%]                    dnMat_m.f90  done.\n[ 84%]                   dnPoly_m.f90\n[ 86%]                   dnPoly_m.f90  done.\n[ 86%]                   dnS_Op_m.f90\n[ 88%]                   dnS_Op_m.f90  done.\n[ 88%]                    dnVec_m.f90\n[ 90%]                    dnVec_m.f90  done.\n[ 90%]                   dnFunc_m.f90\n[ 92%]                   dnFunc_m.f90  done.\n[ 92%]                    dnSVM_m.f90\n[ 94%]                    dnSVM_m.f90  done.\n[ 94%]                  libAD_dnSVM.a\n[ 96%]                  libAD_dnSVM.a  done.\n[ 96%]                Example_dnS.f90\n[ 98%]                Example_dnS.f90  done.\n[ 98%]                        Exa_dnS\n[100%]                        Exa_dnS  done.\n\n/usr/bin/ld: cannot find -lblas: No such file or directory\n/usr/bin/ld: cannot find -llapack: No such file or directory\n/usr/bin/ld: cannot find -lblas: No such file or directory\n/usr/bin/ld: cannot find -llapack: No such file or directory\ncollect2: error: ld returned 1 exit status\n",
+          "stderr_tail": "<ERROR> Compilation failed for object \" Exa_dnS \"\n<ERROR> stopping due to failed compilation\nSTOP 1\n"
+        }
+      ]
+    },
+    {
+      "repository": "zoziha/Auto-Diff",
+      "revision": "35e62246675cbe6dcd04ce25a81f7885653feabe",
+      "category": "Automatic Differentiation",
+      "outcome": "build_pass",
+      "build_ok": true,
+      "application_targets": [],
+      "error": "",
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "times": {
+        "total": 5.017942300066352,
+        "compile": 1.408,
+        "run": null,
+        "other": 3.609942300066352
+      },
+      "stages": [
+        {
+          "name": "Build",
+          "command": [
+            "fpm",
+            "build",
+            "--profile",
+            "debug",
+            "--compiler",
+            "gfortran",
+            "--c-compiler",
+            "gcc",
+            "--cxx-compiler",
+            "g++",
+            "--no-prune"
+          ],
+          "seconds": 1.408,
+          "ok": true,
+          "exit_code": 0,
+          "error": "",
+          "stdout_tail": " + mkdir -p build/dependencies\n[  0%]                   ad_kinds.f90\n[  5%]                   ad_kinds.f90  done.\n[  5%]                  testdrive.F90\n[ 10%]                  testdrive.F90  done.\n[ 10%]          testdrive_version.f90\n[ 15%]          testdrive_version.f90  done.\n[ 15%]                   ad_types.f90\n[ 21%]                   ad_types.f90  done.\n[ 21%]               ad_intrinsic.f90\n[ 26%]               ad_intrinsic.f90  done.\n[ 26%]                ad_operator.f90\n[ 31%]                ad_operator.f90  done.\n[ 31%]                ad_usr_func.f90\n[ 36%]                ad_usr_func.f90  done.\n[ 36%]                  auto_diff.f90\n[ 42%]                  auto_diff.f90  done.\n[ 42%]                 libAuto-Diff.a\n[ 47%]                 libAuto-Diff.a  done.\n[ 47%]                     bench1.f90\n[ 52%]                     bench1.f90  done.\n[ 52%]                      demo1.f90\n[ 57%]                      demo1.f90  done.\n[ 57%]                      demo2.f90\n[ 63%]                      demo2.f90  done.\n[ 63%]                      demo3.f90\n[ 68%]                      demo3.f90  done.\n[ 68%]                      demo4.f90\n[ 73%]                      demo4.f90  done.\n[ 73%]                         bench1\n[ 78%]                         bench1  done.\n[ 78%]                          demo1\n[ 84%]                          demo1  done.\n[ 84%]                          demo2\n[ 89%]                          demo2  done.\n[ 89%]                          demo3\n[ 94%]                          demo3  done.\n[ 94%]                          demo4\n[100%]                          demo4  done.\n[100%] Project compiled successfully.\n",
+          "stderr_tail": ""
+        }
+      ]
+    },
+    {
+      "repository": "jacobwilliams/kronrod",
+      "revision": "312278846b6e403fdea410a823d88ef4fb92a3cc",
+      "category": "Numerical Integration (Quadrature)",
+      "outcome": "build_pass",
+      "build_ok": true,
+      "application_targets": [
+        "kronrod",
+        "patterson_rule_compute",
+        "toms672"
+      ],
+      "error": "",
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "times": {
+        "total": 11.881049800198525,
+        "compile": 8.118,
+        "run": null,
+        "other": 3.763049800198525
+      },
+      "stages": [
+        {
+          "name": "Build",
+          "command": [
+            "fpm",
+            "build",
+            "--profile",
+            "debug",
+            "--compiler",
+            "gfortran",
+            "--c-compiler",
+            "gcc",
+            "--cxx-compiler",
+            "g++",
+            "--no-prune"
+          ],
+          "seconds": 8.118,
+          "ok": true,
+          "exit_code": 0,
+          "error": "",
+          "stdout_tail": " + mkdir -p build/dependencies\n[  0%]            toms672_support.f90\n[  5%]            toms672_support.f90  done.\n[  5%]                     mpfuna.f90\n[ 10%]                     mpfuna.f90  done.\n[ 10%]                     second.f90\n[ 15%]                     second.f90  done.\n[ 15%]                    toms672.f90\n[ 21%]                    toms672.f90  done.\n[ 21%]                   mpmask13.f90\n[ 26%]                   mpmask13.f90  done.\n[ 26%]                     mpfunb.f90\n[ 31%]                     mpfunb.f90  done.\n[ 31%]                     mpfunc.f90\n[ 36%]                     mpfunc.f90  done.\n[ 36%]                     mpfund.f90\n[ 42%]                     mpfund.f90  done.\n[ 42%]                     mpfune.f90\n[ 47%]                     mpfune.f90  done.\n[ 47%]                     mpfunf.f90\n[ 52%]                     mpfunf.f90  done.\n[ 52%]                    mpfung1.f90\n[ 57%]                    mpfung1.f90  done.\n[ 57%]                    mpfunh1.f90\n[ 63%]                    mpfunh1.f90  done.\n[ 63%]                   mpmodule.f90\n[ 68%]                   mpmodule.f90  done.\n[ 68%]                   libkronrod.a\n[ 73%]                   libkronrod.a  done.\n[ 73%]                       main.f90\n[ 78%]                       main.f90  done.\n[ 78%]     patterson_rule_compute.f90\n[ 84%]     patterson_rule_compute.f90  done.\n[ 84%]                        kronrod\n[ 89%]                        kronrod  done.\n[ 89%]         patterson_rule_compute\n[ 94%]         patterson_rule_compute  done.\n[ 94%]                        toms672\n[100%]                        toms672  done.\n[100%] Project compiled successfully.\n",
+          "stderr_tail": ""
+        }
+      ]
+    },
+    {
+      "repository": "Euler-37/integrate_fortran",
+      "revision": "5281426a7407aa8cef7f684ff8cf1f7e4a4df906",
+      "category": "Numerical Integration (Quadrature)",
+      "outcome": "build_pass",
+      "build_ok": true,
+      "application_targets": [],
+      "error": "",
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "times": {
+        "total": 3.305364199914038,
+        "compile": 0.384,
+        "run": null,
+        "other": 2.9213641999140383
+      },
+      "stages": [
+        {
+          "name": "Build",
+          "command": [
+            "fpm",
+            "build",
+            "--profile",
+            "debug",
+            "--compiler",
+            "gfortran",
+            "--c-compiler",
+            "gcc",
+            "--cxx-compiler",
+            "g++",
+            "--no-prune"
+          ],
+          "seconds": 0.384,
+          "ok": true,
+          "exit_code": 0,
+          "error": "",
+          "stdout_tail": " + mkdir -p build/dependencies\n[  0%]                  gauss_leg.f90\n[ 50%]                  gauss_leg.f90  done.\n[ 50%]                 libgauss_leg.a\n[100%]                 libgauss_leg.a  done.\n[100%] Project compiled successfully.\n",
+          "stderr_tail": ""
+        }
+      ]
+    },
+    {
+      "repository": "geospace-code/h5fortran",
+      "revision": "9c7fe2f404b68ea0836c39f4bea67919c07f25bb",
+      "category": "File I/O",
+      "outcome": "unsupported_dependency",
+      "build_ok": false,
+      "application_targets": [],
+      "error": "ValueError: hdf5: registry dependencies and metapackages are not supported yet; use a GitHub git dependency.",
+      "compiler": "",
+      "times": {
+        "total": 1.2044857998844236,
+        "compile": null,
+        "run": null,
+        "other": 1.2044857998844236
+      },
+      "stages": []
+    },
+    {
+      "repository": "freevryheid/flibcsv",
+      "revision": "ce19ebe6b08c58f1014527d27f27bdd97b38c835",
+      "category": "File I/O",
+      "outcome": "build_pass",
+      "build_ok": true,
+      "application_targets": [
+        "csvfix",
+        "csvinfo",
+        "csvtest",
+        "csvvalid"
+      ],
+      "error": "",
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "times": {
+        "total": 4.744132500141859,
+        "compile": 1.223,
+        "run": null,
+        "other": 3.521132500141859
+      },
+      "stages": [
+        {
+          "name": "Build",
+          "command": [
+            "fpm",
+            "build",
+            "--profile",
+            "debug",
+            "--compiler",
+            "gfortran",
+            "--c-compiler",
+            "gcc",
+            "--cxx-compiler",
+            "g++",
+            "--no-prune"
+          ],
+          "seconds": 1.223,
+          "ok": true,
+          "exit_code": 0,
+          "error": "",
+          "stdout_tail": " + mkdir -p build/dependencies\n[  0%]                    flibcsv.f90\n[  9%]                    flibcsv.f90  done.\n[  9%]                       libcsv.c\n[ 18%]                       libcsv.c  done.\n[ 18%]                       csvfix.c\n[ 27%]                       csvfix.c  done.\n[ 27%]                      csvinfo.c\n[ 36%]                      csvinfo.c  done.\n[ 36%]                      csvtest.c\n[ 45%]                      csvtest.c  done.\n[ 45%]                     csvvalid.c\n[ 54%]                     csvvalid.c  done.\n[ 54%]                   libflibcsv.a\n[ 63%]                   libflibcsv.a  done.\n[ 63%]                         csvfix\n[ 72%]                         csvfix  done.\n[ 72%]                        csvinfo\n[ 81%]                        csvinfo  done.\n[ 81%]                        csvtest\n[ 90%]                        csvtest  done.\n[ 90%]                       csvvalid\n[100%]                       csvvalid  done.\n[100%] Project compiled successfully.\n",
+          "stderr_tail": ""
+        }
+      ]
+    },
+    {
+      "repository": "furstj/interpolation",
+      "revision": "bf6d22ad931855d510dcfb5bdd6870cce8924b22",
+      "category": "Interpolation",
+      "outcome": "unsupported_dependency",
+      "build_ok": false,
+      "application_targets": [],
+      "error": "ValueError: stdlib: registry dependencies and metapackages are not supported yet; use a GitHub git dependency.",
+      "compiler": "",
+      "times": {
+        "total": 0.5342164000030607,
+        "compile": null,
+        "run": null,
+        "other": 0.5342164000030607
+      },
+      "stages": []
+    },
+    {
+      "repository": "vmagnin/formidi",
+      "revision": "db97a3bbc716c8050bcf8bb35a55dcddb8478c85",
+      "category": "Art and Music",
+      "outcome": "build_pass",
+      "build_ok": true,
+      "application_targets": [],
+      "error": "",
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "times": {
+        "total": 3.5280490000732243,
+        "compile": 1.081,
+        "run": null,
+        "other": 2.4470490000732243
+      },
+      "stages": [
+        {
+          "name": "Build",
+          "command": [
+            "fpm",
+            "build",
+            "--profile",
+            "debug",
+            "--compiler",
+            "gfortran",
+            "--c-compiler",
+            "gcc",
+            "--cxx-compiler",
+            "g++",
+            "--no-prune"
+          ],
+          "seconds": 1.081,
+          "ok": true,
+          "exit_code": 0,
+          "error": "",
+          "stdout_tail": " + mkdir -p build/dependencies\n[  0%]             GM_instruments.f90\n[  5%]             GM_instruments.f90  done.\n[  5%]       MIDI_control_changes.f90\n[ 10%]       MIDI_control_changes.f90  done.\n[ 10%]               music_common.f90\n[ 15%]               music_common.f90  done.\n[ 15%]                  utilities.f90\n[ 21%]                  utilities.f90  done.\n[ 21%]            MIDI_file_class.f90\n[ 26%]            MIDI_file_class.f90  done.\n[ 26%]                      music.f90\n[ 31%]                      music.f90  done.\n[ 31%]                   libformidi.a\n[ 36%]                   libformidi.a  done.\n[ 36%]                      blues.f90\n[ 42%]                      blues.f90  done.\n[ 42%]                      canon.f90\n[ 47%]                      canon.f90  done.\n[ 47%]           circle_of_fifths.f90\n[ 52%]           circle_of_fifths.f90  done.\n[ 52%]                   la_folia.f90\n[ 57%]                   la_folia.f90  done.\n[ 57%]                     motifs.f90\n[ 63%]                     motifs.f90  done.\n[ 63%]                 third_kind.f90\n[ 68%]                 third_kind.f90  done.\n[ 68%]                          blues\n[ 73%]                          blues  done.\n[ 73%]                          canon\n[ 78%]                          canon  done.\n[ 78%]               circle_of_fifths\n[ 84%]               circle_of_fifths  done.\n[ 84%]                       la_folia\n[ 89%]                       la_folia  done.\n[ 89%]                         motifs\n[ 94%]                         motifs  done.\n[ 94%]                     third_kind\n[100%]                     third_kind  done.\n[100%] Project compiled successfully.\n",
+          "stderr_tail": ""
+        }
+      ]
+    }
+  ],
+  "fix_verifications": [
+    {
+      "repository": "HugoMVale/odrpack95",
+      "revision": "12597b20812a76a4b702f985f6adc82632a18f60",
+      "tested_at": "2026-10-27T21:33:56.846937+00:00",
+      "outcome": "build_pass",
+      "preprocess": false,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "target_groups": {
+        "app": [],
+        "example": [
+          "example1",
+          "example2",
+          "example3",
+          "example4",
+          "example5"
+        ],
+        "test": []
+      },
+      "build_seconds": 3.269
+    },
+    {
+      "repository": "lauvergn/AD_dnSVM",
+      "revision": "32db0bd122ce1dae290e9cf4c1fda4ab8f3de6f1",
+      "tested_at": "2026-10-27T21:34:13.678535+00:00",
+      "outcome": "build_pass",
+      "preprocess": false,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "target_groups": {
+        "app": [
+          "Exa_dnS"
+        ],
+        "example": [],
+        "test": []
+      },
+      "build_seconds": 9.582
+    },
+    {
+      "repository": "princemahajan/FLINT",
+      "revision": "b6322037cb751b11fa64ea66cf23173ae572fff6",
+      "tested_at": "2026-10-27T21:34:34.820868+00:00",
+      "outcome": "build_pass",
+      "preprocess": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "target_groups": {
+        "app": [],
+        "example": [],
+        "test": []
+      },
+      "build_seconds": 1.349
+    }
+  ]
+}

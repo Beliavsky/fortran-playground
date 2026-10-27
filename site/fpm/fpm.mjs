@@ -1,6 +1,7 @@
 import {renderPlots} from '../plots.mjs';
 import {createEditor} from '../editors.mjs';
 import {serviceOrigin} from '../service_config.mjs';
+import {playgroundConfig} from '../config.mjs';
 import {githubRepository, pinnedSource, projectFiles, zipFiles, download} from './project_export.mjs';
 
 const get = id => document.getElementById(id);
@@ -24,6 +25,9 @@ let compilerLabels = {gfortran: 'GNU Fortran 16.2.0'};
 let compilerSelection = false;
 let translatedSupported = false;
 let examplesSupported = false;
+let preprocessingSupported = false;
+const preprocessingUnavailable = () => Boolean(get('preprocess').checked) && !preprocessingSupported;
+let knownTargets = {}, knownTargetsKey = '';
 const examplesUnavailable = () => get('action').value === 'example' && !examplesSupported;
 const translatedUnavailable = () => Boolean(get('subdirectory').value.trim()) && !translatedSupported;
 let packages = [], generalPackages = [], allPackages, translatedPackages, precompiled = {};
@@ -33,6 +37,7 @@ let topicButtons = [];
 const genericTopics = new Set(['fortran', 'modern-fortran', 'fortran-package-manager', 'fpm']);
 const translatedCollection = () => get('package-collection').value === 'translated-r';
 const allCollection = () => get('package-collection').value === 'all';
+const allPackagesEnabled = playgroundConfig.enableAllFpmPackages === true;
 const collectionLabels = {general: 'Selected Fortran packages', all: 'All Fortran packages', 'translated-r': 'Translated R packages'};
 const buildable = p => !p.fpm_status || p.fpm_status === 'available';
 const packageCategories = p => p.categories?.length ? p.categories : [p.category];
@@ -59,7 +64,10 @@ function controls() {
   if (ready && examplesUnavailable()) get('workflow-note').textContent = localExecution
     ? 'Restart the local server with the updated code to enable Run examples.'
     : 'The connected FPM service needs an update to support Run examples. Complete the backend deployment, then reload this page.';
-  get('submit').disabled = busy || !ready || translatedUnavailable() || examplesUnavailable();
+  if (ready && preprocessingUnavailable()) get('workflow-note').textContent = localExecution
+    ? 'Restart the updated local server to enable preprocessing.'
+    : 'Preprocessing requires the updated FPM backend deployment. Uncheck Preprocess to use package defaults.';
+  get('submit').disabled = busy || !ready || translatedUnavailable() || examplesUnavailable() || preprocessingUnavailable();
   get('cancel').disabled = !busy || !job;
   for (const id of ['workflow', 'action', 'package-url', 'revision', 'subdirectory', 'target', 'example', 'package-collection']) get(id).disabled = busy;
   get('compiler').disabled = busy || !ready || !compilerSelection;
@@ -74,9 +82,52 @@ function controls() {
     || precompiled[selected.id]?.revision !== selected.revision));
   get('download-main').disabled = busy;
   get('download-project').disabled = busy || exporting;
+  get('preprocess').disabled = busy;
+  renderTargetChoices();
   editor.setReadOnly(busy);
   editor.refresh();
 }
+
+function targetContext() {
+  return ['package-url', 'revision', 'subdirectory', 'compiler', 'workflow'].map(id => get(id).value).join('\n')
+    + '\n' + Boolean(get('preprocess').checked);
+}
+
+function renderTargetChoices() {
+  if (knownTargetsKey !== targetContext()) knownTargets = {};
+  const consumer = get('workflow').value === 'consumer';
+  const kind = {example: 'example', test: 'test'}[get('action').value] || 'app';
+  const names = knownTargets[kind] || [];
+  const picker = get('target-picker');
+  picker.hidden = consumer || !names.length;
+  picker.disabled = busy;
+  const previous = picker.value;
+  const placeholder = document.createElement('option'); placeholder.value = ''; placeholder.textContent = 'Choose a target…';
+  picker.replaceChildren(placeholder, ...names.map(name => {
+    const option = document.createElement('option'); option.value = name; option.textContent = name; return option;
+  }));
+  picker.value = names.includes(previous) ? previous : '';
+  if (Object.keys(knownTargets).length) get('targets').replaceChildren(...names.map(name => {
+    const option = document.createElement('option'); option.value = name; return option;
+  }));
+  get('target-discovery').hidden = consumer || !Object.keys(knownTargets).length;
+  get('target-summary').textContent = Object.entries(knownTargets).map(([group, values]) =>
+    `${{app: 'Applications', example: 'Examples', test: 'Compiled tests'}[group]}: ${values.length}`).join(' · ')
+    + '. Choose an action and target, then submit. Test builds and discovers test targets.';
+  for (const [id, group] of [['use-app-targets', 'app'], ['use-example-targets', 'example'], ['use-test-targets', 'test']]) {
+    get(id).hidden = !knownTargets[group]?.length || (group === 'example' && !examplesSupported);
+    get(id).disabled = busy;
+  }
+}
+get('target-picker').addEventListener('change', () => {
+  if (get('target-picker').value) get('target').value = get('target-picker').value;
+});
+for (const [id, action] of [['use-app-targets', 'run'], ['use-example-targets', 'example'], ['use-test-targets', 'test']]) {
+  get(id).addEventListener('click', () => {
+    get('action').value = action; resetTargets(); controls(); get('target-picker').focus();
+  });
+}
+get('preprocess').addEventListener('change', () => {resetTargets(); controls();});
 
 function renderTopics(packageEntry) {
   const container = get('package-topics');
@@ -141,11 +192,12 @@ function renderPackages() {
       message.textContent = `No matches in ${collectionLabels[get('package-collection').value]}${category ? ' / ' + category : ''}.`;
       matches.appendChild(message);
       const button = document.createElement('button'); button.type = 'button'; button.disabled = busy;
-      button.textContent = category ? 'Search all categories' : translatedCollection() ? 'Search Selected Fortran packages' : allCollection() ? 'Search Translated R packages' : 'Search All Fortran packages';
+      const nextCollection = translatedCollection() ? 'general' : allCollection() ? 'translated-r' : allPackagesEnabled ? 'all' : 'translated-r';
+      button.textContent = category ? 'Search all categories' : `Search ${collectionLabels[nextCollection]}`;
       button.addEventListener('click', async () => {
         if (category) get('package-category').value = '';
         else {
-          get('package-collection').value = translatedCollection() ? 'general' : allCollection() ? 'translated-r' : 'all';
+          get('package-collection').value = nextCollection;
           await selectCollection();
           get('package-search').value = query;
         }
@@ -163,6 +215,7 @@ get('package-search').addEventListener('input', renderPackages);
 get('package-category').addEventListener('change', renderPackages);
 
 async function selectCollection() {
+  if (!allPackagesEnabled && allCollection()) get('package-collection').value = 'general';
   const generation = ++collectionGeneration;
   const translated = translatedCollection();
   get('subdirectory-label').hidden = !translated;
@@ -207,6 +260,9 @@ async function selectCollection() {
     if (generation === collectionGeneration) {collectionLoading = false; renderPackages();}
   }
 }
+get('package-collection').replaceChildren(...['general', ...(allPackagesEnabled ? ['all'] : []), 'translated-r'].map(value => {
+  const option = document.createElement('option'); option.value = value; option.textContent = collectionLabels[value]; return option;
+}));
 get('package-collection').value = 'general';
 get('package-collection').addEventListener('change', selectCollection);
 
@@ -225,6 +281,7 @@ get('download-project').addEventListener('click', async () => {
   // Snapshot everything before fetching tools, so edits during the download
   // cannot mix different main programs, inputs or dependency selections.
   const snapshot = {source: editor.getValue(), stdin: get('stdin').value,
+    preprocess: Boolean(get('preprocess').checked),
     url: get('package-url').value.trim(), revision: get('revision').value.trim(),
     subdirectory: get('subdirectory').value.trim(), packages};
   exporting = true; controls();
@@ -243,7 +300,7 @@ get('download-project').addEventListener('click', async () => {
 });
 
 function resetTargets() {
-  const key = [get('package-url').value, get('revision').value, get('subdirectory').value, get('action').value, get('compiler').value].join('\n');
+  const key = targetContext() + '\n' + get('action').value;
   if (targetsKey !== key) {
     targetsKey = key;
     get('target').value = '';
@@ -268,6 +325,9 @@ export function resultText(result) {
     if (stage.exit_code !== 0) lines.push(`Exit code: ${stage.exit_code}`);
   }
   if (result.targets?.length) lines.push('', `Available targets: ${result.targets.join(', ')}`);
+  for (const [kind, names] of Object.entries(result.target_groups || {})) {
+    if (names.length) lines.push(`${{app: 'Applications', example: 'Examples', test: 'Tests'}[kind]}: ${names.join(', ')}`);
+  }
   if (result.total_seconds !== undefined) lines.push('', `Total ${result.local ? 'local' : 'service'} time: ${result.total_seconds.toFixed(3)} seconds`);
   return lines.join('\n');
 }
@@ -291,7 +351,7 @@ async function request(path, options = {}) {
 }
 
 async function submit() {
-  if (busy || !ready || translatedUnavailable() || examplesUnavailable()) return;
+  if (busy || !ready || translatedUnavailable() || examplesUnavailable() || preprocessingUnavailable()) return;
   busy = true;
   job = '';
   controls();
@@ -304,6 +364,7 @@ async function submit() {
       ...(get('subdirectory').value.trim() ? {subdirectory: get('subdirectory').value.trim()} : {}),
       ...(compilerSelection ? {compiler: get('compiler').value} : {}),
       workflow: get('workflow').value, action: get('action').value, target: get('target').value.trim(),
+      ...(get('preprocess').checked ? {preprocess: true} : {}),
       source: editor.getValue(), stdin: get('stdin').value};
     const submitted = await request('/api/jobs', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload)});
     job = submitted.id;
@@ -316,6 +377,9 @@ async function submit() {
       if (response.state !== 'done') continue;
       terminal = true;
       const result = response.result;
+      knownTargetsKey = targetContext();
+      knownTargets = result.target_groups || (Array.isArray(result.targets) ? {
+        [{example: 'example', test: 'test'}[get('action').value] || 'app']: result.targets} : {});
       get('output').value = resultText(result);
       renderPlots(get('plot-results'), result);
       get('status').textContent = nothingRun(result) ? 'BUILD PASS — nothing run'
@@ -398,6 +462,17 @@ function selectPackage() {
         : precompiled[selected.id]?.revision === selected.revision ? 'Verified precompiled GNU 16 library.'
         : 'Precompiled build is not available on this service yet.');
     for (const child of [repository, separator, revision, detail]) note.appendChild(child);
+    if (selected.audit) {
+      const audit = document.createElement('span');
+      audit.textContent = ` Last hosted GNU 16 audit (${selected.audit.tested_at.slice(0, 10)}, commit ${selected.audit.revision.slice(0, 7)}): ${selected.audit.summary}. This records that revision; the default branch may have changed.`;
+      note.appendChild(audit);
+      if (selected.audit.verification) {
+        const verified = document.createElement('span');
+        verified.textContent = ' Verified with the numerical-library/preprocessing service update: build passed'
+          + (selected.audit.verification.preprocess ? ' with Preprocess enabled' : '') + '. See the audit report for details.';
+        note.appendChild(verified);
+      }
+    }
   }
   controls();
 }
@@ -408,12 +483,13 @@ get('load-package').addEventListener('click', () => {
   get('package-url').value = `https://github.com/${selected.repository}`;
   get('revision').value = selected.revision;
   get('subdirectory').value = selected.subdirectory || '';
+  get('preprocess').checked = Boolean(selected.audit?.verification?.preprocess);
   if (!localExecution && !selected.subdirectory) get('compiler').value = 'gfortran';
   get('connection').textContent = localExecution
     ? `${compilerLabels[get('compiler').value] || 'No compiler found'} · Local FPM · Builds from scratch`
     : `${compilerLabels[get('compiler').value]} · FPM 0.12.0 · Separate package service`;
   get('workflow').value = selected.subdirectory || !selected.source ? 'package' : 'consumer';
-  get('action').value = 'run';
+  get('action').value = selected.subdirectory || selected.source ? 'run' : 'build';
   if (selected.source) editor.setValue(selected.source);
   sourceLinks(selected);
   resetTargets(); controls();
@@ -476,6 +552,7 @@ async function initialize() {
     precompiled = health.precompiled ?? {};
     translatedSupported = health.features?.translated_r === true;
     examplesSupported = health.features?.run_examples === true;
+    preprocessingSupported = health.features?.preprocess === true;
     if (localExecution) {
       get('compiler').replaceChildren(...Object.entries(compilerLabels).map(([value, textContent]) => {
         const option = document.createElement('option'); Object.assign(option, {value, textContent}); return option;
@@ -504,7 +581,7 @@ async function initialize() {
     : 'Precompiled packages have not been deployed on this service yet. The existing examples and custom URLs remain available.';
   controls();
   const linkedCollection = typeof location !== 'undefined' ? new URLSearchParams(location.search).get('collection') : '';
-  if (['all', 'translated-r'].includes(linkedCollection)) {
+  if (linkedCollection === 'translated-r' || (linkedCollection === 'all' && allPackagesEnabled)) {
     get('package-collection').value = linkedCollection;
     await selectCollection();
   }

@@ -5,7 +5,7 @@ import tempfile
 import tomllib
 import unittest
 
-from fpm_collections import R_REPOSITORY, TranslatedRPreparer, source_preparer, validate_request
+from fpm_collections import R_REPOSITORY, PortablePreparer, TranslatedRPreparer, source_preparer, validate_request
 from fpm_sources import Preparer
 
 COMMIT = 'a' * 40
@@ -71,7 +71,8 @@ class CollectionTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate_request({**PAYLOAD, 'url': 'https://github.com/example/other'})
         with tempfile.TemporaryDirectory() as temporary:
-            self.assertIs(type(source_preparer(temporary, {})), Preparer)
+            self.assertIs(type(source_preparer(temporary, {})), PortablePreparer)
+            self.assertIsInstance(source_preparer(temporary, {}), Preparer)
             self.assertIsInstance(source_preparer(temporary, PAYLOAD), TranslatedRPreparer)
 
     def test_local_compaction_preserves_subdirectory_and_sibling(self):

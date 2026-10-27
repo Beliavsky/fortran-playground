@@ -119,6 +119,7 @@ def main(argv, *, hosted):
     parser.add_argument('--fpm', required=True, metavar='GITHUB_URL' if hosted else 'DIRECTORY')
     parser.add_argument('--action', choices=('build', 'run', 'test', 'example'), default='run')
     parser.add_argument('--compile-only', action='store_true', help='Alias for --action build')
+    parser.add_argument('--preprocess', action='store_true', help='Enable Fortran preprocessing in addition to package settings')
     parser.add_argument('--target', default='', help='Names or * and ? patterns, separated by spaces/commas; quote lists in the shell')
     parser.add_argument('--main', type=Path, help='Local UTF-8 main program using the package; Build or Run only')
     group = parser.add_mutually_exclusive_group()
@@ -175,7 +176,8 @@ def main(argv, *, hosted):
             owner_key = (os.environ.get('P2F_OWNER_KEY') or getpass.getpass('Owner key: ')) if args.owner else ''
             client = PlaygroundClient(url, args.origin, owner_key=owner_key)
             payload = validate_request({'url': args.fpm, 'revision': args.revision, 'subdirectory': args.subdirectory, 'action': action,
-                'target': args.target, 'source': source or '', 'workflow': 'consumer' if source is not None else 'package', 'stdin': stdin})
+                'target': args.target, 'source': source or '', 'workflow': 'consumer' if source is not None else 'package', 'stdin': stdin,
+                **({'preprocess': True} if args.preprocess else {})})
             health = client.request('health')
             available = health.get('compilers', {'gfortran': health.get('compiler')})
             missing = [name for name in selected if name not in available]
@@ -201,7 +203,7 @@ def main(argv, *, hosted):
                 overrides[name] = path
             options = {'action': action, 'target': args.target, 'source': source, 'stdin': stdin,
                        'profile': args.profile, 'compile_timeout': args.compile_timeout, 'run_timeout': args.run_timeout,
-                       'output_limit': args.max_output_mb * 1024 * 1024, 'fail_fast': args.fail_fast}
+                       'output_limit': args.max_output_mb * 1024 * 1024, 'fail_fast': args.fail_fast, 'preprocess': args.preprocess}
             def update(row):
                 if row['status'] != 'RUNNING':
                     print_row(row, args.terse)

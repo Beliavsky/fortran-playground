@@ -92,6 +92,7 @@ class TargetTests(unittest.TestCase):
                  patch.object(worker.subprocess, 'check_output', return_value=COMPILERS['gfortran']['version']):
                 result = worker.execute({'request': payload, 'bundle': '', 'root': '.'})
                 self.assertTrue(result['ok'], result)
+                self.assertEqual(result['target_groups']['example'], ['demo_sample'])
                 self.assertEqual(result['stages'][-1]['name'], 'Examples')
                 self.assertIn('--example', commands[-1])
                 names.return_value = []

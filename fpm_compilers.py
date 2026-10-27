@@ -11,3 +11,7 @@ COMPILERS = {
 def compiler_flags(compiler):
     return ['--profile', 'debug', '--compiler', COMPILERS[compiler]['command'],
             '--c-compiler', 'gcc', '--cxx-compiler', 'g++', '--no-prune']
+
+
+def preprocessing_flag(compiler, *, windows=False):
+    return ('/fpp' if windows else '-fpp') if compiler == 'ifx' else '--cpp' if compiler == 'lfortran' else '-cpp'
