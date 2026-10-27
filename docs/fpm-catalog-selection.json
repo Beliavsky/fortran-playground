@@ -205,6 +205,21 @@
       "repository": "jacobwilliams/polyroots-fortran",
       "revision": "165ed6fbec98cc23d9ed4784fbc4708adb5e0bcf",
       "error": "The pinned library links BLAS and LAPACK, which are not installed as external system libraries in this sandbox image."
+    },
+    {
+      "repository": "MilanSkocic/codata",
+      "revision": "d0c9b1552f0fa483a364de4a69e82c5e23344caf",
+      "error": "stdlib: registry dependencies and metapackages are not supported yet; use a GitHub git dependency."
+    },
+    {
+      "repository": "loiseaujc/SpecialMatrices",
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "error": "stdlib: registry dependencies and metapackages are not supported yet; use a GitHub git dependency."
+    },
+    {
+      "repository": "jacobwilliams/simulated-annealing",
+      "revision": "76a62c019ec861737c51ffedf3e53aa330b432d3",
+      "error": "The current manifest uses list-valued library.type, rejected by FPM 0.12.0. Releases 2.0/2.1 have the same syntax; releases 1.1/1.2 link external BLAS/LAPACK absent from this image."
     }
   ],
   "selection_notes": "Prioritize reuse and popularity, then broaden numerical methods and practical utilities; require a checked GNU 16 consumer example and successful cached-main verification.",
@@ -212,5 +227,38 @@
     "urbanjost/orderpack": [
       "urbanjost/M_orderpack"
     ]
-  }
+  },
+  "expansions": [
+    {
+      "date": "2026-10-26",
+      "candidate_count": 32,
+      "selected": [
+        "perazz/fortran-regex",
+        "perazz/fortran-shlex",
+        "perazz/fortran-primes",
+        "LKedward/fhash",
+        "wavebitscientific/functional-fortran",
+        "Nicholaswogan/forwarddiff",
+        "gha3mi/kinds",
+        "vmagnin/forcolormap",
+        "art-rasa/rational_number",
+        "jchristopherson/fortran_test_helper",
+        "urbanjost/M_match",
+        "urbanjost/M_list",
+        "urbanjost/M_color",
+        "jacobwilliams/fmin",
+        "jacobwilliams/slsqp",
+        "jacobwilliams/lbfgsb",
+        "jacobwilliams/specfun",
+        "jacobwilliams/regridpack",
+        "jacobwilliams/splpak",
+        "jacobwilliams/Fortran-Astrodynamics-Toolkit",
+        "ShinobuAmasaki/forgex",
+        "jchristopherson/ferror",
+        "urbanjost/M_framework"
+      ],
+      "rationale": "Broaden optimization, special functions, automatic differentiation, text parsing, containers, colors and orbital mechanics. Favor reusable dependencies and popular libraries, with a checked editable consumer example for each.",
+      "popularity_note": "Star counts are a dated GitHub snapshot; missing counters are omitted, rather than reported as zero."
+    }
+  ]
 }

@@ -425,6 +425,292 @@
       "description": "Sorting, ranking, medians, and partial ordering of arrays.",
       "dependencies": [],
       "dependents_in_sample": 2
+    },
+    {
+      "id": "fortran-regex",
+      "repository": "perazz/fortran-regex",
+      "revision": "96ab33fe003862a28cec91ddd170ac0e86c26c87",
+      "archive_sha256": "a11de40cd2ac971b4e775a6bac2d537f3efa263562688525df18ba2722b944eb",
+      "license": "MIT",
+      "stars": 30,
+      "category": "Text parsing",
+      "description": "Search text with a lightweight regular expression engine.",
+      "dependencies": [],
+      "dependents_in_sample": 1
+    },
+    {
+      "id": "fortran-shlex",
+      "repository": "perazz/fortran-shlex",
+      "revision": "e20b6f86c82e33fae78b54b074bab5369efde6a3",
+      "archive_sha256": "59a882bf8f3c69ba1684947e0f9e67d91c385b1eaec2213a6b4005c35168b346",
+      "license": "MIT",
+      "stars": 10,
+      "category": "Text parsing",
+      "description": "Split command strings into tokens while respecting quotes.",
+      "dependencies": [],
+      "dependents_in_sample": 1
+    },
+    {
+      "id": "fortran-primes",
+      "repository": "perazz/fortran-primes",
+      "revision": "817abbf15c2565d2b92c35546d9e18152eb02e2c",
+      "archive_sha256": "1ae02b151c246b976ac7ad34d117ef9990d82cee2a68b4d2946dd100024763c1",
+      "license": "MIT; source headers also identify CC-BY-NC-4.0 components",
+      "stars": 14,
+      "category": "Number theory",
+      "description": "Generate prime numbers, test primality, and factor integers.",
+      "dependencies": [],
+      "dependents_in_sample": 0
+    },
+    {
+      "id": "fhash",
+      "repository": "LKedward/fhash",
+      "revision": "3230739066bd828cd2aa49eca48327a607d57732",
+      "archive_sha256": "2b44acb2c6be7524eda94f813367e3ca1c636b44c4ccd96524f6b21c4c28efeb",
+      "license": "MIT",
+      "stars": 42,
+      "category": "Containers and graphs",
+      "description": "Hash tables with generic keys and values.",
+      "dependencies": [],
+      "dependents_in_sample": 1
+    },
+    {
+      "id": "functional-fortran",
+      "repository": "wavebitscientific/functional-fortran",
+      "revision": "2457a66531b3b803db36928fec21d74a20434830",
+      "archive_sha256": "6421bd15606b480acccc18fd1142afde228ee83a2dd816dd8b9f2a9f093f08f1",
+      "license": "BSD-3-Clause",
+      "stars": 438,
+      "category": "General utilities",
+      "description": "Functional array operations including map, filter, fold, and ranges.",
+      "dependencies": [],
+      "dependents_in_sample": 0
+    },
+    {
+      "id": "forwarddiff",
+      "repository": "Nicholaswogan/forwarddiff",
+      "revision": "2388e8ecf300a7bbc0904feab47023413464edf9",
+      "archive_sha256": "99643ce39a15906f58a7af9ec7c7edfeaadb161d8f3087e0e5dc8d0961f4f329",
+      "license": "MIT",
+      "stars": 28,
+      "category": "Differentiation",
+      "description": "Forward automatic differentiation using dual numbers (Differentia).",
+      "dependencies": [],
+      "dependents_in_sample": 0
+    },
+    {
+      "id": "kinds",
+      "repository": "gha3mi/kinds",
+      "revision": "811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f",
+      "archive_sha256": "495d1133b1630dea4f38d69e5e3189e3279e4ce5836da1a7aec8a822bbe16518",
+      "license": "BSD-3-Clause (LICENSE; manifest says license)",
+      "category": "General utilities",
+      "description": "Named real and integer kinds with configurable working precision.",
+      "dependencies": [],
+      "dependents_in_sample": 6
+    },
+    {
+      "id": "forcolormap",
+      "repository": "vmagnin/forcolormap",
+      "revision": "e720711cbe941e1c586da567315464cb344859c4",
+      "archive_sha256": "9cf0a46b5ce69451360604421e5e17f7a5ced5cee6820114218c6188d4416962",
+      "license": "MIT",
+      "stars": 26,
+      "category": "Colors",
+      "description": "Scientific colormaps mapping scalar values to RGB colors.",
+      "dependencies": [
+        {
+          "repository": "gha3mi/forimage",
+          "revision": "65f53ce6a53c3a3ee38f05e6a065505bc3fa0dfb",
+          "sha256": "2147970d0b3e3b10c6f7ea5bc8a79bdfab67331e8e98fc309c2ee22e85003118"
+        }
+      ],
+      "dependents_in_sample": 1
+    },
+    {
+      "id": "rational_number",
+      "repository": "art-rasa/rational_number",
+      "revision": "b6ff702a0f51b950798f2a31c5bd81ae0c15385a",
+      "archive_sha256": "1a62823cabbfe76f1957129d84cbb70b27f3ba1d82b361e702d9ed2450630f87",
+      "license": "MIT",
+      "stars": 1,
+      "category": "Number theory",
+      "description": "Exact rational arithmetic with integer numerators and denominators.",
+      "dependencies": [
+        {
+          "repository": "art-rasa/math",
+          "revision": "83035edb1963203401348fcfb55902071cc270db",
+          "sha256": "9e8848c5b5d07df649853309095df5fdbe56f376ec47047520578b6815fbb607"
+        }
+      ],
+      "dependents_in_sample": 0
+    },
+    {
+      "id": "fortran_test_helper",
+      "repository": "jchristopherson/fortran_test_helper",
+      "revision": "1557b1485d8a5b042862042552f1e1a34552ca5e",
+      "archive_sha256": "846d7506d044b41eb307619d84369d97afdd8b4838ea19eae6803735dffc10e2",
+      "license": "GPL-3.0",
+      "category": "Testing",
+      "description": "Assertions and random array generators for numerical tests.",
+      "dependencies": [],
+      "dependents_in_sample": 9
+    },
+    {
+      "id": "m_match",
+      "repository": "urbanjost/M_match",
+      "revision": "8bfa9eb4b45a32e6e32234ce4dd6d883a032bb6b",
+      "archive_sha256": "1978082fa464fe4a22541c6e614e90637accedf87f170477ff227bda4d6c9536",
+      "license": "MIT",
+      "stars": 10,
+      "category": "Text parsing",
+      "description": "Pattern matching with a compact grep-style regular expression syntax.",
+      "dependencies": [],
+      "dependents_in_sample": 2
+    },
+    {
+      "id": "m_list",
+      "repository": "urbanjost/M_list",
+      "revision": "c7836531355f0aa95296bd668f0a3d60969ea5fc",
+      "archive_sha256": "d1d1bd016619f13ae823804cac9ad68ee60819cea2cb4349629ba01ea45355ab",
+      "license": "Public Domain",
+      "category": "Containers and graphs",
+      "description": "Maintain sorted arrays and small dictionaries through insertion and lookup.",
+      "dependencies": [],
+      "dependents_in_sample": 2,
+      "stars": 1
+    },
+    {
+      "id": "m_color",
+      "repository": "urbanjost/M_color",
+      "revision": "2e52d6ee6fde8e94ac17ab2cc54cbc497c15962c",
+      "archive_sha256": "d43936d2bcd10e51267a1466821bd56eb3d5fe1d69770c6fa4f5419bbe4a6423",
+      "license": "Public Domain",
+      "category": "Colors",
+      "description": "Convert color names and RGB, HLS, HSV, and other color models.",
+      "dependencies": [],
+      "dependents_in_sample": 0,
+      "stars": 2
+    },
+    {
+      "id": "fmin",
+      "repository": "jacobwilliams/fmin",
+      "revision": "3d094fba0e9b98d132414f8442c7c76d32da1d30",
+      "archive_sha256": "ea895586cc9219dcdf4270a301a02ea2fa7154cea29318f7520cd58cbc4f0e27",
+      "license": "BSD-3",
+      "category": "Roots and optimization",
+      "description": "Derivative-free minimization of a scalar function on an interval.",
+      "dependencies": [],
+      "dependents_in_sample": 1,
+      "stars": 8
+    },
+    {
+      "id": "slsqp",
+      "repository": "jacobwilliams/slsqp",
+      "revision": "e28b14fc48189fd4fce5f359327164fca55b52be",
+      "archive_sha256": "4163e6844f6ffef649e9650c3123173e48ad6140cd1130c9eb2cf4f1d43eef88",
+      "license": "BSD-3-Clause",
+      "category": "Roots and optimization",
+      "description": "Sequential least-squares optimization with bounds and nonlinear constraints.",
+      "dependencies": [],
+      "dependents_in_sample": 0,
+      "stars": 114
+    },
+    {
+      "id": "lbfgsb",
+      "repository": "jacobwilliams/lbfgsb",
+      "revision": "ce1a9322016d6f31b652393e000a914b63af6fef",
+      "archive_sha256": "2be49cea9582c8766d328d3ec4d16542f397ed3095ab425adf687f7bc5c4de88",
+      "license": "BSD-3",
+      "category": "Roots and optimization",
+      "description": "Limited-memory quasi-Newton optimization with variable bounds.",
+      "dependencies": [],
+      "dependents_in_sample": 0,
+      "stars": 14
+    },
+    {
+      "id": "specfun",
+      "repository": "jacobwilliams/specfun",
+      "revision": "e74d9c810d5c9248b5d8ffab4b766e7bb22ffd23",
+      "archive_sha256": "0aa46035360d2d462e1d8cfe03bac7c433bf44d021f98074215db40984f7c05b",
+      "license": "BSD-3",
+      "category": "Special functions",
+      "description": "Special functions including Bessel, Airy, gamma, and related functions.",
+      "dependencies": [],
+      "dependents_in_sample": 0,
+      "stars": 8
+    },
+    {
+      "id": "regridpack",
+      "repository": "jacobwilliams/regridpack",
+      "revision": "e47346d9244ab93f70367f16364d73217fbc0451",
+      "archive_sha256": "e1fb4cdf060a0c8c3d9112bef5eaad01e4936486b9ffe1072cff8729643503c8",
+      "license": "BSD-3",
+      "category": "Interpolation",
+      "description": "Linear and cubic interpolation between one- to four-dimensional grids.",
+      "dependencies": [],
+      "dependents_in_sample": 0,
+      "stars": 20
+    },
+    {
+      "id": "splpak",
+      "repository": "jacobwilliams/splpak",
+      "revision": "35340cb2d193c7aa44f03978db21660df8297cc0",
+      "archive_sha256": "3909e8aa03c933e98106793f8a68b1843f4ad94bd3e6620c89bf1032a0d1235b",
+      "license": "Apache",
+      "category": "Interpolation",
+      "description": "Least-squares fitting and evaluation of multidimensional cubic splines.",
+      "dependencies": [],
+      "dependents_in_sample": 0,
+      "stars": 12
+    },
+    {
+      "id": "fortran-astrodynamics-toolkit",
+      "repository": "jacobwilliams/Fortran-Astrodynamics-Toolkit",
+      "revision": "3cf0a0a8ba2abf8bc4995c6da5b6abae07b45a0a",
+      "archive_sha256": "14f756464ce125fae2aef47481996915d87d62b54a65b24ee0a8bed75857ac6f",
+      "license": "BSD-3",
+      "category": "Astronomy and orbits",
+      "description": "Orbital mechanics, coordinate transformations, and spacecraft trajectory tools.",
+      "dependencies": [],
+      "dependents_in_sample": 1,
+      "stars": 212
+    },
+    {
+      "id": "forgex",
+      "repository": "ShinobuAmasaki/forgex",
+      "revision": "e79f4792a1ac776fb0b1612de560f7791795ea8e",
+      "archive_sha256": "1f88615d1cb88564697b46a958ac1d3a9f6e625c911a451e3f1784e3449d8550",
+      "license": "MIT",
+      "category": "Text parsing",
+      "description": "Regular expressions with Unicode support and full or substring matching.",
+      "dependencies": [],
+      "dependents_in_sample": 0,
+      "stars": 30
+    },
+    {
+      "id": "ferror",
+      "repository": "jchristopherson/ferror",
+      "revision": "9d6c9750f5c14ef2c806104ea8dfdfc9ce91efed",
+      "archive_sha256": "b2c2c059d263b38484acf6956fa6416f899d739d3669906931aa1c08441510bd",
+      "license": "GPL-3.0",
+      "category": "Error handling",
+      "description": "Structured error and warning reporting with configurable handling.",
+      "dependencies": [],
+      "dependents_in_sample": 1,
+      "stars": 11
+    },
+    {
+      "id": "m_framework",
+      "repository": "urbanjost/M_framework",
+      "revision": "05134b388078ce5e2e8391ceba5e04a6dce7a640",
+      "archive_sha256": "823bb7394a8fd80d213741d36531101136727d256f80168352b26f1dea5653c4",
+      "license": "CC0-1.0",
+      "category": "Testing",
+      "description": "Unit testing, floating-point comparisons, and diagnostic formatting.",
+      "dependencies": [],
+      "dependents_in_sample": 5,
+      "stars": 6
     }
   ]
 }
