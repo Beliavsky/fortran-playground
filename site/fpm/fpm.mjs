@@ -22,6 +22,8 @@ editor.setIndentation({width: 3, automatic: true});
 let origin = '', examples = [], busy = false, job = '', targetsKey = '', ready = false;
 let compilerLabels = {gfortran: 'GNU Fortran 16.2.0'};
 let compilerSelection = false;
+let translatedSupported = false;
+const translatedUnavailable = () => Boolean(get('subdirectory').value.trim()) && !translatedSupported;
 let packages = [], generalPackages = [], translatedPackages, precompiled = {};
 let collectionLoading = false, collectionGeneration = 0;
 const translatedCollection = () => get('package-collection').value === 'translated-r';
@@ -42,7 +44,10 @@ function controls() {
     : 'Build the downloaded project itself. Run uses an application target; Test runs all tests unless you select one. Leave the target blank to discover available applications.';
   const labels = {run: 'Compile and Run', build: 'Build', test: 'Build and Test'};
   get('submit').textContent = labels[get('action').value];
-  get('submit').disabled = busy || !ready;
+  if (ready && translatedUnavailable()) get('workflow-note').textContent = localExecution
+    ? 'Restart the local server with the updated code to enable translated R packages.'
+    : 'The connected FPM service does not yet support translated R packages. Complete the updated FPM backend deployment, then reload this page. General packages remain available.';
+  get('submit').disabled = busy || !ready || translatedUnavailable();
   get('cancel').disabled = !busy || !job;
   for (const id of ['workflow', 'action', 'package-url', 'revision', 'subdirectory', 'target', 'example', 'package-collection']) get(id).disabled = busy;
   get('compiler').disabled = busy || !ready || !compilerSelection;
@@ -191,7 +196,7 @@ async function request(path, options = {}) {
 }
 
 async function submit() {
-  if (busy || !ready) return;
+  if (busy || !ready || translatedUnavailable()) return;
   busy = true;
   job = '';
   controls();
@@ -258,6 +263,7 @@ for (const id of ['package-url', 'revision', 'subdirectory']) get(id).addEventLi
   resetTargets();
   sourceLinks({repository: githubRepository(get('package-url').value.trim()),
     revision: get('revision').value.trim(), subdirectory: get('subdirectory').value.trim()});
+  controls();
 });
 get('example').addEventListener('change', controls);
 get('available-package').addEventListener('change', () => {
@@ -344,6 +350,7 @@ async function initialize() {
     compilerSelection = Boolean(health.compilers);
     compilerLabels = health.compilers ?? {gfortran: health.compiler};
     precompiled = health.precompiled ?? {};
+    translatedSupported = health.features?.translated_r === true;
     if (localExecution) {
       get('compiler').replaceChildren(...Object.entries(compilerLabels).map(([value, textContent]) => {
         const option = document.createElement('option'); Object.assign(option, {value, textContent}); return option;

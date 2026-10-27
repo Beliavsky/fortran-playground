@@ -22,7 +22,9 @@ FPM_URL = RECIPE['fpm_url']
 FPM_SHA256 = RECIPE['fpm_sha256']
 OWNER_SECRET_NAME = os.environ.get('FPM_OWNER_SECRET', '')
 ENABLED_COMPILERS = tuple(json.loads(os.environ.get('FPM_ENABLED_COMPILERS', '["gfortran"]')))
-PRECOMPILED = json.loads(os.environ.get('FPM_PRECOMPILED', '{}'))
+PRECOMPILED_FILE = os.environ.get('FPM_PRECOMPILED_FILE', '')
+PRECOMPILED = (json.loads(Path(PRECOMPILED_FILE).read_text(encoding='utf-8')) if PRECOMPILED_FILE
+               else json.loads(os.environ.get('FPM_PRECOMPILED', '{}')))
 if modal.is_local():
     from fpm_cache import recipe_identity
     RECIPE_ID = recipe_identity()
@@ -93,7 +95,8 @@ def runtime_images(compilers):
 
 container_settings = {'FPM_IMAGE_NAME': IMAGE_NAME, 'FPM_OWNER_SECRET': OWNER_SECRET_NAME,
                       'FPM_BUILD_RECIPE': RECIPE_ID,
-                      'FPM_PRECOMPILED': json.dumps(PRECOMPILED),
+                      **({'FPM_PRECOMPILED_FILE': '/root/fpm-precompiled.json'} if PRECOMPILED_FILE
+                         else {'FPM_PRECOMPILED': json.dumps(PRECOMPILED)}),
                       'FPM_ENABLED_COMPILERS': json.dumps(ENABLED_COMPILERS)}
 broker_image = (modal.Image.debian_slim(python_version='3.12').pip_install('tomli-w==1.2.0')
     .env(container_settings)
@@ -116,6 +119,12 @@ api_image = (modal.Image.debian_slim(python_version='3.12').pip_install('fastapi
     .add_local_file(ROOT / 'fpm_catalog.json', '/root/fpm_catalog.json', copy=True)
     .add_local_file(ROOT / 'fpm_api.py', '/root/fpm_api.py', copy=True)
     .add_local_file(ROOT / 'fpm_collections.py', '/root/fpm_collections.py', copy=True))
+
+if PRECOMPILED_FILE:
+    # Routing is private deployment configuration, never a worker input or a
+    # library recipe input. Both broker and API import it at container startup.
+    broker_image = broker_image.add_local_file(Path(PRECOMPILED_FILE), '/root/fpm-precompiled.json', copy=True)
+    api_image = api_image.add_local_file(Path(PRECOMPILED_FILE), '/root/fpm-precompiled.json', copy=True)
 
 
 def bundle_sources(directory):

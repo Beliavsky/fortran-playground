@@ -60,6 +60,7 @@ globalThis.fetch = async (url, options = {}) => {
   else if (url === './translated-r.json') {translatedFetches++; value = translated;}
   else if (url === './service.json') value = {url: unconfigured ? '' : 'https://fpm.modal.run'};
   else if (url.endsWith('/api/health')) value = {ok: true, compiler: 'GNU Fortran 16.2.0', fpm: '0.12.0',
+    ...(legacyService ? {} : {features: {translated_r: true}}),
     ...(legacyService ? {} : {compilers: {gfortran: 'GNU Fortran 16.2.0', ifx: 'Intel ifx',
       ...(localExecution ? {lfortran: 'LFortran local'} : {})},
       precompiled: localExecution ? {} : {[packages[0].id]: {revision: packages[0].revision, compiler: 'gfortran'}}}),
@@ -238,8 +239,14 @@ assert.equal(get('workflow').value, 'package');
 assert.equal(get('subdirectory').value, 'Metrics');
 assert.match(get('package-source').href, /\/Metrics$/);
 await get('submit').listeners.click();
-assert.equal(submissions.at(-1).subdirectory, 'Metrics');
-assert.equal(submissions.at(-1).workflow, 'package');
+if (legacyService) {
+  assert.equal(get('submit').disabled, true);
+  assert.match(get('workflow-note').textContent, /backend deployment/);
+  assert.notEqual(submissions.at(-1).subdirectory, 'Metrics', 'An old API must not receive unsupported requests');
+} else {
+  assert.equal(submissions.at(-1).subdirectory, 'Metrics');
+  assert.equal(submissions.at(-1).workflow, 'package');
+}
 get('workflow').value = 'consumer'; get('workflow').listeners.change();
 get('source').value = 'program main\nprint *, 42\nend program';
 await get('download-project').listeners.click();
@@ -249,6 +256,7 @@ get('package-collection').value = 'general';
 await get('package-collection').listeners.change();
 get('example').value = examples[0].name; get('load-example').listeners.click();
 assert.equal(get('subdirectory').value, '', 'Loading a general example clears the translated directory');
+assert.equal(get('submit').disabled, false, 'General examples stay usable with an older service');
 assert.equal(translatedFetches, 1);
 globalThis.setTimeout = originalTimeout;
 console.log('FPM UI: workflows, targets, stdin, results, no automatic submissions, and error recovery passed.');

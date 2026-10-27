@@ -4,6 +4,8 @@ import asyncio
 from pathlib import Path
 import runpy
 import types
+import json
+import tempfile
 import unittest
 from unittest.mock import patch
 from xdeploy_fpm import verify_api
@@ -14,6 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 class Image:
     def __init__(self):
         self.environment = {}
+        self.files = []
 
     @classmethod
     def from_registry(cls, *args, **kwargs): return cls()
@@ -21,7 +24,9 @@ class Image:
     def debian_slim(cls, *args, **kwargs): return cls()
     def pip_install(self, *args, **kwargs): return self
     def run_commands(self, *args, **kwargs): return self
-    def add_local_file(self, *args, **kwargs): return self
+    def add_local_file(self, source, target, **kwargs):
+        self.files.append((str(source), target))
+        return self
     def add_local_dir(self, *args, **kwargs): return self
     def env(self, environment):
         self.environment.update(environment)
@@ -38,6 +43,35 @@ class App:
 
 
 class ModalConfigTests(unittest.TestCase):
+    def test_large_catalog_uses_image_file_and_short_environment_values(self):
+        from xdeploy_fpm import configure_routing
+        entries = {str(index): {'key': 'a' * 24, 'image': 'library-' + str(index), 'revision': 'b' * 40,
+                                'records': [{'repository': 'owner/' + 'x' * 1000}],
+                                'verification': 'private operator report'} for index in range(100)}
+        with tempfile.TemporaryDirectory() as temporary, patch.dict(os.environ):
+            path = configure_routing(entries, temporary)
+            self.assertGreater(path.stat().st_size, 32767)
+            self.assertNotIn('FPM_PRECOMPILED', os.environ)
+            self.assertLess(len(os.environ['FPM_PRECOMPILED_FILE']), 32767)
+            local = self.load(True, {'FPM_PRECOMPILED_FILE': str(path)})
+            expected = json.loads(path.read_text(encoding='utf-8'))
+            self.assertEqual(local['PRECOMPILED'], expected)
+            self.assertNotIn('verification', expected['0'])
+            for name in ('api_image', 'broker_image'):
+                image = local[name]
+                self.assertIn((str(path), '/root/fpm-precompiled.json'), image.files)
+                self.assertNotIn('FPM_PRECOMPILED', image.environment)
+                self.assertTrue(all(len(value) < 32767 for value in image.environment.values()))
+                original = Path.read_text
+                def read(source, *args, **kwargs):
+                    if source.as_posix() == '/root/fpm-precompiled.json':
+                        return json.dumps(expected)
+                    return original(source, *args, **kwargs)
+                with patch.object(Path, 'read_text', read):
+                    remote = self.load(False, image.environment)
+                self.assertEqual(remote['PRECOMPILED'], expected)
+                self.assertEqual(remote['IMAGE_NAME'], local['IMAGE_NAME'])
+
     def load(self, local, environment):
         modal = types.SimpleNamespace(App=App, Image=Image, is_local=lambda: local,
             Dict=types.SimpleNamespace(from_name=lambda *args, **kwargs: None),
@@ -74,6 +108,10 @@ class ModalConfigTests(unittest.TestCase):
         response.__enter__.return_value = response
         with patch('xdeploy_fpm.urlopen', return_value=response) as open_url:
             verify_api('https://test.modal.run', 'https://example.org')
+            with self.assertRaisesRegex(ValueError, 'older FPM API'):
+                verify_api('https://test.modal.run', 'https://example.org', translated_r=True)
+            response.read.return_value = b'{"ok":true,"fpm":"0.12.0","features":{"translated_r":true}}'
+            verify_api('https://test.modal.run', 'https://example.org', translated_r=True)
             with self.assertRaisesRegex(ValueError, 'compiler catalog'):
                 verify_api('https://test.modal.run', 'https://example.org', ['gfortran', 'ifx'])
             self.assertEqual(open_url.call_args.args[0].full_url, 'https://test.modal.run/api/health')

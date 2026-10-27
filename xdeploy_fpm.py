@@ -8,7 +8,20 @@ import sys
 from urllib.request import Request, urlopen
 
 
-def verify_api(url, origin, compilers=None, precompiled=None):
+def configure_routing(entries, directory=None):
+    """Pass large private routing tables as an image file, not Windows env text."""
+    routing = {name: {k: entry[k] for k in ('key', 'image', 'revision', 'records')}
+               for name, entry in entries.items()}
+    directory = Path(directory) if directory is not None else Path(__file__).resolve().parent / '.fpm-audit-cache'
+    directory.mkdir(parents=True, exist_ok=True)
+    path = (directory / 'deploy-routing.json').resolve()
+    path.write_text(json.dumps(routing) + '\n', encoding='utf-8')
+    os.environ.pop('FPM_PRECOMPILED', None)
+    os.environ['FPM_PRECOMPILED_FILE'] = str(path)
+    return path
+
+
+def verify_api(url, origin, compilers=None, precompiled=None, *, translated_r=False):
     request = Request(url + '/api/health', headers={'Origin': origin})
     with urlopen(request, timeout=45) as response:
         data = json.loads(response.read(65536))
@@ -23,6 +36,8 @@ def verify_api(url, origin, compilers=None, precompiled=None):
                         for name, entry in precompiled.items()}
             if data.get('precompiled', {}) != expected:
                 raise ValueError('The deployed precompiled catalog does not match the verified images.')
+        if translated_r and data.get('features', {}).get('translated_r') is not True:
+            raise ValueError('The endpoint is still serving an older FPM API without translated R package support.')
 
 
 def main():
@@ -66,10 +81,7 @@ def main():
                     raise
                 print(f'WARNING: {compiler} remains unavailable: {error}', flush=True)
     os.environ['FPM_ENABLED_COMPILERS'] = json.dumps(enabled)
-    # Containers need routing information, not the larger operator build report.
-    routing = {name: {k: entry[k] for k in ('key', 'image', 'revision', 'records')}
-               for name, entry in precompiled.items()} if not args.without_precompiled else {}
-    os.environ['FPM_PRECOMPILED'] = json.dumps(routing)
+    configure_routing(precompiled if not args.without_precompiled else {})
     subprocess.run([sys.executable, '-X', 'utf8', '-m', 'modal', 'deploy', 'xfpm_modal.py'],
                    cwd=Path(__file__).resolve().parent, check=True)
     url = modal.Function.from_name(APP_NAME, 'api').get_web_url()
@@ -79,7 +91,7 @@ def main():
     print('Checking the deployed HTTP endpoint and browser access...', flush=True)
     origin = os.environ.get('FPM_ORIGINS', 'https://beliavsky.github.io').split(',')[0]
     try:
-        verify_api(url, origin, enabled, precompiled if not args.without_precompiled else {})
+        verify_api(url, origin, enabled, precompiled if not args.without_precompiled else {}, translated_r=True)
     except Exception as error:
         raise SystemExit(f'Deployment completed, but the API is not ready: {error}\n'
                          f'Inspect startup logs with: {sys.executable} -m modal app logs {APP_NAME}') from error

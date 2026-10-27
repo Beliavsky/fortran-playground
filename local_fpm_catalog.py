@@ -38,7 +38,8 @@ def health(server):
              if importlib.util.find_spec('tomli_w') is None else '')
     return {'ok': not error, 'error': error, 'local': True, 'fpm': 'local installation',
             'compiler': available.get('gfortran', next(iter(available.values()), 'not found')),
-            'compilers': available, 'workspace': str(server.workspace), 'precompiled': {}}
+            'compilers': available, 'workspace': str(server.workspace), 'precompiled': {},
+            'features': {'translated_r': True}}
 
 
 def compact_sources(sources, repositories):

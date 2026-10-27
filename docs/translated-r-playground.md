@@ -44,3 +44,5 @@ Add `--revision COMMIT` to reproduce a catalog snapshot; omitting it resolves th
 Refresh the discovery catalog explicitly with `python xtranslated_r_catalog.py`, optionally adding `--revision COMMIT`. This reads upstream manifests and generates `site/fpm/translated-r.json`; it performs no compilation. Normal site generation does not contact that repository or refresh this snapshot.
 
 Publish the frontend through the normal Pages workflow and redeploy the separate FPM service with `python xdeploy_fpm.py` in the Python environment containing the Modal SDK. No translated packages are added to its precompilation list. Existing general-catalog library keys are preserved.
+
+Deployment checks that `/api/health` advertises translated R support. If deployment fails before the API is replaced, the previous service stays active. The page detects an older API, explains that the backend must be updated, and keeps general-package workflows usable. Reload the page after deployment completes.

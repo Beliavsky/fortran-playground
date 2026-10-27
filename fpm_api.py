@@ -116,6 +116,7 @@ def create_api(service, origins):
     async def health():
         return {'ok': True, 'compiler': COMPILERS['gfortran']['label'], 'fpm': '0.12.0',
                 'clean_builds': not bool(service.precompiled), 'plotting': True,
+                'features': {'translated_r': True},
                 'compilers': {name: COMPILERS[name]['label'] for name in service.compilers},
                 'precompiled': {name: {'revision': entry['revision'], 'compiler': 'gfortran'}
                                 for name, entry in service.precompiled.items()}}

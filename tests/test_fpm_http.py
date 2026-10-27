@@ -8,6 +8,17 @@ from fpm_api import Service, create_api
 @unittest.skipUnless(importlib.util.find_spec('fastapi') and importlib.util.find_spec('httpx'),
                      'FastAPI and httpx required for HTTP adapter tests')
 class HttpTests(unittest.TestCase):
+    def test_translated_package_directory_survives_http_admission(self):
+        from fastapi.testclient import TestClient
+        from test_fpm_service import MemoryStore, Runner
+        runner = Runner()
+        payload = {'url': 'https://github.com/Beliavsky/Fortran-from-R-packages',
+                   'revision': 'a' * 40, 'subdirectory': 'fGarch', 'workflow': 'package', 'action': 'run'}
+        with TestClient(create_api(Service(MemoryStore(), runner), ['https://play.example'])) as client:
+            response = client.post('/api/jobs', json=payload, headers={'Origin': 'https://play.example'})
+            self.assertEqual(response.status_code, 200, response.text)
+            self.assertEqual(runner.calls[response.json()['id']]['subdirectory'], 'fGarch')
+
     def test_origins_payloads_polling_and_cancellation(self):
         from fastapi.testclient import TestClient
         from test_fpm_service import MemoryStore, Runner, PAYLOAD
@@ -16,6 +27,7 @@ class HttpTests(unittest.TestCase):
         cached = {'fortran-lapack': {'revision': 'a'*40, 'image': 'private-image-name', 'key': 'internal'}}
         with TestClient(create_api(Service(store, runner, precompiled=cached), ['https://play.example'])) as client:
             self.assertEqual(client.get('/api/health').json()['fpm'], '0.12.0')
+            self.assertTrue(client.get('/api/health').json()['features']['translated_r'])
             self.assertEqual(client.get('/api/health').json()['precompiled'],
                              {'fortran-lapack': {'revision': 'a'*40, 'compiler': 'gfortran'}})
             self.assertFalse(client.get('/api/health').json()['clean_builds'])
