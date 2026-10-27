@@ -550,6 +550,7 @@ You need Python and Node/npm to build and preview. Install gfortran to run the c
 ```powershell
 npm ci
 python xeditor.py
+python -m pip install matplotlib==3.10.8 tomli-w==1.2.0
 npm test
 python -m unittest discover -s tests -v
 python xserve.py
@@ -560,6 +561,8 @@ Open <http://127.0.0.1:8766/>. The `/run/` path redirects to the main page. Use 
 This is a static preview. Execution, formatting, and checking still use the hosted service configured in `site/service.json`, consume the owner's Modal resources, and share its usage limits. Do not publish the Python preview server as an execution sandbox.
 
 ### Testing
+
+Install the Python test dependencies with `python -m pip install matplotlib==3.10.8 tomli-w==1.2.0`. The FPM catalog and project-download tests require `tomli-w` to write prepared package manifests.
 
 ```powershell
 npm test
