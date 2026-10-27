@@ -161,6 +161,13 @@ get('package-category').addEventListener('change', renderPackages);
 async function selectCollection() {
   const generation = ++collectionGeneration;
   const translated = translatedCollection();
+  get('subdirectory-label').hidden = !translated;
+  get('subdirectory').hidden = !translated;
+  if (!translated) {
+    get('subdirectory').value = '';
+    resetTargets();
+  }
+  sourceLinks(null);
   collectionLoading = true;
   packages = [];
   renderPackages();

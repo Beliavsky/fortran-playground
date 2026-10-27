@@ -60,8 +60,8 @@
     <input id="package-url" type="url" placeholder="https://github.com/owner/package" maxlength="2048" autocomplete="off" spellcheck="false">
     <label for="revision">Revision (optional)</label>
     <input id="revision" type="text" placeholder="Branch, tag, or commit; default: HEAD" maxlength="200" spellcheck="false">
-    <label for="subdirectory">Package directory (translated R collection)</label>
-    <input id="subdirectory" type="text" placeholder="Blank for a repository-root package" maxlength="200" spellcheck="false">
+    <label id="subdirectory-label" for="subdirectory" hidden>Package directory (translated R collection)</label>
+    <input id="subdirectory" type="text" placeholder="Blank for a repository-root package" maxlength="200" spellcheck="false" hidden>
   </div>
   <div class="toolbar" data-focus-actions>
     <label for="workflow">Use</label>

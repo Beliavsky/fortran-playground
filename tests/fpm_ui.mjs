@@ -3,6 +3,9 @@ import {readFileSync} from 'node:fs';
 
 const html = readFileSync(new URL('../site/fpm/index.html', import.meta.url), 'utf8');
 const ids = new Set([...html.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]));
+for (const id of ['subdirectory', 'subdirectory-label']) {
+  assert.match(html, new RegExp(`<[^>]*id="${id}"[^>]*\\bhidden\\b`));
+}
 const localExecution = process.argv.includes('--local');
 if (localExecution) {
   ids.add('local-source-link'); ids.add('local-projects-link');
@@ -281,6 +284,8 @@ assert.equal(translatedFetches, 0, 'General collection does not fetch translated
 get('package-collection').value = 'translated-r';
 await get('package-collection').listeners.change();
 assert.equal(translatedFetches, 1);
+assert.equal(get('subdirectory').hidden, false);
+assert.equal(get('subdirectory-label').hidden, false);
 get('package-search').value = 'dvode'; get('package-search').listeners.input();
 await get('package-search-results').options.find(item => item.textContent === 'Search General Fortran packages').listeners.click();
 assert.equal(get('available-package').value, 'dvode');
@@ -311,6 +316,9 @@ const translatedZip = Buffer.from(await downloads.at(-1).blob.arrayBuffer()).toS
 assert.ok(translatedZip.includes('"subdirectory": "Metrics"'));
 get('package-collection').value = 'general';
 await get('package-collection').listeners.change();
+assert.equal(get('subdirectory').hidden, true);
+assert.equal(get('subdirectory-label').hidden, true);
+assert.equal(get('subdirectory').value, '', 'Changing to general clears the hidden translated directory');
 get('example').value = examples[0].name; get('load-example').listeners.click();
 assert.equal(get('subdirectory').value, '', 'Loading a general example clears the translated directory');
 assert.equal(get('submit').disabled, false, 'General examples stay usable with an older service');
