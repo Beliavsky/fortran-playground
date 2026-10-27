@@ -13,6 +13,77 @@ from fpm_cache import (catalog, cache_identity, match_package, cached_request_ma
 
 
 class CacheTests(unittest.TestCase):
+    def incremental_entry(self, package):
+        import hashlib
+        source = (Path(__file__).resolve().parents[1] / 'fpm_catalog/demos' / (package['id'] + '.f90')).read_text(encoding='utf-8')
+        key = cache_identity(package, 'recipe')
+        return {'key': key, 'artifact_image': 'library-' + key, 'image': 'fpm-run-worker-' + key,
+                'artifact_bytes': 1, 'revision': package['revision'],
+                'verification': {'library_reused': True, 'build_seconds': 0.1,
+                                 'demo_sha256': hashlib.sha256(source.encode()).hexdigest()}}
+
+    def incremental_build(self, packages, previous, *, names=None, **options):
+        from contextlib import ExitStack
+        from xprecompile_fpm import build_catalog
+        added = self.incremental_entry(packages[-1])
+        image = Mock()
+        modal = types.SimpleNamespace(Image=types.SimpleNamespace(from_name=Mock(return_value=image)))
+        with tempfile.TemporaryDirectory() as temporary, ExitStack() as stack:
+            report = Path(temporary) / 'build.json'
+            report.write_text(json.dumps({'packages': previous}))
+            stack.enter_context(patch.dict('sys.modules', {'modal': modal}))
+            stack.enter_context(patch('xprecompile_fpm.catalog', return_value=packages))
+            stack.enter_context(patch('fpm_cache.recipe_identity', return_value='recipe'))
+            stack.enter_context(patch('fpm_cache.worker_identity', return_value='worker'))
+            calls = {}
+            for name, value in [('find_artifact', None), ('build_package', added), ('refresh_worker', image),
+                                ('verify_cached', added['verification'])]:
+                calls[name] = stack.enter_context(patch('xprecompile_fpm.' + name, return_value=value))
+            result = build_catalog('app', 'base', 'base-name', names, report, **options)
+            saved = json.loads(report.read_text())
+        return result, saved, calls, modal.Image.from_name
+
+    def test_unchanged_deployment_starts_no_package_jobs(self):
+        package = catalog()[0]
+        old = self.incremental_entry(package)
+        result, _, calls, lookup = self.incremental_build([package], {package['id']: old})
+        self.assertEqual(result[package['id']], old)
+        for call in calls.values():
+            call.assert_not_called()
+        lookup.assert_not_called()
+
+    def test_new_batch_only_compiles_new_package_and_retains_existing_routing(self):
+        first, second = catalog()[:2]
+        old = self.incremental_entry(first)
+        for names in (None, [second['id']]):
+            with self.subTest(names=names):
+                result, saved, calls, _ = self.incremental_build([first, second], {first['id']: old}, names=names)
+                calls['build_package'].assert_called_once()
+                self.assertEqual(calls['build_package'].call_args.args[2], second)
+                calls['verify_cached'].assert_called_once()
+                self.assertEqual(result[first['id']], old)
+                self.assertEqual(set(saved['packages']), {first['id'], second['id']})
+                self.assertEqual(set(result), {first['id'], second['id']})
+
+    def test_worker_or_example_change_and_reverify_keep_libraries(self):
+        package = catalog()[0]
+        for change, options in [({}, {'reverify': True}), ({'image': 'old-worker'}, {}),
+                                ({'verification': {'library_reused': True, 'demo_sha256': 'old-example'}}, {})]:
+            with self.subTest(change=change, options=options):
+                old = {**self.incremental_entry(package), **change}
+                _, _, calls, _ = self.incremental_build([package], {package['id']: old}, **options)
+                calls['build_package'].assert_not_called()
+                calls['find_artifact'].assert_not_called()
+                calls['verify_cached'].assert_called_once()
+                self.assertEqual(calls['refresh_worker'].call_count, int('image' in change))
+
+    def test_force_rebuild_is_explicit(self):
+        package = catalog()[0]
+        _, _, calls, _ = self.incremental_build([package], {package['id']: self.incremental_entry(package)}, rebuild=True)
+        calls['build_package'].assert_called_once()
+        calls['find_artifact'].assert_not_called()
+        calls['verify_cached'].assert_called_once()
+
     def test_catalog_has_pins_checksums_sources_and_descriptions(self):
         root = Path(__file__).resolve().parents[1]
         packages = catalog()
@@ -88,7 +159,7 @@ class CacheTests(unittest.TestCase):
                  patch('xprecompile_fpm.find_artifact', return_value=None), \
                  patch('xprecompile_fpm.build_package', return_value=added) as compile_library, \
                  patch('xprecompile_fpm.refresh_worker', return_value=fake_image) as refresh, \
-                 patch('xprecompile_fpm.verify_cached', return_value={'build_seconds': 0.1}):
+                 patch('xprecompile_fpm.verify_cached', return_value={'build_seconds': 0.1, 'library_reused': True}):
                 result = build_catalog('app', 'base-image', 'new-worker', report_path=report)
             self.assertEqual(compile_library.call_count, 1)
             self.assertEqual(compile_library.call_args.args[2], second)

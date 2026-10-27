@@ -154,7 +154,7 @@ def find_artifact(app, package, recipe):
         sandbox.terminate()
 
 
-def build_catalog(app, image, base_name, names=None, report_path=DEFAULT_REPORT):
+def build_catalog(app, image, base_name, names=None, report_path=DEFAULT_REPORT, *, reverify=False, rebuild=False):
     import modal
     from fpm_cache import recipe_identity, worker_identity
     recipe = recipe_identity()
@@ -164,12 +164,10 @@ def build_catalog(app, image, base_name, names=None, report_path=DEFAULT_REPORT)
     retained = {p['id']: previous.get('packages', {}).get(p['id']) for p in catalog()}
     retained = {name: entry for name, entry in retained.items() if entry
                 and entry.get('key') == cache_identity(next(p for p in catalog() if p['id'] == name), recipe)}
-    enabled = {}
     failures = {}
     report_path.parent.mkdir(parents=True, exist_ok=True)
     for package in packages:
         name = package['id']
-        print('Precompiling GNU 16 package:', name, flush=True)
         try:
             if package.get('catalog_build'):
                 from fpm_catalog_build import validate_build
@@ -178,19 +176,32 @@ def build_catalog(app, image, base_name, names=None, report_path=DEFAULT_REPORT)
                 from fpm_catalog_patches import validate_patches
                 validate_patches(package)
             old = previous.get('packages', {}).get(name)
-            if old and old.get('key') == cache_identity(package, recipe) and old.get('artifact_image'):
+            runner_name = 'fpm-run-' + worker + '-' + cache_identity(package, recipe)
+            if (not rebuild and not reverify and old and old.get('key') == cache_identity(package, recipe)
+                    and old.get('artifact_image') and old.get('image') == runner_name
+                    and old.get('verification', {}).get('library_reused') is True
+                    and old['verification'].get('demo_sha256') == hashlib.sha256(
+                        (ROOT / 'fpm_catalog/demos' / (name + '.f90')).read_text(encoding='utf-8').encode()).hexdigest()):
+                print(f'{name}: reusing verified published image; no compilation or verification job', flush=True)
+                continue
+            if not rebuild and old and old.get('key') == cache_identity(package, recipe) and old.get('artifact_image'):
+                print(f'{name}: reusing compiled library', flush=True)
                 entry = old
             else:
-                entry = find_artifact(app, package, recipe) or build_package(app, image, package, recipe)
+                entry = None if rebuild else find_artifact(app, package, recipe)
+                if entry is None:
+                    print(f'{name}: compiling library ({"forced rebuild" if rebuild else "no matching published artifact"})', flush=True)
+                    entry = build_package(app, image, package, recipe)
             runner_name = 'fpm-run-' + worker + '-' + entry['key']
             if entry.get('image') == runner_name:
                 ready = modal.Image.from_name(runner_name)
             else:
+                print(f'{name}: refreshing worker layer; keeping compiled library', flush=True)
                 ready = refresh_worker(app, modal.Image.from_name(entry['artifact_image']))
+            print(f'{name}: verifying changed main; keeping compiled library', flush=True)
             verification = verify_cached(app, ready, package, entry['key'])
             ready.publish(runner_name)
             entry = {**entry, 'image': runner_name, 'verification': verification}
-            enabled[name] = entry
             retained[name] = entry
             print(f"{name}: verified; {entry['artifact_bytes']/1048576:.1f} MiB artifacts; "
                   f"changed main build {entry['verification']['build_seconds']:.3f} seconds", flush=True)
@@ -201,7 +212,12 @@ def build_catalog(app, image, base_name, names=None, report_path=DEFAULT_REPORT)
         report_path.write_text(json.dumps({'base_image': base_name, 'recipe': recipe, 'packages': retained, 'failures': failures}, indent=2) + '\n')
     if failures:
         raise RuntimeError('Catalog verification failed for: ' + ', '.join(failures) + '. See ' + str(report_path))
-    return enabled
+    report_path.write_text(json.dumps({'base_image': base_name, 'recipe': recipe, 'packages': retained,
+                                      'failures': failures}, indent=2) + '\n')
+    # A selected batch extends the deployed catalog rather than removing valid
+    # images for packages outside that batch. Drop only stale/unverified entries.
+    return {name: entry for name, entry in retained.items()
+            if entry.get('image') and entry.get('verification', {}).get('library_reused') is True}
 
 
 def write_validation_report(entries, path):
@@ -237,13 +253,18 @@ def main():
     parser.add_argument('--packages', nargs='+', choices=[p['id'] for p in catalog()])
     parser.add_argument('--report', type=Path, default=DEFAULT_REPORT)
     parser.add_argument('--validation-report', type=Path, help='Write public measurements after verifying the complete catalog.')
+    parser.add_argument('--reverify', action='store_true', help='Re-run changed-main verification, retaining compiled libraries.')
+    parser.add_argument('--rebuild', action='store_true', help='Force rebuilding selected libraries; default: reuse matching published builds.')
     args = parser.parse_args()
+    if args.validation_report and args.packages:
+        parser.error('--validation-report requires checking the complete catalog; omit --packages.')
     import modal
     from xfpm_modal import APP_NAME, runtime_image, IMAGE_NAME
     app = modal.App.lookup(APP_NAME, create_if_missing=True)
     with modal.enable_output():
         image = runtime_image.build(app)
-        entries = build_catalog(app, image, IMAGE_NAME, args.packages, args.report)
+        entries = build_catalog(app, image, IMAGE_NAME, args.packages, args.report,
+                                reverify=args.reverify or bool(args.validation_report), rebuild=args.rebuild)
         if args.validation_report:
             write_validation_report(entries, args.validation_report)
 

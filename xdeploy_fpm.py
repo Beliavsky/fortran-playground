@@ -32,7 +32,9 @@ def main():
     parser.add_argument('--without-precompiled', action='store_true', help='Deploy only clean package builds.')
     from fpm_cache import catalog
     parser.add_argument('--packages', nargs='+', choices=[p['id'] for p in catalog()],
-                        help='Precompile only these catalog package IDs; default: all.')
+                        help='Process these IDs, retaining other verified packages; default: all. Matching builds are reused.')
+    parser.add_argument('--reverify', action='store_true', help='Re-run changed-main checks, retaining compiled package libraries.')
+    parser.add_argument('--rebuild', action='store_true', help='Force recompiling selected package libraries.')
     parser.add_argument('--compilers', nargs='+', choices=['gfortran', 'gfortran17', 'ifx', 'flang'],
                         default=['gfortran', 'gfortran17', 'ifx', 'flang'],
                         help='Toolchains to build and verify; GNU 16 is always included.')
@@ -57,7 +59,8 @@ def main():
                 enabled.append(compiler)
                 if compiler == 'gfortran' and not args.without_precompiled:
                     from xprecompile_fpm import build_catalog
-                    precompiled = build_catalog(build_app, image, IMAGE_NAME, args.packages)
+                    precompiled = build_catalog(build_app, image, IMAGE_NAME, args.packages,
+                                                reverify=args.reverify, rebuild=args.rebuild)
             except Exception as error:
                 if compiler == 'gfortran':
                     raise
