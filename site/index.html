@@ -8,9 +8,11 @@
   <link rel="stylesheet" href="editor-vendor/codemirror.css">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="view_controls.css">
 </head>
 <body>
 <main>
+<div class="view-controls" aria-label="Display settings"><button id="theme-toggle" type="button" aria-pressed="false">Dark mode</button><button id="focus-toggle" type="button" aria-pressed="false">Focus mode</button><span id="focus-status" role="status" hidden></span></div>
   <header>
     <p class="eyebrow">EDIT · COMPILE · RUN</p>
     <h1>Fortran playground</h1>
@@ -176,7 +178,7 @@
   <p id="freshness" class="version">No results yet.</p>
   <p id="error-note" class="version" role="status" hidden></p>
   <div id="quick-fix-details"><p id="fix-note" class="version" role="status" hidden></p></div>
-  <section id="comparison-results" hidden aria-label="Compiler comparison results">
+  <section id="comparison-results" data-focus-panel hidden aria-label="Compiler comparison results">
     <h2>Compiler comparison</h2>
     <div class="toolbar">
       <label><input id="show-all-outputs" type="checkbox"> Show all outputs</label>
@@ -207,7 +209,7 @@
     </tbody></table></div>
     <p id="comparison-detail" class="version" role="status"></p>
   </section>
-  <div id="workspace" class="workspace">
+  <div id="workspace" data-focus-panel class="workspace">
     <section id="source-pane" class="panel">
       <div class="source-header">
         <label for="fortran">Fortran input <span id="fortran-lines" class="line-count">0 lines</span></label>
@@ -239,8 +241,8 @@
       </section>
     </div>
   </div>
-  <div id="plot-results" aria-live="polite"></div>
-    <div id="all-comparison-outputs" hidden aria-label="Output from all selected compilers">
+  <div id="plot-results" data-focus-panel aria-live="polite"></div>
+    <div id="all-comparison-outputs" data-focus-panel hidden aria-label="Output from all selected compilers">
       <section id="compare-output-gfortran" class="comparison-output" hidden>
         <h3 id="compare-output-title-gfortran"></h3>
         <p id="compare-output-version-gfortran" class="version"></p>
@@ -318,6 +320,7 @@
     <p>Hosted runs use the shared Python-to-Fortran execution service and its workload limits. Programs run in isolated environments without network access. Running a local preview still sends execution jobs to that hosted service.</p>
   </footer>
 </main>
+<script type="module" src="view_controls.mjs"></script>
 <script type="module" src="app.mjs"></script>
 </body>
 </html>

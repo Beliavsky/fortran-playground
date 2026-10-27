@@ -1,13 +1,15 @@
 <!doctype html>
 <html lang="en">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Local Fortran</title><link rel="stylesheet" href="editor-vendor/codemirror.css"><link rel="stylesheet" href="style.css"></head>
+<title>Local Fortran</title><link rel="stylesheet" href="editor-vendor/codemirror.css"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="view_controls.css">
+</head>
 <body><main>
+<div class="view-controls" aria-label="Display settings"><button id="theme-toggle" type="button" aria-pressed="false">Dark mode</button><button id="focus-toggle" type="button" aria-pressed="false">Focus mode</button><span id="focus-status" role="status" hidden></span></div>
 <header><p class="eyebrow">EDIT · BUILD · COMPARE</p><h1>Local Fortran</h1>
 <p>Use compilers installed on this computer. Programs run with your permissions and can access your files and network.</p>
 <p><a id="fpm-link" href="/fpm/">Local FPM playground</a></p>
 <p id="workspace" class="note"></p><p id="status" role="status">Connecting to the local server…</p></header>
-<div class="toolbar"><label for="interface">Interface</label><select id="interface"><option value="single">Single compiler</option><option value="compare">Compare compilers</option></select>
+<div class="toolbar" data-focus-actions><label for="interface">Interface</label><select id="interface"><option value="single">Single compiler</option><option value="compare">Compare compilers</option></select>
 <span id="single-compiler"><label for="compiler">Compiler</label> <select id="compiler"></select></span>
 <fieldset id="compiler-choices" hidden><legend>Compilers</legend><label><input id="gfortran" type="checkbox"> gfortran</label> <label><input id="gfortran17" type="checkbox"> gfortran17</label> <label><input id="ifx" type="checkbox"> ifx</label> <label><input id="flang" type="checkbox"> flang</label> <label><input id="lfortran" type="checkbox"> lfortran</label> <label><input id="ofort" type="checkbox"> ofort</label></fieldset>
 <button id="compile" disabled>Compile</button><button id="run" class="primary" disabled>Compile and Run</button><button id="stop" disabled>Stop</button></div>
@@ -15,7 +17,7 @@
 <label for="indent-width">Indent spaces</label><select id="indent-width"><option>2</option><option selected>3</option><option>4</option></select>
 <label><input id="auto-indent" type="checkbox" checked> Auto-indent</label><span id="line-count" class="note"></span></div>
 <p id="versions" class="note"></p>
-<div class="workspace">
+<div class="workspace" data-focus-panel>
 <aside><h2>Workspace files</h2><button id="refresh">Refresh list</button>
 <label for="files">Select local Fortran files</label><select id="files" multiple size="8"></select><button id="add">Add selected</button>
 <h2>Compilation order</h2><p class="note">Modules before files that use them. Compilers build files separately; ofort interprets them in order.</p>
@@ -44,7 +46,7 @@
 <div class="toolbar"><label for="compile-timeout">Compile/link timeout (seconds)</label><input id="compile-timeout" type="number" min="0" value="120">
 <label for="run-timeout">Run timeout (seconds)</label><input id="run-timeout" type="number" min="0" value="30"><span class="note">0 means unlimited.</span>
 <label><input id="fail-fast" type="checkbox"> Stop on first failure</label></div></details>
-<section><h2>Results</h2><p class="note">Times in seconds. Each comparison uses one source snapshot. Program working directory is the workspace shown above.</p>
+<section data-focus-panel><h2>Results</h2><p class="note">Times in seconds. Each comparison uses one source snapshot. Program working directory is the workspace shown above.</p>
 <label><input id="diff-enabled" type="checkbox"> Compare outputs</label>
 <div id="diff-controls" class="toolbar" hidden>
 <label for="diff-mode">Comparison</label><select id="diff-mode"><option value="whitespace">Ignore whitespace</option><option value="exact">Exact</option><option value="numeric">Numeric-aware</option></select>
@@ -58,4 +60,5 @@
 <div id="results"></div></section>
 <footer>
 <p>Plotting: <code>use pyplot_module</code> and save a PNG with <code>savefig</code>. See <a href="https://github.com/Beliavsky/fortran-playground/blob/main/docs/plotting.md">examples and setup</a>. Local rendering requires Python, NumPy, and Matplotlib.</p>Local Fortran uses Python's standard library and your installed compilers. Nothing is submitted to the online playground. Close this server with Ctrl+C.</footer>
-</main><script src="editor-vendor/codemirror.js"></script><script src="editor-vendor/fortran.js"></script><script type="module" src="app.mjs"></script></body></html>
+</main>
+<script type="module" src="view_controls.mjs"></script><script src="editor-vendor/codemirror.js"></script><script src="editor-vendor/fortran.js"></script><script type="module" src="app.mjs"></script></body></html>

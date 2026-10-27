@@ -14,3 +14,6 @@ if __name__ == '__main__':
                          ('LICENSE', 'LICENSE')]:
         shutil.copyfile(SOURCE / source, DEST / dest)
     print('Bundled CodeMirror editor assets and license')
+
+    for name in ('view_controls.css', 'view_controls.mjs'):
+        shutil.copyfile(ROOT / 'site' / name, ROOT / 'local_site' / name)

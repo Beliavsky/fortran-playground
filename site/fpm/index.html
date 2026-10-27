@@ -8,16 +8,19 @@
   <link rel="stylesheet" href="../editor-vendor/codemirror.css">
   <link rel="stylesheet" href="../style.css">
   <link rel="stylesheet" href="fpm.css">
+<link rel="stylesheet" href="../view_controls.css">
 </head>
 <body>
 <main>
+<div class="view-controls" aria-label="Display settings"><button id="theme-toggle" type="button" aria-pressed="false">Dark mode</button><button id="focus-toggle" type="button" aria-pressed="false">Focus mode</button><span id="focus-status" role="status" hidden></span></div>
   <header>
     <p class="eyebrow">FORTRAN PACKAGES &middot; EXPERIMENTAL</p>
     <h1>FPM package playground</h1>
     <p>Build a package, run its applications, examples, or tests, or write a program that uses its modules.</p>
     <p><a href="../">Fortran playground</a> &middot; <a href="https://github.com/Beliavsky/fortran-playground">GitHub repository</a></p>
     <p id="connection" role="status">Connecting to the FPM service…</p>
-  </header>
+  <p class="fpm-resources" aria-label="FPM resources"><a href="https://fpm.fortran-lang.org/">About FPM</a> &middot; <a href="https://github.com/topics/fortran-package-manager">FPM packages on GitHub</a> &middot; <a href="https://beliavsky.github.io/Fortran-packages-list/">Fortran packages list</a> &middot; <a href="https://github.com/Beliavsky/Fortran-Tools">Fortran tools</a></p>
+</header>
   <div class="toolbar">
     <label for="example">Examples</label>
     <select id="example"><option value="">Choose a package example…</option></select>
@@ -60,7 +63,7 @@
     <label for="subdirectory">Package directory (translated R collection)</label>
     <input id="subdirectory" type="text" placeholder="Blank for a repository-root package" maxlength="200" spellcheck="false">
   </div>
-  <div class="toolbar">
+  <div class="toolbar" data-focus-actions>
     <label for="workflow">Use</label>
     <select id="workflow"><option value="consumer">My main program</option><option value="package">Package's own programs and tests</option></select>
     <label for="action">Action</label>
@@ -75,7 +78,7 @@
     <span id="status" role="status" aria-live="polite">Connecting…</span>
   </div>
   <p id="workflow-note">The package is built as a dependency of your main program. Examples include working main programs.</p>
-  <div id="workspace" class="editors">
+  <div id="workspace" data-focus-panel class="editors">
     <section id="source-pane" class="panel">
       <label for="source">Fortran main program <span id="line-count" class="line-count"></span></label>
       <textarea id="source" spellcheck="false" aria-label="Fortran main program">program main
@@ -97,7 +100,7 @@ end program main
       <div class="output-buttons"><button id="copy" type="button">Copy results</button></div>
     </section>
   </div>
-  <div id="plot-results"></div>
+  <div id="plot-results" data-focus-panel></div>
   <section id="stdin-pane" class="stdin-panel">
     <label for="stdin">Standard input (optional)</label>
     <textarea id="stdin" rows="4" spellcheck="false" aria-label="Standard input"></textarea>
@@ -109,6 +112,7 @@ end program main
     <p>FPM has a separate job queue and usage allowance: 30 jobs per address per ten minutes and 100 public jobs per day. See <a href="https://github.com/Beliavsky/fortran-playground/blob/main/docs/fpm-mode.md">instructions and limitations</a>.</p>
   </footer>
 </main>
+<script type="module" src="../view_controls.mjs"></script>
 <script type="module" src="fpm.mjs"></script>
 </body>
 </html>

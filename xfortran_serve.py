@@ -387,7 +387,7 @@ class Handler(BaseHTTPRequestHandler):
                     assets = ASSETS if name.startswith('editor-vendor/') else HOSTED_ASSETS
                     self.reply(200, (assets / name).read_bytes(),
                         'text/css; charset=utf-8' if name.endswith('.css') else 'text/javascript; charset=utf-8')
-            elif parsed.path in ('/', '/index.html', '/app.mjs', '/style.css', '/editors.mjs', '/indentation.mjs',
+            elif parsed.path in ('/', '/index.html', '/app.mjs', '/style.css', '/view_controls.css', '/view_controls.mjs', '/editors.mjs', '/indentation.mjs',
                                  '/output_diff.mjs', '/output_diff_ui.mjs', '/plots.mjs',
                                  '/editor-vendor/codemirror.js', '/editor-vendor/fortran.js',
                                  '/editor-vendor/codemirror.css', '/editor-vendor/LICENSE'):

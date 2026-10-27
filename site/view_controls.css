@@ -1,0 +1,64 @@
+:root {
+  --view-bg: #f3f5f3; --view-panel: #fff; --view-soft: #eaf0ed;
+  --view-text: #182f3c; --view-muted: #526961; --view-border: #bdccc5;
+  --view-link: #17634d; --view-primary: #17634d; --view-primary-text: #fff;
+  --view-keyword: #7135a0; --view-string: #a23c20; --view-number: #28632c;
+  --view-comment: #596c63; --view-builtin: #17607b; --view-selection: #cce4d8;
+  --view-error: #fff1d9; color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --view-bg: #101916; --view-panel: #15221f; --view-soft: #20332d;
+  --view-text: #dfe9e6; --view-muted: #a6b8b1; --view-border: #466158;
+  --view-link: #a3dbc8; --view-primary: #a3dbc8; --view-primary-text: #10241c;
+  --view-keyword: #c4a7ff; --view-string: #f2b795; --view-number: #a4d0a0;
+  --view-comment: #a6b5b0; --view-builtin: #7fc9e3; --view-selection: #37584d;
+  --view-error: #4b3520; color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) { background: #101916; color: #dfe9e6; color-scheme: dark; }
+}
+html, body { background: var(--view-bg); color: var(--view-text); }
+a { color: var(--view-link); }
+header, footer, .panel, .diagnostics, .result, aside, details, input, select,
+textarea, button, .CodeMirror, .CodeMirror-gutters, th, td { border-color: var(--view-border); }
+:root .panel, :root .diagnostics, :root .result, :root .settings, :root input,
+:root select, :root textarea, :root button, :root .CodeMirror, :root pre,
+:root .comparison-output, :root #plot-results > section {
+  background: var(--view-panel); color: var(--view-text);
+}
+:root #additional-options { background: var(--view-panel); color: var(--view-text); border-color: var(--view-border); }
+:root .panel label, .source-header, aside, .CodeMirror-gutters, th,
+.CodeMirror[aria-readonly="true"], .comparison-output h3 { background: var(--view-soft); color: var(--view-text); }
+button.primary { background: var(--view-primary); color: var(--view-primary-text); }
+button:disabled { opacity: .55; }
+.note, .version, .editor-note, footer, .eyebrow, .line-count { color: var(--view-muted); }
+.CodeMirror-linenumber { color: var(--view-muted); }
+.CodeMirror-cursor { border-left-color: var(--view-text); }
+.CodeMirror-selected, .CodeMirror-focused .CodeMirror-selected { background: var(--view-selection); }
+.cm-s-default .cm-keyword, .cm-s-default .cm-atom { color: var(--view-keyword); }
+.cm-s-default .cm-string, .cm-s-default .cm-string-2 { color: var(--view-string); }
+.cm-s-default .cm-number { color: var(--view-number); }
+.cm-s-default .cm-comment { color: var(--view-comment); }
+.cm-s-default .cm-builtin, .cm-s-default .cm-variable-2 { color: var(--view-builtin); }
+.cm-s-default .cm-def, .cm-s-default .cm-tag, .cm-s-default .cm-qualifier { color: var(--view-builtin); }
+.CodeMirror .p2f-error-line { background: var(--view-error); }
+.view-controls { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 14px; }
+.fpm-resources { font-size: .95rem; line-height: 1.8; }
+:root[data-focus="true"] main { max-width: none; padding: 12px 20px; }
+:root[data-focus="true"] main > :not([data-focus-panel]):not([data-focus-actions]):not(.view-controls) { display: none !important; }
+:root[data-focus="true"] .view-controls { position: sticky; top: 0; z-index: 10; padding: 8px 0; background: var(--view-bg); }
+:root[data-focus="true"] [data-focus-actions] > :not(#submit):not(#cancel):not(#compile):not(#run):not(#stop):not(#status) { display: none !important; }
+:root[data-focus="true"] .source-actions > :not(#compile):not(#run):not(#stop):not(#compare-action-count) { display: none !important; }
+:root[data-focus="true"] .workspace > aside,
+:root[data-focus="true"] .editor-note { display: none !important; }
+:root[data-focus="true"] .workspace:has(> aside) { grid-template-columns: 1fr; }
+:root[data-focus="true"] #workspace.workspace { height: max(520px, calc(100dvh - 110px)); }
+:root[data-focus="true"] .CodeMirror { height: max(450px, calc(100dvh - 220px)); }
+:root[data-focus="true"] #source-pane .CodeMirror { min-height: 400px; }
+:root[data-focus="true"] .editors > .panel > textarea { height: max(450px, calc(100dvh - 220px)); }
+:root[data-focus="true"] #workspace.workspace #source-pane .CodeMirror { height: 0; min-height: 0; }
+@media (max-width: 760px) {
+  :root[data-focus="true"] main { padding: 8px; }
+  :root[data-focus="true"] #workspace.workspace { height: auto; }
+  :root[data-focus="true"] #workspace.workspace #source-pane .CodeMirror { height: 450px; min-height: 450px; }
+}

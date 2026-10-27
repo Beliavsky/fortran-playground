@@ -31,6 +31,8 @@ Explore Fortran in your browser with short examples, an editable source pane, an
 
 ## Using the playground
 
+The online and local source and FPM pages have **Dark mode / Light mode** and **Focus mode** buttons. The initial theme follows your system preference; an explicit choice is saved in this browser. Focus mode hides navigation and settings, expands the editor and results, and keeps execution controls and status visible. Click **Exit focus mode** or press **Escape** to restore the page. Code, settings, and results are preserved. FPM pages also link to the FPM documentation, GitHub's FPM topic, the Fortran packages list, and Fortran Tools.
+
 The FPM playground also offers a separate **Translated R packages** collection with 596 searchable packages. These download and compile from scratch, online or locally. See [usage and limitations](docs/translated-r-playground.md).
 
 FPM packages can also be used from the command line: `python xplayground_run.py --fpm GITHUB_URL --action test` uses the hosted package service, while `python xfortran_run.py --fpm DIRECTORY --action test` uses installed compilers and FPM. The main local package page, started with `python xfortran_serve.py --workspace DIRECTORY --fpm`, shares the hosted interface and catalog but downloads and compiles locally from scratch. Install its source-preparation dependency with `python -m pip install tomli-w==1.2.0`. The secondary **Local FPM projects** page retains directory-based operation and compiler comparison; open it from the main page or use `--fpm-projects`. See [hosted/local FPM runner and browser instructions](docs/fpm-runners.md) for custom main programs, comparisons, targets, limits, and working directories.

@@ -216,7 +216,7 @@ class ServerTests(unittest.TestCase):
         self.assertNotIn('token', result)
         self.assertEqual(self.request('/xfortran_run.py')[0], 404)
         self.assertEqual(self.request('/')[0], 200)
-        for asset in ['editors.mjs', 'indentation.mjs', 'output_diff.mjs', 'output_diff_ui.mjs']:
+        for asset in ['editors.mjs', 'indentation.mjs', 'output_diff.mjs', 'output_diff_ui.mjs', 'view_controls.mjs', 'view_controls.css']:
             self.assertEqual(self.request('/' + asset)[0], 200)
         for asset in ['codemirror.js', 'fortran.js', 'codemirror.css', 'LICENSE']:
             self.assertEqual(self.request('/editor-vendor/' + asset)[0], 200)
