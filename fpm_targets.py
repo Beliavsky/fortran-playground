@@ -2,6 +2,25 @@
 from fnmatch import fnmatchcase
 import re
 import shlex
+import os
+import tomllib
+
+
+def discover_targets(project, kind, *, windows=False):
+    """Use FPM's compiled target buckets, with manifest fallback for custom ones."""
+    manifest = tomllib.loads((project / 'fpm.toml').read_text(encoding='utf-8-sig'))
+    tables = {'app': 'executable', 'example': 'example', 'test': 'test'}
+    declared = {category: {item['name'] for item in manifest.get(table, [])}
+                for category, table in tables.items()}
+    found = set()
+    for path in (project / 'build').glob('*/*/*'):
+        if not path.is_file() or not (path.suffix.lower() == '.exe' if windows else os.access(path, os.X_OK)):
+            continue
+        name = path.stem if windows else path.name
+        bucket = path.parent.name
+        if bucket == kind or (bucket not in tables and name in declared[kind]):
+            found.add(name)
+    return sorted(found)
 
 
 def parse_targets(value):

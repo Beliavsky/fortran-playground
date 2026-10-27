@@ -30,6 +30,7 @@ class CompilerTests(unittest.TestCase):
     def test_target_discovery_handles_non_gnu_build_directories(self):
         with tempfile.TemporaryDirectory() as temporary:
             project = Path(temporary)
+            (project / 'fpm.toml').write_text('name="fixture"\n')
             for compiler in ('gfortran', 'ifx', 'flang-new'):
                 executable = project / 'build' / (compiler + '_123') / 'app' / compiler
                 executable.parent.mkdir(parents=True)

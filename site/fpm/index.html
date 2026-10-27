@@ -14,7 +14,7 @@
   <header>
     <p class="eyebrow">FORTRAN PACKAGES &middot; EXPERIMENTAL</p>
     <h1>FPM package playground</h1>
-    <p>Build a package, run its applications or tests, or write a program that uses its modules.</p>
+    <p>Build a package, run its applications, examples, or tests, or write a program that uses its modules.</p>
     <p><a href="../">Fortran playground</a> &middot; <a href="https://github.com/Beliavsky/fortran-playground">GitHub repository</a></p>
     <p id="connection" role="status">Connecting to the FPM service…</p>
   </header>
@@ -64,7 +64,7 @@
     <label for="workflow">Use</label>
     <select id="workflow"><option value="consumer">My main program</option><option value="package">Package's own programs and tests</option></select>
     <label for="action">Action</label>
-    <select id="action"><option value="run">Compile and Run</option><option value="build">Build only</option><option id="test-action" value="test" disabled>Test</option></select>
+    <select id="action"><option value="run">Compile and Run</option><option id="example-action" value="example" disabled>Run examples</option><option value="build">Build only</option><option id="test-action" value="test" disabled>Test</option></select>
     <span id="target-controls" hidden>
       <label for="target">Targets</label>
       <input id="target" type="text" list="targets" placeholder="demo_* or name1 name2" maxlength="2048" spellcheck="false">

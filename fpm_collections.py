@@ -24,8 +24,14 @@ def validate_request(payload):
         raise ValueError('Choose a top-level package directory.')
     target = payload.get('target', '')
     parse_targets(target)
-    result = base_validate({**{k: v for k, v in payload.items() if k != 'subdirectory'}, 'target': ''})
+    action = payload.get('action', 'run')
+    example = action == 'example'
+    if example and payload.get('workflow', 'consumer') != 'package':
+        raise ValueError('Run examples applies to the package workflow, not a custom main.')
+    result = base_validate({**{k: v for k, v in payload.items() if k != 'subdirectory'}, 'target': '',
+                            **({'action': 'run'} if example else {})})
     result['target'] = target
+    result['action'] = action
     if subdirectory:
         if github_repository(result['url']).lower() != R_REPOSITORY.lower():
             raise ValueError('Package subdirectories are currently supported for the translated R collection only.')

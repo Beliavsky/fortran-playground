@@ -90,3 +90,14 @@ For source-file and existing-directory FPM operation, copy `xfortran_run.py`, `x
 Standalone hosted FPM use additionally needs `xplayground_run.py` and a package-service configuration or `--service-url`. See [plotting](plotting.md) for PNG examples, local Python requirements, and `--plot-dir`.
 
 For package options, run `python xfortran_run.py --fpm . --help` or `python xplayground_run.py --fpm URL --help`.
+
+## Running FPM examples
+
+Use the browser action **Run examples**, or CLI **--action example**, to run FPM example targets with the same name/pattern selection and total timeout as applications. For example:
+
+`	ext
+python xplayground_run.py --fpm https://github.com/urbanjost/M_CLI2 --action example --target demo1
+python xfortran_run.py --fpm DIRECTORY --action example --target "demo*"
+`
+
+Successful compilation with no executed program is displayed as **BUILD PASS — nothing run**. Its machine-readable status is NOT_RUN and the requested operation remains incomplete. Consumer main programs support Build and Run; examples and tests operate on the package itself.

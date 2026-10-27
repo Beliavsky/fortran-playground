@@ -4,10 +4,13 @@ Choose **Collection → Translated R packages** in the [online FPM playground](h
 
 Search names, descriptions, and keywords, or filter by subject category. A package may belong to several categories. Select a package and click **Load package** to fill in its repository, pinned commit, and package directory. Loading a selection submits no job and initially selects the package's own programs and tests. **Browse pinned source** opens that package's documentation, examples, and source at the selected commit.
 
-- **Compile and Run** builds and runs the package's application. If several applications exist, select a reported target and submit again. Packages with only FPM examples may need **My main program** or **Test** instead: this interface does not currently invoke `fpm run --example`.
+- **Compile and Run** builds and runs the package's application. If several applications exist, select reported targets or patterns and submit again.
+- **Run examples** invokes `fpm run --example` for the package's FPM example targets. Select a name or pattern such as `demo*`; leave blank to discover names when several examples exist.
 - **Build only** checks that the package builds without running an application.
 - **Test** runs the package's tests, optionally selecting a target.
 - **My main program** lets you write a main that uses the package's modules. Consult its source documentation for module and procedure names. Your editor contents are preserved when loading a translated package.
+
+Successful compilation followed by no execution is labelled **BUILD PASS — nothing run**, with the reason and available targets. Application and example targets are distinct FPM categories, even when their names begin with `demo`.
 
 Every translated package is downloaded and built from scratch. None is precompiled. Selection retrieves only the requested package directory and recursively required sibling directories, rather than downloading all 596 packages. Files are checked against Git blob hashes from trees at the pinned commit. GitHub dependencies outside the collection use the normal preparation rules. Downloaded FPM projects preserve the selected directory and revision for local builds.
 

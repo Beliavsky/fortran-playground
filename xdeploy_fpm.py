@@ -21,7 +21,7 @@ def configure_routing(entries, directory=None):
     return path
 
 
-def verify_api(url, origin, compilers=None, precompiled=None, *, translated_r=False):
+def verify_api(url, origin, compilers=None, precompiled=None, *, translated_r=False, run_examples=False):
     request = Request(url + '/api/health', headers={'Origin': origin})
     with urlopen(request, timeout=45) as response:
         data = json.loads(response.read(65536))
@@ -38,6 +38,8 @@ def verify_api(url, origin, compilers=None, precompiled=None, *, translated_r=Fa
                 raise ValueError('The deployed precompiled catalog does not match the verified images.')
         if translated_r and data.get('features', {}).get('translated_r') is not True:
             raise ValueError('The endpoint is still serving an older FPM API without translated R package support.')
+        if run_examples and data.get('features', {}).get('run_examples') is not True:
+            raise ValueError('The endpoint is still serving an older FPM API without Run examples support.')
 
 
 def main():
@@ -91,7 +93,7 @@ def main():
     print('Checking the deployed HTTP endpoint and browser access...', flush=True)
     origin = os.environ.get('FPM_ORIGINS', 'https://beliavsky.github.io').split(',')[0]
     try:
-        verify_api(url, origin, enabled, precompiled if not args.without_precompiled else {}, translated_r=True)
+        verify_api(url, origin, enabled, precompiled if not args.without_precompiled else {}, translated_r=True, run_examples=True)
     except Exception as error:
         raise SystemExit(f'Deployment completed, but the API is not ready: {error}\n'
                          f'Inspect startup logs with: {sys.executable} -m modal app logs {APP_NAME}') from error

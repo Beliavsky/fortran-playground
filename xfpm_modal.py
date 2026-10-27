@@ -160,7 +160,8 @@ def execute_job(identifier, payload, *, sandbox_image=None, sandbox_app=None, ca
         else:
             with tempfile.TemporaryDirectory() as temporary:
                 # Target selection is an execution setting, not source input.
-                root, records = source_preparer(temporary, payload).prepare({**payload, 'target': ''})
+                root, records = source_preparer(temporary, payload).prepare({**payload, 'target': '',
+                    'action': 'run' if payload['action'] == 'example' else payload['action']})
                 # Workers receive an already selected source root. Preserve the
                 # protocol used by existing precompiled images.
                 worker_request = {k: v for k, v in payload.items() if k != 'subdirectory'}

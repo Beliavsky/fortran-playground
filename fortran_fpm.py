@@ -9,7 +9,7 @@ import threading
 import time
 import tomllib
 import sys
-from fpm_targets import parse_targets, select_targets
+from fpm_targets import parse_targets, select_targets, discover_targets
 
 COMPILERS = ('gfortran', 'gfortran17', 'ifx', 'flang', 'lfortran')
 
@@ -28,8 +28,8 @@ def validate_options(options):
     defaults = {'action': 'run', 'target': '', 'source': None, 'stdin': '', 'profile': 'debug',
                 'compile_timeout': 120, 'run_timeout': 30, 'output_limit': 4 * 1024 * 1024, 'fail_fast': False}
     result = {**defaults, **options}
-    if result['action'] not in ('build', 'run', 'test') or result['profile'] not in ('debug', 'release'):
-        raise ValueError('Choose Build, Run, or Test and a debug or release profile')
+    if result['action'] not in ('build', 'run', 'test', 'example') or result['profile'] not in ('debug', 'release'):
+        raise ValueError('Choose Build, Run, Run examples, or Test and a debug or release profile')
     parse_targets(result['target'])
     for key in ('compile_timeout', 'run_timeout'):
         if type(result[key]) not in (float, int) or not math.isfinite(result[key]) or result[key] < 0:
@@ -43,8 +43,8 @@ def validate_options(options):
     if result['source'] is not None:
         if not isinstance(result['source'], str) or not result['source'].strip() or '\0' in result['source']:
             raise ValueError('Enter a nonempty Fortran main program')
-        if result['action'] == 'test':
-            raise ValueError('Test applies to the package, not a custom main program')
+        if result['action'] in ('test', 'example'):
+            raise ValueError('Tests and examples apply to the package, not a custom main program')
         if result['target']:
             raise ValueError('Target selection applies to the package, not a custom main program')
     if result['action'] == 'build' and (result['stdin'] or result['target']):
@@ -53,11 +53,7 @@ def validate_options(options):
 
 
 def target_names(project, kind):
-    names = set()
-    for path in (project / 'build').glob(f'*/{kind}/*'):
-        if path.is_file() and (path.suffix.lower() == '.exe' if os.name == 'nt' else os.access(path, os.X_OK)):
-            names.add(path.stem if os.name == 'nt' else path.name)
-    return sorted(names)
+    return discover_targets(project, kind, windows=os.name == 'nt')
 
 
 def compiler_shim(executable, name, directory):
@@ -148,27 +144,32 @@ def execute_project(project, name, *, options=None, overrides=None, cancel=None,
             if not build['ok']:
                 row['status'] = 'STOPPED' if build.get('cancelled') else 'FAIL'
                 return finish_result(row, started)
-            kind = 'test' if options['action'] == 'test' else 'app'
+            row['build_ok'] = True
+            kind = {'test': 'test', 'example': 'example'}.get(options['action'], 'app')
             row['targets'] = names = target_names(workdir, kind)
             if options['action'] == 'build':
                 row.update(ok=True, status='PASS')
                 return finish_result(row, started)
             target = options['target'] if options['source'] is None else ''
-            if not names or (kind == 'app' and not target.strip() and len(names) > 1):
-                row.update(status='FAIL', needs_target=True,
+            if not names or (kind in ('app', 'example') and not target.strip() and len(names) > 1):
+                row.update(status='NOT_RUN', nothing_run=True, needs_target=bool(names),
                            error='Choose an available target: ' + ', '.join(names) if names else
-                                 'No application/test targets found. Use Build or supply a main program.')
+                                 f'No {kind} targets found. Choose Run examples, Test, Build, or supply a main program.')
                 return finish_result(row, started)
             try:
                 selected = select_targets(target, names)
             except ValueError as error:
-                row.update(status='FAIL', needs_target=True, error=str(error))
+                row.update(status='NOT_RUN', nothing_run=True, needs_target=True, error=str(error))
                 return finish_result(row, started)
             before = snapshot(workdir)
-            run = stage([options['action'], *flags, *(['--target', *selected] if selected else [])],
+            run = stage(['run' if kind == 'example' else options['action'], *flags,
+                         *(['--example'] if kind == 'example' else []), *(['--target', *selected] if selected else [])],
                         options['run_timeout'], options['stdin'])
             row.update(collect_plots(workdir, before))
             row['execution'] = run
+            if run['ok'] and '<INFO> No executables to run' in run['stderr']:
+                row.update(status='NOT_RUN', nothing_run=True, error='FPM found no runnable targets. Choose another action or target.')
+                return finish_result(row, started)
             row.update(ok=run['ok'], status='PASS' if run['ok'] else 'STOPPED' if run.get('cancelled') else 'FAIL')
     except (ValueError, OSError) as error:
         row['error'] = str(error)

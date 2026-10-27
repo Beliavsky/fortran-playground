@@ -39,7 +39,7 @@ def health(server):
     return {'ok': not error, 'error': error, 'local': True, 'fpm': 'local installation',
             'compiler': available.get('gfortran', next(iter(available.values()), 'not found')),
             'compilers': available, 'workspace': str(server.workspace), 'precompiled': {},
-            'features': {'translated_r': True}}
+            'features': {'translated_r': True, 'run_examples': True}}
 
 
 def compact_sources(sources, repositories):
@@ -108,7 +108,8 @@ def execute_catalog(workspace, data, *, overrides=None, fpm_path=None, cancel=No
                     if settings else source_preparer(sources, request, pins=pins, downloader=download))
         preparer.deadline = time.monotonic() + 600
         # Compiler choice does not change the downloaded source tree.
-        relative, records = preparer.prepare({**request, 'compiler': 'gfortran', 'target': ''})
+        relative, records = preparer.prepare({**request, 'compiler': 'gfortran', 'target': '',
+                                             'action': 'run' if request['action'] == 'example' else request['action']})
         root = sources / relative
         if package:
             if records[0]['sha256'] != package['archive_sha256']:
@@ -139,5 +140,6 @@ def execute_catalog(workspace, data, *, overrides=None, fpm_path=None, cancel=No
                 'fpm': 'local installation', 'local': True, 'build_mode': 'from-scratch',
                 'packages': records, 'stages': stages, 'targets': row.get('targets', []),
                 'needs_target': row.get('needs_target', False), 'notes': notes,
+                'nothing_run': row.get('nothing_run', False), 'build_ok': row.get('build_ok', False),
                 'plots': row.get('plots', []), 'plot_notes': row.get('plot_notes', []),
                 'prepare_seconds': prepared, 'total_seconds': time.monotonic() - started}

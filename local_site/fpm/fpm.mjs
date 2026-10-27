@@ -21,6 +21,7 @@ editor.setIndentation(indentation);
 if (globalThis.CodeMirror) editor.enhance(globalThis.CodeMirror, 'text/x-fortran', 'Fortran main program');
 get('indent-width').value = String(indentation.width); get('auto-indent').checked = indentation.automatic;
 const status = text => {get('status').textContent = text;};
+const resultLabel = row => row.nothing_run ? 'BUILD PASS — nothing run' : row.status;
 
 async function api(path, payload) {
   const response = await fetch('/api/' + path, {cache: 'no-store', signal: AbortSignal.timeout(45000),
@@ -41,12 +42,13 @@ function selected() {
 function controls() {
   const consumer = get('workflow').value === 'consumer', compare = get('interface').value === 'compare';
   get('test-action').disabled = consumer;
-  if (consumer && get('action').value === 'test') get('action').value = 'run';
+  get('example-action').disabled = consumer;
+  if (consumer && ['test', 'example'].includes(get('action').value)) get('action').value = 'run';
   get('source-pane').hidden = !consumer;
   get('single-compiler').hidden = compare; get('compiler-choices').hidden = !compare;
   get('target-controls').hidden = consumer || get('action').value === 'build';
   get('stdin-pane').hidden = get('action').value === 'build';
-  get('submit').textContent = {build: 'Build', run: 'Compile and Run', test: 'Build and Test'}[get('action').value];
+  get('submit').textContent = {build: 'Build', run: 'Compile and Run', example: 'Run examples', test: 'Build and Test'}[get('action').value];
   get('submit').disabled = busy || loading || !fpm || !selected().length || !get('project').value.trim();
   get('stop').disabled = !busy || stopping || !job;
   for (const id of ['project', 'refresh', 'workflow', 'action', 'profile', 'interface', 'compiler', 'target', 'stdin', 'stdin-file',
@@ -60,7 +62,7 @@ function controls() {
 
 function report() {
   return rows.map(row => {
-    const lines = [`=== ${row.compiler}: ${row.status} ===`, row.compiler_version || '',
+    const lines = [`=== ${row.compiler}: ${resultLabel(row)} ===`, row.compiler_version || '',
       row.project ? 'Project: ' + row.project : '', row.working_directory ? 'Working directory: ' + row.working_directory : '', row.error || ''];
     lines.push(...(row.notes || []).map(note => 'Note: ' + note));
     if (row.times) lines.push('Times in seconds: ' + Object.entries(row.times).map(([key, value]) => `${key}=${value == null ? '-' : value.toFixed(3)}`).join(' '));
@@ -75,12 +77,12 @@ function render() {
   const targets = new Set();
   for (const row of rows) {
     const tr = document.createElement('tr');
-    const values = [row.compiler, row.status, ...['total', 'compile', 'run', 'other'].map(key => row.times?.[key] == null ? '-' : row.times[key].toFixed(3))];
+    const values = [row.compiler, resultLabel(row), ...['total', 'compile', 'run', 'other'].map(key => row.times?.[key] == null ? '-' : row.times[key].toFixed(3))];
     for (const value of values) {const td = document.createElement('td'); td.textContent = value; tr.appendChild(td);}
     get('summary').appendChild(tr);
     const section = document.createElement('section'); section.className = 'result';
     const pre = document.createElement('pre');
-    pre.textContent = [row.compiler + ': ' + row.status, row.compiler_version || '', row.error || '', ...(row.notes || []).map(note => 'Note: ' + note),
+    pre.textContent = [row.compiler + ': ' + resultLabel(row), row.compiler_version || '', row.error || '', ...(row.notes || []).map(note => 'Note: ' + note),
       ...((row.stages ?? []).flatMap(stage => ['$ ' + stage.command.join(' '), stage.stdout || '', stage.stderr || '']))].filter(Boolean).join('\n');
     section.appendChild(pre); renderPlots(section, row); get('results').appendChild(section);
     for (const name of row.targets ?? []) targets.add(name);
@@ -129,7 +131,9 @@ async function submit() {
       const result = await api('jobs/' + job); rows = result.rows || []; render();
       if (result.state === 'done') {
         completed = true;
-        status(result.error || (stopping ? 'Stopped' : rows.every(row => row.ok) ? 'PASS' : 'Some operations failed; see results and available targets.'));
+        status(result.error || (stopping ? 'Stopped' : rows.every(row => row.ok) ? 'PASS'
+          : rows.some(row => row.nothing_run) && rows.every(row => row.ok || row.nothing_run)
+            ? 'BUILD PASS — nothing run for some compilers; see results.' : 'Some operations failed; see results and available targets.'));
         break;
       }
       status(stopping ? 'Stopping…' : 'Building or running with local FPM…');

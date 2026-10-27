@@ -16,7 +16,8 @@ ROOT = Path(__file__).resolve().parent
 
 
 def hosted_row(compiler, result, elapsed):
-    row = {'compiler': compiler, 'ok': result['ok'], 'status': 'PASS' if result['ok'] else 'FAIL',
+    row = {'compiler': compiler, 'ok': result['ok'], 'status': 'NOT_RUN' if result.get('nothing_run') else 'PASS' if result['ok'] else 'FAIL',
+           'nothing_run': result.get('nothing_run', False), 'build_ok': result.get('build_ok', False),
            'compiler_version': result.get('compiler', ''), 'stages': result.get('stages', []),
            'error': result.get('error', ''), 'targets': result.get('targets', []), 'packages': result.get('packages', []),
            'plots': result.get('plots', []), 'plot_notes': result.get('plot_notes', [])}
@@ -65,7 +66,8 @@ def run_hosted_job(client, payload, timeout):
 
 
 def print_row(row, terse=False):
-    print(f'\n=== {row["compiler"]}: {row["status"]} ===', flush=True)
+    label = 'BUILD PASS — nothing run' if row.get('nothing_run') else row['status']
+    print(f'\n=== {row["compiler"]}: {label} ===', flush=True)
     if row.get('error'):
         print(row['error'])
     for note in row.get('notes', []):
@@ -115,7 +117,7 @@ def main(argv, *, hosted):
     names = ('gfortran', 'gfortran17', 'ifx', 'flang') if hosted else ('gfortran', 'gfortran17', 'ifx', 'flang', 'lfortran')
     parser = argparse.ArgumentParser(description=('Hosted' if hosted else 'Local') + ' FPM package operations')
     parser.add_argument('--fpm', required=True, metavar='GITHUB_URL' if hosted else 'DIRECTORY')
-    parser.add_argument('--action', choices=('build', 'run', 'test'), default='run')
+    parser.add_argument('--action', choices=('build', 'run', 'test', 'example'), default='run')
     parser.add_argument('--compile-only', action='store_true', help='Alias for --action build')
     parser.add_argument('--target', default='', help='Names or * and ? patterns, separated by spaces/commas; quote lists in the shell')
     parser.add_argument('--main', type=Path, help='Local UTF-8 main program using the package; Build or Run only')
@@ -150,14 +152,14 @@ def main(argv, *, hosted):
             raise ValueError('List each compiler only once')
         validate_diff_arguments(args, selected)
         if args.compile_only and args.action not in ('run', 'build'):
-            raise ValueError('--compile-only conflicts with --action test')
+            raise ValueError('--compile-only conflicts with the selected action')
         action = 'build' if args.compile_only else args.action
         source = args.main.read_text(encoding='utf-8-sig') if args.main else None
         stdin = args.stdin_file.read_text(encoding='utf-8-sig') if args.stdin_file else ''
         if action == 'build' and (args.stdin_file or args.target):
             raise ValueError('--stdin-file and --target require Run or Test')
-        if source is not None and action == 'test':
-            raise ValueError('--main cannot be used with --action test')
+        if source is not None and action in ('test', 'example'):
+            raise ValueError('--main cannot be used with tests or package examples')
         if source is not None and args.target:
             raise ValueError('--target selects a package target; remove it when using --main')
         if args.list:

@@ -9,7 +9,7 @@
 <div class="toolbar"><label for="project">Package directory</label><input id="project" list="projects" value="." spellcheck="false"><datalist id="projects"></datalist><button id="refresh">Refresh packages</button></div>
 <p class="note">Enter a directory relative to the workspace above, containing fpm.toml. Use . for the workspace itself. Clone or download packages yourself before opening them here.</p>
 <div class="toolbar"><label for="workflow">Use</label><select id="workflow"><option value="package">Package's own programs and tests</option><option value="consumer">My main program</option></select>
-<label for="action">Action</label><select id="action"><option value="run">Compile and Run</option><option value="build">Build only</option><option id="test-action" value="test">Test</option></select>
+<label for="action">Action</label><select id="action"><option value="run">Compile and Run</option><option id="example-action" value="example">Run examples</option><option value="build">Build only</option><option id="test-action" value="test">Test</option></select>
 <label for="profile">Profile</label><select id="profile"><option value="debug">Debug</option><option value="release">Release</option></select>
 <span id="target-controls"><label for="target">Targets (optional)</label><input id="target" list="targets" placeholder="demo_* or name1 name2" maxlength="2048" spellcheck="false"><datalist id="targets"></datalist></span></div>
 <div class="toolbar"><label for="interface">Interface</label><select id="interface"><option value="single">Single compiler</option><option value="compare">Compare compilers</option></select>

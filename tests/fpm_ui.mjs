@@ -64,7 +64,7 @@ globalThis.fetch = async (url, options = {}) => {
   else if (url === './translated-r.json') {translatedFetches++; value = translated;}
   else if (url === './service.json') value = {url: unconfigured ? '' : 'https://fpm.modal.run'};
   else if (url.endsWith('/api/health')) value = {ok: true, compiler: 'GNU Fortran 16.2.0', fpm: '0.12.0',
-    ...(legacyService ? {} : {features: {translated_r: true}}),
+    ...(legacyService ? {} : {features: {translated_r: true, run_examples: true}}),
     ...(legacyService ? {} : {compilers: {gfortran: 'GNU Fortran 16.2.0', ifx: 'Intel ifx',
       ...(localExecution ? {lfortran: 'LFortran local'} : {})},
       precompiled: localExecution ? {} : {[packages[0].id]: {revision: packages[0].revision, compiler: 'gfortran'}}}),
@@ -136,6 +136,7 @@ else {
 assert.equal(get('compiler').options.find(option => option.value === 'ifx').disabled, legacyService);
 assert.equal(get('source-pane').hidden, false);
 assert.equal(get('test-action').disabled, true);
+assert.equal(get('example-action').disabled, true);
 assert.equal(get('example').options.length, 5);
 assert.equal(submissions.length, 0, 'Initialization must not submit a job');
 get('package-search').value = 'DVODE';
@@ -212,6 +213,15 @@ get('workflow').listeners.change();
 assert.equal(get('source-pane').hidden, true);
 assert.equal(get('target-controls').hidden, false);
 assert.equal(get('test-action').disabled, false);
+assert.equal(get('example-action').disabled, false);
+get('action').value = 'example'; get('action').listeners.change();
+assert.equal(get('submit').textContent, 'Run examples');
+await get('submit').listeners.click();
+if (legacyService) {
+  assert.equal(get('submit').disabled, true);
+  assert.match(get('workflow-note').textContent, /Run examples/);
+} else assert.equal(submissions.at(-1).action, 'example');
+get('action').value = 'run'; get('action').listeners.change();
 if (!legacyService) {
   get('target').value = 'old-target';
   get('compiler').value = localExecution ? 'gfortran' : 'ifx'; get('compiler').listeners.change();
@@ -251,6 +261,8 @@ await get('submit').listeners.click();
 assert.equal(cancellations, 1, 'A lost connection cancels the known job');
 assert.equal(get('submit').disabled, false);
 assert.match(resultText({ok: false, error: 'Timed out', stages: []}), /Timed out/);
+assert.match(resultText({ok: false, stages: [{name: 'Build', ok: true, seconds: 1, command: ['fpm', 'build'], exit_code: 0}]}), /^BUILD PASS — nothing run/);
+assert.match(resultText({ok: false, nothing_run: true, stages: []}), /^BUILD PASS — nothing run/);
 
 transportFailure = false;
 assert.equal(translatedFetches, 0, 'General collection does not fetch translated R metadata');

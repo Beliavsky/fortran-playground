@@ -27,6 +27,27 @@ def fixture(root):
 
 class LocalTests(unittest.TestCase):
     @unittest.skipUnless(shutil.which('fpm') and shutil.which('gfortran'), 'FPM and GNU Fortran required')
+    def test_manifest_application_and_fpm_example_in_custom_directories(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / 'fpm.toml').write_text('name="target-layout"\n[build]\nauto-executables=false\nauto-examples=false\n'
+                '[[executable]]\nname="demo_app"\nsource-dir="example"\nmain="app.f90"\n'
+                '[[example]]\nname="demo_sample"\nsource-dir="samples"\nmain="sample.f90"\n')
+            for directory, filename, marker in [('example', 'app.f90', 'APPLICATION PASS'), ('samples', 'sample.f90', 'EXAMPLE PASS')]:
+                (root / directory).mkdir()
+                (root / directory / filename).write_text(f'program main\nprint *,"{marker}"\nend program\n')
+            for action, marker in [('run', 'APPLICATION PASS'), ('example', 'EXAMPLE PASS')]:
+                row = fortran_fpm.execute_project(root, 'gfortran', options={'action': action, 'target': 'demo*'})
+                self.assertTrue(row['ok'], row)
+                self.assertIn(marker, row['execution']['stdout'])
+                self.assertEqual('--example' in row['execution']['command'], action == 'example')
+            row = fortran_fpm.execute_project(root, 'gfortran', options={'action': 'run', 'target': 'missing*'})
+            self.assertEqual(row['status'], 'NOT_RUN')
+            self.assertTrue(row['nothing_run'])
+            self.assertTrue(row['build_ok'])
+            self.assertNotIn('execution', row)
+
+    @unittest.skipUnless(shutil.which('fpm') and shutil.which('gfortran'), 'FPM and GNU Fortran required')
     def test_real_multiple_and_wildcard_targets(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

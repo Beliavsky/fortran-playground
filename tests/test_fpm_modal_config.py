@@ -112,6 +112,10 @@ class ModalConfigTests(unittest.TestCase):
                 verify_api('https://test.modal.run', 'https://example.org', translated_r=True)
             response.read.return_value = b'{"ok":true,"fpm":"0.12.0","features":{"translated_r":true}}'
             verify_api('https://test.modal.run', 'https://example.org', translated_r=True)
+            with self.assertRaisesRegex(ValueError, 'Run examples support'):
+                verify_api('https://test.modal.run', 'https://example.org', run_examples=True)
+            response.read.return_value = b'{"ok":true,"fpm":"0.12.0","features":{"translated_r":true,"run_examples":true}}'
+            verify_api('https://test.modal.run', 'https://example.org', translated_r=True, run_examples=True)
             with self.assertRaisesRegex(ValueError, 'compiler catalog'):
                 verify_api('https://test.modal.run', 'https://example.org', ['gfortran', 'ifx'])
             self.assertEqual(open_url.call_args.args[0].full_url, 'https://test.modal.run/api/health')
@@ -171,15 +175,17 @@ class ModalConfigTests(unittest.TestCase):
         module['modal'].Sandbox = types.SimpleNamespace(create=MagicMock(return_value=sandbox))
         module['modal'].Image.from_name = MagicMock(return_value='clean-image')
         request = {'url': 'https://github.com/' + R_REPOSITORY, 'revision': 'a' * 40,
-                   'subdirectory': 'Metrics', 'workflow': 'package', 'action': 'run', 'target': 'demo_* other'}
+                   'subdirectory': 'Metrics', 'workflow': 'package', 'action': 'example', 'target': 'demo_* other'}
         with patch('fpm_collections.TranslatedRPreparer.prepare', return_value=('r/Metrics', [])) as prepare:
             result = module['execute_job']('translated-job', request, cancelled=lambda: False)
         self.assertEqual(prepare.call_args.args[0]['target'], '')
+        self.assertEqual(prepare.call_args.args[0]['action'], 'run')
         self.assertTrue(result['ok'], result)
         message = json.loads(sandbox.stdin.write.call_args.args[0])
         self.assertEqual(message['root'], 'r/Metrics')
         self.assertNotIn('subdirectory', message['request'])
         self.assertEqual(message['request']['target'], 'demo_* other')
+        self.assertEqual(message['request']['action'], 'example')
         self.assertIn('bundle', message)
         self.assertNotIn('cache_key', message)
 

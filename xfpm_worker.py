@@ -11,7 +11,7 @@ import time
 import tomllib
 
 from fpm_sources import extract_archive, validate_request
-from fpm_targets import parse_targets, select_targets
+from fpm_targets import parse_targets, select_targets, discover_targets
 from fpm_compilers import COMPILERS, compiler_flags
 from fpm_cache import consumer_project, cached_request_matches, library_inventory
 from fortran_plot import uses_pyplot, install_module, collect_plots, plotting_environment, provides_pyplot
@@ -59,16 +59,20 @@ def stage(command, directory, timeout, stdin=''):
 
 
 def targets(project, kind):
-    return sorted({path.name for path in (project / 'build').glob(f'*/{kind}/*')
-                   if path.is_file() and os.access(path, os.X_OK)})
+    return discover_targets(project, kind)
 
 
 def execute(message):
     os.environ.update(plotting_environment())
     target_text = message['request'].get('target', '')
     parse_targets(target_text)
-    payload = validate_request({**message['request'], 'target': ''})
+    action = message['request'].get('action', 'run')
+    if action == 'example' and message['request'].get('workflow', 'consumer') != 'package':
+        raise ValueError('Run examples requires the package workflow.')
+    payload = validate_request({**message['request'], 'target': '',
+                                **({'action': 'run'} if action == 'example' else {})})
     payload['target'] = target_text
+    payload['action'] = action
     compiler = payload['compiler']
     if compiler != os.environ.get('FPM_COMPILER', 'gfortran'):
         raise ValueError('Requested compiler does not match this sandbox image.')
@@ -108,26 +112,33 @@ def execute(message):
         result['packages'] = cached['records']
     if not build['ok']:
         return result
-    kind = 'test' if payload['action'] == 'test' else 'app'
+    result['build_ok'] = True
+    kind = {'test': 'test', 'example': 'example'}.get(payload['action'], 'app')
     result['targets'] = available = targets(project, kind)
     if payload['action'] == 'build':
         result['ok'] = True
         return result
     if not available:
-        result['error'] = f'This package has no {"test" if kind == "test" else "application"} targets. Try Build or supply a custom main program.'
+        result.update(status='NOT_RUN', nothing_run=True,
+                      error=f'This package has no {kind} targets. Choose Run examples, Test, Build, or supply a custom main program.')
         return result
     target = payload['target'] if payload['workflow'] == 'package' else ''
-    if kind == 'app' and not target.strip() and len(available) > 1:
-        result.update(error='Choose an application target, then submit again.', needs_target=True)
+    if kind in ('app', 'example') and not target.strip() and len(available) > 1:
+        result.update(error=f'Choose {kind} targets, then submit again.', needs_target=True,
+                      status='NOT_RUN', nothing_run=True)
         return result
     try:
         selected = select_targets(target, available)
     except ValueError as error:
-        result.update(error=str(error), needs_target=True)
+        result.update(error=str(error), needs_target=True, status='NOT_RUN', nothing_run=True)
         return result
-    command = ['fpm', payload['action'], *flags] + (['--target', *selected] if selected else [])
+    command = ['fpm', 'run' if kind == 'example' else payload['action'], *flags,
+               *(['--example'] if kind == 'example' else []), *(['--target', *selected] if selected else [])]
     run = stage(command, project, 30, payload['stdin'])
-    result['stages'].append({'name': 'Test' if kind == 'test' else 'Run', **run})
+    result['stages'].append({'name': {'test': 'Test', 'example': 'Examples'}.get(kind, 'Run'), **run})
+    if run['ok'] and '<INFO> No executables to run' in run['stderr']:
+        result.update(status='NOT_RUN', nothing_run=True, error='FPM found no runnable targets. Choose another action or target.')
+        return result
     result.update(collect_plots(project))
     result['ok'] = run['ok']
     return result

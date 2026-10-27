@@ -23,6 +23,8 @@ let origin = '', examples = [], busy = false, job = '', targetsKey = '', ready =
 let compilerLabels = {gfortran: 'GNU Fortran 16.2.0'};
 let compilerSelection = false;
 let translatedSupported = false;
+let examplesSupported = false;
+const examplesUnavailable = () => get('action').value === 'example' && !examplesSupported;
 const translatedUnavailable = () => Boolean(get('subdirectory').value.trim()) && !translatedSupported;
 let packages = [], generalPackages = [], translatedPackages, precompiled = {};
 let collectionLoading = false, collectionGeneration = 0;
@@ -37,20 +39,24 @@ get('compiler').value = 'gfortran';
 function controls() {
   const consumer = get('workflow').value === 'consumer';
   get('test-action').disabled = consumer;
-  if (consumer && get('action').value === 'test') get('action').value = 'run';
+  get('example-action').disabled = consumer;
+  if (consumer && ['test', 'example'].includes(get('action').value)) get('action').value = 'run';
   get('source-pane').hidden = !consumer;
   get('workspace').classList.toggle('package-only', !consumer);
   get('target-controls').hidden = consumer || get('action').value === 'build';
   get('stdin-pane').hidden = get('action').value === 'build';
   get('workflow-note').textContent = consumer
     ? 'The package is built as a dependency of your main program. Examples include working main programs.'
-    : 'Build the downloaded project itself. Targets accept names separated by spaces or commas, with * and ? patterns (quotes optional). Leave blank to discover applications or run all tests. Selected programs share the run/test time limit.';
-  const labels = {run: 'Compile and Run', build: 'Build', test: 'Build and Test'};
+    : 'Compile and Run selects applications; Run examples selects FPM example targets; Test selects tests. Targets accept names or * and ? patterns, separated by spaces or commas. Leave blank to discover applications/examples or run all tests. Programs share the run/test time limit.';
+  const labels = {run: 'Compile and Run', example: 'Run examples', build: 'Build', test: 'Build and Test'};
   get('submit').textContent = labels[get('action').value];
   if (ready && translatedUnavailable()) get('workflow-note').textContent = localExecution
     ? 'Restart the local server with the updated code to enable translated R packages.'
     : 'The connected FPM service does not yet support translated R packages. Complete the updated FPM backend deployment, then reload this page. General packages remain available.';
-  get('submit').disabled = busy || !ready || translatedUnavailable();
+  if (ready && examplesUnavailable()) get('workflow-note').textContent = localExecution
+    ? 'Restart the local server with the updated code to enable Run examples.'
+    : 'The connected FPM service needs an update to support Run examples. Complete the backend deployment, then reload this page.';
+  get('submit').disabled = busy || !ready || translatedUnavailable() || examplesUnavailable();
   get('cancel').disabled = !busy || !job;
   for (const id of ['workflow', 'action', 'package-url', 'revision', 'subdirectory', 'target', 'example', 'package-collection']) get(id).disabled = busy;
   get('compiler').disabled = busy || !ready || !compilerSelection;
@@ -227,7 +233,8 @@ function resetTargets() {
 }
 
 export function resultText(result) {
-  const lines = [`${result.ok ? 'PASS' : 'FAIL'}${result.needs_target ? ' — target selection required' : ''}`];
+  const lines = [nothingRun(result) ? 'BUILD PASS — nothing run'
+    : `${result.ok ? 'PASS' : 'FAIL'}${result.needs_target ? ' — target selection required' : ''}`];
   if (result.error) lines.push(result.error);
   for (const note of result.notes ?? []) lines.push('Note: ' + note);
   for (const pkg of result.packages ?? []) lines.push(`Package: ${pkg.repository} @ ${pkg.revision}`);
@@ -246,6 +253,11 @@ export function resultText(result) {
   return lines.join('\n');
 }
 
+function nothingRun(result) {
+  return result.nothing_run || (!result.ok && result.stages?.some(s => s.name === 'Build' && s.ok)
+    && !result.stages.some(s => s.name !== 'Build'));
+}
+
 async function request(path, options = {}) {
   if (localExecution) {
     path = '/api/fpm/catalog' + path.slice('/api'.length);
@@ -260,7 +272,7 @@ async function request(path, options = {}) {
 }
 
 async function submit() {
-  if (busy || !ready || translatedUnavailable()) return;
+  if (busy || !ready || translatedUnavailable() || examplesUnavailable()) return;
   busy = true;
   job = '';
   controls();
@@ -287,7 +299,8 @@ async function submit() {
       const result = response.result;
       get('output').value = resultText(result);
       renderPlots(get('plot-results'), result);
-      get('status').textContent = result.needs_target ? 'Choose a target' : result.ok ? 'PASS' : 'FAIL';
+      get('status').textContent = nothingRun(result) ? 'BUILD PASS — nothing run'
+        : result.needs_target ? 'Choose a target' : result.ok ? 'PASS' : 'FAIL';
       get('targets').replaceChildren(...(result.targets ?? []).map(name => {
         const option = document.createElement('option'); option.value = name; return option;
       }));
@@ -417,6 +430,7 @@ async function initialize() {
     compilerLabels = health.compilers ?? {gfortran: health.compiler};
     precompiled = health.precompiled ?? {};
     translatedSupported = health.features?.translated_r === true;
+    examplesSupported = health.features?.run_examples === true;
     if (localExecution) {
       get('compiler').replaceChildren(...Object.entries(compilerLabels).map(([value, textContent]) => {
         const option = document.createElement('option'); Object.assign(option, {value, textContent}); return option;
