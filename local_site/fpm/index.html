@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="en">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Local FPM playground</title><link rel="stylesheet" href="../editor-vendor/codemirror.css"><link rel="stylesheet" href="../style.css"></head>
+<title>Local FPM projects</title><link rel="stylesheet" href="/editor-vendor/codemirror.css"><link rel="stylesheet" href="/style.css"></head>
 <body><main>
-<header><p class="eyebrow">LOCAL FORTRAN PACKAGES</p><h1>Local FPM playground</h1>
+<header><p class="eyebrow">LOCAL FORTRAN PACKAGES</p><h1>Local FPM projects</h1>
 <p>Use your installed FPM and compilers. Builds create files in the package's build directory; applications and tests run with your permissions and can access files and the network.</p>
-<p><a id="source-link" href="/">Local source-file playground</a></p><p id="workspace" class="note"></p><p id="status" role="status">Connecting…</p></header>
+<p><a id="catalog-link" href="/fpm/">Local FPM playground</a> &middot; <a id="source-link" href="/">Local source-file playground</a></p><p id="workspace" class="note"></p><p id="status" role="status">Connecting…</p></header>
 <div class="toolbar"><label for="project">Package directory</label><input id="project" list="projects" value="." spellcheck="false"><datalist id="projects"></datalist><button id="refresh">Refresh packages</button></div>
 <p class="note">Enter a directory relative to the workspace above, containing fpm.toml. Use . for the workspace itself. Clone or download packages yourself before opening them here.</p>
 <div class="toolbar"><label for="workflow">Use</label><select id="workflow"><option value="package">Package's own programs and tests</option><option value="consumer">My main program</option></select>
@@ -41,4 +41,4 @@ end program main
 <div class="scroll"><table><thead><tr><th>Compiler</th><th>Result</th><th>Total</th><th>Compile</th><th>Run</th><th>Other</th></tr></thead><tbody id="summary"></tbody></table></div><div id="results"></div></section>
 <footer>
 <p>Plotting: <code>use pyplot_module</code> and save a PNG with <code>savefig</code>. See <a href="https://github.com/Beliavsky/fortran-playground/blob/main/docs/plotting.md">examples and setup</a>. Local rendering requires Python, NumPy, and Matplotlib.</p>FPM resolves dependencies normally, using its local cache and network. No hosted playground requests or usage quotas apply. Initialize Intel's compiler environment before starting the server if using ifx.</footer>
-</main><script src="../editor-vendor/codemirror.js"></script><script src="../editor-vendor/fortran.js"></script><script type="module" src="fpm.mjs"></script></body></html>
+</main><script src="/editor-vendor/codemirror.js"></script><script src="/editor-vendor/fortran.js"></script><script type="module" src="/fpm/projects.mjs"></script></body></html>

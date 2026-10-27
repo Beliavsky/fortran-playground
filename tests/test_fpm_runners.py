@@ -66,7 +66,7 @@ class LocalTests(unittest.TestCase):
             self.assertTrue(consumer['ok'], consumer)
             self.assertIn('CONSUMER PASS', consumer['execution']['stdout'])
             self.assertEqual((root / 'fpm.toml').read_bytes(), original)
-            self.assertFalse(list(root.glob('.fortran-fpm-*')))
+            self.assertFalse(list(root.glob('.fp-*')))
             cancelled = threading.Event(); cancelled.set()
             result = fortran_fpm.compare_projects(root, ['gfortran'], cancel=cancelled)
             self.assertEqual(result[0]['status'], 'SKIP')

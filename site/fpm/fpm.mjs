@@ -4,6 +4,19 @@ import {serviceOrigin} from '../service_config.mjs';
 import {githubRepository, pinnedSource, projectFiles, zipFiles, download} from './project_export.mjs';
 
 const get = id => document.getElementById(id);
+const localExecution = document.documentElement?.dataset?.execution === 'local';
+let localToken = '';
+if (localExecution) {
+  localToken = new URLSearchParams(location.hash.slice(1)).get('session') || '';
+  try {
+    if (localToken) sessionStorage.setItem('local-fortran-session', localToken);
+    else localToken = sessionStorage.getItem('local-fortran-session') || '';
+    history.replaceState(null, '', location.pathname);
+  } catch {}
+  for (const [id, path] of [['local-source-link', '/'], ['local-projects-link', '/fpm/projects/']]) {
+    get(id).href = path + '#session=' + encodeURIComponent(localToken);
+  }
+}
 const editor = createEditor(get('source'), get('line-count'));
 editor.setIndentation({width: 3, automatic: true});
 let origin = '', examples = [], busy = false, job = '', targetsKey = '', ready = false;
@@ -35,8 +48,8 @@ function controls() {
   get('package-search').disabled = busy;
   get('package-category').disabled = busy;
   const selected = packages.find(p => p.id === get('available-package').value);
-  get('load-package').disabled = busy || !ready || !selected
-    || precompiled[selected.id]?.revision !== selected.revision;
+  get('load-package').disabled = busy || !selected || (!localExecution && (!ready
+    || precompiled[selected.id]?.revision !== selected.revision));
   get('download-main').disabled = busy;
   get('download-project').disabled = busy || exporting;
   editor.setReadOnly(busy);
@@ -50,13 +63,13 @@ function renderPackages() {
   const visible = packages.filter(p => (!category || p.category === category)
     && `${p.id} ${p.repository} ${p.description} ${p.category}`.toLowerCase().includes(query));
   const placeholder = document.createElement('option');
-  placeholder.value = ''; placeholder.textContent = 'Choose a precompiled package…';
+  placeholder.value = ''; placeholder.textContent = localExecution ? 'Choose a package…' : 'Choose a precompiled package…';
   get('available-package').replaceChildren(placeholder);
   for (const item of visible) {
     const option = document.createElement('option');
     option.value = item.id;
     option.textContent = `${item.id} — ${item.description}`;
-    option.disabled = precompiled[item.id]?.revision !== item.revision;
+    option.disabled = !localExecution && precompiled[item.id]?.revision !== item.revision;
     get('available-package').appendChild(option);
   }
   get('available-package').value = visible.some(p => p.id === previous) ? previous : '';
@@ -108,6 +121,7 @@ function resetTargets() {
 export function resultText(result) {
   const lines = [`${result.ok ? 'PASS' : 'FAIL'}${result.needs_target ? ' — target selection required' : ''}`];
   if (result.error) lines.push(result.error);
+  for (const note of result.notes ?? []) lines.push('Note: ' + note);
   for (const pkg of result.packages ?? []) lines.push(`Package: ${pkg.repository} @ ${pkg.revision}`);
   if (result.compiler) lines.push(`Compiler: ${result.compiler}; FPM ${result.fpm}`);
   if (result.cache) lines.push(`Precompiled package: ${result.cache.package} (${result.cache.compiler}); `
@@ -120,11 +134,17 @@ export function resultText(result) {
     if (stage.exit_code !== 0) lines.push(`Exit code: ${stage.exit_code}`);
   }
   if (result.targets?.length) lines.push('', `Available targets: ${result.targets.join(', ')}`);
-  if (result.total_seconds !== undefined) lines.push('', `Total service time: ${result.total_seconds.toFixed(3)} seconds`);
+  if (result.total_seconds !== undefined) lines.push('', `Total ${result.local ? 'local' : 'service'} time: ${result.total_seconds.toFixed(3)} seconds`);
   return lines.join('\n');
 }
 
 async function request(path, options = {}) {
+  if (localExecution) {
+    path = '/api/fpm/catalog' + path.slice('/api'.length);
+    options = {...options, headers: {...options.headers, 'X-Local-Token': localToken,
+      ...(options.method === 'POST' ? {'Content-Type': 'application/json'} : {})},
+      ...(options.method === 'POST' ? {body: options.body || '{}'} : {})};
+  }
   const response = await fetch(origin + path, {...options, signal: AbortSignal.timeout(20000)});
   const data = await response.json();
   if (!response.ok) throw new Error(data.error || `Service returned HTTP ${response.status}`);
@@ -148,7 +168,7 @@ async function submit() {
     const submitted = await request('/api/jobs', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload)});
     job = submitted.id;
     controls();
-    const deadline = Date.now() + 420000;
+    const deadline = localExecution ? Infinity : Date.now() + 420000;
     while (Date.now() < deadline) {
       get('status').textContent = 'Preparing, building, or running…';
       await new Promise(resolve => setTimeout(resolve, 1000));
@@ -189,7 +209,9 @@ get('cancel').addEventListener('click', async () => {
 for (const id of ['workflow', 'action']) get(id).addEventListener('change', () => {resetTargets(); controls();});
 get('compiler').addEventListener('change', () => {
   resetTargets();
-  get('connection').textContent = `${compilerLabels[get('compiler').value]} · FPM 0.12.0 · Separate package service`;
+  get('connection').textContent = localExecution
+    ? `${compilerLabels[get('compiler').value]} · Local FPM · Builds from scratch`
+    : `${compilerLabels[get('compiler').value]} · FPM 0.12.0 · Separate package service`;
   controls();
 });
 for (const id of ['package-url', 'revision']) get(id).addEventListener('input', () => {
@@ -203,7 +225,8 @@ get('available-package').addEventListener('change', () => {
   sourceLinks(selected);
   get('package-note').textContent = selected
     ? `${selected.description} Source: https://github.com/${selected.repository} @ ${selected.revision}. `
-      + (precompiled[selected.id]?.revision === selected.revision ? 'Verified precompiled GNU 16 library.'
+      + (localExecution ? 'Sources download and build locally when you submit a job.'
+        : precompiled[selected.id]?.revision === selected.revision ? 'Verified precompiled GNU 16 library.'
         : 'Precompiled build is not available on this service yet.')
     : 'Choose a package to load its pinned revision and a working main program. Loading does not run a job.';
   controls();
@@ -213,8 +236,10 @@ get('load-package').addEventListener('click', () => {
   if (!selected || get('load-package').disabled) return;
   get('package-url').value = `https://github.com/${selected.repository}`;
   get('revision').value = selected.revision;
-  get('compiler').value = 'gfortran';
-  get('connection').textContent = `${compilerLabels.gfortran} · FPM 0.12.0 · Separate package service`;
+  if (!localExecution) get('compiler').value = 'gfortran';
+  get('connection').textContent = localExecution
+    ? `${compilerLabels[get('compiler').value] || 'No compiler found'} · Local FPM · Builds from scratch`
+    : `${compilerLabels.gfortran} · FPM 0.12.0 · Separate package service`;
   get('workflow').value = 'consumer';
   get('action').value = 'run';
   editor.setValue(selected.source);
@@ -263,30 +288,42 @@ async function initialize() {
     }
   }).catch(error => {get('package-note').textContent = error.message;});
   try {
-    const response = await fetch('./service.json', {cache: 'no-store'});
-    if (!response.ok) throw new Error('Cannot load FPM service configuration.');
-    const configuration = await response.json();
-    if (!configuration.url) throw new Error('The FPM service has not been configured yet. See the instructions linked below.');
-    origin = serviceOrigin(configuration.url);
+    if (!localExecution) {
+      const response = await fetch('./service.json', {cache: 'no-store'});
+      if (!response.ok) throw new Error('Cannot load FPM service configuration.');
+      const configuration = await response.json();
+      if (!configuration.url) throw new Error('The FPM service has not been configured yet. See the instructions linked below.');
+      origin = serviceOrigin(configuration.url);
+    }
     const health = await request('/api/health');
-    if (!health.ok || typeof health.fpm !== 'string') throw new Error('FPM service unavailable or incompatible.');
+    if (!health.ok || typeof health.fpm !== 'string') throw new Error(health.error || 'FPM service unavailable or incompatible.');
     compilerSelection = Boolean(health.compilers);
     compilerLabels = health.compilers ?? {gfortran: health.compiler};
     precompiled = health.precompiled ?? {};
+    if (localExecution) {
+      get('compiler').replaceChildren(...Object.entries(compilerLabels).map(([value, textContent]) => {
+        const option = document.createElement('option'); Object.assign(option, {value, textContent}); return option;
+      }));
+      get('compiler').value = Object.hasOwn(compilerLabels, 'gfortran') ? 'gfortran' : Object.keys(compilerLabels)[0] || '';
+    }
     for (const option of get('compiler').options) {
       option.disabled = !Object.hasOwn(compilerLabels, option.value);
       if (!option.disabled) option.textContent = compilerLabels[option.value];
     }
     ready = true;
-    get('connection').textContent = `${health.compiler} · FPM ${health.fpm} · Separate package service`;
+    get('connection').textContent = localExecution
+      ? `${health.workspace} · ${compilerLabels[get('compiler').value]} · Local FPM · Builds from scratch`
+      : `${health.compiler} · FPM ${health.fpm} · Separate package service`;
     get('status').textContent = 'Ready';
   } catch (error) {
     get('connection').textContent = error.message;
-    get('status').textContent = 'Service unavailable';
+    get('status').textContent = localExecution ? 'Local setup incomplete' : 'Service unavailable';
   }
   await Promise.all([catalog, available]);
   renderPackages();
-  get('package-note').textContent = Object.keys(precompiled).length
+  get('package-note').textContent = localExecution
+    ? 'Choose a package to load its pinned revision and example main. Each submission downloads sources and builds locally from scratch.'
+    : Object.keys(precompiled).length
     ? 'Choose a package to load its pinned revision and a working main program. Loading does not run a job.'
     : 'Precompiled packages have not been deployed on this service yet. The existing examples and custom URLs remain available.';
   controls();

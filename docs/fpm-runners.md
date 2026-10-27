@@ -1,6 +1,6 @@
 # FPM from Python and the local browser
 
-Both command-line runners accept an explicit `--fpm` mode. Ordinary source-file commands retain their existing behavior. FPM mode requires Python 3.11 or later; the clients and local server use the standard library.
+Both command-line runners accept an explicit `--fpm` mode. Ordinary source-file commands retain their existing behavior. FPM mode requires Python 3.11 or later; the command-line clients and directory-based local page use the standard library. The local catalog page also requires `tomli-w` for source preparation.
 
 ## Hosted packages: xplayground_run.py
 
@@ -52,23 +52,39 @@ Use `--terse` to omit versions, project metadata, and individual command/timing 
 
 Output comparison remains optional: `--diff`, `--diff exact`, or `--diff numeric`, with `--diff-atol`, `--diff-rtol`, and `--diff-reference`. It compares captured execution stdout, retaining the original output. Build-only, failed, skipped, timed-out, cancelled, or truncated operations are not comparable. Output differences do not alter the exit code: `0` means all requested operations passed, `1` means an operation failed or was skipped, `2` means a request/configuration/service error, and `130` means interrupted.
 
-## Local browser page
+## Local FPM playground
 
-Start the server at the package directory or a parent workspace:
+The main local package playground uses the same interface, package catalog, examples, source links, downloads, editor and plot display as the hosted FPM page. It executes through the loopback server using installed compilers and FPM, with no Modal account or hosted requests.
 
 ```text
-python xfortran_serve.py --workspace C:\fortran\mypackage --fpm
-python xfortran_serve.py --workspace C:\fortran --fpm --fpm-path C:\tools\fpm.exe
+python -m pip install tomli-w==1.2.0
+python xfortran_serve.py --workspace C:\fortran --fpm
 ```
 
-Use the full session URL printed by the server. The ordinary local playground also links to **Local FPM packages**. The package page discovers projects within the workspace, excluding hidden/build directories; you can enter a workspace-relative directory yourself. Use `.` for the workspace root. A package directory cannot escape that workspace.
+Open the full session URL printed by the server. Select a catalog entry or enter a public GitHub repository and optional revision. You can edit a main program using the package or choose the package's own Build, Run or Test action. Standard input and application/test target selection work as on the hosted page. The compiler selector lists discovered local FPM compilers: gfortran, gfortran17, ifx, Flang and LFortran when installed. The default is the installed gfortran, whose actual version is shown; to use GNU 16, put that version on PATH or pass `--compiler-path gfortran=PATH_TO_GFORTRAN16`. `--fpm-path PATH` overrides the FPM executable. Initialize Intel's environment before starting the server when using ifx.
 
-The page offers package/custom-main workflows, single- or multi-compiler operation, Build/Run/Test, optional targets, debug/release profiles, stdin text/file loading, configurable timeouts, Stop, and stop-on-first-failure. It uses the same local runner as `xfortran_run.py`. Only one source-file or FPM job runs through this server at a time. The compiler environment and executable overrides are inherited from the server's launch terminal.
+Each submission downloads sources into a fresh temporary directory inside the workspace, compiles from scratch, and removes its source/build tree when finished. There is no persistent precompiled-package directory yet. Catalog consumer jobs use the recorded source/dependency pins, checksums, manifest adaptations and patches. The package's own programs/tests use development dependencies resolved during preparation; they do not reuse the hosted consumer cache. GitHub downloads retain the source preparer's archive/path checks. Local compilation and execution have no hosted timeouts or job quotas; Cancel stops active work. Only one job runs through this server at a time.
+
+Install native libraries such as BLAS, LAPACK or SQLite locally when required; the server does not install them. Catalog recipes with GNU-specific compiler flags require gfortran or gfortran17. Other catalog entries and custom repositories can be tried with the other installed compilers. First local builds of large packages such as stdlib may take several minutes. Plotting requires NumPy and Matplotlib on the local machine.
+
+## Local FPM projects
+
+The secondary **Local FPM projects** page works with existing packages on disk. Open it using the link in the main local playground, or launch it directly:
+
+```text
+python xfortran_serve.py --workspace C:\fortran --fpm-projects
+```
+
+It discovers package directories within the workspace, excluding hidden/build directories. You can enter a workspace-relative directory yourself; `.` means the workspace root. A package directory cannot escape that workspace. It supports package/custom-main workflows, single- or multi-compiler operation, Build/Run/Test, optional targets, debug/release profiles, stdin text/file loading, configurable timeouts, Stop, and stop-on-first-failure. Existing projects retain their normal FPM build directories, so ordinary FPM incremental builds still apply on this page.
 
 The main-program editor provides syntax highlighting, configurable indentation (default three spaces), local file loading, Format via installed fprettify, and Check via installed Fortitude. Results show every selected compiler's timings, commands, stdout/stderr, and available targets. Copy all results and optional exact/whitespace/numeric output comparisons submit no extra jobs. Text and source edits remain in the browser until submitted; the editor does not overwrite package source files.
 
-The local API retains the existing loopback Host/Origin/session-token checks. The session fragment is carried between local pages, while session storage supports reloads. Unrelated websites cannot submit jobs through the browser. The local tools themselves run with your normal permissions, so use packages you trust.
+Both pages use the same local execution backend as `xfortran_run.py`. The API retains the loopback Host/Origin/session-token checks, and navigation carries the session between local pages. Reloads use per-tab session storage. Local programs run with your normal permissions, so use packages you trust.
 
-To copy the local tools into a separate project, take `xfortran_run.py`, `xfortran_serve.py`, `fortran_fpm.py`, `fpm_runner.py`, `fortran_output_diff.py`, `fortran_plot.py`, `vendor/pyplot-fortran/`, and `local_site/` together. No hosted backend modules or Modal SDK are needed for local FPM operation. Standalone hosted FPM use additionally needs `xplayground_run.py`, `fpm_sources.py`, `fpm_compilers.py`, and a package-service configuration or `--service-url`. See [plotting](plotting.md) for PNG examples, required local Python packages, and `--plot-dir`.
+## Moving the local tools
+
+For source-file and existing-directory FPM operation, copy `xfortran_run.py`, `xfortran_serve.py`, `fortran_fpm.py`, `fpm_runner.py`, `fortran_output_diff.py`, `fortran_plot.py`, `vendor/pyplot-fortran/`, and `local_site/` together. The main catalog page additionally needs `local_fpm_catalog.py`, `fpm_sources.py`, `fpm_compilers.py`, `fpm_catalog_build.py`, `fpm_catalog_patches.py`, `fpm_catalog.json`, and the shared `site/` frontend assets. It does not need the Modal SDK or execution-service modules. The source catalog and frontend assets can be generated in this repository before copying them.
+
+Standalone hosted FPM use additionally needs `xplayground_run.py` and a package-service configuration or `--service-url`. See [plotting](plotting.md) for PNG examples, local Python requirements, and `--plot-dir`.
 
 For package options, run `python xfortran_run.py --fpm . --help` or `python xplayground_run.py --fpm URL --help`.

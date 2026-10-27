@@ -3,11 +3,19 @@ import {readFileSync} from 'node:fs';
 
 const html = readFileSync(new URL('../site/fpm/index.html', import.meta.url), 'utf8');
 const ids = new Set([...html.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]));
+const localExecution = process.argv.includes('--local');
+if (localExecution) {
+  ids.add('local-source-link'); ids.add('local-projects-link');
+  globalThis.location = new URL('http://127.0.0.1:8766/fpm/#session=private');
+  globalThis.sessionStorage = {getItem() {return 'private';}, setItem() {}};
+  globalThis.history = {replaceState() {}};
+}
 const elements = new Map();
 const downloads = [], blobs = new Map();
 URL.createObjectURL = blob => {const url = `blob:export-${blobs.size}`; blobs.set(url, blob); return url;};
 URL.revokeObjectURL = () => {};
 globalThis.document = {
+  documentElement: {dataset: {execution: localExecution ? 'local' : 'hosted'}},
   getElementById(id) {
     assert.ok(ids.has(id), `Missing element ${id}`);
     if (!elements.has(id)) elements.set(id, {
@@ -34,6 +42,11 @@ const runtime = JSON.parse(readFileSync(new URL('../site/fpm/project-runtime.jso
 let result = {ok: true, packages: [{repository: 'test/package', revision: 'a'.repeat(40)}],
   stages: [{name: 'Run', ok: true, seconds: 0.1, command: ['fpm', 'run'], stdout: '<script>42</script>', stderr: '', exit_code: 0}]};
 globalThis.fetch = async (url, options = {}) => {
+  if (localExecution && url.startsWith('/api/')) {
+    assert.equal(options.headers['X-Local-Token'], 'private');
+    assert.ok(url.startsWith('/api/fpm/catalog/'));
+    url = '/api/' + url.slice('/api/fpm/catalog/'.length);
+  } else if (localExecution) assert.ok(!url.includes('modal.run') && url !== './service.json');
   let value;
   if (url === './examples.json') value = examples;
   else if (url === './project-runtime.json') {
@@ -44,8 +57,10 @@ globalThis.fetch = async (url, options = {}) => {
   else if (url === './packages.json') value = packages;
   else if (url === './service.json') value = {url: unconfigured ? '' : 'https://fpm.modal.run'};
   else if (url.endsWith('/api/health')) value = {ok: true, compiler: 'GNU Fortran 16.2.0', fpm: '0.12.0',
-    ...(legacyService ? {} : {compilers: {gfortran: 'GNU Fortran 16.2.0', ifx: 'Intel ifx'},
-      precompiled: {[packages[0].id]: {revision: packages[0].revision, compiler: 'gfortran'}}})};
+    ...(legacyService ? {} : {compilers: {gfortran: 'GNU Fortran 16.2.0', ifx: 'Intel ifx',
+      ...(localExecution ? {lfortran: 'LFortran local'} : {})},
+      precompiled: localExecution ? {} : {[packages[0].id]: {revision: packages[0].revision, compiler: 'gfortran'}}}),
+    ...(localExecution ? {local: true, workspace: 'C:/test'} : {})};
   else if (url.endsWith('/cancel')) {cancellations++; value = {state: 'cancelling'};}
   else if (url.endsWith('/api/jobs')) {
     if (fail) return {ok: false, async json() {return {error: 'Both FPM job slots are busy.'};}};
@@ -105,7 +120,11 @@ if (unconfigured) {
 }
 assert.equal(get('submit').disabled, false);
 assert.equal(get('compiler').value, 'gfortran');
-assert.equal(get('compiler').options.find(option => option.value === 'flang').disabled, true);
+if (!localExecution) assert.equal(get('compiler').options.find(option => option.value === 'flang').disabled, true);
+else {
+  assert.ok(get('compiler').options.some(option => option.value === 'lfortran'));
+  assert.match(get('local-projects-link').href, /\/fpm\/projects\/#session=private/);
+}
 assert.equal(get('compiler').options.find(option => option.value === 'ifx').disabled, legacyService);
 assert.equal(get('source-pane').hidden, false);
 assert.equal(get('test-action').disabled, true);
@@ -132,15 +151,15 @@ if (!legacyService) {
   get('compiler').value = 'ifx';
   get('compiler').listeners.change();
   get('load-package').listeners.click();
-  assert.equal(get('compiler').value, 'gfortran');
-  assert.match(get('connection').textContent, /GNU Fortran 16/);
+  assert.equal(get('compiler').value, localExecution ? 'ifx' : 'gfortran');
+  assert.match(get('connection').textContent, localExecution ? /Local FPM/ : /GNU Fortran 16/);
   assert.equal(get('source').value, packages[0].source);
   assert.equal(get('revision').value, packages[0].revision);
   assert.equal(submissions.length, 0, 'Loading a cached package must not submit a job');
 }
 get('available-package').value = packages[1].id;
 get('available-package').listeners.change();
-assert.equal(get('load-package').disabled, true, 'An unverified catalog entry cannot be loaded');
+assert.equal(get('load-package').disabled, !localExecution, 'Local packages build from source; hosted packages require verification');
 assert.match(resultText({ok: true, cache: {package: 'fortran-lapack', compiler: 'GNU 16', library_reused: true}}), /library reused/);
 
 get('example').value = examples[0].name;
@@ -151,7 +170,7 @@ assert.equal(get('revision').value, examples[0].revision);
 await get('submit').listeners.click();
 assert.equal(submissions.length, 1);
 assert.equal(submissions[0].workflow, 'consumer');
-assert.equal(submissions[0].compiler, legacyService ? undefined : 'gfortran');
+assert.equal(submissions[0].compiler, legacyService ? undefined : localExecution ? 'ifx' : 'gfortran');
 assert.equal(submissions[0].source, examples[0].source);
 assert.match(get('output').value, /<script>42<\/script>/, 'Output is plain text, not inserted as HTML');
 assert.equal(get('status').textContent, 'PASS');
@@ -163,9 +182,9 @@ assert.equal(get('target-controls').hidden, false);
 assert.equal(get('test-action').disabled, false);
 if (!legacyService) {
   get('target').value = 'old-target';
-  get('compiler').value = 'ifx'; get('compiler').listeners.change();
+  get('compiler').value = localExecution ? 'gfortran' : 'ifx'; get('compiler').listeners.change();
   assert.equal(get('target').value, '');
-  assert.match(get('connection').textContent, /Intel ifx/);
+  assert.match(get('connection').textContent, localExecution ? /GNU Fortran 16/ : /Intel ifx/);
 }
 result = {ok: false, needs_target: true, error: 'Choose an application target', targets: ['alpha', 'beta'], stages: []};
 await get('submit').listeners.click();
@@ -176,7 +195,7 @@ get('stdin').value = '41\n';
 result = {ok: true, stages: []};
 await get('submit').listeners.click();
 assert.equal(submissions.at(-1).target, 'alpha');
-assert.equal(submissions.at(-1).compiler, legacyService ? undefined : 'ifx');
+assert.equal(submissions.at(-1).compiler, legacyService ? undefined : localExecution ? 'gfortran' : 'ifx');
 assert.equal(submissions.at(-1).stdin, '41\n');
 
 get('action').value = 'test';

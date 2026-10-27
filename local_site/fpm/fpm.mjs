@@ -11,6 +11,7 @@ try {
   history.replaceState(null, '', location.pathname);
 } catch {}
 get('source-link').href = '/#session=' + encodeURIComponent(token);
+get('catalog-link').href = '/fpm/#session=' + encodeURIComponent(token);
 const names = ['gfortran', 'gfortran17', 'ifx', 'flang', 'lfortran'];
 let catalog = {}, fpm = '', busy = false, loading = false, stopping = false, job = '', rows = [];
 const comparison = createOutputComparison(get);

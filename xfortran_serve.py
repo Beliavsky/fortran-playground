@@ -7,6 +7,7 @@ import argparse
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
 import math
+import re
 from pathlib import Path
 import secrets
 import shutil
@@ -19,7 +20,33 @@ import webbrowser
 from xfortran_run import COMPILERS, SUFFIXES, UnsupportedOption, compare, discover, flags_for, run_process
 
 ASSETS = Path(__file__).resolve().parent / 'local_site'
+HOSTED_ASSETS = Path(__file__).resolve().parent / 'site'
 MAX_BODY = 16 * 1024 * 1024
+
+
+def catalog_page():
+    """Use the hosted markup and assets, changing only local execution labels."""
+    text = (HOSTED_ASSETS / 'fpm/index.html').read_text(encoding='utf-8')
+    text = text.replace('<html lang="en">', '<html lang="en" data-execution="local">')
+    text = text.replace('<title>FPM package playground</title>', '<title>Local FPM playground</title>')
+    text = text.replace('FORTRAN PACKAGES &middot; EXPERIMENTAL', 'LOCAL FORTRAN PACKAGES')
+    text = text.replace('<h1>FPM package playground</h1>', '<h1>Local FPM playground</h1>\n'
+        '<p><a id="local-source-link" href="/">Local source-file playground</a> &middot; '
+        '<a id="local-projects-link" href="/fpm/projects/">Local FPM projects</a></p>\n'
+        '<p>Compile and run with your installed FPM and compilers. Programs run with your permissions. '
+        'GitHub sources download into a fresh temporary project for each submission.</p>')
+    text = text.replace('Available packages (GNU Fortran 16)', 'Packages (build locally)')
+    text = text.replace('Choose a precompiled package&hellip;', 'Choose a package&hellip;')
+    text = text.replace("connect-src 'self' https://*.modal.run", "connect-src 'self'")
+    for name in ('style.css', 'editor-vendor/codemirror.css'):
+        text = text.replace('href="../' + name + '"', 'href="ui/' + name + '"')
+    text = text.replace('href="fpm.css"', 'href="ui/fpm/fpm.css"')
+    text = text.replace('src="fpm.mjs"', 'src="ui/fpm/fpm.mjs"')
+    return re.sub(r'<footer>.*?</footer>', '<footer><p>All compilation and execution use your computer. '
+        'No hosted jobs or usage quotas apply. Each submission builds from scratch; package source files '
+        'and builds in existing local projects are untouched. Install the native libraries listed in the '
+        'catalog build notes when required. Use Local FPM projects to work with packages already on disk '
+        'or compare installed compilers.</p></footer>', text, flags=re.S)
 
 
 class LocalServer(ThreadingHTTPServer):
@@ -257,6 +284,32 @@ class LocalServer(ThreadingHTTPServer):
                 result['error'] = stage['stderr'] or 'Fortitude returned invalid diagnostics'
         return result
 
+    def submit_catalog(self, data):
+        from local_fpm_catalog import validate_local_request, execute_catalog
+        request = validate_local_request(data)
+        if not self.fpm_path or not self.compilers[request['compiler']].get('path'):
+            raise ValueError('Choose an installed compiler and install FPM before submitting')
+        with self.lock:
+            if any(job['state'] == 'running' for job in self.jobs.values()):
+                return None
+            for identifier in list(self.jobs)[:-19]:
+                self.jobs.pop(identifier)
+            identifier = secrets.token_urlsafe(16)
+            job = {'state': 'running', 'cancel': threading.Event()}
+            self.jobs[identifier] = job
+
+        def work():
+            try:
+                result = execute_catalog(self.workspace, request, overrides=self.overrides,
+                                         fpm_path=self.fpm_path, cancel=job['cancel'])
+            except Exception as error:
+                result = {'ok': False, 'error': str(error), 'stages': [], 'local': True}
+            with self.lock:
+                job.update(result=result, state='done')
+        job['thread'] = threading.Thread(target=work, daemon=True)
+        job['thread'].start()
+        return identifier
+
 
 class Handler(BaseHTTPRequestHandler):
     def log_message(self, *args):
@@ -299,6 +352,9 @@ class Handler(BaseHTTPRequestHandler):
                 self.reply(200, {'workspace': str(self.server.workspace), 'fpm': self.server.fpm_path,
                     'projects': self.server.project_list(),
                     'compilers': {name: value for name, value in self.server.compilers.items() if name in FPM_COMPILERS}})
+            elif parsed.path == '/api/fpm/catalog/health':
+                from local_fpm_catalog import health
+                self.reply(200, health(self.server))
             elif parsed.path == '/api/files':
                 self.reply(200, {'files': self.server.file_list()})
             elif parsed.path == '/api/source':
@@ -306,14 +362,32 @@ class Handler(BaseHTTPRequestHandler):
                 if path.stat().st_size > MAX_BODY:
                     raise ValueError('Source is larger than the 16 MiB editor request limit')
                 self.reply(200, {'source': path.read_text(encoding='utf-8-sig')})
-            elif parsed.path.startswith('/api/jobs/'):
-                identifier = parsed.path.removeprefix('/api/jobs/')
+            elif parsed.path.startswith(('/api/jobs/', '/api/fpm/catalog/jobs/')):
+                identifier = parsed.path.rsplit('/', 1)[-1]
                 with self.server.lock:
                     job = self.server.jobs.get(identifier)
-                    value = {key: job[key] for key in ('state', 'rows', 'error') if key in job} if job else None
+                    value = {key: job[key] for key in ('state', 'rows', 'result', 'error') if key in job} if job else None
                 self.reply(200 if value else 404, value or {'error': 'Unknown job'})
+            elif parsed.path in ('/fpm/', '/fpm/index.html'):
+                self.reply(200, catalog_page().encode('utf-8'), 'text/html; charset=utf-8')
+            elif parsed.path in ('/fpm/projects/', '/fpm/projects/index.html'):
+                self.reply(200, (ASSETS / 'fpm/index.html').read_bytes(), 'text/html; charset=utf-8')
+            elif parsed.path in ('/fpm/projects.mjs', '/fpm/fpm.mjs'):
+                self.reply(200, (ASSETS / 'fpm/fpm.mjs').read_bytes(), 'text/javascript; charset=utf-8')
+            elif parsed.path in ('/fpm/examples.json', '/fpm/packages.json', '/fpm/project-runtime.json'):
+                self.reply(200, (HOSTED_ASSETS / parsed.path[1:]).read_bytes())
+            elif parsed.path.startswith('/fpm/ui/'):
+                name = parsed.path.removeprefix('/fpm/ui/')
+                allowed = {'style.css', 'plots.mjs', 'editors.mjs', 'indentation.mjs', 'service_config.mjs',
+                           'fpm/fpm.mjs', 'fpm/project_export.mjs', 'fpm/fpm.css',
+                           'editor-vendor/codemirror.js', 'editor-vendor/fortran.js', 'editor-vendor/codemirror.css'}
+                if name not in allowed:
+                    self.reply(404, {'error': 'Not found'})
+                else:
+                    assets = ASSETS if name.startswith('editor-vendor/') else HOSTED_ASSETS
+                    self.reply(200, (assets / name).read_bytes(),
+                        'text/css; charset=utf-8' if name.endswith('.css') else 'text/javascript; charset=utf-8')
             elif parsed.path in ('/', '/index.html', '/app.mjs', '/style.css', '/editors.mjs', '/indentation.mjs',
-                                 '/fpm/', '/fpm/index.html', '/fpm/fpm.mjs',
                                  '/output_diff.mjs', '/output_diff_ui.mjs', '/plots.mjs',
                                  '/editor-vendor/codemirror.js', '/editor-vendor/fortran.js',
                                  '/editor-vendor/codemirror.css', '/editor-vendor/LICENSE'):
@@ -344,8 +418,11 @@ class Handler(BaseHTTPRequestHandler):
             elif path == '/api/fpm/jobs':
                 identifier = self.server.submit_fpm(data)
                 self.reply(202 if identifier else 409, {'id': identifier} if identifier else {'error': 'A local job is already active'})
-            elif path.startswith('/api/jobs/') and path.endswith('/cancel'):
-                identifier = path[len('/api/jobs/'):-len('/cancel')]
+            elif path == '/api/fpm/catalog/jobs':
+                identifier = self.server.submit_catalog(data)
+                self.reply(202 if identifier else 409, {'id': identifier} if identifier else {'error': 'A local job is already active'})
+            elif path.startswith(('/api/jobs/', '/api/fpm/catalog/jobs/')) and path.endswith('/cancel'):
+                identifier = path.rsplit('/', 2)[-2]
                 with self.server.lock:
                     job = self.server.jobs.get(identifier)
                     if job:
@@ -364,6 +441,7 @@ def main(argv=None):
     parser.add_argument('--compiler-path', action='append', default=[], metavar='COMPILER=PATH')
     parser.add_argument('--no-browser', action='store_true')
     parser.add_argument('--fpm', action='store_true', help='Open the local FPM package page')
+    parser.add_argument('--fpm-projects', action='store_true', help='Open the directory-based Local FPM projects page')
     parser.add_argument('--fpm-path', help='FPM executable override')
     args = parser.parse_args(argv)
     overrides = {}
@@ -376,7 +454,8 @@ def main(argv=None):
         server = LocalServer(args.workspace, args.port, overrides, fpm_path=args.fpm_path)
     except (OSError, ValueError) as error:
         parser.error(str(error))
-    url = server.origin + ('/fpm/' if args.fpm else '/') + '#session=' + server.token
+    page = '/fpm/projects/' if args.fpm_projects else '/fpm/' if args.fpm else '/'
+    url = server.origin + page + '#session=' + server.token
     print(f'Local Fortran workspace: {server.workspace}\nOpen {url}\nPrograms run with your permissions. Press Ctrl+C to stop.', flush=True)
     if not args.no_browser:
         webbrowser.open(url)

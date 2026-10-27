@@ -31,7 +31,7 @@ Explore Fortran in your browser with short examples, an editable source pane, an
 
 ## Using the playground
 
-FPM packages can also be used from the command line: `python xplayground_run.py --fpm GITHUB_URL --action test` uses the hosted package service, while `python xfortran_run.py --fpm DIRECTORY --action test` uses installed compilers and FPM. Start the local package page with `python xfortran_serve.py --workspace DIRECTORY --fpm`. See [hosted/local FPM runner and browser instructions](docs/fpm-runners.md) for custom main programs, comparisons, targets, limits, and working directories.
+FPM packages can also be used from the command line: `python xplayground_run.py --fpm GITHUB_URL --action test` uses the hosted package service, while `python xfortran_run.py --fpm DIRECTORY --action test` uses installed compilers and FPM. The main local package page, started with `python xfortran_serve.py --workspace DIRECTORY --fpm`, shares the hosted interface and catalog but downloads and compiles locally from scratch. Install its source-preparation dependency with `python -m pip install tomli-w==1.2.0`. The secondary **Local FPM projects** page retains directory-based operation and compiler comparison; open it from the main page or use `--fpm-projects`. See [hosted/local FPM runner and browser instructions](docs/fpm-runners.md) for custom main programs, comparisons, targets, limits, and working directories.
 
 1. Choose an example, load a local Fortran file, or write your own program.
 2. Select an available compiler or interpreter and, optionally, a language standard and compiler options.
@@ -493,7 +493,7 @@ The [FPM feasibility audit](docs/fpm-feasibility/README.md) found five packages 
 
 ## Local compiler tools
 
-The independent local tools use **installed gfortran, gfortran17, ifx, LLVM Flang, LFortran, and/or ofort**, with Python's standard library. They do not contact the hosted playground, require Modal, or consume hosted quotas. Source-file mode accepts local files; package mode uses installed FPM, which may download dependencies normally. To move the complete local tools to a separate project, copy `xfortran_run.py`, `fortran_output_diff.py`, `fortran_plot.py`, `fortran_fpm.py`, `fpm_runner.py`, `xfortran_serve.py`, `vendor/pyplot-fortran/`, and the `local_site/` directory together. Source-only command-line use needs `xfortran_run.py`, `fortran_output_diff.py`, and `fortran_plot.py`; plotting also needs the vendored module, NumPy, and Matplotlib.
+The independent local tools use **installed gfortran, gfortran17, ifx, LLVM Flang, LFortran, and/or ofort**, with Python's standard library for source-file and existing-directory package operation. The local catalog page additionally needs `tomli-w`. They do not contact the hosted playground, require Modal, or consume hosted quotas. Source-file mode accepts local files; package mode uses installed FPM, which may download dependencies normally. See [moving the local tools](docs/fpm-runners.md#moving-the-local-tools) for the files needed by each interface, including the shared frontend and catalog preparation modules. Source-only command-line use needs `xfortran_run.py`, `fortran_output_diff.py`, and `fortran_plot.py`; plotting also needs the vendored module, NumPy, and Matplotlib.
 
 ### Local command-line runner
 

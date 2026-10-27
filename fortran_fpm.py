@@ -88,7 +88,8 @@ def compiler_shim(executable, name, directory):
     return destination.name, environment
 
 
-def execute_project(project, name, *, options=None, overrides=None, cancel=None, fpm_path=None):
+def execute_project(project, name, *, options=None, overrides=None, cancel=None, fpm_path=None,
+                    build_environment=None):
     from xfortran_run import compiler_executable, run_process, finish_result
     started = time.perf_counter()
     row = {'compiler': name, 'ok': False, 'status': 'ERROR', 'stages': [], 'project': str(project),
@@ -111,12 +112,16 @@ def execute_project(project, name, *, options=None, overrides=None, cancel=None,
         row['compiler_version'] = lines[0] if lines else name
         # The consumer and shim live outside src/app/test and are removed after
         # each compiler. Keeping them on this drive allows relative dependencies.
-        with tempfile.TemporaryDirectory(prefix='.fortran-fpm-', dir=root) as temporary:
+        with tempfile.TemporaryDirectory(prefix='.fp-', dir=root) as temporary:
             scratch = Path(temporary)
             command, environment = compiler_shim(executable, name, scratch)
+            for key, value in (build_environment or {}).items():
+                if key not in {'FPM_FFLAGS', 'FPM_LDFLAGS'}:
+                    raise ValueError('Unsupported local package build environment')
+                environment[key] = (environment.get(key, '') + ' ' + value).strip()
             workdir = root
             if options['source'] is not None:
-                workdir = scratch / 'consumer'
+                workdir = scratch / 'c'
                 (workdir / 'app').mkdir(parents=True)
                 manifest = tomllib.loads((root / 'fpm.toml').read_text(encoding='utf-8-sig'))
                 dependency = manifest.get('name')
