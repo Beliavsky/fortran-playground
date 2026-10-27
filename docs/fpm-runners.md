@@ -4,6 +4,8 @@ Both command-line runners accept an explicit `--fpm` mode. Ordinary source-file 
 
 ## Hosted packages: xplayground_run.py
 
+The online and local catalog pages include a separate [Translated R packages collection](translated-r-playground.md). The hosted runner accepts `--subdirectory NAME` for a package in that repository; ordinary root-level FPM repositories are unchanged.
+
 The hosted runner submits a public GitHub FPM package to the separate package service:
 
 ```text
@@ -83,7 +85,7 @@ Both pages use the same local execution backend as `xfortran_run.py`. The API re
 
 ## Moving the local tools
 
-For source-file and existing-directory FPM operation, copy `xfortran_run.py`, `xfortran_serve.py`, `fortran_fpm.py`, `fpm_runner.py`, `fortran_output_diff.py`, `fortran_plot.py`, `vendor/pyplot-fortran/`, and `local_site/` together. The main catalog page additionally needs `local_fpm_catalog.py`, `fpm_sources.py`, `fpm_compilers.py`, `fpm_catalog_build.py`, `fpm_catalog_patches.py`, `fpm_catalog.json`, and the shared `site/` frontend assets. It does not need the Modal SDK or execution-service modules. The source catalog and frontend assets can be generated in this repository before copying them.
+For source-file and existing-directory FPM operation, copy `xfortran_run.py`, `xfortran_serve.py`, `fortran_fpm.py`, `fpm_runner.py`, `fortran_output_diff.py`, `fortran_plot.py`, `vendor/pyplot-fortran/`, and `local_site/` together. The main catalog page additionally needs `local_fpm_catalog.py`, `fpm_collections.py`, `fpm_sources.py`, `fpm_compilers.py`, `fpm_catalog_build.py`, `fpm_catalog_patches.py`, `fpm_catalog.json`, and the shared `site/` frontend assets. It does not need the Modal SDK or execution-service modules. The source catalog and frontend assets can be generated in this repository before copying them.
 
 Standalone hosted FPM use additionally needs `xplayground_run.py` and a package-service configuration or `--service-url`. See [plotting](plotting.md) for PNG examples, local Python requirements, and `--plot-dir`.
 

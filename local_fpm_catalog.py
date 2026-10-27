@@ -8,7 +8,8 @@ import tempfile
 import time
 
 from fortran_fpm import COMPILERS, execute_project
-from fpm_sources import Preparer, fetch, validate_request
+from fpm_sources import Preparer, fetch
+from fpm_collections import source_preparer, validate_request
 
 
 def catalog():
@@ -76,7 +77,7 @@ def execute_catalog(workspace, data, *, overrides=None, fpm_path=None, cancel=No
     request = validate_local_request(data)
     compiler = request['compiler']
     cancel = cancel or threading.Event()
-    package = next((p for p in catalog() if request['url'].rstrip('/').removesuffix('.git').lower()
+    package = next((p for p in catalog() if not request.get('subdirectory') and request['url'].rstrip('/').removesuffix('.git').lower()
                     == ('https://github.com/' + p['repository']).lower()
                     and request['revision'] == p['revision']), None)
     settings = validate_build(package) if package else {}
@@ -103,7 +104,7 @@ def execute_catalog(workspace, data, *, overrides=None, fpm_path=None, cancel=No
                   'sha256': package['archive_sha256']}, *package.get('dependencies', [])]
                 if package and consumer else None)
         preparer = (CatalogPreparer(sources, options=copy.deepcopy(settings), pins=pins, downloader=download)
-                    if settings else Preparer(sources, pins=pins, downloader=download))
+                    if settings else source_preparer(sources, request, pins=pins, downloader=download))
         preparer.deadline = time.monotonic() + 600
         # Compiler choice does not change the downloaded source tree.
         relative, records = preparer.prepare({**request, 'compiler': 'gfortran'})
@@ -112,7 +113,10 @@ def execute_catalog(workspace, data, *, overrides=None, fpm_path=None, cancel=No
             if records[0]['sha256'] != package['archive_sha256']:
                 raise ValueError('Catalog root archive checksum mismatch')
             apply_patches(package, root)
-        root = compact_sources(sources, preparer.repositories.values())[root.resolve()]
+        original = root.resolve()
+        mapping = compact_sources(sources, preparer.repositories.values())
+        container = next(p for p in mapping if original.is_relative_to(p))
+        root = mapping[container] / original.relative_to(container)
         prepared = time.monotonic() - started
         if cancel.is_set():
             raise InterruptedError('Source preparation cancelled')

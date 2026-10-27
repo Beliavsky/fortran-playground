@@ -129,6 +129,7 @@ def main(argv, *, hosted):
     parser.add_argument('--plot-dir', type=Path, default=Path('playground-plots'), help='Save returned PNGs under DIR/COMPILER (default: playground-plots)')
     if hosted:
         parser.add_argument('--revision', default='')
+        parser.add_argument('--subdirectory', default='', help='Top-level package directory in the translated R collection')
         parser.add_argument('--service-url', help='Defaults to site/fpm/service.json')
         parser.add_argument('--origin', default='https://beliavsky.github.io')
         parser.add_argument('--owner', action='store_true')
@@ -165,13 +166,13 @@ def main(argv, *, hosted):
             print('=== Main program ===\n' + source + '\n=== End main program ===')
         if hosted:
             from xplayground_run import PlaygroundClient, ServiceError
-            from fpm_sources import validate_request
+            from fpm_collections import validate_request
             if not math.isfinite(args.timeout) or args.timeout <= 0:
                 raise ValueError('--timeout must be positive finite seconds')
             url = args.service_url or json.loads((ROOT / 'site/fpm/service.json').read_text(encoding='utf-8'))['url']
             owner_key = (os.environ.get('P2F_OWNER_KEY') or getpass.getpass('Owner key: ')) if args.owner else ''
             client = PlaygroundClient(url, args.origin, owner_key=owner_key)
-            payload = validate_request({'url': args.fpm, 'revision': args.revision, 'action': action,
+            payload = validate_request({'url': args.fpm, 'revision': args.revision, 'subdirectory': args.subdirectory, 'action': action,
                 'target': args.target, 'source': source or '', 'workflow': 'consumer' if source is not None else 'package', 'stdin': stdin})
             health = client.request('health')
             available = health.get('compilers', {'gfortran': health.get('compiler')})

@@ -122,6 +122,27 @@ class ModalConfigTests(unittest.TestCase):
         module['modal'].Image.from_name.assert_called_once_with('verified-image')
         sandbox.terminate.assert_called_once()
 
+    def test_translated_sources_reach_existing_worker_protocol(self):
+        import json
+        from unittest.mock import MagicMock
+        from fpm_collections import R_REPOSITORY
+        module = self.load(True, {})
+        sandbox = MagicMock()
+        sandbox.poll.return_value = 0
+        sandbox.stdout.read.return_value = '{"ok":true,"stages":[]}'
+        module['modal'].Sandbox = types.SimpleNamespace(create=MagicMock(return_value=sandbox))
+        module['modal'].Image.from_name = MagicMock(return_value='clean-image')
+        request = {'url': 'https://github.com/' + R_REPOSITORY, 'revision': 'a' * 40,
+                   'subdirectory': 'Metrics', 'workflow': 'package', 'action': 'run'}
+        with patch('fpm_collections.TranslatedRPreparer.prepare', return_value=('r/Metrics', [])):
+            result = module['execute_job']('translated-job', request, cancelled=lambda: False)
+        self.assertTrue(result['ok'], result)
+        message = json.loads(sandbox.stdin.write.call_args.args[0])
+        self.assertEqual(message['root'], 'r/Metrics')
+        self.assertNotIn('subdirectory', message['request'])
+        self.assertIn('bundle', message)
+        self.assertNotIn('cache_key', message)
+
 
 if __name__ == '__main__':
     unittest.main()

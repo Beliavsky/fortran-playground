@@ -35,6 +35,8 @@ get('compiler').options = ['gfortran', 'gfortran17', 'ifx', 'flang'].map(value =
 const legacyService = process.argv.includes('--legacy');
 const examples = JSON.parse(readFileSync(new URL('../site/fpm/examples.json', import.meta.url), 'utf8'));
 const packages = JSON.parse(readFileSync(new URL('../site/fpm/packages.json', import.meta.url), 'utf8'));
+const translated = JSON.parse(readFileSync(new URL('../site/fpm/translated-r.json', import.meta.url), 'utf8'));
+let translatedFetches = 0;
 const unconfigured = process.argv.includes('--unconfigured');
 let submissions = [], fail = false, cancellations = 0, transportFailure = false;
 let runtimeFailure = false, holdRuntime;
@@ -55,6 +57,7 @@ globalThis.fetch = async (url, options = {}) => {
     value = runtime;
   }
   else if (url === './packages.json') value = packages;
+  else if (url === './translated-r.json') {translatedFetches++; value = translated;}
   else if (url === './service.json') value = {url: unconfigured ? '' : 'https://fpm.modal.run'};
   else if (url.endsWith('/api/health')) value = {ok: true, compiler: 'GNU Fortran 16.2.0', fpm: '0.12.0',
     ...(legacyService ? {} : {compilers: {gfortran: 'GNU Fortran 16.2.0', ifx: 'Intel ifx',
@@ -219,5 +222,33 @@ await get('submit').listeners.click();
 assert.equal(cancellations, 1, 'A lost connection cancels the known job');
 assert.equal(get('submit').disabled, false);
 assert.match(resultText({ok: false, error: 'Timed out', stages: []}), /Timed out/);
+
+transportFailure = false;
+assert.equal(translatedFetches, 0, 'General collection does not fetch translated R metadata');
+get('package-collection').value = 'translated-r';
+await get('package-collection').listeners.change();
+assert.equal(translatedFetches, 1);
+assert.match(get('package-count').textContent, /596/);
+get('package-search').value = 'Metrics'; get('package-search').listeners.input();
+assert.ok(get('available-package').options.some(option => option.value === 'Metrics'));
+get('available-package').value = 'Metrics'; get('available-package').listeners.change();
+assert.equal(get('load-package').disabled, false, 'Cold builds do not require a precompiled image');
+get('load-package').listeners.click();
+assert.equal(get('workflow').value, 'package');
+assert.equal(get('subdirectory').value, 'Metrics');
+assert.match(get('package-source').href, /\/Metrics$/);
+await get('submit').listeners.click();
+assert.equal(submissions.at(-1).subdirectory, 'Metrics');
+assert.equal(submissions.at(-1).workflow, 'package');
+get('workflow').value = 'consumer'; get('workflow').listeners.change();
+get('source').value = 'program main\nprint *, 42\nend program';
+await get('download-project').listeners.click();
+const translatedZip = Buffer.from(await downloads.at(-1).blob.arrayBuffer()).toString('utf8');
+assert.ok(translatedZip.includes('"subdirectory": "Metrics"'));
+get('package-collection').value = 'general';
+await get('package-collection').listeners.change();
+get('example').value = examples[0].name; get('load-example').listeners.click();
+assert.equal(get('subdirectory').value, '', 'Loading a general example clears the translated directory');
+assert.equal(translatedFetches, 1);
 globalThis.setTimeout = originalTimeout;
 console.log('FPM UI: workflows, targets, stdin, results, no automatic submissions, and error recovery passed.');

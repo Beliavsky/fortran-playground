@@ -15,7 +15,7 @@ import tomllib
 def prepare(project, settings, *, downloader=None):
     """Download locked sources once; preserve local edits on subsequent runs."""
     sys.path.insert(0, str(project / 'tools'))
-    from fpm_sources import Preparer
+    from fpm_collections import source_preparer
     from fpm_catalog_build import CatalogPreparer, validate_build
     from fpm_catalog_patches import apply_patches
     package = settings.get('package')
@@ -39,7 +39,7 @@ def prepare(project, settings, *, downloader=None):
         sources = Path(temporary) / 'sources'
         kwargs = {'pins': pins, **({'downloader': downloader} if downloader else {})}
         preparer = (CatalogPreparer(sources, options=options, **kwargs) if options
-                    else Preparer(sources, **kwargs))
+                    else source_preparer(sources, settings['request'], **kwargs))
         # These are local downloads, rather than a public preparation job.
         preparer.deadline = time.monotonic() + 600
         relative, records = preparer.prepare({**settings['request'],

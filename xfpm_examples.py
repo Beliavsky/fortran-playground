@@ -20,7 +20,7 @@ def generate_fpm_examples(site):
     # machine. This never builds libraries or contacts the execution service.
     root = audit.parents[1]
     runtime = {'run.py': (root / 'fpm_project_run.py').read_text(encoding='utf-8')}
-    for name in ('fpm_sources.py', 'fpm_compilers.py', 'fpm_catalog_build.py',
+    for name in ('fpm_sources.py', 'fpm_collections.py', 'fpm_compilers.py', 'fpm_catalog_build.py',
                  'fpm_catalog_patches.py', 'fortran_plot.py'):
         runtime['tools/' + name] = (root / name).read_text(encoding='utf-8')
     from fortran_plot import module_source

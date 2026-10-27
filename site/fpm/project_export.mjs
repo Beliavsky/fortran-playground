@@ -15,16 +15,21 @@ export function githubRepository(value) {
 export function pinnedSource(packageEntry) {
   return packageEntry && githubRepository(`https://github.com/${packageEntry.repository}`)
     && /^[a-f0-9]{40}$/.test(packageEntry.revision)
-    ? `https://github.com/${packageEntry.repository}/tree/${packageEntry.revision}` : '';
+    ? `https://github.com/${packageEntry.repository}/tree/${packageEntry.revision}`
+      + (packageEntry.subdirectory ? '/' + encodeURIComponent(packageEntry.subdirectory) : '') : '';
 }
 
-export function projectFiles({source, stdin = '', url, revision, packages, runtime}) {
+export function projectFiles({source, stdin = '', url, revision, subdirectory = '', packages, runtime}) {
   const repository = githubRepository(url);
   if (!repository || !/^[A-Za-z0-9_./-]{0,200}$/.test(revision)) throw new Error('Enter a valid GitHub repository and revision.');
   if (!source.trim()) throw new Error('Enter a main program before downloading a project.');
-  const packageEntry = packages.find(p => p.repository.toLowerCase() === repository.toLowerCase() && p.revision === revision);
+  if (subdirectory && (!/^[A-Za-z0-9_.-]+$/.test(subdirectory) || ['.', '..'].includes(subdirectory)
+      || repository.toLowerCase() !== 'beliavsky/fortran-from-r-packages')) throw new Error('Invalid translated R package directory.');
+  const packageEntry = packages.find(p => p.repository.toLowerCase() === repository.toLowerCase() && p.revision === revision
+    && (p.subdirectory || '') === subdirectory && !subdirectory);
   const {source: exampleSource, ...packageSettings} = packageEntry ?? {};
-  const settings = {schema: 1, request: {url: `https://github.com/${repository}`, revision},
+  const settings = {schema: 1, request: {url: `https://github.com/${repository}`, revision,
+    ...(subdirectory ? {subdirectory} : {})},
     ...(packageEntry ? {package: packageSettings} : {})};
   const system = packageSettings.catalog_build?.apt_packages ?? [];
   const requirements = system.length
@@ -35,7 +40,7 @@ export function projectFiles({source, stdin = '', url, revision, packages, runti
     'playground.json': JSON.stringify(settings, null, 2) + '\n',
     'requirements.txt': 'tomli-w>=1,<3\n', ...runtime,
     'README.md': `# Downloaded FPM project\n\nYour edited main program is in app/main.f90.\n\n`
-      + `Package source: https://github.com/${repository}/tree/${revision || 'HEAD'}\n\n`
+      + `Package source: https://github.com/${repository}/tree/${revision || 'HEAD'}${subdirectory ? '/' + encodeURIComponent(subdirectory) : ''}\n\n`
       + 'Requires Python 3.12+, FPM 0.12 or later, and a local GNU Fortran compiler (the catalog was tested with 16.2). Mixed-language packages also require GCC/G++.\n\n'
       + 'Extract the ZIP and run these commands from its directory:\n\n'
       + '```\npython -m pip install -r requirements.txt\npython run.py\n```\n\n'

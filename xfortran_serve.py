@@ -374,7 +374,7 @@ class Handler(BaseHTTPRequestHandler):
                 self.reply(200, (ASSETS / 'fpm/index.html').read_bytes(), 'text/html; charset=utf-8')
             elif parsed.path in ('/fpm/projects.mjs', '/fpm/fpm.mjs'):
                 self.reply(200, (ASSETS / 'fpm/fpm.mjs').read_bytes(), 'text/javascript; charset=utf-8')
-            elif parsed.path in ('/fpm/examples.json', '/fpm/packages.json', '/fpm/project-runtime.json'):
+            elif parsed.path in ('/fpm/examples.json', '/fpm/packages.json', '/fpm/translated-r.json', '/fpm/project-runtime.json'):
                 self.reply(200, (HOSTED_ASSETS / parsed.path[1:]).read_bytes())
             elif parsed.path.startswith('/fpm/ui/'):
                 name = parsed.path.removeprefix('/fpm/ui/')

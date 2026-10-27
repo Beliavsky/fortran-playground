@@ -6,7 +6,7 @@ import json
 import secrets
 import time
 
-from fpm_sources import validate_request
+from fpm_collections import validate_request
 from fpm_compilers import COMPILERS
 
 

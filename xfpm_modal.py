@@ -102,7 +102,8 @@ broker_image = (modal.Image.debian_slim(python_version='3.12').pip_install('toml
     .add_local_file(ROOT / 'fpm_build.py', '/root/fpm_build.py', copy=True)
     .add_local_file(ROOT / 'fpm_build_recipe.json', '/root/fpm_build_recipe.json', copy=True)
     .add_local_file(ROOT / 'fpm_catalog.json', '/root/fpm_catalog.json', copy=True)
-    .add_local_file(ROOT / 'fpm_sources.py', '/root/fpm_sources.py', copy=True))
+    .add_local_file(ROOT / 'fpm_sources.py', '/root/fpm_sources.py', copy=True)
+    .add_local_file(ROOT / 'fpm_collections.py', '/root/fpm_collections.py', copy=True))
 api_image = (modal.Image.debian_slim(python_version='3.12').pip_install('fastapi==0.142.2')
     .env({**container_settings,
           'FPM_ORIGINS': os.environ.get('FPM_ORIGINS',
@@ -113,7 +114,8 @@ api_image = (modal.Image.debian_slim(python_version='3.12').pip_install('fastapi
     .add_local_file(ROOT / 'fpm_build.py', '/root/fpm_build.py', copy=True)
     .add_local_file(ROOT / 'fpm_build_recipe.json', '/root/fpm_build_recipe.json', copy=True)
     .add_local_file(ROOT / 'fpm_catalog.json', '/root/fpm_catalog.json', copy=True)
-    .add_local_file(ROOT / 'fpm_api.py', '/root/fpm_api.py', copy=True))
+    .add_local_file(ROOT / 'fpm_api.py', '/root/fpm_api.py', copy=True)
+    .add_local_file(ROOT / 'fpm_collections.py', '/root/fpm_collections.py', copy=True))
 
 
 def bundle_sources(directory):
@@ -127,8 +129,7 @@ def bundle_sources(directory):
 
 
 def execute_job(identifier, payload, *, sandbox_image=None, sandbox_app=None, cancelled=None):
-    from fpm_sources import Preparer
-    from fpm_sources import validate_request
+    from fpm_collections import source_preparer, validate_request
     sandbox = None
     cancelled = cancelled or (lambda: state.get('cancel:' + identifier, False))
     started = time.monotonic()
@@ -137,7 +138,7 @@ def execute_job(identifier, payload, *, sandbox_image=None, sandbox_app=None, ca
         if payload['compiler'] not in ENABLED_COMPILERS and sandbox_image is None:
             raise ValueError('Requested FPM compiler is not enabled.')
         from fpm_cache import match_package, cache_identity
-        selected = match_package(payload)
+        selected = None if payload.get('subdirectory') else match_package(payload)
         cache = PRECOMPILED.get(selected['id']) if selected and sandbox_image is None else None
         if cache and cache.get('key') != cache_identity(selected, RECIPE_ID):
             raise ValueError('Precompiled image is stale; rebuild the package catalog before deploying.')
@@ -146,8 +147,11 @@ def execute_job(identifier, payload, *, sandbox_image=None, sandbox_app=None, ca
             message = {'request': payload, 'cache_key': cache['key']}
         else:
             with tempfile.TemporaryDirectory() as temporary:
-                root, records = Preparer(temporary).prepare(payload)
-                message = {'request': payload, 'root': root, 'bundle': bundle_sources(temporary)}
+                root, records = source_preparer(temporary, payload).prepare(payload)
+                # Workers receive an already selected source root. Preserve the
+                # protocol used by existing precompiled images.
+                worker_request = {k: v for k, v in payload.items() if k != 'subdirectory'}
+                message = {'request': worker_request, 'root': root, 'bundle': bundle_sources(temporary)}
         prepare_seconds = time.monotonic() - started
         if cancelled():
             return {'ok': False, 'error': 'Cancelled.', 'stages': []}
