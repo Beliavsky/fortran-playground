@@ -26,7 +26,8 @@ export function projectFiles({source, stdin = '', url, revision, subdirectory = 
   if (subdirectory && (!/^[A-Za-z0-9_.-]+$/.test(subdirectory) || ['.', '..'].includes(subdirectory)
       || repository.toLowerCase() !== 'beliavsky/fortran-from-r-packages')) throw new Error('Invalid translated R package directory.');
   const packageEntry = packages.find(p => p.repository.toLowerCase() === repository.toLowerCase() && p.revision === revision
-    && (p.subdirectory || '') === subdirectory && !subdirectory);
+    && (p.subdirectory || '') === subdirectory && !subdirectory
+    && /^[a-f0-9]{40}$/.test(p.revision) && /^[a-f0-9]{64}$/.test(p.archive_sha256));
   const {source: exampleSource, ...packageSettings} = packageEntry ?? {};
   const settings = {schema: 1, request: {url: `https://github.com/${repository}`, revision,
     ...(subdirectory ? {subdirectory} : {})},

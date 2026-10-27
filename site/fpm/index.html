@@ -36,7 +36,7 @@
   </div>
   <div class="toolbar package-filters">
     <label for="package-collection">Collection</label>
-    <select id="package-collection"><option value="general">General Fortran packages</option><option value="translated-r">Translated R packages</option></select>
+    <select id="package-collection"><option value="general">Selected Fortran packages</option><option value="all">All Fortran packages</option><option value="translated-r">Translated R packages</option></select>
     <label for="package-search">Find a package</label>
     <input id="package-search" type="search" placeholder="Name, GitHub owner, topic, keyword, or description" maxlength="120">
     <label for="package-category">Category</label>
@@ -44,7 +44,7 @@
     <span id="package-count" aria-live="polite"></span>
   </div>
   <div class="toolbar">
-    <label id="package-list-label" for="available-package">Available packages (GNU Fortran 16)</label>
+    <label id="package-list-label" for="available-package">Selected packages (GNU Fortran 16)</label>
     <select id="available-package"><option value="">Choose a precompiled package&hellip;</option></select>
     <button id="load-package" type="button" disabled>Load package</button>
   </div>

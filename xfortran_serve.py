@@ -35,7 +35,7 @@ def catalog_page():
         '<a id="local-projects-link" href="/fpm/projects/">Local FPM projects</a></p>\n'
         '<p>Compile and run with your installed FPM and compilers. Programs run with your permissions. '
         'GitHub sources download into a fresh temporary project for each submission.</p>')
-    text = text.replace('Available packages (GNU Fortran 16)', 'Packages (build locally)')
+    text = text.replace('Selected packages (GNU Fortran 16)', 'Selected packages (build locally)')
     text = text.replace('Choose a precompiled package&hellip;', 'Choose a package&hellip;')
     text = text.replace("connect-src 'self' https://*.modal.run", "connect-src 'self'")
     for name in ('style.css', 'editor-vendor/codemirror.css'):
@@ -374,7 +374,7 @@ class Handler(BaseHTTPRequestHandler):
                 self.reply(200, (ASSETS / 'fpm/index.html').read_bytes(), 'text/html; charset=utf-8')
             elif parsed.path in ('/fpm/projects.mjs', '/fpm/fpm.mjs'):
                 self.reply(200, (ASSETS / 'fpm/fpm.mjs').read_bytes(), 'text/javascript; charset=utf-8')
-            elif parsed.path in ('/fpm/examples.json', '/fpm/packages.json', '/fpm/translated-r.json', '/fpm/project-runtime.json'):
+            elif parsed.path in ('/fpm/examples.json', '/fpm/packages.json', '/fpm/all-packages.json', '/fpm/translated-r.json', '/fpm/project-runtime.json'):
                 self.reply(200, (HOSTED_ASSETS / parsed.path[1:]).read_bytes())
             elif parsed.path.startswith('/fpm/ui/'):
                 name = parsed.path.removeprefix('/fpm/ui/')

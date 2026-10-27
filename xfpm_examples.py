@@ -19,6 +19,19 @@ def generate_fpm_examples(site):
                  (package['id'] + '.f90')).read_text(encoding='utf-8'),
                  'topics': topics.get(package['repository'].lower(), {}).get('topics', [])} for package in catalog()]
     (site / 'fpm/packages.json').write_text(json.dumps(packages, indent=2) + '\n', encoding='utf-8')
+    # Discovery metadata is refreshed explicitly, never during builds/deploys.
+    discovery = json.loads((audit.parents[1] / 'fpm_catalog/all-packages.json').read_text(encoding='utf-8'))
+    selected = {p['repository'].lower(): p for p in packages}
+    combined = {}
+    for entry in discovery['packages']:
+        key = entry['repository'].lower()
+        pinned = selected.get(key, {})
+        combined[key] = {**entry, **pinned, 'fpm_status': 'available' if pinned else entry['fpm_status'],
+                         'categories': sorted(set(entry['categories'] + ([pinned['category']] if pinned else [])))}
+    for key, entry in selected.items():
+        combined.setdefault(key, {**entry, 'fpm_status': 'available', 'categories': [entry['category']]})
+    (site / 'fpm/all-packages.json').write_text(json.dumps(
+        sorted(combined.values(), key=lambda p: p['repository'].lower()), indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
     # Small local-export tools only; package archives are fetched by the user's
     # machine. This never builds libraries or contacts the execution service.
     root = audit.parents[1]

@@ -180,6 +180,7 @@ class CatalogHTTPTests(unittest.TestCase):
             self.assertEqual(self.request('/fpm/ui/' + name)[0], 200)
         from fpm_cache import catalog
         self.assertEqual(len(self.request('/fpm/packages.json')[1]), len(catalog()))
+        self.assertGreater(len(self.request('/fpm/all-packages.json')[1]), len(catalog()))
         self.assertGreaterEqual(len(self.request('/fpm/translated-r.json')[1]), 596)
         self.assertIn('run.py', self.request('/fpm/project-runtime.json')[1])
         self.assertEqual(self.request('/fpm/ui/../../fpm_catalog.json')[0], 404)

@@ -26,12 +26,15 @@ let translatedSupported = false;
 let examplesSupported = false;
 const examplesUnavailable = () => get('action').value === 'example' && !examplesSupported;
 const translatedUnavailable = () => Boolean(get('subdirectory').value.trim()) && !translatedSupported;
-let packages = [], generalPackages = [], translatedPackages, precompiled = {};
+let packages = [], generalPackages = [], allPackages, translatedPackages, precompiled = {};
 let collectionLoading = false, collectionGeneration = 0;
 let searchButtons = [];
 let topicButtons = [];
 const genericTopics = new Set(['fortran', 'modern-fortran', 'fortran-package-manager', 'fpm']);
 const translatedCollection = () => get('package-collection').value === 'translated-r';
+const allCollection = () => get('package-collection').value === 'all';
+const collectionLabels = {general: 'Selected Fortran packages', all: 'All Fortran packages', 'translated-r': 'Translated R packages'};
+const buildable = p => !p.fpm_status || p.fpm_status === 'available';
 const packageCategories = p => p.categories?.length ? p.categories : [p.category];
 let exporting = false, exportRuntime;
 get('compiler').value = 'gfortran';
@@ -67,7 +70,7 @@ function controls() {
   for (const button of searchButtons) button.disabled = busy;
   for (const button of topicButtons) button.disabled = busy;
   const selected = packages.find(p => p.id === get('available-package').value);
-  get('load-package').disabled = busy || collectionLoading || !selected || (!localExecution && !translatedCollection() && (!ready
+  get('load-package').disabled = busy || collectionLoading || !selected || !buildable(selected) || (!localExecution && !translatedCollection() && !allCollection() && (!ready
     || precompiled[selected.id]?.revision !== selected.revision));
   get('download-main').disabled = busy;
   get('download-project').disabled = busy || exporting;
@@ -101,18 +104,19 @@ function renderPackages() {
   const query = get('package-search').value.trim().toLowerCase();
   const category = get('package-category').value;
   const visible = packages.filter(p => {
-    const text = `${p.id} ${p.repository} ${p.description} ${p.category} ${(p.keywords || []).join(' ')} ${(p.topics || []).join(' ')}`.toLowerCase();
+    const text = `${p.id} ${p.name || ''} ${p.repository} ${p.description} ${packageCategories(p).join(' ')} ${(p.keywords || []).join(' ')} ${(p.topics || []).join(' ')}`.toLowerCase();
     return (!category || packageCategories(p).includes(category)) && (text.includes(query)
       || text.replace(/[-_]+/g, ' ').includes(query.replace(/[-_]+/g, ' ')));
   });
   const placeholder = document.createElement('option');
-  placeholder.value = ''; placeholder.textContent = localExecution || translatedCollection() ? 'Choose a package…' : 'Choose a precompiled package…';
+  placeholder.value = ''; placeholder.textContent = localExecution || translatedCollection() || allCollection() ? 'Choose a package…' : 'Choose a precompiled package…';
   get('available-package').replaceChildren(placeholder);
   for (const item of visible) {
     const option = document.createElement('option');
     option.value = item.id;
-    option.textContent = `${item.id} — ${item.description}`;
-    option.disabled = !localExecution && !translatedCollection() && precompiled[item.id]?.revision !== item.revision;
+    option.textContent = `${item.name || item.id} — ${item.description}${buildable(item) ? '' : ' [FPM unavailable]'}`;
+    // Discovery-only entries remain selectable so their source and status can be inspected.
+    option.disabled = !localExecution && !translatedCollection() && !allCollection() && precompiled[item.id]?.revision !== item.revision;
     get('available-package').appendChild(option);
   }
   get('available-package').value = query && visible.length === 1 ? visible[0].id
@@ -127,21 +131,21 @@ function renderPackages() {
     for (const item of visible.slice(0, 20)) {
       const button = document.createElement('button');
       button.type = 'button'; button.disabled = busy;
-      button.textContent = `${item.id} — ${item.description}`;
+      button.textContent = `${item.name || item.id} — ${item.description}`;
       button.addEventListener('click', () => {get('available-package').value = item.id; selectPackage();});
       searchButtons.push(button);
       matches.appendChild(button);
     }
     if (!visible.length) {
       const message = document.createElement('span');
-      message.textContent = `No matches in ${translatedCollection() ? 'Translated R packages' : 'General Fortran packages'}${category ? ' / ' + category : ''}.`;
+      message.textContent = `No matches in ${collectionLabels[get('package-collection').value]}${category ? ' / ' + category : ''}.`;
       matches.appendChild(message);
       const button = document.createElement('button'); button.type = 'button'; button.disabled = busy;
-      button.textContent = category ? 'Search all categories' : translatedCollection() ? 'Search General Fortran packages' : 'Search Translated R packages';
+      button.textContent = category ? 'Search all categories' : translatedCollection() ? 'Search Selected Fortran packages' : allCollection() ? 'Search Translated R packages' : 'Search All Fortran packages';
       button.addEventListener('click', async () => {
         if (category) get('package-category').value = '';
         else {
-          get('package-collection').value = translatedCollection() ? 'general' : 'translated-r';
+          get('package-collection').value = translatedCollection() ? 'general' : allCollection() ? 'translated-r' : 'all';
           await selectCollection();
           get('package-search').value = query;
         }
@@ -178,10 +182,15 @@ async function selectCollection() {
       if (!response.ok) throw new Error('Cannot load the translated R catalog. Please retry.');
       translatedPackages = await response.json();
     }
+    if (allCollection() && !allPackages) {
+      const response = await fetch('./all-packages.json', {cache: 'no-store'});
+      if (!response.ok) throw new Error('Cannot load the full package catalog. Please retry.');
+      allPackages = await response.json();
+    }
     if (generation !== collectionGeneration) return;
-    packages = translated ? translatedPackages : generalPackages;
+    packages = translated ? translatedPackages : allCollection() ? allPackages : generalPackages;
     get('package-list-label').textContent = translated ? 'Translated R packages (build from scratch)'
-      : localExecution ? 'Packages (build locally)' : 'Available packages (GNU Fortran 16)';
+      : allCollection() ? 'All packages (build on demand)' : localExecution ? 'Selected packages (build locally)' : 'Selected packages (GNU Fortran 16)';
     get('package-search').value = '';
     get('package-category').replaceChildren(...['', ...new Set(packages.flatMap(packageCategories))].sort().map(value => {
       const option = document.createElement('option'); option.value = value; option.textContent = value || 'All categories'; return option;
@@ -190,7 +199,8 @@ async function selectCollection() {
     get('available-package').value = '';
     get('package-note').textContent = translated
       ? 'Experimental R translations. Select a package to build or run its own programs, or write your own main. Sources and sibling dependencies download at the pinned revision. Every job builds from scratch; these packages have not been verified in this playground and may exceed online limits.'
-      : 'Choose a package to load its pinned revision and example main.';
+      : allCollection() ? 'Packages from the Fortran packages list, plus the selected catalog. A root fpm.toml was checked when the catalog was refreshed; builds are not verified. Limits, external libraries, registry dependencies, or unsupported features may prevent a build. Select a package to see its status.'
+      : 'Choose a selected package to load its pinned revision and example main.';
   } catch (error) {
     if (generation === collectionGeneration) get('package-note').textContent = error.message;
   } finally {
@@ -201,9 +211,11 @@ get('package-collection').value = 'general';
 get('package-collection').addEventListener('change', selectCollection);
 
 function sourceLinks(packageEntry) {
-  const url = pinnedSource(packageEntry);
+  const unpinned = packageEntry && !packageEntry.revision && githubRepository(`https://github.com/${packageEntry.repository}`);
+  const url = pinnedSource(packageEntry) || (unpinned ? `https://github.com/${unpinned}` : '');
   get('package-source-links').hidden = !url;
   get('package-source').href = url || '';
+  get('package-source').textContent = unpinned ? 'Browse source (default branch)' : 'Browse pinned source';
 }
 
 get('download-main').addEventListener('click', () => {
@@ -359,23 +371,29 @@ function selectPackage() {
     ? `${selected.description} Source: `
     : 'Choose a package to load its pinned revision and a working main program. Loading does not run a job.';
   if (selected) {
-    const source = pinnedSource(selected);
+    const validRepository = githubRepository(`https://github.com/${selected.repository}`);
+    const source = pinnedSource(selected) || (validRepository ? `https://github.com/${validRepository}` : '');
     const repository = document.createElement(source ? 'a' : 'span');
     repository.textContent = selected.repository;
     const separator = document.createElement('span'); separator.textContent = ' @ ';
     const revision = document.createElement(source ? 'a' : 'span');
-    revision.textContent = selected.revision.slice(0, 7);
-    revision.title = selected.revision;
+    revision.textContent = selected.revision ? selected.revision.slice(0, 7) : 'default branch';
+    revision.title = selected.revision || 'The current default branch is resolved when you submit a job.';
     if (source) {
       repository.href = `https://github.com/${selected.repository}`;
       revision.href = source;
       for (const link of [repository, revision]) {
         link.target = '_blank'; link.rel = 'noopener noreferrer';
       }
-      revision.setAttribute('aria-label', `Browse source at commit ${selected.revision}`);
+      revision.setAttribute('aria-label', selected.revision ? `Browse source at commit ${selected.revision}` : 'Browse source on the default branch');
     }
     const detail = document.createElement('span');
-    detail.textContent = '. ' + (selected.subdirectory ? 'Experimental R translation; not verified in this playground. Each submission builds from scratch. See the pinned source for documentation, examples, coverage and licensing.'
+    const unavailable = {missing: 'No root fpm.toml was found. Browse the repository for build instructions; loading for compilation is disabled.',
+      invalid: 'The root fpm.toml could not be parsed. Loading for compilation is disabled.',
+      unknown: 'The root fpm.toml could not be checked. Loading for compilation is disabled until a catalog refresh verifies it.'};
+    detail.textContent = '. ' + (!buildable(selected) ? unavailable[selected.fpm_status] || unavailable.unknown
+        : selected.subdirectory ? 'Experimental R translation; not verified in this playground. Each submission builds from scratch. See the pinned source for documentation, examples, coverage and licensing.'
+        : allCollection() && !selected.source ? 'Root fpm.toml found; compilation has not been verified. Sources download and build from scratch at the current default branch. External dependencies and service limits may prevent a build.'
         : localExecution ? 'Sources download and build locally when you submit a job.'
         : precompiled[selected.id]?.revision === selected.revision ? 'Verified precompiled GNU 16 library.'
         : 'Precompiled build is not available on this service yet.');
@@ -394,7 +412,7 @@ get('load-package').addEventListener('click', () => {
   get('connection').textContent = localExecution
     ? `${compilerLabels[get('compiler').value] || 'No compiler found'} · Local FPM · Builds from scratch`
     : `${compilerLabels[get('compiler').value]} · FPM 0.12.0 · Separate package service`;
-  get('workflow').value = selected.subdirectory ? 'package' : 'consumer';
+  get('workflow').value = selected.subdirectory || !selected.source ? 'package' : 'consumer';
   get('action').value = 'run';
   if (selected.source) editor.setValue(selected.source);
   sourceLinks(selected);
@@ -485,8 +503,9 @@ async function initialize() {
     ? 'Choose a package to load its pinned revision and a working main program. Loading does not run a job.'
     : 'Precompiled packages have not been deployed on this service yet. The existing examples and custom URLs remain available.';
   controls();
-  if (typeof location !== 'undefined' && new URLSearchParams(location.search).get('collection') === 'translated-r') {
-    get('package-collection').value = 'translated-r';
+  const linkedCollection = typeof location !== 'undefined' ? new URLSearchParams(location.search).get('collection') : '';
+  if (['all', 'translated-r'].includes(linkedCollection)) {
+    get('package-collection').value = linkedCollection;
     await selectCollection();
   }
 }
