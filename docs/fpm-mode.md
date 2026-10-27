@@ -26,6 +26,8 @@ Every command uses `--profile debug --no-prune`, with an explicit compiler execu
 
 **Find a package** searches the selected collection and category. Matching packages appear as clickable results below the search field, and a unique match is selected automatically without loading code or submitting a job. When no packages match, use **Search all categories** or the button to search the other collection. The translated R catalog downloads only when that collection is requested.
 
+The general collection also searches saved **GitHub topics**. For example, `adams-bashforth` or `adams bashforth` finds DVODE. Selecting a package displays its repository topics as clickable labels, with descriptive topics ahead of generic labels such as `fortran`. Clicking a topic searches the current collection and clears the category filter; it does not load code or submit a job. Packages without topics remain searchable by their other metadata. Translated R packages use their individual keywords and categories rather than sharing the same repository-wide topics. Topic metadata is stored with the site, so searching does not contact GitHub or the compilation service.
+
 Standard input is supplied from the optional text box; there is no interactive terminal. Copy results preserves the captured output, diagnostics, timings, and resolved commits. Loading an example never submits a job automatically.
 
 ## Supported dependencies and bounds

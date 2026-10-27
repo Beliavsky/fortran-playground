@@ -1,0 +1,794 @@
+{
+  "schema": 1,
+  "retrieved_at": "2026-10-27T13:31:10.945780+00:00",
+  "source": "GitHub repository topic labels",
+  "repositories": {
+    "acbbullock/io-fortran-library": {
+      "topics": [
+        "csv",
+        "fortran",
+        "fortran-package-manager",
+        "input-output",
+        "modern-fortran"
+      ]
+    },
+    "art-rasa/rational_number": {
+      "topics": []
+    },
+    "everythingfunctional/quaff": {
+      "topics": [
+        "fortran",
+        "units-of-measure"
+      ]
+    },
+    "fortran-lang/fftpack": {
+      "topics": [
+        "fast-fourier-transform",
+        "fft",
+        "fft-library",
+        "fftpack",
+        "fortran-library",
+        "fortran-package-manager"
+      ]
+    },
+    "fortran-lang/stdlib": {
+      "topics": [
+        "blas",
+        "fortran",
+        "fortran-library",
+        "fortran-package-manager",
+        "fortran-stdlib",
+        "hash",
+        "lapack",
+        "linear-algebra",
+        "numerical-methods",
+        "numpy",
+        "probability-distribution",
+        "quadrature",
+        "rng",
+        "sorting",
+        "statistics",
+        "stdlib",
+        "strings"
+      ]
+    },
+    "fortran-lang/test-drive": {
+      "topics": [
+        "fortran-library",
+        "fortran-package-manager",
+        "testing-framework",
+        "unit-testing"
+      ]
+    },
+    "gha3mi/forpca": {
+      "topics": [
+        "fortran",
+        "fortran-package-manager",
+        "pca",
+        "principal-component-analysis"
+      ]
+    },
+    "gha3mi/kinds": {
+      "topics": []
+    },
+    "interkosmos/fortran-sqlite3": {
+      "topics": [
+        "fortran",
+        "fortran-package-manager",
+        "fpm",
+        "sqlite",
+        "sqlite3"
+      ]
+    },
+    "jacobwilliams/argv-fortran": {
+      "topics": [
+        "argv",
+        "fortran",
+        "fortran-package-manager"
+      ]
+    },
+    "jacobwilliams/bspline-fortran": {
+      "topics": [
+        "b-spline",
+        "extrapolation",
+        "fortran",
+        "fortran-package-manager",
+        "interpolation",
+        "least-squares-curve-fitting",
+        "quadrature-integration",
+        "splines"
+      ]
+    },
+    "jacobwilliams/csv-fortran": {
+      "topics": [
+        "csv",
+        "fortran",
+        "fortran-package-manager"
+      ]
+    },
+    "jacobwilliams/daglib": {
+      "topics": [
+        "directed-acyclic-graph",
+        "fortran",
+        "fortran-package-manager",
+        "graphviz",
+        "graphviz-dot-language",
+        "toposort"
+      ]
+    },
+    "jacobwilliams/ddeabm": {
+      "topics": [
+        "adams-bashforth",
+        "fortran",
+        "fortran-package-manager",
+        "ode",
+        "root-finding",
+        "slatec"
+      ]
+    },
+    "jacobwilliams/dop853": {
+      "topics": [
+        "dop853",
+        "fortran",
+        "fortran-package-manager",
+        "ode",
+        "runge-kutta"
+      ]
+    },
+    "jacobwilliams/dvode": {
+      "topics": [
+        "adams-bashforth",
+        "fortran",
+        "fortran-package-manager",
+        "ode",
+        "vode"
+      ]
+    },
+    "jacobwilliams/finterp": {
+      "topics": [
+        "fortran",
+        "fortran-package-manager",
+        "interpolation",
+        "linear-interpolation",
+        "nearest-neighbor-interpolation"
+      ]
+    },
+    "jacobwilliams/flist": {
+      "topics": [
+        "fortran",
+        "fortran-package-manager",
+        "linked-list"
+      ]
+    },
+    "jacobwilliams/fmin": {
+      "topics": [
+        "brent",
+        "fortran-package-manager",
+        "minimization"
+      ]
+    },
+    "jacobwilliams/fortran-astrodynamics-toolkit": {
+      "topics": [
+        "astrodynamics",
+        "ephemeris",
+        "fortran",
+        "fortran-package-manager",
+        "gravity-field",
+        "orbital-mechanics",
+        "orbital-simulation",
+        "runge-kutta",
+        "runge-kutta-adaptive-step-size"
+      ]
+    },
+    "jacobwilliams/fortran-search-and-sort": {
+      "topics": [
+        "binary-search",
+        "fortran",
+        "quicksort",
+        "searching-algorithms",
+        "sorting-algorithms"
+      ]
+    },
+    "jacobwilliams/fortran_function_parser": {
+      "topics": [
+        "expression-parser",
+        "fortran",
+        "function-parser"
+      ]
+    },
+    "jacobwilliams/geodesic-fortran": {
+      "topics": [
+        "fortran",
+        "fortran-package-manager",
+        "geodesy",
+        "geodetic-computations",
+        "vincenty-direct",
+        "vincenty-formula",
+        "vincenty-inverse"
+      ]
+    },
+    "jacobwilliams/json-fortran": {
+      "topics": [
+        "fortran",
+        "fortran-package-manager",
+        "json"
+      ]
+    },
+    "jacobwilliams/lbfgsb": {
+      "topics": [
+        "bfgs",
+        "bfgs-algorithm",
+        "constrained-optimization",
+        "fortran",
+        "fortran-package-manager",
+        "lbfgsb",
+        "lbfgsb-solver",
+        "numerical-optimization"
+      ]
+    },
+    "jacobwilliams/lsmr": {
+      "topics": [
+        "fortran",
+        "fortran-package-manager",
+        "least-squares",
+        "linear-algebra",
+        "linear-equations",
+        "lsmr",
+        "sparse-linear-systems"
+      ]
+    },
+    "jacobwilliams/lsqr": {
+      "topics": [
+        "conjugate-gradient",
+        "fortran",
+        "fortran-package-manager",
+        "least-squares",
+        "linear-algebra",
+        "linear-equations",
+        "lsqr"
+      ]
+    },
+    "jacobwilliams/mersenne-twister-fortran": {
+      "topics": [
+        "fortran",
+        "fortran-package-manager",
+        "mersenne-twister",
+        "random-number-generators",
+        "rng"
+      ]
+    },
+    "jacobwilliams/minpack": {
+      "topics": []
+    },
+    "jacobwilliams/mpfun2020-var1": {
+      "topics": [
+        "arbitrary-precision"
+      ]
+    },
+    "jacobwilliams/nlesolver-fortran": {
+      "topics": [
+        "broyden-method",
+        "differential-correction-algorithm",
+        "fortran",
+        "fortran-package-manager",
+        "lsmr",
+        "lsqr",
+        "lusol",
+        "minimum-norm",
+        "newton-raphson",
+        "nonlinear-equation-solver",
+        "nonlinear-equations",
+        "quasi-newton"
+      ]
+    },
+    "jacobwilliams/numdiff": {
+      "topics": [
+        "differentiation",
+        "finite-differences",
+        "graph-coloring",
+        "numerical-differentiation",
+        "numerical-methods",
+        "optimization",
+        "sparsity-optimization"
+      ]
+    },
+    "jacobwilliams/pchip": {
+      "topics": [
+        "fortran",
+        "fortran-package-manager",
+        "hermite-interpolation",
+        "interpolation",
+        "slatec"
+      ]
+    },
+    "jacobwilliams/pikaia": {
+      "topics": [
+        "fortran",
+        "fortran-package-manager",
+        "genetic-algorithm",
+        "numerical-optimization",
+        "optimization",
+        "pikaia"
+      ]
+    },
+    "jacobwilliams/polyroots-fortran": {
+      "topics": [
+        "companion-matrix",
+        "eigenvalues",
+        "fortran",
+        "fortran-package-manager",
+        "jenkins-traub",
+        "laguerre-method",
+        "nonlinear-equations",
+        "polynomial-equations",
+        "polynomial-roots",
+        "polynomials",
+        "root-finding"
+      ]
+    },
+    "jacobwilliams/popen-fortran": {
+      "topics": [
+        "fortran",
+        "fortran-package-manager",
+        "popen"
+      ]
+    },
+    "jacobwilliams/powellopt": {
+      "topics": [
+        "constrained-optimization",
+        "fortran",
+        "fortran-package-manager",
+        "nonlinear-optimization",
+        "numerical-optimization",
+        "optimization",
+        "unconstrained-optimization"
+      ]
+    },
+    "jacobwilliams/pyplot-fortran": {
+      "topics": [
+        "contour-plot",
+        "fortran",
+        "fortran-package-manager",
+        "matplotlib",
+        "plot",
+        "plotting",
+        "plotting-in-fortran",
+        "pyplot"
+      ]
+    },
+    "jacobwilliams/quadpack": {
+      "topics": [
+        "fortran",
+        "fortran-package-manager",
+        "gauss-kronrod",
+        "gauss-kronrod-quadrature",
+        "numerical-integration",
+        "quadpack",
+        "quadrature",
+        "quadrature-integration",
+        "slatec"
+      ]
+    },
+    "jacobwilliams/quadrature-fortran": {
+      "topics": [
+        "fortran",
+        "fortran-package-manager",
+        "integration",
+        "numerical-integration",
+        "quadrature",
+        "quadrature-integration"
+      ]
+    },
+    "jacobwilliams/regridpack": {
+      "topics": [
+        "fortran",
+        "fortran-package-manager",
+        "interpolation",
+        "linear-interpolation",
+        "regridding",
+        "spline-interpolation"
+      ]
+    },
+    "jacobwilliams/rklib": {
+      "topics": [
+        "differential-equations",
+        "fortran",
+        "fortran-package-manager",
+        "ode",
+        "ode-solver",
+        "root-finding",
+        "runge-kutta",
+        "runge-kutta-adaptive-step-size",
+        "runge-kutta-fehlberg"
+      ]
+    },
+    "jacobwilliams/roots-fortran": {
+      "topics": [
+        "bisection",
+        "brent-dekker",
+        "fortran",
+        "fortran-package-manager",
+        "muller",
+        "muller-s-method",
+        "regula-falsi",
+        "root-finding",
+        "zeroin"
+      ]
+    },
+    "jacobwilliams/simulated-annealing": {
+      "topics": [
+        "annealing",
+        "basin-hopping",
+        "fortran",
+        "fortran-package-manager",
+        "minimization",
+        "optimization",
+        "python",
+        "simulated-annealing",
+        "stochastic-optimization"
+      ]
+    },
+    "jacobwilliams/slsqp": {
+      "topics": [
+        "constrained-optimization",
+        "fortran",
+        "fortran-package-manager",
+        "nnls",
+        "numerical-optimization",
+        "optimization",
+        "sqp"
+      ]
+    },
+    "jacobwilliams/specfun": {
+      "topics": [
+        "fortran",
+        "fortran-package-manager",
+        "scipy",
+        "special-functions"
+      ]
+    },
+    "jacobwilliams/splpak": {
+      "topics": [
+        "cubic-splines",
+        "curve-fitting",
+        "fortran",
+        "fortran-package-manager",
+        "interpolation",
+        "least-squares",
+        "splines"
+      ]
+    },
+    "jacobwilliams/stringsort": {
+      "topics": [
+        "fortran",
+        "fortran-package-manager",
+        "quicksort",
+        "sorting-algorithms"
+      ]
+    },
+    "jchristopherson/collections": {
+      "topics": [
+        "collection",
+        "collections",
+        "fortran",
+        "generic-collections",
+        "generic-list",
+        "linked-list",
+        "list",
+        "lists"
+      ]
+    },
+    "jchristopherson/ferror": {
+      "topics": []
+    },
+    "jchristopherson/fortran_test_helper": {
+      "topics": []
+    },
+    "jchristopherson/fstats": {
+      "topics": [
+        "allan-variance",
+        "anova",
+        "bootstrap",
+        "design-of-experiments",
+        "distributions",
+        "experimental-design",
+        "gauge-r-and-r-study",
+        "hypothesis-testing",
+        "interpolation",
+        "levenberg-marquardt",
+        "lowess",
+        "markov-chain-monte-carlo",
+        "mcmc-sampler",
+        "missing-data",
+        "regression",
+        "sampling-distribution",
+        "special-functions",
+        "statistical-testing",
+        "statistics"
+      ]
+    },
+    "jchristopherson/peaks": {
+      "topics": [
+        "fortran",
+        "peak-detection",
+        "signal-analysis"
+      ]
+    },
+    "jchristopherson/spectrum": {
+      "topics": [
+        "cross-spectral-density",
+        "filter",
+        "filtering",
+        "fir-filter",
+        "fortran",
+        "gaussian-filter",
+        "iir-filters",
+        "numerical-differentiation",
+        "periodogram",
+        "power-spectral-density",
+        "psd",
+        "total-variation-filter",
+        "total-variation-regularization",
+        "transfer-function"
+      ]
+    },
+    "lkedward/fhash": {
+      "topics": [
+        "fortran",
+        "fortran-package-manager",
+        "fpm",
+        "hashmap",
+        "hashtable"
+      ]
+    },
+    "loiseaujc/specialmatrices": {
+      "topics": [
+        "linear-algebra",
+        "sparse-linear-systems",
+        "sparse-matrix"
+      ]
+    },
+    "milanskocic/codata": {
+      "topics": [
+        "c",
+        "codata",
+        "fortran-language",
+        "fortran-library",
+        "fortran-package-manager",
+        "python",
+        "science"
+      ]
+    },
+    "modern-fortran/neural-fortran": {
+      "topics": [
+        "cnn",
+        "deep-learning",
+        "fortran",
+        "machine-learning",
+        "neural-network",
+        "parallel"
+      ]
+    },
+    "nekstab/lightkrylov": {
+      "topics": []
+    },
+    "nicholaswogan/forwarddiff": {
+      "topics": [
+        "autodiff",
+        "autodifferentiation",
+        "automatic-differentiation",
+        "differential-equations"
+      ]
+    },
+    "perazz/fitpack": {
+      "topics": [
+        "curve-fitting",
+        "fortran",
+        "smoothing",
+        "smoothing-splines",
+        "spline-approximation",
+        "spline-curve",
+        "spline-interpolation",
+        "splines",
+        "surface-fitting"
+      ]
+    },
+    "perazz/fortran-lapack": {
+      "topics": [
+        "blas",
+        "eigenvalues",
+        "eigenvectors",
+        "fortran",
+        "fortran-package-manager",
+        "lapack",
+        "lapack95",
+        "lapacke",
+        "linear-algebra",
+        "linear-equations",
+        "machine-learning",
+        "matrix-factorization",
+        "modern-fortran",
+        "modern-fortran-modules",
+        "numpy",
+        "singular-values",
+        "svd"
+      ]
+    },
+    "perazz/fortran-primes": {
+      "topics": [
+        "factorization",
+        "fortran",
+        "fortran-package-manager",
+        "modern-fortran",
+        "prime-numbers",
+        "primes"
+      ]
+    },
+    "perazz/fortran-regex": {
+      "topics": [
+        "fortran",
+        "regex",
+        "regex-parser",
+        "regular-expression",
+        "regular-expressions"
+      ]
+    },
+    "perazz/fortran-shlex": {
+      "topics": [
+        "fortran",
+        "posix",
+        "regular-expressions",
+        "shlex",
+        "shlex-library"
+      ]
+    },
+    "shinobuamasaki/forgex": {
+      "topics": [
+        "fortran",
+        "fortran-package-manager",
+        "regex",
+        "regular-expression"
+      ]
+    },
+    "toml-f/jonquil": {
+      "topics": [
+        "fortran-library",
+        "fortran-package-manager",
+        "json",
+        "json-parser",
+        "serde"
+      ]
+    },
+    "toml-f/toml-f": {
+      "topics": [
+        "fortran-library",
+        "fortran-package-manager",
+        "serde",
+        "toml",
+        "toml-parser"
+      ]
+    },
+    "urbanjost/m_attr": {
+      "topics": [
+        "ansi-escape-sequences",
+        "fortran",
+        "fortran-package-manager",
+        "terminal"
+      ]
+    },
+    "urbanjost/m_cli2": {
+      "topics": [
+        "argument",
+        "command-line",
+        "fortran",
+        "fortran-package-manager",
+        "parsing"
+      ]
+    },
+    "urbanjost/m_color": {
+      "topics": [
+        "color-conversion",
+        "color-models",
+        "fortran",
+        "fortran-package-manager"
+      ]
+    },
+    "urbanjost/m_framework": {
+      "topics": [
+        "fortran",
+        "fortran-package-manager",
+        "fpm",
+        "unit-testing"
+      ]
+    },
+    "urbanjost/m_io": {
+      "topics": [
+        "fortran",
+        "fortran-package-manager",
+        "io"
+      ]
+    },
+    "urbanjost/m_list": {
+      "topics": [
+        "fortran-package-manager"
+      ]
+    },
+    "urbanjost/m_match": {
+      "topics": [
+        "bre",
+        "fortran",
+        "fortran-package-manager",
+        "regex",
+        "regular-expressions"
+      ]
+    },
+    "urbanjost/m_sets": {
+      "topics": [
+        "fortran",
+        "fortran-package-manager",
+        "matlab",
+        "sets"
+      ]
+    },
+    "urbanjost/m_sort": {
+      "topics": [
+        "fortran",
+        "fortran-package-manager",
+        "fpm",
+        "sort",
+        "sorting",
+        "sorting-algorithms"
+      ]
+    },
+    "urbanjost/m_strings": {
+      "topics": [
+        "fortran",
+        "fortran-package-manager",
+        "fpm",
+        "string-manipulation",
+        "strings"
+      ]
+    },
+    "urbanjost/m_time": {
+      "topics": [
+        "calendar",
+        "date",
+        "date-formatting",
+        "datetime",
+        "fortran",
+        "fortran-package-manager",
+        "fpm",
+        "time"
+      ]
+    },
+    "urbanjost/orderpack": {
+      "topics": [
+        "fortran",
+        "fortran-package-manager",
+        "fpm",
+        "sort"
+      ]
+    },
+    "vmagnin/forcolormap": {
+      "topics": [
+        "colormaps",
+        "fortran",
+        "fortran-package-manager"
+      ]
+    },
+    "wavebitscientific/datetime-fortran": {
+      "topics": [
+        "datetime",
+        "fortran",
+        "strftime",
+        "timedelta"
+      ]
+    },
+    "wavebitscientific/functional-fortran": {
+      "topics": [
+        "fortran",
+        "functional-programming"
+      ]
+    }
+  }
+}

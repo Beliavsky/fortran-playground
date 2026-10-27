@@ -13,8 +13,11 @@ def generate_fpm_examples(site):
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(examples, indent=2) + '\n', encoding='utf-8')
     from fpm_cache import catalog
+    topics_path = audit.parents[1] / 'fpm_catalog/topics.json'
+    topics = json.loads(topics_path.read_text(encoding='utf-8'))['repositories'] if topics_path.exists() else {}
     packages = [{**package, 'source': (audit.parents[1] / 'fpm_catalog/demos' /
-                 (package['id'] + '.f90')).read_text(encoding='utf-8')} for package in catalog()]
+                 (package['id'] + '.f90')).read_text(encoding='utf-8'),
+                 'topics': topics.get(package['repository'].lower(), {}).get('topics', [])} for package in catalog()]
     (site / 'fpm/packages.json').write_text(json.dumps(packages, indent=2) + '\n', encoding='utf-8')
     # Small local-export tools only; package archives are fetched by the user's
     # machine. This never builds libraries or contacts the execution service.

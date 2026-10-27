@@ -139,6 +139,21 @@ The hosted Python runner also benefits automatically when `--fpm URL --revision 
 
 ## Build, verify, and deploy
 
+### Refresh GitHub topics
+
+The general catalog includes a saved snapshot of repository topics in `fpm_catalog/topics.json`. Topics describe repositories; package source revisions remain pinned independently. Refresh topics explicitly, then regenerate the public catalog:
+
+```text
+python xgithub_topics.py
+python xfpm_examples.py
+```
+
+The refresh command uses GitHub's repository topics API. It reads `GITHUB_TOKEN` or `GH_TOKEN` when available; a complete refresh of this catalog may exceed the unauthenticated API allowance. Alternatively, read the topic labels from the public repository pages with `python xgithub_topics.py --html`, then run `python xfpm_examples.py`. Failed refreshes preserve the previous complete snapshot.
+
+Normal site builds read the saved snapshot and make no topic API requests. Commit the snapshot and generated `site/fpm/packages.json` to publish updated search metadata. Topic changes require no backend deployment or library recompilation, and the online and local catalog pages use the same metadata.
+
+### Package builds
+
 Use an authenticated Python environment containing [requirements-fpm.txt](../requirements-fpm.txt). From this repository root:
 
 ```powershell

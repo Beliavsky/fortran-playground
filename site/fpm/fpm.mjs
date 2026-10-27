@@ -27,6 +27,8 @@ const translatedUnavailable = () => Boolean(get('subdirectory').value.trim()) &&
 let packages = [], generalPackages = [], translatedPackages, precompiled = {};
 let collectionLoading = false, collectionGeneration = 0;
 let searchButtons = [];
+let topicButtons = [];
+const genericTopics = new Set(['fortran', 'modern-fortran', 'fortran-package-manager', 'fpm']);
 const translatedCollection = () => get('package-collection').value === 'translated-r';
 const packageCategories = p => p.categories?.length ? p.categories : [p.category];
 let exporting = false, exportRuntime;
@@ -57,6 +59,7 @@ function controls() {
   get('package-search').disabled = busy || collectionLoading;
   get('package-category').disabled = busy || collectionLoading;
   for (const button of searchButtons) button.disabled = busy;
+  for (const button of topicButtons) button.disabled = busy;
   const selected = packages.find(p => p.id === get('available-package').value);
   get('load-package').disabled = busy || collectionLoading || !selected || (!localExecution && !translatedCollection() && (!ready
     || precompiled[selected.id]?.revision !== selected.revision));
@@ -66,12 +69,36 @@ function controls() {
   editor.refresh();
 }
 
+function renderTopics(packageEntry) {
+  const container = get('package-topics');
+  const topics = [...new Set(packageEntry?.topics || [])].sort((a, b) =>
+    Number(genericTopics.has(a)) - Number(genericTopics.has(b)) || a.localeCompare(b));
+  container.replaceChildren();
+  topicButtons = [];
+  container.hidden = !topics.length;
+  if (!topics.length) return;
+  const label = document.createElement('span'); label.textContent = 'GitHub topics:'; container.appendChild(label);
+  for (const topic of topics) {
+    const button = document.createElement('button'); button.type = 'button'; button.textContent = topic;
+    button.disabled = busy;
+    button.addEventListener('click', () => {
+      get('package-search').value = topic;
+      get('package-category').value = '';
+      renderPackages();
+    });
+    topicButtons.push(button); container.appendChild(button);
+  }
+}
+
 function renderPackages() {
   const previous = get('available-package').value;
   const query = get('package-search').value.trim().toLowerCase();
   const category = get('package-category').value;
-  const visible = packages.filter(p => (!category || packageCategories(p).includes(category))
-    && `${p.id} ${p.repository} ${p.description} ${p.category} ${(p.keywords || []).join(' ')}`.toLowerCase().includes(query));
+  const visible = packages.filter(p => {
+    const text = `${p.id} ${p.repository} ${p.description} ${p.category} ${(p.keywords || []).join(' ')} ${(p.topics || []).join(' ')}`.toLowerCase();
+    return (!category || packageCategories(p).includes(category)) && (text.includes(query)
+      || text.replace(/[-_]+/g, ' ').includes(query.replace(/[-_]+/g, ' ')));
+  });
   const placeholder = document.createElement('option');
   placeholder.value = ''; placeholder.textContent = localExecution || translatedCollection() ? 'Choose a package…' : 'Choose a precompiled package…';
   get('available-package').replaceChildren(placeholder);
@@ -85,6 +112,7 @@ function renderPackages() {
   get('available-package').value = query && visible.length === 1 ? visible[0].id
     : visible.some(p => p.id === previous) ? previous : '';
   get('package-count').textContent = `${visible.length} of ${packages.length} packages`;
+  renderTopics(packages.find(p => p.id === get('available-package').value));
   const matches = get('package-search-results');
   matches.replaceChildren();
   searchButtons = [];
@@ -304,6 +332,7 @@ for (const id of ['package-url', 'revision', 'subdirectory']) get(id).addEventLi
 get('example').addEventListener('change', controls);
 function selectPackage() {
   const selected = packages.find(p => p.id === get('available-package').value);
+  renderTopics(selected);
   sourceLinks(selected);
   get('package-note').textContent = selected
     ? `${selected.description} Source: https://github.com/${selected.repository} @ ${selected.revision}. `

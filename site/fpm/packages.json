@@ -9,7 +9,26 @@
     "dependents_in_sample": 0,
     "license": "BSD3",
     "category": "Linear algebra",
-    "source": "program main\n   use iso_fortran_env, only: real64\n   use linear_algebra, only: solve\n   implicit none\n   real(real64) :: a(2,2), b(2), x(2)\n   a = reshape([3.0_real64, 1.0_real64, 1.0_real64, 2.0_real64], [2,2])\n   b = [9.0_real64, 8.0_real64]\n   x = solve(a, b)\n   if (maxval(abs(matmul(a,x)-b)) > 1.0e-10_real64) error stop 'incorrect solution'\n   print *, 'x =', x\n   print *, 'PASS fortran-lapack'\nend program main\n"
+    "source": "program main\n   use iso_fortran_env, only: real64\n   use linear_algebra, only: solve\n   implicit none\n   real(real64) :: a(2,2), b(2), x(2)\n   a = reshape([3.0_real64, 1.0_real64, 1.0_real64, 2.0_real64], [2,2])\n   b = [9.0_real64, 8.0_real64]\n   x = solve(a, b)\n   if (maxval(abs(matmul(a,x)-b)) > 1.0e-10_real64) error stop 'incorrect solution'\n   print *, 'x =', x\n   print *, 'PASS fortran-lapack'\nend program main\n",
+    "topics": [
+      "blas",
+      "eigenvalues",
+      "eigenvectors",
+      "fortran",
+      "fortran-package-manager",
+      "lapack",
+      "lapack95",
+      "lapacke",
+      "linear-algebra",
+      "linear-equations",
+      "machine-learning",
+      "matrix-factorization",
+      "modern-fortran",
+      "modern-fortran-modules",
+      "numpy",
+      "singular-values",
+      "svd"
+    ]
   },
   {
     "id": "test-drive",
@@ -21,7 +40,13 @@
     "dependents_in_sample": 33,
     "license": "Apache-2.0 OR MIT",
     "category": "Testing",
-    "source": "program main\n   use testdrive, only: error_type, check\n   implicit none\n   type(error_type), allocatable :: error\n   call check(error, 2 + 2, 4)\n   if (allocated(error)) error stop 'assertion failed'\n   print *, 'PASS test-drive'\nend program main\n"
+    "source": "program main\n   use testdrive, only: error_type, check\n   implicit none\n   type(error_type), allocatable :: error\n   call check(error, 2 + 2, 4)\n   if (allocated(error)) error stop 'assertion failed'\n   print *, 'PASS test-drive'\nend program main\n",
+    "topics": [
+      "fortran-library",
+      "fortran-package-manager",
+      "testing-framework",
+      "unit-testing"
+    ]
   },
   {
     "id": "pyplot-fortran",
@@ -33,7 +58,17 @@
     "dependents_in_sample": 13,
     "license": "BSD-3",
     "category": "Plotting",
-    "source": "program plot_trig\n   use iso_fortran_env, only: dp => real64\n   use pyplot_module, only: pyplot\n   implicit none\n   type(pyplot) :: plt\n   integer :: i, status\n   real(dp) :: x(101)\n   real(dp), parameter :: pi = acos(-1.0_dp)\n\n   x = [(2*pi*i/100, i = 0, 100)]\n   call plt%initialize(grid=.true., legend=.true., &\n      title='Sine and cosine', xlabel='x (radians)', &\n      ylabel='Function value', use_oo_api=.true.)\n   call plt%add_plot(x, sin(x), label='sin(x)', linestyle='b-')\n   call plt%add_plot(x, cos(x), label='cos(x)', linestyle='r--')\n   call plt%savefig('trig.png', istat=status)\n   if (status /= 0) error stop 'Plot generation failed'\n   print '(a)', 'Saved trig.png'\n   print *, 'PASS pyplot-fortran'\nend program plot_trig\n"
+    "source": "program plot_trig\n   use iso_fortran_env, only: dp => real64\n   use pyplot_module, only: pyplot\n   implicit none\n   type(pyplot) :: plt\n   integer :: i, status\n   real(dp) :: x(101)\n   real(dp), parameter :: pi = acos(-1.0_dp)\n\n   x = [(2*pi*i/100, i = 0, 100)]\n   call plt%initialize(grid=.true., legend=.true., &\n      title='Sine and cosine', xlabel='x (radians)', &\n      ylabel='Function value', use_oo_api=.true.)\n   call plt%add_plot(x, sin(x), label='sin(x)', linestyle='b-')\n   call plt%add_plot(x, cos(x), label='cos(x)', linestyle='r--')\n   call plt%savefig('trig.png', istat=status)\n   if (status /= 0) error stop 'Plot generation failed'\n   print '(a)', 'Saved trig.png'\n   print *, 'PASS pyplot-fortran'\nend program plot_trig\n",
+    "topics": [
+      "contour-plot",
+      "fortran",
+      "fortran-package-manager",
+      "matplotlib",
+      "plot",
+      "plotting",
+      "plotting-in-fortran",
+      "pyplot"
+    ]
   },
   {
     "id": "json-fortran",
@@ -45,7 +80,12 @@
     "dependents_in_sample": 12,
     "license": "BSD",
     "category": "Data formats",
-    "source": "program main\n   use json_module, only: json_file\n   implicit none\n   type(json_file) :: document\n   integer :: answer\n   logical :: found\n   call document%initialize()\n   call document%load_from_string('{\"answer\":42}')\n   call document%get('answer', answer, found)\n   if (.not. found) error stop 'missing value'\n   if (answer /= 42) error stop 'incorrect JSON value'\n   print *, 'answer =', answer\n   call document%destroy()\n   print *, 'PASS json-fortran'\nend program main\n"
+    "source": "program main\n   use json_module, only: json_file\n   implicit none\n   type(json_file) :: document\n   integer :: answer\n   logical :: found\n   call document%initialize()\n   call document%load_from_string('{\"answer\":42}')\n   call document%get('answer', answer, found)\n   if (.not. found) error stop 'missing value'\n   if (answer /= 42) error stop 'incorrect JSON value'\n   print *, 'answer =', answer\n   call document%destroy()\n   print *, 'PASS json-fortran'\nend program main\n",
+    "topics": [
+      "fortran",
+      "fortran-package-manager",
+      "json"
+    ]
   },
   {
     "id": "toml-f",
@@ -57,7 +97,14 @@
     "dependents_in_sample": 7,
     "license": "Apache-2.0 OR MIT",
     "category": "Data formats",
-    "source": "! Parse a small TOML document and retrieve its integer value.\nprogram demo\n   use tomlf, only: toml_table, toml_error, toml_parse, get_value\n   implicit none\n   type(toml_table), allocatable :: table\n   type(toml_error), allocatable :: error\n   integer :: answer, status\n   call toml_parse(table, 'answer = 42', error=error)\n   if (allocated(error)) error stop 'TOML parsing failed'\n   call get_value(table, 'answer', answer, stat=status)\n   if (status /= 0 .or. answer /= 42) error stop 'incorrect TOML value'\n   print '(a,i0)', 'PASS toml-f answer=', answer\nend program demo\n"
+    "source": "! Parse a small TOML document and retrieve its integer value.\nprogram demo\n   use tomlf, only: toml_table, toml_error, toml_parse, get_value\n   implicit none\n   type(toml_table), allocatable :: table\n   type(toml_error), allocatable :: error\n   integer :: answer, status\n   call toml_parse(table, 'answer = 42', error=error)\n   if (allocated(error)) error stop 'TOML parsing failed'\n   call get_value(table, 'answer', answer, stat=status)\n   if (status /= 0 .or. answer /= 42) error stop 'incorrect TOML value'\n   print '(a,i0)', 'PASS toml-f answer=', answer\nend program demo\n",
+    "topics": [
+      "fortran-library",
+      "fortran-package-manager",
+      "serde",
+      "toml",
+      "toml-parser"
+    ]
   },
   {
     "id": "fftpack",
@@ -69,7 +116,15 @@
     "dependents_in_sample": 1,
     "license": "Public Domain",
     "category": "Transforms",
-    "source": "program main\n   use fftpack, only: fft, ifft, rk\n   implicit none\n   complex(rk) :: x(4), y(4), restored(4)\n   x = cmplx([1, 2, 3, 4], 0, kind=rk)\n   y = fft(x)\n   ! FFTPACK's backward transform is unnormalized.\n   restored = ifft(y) / real(size(x), rk)\n   if (maxval(abs(restored-x)) > 1.0e-10_rk) error stop 'FFT round trip failed'\n   print *, 'Fourier coefficients:', y\n   print *, 'PASS fftpack'\nend program main\n"
+    "source": "program main\n   use fftpack, only: fft, ifft, rk\n   implicit none\n   complex(rk) :: x(4), y(4), restored(4)\n   x = cmplx([1, 2, 3, 4], 0, kind=rk)\n   y = fft(x)\n   ! FFTPACK's backward transform is unnormalized.\n   restored = ifft(y) / real(size(x), rk)\n   if (maxval(abs(restored-x)) > 1.0e-10_rk) error stop 'FFT round trip failed'\n   print *, 'Fourier coefficients:', y\n   print *, 'PASS fftpack'\nend program main\n",
+    "topics": [
+      "fast-fourier-transform",
+      "fft",
+      "fft-library",
+      "fftpack",
+      "fortran-library",
+      "fortran-package-manager"
+    ]
   },
   {
     "id": "roots-fortran",
@@ -81,7 +136,18 @@
     "dependents_in_sample": 3,
     "license": "BSD-3",
     "category": "Roots and optimization",
-    "source": "! Solve x**2 - 2 = 0 with Brent's method.\n! Module callbacks avoid executable-stack trampolines for internal procedures.\nmodule audit_functions\n   use iso_fortran_env, only: wp => real64\n   use root_module, only: root_solver\n   implicit none\ncontains\n   function equation(me, x) result(y)\n      class(root_solver), intent(inout) :: me\n      real(wp), intent(in) :: x\n      real(wp) :: y\n      y = x*x - 2.0_wp\n   end function equation\nend module audit_functions\n\nprogram demo\n   use iso_fortran_env, only: wp => real64\n   use root_module, only: brent_solver\n   use audit_functions, only: equation\n   use ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   real(wp) :: x, residual\n   integer :: status\n   type(brent_solver) :: solver\n   call solver%initialize(equation, rtol=1.0e-12_wp)\n   call solver%solve(0.0_wp, 2.0_wp, x, residual, status)\n   if (.not. ieee_is_finite(x)) error stop 'nonfinite root'\n   if (status /= 0 .or. abs(x - sqrt(2.0_wp)) > 1.0e-9_wp) error stop 'incorrect root'\n   print '(a,f15.12)', 'PASS roots-fortran sqrt(2)=', x\nend program demo\n"
+    "source": "! Solve x**2 - 2 = 0 with Brent's method.\n! Module callbacks avoid executable-stack trampolines for internal procedures.\nmodule audit_functions\n   use iso_fortran_env, only: wp => real64\n   use root_module, only: root_solver\n   implicit none\ncontains\n   function equation(me, x) result(y)\n      class(root_solver), intent(inout) :: me\n      real(wp), intent(in) :: x\n      real(wp) :: y\n      y = x*x - 2.0_wp\n   end function equation\nend module audit_functions\n\nprogram demo\n   use iso_fortran_env, only: wp => real64\n   use root_module, only: brent_solver\n   use audit_functions, only: equation\n   use ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   real(wp) :: x, residual\n   integer :: status\n   type(brent_solver) :: solver\n   call solver%initialize(equation, rtol=1.0e-12_wp)\n   call solver%solve(0.0_wp, 2.0_wp, x, residual, status)\n   if (.not. ieee_is_finite(x)) error stop 'nonfinite root'\n   if (status /= 0 .or. abs(x - sqrt(2.0_wp)) > 1.0e-9_wp) error stop 'incorrect root'\n   print '(a,f15.12)', 'PASS roots-fortran sqrt(2)=', x\nend program demo\n",
+    "topics": [
+      "bisection",
+      "brent-dekker",
+      "fortran",
+      "fortran-package-manager",
+      "muller",
+      "muller-s-method",
+      "regula-falsi",
+      "root-finding",
+      "zeroin"
+    ]
   },
   {
     "id": "m_strings",
@@ -93,7 +159,14 @@
     "dependents_in_sample": 6,
     "license": "CC0-1.0",
     "category": "Strings and sorting",
-    "source": "program main\n   use M_strings, only: upper\n   implicit none\n   if (upper('Fortran') /= 'FORTRAN') error stop 'incorrect conversion'\n   print *, upper('Fortran strings')\n   print *, 'PASS m_strings'\nend program main\n"
+    "source": "program main\n   use M_strings, only: upper\n   implicit none\n   if (upper('Fortran') /= 'FORTRAN') error stop 'incorrect conversion'\n   print *, upper('Fortran strings')\n   print *, 'PASS m_strings'\nend program main\n",
+    "topics": [
+      "fortran",
+      "fortran-package-manager",
+      "fpm",
+      "string-manipulation",
+      "strings"
+    ]
   },
   {
     "id": "stdlib",
@@ -105,7 +178,26 @@
     "dependents_in_sample": 11,
     "license": "MIT",
     "category": "General utilities",
-    "source": "program main\n   use iso_fortran_env, only: real64\n   use stdlib_stats, only: mean\n   implicit none\n   real(real64) :: x(4)\n   x = [1.0_real64, 2.0_real64, 3.0_real64, 4.0_real64]\n   if (abs(mean(x)-2.5_real64) > 1.0e-12_real64) error stop 'incorrect mean'\n   print *, 'mean =', mean(x)\n   print *, 'PASS stdlib'\nend program main\n"
+    "source": "program main\n   use iso_fortran_env, only: real64\n   use stdlib_stats, only: mean\n   implicit none\n   real(real64) :: x(4)\n   x = [1.0_real64, 2.0_real64, 3.0_real64, 4.0_real64]\n   if (abs(mean(x)-2.5_real64) > 1.0e-12_real64) error stop 'incorrect mean'\n   print *, 'mean =', mean(x)\n   print *, 'PASS stdlib'\nend program main\n",
+    "topics": [
+      "blas",
+      "fortran",
+      "fortran-library",
+      "fortran-package-manager",
+      "fortran-stdlib",
+      "hash",
+      "lapack",
+      "linear-algebra",
+      "numerical-methods",
+      "numpy",
+      "probability-distribution",
+      "quadrature",
+      "rng",
+      "sorting",
+      "statistics",
+      "stdlib",
+      "strings"
+    ]
   },
   {
     "id": "bspline-fortran",
@@ -118,7 +210,17 @@
     "description": "One- to six-dimensional B-spline interpolation.",
     "dependencies": [],
     "dependents_in_sample": 1,
-    "source": "program main\n   use bspline_module, only: bspline_1d\n   use bspline_kinds_module, only: wp, ip\n   implicit none\n   type(bspline_1d) :: spline\n   integer(ip) :: status\n   real(wp) :: value\n   call spline%initialize([0.0_wp,1.0_wp,2.0_wp], [0.0_wp,2.0_wp,4.0_wp], 2_ip, status)\n   if (status /= 0) error stop 'initialization failed'\n   call spline%evaluate(0.5_wp, 0_ip, value, status)\n   if (status /= 0 .or. abs(value-1.0_wp) > 1.e-10_wp) error stop 'incorrect spline'\n   print *, 'Interpolated value:', value\n   call spline%destroy()\n   print *, 'PASS bspline-fortran'\nend program main\n"
+    "source": "program main\n   use bspline_module, only: bspline_1d\n   use bspline_kinds_module, only: wp, ip\n   implicit none\n   type(bspline_1d) :: spline\n   integer(ip) :: status\n   real(wp) :: value\n   call spline%initialize([0.0_wp,1.0_wp,2.0_wp], [0.0_wp,2.0_wp,4.0_wp], 2_ip, status)\n   if (status /= 0) error stop 'initialization failed'\n   call spline%evaluate(0.5_wp, 0_ip, value, status)\n   if (status /= 0 .or. abs(value-1.0_wp) > 1.e-10_wp) error stop 'incorrect spline'\n   print *, 'Interpolated value:', value\n   call spline%destroy()\n   print *, 'PASS bspline-fortran'\nend program main\n",
+    "topics": [
+      "b-spline",
+      "extrapolation",
+      "fortran",
+      "fortran-package-manager",
+      "interpolation",
+      "least-squares-curve-fitting",
+      "quadrature-integration",
+      "splines"
+    ]
   },
   {
     "id": "pchip",
@@ -131,7 +233,14 @@
     "description": "Shape-preserving piecewise cubic interpolation.",
     "dependencies": [],
     "dependents_in_sample": 0,
-    "source": "! Interpolate linear data and verify an interior value.\nprogram demo\n   use iso_fortran_env, only: wp => real64\n   use ieee_arithmetic, only: ieee_is_finite\n   use pchip_module, only: dpchim, dpchfe\n   implicit none\n   real(wp) :: x(3), f(1,3), d(1,3), query(1), answer(1)\n   integer :: status\n   logical :: skip\n   x = [0.0_wp, 1.0_wp, 2.0_wp]\n   f(1,:) = 2*x + 1\n   call dpchim(3, x, f, d, 1, status)\n   if (status < 0) error stop 'derivative calculation failed'\n   skip = .false.\n   query = 0.5_wp\n   call dpchfe(3, x, f, d, 1, skip, 1, query, answer, status)\n   if (.not. ieee_is_finite(answer(1))) error stop 'nonfinite interpolation'\n   if (status < 0 .or. abs(answer(1) - 2.0_wp) > 1.0e-12_wp) error stop 'incorrect interpolation'\n   print '(a,f8.4)', 'PASS pchip value=', answer(1)\nend program demo\n"
+    "source": "! Interpolate linear data and verify an interior value.\nprogram demo\n   use iso_fortran_env, only: wp => real64\n   use ieee_arithmetic, only: ieee_is_finite\n   use pchip_module, only: dpchim, dpchfe\n   implicit none\n   real(wp) :: x(3), f(1,3), d(1,3), query(1), answer(1)\n   integer :: status\n   logical :: skip\n   x = [0.0_wp, 1.0_wp, 2.0_wp]\n   f(1,:) = 2*x + 1\n   call dpchim(3, x, f, d, 1, status)\n   if (status < 0) error stop 'derivative calculation failed'\n   skip = .false.\n   query = 0.5_wp\n   call dpchfe(3, x, f, d, 1, skip, 1, query, answer, status)\n   if (.not. ieee_is_finite(answer(1))) error stop 'nonfinite interpolation'\n   if (status < 0 .or. abs(answer(1) - 2.0_wp) > 1.0e-12_wp) error stop 'incorrect interpolation'\n   print '(a,f8.4)', 'PASS pchip value=', answer(1)\nend program demo\n",
+    "topics": [
+      "fortran",
+      "fortran-package-manager",
+      "hermite-interpolation",
+      "interpolation",
+      "slatec"
+    ]
   },
   {
     "id": "finterp",
@@ -144,7 +253,14 @@
     "description": "Multidimensional linear and nearest-neighbor interpolation.",
     "dependencies": [],
     "dependents_in_sample": 2,
-    "source": "program main\n   use iso_fortran_env, only: real64\n   use linear_interpolation_module, only: linear_interp_1d\n   implicit none\n   type(linear_interp_1d) :: interpolator\n   real(real64) :: value\n   integer :: status\n   call interpolator%initialize([0.0_real64,1.0_real64], [2.0_real64,4.0_real64], status)\n   if (status /= 0) error stop 'initialization failed'\n   call interpolator%evaluate(0.25_real64, value)\n   if (abs(value-2.5_real64) > 1.e-12_real64) error stop 'incorrect interpolation'\n   print *, 'Interpolated value:', value\n   print *, 'PASS finterp'\nend program main\n"
+    "source": "program main\n   use iso_fortran_env, only: real64\n   use linear_interpolation_module, only: linear_interp_1d\n   implicit none\n   type(linear_interp_1d) :: interpolator\n   real(real64) :: value\n   integer :: status\n   call interpolator%initialize([0.0_real64,1.0_real64], [2.0_real64,4.0_real64], status)\n   if (status /= 0) error stop 'initialization failed'\n   call interpolator%evaluate(0.25_real64, value)\n   if (abs(value-2.5_real64) > 1.e-12_real64) error stop 'incorrect interpolation'\n   print *, 'Interpolated value:', value\n   print *, 'PASS finterp'\nend program main\n",
+    "topics": [
+      "fortran",
+      "fortran-package-manager",
+      "interpolation",
+      "linear-interpolation",
+      "nearest-neighbor-interpolation"
+    ]
   },
   {
     "id": "quadpack",
@@ -157,7 +273,18 @@
     "description": "Adaptive numerical integration, including improper and oscillatory integrals.",
     "dependencies": [],
     "dependents_in_sample": 0,
-    "source": "module integrand\n   use iso_fortran_env, only: wp => real64\n   implicit none\ncontains\n   function square(x) result(y)\n      real(wp), intent(in) :: x\n      real(wp) :: y\n      y = x*x\n   end function\nend module\nprogram main\n   use quadpack, only: dqag\n   use integrand, only: square, wp\n   implicit none\n   integer, parameter :: limit=100\n   integer :: neval, status, last, iwork(limit)\n   real(wp) :: value, error, work(4*limit)\n   call dqag(square, 0.0_wp, 1.0_wp, 1.e-10_wp, 1.e-10_wp, 1, &\n      value, error, neval, status, limit, 4*limit, last, iwork, work)\n   print *, 'Integral, error estimate, status:', value, error, status\n   if (status /= 0 .or. abs(value-1.0_wp/3) > 1.e-10_wp) error stop 'incorrect integral'\n   print *, 'Integral of x squared:', value\n   print *, 'PASS quadpack'\nend program main\n"
+    "source": "module integrand\n   use iso_fortran_env, only: wp => real64\n   implicit none\ncontains\n   function square(x) result(y)\n      real(wp), intent(in) :: x\n      real(wp) :: y\n      y = x*x\n   end function\nend module\nprogram main\n   use quadpack, only: dqag\n   use integrand, only: square, wp\n   implicit none\n   integer, parameter :: limit=100\n   integer :: neval, status, last, iwork(limit)\n   real(wp) :: value, error, work(4*limit)\n   call dqag(square, 0.0_wp, 1.0_wp, 1.e-10_wp, 1.e-10_wp, 1, &\n      value, error, neval, status, limit, 4*limit, last, iwork, work)\n   print *, 'Integral, error estimate, status:', value, error, status\n   if (status /= 0 .or. abs(value-1.0_wp/3) > 1.e-10_wp) error stop 'incorrect integral'\n   print *, 'Integral of x squared:', value\n   print *, 'PASS quadpack'\nend program main\n",
+    "topics": [
+      "fortran",
+      "fortran-package-manager",
+      "gauss-kronrod",
+      "gauss-kronrod-quadrature",
+      "numerical-integration",
+      "quadpack",
+      "quadrature",
+      "quadrature-integration",
+      "slatec"
+    ]
   },
   {
     "id": "quadrature-fortran",
@@ -170,7 +297,15 @@
     "description": "Adaptive Gaussian quadrature in one or more dimensions.",
     "dependencies": [],
     "dependents_in_sample": 0,
-    "source": "! Integrate x**2 over [0,1]; verify the result rather than only printing it.\n! Module callbacks avoid executable-stack trampolines for internal procedures.\nmodule audit_functions\n   use iso_fortran_env, only: wp => real64\n   use quadrature_module, only: integration_class_1d\n   implicit none\ncontains\n   function square(me, x) result(y)\n      class(integration_class_1d), intent(inout) :: me\n      real(wp), intent(in) :: x\n      real(wp) :: y\n      y = x*x\n   end function square\nend module audit_functions\n\nprogram demo\n   use iso_fortran_env, only: wp => real64\n   use ieee_arithmetic, only: ieee_is_finite\n   use quadrature_module, only: integration_class_1d\n   use audit_functions, only: square\n   implicit none\n   type(integration_class_1d) :: integral\n   real(wp) :: answer, estimate\n   integer :: status\n   call integral%initialize(fx=square, xl=0.0_wp, xu=1.0_wp, tolx=1.0e-10_wp, methodx=8)\n   call integral%integrate(answer, status, estimate)\n   if (.not. ieee_is_finite(answer)) error stop 'nonfinite integral'\n   if (abs(answer - 1.0_wp/3.0_wp) > 1.0e-9_wp) error stop 'incorrect integral'\n   print '(a,f15.12,a,i0)', 'PASS quadrature-fortran integral=', answer, ' status=', status\nend program demo\n"
+    "source": "! Integrate x**2 over [0,1]; verify the result rather than only printing it.\n! Module callbacks avoid executable-stack trampolines for internal procedures.\nmodule audit_functions\n   use iso_fortran_env, only: wp => real64\n   use quadrature_module, only: integration_class_1d\n   implicit none\ncontains\n   function square(me, x) result(y)\n      class(integration_class_1d), intent(inout) :: me\n      real(wp), intent(in) :: x\n      real(wp) :: y\n      y = x*x\n   end function square\nend module audit_functions\n\nprogram demo\n   use iso_fortran_env, only: wp => real64\n   use ieee_arithmetic, only: ieee_is_finite\n   use quadrature_module, only: integration_class_1d\n   use audit_functions, only: square\n   implicit none\n   type(integration_class_1d) :: integral\n   real(wp) :: answer, estimate\n   integer :: status\n   call integral%initialize(fx=square, xl=0.0_wp, xu=1.0_wp, tolx=1.0e-10_wp, methodx=8)\n   call integral%integrate(answer, status, estimate)\n   if (.not. ieee_is_finite(answer)) error stop 'nonfinite integral'\n   if (abs(answer - 1.0_wp/3.0_wp) > 1.0e-9_wp) error stop 'incorrect integral'\n   print '(a,f15.12,a,i0)', 'PASS quadrature-fortran integral=', answer, ' status=', status\nend program demo\n",
+    "topics": [
+      "fortran",
+      "fortran-package-manager",
+      "integration",
+      "numerical-integration",
+      "quadrature",
+      "quadrature-integration"
+    ]
   },
   {
     "id": "dop853",
@@ -183,7 +318,14 @@
     "description": "Adaptive eighth-order Runge-Kutta integration of ordinary differential equations.",
     "dependencies": [],
     "dependents_in_sample": 1,
-    "source": "module ode_functions\n   use dop853_module, only: dop853_class, wp => dop853_wp\n   implicit none\ncontains\n   subroutine decay(me, x, y, derivative)\n      class(dop853_class), intent(inout) :: me\n      real(wp), intent(in) :: x, y(:)\n      real(wp), intent(out) :: derivative(:)\n      derivative = -y\n   end subroutine\nend module\nprogram main\n   use ode_functions\n   implicit none\n   type(dop853_class) :: solver\n   real(wp) :: x, y(1)\n   integer :: status\n   logical :: initialized\n   x = 0.0_wp\n   y = 1.0_wp\n   call solver%initialize(n=1, fcn=decay, status_ok=initialized)\n   if (.not. initialized) error stop 'initialization failed'\n   call solver%integrate(x, y, 1.0_wp, [1.e-10_wp], [1.e-10_wp], 0, status)\n   if (status < 0 .or. abs(y(1)-exp(-1.0_wp)) > 1.e-8_wp) error stop 'incorrect ODE solution'\n   print *, 'y(1) for dy/dx=-y:', y\n   print *, 'PASS dop853'\nend program main\n"
+    "source": "module ode_functions\n   use dop853_module, only: dop853_class, wp => dop853_wp\n   implicit none\ncontains\n   subroutine decay(me, x, y, derivative)\n      class(dop853_class), intent(inout) :: me\n      real(wp), intent(in) :: x, y(:)\n      real(wp), intent(out) :: derivative(:)\n      derivative = -y\n   end subroutine\nend module\nprogram main\n   use ode_functions\n   implicit none\n   type(dop853_class) :: solver\n   real(wp) :: x, y(1)\n   integer :: status\n   logical :: initialized\n   x = 0.0_wp\n   y = 1.0_wp\n   call solver%initialize(n=1, fcn=decay, status_ok=initialized)\n   if (.not. initialized) error stop 'initialization failed'\n   call solver%integrate(x, y, 1.0_wp, [1.e-10_wp], [1.e-10_wp], 0, status)\n   if (status < 0 .or. abs(y(1)-exp(-1.0_wp)) > 1.e-8_wp) error stop 'incorrect ODE solution'\n   print *, 'y(1) for dy/dx=-y:', y\n   print *, 'PASS dop853'\nend program main\n",
+    "topics": [
+      "dop853",
+      "fortran",
+      "fortran-package-manager",
+      "ode",
+      "runge-kutta"
+    ]
   },
   {
     "id": "minpack",
@@ -196,7 +338,8 @@
     "description": "Nonlinear equation solvers and nonlinear least-squares fitting.",
     "dependencies": [],
     "dependents_in_sample": 0,
-    "source": "module equations\n   use minpack_module, only: wp\n   implicit none\ncontains\n   subroutine residual(n, x, fvec, iflag)\n      integer, intent(in) :: n\n      real(wp), intent(in) :: x(n)\n      real(wp), intent(out) :: fvec(n)\n      integer, intent(inout) :: iflag\n      fvec = [x(1)**2-2.0_wp, x(2)-3.0_wp]\n   end subroutine\nend module\nprogram main\n   use minpack_module, only: hybrd1\n   use equations\n   implicit none\n   real(wp) :: x(2), fvec(2), work(19)\n   integer :: status\n   x = [1.0_wp,1.0_wp]\n   call hybrd1(residual, 2, x, fvec, 1.e-10_wp, status, work, size(work))\n   if (status /= 1 .or. maxval(abs(fvec)) > 1.e-8_wp) error stop 'nonlinear solve failed'\n   print *, 'Solution (sqrt(2), 3):', x\n   print *, 'PASS minpack'\nend program main\n"
+    "source": "module equations\n   use minpack_module, only: wp\n   implicit none\ncontains\n   subroutine residual(n, x, fvec, iflag)\n      integer, intent(in) :: n\n      real(wp), intent(in) :: x(n)\n      real(wp), intent(out) :: fvec(n)\n      integer, intent(inout) :: iflag\n      fvec = [x(1)**2-2.0_wp, x(2)-3.0_wp]\n   end subroutine\nend module\nprogram main\n   use minpack_module, only: hybrd1\n   use equations\n   implicit none\n   real(wp) :: x(2), fvec(2), work(19)\n   integer :: status\n   x = [1.0_wp,1.0_wp]\n   call hybrd1(residual, 2, x, fvec, 1.e-10_wp, status, work, size(work))\n   if (status /= 1 .or. maxval(abs(fvec)) > 1.e-8_wp) error stop 'nonlinear solve failed'\n   print *, 'Solution (sqrt(2), 3):', x\n   print *, 'PASS minpack'\nend program main\n",
+    "topics": []
   },
   {
     "id": "mersenne-twister-fortran",
@@ -209,7 +352,14 @@
     "description": "Reproducible 64-bit Mersenne Twister random number generation.",
     "dependencies": [],
     "dependents_in_sample": 2,
-    "source": "program main\n   use mt19937_64, only: mt19937\n   use iso_fortran_env, only: real64\n   implicit none\n   type(mt19937) :: generator\n   real(real64) :: first, repeated\n   call generator%initialize(42)\n   first = generator%genrand64_real2()\n   call generator%initialize(42)\n   repeated = generator%genrand64_real2()\n   if (first /= repeated .or. first < 0 .or. first >= 1) error stop 'incorrect generator'\n   print *, 'First uniform value for seed 42:', first\n   print *, 'PASS mersenne-twister-fortran'\nend program main\n"
+    "source": "program main\n   use mt19937_64, only: mt19937\n   use iso_fortran_env, only: real64\n   implicit none\n   type(mt19937) :: generator\n   real(real64) :: first, repeated\n   call generator%initialize(42)\n   first = generator%genrand64_real2()\n   call generator%initialize(42)\n   repeated = generator%genrand64_real2()\n   if (first /= repeated .or. first < 0 .or. first >= 1) error stop 'incorrect generator'\n   print *, 'First uniform value for seed 42:', first\n   print *, 'PASS mersenne-twister-fortran'\nend program main\n",
+    "topics": [
+      "fortran",
+      "fortran-package-manager",
+      "mersenne-twister",
+      "random-number-generators",
+      "rng"
+    ]
   },
   {
     "id": "fortran-search-and-sort",
@@ -222,7 +372,14 @@
     "description": "Generic sorting, searching, and duplicate removal for arrays.",
     "dependencies": [],
     "dependents_in_sample": 1,
-    "source": "program main\n   use sorting_module, only: sort_ascending, binary_search\n   implicit none\n   integer :: values(5), position\n   values = [9,3,7,1,5]\n   call sort_ascending(values)\n   if (any(values /= [1,3,5,7,9])) error stop 'sort failed'\n   position = binary_search(7, values)\n   if (position /= 4) error stop 'search failed'\n   print *, 'Sorted values:', values\n   print *, 'Position of 7:', position\n   print *, 'PASS fortran-search-and-sort'\nend program main\n"
+    "source": "program main\n   use sorting_module, only: sort_ascending, binary_search\n   implicit none\n   integer :: values(5), position\n   values = [9,3,7,1,5]\n   call sort_ascending(values)\n   if (any(values /= [1,3,5,7,9])) error stop 'sort failed'\n   position = binary_search(7, values)\n   if (position /= 4) error stop 'search failed'\n   print *, 'Sorted values:', values\n   print *, 'Position of 7:', position\n   print *, 'PASS fortran-search-and-sort'\nend program main\n",
+    "topics": [
+      "binary-search",
+      "fortran",
+      "quicksort",
+      "searching-algorithms",
+      "sorting-algorithms"
+    ]
   },
   {
     "id": "stringsort",
@@ -235,7 +392,13 @@
     "description": "Lexical and natural sorting of character arrays.",
     "dependencies": [],
     "dependents_in_sample": 0,
-    "source": "program main\n   use string_sort_module, only: lexical_sort_natural_recursive\n   implicit none\n   character(8) :: names(3)\n   names = [character(8) :: 'file10','file2','file1']\n   call lexical_sort_natural_recursive(names, case_sensitive=.true.)\n   if (any(names /= [character(8) :: 'file1','file2','file10'])) error stop 'sort failed'\n   print *, names\n   print *, 'PASS stringsort'\nend program main\n"
+    "source": "program main\n   use string_sort_module, only: lexical_sort_natural_recursive\n   implicit none\n   character(8) :: names(3)\n   names = [character(8) :: 'file10','file2','file1']\n   call lexical_sort_natural_recursive(names, case_sensitive=.true.)\n   if (any(names /= [character(8) :: 'file1','file2','file10'])) error stop 'sort failed'\n   print *, names\n   print *, 'PASS stringsort'\nend program main\n",
+    "topics": [
+      "fortran",
+      "fortran-package-manager",
+      "quicksort",
+      "sorting-algorithms"
+    ]
   },
   {
     "id": "flist",
@@ -248,7 +411,12 @@
     "description": "Linked lists storing values of different types under named keys.",
     "dependencies": [],
     "dependents_in_sample": 0,
-    "source": "program main\n   use linked_list_module, only: list\n   implicit none\n   type(list) :: values\n   class(*), pointer :: item\n   values = list(.false.)\n   call values%add_clone('answer',42)\n   call values%get('answer',item)\n   if (.not. associated(item)) error stop 'missing value'\n   select type(item)\n   type is(integer)\n      if (item /= 42) error stop 'incorrect value'\n      print *, 'Stored answer:', item\n   class default\n      error stop 'incorrect type'\n   end select\n   call values%destroy()\n   print *, 'PASS flist'\nend program main\n"
+    "source": "program main\n   use linked_list_module, only: list\n   implicit none\n   type(list) :: values\n   class(*), pointer :: item\n   values = list(.false.)\n   call values%add_clone('answer',42)\n   call values%get('answer',item)\n   if (.not. associated(item)) error stop 'missing value'\n   select type(item)\n   type is(integer)\n      if (item /= 42) error stop 'incorrect value'\n      print *, 'Stored answer:', item\n   class default\n      error stop 'incorrect type'\n   end select\n   call values%destroy()\n   print *, 'PASS flist'\nend program main\n",
+    "topics": [
+      "fortran",
+      "fortran-package-manager",
+      "linked-list"
+    ]
   },
   {
     "id": "daglib",
@@ -261,7 +429,15 @@
     "description": "Directed acyclic graphs and topological ordering of dependencies.",
     "dependencies": [],
     "dependents_in_sample": 0,
-    "source": "program main\n   use dag_module, only: dag\n   implicit none\n   type(dag) :: graph\n   integer, allocatable :: order(:)\n   integer :: status\n   call graph%set_vertices(3)\n   call graph%set_edges(2,[1])\n   call graph%set_edges(3,[2])\n   call graph%toposort(order,status)\n   if (status /= 0) error stop 'topological sort failed'\n   if (any(order /= [1,2,3])) error stop 'incorrect dependency order'\n   print *, 'Dependency order:', order\n   call graph%destroy()\n   print *, 'PASS daglib'\nend program main\n"
+    "source": "program main\n   use dag_module, only: dag\n   implicit none\n   type(dag) :: graph\n   integer, allocatable :: order(:)\n   integer :: status\n   call graph%set_vertices(3)\n   call graph%set_edges(2,[1])\n   call graph%set_edges(3,[2])\n   call graph%toposort(order,status)\n   if (status /= 0) error stop 'topological sort failed'\n   if (any(order /= [1,2,3])) error stop 'incorrect dependency order'\n   print *, 'Dependency order:', order\n   call graph%destroy()\n   print *, 'PASS daglib'\nend program main\n",
+    "topics": [
+      "directed-acyclic-graph",
+      "fortran",
+      "fortran-package-manager",
+      "graphviz",
+      "graphviz-dot-language",
+      "toposort"
+    ]
   },
   {
     "id": "argv-fortran",
@@ -274,7 +450,12 @@
     "description": "Read command-line arguments as allocatable strings.",
     "dependencies": [],
     "dependents_in_sample": 1,
-    "source": "program main\n   use argv_module, only: argv\n   implicit none\n   character(:), allocatable :: executable\n   ! No extra command-line arguments are supplied by the hosted playground.\n   executable = argv(0)\n   if (len(executable) == 0) error stop 'missing executable name'\n   print *, 'Executable:', executable\n   print *, 'PASS argv-fortran'\nend program main\n"
+    "source": "program main\n   use argv_module, only: argv\n   implicit none\n   character(:), allocatable :: executable\n   ! No extra command-line arguments are supplied by the hosted playground.\n   executable = argv(0)\n   if (len(executable) == 0) error stop 'missing executable name'\n   print *, 'Executable:', executable\n   print *, 'PASS argv-fortran'\nend program main\n",
+    "topics": [
+      "argv",
+      "fortran",
+      "fortran-package-manager"
+    ]
   },
   {
     "id": "popen-fortran",
@@ -287,7 +468,12 @@
     "description": "Capture the text output of a subprocess.",
     "dependencies": [],
     "dependents_in_sample": 1,
-    "source": "program main\n   use popen_module, only: get_command_as_string\n   implicit none\n   character(:), allocatable :: output\n   output = get_command_as_string('printf 42')\n   if (trim(output) /= '42') error stop 'incorrect subprocess output'\n   print *, 'Captured output:', output\n   print *, 'PASS popen-fortran'\nend program main\n"
+    "source": "program main\n   use popen_module, only: get_command_as_string\n   implicit none\n   character(:), allocatable :: output\n   output = get_command_as_string('printf 42')\n   if (trim(output) /= '42') error stop 'incorrect subprocess output'\n   print *, 'Captured output:', output\n   print *, 'PASS popen-fortran'\nend program main\n",
+    "topics": [
+      "fortran",
+      "fortran-package-manager",
+      "popen"
+    ]
   },
   {
     "id": "fortran_function_parser",
@@ -300,7 +486,12 @@
     "description": "Parse and evaluate mathematical expressions supplied as strings.",
     "dependencies": [],
     "dependents_in_sample": 0,
-    "source": "program main\n   use function_parser, only: fparser\n   use iso_fortran_env, only: real64\n   implicit none\n   type(fparser) :: expression\n   real(real64) :: result\n   call expression%parse('sin(x)^2 + cos(x)^2', ['x'])\n   if (expression%error()) error stop 'expression parsing failed'\n   call expression%evaluate([0.7_real64], result)\n   if (expression%error() .or. abs(result-1.0_real64) > 1.e-12_real64) error stop 'incorrect evaluation'\n   print *, 'Expression value:', result\n   call expression%destroy()\n   print *, 'PASS fortran_function_parser'\nend program main\n"
+    "source": "program main\n   use function_parser, only: fparser\n   use iso_fortran_env, only: real64\n   implicit none\n   type(fparser) :: expression\n   real(real64) :: result\n   call expression%parse('sin(x)^2 + cos(x)^2', ['x'])\n   if (expression%error()) error stop 'expression parsing failed'\n   call expression%evaluate([0.7_real64], result)\n   if (expression%error() .or. abs(result-1.0_real64) > 1.e-12_real64) error stop 'incorrect evaluation'\n   print *, 'Expression value:', result\n   call expression%destroy()\n   print *, 'PASS fortran_function_parser'\nend program main\n",
+    "topics": [
+      "expression-parser",
+      "fortran",
+      "function-parser"
+    ]
   },
   {
     "id": "numdiff",
@@ -313,7 +504,16 @@
     "description": "Numerical derivatives and sparse Jacobian estimation.",
     "dependencies": [],
     "dependents_in_sample": 2,
-    "source": "module functions\n   use numdiff_kinds_module, only: wp\n   use diff_module, only: diff_func\n   implicit none\ncontains\n   function square(me,x) result(y)\n      class(diff_func), intent(inout) :: me\n      real(wp), intent(in) :: x\n      real(wp) :: y\n      y = x*x\n   end function\nend module\nprogram main\n   use functions\n   implicit none\n   type(diff_func) :: derivative\n   real(wp) :: value, error\n   integer :: status\n   call derivative%set_function(square)\n   call derivative%compute_derivative(1, 2.0_wp, 0.0_wp, 4.0_wp, 1.e-10_wp, &\n      -epsilon(1.0_wp), value, error, status)\n   if (status /= 0 .or. abs(value-4.0_wp) > 1.e-7_wp) error stop 'incorrect derivative'\n   print *, 'Derivative of x squared at 2:', value\n   print *, 'PASS numdiff'\nend program main\n"
+    "source": "module functions\n   use numdiff_kinds_module, only: wp\n   use diff_module, only: diff_func\n   implicit none\ncontains\n   function square(me,x) result(y)\n      class(diff_func), intent(inout) :: me\n      real(wp), intent(in) :: x\n      real(wp) :: y\n      y = x*x\n   end function\nend module\nprogram main\n   use functions\n   implicit none\n   type(diff_func) :: derivative\n   real(wp) :: value, error\n   integer :: status\n   call derivative%set_function(square)\n   call derivative%compute_derivative(1, 2.0_wp, 0.0_wp, 4.0_wp, 1.e-10_wp, &\n      -epsilon(1.0_wp), value, error, status)\n   if (status /= 0 .or. abs(value-4.0_wp) > 1.e-7_wp) error stop 'incorrect derivative'\n   print *, 'Derivative of x squared at 2:', value\n   print *, 'PASS numdiff'\nend program main\n",
+    "topics": [
+      "differentiation",
+      "finite-differences",
+      "graph-coloring",
+      "numerical-differentiation",
+      "numerical-methods",
+      "optimization",
+      "sparsity-optimization"
+    ]
   },
   {
     "id": "csv-fortran",
@@ -326,7 +526,12 @@
     "description": "Read and write CSV files with typed columns.",
     "dependencies": [],
     "dependents_in_sample": 1,
-    "source": "program main\n   use csv_module, only: csv_file\n   use iso_fortran_env, only: real64\n   implicit none\n   type(csv_file) :: file\n   real(real64), allocatable :: column(:)\n   logical :: ok\n   call file%open('values.csv', n_cols=2, status_ok=ok)\n   if (.not. ok) error stop 'open failed'\n   call file%add(['x','y'])\n   call file%next_row()\n   call file%add([1.0_real64,2.0_real64])\n   call file%next_row()\n   call file%add([3.0_real64,6.0_real64])\n   call file%next_row()\n   call file%close(ok)\n   if (.not. ok) error stop 'close failed'\n   call file%read('values.csv', header_row=1, status_ok=ok)\n   if (.not. ok) error stop 'read failed'\n   call file%get(2, column, ok)\n   if (.not. ok) error stop 'missing column'\n   if (size(column) /= 2) error stop 'incorrect row count'\n   if (any(abs(column-[2.0_real64,6.0_real64]) > 1.e-12_real64)) error stop 'incorrect values'\n   print *, 'CSV y column:', column\n   print *, 'PASS csv-fortran'\nend program main\n"
+    "source": "program main\n   use csv_module, only: csv_file\n   use iso_fortran_env, only: real64\n   implicit none\n   type(csv_file) :: file\n   real(real64), allocatable :: column(:)\n   logical :: ok\n   call file%open('values.csv', n_cols=2, status_ok=ok)\n   if (.not. ok) error stop 'open failed'\n   call file%add(['x','y'])\n   call file%next_row()\n   call file%add([1.0_real64,2.0_real64])\n   call file%next_row()\n   call file%add([3.0_real64,6.0_real64])\n   call file%next_row()\n   call file%close(ok)\n   if (.not. ok) error stop 'close failed'\n   call file%read('values.csv', header_row=1, status_ok=ok)\n   if (.not. ok) error stop 'read failed'\n   call file%get(2, column, ok)\n   if (.not. ok) error stop 'missing column'\n   if (size(column) /= 2) error stop 'incorrect row count'\n   if (any(abs(column-[2.0_real64,6.0_real64]) > 1.e-12_real64)) error stop 'incorrect values'\n   print *, 'CSV y column:', column\n   print *, 'PASS csv-fortran'\nend program main\n",
+    "topics": [
+      "csv",
+      "fortran",
+      "fortran-package-manager"
+    ]
   },
   {
     "id": "datetime-fortran",
@@ -339,7 +544,13 @@
     "description": "Date/time objects, durations, and calendar arithmetic.",
     "dependencies": [],
     "dependents_in_sample": 1,
-    "source": "! Advance across a leap-year day and check the resulting calendar date.\nprogram demo\n   use datetime_module\n   implicit none\n   type(datetime) :: start, finish\n   start = datetime(2024, 2, 28)\n   finish = start + timedelta(days=2)\n   if (finish%getYear() /= 2024 .or. finish%getMonth() /= 3 .or. finish%getDay() /= 1) &\n      error stop 'incorrect calendar arithmetic'\n   print '(a,a)', 'PASS datetime-fortran date=', finish%isoformat()\nend program demo\n"
+    "source": "! Advance across a leap-year day and check the resulting calendar date.\nprogram demo\n   use datetime_module\n   implicit none\n   type(datetime) :: start, finish\n   start = datetime(2024, 2, 28)\n   finish = start + timedelta(days=2)\n   if (finish%getYear() /= 2024 .or. finish%getMonth() /= 3 .or. finish%getDay() /= 1) &\n      error stop 'incorrect calendar arithmetic'\n   print '(a,a)', 'PASS datetime-fortran date=', finish%isoformat()\nend program demo\n",
+    "topics": [
+      "datetime",
+      "fortran",
+      "strftime",
+      "timedelta"
+    ]
   },
   {
     "id": "m_io",
@@ -352,7 +563,12 @@
     "description": "Convenience routines for reading text files, tables, and paths.",
     "dependencies": [],
     "dependents_in_sample": 4,
-    "source": "program main\n   use M_io, only: fileread\n   implicit none\n   character(:), allocatable :: lines(:)\n   integer :: unit\n   open(newunit=unit,file='message.txt',status='replace')\n   write(unit,'(a)') 'Fortran file input'\n   close(unit)\n   call fileread('message.txt',lines)\n   if (.not. allocated(lines)) error stop 'read failed'\n   if (size(lines) /= 1) error stop 'incorrect line count'\n   if (trim(lines(1)) /= 'Fortran file input') error stop 'incorrect text'\n   print *, trim(lines(1))\n   print *, 'PASS m_io'\nend program main\n"
+    "source": "program main\n   use M_io, only: fileread\n   implicit none\n   character(:), allocatable :: lines(:)\n   integer :: unit\n   open(newunit=unit,file='message.txt',status='replace')\n   write(unit,'(a)') 'Fortran file input'\n   close(unit)\n   call fileread('message.txt',lines)\n   if (.not. allocated(lines)) error stop 'read failed'\n   if (size(lines) /= 1) error stop 'incorrect line count'\n   if (trim(lines(1)) /= 'Fortran file input') error stop 'incorrect text'\n   print *, trim(lines(1))\n   print *, 'PASS m_io'\nend program main\n",
+    "topics": [
+      "fortran",
+      "fortran-package-manager",
+      "io"
+    ]
   },
   {
     "id": "m_time",
@@ -365,7 +581,17 @@
     "description": "Calendar arithmetic, Julian dates, and date/time formatting.",
     "dependencies": [],
     "dependents_in_sample": 4,
-    "source": "program main\n   use M_time, only: d2j, realtime\n   implicit none\n   real(realtime) :: julian\n   ! DATE_AND_TIME convention: year, month, day, UTC offset, hour, minute, second, millisecond.\n   julian = d2j([2000,1,1,0,12,0,0,0])\n   if (abs(julian-2451545.0_realtime) > 1.e-8_realtime) error stop 'incorrect Julian day'\n   print *, 'Julian date of noon on 2000-01-01:', julian\n   print *, 'PASS m_time'\nend program main\n"
+    "source": "program main\n   use M_time, only: d2j, realtime\n   implicit none\n   real(realtime) :: julian\n   ! DATE_AND_TIME convention: year, month, day, UTC offset, hour, minute, second, millisecond.\n   julian = d2j([2000,1,1,0,12,0,0,0])\n   if (abs(julian-2451545.0_realtime) > 1.e-8_realtime) error stop 'incorrect Julian day'\n   print *, 'Julian date of noon on 2000-01-01:', julian\n   print *, 'PASS m_time'\nend program main\n",
+    "topics": [
+      "calendar",
+      "date",
+      "date-formatting",
+      "datetime",
+      "fortran",
+      "fortran-package-manager",
+      "fpm",
+      "time"
+    ]
   },
   {
     "id": "m_sets",
@@ -384,7 +610,13 @@
       }
     ],
     "dependents_in_sample": 1,
-    "source": "program main\n   use M_sets, only: union, intersect\n   implicit none\n   integer, allocatable :: combined(:), common(:)\n   combined = union([1,3,5], [2,3,4])\n   common = intersect([1,3,5], [2,3,4])\n   if (any(combined /= [1,2,3,4,5])) error stop 'incorrect union'\n   if (size(common) /= 1) error stop 'incorrect intersection size'\n   if (common(1) /= 3) error stop 'incorrect intersection'\n   print *, 'Union:', combined\n   print *, 'Intersection:', common\n   print *, 'PASS m_sets'\nend program main\n"
+    "source": "program main\n   use M_sets, only: union, intersect\n   implicit none\n   integer, allocatable :: combined(:), common(:)\n   combined = union([1,3,5], [2,3,4])\n   common = intersect([1,3,5], [2,3,4])\n   if (any(combined /= [1,2,3,4,5])) error stop 'incorrect union'\n   if (size(common) /= 1) error stop 'incorrect intersection size'\n   if (common(1) /= 3) error stop 'incorrect intersection'\n   print *, 'Union:', combined\n   print *, 'Intersection:', common\n   print *, 'PASS m_sets'\nend program main\n",
+    "topics": [
+      "fortran",
+      "fortran-package-manager",
+      "matlab",
+      "sets"
+    ]
   },
   {
     "id": "m_sort",
@@ -397,7 +629,15 @@
     "description": "Shell sort, heapsort, quicksort, and related sorting utilities.",
     "dependencies": [],
     "dependents_in_sample": 0,
-    "source": "program main\n   use M_sort, only: sort_shell\n   implicit none\n   integer :: values(5)\n   values = [5,2,4,1,3]\n   call sort_shell(values, 'a')\n   if (any(values /= [1,2,3,4,5])) error stop 'incorrect sort'\n   print *, 'Sorted values:', values\n   print *, 'PASS m_sort'\nend program main\n"
+    "source": "program main\n   use M_sort, only: sort_shell\n   implicit none\n   integer :: values(5)\n   values = [5,2,4,1,3]\n   call sort_shell(values, 'a')\n   if (any(values /= [1,2,3,4,5])) error stop 'incorrect sort'\n   print *, 'Sorted values:', values\n   print *, 'PASS m_sort'\nend program main\n",
+    "topics": [
+      "fortran",
+      "fortran-package-manager",
+      "fpm",
+      "sort",
+      "sorting",
+      "sorting-algorithms"
+    ]
   },
   {
     "id": "m_cli2",
@@ -410,7 +650,14 @@
     "description": "Typed command-line parsing with defaults and help text.",
     "dependencies": [],
     "dependents_in_sample": 11,
-    "source": "program main\n   use M_CLI2, only: set_args, iget, sget\n   implicit none\n   ! Hosted runs have no extra arguments; this demonstrates the defaults.\n   call set_args('--count 42 --title \"Fortran\"')\n   if (iget('count') /= 42) error stop 'incorrect integer option'\n   if (sget('title') /= 'Fortran') error stop 'incorrect string option'\n   print *, 'count =', iget('count'), ' title = ', sget('title')\n   print *, 'PASS m_cli2'\nend program main\n"
+    "source": "program main\n   use M_CLI2, only: set_args, iget, sget\n   implicit none\n   ! Hosted runs have no extra arguments; this demonstrates the defaults.\n   call set_args('--count 42 --title \"Fortran\"')\n   if (iget('count') /= 42) error stop 'incorrect integer option'\n   if (sget('title') /= 'Fortran') error stop 'incorrect string option'\n   print *, 'count =', iget('count'), ' title = ', sget('title')\n   print *, 'PASS m_cli2'\nend program main\n",
+    "topics": [
+      "argument",
+      "command-line",
+      "fortran",
+      "fortran-package-manager",
+      "parsing"
+    ]
   },
   {
     "id": "m_attr",
@@ -423,7 +670,13 @@
     "description": "Terminal styling markup with a plain-text output mode.",
     "dependencies": [],
     "dependents_in_sample": 2,
-    "source": "program main\n   use M_attr, only: attr, attr_mode\n   implicit none\n   character(:), allocatable :: text\n   ! Plain output works in the browser's output pane too.\n   call attr_mode(manner='plain')\n   text = attr('<bold>Fortran<reset>')\n   if (text /= 'Fortran') error stop 'incorrect plain-text conversion'\n   print *, text\n   print *, 'PASS m_attr'\nend program main\n"
+    "source": "program main\n   use M_attr, only: attr, attr_mode\n   implicit none\n   character(:), allocatable :: text\n   ! Plain output works in the browser's output pane too.\n   call attr_mode(manner='plain')\n   text = attr('<bold>Fortran<reset>')\n   if (text /= 'Fortran') error stop 'incorrect plain-text conversion'\n   print *, text\n   print *, 'PASS m_attr'\nend program main\n",
+    "topics": [
+      "ansi-escape-sequences",
+      "fortran",
+      "fortran-package-manager",
+      "terminal"
+    ]
   },
   {
     "id": "jonquil",
@@ -442,7 +695,14 @@
       }
     ],
     "dependents_in_sample": 3,
-    "source": "program main\n   use jonquil\n   implicit none\n   class(json_value), allocatable :: document\n   type(json_object), pointer :: object\n   type(json_error), allocatable :: error\n   integer :: answer\n   call json_loads(document, '{\"answer\":42}', error=error)\n   if (allocated(error)) error stop 'JSON parsing failed'\n   object => cast_to_object(document)\n   call get_value(object,'answer',answer)\n   if (answer /= 42) error stop 'incorrect JSON value'\n   print *, json_serialize(document)\n   print *, 'PASS jonquil'\nend program main\n"
+    "source": "program main\n   use jonquil\n   implicit none\n   class(json_value), allocatable :: document\n   type(json_object), pointer :: object\n   type(json_error), allocatable :: error\n   integer :: answer\n   call json_loads(document, '{\"answer\":42}', error=error)\n   if (allocated(error)) error stop 'JSON parsing failed'\n   object => cast_to_object(document)\n   call get_value(object,'answer',answer)\n   if (answer /= 42) error stop 'incorrect JSON value'\n   print *, json_serialize(document)\n   print *, 'PASS jonquil'\nend program main\n",
+    "topics": [
+      "fortran-library",
+      "fortran-package-manager",
+      "json",
+      "json-parser",
+      "serde"
+    ]
   },
   {
     "id": "orderpack",
@@ -455,7 +715,13 @@
     "description": "Sorting, ranking, medians, and partial ordering of arrays.",
     "dependencies": [],
     "dependents_in_sample": 2,
-    "source": "program main\n   use M_orderpack, only: rank\n   implicit none\n   real :: values(4)\n   integer :: indices(4)\n   values = [30.0,10.0,40.0,20.0]\n   call rank(values,indices)\n   if (any(indices /= [2,4,1,3])) error stop 'incorrect ranks'\n   print *, 'Indices in ascending order:', indices\n   print *, 'Ordered values:', values(indices)\n   print *, 'PASS orderpack'\nend program main\n"
+    "source": "program main\n   use M_orderpack, only: rank\n   implicit none\n   real :: values(4)\n   integer :: indices(4)\n   values = [30.0,10.0,40.0,20.0]\n   call rank(values,indices)\n   if (any(indices /= [2,4,1,3])) error stop 'incorrect ranks'\n   print *, 'Indices in ascending order:', indices\n   print *, 'Ordered values:', values(indices)\n   print *, 'PASS orderpack'\nend program main\n",
+    "topics": [
+      "fortran",
+      "fortran-package-manager",
+      "fpm",
+      "sort"
+    ]
   },
   {
     "id": "fortran-regex",
@@ -468,7 +734,14 @@
     "description": "Search text with a lightweight regular expression engine.",
     "dependencies": [],
     "dependents_in_sample": 1,
-    "source": "program main\n   use regex_module, only: regex\n   implicit none\n   integer :: position, length\n   position = regex('temperature=273 K', '[0-9]+', length)\n   if (position /= 13 .or. length /= 3) error stop 'incorrect match'\n   print *, 'Number starts at character', position, 'with length', length\n   print *, 'PASS fortran-regex'\nend program\n"
+    "source": "program main\n   use regex_module, only: regex\n   implicit none\n   integer :: position, length\n   position = regex('temperature=273 K', '[0-9]+', length)\n   if (position /= 13 .or. length /= 3) error stop 'incorrect match'\n   print *, 'Number starts at character', position, 'with length', length\n   print *, 'PASS fortran-regex'\nend program\n",
+    "topics": [
+      "fortran",
+      "regex",
+      "regex-parser",
+      "regular-expression",
+      "regular-expressions"
+    ]
   },
   {
     "id": "fortran-shlex",
@@ -481,7 +754,14 @@
     "description": "Split command strings into tokens while respecting quotes.",
     "dependencies": [],
     "dependents_in_sample": 1,
-    "source": "program main\n   use shlex_module, only: split\n   implicit none\n   character(:), allocatable :: words(:)\n   words = split('simulate --title \"heat flow\"')\n   if (size(words) /= 3) error stop 'incorrect token count'\n   if (words(3) /= 'heat flow') error stop 'quoted text split incorrectly'\n   print *, 'Third argument: ', trim(words(3))\n   print *, 'PASS fortran-shlex'\nend program\n"
+    "source": "program main\n   use shlex_module, only: split\n   implicit none\n   character(:), allocatable :: words(:)\n   words = split('simulate --title \"heat flow\"')\n   if (size(words) /= 3) error stop 'incorrect token count'\n   if (words(3) /= 'heat flow') error stop 'quoted text split incorrectly'\n   print *, 'Third argument: ', trim(words(3))\n   print *, 'PASS fortran-shlex'\nend program\n",
+    "topics": [
+      "fortran",
+      "posix",
+      "regular-expressions",
+      "shlex",
+      "shlex-library"
+    ]
   },
   {
     "id": "fortran-primes",
@@ -494,7 +774,15 @@
     "description": "Generate prime numbers, test primality, and factor integers.",
     "dependencies": [],
     "dependents_in_sample": 0,
-    "source": "program main\n   use prime_numbers, only: primes, is_prime\n   implicit none\n   integer, allocatable :: values(:)\n   values = primes(30)\n   if (size(values) /= 10) error stop 'incorrect prime count'\n   if (any(values /= [2,3,5,7,11,13,17,19,23,29])) error stop 'incorrect primes'\n   if (.not. is_prime(97) .or. is_prime(91)) error stop 'incorrect primality test'\n   print *, 'Primes through 30:', values\n   print *, 'PASS fortran-primes'\nend program\n"
+    "source": "program main\n   use prime_numbers, only: primes, is_prime\n   implicit none\n   integer, allocatable :: values(:)\n   values = primes(30)\n   if (size(values) /= 10) error stop 'incorrect prime count'\n   if (any(values /= [2,3,5,7,11,13,17,19,23,29])) error stop 'incorrect primes'\n   if (.not. is_prime(97) .or. is_prime(91)) error stop 'incorrect primality test'\n   print *, 'Primes through 30:', values\n   print *, 'PASS fortran-primes'\nend program\n",
+    "topics": [
+      "factorization",
+      "fortran",
+      "fortran-package-manager",
+      "modern-fortran",
+      "prime-numbers",
+      "primes"
+    ]
   },
   {
     "id": "fhash",
@@ -507,7 +795,14 @@
     "description": "Hash tables with generic keys and values.",
     "dependencies": [],
     "dependents_in_sample": 1,
-    "source": "program main\n   use fhash, only: fhash_tbl_t, key => fhash_key\n   implicit none\n   type(fhash_tbl_t) :: table\n   integer :: count\n   call table%set(key('samples'), value=128)\n   call table%set(key('samples'), value=256)\n   call table%get(key('samples'), count)\n   if (count /= 256) error stop 'incorrect table lookup'\n   print *, 'Updated sample count:', count\n   print *, 'PASS fhash'\nend program\n"
+    "source": "program main\n   use fhash, only: fhash_tbl_t, key => fhash_key\n   implicit none\n   type(fhash_tbl_t) :: table\n   integer :: count\n   call table%set(key('samples'), value=128)\n   call table%set(key('samples'), value=256)\n   call table%get(key('samples'), count)\n   if (count /= 256) error stop 'incorrect table lookup'\n   print *, 'Updated sample count:', count\n   print *, 'PASS fhash'\nend program\n",
+    "topics": [
+      "fortran",
+      "fortran-package-manager",
+      "fpm",
+      "hashmap",
+      "hashtable"
+    ]
   },
   {
     "id": "functional-fortran",
@@ -520,7 +815,11 @@
     "description": "Functional array operations including map, filter, fold, and ranges.",
     "dependencies": [],
     "dependents_in_sample": 0,
-    "source": "program main\n   use functional, only: arange, reverse, set\n   implicit none\n   integer, allocatable :: values(:)\n   values = arange(1, 9, 2)\n   if (any(values /= [1,3,5,7,9])) error stop 'incorrect range'\n   if (any(reverse(values) /= [9,7,5,3,1])) error stop 'incorrect reversal'\n   if (size(set([2,1,2,3,1])) /= 3) error stop 'incorrect unique values'\n   print *, 'Odd numbers:', values\n   print *, 'Reversed:', reverse(values)\n   print *, 'PASS functional-fortran'\nend program\n"
+    "source": "program main\n   use functional, only: arange, reverse, set\n   implicit none\n   integer, allocatable :: values(:)\n   values = arange(1, 9, 2)\n   if (any(values /= [1,3,5,7,9])) error stop 'incorrect range'\n   if (any(reverse(values) /= [9,7,5,3,1])) error stop 'incorrect reversal'\n   if (size(set([2,1,2,3,1])) /= 3) error stop 'incorrect unique values'\n   print *, 'Odd numbers:', values\n   print *, 'Reversed:', reverse(values)\n   print *, 'PASS functional-fortran'\nend program\n",
+    "topics": [
+      "fortran",
+      "functional-programming"
+    ]
   },
   {
     "id": "forwarddiff",
@@ -533,7 +832,13 @@
     "description": "Forward automatic differentiation using dual numbers (Differentia).",
     "dependencies": [],
     "dependents_in_sample": 0,
-    "source": "module example_functions\n   use differentia, only: wp, derivative\n   implicit none\ncontains\n   function cubic(x) result(y)\n      use differentia\n      type(dual), intent(in) :: x\n      type(dual) :: y\n      y = x*x*x\n   end function\nend module example_functions\n\nprogram main\n   use example_functions, only: cubic\n   use differentia, only: wp, derivative\n   implicit none\n   real(wp) :: value, slope\n   call derivative(cubic, 2.0_wp, value, slope)\n   if (abs(value-8.0_wp) > 1.e-12_wp) error stop 'incorrect value'\n   if (abs(slope-12.0_wp) > 1.e-12_wp) error stop 'incorrect derivative'\n   print *, 'x cubed and its derivative at x=2:', value, slope\n   print *, 'PASS forwarddiff'\nend program main\n"
+    "source": "module example_functions\n   use differentia, only: wp, derivative\n   implicit none\ncontains\n   function cubic(x) result(y)\n      use differentia\n      type(dual), intent(in) :: x\n      type(dual) :: y\n      y = x*x*x\n   end function\nend module example_functions\n\nprogram main\n   use example_functions, only: cubic\n   use differentia, only: wp, derivative\n   implicit none\n   real(wp) :: value, slope\n   call derivative(cubic, 2.0_wp, value, slope)\n   if (abs(value-8.0_wp) > 1.e-12_wp) error stop 'incorrect value'\n   if (abs(slope-12.0_wp) > 1.e-12_wp) error stop 'incorrect derivative'\n   print *, 'x cubed and its derivative at x=2:', value, slope\n   print *, 'PASS forwarddiff'\nend program main\n",
+    "topics": [
+      "autodiff",
+      "autodifferentiation",
+      "automatic-differentiation",
+      "differential-equations"
+    ]
   },
   {
     "id": "kinds",
@@ -545,7 +850,8 @@
     "description": "Named real and integer kinds with configurable working precision.",
     "dependencies": [],
     "dependents_in_sample": 6,
-    "source": "program main\n   use kinds, only: rk, ik, rk64\n   implicit none\n   real(rk) :: x\n   integer(ik) :: n\n   x = sqrt(2.0_rk)\n   n = 100_ik\n   if (precision(1.0_rk64) < 15) error stop 'insufficient double precision'\n   if (abs(x*x-2.0_rk) > 10*epsilon(x)) error stop 'incorrect square root'\n   print *, 'Working real precision:', precision(x), 'digits'\n   print *, 'Integer storage:', storage_size(n), 'bits'\n   print *, 'PASS kinds'\nend program\n"
+    "source": "program main\n   use kinds, only: rk, ik, rk64\n   implicit none\n   real(rk) :: x\n   integer(ik) :: n\n   x = sqrt(2.0_rk)\n   n = 100_ik\n   if (precision(1.0_rk64) < 15) error stop 'insufficient double precision'\n   if (abs(x*x-2.0_rk) > 10*epsilon(x)) error stop 'incorrect square root'\n   print *, 'Working real precision:', precision(x), 'digits'\n   print *, 'Integer storage:', storage_size(n), 'bits'\n   print *, 'PASS kinds'\nend program\n",
+    "topics": []
   },
   {
     "id": "forcolormap",
@@ -564,7 +870,12 @@
       }
     ],
     "dependents_in_sample": 1,
-    "source": "program main\n   use forcolormap, only: Colormap, wp\n   implicit none\n   type(Colormap) :: colors\n   integer :: red, green, blue, i\n   call colors%set('viridis', 0.0_wp, 1.0_wp)\n   do i = 0, 4\n      call colors%compute_RGB(real(i,wp)/4, red, green, blue)\n      if (min(red,green,blue) < 0 .or. max(red,green,blue) > 255) error stop 'RGB out of range'\n      print *, 'Value and RGB:', real(i,wp)/4, red, green, blue\n      if (i == 0 .and. (red /= 68 .or. green /= 1 .or. blue /= 84)) error stop 'incorrect viridis endpoint'\n   end do\n   print *, 'PASS forcolormap'\nend program\n"
+    "source": "program main\n   use forcolormap, only: Colormap, wp\n   implicit none\n   type(Colormap) :: colors\n   integer :: red, green, blue, i\n   call colors%set('viridis', 0.0_wp, 1.0_wp)\n   do i = 0, 4\n      call colors%compute_RGB(real(i,wp)/4, red, green, blue)\n      if (min(red,green,blue) < 0 .or. max(red,green,blue) > 255) error stop 'RGB out of range'\n      print *, 'Value and RGB:', real(i,wp)/4, red, green, blue\n      if (i == 0 .and. (red /= 68 .or. green /= 1 .or. blue /= 84)) error stop 'incorrect viridis endpoint'\n   end do\n   print *, 'PASS forcolormap'\nend program\n",
+    "topics": [
+      "colormaps",
+      "fortran",
+      "fortran-package-manager"
+    ]
   },
   {
     "id": "rational_number",
@@ -583,7 +894,8 @@
       }
     ],
     "dependents_in_sample": 0,
-    "source": "program main\n   use rational_number\n   implicit none\n   type(rationalnumber_t) :: total\n   total = ratNumAdd(ratNumInit(1,3), ratNumInit(1,6), simplify=.true.)\n   if (ratNumGetNumerator(total) /= 1 .or. ratNumGetDenominator(total) /= 2) &\n      error stop 'incorrect fraction'\n   print *, '1/3 + 1/6 = ', ratNumToStr(total)\n   print *, 'PASS rational_number'\nend program\n"
+    "source": "program main\n   use rational_number\n   implicit none\n   type(rationalnumber_t) :: total\n   total = ratNumAdd(ratNumInit(1,3), ratNumInit(1,6), simplify=.true.)\n   if (ratNumGetNumerator(total) /= 1 .or. ratNumGetDenominator(total) /= 2) &\n      error stop 'incorrect fraction'\n   print *, '1/3 + 1/6 = ', ratNumToStr(total)\n   print *, 'PASS rational_number'\nend program\n",
+    "topics": []
   },
   {
     "id": "fortran_test_helper",
@@ -595,7 +907,8 @@
     "description": "Assertions and random array generators for numerical tests.",
     "dependencies": [],
     "dependents_in_sample": 9,
-    "source": "program main\n   use fortran_test_helper, only: assert\n   implicit none\n   real :: x(3)\n   x = [1.0,2.0,3.0]\n   if (.not. assert(x*x, [1.0,4.0,9.0], 1.e-6)) error stop 'array assertion failed'\n   if (assert(1.0, 2.0, 1.e-6)) error stop 'unequal values accepted'\n   print *, 'Checked array arithmetic and unequal scalars.'\n   print *, 'PASS fortran_test_helper'\nend program\n"
+    "source": "program main\n   use fortran_test_helper, only: assert\n   implicit none\n   real :: x(3)\n   x = [1.0,2.0,3.0]\n   if (.not. assert(x*x, [1.0,4.0,9.0], 1.e-6)) error stop 'array assertion failed'\n   if (assert(1.0, 2.0, 1.e-6)) error stop 'unequal values accepted'\n   print *, 'Checked array arithmetic and unequal scalars.'\n   print *, 'PASS fortran_test_helper'\nend program\n",
+    "topics": []
   },
   {
     "id": "m_match",
@@ -608,7 +921,14 @@
     "description": "Pattern matching with a compact grep-style regular expression syntax.",
     "dependencies": [],
     "dependents_in_sample": 2,
-    "source": "program main\n   use M_match, only: getpat, match, regex_pattern, YES, ERR\n   implicit none\n   type(regex_pattern) :: pattern\n   integer :: status\n   status = getpat('^[0-9][0-9]*$', pattern%pat)\n   if (status == ERR) error stop 'invalid pattern'\n   if (match('2026'//char(10), pattern%pat) /= YES) error stop 'digits not matched'\n   if (match('abc'//char(10), pattern%pat) == YES) error stop 'letters matched as digits'\n   print *, 'Matched digits and rejected letters.'\n   print *, 'PASS m_match'\nend program\n"
+    "source": "program main\n   use M_match, only: getpat, match, regex_pattern, YES, ERR\n   implicit none\n   type(regex_pattern) :: pattern\n   integer :: status\n   status = getpat('^[0-9][0-9]*$', pattern%pat)\n   if (status == ERR) error stop 'invalid pattern'\n   if (match('2026'//char(10), pattern%pat) /= YES) error stop 'digits not matched'\n   if (match('abc'//char(10), pattern%pat) == YES) error stop 'letters matched as digits'\n   print *, 'Matched digits and rejected letters.'\n   print *, 'PASS m_match'\nend program\n",
+    "topics": [
+      "bre",
+      "fortran",
+      "fortran-package-manager",
+      "regex",
+      "regular-expressions"
+    ]
   },
   {
     "id": "m_list",
@@ -621,7 +941,10 @@
     "dependencies": [],
     "dependents_in_sample": 2,
     "stars": 1,
-    "source": "program main\n   use M_list, only: locate, insert\n   implicit none\n   integer, allocatable :: values(:)\n   integer :: place\n   ! M_list keeps arrays in descending order.\n   values = [30,10]\n   call locate(values, 20, place)\n   if (place >= 1) error stop 'unexpected existing entry'\n   call insert(values, 20, abs(place))\n   if (any(values /= [30,20,10])) error stop 'incorrect insertion'\n   call locate(values, 20, place)\n   if (place /= 2) error stop 'incorrect lookup'\n   print *, 'Sorted values:', values\n   print *, 'PASS m_list'\nend program\n"
+    "source": "program main\n   use M_list, only: locate, insert\n   implicit none\n   integer, allocatable :: values(:)\n   integer :: place\n   ! M_list keeps arrays in descending order.\n   values = [30,10]\n   call locate(values, 20, place)\n   if (place >= 1) error stop 'unexpected existing entry'\n   call insert(values, 20, abs(place))\n   if (any(values /= [30,20,10])) error stop 'incorrect insertion'\n   call locate(values, 20, place)\n   if (place /= 2) error stop 'incorrect lookup'\n   print *, 'Sorted values:', values\n   print *, 'PASS m_list'\nend program\n",
+    "topics": [
+      "fortran-package-manager"
+    ]
   },
   {
     "id": "m_color",
@@ -634,7 +957,13 @@
     "dependencies": [],
     "dependents_in_sample": 0,
     "stars": 2,
-    "source": "program main\n   use M_color, only: color_name2rgb\n   implicit none\n   real :: red, green, blue\n   call color_name2rgb('red', red, green, blue)\n   if (abs(red-100.0) > 1.e-5 .or. abs(green)+abs(blue) > 1.e-5) error stop 'incorrect red'\n   print *, 'Red as RGB percentages:', red, green, blue\n   print *, 'PASS m_color'\nend program\n"
+    "source": "program main\n   use M_color, only: color_name2rgb\n   implicit none\n   real :: red, green, blue\n   call color_name2rgb('red', red, green, blue)\n   if (abs(red-100.0) > 1.e-5 .or. abs(green)+abs(blue) > 1.e-5) error stop 'incorrect red'\n   print *, 'Red as RGB percentages:', red, green, blue\n   print *, 'PASS m_color'\nend program\n",
+    "topics": [
+      "color-conversion",
+      "color-models",
+      "fortran",
+      "fortran-package-manager"
+    ]
   },
   {
     "id": "fmin",
@@ -647,7 +976,12 @@
     "dependencies": [],
     "dependents_in_sample": 1,
     "stars": 8,
-    "source": "module example_functions\n   use fmin_module, only: fmin\n   use iso_fortran_env, only: wp => real64\n   implicit none\ncontains\n   function parabola(x) result(y)\n      real(wp), intent(in) :: x\n      real(wp) :: y\n      y = (x-2.0_wp)**2 + 1.0_wp\n   end function\nend module example_functions\n\nprogram main\n   use example_functions, only: parabola\n   use fmin_module, only: fmin\n   use iso_fortran_env, only: wp => real64\n   implicit none\n   real(wp) :: xmin\n   xmin = fmin(parabola, -5.0_wp, 5.0_wp, 1.e-9_wp)\n   if (abs(xmin-2.0_wp) > 1.e-6_wp) error stop 'incorrect minimum'\n   print *, 'Minimum of (x-2)**2 + 1 at x =', xmin\n   print *, 'PASS fmin'\nend program main\n"
+    "source": "module example_functions\n   use fmin_module, only: fmin\n   use iso_fortran_env, only: wp => real64\n   implicit none\ncontains\n   function parabola(x) result(y)\n      real(wp), intent(in) :: x\n      real(wp) :: y\n      y = (x-2.0_wp)**2 + 1.0_wp\n   end function\nend module example_functions\n\nprogram main\n   use example_functions, only: parabola\n   use fmin_module, only: fmin\n   use iso_fortran_env, only: wp => real64\n   implicit none\n   real(wp) :: xmin\n   xmin = fmin(parabola, -5.0_wp, 5.0_wp, 1.e-9_wp)\n   if (abs(xmin-2.0_wp) > 1.e-6_wp) error stop 'incorrect minimum'\n   print *, 'Minimum of (x-2)**2 + 1 at x =', xmin\n   print *, 'PASS fmin'\nend program main\n",
+    "topics": [
+      "brent",
+      "fortran-package-manager",
+      "minimization"
+    ]
   },
   {
     "id": "slsqp",
@@ -660,7 +994,16 @@
     "dependencies": [],
     "dependents_in_sample": 0,
     "stars": 114,
-    "source": "module example_functions\n   use slsqp_module, only: slsqp_solver\n   use slsqp_kinds, only: wp\n   implicit none\ncontains\n   subroutine objective(me,x,f,c)\n      class(slsqp_solver), intent(inout) :: me\n      real(wp), intent(in) :: x(:)\n      real(wp), intent(out) :: f, c(:)\n      f = sum(x*x)\n      c(1) = sum(x)-1.0_wp\n   end subroutine\n   subroutine gradient(me,x,g,a)\n      class(slsqp_solver), intent(inout) :: me\n      real(wp), intent(in) :: x(:)\n      real(wp), intent(out) :: g(:), a(:,:)\n      g = 2*x\n      a = 1.0_wp\n   end subroutine\nend module example_functions\n\nprogram main\n   use example_functions, only: objective, gradient\n   use slsqp_module, only: slsqp_solver\n   use slsqp_kinds, only: wp\n   implicit none\n   type(slsqp_solver) :: solver\n   real(wp) :: x(2)\n   logical :: initialized\n   integer :: status\n   ! Minimize x(1)**2+x(2)**2 subject to x(1)+x(2)=1.\n   x = [0.2_wp,0.8_wp]\n   call solver%initialize(2,1,1,100,1.e-9_wp,objective,gradient, &\n      [0.0_wp,0.0_wp],[1.0_wp,1.0_wp],status_ok=initialized)\n   if (.not. initialized) error stop 'initialization failed'\n   call solver%optimize(x,status)\n   if (status /= 0 .or. maxval(abs(x-0.5_wp)) > 1.e-6_wp) error stop 'incorrect optimum'\n   print *, 'Constrained minimum at:', x\n   print *, 'PASS slsqp'\nend program main\n"
+    "source": "module example_functions\n   use slsqp_module, only: slsqp_solver\n   use slsqp_kinds, only: wp\n   implicit none\ncontains\n   subroutine objective(me,x,f,c)\n      class(slsqp_solver), intent(inout) :: me\n      real(wp), intent(in) :: x(:)\n      real(wp), intent(out) :: f, c(:)\n      f = sum(x*x)\n      c(1) = sum(x)-1.0_wp\n   end subroutine\n   subroutine gradient(me,x,g,a)\n      class(slsqp_solver), intent(inout) :: me\n      real(wp), intent(in) :: x(:)\n      real(wp), intent(out) :: g(:), a(:,:)\n      g = 2*x\n      a = 1.0_wp\n   end subroutine\nend module example_functions\n\nprogram main\n   use example_functions, only: objective, gradient\n   use slsqp_module, only: slsqp_solver\n   use slsqp_kinds, only: wp\n   implicit none\n   type(slsqp_solver) :: solver\n   real(wp) :: x(2)\n   logical :: initialized\n   integer :: status\n   ! Minimize x(1)**2+x(2)**2 subject to x(1)+x(2)=1.\n   x = [0.2_wp,0.8_wp]\n   call solver%initialize(2,1,1,100,1.e-9_wp,objective,gradient, &\n      [0.0_wp,0.0_wp],[1.0_wp,1.0_wp],status_ok=initialized)\n   if (.not. initialized) error stop 'initialization failed'\n   call solver%optimize(x,status)\n   if (status /= 0 .or. maxval(abs(x-0.5_wp)) > 1.e-6_wp) error stop 'incorrect optimum'\n   print *, 'Constrained minimum at:', x\n   print *, 'PASS slsqp'\nend program main\n",
+    "topics": [
+      "constrained-optimization",
+      "fortran",
+      "fortran-package-manager",
+      "nnls",
+      "numerical-optimization",
+      "optimization",
+      "sqp"
+    ]
   },
   {
     "id": "lbfgsb",
@@ -673,7 +1016,17 @@
     "dependencies": [],
     "dependents_in_sample": 0,
     "stars": 14,
-    "source": "program main\n   use lbfgsb_module, only: setulb, wp => lbfgsp_wp\n   implicit none\n   integer, parameter :: n=2, m=5\n   real(wp) :: x(n), lower(n), upper(n), f, g(n), wa(2*m*n+5*n+11*m*m+8*m), dsave(29)\n   integer :: bounds(n), iwa(3*n), isave(44), iteration\n   logical :: lsave(4)\n   character(60) :: task, csave\n   x = 0.0_wp\n   lower = -1.0_wp\n   upper = 1.0_wp\n   bounds = 2\n   task = 'START'\n   ! The unconstrained minimum is (2,2); the bounded minimum is (1,1).\n   do iteration = 1, 100\n      call setulb(n,m,x,lower,upper,bounds,f,g,1.e7_wp,1.e-8_wp, &\n         wa,iwa,task,-1,csave,lsave,isave,dsave)\n      if (task(1:2) == 'FG') then\n         f = sum((x-2.0_wp)**2)\n         g = 2*(x-2.0_wp)\n      else if (task(1:5) /= 'NEW_X') then\n         exit\n      end if\n   end do\n   if (task(1:4) /= 'CONV' .or. maxval(abs(x-1.0_wp)) > 1.e-8_wp) error stop 'incorrect optimum'\n   print *, 'Bounded minimum at:', x\n   print *, 'PASS lbfgsb'\nend program\n"
+    "source": "program main\n   use lbfgsb_module, only: setulb, wp => lbfgsp_wp\n   implicit none\n   integer, parameter :: n=2, m=5\n   real(wp) :: x(n), lower(n), upper(n), f, g(n), wa(2*m*n+5*n+11*m*m+8*m), dsave(29)\n   integer :: bounds(n), iwa(3*n), isave(44), iteration\n   logical :: lsave(4)\n   character(60) :: task, csave\n   x = 0.0_wp\n   lower = -1.0_wp\n   upper = 1.0_wp\n   bounds = 2\n   task = 'START'\n   ! The unconstrained minimum is (2,2); the bounded minimum is (1,1).\n   do iteration = 1, 100\n      call setulb(n,m,x,lower,upper,bounds,f,g,1.e7_wp,1.e-8_wp, &\n         wa,iwa,task,-1,csave,lsave,isave,dsave)\n      if (task(1:2) == 'FG') then\n         f = sum((x-2.0_wp)**2)\n         g = 2*(x-2.0_wp)\n      else if (task(1:5) /= 'NEW_X') then\n         exit\n      end if\n   end do\n   if (task(1:4) /= 'CONV' .or. maxval(abs(x-1.0_wp)) > 1.e-8_wp) error stop 'incorrect optimum'\n   print *, 'Bounded minimum at:', x\n   print *, 'PASS lbfgsb'\nend program\n",
+    "topics": [
+      "bfgs",
+      "bfgs-algorithm",
+      "constrained-optimization",
+      "fortran",
+      "fortran-package-manager",
+      "lbfgsb",
+      "lbfgsb-solver",
+      "numerical-optimization"
+    ]
   },
   {
     "id": "specfun",
@@ -686,7 +1039,13 @@
     "dependencies": [],
     "dependents_in_sample": 0,
     "stars": 8,
-    "source": "program main\n   use specfun_module, only: bernob, wp => specfun_wp\n   implicit none\n   real(wp) :: bernoulli(0:6)\n   call bernob(6,bernoulli)\n   if (abs(bernoulli(2)-1.0_wp/6) > 1.e-12_wp) error stop 'incorrect B2'\n   if (abs(bernoulli(4)+1.0_wp/30) > 1.e-12_wp) error stop 'incorrect B4'\n   if (abs(bernoulli(6)-1.0_wp/42) > 1.e-12_wp) error stop 'incorrect B6'\n   print *, 'Even Bernoulli numbers B0 to B6:', bernoulli(0:6:2)\n   print *, 'PASS specfun'\nend program\n"
+    "source": "program main\n   use specfun_module, only: bernob, wp => specfun_wp\n   implicit none\n   real(wp) :: bernoulli(0:6)\n   call bernob(6,bernoulli)\n   if (abs(bernoulli(2)-1.0_wp/6) > 1.e-12_wp) error stop 'incorrect B2'\n   if (abs(bernoulli(4)+1.0_wp/30) > 1.e-12_wp) error stop 'incorrect B4'\n   if (abs(bernoulli(6)-1.0_wp/42) > 1.e-12_wp) error stop 'incorrect B6'\n   print *, 'Even Bernoulli numbers B0 to B6:', bernoulli(0:6:2)\n   print *, 'PASS specfun'\nend program\n",
+    "topics": [
+      "fortran",
+      "fortran-package-manager",
+      "scipy",
+      "special-functions"
+    ]
   },
   {
     "id": "regridpack",
@@ -699,7 +1058,15 @@
     "dependencies": [],
     "dependents_in_sample": 0,
     "stars": 20,
-    "source": "program main\n   use regridpack_module, only: regrid\n   use iso_fortran_env, only: wp => real64\n   implicit none\n   real(wp) :: x(3), y(3), targets(2), values(2)\n   integer :: status\n   x = [0.0_wp,1.0_wp,2.0_wp]\n   y = 2*x+1\n   targets = [0.25_wp,1.75_wp]\n   call regrid(x,y,targets,values,1,status)\n   if (status /= 0 .or. maxval(abs(values-(2*targets+1))) > 1.e-12_wp) error stop 'incorrect regrid'\n   print *, 'Values on the new grid:', values\n   print *, 'PASS regridpack'\nend program\n"
+    "source": "program main\n   use regridpack_module, only: regrid\n   use iso_fortran_env, only: wp => real64\n   implicit none\n   real(wp) :: x(3), y(3), targets(2), values(2)\n   integer :: status\n   x = [0.0_wp,1.0_wp,2.0_wp]\n   y = 2*x+1\n   targets = [0.25_wp,1.75_wp]\n   call regrid(x,y,targets,values,1,status)\n   if (status /= 0 .or. maxval(abs(values-(2*targets+1))) > 1.e-12_wp) error stop 'incorrect regrid'\n   print *, 'Values on the new grid:', values\n   print *, 'PASS regridpack'\nend program\n",
+    "topics": [
+      "fortran",
+      "fortran-package-manager",
+      "interpolation",
+      "linear-interpolation",
+      "regridding",
+      "spline-interpolation"
+    ]
   },
   {
     "id": "splpak",
@@ -712,7 +1079,16 @@
     "dependencies": [],
     "dependents_in_sample": 0,
     "stars": 12,
-    "source": "program main\n   use splpak_module, only: splpak_type, wp => splpak_wp\n   implicit none\n   integer, parameter :: n=20, nodes(1)=[10], ncf=10, nwrk=ncf*(ncf+1)+1\n   type(splpak_type) :: spline\n   real(wp) :: x(1,n), y(n), weights(n), coef(ncf), work(nwrk), value\n   integer :: i, status\n   do i=1,n\n      x(1,i) = real(i-1,wp)/(n-1)\n   end do\n   y = 2*x(1,:)\n   weights = 1.0_wp\n   call spline%initialize(1,x,1,y,weights,n,[0.0_wp],[1.0_wp], &\n      nodes,1.0_wp,coef,ncf,work,nwrk,status)\n   if (status /= 0) error stop 'spline fit failed'\n   value = spline%evaluate(1,[0.5_wp],coef,[0.0_wp],[1.0_wp],nodes,status)\n   if (status /= 0 .or. abs(value-1.0_wp) > 1.e-8_wp) error stop 'incorrect spline value'\n   print *, 'Fitted value of 2*x at x=0.5:', value\n   print *, 'PASS splpak'\nend program\n"
+    "source": "program main\n   use splpak_module, only: splpak_type, wp => splpak_wp\n   implicit none\n   integer, parameter :: n=20, nodes(1)=[10], ncf=10, nwrk=ncf*(ncf+1)+1\n   type(splpak_type) :: spline\n   real(wp) :: x(1,n), y(n), weights(n), coef(ncf), work(nwrk), value\n   integer :: i, status\n   do i=1,n\n      x(1,i) = real(i-1,wp)/(n-1)\n   end do\n   y = 2*x(1,:)\n   weights = 1.0_wp\n   call spline%initialize(1,x,1,y,weights,n,[0.0_wp],[1.0_wp], &\n      nodes,1.0_wp,coef,ncf,work,nwrk,status)\n   if (status /= 0) error stop 'spline fit failed'\n   value = spline%evaluate(1,[0.5_wp],coef,[0.0_wp],[1.0_wp],nodes,status)\n   if (status /= 0 .or. abs(value-1.0_wp) > 1.e-8_wp) error stop 'incorrect spline value'\n   print *, 'Fitted value of 2*x at x=0.5:', value\n   print *, 'PASS splpak'\nend program\n",
+    "topics": [
+      "cubic-splines",
+      "curve-fitting",
+      "fortran",
+      "fortran-package-manager",
+      "interpolation",
+      "least-squares",
+      "splines"
+    ]
   },
   {
     "id": "fortran-astrodynamics-toolkit",
@@ -725,7 +1101,18 @@
     "dependencies": [],
     "dependents_in_sample": 1,
     "stars": 212,
-    "source": "program main\n   use fortran_astrodynamics_toolkit, only: orbital_elements_to_rv, fat_wp\n   implicit none\n   real(fat_wp), parameter :: mu=398600.4418_fat_wp, radius=7000.0_fat_wp\n   real(fat_wp) :: r(3), v(3)\n   ! Circular equatorial orbit: semilatus rectum equals the radius.\n   call orbital_elements_to_rv(mu,radius,0.0_fat_wp,0.0_fat_wp, &\n      0.0_fat_wp,0.0_fat_wp,0.0_fat_wp,r,v)\n   if (abs(norm2(r)-radius) > 1.e-8_fat_wp) error stop 'incorrect radius'\n   if (abs(norm2(v)-sqrt(mu/radius)) > 1.e-10_fat_wp) error stop 'incorrect speed'\n   if (abs(dot_product(r,v)) > 1.e-8_fat_wp) error stop 'velocity is not tangential'\n   print *, 'Position (km):', r\n   print *, 'Velocity (km/s):', v\n   print *, 'PASS fortran-astrodynamics-toolkit'\nend program\n"
+    "source": "program main\n   use fortran_astrodynamics_toolkit, only: orbital_elements_to_rv, fat_wp\n   implicit none\n   real(fat_wp), parameter :: mu=398600.4418_fat_wp, radius=7000.0_fat_wp\n   real(fat_wp) :: r(3), v(3)\n   ! Circular equatorial orbit: semilatus rectum equals the radius.\n   call orbital_elements_to_rv(mu,radius,0.0_fat_wp,0.0_fat_wp, &\n      0.0_fat_wp,0.0_fat_wp,0.0_fat_wp,r,v)\n   if (abs(norm2(r)-radius) > 1.e-8_fat_wp) error stop 'incorrect radius'\n   if (abs(norm2(v)-sqrt(mu/radius)) > 1.e-10_fat_wp) error stop 'incorrect speed'\n   if (abs(dot_product(r,v)) > 1.e-8_fat_wp) error stop 'velocity is not tangential'\n   print *, 'Position (km):', r\n   print *, 'Velocity (km/s):', v\n   print *, 'PASS fortran-astrodynamics-toolkit'\nend program\n",
+    "topics": [
+      "astrodynamics",
+      "ephemeris",
+      "fortran",
+      "fortran-package-manager",
+      "gravity-field",
+      "orbital-mechanics",
+      "orbital-simulation",
+      "runge-kutta",
+      "runge-kutta-adaptive-step-size"
+    ]
   },
   {
     "id": "forgex",
@@ -738,7 +1125,13 @@
     "dependencies": [],
     "dependents_in_sample": 0,
     "stars": 30,
-    "source": "program main\n   use forgex, only: operator(.match.), operator(.in.), regex\n   implicit none\n   character(:), allocatable :: number\n   if (.not. ('[A-Z]{2}[0-9]{3}' .match. 'AB123')) error stop 'identifier not matched'\n   if ('[A-Z]{2}[0-9]{3}' .match. 'AB12') error stop 'invalid identifier accepted'\n   call regex('[0-9]+','sample=128',number)\n   if (number /= '128') error stop 'incorrect extracted number'\n   print *, 'Extracted sample count: ', number\n   print *, 'PASS forgex'\nend program\n"
+    "source": "program main\n   use forgex, only: operator(.match.), operator(.in.), regex\n   implicit none\n   character(:), allocatable :: number\n   if (.not. ('[A-Z]{2}[0-9]{3}' .match. 'AB123')) error stop 'identifier not matched'\n   if ('[A-Z]{2}[0-9]{3}' .match. 'AB12') error stop 'invalid identifier accepted'\n   call regex('[0-9]+','sample=128',number)\n   if (number /= '128') error stop 'incorrect extracted number'\n   print *, 'Extracted sample count: ', number\n   print *, 'PASS forgex'\nend program\n",
+    "topics": [
+      "fortran",
+      "fortran-package-manager",
+      "regex",
+      "regular-expression"
+    ]
   },
   {
     "id": "ferror",
@@ -751,7 +1144,8 @@
     "dependencies": [],
     "dependents_in_sample": 1,
     "stars": 11,
-    "source": "program main\n   use ferror, only: errors\n   implicit none\n   type(errors) :: handler\n   call handler%set_exit_on_error(.false.)\n   call handler%set_suppress_printing(.true.)\n   call handler%report_error('read_sample','Sample count must be positive',42)\n   if (.not. handler%has_error_occurred()) error stop 'missing error'\n   if (handler%get_error_flag() /= 42) error stop 'incorrect error code'\n   print *, 'Handled error:', handler%get_error_flag()\n   call handler%reset_error_status()\n   if (handler%has_error_occurred()) error stop 'error not reset'\n   print *, 'PASS ferror'\nend program\n"
+    "source": "program main\n   use ferror, only: errors\n   implicit none\n   type(errors) :: handler\n   call handler%set_exit_on_error(.false.)\n   call handler%set_suppress_printing(.true.)\n   call handler%report_error('read_sample','Sample count must be positive',42)\n   if (.not. handler%has_error_occurred()) error stop 'missing error'\n   if (handler%get_error_flag() /= 42) error stop 'incorrect error code'\n   print *, 'Handled error:', handler%get_error_flag()\n   call handler%reset_error_status()\n   if (handler%has_error_occurred()) error stop 'error not reset'\n   print *, 'PASS ferror'\nend program\n",
+    "topics": []
   },
   {
     "id": "m_framework",
@@ -764,7 +1158,13 @@
     "dependencies": [],
     "dependents_in_sample": 5,
     "stars": 6,
-    "source": "program main\n   use M_framework__approx, only: in_margin\n   implicit none\n   real :: computed(3), expected(3)\n   computed = [1.0,2.0,3.000001]\n   expected = [1.0,2.0,3.0]\n   if (.not. all(in_margin(computed,expected,1.e-5))) error stop 'close values rejected'\n   if (in_margin(1.0,2.0,1.e-5)) error stop 'different values accepted'\n   print *, 'Compared arrays with a relative margin.'\n   print *, 'PASS m_framework'\nend program\n"
+    "source": "program main\n   use M_framework__approx, only: in_margin\n   implicit none\n   real :: computed(3), expected(3)\n   computed = [1.0,2.0,3.000001]\n   expected = [1.0,2.0,3.0]\n   if (.not. all(in_margin(computed,expected,1.e-5))) error stop 'close values rejected'\n   if (in_margin(1.0,2.0,1.e-5)) error stop 'different values accepted'\n   print *, 'Compared arrays with a relative margin.'\n   print *, 'PASS m_framework'\nend program\n",
+    "topics": [
+      "fortran",
+      "fortran-package-manager",
+      "fpm",
+      "unit-testing"
+    ]
   },
   {
     "id": "fitpack",
@@ -777,7 +1177,18 @@
     "description": "Spline fitting, smoothing, derivatives, and integration of curves and surfaces.",
     "dependencies": [],
     "dependents_in_sample": 0,
-    "source": "program main\n   use fitpack, only: fitpack_curve, FP_REAL, FP_FLAG, FITPACK_SUCCESS\n   implicit none\n   type(fitpack_curve) :: curve\n   real(FP_REAL) :: x(6), y(6), value, slope\n   integer(FP_FLAG) :: status\n   integer :: i\n   x = [(real(i-1,FP_REAL)/5,i=1,6)]\n   y = x*x\n   status = curve%new_fit(x,y,smoothing=0.0_FP_REAL)\n   if (.not. FITPACK_SUCCESS(status)) error stop 'spline fit failed'\n   value = curve%eval(0.5_FP_REAL,status)\n   if (.not. FITPACK_SUCCESS(status)) error stop 'evaluation failed'\n   if (abs(value-0.25_FP_REAL) > 1.e-10_FP_REAL) error stop 'incorrect value'\n   slope = curve%dfdx(0.5_FP_REAL,order=1,ierr=status)\n   if (.not. FITPACK_SUCCESS(status)) error stop 'derivative failed'\n   if (abs(slope-1.0_FP_REAL) > 1.e-10_FP_REAL) error stop 'incorrect derivative'\n   print *, 'Spline value and derivative at x=0.5:', value, slope\n   call curve%destroy()\n   print *, 'PASS fitpack'\nend program main\n"
+    "source": "program main\n   use fitpack, only: fitpack_curve, FP_REAL, FP_FLAG, FITPACK_SUCCESS\n   implicit none\n   type(fitpack_curve) :: curve\n   real(FP_REAL) :: x(6), y(6), value, slope\n   integer(FP_FLAG) :: status\n   integer :: i\n   x = [(real(i-1,FP_REAL)/5,i=1,6)]\n   y = x*x\n   status = curve%new_fit(x,y,smoothing=0.0_FP_REAL)\n   if (.not. FITPACK_SUCCESS(status)) error stop 'spline fit failed'\n   value = curve%eval(0.5_FP_REAL,status)\n   if (.not. FITPACK_SUCCESS(status)) error stop 'evaluation failed'\n   if (abs(value-0.25_FP_REAL) > 1.e-10_FP_REAL) error stop 'incorrect value'\n   slope = curve%dfdx(0.5_FP_REAL,order=1,ierr=status)\n   if (.not. FITPACK_SUCCESS(status)) error stop 'derivative failed'\n   if (abs(slope-1.0_FP_REAL) > 1.e-10_FP_REAL) error stop 'incorrect derivative'\n   print *, 'Spline value and derivative at x=0.5:', value, slope\n   call curve%destroy()\n   print *, 'PASS fitpack'\nend program main\n",
+    "topics": [
+      "curve-fitting",
+      "fortran",
+      "smoothing",
+      "smoothing-splines",
+      "spline-approximation",
+      "spline-curve",
+      "spline-interpolation",
+      "splines",
+      "surface-fitting"
+    ]
   },
   {
     "id": "lsqr",
@@ -790,7 +1201,16 @@
     "description": "Iterative sparse linear systems and least-squares solver using coordinate storage.",
     "dependencies": [],
     "dependents_in_sample": 1,
-    "source": "program main\n   use lsqr_kinds, only: wp, zero\n   use lsqr_module, only: lsqr_solver_ez\n   implicit none\n   type(lsqr_solver_ez) :: solver\n   real(wp) :: x(2)\n   integer :: status\n   ! Sparse diagonal matrix diag(2,3), represented by its two nonzero entries.\n   call solver%initialize(2,2,[2.0_wp,3.0_wp],[1,2],[1,2])\n   call solver%solve([4.0_wp,9.0_wp],zero,x,status)\n   if (status < 1 .or. status > 2) error stop 'solver did not converge'\n   if (maxval(abs(x-[2.0_wp,3.0_wp])) > 1.e-10_wp) error stop 'incorrect solution'\n   print *, 'Solution of diag(2,3)*x = (4,9):', x\n   print *, 'PASS lsqr'\nend program main\n"
+    "source": "program main\n   use lsqr_kinds, only: wp, zero\n   use lsqr_module, only: lsqr_solver_ez\n   implicit none\n   type(lsqr_solver_ez) :: solver\n   real(wp) :: x(2)\n   integer :: status\n   ! Sparse diagonal matrix diag(2,3), represented by its two nonzero entries.\n   call solver%initialize(2,2,[2.0_wp,3.0_wp],[1,2],[1,2])\n   call solver%solve([4.0_wp,9.0_wp],zero,x,status)\n   if (status < 1 .or. status > 2) error stop 'solver did not converge'\n   if (maxval(abs(x-[2.0_wp,3.0_wp])) > 1.e-10_wp) error stop 'incorrect solution'\n   print *, 'Solution of diag(2,3)*x = (4,9):', x\n   print *, 'PASS lsqr'\nend program main\n",
+    "topics": [
+      "conjugate-gradient",
+      "fortran",
+      "fortran-package-manager",
+      "least-squares",
+      "linear-algebra",
+      "linear-equations",
+      "lsqr"
+    ]
   },
   {
     "id": "mpfun2020-var1",
@@ -803,7 +1223,10 @@
     "description": "Thread-safe arbitrary-precision real and complex arithmetic.",
     "dependencies": [],
     "dependents_in_sample": 2,
-    "source": "program main\n   use mpmodule\n   implicit none\n   integer, parameter :: digits=100, words=digits/mpdpw+2\n   type(mp_real) :: two, root, residual, tolerance\n   two = mpreal(2.0d0,words)\n   root = sqrt(two)\n   residual = abs(root*root-two)\n   tolerance = mpreal(10.0d0,words)**(-90)\n   if (residual > tolerance) error stop 'high-precision identity failed'\n   print *, 'Square root of 2 to 100 decimal places:'\n   call mpwrite(6,digits+10,digits,root)\n   print *, 'Squared result agrees with 2 to at least 90 decimal places.'\n   print *, 'PASS mpfun2020-var1'\nend program main\n"
+    "source": "program main\n   use mpmodule\n   implicit none\n   integer, parameter :: digits=100, words=digits/mpdpw+2\n   type(mp_real) :: two, root, residual, tolerance\n   two = mpreal(2.0d0,words)\n   root = sqrt(two)\n   residual = abs(root*root-two)\n   tolerance = mpreal(10.0d0,words)**(-90)\n   if (residual > tolerance) error stop 'high-precision identity failed'\n   print *, 'Square root of 2 to 100 decimal places:'\n   call mpwrite(6,digits+10,digits,root)\n   print *, 'Squared result agrees with 2 to at least 90 decimal places.'\n   print *, 'PASS mpfun2020-var1'\nend program main\n",
+    "topics": [
+      "arbitrary-precision"
+    ]
   },
   {
     "id": "rklib",
@@ -822,7 +1245,18 @@
       }
     ],
     "dependents_in_sample": 0,
-    "source": "module example_functions\n   use rklib_module, only: rk_class, wp => rk_module_rk\n   implicit none\ncontains\n   subroutine decay(me,t,y,dy)\n      class(rk_class), intent(inout) :: me\n      real(wp), intent(in) :: t, y(:)\n      real(wp), intent(out) :: dy(:)\n      dy = -y\n   end subroutine decay\nend module example_functions\n\nprogram main\n   use example_functions, only: decay\n   use rklib_module, only: rk4_class, wp => rk_module_rk\n   implicit none\n   type(rk4_class) :: solver\n   real(wp) :: value(1)\n   call solver%initialize(n=1,f=decay)\n   call solver%integrate(0.0_wp,[1.0_wp],0.01_wp,1.0_wp,value)\n   if (abs(value(1)-exp(-1.0_wp)) > 1.e-8_wp) error stop 'incorrect RK4 result'\n   print *, 'dy/dt=-y at t=1, using RK4:', value\n   print *, 'PASS rklib'\nend program main\n"
+    "source": "module example_functions\n   use rklib_module, only: rk_class, wp => rk_module_rk\n   implicit none\ncontains\n   subroutine decay(me,t,y,dy)\n      class(rk_class), intent(inout) :: me\n      real(wp), intent(in) :: t, y(:)\n      real(wp), intent(out) :: dy(:)\n      dy = -y\n   end subroutine decay\nend module example_functions\n\nprogram main\n   use example_functions, only: decay\n   use rklib_module, only: rk4_class, wp => rk_module_rk\n   implicit none\n   type(rk4_class) :: solver\n   real(wp) :: value(1)\n   call solver%initialize(n=1,f=decay)\n   call solver%integrate(0.0_wp,[1.0_wp],0.01_wp,1.0_wp,value)\n   if (abs(value(1)-exp(-1.0_wp)) > 1.e-8_wp) error stop 'incorrect RK4 result'\n   print *, 'dy/dt=-y at t=1, using RK4:', value\n   print *, 'PASS rklib'\nend program main\n",
+    "topics": [
+      "differential-equations",
+      "fortran",
+      "fortran-package-manager",
+      "ode",
+      "ode-solver",
+      "root-finding",
+      "runge-kutta",
+      "runge-kutta-adaptive-step-size",
+      "runge-kutta-fehlberg"
+    ]
   },
   {
     "id": "ddeabm",
@@ -841,7 +1275,15 @@
       }
     ],
     "dependents_in_sample": 1,
-    "source": "module example_functions\n   use ddeabm_module, only: ddeabm_class, wp => ddeabm_rk\n   implicit none\ncontains\n   subroutine oscillator(me,t,y,dy)\n      class(ddeabm_class), intent(inout) :: me\n      real(wp), intent(in) :: t, y(:)\n      real(wp), intent(out) :: dy(:)\n      dy = [y(2),-y(1)]\n   end subroutine oscillator\nend module example_functions\n\nprogram main\n   use example_functions, only: oscillator\n   use ddeabm_module, only: ddeabm_class, wp => ddeabm_rk\n   implicit none\n   type(ddeabm_class) :: solver\n   real(wp) :: t, y(2)\n   integer :: status\n   t = 0.0_wp\n   y = [1.0_wp,0.0_wp]\n   call solver%initialize(neq=2,maxnum=10000,df=oscillator,rtol=[1.e-10_wp],atol=[1.e-10_wp])\n   call solver%integrate(t,y,acos(-1.0_wp)/2,idid=status)\n   if (status < 0 .or. maxval(abs(y-[0.0_wp,-1.0_wp])) > 1.e-8_wp) error stop 'incorrect oscillator result'\n   print *, 'Harmonic oscillator at a quarter period:', y\n   print *, 'PASS ddeabm'\nend program main\n"
+    "source": "module example_functions\n   use ddeabm_module, only: ddeabm_class, wp => ddeabm_rk\n   implicit none\ncontains\n   subroutine oscillator(me,t,y,dy)\n      class(ddeabm_class), intent(inout) :: me\n      real(wp), intent(in) :: t, y(:)\n      real(wp), intent(out) :: dy(:)\n      dy = [y(2),-y(1)]\n   end subroutine oscillator\nend module example_functions\n\nprogram main\n   use example_functions, only: oscillator\n   use ddeabm_module, only: ddeabm_class, wp => ddeabm_rk\n   implicit none\n   type(ddeabm_class) :: solver\n   real(wp) :: t, y(2)\n   integer :: status\n   t = 0.0_wp\n   y = [1.0_wp,0.0_wp]\n   call solver%initialize(neq=2,maxnum=10000,df=oscillator,rtol=[1.e-10_wp],atol=[1.e-10_wp])\n   call solver%integrate(t,y,acos(-1.0_wp)/2,idid=status)\n   if (status < 0 .or. maxval(abs(y-[0.0_wp,-1.0_wp])) > 1.e-8_wp) error stop 'incorrect oscillator result'\n   print *, 'Harmonic oscillator at a quarter period:', y\n   print *, 'PASS ddeabm'\nend program main\n",
+    "topics": [
+      "adams-bashforth",
+      "fortran",
+      "fortran-package-manager",
+      "ode",
+      "root-finding",
+      "slatec"
+    ]
   },
   {
     "id": "dvode",
@@ -854,7 +1296,14 @@
     "description": "Variable-coefficient multistep ODE solver for stiff and nonstiff systems.",
     "dependencies": [],
     "dependents_in_sample": 0,
-    "source": "module example_functions\n   use dvode_module, only: dvode_t\n   use dvode_kinds_module, only: wp => dvode_wp\n   implicit none\ncontains\n   subroutine stiff_decay(me,n,t,y,dy)\n      class(dvode_t), intent(inout) :: me\n      integer :: n\n      real(wp) :: t, y(n), dy(n)\n      ! Exact solution cos(t); the -1000*(y-cos(t)) term makes the equation stiff.\n      dy = -1000.0_wp*(y-cos(t))-sin(t)\n   end subroutine stiff_decay\nend module example_functions\n\nprogram main\n   use example_functions, only: stiff_decay\n   use dvode_module, only: dvode_t\n   use dvode_kinds_module, only: wp => dvode_wp\n   implicit none\n   type(dvode_t) :: solver\n   real(wp) :: t, y(1), work(100)\n   integer :: iwork(40), status\n   t = 0.0_wp\n   y = 1.0_wp\n   work = 0.0_wp\n   iwork = 0\n   status = 1\n   call solver%initialize(f=stiff_decay)\n   ! MF=22: BDF method with an internally approximated full Jacobian.\n   call solver%solve(1,y,t,1.0_wp,1,[1.e-8_wp],[1.e-10_wp],1,status,0,work,100,iwork,40,22)\n   if (status < 0 .or. abs(y(1)-cos(1.0_wp)) > 1.e-6_wp) error stop 'incorrect stiff solution'\n   print *, 'Stiff equation at t=1:', y, 'exact:', cos(1.0_wp)\n   print *, 'PASS dvode'\nend program main\n"
+    "source": "module example_functions\n   use dvode_module, only: dvode_t\n   use dvode_kinds_module, only: wp => dvode_wp\n   implicit none\ncontains\n   subroutine stiff_decay(me,n,t,y,dy)\n      class(dvode_t), intent(inout) :: me\n      integer :: n\n      real(wp) :: t, y(n), dy(n)\n      ! Exact solution cos(t); the -1000*(y-cos(t)) term makes the equation stiff.\n      dy = -1000.0_wp*(y-cos(t))-sin(t)\n   end subroutine stiff_decay\nend module example_functions\n\nprogram main\n   use example_functions, only: stiff_decay\n   use dvode_module, only: dvode_t\n   use dvode_kinds_module, only: wp => dvode_wp\n   implicit none\n   type(dvode_t) :: solver\n   real(wp) :: t, y(1), work(100)\n   integer :: iwork(40), status\n   t = 0.0_wp\n   y = 1.0_wp\n   work = 0.0_wp\n   iwork = 0\n   status = 1\n   call solver%initialize(f=stiff_decay)\n   ! MF=22: BDF method with an internally approximated full Jacobian.\n   call solver%solve(1,y,t,1.0_wp,1,[1.e-8_wp],[1.e-10_wp],1,status,0,work,100,iwork,40,22)\n   if (status < 0 .or. abs(y(1)-cos(1.0_wp)) > 1.e-6_wp) error stop 'incorrect stiff solution'\n   print *, 'Stiff equation at t=1:', y, 'exact:', cos(1.0_wp)\n   print *, 'PASS dvode'\nend program main\n",
+    "topics": [
+      "adams-bashforth",
+      "fortran",
+      "fortran-package-manager",
+      "ode",
+      "vode"
+    ]
   },
   {
     "id": "pikaia",
@@ -873,7 +1322,15 @@
       }
     ],
     "dependents_in_sample": 0,
-    "source": "module example_functions\n   use pikaia_module, only: pikaia_class\n   use iso_fortran_env, only: wp => real64\n   implicit none\ncontains\n   subroutine fitness(me,x,f)\n      class(pikaia_class), intent(inout) :: me\n      real(wp), intent(in) :: x(:)\n      real(wp), intent(out) :: f\n      ! Pikaia maximizes fitness. Its maximum here is at (0.3,0.7).\n      f = 1.0_wp-(x(1)-0.3_wp)**2-(x(2)-0.7_wp)**2\n   end subroutine fitness\nend module example_functions\n\nprogram main\n   use example_functions, only: fitness\n   use pikaia_module, only: pikaia_class\n   use iso_fortran_env, only: wp => real64\n   implicit none\n   type(pikaia_class) :: solver\n   real(wp) :: x(2), f\n   integer :: status\n   x = 0.5_wp\n   call solver%init(2,[0.0_wp,0.0_wp],[1.0_wp,1.0_wp],fitness,status, &\n      ngen=300,np=100,nd=6,ivrb=0,iseed=12345)\n   if (status /= 0) error stop 'initialization failed'\n   call solver%solve(x,f,status)\n   if (status /= 0 .or. maxval(abs(x-[0.3_wp,0.7_wp])) > 0.01_wp) error stop 'incorrect optimum'\n   print *, 'Genetic algorithm optimum:', x, 'fitness:', f\n   print *, 'PASS pikaia'\nend program main\n"
+    "source": "module example_functions\n   use pikaia_module, only: pikaia_class\n   use iso_fortran_env, only: wp => real64\n   implicit none\ncontains\n   subroutine fitness(me,x,f)\n      class(pikaia_class), intent(inout) :: me\n      real(wp), intent(in) :: x(:)\n      real(wp), intent(out) :: f\n      ! Pikaia maximizes fitness. Its maximum here is at (0.3,0.7).\n      f = 1.0_wp-(x(1)-0.3_wp)**2-(x(2)-0.7_wp)**2\n   end subroutine fitness\nend module example_functions\n\nprogram main\n   use example_functions, only: fitness\n   use pikaia_module, only: pikaia_class\n   use iso_fortran_env, only: wp => real64\n   implicit none\n   type(pikaia_class) :: solver\n   real(wp) :: x(2), f\n   integer :: status\n   x = 0.5_wp\n   call solver%init(2,[0.0_wp,0.0_wp],[1.0_wp,1.0_wp],fitness,status, &\n      ngen=300,np=100,nd=6,ivrb=0,iseed=12345)\n   if (status /= 0) error stop 'initialization failed'\n   call solver%solve(x,f,status)\n   if (status /= 0 .or. maxval(abs(x-[0.3_wp,0.7_wp])) > 0.01_wp) error stop 'incorrect optimum'\n   print *, 'Genetic algorithm optimum:', x, 'fitness:', f\n   print *, 'PASS pikaia'\nend program main\n",
+    "topics": [
+      "fortran",
+      "fortran-package-manager",
+      "genetic-algorithm",
+      "numerical-optimization",
+      "optimization",
+      "pikaia"
+    ]
   },
   {
     "id": "io-fortran-library",
@@ -886,7 +1343,14 @@
     "description": "High-level numeric array file I/O, dynamic strings, and numeric/string conversion.",
     "dependencies": [],
     "dependents_in_sample": 1,
-    "source": "program main\n   use io_fortran_lib, only: to_file, from_file\n   implicit none\n   real, allocatable :: loaded(:,:)\n   real :: values(2,3)\n   integer :: status\n   values = reshape([1.0,2.0,3.0,4.0,5.0,6.0],[2,3])\n   call to_file(values,'samples.csv',delim=',',stat=status)\n   if (status /= 0) error stop 'CSV write failed'\n   call from_file('samples.csv',into=loaded,delim=',',stat=status)\n   if (status /= 0) error stop 'CSV read failed'\n   if (any(shape(loaded) /= shape(values))) error stop 'incorrect dimensions'\n   if (maxval(abs(loaded-values)) > 1.e-6) error stop 'incorrect CSV values'\n   print *, 'Round trip of a 2-by-3 numeric CSV table:'\n   print *, loaded\n   print *, 'PASS io-fortran-library'\nend program main\n"
+    "source": "program main\n   use io_fortran_lib, only: to_file, from_file\n   implicit none\n   real, allocatable :: loaded(:,:)\n   real :: values(2,3)\n   integer :: status\n   values = reshape([1.0,2.0,3.0,4.0,5.0,6.0],[2,3])\n   call to_file(values,'samples.csv',delim=',',stat=status)\n   if (status /= 0) error stop 'CSV write failed'\n   call from_file('samples.csv',into=loaded,delim=',',stat=status)\n   if (status /= 0) error stop 'CSV read failed'\n   if (any(shape(loaded) /= shape(values))) error stop 'incorrect dimensions'\n   if (maxval(abs(loaded-values)) > 1.e-6) error stop 'incorrect CSV values'\n   print *, 'Round trip of a 2-by-3 numeric CSV table:'\n   print *, loaded\n   print *, 'PASS io-fortran-library'\nend program main\n",
+    "topics": [
+      "csv",
+      "fortran",
+      "fortran-package-manager",
+      "input-output",
+      "modern-fortran"
+    ]
   },
   {
     "id": "collections",
@@ -899,7 +1363,17 @@
     "description": "Generic dynamically growing lists and linked lists with polymorphic values.",
     "dependencies": [],
     "dependents_in_sample": 3,
-    "source": "program main\n   use collections, only: list\n   implicit none\n   type(list) :: values\n   class(*), pointer :: item\n   integer :: i, total\n   do i=1,4\n      call values%push(10*i)\n   end do\n   call values%insert(2,5)\n   if (values%count() /= 5) error stop 'incorrect list size'\n   total = 0\n   do i=1,values%count()\n      item => values%get(i)\n      select type(item)\n      type is(integer)\n         total = total+item\n      class default\n         error stop 'unexpected item type'\n      end select\n   end do\n   if (total /= 105) error stop 'incorrect list contents'\n   print *, 'List length and sum:', values%count(), total\n   print *, 'PASS collections'\nend program main\n"
+    "source": "program main\n   use collections, only: list\n   implicit none\n   type(list) :: values\n   class(*), pointer :: item\n   integer :: i, total\n   do i=1,4\n      call values%push(10*i)\n   end do\n   call values%insert(2,5)\n   if (values%count() /= 5) error stop 'incorrect list size'\n   total = 0\n   do i=1,values%count()\n      item => values%get(i)\n      select type(item)\n      type is(integer)\n         total = total+item\n      class default\n         error stop 'unexpected item type'\n      end select\n   end do\n   if (total /= 105) error stop 'incorrect list contents'\n   print *, 'List length and sum:', values%count(), total\n   print *, 'PASS collections'\nend program main\n",
+    "topics": [
+      "collection",
+      "collections",
+      "fortran",
+      "generic-collections",
+      "generic-list",
+      "linked-list",
+      "list",
+      "lists"
+    ]
   },
   {
     "id": "peaks",
@@ -918,7 +1392,12 @@
       }
     ],
     "dependents_in_sample": 0,
-    "source": "program main\n   use peaks, only: peak_detect\n   use iso_fortran_env, only: real64\n   implicit none\n   integer, allocatable :: maxima(:), minima(:)\n   real(real64), allocatable :: high(:), low(:)\n   real(real64) :: signal(9)\n   signal = [0.0_real64,1.0_real64,3.0_real64,1.0_real64,0.0_real64, &\n             1.0_real64,4.0_real64,1.0_real64,0.0_real64]\n   call peak_detect(signal,0.5_real64,maxima,high,minima,low)\n   if (size(maxima) /= 2 .or. size(minima) /= 1) error stop 'incorrect extrema count'\n   if (any(maxima /= [3,7]) .or. any(minima /= [5])) error stop 'incorrect extrema positions'\n   if (maxval(abs(high-[3.0_real64,4.0_real64])) > 1.e-12_real64) error stop 'incorrect peak values'\n   print *, 'Peak positions:', maxima\n   print *, 'Peak heights:', high\n   print *, 'Valley position:', minima\n   print *, 'PASS peaks'\nend program main\n"
+    "source": "program main\n   use peaks, only: peak_detect\n   use iso_fortran_env, only: real64\n   implicit none\n   integer, allocatable :: maxima(:), minima(:)\n   real(real64), allocatable :: high(:), low(:)\n   real(real64) :: signal(9)\n   signal = [0.0_real64,1.0_real64,3.0_real64,1.0_real64,0.0_real64, &\n             1.0_real64,4.0_real64,1.0_real64,0.0_real64]\n   call peak_detect(signal,0.5_real64,maxima,high,minima,low)\n   if (size(maxima) /= 2 .or. size(minima) /= 1) error stop 'incorrect extrema count'\n   if (any(maxima /= [3,7]) .or. any(minima /= [5])) error stop 'incorrect extrema positions'\n   if (maxval(abs(high-[3.0_real64,4.0_real64])) > 1.e-12_real64) error stop 'incorrect peak values'\n   print *, 'Peak positions:', maxima\n   print *, 'Peak heights:', high\n   print *, 'Valley position:', minima\n   print *, 'PASS peaks'\nend program main\n",
+    "topics": [
+      "fortran",
+      "peak-detection",
+      "signal-analysis"
+    ]
   },
   {
     "id": "powellopt",
@@ -931,7 +1410,16 @@
     "description": "Powell derivative-free optimization methods including BOBYQA and COBYLA.",
     "dependencies": [],
     "dependents_in_sample": 1,
-    "source": "module example_functions\n   use iso_fortran_env, only: wp => real64\n   implicit none\ncontains\n   subroutine objective(n,x,f)\n      integer, intent(in) :: n\n      real(wp), intent(in) :: x(:)\n      real(wp), intent(out) :: f\n      f = (x(1)-1.0_wp)**2+2*(x(2)+2.0_wp)**2\n   end subroutine objective\nend module example_functions\n\nprogram main\n   use example_functions, only: objective, wp\n   use bobyqa_module, only: bobyqa\n   implicit none\n   real(wp) :: x(2)\n   x = 0.0_wp\n   call bobyqa(2,5,x,[-5.0_wp,-5.0_wp],[5.0_wp,5.0_wp],0.5_wp,1.e-8_wp,0,1000,objective)\n   if (maxval(abs(x-[1.0_wp,-2.0_wp])) > 1.e-6_wp) error stop 'incorrect BOBYQA result'\n   print *, 'Derivative-free minimum at:', x\n   print *, 'PASS powellopt'\nend program main\n"
+    "source": "module example_functions\n   use iso_fortran_env, only: wp => real64\n   implicit none\ncontains\n   subroutine objective(n,x,f)\n      integer, intent(in) :: n\n      real(wp), intent(in) :: x(:)\n      real(wp), intent(out) :: f\n      f = (x(1)-1.0_wp)**2+2*(x(2)+2.0_wp)**2\n   end subroutine objective\nend module example_functions\n\nprogram main\n   use example_functions, only: objective, wp\n   use bobyqa_module, only: bobyqa\n   implicit none\n   real(wp) :: x(2)\n   x = 0.0_wp\n   call bobyqa(2,5,x,[-5.0_wp,-5.0_wp],[5.0_wp,5.0_wp],0.5_wp,1.e-8_wp,0,1000,objective)\n   if (maxval(abs(x-[1.0_wp,-2.0_wp])) > 1.e-6_wp) error stop 'incorrect BOBYQA result'\n   print *, 'Derivative-free minimum at:', x\n   print *, 'PASS powellopt'\nend program main\n",
+    "topics": [
+      "constrained-optimization",
+      "fortran",
+      "fortran-package-manager",
+      "nonlinear-optimization",
+      "numerical-optimization",
+      "optimization",
+      "unconstrained-optimization"
+    ]
   },
   {
     "id": "fstats",
@@ -976,7 +1464,28 @@
       }
     },
     "dependents_in_sample": 1,
-    "source": "program main\n   use fstats, only: mean, variance, normal_distribution\n   use iso_fortran_env, only: real64\n   implicit none\n   real(real64) :: samples(5), average, sample_variance, probability\n   type(normal_distribution) :: normal\n   samples = [1.0_real64,2.0_real64,3.0_real64,4.0_real64,5.0_real64]\n   average = mean(samples)\n   sample_variance = variance(samples)\n   normal%mean_value = 0.0_real64\n   normal%standard_deviation = 1.0_real64\n   probability = normal%cdf(0.0_real64)\n   if (abs(average-3.0_real64) > 1.e-12_real64) error stop 'incorrect mean'\n   if (abs(sample_variance-2.5_real64) > 1.e-12_real64) error stop 'incorrect sample variance'\n   if (abs(probability-0.5_real64) > 1.e-12_real64) error stop 'incorrect normal CDF'\n   print *, 'Mean and sample variance:', average, sample_variance\n   print *, 'Standard normal probability P(X <= 0):', probability\n   print *, 'PASS fstats'\nend program main\n"
+    "source": "program main\n   use fstats, only: mean, variance, normal_distribution\n   use iso_fortran_env, only: real64\n   implicit none\n   real(real64) :: samples(5), average, sample_variance, probability\n   type(normal_distribution) :: normal\n   samples = [1.0_real64,2.0_real64,3.0_real64,4.0_real64,5.0_real64]\n   average = mean(samples)\n   sample_variance = variance(samples)\n   normal%mean_value = 0.0_real64\n   normal%standard_deviation = 1.0_real64\n   probability = normal%cdf(0.0_real64)\n   if (abs(average-3.0_real64) > 1.e-12_real64) error stop 'incorrect mean'\n   if (abs(sample_variance-2.5_real64) > 1.e-12_real64) error stop 'incorrect sample variance'\n   if (abs(probability-0.5_real64) > 1.e-12_real64) error stop 'incorrect normal CDF'\n   print *, 'Mean and sample variance:', average, sample_variance\n   print *, 'Standard normal probability P(X <= 0):', probability\n   print *, 'PASS fstats'\nend program main\n",
+    "topics": [
+      "allan-variance",
+      "anova",
+      "bootstrap",
+      "design-of-experiments",
+      "distributions",
+      "experimental-design",
+      "gauge-r-and-r-study",
+      "hypothesis-testing",
+      "interpolation",
+      "levenberg-marquardt",
+      "lowess",
+      "markov-chain-monte-carlo",
+      "mcmc-sampler",
+      "missing-data",
+      "regression",
+      "sampling-distribution",
+      "special-functions",
+      "statistical-testing",
+      "statistics"
+    ]
   },
   {
     "id": "spectrum",
@@ -1004,7 +1513,23 @@
       ]
     },
     "dependents_in_sample": 0,
-    "source": "program main\n   use spectrum, only: convolve, remove_mean\n   use iso_fortran_env, only: real64\n   implicit none\n   real(real64), allocatable :: filtered(:), centered(:)\n   real(real64) :: signal(3)\n   signal = [1.0_real64,2.0_real64,3.0_real64]\n   filtered = convolve(signal,[0.5_real64,0.5_real64])\n   if (size(filtered) /= 4) error stop 'incorrect convolution length'\n   if (maxval(abs(filtered-[0.5_real64,1.5_real64,2.5_real64,1.5_real64])) > 1.e-12_real64) &\n      error stop 'incorrect convolution'\n   centered = remove_mean(signal)\n   if (maxval(abs(centered-[-1.0_real64,0.0_real64,1.0_real64])) > 1.e-12_real64) error stop 'incorrect centering'\n   print *, 'Two-point averaging filter (full convolution):', filtered\n   print *, 'Signal with mean removed:', centered\n   print *, 'PASS spectrum'\nend program main\n"
+    "source": "program main\n   use spectrum, only: convolve, remove_mean\n   use iso_fortran_env, only: real64\n   implicit none\n   real(real64), allocatable :: filtered(:), centered(:)\n   real(real64) :: signal(3)\n   signal = [1.0_real64,2.0_real64,3.0_real64]\n   filtered = convolve(signal,[0.5_real64,0.5_real64])\n   if (size(filtered) /= 4) error stop 'incorrect convolution length'\n   if (maxval(abs(filtered-[0.5_real64,1.5_real64,2.5_real64,1.5_real64])) > 1.e-12_real64) &\n      error stop 'incorrect convolution'\n   centered = remove_mean(signal)\n   if (maxval(abs(centered-[-1.0_real64,0.0_real64,1.0_real64])) > 1.e-12_real64) error stop 'incorrect centering'\n   print *, 'Two-point averaging filter (full convolution):', filtered\n   print *, 'Signal with mean removed:', centered\n   print *, 'PASS spectrum'\nend program main\n",
+    "topics": [
+      "cross-spectral-density",
+      "filter",
+      "filtering",
+      "fir-filter",
+      "fortran",
+      "gaussian-filter",
+      "iir-filters",
+      "numerical-differentiation",
+      "periodogram",
+      "power-spectral-density",
+      "psd",
+      "total-variation-filter",
+      "total-variation-regularization",
+      "transfer-function"
+    ]
   },
   {
     "id": "lsmr",
@@ -1026,7 +1551,16 @@
       ]
     },
     "dependents_in_sample": 1,
-    "source": "module example_matrix\n   use lsmrDataModule, only: ip => lsmr_ip, wp => lsmr_wp\n   implicit none\ncontains\n   subroutine multiply(m,n,x,y)\n      integer(ip), intent(in) :: m,n\n      real(wp), intent(in) :: x(n)\n      real(wp), intent(inout) :: y(m)\n      y = y+[2.0_wp*x(1),3.0_wp*x(2)]\n   end subroutine\n   subroutine transpose_multiply(m,n,x,y)\n      integer(ip), intent(in) :: m,n\n      real(wp), intent(inout) :: x(n)\n      real(wp), intent(in) :: y(m)\n      x = x+[2.0_wp*y(1),3.0_wp*y(2)]\n   end subroutine\nend module example_matrix\n\nprogram main\n   use example_matrix\n   use lsmrModule, only: lsmr\n   implicit none\n   real(wp) :: x(2), norm_a, condition, residual, normal_residual, norm_x\n   integer(ip) :: status, iterations\n   ! Matrix products avoid storing a dense matrix; A=diag(2,3), b=(4,9).\n   call lsmr(2_ip,2_ip,multiply,transpose_multiply,[4.0_wp,9.0_wp],0.0_wp, &\n      1.e-12_wp,1.e-12_wp,1.e8_wp,20_ip,0_ip,0_ip,x,status,iterations, &\n      norm_a,condition,residual,normal_residual,norm_x)\n   if (status < 1 .or. status > 2) error stop 'LSMR did not converge'\n   if (maxval(abs(x-[2.0_wp,3.0_wp])) > 1.e-10_wp) error stop 'incorrect sparse solution'\n   print *, 'LSMR solution:', x\n   print *, 'Residual norm:', residual\n   print *, 'PASS lsmr'\nend program main\n"
+    "source": "module example_matrix\n   use lsmrDataModule, only: ip => lsmr_ip, wp => lsmr_wp\n   implicit none\ncontains\n   subroutine multiply(m,n,x,y)\n      integer(ip), intent(in) :: m,n\n      real(wp), intent(in) :: x(n)\n      real(wp), intent(inout) :: y(m)\n      y = y+[2.0_wp*x(1),3.0_wp*x(2)]\n   end subroutine\n   subroutine transpose_multiply(m,n,x,y)\n      integer(ip), intent(in) :: m,n\n      real(wp), intent(inout) :: x(n)\n      real(wp), intent(in) :: y(m)\n      x = x+[2.0_wp*y(1),3.0_wp*y(2)]\n   end subroutine\nend module example_matrix\n\nprogram main\n   use example_matrix\n   use lsmrModule, only: lsmr\n   implicit none\n   real(wp) :: x(2), norm_a, condition, residual, normal_residual, norm_x\n   integer(ip) :: status, iterations\n   ! Matrix products avoid storing a dense matrix; A=diag(2,3), b=(4,9).\n   call lsmr(2_ip,2_ip,multiply,transpose_multiply,[4.0_wp,9.0_wp],0.0_wp, &\n      1.e-12_wp,1.e-12_wp,1.e8_wp,20_ip,0_ip,0_ip,x,status,iterations, &\n      norm_a,condition,residual,normal_residual,norm_x)\n   if (status < 1 .or. status > 2) error stop 'LSMR did not converge'\n   if (maxval(abs(x-[2.0_wp,3.0_wp])) > 1.e-10_wp) error stop 'incorrect sparse solution'\n   print *, 'LSMR solution:', x\n   print *, 'Residual norm:', residual\n   print *, 'PASS lsmr'\nend program main\n",
+    "topics": [
+      "fortran",
+      "fortran-package-manager",
+      "least-squares",
+      "linear-algebra",
+      "linear-equations",
+      "lsmr",
+      "sparse-linear-systems"
+    ]
   },
   {
     "id": "nlesolver-fortran",
@@ -1069,7 +1603,21 @@
       ]
     },
     "dependents_in_sample": 1,
-    "source": "module example_functions\n   use nlesolver_module, only: nlesolver_type, wp => nlesolver_rk\n   implicit none\ncontains\n   subroutine residual(me,x,f)\n      class(nlesolver_type), intent(inout) :: me\n      real(wp), intent(in) :: x(:)\n      real(wp), intent(out) :: f(:)\n      f = [x(1)**2-2.0_wp,x(2)-3.0_wp]\n   end subroutine\n   subroutine jacobian(me,x,g)\n      class(nlesolver_type), intent(inout) :: me\n      real(wp), intent(in) :: x(:)\n      real(wp), intent(out) :: g(:,:)\n      g = 0.0_wp\n      g(1,1) = 2*x(1)\n      g(2,2) = 1.0_wp\n   end subroutine\nend module example_functions\n\nprogram main\n   use example_functions\n   implicit none\n   type(nlesolver_type) :: solver\n   real(wp) :: x(2)\n   integer :: status\n   character(:), allocatable :: message\n   call solver%initialize(n=2,m=2,max_iter=50,tol=1.e-10_wp,func=residual,grad=jacobian,verbose=.false.)\n   call solver%status(status,message)\n   if (status /= 0) error stop 'initialization failed'\n   x = [1.0_wp,0.0_wp]\n   call solver%solve(x)\n   call solver%status(status,message)\n   if (status /= 1) error stop 'required accuracy was not achieved'\n   if (maxval(abs(x-[sqrt(2.0_wp),3.0_wp])) > 1.e-8_wp) error stop 'incorrect roots'\n   print *, 'Roots of x**2=2 and y=3:', x\n   print *, message\n   print *, 'PASS nlesolver-fortran'\nend program main\n"
+    "source": "module example_functions\n   use nlesolver_module, only: nlesolver_type, wp => nlesolver_rk\n   implicit none\ncontains\n   subroutine residual(me,x,f)\n      class(nlesolver_type), intent(inout) :: me\n      real(wp), intent(in) :: x(:)\n      real(wp), intent(out) :: f(:)\n      f = [x(1)**2-2.0_wp,x(2)-3.0_wp]\n   end subroutine\n   subroutine jacobian(me,x,g)\n      class(nlesolver_type), intent(inout) :: me\n      real(wp), intent(in) :: x(:)\n      real(wp), intent(out) :: g(:,:)\n      g = 0.0_wp\n      g(1,1) = 2*x(1)\n      g(2,2) = 1.0_wp\n   end subroutine\nend module example_functions\n\nprogram main\n   use example_functions\n   implicit none\n   type(nlesolver_type) :: solver\n   real(wp) :: x(2)\n   integer :: status\n   character(:), allocatable :: message\n   call solver%initialize(n=2,m=2,max_iter=50,tol=1.e-10_wp,func=residual,grad=jacobian,verbose=.false.)\n   call solver%status(status,message)\n   if (status /= 0) error stop 'initialization failed'\n   x = [1.0_wp,0.0_wp]\n   call solver%solve(x)\n   call solver%status(status,message)\n   if (status /= 1) error stop 'required accuracy was not achieved'\n   if (maxval(abs(x-[sqrt(2.0_wp),3.0_wp])) > 1.e-8_wp) error stop 'incorrect roots'\n   print *, 'Roots of x**2=2 and y=3:', x\n   print *, message\n   print *, 'PASS nlesolver-fortran'\nend program main\n",
+    "topics": [
+      "broyden-method",
+      "differential-correction-algorithm",
+      "fortran",
+      "fortran-package-manager",
+      "lsmr",
+      "lsqr",
+      "lusol",
+      "minimum-norm",
+      "newton-raphson",
+      "nonlinear-equation-solver",
+      "nonlinear-equations",
+      "quasi-newton"
+    ]
   },
   {
     "id": "codata",
@@ -1102,7 +1650,16 @@
       }
     },
     "dependents_in_sample": 2,
-    "source": "program main\n   use codata, only: SPEED_OF_LIGHT_IN_VACUUM, PLANCK_CONSTANT, BOLTZMANN_CONSTANT\n   use iso_fortran_env, only: real64\n   implicit none\n   real(real64) :: wavelength, energy, temperature\n   wavelength = 500.e-9_real64\n   energy = PLANCK_CONSTANT%value*SPEED_OF_LIGHT_IN_VACUUM%value/wavelength\n   temperature = energy/BOLTZMANN_CONSTANT%value\n   if (abs(SPEED_OF_LIGHT_IN_VACUUM%value-299792458.0_real64) > 1.e-6_real64) error stop 'incorrect light speed'\n   if (abs(energy/3.972891714297857e-19_real64-1.0_real64) > 1.e-12_real64) error stop 'incorrect photon energy'\n   print *, '500 nm photon energy (J):', energy\n   print *, 'Equivalent E/k temperature (K):', temperature\n   print *, 'Planck constant uncertainty:', PLANCK_CONSTANT%uncertainty\n   print *, 'PASS codata'\nend program main\n"
+    "source": "program main\n   use codata, only: SPEED_OF_LIGHT_IN_VACUUM, PLANCK_CONSTANT, BOLTZMANN_CONSTANT\n   use iso_fortran_env, only: real64\n   implicit none\n   real(real64) :: wavelength, energy, temperature\n   wavelength = 500.e-9_real64\n   energy = PLANCK_CONSTANT%value*SPEED_OF_LIGHT_IN_VACUUM%value/wavelength\n   temperature = energy/BOLTZMANN_CONSTANT%value\n   if (abs(SPEED_OF_LIGHT_IN_VACUUM%value-299792458.0_real64) > 1.e-6_real64) error stop 'incorrect light speed'\n   if (abs(energy/3.972891714297857e-19_real64-1.0_real64) > 1.e-12_real64) error stop 'incorrect photon energy'\n   print *, '500 nm photon energy (J):', energy\n   print *, 'Equivalent E/k temperature (K):', temperature\n   print *, 'Planck constant uncertainty:', PLANCK_CONSTANT%uncertainty\n   print *, 'PASS codata'\nend program main\n",
+    "topics": [
+      "c",
+      "codata",
+      "fortran-language",
+      "fortran-library",
+      "fortran-package-manager",
+      "python",
+      "science"
+    ]
   },
   {
     "id": "specialmatrices",
@@ -1156,7 +1713,12 @@
         }
       ]
     },
-    "source": "program main\n   use SpecialMatrices, only: diagonal, Strang, Poisson2D, solve, trace, det, matmul\n   use iso_fortran_env, only: real64\n   implicit none\n   type(diagonal) :: matrix\n   type(Strang) :: laplacian\n   type(Poisson2D) :: poisson\n   real(real64), allocatable :: solution(:,:)\n   real(real64) :: rhs(3,2), poisson_rhs(6,2)\n   real(real64), allocatable :: product(:,:)\n   real(real64), allocatable :: x(:)\n   matrix = diagonal([2.0_real64,3.0_real64,4.0_real64])\n   x = solve(matrix,[4.0_real64,9.0_real64,16.0_real64])\n   if (maxval(abs(x-[2.0_real64,3.0_real64,4.0_real64])) > 1.e-12_real64) error stop 'incorrect solution'\n   if (abs(trace(matrix)-9.0_real64) > 1.e-12_real64) error stop 'incorrect trace'\n   if (abs(det(matrix)-24.0_real64) > 1.e-12_real64) error stop 'incorrect determinant'\n   print *, 'Structured diagonal solve:', x\n   print *, 'Trace and determinant:', trace(matrix), det(matrix)\n   laplacian = Strang(3)\n   rhs = reshape([1.,2.,3.,4.,5.,6.],[3,2])\n   product = matmul(laplacian,rhs)\n   if (maxval(abs(product-reshape([0.,0.,4.,3.,0.,7.],[3,2]))) > 1.e-12_real64) &\n      error stop 'incorrect Strang matrix product'\n   poisson = Poisson2D(3,2)\n   poisson_rhs = reshape([1.,2.,3.,4.,5.,6.,7.,8.,9.,10.,11.,12.],[6,2])\n   solution = solve(poisson,poisson_rhs)\n   product = matmul(poisson,solution)\n   if (maxval(abs(product-poisson_rhs)) > 1.e-11_real64) error stop 'incorrect Poisson solution'\n   print *, 'PASS specialmatrices'\nend program main\n"
+    "source": "program main\n   use SpecialMatrices, only: diagonal, Strang, Poisson2D, solve, trace, det, matmul\n   use iso_fortran_env, only: real64\n   implicit none\n   type(diagonal) :: matrix\n   type(Strang) :: laplacian\n   type(Poisson2D) :: poisson\n   real(real64), allocatable :: solution(:,:)\n   real(real64) :: rhs(3,2), poisson_rhs(6,2)\n   real(real64), allocatable :: product(:,:)\n   real(real64), allocatable :: x(:)\n   matrix = diagonal([2.0_real64,3.0_real64,4.0_real64])\n   x = solve(matrix,[4.0_real64,9.0_real64,16.0_real64])\n   if (maxval(abs(x-[2.0_real64,3.0_real64,4.0_real64])) > 1.e-12_real64) error stop 'incorrect solution'\n   if (abs(trace(matrix)-9.0_real64) > 1.e-12_real64) error stop 'incorrect trace'\n   if (abs(det(matrix)-24.0_real64) > 1.e-12_real64) error stop 'incorrect determinant'\n   print *, 'Structured diagonal solve:', x\n   print *, 'Trace and determinant:', trace(matrix), det(matrix)\n   laplacian = Strang(3)\n   rhs = reshape([1.,2.,3.,4.,5.,6.],[3,2])\n   product = matmul(laplacian,rhs)\n   if (maxval(abs(product-reshape([0.,0.,4.,3.,0.,7.],[3,2]))) > 1.e-12_real64) &\n      error stop 'incorrect Strang matrix product'\n   poisson = Poisson2D(3,2)\n   poisson_rhs = reshape([1.,2.,3.,4.,5.,6.,7.,8.,9.,10.,11.,12.],[6,2])\n   solution = solve(poisson,poisson_rhs)\n   product = matmul(poisson,solution)\n   if (maxval(abs(product-poisson_rhs)) > 1.e-11_real64) error stop 'incorrect Poisson solution'\n   print *, 'PASS specialmatrices'\nend program main\n",
+    "topics": [
+      "linear-algebra",
+      "sparse-linear-systems",
+      "sparse-matrix"
+    ]
   },
   {
     "id": "quaff",
@@ -1204,7 +1766,11 @@
       }
     },
     "dependents_in_sample": 0,
-    "source": "program main\n   use quaff, only: length_t, time_t, speed_t, METERS, SECONDS, FEET_PER_SECOND, &\n      METERS_PER_SECOND, operator(.unit.), operator(/)\n   implicit none\n   type(length_t) :: distance\n   type(time_t) :: duration\n   type(speed_t) :: speed\n   double precision :: speed_in_feet, speed_in_meters\n   distance = 100.0d0.unit.METERS\n   duration = 10.0d0.unit.SECONDS\n   speed = distance/duration\n   speed_in_meters = speed.in.METERS_PER_SECOND\n   speed_in_feet = speed.in.FEET_PER_SECOND\n   if (abs(speed_in_meters-10.0d0) > 1.d-12) error stop 'incorrect speed'\n   if (abs(speed_in_feet-10.0d0/0.3048d0) > 1.d-10) error stop 'incorrect unit conversion'\n   print *, 'Speed in m/s:', speed_in_meters\n   print *, 'Speed in ft/s:', speed_in_feet\n   print *, 'PASS quaff'\nend program main\n"
+    "source": "program main\n   use quaff, only: length_t, time_t, speed_t, METERS, SECONDS, FEET_PER_SECOND, &\n      METERS_PER_SECOND, operator(.unit.), operator(/)\n   implicit none\n   type(length_t) :: distance\n   type(time_t) :: duration\n   type(speed_t) :: speed\n   double precision :: speed_in_feet, speed_in_meters\n   distance = 100.0d0.unit.METERS\n   duration = 10.0d0.unit.SECONDS\n   speed = distance/duration\n   speed_in_meters = speed.in.METERS_PER_SECOND\n   speed_in_feet = speed.in.FEET_PER_SECOND\n   if (abs(speed_in_meters-10.0d0) > 1.d-12) error stop 'incorrect speed'\n   if (abs(speed_in_feet-10.0d0/0.3048d0) > 1.d-10) error stop 'incorrect unit conversion'\n   print *, 'Speed in m/s:', speed_in_meters\n   print *, 'Speed in ft/s:', speed_in_feet\n   print *, 'PASS quaff'\nend program main\n",
+    "topics": [
+      "fortran",
+      "units-of-measure"
+    ]
   },
   {
     "id": "forpca",
@@ -1274,7 +1840,13 @@
       }
     },
     "dependents_in_sample": 0,
-    "source": "program main\n   use forpca, only: tpca\n   use kinds, only: rk\n   implicit none\n   type(tpca) :: analysis\n   real(rk) :: data(5,2)\n   real(rk), allocatable :: coefficients(:,:), variances(:), scores(:), reconstructed(:,:)\n   real(rk) :: centered(5,2), expected_direction(2)\n   data(:,1) = [-2.0_rk,-1.0_rk,0.0_rk,1.0_rk,2.0_rk]\n   data(:,2) = 2*data(:,1)+3\n   ! This API returns the full basis. Use its leading direction for a rank-one projection.\n   call analysis%pca(data,1,'svd',coefficients,latent=variances)\n   expected_direction = [1.0_rk,2.0_rk]/sqrt(5.0_rk)\n   if (abs(abs(dot_product(coefficients(:,1),expected_direction))-1.0_rk) > 1.e-8_rk) &\n      error stop 'incorrect principal direction'\n   centered = data\n   centered(:,2) = centered(:,2)-3\n   scores = matmul(centered,coefficients(:,1))\n   allocate(reconstructed(5,2))\n   reconstructed(:,1) = scores*coefficients(1,1)\n   reconstructed(:,2) = scores*coefficients(2,1)+3\n   if (maxval(abs(reconstructed-data)) > 1.e-8_rk) error stop 'incorrect rank-one reconstruction'\n   print *, 'Principal direction:', coefficients(:,1)\n   print *, 'Maximum rank-one reconstruction error:', maxval(abs(reconstructed-data))\n   call analysis%finalize()\n   print *, 'PASS forpca'\nend program main\n"
+    "source": "program main\n   use forpca, only: tpca\n   use kinds, only: rk\n   implicit none\n   type(tpca) :: analysis\n   real(rk) :: data(5,2)\n   real(rk), allocatable :: coefficients(:,:), variances(:), scores(:), reconstructed(:,:)\n   real(rk) :: centered(5,2), expected_direction(2)\n   data(:,1) = [-2.0_rk,-1.0_rk,0.0_rk,1.0_rk,2.0_rk]\n   data(:,2) = 2*data(:,1)+3\n   ! This API returns the full basis. Use its leading direction for a rank-one projection.\n   call analysis%pca(data,1,'svd',coefficients,latent=variances)\n   expected_direction = [1.0_rk,2.0_rk]/sqrt(5.0_rk)\n   if (abs(abs(dot_product(coefficients(:,1),expected_direction))-1.0_rk) > 1.e-8_rk) &\n      error stop 'incorrect principal direction'\n   centered = data\n   centered(:,2) = centered(:,2)-3\n   scores = matmul(centered,coefficients(:,1))\n   allocate(reconstructed(5,2))\n   reconstructed(:,1) = scores*coefficients(1,1)\n   reconstructed(:,2) = scores*coefficients(2,1)+3\n   if (maxval(abs(reconstructed-data)) > 1.e-8_rk) error stop 'incorrect rank-one reconstruction'\n   print *, 'Principal direction:', coefficients(:,1)\n   print *, 'Maximum rank-one reconstruction error:', maxval(abs(reconstructed-data))\n   call analysis%finalize()\n   print *, 'PASS forpca'\nend program main\n",
+    "topics": [
+      "fortran",
+      "fortran-package-manager",
+      "pca",
+      "principal-component-analysis"
+    ]
   },
   {
     "id": "neural-fortran",
@@ -1286,7 +1858,15 @@
     "category": "Machine learning",
     "description": "Neural networks with dense and convolutional layers and gradient-based training.",
     "dependencies": [],
-    "source": "program main\n   use nf, only: network, input, dense, linear, sgd\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   type(network) :: net\n   integer :: nseed, epoch, i\n   integer, allocatable :: seed(:)\n   real :: x, target, prediction(1), max_error\n   call random_seed(size=nseed)\n   allocate(seed(nseed)); seed=42; call random_seed(put=seed)\n   net = network([input(1), dense(1, activation=linear())])\n   ! Learn y = 2*x + 1 from nine generated observations.\n   do epoch=1,150\n      do i=-4,4\n         x=real(i)/4; target=2*x+1\n         call net%forward([x])\n         call net%backward([target])\n         call net%update(sgd(learning_rate=0.05))\n      end do\n   end do\n   max_error=0\n   do i=-5,5\n      x=real(i)/5; prediction=net%predict([x])\n      if (.not.all(ieee_is_finite(prediction))) error stop 'nonfinite prediction'\n      max_error=max(max_error,abs(prediction(1)-(2*x+1)))\n   end do\n   if (max_error > 1.e-4) error stop 'network did not learn the line'\n   print *, 'Learned y = 2*x + 1; maximum test error:', max_error\n   print *, 'PASS neural-fortran'\nend program main\n"
+    "source": "program main\n   use nf, only: network, input, dense, linear, sgd\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   type(network) :: net\n   integer :: nseed, epoch, i\n   integer, allocatable :: seed(:)\n   real :: x, target, prediction(1), max_error\n   call random_seed(size=nseed)\n   allocate(seed(nseed)); seed=42; call random_seed(put=seed)\n   net = network([input(1), dense(1, activation=linear())])\n   ! Learn y = 2*x + 1 from nine generated observations.\n   do epoch=1,150\n      do i=-4,4\n         x=real(i)/4; target=2*x+1\n         call net%forward([x])\n         call net%backward([target])\n         call net%update(sgd(learning_rate=0.05))\n      end do\n   end do\n   max_error=0\n   do i=-5,5\n      x=real(i)/5; prediction=net%predict([x])\n      if (.not.all(ieee_is_finite(prediction))) error stop 'nonfinite prediction'\n      max_error=max(max_error,abs(prediction(1)-(2*x+1)))\n   end do\n   if (max_error > 1.e-4) error stop 'network did not learn the line'\n   print *, 'Learned y = 2*x + 1; maximum test error:', max_error\n   print *, 'PASS neural-fortran'\nend program main\n",
+    "topics": [
+      "cnn",
+      "deep-learning",
+      "fortran",
+      "machine-learning",
+      "neural-network",
+      "parallel"
+    ]
   },
   {
     "id": "lightkrylov",
@@ -1332,7 +1912,8 @@
         "liblapack-dev=3.12.1-6"
       ]
     },
-    "source": "program main\n   use LightKrylov, only: dense_linop_rdp, dense_vector_rdp, dense_vector, gmres\n   use LightKrylov_Constants, only: dp\n   implicit none\n   type(dense_linop_rdp) :: operator\n   type(dense_vector_rdp) :: rhs, solution\n   real(dp) :: matrix(6,6), expected(6), residual\n   integer :: i, info\n   matrix=0._dp; expected=1._dp\n   do i=1,6\n      matrix(i,i)=real(i,dp)\n      if (i<6) matrix(i,i+1)=0.25_dp\n   end do\n   operator%data=matrix\n   rhs=dense_vector(matmul(matrix,expected))\n   solution=dense_vector([0._dp,0._dp,0._dp,0._dp,0._dp,0._dp])\n   ! GMRES uses the operator's matrix-vector action to solve A*x = b.\n   call gmres(operator,rhs,solution,info,rtol=1.e-10_dp,atol=1.e-12_dp)\n   if (info<0) error stop 'GMRES failed'\n   residual=sqrt(sum((matmul(matrix,solution%data)-rhs%data)**2))\n   if (residual>1.e-8_dp) error stop 'large linear-system residual'\n   if (maxval(abs(solution%data-expected))>1.e-8_dp) error stop 'incorrect solution'\n   print *, 'GMRES solution:',solution%data\n   print *, 'Residual norm:',residual\n   print *, 'PASS lightkrylov'\nend program main\n"
+    "source": "program main\n   use LightKrylov, only: dense_linop_rdp, dense_vector_rdp, dense_vector, gmres\n   use LightKrylov_Constants, only: dp\n   implicit none\n   type(dense_linop_rdp) :: operator\n   type(dense_vector_rdp) :: rhs, solution\n   real(dp) :: matrix(6,6), expected(6), residual\n   integer :: i, info\n   matrix=0._dp; expected=1._dp\n   do i=1,6\n      matrix(i,i)=real(i,dp)\n      if (i<6) matrix(i,i+1)=0.25_dp\n   end do\n   operator%data=matrix\n   rhs=dense_vector(matmul(matrix,expected))\n   solution=dense_vector([0._dp,0._dp,0._dp,0._dp,0._dp,0._dp])\n   ! GMRES uses the operator's matrix-vector action to solve A*x = b.\n   call gmres(operator,rhs,solution,info,rtol=1.e-10_dp,atol=1.e-12_dp)\n   if (info<0) error stop 'GMRES failed'\n   residual=sqrt(sum((matmul(matrix,solution%data)-rhs%data)**2))\n   if (residual>1.e-8_dp) error stop 'large linear-system residual'\n   if (maxval(abs(solution%data-expected))>1.e-8_dp) error stop 'incorrect solution'\n   print *, 'GMRES solution:',solution%data\n   print *, 'Residual norm:',residual\n   print *, 'PASS lightkrylov'\nend program main\n",
+    "topics": []
   },
   {
     "id": "polyroots-fortran",
@@ -1351,7 +1932,20 @@
         "liblapack-dev=3.12.1-6"
       ]
     },
-    "source": "program main\n   use polyroots_module, only: polyroots, wp => polyroots_module_rk\n   implicit none\n   integer, parameter :: degree=3\n   real(wp) :: coefficients(4)=[1._wp,-6._wp,11._wp,-6._wp]\n   real(wp) :: re(degree), im(degree), residual, expected\n   complex(wp) :: z, value\n   integer :: status, i, j\n   ! x**3 - 6*x**2 + 11*x - 6 has roots 1, 2, 3.\n   call polyroots(degree,coefficients,re,im,status)\n   if (status /= 0) error stop 'root solver failed'\n   do i=1,degree\n      z=cmplx(re(i),im(i),kind=wp); value=cmplx(coefficients(1),0._wp,kind=wp)\n      do j=2,degree+1\n         value=value*z+coefficients(j)\n      end do\n      residual=abs(value)\n      if (residual > 1.e-10_wp) error stop 'large polynomial residual'\n      print *, 'Root and residual:',z,residual\n   end do\n   do j=1,3\n      expected=real(j,wp)\n      if (minval(abs(cmplx(re,im,kind=wp)-expected)) > 1.e-10_wp) error stop 'missing root'\n   end do\n   print *, 'PASS polyroots-fortran'\nend program main\n"
+    "source": "program main\n   use polyroots_module, only: polyroots, wp => polyroots_module_rk\n   implicit none\n   integer, parameter :: degree=3\n   real(wp) :: coefficients(4)=[1._wp,-6._wp,11._wp,-6._wp]\n   real(wp) :: re(degree), im(degree), residual, expected\n   complex(wp) :: z, value\n   integer :: status, i, j\n   ! x**3 - 6*x**2 + 11*x - 6 has roots 1, 2, 3.\n   call polyroots(degree,coefficients,re,im,status)\n   if (status /= 0) error stop 'root solver failed'\n   do i=1,degree\n      z=cmplx(re(i),im(i),kind=wp); value=cmplx(coefficients(1),0._wp,kind=wp)\n      do j=2,degree+1\n         value=value*z+coefficients(j)\n      end do\n      residual=abs(value)\n      if (residual > 1.e-10_wp) error stop 'large polynomial residual'\n      print *, 'Root and residual:',z,residual\n   end do\n   do j=1,3\n      expected=real(j,wp)\n      if (minval(abs(cmplx(re,im,kind=wp)-expected)) > 1.e-10_wp) error stop 'missing root'\n   end do\n   print *, 'PASS polyroots-fortran'\nend program main\n",
+    "topics": [
+      "companion-matrix",
+      "eigenvalues",
+      "fortran",
+      "fortran-package-manager",
+      "jenkins-traub",
+      "laguerre-method",
+      "nonlinear-equations",
+      "polynomial-equations",
+      "polynomial-roots",
+      "polynomials",
+      "root-finding"
+    ]
   },
   {
     "id": "fortran-sqlite3",
@@ -1380,7 +1974,14 @@
         }
       ]
     },
-    "source": "program main\n   use iso_c_binding, only: c_ptr, c_null_funptr, c_null_ptr\n   use sqlite3\n   implicit none\n   type(c_ptr) :: db, statement\n   character(:), allocatable :: message\n   integer :: rc, count\n   real(kind(1.d0)) :: average\n   rc=sqlite3_open(':memory:',db)\n   if (rc /= SQLITE_OK) error stop 'cannot open database'\n   rc=sqlite3_exec(db,'CREATE TABLE observations(value REAL);'// &\n      'INSERT INTO observations VALUES(1.0),(2.0),(3.0),(4.0),(5.0);', &\n      c_null_funptr,c_null_ptr,message)\n   if (rc /= SQLITE_OK) error stop 'cannot create observations'\n   rc=sqlite3_prepare_v2(db,'SELECT COUNT(*), AVG(value) FROM observations',statement)\n   if (rc /= SQLITE_OK) error stop 'cannot prepare query'\n   rc=sqlite3_step(statement)\n   if (rc /= SQLITE_ROW) error stop 'missing query result'\n   count=sqlite3_column_int(statement,0)\n   average=sqlite3_column_double(statement,1)\n   if (count /= 5 .or. abs(average-3.d0)>1.d-12) error stop 'incorrect query result'\n   print *, 'Observation count and average:',count,average\n   rc=sqlite3_step(statement)\n   if (rc /= SQLITE_DONE) error stop 'unexpected additional row'\n   rc=sqlite3_finalize(statement)\n   if (rc /= SQLITE_OK) error stop 'cannot finalize query'\n   rc=sqlite3_close(db)\n   if (rc /= SQLITE_OK) error stop 'cannot close database'\n   print *, 'PASS fortran-sqlite3'\nend program main\n"
+    "source": "program main\n   use iso_c_binding, only: c_ptr, c_null_funptr, c_null_ptr\n   use sqlite3\n   implicit none\n   type(c_ptr) :: db, statement\n   character(:), allocatable :: message\n   integer :: rc, count\n   real(kind(1.d0)) :: average\n   rc=sqlite3_open(':memory:',db)\n   if (rc /= SQLITE_OK) error stop 'cannot open database'\n   rc=sqlite3_exec(db,'CREATE TABLE observations(value REAL);'// &\n      'INSERT INTO observations VALUES(1.0),(2.0),(3.0),(4.0),(5.0);', &\n      c_null_funptr,c_null_ptr,message)\n   if (rc /= SQLITE_OK) error stop 'cannot create observations'\n   rc=sqlite3_prepare_v2(db,'SELECT COUNT(*), AVG(value) FROM observations',statement)\n   if (rc /= SQLITE_OK) error stop 'cannot prepare query'\n   rc=sqlite3_step(statement)\n   if (rc /= SQLITE_ROW) error stop 'missing query result'\n   count=sqlite3_column_int(statement,0)\n   average=sqlite3_column_double(statement,1)\n   if (count /= 5 .or. abs(average-3.d0)>1.d-12) error stop 'incorrect query result'\n   print *, 'Observation count and average:',count,average\n   rc=sqlite3_step(statement)\n   if (rc /= SQLITE_DONE) error stop 'unexpected additional row'\n   rc=sqlite3_finalize(statement)\n   if (rc /= SQLITE_OK) error stop 'cannot finalize query'\n   rc=sqlite3_close(db)\n   if (rc /= SQLITE_OK) error stop 'cannot close database'\n   print *, 'PASS fortran-sqlite3'\nend program main\n",
+    "topics": [
+      "fortran",
+      "fortran-package-manager",
+      "fpm",
+      "sqlite",
+      "sqlite3"
+    ]
   },
   {
     "id": "geodesic-fortran",
@@ -1392,7 +1993,16 @@
     "category": "Geodesy",
     "description": "Distances, bearings and geodetic coordinate transformations on spheres and ellipsoids.",
     "dependencies": [],
-    "source": "program main\n   use geodesic_module, only: inverse, direct, wp => geodesic_wp\n   implicit none\n   real(wp), parameter :: a=6378137._wp, f=1._wp/298.257223563_wp\n   real(wp) :: distance, azimuth1, azimuth2, arc, reduced, scale12, scale21, area\n   real(wp) :: latitude, longitude, final_bearing\n   ! Equatorial quarter-circle: distance must equal pi*a/2.\n   call inverse(a,f,0._wp,0._wp,0._wp,90._wp,distance,azimuth1,azimuth2, &\n      0,arc,reduced,scale12,scale21,area)\n   if (abs(distance-acos(-1._wp)*a/2)>1.e-6_wp) error stop 'incorrect equatorial distance'\n   ! London to New York, with a direct/inverse round trip.\n   call inverse(a,f,51.5074_wp,-0.1278_wp,40.7128_wp,-74.0060_wp, &\n      distance,azimuth1,azimuth2,0,arc,reduced,scale12,scale21,area)\n   if (distance < 5.58e6_wp .or. distance > 5.59e6_wp) error stop 'incorrect city distance'\n   call direct(a,f,51.5074_wp,-0.1278_wp,azimuth1,distance,0,latitude,longitude, &\n      final_bearing,0,arc,reduced,scale12,scale21,area)\n   if (abs(latitude-40.7128_wp)>1.e-8_wp .or. abs(longitude+74.0060_wp)>1.e-8_wp) &\n      error stop 'failed geodesic round trip'\n   print *, 'London to New York (km):',distance/1000\n   print *, 'Initial and final bearings (degrees):',azimuth1,azimuth2\n   print *, 'PASS geodesic-fortran'\nend program main\n"
+    "source": "program main\n   use geodesic_module, only: inverse, direct, wp => geodesic_wp\n   implicit none\n   real(wp), parameter :: a=6378137._wp, f=1._wp/298.257223563_wp\n   real(wp) :: distance, azimuth1, azimuth2, arc, reduced, scale12, scale21, area\n   real(wp) :: latitude, longitude, final_bearing\n   ! Equatorial quarter-circle: distance must equal pi*a/2.\n   call inverse(a,f,0._wp,0._wp,0._wp,90._wp,distance,azimuth1,azimuth2, &\n      0,arc,reduced,scale12,scale21,area)\n   if (abs(distance-acos(-1._wp)*a/2)>1.e-6_wp) error stop 'incorrect equatorial distance'\n   ! London to New York, with a direct/inverse round trip.\n   call inverse(a,f,51.5074_wp,-0.1278_wp,40.7128_wp,-74.0060_wp, &\n      distance,azimuth1,azimuth2,0,arc,reduced,scale12,scale21,area)\n   if (distance < 5.58e6_wp .or. distance > 5.59e6_wp) error stop 'incorrect city distance'\n   call direct(a,f,51.5074_wp,-0.1278_wp,azimuth1,distance,0,latitude,longitude, &\n      final_bearing,0,arc,reduced,scale12,scale21,area)\n   if (abs(latitude-40.7128_wp)>1.e-8_wp .or. abs(longitude+74.0060_wp)>1.e-8_wp) &\n      error stop 'failed geodesic round trip'\n   print *, 'London to New York (km):',distance/1000\n   print *, 'Initial and final bearings (degrees):',azimuth1,azimuth2\n   print *, 'PASS geodesic-fortran'\nend program main\n",
+    "topics": [
+      "fortran",
+      "fortran-package-manager",
+      "geodesy",
+      "geodetic-computations",
+      "vincenty-direct",
+      "vincenty-formula",
+      "vincenty-inverse"
+    ]
   },
   {
     "id": "simulated-annealing",
@@ -1411,6 +2021,17 @@
         "liblapack-dev=3.12.1-6"
       ]
     },
-    "source": "module objective_module\n   use simulated_annealing_module, only: simulated_annealing_type, dp => simann_wp\n   implicit none\ncontains\n   subroutine objective(me,x,value,status)\n      class(simulated_annealing_type), intent(inout) :: me\n      real(dp), intent(in) :: x(:)\n      real(dp), intent(out) :: value\n      integer, intent(out) :: status\n      ! Rastrigin function: global minimum is zero at (0,0).\n      value=sum(x*x+10._dp*(1._dp-cos(2*acos(-1._dp)*x)))\n      status=0\n   end subroutine objective\nend module objective_module\nprogram main\n   use objective_module\n   use iso_fortran_env, only: output_unit\n   implicit none\n   type(simulated_annealing_type) :: solver\n   real(dp) :: x(2), best(2), step(2), temperature, value\n   integer :: accepted, evaluations, status\n   x=[2.5_dp,-1.5_dp]; step=1._dp; temperature=20._dp\n   call solver%initialize(objective,2,[-5._dp,-5._dp],[5._dp,5._dp],[2._dp,2._dp], &\n      .false.,1.e-8_dp,20,10,4,200000,0,1,2,1,0.1_dp,output_unit)\n   call solver%optimize(x,0.85_dp,temperature,step,best,value,accepted,evaluations,status)\n   print *, 'Optimization status, point and value:',status,best,value\n   if (status /= 0) error stop 'annealing did not converge'\n   if (value > 1.e-5_dp .or. maxval(abs(best))>1.e-3_dp) error stop 'incorrect global minimum'\n   print *, 'Best point:',best\n   print *, 'Objective and evaluations:',value,evaluations\n   print *, 'PASS simulated-annealing'\nend program main\n"
+    "source": "module objective_module\n   use simulated_annealing_module, only: simulated_annealing_type, dp => simann_wp\n   implicit none\ncontains\n   subroutine objective(me,x,value,status)\n      class(simulated_annealing_type), intent(inout) :: me\n      real(dp), intent(in) :: x(:)\n      real(dp), intent(out) :: value\n      integer, intent(out) :: status\n      ! Rastrigin function: global minimum is zero at (0,0).\n      value=sum(x*x+10._dp*(1._dp-cos(2*acos(-1._dp)*x)))\n      status=0\n   end subroutine objective\nend module objective_module\nprogram main\n   use objective_module\n   use iso_fortran_env, only: output_unit\n   implicit none\n   type(simulated_annealing_type) :: solver\n   real(dp) :: x(2), best(2), step(2), temperature, value\n   integer :: accepted, evaluations, status\n   x=[2.5_dp,-1.5_dp]; step=1._dp; temperature=20._dp\n   call solver%initialize(objective,2,[-5._dp,-5._dp],[5._dp,5._dp],[2._dp,2._dp], &\n      .false.,1.e-8_dp,20,10,4,200000,0,1,2,1,0.1_dp,output_unit)\n   call solver%optimize(x,0.85_dp,temperature,step,best,value,accepted,evaluations,status)\n   print *, 'Optimization status, point and value:',status,best,value\n   if (status /= 0) error stop 'annealing did not converge'\n   if (value > 1.e-5_dp .or. maxval(abs(best))>1.e-3_dp) error stop 'incorrect global minimum'\n   print *, 'Best point:',best\n   print *, 'Objective and evaluations:',value,evaluations\n   print *, 'PASS simulated-annealing'\nend program main\n",
+    "topics": [
+      "annealing",
+      "basin-hopping",
+      "fortran",
+      "fortran-package-manager",
+      "minimization",
+      "optimization",
+      "python",
+      "simulated-annealing",
+      "stochastic-optimization"
+    ]
   }
 ]

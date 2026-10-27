@@ -36,6 +36,9 @@ get('compiler').options = ['gfortran', 'gfortran17', 'ifx', 'flang'].map(value =
 const legacyService = process.argv.includes('--legacy');
 const examples = JSON.parse(readFileSync(new URL('../site/fpm/examples.json', import.meta.url), 'utf8'));
 const packages = JSON.parse(readFileSync(new URL('../site/fpm/packages.json', import.meta.url), 'utf8'));
+// Keep topic-search behavior testable if an author later edits live metadata.
+const topicFixture = packages.find(p => p.id === 'dvode');
+topicFixture.topics = [...new Set([...(topicFixture.topics || []), 'adams-bashforth', 'fortran'])];
 const translated = JSON.parse(readFileSync(new URL('../site/fpm/translated-r.json', import.meta.url), 'utf8'));
 let translatedFetches = 0;
 const unconfigured = process.argv.includes('--unconfigured');
@@ -138,6 +141,19 @@ assert.equal(submissions.length, 0, 'Initialization must not submit a job');
 get('package-search').value = 'DVODE';
 get('package-search').listeners.input();
 assert.equal(get('available-package').value, 'dvode');
+get('package-search').value = 'adams bashforth'; get('package-search').listeners.input();
+assert.ok(get('available-package').options.some(item => item.value === 'dvode'));
+get('available-package').value = 'dvode'; get('available-package').listeners.change();
+assert.equal(get('package-topics').hidden, false);
+const topicLabel = get('package-topics').options.find(item => item.textContent === 'adams-bashforth');
+get('package-category').value = 'Interpolation';
+topicLabel.listeners.click();
+assert.equal(get('package-category').value, '');
+assert.equal(get('package-search').value, 'adams-bashforth');
+assert.ok(get('available-package').options.some(item => item.value === 'dvode'));
+const labels = get('package-topics').options.map(item => item.textContent);
+assert.ok(labels.indexOf('adams-bashforth') < labels.indexOf('fortran'));
+get('package-search').value = 'DVODE'; get('package-search').listeners.input();
 assert.ok(get('package-search-results').options.some(item => item.textContent.startsWith('dvode')));
 get('package-category').value = 'Interpolation'; get('package-category').listeners.change();
 assert.equal(get('available-package').options.length, 1);
@@ -145,7 +161,10 @@ await get('package-search-results').options.find(item => item.textContent === 'S
 assert.equal(get('available-package').value, 'dvode');
 get('package-search').value = 'lapack';
 get('package-search').listeners.input();
-assert.deepEqual(get('available-package').options.map(p => p.value), ['', 'fortran-lapack']);
+assert.ok(get('available-package').options.some(p => p.value === 'fortran-lapack'));
+for (const packageEntry of packages.filter(p => p.topics?.includes('lapack'))) {
+  assert.ok(get('available-package').options.some(p => p.value === packageEntry.id), 'Topic matches join description matches');
+}
 get('package-search').value = '';
 get('package-search').listeners.input();
 get('package-category').value = 'Interpolation';
@@ -243,6 +262,7 @@ await get('package-search-results').options.find(item => item.textContent === 'S
 assert.equal(get('available-package').value, 'dvode');
 get('package-collection').value = 'translated-r'; await get('package-collection').listeners.change();
 assert.match(get('package-count').textContent, /596/);
+assert.equal(get('package-topics').hidden, true, 'Translated packages do not inherit repository-wide topic labels');
 get('package-search').value = 'Metrics'; get('package-search').listeners.input();
 assert.ok(get('available-package').options.some(option => option.value === 'Metrics'));
 get('available-package').value = 'Metrics'; get('available-package').listeners.change();
