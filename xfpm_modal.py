@@ -29,7 +29,7 @@ if modal.is_local():
     from fpm_cache import recipe_identity
     RECIPE_ID = recipe_identity()
     digest = hashlib.sha256()
-    for filename in ('xfpm_modal.py', 'xfpm_worker.py', 'fpm_sources.py', 'fpm_compilers.py', 'fortran_plot.py',
+    for filename in ('xfpm_modal.py', 'xfpm_worker.py', 'fpm_targets.py', 'fpm_sources.py', 'fpm_compilers.py', 'fortran_plot.py',
                      'fpm_cache.py', 'fpm_build.py', 'fpm_build_recipe.json', 'xfpm_prebuild.py', 'fpm_catalog.json',
                      'vendor/pyplot-fortran/src/pyplot_module.F90', 'vendor/pyplot-fortran/upstream.json',
                      'fpm_toolchains/xinstall_gnu17.sh', 'fpm_toolchains/xinstall_intel.sh', 'fpm_toolchains/xinstall_flang.sh'):
@@ -56,6 +56,7 @@ def with_fpm(base, compiler):
     .env({'FPM_COMPILER': compiler})
     .add_local_file(ROOT / 'fpm_sources.py', '/opt/fpm/fpm_sources.py', copy=True)
     .add_local_file(ROOT / 'fpm_compilers.py', '/opt/fpm/fpm_compilers.py', copy=True)
+    .add_local_file(ROOT / 'fpm_targets.py', '/opt/fpm/fpm_targets.py', copy=True)
     .add_local_file(ROOT / 'fpm_cache.py', '/opt/fpm/fpm_cache.py', copy=True)
     .add_local_file(ROOT / 'fpm_build.py', '/opt/fpm/fpm_build.py', copy=True)
     .add_local_file(ROOT / 'fpm_catalog.json', '/opt/fpm/fpm_catalog.json', copy=True)
@@ -107,6 +108,7 @@ broker_image = (modal.Image.debian_slim(python_version='3.12').pip_install('toml
     .add_local_file(ROOT / 'fpm_catalog.json', '/root/fpm_catalog.json', copy=True)
     .add_local_file(ROOT / 'fpm_sources.py', '/root/fpm_sources.py', copy=True)
     .add_local_file(ROOT / 'fpm_collections.py', '/root/fpm_collections.py', copy=True))
+broker_image = broker_image.add_local_file(ROOT / 'fpm_targets.py', '/root/fpm_targets.py', copy=True)
 api_image = (modal.Image.debian_slim(python_version='3.12').pip_install('fastapi==0.142.2')
     .env({**container_settings,
           'FPM_ORIGINS': os.environ.get('FPM_ORIGINS',
@@ -119,6 +121,7 @@ api_image = (modal.Image.debian_slim(python_version='3.12').pip_install('fastapi
     .add_local_file(ROOT / 'fpm_catalog.json', '/root/fpm_catalog.json', copy=True)
     .add_local_file(ROOT / 'fpm_api.py', '/root/fpm_api.py', copy=True)
     .add_local_file(ROOT / 'fpm_collections.py', '/root/fpm_collections.py', copy=True))
+api_image = api_image.add_local_file(ROOT / 'fpm_targets.py', '/root/fpm_targets.py', copy=True)
 
 if PRECOMPILED_FILE:
     # Routing is private deployment configuration, never a worker input or a
@@ -156,7 +159,8 @@ def execute_job(identifier, payload, *, sandbox_image=None, sandbox_app=None, ca
             message = {'request': payload, 'cache_key': cache['key']}
         else:
             with tempfile.TemporaryDirectory() as temporary:
-                root, records = source_preparer(temporary, payload).prepare(payload)
+                # Target selection is an execution setting, not source input.
+                root, records = source_preparer(temporary, payload).prepare({**payload, 'target': ''})
                 # Workers receive an already selected source root. Preserve the
                 # protocol used by existing precompiled images.
                 worker_request = {k: v for k, v in payload.items() if k != 'subdirectory'}

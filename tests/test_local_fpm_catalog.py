@@ -39,6 +39,15 @@ def payload(**extra):
 
 
 class CatalogExecutionTests(unittest.TestCase):
+    def test_package_target_patterns_are_execution_settings(self):
+        _, data = fixture()
+        with tempfile.TemporaryDirectory() as temporary, patch('local_fpm_catalog.catalog', return_value=[]), \
+                patch('local_fpm_catalog.execute_project', return_value={'ok': True, 'status': 'PASS', 'stages': []}) as execute:
+            result = execute_catalog(temporary, payload(workflow='package', target='demo_* other'),
+                                     downloader=lambda *a, **k: data)
+            self.assertTrue(result['ok'])
+            self.assertEqual(execute.call_args.kwargs['options']['target'], 'demo_* other')
+
     def test_short_paths_preserve_external_and_nested_dependency_references(self):
         import tomllib
         with tempfile.TemporaryDirectory() as temporary:

@@ -26,7 +26,8 @@ globalThis.document = {
     });
     return elements.get(id);
   },
-  createElement(tag) {return tag === 'a' ? {click() {downloads.push({name: this.download, blob: blobs.get(this.href)});}} : {};},
+  createElement(tag) {return tag === 'a' ? {click() {downloads.push({name: this.download, blob: blobs.get(this.href)});}}
+    : {listeners: {}, addEventListener(name, fn) {this.listeners[name] = fn;}};},
 };
 const get = id => document.getElementById(id);
 get('workflow').value = 'consumer';
@@ -134,6 +135,14 @@ assert.equal(get('source-pane').hidden, false);
 assert.equal(get('test-action').disabled, true);
 assert.equal(get('example').options.length, 5);
 assert.equal(submissions.length, 0, 'Initialization must not submit a job');
+get('package-search').value = 'DVODE';
+get('package-search').listeners.input();
+assert.equal(get('available-package').value, 'dvode');
+assert.ok(get('package-search-results').options.some(item => item.textContent.startsWith('dvode')));
+get('package-category').value = 'Interpolation'; get('package-category').listeners.change();
+assert.equal(get('available-package').options.length, 1);
+await get('package-search-results').options.find(item => item.textContent === 'Search all categories').listeners.click();
+assert.equal(get('available-package').value, 'dvode');
 get('package-search').value = 'lapack';
 get('package-search').listeners.input();
 assert.deepEqual(get('available-package').options.map(p => p.value), ['', 'fortran-lapack']);
@@ -229,6 +238,10 @@ assert.equal(translatedFetches, 0, 'General collection does not fetch translated
 get('package-collection').value = 'translated-r';
 await get('package-collection').listeners.change();
 assert.equal(translatedFetches, 1);
+get('package-search').value = 'dvode'; get('package-search').listeners.input();
+await get('package-search-results').options.find(item => item.textContent === 'Search General Fortran packages').listeners.click();
+assert.equal(get('available-package').value, 'dvode');
+get('package-collection').value = 'translated-r'; await get('package-collection').listeners.change();
 assert.match(get('package-count').textContent, /596/);
 get('package-search').value = 'Metrics'; get('package-search').listeners.input();
 assert.ok(get('available-package').options.some(option => option.value === 'Metrics'));

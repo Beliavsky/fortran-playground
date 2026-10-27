@@ -113,7 +113,7 @@ def refresh_worker(app, image):
     with tempfile.TemporaryDirectory() as temporary:
         directory = Path(temporary)
         for name in ('fpm_cache.py', 'fpm_build.py', 'fpm_sources.py', 'fpm_compilers.py',
-                     'xfpm_worker.py', 'fortran_plot.py'):
+                     'xfpm_worker.py', 'fpm_targets.py', 'fortran_plot.py'):
             shutil.copyfile(ROOT / name, directory / name)
         shutil.copytree(ROOT / 'vendor/pyplot-fortran', directory / 'vendor/pyplot-fortran')
         return image.add_local_dir(directory, '/opt/fpm', copy=True).env({'FPM_COMPILER': 'gfortran'}).build(app)

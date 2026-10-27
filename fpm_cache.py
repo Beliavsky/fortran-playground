@@ -10,7 +10,7 @@ from fpm_build import consumer_project, library_inventory
 BUILD_FILES = ('xfpm_prebuild.py', 'fpm_build.py', 'fpm_sources.py', 'fortran_plot.py',
                'vendor/pyplot-fortran/src/pyplot_module.F90', 'vendor/pyplot-fortran/upstream.json')
 WORKER_FILES = ('xfpm_worker.py', 'fpm_cache.py', 'fpm_build.py', 'fpm_sources.py', 'fpm_compilers.py',
-                'fortran_plot.py', 'vendor/pyplot-fortran/src/pyplot_module.F90', 'vendor/pyplot-fortran/upstream.json')
+                'fpm_targets.py', 'fortran_plot.py', 'vendor/pyplot-fortran/src/pyplot_module.F90', 'vendor/pyplot-fortran/upstream.json')
 
 
 def worker_identity(root=ROOT):

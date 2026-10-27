@@ -9,6 +9,7 @@ import threading
 import time
 import tomllib
 import sys
+from fpm_targets import parse_targets, select_targets
 
 COMPILERS = ('gfortran', 'gfortran17', 'ifx', 'flang', 'lfortran')
 
@@ -29,9 +30,7 @@ def validate_options(options):
     result = {**defaults, **options}
     if result['action'] not in ('build', 'run', 'test') or result['profile'] not in ('debug', 'release'):
         raise ValueError('Choose Build, Run, or Test and a debug or release profile')
-    import re
-    if not isinstance(result['target'], str) or (result['target'] and not re.fullmatch(r'[A-Za-z0-9_][A-Za-z0-9_.-]{0,127}', result['target'])):
-        raise ValueError('Supply one target name, without flags or wildcards')
+    parse_targets(result['target'])
     for key in ('compile_timeout', 'run_timeout'):
         if type(result[key]) not in (float, int) or not math.isfinite(result[key]) or result[key] < 0:
             raise ValueError('Timeouts must be finite nonnegative seconds; 0 means unlimited')
@@ -155,13 +154,18 @@ def execute_project(project, name, *, options=None, overrides=None, cancel=None,
                 row.update(ok=True, status='PASS')
                 return finish_result(row, started)
             target = options['target'] if options['source'] is None else ''
-            if not names or (target and target not in names) or (kind == 'app' and not target and len(names) > 1):
+            if not names or (kind == 'app' and not target.strip() and len(names) > 1):
                 row.update(status='FAIL', needs_target=True,
                            error='Choose an available target: ' + ', '.join(names) if names else
                                  'No application/test targets found. Use Build or supply a main program.')
                 return finish_result(row, started)
+            try:
+                selected = select_targets(target, names)
+            except ValueError as error:
+                row.update(status='FAIL', needs_target=True, error=str(error))
+                return finish_result(row, started)
             before = snapshot(workdir)
-            run = stage([options['action'], *flags, *(['--target', target] if target else [])],
+            run = stage([options['action'], *flags, *(['--target', *selected] if selected else [])],
                         options['run_timeout'], options['stdin'])
             row.update(collect_plots(workdir, before))
             row['execution'] = run

@@ -11,7 +11,7 @@
 <div class="toolbar"><label for="workflow">Use</label><select id="workflow"><option value="package">Package's own programs and tests</option><option value="consumer">My main program</option></select>
 <label for="action">Action</label><select id="action"><option value="run">Compile and Run</option><option value="build">Build only</option><option id="test-action" value="test">Test</option></select>
 <label for="profile">Profile</label><select id="profile"><option value="debug">Debug</option><option value="release">Release</option></select>
-<span id="target-controls"><label for="target">Target (optional)</label><input id="target" list="targets" spellcheck="false"><datalist id="targets"></datalist></span></div>
+<span id="target-controls"><label for="target">Targets (optional)</label><input id="target" list="targets" placeholder="demo_* or name1 name2" maxlength="2048" spellcheck="false"><datalist id="targets"></datalist></span></div>
 <div class="toolbar"><label for="interface">Interface</label><select id="interface"><option value="single">Single compiler</option><option value="compare">Compare compilers</option></select>
 <span id="single-compiler"><label for="compiler">Compiler</label><select id="compiler"></select></span>
 <fieldset id="compiler-choices" hidden><legend>Compilers</legend>

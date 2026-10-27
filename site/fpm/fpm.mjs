@@ -26,6 +26,7 @@ let translatedSupported = false;
 const translatedUnavailable = () => Boolean(get('subdirectory').value.trim()) && !translatedSupported;
 let packages = [], generalPackages = [], translatedPackages, precompiled = {};
 let collectionLoading = false, collectionGeneration = 0;
+let searchButtons = [];
 const translatedCollection = () => get('package-collection').value === 'translated-r';
 const packageCategories = p => p.categories?.length ? p.categories : [p.category];
 let exporting = false, exportRuntime;
@@ -41,7 +42,7 @@ function controls() {
   get('stdin-pane').hidden = get('action').value === 'build';
   get('workflow-note').textContent = consumer
     ? 'The package is built as a dependency of your main program. Examples include working main programs.'
-    : 'Build the downloaded project itself. Run uses an application target; Test runs all tests unless you select one. Leave the target blank to discover available applications.';
+    : 'Build the downloaded project itself. Targets accept names separated by spaces or commas, with * and ? patterns (quotes optional). Leave blank to discover applications or run all tests. Selected programs share the run/test time limit.';
   const labels = {run: 'Compile and Run', build: 'Build', test: 'Build and Test'};
   get('submit').textContent = labels[get('action').value];
   if (ready && translatedUnavailable()) get('workflow-note').textContent = localExecution
@@ -53,8 +54,9 @@ function controls() {
   get('compiler').disabled = busy || !ready || !compilerSelection;
   get('load-example').disabled = busy || !get('example').value;
   get('available-package').disabled = busy;
-  get('package-search').disabled = busy;
-  get('package-category').disabled = busy;
+  get('package-search').disabled = busy || collectionLoading;
+  get('package-category').disabled = busy || collectionLoading;
+  for (const button of searchButtons) button.disabled = busy;
   const selected = packages.find(p => p.id === get('available-package').value);
   get('load-package').disabled = busy || collectionLoading || !selected || (!localExecution && !translatedCollection() && (!ready
     || precompiled[selected.id]?.revision !== selected.revision));
@@ -80,8 +82,42 @@ function renderPackages() {
     option.disabled = !localExecution && !translatedCollection() && precompiled[item.id]?.revision !== item.revision;
     get('available-package').appendChild(option);
   }
-  get('available-package').value = visible.some(p => p.id === previous) ? previous : '';
+  get('available-package').value = query && visible.length === 1 ? visible[0].id
+    : visible.some(p => p.id === previous) ? previous : '';
   get('package-count').textContent = `${visible.length} of ${packages.length} packages`;
+  const matches = get('package-search-results');
+  matches.replaceChildren();
+  searchButtons = [];
+  matches.hidden = !query;
+  if (query) {
+    for (const item of visible.slice(0, 20)) {
+      const button = document.createElement('button');
+      button.type = 'button'; button.disabled = busy;
+      button.textContent = `${item.id} — ${item.description}`;
+      button.addEventListener('click', () => {get('available-package').value = item.id; selectPackage();});
+      searchButtons.push(button);
+      matches.appendChild(button);
+    }
+    if (!visible.length) {
+      const message = document.createElement('span');
+      message.textContent = `No matches in ${translatedCollection() ? 'Translated R packages' : 'General Fortran packages'}${category ? ' / ' + category : ''}.`;
+      matches.appendChild(message);
+      const button = document.createElement('button'); button.type = 'button'; button.disabled = busy;
+      button.textContent = category ? 'Search all categories' : translatedCollection() ? 'Search General Fortran packages' : 'Search Translated R packages';
+      button.addEventListener('click', async () => {
+        if (category) get('package-category').value = '';
+        else {
+          get('package-collection').value = translatedCollection() ? 'general' : 'translated-r';
+          await selectCollection();
+          get('package-search').value = query;
+        }
+        renderPackages();
+      });
+      matches.appendChild(button);
+      searchButtons.push(button);
+    }
+    if (visible.length === 1) selectPackage();
+  }
   controls();
 }
 
@@ -266,7 +302,7 @@ for (const id of ['package-url', 'revision', 'subdirectory']) get(id).addEventLi
   controls();
 });
 get('example').addEventListener('change', controls);
-get('available-package').addEventListener('change', () => {
+function selectPackage() {
   const selected = packages.find(p => p.id === get('available-package').value);
   sourceLinks(selected);
   get('package-note').textContent = selected
@@ -277,7 +313,8 @@ get('available-package').addEventListener('change', () => {
         : 'Precompiled build is not available on this service yet.')
     : 'Choose a package to load its pinned revision and a working main program. Loading does not run a job.';
   controls();
-});
+}
+get('available-package').addEventListener('change', selectPackage);
 get('load-package').addEventListener('click', () => {
   const selected = packages.find(p => p.id === get('available-package').value);
   if (!selected || get('load-package').disabled) return;

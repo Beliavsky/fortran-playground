@@ -46,6 +46,7 @@
     <button id="load-package" type="button" disabled>Load package</button>
   </div>
   <p id="package-note">Loading the available package catalog&hellip;</p>
+  <div id="package-search-results" class="toolbar" role="group" aria-label="Matching packages" hidden></div>
   <p id="package-source-links" hidden>
     <a id="package-source" target="_blank" rel="noopener noreferrer">Browse pinned source</a>
     &middot; <a href="https://github.com/Beliavsky/fortran-playground/blob/main/docs/fpm-precompiled.md#catalog-specific-build-adaptations" target="_blank" rel="noopener noreferrer">Build notes and patches</a>
@@ -64,8 +65,8 @@
     <label for="action">Action</label>
     <select id="action"><option value="run">Compile and Run</option><option value="build">Build only</option><option id="test-action" value="test" disabled>Test</option></select>
     <span id="target-controls" hidden>
-      <label for="target">Target</label>
-      <input id="target" type="text" list="targets" placeholder="Optional target name" maxlength="128" spellcheck="false">
+      <label for="target">Targets</label>
+      <input id="target" type="text" list="targets" placeholder="demo_* or name1 name2" maxlength="2048" spellcheck="false">
       <datalist id="targets"></datalist>
     </span>
     <button id="submit" class="primary" type="button" disabled>Compile and Run</button>

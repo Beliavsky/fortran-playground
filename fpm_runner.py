@@ -117,7 +117,7 @@ def main(argv, *, hosted):
     parser.add_argument('--fpm', required=True, metavar='GITHUB_URL' if hosted else 'DIRECTORY')
     parser.add_argument('--action', choices=('build', 'run', 'test'), default='run')
     parser.add_argument('--compile-only', action='store_true', help='Alias for --action build')
-    parser.add_argument('--target', default='')
+    parser.add_argument('--target', default='', help='Names or * and ? patterns, separated by spaces/commas; quote lists in the shell')
     parser.add_argument('--main', type=Path, help='Local UTF-8 main program using the package; Build or Run only')
     group = parser.add_mutually_exclusive_group()
     group.add_argument('--compiler', choices=names)

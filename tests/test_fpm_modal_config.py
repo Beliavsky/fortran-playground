@@ -171,13 +171,15 @@ class ModalConfigTests(unittest.TestCase):
         module['modal'].Sandbox = types.SimpleNamespace(create=MagicMock(return_value=sandbox))
         module['modal'].Image.from_name = MagicMock(return_value='clean-image')
         request = {'url': 'https://github.com/' + R_REPOSITORY, 'revision': 'a' * 40,
-                   'subdirectory': 'Metrics', 'workflow': 'package', 'action': 'run'}
-        with patch('fpm_collections.TranslatedRPreparer.prepare', return_value=('r/Metrics', [])):
+                   'subdirectory': 'Metrics', 'workflow': 'package', 'action': 'run', 'target': 'demo_* other'}
+        with patch('fpm_collections.TranslatedRPreparer.prepare', return_value=('r/Metrics', [])) as prepare:
             result = module['execute_job']('translated-job', request, cancelled=lambda: False)
+        self.assertEqual(prepare.call_args.args[0]['target'], '')
         self.assertTrue(result['ok'], result)
         message = json.loads(sandbox.stdin.write.call_args.args[0])
         self.assertEqual(message['root'], 'r/Metrics')
         self.assertNotIn('subdirectory', message['request'])
+        self.assertEqual(message['request']['target'], 'demo_* other')
         self.assertIn('bundle', message)
         self.assertNotIn('cache_key', message)
 

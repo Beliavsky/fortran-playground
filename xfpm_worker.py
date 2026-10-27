@@ -11,6 +11,7 @@ import time
 import tomllib
 
 from fpm_sources import extract_archive, validate_request
+from fpm_targets import parse_targets, select_targets
 from fpm_compilers import COMPILERS, compiler_flags
 from fpm_cache import consumer_project, cached_request_matches, library_inventory
 from fortran_plot import uses_pyplot, install_module, collect_plots, plotting_environment, provides_pyplot
@@ -64,7 +65,10 @@ def targets(project, kind):
 
 def execute(message):
     os.environ.update(plotting_environment())
-    payload = validate_request(message['request'])
+    target_text = message['request'].get('target', '')
+    parse_targets(target_text)
+    payload = validate_request({**message['request'], 'target': ''})
+    payload['target'] = target_text
     compiler = payload['compiler']
     if compiler != os.environ.get('FPM_COMPILER', 'gfortran'):
         raise ValueError('Requested compiler does not match this sandbox image.')
@@ -113,13 +117,15 @@ def execute(message):
         result['error'] = f'This package has no {"test" if kind == "test" else "application"} targets. Try Build or supply a custom main program.'
         return result
     target = payload['target'] if payload['workflow'] == 'package' else ''
-    if target and target not in available:
-        result.update(error='The selected target was not found. Choose an available target.', needs_target=True)
-        return result
-    if kind == 'app' and not target and len(available) > 1:
+    if kind == 'app' and not target.strip() and len(available) > 1:
         result.update(error='Choose an application target, then submit again.', needs_target=True)
         return result
-    command = ['fpm', payload['action'], *flags] + (['--target', target] if target else [])
+    try:
+        selected = select_targets(target, available)
+    except ValueError as error:
+        result.update(error=str(error), needs_target=True)
+        return result
+    command = ['fpm', payload['action'], *flags] + (['--target', *selected] if selected else [])
     run = stage(command, project, 30, payload['stdin'])
     result['stages'].append({'name': 'Test' if kind == 'test' else 'Run', **run})
     result.update(collect_plots(project))

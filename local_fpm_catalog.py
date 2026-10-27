@@ -108,7 +108,7 @@ def execute_catalog(workspace, data, *, overrides=None, fpm_path=None, cancel=No
                     if settings else source_preparer(sources, request, pins=pins, downloader=download))
         preparer.deadline = time.monotonic() + 600
         # Compiler choice does not change the downloaded source tree.
-        relative, records = preparer.prepare({**request, 'compiler': 'gfortran'})
+        relative, records = preparer.prepare({**request, 'compiler': 'gfortran', 'target': ''})
         root = sources / relative
         if package:
             if records[0]['sha256'] != package['archive_sha256']:

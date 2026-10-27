@@ -26,6 +26,24 @@ def fixture(root):
 
 
 class LocalTests(unittest.TestCase):
+    @unittest.skipUnless(shutil.which('fpm') and shutil.which('gfortran'), 'FPM and GNU Fortran required')
+    def test_real_multiple_and_wildcard_targets(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            fixture(root)
+            for name in ['demo_a', 'demo_b']:
+                (root / 'app' / (name + '.f90')).write_text(f'program {name}\nprint *, "{name} PASS"\nend program\n')
+            for target in ['"demo_*"', 'demo_a,demo_b']:
+                with self.subTest(target=target):
+                    result = fortran_fpm.execute_project(root, 'gfortran', options={'target': target})
+                    self.assertTrue(result['ok'], result)
+                    self.assertIn('demo_a PASS', result['execution']['stdout'])
+                    self.assertIn('demo_b PASS', result['execution']['stdout'])
+                    self.assertEqual(result['execution']['command'][-3:], ['--target', 'demo_a', 'demo_b'])
+            result = fortran_fpm.execute_project(root, 'gfortran', options={'target': 'missing*'})
+            self.assertTrue(result['needs_target'], result)
+            self.assertIn('No available target matches', result['error'])
+
     def test_validation_and_paths(self):
         for options in [{'action': 'install'}, {'profile': 'fast'}, {'target': '--runner'}, {'compile_timeout': -1},
                         {'source': ''}, {'source': 'program main', 'action': 'test'}, {'stdin': 'a', 'action': 'build'},

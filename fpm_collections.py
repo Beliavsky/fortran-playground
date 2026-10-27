@@ -9,6 +9,7 @@ from urllib.parse import quote, urlsplit
 from urllib.request import Request, urlopen
 
 from fpm_sources import Preparer, validate_request as base_validate, github_repository, MAX_EXPANDED
+from fpm_targets import parse_targets
 
 R_REPOSITORY = 'Beliavsky/Fortran-from-R-packages'
 
@@ -21,7 +22,10 @@ def validate_request(payload):
             or (subdirectory and (not re.fullmatch(r'[A-Za-z0-9_.-]+', subdirectory)
                                   or subdirectory in {'.', '..'}))):
         raise ValueError('Choose a top-level package directory.')
-    result = base_validate({k: v for k, v in payload.items() if k != 'subdirectory'})
+    target = payload.get('target', '')
+    parse_targets(target)
+    result = base_validate({**{k: v for k, v in payload.items() if k != 'subdirectory'}, 'target': ''})
+    result['target'] = target
     if subdirectory:
         if github_repository(result['url']).lower() != R_REPOSITORY.lower():
             raise ValueError('Package subdirectories are currently supported for the translated R collection only.')
