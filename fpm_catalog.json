@@ -711,6 +711,628 @@
       "dependencies": [],
       "dependents_in_sample": 5,
       "stars": 6
+    },
+    {
+      "id": "fitpack",
+      "repository": "perazz/fitpack",
+      "revision": "1907c7bad9f5c4557970e906bdd4909eb52b2d4c",
+      "archive_sha256": "7920f83f31016a23d2281af30ac5264cbc317b754b6a4c7de1a0efa3efc0d0b9",
+      "license": "BSD-3-Clause",
+      "stars": 75,
+      "category": "Interpolation",
+      "description": "Spline fitting, smoothing, derivatives, and integration of curves and surfaces.",
+      "dependencies": [],
+      "dependents_in_sample": 0
+    },
+    {
+      "id": "lsqr",
+      "repository": "jacobwilliams/LSQR",
+      "revision": "4df2ce600ca26a9f7e80dc01bfd0859d538547b3",
+      "archive_sha256": "3e5654977d4b207e0123ddd99bc669f0f60cb1526de8456399657e27bdc078fa",
+      "license": "BSD-3",
+      "stars": 31,
+      "category": "Linear algebra",
+      "description": "Iterative sparse linear systems and least-squares solver using coordinate storage.",
+      "dependencies": [],
+      "dependents_in_sample": 1
+    },
+    {
+      "id": "mpfun2020-var1",
+      "repository": "jacobwilliams/MPFUN2020-var1",
+      "revision": "f2191ad80d811cd5e309d83ffad9b2607d27aabc",
+      "archive_sha256": "1373c64f1f5c578e5270ad840b2b90d0468b88837fc3c6a5e83c4bc4f2b7a5a7",
+      "license": "BSD-3",
+      "stars": 2,
+      "category": "High precision",
+      "description": "Thread-safe arbitrary-precision real and complex arithmetic.",
+      "dependencies": [],
+      "dependents_in_sample": 2
+    },
+    {
+      "id": "rklib",
+      "repository": "jacobwilliams/rklib",
+      "revision": "e3d51f9e8a2e6756612e8e53687ab2d4b67dfb76",
+      "archive_sha256": "6c70084cb47a59f6d61b326801135cdf2889ec723b7454a82f9e04b3735593d8",
+      "license": "BSD-3",
+      "stars": 95,
+      "category": "Differential equations",
+      "description": "A collection of fixed- and variable-step Runge-Kutta ODE integration methods.",
+      "dependencies": [
+        {
+          "repository": "jacobwilliams/roots-fortran",
+          "revision": "85dc6b98404a61d49944939414f7f56c3f32edd1",
+          "sha256": "77e3839b1df2500887afbba0924a36fc6265c705f5189c2c8a6c48f169cb8228"
+        }
+      ],
+      "dependents_in_sample": 0
+    },
+    {
+      "id": "ddeabm",
+      "repository": "jacobwilliams/ddeabm",
+      "revision": "dba70c8c65388638662df2694339c5ba7feaf12a",
+      "archive_sha256": "b8e5c3dcd67d8ed7183803cc56388e7cf696b1be5383bab381bd42778c1ad92b",
+      "license": "BSD-3",
+      "stars": 41,
+      "category": "Differential equations",
+      "description": "Adaptive Adams-Bashforth-Moulton ODE integration with event finding.",
+      "dependencies": [
+        {
+          "repository": "jacobwilliams/roots-fortran",
+          "revision": "d1b45284cb3a6a2303638910452e20206f213084",
+          "sha256": "fe397ea43ebdb297e579604a92f1079ac3e46cf78383d8aef7a497ebaaa2a3fe"
+        }
+      ],
+      "dependents_in_sample": 1
+    },
+    {
+      "id": "dvode",
+      "repository": "jacobwilliams/dvode",
+      "revision": "59d2eedd1410a4bd6c196c24d08f95a7c20565c0",
+      "archive_sha256": "184807fd631421b32692c7ee37613bea78443f274a8d38954736f13c7c7246d3",
+      "license": "BSD-3",
+      "stars": 10,
+      "category": "Differential equations",
+      "description": "Variable-coefficient multistep ODE solver for stiff and nonstiff systems.",
+      "dependencies": [],
+      "dependents_in_sample": 0
+    },
+    {
+      "id": "pikaia",
+      "repository": "jacobwilliams/pikaia",
+      "revision": "c080c4004896243bf9b8bbb4577e402c9e31c5e3",
+      "archive_sha256": "a3e1a44da80c0497d7211ec5d0f2ceb1f8233369f6ab6312eff728720b36872b",
+      "license": "BSD-3",
+      "stars": 39,
+      "category": "Roots and optimization",
+      "description": "Genetic algorithm for global optimization with reproducible random seeds.",
+      "dependencies": [
+        {
+          "repository": "jacobwilliams/mersenne-twister-fortran",
+          "revision": "06961991ad4d014fbdd5b542328dd784970f33ed",
+          "sha256": "d53f72652db2c57802ce17b99e2c4d34725d804135bd0bc38614f7e46cd06903"
+        }
+      ],
+      "dependents_in_sample": 0
+    },
+    {
+      "id": "io-fortran-library",
+      "repository": "acbbullock/IO-Fortran-Library",
+      "revision": "15bc3557c36adc174abbd9a077e0686dc11cc4af",
+      "archive_sha256": "edfa815c5034803b37586324b0a8b49ffafe362bcd85fb6f8e91f5816bede6c2",
+      "license": "MIT",
+      "stars": 17,
+      "category": "Files and processes",
+      "description": "High-level numeric array file I/O, dynamic strings, and numeric/string conversion.",
+      "dependencies": [],
+      "dependents_in_sample": 1
+    },
+    {
+      "id": "collections",
+      "repository": "jchristopherson/collections",
+      "revision": "ce37c94e72b3ae5db2e2208489999260a7875f81",
+      "archive_sha256": "5d53caf3c0b35e9e2a8bed49f8e96dca1b282434859c8c6f53fae3123528f265",
+      "license": "MIT",
+      "stars": 2,
+      "category": "Containers and graphs",
+      "description": "Generic dynamically growing lists and linked lists with polymorphic values.",
+      "dependencies": [],
+      "dependents_in_sample": 3
+    },
+    {
+      "id": "peaks",
+      "repository": "jchristopherson/peaks",
+      "revision": "5bd81dc18ddd629ecf3daa08769ff2440def3682",
+      "archive_sha256": "9e960c21152146921544c46a482bb7c3999fd32b1c97a9a4759ed56f9dff6b44",
+      "license": "MIT",
+      "stars": 3,
+      "category": "Signal processing",
+      "description": "Detect local maxima and minima in sampled signals using a noise threshold.",
+      "dependencies": [
+        {
+          "repository": "jchristopherson/fortran_test_helper",
+          "revision": "1557b1485d8a5b042862042552f1e1a34552ca5e",
+          "sha256": "846d7506d044b41eb307619d84369d97afdd8b4838ea19eae6803735dffc10e2"
+        }
+      ],
+      "dependents_in_sample": 0
+    },
+    {
+      "id": "powellopt",
+      "repository": "jacobwilliams/PowellOpt",
+      "revision": "0987cd09d695cec968a3d02c8230d4ce5af33533",
+      "archive_sha256": "80eb370f64fd8da6d228ae93dc37bd9a267d35f85d7cef806bb5840b01cb6eef",
+      "license": "BSD",
+      "stars": 39,
+      "category": "Roots and optimization",
+      "description": "Powell derivative-free optimization methods including BOBYQA and COBYLA.",
+      "dependencies": [],
+      "dependents_in_sample": 1
+    },
+    {
+      "id": "fstats",
+      "repository": "jchristopherson/fstats",
+      "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "archive_sha256": "cf6b7367fc2a0d74f46000dc80a4cbedd07fd554e29117144b695b3a9ffa6fef",
+      "license": "MIT",
+      "stars": 16,
+      "category": "Statistics",
+      "description": "Probability distributions, statistical tests, regression, bootstrap sampling, and MCMC.",
+      "dependencies": [
+        {
+          "repository": "jchristopherson/linalg",
+          "revision": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+          "sha256": "6210b8b167b50694941f48b20ad5d94bdacab026f1eb4720e2d55e8ddde0b59a"
+        },
+        {
+          "repository": "jchristopherson/collections",
+          "revision": "ce37c94e72b3ae5db2e2208489999260a7875f81",
+          "sha256": "5d53caf3c0b35e9e2a8bed49f8e96dca1b282434859c8c6f53fae3123528f265"
+        },
+        {
+          "repository": "jchristopherson/fstring",
+          "revision": "1bb1043a1ed34b8bd57f2687166463dd573bce3d",
+          "sha256": "0272f644a9217485fa2a3a18e41010c88f81ccc7398fc855c37518be2ac8eb3f"
+        }
+      ],
+      "catalog_build": {
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "metapackages": [
+          "openmp",
+          "blas",
+          "lapack"
+        ],
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6",
+          "libarpack2-dev=3.9.1-6"
+        ],
+        "environment": {
+          "FPM_FFLAGS": "-fopenmp"
+        }
+      },
+      "dependents_in_sample": 1
+    },
+    {
+      "id": "spectrum",
+      "repository": "jchristopherson/spectrum",
+      "revision": "5af0d5a85eccf971aa6e0fc72b1c7439c3cef536",
+      "archive_sha256": "20079f9ad017369097d5463fec26732775fb33a868eb2d3c3a308a044cb92e79",
+      "license": "MIT",
+      "stars": 5,
+      "category": "Signal processing",
+      "description": "Filtering, spectral estimation, convolution, resampling, and signal analysis.",
+      "dependencies": [
+        {
+          "repository": "jchristopherson/linalg",
+          "revision": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+          "sha256": "6210b8b167b50694941f48b20ad5d94bdacab026f1eb4720e2d55e8ddde0b59a"
+        }
+      ],
+      "catalog_build": {
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "metapackages": [],
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6",
+          "libarpack2-dev=3.9.1-6"
+        ]
+      },
+      "dependents_in_sample": 0
+    },
+    {
+      "id": "lsmr",
+      "repository": "jacobwilliams/LSMR",
+      "revision": "12611e2299c5188441b097437695a66c85369e76",
+      "archive_sha256": "62fb8a51e5024e2dc6dfe2db0d18a3e336ba1a6008c901a37a1da300eb215a6b",
+      "license": "BSD",
+      "stars": 8,
+      "category": "Linear algebra",
+      "description": "Iterative solution of sparse linear equations and least-squares problems.",
+      "dependencies": [],
+      "catalog_build": {
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "metapackages": [],
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6",
+          "libarpack2-dev=3.9.1-6"
+        ]
+      },
+      "dependents_in_sample": 1
+    },
+    {
+      "id": "nlesolver-fortran",
+      "repository": "jacobwilliams/nlesolver-fortran",
+      "revision": "60f38870a25e6b448dd552f184aa2f8616fc8cb0",
+      "archive_sha256": "0fe03089eaccc651b3f752e93353aa0c0d5dd0379ef5179c0902876dac9ce32d",
+      "license": "BSD-3",
+      "stars": 55,
+      "category": "Roots and optimization",
+      "description": "Newton and quasi-Newton solvers for dense or sparse nonlinear equation systems.",
+      "dependencies": [
+        {
+          "repository": "jacobwilliams/fmin",
+          "revision": "88af2947680c8980f72fdafdac77715c828e8198",
+          "sha256": "35a14cc43ed71079b9222c75d56a8b671a77198597ea65da684de0055a8784dc"
+        },
+        {
+          "repository": "jacobwilliams/LSQR",
+          "revision": "a11a9ed9c631f88a567771b0afce7f4c398369fc",
+          "sha256": "5dc89aa86d0e84f4deda8aba9b776d865e5aef2d66f5a61596c2885ec0bef6c8"
+        },
+        {
+          "repository": "jacobwilliams/lusol",
+          "revision": "e5567293df3292130ba7e4809931545aadd323ff",
+          "sha256": "d73acf3bc93bd9f8b34c19e173bbfadde3721b15aa837d629c76f3adf1c510b7"
+        },
+        {
+          "repository": "jacobwilliams/LSMR",
+          "revision": "6230146c61e8341b1077c22bdc67085e7e382f1b",
+          "sha256": "fa2ec7d65839202aa46759b4f7bc6f0c345ffff0278882538216d645d9052a90"
+        }
+      ],
+      "catalog_build": {
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "metapackages": [],
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6",
+          "libarpack2-dev=3.9.1-6"
+        ]
+      },
+      "dependents_in_sample": 1
+    },
+    {
+      "id": "codata",
+      "repository": "MilanSkocic/codata",
+      "revision": "d0c9b1552f0fa483a364de4a69e82c5e23344caf",
+      "archive_sha256": "47a519277191fa5c9f3e476c1bf17bbafb6bf2eeeaca43fbffd938e7ecb835a3",
+      "license": "MIT",
+      "stars": 10,
+      "category": "Physical constants",
+      "description": "CODATA physical constants and uncertainties for several published adjustments.",
+      "dependencies": [
+        {
+          "repository": "fortran-lang/stdlib",
+          "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+        }
+      ],
+      "catalog_build": {
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "registry": {
+          "stdlib": {
+            "git": "https://github.com/fortran-lang/stdlib",
+            "rev": "58eb9133966c2797e0593281169ef57c43eccc1d"
+          }
+        },
+        "metapackages": [],
+        "manifest_versions": {
+          "milanskocic/codata": "0.0.0",
+          "fortran-lang/stdlib": "0.0.0"
+        }
+      },
+      "dependents_in_sample": 2
+    },
+    {
+      "id": "specialmatrices",
+      "repository": "loiseaujc/SpecialMatrices",
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "archive_sha256": "b44d6c7e8806a2588fcbfde53fa280a867e0ce9fe31bd2d68828c6131194ce22",
+      "license": "BSD-3-Clause (README declaration; manifest placeholder)",
+      "stars": 4,
+      "category": "Linear algebra",
+      "description": "Structured diagonal, circulant, Toeplitz, tridiagonal, and other matrices.",
+      "dependencies": [
+        {
+          "repository": "fortran-lang/stdlib",
+          "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+        },
+        {
+          "repository": "nshalle/fftpack",
+          "revision": "73745a4e82f5f9c3fa07f49cac0439c21ba50829",
+          "sha256": "6fdc6a1fdf2642c94aa0f2c294ed012fe3d99b1ef4efe05395a9367bd06af8b6"
+        }
+      ],
+      "catalog_build": {
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "registry": {
+          "stdlib": {
+            "git": "https://github.com/fortran-lang/stdlib",
+            "rev": "58eb9133966c2797e0593281169ef57c43eccc1d"
+          }
+        },
+        "metapackages": [],
+        "manifest_versions": {
+          "fortran-lang/stdlib": "0.0.0"
+        }
+      },
+      "dependents_in_sample": 2,
+      "catalog_patches": {
+        "adapter_sha256": "86ce9e8662821f1a01dbc6be505d9b18aec81bac32d625ae6f37e85932e464a5",
+        "edits": [
+          {
+            "path": "src/Strang/matvecs.f90",
+            "sha256": "3cb40444552c5edf778097b45cc0f75dce68e79466c56fd6fa4469615c798ca9",
+            "before": "do concurrent(i=1:size(x, 2))",
+            "after": "do i = 1, size(x, 2)"
+          },
+          {
+            "path": "src/Poisson2D/solve.f90",
+            "sha256": "ade74b8d71158b7fa382424553943e83547e128b3aaf44e2c629acc82462f8b7",
+            "before": "submodule(specialmatrices_poisson2D) poisson2D_solve\n   use fftpack, only: dst => dsint, init_dst => dsinti\n   implicit none(type, external)\n\n   character(len=*), parameter :: this = \"poisson2D_linear_solver\"\ncontains\n   module procedure solve_single_rhs\n   ! Local variables.\n   integer(ilp) :: nx, ny, i, j, nx_wrk, ny_wrk\n   real(dp), allocatable :: lambda_x(:), lambda_y(:)\n   real(dp), allocatable :: wsave_x(:), wsave_y(:)\n   real(dp), pointer     :: xmat(:, :)\n   real(dp) :: scale\n\n   ! Initializes pointer and allocatable arrays.\n   nx = A%nx; ny = A%ny\n   x = b; xmat(1:nx, 1:ny) => x\n   nx_wrk = int(2.5*nx + 15, kind=ilp); ny_wrk = int(2.5*ny + 15, kind=ilp)\n   allocate (wsave_x(nx_wrk)); allocate (wsave_y(ny_wrk))\n\n   ! Initializes Discrete Sine Transforms (Type-I).\n   call init_dst(nx, wsave_x); call init_dst(ny, wsave_y)\n\n   ! Compute the DST-I of the right-hand side.\n   do concurrent(j=1:ny)\n      call dst(nx, xmat(:, j), wsave_x)\n   end do\n   do concurrent(i=1:nx)\n      call dst(ny, xmat(i, :), wsave_y)\n   end do\n\n   ! Compute the eigenvalues of the 1D Laplacian operators.\n   lambda_x = -eigvalsh(Strang(nx))/A%dx**2\n   lambda_y = -eigvalsh(Strang(ny))/A%dy**2\n\n   ! Compute the solution in spectral space.\n   do concurrent(i=1:nx, j=1:ny)\n      xmat(i, j) = xmat(i, j)/(lambda_x(i) + lambda_y(j))\n   end do\n\n   ! Inverse DST-I of the solution.\n   scale = 1.0_dp/(2*(nx + 1)*2*(ny + 1))\n   do concurrent(j=1:ny)\n      call dst(nx, xmat(:, j), wsave_x)\n   end do\n   do concurrent(i=1:nx)\n      call dst(ny, xmat(i, :), wsave_y)\n   end do\n   xmat = scale*xmat\n   end procedure solve_single_rhs\n\n   module procedure solve_multi_rhs\n   integer(ilp) :: i\n   allocate (x, mold=b)\n   do concurrent(i=1:size(b, 2))\n      x(:, i) = solve(A, b(:, i))\n   end do\n   end procedure solve_multi_rhs\n\nend submodule poisson2D_solve\n",
+            "after": "submodule(specialmatrices_poisson2D) poisson2D_solve\n   use fftpack, only: dst => dsint, init_dst => dsinti\n   implicit none(type, external)\n\n   character(len=*), parameter :: this = \"poisson2D_linear_solver\"\ncontains\n   module procedure solve_single_rhs\n   ! Local variables.\n   integer(ilp) :: nx, ny, i, j, nx_wrk, ny_wrk\n   real(dp), allocatable :: lambda_x(:), lambda_y(:)\n   real(dp), allocatable :: wsave_x(:), wsave_y(:)\n   real(dp), pointer     :: xmat(:, :)\n   real(dp) :: scale\n\n   ! Initializes pointer and allocatable arrays.\n   nx = A%nx; ny = A%ny\n   x = b; xmat(1:nx, 1:ny) => x\n   nx_wrk = int(2.5*nx + 15, kind=ilp); ny_wrk = int(2.5*ny + 15, kind=ilp)\n   allocate (wsave_x(nx_wrk)); allocate (wsave_y(ny_wrk))\n\n   ! Initializes Discrete Sine Transforms (Type-I).\n   call init_dst(nx, wsave_x); call init_dst(ny, wsave_y)\n\n   ! Compute the DST-I of the right-hand side.\n   do j=1,ny\n      call dst(nx, xmat(:, j), wsave_x)\n   end do\n   do i=1,nx\n      call dst(ny, xmat(i, :), wsave_y)\n   end do\n\n   ! Compute the eigenvalues of the 1D Laplacian operators.\n   lambda_x = -eigvalsh(Strang(nx))/A%dx**2\n   lambda_y = -eigvalsh(Strang(ny))/A%dy**2\n\n   ! Compute the solution in spectral space.\n   do concurrent(i=1:nx, j=1:ny)\n      xmat(i, j) = xmat(i, j)/(lambda_x(i) + lambda_y(j))\n   end do\n\n   ! Inverse DST-I of the solution.\n   scale = 1.0_dp/(2*(nx + 1)*2*(ny + 1))\n   do j=1,ny\n      call dst(nx, xmat(:, j), wsave_x)\n   end do\n   do i=1,nx\n      call dst(ny, xmat(i, :), wsave_y)\n   end do\n   xmat = scale*xmat\n   end procedure solve_single_rhs\n\n   module procedure solve_multi_rhs\n   integer(ilp) :: i\n   allocate (x, mold=b)\n   do i=1,size(b, 2)\n      x(:, i) = solve(A, b(:, i))\n   end do\n   end procedure solve_multi_rhs\n\nend submodule poisson2D_solve\n"
+          }
+        ]
+      }
+    },
+    {
+      "id": "quaff",
+      "repository": "everythingfunctional/quaff",
+      "revision": "f26da3d854045b79102d27bdb4e9f9b072444272",
+      "archive_sha256": "e420a22fd309619e71abed44cd8e0054852eb23e82967903f733bad0e7c4bc78",
+      "license": "MIT",
+      "stars": 11,
+      "category": "Units and quantities",
+      "description": "Physical quantities with type-safe arithmetic and automatic unit conversions.",
+      "dependencies": [
+        {
+          "repository": "everythingfunctional/erloff",
+          "revision": "89e92f86c160d4f995d8ae3c2bb6f2671cf6311c",
+          "sha256": "d294beaa81d9c5fc039e60e18ab594e9a94fea910fdf7ef7e064c27330ef1df8"
+        },
+        {
+          "repository": "everythingfunctional/iso_varying_string",
+          "revision": "850391bdb4839ae25baaab449ad83c49be21d774",
+          "sha256": "b3006a15cb8b0c5b82d14c3bbe947190def6f0db2fec1a89f7884062913960a9"
+        },
+        {
+          "repository": "everythingfunctional/strff",
+          "revision": "360d9a47b4cc877438a58978b6fe27651f2fa6a2",
+          "sha256": "d6aacacf027d6ed0bfdc76adea3c58b5161324d0f23ea53f7bf38879fd1a3f2e"
+        },
+        {
+          "repository": "everythingfunctional/parff",
+          "revision": "dbce6a04992fbc1e2d13b6c633480d3cd4bbe35c",
+          "sha256": "614aac0224f2f60d299d3b1ba859e4423553e42f144546b968ee52549f4573a5"
+        }
+      ],
+      "catalog_build": {
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "metapackages": [],
+        "git_aliases": {
+          "https://gitlab.com/everythingfunctional/erloff": "https://github.com/everythingfunctional/erloff",
+          "https://gitlab.com/everythingfunctional/iso_varying_string": "https://github.com/everythingfunctional/iso_varying_string",
+          "https://gitlab.com/everythingfunctional/parff": "https://github.com/everythingfunctional/parff",
+          "https://gitlab.com/everythingfunctional/strff": "https://github.com/everythingfunctional/strff"
+        },
+        "source_revisions": {
+          "everythingfunctional/iso_varying_string": "850391bdb4839ae25baaab449ad83c49be21d774",
+          "everythingfunctional/strff": "360d9a47b4cc877438a58978b6fe27651f2fa6a2"
+        }
+      },
+      "dependents_in_sample": 0
+    },
+    {
+      "id": "forpca",
+      "repository": "gha3mi/forpca",
+      "revision": "d5d87badc4c25c647b3618f22560e712728d8165",
+      "archive_sha256": "e01059bbc49107d7e29ddb275503ea7b789e6a9478c63a33f3f1d864b1a068a4",
+      "license": "BSD-3-Clause (LICENSE file; manifest placeholder)",
+      "stars": 2,
+      "category": "Statistics",
+      "description": "Principal component directions from eigendecomposition or singular value decomposition.",
+      "dependencies": [
+        {
+          "repository": "gha3mi/kinds",
+          "revision": "811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f",
+          "sha256": "495d1133b1630dea4f38d69e5e3189e3279e4ce5836da1a7aec8a822bbe16518"
+        },
+        {
+          "repository": "gha3mi/foreig",
+          "revision": "8fcfcab03e5d7cf5eda8c51c7a1e97fe52954c39",
+          "sha256": "842695c219adfd981a06d7451b87b27d57d3db86c8878612b371b782eb0e02d1"
+        },
+        {
+          "repository": "gha3mi/forsvd",
+          "revision": "f39bba7afcb048a21947a7a640bdf9a18337f8ac",
+          "sha256": "b9a97d840dca7ad2d11ef00c5986719d180d455b2fa188a4d0b374219414088e"
+        },
+        {
+          "repository": "gha3mi/fortime",
+          "revision": "de733e2c775457d4979403fe77ab69cf28e2b159",
+          "sha256": "bccc83cf947693ad4defcfb4684af7cd660db8a6e57084b7f07e7edfd584161d"
+        },
+        {
+          "repository": "szaghi/FACE",
+          "revision": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8",
+          "sha256": "d4cc3c3a2c70e7369607624ae3361a6f7b2ba3f1e9a63ffd94ecb5cd4b019469"
+        },
+        {
+          "repository": "gha3mi/formatmul",
+          "revision": "6a77af418bbd77ffb5323a338db5cdf9368a73f7",
+          "sha256": "40d47f1616970d37c22ba264b4970abe96597423602090785ed3731ac76fc525"
+        }
+      ],
+      "catalog_build": {
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "metapackages": [],
+        "manifest_versions": {
+          "gha3mi/forpca": "0.0.0",
+          "gha3mi/kinds": "0.0.0",
+          "gha3mi/foreig": "0.0.0",
+          "gha3mi/forsvd": "0.0.0",
+          "gha3mi/formatmul": "0.0.0",
+          "gha3mi/fortime": "0.0.0"
+        },
+        "source_revisions": {
+          "szaghi/face": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8",
+          "gha3mi/fortime": "de733e2c775457d4979403fe77ab69cf28e2b159",
+          "gha3mi/formatmul": "6a77af418bbd77ffb5323a338db5cdf9368a73f7"
+        },
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6",
+          "libarpack2-dev=3.9.1-6"
+        ],
+        "environment": {
+          "FPM_FFLAGS": "-fopenmp",
+          "FPM_LDFLAGS": "-llapack -lblas"
+        }
+      },
+      "dependents_in_sample": 0
+    },
+    {
+      "id": "neural-fortran",
+      "repository": "modern-fortran/neural-fortran",
+      "revision": "b2073fa542c8dcdf9466d1a192d2888b628a5df3",
+      "archive_sha256": "2e92f6d91db9bb2da0dabb45d3985de12d2eae493a5ee2a6881ba54d7f9e43ba",
+      "license": "MIT",
+      "stars": 478,
+      "category": "Machine learning",
+      "description": "Neural networks with dense and convolutional layers and gradient-based training.",
+      "dependencies": []
+    },
+    {
+      "id": "lightkrylov",
+      "repository": "nekStab/LightKrylov",
+      "revision": "849fa1d2f29c14d0181315e76e731bff7f0b2d08",
+      "archive_sha256": "d1eb50b781520f370535a464ed24963c562866e6ba7ebf7ca5cdce30c61e35e2",
+      "license": "BSD-3-Clause",
+      "stars": 44,
+      "category": "Linear algebra",
+      "description": "Krylov methods for eigenvalues, linear systems, singular values and matrix exponentials.",
+      "dependencies": [
+        {
+          "repository": "fortran-lang/stdlib",
+          "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+        },
+        {
+          "repository": "szaghi/FACE",
+          "revision": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8",
+          "sha256": "d4cc3c3a2c70e7369607624ae3361a6f7b2ba3f1e9a63ffd94ecb5cd4b019469"
+        }
+      ],
+      "catalog_build": {
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "manifest_versions": {
+          "fortran-lang/stdlib": "0.0.0"
+        },
+        "registry": {
+          "stdlib": {
+            "git": "https://github.com/fortran-lang/stdlib",
+            "rev": "58eb9133966c2797e0593281169ef57c43eccc1d"
+          }
+        },
+        "source_revisions": {
+          "szaghi/face": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8"
+        },
+        "environment": {
+          "FPM_FFLAGS": "-cpp -DSTDLIB_EXTERNAL_BLAS -DSTDLIB_EXTERNAL_LAPACK -ffunction-sections -fdata-sections",
+          "FPM_LDFLAGS": "-Wl,--gc-sections -llapack -lblas"
+        },
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6"
+        ]
+      }
+    },
+    {
+      "id": "polyroots-fortran",
+      "repository": "jacobwilliams/polyroots-fortran",
+      "revision": "165ed6fbec98cc23d9ed4784fbc4708adb5e0bcf",
+      "archive_sha256": "2a36e248e8c4eeb877b5497428ac0a46897fa076918204a304f9e00292001f9c",
+      "license": "BSD-3",
+      "stars": 29,
+      "category": "Roots and optimization",
+      "description": "Find all real and complex roots of polynomial equations using several numerical algorithms.",
+      "dependencies": [],
+      "catalog_build": {
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6"
+        ]
+      }
+    },
+    {
+      "id": "fortran-sqlite3",
+      "repository": "interkosmos/fortran-sqlite3",
+      "revision": "f55f982df2b41cab579e0258cb8cc574236be349",
+      "archive_sha256": "9981297f4d8471ab814c9e58cda7d72385a7b28e8d10378e773f754e56ed67e0",
+      "license": "ISC",
+      "stars": 33,
+      "category": "Databases",
+      "description": "SQLite database bindings for creating tables, executing SQL and reading query results.",
+      "dependencies": [],
+      "catalog_build": {
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "apt_packages": [
+          "libsqlite3-dev=3.46.1-7+deb13u2"
+        ]
+      },
+      "catalog_patches": {
+        "adapter_sha256": "86ce9e8662821f1a01dbc6be505d9b18aec81bac32d625ae6f37e85932e464a5",
+        "edits": [
+          {
+            "path": "src/sqlite3_macro.c",
+            "sha256": "2492778d3b14da857f2e6e5bd5675ad052a35918ea5a37656c0c7eee3c301637",
+            "before": "    sqlite3_finalize((sqlite3_stmt *) *stmt);",
+            "after": "    rc = sqlite3_finalize((sqlite3_stmt *) *stmt);"
+          }
+        ]
+      }
+    },
+    {
+      "id": "geodesic-fortran",
+      "repository": "jacobwilliams/geodesic-fortran",
+      "revision": "b16eaf6622baabee7dfb75b99b78e42eaa878440",
+      "archive_sha256": "21dc2d3c0e22fa61a211c6f2013161d5a43f9b6c9415979bada1aef0513552be",
+      "license": "BSD-3",
+      "stars": 12,
+      "category": "Geodesy",
+      "description": "Distances, bearings and geodetic coordinate transformations on spheres and ellipsoids.",
+      "dependencies": []
+    },
+    {
+      "id": "simulated-annealing",
+      "repository": "jacobwilliams/simulated-annealing",
+      "revision": "a2fa094d1ee39525c7e081cfd67866975e9e1dc5",
+      "archive_sha256": "d2fb01dfd123ccbda75b4bcfc547da517f3ef9ea8e71a686ef6572253b9b58ba",
+      "license": "BSD-3",
+      "stars": 34,
+      "category": "Roots and optimization",
+      "description": "Stochastic global optimization by simulated annealing with bounds and reproducible seeds.",
+      "dependencies": [],
+      "catalog_build": {
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6"
+        ]
+      }
     }
   ]
 }

@@ -4,6 +4,9 @@ import {readFileSync} from 'node:fs';
 const html = readFileSync(new URL('../site/fpm/index.html', import.meta.url), 'utf8');
 const ids = new Set([...html.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]));
 const elements = new Map();
+const downloads = [], blobs = new Map();
+URL.createObjectURL = blob => {const url = `blob:export-${blobs.size}`; blobs.set(url, blob); return url;};
+URL.revokeObjectURL = () => {};
 globalThis.document = {
   getElementById(id) {
     assert.ok(ids.has(id), `Missing element ${id}`);
@@ -15,7 +18,7 @@ globalThis.document = {
     });
     return elements.get(id);
   },
-  createElement() {return {};},
+  createElement(tag) {return tag === 'a' ? {click() {downloads.push({name: this.download, blob: blobs.get(this.href)});}} : {};},
 };
 const get = id => document.getElementById(id);
 get('workflow').value = 'consumer';
@@ -26,11 +29,18 @@ const examples = JSON.parse(readFileSync(new URL('../site/fpm/examples.json', im
 const packages = JSON.parse(readFileSync(new URL('../site/fpm/packages.json', import.meta.url), 'utf8'));
 const unconfigured = process.argv.includes('--unconfigured');
 let submissions = [], fail = false, cancellations = 0, transportFailure = false;
+let runtimeFailure = false, holdRuntime;
+const runtime = JSON.parse(readFileSync(new URL('../site/fpm/project-runtime.json', import.meta.url), 'utf8'));
 let result = {ok: true, packages: [{repository: 'test/package', revision: 'a'.repeat(40)}],
   stages: [{name: 'Run', ok: true, seconds: 0.1, command: ['fpm', 'run'], stdout: '<script>42</script>', stderr: '', exit_code: 0}]};
 globalThis.fetch = async (url, options = {}) => {
   let value;
   if (url === './examples.json') value = examples;
+  else if (url === './project-runtime.json') {
+    if (holdRuntime) await holdRuntime;
+    if (runtimeFailure) return {ok: false};
+    value = runtime;
+  }
   else if (url === './packages.json') value = packages;
   else if (url === './service.json') value = {url: unconfigured ? '' : 'https://fpm.modal.run'};
   else if (url.endsWith('/api/health')) value = {ok: true, compiler: 'GNU Fortran 16.2.0', fpm: '0.12.0',
@@ -49,6 +59,39 @@ globalThis.fetch = async (url, options = {}) => {
 const originalTimeout = globalThis.setTimeout;
 globalThis.setTimeout = fn => {queueMicrotask(fn); return 1;};
 const {resultText} = await import('../site/fpm/fpm.mjs');
+// Downloads do not depend on API health and must not submit jobs.
+get('package-url').value = `https://github.com/${packages[0].repository}`;
+get('revision').value = packages[0].revision;
+get('package-url').listeners.input();
+assert.equal(get('package-source-links').hidden, false);
+assert.equal(get('package-source').href, `https://github.com/${packages[0].repository}/tree/${packages[0].revision}`);
+get('source').value = 'program main\n! edited snapshot\nend program\n';
+get('stdin').value = 'saved input\n';
+get('download-main').listeners.click();
+assert.equal(downloads.at(-1).name, 'main.f90');
+assert.equal(await downloads.at(-1).blob.text(), get('source').value);
+runtimeFailure = true;
+await get('download-project').listeners.click();
+assert.match(get('download-note').textContent, /retry/);
+assert.equal(get('download-project').disabled, false);
+runtimeFailure = false;
+let releaseRuntime;
+holdRuntime = new Promise(resolve => {releaseRuntime = resolve;});
+const saving = get('download-project').listeners.click();
+assert.equal(get('download-project').disabled, true);
+get('source').value = 'changed while fetching';
+get('revision').value = 'main';
+releaseRuntime();
+await saving;
+const saved = Buffer.from(await downloads.at(-1).blob.arrayBuffer()).toString('utf8');
+assert.match(saved, /edited snapshot/);
+assert.ok(!saved.includes('changed while fetching'));
+assert.ok(saved.includes(packages[0].revision));
+assert.equal(get('download-project').disabled, false);
+assert.equal(submissions.length, 0);
+get('revision').value = 'main'; get('revision').listeners.input();
+assert.equal(get('package-source-links').hidden, true);
+get('stdin').value = '';
 if (unconfigured) {
   assert.equal(get('submit').disabled, true);
   assert.match(get('connection').textContent, /not been configured/);

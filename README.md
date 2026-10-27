@@ -485,7 +485,9 @@ Reports distinguish Exact match, Formatting only, Numeric match, Within toleranc
 
 ## FPM package feasibility
 
-The FPM page also offers a [searchable catalog of 58 precompiled GNU Fortran 16 packages](docs/fpm-precompiled.md) in 24 categories: numerical methods, interpolation, differential equations, plotting, data formats, dates, containers, files, and command-line utilities. Each has a one-line description and an editable example. Catalog and service edits preserve compatible compiled libraries; other compilers and custom package URLs retain clean builds.
+The FPM page also offers a [searchable catalog of 83 precompiled GNU Fortran 16 packages](docs/fpm-precompiled.md) in 32 categories: numerical methods, machine learning, databases, geodesy, plotting, data formats, dates, containers, files, and command-line utilities. Each has a one-line description and an editable example. Catalog and service edits preserve compatible compiled libraries; other compilers and custom package URLs retain clean builds.
+
+Each catalog selection links to its pinned upstream source. You can download your edited main as a Fortran file or an FPM project ZIP with local build tools, dependency locks, and recorded patches/settings. Package sources download on the first local run; the ZIP README explains setup. Downloads do not submit a compiler job or require the execution service.
 
 The [FPM feasibility audit](docs/fpm-feasibility/README.md) found five packages that build and run short consumer programs within the configured public sandbox limits. It includes pinned package revisions, tested main programs, measurements, and a callback compatibility limitation. The separate [FPM mode](docs/fpm-mode.md) builds on these examples and also supports package Build, Run, and Test actions; it requires its own service deployment.
 

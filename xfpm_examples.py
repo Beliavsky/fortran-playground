@@ -16,6 +16,17 @@ def generate_fpm_examples(site):
     packages = [{**package, 'source': (audit.parents[1] / 'fpm_catalog/demos' /
                  (package['id'] + '.f90')).read_text(encoding='utf-8')} for package in catalog()]
     (site / 'fpm/packages.json').write_text(json.dumps(packages, indent=2) + '\n', encoding='utf-8')
+    # Small local-export tools only; package archives are fetched by the user's
+    # machine. This never builds libraries or contacts the execution service.
+    root = audit.parents[1]
+    runtime = {'run.py': (root / 'fpm_project_run.py').read_text(encoding='utf-8')}
+    for name in ('fpm_sources.py', 'fpm_compilers.py', 'fpm_catalog_build.py',
+                 'fpm_catalog_patches.py', 'fortran_plot.py'):
+        runtime['tools/' + name] = (root / name).read_text(encoding='utf-8')
+    from fortran_plot import module_source
+    runtime['tools/pyplot_module.f90'] = module_source()
+    runtime['tools/pyplot-LICENSE'] = (root / 'vendor/pyplot-fortran/LICENSE').read_text(encoding='utf-8')
+    (site / 'fpm/project-runtime.json').write_text(json.dumps(runtime, indent=2) + '\n', encoding='utf-8')
 
 
 if __name__ == '__main__':

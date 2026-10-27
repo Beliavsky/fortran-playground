@@ -59,6 +59,13 @@ def cache_identity(package, recipe):
     pin = {k: package[k] for k in ('id', 'repository', 'revision', 'archive_sha256')}
     dependencies = [{k: p[k] for k in ('repository', 'revision', 'sha256')}
                     for p in package.get('dependencies', [])]
-    data = json.dumps({'schema': CACHE_SCHEMA, 'package': pin, 'recipe': recipe,
-                       'dependencies': sorted(dependencies, key=lambda p: (p['repository'].lower(), p['revision']))}, sort_keys=True)
+    identity = {'schema': CACHE_SCHEMA, 'package': pin, 'recipe': recipe,
+                'dependencies': sorted(dependencies, key=lambda p: (p['repository'].lower(), p['revision']))}
+    # Preserve all existing keys; only packages opting into an operator build
+    # recipe depend on native libraries, compiler environment and adapters.
+    if package.get('catalog_build'):
+        identity['catalog_build'] = package['catalog_build']
+    if package.get('catalog_patches'):
+        identity['catalog_patches'] = package['catalog_patches']
+    data = json.dumps(identity, sort_keys=True)
     return hashlib.sha256(data.encode()).hexdigest()[:24]

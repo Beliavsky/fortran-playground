@@ -1,10 +1,10 @@
 {
-  "verified_at": "2026-10-27T00:03:52.357774+00:00",
+  "verified_at": "2026-10-27T01:59:01.746663+00:00",
   "compiler": "GNU Fortran 16.2.0",
   "fpm": "0.12.0",
   "compiler_image": "gcc:16.2.0-trixie@sha256:43978d7710a803d1c3d32f4117c1528ec7285a4ce2c0a51e982ec1a6e3d87d95",
   "recipe": "c5a4381ee9e2eae85215f045",
-  "worker": "5428e791d7d2b178",
+  "worker": "b55daade074e5cd2",
   "sandbox": {
     "runtime": "gvisor",
     "cpu": [
@@ -22,8 +22,8 @@
     "new_file_limit_mib": 16
   },
   "check": "Each edited main ran successfully; library artifacts were unchanged and FPM rebuilt only the main and executable. Plotting returned a PNG.",
-  "artifact_size_note": "Logical object/module/archive bytes including FPM flag variants; excludes compiler images, sources, main executables. Not compressed storage or billing.",
-  "total_artifact_bytes": 752410655,
+  "artifact_size_note": "Logical object/module/archive bytes including FPM flag variants; excludes compiler images, native system libraries, sources, main executables. Not compressed storage or billing.",
+  "total_artifact_bytes": 2003647699,
   "packages": [
     {
       "id": "fortran-lapack",
@@ -39,8 +39,8 @@
       "prebuild_seconds": 205.919,
       "artifact_bytes": 302485404,
       "verification": {
-        "seconds": 4.038,
-        "build_seconds": 1.731,
+        "seconds": 18.361,
+        "build_seconds": 7.88,
         "library_reused": true,
         "demo_sha256": "66c6d1b1edbe1b6da10d6bf41a0aff2975d6ccbe0d2b220c04292162189987fb",
         "compiled_targets": [
@@ -63,8 +63,8 @@
       "prebuild_seconds": 1.0,
       "artifact_bytes": 979870,
       "verification": {
-        "seconds": 1.244,
-        "build_seconds": 0.201,
+        "seconds": 2.534,
+        "build_seconds": 0.369,
         "library_reused": true,
         "demo_sha256": "16cedb750b0a6fe26fd3a02c3c94376126364ba0abb5665a49416f602fdc0d91",
         "compiled_targets": [
@@ -87,8 +87,8 @@
       "prebuild_seconds": 1.003,
       "artifact_bytes": 545594,
       "verification": {
-        "seconds": 3.41,
-        "build_seconds": 0.504,
+        "seconds": 3.434,
+        "build_seconds": 0.203,
         "library_reused": true,
         "demo_sha256": "99e12d83c262c7326668f5351724e445f452b4b5d233a6a61a92e2502ebad61d",
         "compiled_targets": [
@@ -111,8 +111,8 @@
       "prebuild_seconds": 2.64,
       "artifact_bytes": 1912453,
       "verification": {
-        "seconds": 1.591,
-        "build_seconds": 0.459,
+        "seconds": 2.858,
+        "build_seconds": 0.255,
         "library_reused": true,
         "demo_sha256": "88ebfa11741e99ef4c64f912d15255f79fe1c6bd0892235d6c5143fd03661ac0",
         "compiled_targets": [
@@ -135,8 +135,8 @@
       "prebuild_seconds": 2.706,
       "artifact_bytes": 2673051,
       "verification": {
-        "seconds": 1.836,
-        "build_seconds": 0.559,
+        "seconds": 2.109,
+        "build_seconds": 0.466,
         "library_reused": true,
         "demo_sha256": "e83d6c5167577c76eeb027e879ce88e38a7838a2c8680ec0b5f5d4c5da0e44f9",
         "compiled_targets": [
@@ -159,8 +159,8 @@
       "prebuild_seconds": 8.108,
       "artifact_bytes": 4540298,
       "verification": {
-        "seconds": 1.505,
-        "build_seconds": 0.456,
+        "seconds": 3.245,
+        "build_seconds": 0.462,
         "library_reused": true,
         "demo_sha256": "006e98c5fbf26c767ee99fbac472a69d8876d09671ce48d34a465110d58d9689",
         "compiled_targets": [
@@ -183,8 +183,8 @@
       "prebuild_seconds": 0.95,
       "artifact_bytes": 729926,
       "verification": {
-        "seconds": 1.651,
-        "build_seconds": 0.395,
+        "seconds": 2.29,
+        "build_seconds": 0.26,
         "library_reused": true,
         "demo_sha256": "5cbbf582739e7cca634550ad33aebf2cbcfc1c093bc43bceff2a61148ac71632",
         "compiled_targets": [
@@ -207,8 +207,8 @@
       "prebuild_seconds": 3.623,
       "artifact_bytes": 4457090,
       "verification": {
-        "seconds": 1.719,
-        "build_seconds": 0.431,
+        "seconds": 2.423,
+        "build_seconds": 0.156,
         "library_reused": true,
         "demo_sha256": "4523737fbe04fb871a900181ebb3bb6300cfdab0a7c78f39c569841f239a2a65",
         "compiled_targets": [
@@ -231,8 +231,8 @@
       "prebuild_seconds": 160.386,
       "artifact_bytes": 344981000,
       "verification": {
-        "seconds": 6.733,
-        "build_seconds": 2.674,
+        "seconds": 4.696,
+        "build_seconds": 1.456,
         "library_reused": true,
         "demo_sha256": "bd9f6d28306dcb78af5cc2350b11f42682e31eec2972bb2e1667ddd9b973b114",
         "compiled_targets": [
@@ -255,8 +255,8 @@
       "prebuild_seconds": 3.064,
       "artifact_bytes": 3377867,
       "verification": {
-        "seconds": 2.272,
-        "build_seconds": 0.598,
+        "seconds": 3.281,
+        "build_seconds": 0.323,
         "library_reused": true,
         "demo_sha256": "1d975d9374e16f24b444cd4c1825967b49d2f5b94419d0a413cf3fc8c80c776c",
         "compiled_targets": [
@@ -279,8 +279,8 @@
       "prebuild_seconds": 1.006,
       "artifact_bytes": 806484,
       "verification": {
-        "seconds": 1.371,
-        "build_seconds": 0.324,
+        "seconds": 1.98,
+        "build_seconds": 0.304,
         "library_reused": true,
         "demo_sha256": "db49fe3937cd2abccb2c0e5f49216ac47043e9436df7fcebcc3490b8441fd8cb",
         "compiled_targets": [
@@ -303,8 +303,8 @@
       "prebuild_seconds": 1.788,
       "artifact_bytes": 1558310,
       "verification": {
-        "seconds": 2.499,
-        "build_seconds": 0.487,
+        "seconds": 3.51,
+        "build_seconds": 0.255,
         "library_reused": true,
         "demo_sha256": "9281b42993ac1ca33ca107a94a5dde5c7144151d26595766baaa0b166700d3d2",
         "compiled_targets": [
@@ -327,8 +327,8 @@
       "prebuild_seconds": 6.161,
       "artifact_bytes": 8014050,
       "verification": {
-        "seconds": 1.498,
-        "build_seconds": 0.401,
+        "seconds": 2.824,
+        "build_seconds": 0.427,
         "library_reused": true,
         "demo_sha256": "915ba6b25315da0c1b5bacbc209e41e7de24e8b5e983411aa467829fb855144b",
         "compiled_targets": [
@@ -351,8 +351,8 @@
       "prebuild_seconds": 1.12,
       "artifact_bytes": 634653,
       "verification": {
-        "seconds": 1.742,
-        "build_seconds": 0.558,
+        "seconds": 3.162,
+        "build_seconds": 0.248,
         "library_reused": true,
         "demo_sha256": "8f7b5ba97eff8093f0324e9db518f7f21946df21ca16ca01814b31887044d22b",
         "compiled_targets": [
@@ -375,8 +375,8 @@
       "prebuild_seconds": 1.26,
       "artifact_bytes": 928402,
       "verification": {
-        "seconds": 2.076,
-        "build_seconds": 0.326,
+        "seconds": 3.384,
+        "build_seconds": 0.282,
         "library_reused": true,
         "demo_sha256": "dab90f237637ce5e97cd0cd14c40aa0682de13fd5535eebb1203fa51da6b88dd",
         "compiled_targets": [
@@ -399,8 +399,8 @@
       "prebuild_seconds": 2.433,
       "artifact_bytes": 2200554,
       "verification": {
-        "seconds": 1.178,
-        "build_seconds": 0.237,
+        "seconds": 3.202,
+        "build_seconds": 0.401,
         "library_reused": true,
         "demo_sha256": "cf0693ed8c2d2e864525dd4d354666d235a0fbbdaf16ed202990e12c99b2d0ea",
         "compiled_targets": [
@@ -423,8 +423,8 @@
       "prebuild_seconds": 0.587,
       "artifact_bytes": 570782,
       "verification": {
-        "seconds": 3.055,
-        "build_seconds": 1.106,
+        "seconds": 2.437,
+        "build_seconds": 0.534,
         "library_reused": true,
         "demo_sha256": "163e3483e21efbecabd772c417a660c0eebb63389356d32fca1873a946c87915",
         "compiled_targets": [
@@ -447,8 +447,8 @@
       "prebuild_seconds": 1.772,
       "artifact_bytes": 778577,
       "verification": {
-        "seconds": 2.464,
-        "build_seconds": 0.45,
+        "seconds": 2.577,
+        "build_seconds": 0.474,
         "library_reused": true,
         "demo_sha256": "f89ec5d7342ef5683198abc7a5bfa42889cd443a1927b071872af902165cda07",
         "compiled_targets": [
@@ -471,8 +471,8 @@
       "prebuild_seconds": 1.306,
       "artifact_bytes": 701904,
       "verification": {
-        "seconds": 1.773,
-        "build_seconds": 0.44,
+        "seconds": 2.866,
+        "build_seconds": 0.262,
         "library_reused": true,
         "demo_sha256": "fe0d76725dc7c4bb161dcd69983c0407f972a20cdb11257f8cfe0b6bf21bf2de",
         "compiled_targets": [
@@ -495,8 +495,8 @@
       "prebuild_seconds": 0.795,
       "artifact_bytes": 600629,
       "verification": {
-        "seconds": 2.411,
-        "build_seconds": 0.475,
+        "seconds": 2.79,
+        "build_seconds": 0.3,
         "library_reused": true,
         "demo_sha256": "b27870bafbe5562d5d48a7d8dddba4df102f35fff782f9de7c15e914cfcffd25",
         "compiled_targets": [
@@ -519,8 +519,8 @@
       "prebuild_seconds": 1.361,
       "artifact_bytes": 956969,
       "verification": {
-        "seconds": 1.978,
-        "build_seconds": 0.485,
+        "seconds": 2.487,
+        "build_seconds": 0.221,
         "library_reused": true,
         "demo_sha256": "5ae1a2418d6e95e68e4724f1ad2f31804b0e4d5a36c2afd135ade22dff572e40",
         "compiled_targets": [
@@ -543,8 +543,8 @@
       "prebuild_seconds": 1.314,
       "artifact_bytes": 540479,
       "verification": {
-        "seconds": 1.784,
-        "build_seconds": 0.308,
+        "seconds": 3.721,
+        "build_seconds": 1.396,
         "library_reused": true,
         "demo_sha256": "66a8a8725ff4ae0f91b98b256a44662a5397e6cf273a466edc55d98bcf6ae218",
         "compiled_targets": [
@@ -567,8 +567,8 @@
       "prebuild_seconds": 0.791,
       "artifact_bytes": 547948,
       "verification": {
-        "seconds": 1.624,
-        "build_seconds": 0.418,
+        "seconds": 2.424,
+        "build_seconds": 0.409,
         "library_reused": true,
         "demo_sha256": "3607babd42189d98ba4e9d47efc4cb1d863af9a8382baab2cd55af4d869b608e",
         "compiled_targets": [
@@ -591,8 +591,8 @@
       "prebuild_seconds": 1.356,
       "artifact_bytes": 1001767,
       "verification": {
-        "seconds": 2.845,
-        "build_seconds": 0.572,
+        "seconds": 1.983,
+        "build_seconds": 0.232,
         "library_reused": true,
         "demo_sha256": "064649d549884d8e3c2c3cfa4b527ceb0acd07d964f454873c8578078c55abac",
         "compiled_targets": [
@@ -615,8 +615,8 @@
       "prebuild_seconds": 2.385,
       "artifact_bytes": 2293231,
       "verification": {
-        "seconds": 1.783,
-        "build_seconds": 0.337,
+        "seconds": 3.064,
+        "build_seconds": 0.425,
         "library_reused": true,
         "demo_sha256": "50a55c4c34c6c8bd0e78813af9918b448029f07b7b9a64ed63ba925b4bbe96bb",
         "compiled_targets": [
@@ -639,8 +639,8 @@
       "prebuild_seconds": 1.169,
       "artifact_bytes": 866604,
       "verification": {
-        "seconds": 2.423,
-        "build_seconds": 0.383,
+        "seconds": 1.623,
+        "build_seconds": 0.207,
         "library_reused": true,
         "demo_sha256": "fc9b5cf13bcabc1a568c5ad977708312ec7bcb73579247d0d4071829bd1d5b9d",
         "compiled_targets": [
@@ -663,8 +663,8 @@
       "prebuild_seconds": 1.196,
       "artifact_bytes": 720550,
       "verification": {
-        "seconds": 2.32,
-        "build_seconds": 0.36,
+        "seconds": 3.211,
+        "build_seconds": 0.473,
         "library_reused": true,
         "demo_sha256": "f4f5ebd1215bee07dae37d8de2d4679e21f2f08da404b2a2266e98a2c34b50d0",
         "compiled_targets": [
@@ -687,8 +687,8 @@
       "prebuild_seconds": 1.668,
       "artifact_bytes": 1271048,
       "verification": {
-        "seconds": 2.426,
-        "build_seconds": 0.457,
+        "seconds": 4.638,
+        "build_seconds": 0.444,
         "library_reused": true,
         "demo_sha256": "85e04b68f945638605b22ff738e316386345f971d531fc7dddcce6ea0fa0090a",
         "compiled_targets": [
@@ -711,8 +711,8 @@
       "prebuild_seconds": 2.424,
       "artifact_bytes": 1486535,
       "verification": {
-        "seconds": 2.252,
-        "build_seconds": 0.506,
+        "seconds": 1.659,
+        "build_seconds": 0.218,
         "library_reused": true,
         "demo_sha256": "28c73e93ad55bf79b211f2e616df6a8f385a70d2090d5a1618d0e6196946a965",
         "compiled_targets": [
@@ -740,8 +740,8 @@
       "prebuild_seconds": 3.712,
       "artifact_bytes": 8454691,
       "verification": {
-        "seconds": 1.489,
-        "build_seconds": 0.352,
+        "seconds": 3.572,
+        "build_seconds": 0.332,
         "library_reused": true,
         "demo_sha256": "b75c6c035576c4144133ea87d63652d04a3a370987c8672fac88fcf7f5e3ce89",
         "compiled_targets": [
@@ -764,8 +764,8 @@
       "prebuild_seconds": 1.714,
       "artifact_bytes": 1783298,
       "verification": {
-        "seconds": 2.273,
-        "build_seconds": 0.317,
+        "seconds": 3.411,
+        "build_seconds": 0.489,
         "library_reused": true,
         "demo_sha256": "060eae02913a585a01593d76ea1a4e53b2b8d3e6742c1cc78ed1051ce35289be",
         "compiled_targets": [
@@ -788,8 +788,8 @@
       "prebuild_seconds": 1.927,
       "artifact_bytes": 1645766,
       "verification": {
-        "seconds": 2.76,
-        "build_seconds": 0.384,
+        "seconds": 2.202,
+        "build_seconds": 0.514,
         "library_reused": true,
         "demo_sha256": "441887cf9fabc705700021c82b6bd83a9886f2e1cd58c43ec85edc476c25b329",
         "compiled_targets": [
@@ -812,8 +812,8 @@
       "prebuild_seconds": 1.105,
       "artifact_bytes": 913564,
       "verification": {
-        "seconds": 1.387,
-        "build_seconds": 0.301,
+        "seconds": 3.671,
+        "build_seconds": 0.51,
         "library_reused": true,
         "demo_sha256": "5af6ab0ffcdcab0047650b74e1fcf18d24f15645946e95d8f4a53d5a7ff687ea",
         "compiled_targets": [
@@ -841,8 +841,8 @@
       "prebuild_seconds": 5.964,
       "artifact_bytes": 3076445,
       "verification": {
-        "seconds": 1.517,
-        "build_seconds": 0.39,
+        "seconds": 3.107,
+        "build_seconds": 0.298,
         "library_reused": true,
         "demo_sha256": "7c5ae8e23c1bcd20c8bde9c608f99cfcc22abd8b3fe3e42fd7d5bff3d1b36eef",
         "compiled_targets": [
@@ -865,8 +865,8 @@
       "prebuild_seconds": 4.894,
       "artifact_bytes": 6939308,
       "verification": {
-        "seconds": 2.323,
-        "build_seconds": 0.56,
+        "seconds": 1.789,
+        "build_seconds": 0.286,
         "library_reused": true,
         "demo_sha256": "c8dd69f84ff91a5bdf7030b73747a992373f8b345f12f49ca1e79ce242db62f5",
         "compiled_targets": [
@@ -889,8 +889,8 @@
       "prebuild_seconds": 1.965,
       "artifact_bytes": 1425404,
       "verification": {
-        "seconds": 2.389,
-        "build_seconds": 0.397,
+        "seconds": 2.239,
+        "build_seconds": 0.291,
         "library_reused": true,
         "demo_sha256": "7d3920a6b5f1c560665ea98f229f29cda121301b36f3c23d2f0c6bfd1f1e8eed",
         "compiled_targets": [
@@ -913,8 +913,8 @@
       "prebuild_seconds": 2.768,
       "artifact_bytes": 916073,
       "verification": {
-        "seconds": 2.955,
-        "build_seconds": 0.487,
+        "seconds": 2.356,
+        "build_seconds": 0.231,
         "library_reused": true,
         "demo_sha256": "8d9bc325ca764585d993c6330717a0066a02b11e427dd565f67c90b1ae1799c6",
         "compiled_targets": [
@@ -937,8 +937,8 @@
       "prebuild_seconds": 2.964,
       "artifact_bytes": 2099548,
       "verification": {
-        "seconds": 2.35,
-        "build_seconds": 0.454,
+        "seconds": 2.444,
+        "build_seconds": 0.496,
         "library_reused": true,
         "demo_sha256": "99718d896d36e2b277b500a65b1edbd3c788c8c0f37ff8d650ecf8471c88c44b",
         "compiled_targets": [
@@ -961,8 +961,8 @@
       "prebuild_seconds": 1.483,
       "artifact_bytes": 836140,
       "verification": {
-        "seconds": 2.327,
-        "build_seconds": 0.339,
+        "seconds": 2.519,
+        "build_seconds": 0.449,
         "library_reused": true,
         "demo_sha256": "3ded535863529c89a81e99f40a156d742f2a6ec3371ed76fb39a4558480ac37b",
         "compiled_targets": [
@@ -985,8 +985,8 @@
       "prebuild_seconds": 2.079,
       "artifact_bytes": 2367379,
       "verification": {
-        "seconds": 1.873,
-        "build_seconds": 0.311,
+        "seconds": 2.176,
+        "build_seconds": 0.15,
         "library_reused": true,
         "demo_sha256": "77ebc1e031eb2edbfe9b9986f7f93fce6f1c20b055c2cfac95e17a279e3d57a0",
         "compiled_targets": [
@@ -1009,8 +1009,8 @@
       "prebuild_seconds": 1.01,
       "artifact_bytes": 1032309,
       "verification": {
-        "seconds": 2.067,
-        "build_seconds": 0.628,
+        "seconds": 1.463,
+        "build_seconds": 0.319,
         "library_reused": true,
         "demo_sha256": "dd2ada5d6a52126ab00677f8812a98ffb64af503f1594143bfcf457646b80311",
         "compiled_targets": [
@@ -1033,8 +1033,8 @@
       "prebuild_seconds": 1.09,
       "artifact_bytes": 536535,
       "verification": {
-        "seconds": 2.248,
-        "build_seconds": 0.214,
+        "seconds": 1.784,
+        "build_seconds": 0.244,
         "library_reused": true,
         "demo_sha256": "342156b4ca1266d3843e86c61dcd0f7b18e23b7b543d81d330d1af3bb0ac59ea",
         "compiled_targets": [
@@ -1062,8 +1062,8 @@
       "prebuild_seconds": 2.712,
       "artifact_bytes": 2997586,
       "verification": {
-        "seconds": 3.226,
-        "build_seconds": 0.642,
+        "seconds": 1.393,
+        "build_seconds": 0.353,
         "library_reused": true,
         "demo_sha256": "9c11ca340892983113e0630fc3180ceb33839e18cf16f499b4b5744dc351ec78",
         "compiled_targets": [
@@ -1091,8 +1091,8 @@
       "prebuild_seconds": 1.158,
       "artifact_bytes": 562112,
       "verification": {
-        "seconds": 2.749,
-        "build_seconds": 0.402,
+        "seconds": 2.75,
+        "build_seconds": 0.42,
         "library_reused": true,
         "demo_sha256": "021231a26d11a742dad72e5d79637102eff1d4797e5e498c0a1dfae12e09c669",
         "compiled_targets": [
@@ -1115,8 +1115,8 @@
       "prebuild_seconds": 1.567,
       "artifact_bytes": 1009292,
       "verification": {
-        "seconds": 2.738,
-        "build_seconds": 0.413,
+        "seconds": 2.299,
+        "build_seconds": 0.453,
         "library_reused": true,
         "demo_sha256": "bb73327d768f7c37a378352c9b1e40dfc45a447b2a6069cdb96633f3ade8e443",
         "compiled_targets": [
@@ -1139,8 +1139,8 @@
       "prebuild_seconds": 1.219,
       "artifact_bytes": 655804,
       "verification": {
-        "seconds": 2.178,
-        "build_seconds": 0.567,
+        "seconds": 1.752,
+        "build_seconds": 0.451,
         "library_reused": true,
         "demo_sha256": "b58d08d9a70fb18f84583ac49dbe9e43e0efda1b17e8e1fa7312ec5288f7f835",
         "compiled_targets": [
@@ -1163,8 +1163,8 @@
       "prebuild_seconds": 0.895,
       "artifact_bytes": 856794,
       "verification": {
-        "seconds": 2.615,
-        "build_seconds": 0.393,
+        "seconds": 2.01,
+        "build_seconds": 0.411,
         "library_reused": true,
         "demo_sha256": "12f0b5c7628f7d9bb316f72b4a47bb29e7c94f4ccae1b08c216dec12e6f7d730",
         "compiled_targets": [
@@ -1187,8 +1187,8 @@
       "prebuild_seconds": 1.303,
       "artifact_bytes": 1022332,
       "verification": {
-        "seconds": 2.221,
-        "build_seconds": 0.508,
+        "seconds": 2.678,
+        "build_seconds": 0.526,
         "library_reused": true,
         "demo_sha256": "049b4f836d885f3fab9ccbca8739728069f637f2918083d25d3d7c9d2e5aa6c0",
         "compiled_targets": [
@@ -1211,8 +1211,8 @@
       "prebuild_seconds": 1.064,
       "artifact_bytes": 546494,
       "verification": {
-        "seconds": 3.275,
-        "build_seconds": 0.835,
+        "seconds": 2.054,
+        "build_seconds": 0.393,
         "library_reused": true,
         "demo_sha256": "767de3e53db2c970d38866039afdd3d3cbfc79bf7ca369eba6829fdcec598910",
         "compiled_targets": [
@@ -1235,8 +1235,8 @@
       "prebuild_seconds": 1.644,
       "artifact_bytes": 1352530,
       "verification": {
-        "seconds": 1.847,
-        "build_seconds": 0.247,
+        "seconds": 1.807,
+        "build_seconds": 0.312,
         "library_reused": true,
         "demo_sha256": "e384930884dfee5f4d867046b440cc9c0fecd3ee1cc9cd834d8d6aba1cd91dda",
         "compiled_targets": [
@@ -1259,8 +1259,8 @@
       "prebuild_seconds": 1.896,
       "artifact_bytes": 1066265,
       "verification": {
-        "seconds": 2.822,
-        "build_seconds": 0.454,
+        "seconds": 2.23,
+        "build_seconds": 0.42,
         "library_reused": true,
         "demo_sha256": "96872b902f9eb664df381874b9ded3fa8e990194756ca6ea344edd52de04b382",
         "compiled_targets": [
@@ -1283,8 +1283,8 @@
       "prebuild_seconds": 1.575,
       "artifact_bytes": 2639940,
       "verification": {
-        "seconds": 1.533,
-        "build_seconds": 0.29,
+        "seconds": 2.147,
+        "build_seconds": 0.478,
         "library_reused": true,
         "demo_sha256": "885e59b97b08643364bf948a92e7277ef86f5212a63f625cf579c94227271f49",
         "compiled_targets": [
@@ -1307,8 +1307,8 @@
       "prebuild_seconds": 1.619,
       "artifact_bytes": 1671940,
       "verification": {
-        "seconds": 1.865,
-        "build_seconds": 0.412,
+        "seconds": 2.116,
+        "build_seconds": 0.227,
         "library_reused": true,
         "demo_sha256": "36c0ea6a8f05d179fd9762415ec4eb6f0c6c14c266281fc1d34eba0c9b45ac02",
         "compiled_targets": [
@@ -1331,8 +1331,8 @@
       "prebuild_seconds": 1.475,
       "artifact_bytes": 780372,
       "verification": {
-        "seconds": 1.792,
-        "build_seconds": 0.461,
+        "seconds": 1.79,
+        "build_seconds": 0.214,
         "library_reused": true,
         "demo_sha256": "fadfa994f51767ac9a78e8512024429aceae52e762bd657af04cb19d5def8cc6",
         "compiled_targets": [
@@ -1355,8 +1355,8 @@
       "prebuild_seconds": 6.077,
       "artifact_bytes": 6039077,
       "verification": {
-        "seconds": 2.446,
-        "build_seconds": 0.53,
+        "seconds": 2.148,
+        "build_seconds": 0.223,
         "library_reused": true,
         "demo_sha256": "934862b34490767b65250c2cdac28a91b951574f107c2d98309ff03bee325395",
         "compiled_targets": [
@@ -1379,8 +1379,8 @@
       "prebuild_seconds": 3.526,
       "artifact_bytes": 3028522,
       "verification": {
-        "seconds": 2.508,
-        "build_seconds": 0.507,
+        "seconds": 1.885,
+        "build_seconds": 0.484,
         "library_reused": true,
         "demo_sha256": "0b0604d446957d70b5484fd1185141c92eb9fbc95a369dced5b1944e47b112a7",
         "compiled_targets": [
@@ -1403,8 +1403,8 @@
       "prebuild_seconds": 2.044,
       "artifact_bytes": 1316434,
       "verification": {
-        "seconds": 2.097,
-        "build_seconds": 0.404,
+        "seconds": 2.638,
+        "build_seconds": 0.43,
         "library_reused": true,
         "demo_sha256": "0f5e7ff5ceab93e28a04183189a6ddca98dd2343f8782322cd7f470d4c1ee15a",
         "compiled_targets": [
@@ -1427,13 +1427,929 @@
       "prebuild_seconds": 2.185,
       "artifact_bytes": 1676672,
       "verification": {
-        "seconds": 1.752,
-        "build_seconds": 0.554,
+        "seconds": 2.626,
+        "build_seconds": 0.466,
         "library_reused": true,
         "demo_sha256": "ad7bbad2a2569a58aa995e1cfe9b65f1f7814656726ecbeb7dcbe1447f862537",
         "compiled_targets": [
           "main.f90",
           "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "fitpack",
+      "repository": "perazz/fitpack",
+      "revision": "1907c7bad9f5c4557970e906bdd4909eb52b2d4c",
+      "records": [
+        {
+          "repository": "perazz/fitpack",
+          "revision": "1907c7bad9f5c4557970e906bdd4909eb52b2d4c",
+          "sha256": "7920f83f31016a23d2281af30ac5264cbc317b754b6a4c7de1a0efa3efc0d0b9"
+        }
+      ],
+      "prebuild_seconds": 10.791,
+      "artifact_bytes": 17752598,
+      "verification": {
+        "seconds": 1.512,
+        "build_seconds": 0.311,
+        "library_reused": true,
+        "demo_sha256": "55353dc85af65a2bebfd496d09b0c9eb1b49fb781a5b8663cf85d5fb98aea220",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "lsqr",
+      "repository": "jacobwilliams/LSQR",
+      "revision": "4df2ce600ca26a9f7e80dc01bfd0859d538547b3",
+      "records": [
+        {
+          "repository": "jacobwilliams/LSQR",
+          "revision": "4df2ce600ca26a9f7e80dc01bfd0859d538547b3",
+          "sha256": "3e5654977d4b207e0123ddd99bc669f0f60cb1526de8456399657e27bdc078fa"
+        }
+      ],
+      "prebuild_seconds": 1.157,
+      "artifact_bytes": 740673,
+      "verification": {
+        "seconds": 1.971,
+        "build_seconds": 0.421,
+        "library_reused": true,
+        "demo_sha256": "bde69c8b8305e5d5f829a2a1fbac8e1d8f4bda8f20c6558dc9ab4f2a63d07049",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "mpfun2020-var1",
+      "repository": "jacobwilliams/MPFUN2020-var1",
+      "revision": "f2191ad80d811cd5e309d83ffad9b2607d27aabc",
+      "records": [
+        {
+          "repository": "jacobwilliams/MPFUN2020-var1",
+          "revision": "f2191ad80d811cd5e309d83ffad9b2607d27aabc",
+          "sha256": "1373c64f1f5c578e5270ad840b2b90d0468b88837fc3c6a5e83c4bc4f2b7a5a7"
+        }
+      ],
+      "prebuild_seconds": 8.896,
+      "artifact_bytes": 16378159,
+      "verification": {
+        "seconds": 2.056,
+        "build_seconds": 0.44,
+        "library_reused": true,
+        "demo_sha256": "4a623b20c087773d185ce1c43a7650be5218be3cb90b6f34b984dae124c1da6a",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "rklib",
+      "repository": "jacobwilliams/rklib",
+      "revision": "e3d51f9e8a2e6756612e8e53687ab2d4b67dfb76",
+      "records": [
+        {
+          "repository": "jacobwilliams/rklib",
+          "revision": "e3d51f9e8a2e6756612e8e53687ab2d4b67dfb76",
+          "sha256": "6c70084cb47a59f6d61b326801135cdf2889ec723b7454a82f9e04b3735593d8"
+        },
+        {
+          "repository": "jacobwilliams/roots-fortran",
+          "revision": "85dc6b98404a61d49944939414f7f56c3f32edd1",
+          "sha256": "77e3839b1df2500887afbba0924a36fc6265c705f5189c2c8a6c48f169cb8228"
+        }
+      ],
+      "prebuild_seconds": 15.928,
+      "artifact_bytes": 19932467,
+      "verification": {
+        "seconds": 1.272,
+        "build_seconds": 0.314,
+        "library_reused": true,
+        "demo_sha256": "8ca1e61a1ce96fa460f9c5c0deb5d29531bc3d21282bb6ecf54ad3649c5f55dc",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "ddeabm",
+      "repository": "jacobwilliams/ddeabm",
+      "revision": "dba70c8c65388638662df2694339c5ba7feaf12a",
+      "records": [
+        {
+          "repository": "jacobwilliams/ddeabm",
+          "revision": "dba70c8c65388638662df2694339c5ba7feaf12a",
+          "sha256": "b8e5c3dcd67d8ed7183803cc56388e7cf696b1be5383bab381bd42778c1ad92b"
+        },
+        {
+          "repository": "jacobwilliams/roots-fortran",
+          "revision": "d1b45284cb3a6a2303638910452e20206f213084",
+          "sha256": "fe397ea43ebdb297e579604a92f1079ac3e46cf78383d8aef7a497ebaaa2a3fe"
+        }
+      ],
+      "prebuild_seconds": 1.614,
+      "artifact_bytes": 1271943,
+      "verification": {
+        "seconds": 2.487,
+        "build_seconds": 0.451,
+        "library_reused": true,
+        "demo_sha256": "9111e39a3872639e9dfaf77cb406dfb72b2d0618cd992dbb0a66a0b8b01c34f5",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "dvode",
+      "repository": "jacobwilliams/dvode",
+      "revision": "59d2eedd1410a4bd6c196c24d08f95a7c20565c0",
+      "records": [
+        {
+          "repository": "jacobwilliams/dvode",
+          "revision": "59d2eedd1410a4bd6c196c24d08f95a7c20565c0",
+          "sha256": "184807fd631421b32692c7ee37613bea78443f274a8d38954736f13c7c7246d3"
+        }
+      ],
+      "prebuild_seconds": 1.485,
+      "artifact_bytes": 985102,
+      "verification": {
+        "seconds": 2.316,
+        "build_seconds": 0.424,
+        "library_reused": true,
+        "demo_sha256": "8119e67c9c3fd21bef885755de3f18471ced4bf33b29ad1b6b8f6231eee94dc6",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "pikaia",
+      "repository": "jacobwilliams/pikaia",
+      "revision": "c080c4004896243bf9b8bbb4577e402c9e31c5e3",
+      "records": [
+        {
+          "repository": "jacobwilliams/pikaia",
+          "revision": "c080c4004896243bf9b8bbb4577e402c9e31c5e3",
+          "sha256": "a3e1a44da80c0497d7211ec5d0f2ceb1f8233369f6ab6312eff728720b36872b"
+        },
+        {
+          "repository": "jacobwilliams/mersenne-twister-fortran",
+          "revision": "06961991ad4d014fbdd5b542328dd784970f33ed",
+          "sha256": "d53f72652db2c57802ce17b99e2c4d34725d804135bd0bc38614f7e46cd06903"
+        }
+      ],
+      "prebuild_seconds": 1.16,
+      "artifact_bytes": 862151,
+      "verification": {
+        "seconds": 1.854,
+        "build_seconds": 0.434,
+        "library_reused": true,
+        "demo_sha256": "3e2363b011ace51d8306b03c5f7968f0e714bcb1684a236d79b3dfd8b9eba745",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "io-fortran-library",
+      "repository": "acbbullock/IO-Fortran-Library",
+      "revision": "15bc3557c36adc174abbd9a077e0686dc11cc4af",
+      "records": [
+        {
+          "repository": "acbbullock/IO-Fortran-Library",
+          "revision": "15bc3557c36adc174abbd9a077e0686dc11cc4af",
+          "sha256": "edfa815c5034803b37586324b0a8b49ffafe362bcd85fb6f8e91f5816bede6c2"
+        }
+      ],
+      "prebuild_seconds": 12.707,
+      "artifact_bytes": 13871590,
+      "verification": {
+        "seconds": 1.956,
+        "build_seconds": 0.39,
+        "library_reused": true,
+        "demo_sha256": "fb89db17c66b35d2ad9d19709a3dcfb791ca4a324241b390b66fb00e9611e2ce",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "collections",
+      "repository": "jchristopherson/collections",
+      "revision": "ce37c94e72b3ae5db2e2208489999260a7875f81",
+      "records": [
+        {
+          "repository": "jchristopherson/collections",
+          "revision": "ce37c94e72b3ae5db2e2208489999260a7875f81",
+          "sha256": "5d53caf3c0b35e9e2a8bed49f8e96dca1b282434859c8c6f53fae3123528f265"
+        }
+      ],
+      "prebuild_seconds": 1.107,
+      "artifact_bytes": 632195,
+      "verification": {
+        "seconds": 2.281,
+        "build_seconds": 0.302,
+        "library_reused": true,
+        "demo_sha256": "079054a8e6cbfac5304655b4d99c8550441b5c04c09eda44caaeee6692b3db18",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "peaks",
+      "repository": "jchristopherson/peaks",
+      "revision": "5bd81dc18ddd629ecf3daa08769ff2440def3682",
+      "records": [
+        {
+          "repository": "jchristopherson/peaks",
+          "revision": "5bd81dc18ddd629ecf3daa08769ff2440def3682",
+          "sha256": "9e960c21152146921544c46a482bb7c3999fd32b1c97a9a4759ed56f9dff6b44"
+        },
+        {
+          "repository": "jchristopherson/fortran_test_helper",
+          "revision": "1557b1485d8a5b042862042552f1e1a34552ca5e",
+          "sha256": "846d7506d044b41eb307619d84369d97afdd8b4838ea19eae6803735dffc10e2"
+        }
+      ],
+      "prebuild_seconds": 1.429,
+      "artifact_bytes": 1120448,
+      "verification": {
+        "seconds": 1.287,
+        "build_seconds": 0.321,
+        "library_reused": true,
+        "demo_sha256": "f71c0b48cf8774ed6790d77748c3b55cef8ecdb42916e95b890868fc51557a99",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "powellopt",
+      "repository": "jacobwilliams/PowellOpt",
+      "revision": "0987cd09d695cec968a3d02c8230d4ce5af33533",
+      "records": [
+        {
+          "repository": "jacobwilliams/PowellOpt",
+          "revision": "0987cd09d695cec968a3d02c8230d4ce5af33533",
+          "sha256": "80eb370f64fd8da6d228ae93dc37bd9a267d35f85d7cef806bb5840b01cb6eef"
+        }
+      ],
+      "prebuild_seconds": 2.484,
+      "artifact_bytes": 2491452,
+      "verification": {
+        "seconds": 2.159,
+        "build_seconds": 0.322,
+        "library_reused": true,
+        "demo_sha256": "cd857f726ec3f473f9cfbeb3a3728c58e6a6fabc8a2eaecc4cfe2ff2f23e20fa",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "fstats",
+      "repository": "jchristopherson/fstats",
+      "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "records": [
+        {
+          "repository": "jchristopherson/fstats",
+          "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+          "sha256": "cf6b7367fc2a0d74f46000dc80a4cbedd07fd554e29117144b695b3a9ffa6fef"
+        },
+        {
+          "repository": "jchristopherson/linalg",
+          "revision": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+          "sha256": "6210b8b167b50694941f48b20ad5d94bdacab026f1eb4720e2d55e8ddde0b59a"
+        },
+        {
+          "repository": "jchristopherson/collections",
+          "revision": "ce37c94e72b3ae5db2e2208489999260a7875f81",
+          "sha256": "5d53caf3c0b35e9e2a8bed49f8e96dca1b282434859c8c6f53fae3123528f265"
+        },
+        {
+          "repository": "jchristopherson/fstring",
+          "revision": "1bb1043a1ed34b8bd57f2687166463dd573bce3d",
+          "sha256": "0272f644a9217485fa2a3a18e41010c88f81ccc7398fc855c37518be2ac8eb3f"
+        }
+      ],
+      "prebuild_seconds": 9.757,
+      "artifact_bytes": 14894488,
+      "verification": {
+        "seconds": 3.196,
+        "build_seconds": 0.741,
+        "library_reused": true,
+        "demo_sha256": "5f59de90d4494ddc13641d5fecc68b31b0a889f8a3a27dfad7e2e0e9aecd82a9",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "metapackages": [
+          "openmp",
+          "blas",
+          "lapack"
+        ],
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6",
+          "libarpack2-dev=3.9.1-6"
+        ],
+        "environment": {
+          "FPM_FFLAGS": "-fopenmp"
+        }
+      }
+    },
+    {
+      "id": "spectrum",
+      "repository": "jchristopherson/spectrum",
+      "revision": "5af0d5a85eccf971aa6e0fc72b1c7439c3cef536",
+      "records": [
+        {
+          "repository": "jchristopherson/spectrum",
+          "revision": "5af0d5a85eccf971aa6e0fc72b1c7439c3cef536",
+          "sha256": "20079f9ad017369097d5463fec26732775fb33a868eb2d3c3a308a044cb92e79"
+        },
+        {
+          "repository": "jchristopherson/linalg",
+          "revision": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+          "sha256": "6210b8b167b50694941f48b20ad5d94bdacab026f1eb4720e2d55e8ddde0b59a"
+        }
+      ],
+      "prebuild_seconds": 8.293,
+      "artifact_bytes": 12108468,
+      "verification": {
+        "seconds": 2.048,
+        "build_seconds": 0.427,
+        "library_reused": true,
+        "demo_sha256": "67a3c45d401e844312052026ed6743fdc6234c7f9adb876f5a0dd2b858e93be9",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "metapackages": [],
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6",
+          "libarpack2-dev=3.9.1-6"
+        ]
+      }
+    },
+    {
+      "id": "lsmr",
+      "repository": "jacobwilliams/LSMR",
+      "revision": "12611e2299c5188441b097437695a66c85369e76",
+      "records": [
+        {
+          "repository": "jacobwilliams/LSMR",
+          "revision": "12611e2299c5188441b097437695a66c85369e76",
+          "sha256": "62fb8a51e5024e2dc6dfe2db0d18a3e336ba1a6008c901a37a1da300eb215a6b"
+        }
+      ],
+      "prebuild_seconds": 0.84,
+      "artifact_bytes": 696172,
+      "verification": {
+        "seconds": 2.699,
+        "build_seconds": 0.477,
+        "library_reused": true,
+        "demo_sha256": "acb7b4670c7469aa12099b8b7a8a12520ffc614021ccf6648f1c7925d2a78e6d",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "metapackages": [],
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6",
+          "libarpack2-dev=3.9.1-6"
+        ]
+      }
+    },
+    {
+      "id": "nlesolver-fortran",
+      "repository": "jacobwilliams/nlesolver-fortran",
+      "revision": "60f38870a25e6b448dd552f184aa2f8616fc8cb0",
+      "records": [
+        {
+          "repository": "jacobwilliams/nlesolver-fortran",
+          "revision": "60f38870a25e6b448dd552f184aa2f8616fc8cb0",
+          "sha256": "0fe03089eaccc651b3f752e93353aa0c0d5dd0379ef5179c0902876dac9ce32d"
+        },
+        {
+          "repository": "jacobwilliams/fmin",
+          "revision": "88af2947680c8980f72fdafdac77715c828e8198",
+          "sha256": "35a14cc43ed71079b9222c75d56a8b671a77198597ea65da684de0055a8784dc"
+        },
+        {
+          "repository": "jacobwilliams/LSQR",
+          "revision": "a11a9ed9c631f88a567771b0afce7f4c398369fc",
+          "sha256": "5dc89aa86d0e84f4deda8aba9b776d865e5aef2d66f5a61596c2885ec0bef6c8"
+        },
+        {
+          "repository": "jacobwilliams/lusol",
+          "revision": "e5567293df3292130ba7e4809931545aadd323ff",
+          "sha256": "d73acf3bc93bd9f8b34c19e173bbfadde3721b15aa837d629c76f3adf1c510b7"
+        },
+        {
+          "repository": "jacobwilliams/LSMR",
+          "revision": "6230146c61e8341b1077c22bdc67085e7e382f1b",
+          "sha256": "fa2ec7d65839202aa46759b4f7bc6f0c345ffff0278882538216d645d9052a90"
+        }
+      ],
+      "prebuild_seconds": 2.182,
+      "artifact_bytes": 2221015,
+      "verification": {
+        "seconds": 3.494,
+        "build_seconds": 0.573,
+        "library_reused": true,
+        "demo_sha256": "cbb9c9c9f87d704464c74ef7f3dda650de3834bf33c72fe44bc7225e23819a7c",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "metapackages": [],
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6",
+          "libarpack2-dev=3.9.1-6"
+        ]
+      }
+    },
+    {
+      "id": "codata",
+      "repository": "MilanSkocic/codata",
+      "revision": "d0c9b1552f0fa483a364de4a69e82c5e23344caf",
+      "records": [
+        {
+          "repository": "MilanSkocic/codata",
+          "revision": "d0c9b1552f0fa483a364de4a69e82c5e23344caf",
+          "sha256": "47a519277191fa5c9f3e476c1bf17bbafb6bf2eeeaca43fbffd938e7ecb835a3"
+        },
+        {
+          "repository": "fortran-lang/stdlib",
+          "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+        }
+      ],
+      "prebuild_seconds": 245.16,
+      "artifact_bytes": 360046948,
+      "verification": {
+        "seconds": 4.501,
+        "build_seconds": 1.578,
+        "library_reused": true,
+        "demo_sha256": "2a6368afdfbed5253b21d416f634d5cff8bb65cb3c90273cfddfdbb95274021b",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "registry": {
+          "stdlib": {
+            "git": "https://github.com/fortran-lang/stdlib",
+            "rev": "58eb9133966c2797e0593281169ef57c43eccc1d"
+          }
+        },
+        "metapackages": [],
+        "manifest_versions": {
+          "milanskocic/codata": "0.0.0",
+          "fortran-lang/stdlib": "0.0.0"
+        }
+      }
+    },
+    {
+      "id": "specialmatrices",
+      "repository": "loiseaujc/SpecialMatrices",
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "records": [
+        {
+          "repository": "loiseaujc/SpecialMatrices",
+          "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+          "sha256": "b44d6c7e8806a2588fcbfde53fa280a867e0ce9fe31bd2d68828c6131194ce22"
+        },
+        {
+          "repository": "fortran-lang/stdlib",
+          "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+        },
+        {
+          "repository": "nshalle/fftpack",
+          "revision": "73745a4e82f5f9c3fa07f49cac0439c21ba50829",
+          "sha256": "6fdc6a1fdf2642c94aa0f2c294ed012fe3d99b1ef4efe05395a9367bd06af8b6"
+        }
+      ],
+      "prebuild_seconds": 255.862,
+      "artifact_bytes": 364369536,
+      "verification": {
+        "seconds": 4.285,
+        "build_seconds": 1.5,
+        "library_reused": true,
+        "demo_sha256": "f6e9f856c46733320804ef956be8df9bf6de65614541819677d3835413cdd770",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "registry": {
+          "stdlib": {
+            "git": "https://github.com/fortran-lang/stdlib",
+            "rev": "58eb9133966c2797e0593281169ef57c43eccc1d"
+          }
+        },
+        "metapackages": [],
+        "manifest_versions": {
+          "fortran-lang/stdlib": "0.0.0"
+        }
+      },
+      "catalog_patches": {
+        "adapter_sha256": "86ce9e8662821f1a01dbc6be505d9b18aec81bac32d625ae6f37e85932e464a5",
+        "edits": [
+          {
+            "path": "src/Strang/matvecs.f90",
+            "sha256": "3cb40444552c5edf778097b45cc0f75dce68e79466c56fd6fa4469615c798ca9",
+            "before": "do concurrent(i=1:size(x, 2))",
+            "after": "do i = 1, size(x, 2)"
+          },
+          {
+            "path": "src/Poisson2D/solve.f90",
+            "sha256": "ade74b8d71158b7fa382424553943e83547e128b3aaf44e2c629acc82462f8b7",
+            "before": "submodule(specialmatrices_poisson2D) poisson2D_solve\n   use fftpack, only: dst => dsint, init_dst => dsinti\n   implicit none(type, external)\n\n   character(len=*), parameter :: this = \"poisson2D_linear_solver\"\ncontains\n   module procedure solve_single_rhs\n   ! Local variables.\n   integer(ilp) :: nx, ny, i, j, nx_wrk, ny_wrk\n   real(dp), allocatable :: lambda_x(:), lambda_y(:)\n   real(dp), allocatable :: wsave_x(:), wsave_y(:)\n   real(dp), pointer     :: xmat(:, :)\n   real(dp) :: scale\n\n   ! Initializes pointer and allocatable arrays.\n   nx = A%nx; ny = A%ny\n   x = b; xmat(1:nx, 1:ny) => x\n   nx_wrk = int(2.5*nx + 15, kind=ilp); ny_wrk = int(2.5*ny + 15, kind=ilp)\n   allocate (wsave_x(nx_wrk)); allocate (wsave_y(ny_wrk))\n\n   ! Initializes Discrete Sine Transforms (Type-I).\n   call init_dst(nx, wsave_x); call init_dst(ny, wsave_y)\n\n   ! Compute the DST-I of the right-hand side.\n   do concurrent(j=1:ny)\n      call dst(nx, xmat(:, j), wsave_x)\n   end do\n   do concurrent(i=1:nx)\n      call dst(ny, xmat(i, :), wsave_y)\n   end do\n\n   ! Compute the eigenvalues of the 1D Laplacian operators.\n   lambda_x = -eigvalsh(Strang(nx))/A%dx**2\n   lambda_y = -eigvalsh(Strang(ny))/A%dy**2\n\n   ! Compute the solution in spectral space.\n   do concurrent(i=1:nx, j=1:ny)\n      xmat(i, j) = xmat(i, j)/(lambda_x(i) + lambda_y(j))\n   end do\n\n   ! Inverse DST-I of the solution.\n   scale = 1.0_dp/(2*(nx + 1)*2*(ny + 1))\n   do concurrent(j=1:ny)\n      call dst(nx, xmat(:, j), wsave_x)\n   end do\n   do concurrent(i=1:nx)\n      call dst(ny, xmat(i, :), wsave_y)\n   end do\n   xmat = scale*xmat\n   end procedure solve_single_rhs\n\n   module procedure solve_multi_rhs\n   integer(ilp) :: i\n   allocate (x, mold=b)\n   do concurrent(i=1:size(b, 2))\n      x(:, i) = solve(A, b(:, i))\n   end do\n   end procedure solve_multi_rhs\n\nend submodule poisson2D_solve\n",
+            "after": "submodule(specialmatrices_poisson2D) poisson2D_solve\n   use fftpack, only: dst => dsint, init_dst => dsinti\n   implicit none(type, external)\n\n   character(len=*), parameter :: this = \"poisson2D_linear_solver\"\ncontains\n   module procedure solve_single_rhs\n   ! Local variables.\n   integer(ilp) :: nx, ny, i, j, nx_wrk, ny_wrk\n   real(dp), allocatable :: lambda_x(:), lambda_y(:)\n   real(dp), allocatable :: wsave_x(:), wsave_y(:)\n   real(dp), pointer     :: xmat(:, :)\n   real(dp) :: scale\n\n   ! Initializes pointer and allocatable arrays.\n   nx = A%nx; ny = A%ny\n   x = b; xmat(1:nx, 1:ny) => x\n   nx_wrk = int(2.5*nx + 15, kind=ilp); ny_wrk = int(2.5*ny + 15, kind=ilp)\n   allocate (wsave_x(nx_wrk)); allocate (wsave_y(ny_wrk))\n\n   ! Initializes Discrete Sine Transforms (Type-I).\n   call init_dst(nx, wsave_x); call init_dst(ny, wsave_y)\n\n   ! Compute the DST-I of the right-hand side.\n   do j=1,ny\n      call dst(nx, xmat(:, j), wsave_x)\n   end do\n   do i=1,nx\n      call dst(ny, xmat(i, :), wsave_y)\n   end do\n\n   ! Compute the eigenvalues of the 1D Laplacian operators.\n   lambda_x = -eigvalsh(Strang(nx))/A%dx**2\n   lambda_y = -eigvalsh(Strang(ny))/A%dy**2\n\n   ! Compute the solution in spectral space.\n   do concurrent(i=1:nx, j=1:ny)\n      xmat(i, j) = xmat(i, j)/(lambda_x(i) + lambda_y(j))\n   end do\n\n   ! Inverse DST-I of the solution.\n   scale = 1.0_dp/(2*(nx + 1)*2*(ny + 1))\n   do j=1,ny\n      call dst(nx, xmat(:, j), wsave_x)\n   end do\n   do i=1,nx\n      call dst(ny, xmat(i, :), wsave_y)\n   end do\n   xmat = scale*xmat\n   end procedure solve_single_rhs\n\n   module procedure solve_multi_rhs\n   integer(ilp) :: i\n   allocate (x, mold=b)\n   do i=1,size(b, 2)\n      x(:, i) = solve(A, b(:, i))\n   end do\n   end procedure solve_multi_rhs\n\nend submodule poisson2D_solve\n"
+          }
+        ]
+      }
+    },
+    {
+      "id": "quaff",
+      "repository": "everythingfunctional/quaff",
+      "revision": "f26da3d854045b79102d27bdb4e9f9b072444272",
+      "records": [
+        {
+          "repository": "everythingfunctional/quaff",
+          "revision": "f26da3d854045b79102d27bdb4e9f9b072444272",
+          "sha256": "e420a22fd309619e71abed44cd8e0054852eb23e82967903f733bad0e7c4bc78"
+        },
+        {
+          "repository": "everythingfunctional/erloff",
+          "revision": "89e92f86c160d4f995d8ae3c2bb6f2671cf6311c",
+          "sha256": "d294beaa81d9c5fc039e60e18ab594e9a94fea910fdf7ef7e064c27330ef1df8"
+        },
+        {
+          "repository": "everythingfunctional/iso_varying_string",
+          "revision": "850391bdb4839ae25baaab449ad83c49be21d774",
+          "sha256": "b3006a15cb8b0c5b82d14c3bbe947190def6f0db2fec1a89f7884062913960a9"
+        },
+        {
+          "repository": "everythingfunctional/strff",
+          "revision": "360d9a47b4cc877438a58978b6fe27651f2fa6a2",
+          "sha256": "d6aacacf027d6ed0bfdc76adea3c58b5161324d0f23ea53f7bf38879fd1a3f2e"
+        },
+        {
+          "repository": "everythingfunctional/parff",
+          "revision": "dbce6a04992fbc1e2d13b6c633480d3cd4bbe35c",
+          "sha256": "614aac0224f2f60d299d3b1ba859e4423553e42f144546b968ee52549f4573a5"
+        }
+      ],
+      "prebuild_seconds": 13.787,
+      "artifact_bytes": 12235742,
+      "verification": {
+        "seconds": 2.822,
+        "build_seconds": 0.683,
+        "library_reused": true,
+        "demo_sha256": "97150dd9ba968dd2b99a8c535b3c47186c6131df075ce688ca6d7a37bdd2f529",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "metapackages": [],
+        "git_aliases": {
+          "https://gitlab.com/everythingfunctional/erloff": "https://github.com/everythingfunctional/erloff",
+          "https://gitlab.com/everythingfunctional/iso_varying_string": "https://github.com/everythingfunctional/iso_varying_string",
+          "https://gitlab.com/everythingfunctional/parff": "https://github.com/everythingfunctional/parff",
+          "https://gitlab.com/everythingfunctional/strff": "https://github.com/everythingfunctional/strff"
+        },
+        "source_revisions": {
+          "everythingfunctional/iso_varying_string": "850391bdb4839ae25baaab449ad83c49be21d774",
+          "everythingfunctional/strff": "360d9a47b4cc877438a58978b6fe27651f2fa6a2"
+        }
+      }
+    },
+    {
+      "id": "forpca",
+      "repository": "gha3mi/forpca",
+      "revision": "d5d87badc4c25c647b3618f22560e712728d8165",
+      "records": [
+        {
+          "repository": "gha3mi/forpca",
+          "revision": "d5d87badc4c25c647b3618f22560e712728d8165",
+          "sha256": "e01059bbc49107d7e29ddb275503ea7b789e6a9478c63a33f3f1d864b1a068a4"
+        },
+        {
+          "repository": "gha3mi/kinds",
+          "revision": "811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f",
+          "sha256": "495d1133b1630dea4f38d69e5e3189e3279e4ce5836da1a7aec8a822bbe16518"
+        },
+        {
+          "repository": "gha3mi/foreig",
+          "revision": "8fcfcab03e5d7cf5eda8c51c7a1e97fe52954c39",
+          "sha256": "842695c219adfd981a06d7451b87b27d57d3db86c8878612b371b782eb0e02d1"
+        },
+        {
+          "repository": "gha3mi/forsvd",
+          "revision": "f39bba7afcb048a21947a7a640bdf9a18337f8ac",
+          "sha256": "b9a97d840dca7ad2d11ef00c5986719d180d455b2fa188a4d0b374219414088e"
+        },
+        {
+          "repository": "gha3mi/fortime",
+          "revision": "de733e2c775457d4979403fe77ab69cf28e2b159",
+          "sha256": "bccc83cf947693ad4defcfb4684af7cd660db8a6e57084b7f07e7edfd584161d"
+        },
+        {
+          "repository": "szaghi/FACE",
+          "revision": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8",
+          "sha256": "d4cc3c3a2c70e7369607624ae3361a6f7b2ba3f1e9a63ffd94ecb5cd4b019469"
+        },
+        {
+          "repository": "gha3mi/formatmul",
+          "revision": "6a77af418bbd77ffb5323a338db5cdf9368a73f7",
+          "sha256": "40d47f1616970d37c22ba264b4970abe96597423602090785ed3731ac76fc525"
+        }
+      ],
+      "prebuild_seconds": 1.917,
+      "artifact_bytes": 1528937,
+      "verification": {
+        "seconds": 3.654,
+        "build_seconds": 0.504,
+        "library_reused": true,
+        "demo_sha256": "4a92e7e3f382bce67f6c462054b8efbc45e8267e3b0423b6e2adce55acb1b2f9",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "metapackages": [],
+        "manifest_versions": {
+          "gha3mi/forpca": "0.0.0",
+          "gha3mi/kinds": "0.0.0",
+          "gha3mi/foreig": "0.0.0",
+          "gha3mi/forsvd": "0.0.0",
+          "gha3mi/formatmul": "0.0.0",
+          "gha3mi/fortime": "0.0.0"
+        },
+        "source_revisions": {
+          "szaghi/face": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8",
+          "gha3mi/fortime": "de733e2c775457d4979403fe77ab69cf28e2b159",
+          "gha3mi/formatmul": "6a77af418bbd77ffb5323a338db5cdf9368a73f7"
+        },
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6",
+          "libarpack2-dev=3.9.1-6"
+        ],
+        "environment": {
+          "FPM_FFLAGS": "-fopenmp",
+          "FPM_LDFLAGS": "-llapack -lblas"
+        }
+      }
+    },
+    {
+      "id": "neural-fortran",
+      "repository": "modern-fortran/neural-fortran",
+      "revision": "b2073fa542c8dcdf9466d1a192d2888b628a5df3",
+      "records": [
+        {
+          "repository": "modern-fortran/neural-fortran",
+          "revision": "b2073fa542c8dcdf9466d1a192d2888b628a5df3",
+          "sha256": "2e92f6d91db9bb2da0dabb45d3985de12d2eae493a5ee2a6881ba54d7f9e43ba"
+        }
+      ],
+      "prebuild_seconds": 6.464,
+      "artifact_bytes": 6065718,
+      "verification": {
+        "seconds": 2.525,
+        "build_seconds": 0.362,
+        "library_reused": true,
+        "demo_sha256": "af8c830fedb2ae38084825d3112b71441d04773cd4facc0a6649da9f61330ac4",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "lightkrylov",
+      "repository": "nekStab/LightKrylov",
+      "revision": "849fa1d2f29c14d0181315e76e731bff7f0b2d08",
+      "records": [
+        {
+          "repository": "nekStab/LightKrylov",
+          "revision": "849fa1d2f29c14d0181315e76e731bff7f0b2d08",
+          "sha256": "d1eb50b781520f370535a464ed24963c562866e6ba7ebf7ca5cdce30c61e35e2"
+        },
+        {
+          "repository": "fortran-lang/stdlib",
+          "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+        },
+        {
+          "repository": "szaghi/FACE",
+          "revision": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8",
+          "sha256": "d4cc3c3a2c70e7369607624ae3361a6f7b2ba3f1e9a63ffd94ecb5cd4b019469"
+        }
+      ],
+      "prebuild_seconds": 279.236,
+      "artifact_bytes": 397083720,
+      "verification": {
+        "seconds": 4.367,
+        "build_seconds": 1.676,
+        "library_reused": true,
+        "demo_sha256": "52c6079f2c56aa3c43133d034233fabc35cb793e77d8501ad397cd77fc74cdc3",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "manifest_versions": {
+          "fortran-lang/stdlib": "0.0.0"
+        },
+        "registry": {
+          "stdlib": {
+            "git": "https://github.com/fortran-lang/stdlib",
+            "rev": "58eb9133966c2797e0593281169ef57c43eccc1d"
+          }
+        },
+        "source_revisions": {
+          "szaghi/face": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8"
+        },
+        "environment": {
+          "FPM_FFLAGS": "-cpp -DSTDLIB_EXTERNAL_BLAS -DSTDLIB_EXTERNAL_LAPACK -ffunction-sections -fdata-sections",
+          "FPM_LDFLAGS": "-Wl,--gc-sections -llapack -lblas"
+        },
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6"
+        ]
+      }
+    },
+    {
+      "id": "polyroots-fortran",
+      "repository": "jacobwilliams/polyroots-fortran",
+      "revision": "165ed6fbec98cc23d9ed4784fbc4708adb5e0bcf",
+      "records": [
+        {
+          "repository": "jacobwilliams/polyroots-fortran",
+          "revision": "165ed6fbec98cc23d9ed4784fbc4708adb5e0bcf",
+          "sha256": "2a36e248e8c4eeb877b5497428ac0a46897fa076918204a304f9e00292001f9c"
+        }
+      ],
+      "prebuild_seconds": 1.314,
+      "artifact_bytes": 1867931,
+      "verification": {
+        "seconds": 2.604,
+        "build_seconds": 0.3,
+        "library_reused": true,
+        "demo_sha256": "db4fcba33a4969192dc2eb0a7c3989b3e4069efee83486506e5f7d0f33aa4bbb",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6"
+        ]
+      }
+    },
+    {
+      "id": "fortran-sqlite3",
+      "repository": "interkosmos/fortran-sqlite3",
+      "revision": "f55f982df2b41cab579e0258cb8cc574236be349",
+      "records": [
+        {
+          "repository": "interkosmos/fortran-sqlite3",
+          "revision": "f55f982df2b41cab579e0258cb8cc574236be349",
+          "sha256": "9981297f4d8471ab814c9e58cda7d72385a7b28e8d10378e773f754e56ed67e0"
+        }
+      ],
+      "prebuild_seconds": 1.303,
+      "artifact_bytes": 587235,
+      "verification": {
+        "seconds": 2.845,
+        "build_seconds": 0.321,
+        "library_reused": true,
+        "demo_sha256": "c7a535f69b00be80f1a78240599168ca96d3ae46a3a9d4a2c7b6b9d100da27fe",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "apt_packages": [
+          "libsqlite3-dev=3.46.1-7+deb13u2"
+        ]
+      },
+      "catalog_patches": {
+        "adapter_sha256": "86ce9e8662821f1a01dbc6be505d9b18aec81bac32d625ae6f37e85932e464a5",
+        "edits": [
+          {
+            "path": "src/sqlite3_macro.c",
+            "sha256": "2492778d3b14da857f2e6e5bd5675ad052a35918ea5a37656c0c7eee3c301637",
+            "before": "    sqlite3_finalize((sqlite3_stmt *) *stmt);",
+            "after": "    rc = sqlite3_finalize((sqlite3_stmt *) *stmt);"
+          }
+        ]
+      }
+    },
+    {
+      "id": "geodesic-fortran",
+      "repository": "jacobwilliams/geodesic-fortran",
+      "revision": "b16eaf6622baabee7dfb75b99b78e42eaa878440",
+      "records": [
+        {
+          "repository": "jacobwilliams/geodesic-fortran",
+          "revision": "b16eaf6622baabee7dfb75b99b78e42eaa878440",
+          "sha256": "21dc2d3c0e22fa61a211c6f2013161d5a43f9b6c9415979bada1aef0513552be"
+        }
+      ],
+      "prebuild_seconds": 0.891,
+      "artifact_bytes": 774822,
+      "verification": {
+        "seconds": 2.841,
+        "build_seconds": 0.174,
+        "library_reused": true,
+        "demo_sha256": "ac90afaca96eb1c208041d97b66e4d3d92064bbc89d5da28d5d685134698fec0",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "simulated-annealing",
+      "repository": "jacobwilliams/simulated-annealing",
+      "revision": "a2fa094d1ee39525c7e081cfd67866975e9e1dc5",
+      "records": [
+        {
+          "repository": "jacobwilliams/simulated-annealing",
+          "revision": "a2fa094d1ee39525c7e081cfd67866975e9e1dc5",
+          "sha256": "d2fb01dfd123ccbda75b4bcfc547da517f3ef9ea8e71a686ef6572253b9b58ba"
+        }
+      ],
+      "prebuild_seconds": 0.953,
+      "artifact_bytes": 717534,
+      "verification": {
+        "seconds": 3.129,
+        "build_seconds": 0.517,
+        "library_reused": true,
+        "demo_sha256": "9591f3cb29f9512a694f0af87be58ab01086831d98aa260c714f3310d060871a",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6"
         ]
       }
     }

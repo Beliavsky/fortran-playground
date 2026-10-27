@@ -204,22 +204,61 @@
     {
       "repository": "jacobwilliams/polyroots-fortran",
       "revision": "165ed6fbec98cc23d9ed4784fbc4708adb5e0bcf",
-      "error": "The pinned library links BLAS and LAPACK, which are not installed as external system libraries in this sandbox image."
+      "historical_error": "The pinned library links BLAS and LAPACK, which are not installed as external system libraries in this sandbox image.",
+      "status": "Now included with pinned native libraries and an FPM-compatible release where necessary."
     },
     {
       "repository": "MilanSkocic/codata",
       "revision": "d0c9b1552f0fa483a364de4a69e82c5e23344caf",
-      "error": "stdlib: registry dependencies and metapackages are not supported yet; use a GitHub git dependency."
+      "historical_error": "stdlib: registry dependencies and metapackages are not supported yet; use a GitHub git dependency.",
+      "status": "Now included: catalog-specific pinned build adaptations resolve the previous preparation/build limitation."
     },
     {
       "repository": "loiseaujc/SpecialMatrices",
       "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
-      "error": "stdlib: registry dependencies and metapackages are not supported yet; use a GitHub git dependency."
+      "historical_error": "stdlib: registry dependencies and metapackages are not supported yet; use a GitHub git dependency.",
+      "status": "Now included: catalog-specific pinned build adaptations resolve the previous preparation/build limitation."
     },
     {
       "repository": "jacobwilliams/simulated-annealing",
       "revision": "76a62c019ec861737c51ffedf3e53aa330b432d3",
-      "error": "The current manifest uses list-valued library.type, rejected by FPM 0.12.0. Releases 2.0/2.1 have the same syntax; releases 1.1/1.2 link external BLAS/LAPACK absent from this image."
+      "historical_error": "The current manifest uses list-valued library.type, rejected by FPM 0.12.0. Releases 2.0/2.1 have the same syntax; releases 1.1/1.2 link external BLAS/LAPACK absent from this image.",
+      "status": "Now included with pinned native libraries and an FPM-compatible release where necessary."
+    },
+    {
+      "repository": "jacobwilliams/LSMR",
+      "revision": "12611e2299c5188441b097437695a66c85369e76",
+      "historical_error": "Deferred: this manifest links external LAPACK and BLAS, absent from the current image; LSQR provides a compatible sparse solver for this batch.",
+      "status": "Now included: catalog-specific pinned build adaptations resolve the previous preparation/build limitation."
+    },
+    {
+      "repository": "jacobwilliams/nlesolver-fortran",
+      "revision": "60f38870a25e6b448dd552f184aa2f8616fc8cb0",
+      "historical_error": "Deferred: its manifest and dependencies require external LAPACK and BLAS, absent from the current image.",
+      "status": "Now included: catalog-specific pinned build adaptations resolve the previous preparation/build limitation."
+    },
+    {
+      "repository": "everythingfunctional/quaff",
+      "revision": "f26da3d854045b79102d27bdb4e9f9b072444272",
+      "historical_error": "Deferred: its dependencies are hosted on GitLab, which the current GitHub-only preparation path does not support.",
+      "status": "Now included: catalog-specific pinned build adaptations resolve the previous preparation/build limitation."
+    },
+    {
+      "repository": "jchristopherson/spectrum",
+      "revision": "5af0d5a85eccf971aa6e0fc72b1c7439c3cef536",
+      "historical_error": "Deferred: its linalg dependency links external BLAS, LAPACK and ARPACK, absent from the current image.",
+      "status": "Now included: catalog-specific pinned build adaptations resolve the previous preparation/build limitation."
+    },
+    {
+      "repository": "jchristopherson/fstats",
+      "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "historical_error": "Deferred: its OpenMP metapackage is unsupported by the current preparation path; its dependency chain also needs external numerical libraries.",
+      "status": "Now included: catalog-specific pinned build adaptations resolve the previous preparation/build limitation."
+    },
+    {
+      "repository": "jacobwilliams/odepack",
+      "revision": "94bbe0d5a9dd007dc9e07788ec9c8316417619c8",
+      "error": "The pinned source fails compilation under the current build policy: dlsodar.inc calls f with an implicit interface, rejected by -Werror=implicit-interface."
     }
   ],
   "selection_notes": "Prioritize reuse and popularity, then broaden numerical methods and practical utilities; require a checked GNU 16 consumer example and successful cached-main verification.",
@@ -259,6 +298,53 @@
       ],
       "rationale": "Broaden optimization, special functions, automatic differentiation, text parsing, containers, colors and orbital mechanics. Favor reusable dependencies and popular libraries, with a checked editable consumer example for each.",
       "popularity_note": "Star counts are a dated GitHub snapshot; missing counters are omitted, rather than reported as zero."
+    },
+    {
+      "checked_at": "2026-10-27T00:43:44.476296+00:00",
+      "candidate_count": 19,
+      "selected": [
+        "perazz/fitpack",
+        "jacobwilliams/LSQR",
+        "jacobwilliams/MPFUN2020-var1",
+        "jacobwilliams/rklib",
+        "jacobwilliams/ddeabm",
+        "jacobwilliams/dvode",
+        "jacobwilliams/pikaia",
+        "acbbullock/IO-Fortran-Library",
+        "jchristopherson/collections",
+        "jchristopherson/peaks",
+        "jacobwilliams/PowellOpt"
+      ],
+      "rationale": "Favor general numerical and utility libraries: sparse least squares, arbitrary precision, curve fitting, array I/O, signal peaks, generic containers, ODE solvers and optimization. Defer specialized molecular and STL geometry libraries by user preference.",
+      "ref_resolution_note": "Research resolved tagged/branch dependencies with git ls-remote because the unauthenticated GitHub REST quota was exhausted. Catalog builds use the recorded exact commits and archive checksums."
+    },
+    {
+      "checked_at": "2026-10-27T01:24:13.988615+00:00",
+      "candidate_count": 8,
+      "selected": [
+        "jchristopherson/fstats",
+        "jchristopherson/spectrum",
+        "jacobwilliams/LSMR",
+        "jacobwilliams/nlesolver-fortran",
+        "MilanSkocic/codata",
+        "loiseaujc/SpecialMatrices",
+        "everythingfunctional/quaff",
+        "gha3mi/forpca"
+      ],
+      "rationale": "Add all eight requested numerical, physical constants, units and statistics packages. Explicit operator-owned adapters handle pinned native libraries, selected registry/OpenMP declarations and verified GitHub mirrors; source patches and compatible dependency overrides are recorded per package."
+    },
+    {
+      "checked_at": "2026-10-27T01:48:59.544537+00:00",
+      "candidate_count": 6,
+      "selected": [
+        "modern-fortran/neural-fortran",
+        "nekStab/LightKrylov",
+        "jacobwilliams/polyroots-fortran",
+        "interkosmos/fortran-sqlite3",
+        "jacobwilliams/geodesic-fortran",
+        "jacobwilliams/simulated-annealing"
+      ],
+      "rationale": "Add all six requested candidates, broadening machine learning, databases and geodesy alongside polynomial roots, Krylov methods and global optimization. Use compatible releases, pinned native libraries and dependency archives; record the SQLite status-return correction."
     }
   ]
 }

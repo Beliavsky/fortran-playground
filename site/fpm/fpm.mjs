@@ -1,6 +1,7 @@
 import {renderPlots} from '../plots.mjs';
 import {createEditor} from '../editors.mjs';
 import {serviceOrigin} from '../service_config.mjs';
+import {githubRepository, pinnedSource, projectFiles, zipFiles, download} from './project_export.mjs';
 
 const get = id => document.getElementById(id);
 const editor = createEditor(get('source'), get('line-count'));
@@ -9,6 +10,7 @@ let origin = '', examples = [], busy = false, job = '', targetsKey = '', ready =
 let compilerLabels = {gfortran: 'GNU Fortran 16.2.0'};
 let compilerSelection = false;
 let packages = [], precompiled = {};
+let exporting = false, exportRuntime;
 get('compiler').value = 'gfortran';
 
 function controls() {
@@ -35,6 +37,8 @@ function controls() {
   const selected = packages.find(p => p.id === get('available-package').value);
   get('load-package').disabled = busy || !ready || !selected
     || precompiled[selected.id]?.revision !== selected.revision;
+  get('download-main').disabled = busy;
+  get('download-project').disabled = busy || exporting;
   editor.setReadOnly(busy);
   editor.refresh();
 }
@@ -62,6 +66,35 @@ function renderPackages() {
 
 get('package-search').addEventListener('input', renderPackages);
 get('package-category').addEventListener('change', renderPackages);
+
+function sourceLinks(packageEntry) {
+  const url = pinnedSource(packageEntry);
+  get('package-source-links').hidden = !url;
+  get('package-source').href = url || '';
+}
+
+get('download-main').addEventListener('click', () => {
+  download(new Blob([editor.getValue()], {type: 'text/plain;charset=utf-8'}), 'main.f90');
+});
+get('download-project').addEventListener('click', async () => {
+  // Snapshot everything before fetching tools, so edits during the download
+  // cannot mix different main programs, inputs or dependency selections.
+  const snapshot = {source: editor.getValue(), stdin: get('stdin').value,
+    url: get('package-url').value.trim(), revision: get('revision').value.trim(), packages};
+  exporting = true; controls();
+  try {
+    if (!exportRuntime) {
+      const response = await fetch('./project-runtime.json', {cache: 'no-store'});
+      if (!response.ok) throw new Error('Could not load the project download tools. Please retry.');
+      exportRuntime = await response.json();
+    }
+    const files = projectFiles({...snapshot, runtime: exportRuntime});
+    const name = githubRepository(snapshot.url).split('/').at(-1);
+    download(zipFiles(files), `${name}-playground.zip`);
+    get('download-note').textContent = 'Project downloaded. Extract it and follow README.md to build locally; no playground job was submitted.';
+  } catch (error) {get('download-note').textContent = error.message;}
+  finally {exporting = false; controls();}
+});
 
 function resetTargets() {
   const key = [get('package-url').value, get('revision').value, get('action').value, get('compiler').value].join('\n');
@@ -159,10 +192,15 @@ get('compiler').addEventListener('change', () => {
   get('connection').textContent = `${compilerLabels[get('compiler').value]} · FPM 0.12.0 · Separate package service`;
   controls();
 });
-for (const id of ['package-url', 'revision']) get(id).addEventListener('input', resetTargets);
+for (const id of ['package-url', 'revision']) get(id).addEventListener('input', () => {
+  resetTargets();
+  sourceLinks({repository: githubRepository(get('package-url').value.trim()),
+    revision: get('revision').value.trim()});
+});
 get('example').addEventListener('change', controls);
 get('available-package').addEventListener('change', () => {
   const selected = packages.find(p => p.id === get('available-package').value);
+  sourceLinks(selected);
   get('package-note').textContent = selected
     ? `${selected.description} Source: https://github.com/${selected.repository} @ ${selected.revision}. `
       + (precompiled[selected.id]?.revision === selected.revision ? 'Verified precompiled GNU 16 library.'
@@ -180,6 +218,7 @@ get('load-package').addEventListener('click', () => {
   get('workflow').value = 'consumer';
   get('action').value = 'run';
   editor.setValue(selected.source);
+  sourceLinks(selected);
   resetTargets(); controls();
 });
 get('load-example').addEventListener('click', () => {
@@ -190,6 +229,7 @@ get('load-example').addEventListener('click', () => {
   get('workflow').value = 'consumer';
   get('action').value = 'run';
   editor.setValue(example.source);
+  sourceLinks({repository: example.repository, revision: example.revision});
   resetTargets(); controls();
 });
 get('copy').addEventListener('click', async () => {

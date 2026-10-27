@@ -58,16 +58,23 @@ def build_package(app, base_image, package, recipe):
     import modal
     from fpm_sources import Preparer
     from xfpm_modal import bundle_sources
+    from fpm_catalog_build import CatalogPreparer, validate_build, build_image
+    options = validate_build(package)
+    base_image = build_image(app, base_image, options)
     key = cache_identity(package, recipe)
     name = 'fortran-fpm-lib-' + key
     source = (ROOT / 'fpm_catalog/demos' / (package['id'] + '.f90')).read_text(encoding='utf-8')
     with tempfile.TemporaryDirectory() as temporary:
         pins = [{'repository': package['repository'], 'revision': package['revision'], 'sha256': package['archive_sha256']},
                 *package.get('dependencies', [])]
-        root, records = Preparer(temporary, pins=pins).prepare({'url': 'https://github.com/' + package['repository'],
+        preparer = CatalogPreparer(temporary, pins=pins, options=options) if options else Preparer(temporary, pins=pins)
+        root, records = preparer.prepare({'url': 'https://github.com/' + package['repository'],
                                                     'revision': package['revision'], 'source': source})
         if records[0]['sha256'] != package['archive_sha256']:
             raise ValueError('Pinned package archive checksum mismatch.')
+        if package.get('catalog_patches'):
+            from fpm_catalog_patches import apply_patches
+            apply_patches(package, Path(temporary) / root)
         message = {**package, 'key': key, 'recipe': recipe, 'source': source, 'root': root,
                    'records': records, 'bundle': bundle_sources(temporary)}
     sandbox = modal.Sandbox.create('python', '/opt/fpm/xfpm_prebuild.py', app=app, image=base_image,
@@ -164,6 +171,12 @@ def build_catalog(app, image, base_name, names=None, report_path=DEFAULT_REPORT)
         name = package['id']
         print('Precompiling GNU 16 package:', name, flush=True)
         try:
+            if package.get('catalog_build'):
+                from fpm_catalog_build import validate_build
+                validate_build(package)
+            if package.get('catalog_patches'):
+                from fpm_catalog_patches import validate_patches
+                validate_patches(package)
             old = previous.get('packages', {}).get(name)
             if old and old.get('key') == cache_identity(package, recipe) and old.get('artifact_image'):
                 entry = old
@@ -210,10 +223,11 @@ def write_validation_report(entries, path):
                     'network': False, 'secrets': False, 'build_limit_seconds': 180,
                     'run_limit_seconds': 30, 'new_file_limit_mib': 16},
         'check': 'Each edited main ran successfully; library artifacts were unchanged and FPM rebuilt only the main and executable. Plotting returned a PNG.',
-        'artifact_size_note': 'Logical object/module/archive bytes including FPM flag variants; excludes compiler images, sources, main executables. Not compressed storage or billing.',
+        'artifact_size_note': 'Logical object/module/archive bytes including FPM flag variants; excludes compiler images, native system libraries, sources, main executables. Not compressed storage or billing.',
         'total_artifact_bytes': sum(e['artifact_bytes'] for e in entries.values()),
-        'packages': [{k: entries[p['id']][k] for k in ('id', 'repository', 'revision', 'records',
-                     'prebuild_seconds', 'artifact_bytes', 'verification')} for p in packages]}
+        'packages': [{**{k: entries[p['id']][k] for k in ('id', 'repository', 'revision', 'records',
+                     'prebuild_seconds', 'artifact_bytes', 'verification')},
+                     **({key: p[key] for key in ('catalog_build', 'catalog_patches') if p.get(key)})} for p in packages]}
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
 

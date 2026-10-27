@@ -44,6 +44,10 @@
     <button id="load-package" type="button" disabled>Load package</button>
   </div>
   <p id="package-note">Loading the available package catalog&hellip;</p>
+  <p id="package-source-links" hidden>
+    <a id="package-source" target="_blank" rel="noopener noreferrer">Browse pinned source</a>
+    &middot; <a href="https://github.com/Beliavsky/fortran-playground/blob/main/docs/fpm-precompiled.md#catalog-specific-build-adaptations" target="_blank" rel="noopener noreferrer">Build notes and patches</a>
+  </p>
   <div class="package-fields">
     <label for="package-url">Package GitHub URL</label>
     <input id="package-url" type="url" placeholder="https://github.com/owner/package" maxlength="2048" autocomplete="off" spellcheck="false">
@@ -75,6 +79,11 @@
 end program main
 </textarea>
       <p class="editor-note">Syntax coloring &middot; Automatic indentation: 3 spaces &middot; Tab: indent &middot; Ctrl+Z: undo</p>
+      <div class="output-buttons">
+        <button id="download-main" type="button">Download main (.f90)</button>
+        <button id="download-project" type="button">Download FPM project (.zip)</button>
+      </div>
+      <p id="download-note" class="editor-note" role="status">Project ZIPs include your main and local build tools. Dependencies download on your first local run.</p>
     </section>
     <section class="panel">
       <label for="output">Build and program output</label>
