@@ -35,12 +35,18 @@
     <span>FPM 0.12.0</span>
   </div>
   <div class="toolbar package-filters">
-    <label for="package-collection">Collection</label>
-    <select id="package-collection"><option value="general">Selected Fortran packages</option><option value="all">All Fortran packages</option><option value="translated-r">Translated R packages</option></select>
-    <label for="package-search">Find a package</label>
-    <input id="package-search" type="search" placeholder="Name, GitHub owner, topic, keyword, or description" maxlength="120">
-    <label for="package-category">Category</label>
-    <select id="package-category"><option value="">All categories</option></select>
+    <div class="package-filter">
+      <label for="package-collection">Collection</label>
+      <select id="package-collection"><option value="general">Selected Fortran packages</option><option value="all">All Fortran packages</option><option value="translated-r">Translated R packages</option></select>
+    </div>
+    <div class="package-filter package-search-filter">
+      <label for="package-search">Find a package</label>
+      <input id="package-search" type="search" placeholder="Name, GitHub owner, topic, keyword, or description" maxlength="120">
+    </div>
+    <div class="package-filter">
+      <label for="package-category">Category</label>
+      <select id="package-category"><option value="">All categories</option></select>
+    </div>
     <span id="package-count" aria-live="polite"></span>
   </div>
   <div class="toolbar">
