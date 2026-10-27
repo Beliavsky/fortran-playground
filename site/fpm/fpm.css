@@ -2,7 +2,8 @@
 .package-fields input, #target { font: inherit; padding: 9px; border: 1px solid #aebfba; border-radius: 6px; min-width: 0; }
 .package-fields label { font-weight: 600; }
 #available-package { min-width: 0; max-width: 100%; flex: 1 1 28rem; }
-.package-filters input { font: inherit; padding: 8px; min-width: 0; flex: 1 1 16rem; }
+.package-filters input { font: inherit; padding: 8px; min-width: 0; flex: 1 1 26rem; }
+.package-filters input::placeholder { font-size: .875rem; }
 .editors.package-only { grid-template-columns: 1fr; }
 .editor-note, .output-buttons { margin: 10px 16px; font-size: 13px; }
 .stdin-panel { margin-top: 18px; }
