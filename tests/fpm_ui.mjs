@@ -19,14 +19,16 @@ globalThis.document = {
   getElementById(id) {
     assert.ok(ids.has(id), `Missing element ${id}`);
     if (!elements.has(id)) elements.set(id, {
-      value: '', disabled: false, hidden: false, textContent: '', readOnly: false, options: [], listeners: {},
+      value: '', disabled: false, hidden: false, readOnly: false, options: [], listeners: {},
+      get textContent() {return this.text || '';},
+      set textContent(value) {this.text = value; this.options = [];},
       classList: {toggle() {}}, addEventListener(name, fn) {this.listeners[name] = fn;},
       appendChild(child) {this.options.push(child);}, replaceChildren(...children) {this.options = children;},
       focus() {}, select() {},
     });
     return elements.get(id);
   },
-  createElement(tag) {return tag === 'a' ? {click() {downloads.push({name: this.download, blob: blobs.get(this.href)});}}
+  createElement(tag) {return tag === 'a' ? {setAttribute(key, value) {this[key] = value;}, click() {downloads.push({name: this.download, blob: blobs.get(this.href)});}}
     : {listeners: {}, addEventListener(name, fn) {this.listeners[name] = fn;}};},
 };
 const get = id => document.getElementById(id);
@@ -180,6 +182,16 @@ get('available-package').value = packages[0].id;
 get('available-package').listeners.change();
 assert.equal(get('load-package').disabled, legacyService);
 assert.match(get('package-note').textContent, /linear algebra/);
+const sourceNote = get('package-note').options;
+assert.equal(sourceNote[0].textContent, packages[0].repository);
+assert.equal(sourceNote[0].href, `https://github.com/${packages[0].repository}`);
+assert.equal(sourceNote[2].textContent, packages[0].revision.slice(0, 7));
+assert.equal(sourceNote[2].title, packages[0].revision);
+assert.equal(sourceNote[2].href, `https://github.com/${packages[0].repository}/tree/${packages[0].revision}`);
+for (const link of [sourceNote[0], sourceNote[2]]) {
+  assert.equal(link.target, '_blank');
+  assert.equal(link.rel, 'noopener noreferrer');
+}
 if (!legacyService) {
   get('compiler').value = 'ifx';
   get('compiler').listeners.change();

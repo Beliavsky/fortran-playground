@@ -347,13 +347,33 @@ function selectPackage() {
   const selected = packages.find(p => p.id === get('available-package').value);
   renderTopics(selected);
   sourceLinks(selected);
-  get('package-note').textContent = selected
-    ? `${selected.description} Source: https://github.com/${selected.repository} @ ${selected.revision}. `
-      + (selected.subdirectory ? 'Experimental R translation; not verified in this playground. Each submission builds from scratch. See the pinned source for documentation, examples, coverage and licensing.'
+  const note = get('package-note');
+  note.textContent = selected
+    ? `${selected.description} Source: `
+    : 'Choose a package to load its pinned revision and a working main program. Loading does not run a job.';
+  if (selected) {
+    const source = pinnedSource(selected);
+    const repository = document.createElement(source ? 'a' : 'span');
+    repository.textContent = selected.repository;
+    const separator = document.createElement('span'); separator.textContent = ' @ ';
+    const revision = document.createElement(source ? 'a' : 'span');
+    revision.textContent = selected.revision.slice(0, 7);
+    revision.title = selected.revision;
+    if (source) {
+      repository.href = `https://github.com/${selected.repository}`;
+      revision.href = source;
+      for (const link of [repository, revision]) {
+        link.target = '_blank'; link.rel = 'noopener noreferrer';
+      }
+      revision.setAttribute('aria-label', `Browse source at commit ${selected.revision}`);
+    }
+    const detail = document.createElement('span');
+    detail.textContent = '. ' + (selected.subdirectory ? 'Experimental R translation; not verified in this playground. Each submission builds from scratch. See the pinned source for documentation, examples, coverage and licensing.'
         : localExecution ? 'Sources download and build locally when you submit a job.'
         : precompiled[selected.id]?.revision === selected.revision ? 'Verified precompiled GNU 16 library.'
-        : 'Precompiled build is not available on this service yet.')
-    : 'Choose a package to load its pinned revision and a working main program. Loading does not run a job.';
+        : 'Precompiled build is not available on this service yet.');
+    for (const child of [repository, separator, revision, detail]) note.appendChild(child);
+  }
   controls();
 }
 get('available-package').addEventListener('change', selectPackage);
