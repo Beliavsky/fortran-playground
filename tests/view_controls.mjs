@@ -55,6 +55,6 @@ for (const name of ['view_controls.mjs', 'view_controls.css']) {
 for (const name of ['site/index.html', 'site/fpm/index.html', 'local_site/index.html', 'local_site/fpm/index.html']) {
   const html = readFileSync(new URL('../' + name, import.meta.url), 'utf8');
   for (const token of ['id="theme-toggle"', 'id="focus-toggle"', 'view_controls.css', 'view_controls.mjs', 'data-focus-panel']) assert.ok(html.includes(token), name + ': ' + token);
-  if (name.includes('/fpm/')) for (const link of ['https://fpm.fortran-lang.org/', 'https://github.com/topics/fortran-package-manager', 'https://beliavsky.github.io/Fortran-packages-list/', 'https://github.com/Beliavsky/Fortran-Tools']) assert.ok(html.includes(link));
+  if (name.includes('/fpm/')) for (const link of ['https://fpm.fortran-lang.org/', 'https://github.com/topics/fortran-package-manager', 'https://fortran-lang.org/packages/', 'https://beliavsky.github.io/Fortran-packages-list/']) assert.ok(html.includes(link));
 }
 console.log('View controls tests passed');
