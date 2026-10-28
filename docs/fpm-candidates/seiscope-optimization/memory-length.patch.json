@@ -1,0 +1,11 @@
+{
+  "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+  "edits": [
+    {
+      "path": "src/sotb/merged-LBFGS.f90",
+      "sha256": "e11e89d0d264264cb73cf6d138a228406d0682151d2863d6947355bf8401951c",
+      "before": "call descent_LBFGS(n,grad,sk,yk,optim%cpt_lbfgs,&\n                l,descent)",
+      "after": "call descent_LBFGS(n,grad,sk,yk,optim%cpt_lbfgs,&\n                optim%l,descent)"
+    }
+  ]
+}

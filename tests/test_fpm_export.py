@@ -19,6 +19,33 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class ExportTests(unittest.TestCase):
+    def test_non_fpm_catalog_wrapper_survives_export_and_local_edits(self):
+        data = archive({'solver.f90': 'module solver\nend module\n', 'LICENSE': 'upstream license',
+                        'examples/main.f90': 'program upstream\nend program\n'})
+        package = {'id': 'solver', 'repository': 'test/solver', 'revision': 'a'*40,
+                   'archive_sha256': hashlib.sha256(data).hexdigest(),
+                   'catalog_build': {'adapter_sha256': adapter_digest(), 'source_packages': {
+                       'test/solver': {'manifest': 'name="solver"\n[library]\nsource-dir="playground-library"\n',
+                                       'sources': ['solver.f90']}}}}
+        with tempfile.TemporaryDirectory() as temporary:
+            project = Path(temporary).resolve()
+            runtime = json.loads((ROOT/'site/fpm/project-runtime.json').read_text(encoding='utf-8'))
+            for name, text in runtime.items():
+                path = project/name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(text, encoding='utf-8')
+            (project/'app').mkdir()
+            (project/'app/main.f90').write_text('program main\nuse solver\nend program\n')
+            settings = {'schema': 1, 'package': package,
+                        'request': {'url': 'https://github.com/test/solver', 'revision': 'a'*40}}
+            root = prepare(project, settings, downloader=lambda *a, **k: data)
+            self.assertEqual(set(tomllib.loads((project/'fpm.toml').read_text())['dependencies']), {'solver'})
+            self.assertEqual((root/'LICENSE').read_text(), 'upstream license')
+            source = root/'playground-library/solver.f90'
+            source.write_text('local edit')
+            self.assertEqual(prepare(project, settings, downloader=Mock(side_effect=AssertionError)), root)
+            self.assertEqual(source.read_text(), 'local edit')
+
     def fixture(self, project):
         runtime = json.loads((ROOT / 'site/fpm/project-runtime.json').read_text(encoding='utf-8'))
         for name, text in runtime.items():

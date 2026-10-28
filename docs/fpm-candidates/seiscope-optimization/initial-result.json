@@ -1,0 +1,79 @@
+{
+  "ok": false,
+  "compiler": "GNU Fortran (GCC) 16.2.0",
+  "compiler_id": "gfortran",
+  "fpm": "0.12.0",
+  "stages": [
+    {
+      "name": "Build",
+      "command": [
+        "fpm",
+        "build",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.514,
+      "ok": true,
+      "exit_code": 0,
+      "error": "",
+      "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+      "stderr": ""
+    },
+    {
+      "name": "Run",
+      "command": [
+        "fpm",
+        "run",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.031,
+      "ok": false,
+      "exit_code": 2,
+      "error": "",
+      "stdout": "",
+      "stderr": "Project is up to date\nAt line 102 of file ./././/../sources/bundle/packages/0/seiscope_opt_toolbox_w_ctypes-74a25c29d13c506e16f8025eb13a2cf396dc23c0/src/sotb/merged-LBFGS.f90\nFortran runtime error: Index '1' of dimension 2 of array 'sk' outside of expected range (1:0)\n\nError termination. Backtrace:\n#0  0x2b889a029f83 in ???\n#1  0x2b889a02ac39 in ???\n#2  0x2b889a02b21b in ???\n#3  0x405a19 in ???\n#4  0x4054b9 in ???\n#5  0x40139a in MAIN__\n\tat app/main.f90:49\n#6  0x401a1e in main\n\tat app/main.f90:34\n<ERROR> Execution for object \" playground-main \" returned exit code  2\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 2\n"
+    }
+  ],
+  "cache": {
+    "package": "seiscope-optimization",
+    "compiler": "GNU Fortran 16.2.0",
+    "key": "09760060f9009917ddc280cc",
+    "library_reused": true,
+    "changed_artifacts": []
+  },
+  "packages": [
+    {
+      "repository": "ofmla/seiscope_opt_toolbox_w_ctypes",
+      "revision": "74a25c29d13c506e16f8025eb13a2cf396dc23c0",
+      "sha256": "8915f61094dc4ec7cf3be3cf663638ef3433815dd707e9cfc33fdfdb29efe874"
+    }
+  ],
+  "build_ok": true,
+  "target_groups": {
+    "app": [
+      "playground-main"
+    ],
+    "example": [],
+    "test": []
+  },
+  "targets": [
+    "playground-main"
+  ],
+  "plots": [],
+  "plot_notes": []
+}

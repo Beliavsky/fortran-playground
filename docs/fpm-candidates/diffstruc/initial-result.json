@@ -1,0 +1,84 @@
+{
+  "ok": false,
+  "compiler": "GNU Fortran (GCC) 16.2.0",
+  "compiler_id": "gfortran",
+  "fpm": "0.12.0",
+  "stages": [
+    {
+      "name": "Build",
+      "command": [
+        "fpm",
+        "build",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.666,
+      "ok": true,
+      "exit_code": 0,
+      "error": "",
+      "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+      "stderr": ""
+    },
+    {
+      "name": "Run",
+      "command": [
+        "fpm",
+        "run",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.038,
+      "ok": false,
+      "exit_code": 1,
+      "error": "",
+      "stdout": "",
+      "stderr": "Project is up to date\nERROR STOP Incorrect gradient\n\nError termination. Backtrace:\n#0  0x2b41968d9f83 in ???\n#1  0x2b41968dac39 in ???\n#2  0x2b41968dc045 in ???\n#3  0x4026df in MAIN__\n\tat app/main.f90:31\n#4  0x402c74 in main\n\tat app/main.f90:4\n<ERROR> Execution for object \" playground-main \" returned exit code  1\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 1\n"
+    }
+  ],
+  "cache": {
+    "package": "diffstruc",
+    "compiler": "GNU Fortran 16.2.0",
+    "key": "b80bf26493bdfddd78a5e006",
+    "library_reused": true,
+    "changed_artifacts": []
+  },
+  "packages": [
+    {
+      "repository": "nedtaylor/diffstruc",
+      "revision": "88565f8e01792706edc0bd7e70dde957c26122a4",
+      "sha256": "84daa1e2c23f1cd2285b5212f4f5390cf930336c98feae7da0b5eb4534a7e65f"
+    },
+    {
+      "repository": "nedtaylor/coreutils",
+      "revision": "ead4501f4b695c4f0fe3267f1bf5318544c9b1e2",
+      "sha256": "a2979763627707ba61169b4abacd7ee60b586df9115ac2beb9ee674c25031554"
+    }
+  ],
+  "build_ok": true,
+  "target_groups": {
+    "app": [
+      "playground-main"
+    ],
+    "example": [],
+    "test": []
+  },
+  "targets": [
+    "playground-main"
+  ],
+  "plots": [],
+  "plot_notes": []
+}

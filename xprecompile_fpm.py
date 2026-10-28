@@ -14,6 +14,16 @@ ROOT = Path(__file__).resolve().parent
 DEFAULT_REPORT = ROOT / '.fpm-audit-cache/precompiled.json'
 
 
+def write_build_message(writer, message):
+    """Drain bounded chunks: source bundles can exceed Modal's stdin buffer."""
+    data = (json.dumps(message) + '\n').encode('utf-8')
+    for start in range(0, len(data), 64 * 1024):
+        writer.write(data[start:start + 64 * 1024])
+        writer.drain()
+    writer.write_eof()
+    writer.drain()
+
+
 def verify_cached(app, image, package, key):
     """Test a different main in a fresh, ordinary restricted execution sandbox."""
     import modal
@@ -72,7 +82,15 @@ def verify_cached(app, image, package, key):
         sandbox.terminate()
 
 
-def build_package(app, base_image, package, recipe):
+def build_package(app, base_image, package, recipe, *, _shared_plan=None):
+    if package.get('catalog_build', {}).get('shared_dependencies') and _shared_plan is None:
+        options = package['catalog_build']
+        shared = {name.lower() for name in options['shared_dependencies']['repositories']}
+        if (shared & {name.lower() for name in options.get('source_packages', {})}
+                or (package.get('catalog_patches') and package['repository'].lower() in shared)):
+            raise ValueError('Shared dependencies currently require unpatched library sources.')
+        from xshared_fpm import build_shared_package
+        return build_shared_package(app, base_image, package, recipe)
     import modal
     from fpm_sources import Preparer
     from xfpm_modal import bundle_sources
@@ -93,16 +111,18 @@ def build_package(app, base_image, package, recipe):
         if package.get('catalog_patches'):
             from fpm_catalog_patches import apply_patches
             apply_patches(package, Path(temporary) / root)
+        if _shared_plan:
+            from fpm_shared import rewrite_shared_sources
+            rewrite_shared_sources({repo: path for (repo, _), path in preparer.repositories.items()}, _shared_plan)
         message = {**package, 'key': key, 'recipe': recipe, 'source': source, 'root': root,
                    'records': records, 'bundle': bundle_sources(temporary)}
-    sandbox = modal.Sandbox.create('python', '/opt/fpm/xfpm_prebuild.py', app=app, image=base_image,
+    prebuild = '/opt/fpm/xfpm_shared_prebuild.py' if _shared_plan else '/opt/fpm/xfpm_prebuild.py'
+    sandbox = modal.Sandbox.create('python', prebuild, app=app, image=base_image,
         runtime='gvisor', workdir='/work', timeout=4000, cpu=2, memory=4096,
         block_network=True, secrets=[], volumes={}, include_oidc_identity_token=False,
         env={'OMP_NUM_THREADS': '2', 'HOME': '/work'})
     try:
-        sandbox.stdin.write((json.dumps(message) + '\n').encode())
-        sandbox.stdin.write_eof()
-        sandbox.stdin.drain()
+        write_build_message(sandbox.stdin, message)
         # Builder emits one JSON line and stays alive until the filesystem is snapshotted.
         output = ''
         for chunk in sandbox.stdout:
@@ -128,13 +148,16 @@ def build_package(app, base_image, package, recipe):
 
 def refresh_worker(app, image):
     """Replace worker code/catalog in one layer; retain the compiled /work tree."""
-    with tempfile.TemporaryDirectory() as temporary:
-        directory = Path(temporary)
-        for name in ('fpm_cache.py', 'fpm_build.py', 'fpm_sources.py', 'fpm_compilers.py',
-                     'xfpm_worker.py', 'fpm_targets.py', 'fortran_plot.py', 'fortran_image.py'):
-            shutil.copyfile(ROOT / name, directory / name)
-        shutil.copytree(ROOT / 'vendor/pyplot-fortran', directory / 'vendor/pyplot-fortran')
-        return image.add_local_dir(directory, '/opt/fpm', copy=True).env({'FPM_COMPILER': 'gfortran'}).build(app)
+    from fpm_cache import worker_identity
+    # Later child image layers may resolve these inputs again. Keep a stable,
+    # content-versioned directory rather than an already deleted temporary one.
+    directory = ROOT / '.fpm-audit-cache/worker-layers' / worker_identity()
+    directory.mkdir(parents=True, exist_ok=True)
+    for name in ('fpm_cache.py', 'fpm_build.py', 'fpm_sources.py', 'fpm_compilers.py',
+                 'xfpm_worker.py', 'fpm_targets.py', 'fortran_plot.py', 'fortran_image.py'):
+        shutil.copyfile(ROOT / name, directory / name)
+    shutil.copytree(ROOT / 'vendor/pyplot-fortran', directory / 'vendor/pyplot-fortran', dirs_exist_ok=True)
+    return image.add_local_dir(directory, '/opt/fpm', copy=True).env({'FPM_COMPILER': 'gfortran'}).build(app)
 
 
 def find_artifact(app, package, recipe):
@@ -179,6 +202,12 @@ def build_catalog(app, image, base_name, names=None, report_path=DEFAULT_REPORT,
     worker = worker_identity()
     packages = [p for p in catalog() if names is None or p['id'] in names]
     previous = json.loads(report_path.read_text()) if report_path.exists() else {}
+    donors = dict(previous.get('dependency_donors', {}))
+    # Keep verified old donors available while selected parents are migrated.
+    # They may still be serving the public API until the operator redeploys.
+    for name, entry in previous.get('packages', {}).items():
+        if entry.get('artifact_image') and entry.get('verification', {}).get('library_reused') is True:
+            donors.setdefault(entry['key'], {**entry, 'id': entry.get('id', name)})
     retained = {p['id']: previous.get('packages', {}).get(p['id']) for p in catalog()}
     retained = {name: entry for name, entry in retained.items() if entry
                 and entry.get('key') == cache_identity(next(p for p in catalog() if p['id'] == name), recipe)}
@@ -216,6 +245,9 @@ def build_catalog(app, image, base_name, names=None, report_path=DEFAULT_REPORT,
             else:
                 print(f'{name}: refreshing worker layer; keeping compiled library', flush=True)
                 ready = refresh_worker(app, modal.Image.from_name(entry['artifact_image']))
+                if package.get('catalog_build', {}).get('shared_dependencies'):
+                    from xshared_fpm import shared_worker_image
+                    ready = shared_worker_image(app, ready)
             print(f'{name}: verifying changed main; keeping compiled library', flush=True)
             verification = verify_cached(app, ready, package, entry['key'])
             ready.publish(runner_name)
@@ -227,15 +259,33 @@ def build_catalog(app, image, base_name, names=None, report_path=DEFAULT_REPORT,
             retained.pop(name, None)
             failures[name] = str(error)
             print(f'{name}: FAILED: {error}', flush=True)
-        report_path.write_text(json.dumps({'base_image': base_name, 'recipe': recipe, 'packages': retained, 'failures': failures}, indent=2) + '\n')
+        report_path.write_text(json.dumps({'base_image': base_name, 'recipe': recipe, 'packages': retained,
+                                          'dependency_donors': donors, 'failures': failures}, indent=2) + '\n')
     if failures:
         raise RuntimeError('Catalog verification failed for: ' + ', '.join(failures) + '. See ' + str(report_path))
     report_path.write_text(json.dumps({'base_image': base_name, 'recipe': recipe, 'packages': retained,
-                                      'failures': failures}, indent=2) + '\n')
+                                      'dependency_donors': donors, 'failures': failures}, indent=2) + '\n')
     # A selected batch extends the deployed catalog rather than removing valid
     # images for packages outside that batch. Drop only stale/unverified entries.
     return {name: entry for name, entry in retained.items()
             if entry.get('image') and entry.get('verification', {}).get('library_reused') is True}
+
+
+def artifact_totals(entries):
+    """Count each immutable shared export once, regardless of its consumers."""
+    shared = {}
+    for name, entry in entries.items():
+        for dependency in entry.get('shared_dependencies', []):
+            key = dependency['key']
+            if key in shared and shared[key]['dependency'] != dependency:
+                raise ValueError('Conflicting shared dependency measurements: ' + key)
+            shared.setdefault(key, {'dependency': dependency, 'users': []})['users'].append(name)
+    owned = sum(e['artifact_bytes'] for e in entries.values())
+    shared_bytes = sum(e['dependency']['artifact_bytes'] for e in shared.values())
+    return {'owned_artifact_bytes': owned, 'shared_artifact_bytes': shared_bytes,
+            'total_artifact_bytes': owned + shared_bytes,
+            'shared_dependencies': [{**entry['dependency'], 'users': sorted(entry['users'])}
+                                    for _, entry in sorted(shared.items())]}
 
 
 def write_validation_report(entries, path):
@@ -257,11 +307,13 @@ def write_validation_report(entries, path):
                     'network': False, 'secrets': False, 'build_limit_seconds': 180,
                     'run_limit_seconds': 30, 'new_file_limit_mib': 16},
         'check': 'Each edited main ran successfully; library artifacts were unchanged and FPM rebuilt only the main and executable. Plotting returned a PNG.',
-        'artifact_size_note': 'Logical object/module/archive bytes including FPM flag variants; excludes compiler images, native system libraries, sources, main executables. Not compressed storage or billing.',
-        'total_artifact_bytes': sum(e['artifact_bytes'] for e in entries.values()),
+        'artifact_size_note': 'Logical package-owned object/module/archive bytes plus each immutable shared dependency export once. Legacy package measurements include their dependency objects and FPM flag variants. Excludes compiler images, native system libraries, sources and main executables; not compressed storage or billing. Retired rollout images and the operator export Volume are not counted.',
+        **artifact_totals(entries),
         'packages': [{**{k: entries[p['id']][k] for k in ('id', 'repository', 'revision', 'records',
                      'prebuild_seconds', 'artifact_bytes', 'verification')},
-                     **({key: p[key] for key in ('catalog_build', 'catalog_patches') if p.get(key)})} for p in packages]}
+                     **({key: p[key] for key in ('catalog_build', 'catalog_patches') if p.get(key)}),
+                     **({'shared_dependencies': entries[p['id']]['shared_dependencies']}
+                        if entries[p['id']].get('shared_dependencies') else {})} for p in packages]}
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
 

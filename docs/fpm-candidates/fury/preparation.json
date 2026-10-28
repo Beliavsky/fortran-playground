@@ -1,0 +1,15 @@
+{
+  "repository": "szaghi/FURY",
+  "revision": "093e4d558ae089107464eb4ea7adec4f1178b907",
+  "archive_sha256": "cdd0806a631842a9ead7f85f0408c138ed37e955b8a929582c25afeb1301daac",
+  "error": "Package archive contains an unsafe path, link, or special file.",
+  "id": "fury",
+  "phase": "archive preparation",
+  "download_limit_bytes": 16777216,
+  "links": [
+    {
+      "path": "CONTRIBUTING.md",
+      "target": "docs/guide/contributing.md"
+    }
+  ]
+}

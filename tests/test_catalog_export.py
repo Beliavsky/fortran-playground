@@ -44,8 +44,12 @@ class CatalogExportTests(unittest.TestCase):
                     self.assertNotIn(field, record)
         self.assertEqual(feed['taxonomies']['gams']['classes']['L6']['parent'], 'L')
         self.assertEqual(feed['taxonomies']['gams']['classes']['G1b']['parent'], 'G1')
-        self.assertEqual(sum(len(p['curation'].get('procedures', [])) for p in feed['projects']), 132)
-        self.assertEqual(sum('numerical_review' in p['curation'] for p in feed['projects']), 104)
+        gams = json.loads((ROOT / 'fpm_catalog/gams.json').read_text(encoding='utf-8'))
+        review = json.loads((ROOT / 'fpm_catalog/gams-numerical-review.json').read_text(encoding='utf-8'))
+        self.assertEqual({r['id'] for p in feed['projects'] for r in p['curation'].get('procedures', [])},
+                         {r['id'] for r in gams['procedure_mappings']})
+        self.assertEqual(sum('numerical_review' in p['curation'] for p in feed['projects']),
+                         len(review['packages']))
         self.assertIn('fpm_catalog/gams-numerical-review.json', {r['path'] for r in feed['provenance']['inputs']})
         self.assertEqual(len(feed['demonstrations']), 3)
         for driver in feed['demonstrations']:

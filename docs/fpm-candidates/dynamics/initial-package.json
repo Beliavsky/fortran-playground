@@ -1,0 +1,62 @@
+{
+  "id": "dynamics",
+  "repository": "jchristopherson/dynamics",
+  "revision": "580d04859a25126d3261e44b3fbec5111835e3a4",
+  "archive_sha256": "9aae4e1bff56b7a4bcf738be61dced3038d778b5b94bbc91ecb9edf58eaa3d87",
+  "stars": 3,
+  "category": "Dynamics and control",
+  "description": "Frequency response, vibration analysis, modal analysis and dynamic-system calculations.",
+  "license": "MIT",
+  "catalog_build": {
+    "apt_packages": [
+      "libblas-dev=3.12.1-6",
+      "liblapack-dev=3.12.1-6",
+      "libarpack2-dev=3.9.1-6"
+    ],
+    "source_revisions": {
+      "jchristopherson/fortran_test_helper": "1557b1485d8a5b042862042552f1e1a34552ca5e",
+      "jchristopherson/ferror": "9d6c9750f5c14ef2c806104ea8dfdfc9ce91efed",
+      "jchristopherson/collections": "ce37c94e72b3ae5db2e2208489999260a7875f81",
+      "jchristopherson/peaks": "5bd81dc18ddd629ecf3daa08769ff2440def3682",
+      "jchristopherson/fstats": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "jchristopherson/spectrum": "5af0d5a85eccf971aa6e0fc72b1c7439c3cef536",
+      "jchristopherson/geompack": "b7a327ca3a13507859c42dd6fba50af0bb5d5c6a",
+      "jchristopherson/linalg": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+      "jchristopherson/nonlin": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+      "jchristopherson/diffeq": "989b320179c23aaff4bfe72994c90e9034f50c74"
+    },
+    "adapter_sha256": "fd73ab30a27bb1299e6630ac45976aec59e1c123d56881471a0cb2065cc97bbc"
+  },
+  "dependencies": [
+    {
+      "repository": "jchristopherson/linalg",
+      "revision": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+      "sha256": "6210b8b167b50694941f48b20ad5d94bdacab026f1eb4720e2d55e8ddde0b59a"
+    },
+    {
+      "repository": "jchristopherson/nonlin",
+      "revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+      "sha256": "3a6f6cf6daa9b352213407f7c90555c22a492ad455cab0e2eb708efc7d34eaba"
+    },
+    {
+      "repository": "jchristopherson/ferror",
+      "revision": "9d6c9750f5c14ef2c806104ea8dfdfc9ce91efed",
+      "sha256": "b2c2c059d263b38484acf6956fa6416f899d739d3669906931aa1c08441510bd"
+    },
+    {
+      "repository": "jchristopherson/diffeq",
+      "revision": "989b320179c23aaff4bfe72994c90e9034f50c74",
+      "sha256": "09f6e92aea1dc8c9eb9233d4052b012e3b53a739e1ce078453d0421ddb1d4e87"
+    },
+    {
+      "repository": "jchristopherson/spectrum",
+      "revision": "5af0d5a85eccf971aa6e0fc72b1c7439c3cef536",
+      "sha256": "20079f9ad017369097d5463fec26732775fb33a868eb2d3c3a308a044cb92e79"
+    },
+    {
+      "repository": "jchristopherson/fstats",
+      "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "sha256": "cf6b7367fc2a0d74f46000dc80a4cbedd07fd554e29117144b695b3a9ffa6fef"
+    }
+  ]
+}

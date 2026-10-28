@@ -667,5 +667,13 @@ export const gamsSubclasses = {
   "L13b": {
     "label": "Principal components analysis",
     "parent": "L13"
+  },
+  "C10b": {
+    "label": "I, K",
+    "parent": "C10"
+  },
+  "C10b1": {
+    "label": "Real argument, integer order",
+    "parent": "C10b"
   }
 };

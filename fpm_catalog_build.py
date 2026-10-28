@@ -7,11 +7,15 @@ enable selected compiler metapackages, and render manifest version placeholders.
 import hashlib
 from pathlib import Path
 import re
+import shutil
 import tomllib
 
-from fpm_sources import Preparer, github_repository
+from fpm_sources import Preparer, github_repository, extract_archive, MAX_PACKAGES, MAX_EXPANDED
 
 ROOT = Path(__file__).resolve().parent
+LEGACY_ADAPTER_SHA256 = '2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133'
+SOURCE_ADAPTER_SHA256 = 'fd73ab30a27bb1299e6630ac45976aec59e1c123d56881471a0cb2065cc97bbc'
+NAME_ADAPTER_SHA256 = 'e69f1678e4f5c0963a1794ac1fa804522972481e75f9e530400bd3eec8e92c32'
 
 
 def adapter_digest():
@@ -23,9 +27,42 @@ def validate_build(package):
     if not options:
         return options
     allowed = {'adapter_sha256', 'apt_packages', 'environment', 'registry', 'git_aliases',
-               'metapackages', 'manifest_versions', 'source_revisions'}
-    if set(options) - allowed or options.get('adapter_sha256') != adapter_digest():
+               'metapackages', 'manifest_versions', 'manifest_names', 'source_revisions', 'source_packages', 'shared_dependencies'}
+    if (set(options) - allowed or options.get('adapter_sha256') not in {adapter_digest(), LEGACY_ADAPTER_SHA256, SOURCE_ADAPTER_SHA256, NAME_ADAPTER_SHA256}
+            or (options.get('source_packages') and options.get('adapter_sha256') == LEGACY_ADAPTER_SHA256)
+            or (options.get('manifest_names') and options.get('adapter_sha256') not in {adapter_digest(), NAME_ADAPTER_SHA256})):
         raise ValueError('Refresh the catalog build adapter checksum: ' + package['id'])
+    shared = options.get('shared_dependencies')
+    if shared:
+        if (options.get('adapter_sha256') != adapter_digest()
+                or set(shared) != {'adapter_sha256', 'repositories'}
+                or not re.fullmatch('[a-f0-9]{64}', shared.get('adapter_sha256', ''))
+                or not isinstance(shared['repositories'], list) or not 1 <= len(shared['repositories']) <= 12
+                or len(set(shared['repositories'])) != len(shared['repositories'])):
+            raise ValueError('Invalid shared dependency recipe.')
+        for repo in shared['repositories']:
+            github_repository('https://github.com/' + repo)
+    for repo, name in options.get('manifest_names', {}).items():
+        github_repository('https://github.com/' + repo)
+        if not isinstance(name, str) or not re.fullmatch(r'[A-Za-z0-9_][A-Za-z0-9_-]*', name):
+            raise ValueError('Invalid catalog manifest name.')
+    for repo, spec in options.get('source_packages', {}).items():
+        github_repository('https://github.com/' + repo)
+        if (set(spec) != {'manifest', 'sources'} or not isinstance(spec['manifest'], str)
+                or len(spec['manifest'].encode()) > 16000 or not isinstance(spec['sources'], list)
+                or not 1 <= len(spec['sources']) <= 500):
+            raise ValueError('Invalid catalog source package.')
+        from pathlib import PurePosixPath
+        names = set()
+        for source in spec['sources']:
+            path = PurePosixPath(source)
+            if (path.is_absolute() or '..' in path.parts or '\\' in source or ':' in source
+                    or path.suffix.lower() not in {'.f', '.f90', '.f95', '.for'} or path.name in names):
+                raise ValueError('Catalog library sources must be distinct relative Fortran files.')
+            names.add(path.name)
+        manifest = tomllib.loads(spec['manifest'])
+        if manifest.get('library', {}).get('source-dir') != 'playground-library':
+            raise ValueError('Catalog source package must use playground-library.')
     for value in options.get('apt_packages', []):
         if not re.fullmatch(r'[a-z0-9][a-z0-9+.-]*=[A-Za-z0-9:~+.-]+', value):
             raise ValueError('Catalog system packages must have exact versions.')
@@ -63,7 +100,54 @@ class CatalogPreparer(Preparer):
             if revision and re.fullmatch('[a-f0-9]{40}', revision) and revision != override:
                 raise ValueError('Catalog source override conflicts with an explicit upstream commit.')
             revision = override
+        source_package = self.options.get('source_packages', {}).get(repo.lower())
+        if source_package:
+            return self.source_package(repo, revision, source_package, development=development)
         return super().repository(url, revision, development=development)
+
+    def source_package(self, repo, revision, spec, *, development=False):
+        """Wrap an explicitly locked non-FPM repository without changing its sources.
+
+        This operator-only path retains the ordinary downloader/archive/graph limits.
+        Only listed files enter the library; upstream programs and objects stay out.
+        """
+        pin = self.pins.get(repo.lower()) if self.pins is not None else None
+        if not pin or not re.fullmatch('[a-f0-9]{40}', pin['revision']):
+            raise ValueError('Catalog source packages require an exact archive lock.')
+        if re.fullmatch('[a-f0-9]{40}', revision) and revision != pin['revision']:
+            raise ValueError('Catalog source package revision conflicts with its lock.')
+        key = (repo.lower(), pin['revision'])
+        if key in self.repositories:
+            root = self.repositories[key]
+            self.manifest(root, development=development)
+            return root
+        if len(self.records) >= MAX_PACKAGES:
+            raise ValueError('Dependency graph exceeds 12 repositories.')
+        data = self.download(f"https://codeload.github.com/{repo}/tar.gz/{pin['revision']}")
+        digest = hashlib.sha256(data).hexdigest()
+        if digest != pin['sha256']:
+            raise ValueError('Catalog source package archive checksum mismatch.')
+        root = extract_archive(data, self.directory / 'packages' / str(len(self.records)),
+                               require_manifest=False).resolve()
+        if (root / 'fpm.toml').exists() or (root / 'playground-library').exists():
+            raise ValueError('Catalog source package must not overwrite upstream files.')
+        library = root / 'playground-library'
+        library.mkdir()
+        for source in spec['sources']:
+            path = (root / source).resolve()
+            if not path.is_relative_to(root) or not path.is_file():
+                raise ValueError('Missing catalog library source: ' + source)
+            shutil.copyfile(path, library / path.name)
+        (root / 'fpm.toml').write_text(spec['manifest'], encoding='utf-8')
+        paths = list(self.directory.rglob('*'))
+        if len(paths) > 20000 or sum(p.stat().st_size for p in paths if p.is_file()) > MAX_EXPANDED:
+            raise ValueError('Combined dependency sources exceed 64 MiB / 20000 entries.')
+        self.repositories[key] = root
+        self.records.append({'repository': repo, 'revision': pin['revision'], 'sha256': digest})
+        shutil.rmtree(root / 'build', ignore_errors=True)
+        (root / 'fpm.lock').unlink(missing_ok=True)
+        self.manifest(root, development=development)
+        return root
 
     def manifest(self, root, *, development=False):
         root = root.resolve()
@@ -74,6 +158,13 @@ class CatalogPreparer(Preparer):
         if len(text.encode()) > 1000000:
             raise ValueError('Package manifest is too large.')
         manifest = tomllib.loads(text)
+        containing = next((repo for (repo, _), directory in self.repositories.items()
+                           if root == directory), '')
+        name = self.options.get('manifest_names', {}).get(containing)
+        if name:
+            # Operator-owned setting for a pinned root manifest only. Public
+            # requests retain ordinary package-name validation.
+            manifest['name'] = name
         # Placeholder versions appear in release-generation templates upstream.
         if manifest.get('version') == 'VERSION':
             containing = next((repo for (repo, _), directory in self.repositories.items()

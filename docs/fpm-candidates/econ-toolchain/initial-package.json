@@ -1,0 +1,31 @@
+{
+  "id": "econ-toolchain",
+  "repository": "renatomatz/econ-toolchain",
+  "revision": "301d1659ba3d34973195985c552ca6fcfe2d9f29",
+  "archive_sha256": "17f9f11a1e31418ab0211127966d9336068ce6d4662f421a9a513a6daedd70a5",
+  "stars": 0,
+  "category": "Statistics",
+  "description": "Markov chains, stochastic-process discretization and numerical tools for economic models.",
+  "license": "MIT",
+  "catalog_build": {
+    "apt_packages": [
+      "libopenblas-serial-dev=0.3.29+ds-3",
+      "libopenblas-dev=0.3.29+ds-3"
+    ],
+    "environment": {
+      "FPM_FFLAGS": "-fcoarray=single"
+    },
+    "source_revisions": {
+      "fortran-lang/stdlib": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "jacobwilliams/simulated-annealing": "a2fa094d1ee39525c7e081cfd67866975e9e1dc5"
+    },
+    "adapter_sha256": "e69f1678e4f5c0963a1794ac1fa804522972481e75f9e530400bd3eec8e92c32"
+  },
+  "dependencies": [
+    {
+      "repository": "fortran-lang/stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+    }
+  ]
+}

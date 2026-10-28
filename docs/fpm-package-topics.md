@@ -1,6 +1,6 @@
 # Playground topics by package
 
-159 selected packages; 304 distinct playground topics. GitHub topics were retrieved on 2026-10-28.
+175 selected packages; 348 distinct playground topics. GitHub topics were retrieved on 2026-10-28.
 
 The playground topics below are editorial suggestions based on the saved package descriptions, categories, and GitHub labels. They describe the package, rather than claiming every feature is exercised by its example main program. They are not author-supplied GitHub topics.
 
@@ -85,10 +85,12 @@ The first command validates coverage and regenerates this page; use `--check` to
 | Package and description | Playground topics | GitHub topics |
 | --- | --- | --- |
 | [daskr](https://github.com/davidpfister/daskr) — Differential-algebraic equation solver with root finding and direct or Krylov linear solvers. | `dae`, `differential-equations`, `iterative-solvers`, `krylov-methods`, `root-finding` | `dae`, `differential-equations`, `fortran`, `fortran-package-manager`, `netlib` |
+| [dde_solver](https://github.com/WarrenWeckesser/dde_solver) — Adaptive integration and interpolation for delay differential equations. | `adaptive-methods`, `delay-differential-equations`, `initial-value-problems`, `interpolation` | `delay-differential-equations`, `differential-equations`, `fortran` |
 | [ddeabm](https://github.com/jacobwilliams/ddeabm) — Adaptive Adams-Bashforth-Moulton ODE integration with event finding. | `adams-methods`, `adaptive-methods`, `event-detection`, `initial-value-problems`, `ode` | `adams-bashforth`, `fortran`, `fortran-package-manager`, `ode`, `root-finding`, `slatec` |
 | [diffeq](https://github.com/jchristopherson/diffeq) — Adaptive explicit and implicit integrators for ordinary differential and differential-algebraic equations. | `adaptive-methods`, `dae`, `differential-equations`, `implicit-methods`, `ode` | `adams-bashforth-moulton`, `backwards-differentiation-formula`, `bdf`, `differential-algebraic-equations`, `differential-equations`, `esdirk`, `event-detection`, `implicit-runge-kutta`, `index-reduction`, `kennedy-carpenter`, `rosenbrock`, `runge-kutta-methods`, `tsitouras` |
 | [dop853](https://github.com/jacobwilliams/dop853) — Adaptive eighth-order Runge-Kutta integration of ordinary differential equations. | `adaptive-methods`, `initial-value-problems`, `ode`, `runge-kutta` | `dop853`, `fortran`, `fortran-package-manager`, `ode`, `runge-kutta` |
 | [dvode](https://github.com/jacobwilliams/dvode) — Variable-coefficient multistep ODE solver for stiff and nonstiff systems. | `initial-value-problems`, `multistep-methods`, `ode`, `stiff-equations` | `adams-bashforth`, `fortran`, `fortran-package-manager`, `ode`, `vode` |
+| [fishpack](https://github.com/jlokimlin/fishpack) — Finite-difference solvers for separable elliptic partial differential equations. | `finite-differences`, `helmholtz-equation`, `partial-differential-equations`, `poisson-equation` | None supplied |
 | [flint](https://github.com/princemahajan/FLINT) — Adaptive explicit Runge-Kutta ODE integration with dense output and event detection. | `adaptive-methods`, `dense-output`, `event-detection`, `ode`, `runge-kutta` | `differential-equations`, `fortran`, `julia`, `numerical-integration`, `ode`, `ode-events`, `runge-kutta` |
 | [odepack](https://github.com/Nicholaswogan/odepack) — Modern thread-safe interfaces to the LSODA and LSODAR initial-value ODE solvers. | `event-detection`, `initial-value-problems`, `ode`, `stiff-equations`, `thread-safe` | `fortran-package-manager`, `ode`, `ode-solver`, `odepack` |
 | [rkf45](https://github.com/zoziha/rkf45) — Classic adaptive Runge-Kutta-Fehlberg fourth/fifth-order ODE integration. | `adaptive-methods`, `initial-value-problems`, `ode`, `runge-kutta` | `fehlberg`, `fortran`, `fortran-package-manager`, `fourth-fifth-order`, `ode`, `rkf45`, `runge-kutta` |
@@ -101,9 +103,17 @@ The first command validates coverage and regenerates this page; use `--check` to
 | Package and description | Playground topics | GitHub topics |
 | --- | --- | --- |
 | [ad_dnsvm](https://github.com/lauvergn/AD_dnSVM) — Forward automatic differentiation of scalars, vectors and matrices through third derivatives. | `arrays`, `automatic-differentiation`, `derivatives`, `differentiation`, `higher-order-derivatives` | `automatic-differentiation`, `fortran` |
+| [diffstruc](https://github.com/nedtaylor/diffstruc) — Forward and reverse automatic differentiation with array computation graphs. | `automatic-differentiation`, `derivatives`, `forward-mode`, `gradients`, `reverse-mode` | `automatic-differentiation`, `backpropagation`, `differentiation`, `fortran`, `fortran-package-manager`, `forward-mode`, `library`, `partial-differentiation`, `reverse-mode` |
+| [dnaoad-fpm](https://github.com/fpenunuri/DNAOAD-FPM) — Complex dual numbers for derivatives through configurable order. | `automatic-differentiation`, `complex-arithmetic`, `dual-numbers`, `higher-order-derivatives` | None supplied |
 | [fordiff](https://github.com/gha3mi/fordiff) — Numerical derivatives using finite differences and complex steps. | `complex-step`, `derivatives`, `differentiation`, `finite-differences` | `complex-step-differentiation`, `derivative`, `differentiation`, `finite-difference`, `fortran`, `fortran-package-manager` |
 | [forwarddiff](https://github.com/Nicholaswogan/forwarddiff) — Forward automatic differentiation using dual numbers (Differentia). | `automatic-differentiation`, `derivatives`, `differentiation`, `dual-numbers` | `autodiff`, `autodifferentiation`, `automatic-differentiation`, `differential-equations` |
 | [numdiff](https://github.com/jacobwilliams/NumDiff) — Numerical derivatives and sparse Jacobian estimation. | `differentiation`, `finite-differences`, `jacobians`, `sparse-matrices` | `differentiation`, `finite-differences`, `graph-coloring`, `numerical-differentiation`, `numerical-methods`, `optimization`, `sparsity-optimization` |
+
+## Dynamics and control
+
+| Package and description | Playground topics | GitHub topics |
+| --- | --- | --- |
+| [dynamics](https://github.com/jchristopherson/dynamics) — Frequency response, vibration analysis, modal analysis and dynamic-system calculations. | `control-systems`, `damping`, `frequency-response`, `modal-analysis`, `vibration` | `denavit-hartenberg`, `frequency-analysis`, `frequency-response`, `frf-fitting`, `geometric-algorithms`, `kinematics`, `modal-analysis`, `parallel-linkage`, `poincare-map`, `quaternions`, `rotation-matrix`, `serial-linkage`, `structural-dynamics`, `system-identification` |
 
 ## Encoding and compression
 
@@ -181,6 +191,12 @@ The first command validates coverage and regenerates this page; use `--check` to
 | [forimage](https://github.com/gha3mi/forimage) — Create, read, write and transform PNM images and convert color representations. | `color-conversion`, `file-io`, `image-processing`, `images`, `pnm` | `color`, `decimal`, `fortran`, `fortran-package-manager`, `hexadecimal`, `hsl`, `hsv`, `image`, `pbm`, `pgm`, `pnm`, `ppm`, `rgb` |
 | [fortran_stb_image](https://github.com/lewisfish/fortran_stb_image) — Read and write PNG and other raster image formats through the stb libraries. | `file-io`, `image-io`, `images`, `language-bindings`, `png` | None supplied |
 
+## Integral transforms
+
+| Package and description | Playground topics | GitHub topics |
+| --- | --- | --- |
+| [spherepack](https://github.com/jlokimlin/spherepack) — Spherical harmonic transforms and spherical differential-equation solvers. | `helmholtz-equation`, `integral-transforms`, `partial-differential-equations`, `spherical-harmonics` | None supplied |
+
 ## Integration
 
 | Package and description | Playground topics | GitHub topics |
@@ -189,6 +205,7 @@ The first command validates coverage and regenerates this page; use `--check` to
 | [fortran_cubatures](https://github.com/willklausler/fortran_cubatures) — Gaussian cubature rules for finite-element reference lines, triangles, quadrilaterals, tetrahedra, hexahedra and wedges. | `cubature`, `finite-elements`, `gaussian-quadrature`, `multidimensional`, `quadrature` | `cubature`, `finite-elements`, `fortran`, `fpm`, `numerical-integration`, `quadrature` |
 | [gaussjacobiquad](https://github.com/HaoZeke/GaussJacobiQuad) — Gauss-Jacobi quadrature nodes and weights for weighted numerical integration. | `gauss-jacobi`, `gaussian-quadrature`, `quadrature`, `weighted-integrals` | `f2py`, `gauss-jacobi`, `meson`, `numerical-integration`, `quadrature` |
 | [integrate_fortran](https://github.com/Euler-37/integrate_fortran) — Gauss-Legendre quadrature for one-dimensional and multidimensional integrals. | `gauss-legendre`, `gaussian-quadrature`, `multidimensional`, `quadrature` | `gauss-legendre-integration`, `numerical-integration`, `quadrature` |
+| [qdutillib](https://github.com/lauvergn/QDUtilLib) — Gauss-Legendre and Gauss-Hermite quadrature, linear algebra and numerical utilities. | `gauss-hermite`, `gauss-legendre`, `gaussian-quadrature`, `quadrature` | `fortran` |
 | [quadpack](https://github.com/jacobwilliams/quadpack) — Adaptive numerical integration, including improper and oscillatory integrals. | `adaptive-methods`, `improper-integrals`, `oscillatory-integrals`, `quadrature` | `fortran`, `fortran-package-manager`, `gauss-kronrod`, `gauss-kronrod-quadrature`, `numerical-integration`, `quadpack`, `quadrature`, `quadrature-integration`, `slatec` |
 | [quadrature-fortran](https://github.com/jacobwilliams/quadrature-fortran) — Adaptive Gaussian quadrature in one or more dimensions. | `adaptive-methods`, `gaussian-quadrature`, `multidimensional`, `quadrature` | `fortran`, `fortran-package-manager`, `integration`, `numerical-integration`, `quadrature`, `quadrature-integration` |
 
@@ -211,6 +228,7 @@ The first command validates coverage and regenerates this page; use `--check` to
 | [blas-interface](https://github.com/awvwgk/blas-interface) — Explicit generic Fortran interfaces to BLAS vector and matrix operations. | `blas`, `language-bindings`, `linear-algebra`, `matrix-operations`, `vector-operations` | None supplied |
 | [foreig](https://github.com/gha3mi/foreig) — LAPACK interfaces for eigenvalues and eigenvectors of real matrices. | `eigenvalues`, `eigenvectors`, `lapack`, `linear-algebra` | `eig`, `eigenvalues`, `eigenvalues-and-eigenvectors`, `eigenvectors`, `fortran`, `fortran-package-manager`, `lapack`, `mkl` |
 | [forinv](https://github.com/gha3mi/forinv) — Matrix inverses and singular-value-decomposition pseudoinverses. | `linear-algebra`, `matrix-inverse`, `pseudoinverse`, `svd` | `fortran`, `fortran-package-manager`, `inverse`, `pseudoinverse`, `svd` |
+| [forsvd](https://github.com/gha3mi/forsvd) — Singular value decomposition and truncated low-rank matrix approximations. | `lapack`, `linear-algebra`, `low-rank-approximation`, `singular-value-decomposition` | `fortran`, `fortran-package-manager`, `image-compression`, `low-rank-approximation`, `singular-value-decomposition`, `svd` |
 | [fortran-lapack](https://github.com/perazz/fortran-lapack) — Modern linear algebra: linear systems, eigenvalues, least squares, and matrix factorizations. | `eigenvalues`, `lapack`, `least-squares`, `linear-algebra`, `linear-systems`, `matrix-factorization` | `blas`, `eigenvalues`, `eigenvectors`, `fortran`, `fortran-package-manager`, `lapack`, `lapack95`, `lapacke`, `linear-algebra`, `linear-equations`, `machine-learning`, `matrix-factorization`, `modern-fortran`, `modern-fortran-modules`, `numpy`, `singular-values`, `svd` |
 | [fsparse](https://github.com/jalvesz/FSPARSE) — Sparse matrix storage, format conversions and matrix-vector products. | `format-conversion`, `linear-algebra`, `matrix-vector-products`, `sparse-matrices` | `fortran`, `fortran-library`, `fortran-package-manager`, `sparse-matrices` |
 | [kiss](https://github.com/ivan-pi/kiss) — Krylov iterative solvers for dense matrices and matrix-free linear operators. | `iterative-solvers`, `krylov-methods`, `linear-algebra`, `linear-systems`, `matrix-free` | None supplied |
@@ -218,7 +236,9 @@ The first command validates coverage and regenerates this page; use `--check` to
 | [linalg](https://github.com/jchristopherson/linalg) — Convenient dense and sparse linear algebra interfaces to BLAS, LAPACK and ARPACK. | `arpack`, `blas`, `lapack`, `linear-algebra`, `sparse-matrices` | `blas`, `cholesky-decomposition`, `compressed-row-storage`, `compressed-sparse-row`, `eigenvalues`, `eigenvectors`, `fortran`, `lapack`, `linear-algebra`, `lu-decomposition`, `qr-decomposition`, `singular-value-decomposition`, `sparse-matrix` |
 | [lsmr](https://github.com/jacobwilliams/LSMR) — Iterative solution of sparse linear equations and least-squares problems. | `iterative-solvers`, `least-squares`, `linear-algebra`, `linear-systems`, `sparse-matrices` | `fortran`, `fortran-package-manager`, `least-squares`, `linear-algebra`, `linear-equations`, `lsmr`, `sparse-linear-systems` |
 | [lsqr](https://github.com/jacobwilliams/LSQR) — Iterative sparse linear systems and least-squares solver using coordinate storage. | `iterative-solvers`, `least-squares`, `linear-algebra`, `linear-systems`, `sparse-matrices` | `conjugate-gradient`, `fortran`, `fortran-package-manager`, `least-squares`, `linear-algebra`, `linear-equations`, `lsqr` |
+| [lusol](https://github.com/jacobwilliams/lusol) — Sparse LU factorization, linear solves and efficient column updates. | `linear-systems`, `lu-factorization`, `matrix-updates`, `sparse-linear-algebra` | `fortran`, `fortran-package-manager`, `linear-algebra`, `lu-decomposition`, `lu-factorization`, `lusol`, `matrix-factorization`, `sparse-linear-algebra`, `sparse-matrix` |
 | [minres](https://github.com/willdickson/minres) — Iterative solution of symmetric sparse systems, including indefinite matrices. | `iterative-solvers`, `linear-algebra`, `linear-systems`, `sparse-matrices`, `symmetric-systems` | None supplied |
+| [qdldl-fortran](https://github.com/jacobwilliams/qdldl-fortran) — Sparse LDL-transpose factorization, orderings and solves for quasi-definite systems. | `ldlt-factorization`, `linear-systems`, `matrix-ordering`, `quasi-definite`, `sparse-linear-algebra` | `fortran`, `fortran-package-manager`, `ldl-factorization`, `linear-algebra`, `linear-systems`, `numerical-optimization`, `sparse-data`, `sparse-linear-systems` |
 | [sparse_fortran](https://github.com/Euler-37/sparse_fortran) — Coordinate and compressed-row sparse matrices with matrix-vector products. | `coordinate-storage`, `csr-storage`, `linear-algebra`, `matrix-vector-products`, `sparse-matrices` | None supplied |
 | [specialmatrices](https://github.com/loiseaujc/SpecialMatrices) — Structured diagonal, circulant, Toeplitz, tridiagonal, and other matrices. | `circulant-matrices`, `linear-algebra`, `structured-matrices`, `toeplitz-matrices`, `tridiagonal-matrices` | `linear-algebra`, `sparse-linear-systems`, `sparse-matrix` |
 | [y12m](https://github.com/ivan-pi/y12m) — Direct sparse LU factorization with pivoting, reordering and reuse for multiple right-hand sides. | `direct-solvers`, `linear-algebra`, `linear-systems`, `lu-factorization`, `sparse-matrices` | None supplied |
@@ -256,6 +276,12 @@ The first command validates coverage and regenerates this page; use `--check` to
 | --- | --- | --- |
 | [pyplot-fortran](https://github.com/jacobwilliams/pyplot-fortran) — Create PNG plots from Fortran through Python and Matplotlib. | `matplotlib`, `plotting`, `png`, `python`, `visualization` | `contour-plot`, `fortran`, `fortran-package-manager`, `matplotlib`, `plot`, `plotting`, `plotting-in-fortran`, `pyplot` |
 
+## Quantum mechanics
+
+| Package and description | Playground topics | GitHub topics |
+| --- | --- | --- |
+| [featom](https://github.com/atomic-solvers/featom) — Radial Schroedinger and Dirac equations solved with high-order finite elements. | `atomic-structure`, `dirac-equation`, `eigenvalue-problems`, `finite-elements`, `quantum-mechanics`, `schroedinger-equation` | `atomic-structures`, `dft`, `finite-element-methods`, `hartree-fock` |
+
 ## Random numbers
 
 | Package and description | Playground topics | GitHub topics |
@@ -287,6 +313,7 @@ The first command validates coverage and regenerates this page; use `--check` to
 | [powellopt](https://github.com/jacobwilliams/PowellOpt) — Powell derivative-free optimization methods including BOBYQA and COBYLA. | `bound-constraints`, `constrained-optimization`, `derivative-free`, `optimization` | `constrained-optimization`, `fortran`, `fortran-package-manager`, `nonlinear-optimization`, `numerical-optimization`, `optimization`, `unconstrained-optimization` |
 | [psqp](https://github.com/jacobwilliams/psqp) — Sequential quadratic programming with variable bounds and general nonlinear constraints. | `bound-constraints`, `constrained-optimization`, `optimization`, `sequential-quadratic-programming` | `fortran`, `fortran-package-manager`, `nonlinear-optimization`, `numerical-optimization`, `optimization`, `sqp` |
 | [roots-fortran](https://github.com/jacobwilliams/roots-fortran) — Find roots of scalar functions using bracketing and other solvers. | `nonlinear-equations`, `root-finding`, `scalar-functions` | `bisection`, `brent-dekker`, `fortran`, `fortran-package-manager`, `muller`, `muller-s-method`, `regula-falsi`, `root-finding`, `zeroin` |
+| [seiscope-optimization](https://github.com/ofmla/seiscope_opt_toolbox_w_ctypes) — Gradient-based optimization with L-BFGS, nonlinear conjugate gradients and truncated Newton methods. | `gradient-based-optimization`, `lbfgs`, `nonlinear-conjugate-gradient`, `optimization`, `truncated-newton` | `ctypes-wrapper`, `fortran`, `fortran-package-manager`, `geophysics`, `gradient-based-optimisation`, `python-bindings`, `wrapper-library` |
 | [simulated-annealing](https://github.com/jacobwilliams/simulated-annealing) — Stochastic global optimization by simulated annealing with bounds and reproducible seeds. | `bound-constraints`, `global-optimization`, `optimization`, `simulated-annealing`, `stochastic-methods` | `annealing`, `basin-hopping`, `fortran`, `fortran-package-manager`, `minimization`, `optimization`, `python`, `simulated-annealing`, `stochastic-optimization` |
 | [slsqp](https://github.com/jacobwilliams/slsqp) — Sequential least-squares optimization with bounds and nonlinear constraints. | `bound-constraints`, `constrained-optimization`, `optimization`, `sequential-quadratic-programming` | `constrained-optimization`, `fortran`, `fortran-package-manager`, `nnls`, `numerical-optimization`, `optimization`, `sqp` |
 
@@ -302,6 +329,8 @@ The first command validates coverage and regenerates this page; use `--check` to
 
 | Package and description | Playground topics | GitHub topics |
 | --- | --- | --- |
+| [carlson-elliptic-integrals](https://github.com/jacobwilliams/carlson-elliptic-integrals) — Carlson symmetric elliptic integrals for pendulum periods and other applications. | `carlson-symmetric-forms`, `elliptic-integrals`, `pendulum`, `special-functions` | None supplied |
+| [fortran-bessels](https://github.com/perazz/fortran-bessels) — Bessel and modified Bessel functions, demonstrated with fixed orders zero and one. | `bessel-functions`, `cylindrical-functions`, `modified-bessel-functions`, `special-functions` | `bessel`, `bessel-function`, `fortran`, `math`, `special-functions` |
 | [specfun](https://github.com/jacobwilliams/specfun) — Special functions including Bessel, Airy, gamma, and related functions. | `airy-functions`, `bessel-functions`, `gamma-functions`, `special-functions` | `fortran`, `fortran-package-manager`, `scipy`, `special-functions` |
 | [specfunc-fullerton](https://github.com/arjenmarkus/specfunc-fullerton) — Fullerton special functions including gamma, Bessel, Airy and exponential integrals. | `airy-functions`, `bessel-functions`, `exponential-integrals`, `gamma-functions`, `special-functions` | `special-functions` |
 
@@ -309,10 +338,12 @@ The first command validates coverage and regenerates this page; use `--check` to
 
 | Package and description | Playground topics | GitHub topics |
 | --- | --- | --- |
+| [econ-toolchain](https://github.com/renatomatz/econ-toolchain) — Markov chains, stochastic-process discretization and numerical tools for economic models. | `economics`, `markov-chains`, `stationary-distributions`, `stochastic-processes`, `tauchen-discretization` | None supplied |
 | [fjsample](https://github.com/RJaBi/FJsample) — Jackknife and bootstrap resampling, bias estimates and statistical uncertainties. | `bootstrap`, `jackknife`, `resampling`, `statistics`, `uncertainty` | `bootstrap-resampling`, `fortran`, `fortran-package-manager`, `jackknife-resampling`, `meson-python` |
 | [forpca](https://github.com/gha3mi/forpca) — Principal component directions from eigendecomposition or singular value decomposition. | `dimensionality-reduction`, `eigenvalues`, `principal-component-analysis`, `statistics`, `svd` | `fortran`, `fortran-package-manager`, `pca`, `principal-component-analysis` |
 | [fortsa](https://github.com/zoziha/fortsa) — Time-series autocorrelations, partial correlations and ARIMA modeling through CTSA. | `arima`, `autocorrelation`, `statistics`, `time-series` | `arima`, `arma`, `bindings`, `fortran`, `fpm`, `time-series`, `time-series-analysis`, `tsa` |
 | [fstats](https://github.com/jchristopherson/fstats) — Probability distributions, statistical tests, regression, bootstrap sampling, and MCMC. | `bootstrap`, `hypothesis-testing`, `mcmc`, `probability-distributions`, `regression`, `statistics` | `allan-variance`, `anova`, `bootstrap`, `design-of-experiments`, `distributions`, `experimental-design`, `gauge-r-and-r-study`, `hypothesis-testing`, `interpolation`, `levenberg-marquardt`, `lowess`, `markov-chain-monte-carlo`, `mcmc-sampler`, `missing-data`, `regression`, `sampling-distribution`, `special-functions`, `statistical-testing`, `statistics` |
+| [gslib](https://github.com/exepulveda/gslib2.0) — Geostatistical covariance models, kriging and spatial simulation routines. | `covariance-models`, `gaussian-simulation`, `geostatistics`, `kriging`, `spatial-statistics` | None supplied |
 | [lib_statistics](https://github.com/sebastiandyrda/lib_statistics) — Logistic regression using iteratively reweighted least squares. | `least-squares`, `logistic-regression`, `regression`, `statistics` | None supplied |
 | [odrpack95](https://github.com/HugoMVale/odrpack95) — Orthogonal distance regression with errors in both variables and optional parameter bounds. | `bound-constraints`, `errors-in-variables`, `least-squares`, `regression`, `statistics` | `fortran`, `fpm`, `mathematics`, `odr`, `regression`, `statistics` |
 
@@ -376,7 +407,7 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | --- | --- |
 | `adams-methods` | 1 |
 | `adaptive-grids` | 1 |
-| `adaptive-methods` | 10 |
+| `adaptive-methods` | 11 |
 | `adjacency-structures` | 1 |
 | `airy-functions` | 2 |
 | `approximate-math` | 1 |
@@ -388,18 +419,20 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `assertions` | 3 |
 | `astrodynamics` | 1 |
 | `astronomy` | 1 |
+| `atomic-structure` | 1 |
 | `atomic-weights` | 1 |
 | `autocorrelation` | 1 |
-| `automatic-differentiation` | 2 |
+| `automatic-differentiation` | 4 |
 | `b-splines` | 1 |
 | `base64` | 1 |
-| `bessel-functions` | 2 |
+| `bessel-functions` | 3 |
 | `binary-data` | 1 |
 | `blas` | 2 |
 | `bootstrap` | 2 |
 | `bound-constraints` | 6 |
 | `boundary-value-problems` | 1 |
 | `calendar-arithmetic` | 2 |
+| `carlson-symmetric-forms` | 1 |
 | `cartesian-coordinates` | 1 |
 | `chemistry` | 1 |
 | `circulant-matrices` | 1 |
@@ -407,49 +440,58 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `colormaps` | 1 |
 | `colors` | 2 |
 | `command-line` | 4 |
-| `complex-arithmetic` | 2 |
+| `complex-arithmetic` | 3 |
 | `complex-step` | 2 |
 | `compression` | 3 |
 | `configuration` | 3 |
 | `constrained-optimization` | 6 |
 | `constraint-solving` | 1 |
 | `containers` | 5 |
+| `control-systems` | 1 |
 | `convolution` | 2 |
 | `convolutional-networks` | 1 |
 | `coordinate-storage` | 1 |
 | `coordinate-transformations` | 4 |
 | `cosine-transforms` | 1 |
+| `covariance-models` | 1 |
 | `csr-storage` | 1 |
 | `csv` | 1 |
 | `cubature` | 2 |
 | `curve-fitting` | 3 |
+| `cylindrical-functions` | 1 |
 | `dae` | 2 |
+| `damping` | 1 |
 | `databases` | 1 |
 | `date-time` | 2 |
 | `defaults` | 1 |
 | `delaunay-triangulation` | 1 |
+| `delay-differential-equations` | 1 |
 | `dense-output` | 1 |
 | `dependency-ordering` | 1 |
 | `derivative-free` | 3 |
-| `derivatives` | 4 |
+| `derivatives` | 5 |
 | `diagnostics` | 2 |
 | `dictionaries` | 3 |
 | `differential-equations` | 3 |
 | `differentiation` | 4 |
 | `dimensional-analysis` | 1 |
 | `dimensionality-reduction` | 1 |
+| `dirac-equation` | 1 |
 | `direct-solvers` | 1 |
 | `directed-acyclic-graphs` | 1 |
 | `directories` | 1 |
 | `distances` | 1 |
 | `drawing` | 1 |
-| `dual-numbers` | 1 |
+| `dual-numbers` | 2 |
 | `durations` | 1 |
 | `dynamic-arrays` | 1 |
+| `economics` | 1 |
+| `eigenvalue-problems` | 1 |
 | `eigenvalues` | 5 |
 | `eigenvectors` | 1 |
 | `elementary-functions` | 1 |
 | `ellipsoids` | 1 |
+| `elliptic-integrals` | 1 |
 | `encoding` | 1 |
 | `error-estimation` | 1 |
 | `error-handling` | 1 |
@@ -463,33 +505,40 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `file-io` | 12 |
 | `filesystem` | 2 |
 | `filtering` | 1 |
-| `finite-differences` | 3 |
-| `finite-elements` | 1 |
+| `finite-differences` | 4 |
+| `finite-elements` | 2 |
 | `floating-point` | 3 |
 | `format-conversion` | 1 |
 | `formatting` | 3 |
+| `forward-mode` | 1 |
 | `fourier-transforms` | 3 |
+| `frequency-response` | 1 |
 | `functional-programming` | 2 |
 | `gamma-functions` | 2 |
+| `gauss-hermite` | 1 |
 | `gauss-jacobi` | 1 |
-| `gauss-legendre` | 1 |
-| `gaussian-quadrature` | 4 |
+| `gauss-legendre` | 2 |
+| `gaussian-quadrature` | 5 |
+| `gaussian-simulation` | 1 |
 | `genetic-algorithms` | 1 |
 | `geodesics` | 1 |
 | `geodesy` | 2 |
 | `geographic-coordinates` | 1 |
 | `geometry` | 1 |
+| `geostatistics` | 1 |
 | `global-optimization` | 3 |
-| `gradient-based-optimization` | 1 |
+| `gradient-based-optimization` | 2 |
 | `gradient-descent` | 1 |
+| `gradients` | 1 |
 | `graph-partitioning` | 1 |
 | `graphs` | 3 |
 | `grids` | 3 |
 | `hash-tables` | 1 |
 | `hdf5` | 1 |
 | `heapsort` | 1 |
+| `helmholtz-equation` | 2 |
 | `help-text` | 1 |
-| `higher-order-derivatives` | 1 |
+| `higher-order-derivatives` | 2 |
 | `hls` | 1 |
 | `hsv` | 1 |
 | `huffman-coding` | 1 |
@@ -501,10 +550,11 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `images` | 3 |
 | `implicit-methods` | 1 |
 | `improper-integrals` | 1 |
-| `initial-value-problems` | 6 |
+| `initial-value-problems` | 7 |
 | `input-parameters` | 1 |
 | `integer-factorization` | 1 |
-| `interpolation` | 7 |
+| `integral-transforms` | 1 |
+| `interpolation` | 8 |
 | `isotopes` | 1 |
 | `iterative-solvers` | 5 |
 | `jackknife` | 1 |
@@ -512,21 +562,26 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `json` | 2 |
 | `julian-dates` | 1 |
 | `kiss-generator` | 1 |
+| `kriging` | 1 |
 | `krylov-methods` | 3 |
 | `language-bindings` | 12 |
-| `lapack` | 3 |
+| `lapack` | 4 |
+| `lbfgs` | 1 |
+| `ldlt-factorization` | 1 |
 | `least-squares` | 9 |
 | `limited-memory` | 1 |
-| `linear-algebra` | 15 |
+| `linear-algebra` | 16 |
 | `linear-programming` | 1 |
-| `linear-systems` | 9 |
+| `linear-systems` | 11 |
 | `linked-lists` | 2 |
 | `logarithms` | 1 |
 | `logistic-regression` | 1 |
 | `lossless-compression` | 3 |
-| `lu-factorization` | 1 |
+| `low-rank-approximation` | 1 |
+| `lu-factorization` | 2 |
 | `machine-learning` | 2 |
 | `map-filter-reduce` | 1 |
+| `markov-chains` | 1 |
 | `mathematical-expressions` | 2 |
 | `matlab-like` | 1 |
 | `matplotlib` | 1 |
@@ -535,7 +590,8 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `matrix-free` | 1 |
 | `matrix-inverse` | 1 |
 | `matrix-operations` | 1 |
-| `matrix-ordering` | 1 |
+| `matrix-ordering` | 2 |
+| `matrix-updates` | 1 |
 | `matrix-vector-products` | 2 |
 | `mcmc` | 1 |
 | `medians` | 1 |
@@ -546,6 +602,8 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `metadata` | 2 |
 | `minimax` | 1 |
 | `minimization` | 1 |
+| `modal-analysis` | 1 |
+| `modified-bessel-functions` | 1 |
 | `multidimensional` | 10 |
 | `multistep-methods` | 1 |
 | `natural-sort` | 1 |
@@ -556,6 +614,7 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `neural-networks` | 1 |
 | `newton-methods` | 2 |
 | `nlopt` | 1 |
+| `nonlinear-conjugate-gradient` | 1 |
 | `nonlinear-equations` | 5 |
 | `nonlinear-optimization` | 2 |
 | `number-formatting` | 1 |
@@ -565,17 +624,19 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `numerical-methods` | 3 |
 | `numerical-testing` | 2 |
 | `ode` | 9 |
-| `optimization` | 16 |
+| `optimization` | 17 |
 | `orbital-mechanics` | 1 |
 | `order-statistics` | 1 |
 | `oscillatory-integrals` | 1 |
 | `parser-combinators` | 1 |
 | `parsing` | 7 |
+| `partial-differential-equations` | 2 |
 | `particle-swarm` | 1 |
 | `paths` | 2 |
 | `pattern-matching` | 4 |
 | `pcre2` | 1 |
 | `peak-detection` | 1 |
+| `pendulum` | 1 |
 | `physical-constants` | 1 |
 | `physical-properties` | 2 |
 | `physical-units` | 1 |
@@ -584,6 +645,7 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `png` | 3 |
 | `pnm` | 1 |
 | `point-sets` | 2 |
+| `poisson-equation` | 1 |
 | `polymorphism` | 3 |
 | `polynomials` | 1 |
 | `portability` | 2 |
@@ -597,7 +659,9 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `puzzles` | 1 |
 | `python` | 1 |
 | `quadratic-programming` | 1 |
-| `quadrature` | 6 |
+| `quadrature` | 7 |
+| `quantum-mechanics` | 1 |
+| `quasi-definite` | 1 |
 | `quasi-newton` | 2 |
 | `quasi-random` | 1 |
 | `quicksort` | 1 |
@@ -611,12 +675,14 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `reproducibility` | 4 |
 | `resampling` | 2 |
 | `reverse-communication` | 1 |
+| `reverse-mode` | 1 |
 | `rgb` | 2 |
 | `root-finding` | 4 |
 | `rosenbrock-methods` | 1 |
 | `runge-kutta` | 4 |
 | `sampled-data` | 1 |
 | `scalar-functions` | 2 |
+| `schroedinger-equation` | 1 |
 | `scientific-data` | 2 |
 | `searching` | 3 |
 | `sequential-quadratic-programming` | 2 |
@@ -626,21 +692,27 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `signal-processing` | 4 |
 | `simulated-annealing` | 1 |
 | `sine-transforms` | 1 |
+| `singular-value-decomposition` | 1 |
 | `smoothing` | 2 |
 | `sorted-arrays` | 1 |
 | `sorting` | 5 |
 | `spacecraft-trajectories` | 1 |
+| `sparse-linear-algebra` | 2 |
 | `sparse-matrices` | 10 |
 | `spatial-indexing` | 1 |
-| `special-functions` | 2 |
+| `spatial-statistics` | 1 |
+| `special-functions` | 4 |
 | `spectral-analysis` | 1 |
+| `spherical-harmonics` | 1 |
 | `splines` | 5 |
 | `sql` | 1 |
 | `sqlite` | 1 |
 | `standard-library` | 1 |
+| `stationary-distributions` | 1 |
 | `statistics` | 8 |
 | `stiff-equations` | 3 |
 | `stochastic-methods` | 3 |
+| `stochastic-processes` | 1 |
 | `strings` | 10 |
 | `structured-matrices` | 1 |
 | `subprocesses` | 1 |
@@ -649,6 +721,7 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `symmetric-systems` | 1 |
 | `tabular-data` | 3 |
 | `tabulated-data` | 3 |
+| `tauchen-discretization` | 1 |
 | `terminal-styling` | 1 |
 | `text-files` | 1 |
 | `text-processing` | 11 |
@@ -660,6 +733,7 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `toml` | 2 |
 | `topological-sort` | 1 |
 | `tridiagonal-matrices` | 1 |
+| `truncated-newton` | 1 |
 | `trust-region` | 1 |
 | `type-conversion` | 4 |
 | `type-safety` | 1 |
@@ -672,6 +746,7 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `variable-length-strings` | 1 |
 | `vector-graphics` | 1 |
 | `vector-operations` | 1 |
+| `vibration` | 1 |
 | `visualization` | 2 |
 | `warnings` | 1 |
 | `water` | 1 |

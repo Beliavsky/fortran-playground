@@ -372,3 +372,167 @@ The [locked recipe](fpm-candidates/polynomial_arnoldi/package.json), [compiler d
 NAFPack's source VERSION file identifies `0.1.52`; the operator renders its manifest placeholder accordingly. Its OpenMP metapackage is resolved explicitly, FFTW is pinned as `libfftw3-dev=3.3.10-2+b1`, and the [manifest-only edit](fpm-candidates/nafpack/fpm-compatibility.patch) removes `[features]` and `[profiles]` definitions unsupported by FPM 0.12. It preserves all prepared dependency/native-link settings. `-fopenmp -cpp -I/usr/include -ffree-line-length-none` enables the ordinary build without adopting its unsupported custom profiles. No numerical Fortran source is patched, no runtime check is suppressed, and normal sandbox limits remain in force.
 
 The selected single-precision example checks two exact complex frequency amplitudes in sixteen samples and verifies reconstruction with an inverse transform. The public validation records the exact source pin, manifest edit, native settings and edited-main cache-reuse result.
+
+## FISHPACK and DDE_SOLVER source packaging
+
+Repositories: [jlokimlin/fishpack](https://github.com/jlokimlin/fishpack), commit `9dc7d2e7a847fa6a610752d4e91eda3ef9c6130d`, and [WarrenWeckesser/dde_solver](https://github.com/WarrenWeckesser/dde_solver), commit `90d3389ce5d5733ab2b6e7ed7d2dad273b4d0c6b`.
+
+Neither pinned repository has a root FPM manifest. Their catalog recipes supply minimal manifests and enumerate the exact library sources copied into `playground-library`. FISHPACK excludes its `src/main.f90` smoke program; DDE_SOLVER includes only `dde_solver_m.f90`. Original upstream files and licenses remain in the source tree. The ordinary archive, graph and resource restrictions still apply. A source wrapper requires an exact archive checksum and commit, is selected only by operator-owned catalog settings, and is also reproduced by local catalog execution and exported projects. It does not enable arbitrary non-FPM visitor repositories.
+
+The FISHPACK consumer solves a manufactured two-dimensional Poisson problem with exact solution `sin(pi*x)*sin(pi*y)`, checking finite values, solver status and maximum discretization error below `1e-3` on 32-by-32 intervals. DDE_SOLVER's consumer adapts the author's delayed oscillator test, places callbacks in a module, and checks nine interpolated samples against `sin(t)` over a full period to `1e-7`. The [author's license](fpm-candidates/dde_solver/licenses/LICENSE.txt) accompanies the adapted demo.
+
+Both consumers passed edited-main verification in the ordinary GNU 16.2 gVisor sandbox, with unchanged library artifacts. Their numerical Fortran sources are unpatched. The wrapper adapter preserves the previous adapter identity for existing recipes, so these additions do not invalidate earlier compiled libraries.
+
+## SPHEREPACK
+
+Repository: [jlokimlin/spherepack](https://github.com/jlokimlin/spherepack), commit `e80da29462c5987162a0884baaab7434d0215467`.
+
+The catalog supplies a source-list FPM wrapper and excludes the upstream smoke program. The first GNU 16 build stops because `wrfft(..)` in `src/vector_synthesis_routines.f90:247` is passed to a rank-one FFT workspace argument. A first attempted assumed-shape declaration `wrfft(:)` is incompatible with the upstream assumed-size callers; the [compiler diagnostic](fpm-candidates/spherepack/retry-result.txt) is retained. Using `wrfft(*)` gets past those calls but exposes a second assumed-rank workspace in `src/vector_synthesis_gaussian_grid_saved.f90:1185`, passed to rank-one coefficient routines. The [next diagnostic](fpm-candidates/spherepack/assumed-shape-retry.log) records that failure.
+
+The working [guarded edits](fpm-candidates/spherepack/workspace-rank.patch.json) use rank-one assumed-size declarations for both workspaces. They apply only to the listed build copies, after checking each original file's normalized checksum; original files remain alongside the wrapper. Numerical expressions and algorithms are unchanged. The [unadapted recipe](fpm-candidates/spherepack/initial-recipe.json) and [initial diagnostic](fpm-candidates/spherepack/initial-build.log) preserve the first attempt.
+
+The consumer adapts the author's `examples/helmsph.f90`, solves the spherical Helmholtz problem for `(1+x*y)*exp(z)` on a 19-by-36 Gaussian grid, and checks finite values and maximum absolute error below `1e-10`. It passed hosted GNU 16 edited-main/cache-reuse checks. This verifies the demonstrated scalar problem, not every vector transform. [Upstream license notices](fpm-candidates/spherepack/licenses/LICENSE.md) and the [modernization license](fpm-candidates/spherepack/licenses/LICENSE.mit.md) accompany the adaptation.
+
+## ForSVD and QDUtilLib quadrature
+
+ForSVD, commit `f39bba7afcb048a21947a7a640bdf9a18337f8ac`, uses the same pinned source already present in ForInv's dependency graph. The new standalone consumer checks singular values `[3,2,1]` and Frobenius reconstruction errors `[sqrt(5),1,0]` as the rank increases. It preserves its input because the LAPACK call overwrites its workspace, as noted under ForInv above. Native BLAS/LAPACK and Fortran dependencies are pinned.
+
+QDUtilLib, commit `8a1fa9ca7cf52683c98cc4bcb40f21dc41df6ed5`, provides Legendre and harmonic-oscillator quadrature. The [initial main](fpm-candidates/qdutillib/initial-main.f90) misunderstood the HO weight convention: it summed `w*x**2`, omitting the Gaussian required by these full-function weights. The [failed check](fpm-candidates/qdutillib/initial-result.json) is an example error, not evidence of a library failure. Source inspection of `SRC/Quadrature/Quadrature_m.f90` shows that its HO weights are derived using Gaussian-weighted basis values; the correct integrand here is `x**2*exp(-x**2)`.
+
+The corrected consumer checks `2/9` for the integral of `x**8` over `[-1,1]` and `sqrt(pi)/2` for the Gaussian second moment. Hosted absolute errors were approximately `2.78e-17` and `2.22e-16`. ForSVD and QDUtilLib both passed changed-main verification without rebuilding their libraries. No library source is patched for either package.
+
+## libsparse
+
+Repository: [jvdp1/libsparse](https://github.com/jvdp1/libsparse), commit `3d93e03a0e7e7b66cc791c054dc45eb5d0a9d70a`.
+
+The root FPM manifest enables MKL PARDISO and other optional facilities. After resolving OpenMP explicitly, the hosted GNU 16 build fails at `src/modsparse_mkl.f90:1` because `mkl_pardiso.f90` is absent. That module also includes MKL BLAS, sparse BLAS and LAPACK interfaces. The current GNU catalog image does not supply those development files. The [locked recipe](fpm-candidates/libsparse/package.json), [build failure](fpm-candidates/libsparse/build-failure.log), and [intended consumer](fpm-candidates/libsparse/main.f90) are retained.
+
+The intended example assembles a tridiagonal operator in linked-list storage, converts it to compressed-row storage and checks matrix-vector multiplication against an independent dense calculation. **It has not compiled or run**, so libsparse is not in Selected. Reproduce preparation with `CatalogPreparer` using the saved recipe and its exact root/dependency locks, then build the consumer with ordinary GNU debug flags. Installing suitable MKL interfaces or obtaining an upstream portable configuration would allow further evaluation; neither alone establishes that the consumer passes.
+
+## finite_difference
+
+Repository: [jlr581/finite_difference](https://github.com/jlr581/finite_difference), commit `ef0f351b7a2ae187833d574b8aeea3cabde0a105`.
+
+This non-FPM repository uses an explicit source-list wrapper. The [first build](fpm-candidates/finite_difference/initial-build.log) fails because `data_types.f90` contains integer literals larger than the default integer kind permits. The [initial recipe](fpm-candidates/finite_difference/initial-recipe.json) records that attempt. Building the complete library and consumer with `-fdefault-integer-8` resolves compilation without disabling range checks.
+
+The resulting seven-node derivative example exceeds the ordinary 200000-byte stage-output limit: repeated array-temporary warnings from `hyper_dual.f90:174-177` flood stderr before numerical output is reached. A smaller three-node uneven stencil, with an explicit shape parameter and no Taylor acceleration, has the same problem. A diagnostic attempt to disable only array-temporary warnings through `FPM_FFLAGS` was ineffective under this FPM debug configuration; the saved final recipe does **not** include that option. No service limit was increased and no runtime check is disabled in that recipe.
+
+The [final locked recipe](fpm-candidates/finite_difference/package.json), [three-node consumer](fpm-candidates/finite_difference/main.f90), [original seven-node consumer](fpm-candidates/finite_difference/initial-main.f90), and [hosted failure](fpm-candidates/finite_difference/hosted-failure.json) preserve reproduction details. The failure record keeps the stage limit, exit code and representative warnings; repetitive stderr is abbreviated. Both builds succeeded, but the sandbox killed the runs at the output limit, so **no numerical accuracy result is established** and the package remains outside Selected. A source change that avoids repeated argument temporaries, or a compatible debug configuration, needs a fresh numerical and cache-reuse check.
+
+## DAQP-fortran and SQPOPT
+
+The investigated DAQP source is [jacobwilliams/daqp-fortran](https://github.com/jacobwilliams/daqp-fortran), commit `318bfb6c55e6992c136a0bb5bf89df7b4c0ba177` (release `0.1.1`). Its archive contains the symbolic link `compare/src/daqp_test_utils.f90 -> ../../test/daqp_test_utils.f90`. The ordinary preparer rejects archive links before extraction. Release `0.1.0`, commit `2e06d6f315390d9b6d9dbce0200dd0af6c10b775`, has the same link. The [archive checks](fpm-candidates/daqp-fortran/archive-checks.json) preserve exact commits, archive checksums and rejected paths. No link was followed, removed or substituted.
+
+The [locked DAQP recipe](fpm-candidates/daqp-fortran/package.json), [upstream manifest](fpm-candidates/daqp-fortran/fpm.toml), [preparation failure](fpm-candidates/daqp-fortran/preparation.json), and [intended consumer](fpm-candidates/daqp-fortran/main.f90) are retained. The consumer would minimize `(x-1)**2+(y-1)**2` subject to nonnegativity and `x+y>=3`, checking the exact optimizer `(1.5,1.5)` and objective `0.5`. **It has not compiled or run.**
+
+The investigated SQPOPT source is [jacobwilliams/sqpopt](https://github.com/jacobwilliams/sqpopt), commit `53b81010c5109a6219585763ad04289dbdede196`. Its root archive passes preparation. Dependency resolution downloads LSQR, LUSOL, FMIN and QDLDL successfully, then encounters the same DAQP `0.1.1` archive rejection. The [SQPOPT recipe](fpm-candidates/sqpopt/package.json) locks the root and all five dependencies, including the rejected DAQP archive; the [preparation record](fpm-candidates/sqpopt/preparation.json) records only repositories reached successfully. No compiler was invoked for this package.
+
+The [intended SQPOPT consumer](fpm-candidates/sqpopt/main.f90) adapts the author's `example/hs71.f90`, moving callbacks into a module and adding finite-value, feasibility, objective and known-solution checks for Hock-Schittkowski problem 71. The [upstream license](fpm-candidates/sqpopt/LICENSE) accompanies the adaptation. **The adapted consumer has not compiled or run.** Neither DAQP nor SQPOPT is in Selected; this is a playground archive-preparation limitation, not a demonstrated numerical or compiler defect in either library.
+
+To reproduce, use `Preparer` with the saved recipe's root/dependency checksum locks and its intended main. SQPOPT reaches the rejected dependency after the five successful records shown in its diagnostic. The DAQP rejection can also be reproduced by downloading the recorded archive with `fpm_sources.fetch` and passing it to `fpm_sources.extract_archive`. An upstream archive replacing the comparison-source link with an ordinary file would permit further evaluation, but would not establish numerical or sandbox compatibility by itself.
+
+## QDLDL-fortran and LUSOL
+
+[QDLDL-fortran](https://github.com/jacobwilliams/qdldl-fortran) is pinned to `8ebdd7fa1075bfb89115d0955806b0996b6b29d5`. Its consumer assembles a four-by-four quasi-definite KKT matrix, solves it with natural, reverse Cuthill-McKee and AMD orderings, and checks a manufactured solution, independent dense residuals and inertia `(2,2,0)`. Solution errors were at most about `4.44e-16`, and residuals at most `8.88e-16`. This is not a claim that its nonpivoting factorization supports arbitrary indefinite matrices. The [verified output](fpm-candidates/qdldl-fortran/verified-output.txt) is retained.
+
+[LUSOL](https://github.com/jacobwilliams/lusol) is pinned to `2d95174d44ec9bf9dabbbd07652c84c11fe56d71`. Its example calls the low-level public routines `lu1fac`, `lu6sol` and `lu8rpc` using the library's 64-bit index kind. It checks a sparse tridiagonal solve, replaces column two without refactorizing the matrix, and checks the updated solve against the original manufactured solution and an independent dense residual. Both solves had maximum solution error about `4.44e-16` and zero residual at the displayed precision; see [output](fpm-candidates/lusol/verified-output.txt).
+
+Both unmodified libraries passed hosted GNU 16 debug builds and changed-main/cache-reuse checks. Neither needs a native system library or an operator source patch.
+
+## Carlson elliptic integrals
+
+Repository: [jacobwilliams/carlson-elliptic-integrals](https://github.com/jacobwilliams/carlson-elliptic-integrals), commit `5f25a59a555b7029505aac71a8341d5851f8abed`.
+
+The consumer computes a one-metre pendulum's period at initial angles 0, 30, 90 and 150 degrees. It evaluates `RF(0,1-sin(theta/2)**2,1)` and independently computes the defining complete elliptic integral using composite Simpson quadrature with 4096 subintervals. It also checks `RF(1,1,1)=1`, status codes and finite values. The largest displayed quadrature disagreement was about `1.55e-15`; the [verified output](fpm-candidates/carlson-elliptic-integrals/verified-output.txt) includes the periods and ratios to the small-angle approximation. The unpatched library passed the ordinary GNU 16 debug and cache-reuse checks.
+
+## fortran-bessels
+
+Repository: [perazz/fortran-bessels](https://github.com/perazz/fortran-bessels), commit `7bf8d6b144b00d4201a782ca65f6ae14a84d49a1`.
+
+The consumer is deliberately limited to `besseli0`, `besseli1`, `besselk0` and `besselk1` for positive real arguments. It checks four independent reference constants at `x=1` and the modified-Bessel Wronskian identity `x*(I0*K1+I1*K0)=1` at five points from `0.25` to `8`. The largest displayed identity error was about `4.44e-16`; see [output](fpm-candidates/fortran-bessels/verified-output.txt).
+
+The pinned README documents known noninteger-order Y/Hankel limitations. Passing this consumer does not validate those paths, all exported procedures, arbitrary argument ranges or performance claims. The library and consumer use the normal GNU 16 debug configuration, without `-ffast-math` or a source patch, and passed changed-main/cache-reuse checks.
+
+## Dynamics
+
+Repository: [jchristopherson/dynamics](https://github.com/jchristopherson/dynamics), commit `580d04859a25126d3261e44b3fbec5111835e3a4`.
+
+The [initial preparation](fpm-candidates/dynamics/initial-preparation.json) encountered an OpenMP metapackage before an explicit mapping was supplied. The final catalog recipe resolves OpenMP with `-fopenmp`, pins BLAS/LAPACK/ARPACK, and locks all eight dependency repositories. The [initial recipe](fpm-candidates/dynamics/initial-package.json) preserves the pre-mapping attempt; the final settings are in the selected catalog and public verification report.
+
+A subsequent attempt hit the operator uploader's [stdin buffer limit](fpm-candidates/dynamics/initial-upload-error.txt) before compilation. The precompile script now drains the source payload in bounded 64 KiB chunks. This does not change the sandbox worker, source/archive limits, visitor resource limits, compiler options or existing library cache identities. The successful prebuild demonstrates the transport fix with the actual prepared dependency bundle.
+
+The consumer computes the complete complex frequency response of `x''+0.2*x'+4*x=cos(omega*t)` at eight angular frequencies, using `frequency_response` and a module callback. It checks the response against `1/(4-omega**2+i*0.2*omega)`, including the resonant frequency. The [verified output](fpm-candidates/dynamics/verified-output.txt) includes amplitudes and analytic errors. No Fortran source is patched. The hosted debug and changed-main/cache-reuse checks passed; verification covers this proportional-damping example, not the library's entire dynamics, controls or finite-element API.
+
+## diffstruc
+
+Repository: [nedtaylor/diffstruc](https://github.com/nedtaylor/diffstruc), commit `88565f8e01792706edc0bd7e70dde957c26122a4`.
+
+The consumer adapts the array setup and forward-mode calls in the author's `test/test_functions.f90`. It compares both forward and reverse gradients of `x1*x2**2+x1**2` at `(1.25,-2)` with the independent analytic gradient `(6.5,-5)`. BLAS/LAPACK and the coreutils dependency are pinned in the catalog recipe. The library is unmodified.
+
+The [initial driver](fpm-candidates/diffstruc/initial-main.f90) retained direction `(0,1)` after its forward-mode loop. Reverse accumulation also applies that direction mask, so the [initial check](fpm-candidates/diffstruc/initial-result.json) failed. This was a driver error, not an established library defect. Restoring direction `(1,1)` before reverse mode gives the expected complete gradient. The corrected demo passed ordinary GNU 16 debug and changed-main/cache-reuse checks; see [verified output](fpm-candidates/diffstruc/verified-output.txt). The author's [MIT license](fpm-candidates/diffstruc/licenses/LICENSE) accompanies the adaptation. These checks do not establish arbitrary-order differentiation or all array-operation paths.
+
+## DNAOAD-FPM
+
+Repository: [fpenunuri/DNAOAD-FPM](https://github.com/fpenunuri/DNAOAD-FPM), commit `f7f328e89b208a99797d64f4a41e97ba91b85962`.
+
+The dual-number initialization follows the author's `app/ex1.f90`. Our consumer evaluates `exp(z)+sin(z)` at `z=0.4` and `z=0.4+0.2i` and checks every derivative from order zero through five against analytic complex values, including finite-error checks. Five is this precompiled library's default maximum order; changing only the user's main cannot increase that compiled configuration. Higher configured orders require a fresh library build. The unpatched library passed hosted GNU 16 debug and edited-main reuse checks; [output](fpm-candidates/dnaoad-fpm/verified-output.txt) and [MIT license](fpm-candidates/dnaoad-fpm/licenses/LICENSE) are retained. Multivariate Hessian/Jacobian routines are not covered by this demo.
+
+## SEISCOPE optimization toolbox
+
+Repository: [ofmla/seiscope_opt_toolbox_w_ctypes](https://github.com/ofmla/seiscope_opt_toolbox_w_ctypes), commit `74a25c29d13c506e16f8025eb13a2cf396dc23c0`.
+
+The Fortran library works independently of its Python wrapper. The consumer adapts the author's `app/LBFGS/test_LBFGS.f90`, preserves its BSD notice, bounds the reverse-communication loop and checks convergence status, proximity to `(1,1)`, an independently evaluated Rosenbrock objective and gradient. The [initial run](fpm-candidates/seiscope-optimization/initial-result.json) failed a bounds check in `descent_LBFGS`: its caller passed the uninitialized local integer `l` as the workspace extent.
+
+The [guarded edit](fpm-candidates/seiscope-optimization/memory-length.patch.json) changes that actual argument to `optim%l`, the configured memory length already used to allocate and update the arrays. It changes no numerical formula and suppresses no runtime check. The corrected library passed GNU 16 debug and changed-main/cache-reuse checks; see [output](fpm-candidates/seiscope-optimization/verified-output.txt). The [wrapper MIT license](fpm-candidates/seiscope-optimization/licenses/LICENSE.md) and [original demo with its BSD notice](fpm-candidates/seiscope-optimization/licenses/test_LBFGS.f90) are retained. Other optimizers and bound-constrained paths have not been validated by this example.
+
+## GSLIB 2.0
+
+Repository: [exepulveda/gslib2.0](https://github.com/exepulveda/gslib2.0), commit `5c021000eb3da8703ced3ee9be145d6c0ecb2608`.
+
+The original root manifest's name `gslib2.0` fails package-name validation. The catalog-only adapter renders it as `gslib` for this locked repository. Public preparation continues rejecting invalid package names; previous adapter identities and all existing library recipes remain supported. The [initial recipe](fpm-candidates/gslib/initial-package.json) records this name correction before the other compatibility settings.
+
+The [first compilation](fpm-candidates/gslib/initial-build.log) failed at implicitly typed constants in `acorni.f90`. The [manifest edit](fpm-candidates/gslib/implicit-typing.patch.json) explicitly enables legacy implicit typing and external procedures. Compilation then reached a [rank mismatch](fpm-candidates/gslib/implicit-typing-build.log) in `nscore.f90`: its first sorting call supplies scalar placeholders for unused array arguments, while a later call supplies an array in the same position. The final [guarded edits](fpm-candidates/gslib/compatibility.patch.json) declare those placeholders as work arrays of length `nd`. No algorithm or arithmetic expression is changed, no argument-mismatch flag is added, and normal debug runtime checks remain enabled.
+
+The self-contained consumer calls `cova3` and `ksol` to assemble and solve ordinary-kriging systems from observations of value 1 at x=0 and value 3 at x=2. It checks exponential covariances, closed-form weights, independent dense residuals, nonnegative variances and interpolation at the observation locations. The numerical and changed-main/cache-reuse checks passed; see [output](fpm-candidates/gslib/verified-output.txt). It needs no input file. This verifies the demonstrated covariance/solver path, not the complete simulation and command-line application suite. Both the [modernization MIT license](fpm-candidates/gslib/licenses/LICENSE) and [original GSLIB redistribution notice](fpm-candidates/gslib/licenses/LICENSE_original.txt) are retained.
+
+## rational-approximation
+
+Repository: [edvinolo/rational-approximation](https://github.com/edvinolo/rational-approximation), commit `4c9a04c7f6d0e85c613b486b6cd39a28e880f0f6`.
+
+The pinned repository has no root LICENSE or COPYING file, and its [manifest](fpm-candidates/rational-approximation/fpm.toml) declares the placeholder `license = "license"`. The [source identity](fpm-candidates/rational-approximation/source-review.json), [README](fpm-candidates/rational-approximation/README.md) and [review](fpm-candidates/rational-approximation/license-review.txt) are retained. No compilation or redistribution of its library was performed, and it is outside Selected. An explicit upstream license is needed before further evaluation for distribution. Its registry stdlib dependency and preprocessing configuration will also need a pinned, reproducible preparation recipe; their compatibility has not yet been established.
+
+## Featom
+
+Repository: [atomic-solvers/featom](https://github.com/atomic-solvers/featom), commit `87872a3266ceeee61a7244e6ecd134dc3bda790f`.
+
+The consumer adapts the setup from the author's `test/test_coulomb_schroed.f90` for the one-electron hydrogen Coulomb potential. It uses eight radial elements, polynomial order 20, 43 quadrature points per element and a radial cutoff of 100 atomic units. This yields 159 finite-element degrees of freedom. The six states with principal quantum number n<=3 are compared with the independent exact energies `-1/(2*n**2)` Hartree, with finite-value checks. The largest observed error was about `1.17e-12` Hartree, below the demo's `1e-7` acceptance tolerance.
+
+The library source is unmodified; native BLAS/LAPACK versions are pinned. The ordinary hosted GNU 16 debug and changed-main/cache-reuse checks passed. The demo runs in memory and does not write the larger eigenfunction output file used by the upstream test. These checks establish the demonstrated nonrelativistic Coulomb calculation, not every relativistic Dirac, Hartree-Fock or self-consistent DFT path. The [MIT license](fpm-candidates/featom/licenses/LICENSE) accompanies the adaptation. Numerical output is retained with the public verification report.
+
+## JAMS Fortran
+
+Repository: [mcuntz/jams_fortran](https://github.com/mcuntz/jams_fortran), commit `687a5dd08b7239466547f333ccb68463ba5137ad`.
+
+The intended scope was a subset of the numerical modules, initially Laplace inversion and sensitivity analysis. The ordinary bounded download of the pinned GitHub archive exceeds the 16 MiB compressed-download limit before extraction. A subset build would still require obtaining the complete archive under the current preparer. No compiler was invoked, and no complete archive SHA-256 is available because the transfer was stopped at the limit. The [preparation record](fpm-candidates/jams-fortran/preparation.json) retains the exact source revision, URL identity and limiting phase. This is a source-packaging restriction, not a demonstrated numerical or compiler defect.
+
+JAMS is outside Selected. A smaller upstream source revision or source repository would permit a fresh attempt through the existing GitHub preparer. The preparation record also lists the largest Git tree blobs: two bundled NetCDF source archives total about 14.3 MiB, and two remapping test datasets are about 7.2 MiB each. These blob sizes are not compressed-archive measurements; the proposed Laplace/sensitivity subset would not use those files. No archive or resource limit was raised, and no partial archive was used to construct a library.
+
+## FURY
+
+Repository: [szaghi/FURY](https://github.com/szaghi/FURY), commit `093e4d558ae089107464eb4ea7adec4f1178b907`.
+
+The root archive contains the documentation symlink `CONTRIBUTING.md -> docs/guide/contributing.md`, which the strict archive preparer rejects. The five most recent releases were checked as well: v0.8.4 has that same link, and v0.8.0 through v0.8.3 contain `doc/README-FURY.md -> ../README.md`. The [HEAD preparation record](fpm-candidates/fury/preparation.json), [tag commits, checksums and link paths](fpm-candidates/fury/tag-archive-checks.json), and [upstream manifest](fpm-candidates/fury/fpm.toml) are retained. Only the regular manifest member was read for inspection; no link was extracted, followed or substituted.
+
+Compilation and dependency preparation were not reached. FURY is outside Selected, so no kinetic-energy or unit-conversion result is established. Replacing the documentation symlinks with ordinary files in an upstream archive would permit further evaluation. The ordinary archive checks remain unchanged.
+
+## econ-toolchain
+
+Repository: [renatomatz/econ-toolchain](https://github.com/renatomatz/econ-toolchain), commit `301d1659ba3d34973195985c552ca6fcfe2d9f29`.
+
+The consumer adapts the calling conventions in the author's `test/markov_test.f90` and `test/tauchen_test.f90`. It first solves a nonuniform two-state chain with exact stationary probabilities `(2/3,1/3)`, checking finite values, the analytic answer and an independent matrix residual. It then discretizes a zero-mean AR(1) process with persistence 0.8 and innovation standard deviation 0.1 into 31 states. Probability normalization, nonnegativity, equilibrium residual, symmetry and approximate variance are checked. The computed variance was `0.0277451680`, compared with the continuous-process value `0.0277777778`; this finite-grid/truncation approximation is not expected to be exact. Both equilibrium residuals were below `1.2e-14`. See [verified output](fpm-candidates/econ-toolchain/verified-output.txt).
+
+The conventions matter: `markov_steady_state` multiplies a probability column by a column-stochastic matrix, whereas `tauchen` constructs a row-stochastic matrix. The demo transposes Tauchen's result explicitly. The upstream two-state test uses a symmetric matrix that does not reveal this distinction. No numerical library source is patched.
+
+The [initial preparation](fpm-candidates/econ-toolchain/initial-preparation.json) stopped at stdlib's manifest `VERSION` placeholder. The [initial recipe](fpm-candidates/econ-toolchain/initial-package.json) records that attempt. Final preparation renders the pinned stdlib manifest version as `0.8.1`, the value in its upstream VERSION file, and locks both stdlib and simulated-annealing to existing catalog source revisions. OpenBLAS packages are pinned. `-fcoarray=single` permits compilation of the package's coarray-containing modules; this does not enable multi-image execution in FPM mode. Normal debug checks remain enabled.
+
+The complete library and both dependencies passed ordinary hosted GNU 16 debug and changed-main/cache-reuse checks. An edited main rebuilt only the main and executable in about 1.77 seconds. Logical library artifacts occupy about 341.6 MiB, including the stdlib dependency and FPM flag variants; this is not compressed storage or a billing measurement. The [MIT license](fpm-candidates/econ-toolchain/licenses/LICENCE) accompanies the adaptation. Verification covers these Markov-chain routines, not every optimization, simulation or coarray path in the package.

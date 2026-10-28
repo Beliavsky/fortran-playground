@@ -973,6 +973,151 @@
         "y12m-y12mc"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "fishpack": {
+      "revision": "9dc7d2e7a847fa6a610752d4e91eda3ef9c6130d",
+      "archive_sha256": "06859781f35cceb1021f8387ff02944bfac301baae4d88f2abae7998e995b71e",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "fishpack-api"
+      ],
+      "notes": "Centered-grid finite-difference solver for separable two-dimensional Poisson/Helmholtz equations. Source APIs reviewed at this exact revision. Sandbox verification covers the supplied consumer, not all routines."
+    },
+    "dde_solver": {
+      "revision": "90d3389ce5d5733ab2b6e7ed7d2dad273b4d0c6b",
+      "archive_sha256": "c84c9462604a7a1ef49549bc9ec74f9e320fab08ec678075ac5a683adc57b381",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "dde-solver-api"
+      ],
+      "notes": "Delay differential equations: retain the broad differential-equation class rather than assume the ODE subclasses describe delayed problems. Source APIs reviewed at this exact revision. Sandbox verification covers the supplied consumer, not all routines."
+    },
+    "spherepack": {
+      "revision": "e80da29462c5987162a0884baaab7434d0215467",
+      "archive_sha256": "ff1f1d582099f5e95d44a084106ddd80d1efa6b51f220d7313520716171237cd",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "spherepack-api",
+        "spherepack-scalar-transform"
+      ],
+      "notes": "Spherical Helmholtz inversion using harmonic analysis and synthesis; two vector-workspace rank declarations are patched in the catalog recipe. Source APIs reviewed at this exact revision. Sandbox verification covers the supplied consumer, not all routines."
+    },
+    "forsvd": {
+      "revision": "f39bba7afcb048a21947a7a640bdf9a18337f8ac",
+      "archive_sha256": "b9a97d840dca7ad2d11ef00c5986719d180d455b2fa188a4d0b374219414088e",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "forsvd-api"
+      ],
+      "notes": "Computes real dense SVD using LAPACK GESVD or GESDD; the demonstration preserves a separate input copy. Source APIs reviewed at this exact revision. Sandbox verification covers the supplied consumer, not all routines."
+    },
+    "qdutillib": {
+      "revision": "8a1fa9ca7cf52683c98cc4bcb40f21dc41df6ed5",
+      "archive_sha256": "797b427653a60b8cf760c13400c35fc7b79fad59915b1fa508eac97de207281b",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "qdutillib-api"
+      ],
+      "notes": "Constructs quadrature nodes and weights; the HO rule uses full-function weights and requires the Gaussian in the integrand. Source APIs reviewed at this exact revision. Sandbox verification covers the supplied consumer, not all routines."
+    },
+    "qdldl-fortran": {
+      "revision": "8ebdd7fa1075bfb89115d0955806b0996b6b29d5",
+      "archive_sha256": "a757aa58d41657737514df2150f12fa6e594013c25266f52857fcae7b516e665",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "qdldl-fortran-api"
+      ],
+      "notes": "Sparse symmetric quasi-definite systems; no general-indefinite or pivoting guarantee is inferred. Natural, RCM and AMD orderings are checked. Source review covers these representative procedures, not an exhaustive API inventory."
+    },
+    "lusol": {
+      "revision": "2d95174d44ec9bf9dabbbd07652c84c11fe56d71",
+      "archive_sha256": "cb6050bc25617e48c09595face9651f2c83ebd88cb72169f90e0e2217e54ea9e",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "lusol-api"
+      ],
+      "notes": "Sparse LU factorization, solves and column replacement using an existing factorization; the demo uses the public 64-bit index kind. Source review covers these representative procedures, not an exhaustive API inventory."
+    },
+    "carlson-elliptic-integrals": {
+      "revision": "5f25a59a555b7029505aac71a8341d5851f8abed",
+      "archive_sha256": "2c3f4faa86b9840b36bf34df04801961c6931acfb750182e76a53aa20b2f31ef",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "carlson-elliptic-integrals-api"
+      ],
+      "notes": "Carlson symmetric RF evaluated for pendulum periods and checked against independent composite Simpson integration. Source review covers these representative procedures, not an exhaustive API inventory."
+    },
+    "fortran-bessels": {
+      "revision": "7bf8d6b144b00d4201a782ca65f6ae14a84d49a1",
+      "archive_sha256": "bbfb4be6e3a7f9f01d9ea315b2344bd52274ff7f269c2132fc81edbc874b925c",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "fortran-bessels-api"
+      ],
+      "notes": "Real positive arguments and fixed orders zero and one only. Independent values at x=1 and a modified-Bessel Wronskian identity are checked. Upstream documents limitations in other variable-order paths. Source review covers these representative procedures, not an exhaustive API inventory."
+    },
+    "dynamics": {
+      "revision": "580d04859a25126d3261e44b3fbec5111835e3a4",
+      "archive_sha256": "9aae4e1bff56b7a4bcf738be61dced3038d778b5b94bbc91ecb9edf58eaa3d87",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "dynamics-api"
+      ],
+      "notes": "Steady-state harmonic response of a linear second-order ODE system with proportional damping; retain the broad ODE class rather than label this an initial-value integrator. Source review covers these representative procedures, not an exhaustive API inventory."
+    },
+    "diffstruc": {
+      "revision": "88565f8e01792706edc0bd7e70dde957c26122a4",
+      "archive_sha256": "84daa1e2c23f1cd2285b5212f4f5390cf930336c98feae7da0b5eb4534a7e65f",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "diffstruc-api"
+      ],
+      "notes": "Forward directional derivatives and reverse-mode gradients of array expressions; the demo restores the direction mask before reverse accumulation. Source review covers these representative procedures, not an exhaustive API inventory."
+    },
+    "dnaoad-fpm": {
+      "revision": "f7f328e89b208a99797d64f4a41e97ba91b85962",
+      "archive_sha256": "eb96a128d723377508e87d6b843afb405ff66cad7248f7916d2664318e56f703",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "dnaoad-fpm-api"
+      ],
+      "notes": "Dual-number derivatives through the configured maximum order (five in this build); the demo checks orders zero through five at real and complex arguments. Source review covers these representative procedures, not an exhaustive API inventory."
+    },
+    "seiscope-optimization": {
+      "revision": "74a25c29d13c506e16f8025eb13a2cf396dc23c0",
+      "archive_sha256": "8915f61094dc4ec7cf3be3cf663638ef3433815dd707e9cfc33fdfdb29efe874",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "seiscope-optimization-api"
+      ],
+      "notes": "Unconstrained smooth multivariate minimization requiring user first derivatives. The guarded catalog edit replaces an uninitialized workspace-length actual argument with optim%l. Source review covers these representative procedures, not an exhaustive API inventory."
+    },
+    "gslib": {
+      "revision": "5c021000eb3da8703ced3ee9be145d6c0ecb2608",
+      "archive_sha256": "72d7c772e5a9a51cc90c5192bf9f8afb307771764697a8f821873bf36a66f50a",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "gslib-api"
+      ],
+      "notes": "The driver assembles an ordinary-kriging system from GSLIB covariance and linear-solver routines. It checks exponential covariances, closed-form weights, endpoint interpolation and independent system residuals. Broad interpolation/covariance classes only; no exhaustive spatial-statistics review. Source review covers these representative procedures, not an exhaustive API inventory."
+    },
+    "featom": {
+      "revision": "87872a3266ceeee61a7244e6ecd134dc3bda790f",
+      "archive_sha256": "8f32331778e1e0fb1d6639629f247ddee83878dbead1d59bfd0c39c210a60123",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "featom-api"
+      ],
+      "notes": "Radial one-dimensional boundary-value eigenproblem solved by finite elements. The demo checks the six n<=3 hydrogen Coulomb energies; no claim of validating the relativistic or self-consistent DFT paths. Source review covers these representative procedures, not an exhaustive API inventory."
+    },
+    "econ-toolchain": {
+      "revision": "301d1659ba3d34973195985c552ca6fcfe2d9f29",
+      "archive_sha256": "17f9f11a1e31418ab0211127966d9336068ce6d4662f421a9a513a6daedd70a5",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "econ-toolchain-api"
+      ],
+      "notes": "Stochastic-process modeling: deterministic stationary probabilities and AR(1) Markov discretization, not a claim of random sampling. The stationary routine uses column-stochastic matrices, while tauchen returns row-stochastic matrices; the consumer transposes explicitly. Source review covers these representative procedures, not an exhaustive API inventory."
     }
   }
 }

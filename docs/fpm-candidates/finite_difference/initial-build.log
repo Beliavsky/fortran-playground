@@ -1,0 +1,15 @@
+ + mkdir -p build/dependencies
+[  0%]              pyplot_module.f90
+[  8%]              pyplot_module.f90  done.
+[  8%]                 data_types.f90
+<ERROR> Compilation failed for object " .._sources_bundle_packages_0_finite_difference-ef0f351b7a2ae187833d574b8aeea3cabde0a105_playground-library_data_types.f90.o "
+[ 16%]                 data_types.f90  done.
+
+./././/../sources/bundle/packages/0/finite_difference-ef0f351b7a2ae187833d574b8aeea3cabde0a105/playground-library/data_types.f90:63:52:
+
+   63 | type (var_prec) :: log2=var_prec( (/780414346020669,1014559829342592, &
+      |                                                    1
+Error: Integer too big for its kind at (1). This check can be disabled with the option ‘-fno-range-check’
+compilation terminated due to -fmax-errors=1.
+<ERROR> stopping due to failed compilation
+STOP 1

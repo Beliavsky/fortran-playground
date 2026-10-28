@@ -1,0 +1,17 @@
+{
+  "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+  "edits": [
+    {
+      "path": "playground-library/vector_synthesis_routines.f90",
+      "sha256": "770cb18082d80a60396de0e94138f0f5267cac5004f2e35c8e4568561a649387",
+      "before": "real(wp),    intent(in)    :: wrfft(..)",
+      "after": "real(wp),    intent(in)    :: wrfft(*)"
+    },
+    {
+      "path": "playground-library/vector_synthesis_gaussian_grid_saved.f90",
+      "sha256": "f3679396ecb70b32b1daf999b9977ba2545723da4c920aff2e5ae07557194e9e",
+      "before": "real(wp),    intent(out) :: work(..)",
+      "after": "real(wp),    intent(out) :: work(*)"
+    }
+  ]
+}

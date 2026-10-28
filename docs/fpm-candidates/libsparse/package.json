@@ -1,0 +1,20 @@
+{
+  "id": "libsparse",
+  "repository": "jvdp1/libsparse",
+  "revision": "3d93e03a0e7e7b66cc791c054dc45eb5d0a9d70a",
+  "archive_sha256": "54a046bddf583b08b0d63bc3dc5f55c80978a3f97cd0322d0ef74057365b2e34",
+  "stars": 21,
+  "category": "Linear algebra",
+  "description": "Sparse matrix assembly and linked-list, coordinate and compressed-row storage.",
+  "license": "MIT",
+  "dependencies": [],
+  "catalog_build": {
+    "metapackages": [
+      "openmp"
+    ],
+    "environment": {
+      "FPM_FFLAGS": "-fopenmp -cpp -ffree-line-length-none"
+    },
+    "adapter_sha256": "fd73ab30a27bb1299e6630ac45976aec59e1c123d56881471a0cb2065cc97bbc"
+  }
+}

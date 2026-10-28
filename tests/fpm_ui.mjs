@@ -317,11 +317,14 @@ get('package-gams').value = 'D'; get('package-gams').listeners.change();
 assert.ok(get('available-package').options.some(p => p.value === 'fortran-lapack'));
 assert.ok(get('available-package').options.slice(1).every(option =>
   packages.find(p => p.id === option.value).gams.some(c => c.code === 'D')));
-get('package-search').value = 'lapack'; get('package-search').listeners.input();
-const lapackMatches = get('available-package').options.map(p => p.value);
+// Isolate the GAMS filter: text queries can legitimately match curated topics
+// that an author has not supplied (for example ForSVD's "lapack" topic).
+get('package-search').value = ''; get('package-search').listeners.input();
+const classifiedMatches = get('available-package').options.map(p => p.value);
 get('package-topic-source').value = 'github'; get('package-topic-source').listeners.change();
-assert.deepEqual(get('available-package').options.map(p => p.value), lapackMatches,
+assert.deepEqual(get('available-package').options.map(p => p.value), classifiedMatches,
   'GAMS classification works independently of topic source');
+get('package-search').value = 'lapack'; get('package-search').listeners.input();
 get('package-category').value = 'Integration'; get('package-category').listeners.change();
 assert.equal(get('available-package').options.length, 1, 'GAMS, category, and text filters combine');
 await get('package-search-results').options.find(p => p.textContent === 'Search all categories').listeners.click();

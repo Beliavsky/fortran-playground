@@ -133,12 +133,13 @@ class PackageGamsTests(unittest.TestCase):
     def test_g1_procedures_and_verified_drivers(self):
         data = gams_data()
         mappings = g1_procedures(data)
-        self.assertEqual(len(mappings), 11)
-        self.assertEqual(len({m['package_id'] for m in mappings}), 7)
+        self.assertEqual(len(mappings), 12)
+        self.assertEqual(len({m['package_id'] for m in mappings}), 8)
         self.assertEqual(data['detailed_classes']['G1a']['parent'], 'G1')
         self.assertEqual(data['detailed_classes']['G1b']['parent'], 'G1')
         self.assertIn('G1a', {c['code'] for c in package_classes(data, 'fmin')})
         self.assertIn('G1b', {c['code'] for c in package_classes(data, 'minpack')})
+        self.assertIn('G1b', {c['code'] for c in package_classes(data, 'seiscope-optimization')})
         self.assertNotIn('G1a', {c['code'] for c in package_classes(data, 'nonlin')})
         self.assertEqual({d['id'] for d in driver_data()},
                          {'fmin-sine', 'minpack-bard', 'libdogleg-bard'})
@@ -180,8 +181,11 @@ class PackageGamsTests(unittest.TestCase):
     def test_numerical_review_covers_catalog_scope_and_preserves_evidence(self):
         data = gams_data()
         review = numerical_review(data=data)
-        self.assertEqual(len(review['packages']), 104)
-        self.assertEqual(sum(e['status'] == 'procedure-reviewed' for e in review['packages'].values()), 103)
+        expected = {name for name, codes in data['packages'].items() if set(codes) & set('ABCDEFGHIJKLMP')}
+        self.assertEqual(set(review['packages']), expected)
+        mapped = {p['package_id'] for p in data['procedure_mappings']}
+        self.assertEqual({name for name, entry in review['packages'].items()
+                          if entry['status'] == 'procedure-reviewed'}, expected & mapped)
         self.assertEqual(review['packages']['kinds']['status'], 'support-only')
         self.assertTrue(review['packages']['kinds']['evidence'])
         self.assertEqual((ROOT / NUMERICAL_REPORT).read_text(encoding='utf-8'), numerical_review_text())

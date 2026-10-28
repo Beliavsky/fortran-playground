@@ -13,6 +13,34 @@ from fpm_cache import (catalog, cache_identity, match_package, cached_request_ma
 
 
 class CacheTests(unittest.TestCase):
+    def test_large_build_message_drains_before_stdin_buffer_overflows(self):
+        from xprecompile_fpm import write_build_message
+        class BoundedWriter:
+            def __init__(self):
+                self.buffer = bytearray()
+                self.received = bytearray()
+                self.eof = False
+                self.drains = 0
+            def write(self, data):
+                self.buffer.extend(data)
+                if len(self.buffer) > 65536:
+                    raise BufferError('Writer buffer exceeded')
+            def drain(self):
+                self.received.extend(self.buffer)
+                self.buffer.clear()
+                self.drains += 1
+            def write_eof(self):
+                self.assert_empty = not self.buffer
+                self.eof = True
+        writer = BoundedWriter()
+        message = {'bundle': 'a' * 3000000, 'source': 'print *, "caf\u00e9"'}
+        write_build_message(writer, message)
+        self.assertTrue(writer.eof)
+        self.assertTrue(writer.assert_empty)
+        self.assertGreater(writer.drains, 2)
+        self.assertTrue(writer.received.endswith(b'\n'))
+        self.assertEqual(json.loads(writer.received), message)
+
     def incremental_entry(self, package):
         import hashlib
         source = (Path(__file__).resolve().parents[1] / 'fpm_catalog/demos' / (package['id'] + '.f90')).read_text(encoding='utf-8')
@@ -89,13 +117,13 @@ class CacheTests(unittest.TestCase):
         packages = catalog()
         self.assertIn('fortran-lapack', [p['id'] for p in packages])
         self.assertEqual(len({p['id'] for p in packages}), len(packages))
-        generated = json.loads((root / 'site/fpm/packages.json').read_text())
+        generated = json.loads((root / 'site/fpm/packages.json').read_text(encoding='utf-8'))
         for package in packages:
             self.assertRegex(package['revision'], r'^[0-9a-f]{40}$')
             self.assertRegex(package['archive_sha256'], r'^[0-9a-f]{64}$')
             self.assertNotIn('\n', package['description'])
             demo = root / 'fpm_catalog/demos' / (package['id'] + '.f90')
-            source = demo.read_text()
+            source = demo.read_text(encoding='utf-8')
             self.assertIn('PASS ' + package['id'], source)
             self.assertEqual(next(p for p in generated if p['id'] == package['id'])['source'], source)
 
@@ -205,7 +233,7 @@ class CacheTests(unittest.TestCase):
         self.assertEqual(set(rows), {p['id'] for p in catalog()})
         for package in catalog():
             row = rows[package['id']]
-            source = (root / 'fpm_catalog/demos' / (package['id'] + '.f90')).read_text()
+            source = (root / 'fpm_catalog/demos' / (package['id'] + '.f90')).read_text(encoding='utf-8')
             self.assertEqual(row['revision'], package['revision'])
             self.assertEqual(row['verification']['demo_sha256'], hashlib.sha256(source.encode()).hexdigest())
             self.assertTrue(row['verification']['library_reused'])

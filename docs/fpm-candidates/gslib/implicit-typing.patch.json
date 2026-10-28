@@ -1,0 +1,11 @@
+{
+  "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+  "edits": [
+    {
+      "path": "fpm.toml",
+      "sha256": "97588f07e2abd5cfa260ca5cbefdc72392a38e38ed03d5d1c3137cdcef38b68d",
+      "before": "source-dir = \"src/legacy\"",
+      "after": "source-dir = \"src/legacy\"\n\n[fortran]\nimplicit-typing = true\nimplicit-external = true"
+    }
+  ]
+}

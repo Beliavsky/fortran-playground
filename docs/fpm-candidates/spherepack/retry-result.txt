@@ -1,0 +1,144 @@
+ + mkdir -p build/dependencies
+[  0%]              pyplot_module.f90
+[  0%]              pyplot_module.f90  done.
+[  0%]       spherepack_precision.f90
+[  1%]       spherepack_precision.f90  done.
+[  1%] coordinate_transfer_routines.f
+[  2%] coordinate_transfer_routines.f  done.
+[  2%] gaussian_latitudes_and_weights
+[  3%] gaussian_latitudes_and_weights  done.
+[  3%] icosahedral_geodesic_routines.
+[  4%] icosahedral_geodesic_routines.  done.
+[  4%]      spherepack_interfaces.f90
+[  4%]      spherepack_interfaces.f90  done.
+[  4%]  type_FastFourierTransform.f90
+[  5%]  type_FastFourierTransform.f90  done.
+[  5%] type_RealHarmonicCoefficients.
+[  6%] type_RealHarmonicCoefficients.  done.
+[  6%] type_RealPeriodicFastFourierTr
+[  7%] type_RealPeriodicFastFourierTr  done.
+[  7%]        type_ScalarHarmonic.f90
+[  8%]        type_ScalarHarmonic.f90  done.
+[  8%]         type_SphericalGrid.f90
+[  9%]         type_SphericalGrid.f90  done.
+[  9%]              type_Vector3D.f90
+[  9%]              type_Vector3D.f90  done.
+[  9%] type_AssociatedLegendrePolynom
+[ 10%] type_AssociatedLegendrePolynom  done.
+[ 10%]          type_GaussianGrid.f90
+[ 11%]          type_GaussianGrid.f90  done.
+[ 11%]           type_RegularGrid.f90
+[ 12%]           type_RegularGrid.f90  done.
+[ 12%]    type_TrigonometricTable.f90
+[ 13%]    type_TrigonometricTable.f90  done.
+[ 13%]        type_VectorHarmonic.f90
+[ 14%]        type_VectorHarmonic.f90  done.
+[ 14%] type_VectorHarmonicCoefficient
+[ 14%] type_VectorHarmonicCoefficient  done.
+[ 14%]      type_WavetableUtility.f90
+[ 15%]      type_WavetableUtility.f90  done.
+[ 15%]     type_SpherepackUtility.f90
+[ 16%]     type_SpherepackUtility.f90  done.
+[ 16%]  type_SphericalUnitVectors.f90
+[ 17%]  type_SphericalUnitVectors.f90  done.
+[ 17%]             type_Workspace.f90
+[ 18%]             type_Workspace.f90  done.
+[ 18%] colatitudinal_derivative_routi
+[ 19%] colatitudinal_derivative_routi  done.
+[ 19%]   scalar_analysis_routines.f90
+[ 19%]   scalar_analysis_routines.f90  done.
+[ 19%] scalar_projection_routines.f90
+[ 20%] scalar_projection_routines.f90  done.
+[ 20%]  scalar_synthesis_routines.f90
+[ 21%]  scalar_synthesis_routines.f90  done.
+[ 21%]                type_Sphere.f90
+[ 22%]                type_Sphere.f90  done.
+[ 22%]   vector_analysis_routines.f90
+[ 23%]   vector_analysis_routines.f90  done.
+[ 23%]  vector_synthesis_routines.f90
+[ 23%]  vector_synthesis_routines.f90  done.
+[ 23%] colatitudinal_derivative_gauss
+[ 24%] colatitudinal_derivative_gauss  done.
+[ 24%] colatitudinal_derivative_gauss
+[ 25%] colatitudinal_derivative_gauss  done.
+[ 25%] colatitudinal_derivative_regul
+[ 26%] colatitudinal_derivative_regul  done.
+[ 26%] colatitudinal_derivative_regul
+[ 27%] colatitudinal_derivative_regul  done.
+[ 27%]        divergence_routines.f90
+[ 28%]        divergence_routines.f90  done.
+[ 28%]          gradient_routines.f90
+[ 28%]          gradient_routines.f90  done.
+[ 28%]     grid_transfer_routines.f90
+[ 29%]     grid_transfer_routines.f90  done.
+[ 29%]                     idvtec.f90
+[ 30%]                     idvtec.f90  done.
+[ 30%]                     idvtes.f90
+[ 31%]                     idvtes.f90  done.
+[ 31%]                     idvtgc.f90
+[ 32%]                     idvtgc.f90  done.
+[ 32%]                     idvtgs.f90
+[ 33%]                     idvtgs.f90  done.
+[ 33%]                    isfvpec.f90
+[ 33%]                    isfvpec.f90  done.
+[ 33%]                    isfvpes.f90
+[ 34%]                    isfvpes.f90  done.
+[ 34%]                    isfvpgc.f90
+[ 35%]                    isfvpgc.f90  done.
+[ 35%]                    isfvpgs.f90
+[ 36%]                    isfvpgs.f90  done.
+[ 36%] scalar_analysis_gaussian_grid.
+[ 37%] scalar_analysis_gaussian_grid.  done.
+[ 37%] scalar_analysis_gaussian_grid_
+[ 38%] scalar_analysis_gaussian_grid_  done.
+[ 38%] scalar_analysis_regular_grid.f
+[ 38%] scalar_analysis_regular_grid.f  done.
+[ 38%] scalar_analysis_regular_grid_s
+[ 39%] scalar_analysis_regular_grid_s  done.
+[ 39%]  scalar_laplacian_routines.f90
+[ 40%]  scalar_laplacian_routines.f90  done.
+[ 40%] scalar_projection_gaussian_gri
+[ 41%] scalar_projection_gaussian_gri  done.
+[ 41%] scalar_projection_regular_grid
+[ 42%] scalar_projection_regular_grid  done.
+[ 42%] scalar_synthesis_gaussian_grid
+[ 42%] scalar_synthesis_gaussian_grid  done.
+[ 42%] scalar_synthesis_gaussian_grid
+[ 43%] scalar_synthesis_gaussian_grid  done.
+[ 43%] scalar_synthesis_regular_grid.
+[ 44%] scalar_synthesis_regular_grid.  done.
+[ 44%] scalar_synthesis_regular_grid_
+[ 45%] scalar_synthesis_regular_grid_  done.
+[ 45%]                     sfvpec.f90
+[ 46%]                     sfvpec.f90  done.
+[ 46%]                     sfvpes.f90
+[ 47%]                     sfvpes.f90  done.
+[ 47%]                     sfvpgc.f90
+[ 47%]                     sfvpgc.f90  done.
+[ 47%]                     sfvpgs.f90
+[ 48%]                     sfvpgs.f90  done.
+[ 48%]     type_GaussianWorkspace.f90
+[ 49%]     type_GaussianWorkspace.f90  done.
+[ 49%]      type_RegularWorkspace.f90
+[ 50%]      type_RegularWorkspace.f90  done.
+[ 50%] vector_analysis_gaussian_grid.
+[ 51%] vector_analysis_gaussian_grid.  done.
+[ 51%] vector_analysis_gaussian_grid_
+[ 52%] vector_analysis_gaussian_grid_  done.
+[ 52%] vector_analysis_regular_grid.f
+[ 52%] vector_analysis_regular_grid.f  done.
+[ 52%] vector_analysis_regular_grid_s
+[ 53%] vector_analysis_regular_grid_s  done.
+[ 53%]  vector_laplacian_routines.f90
+[ 54%]  vector_laplacian_routines.f90  done.
+[ 54%] vector_synthesis_gaussian_grid
+<ERROR> Compilation failed for object " .._sources_bundle_packages_0_spherepack-e80da29462c5987162a0884baaab7434d0215467_playground-library_vector_synthesis_gaussian_grid.f90.o "
+[ 55%] vector_synthesis_gaussian_grid  done.
+
+./././/../sources/bundle/packages/0/spherepack-e80da29462c5987162a0884baaab7434d0215467/playground-library/vector_synthesis_gaussian_grid.f90:1091:68:
+
+ 1091 |             imm1, ityp, nlat, nlon, nt, v, ve, vo, w, we, wo, wrfft)
+      |                                                                    1
+Error: Actual argument for ‘wrfft’ cannot be an assumed-size array at (1)
+<ERROR> stopping due to failed compilation
+STOP 1

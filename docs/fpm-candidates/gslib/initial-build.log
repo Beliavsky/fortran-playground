@@ -1,0 +1,18 @@
+ + mkdir -p build/dependencies
+[  0%]              pyplot_module.f90
+[  2%]              pyplot_module.f90  done.
+[  2%]                       main.f90
+[  4%]                       main.f90  done.
+[  4%]                     acorni.f90
+<ERROR> Compilation failed for object " .._sources_bundle_packages_0_gslib2.0-5c021000eb3da8703ced3ee9be145d6c0ecb2608_src_legacy_gslib_acorni.f90.o "
+[  7%]                     acorni.f90  done.
+
+./././/../sources/bundle/packages/0/gslib2.0-5c021000eb3da8703ced3ee9be145d6c0ecb2608/src/legacy/gslib/acorni.f90:45:18:
+
+   45 |       parameter (KORDEI=12,MAXOP1=KORDEI+1,MAXINT=2**30)
+      |                  1~~~~~
+Error: Symbol ‘kordei’ at (1) has no IMPLICIT type
+compilation terminated due to -fmax-errors=1.
+<ERROR> stopping due to failed compilation
+STOP 1
+

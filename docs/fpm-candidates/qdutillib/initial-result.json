@@ -1,0 +1,79 @@
+{
+  "ok": false,
+  "compiler": "GNU Fortran (GCC) 16.2.0",
+  "compiler_id": "gfortran",
+  "fpm": "0.12.0",
+  "stages": [
+    {
+      "name": "Build",
+      "command": [
+        "fpm",
+        "build",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.501,
+      "ok": true,
+      "exit_code": 0,
+      "error": "",
+      "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+      "stderr": ""
+    },
+    {
+      "name": "Run",
+      "command": [
+        "fpm",
+        "run",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.079,
+      "ok": false,
+      "exit_code": 1,
+      "error": "",
+      "stdout": "Integral of x**8 on [-1,1]:     0.22222222222222  error:    2.776E-17\nIntegral of x**2*exp(-x**2):    27.56594242302390  error:    2.668E+01\n",
+      "stderr": "Project is up to date\nERROR STOP Hermite quadrature failed\n\nError termination. Backtrace:\n#0  0x2af2d18cbf83 in ???\n#1  0x2af2d18ccc39 in ???\n#2  0x2af2d18ce045 in ???\n#3  0x4032ee in demo_qdutillib\n\tat app/main.f90:24\n#4  0x4033d2 in main\n\tat app/main.f90:3\n<ERROR> Execution for object \" playground-main \" returned exit code  1\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 1\n"
+    }
+  ],
+  "cache": {
+    "package": "qdutillib",
+    "compiler": "GNU Fortran 16.2.0",
+    "key": "1b0af54dd5d2083e0fa0a67b",
+    "library_reused": true,
+    "changed_artifacts": []
+  },
+  "packages": [
+    {
+      "repository": "lauvergn/QDUtilLib",
+      "revision": "8a1fa9ca7cf52683c98cc4bcb40f21dc41df6ed5",
+      "sha256": "797b427653a60b8cf760c13400c35fc7b79fad59915b1fa508eac97de207281b"
+    }
+  ],
+  "build_ok": true,
+  "target_groups": {
+    "app": [
+      "playground-main"
+    ],
+    "example": [],
+    "test": []
+  },
+  "targets": [
+    "playground-main"
+  ],
+  "plots": [],
+  "plot_notes": []
+}

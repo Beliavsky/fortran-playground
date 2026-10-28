@@ -1,0 +1,32 @@
+{
+  "id": "finite_difference",
+  "repository": "jlr581/finite_difference",
+  "revision": "ef0f351b7a2ae187833d574b8aeea3cabde0a105",
+  "archive_sha256": "ca9de9ebd790a4ee9cf2a2df520c55d93c692329656567ab8f0657777ddf1820",
+  "stars": 0,
+  "category": "Differentiation",
+  "description": "Meshless differentiation weights for arbitrary nodes using variable precision and hyper-dual numbers.",
+  "license": "GPL-3.0-or-later",
+  "dependencies": [],
+  "catalog_build": {
+    "source_packages": {
+      "jlr581/finite_difference": {
+        "manifest": "name = \"finite_difference\"\nversion = \"0.0.0\"\n[build]\nauto-executables = false\nauto-tests = false\nauto-examples = false\n[library]\nsource-dir = \"playground-library\"\n[fortran]\nimplicit-typing = true\nimplicit-external = true\n",
+        "sources": [
+          "data_types.f90",
+          "dq_coeff.f90",
+          "hyper_dual.f90",
+          "ldl.f90",
+          "solve.f90",
+          "var_prec.f90",
+          "var_prec_extra.f90",
+          "vector.f90"
+        ]
+      }
+    },
+    "environment": {
+      "FPM_FFLAGS": "-ffree-line-length-none"
+    },
+    "adapter_sha256": "fd73ab30a27bb1299e6630ac45976aec59e1c123d56881471a0cb2065cc97bbc"
+  }
+}

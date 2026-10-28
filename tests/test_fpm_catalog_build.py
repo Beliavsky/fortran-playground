@@ -17,6 +17,62 @@ class CatalogBuildTests(unittest.TestCase):
     def options(self, **values):
         return {'adapter_sha256': adapter_digest(), **values}
 
+    def test_catalog_name_override_preserves_public_validation_and_old_recipes(self):
+        from fpm_catalog_build import SOURCE_ADAPTER_SHA256
+        data = archive({'fpm.toml': 'name="library.2"\n'})
+        pin = {'repository': 'example/library', 'revision': 'a'*40,
+               'sha256': hashlib.sha256(data).hexdigest()}
+        options = self.options(manifest_names={'example/library': 'library'})
+        validate_build({'id': 'library', 'catalog_build': options})
+        with tempfile.TemporaryDirectory() as temporary:
+            root, records = CatalogPreparer(temporary, options=options, pins=[pin],
+                downloader=lambda *a, **k: data).prepare(PAYLOAD)
+            self.assertEqual(tomllib.loads((Path(temporary)/root/'fpm.toml').read_text())['name'], 'library')
+            self.assertEqual(records, [pin])
+        with tempfile.TemporaryDirectory() as temporary, self.assertRaisesRegex(ValueError, 'package name'):
+            Preparer(temporary, pins=[pin], downloader=lambda *a, **k: data).prepare(PAYLOAD)
+        validate_build({'id': 'old', 'catalog_build': {'adapter_sha256': SOURCE_ADAPTER_SHA256}})
+        for invalid in ({**options, 'adapter_sha256': SOURCE_ADAPTER_SHA256},
+                        self.options(manifest_names={'example/library': 'bad.name'})):
+            with self.assertRaises(ValueError):
+                validate_build({'id': 'library', 'catalog_build': invalid})
+
+    def test_locked_non_fpm_sources_export_as_an_ordinary_library(self):
+        data = archive({'solver.f90': 'module solver\nend module\n',
+                        'examples/main.f90': 'program upstream\nend program\n'})
+        spec = {'manifest': 'name="library"\n[library]\nsource-dir="playground-library"\n',
+                'sources': ['solver.f90']}
+        options = self.options(source_packages={'example/library': spec})
+        pin = {'repository': 'example/library', 'revision': 'a'*40,
+               'sha256': hashlib.sha256(data).hexdigest()}
+        validate_build({'id': 'library', 'catalog_build': options})
+        with tempfile.TemporaryDirectory() as temporary:
+            preparer = CatalogPreparer(temporary, options=options, pins=[pin], downloader=lambda *a, **k: data)
+            path, records = preparer.prepare(PAYLOAD)
+            root = Path(temporary) / path
+            self.assertEqual([p.name for p in (root/'playground-library').iterdir()], ['solver.f90'])
+            self.assertEqual((root/'solver.f90').read_bytes(), (root/'playground-library/solver.f90').read_bytes())
+            self.assertTrue((root/'examples/main.f90').exists())
+            self.assertEqual(records, [pin])
+            self.assertEqual(preparer.prepare(PAYLOAD)[0], path)
+        for pins in (None, [{**pin, 'sha256': '0'*64}]):
+            with tempfile.TemporaryDirectory() as temporary, self.assertRaisesRegex(ValueError, 'lock|checksum'):
+                CatalogPreparer(temporary, options=options, pins=pins,
+                                downloader=lambda *a, **k: data).prepare(PAYLOAD)
+        with tempfile.TemporaryDirectory() as temporary, self.assertRaisesRegex(ValueError, 'no fpm.toml'):
+            Preparer(temporary, pins=[pin], downloader=lambda *a, **k: data).prepare(PAYLOAD)
+        for sources in (['../solver.f90'], ['/solver.f90'], ['a/solver.f90','b/solver.f90']):
+            with self.subTest(sources=sources), self.assertRaises(ValueError):
+                validate_build({'id': 'x', 'catalog_build': self.options(
+                    source_packages={'example/library': {**spec, 'sources': sources}})})
+
+    def test_legacy_adapter_identity_keeps_existing_package_keys(self):
+        from fpm_catalog_build import LEGACY_ADAPTER_SHA256
+        options = {'adapter_sha256': LEGACY_ADAPTER_SHA256, 'manifest_versions': {'example/library':'0.0.0'}}
+        validate_build({'id': 'library', 'catalog_build': options})
+        with self.assertRaises(ValueError):
+            validate_build({'id': 'library', 'catalog_build': {**options, 'source_packages': {'example/library': {}}}})
+
     def test_environment_and_adapter_only_invalidate_opted_in_package(self):
         package = {'id': 'x', 'repository': 'owner/x', 'revision': 'a'*40, 'archive_sha256': 'b'*64}
         old = cache_identity(package, 'recipe')

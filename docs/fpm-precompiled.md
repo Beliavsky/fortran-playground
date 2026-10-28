@@ -1,6 +1,6 @@
 # Precompiled FPM packages
 
-The Selected catalog contains **159 precompiled packages in 38 categories**, with search and category filters above the **Available packages (GNU Fortran 16)** selector. Each entry has a one-line description and an editable example main program. **Load package** selects GNU Fortran 16.2.0, the exact source revision, and **My main program**. Loading never submits a job. Only builds verified and advertised by the deployed service can be selected.
+The Selected catalog contains **175 precompiled packages in 41 categories**, with search and category filters above the **Available packages (GNU Fortran 16)** selector. Each entry has a one-line description and an editable example main program. **Load package** selects GNU Fortran 16.2.0, the exact source revision, and **My main program**. Loading never submits a job. Only builds verified and advertised by the deployed service can be selected.
 
 | Category | Package | Description |
 | --- | --- | --- |
@@ -31,10 +31,12 @@ The Selected catalog contains **159 precompiled packages in 38 categories**, wit
 | Dates and times | [datetime-fortran](https://github.com/wavebitscientific/datetime-fortran) | Date/time objects, durations, and calendar arithmetic. |
 | Dates and times | [m_time](https://github.com/urbanjost/M_time) | Calendar arithmetic, Julian dates, and date/time formatting. |
 | Differential equations | [daskr](https://github.com/davidpfister/daskr) | Differential-algebraic equation solver with root finding and direct or Krylov linear solvers. |
+| Differential equations | [dde_solver](https://github.com/WarrenWeckesser/dde_solver) | Adaptive integration and interpolation for delay differential equations. |
 | Differential equations | [ddeabm](https://github.com/jacobwilliams/ddeabm) | Adaptive Adams-Bashforth-Moulton ODE integration with event finding. |
 | Differential equations | [diffeq](https://github.com/jchristopherson/diffeq) | Adaptive explicit and implicit integrators for ordinary differential and differential-algebraic equations. |
 | Differential equations | [dop853](https://github.com/jacobwilliams/dop853) | Adaptive eighth-order Runge-Kutta integration of ordinary differential equations. |
 | Differential equations | [dvode](https://github.com/jacobwilliams/dvode) | Variable-coefficient multistep ODE solver for stiff and nonstiff systems. |
+| Differential equations | [fishpack](https://github.com/jlokimlin/fishpack) | Finite-difference solvers for separable elliptic partial differential equations. |
 | Differential equations | [flint](https://github.com/princemahajan/FLINT) | Adaptive explicit Runge-Kutta ODE integration with dense output and event detection. |
 | Differential equations | [odepack](https://github.com/Nicholaswogan/odepack) | Modern thread-safe interfaces to the LSODA and LSODAR initial-value ODE solvers. |
 | Differential equations | [rkf45](https://github.com/zoziha/rkf45) | Classic adaptive Runge-Kutta-Fehlberg fourth/fifth-order ODE integration. |
@@ -42,9 +44,12 @@ The Selected catalog contains **159 precompiled packages in 38 categories**, wit
 | Differential equations | [stiff3](https://github.com/ivan-pi/stiff3) | Adaptive third-order Rosenbrock solver for stiff autonomous ordinary differential equations. |
 | Differential equations | [twopnt](https://github.com/perazz/twopnt) | Boundary-value problem solver with adaptive grids and a modern object interface. |
 | Differentiation | [ad_dnsvm](https://github.com/lauvergn/AD_dnSVM) | Forward automatic differentiation of scalars, vectors and matrices through third derivatives. |
+| Differentiation | [diffstruc](https://github.com/nedtaylor/diffstruc) | Forward and reverse automatic differentiation with array computation graphs. |
+| Differentiation | [dnaoad-fpm](https://github.com/fpenunuri/DNAOAD-FPM) | Complex dual numbers for derivatives through configurable order. |
 | Differentiation | [fordiff](https://github.com/gha3mi/fordiff) | Numerical derivatives using finite differences and complex steps. |
 | Differentiation | [forwarddiff](https://github.com/Nicholaswogan/forwarddiff) | Forward automatic differentiation using dual numbers (Differentia). |
 | Differentiation | [numdiff](https://github.com/jacobwilliams/NumDiff) | Numerical derivatives and sparse Jacobian estimation. |
+| Dynamics and control | [dynamics](https://github.com/jchristopherson/dynamics) | Frequency response, vibration analysis, modal analysis and dynamic-system calculations. |
 | Encoding and compression | [befor64](https://github.com/szaghi/BeFoR64) | Base64 encoding and decoding of text and numerical data. |
 | Encoding and compression | [fortran-zlib](https://github.com/interkosmos/fortran-zlib) | Fortran interfaces to zlib lossless compression and decompression. |
 | Encoding and compression | [fortran-zstd](https://github.com/interkosmos/fortran-zstd) | Fortran interfaces to Zstandard lossless data compression. |
@@ -71,10 +76,12 @@ The Selected catalog contains **159 precompiled packages in 38 categories**, wit
 | Images | [cairo-fortran](https://github.com/vmagnin/cairo-fortran) | Cairo bindings for drawing vector graphics into PNG and other output formats. |
 | Images | [forimage](https://github.com/gha3mi/forimage) | Create, read, write and transform PNM images and convert color representations. |
 | Images | [fortran_stb_image](https://github.com/lewisfish/fortran_stb_image) | Read and write PNG and other raster image formats through the stb libraries. |
+| Integral transforms | [spherepack](https://github.com/jlokimlin/spherepack) | Spherical harmonic transforms and spherical differential-equation solvers. |
 | Integration | [dcuhre](https://github.com/Zaneham/dcuhre) | Adaptive multidimensional integration over hyperrectangles with vector integrands and error estimates. |
 | Integration | [fortran_cubatures](https://github.com/willklausler/fortran_cubatures) | Gaussian cubature rules for finite-element reference lines, triangles, quadrilaterals, tetrahedra, hexahedra and wedges. |
 | Integration | [gaussjacobiquad](https://github.com/HaoZeke/GaussJacobiQuad) | Gauss-Jacobi quadrature nodes and weights for weighted numerical integration. |
 | Integration | [integrate_fortran](https://github.com/Euler-37/integrate_fortran) | Gauss-Legendre quadrature for one-dimensional and multidimensional integrals. |
+| Integration | [qdutillib](https://github.com/lauvergn/QDUtilLib) | Gauss-Legendre and Gauss-Hermite quadrature, linear algebra and numerical utilities. |
 | Integration | [quadpack](https://github.com/jacobwilliams/quadpack) | Adaptive numerical integration, including improper and oscillatory integrals. |
 | Integration | [quadrature-fortran](https://github.com/jacobwilliams/quadrature-fortran) | Adaptive Gaussian quadrature in one or more dimensions. |
 | Interpolation | [bspline-fortran](https://github.com/jacobwilliams/bspline-fortran) | One- to six-dimensional B-spline interpolation. |
@@ -87,6 +94,7 @@ The Selected catalog contains **159 precompiled packages in 38 categories**, wit
 | Linear algebra | [blas-interface](https://github.com/awvwgk/blas-interface) | Explicit generic Fortran interfaces to BLAS vector and matrix operations. |
 | Linear algebra | [foreig](https://github.com/gha3mi/foreig) | LAPACK interfaces for eigenvalues and eigenvectors of real matrices. |
 | Linear algebra | [forinv](https://github.com/gha3mi/forinv) | Matrix inverses and singular-value-decomposition pseudoinverses. |
+| Linear algebra | [forsvd](https://github.com/gha3mi/forsvd) | Singular value decomposition and truncated low-rank matrix approximations. |
 | Linear algebra | [fortran-lapack](https://github.com/perazz/fortran-lapack) | Modern linear algebra: linear systems, eigenvalues, least squares, and matrix factorizations. |
 | Linear algebra | [fsparse](https://github.com/jalvesz/FSPARSE) | Sparse matrix storage, format conversions and matrix-vector products. |
 | Linear algebra | [kiss](https://github.com/ivan-pi/kiss) | Krylov iterative solvers for dense matrices and matrix-free linear operators. |
@@ -94,7 +102,9 @@ The Selected catalog contains **159 precompiled packages in 38 categories**, wit
 | Linear algebra | [linalg](https://github.com/jchristopherson/linalg) | Convenient dense and sparse linear algebra interfaces to BLAS, LAPACK and ARPACK. |
 | Linear algebra | [lsmr](https://github.com/jacobwilliams/LSMR) | Iterative solution of sparse linear equations and least-squares problems. |
 | Linear algebra | [lsqr](https://github.com/jacobwilliams/LSQR) | Iterative sparse linear systems and least-squares solver using coordinate storage. |
+| Linear algebra | [lusol](https://github.com/jacobwilliams/lusol) | Sparse LU factorization, linear solves and efficient column updates. |
 | Linear algebra | [minres](https://github.com/willdickson/minres) | Iterative solution of symmetric sparse systems, including indefinite matrices. |
+| Linear algebra | [qdldl-fortran](https://github.com/jacobwilliams/qdldl-fortran) | Sparse LDL-transpose factorization, orderings and solves for quasi-definite systems. |
 | Linear algebra | [sparse_fortran](https://github.com/Euler-37/sparse_fortran) | Coordinate and compressed-row sparse matrices with matrix-vector products. |
 | Linear algebra | [specialmatrices](https://github.com/loiseaujc/SpecialMatrices) | Structured diagonal, circulant, Toeplitz, tridiagonal, and other matrices. |
 | Linear algebra | [y12m](https://github.com/ivan-pi/y12m) | Direct sparse LU factorization with pivoting, reordering and reuse for multiple right-hand sides. |
@@ -106,6 +116,7 @@ The Selected catalog contains **159 precompiled packages in 38 categories**, wit
 | Physical properties | [ciaaw](https://github.com/MilanSkocic/ciaaw) | Standard atomic weights, isotopic abundances and nuclide masses for chemistry. |
 | Physical properties | [iapws](https://github.com/MilanSkocic/iapws) | IAPWS thermodynamic properties of water, including saturation pressure and temperature. |
 | Plotting | [pyplot-fortran](https://github.com/jacobwilliams/pyplot-fortran) | Create PNG plots from Fortran through Python and Matplotlib. |
+| Quantum mechanics | [featom](https://github.com/atomic-solvers/featom) | Radial Schroedinger and Dirac equations solved with high-order finite elements. |
 | Random numbers | [mersenne-twister-fortran](https://github.com/jacobwilliams/mersenne-twister-fortran) | Reproducible 64-bit Mersenne Twister random number generation. |
 | Random numbers | [pointsets](https://github.com/arjenmarkus/pointsets) | Construct uniform, geometric, random and quasi-random point sets and multidimensional grids. |
 | Random numbers | [rndgen-fortran](https://github.com/wcota/rndgen-fortran) | Seeded KISS random number generators with multiple independent states and replay. |
@@ -128,17 +139,22 @@ The Selected catalog contains **159 precompiled packages in 38 categories**, wit
 | Roots and optimization | [powellopt](https://github.com/jacobwilliams/PowellOpt) | Powell derivative-free optimization methods including BOBYQA and COBYLA. |
 | Roots and optimization | [psqp](https://github.com/jacobwilliams/psqp) | Sequential quadratic programming with variable bounds and general nonlinear constraints. |
 | Roots and optimization | [roots-fortran](https://github.com/jacobwilliams/roots-fortran) | Find roots of scalar functions using bracketing and other solvers. |
+| Roots and optimization | [seiscope-optimization](https://github.com/ofmla/seiscope_opt_toolbox_w_ctypes) | Gradient-based optimization with L-BFGS, nonlinear conjugate gradients and truncated Newton methods. |
 | Roots and optimization | [simulated-annealing](https://github.com/jacobwilliams/simulated-annealing) | Stochastic global optimization by simulated annealing with bounds and reproducible seeds. |
 | Roots and optimization | [slsqp](https://github.com/jacobwilliams/slsqp) | Sequential least-squares optimization with bounds and nonlinear constraints. |
 | Signal processing | [fastconv](https://github.com/gronki/fastconv) | Small-kernel convolution for smoothing one-, two- and three-dimensional arrays. |
 | Signal processing | [peaks](https://github.com/jchristopherson/peaks) | Detect local maxima and minima in sampled signals using a noise threshold. |
 | Signal processing | [spectrum](https://github.com/jchristopherson/spectrum) | Filtering, spectral estimation, convolution, resampling, and signal analysis. |
+| Special functions | [carlson-elliptic-integrals](https://github.com/jacobwilliams/carlson-elliptic-integrals) | Carlson symmetric elliptic integrals for pendulum periods and other applications. |
+| Special functions | [fortran-bessels](https://github.com/perazz/fortran-bessels) | Bessel and modified Bessel functions, demonstrated with fixed orders zero and one. |
 | Special functions | [specfun](https://github.com/jacobwilliams/specfun) | Special functions including Bessel, Airy, gamma, and related functions. |
 | Special functions | [specfunc-fullerton](https://github.com/arjenmarkus/specfunc-fullerton) | Fullerton special functions including gamma, Bessel, Airy and exponential integrals. |
+| Statistics | [econ-toolchain](https://github.com/renatomatz/econ-toolchain) | Markov chains, stochastic-process discretization and numerical tools for economic models. |
 | Statistics | [fjsample](https://github.com/RJaBi/FJsample) | Jackknife and bootstrap resampling, bias estimates and statistical uncertainties. |
 | Statistics | [forpca](https://github.com/gha3mi/forpca) | Principal component directions from eigendecomposition or singular value decomposition. |
 | Statistics | [fortsa](https://github.com/zoziha/fortsa) | Time-series autocorrelations, partial correlations and ARIMA modeling through CTSA. |
 | Statistics | [fstats](https://github.com/jchristopherson/fstats) | Probability distributions, statistical tests, regression, bootstrap sampling, and MCMC. |
+| Statistics | [gslib](https://github.com/exepulveda/gslib2.0) | Geostatistical covariance models, kriging and spatial simulation routines. |
 | Statistics | [lib_statistics](https://github.com/sebastiandyrda/lib_statistics) | Logistic regression using iteratively reweighted least squares. |
 | Statistics | [odrpack95](https://github.com/HugoMVale/odrpack95) | Orthogonal distance regression with errors in both variables and optional parameter bounds. |
 | Strings | [fortran-pcre2](https://github.com/interkosmos/fortran-pcre2) | Perl-compatible regular expressions, capture groups and text matching through PCRE2. |
@@ -251,6 +267,28 @@ ForDiff's literal `VERSION` manifest field is normalized to the upstream VERSION
 
 **Deferred GMRES candidate:** Polynomial_arnoldi hits a GNU 16 internal compiler error in its unmodified SpecialMatrices dependency. The [locked recipe and compiler diagnostic](fpm-candidate-notes.md#polynomial_arnoldi) are retained. It is outside Selected; no unverified solver result is advertised.
 
+**Elliptic PDEs and delay equations:** FISHPACK solves a two-dimensional Poisson problem on a 32-by-32 grid and checks a known sine-product solution. SPHEREPACK solves a spherical Helmholtz problem adapted from the author's example and checks its analytic solution. DDE_SOLVER integrates the author's delayed sine oscillator and checks interpolated values over a full period. Their pinned repositories have no root FPM manifest: an operator-owned recipe copies only explicitly listed library sources into `playground-library` and supplies a minimal manifest. Original files, examples and licenses remain available in the prepared/exported source tree. The wrapper works in the local playground and downloaded projects too; arbitrary visitor repositories still require their own FPM manifest.
+
+**SVD and quadrature:** ForSVD's consumer checks three known singular values and the errors of rank-one, rank-two and full-rank reconstructions. It preserves the original matrix because LAPACK overwrites its workspace. QDUtilLib checks Gauss-Legendre and harmonic-oscillator quadrature against two exact integrals. Its HO weights integrate the full function, so the consumer includes the Gaussian factor explicitly. Both recipes pin native BLAS/LAPACK and all Fortran dependencies.
+
+**SPHEREPACK source adaptation:** Two checksum-guarded edits replace assumed-rank workspace declarations with rank-one assumed-size declarations compatible with their callers and downstream routines. Numerical formulas are unchanged. The exact edits and initial compiler diagnostics are retained in [candidate notes](fpm-candidate-notes.md#spherepack); exported projects reproduce them. The checked example exercises spherical Helmholtz inversion, not every vector transform.
+
+**Sparse factorization examples:** QDLDL solves a quasi-definite KKT system with natural, reverse Cuthill-McKee and AMD orderings, checking a known solution, independent residuals and matrix inertia. It is not advertised as a general indefinite solver. LUSOL's example uses its 64-bit index kind, factorizes a sparse matrix, solves a manufactured system, replaces a column using the existing factors, and checks the updated solve. Both are self-contained Fortran builds.
+
+**Elliptic and Bessel functions:** The Carlson example computes pendulum periods beyond the small-angle approximation and independently checks RF against composite Simpson quadrature. The fortran-bessels example checks fixed-order modified functions I0, I1, K0 and K1 against reference values and a Wronskian identity. Its upstream README documents limitations in other variable-order paths; these are not covered by the demonstration. No library source is patched and the normal debug profile is retained.
+
+**Dynamics:** The example evaluates a damped oscillator's frequency response at eight angular frequencies and checks the complete complex response against its analytic formula. Its dependency graph, native BLAS/LAPACK/ARPACK libraries and OpenMP configuration are pinned. Only the user main is rebuilt for an edited-main submission. Larger prebuild bundles are streamed in bounded chunks by the operator script; this changes no visitor limit or library cache identity.
+
+**Automatic differentiation:** diffstruc's example compares forward and reverse gradients with an analytic multivariable gradient, restoring the direction mask before reverse accumulation. DNAOAD-FPM checks derivatives of orders zero through five of exp(z)+sin(z) at real and complex arguments; five is the configured maximum order of this compiled build. diffstruc's dependency and native BLAS/LAPACK are pinned. Neither library needs a source patch.
+
+**SEISCOPE optimization:** The author-derived Rosenbrock consumer checks the optimizer status, solution, independently evaluated objective and gradient. A checksum-guarded source edit passes the configured L-BFGS memory length instead of an uninitialized local variable. The original runtime failure and exact edit are recorded in the candidate notes. The upstream BSD notice and wrapper MIT license are retained.
+
+**GSLIB:** A self-contained two-observation ordinary-kriging example uses the covariance and packed linear-solver routines. It checks the exponential covariance formula, analytic weights, endpoint interpolation, variance and independent residuals. The catalog corrects the invalid manifest name, explicitly enables legacy implicit typing/external calls and declares sorting work arrays with the required rank. It retains normal runtime checks and does not use -fallow-argument-mismatch. These checks do not validate every spatial simulation or application path. Sources carry both the modernization MIT license and original GSLIB redistribution notice.
+
+**Stochastic-process calculations:** econ-toolchain's consumer checks a two-state nonuniform stationary distribution against its exact solution and a 31-state Tauchen approximation of an AR(1) process. It checks probability normalization, positivity, independent equilibrium residuals, symmetry and approximate variance. The library's stationary solver expects column-stochastic matrices, while Tauchen returns row-stochastic matrices; the driver explicitly transposes the latter. OpenBLAS and both dependency source revisions are pinned. The build uses single-image coarrays for its coarray-containing modules; this does not add multi-image FPM execution. Only stdlib's manifest VERSION placeholder is rendered as its source VERSION file, 0.8.1. No numerical source is patched.
+
+**Radial finite elements:** featom's example adapts its author's Coulomb test for one-electron hydrogen and checks six n<=3 energies against -1/(2*n**2) Hartree. Its 159-degree-of-freedom radial discretization runs entirely in memory. Native BLAS/LAPACK are pinned; the library source is unmodified. The demonstration covers this nonrelativistic Coulomb branch, not all Dirac or self-consistent DFT calculations.
+
 The adapter's checksum and per-package settings enter that package's cache key. Existing packages without these settings retain their library keys. Native system libraries reside in the package image; their bytes are excluded from the logical artifact figures below.
 
 **SpecialMatrices workaround:** GNU Fortran 16.2 encounters an internal compiler error in selected `do concurrent` loops in this pin. The catalog applies checksum-guarded edits to the Strang matrix-product loop and the Poisson2D sine-transform and multiple-right-hand-side solve loops, using ordinary sequential loops with the same operations. The exact original file checksums and replacements are recorded in `catalog_patches` and applied by [the patch helper](../fpm_catalog_patches.py). The consumer checks diagonal solves, multiple-column Strang products, and Poisson2D solves. Original upstream archive checksums remain recorded, and normal compiler/runtime checks stay enabled. These are playground build workarounds, not upstream fixes.
@@ -261,9 +299,11 @@ The adapter's checksum and per-package settings enter that package's cache key. 
 
 Each catalog library is built ahead of time using GNU Fortran **16.2.0**, FPM **0.12.0**, and the same debug profile and base compiler flags as normal package jobs, plus the explicitly recorded catalog-specific build settings above. A separate immutable image contains its sources, dependency revisions, module files, object files, and library archive. Selecting that exact repository/commit in **My main program** mode reuses the image and compiles/links your edited main program. Results explicitly say whether the library was reused.
 
+Compatible stdlib dependencies are shared across nine catalog entries. Their pinned source, compiler settings, preprocessing and native-library requirements must match; different configurations retain separate immutable builds. The storage total counts each shared export once. See [shared dependency builds](fpm-shared-dependencies.md) for compatibility rules, operator commands, local downloads, and rollout storage accounting.
+
 Debug symbols are removed from precompiled dependency objects and archives to keep linked executables within the existing 16 MiB file limit. Runtime checks remain enabled; your main program retains its debug information. Backtraces inside a cached dependency may therefore have less detail than a local debug build.
 
-All 159 packages passed the changed-main sandbox check, including PNG previews for pyplot-fortran, ForImage, cairo-fortran and stb_image. The recorded compile/link checks took about 0.15 to 7.88 seconds. Their logical library artifacts total about 3,503 MiB; this excludes compiler layers, native system libraries, sources, and main executables and is not a compressed storage or billing measurement. See [the recorded validation](fpm-precompiled-validation.json), which preserves each package's verification date. Unchanged library checks and builds are retained when the catalog expands.
+All 175 packages passed the changed-main sandbox check, including PNG previews for pyplot-fortran, ForImage, cairo-fortran and stb_image. The recorded compile/link checks took about 0.14 to 7.88 seconds. Their logical library artifacts total about 1,180 MiB; this excludes compiler layers, native system libraries, sources, and main executables and is not a compressed storage or billing measurement. See [the recorded validation](fpm-precompiled-validation.json), which preserves each package's verification date. Unchanged library checks and builds are retained when the catalog expands.
 
 Every job receives its own disposable filesystem copy. User code cannot update the published cache or another user's files. There is no shared writable build directory or package download during a cache hit. The normal job admission, CPU/memory bounds, network restriction, build/run timeouts, and output limits still apply. A changed main still needs compilation/linking; precompilation does not remove compiler/package limitations.
 

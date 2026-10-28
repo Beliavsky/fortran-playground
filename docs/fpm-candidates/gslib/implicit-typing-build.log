@@ -1,0 +1,58 @@
+ + mkdir -p build/dependencies
+[  0%]              pyplot_module.f90
+[  2%]              pyplot_module.f90  done.
+[  2%]                       main.f90
+[  4%]                       main.f90  done.
+[  4%]                     acorni.f90
+[  7%]                     acorni.f90  done.
+[  7%]                     backtr.f90
+[  9%]                     backtr.f90  done.
+[  9%]                     beyond.f90
+[ 12%]                     beyond.f90  done.
+[ 12%]                       blue.f90
+[ 14%]                       blue.f90  done.
+[ 14%]                     chknam.f90
+[ 17%]                     chknam.f90  done.
+[ 17%]                   chktitle.f90
+[ 19%]                   chktitle.f90  done.
+[ 19%]                      cova3.f90
+[ 21%]                      cova3.f90  done.
+[ 21%]                    dlocate.f90
+[ 24%]                    dlocate.f90  done.
+[ 24%]                    dpowint.f90
+[ 26%]                    dpowint.f90  done.
+[ 26%]                    dsortem.f90
+[ 29%]                    dsortem.f90  done.
+[ 29%]                     gauinv.f90
+[ 31%]                     gauinv.f90  done.
+[ 31%]                       gcum.f90
+[ 34%]                       gcum.f90  done.
+[ 34%]                    getindx.f90
+[ 36%]                    getindx.f90  done.
+[ 36%]                       getz.f90
+[ 39%]                       getz.f90  done.
+[ 39%]                      green.f90
+[ 41%]                      green.f90  done.
+[ 41%]                       hexa.f90
+[ 43%]                       hexa.f90  done.
+[ 43%]                       ksol.f90
+[ 46%]                       ksol.f90  done.
+[ 46%]                      ktsol.f90
+[ 48%]                      ktsol.f90  done.
+[ 48%]                     locate.f90
+[ 51%]                     locate.f90  done.
+[ 51%]                     nscore.f90
+<ERROR> Compilation failed for object " .._sources_bundle_packages_0_gslib2.0-5c021000eb3da8703ced3ee9be145d6c0ecb2608_src_legacy_gslib_nscore.f90.o "
+[ 53%]                     nscore.f90  done.
+
+./././/../sources/bundle/packages/0/gslib2.0-5c021000eb3da8703ced3ee9be145d6c0ecb2608/src/legacy/gslib/nscore.f90:80:35:
+
+   64 |       call sortem(1,nd,vr,2,wt,tmp,d,e,f,g,h)
+      |                                   2
+......
+   80 |       call sortem(1,nd,tmp,3,wt,vr,vrg,e,f,g,h)
+      |                                   1
+Error: Rank mismatch between actual argument at (1) and actual argument at (2) (scalar and rank-1)
+<ERROR> stopping due to failed compilation
+STOP 1
+

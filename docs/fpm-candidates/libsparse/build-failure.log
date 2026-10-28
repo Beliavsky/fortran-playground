@@ -1,0 +1,30 @@
+ + mkdir -p build/dependencies
+[  0%]              pyplot_module.f90
+[  4%]              pyplot_module.f90  done.
+[  4%]                       dgtrsm.f
+[  8%]                       dgtrsm.f  done.
+[  8%]                        gsfct.f
+[ 12%]                        gsfct.f  done.
+[ 12%]                  modcommon.f90
+[ 16%]                  modcommon.f90  done.
+[ 16%]                   modmetis.f90
+[ 20%]                   modmetis.f90  done.
+[ 20%]                  modrandom.f90
+[ 24%]                  modrandom.f90  done.
+[ 24%]             modsparse_hash.f90
+[ 28%]             modsparse_hash.f90  done.
+[ 28%]          modsparse_helpers.f90
+[ 32%]          modsparse_helpers.f90  done.
+[ 32%]          modsparse_inv_int.f90
+[ 36%]          modsparse_inv_int.f90  done.
+[ 36%]              modsparse_mkl.f90
+<ERROR> Compilation failed for object " .._sources_bundle_packages_0_libsparse-3d93e03a0e7e7b66cc791c054dc45eb5d0a9d70a_src_modsparse_mkl.f90.o "
+[ 40%]              modsparse_mkl.f90  done.
+
+./././/../sources/bundle/packages/0/libsparse-3d93e03a0e7e7b66cc791c054dc45eb5d0a9d70a/src/modsparse_mkl.f90:1:0:
+
+    1 | include 'mkl_pardiso.f90'
+Fatal Error: Cannot open included file ‘mkl_pardiso.f90’
+compilation terminated.
+<ERROR> stopping due to failed compilation
+STOP 1

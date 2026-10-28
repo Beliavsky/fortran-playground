@@ -1,0 +1,79 @@
+{
+  "ok": false,
+  "compiler": "GNU Fortran (GCC) 16.2.0",
+  "compiler_id": "gfortran",
+  "fpm": "0.12.0",
+  "stages": [
+    {
+      "name": "Build",
+      "command": [
+        "fpm",
+        "build",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.324,
+      "ok": true,
+      "exit_code": 0,
+      "error": "",
+      "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+      "stderr": ""
+    },
+    {
+      "name": "Run",
+      "command": [
+        "fpm",
+        "run",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.038,
+      "ok": false,
+      "exit_code": -9,
+      "error": "Output exceeded the 200000-byte stage limit.",
+      "stdout": "",
+      "stderr": "Project is up to date\nAt line 174 of file ./././/../sources/bundle/packages/0/finite_difference-ef0f351b7a2ae187833d574b8aeea3cabde0a105/playground-library/hyper_dual.f90\nFortran runtime warning: An array temporary was created\nAt line 174 of file ./././/../sources/bundle/packages/0/finite_difference-ef0f351b7a2ae187833d574b8aeea3cabde0a105/playground-library/hyper_dual.f90\nFortran runtime warning: An array temporary was created\nAt line 175 of file ./././/../sources/bundle/packages/0/finite_difference-ef0f351b7a2ae187833d574b8aeea3cabde0a105/playground-library/hyper_dual.f90\nFortran runtime warning: An array temporary was created\nAt line 175 of file ./././/../sources/bundle/packages/0/finite_difference-ef0f351b7a2ae187833d574b8aeea3cabde0a105/playground-library/hyper_dual.f90\nFortran runtime warning: An array temporary was created\nAt line 175 of file ./././/../sources/bundle/packages/0/finite_difference-ef0f351b7a2ae187833d574b8aeea3cabde0a105/playground-library/hyper_dual.f90\nFortran runtime warning: An array temporary was created\nAt line 175 of file ./././/../sources/bundle/packages/0/finite_difference-ef0f351b7a2ae187833d574b8aeea3cabde0a105/playground-library/hyper_dual.f90\nFortran runtime warning: An array temporary was created\nAt line 176 of file ./././/../sources/bundle/packages/0/finite_difference-ef0f351b7a2ae187833d574b8aeea3cabde0a105/playground-library/hyper_dual.f90\nFortran runtime warning: An array temporary was created\nAt line 176 of file ./././/../sources/bundle/packages/0/finite_difference-ef0f351b7a2ae187833d574b8aeea3cabde0a105/playground-library/hyper_dual.f90\nFortran runtime warning: An array temporary was created\nAt line 176 of file ./././/../sources/bundle/packages/0/finite_difference-ef0f351b7a2ae187833d574b8aeea3cabde0a105/playground-library/hyper_dual.f90\nFortran runtime warning: An array temporary was created\nAt line 176 of file ./././/../sources/bundle/packages/0/finite_difference-ef0f351b7a2ae187833d574b8aeea3cabde0a105/playground-library/hyper_dual.f90\nFortran runtime warning: An array temporary was created\nAt line 176 of file ./././/../sources/bundle/packages/0/finite_difference-ef0f351b7a2ae187833d574b8aeea3cabde0a105/playground-library/hyper_dual.f90\nFortran runtime warning: An array temporary was created\nAt line 176 of file ./././/../sources/bundle/packages/0/finite_difference-ef0f351b7a2ae187833d574b8aeea3cabde0a105/playground-library/hyper_dual.f90\nFortran runtime warning: An array temporary was created\nAt line 177 of file ./././/../sources/bundle/packages/0/finite_difference-ef0f351b7a2ae187833d574b8aeea3cabde0a105/playground-library/hyper_dual.f90\nFortran runtime warning: An array temporary was created\nAt line 177 of file ./././/../sources/bundle/packages/0/finite_difference-ef0f351b7a2ae187833d574b8aeea3cabde0a105/playground-library/hyper_dual.f90\nFortran runtime warning: An array temporary was created\nAt line 177 of file ./././/../sources/bundle/packages/0/finite_difference-ef0f351b7a2ae187833d574b8aeea3cabd\n[Repeated array-temporary warnings omitted; retained full 200000-byte stage capture in the operator audit cache.]\nbrary/hyper_dual.f90\nFortran runtime warning: An array temporary was created\nAt line 176 of file ./././/../sources/bundle/packages/0/finite_difference-ef0f351b7a2ae187833d574b8aeea3cabde0a105/playground-library/hyper_dual.f90\nFortran runtime warning: An array temporary was created\nAt line 177 of file ./././/../sources/bundle/packages/0/finite_difference-ef0f351b7a2ae187833d574b8aeea3cabde0a105/playground-library/hyper_dual.f90\nFortran runtime warning: An array temporary was created\nAt line 177 of file ./././/../sources/bundle/packages/0/finite_difference-ef0f351b7a2ae187833d574b8aeea3cabde0a105/playground-library/hyper_dual.f90\nFortran runtime warning: An array temporary was created\nAt line 177 of file ./././/../sources/bundle/packages/0/finite_difference-ef0f351b7a2ae187833d574b8aeea3cabde0a105/playground-library/hyper_dual.f90\nFortran runtime warning: An array temporary was created\nAt line 177 of file ./././/../sources/bundle/packages/0/finite_difference-ef0f351b7a2ae187833d574b8aeea"
+    }
+  ],
+  "cache": {
+    "package": "finite_difference",
+    "compiler": "GNU Fortran 16.2.0",
+    "key": "71a10d3116704611d26a330d",
+    "library_reused": true,
+    "changed_artifacts": []
+  },
+  "packages": [
+    {
+      "repository": "jlr581/finite_difference",
+      "revision": "ef0f351b7a2ae187833d574b8aeea3cabde0a105",
+      "sha256": "ca9de9ebd790a4ee9cf2a2df520c55d93c692329656567ab8f0657777ddf1820"
+    }
+  ],
+  "build_ok": true,
+  "target_groups": {
+    "app": [
+      "playground-main"
+    ],
+    "example": [],
+    "test": []
+  },
+  "targets": [
+    "playground-main"
+  ],
+  "plots": [],
+  "plot_notes": []
+}

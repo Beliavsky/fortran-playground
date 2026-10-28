@@ -932,6 +932,49 @@
       "D2",
       "D4",
       "J1"
+    ],
+    "fishpack": [
+      "I2"
+    ],
+    "spherepack": [
+      "I2"
+    ],
+    "forsvd": [
+      "D6"
+    ],
+    "qdutillib": [
+      "H2"
+    ],
+    "qdldl-fortran": [
+      "D2"
+    ],
+    "lusol": [
+      "D2"
+    ],
+    "carlson-elliptic-integrals": [
+      "C14"
+    ],
+    "fortran-bessels": [
+      "C10"
+    ],
+    "dynamics": [
+      "I1"
+    ],
+    "diffstruc": [
+      "H1"
+    ],
+    "dnaoad-fpm": [
+      "H1"
+    ],
+    "seiscope-optimization": [
+      "G1"
+    ],
+    "gslib": [
+      "E2",
+      "L13"
+    ],
+    "featom": [
+      "I1"
     ]
   },
   "detailed_classes": {
@@ -1218,6 +1261,14 @@
     "L13b": {
       "label": "Principal components analysis",
       "parent": "L13"
+    },
+    "C10b": {
+      "label": "I, K",
+      "parent": "C10"
+    },
+    "C10b1": {
+      "label": "Real argument, integer order",
+      "parent": "C10b"
     }
   },
   "procedure_mappings": [
@@ -4606,6 +4657,447 @@
           "sha256": "df71f7ee49f0246207b77243bdf32c1e10642908379a9e303a6a926c3d4a4c1b"
         }
       ]
+    },
+    {
+      "id": "fishpack-api",
+      "package_id": "fishpack",
+      "revision": "9dc7d2e7a847fa6a610752d4e91eda3ef9c6130d",
+      "module": "fishpack",
+      "procedure": "hwscrt",
+      "gams_codes": [
+        "I2"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "problem-specific source or delayed derivative callback",
+      "notes": "Centered-grid finite-difference solver for separable two-dimensional Poisson/Helmholtz equations.",
+      "evidence": [
+        {
+          "path": "src/centered_cartesian_solver.f90",
+          "sha256": "7637d5e74bcbc78eb40b1d3fe6aadcbd8ea3e1eaae643fa9991150288f113726",
+          "line": 305
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "examples/thwscrt.f90",
+          "sha256": "6960893da7a3bfae50314d5b0f3bf95a66fd7868b89088b0781d954cb39c2da6"
+        }
+      ]
+    },
+    {
+      "id": "dde-solver-api",
+      "package_id": "dde_solver",
+      "revision": "90d3389ce5d5733ab2b6e7ed7d2dad273b4d0c6b",
+      "module": "DDE_SOLVER_M",
+      "procedure": "DDE_SOLVER",
+      "gams_codes": [
+        "I"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "problem-specific source or delayed derivative callback",
+      "notes": "Delay differential equations: retain the broad differential-equation class rather than assume the ODE subclasses describe delayed problems.",
+      "evidence": [
+        {
+          "path": "dde_solver_m.f90",
+          "sha256": "068d219497dbf4c4454ab3ad04dd9a3ba27ac76b89c720481fcbb6c0d8ebe5f4",
+          "line": 376
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "tests/delay_oscillator/delay_oscillator.f90",
+          "sha256": "0ee6a4289e8867936430383690d860f4a855673d3a8e2a9205182079bdaf633d"
+        },
+        {
+          "path": "tests/delay_oscillator/delay_oscillator_test.f90",
+          "sha256": "b0ceac14d917d2fbe09a33b472e0ba37f36fe6ddab8cc9e91405f48220c4dd56"
+        }
+      ]
+    },
+    {
+      "id": "spherepack-api",
+      "package_id": "spherepack",
+      "revision": "e80da29462c5987162a0884baaab7434d0215467",
+      "module": "type_Sphere",
+      "procedure": "Sphere%invert_helmholtz",
+      "gams_codes": [
+        "I2"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "problem-specific source or delayed derivative callback",
+      "notes": "Spherical Helmholtz inversion using harmonic analysis and synthesis; two vector-workspace rank declarations are patched in the catalog recipe.",
+      "evidence": [
+        {
+          "path": "src/type_Sphere.f90",
+          "sha256": "c589e66855e16fee2a72a9e50083b677d98b73ab21d894c78f42bc63b4218858",
+          "line": 748
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "examples/helmsph.f90",
+          "sha256": "d0c30718e842c77a52dd4c3b4aee4560f04f8f9e4f9935685618539bd15c1e81"
+        }
+      ]
+    },
+    {
+      "id": "spherepack-scalar-transform",
+      "package_id": "spherepack",
+      "revision": "e80da29462c5987162a0884baaab7434d0215467",
+      "module": "type_GaussianSphere",
+      "procedure": "GaussianSphere%perform_scalar_analysis / perform_scalar_synthesis",
+      "gams_codes": [
+        "J"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "problem-specific source or delayed derivative callback",
+      "notes": "Spherical harmonic analysis and synthesis on Gaussian grids; no narrower trigonometric-transform subclass is inferred.",
+      "evidence": [
+        {
+          "path": "src/type_GaussianSphere.f90",
+          "sha256": "9c1e6364e3c4baed68d89ca4e49ed47786bbde9bddf66d82aac010475bf8745a",
+          "line": 183
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "examples/helmsph.f90",
+          "sha256": "d0c30718e842c77a52dd4c3b4aee4560f04f8f9e4f9935685618539bd15c1e81"
+        }
+      ]
+    },
+    {
+      "id": "forsvd-api",
+      "package_id": "forsvd",
+      "revision": "f39bba7afcb048a21947a7a640bdf9a18337f8ac",
+      "module": "forsvd",
+      "procedure": "svd",
+      "gams_codes": [
+        "D6"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Computes real dense SVD using LAPACK GESVD or GESDD; the demonstration preserves a separate input copy.",
+      "evidence": [
+        {
+          "path": "src/forsvd.f90",
+          "sha256": "c6aadd32de7e0da37b4764960e9fe87a9ecc4b04e2b4b8735b9d189d6103c512",
+          "line": 57
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test1.f90",
+          "sha256": "f61ab7a986a2c5ca53452a3d9185ead021c06ae4dc2dbc16a74303bcd425fc9e"
+        }
+      ]
+    },
+    {
+      "id": "qdutillib-api",
+      "package_id": "qdutillib",
+      "revision": "8a1fa9ca7cf52683c98cc4bcb40f21dc41df6ed5",
+      "module": "QDUtil_Quadrature_m",
+      "procedure": "Init_Quadrature",
+      "gams_codes": [
+        "H2c"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Constructs quadrature nodes and weights; the HO rule uses full-function weights and requires the Gaussian in the integrand.",
+      "evidence": [
+        {
+          "path": "SRC/Quadrature/Quadrature_m.f90",
+          "sha256": "a0c2e6b3f7a6e7ef0d0ab42f6e5c0b3b7177a9c0fc5f18d09e5a65aeda005bf9",
+          "line": 81
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "APP/App_QDLib.f90",
+          "sha256": "f9228fb8929ad1eff119c632ed2ab936a1cffe85b349d67ae84c287bbcab0ab9"
+        }
+      ]
+    },
+    {
+      "id": "qdldl-fortran-api",
+      "package_id": "qdldl-fortran",
+      "revision": "8ebdd7fa1075bfb89115d0955806b0996b6b29d5",
+      "module": "qdldl_module",
+      "procedure": "qdldl_type%analyze / factor / solve",
+      "gams_codes": [
+        "D2b4"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Sparse symmetric quasi-definite systems; no general-indefinite or pivoting guarantee is inferred. Natural, RCM and AMD orderings are checked.",
+      "evidence": [
+        {
+          "path": "src/qdldl_module.f90",
+          "sha256": "afbd0beefc25c5998522cd2ba8f86fbb96b40848edcf0132d5784ac697df75b9",
+          "line": 28
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "example/example_kkt.f90",
+          "sha256": "d1a429384355e642203654c5534ee7dc888e1382c201acb9d952dd0947da597a"
+        }
+      ]
+    },
+    {
+      "id": "lusol-api",
+      "package_id": "lusol",
+      "revision": "2d95174d44ec9bf9dabbbd07652c84c11fe56d71",
+      "module": "lusol",
+      "procedure": "lu1fac / lu6sol / lu8rpc",
+      "gams_codes": [
+        "D2a4"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Sparse LU factorization, solves and column replacement using an existing factorization; the demo uses the public 64-bit index kind.",
+      "evidence": [
+        {
+          "path": "src/lusol.f90",
+          "sha256": "2372004497e54012d074037e3f52edcc4193222b9d92af1295dd03e89e8391af",
+          "line": 101
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/lusol_test.f90",
+          "sha256": "b96078a020eaf15cecc4e871b85cf63b3ac6aa17fc64666d653f16afc044ce94"
+        }
+      ]
+    },
+    {
+      "id": "carlson-elliptic-integrals-api",
+      "package_id": "carlson-elliptic-integrals",
+      "revision": "5f25a59a555b7029505aac71a8341d5851f8abed",
+      "module": "carlson_elliptic_module",
+      "procedure": "drf",
+      "gams_codes": [
+        "C14"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Carlson symmetric RF evaluated for pendulum periods and checked against independent composite Simpson integration.",
+      "evidence": [
+        {
+          "path": "src/carlson_elliptic_module.F90",
+          "sha256": "a40da80250354bdbdee8a1eb30ca6a7ea8a6eae2ad0fc2ff9ef4f687c7c6cfa4",
+          "line": 580
+        }
+      ],
+      "author_examples": []
+    },
+    {
+      "id": "fortran-bessels-api",
+      "package_id": "fortran-bessels",
+      "revision": "7bf8d6b144b00d4201a782ca65f6ae14a84d49a1",
+      "module": "bessels",
+      "procedure": "besseli0 / besseli1 / besselk0 / besselk1",
+      "gams_codes": [
+        "C10b1"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Real positive arguments and fixed orders zero and one only. Independent values at x=1 and a modified-Bessel Wronskian identity are checked. Upstream documents limitations in other variable-order paths.",
+      "evidence": [
+        {
+          "path": "src/bessels.f90",
+          "sha256": "859f5041eaf7b87320a016b2875857980d991f84bd864d37ee284d7bfcdc2932",
+          "line": 752
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/bessels_test.f90",
+          "sha256": "6f2229cd6ab71296530e5923819095a75d3c17ed235e9e3b33df7a7c66df39db"
+        }
+      ]
+    },
+    {
+      "id": "dynamics-api",
+      "package_id": "dynamics",
+      "revision": "580d04859a25126d3261e44b3fbec5111835e3a4",
+      "module": "dynamics_frequency_response",
+      "procedure": "frequency_response (frf_modal_prop_damp)",
+      "gams_codes": [
+        "I1"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Steady-state harmonic response of a linear second-order ODE system with proportional damping; retain the broad ODE class rather than label this an initial-value integrator.",
+      "evidence": [
+        {
+          "path": "src/frequency/dynamics_frequency_response.f90",
+          "sha256": "5b1700c13c9940f770652f3c3f079a1d640377279306b618681e04d7d9d3095f",
+          "line": 119
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "examples/frf_example_1.f90",
+          "sha256": "d28f69355f302d461fccc865f77d649e6bb64599f600a0036660d159d520c09b"
+        }
+      ]
+    },
+    {
+      "id": "diffstruc-api",
+      "package_id": "diffstruc",
+      "revision": "88565f8e01792706edc0bd7e70dde957c26122a4",
+      "module": "diffstruc",
+      "procedure": "array_type%grad_forward / grad_reverse",
+      "gams_codes": [
+        "H1"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "automatic differentiation",
+      "notes": "Forward directional derivatives and reverse-mode gradients of array expressions; the demo restores the direction mask before reverse accumulation.",
+      "evidence": [
+        {
+          "path": "src/diffstruc/diffstruc_types_sub.f90",
+          "sha256": "a79fe601b0c1bc5133b89a05953f8f6ccc658a313af9fe93a8124025d65c3dc9",
+          "line": 505
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_functions.f90",
+          "sha256": "ddf07c01c9cb4e4eb971046b5f2d70ff8cbf1ee17fca7a374748c3e772e83182"
+        }
+      ]
+    },
+    {
+      "id": "dnaoad-fpm-api",
+      "package_id": "dnaoad-fpm",
+      "revision": "f7f328e89b208a99797d64f4a41e97ba91b85962",
+      "module": "dualzn_mod",
+      "procedure": "exp / sin for dualzn",
+      "gams_codes": [
+        "H1"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "automatic differentiation",
+      "notes": "Dual-number derivatives through the configured maximum order (five in this build); the demo checks orders zero through five at real and complex arguments.",
+      "evidence": [
+        {
+          "path": "src/dualzn_mod.f90",
+          "sha256": "90106eb7645f094511f5a0410917c42721b6475e180b09cad1f22d351b0a2c24",
+          "line": 7
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "app/ex1.f90",
+          "sha256": "45cfee1e4f05e4a9f49e640c11051f7102dc0bfd8e544612b096ecd3b8f31ed7"
+        }
+      ]
+    },
+    {
+      "id": "seiscope-optimization-api",
+      "package_id": "seiscope-optimization",
+      "revision": "74a25c29d13c506e16f8025eb13a2cf396dc23c0",
+      "module": "opt_LBFGS",
+      "procedure": "LBFGS",
+      "gams_codes": [
+        "G1b"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "user first derivatives",
+      "notes": "Unconstrained smooth multivariate minimization requiring user first derivatives. The guarded catalog edit replaces an uninitialized workspace-length actual argument with optim%l.",
+      "evidence": [
+        {
+          "path": "src/sotb/merged-LBFGS.f90",
+          "sha256": "e11e89d0d264264cb73cf6d138a228406d0682151d2863d6947355bf8401951c",
+          "line": 213
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "app/LBFGS/test_LBFGS.f90",
+          "sha256": "f802ce7e82063cba7b0367531f8dcf99bf5ab9b6128435ed049816dd0389944d"
+        }
+      ]
+    },
+    {
+      "id": "gslib-api",
+      "package_id": "gslib",
+      "revision": "5c021000eb3da8703ced3ee9be145d6c0ecb2608",
+      "module": "external GSLIB routines",
+      "procedure": "cova3 / ksol (ordinary-kriging driver)",
+      "gams_codes": [
+        "E2",
+        "L13"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "The driver assembles an ordinary-kriging system from GSLIB covariance and linear-solver routines. It checks exponential covariances, closed-form weights, endpoint interpolation and independent system residuals. Broad interpolation/covariance classes only; no exhaustive spatial-statistics review.",
+      "evidence": [
+        {
+          "path": "src/legacy/gslib/cova3.f90",
+          "sha256": "51394c56d3e67747f10ef8bffe8d499b7e7f1e6392f51552721371a8a745439c",
+          "line": 1
+        }
+      ],
+      "author_examples": []
+    },
+    {
+      "id": "featom-api",
+      "package_id": "featom",
+      "revision": "87872a3266ceeee61a7244e6ecd134dc3bda790f",
+      "module": "schroed_dirac_solver",
+      "procedure": "total_energy (nonrelativistic Coulomb branch)",
+      "gams_codes": [
+        "I1b"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Radial one-dimensional boundary-value eigenproblem solved by finite elements. The demo checks the six n<=3 hydrogen Coulomb energies; no claim of validating the relativistic or self-consistent DFT paths.",
+      "evidence": [
+        {
+          "path": "src/schroed_dirac_solver.f90",
+          "sha256": "ff75ec399ea35ce6e695b04a0596655876dbc41085725187f51240a893b77bdb",
+          "line": 18
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_coulomb_schroed.f90",
+          "sha256": "1ef8206d00e88d898465104b248b1f120f802e96a7d9175acccb3b1ffcf4ec65"
+        }
+      ]
+    },
+    {
+      "id": "econ-toolchain-api",
+      "package_id": "econ-toolchain",
+      "revision": "301d1659ba3d34973195985c552ca6fcfe2d9f29",
+      "module": "dist_mod",
+      "procedure": "markov_steady_state / tauchen",
+      "gams_codes": [
+        "M"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Stochastic-process modeling: deterministic stationary probabilities and AR(1) Markov discretization, not a claim of random sampling. The stationary routine uses column-stochastic matrices, while tauchen returns row-stochastic matrices; the consumer transposes explicitly.",
+      "evidence": [
+        {
+          "path": "src/dist.f90",
+          "sha256": "8d8a2905135114193fdef5b858fd1d40baf615f6b7e16330703194f613619b2b",
+          "line": 62
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/markov_test.f90",
+          "sha256": "9a75d29e32c81203ad5bfdcc68949468557645f4684e3ab40d968336cd361dae"
+        },
+        {
+          "path": "test/tauchen_test.f90",
+          "sha256": "f0875648571516ed6ab67343edade07c4ae301e95d5519552acf635b5061241e"
+        }
+      ]
     }
   ],
   "review_notes": {
@@ -5154,6 +5646,56 @@
     "nafpack": [
       "D",
       "J"
+    ],
+    "fishpack": [
+      "I"
+    ],
+    "dde_solver": [
+      "I"
+    ],
+    "spherepack": [
+      "I",
+      "J"
+    ],
+    "forsvd": [
+      "D"
+    ],
+    "qdutillib": [
+      "H"
+    ],
+    "qdldl-fortran": [
+      "D"
+    ],
+    "lusol": [
+      "D"
+    ],
+    "carlson-elliptic-integrals": [
+      "C"
+    ],
+    "fortran-bessels": [
+      "C"
+    ],
+    "dynamics": [
+      "I"
+    ],
+    "diffstruc": [
+      "H"
+    ],
+    "dnaoad-fpm": [
+      "H"
+    ],
+    "seiscope-optimization": [
+      "G"
+    ],
+    "gslib": [
+      "E",
+      "L"
+    ],
+    "featom": [
+      "I"
+    ],
+    "econ-toolchain": [
+      "M"
     ]
   },
   "detailed_taxonomy_source": {

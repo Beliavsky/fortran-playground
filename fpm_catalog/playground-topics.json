@@ -159,6 +159,22 @@
     "rkf45": ["ode", "runge-kutta", "adaptive-methods", "initial-value-problems"],
     "forlab": ["numerical-methods", "linear-algebra", "interpolation", "statistics", "matlab-like"],
     "libdogleg-f": ["optimization", "least-squares", "trust-region", "language-bindings"],
-    "nafpack": ["numerical-methods", "fourier-transforms", "linear-systems", "eigenvalues"]
+    "nafpack": ["numerical-methods", "fourier-transforms", "linear-systems", "eigenvalues"],
+    "fishpack": ["partial-differential-equations", "poisson-equation", "helmholtz-equation", "finite-differences"],
+    "dde_solver": ["delay-differential-equations", "adaptive-methods", "interpolation", "initial-value-problems"],
+    "spherepack": ["spherical-harmonics", "integral-transforms", "partial-differential-equations", "helmholtz-equation"],
+    "forsvd": ["singular-value-decomposition", "low-rank-approximation", "linear-algebra", "lapack"],
+    "qdutillib": ["quadrature", "gaussian-quadrature", "gauss-legendre", "gauss-hermite"],
+    "qdldl-fortran": ["sparse-linear-algebra", "linear-systems", "ldlt-factorization", "quasi-definite", "matrix-ordering"],
+    "lusol": ["sparse-linear-algebra", "linear-systems", "lu-factorization", "matrix-updates"],
+    "carlson-elliptic-integrals": ["elliptic-integrals", "carlson-symmetric-forms", "special-functions", "pendulum"],
+    "fortran-bessels": ["bessel-functions", "modified-bessel-functions", "special-functions", "cylindrical-functions"],
+    "dynamics": ["frequency-response", "vibration", "modal-analysis", "damping", "control-systems"],
+    "diffstruc": ["automatic-differentiation", "forward-mode", "reverse-mode", "gradients", "derivatives"],
+    "dnaoad-fpm": ["automatic-differentiation", "dual-numbers", "higher-order-derivatives", "complex-arithmetic"],
+    "seiscope-optimization": ["optimization", "gradient-based-optimization", "lbfgs", "nonlinear-conjugate-gradient", "truncated-newton"],
+    "gslib": ["geostatistics", "kriging", "spatial-statistics", "covariance-models", "gaussian-simulation"],
+    "featom": ["finite-elements", "schroedinger-equation", "dirac-equation", "quantum-mechanics", "atomic-structure", "eigenvalue-problems"],
+    "econ-toolchain": ["markov-chains", "stationary-distributions", "stochastic-processes", "tauchen-discretization", "economics"]
   }
 }

@@ -587,6 +587,18 @@
     "dependents_in_sample": 11,
     "license": "MIT",
     "category": "General utilities",
+    "catalog_build": {
+      "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+      "shared_dependencies": {
+        "adapter_sha256": "8a85ff125c66db77f139fb6b62e6895fa314413a2b0350e68d8f3126c1d19707",
+        "repositories": [
+          "fortran-lang/stdlib"
+        ]
+      },
+      "manifest_versions": {
+        "fortran-lang/stdlib": "0.8.1"
+      }
+    },
     "source": "program main\n   use iso_fortran_env, only: real64\n   use stdlib_stats, only: mean\n   implicit none\n   real(real64) :: x(4)\n   x = [1.0_real64, 2.0_real64, 3.0_real64, 4.0_real64]\n   if (abs(mean(x)-2.5_real64) > 1.0e-12_real64) error stop 'incorrect mean'\n   print *, 'mean =', mean(x)\n   print *, 'PASS stdlib'\nend program main\n",
     "topics": [
       "blas",
@@ -5286,7 +5298,7 @@
       }
     ],
     "catalog_build": {
-      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+      "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
       "registry": {
         "stdlib": {
           "git": "https://github.com/fortran-lang/stdlib",
@@ -5297,6 +5309,12 @@
       "manifest_versions": {
         "milanskocic/codata": "0.0.0",
         "fortran-lang/stdlib": "0.0.0"
+      },
+      "shared_dependencies": {
+        "adapter_sha256": "8a85ff125c66db77f139fb6b62e6895fa314413a2b0350e68d8f3126c1d19707",
+        "repositories": [
+          "fortran-lang/stdlib"
+        ]
       }
     },
     "dependents_in_sample": 2,
@@ -5347,7 +5365,7 @@
       }
     ],
     "catalog_build": {
-      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+      "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
       "registry": {
         "stdlib": {
           "git": "https://github.com/fortran-lang/stdlib",
@@ -5357,6 +5375,12 @@
       "metapackages": [],
       "manifest_versions": {
         "fortran-lang/stdlib": "0.0.0"
+      },
+      "shared_dependencies": {
+        "adapter_sha256": "8a85ff125c66db77f139fb6b62e6895fa314413a2b0350e68d8f3126c1d19707",
+        "repositories": [
+          "fortran-lang/stdlib"
+        ]
       }
     },
     "dependents_in_sample": 2,
@@ -5785,7 +5809,7 @@
       }
     ],
     "catalog_build": {
-      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+      "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
       "manifest_versions": {
         "fortran-lang/stdlib": "0.0.0"
       },
@@ -5805,7 +5829,13 @@
       "apt_packages": [
         "libblas-dev=3.12.1-6",
         "liblapack-dev=3.12.1-6"
-      ]
+      ],
+      "shared_dependencies": {
+        "adapter_sha256": "8a85ff125c66db77f139fb6b62e6895fa314413a2b0350e68d8f3126c1d19707",
+        "repositories": [
+          "fortran-lang/stdlib"
+        ]
+      }
     },
     "source": "program main\n   use LightKrylov, only: dense_linop_rdp, dense_vector_rdp, dense_vector, gmres\n   use LightKrylov_Constants, only: dp\n   implicit none\n   type(dense_linop_rdp) :: operator\n   type(dense_vector_rdp) :: rhs, solution\n   real(dp) :: matrix(6,6), expected(6), residual\n   integer :: i, info\n   matrix=0._dp; expected=1._dp\n   do i=1,6\n      matrix(i,i)=real(i,dp)\n      if (i<6) matrix(i,i+1)=0.25_dp\n   end do\n   operator%data=matrix\n   rhs=dense_vector(matmul(matrix,expected))\n   solution=dense_vector([0._dp,0._dp,0._dp,0._dp,0._dp,0._dp])\n   ! GMRES uses the operator's matrix-vector action to solve A*x = b.\n   call gmres(operator,rhs,solution,info,rtol=1.e-10_dp,atol=1.e-12_dp)\n   if (info<0) error stop 'GMRES failed'\n   residual=sqrt(sum((matmul(matrix,solution%data)-rhs%data)**2))\n   if (residual>1.e-8_dp) error stop 'large linear-system residual'\n   if (maxval(abs(solution%data-expected))>1.e-8_dp) error stop 'incorrect solution'\n   print *, 'GMRES solution:',solution%data\n   print *, 'Residual norm:',residual\n   print *, 'PASS lightkrylov'\nend program main\n",
     "topics": [],
@@ -8649,7 +8679,13 @@
         "libblas-dev=3.12.1-6",
         "liblapack-dev=3.12.1-6"
       ],
-      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+      "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+      "shared_dependencies": {
+        "adapter_sha256": "8a85ff125c66db77f139fb6b62e6895fa314413a2b0350e68d8f3126c1d19707",
+        "repositories": [
+          "fortran-lang/stdlib"
+        ]
+      }
     },
     "source": "program demo_iapws\n   use iso_fortran_env, only: real64\n   use iapws, only: psat, tsat\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   real(real64) :: temperature(3), pressure(3), restored(3)\n   ! IAPWS-IF97 Table 35 reference pressures (MPa), temperatures in kelvin.\n   real(real64), parameter :: reference(3) = [0.00353658941_real64, 2.63889776_real64, 12.3443146_real64]\n   integer :: i\n\n   temperature = [300._real64, 500._real64, 600._real64]\n   call psat(temperature, pressure)\n   if (.not. all(ieee_is_finite(pressure))) error stop 'Nonfinite saturation pressure'\n   if (any(abs(pressure-reference) > 5.e-8_real64)) error stop 'Reference pressure check failed'\n   call tsat(pressure, restored)\n   if (maxval(abs(restored-temperature)) > 1.e-7_real64) error stop 'Temperature round trip failed'\n   print '(a)', 'Temperature (K)    Saturation pressure (MPa)'\n   do i = 1, 3\n      print '(f12.2,f24.10)', temperature(i), pressure(i)\n   end do\n   print *, 'PASS iapws'\nend program demo_iapws\n",
     "topics": [
@@ -9320,7 +9356,13 @@
         "libblas-dev=3.12.1-6",
         "liblapack-dev=3.12.1-6"
       ],
-      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+      "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+      "shared_dependencies": {
+        "adapter_sha256": "8a85ff125c66db77f139fb6b62e6895fa314413a2b0350e68d8f3126c1d19707",
+        "repositories": [
+          "fortran-lang/stdlib"
+        ]
+      }
     },
     "source": "program demo_ciaaw\n   use iso_fortran_env, only: real64\n   use ciaaw, only: saw, ice\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   real(real64) :: hydrogen, oxygen, carbon, water, carbon_dioxide, abundance\n\n   ! Use abridged standard atomic weights, rather than interval endpoints.\n   hydrogen = saw('H', ab=.true.)\n   oxygen = saw('O', ab=.true.)\n   carbon = saw('C', ab=.true.)\n   if (.not. all(ieee_is_finite([hydrogen,oxygen,carbon]))) error stop 'Nonfinite atomic weights'\n   if (abs(hydrogen-1.008_real64) > 0.0001_real64 .or. abs(oxygen-15.999_real64) > 0.001_real64 .or. &\n       abs(carbon-12.011_real64) > 0.001_real64) error stop 'Atomic-weight check failed'\n   water = 2*hydrogen + oxygen\n   carbon_dioxide = carbon + 2*oxygen\n   print '(a,f12.5)', 'Water molar mass (g/mol):          ', water\n   print '(a,f12.5)', 'Carbon dioxide molar mass (g/mol): ', carbon_dioxide\n   abundance = ice('H', A=1) + ice('H', A=2)\n   if (.not. ieee_is_finite(abundance)) error stop 'Nonfinite isotope abundance'\n   if (abs(abundance-1._real64) > 1.e-6_real64) error stop 'Hydrogen isotope fractions do not sum to one'\n   print '(a,f12.8)', 'Hydrogen isotope fractions sum:   ', abundance\n   print *, 'PASS ciaaw'\nend program demo_ciaaw\n",
     "topics": [
@@ -9873,7 +9915,13 @@
       "source_revisions": {
         "fortran-lang/stdlib": "58eb9133966c2797e0593281169ef57c43eccc1d"
       },
-      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+      "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+      "shared_dependencies": {
+        "adapter_sha256": "8a85ff125c66db77f139fb6b62e6895fa314413a2b0350e68d8f3126c1d19707",
+        "repositories": [
+          "fortran-lang/stdlib"
+        ]
+      }
     },
     "source": "module objective_function\n   implicit none\ncontains\n   function objective(x,n) result(value)\n      integer, intent(in) :: n\n      real(8), intent(in) :: x(n)\n      real(8) :: value\n      value = sum((x-[1.0d0,-2.0d0])**2)\n   end function\nend module\n\nprogram particle_swarm_demo\n   use psomod, only: optimizer\n   use objective_function, only: objective\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   integer, allocatable :: seed(:)\n   integer :: n\n   real(8) :: lower(2), upper(2), result(2), value\n   call random_seed(size=n)\n   allocate(seed(n),source=314159)\n   call random_seed(put=seed)\n   lower = -5\n   upper = 5\n   result = 0\n   ! Use adaptive neighborhoods; convergence depends on topology and work budget.\n   call optimizer(40,400,2,lower,upper,1.d-10,objective,result,topo=2)\n   value = objective(result,2)\n   print '(a,2f12.6)', 'Particle swarm minimum at: ', result\n   print '(a,es12.4)', 'Squared distance from (1,-2): ', value\n   if (.not. ieee_is_finite(value)) error stop 'Nonfinite objective'\n   if (value>1.d-5) error stop 'Optimization check'\n   print *, 'PASS opti'\nend program\n",
     "topics": [
@@ -9971,7 +10019,13 @@
           "rev": "58eb9133966c2797e0593281169ef57c43eccc1d"
         }
       },
-      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+      "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+      "shared_dependencies": {
+        "adapter_sha256": "8a85ff125c66db77f139fb6b62e6895fa314413a2b0350e68d8f3126c1d19707",
+        "repositories": [
+          "fortran-lang/stdlib"
+        ]
+      }
     },
     "source": "program interpolation_demo\n   use iso_fortran_env, only: dp => real64\n   use interpolation, only: interp1\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   real(dp) :: x(5), y(5), xi(9), linear(9), smooth(9)\n   integer :: i\n   x = [0,1,2,3,4]\n   xi = [(i/2.0_dp,i=0,8)]\n   y = 2*x+1\n   linear = interp1(x,y,xi)\n   if (.not. all(ieee_is_finite(linear))) error stop 'Nonfinite interpolation'\n   if (maxval(abs(linear-(2*xi+1)))>1.e-12_dp) error stop 'Linear check'\n   y = [0,1,1,2,3]\n   smooth = interp1(x,y,xi,method='pchip')\n   if (.not. all(ieee_is_finite(smooth))) error stop 'Nonfinite PCHIP'\n   if (any(smooth(2:)<smooth(:8)-1.e-12_dp)) error stop 'Monotonicity check'\n   if (maxval(abs(smooth(1:9:2)-y))>1.e-12_dp) error stop 'Knot check'\n   print '(a)', '       x      linear       pchip'\n   do i=1,9\n      print '(3f12.5)', xi(i),linear(i),smooth(i)\n   end do\n   print *, 'PASS interpolation'\nend program\n",
     "topics": [
@@ -12284,5 +12338,1533 @@
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+  },
+  {
+    "id": "fishpack",
+    "repository": "jlokimlin/fishpack",
+    "revision": "9dc7d2e7a847fa6a610752d4e91eda3ef9c6130d",
+    "archive_sha256": "06859781f35cceb1021f8387ff02944bfac301baae4d88f2abae7998e995b71e",
+    "stars": 38,
+    "category": "Differential equations",
+    "description": "Finite-difference solvers for separable elliptic partial differential equations.",
+    "license": "UCAR AND MIT",
+    "dependencies": [],
+    "catalog_build": {
+      "source_packages": {
+        "jlokimlin/fishpack": {
+          "manifest": "name = \"fishpack\"\nversion = \"0.0.0\"\n[build]\nauto-executables = false\nauto-tests = false\nauto-examples = false\n[library]\nsource-dir = \"playground-library\"\n[fortran]\nimplicit-typing = true\nimplicit-external = true\n",
+          "sources": [
+            "src/centered_axisymmetric_spherical_solver.f90",
+            "src/centered_cartesian_helmholtz_solver_3d.f90",
+            "src/centered_cartesian_solver.f90",
+            "src/centered_cylindrical_solver.f90",
+            "src/centered_helmholtz_solvers.f90",
+            "src/centered_polar_solver.f90",
+            "src/centered_real_linear_systems_solver.f90",
+            "src/centered_spherical_solver.f90",
+            "src/complex_block_tridiagonal_linear_systems_solver.f90",
+            "src/complex_linear_systems_solver.f90",
+            "src/fishpack.f90",
+            "src/fishpack_precision.f90",
+            "src/general_linear_systems_solver_3d.f90",
+            "src/real_block_tridiagonal_linear_systems_solver.f90",
+            "src/sepeli.f90",
+            "src/sepx4.f90",
+            "src/staggered_axisymmetric_spherical_solver.f90",
+            "src/staggered_cartesian_solver.f90",
+            "src/staggered_cylindrical_solver.f90",
+            "src/staggered_helmholtz_solvers.f90",
+            "src/staggered_polar_solver.f90",
+            "src/staggered_real_linear_systems_solver.f90",
+            "src/staggered_spherical_solver.f90",
+            "src/three_dimensional_solvers.f90",
+            "src/type_CenteredCyclicReductionUtility.f90",
+            "src/type_CyclicReductionUtility.f90",
+            "src/type_FishpackWorkspace.f90",
+            "src/type_GeneralizedCyclicReductionUtility.f90",
+            "src/type_PeriodicFastFourierTransform.f90",
+            "src/type_SepAux.f90",
+            "src/type_StaggeredCyclicReductionUtility.f90"
+          ]
+        }
+      },
+      "adapter_sha256": "fd73ab30a27bb1299e6630ac45976aec59e1c123d56881471a0cb2065cc97bbc"
+    },
+    "source": "! Solve Laplacian(u) = -2*pi**2*sin(pi*x)*sin(pi*y) on the unit square.\n! Zero Dirichlet boundaries; exact solution u = sin(pi*x)*sin(pi*y).\nprogram demo_fishpack\n   use fishpack, only: wp, ip, hwscrt\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   integer(ip), parameter :: n=32\n   real(wp) :: f(n+1,n+1), exact(n+1,n+1), boundary(n+1), pi, x, y, perturbation, err\n   integer(ip) :: i,j,status\n   pi = acos(-1._wp)\n   boundary = 0\n   f = 0\n   do j=1,n+1\n      y = real(j-1,wp)/n\n      do i=1,n+1\n         x = real(i-1,wp)/n\n         exact(i,j) = sin(pi*x)*sin(pi*y)\n         if (i>1 .and. i<n+1 .and. j>1 .and. j<n+1) f(i,j) = -2*pi*pi*exact(i,j)\n      end do\n   end do\n   call hwscrt(0._wp,1._wp,n,1_ip,boundary,boundary,0._wp,1._wp,n,1_ip, &\n      boundary,boundary,0._wp,f,n+1,perturbation,status)\n   if (status/=0) error stop 'Poisson solver failed'\n   if (.not. all(ieee_is_finite(f))) error stop 'Nonfinite solution'\n   err = maxval(abs(f-exact))\n   print '(a,i0,a,i0)', 'Grid intervals: ',n,' x ',n\n   print '(a,f16.10)', 'Computed center value: ',f(n/2+1,n/2+1)\n   print '(a,es12.3)', 'Maximum discretization error: ',err\n   if (err>1e-3_wp) error stop 'Poisson error exceeds second-order tolerance'\n   print '(a)', 'PASS fishpack'\nend program\n",
+    "topics": [],
+    "playground_topics": [
+      "finite-differences",
+      "helmholtz-equation",
+      "partial-differential-equations",
+      "poisson-equation"
+    ],
+    "gams": [
+      {
+        "code": "I",
+        "label": "Differential and integral equations",
+        "parent": null
+      },
+      {
+        "code": "I2",
+        "label": "Partial differential equations",
+        "parent": "I"
+      }
+    ],
+    "gams_procedures": [
+      {
+        "id": "fishpack-api",
+        "package_id": "fishpack",
+        "revision": "9dc7d2e7a847fa6a610752d4e91eda3ef9c6130d",
+        "module": "fishpack",
+        "procedure": "hwscrt",
+        "gams_codes": [
+          "I2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "problem-specific source or delayed derivative callback",
+        "notes": "Centered-grid finite-difference solver for separable two-dimensional Poisson/Helmholtz equations.",
+        "evidence": [
+          {
+            "path": "src/centered_cartesian_solver.f90",
+            "sha256": "7637d5e74bcbc78eb40b1d3fe6aadcbd8ea3e1eaae643fa9991150288f113726",
+            "line": 305
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "examples/thwscrt.f90",
+            "sha256": "6960893da7a3bfae50314d5b0f3bf95a66fd7868b89088b0781d954cb39c2da6"
+          }
+        ]
+      }
+    ],
+    "stars_updated_at": "2026-10-28T16:54:18.541524+00:00"
+  },
+  {
+    "id": "dde_solver",
+    "repository": "WarrenWeckesser/dde_solver",
+    "revision": "90d3389ce5d5733ab2b6e7ed7d2dad273b4d0c6b",
+    "archive_sha256": "c84c9462604a7a1ef49549bc9ec74f9e320fab08ec678075ac5a683adc57b381",
+    "stars": 13,
+    "category": "Differential equations",
+    "description": "Adaptive integration and interpolation for delay differential equations.",
+    "license": "BSD-3-Clause",
+    "dependencies": [],
+    "catalog_build": {
+      "source_packages": {
+        "warrenweckesser/dde_solver": {
+          "manifest": "name = \"dde_solver\"\nversion = \"0.0.0\"\n[build]\nauto-executables = false\nauto-tests = false\nauto-examples = false\n[library]\nsource-dir = \"playground-library\"\n[fortran]\nimplicit-typing = true\nimplicit-external = true\n",
+          "sources": [
+            "dde_solver_m.f90"
+          ]
+        }
+      },
+      "adapter_sha256": "fd73ab30a27bb1299e6630ac45976aec59e1c123d56881471a0cb2065cc97bbc"
+    },
+    "source": "! Adapted from the author's delay_oscillator test: y'(t)=-y(t-pi/2), history sin(t).\n! The exact solution remains sin(t). Keep callbacks in a module.\nmodule playground_delay_callbacks\n   implicit none\ncontains\n   subroutine rhs(t,y,z,dy)\n      double precision, intent(in) :: t,y(:),z(:,:)\n      double precision, intent(out) :: dy(:)\n      dy(1) = -z(1,1)\n   end subroutine\n   subroutine history(t,y)\n      double precision, intent(in) :: t\n      double precision, intent(out) :: y(:)\n      y(1) = sin(t)\n   end subroutine\nend module\nprogram demo_dde_solver\n   use playground_delay_callbacks\n   use dde_solver_m, only: dde_set, dde_solver, dde_sol, dde_opts, dde_int, &\n      dde_val, release_arrays, release_int\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   type(dde_sol) :: sol\n   type(dde_opts) :: opts\n   type(dde_int) :: sampled\n   double precision :: pi, times(9), err\n   integer :: i\n   pi = acos(-1d0)\n   opts = dde_set(re=1d-9,ae=1d-12,interpolation=.true.)\n   sol = dde_solver([1,1],rhs,[pi/2],history,[0d0,2*pi],options=opts)\n   if (sol%flag/=0) error stop 'Delay solver failed'\n   times = [(real(i,kind(pi))*pi/4,i=0,8)]\n   sampled = dde_val(times,sol)\n   if (.not. all(ieee_is_finite(sampled%yt))) error stop 'Nonfinite delay solution'\n   err = maxval(abs(sampled%yt(:,1)-sin(times)))\n   print '(a)', 'Time             Numerical y          Exact y'\n   do i=1,size(times)\n      print '(3f20.10)', times(i),sampled%yt(i,1),sin(times(i))\n   end do\n   print '(a,es12.3)', 'Maximum error: ',err\n   if (err>1d-7) error stop 'Delay solution inaccurate'\n   call release_arrays(sol,opts)\n   call release_int(sampled)\n   print '(a)', 'PASS dde_solver'\nend program\n",
+    "topics": [
+      "delay-differential-equations",
+      "differential-equations",
+      "fortran"
+    ],
+    "playground_topics": [
+      "adaptive-methods",
+      "delay-differential-equations",
+      "initial-value-problems",
+      "interpolation"
+    ],
+    "gams": [
+      {
+        "code": "I",
+        "label": "Differential and integral equations",
+        "parent": null
+      }
+    ],
+    "gams_procedures": [
+      {
+        "id": "dde-solver-api",
+        "package_id": "dde_solver",
+        "revision": "90d3389ce5d5733ab2b6e7ed7d2dad273b4d0c6b",
+        "module": "DDE_SOLVER_M",
+        "procedure": "DDE_SOLVER",
+        "gams_codes": [
+          "I"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "problem-specific source or delayed derivative callback",
+        "notes": "Delay differential equations: retain the broad differential-equation class rather than assume the ODE subclasses describe delayed problems.",
+        "evidence": [
+          {
+            "path": "dde_solver_m.f90",
+            "sha256": "068d219497dbf4c4454ab3ad04dd9a3ba27ac76b89c720481fcbb6c0d8ebe5f4",
+            "line": 376
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "tests/delay_oscillator/delay_oscillator.f90",
+            "sha256": "0ee6a4289e8867936430383690d860f4a855673d3a8e2a9205182079bdaf633d"
+          },
+          {
+            "path": "tests/delay_oscillator/delay_oscillator_test.f90",
+            "sha256": "b0ceac14d917d2fbe09a33b472e0ba37f36fe6ddab8cc9e91405f48220c4dd56"
+          }
+        ]
+      }
+    ],
+    "stars_updated_at": "2026-10-28T16:54:18.541524+00:00"
+  },
+  {
+    "id": "spherepack",
+    "repository": "jlokimlin/spherepack",
+    "revision": "e80da29462c5987162a0884baaab7434d0215467",
+    "archive_sha256": "ff1f1d582099f5e95d44a084106ddd80d1efa6b51f220d7313520716171237cd",
+    "stars": 36,
+    "category": "Integral transforms",
+    "description": "Spherical harmonic transforms and spherical differential-equation solvers.",
+    "license": "UCAR AND MIT",
+    "dependencies": [],
+    "catalog_build": {
+      "source_packages": {
+        "jlokimlin/spherepack": {
+          "manifest": "name = \"spherepack\"\nversion = \"0.0.0\"\n[build]\nauto-executables = false\nauto-tests = false\nauto-examples = false\n[library]\nsource-dir = \"playground-library\"\n[fortran]\nimplicit-typing = true\nimplicit-external = true\n",
+          "sources": [
+            "src/colatitudinal_derivative_gaussian_grid.f90",
+            "src/colatitudinal_derivative_gaussian_grid_saved.f90",
+            "src/colatitudinal_derivative_regular_grid.f90",
+            "src/colatitudinal_derivative_regular_grid_saved.f90",
+            "src/colatitudinal_derivative_routines.f90",
+            "src/coordinate_transfer_routines.f90",
+            "src/divergence_gaussian_grid.f90",
+            "src/divergence_gaussian_grid_saved.f90",
+            "src/divergence_regular_grid.f90",
+            "src/divergence_regular_grid_saved.f90",
+            "src/divergence_routines.f90",
+            "src/gaussian_latitudes_and_weights_routines.f90",
+            "src/gradient_gaussian_grid.f90",
+            "src/gradient_gaussian_grid_saved.f90",
+            "src/gradient_regular_grid.f90",
+            "src/gradient_regular_grid_saved.f90",
+            "src/gradient_routines.f90",
+            "src/grid_transfer_routines.f90",
+            "src/grid_transfer_scalar_shift.f90",
+            "src/grid_transfer_scalar_transform.f90",
+            "src/grid_transfer_vector_shift.f90",
+            "src/grid_transfer_vector_transform.f90",
+            "src/icosahedral_geodesic_routines.f90",
+            "src/idvtec.f90",
+            "src/idvtes.f90",
+            "src/idvtgc.f90",
+            "src/idvtgs.f90",
+            "src/invert_divergence_gaussian_grid.f90",
+            "src/invert_divergence_gaussian_grid_saved.f90",
+            "src/invert_divergence_regular_grid.f90",
+            "src/invert_divergence_regular_grid_saved.f90",
+            "src/invert_gradient_gaussian_grid.f90",
+            "src/invert_gradient_gaussian_grid_saved.f90",
+            "src/invert_gradient_regular_grid.f90",
+            "src/invert_gradient_regular_grid_saved.f90",
+            "src/invert_scalar_laplacian_gaussian_grid.f90",
+            "src/invert_scalar_laplacian_gaussian_grid_saved.f90",
+            "src/invert_scalar_laplacian_regular_grid.f90",
+            "src/invert_scalar_laplacian_regular_grid_saved.f90",
+            "src/invert_vector_laplacian_gaussian_grid.f90",
+            "src/invert_vector_laplacian_gaussian_grid_saved.f90",
+            "src/invert_vector_laplacian_regular_grid.f90",
+            "src/invert_vector_laplacian_regular_grid_saved.f90",
+            "src/invert_vorticity_gaussian_grid.f90",
+            "src/invert_vorticity_gaussian_grid_saved.f90",
+            "src/invert_vorticity_regular_grid.f90",
+            "src/invert_vorticity_regular_grid_saved.f90",
+            "src/isfvpec.f90",
+            "src/isfvpes.f90",
+            "src/isfvpgc.f90",
+            "src/isfvpgs.f90",
+            "src/scalar_analysis_gaussian_grid.f90",
+            "src/scalar_analysis_gaussian_grid_saved.f90",
+            "src/scalar_analysis_regular_grid.f90",
+            "src/scalar_analysis_regular_grid_saved.f90",
+            "src/scalar_analysis_routines.f90",
+            "src/scalar_laplacian_gaussian_grid.f90",
+            "src/scalar_laplacian_gaussian_grid_saved.f90",
+            "src/scalar_laplacian_regular_grid.f90",
+            "src/scalar_laplacian_regular_grid_saved.f90",
+            "src/scalar_laplacian_routines.f90",
+            "src/scalar_projection_gaussian_grid.f90",
+            "src/scalar_projection_regular_grid.f90",
+            "src/scalar_projection_routines.f90",
+            "src/scalar_synthesis_gaussian_grid.f90",
+            "src/scalar_synthesis_gaussian_grid_saved.f90",
+            "src/scalar_synthesis_regular_grid.f90",
+            "src/scalar_synthesis_regular_grid_saved.f90",
+            "src/scalar_synthesis_routines.f90",
+            "src/sfvpec.f90",
+            "src/sfvpes.f90",
+            "src/sfvpgc.f90",
+            "src/sfvpgs.f90",
+            "src/spherepack.f90",
+            "src/spherepack_interfaces.f90",
+            "src/spherepack_precision.f90",
+            "src/type_AssociatedLegendrePolynomialGenerator.f90",
+            "src/type_FastFourierTransform.f90",
+            "src/type_GaussianGrid.f90",
+            "src/type_GaussianSphere.f90",
+            "src/type_GaussianWorkspace.f90",
+            "src/type_RealHarmonicCoefficients.f90",
+            "src/type_RealPeriodicFastFourierTransform.f90",
+            "src/type_RegularGrid.f90",
+            "src/type_RegularSphere.f90",
+            "src/type_RegularWorkspace.f90",
+            "src/type_ScalarHarmonic.f90",
+            "src/type_Sphere.f90",
+            "src/type_SpherepackUtility.f90",
+            "src/type_SphericalGrid.f90",
+            "src/type_SphericalUnitVectors.f90",
+            "src/type_TrigonometricTable.f90",
+            "src/type_Vector3D.f90",
+            "src/type_VectorHarmonic.f90",
+            "src/type_VectorHarmonicCoefficients.f90",
+            "src/type_WavetableUtility.f90",
+            "src/type_Workspace.f90",
+            "src/vector_analysis_gaussian_grid.f90",
+            "src/vector_analysis_gaussian_grid_saved.f90",
+            "src/vector_analysis_regular_grid.f90",
+            "src/vector_analysis_regular_grid_saved.f90",
+            "src/vector_analysis_routines.f90",
+            "src/vector_laplacian_gaussian_grid.f90",
+            "src/vector_laplacian_gaussian_grid_saved.f90",
+            "src/vector_laplacian_regular_grid.f90",
+            "src/vector_laplacian_regular_grid_saved.f90",
+            "src/vector_laplacian_routines.f90",
+            "src/vector_synthesis_gaussian_grid.f90",
+            "src/vector_synthesis_gaussian_grid_saved.f90",
+            "src/vector_synthesis_regular_grid.f90",
+            "src/vector_synthesis_regular_grid_saved.f90",
+            "src/vector_synthesis_routines.f90",
+            "src/vorticity_gaussian_grid.f90",
+            "src/vorticity_gaussian_grid_saved.f90",
+            "src/vorticity_regular_grid.f90",
+            "src/vorticity_regular_grid_saved.f90",
+            "src/vorticity_routines.f90"
+          ]
+        }
+      },
+      "adapter_sha256": "fd73ab30a27bb1299e6630ac45976aec59e1c123d56881471a0cb2065cc97bbc"
+    },
+    "catalog_patches": {
+      "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+      "edits": [
+        {
+          "path": "playground-library/vector_synthesis_routines.f90",
+          "sha256": "770cb18082d80a60396de0e94138f0f5267cac5004f2e35c8e4568561a649387",
+          "before": "real(wp),    intent(in)    :: wrfft(..)",
+          "after": "real(wp),    intent(in)    :: wrfft(*)"
+        },
+        {
+          "path": "playground-library/vector_synthesis_gaussian_grid_saved.f90",
+          "sha256": "f3679396ecb70b32b1daf999b9977ba2545723da4c920aff2e5ae07557194e9e",
+          "before": "real(wp),    intent(out) :: work(..)",
+          "after": "real(wp),    intent(out) :: work(*)"
+        }
+      ]
+    },
+    "source": "! Spherical Helmholtz example adapted from the author's examples/helmsph.f90.\n! Exact solution (1+x*y)*exp(z) on the unit sphere, lambda=1.\nprogram demo_spherepack\n   use spherepack, only: GaussianSphere, wp, ip\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   integer(ip), parameter :: nlat=19,nlon=36\n   type(GaussianSphere) :: globe\n   real(wp) :: exact(nlat,nlon), rhs(nlat,nlon), solution(nlat,nlon), x,y,z,err\n   integer :: i,j\n   globe = GaussianSphere(nlat,nlon)\n   do j=1,nlon\n      do i=1,nlat\n         x = globe%unit_vectors%radial(i,j)%x\n         y = globe%unit_vectors%radial(i,j)%y\n         z = globe%unit_vectors%radial(i,j)%z\n         exact(i,j) = (1+x*y)*exp(z)\n         rhs(i,j) = -(x*y*(z*z+6*(z+1))+z*(z+2))*exp(z)\n      end do\n   end do\n   call globe%invert_helmholtz(1._wp,rhs,solution)\n   if (.not. all(ieee_is_finite(solution))) error stop 'Nonfinite spherical solution'\n   err = maxval(abs(solution-exact))\n   print '(a,i0,a,i0)', 'Gaussian spherical grid: ',nlat,' x ',nlon\n   print '(a,es12.3)', 'Maximum Helmholtz solution error: ',err\n   if (err>1e-10_wp) error stop 'Spherical Helmholtz solve inaccurate'\n   call globe%destroy()\n   print '(a)', 'PASS spherepack'\nend program\n",
+    "topics": [],
+    "playground_topics": [
+      "helmholtz-equation",
+      "integral-transforms",
+      "partial-differential-equations",
+      "spherical-harmonics"
+    ],
+    "gams": [
+      {
+        "code": "I",
+        "label": "Differential and integral equations",
+        "parent": null
+      },
+      {
+        "code": "I2",
+        "label": "Partial differential equations",
+        "parent": "I"
+      },
+      {
+        "code": "J",
+        "label": "Integral transforms",
+        "parent": null
+      }
+    ],
+    "gams_procedures": [
+      {
+        "id": "spherepack-api",
+        "package_id": "spherepack",
+        "revision": "e80da29462c5987162a0884baaab7434d0215467",
+        "module": "type_Sphere",
+        "procedure": "Sphere%invert_helmholtz",
+        "gams_codes": [
+          "I2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "problem-specific source or delayed derivative callback",
+        "notes": "Spherical Helmholtz inversion using harmonic analysis and synthesis; two vector-workspace rank declarations are patched in the catalog recipe.",
+        "evidence": [
+          {
+            "path": "src/type_Sphere.f90",
+            "sha256": "c589e66855e16fee2a72a9e50083b677d98b73ab21d894c78f42bc63b4218858",
+            "line": 748
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "examples/helmsph.f90",
+            "sha256": "d0c30718e842c77a52dd4c3b4aee4560f04f8f9e4f9935685618539bd15c1e81"
+          }
+        ]
+      },
+      {
+        "id": "spherepack-scalar-transform",
+        "package_id": "spherepack",
+        "revision": "e80da29462c5987162a0884baaab7434d0215467",
+        "module": "type_GaussianSphere",
+        "procedure": "GaussianSphere%perform_scalar_analysis / perform_scalar_synthesis",
+        "gams_codes": [
+          "J"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "problem-specific source or delayed derivative callback",
+        "notes": "Spherical harmonic analysis and synthesis on Gaussian grids; no narrower trigonometric-transform subclass is inferred.",
+        "evidence": [
+          {
+            "path": "src/type_GaussianSphere.f90",
+            "sha256": "9c1e6364e3c4baed68d89ca4e49ed47786bbde9bddf66d82aac010475bf8745a",
+            "line": 183
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "examples/helmsph.f90",
+            "sha256": "d0c30718e842c77a52dd4c3b4aee4560f04f8f9e4f9935685618539bd15c1e81"
+          }
+        ]
+      }
+    ],
+    "stars_updated_at": "2026-10-28T16:54:18.541524+00:00"
+  },
+  {
+    "id": "forsvd",
+    "repository": "gha3mi/forsvd",
+    "revision": "f39bba7afcb048a21947a7a640bdf9a18337f8ac",
+    "archive_sha256": "b9a97d840dca7ad2d11ef00c5986719d180d455b2fa188a4d0b374219414088e",
+    "stars": 5,
+    "category": "Linear algebra",
+    "description": "Singular value decomposition and truncated low-rank matrix approximations.",
+    "license": "BSD-3-Clause",
+    "dependencies": [
+      {
+        "repository": "gha3mi/kinds",
+        "revision": "811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f",
+        "sha256": "495d1133b1630dea4f38d69e5e3189e3279e4ce5836da1a7aec8a822bbe16518"
+      },
+      {
+        "repository": "gha3mi/fortime",
+        "revision": "de733e2c775457d4979403fe77ab69cf28e2b159",
+        "sha256": "bccc83cf947693ad4defcfb4684af7cd660db8a6e57084b7f07e7edfd584161d"
+      },
+      {
+        "repository": "szaghi/FACE",
+        "revision": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8",
+        "sha256": "d4cc3c3a2c70e7369607624ae3361a6f7b2ba3f1e9a63ffd94ecb5cd4b019469"
+      }
+    ],
+    "catalog_build": {
+      "apt_packages": [
+        "libblas-dev=3.12.1-6",
+        "liblapack-dev=3.12.1-6"
+      ],
+      "environment": {
+        "FPM_FFLAGS": "-cpp -fopenmp",
+        "FPM_LDFLAGS": "-llapack -lblas"
+      },
+      "source_revisions": {
+        "gha3mi/kinds": "811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f",
+        "gha3mi/forsvd": "f39bba7afcb048a21947a7a640bdf9a18337f8ac",
+        "gha3mi/fortime": "de733e2c775457d4979403fe77ab69cf28e2b159",
+        "szaghi/face": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8",
+        "gha3mi/formatmul": "6a77af418bbd77ffb5323a338db5cdf9368a73f7"
+      },
+      "manifest_versions": {
+        "gha3mi/forinv": "0.0.0",
+        "gha3mi/forsvd": "0.0.0",
+        "gha3mi/fortime": "0.0.0",
+        "gha3mi/kinds": "0.0.0",
+        "gha3mi/formatmul": "0.0.0"
+      },
+      "adapter_sha256": "fd73ab30a27bb1299e6630ac45976aec59e1c123d56881471a0cb2065cc97bbc"
+    },
+    "source": "! Compare rank-one and rank-two approximations of a small matrix.\nprogram demo_forsvd\n   use kinds, only: rk\n   use forsvd, only: svd\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   real(rk) :: a(4,3), work(4,3), u(4,4), s(3), vt(3,3), approx(4,3), errors(3)\n   integer :: i,j,k\n   a = reshape([3._rk,0._rk,0._rk,0._rk,0._rk,2._rk,0._rk,0._rk,0._rk,0._rk,1._rk,0._rk],[4,3])\n   ! LAPACK overwrites its input workspace; preserve A for independent checks.\n   work = a\n   call svd(work,u,s,vt,method='gesvd')\n   if (.not. all(ieee_is_finite(s))) error stop 'Nonfinite singular values'\n   if (.not. all(ieee_is_finite(u)) .or. .not. all(ieee_is_finite(vt))) error stop 'Nonfinite vectors'\n   if (maxval(abs(s-[3._rk,2._rk,1._rk]))>1e-11_rk) error stop 'Incorrect singular values'\n   approx = 0\n   print '(a)', 'Rank    Frobenius reconstruction error'\n   do k=1,3\n      do j=1,3\n         do i=1,4\n            approx(i,j) = approx(i,j)+s(k)*u(i,k)*vt(k,j)\n         end do\n      end do\n      errors(k) = norm2(a-approx)\n      print '(i3,es22.10)', k, errors(k)\n   end do\n   if (maxval(abs(errors-[sqrt(5._rk),1._rk,0._rk]))>1e-11_rk) error stop 'Incorrect approximation'\n   print '(a)', 'PASS forsvd'\nend program\n",
+    "topics": [
+      "fortran",
+      "fortran-package-manager",
+      "image-compression",
+      "low-rank-approximation",
+      "singular-value-decomposition",
+      "svd"
+    ],
+    "playground_topics": [
+      "lapack",
+      "linear-algebra",
+      "low-rank-approximation",
+      "singular-value-decomposition"
+    ],
+    "gams": [
+      {
+        "code": "D",
+        "label": "Linear Algebra",
+        "parent": null
+      },
+      {
+        "code": "D6",
+        "label": "Singular value decomposition",
+        "parent": "D"
+      }
+    ],
+    "gams_procedures": [
+      {
+        "id": "forsvd-api",
+        "package_id": "forsvd",
+        "revision": "f39bba7afcb048a21947a7a640bdf9a18337f8ac",
+        "module": "forsvd",
+        "procedure": "svd",
+        "gams_codes": [
+          "D6"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Computes real dense SVD using LAPACK GESVD or GESDD; the demonstration preserves a separate input copy.",
+        "evidence": [
+          {
+            "path": "src/forsvd.f90",
+            "sha256": "c6aadd32de7e0da37b4764960e9fe87a9ecc4b04e2b4b8735b9d189d6103c512",
+            "line": 57
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test1.f90",
+            "sha256": "f61ab7a986a2c5ca53452a3d9185ead021c06ae4dc2dbc16a74303bcd425fc9e"
+          }
+        ]
+      }
+    ],
+    "stars_updated_at": "2026-10-28T16:54:18.541524+00:00"
+  },
+  {
+    "id": "qdutillib",
+    "repository": "lauvergn/QDUtilLib",
+    "revision": "8a1fa9ca7cf52683c98cc4bcb40f21dc41df6ed5",
+    "archive_sha256": "797b427653a60b8cf760c13400c35fc7b79fad59915b1fa508eac97de207281b",
+    "stars": 0,
+    "category": "Integration",
+    "description": "Gauss-Legendre and Gauss-Hermite quadrature, linear algebra and numerical utilities.",
+    "license": "MIT",
+    "dependencies": [],
+    "catalog_build": {
+      "apt_packages": [
+        "libblas-dev=3.12.1-6",
+        "liblapack-dev=3.12.1-6"
+      ],
+      "adapter_sha256": "fd73ab30a27bb1299e6630ac45976aec59e1c123d56881471a0cb2065cc97bbc"
+    },
+    "source": "! Gauss-Legendre and Gauss-Hermite rules with independently known integrals.\nprogram demo_qdutillib\n   use QDUtil_NumParameters_m, only: Rkind\n   use QDUtil_Quadrature_m, only: Quadrature_t, Init_Quadrature, dealloc_Quadrature\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   type(Quadrature_t) :: q\n   real(Rkind) :: value, exact\n   integer :: status\n   call Init_Quadrature(q,nq=6,name='LegendreP',err=status)\n   if (status/=0) error stop 'Legendre initialization failed'\n   value = sum(q%w*q%x(1,:)**8)\n   exact = 2._Rkind/9._Rkind\n   print '(a,f20.14,a,es12.3)', 'Integral of x**8 on [-1,1]: ',value,'  error: ',abs(value-exact)\n   if (.not. ieee_is_finite(value)) error stop 'Nonfinite integral'\n   if (abs(value-exact)>1e-12_Rkind) error stop 'Legendre quadrature failed'\n   call dealloc_Quadrature(q)\n   call Init_Quadrature(q,nq=8,name='HO',err=status)\n   if (status/=0) error stop 'Hermite initialization failed'\n   ! HO weights integrate the full function: include the Gaussian explicitly.\n   value = sum(q%w*q%x(1,:)**2*exp(-q%x(1,:)**2))\n   exact = sqrt(acos(-1._Rkind))/2._Rkind\n   print '(a,f20.14,a,es12.3)', 'Integral of x**2*exp(-x**2): ',value,'  error: ',abs(value-exact)\n   if (.not. ieee_is_finite(value)) error stop 'Nonfinite integral'\n   if (abs(value-exact)>1e-12_Rkind) error stop 'Hermite quadrature failed'\n   call dealloc_Quadrature(q)\n   print '(a)', 'PASS qdutillib'\nend program\n",
+    "topics": [
+      "fortran"
+    ],
+    "playground_topics": [
+      "gauss-hermite",
+      "gauss-legendre",
+      "gaussian-quadrature",
+      "quadrature"
+    ],
+    "gams": [
+      {
+        "code": "H",
+        "label": "Differentiation, integration",
+        "parent": null
+      },
+      {
+        "code": "H2",
+        "label": "Quadrature (numerical evaluation of definite integrals)",
+        "parent": "H"
+      },
+      {
+        "code": "H2c",
+        "label": "Service routines (e.g., compute weights and nodes for quadrature formulas)",
+        "parent": "H2"
+      }
+    ],
+    "gams_procedures": [
+      {
+        "id": "qdutillib-api",
+        "package_id": "qdutillib",
+        "revision": "8a1fa9ca7cf52683c98cc4bcb40f21dc41df6ed5",
+        "module": "QDUtil_Quadrature_m",
+        "procedure": "Init_Quadrature",
+        "gams_codes": [
+          "H2c"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Constructs quadrature nodes and weights; the HO rule uses full-function weights and requires the Gaussian in the integrand.",
+        "evidence": [
+          {
+            "path": "SRC/Quadrature/Quadrature_m.f90",
+            "sha256": "a0c2e6b3f7a6e7ef0d0ab42f6e5c0b3b7177a9c0fc5f18d09e5a65aeda005bf9",
+            "line": 81
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "APP/App_QDLib.f90",
+            "sha256": "f9228fb8929ad1eff119c632ed2ab936a1cffe85b349d67ae84c287bbcab0ab9"
+          }
+        ]
+      }
+    ],
+    "stars_updated_at": "2026-10-28T16:54:18.541524+00:00"
+  },
+  {
+    "id": "qdldl-fortran",
+    "repository": "jacobwilliams/qdldl-fortran",
+    "revision": "8ebdd7fa1075bfb89115d0955806b0996b6b29d5",
+    "archive_sha256": "a757aa58d41657737514df2150f12fa6e594013c25266f52857fcae7b516e665",
+    "stars": 3,
+    "category": "Linear algebra",
+    "description": "Sparse LDL-transpose factorization, orderings and solves for quasi-definite systems.",
+    "license": "Apache-2.0",
+    "dependencies": [],
+    "source": "! Solve a small quasi-definite KKT system using three sparse orderings.\nprogram demo_qdldl\n   use qdldl_module, only: qdldl_type, wp=>qdldl_wp, ip=>qdldl_ip, qdldl_success, &\n      qdldl_order_natural, qdldl_order_rcm, qdldl_order_amd\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   integer(ip), parameter :: n=4\n   integer(ip), parameter :: row(*)=[1,2,1,2,3,1,2,4], col(*)=[1,2,3,3,3,4,4,4]\n   real(wp), parameter :: val(*)=[4._wp,3._wp,1._wp,2._wp,-2._wp,-1._wp,1._wp,-1._wp]\n   integer, parameter :: order(*)=[qdldl_order_natural,qdldl_order_rcm,qdldl_order_amd]\n   character(7), parameter :: names(*)=['natural','RCM    ','AMD    ']\n   type(qdldl_type) :: solver\n   real(wp) :: a(n,n), rhs(n), x(n), exact(n), err, residual\n   integer :: i,k,status\n   integer(ip) :: positive,negative,zero\n   a=0\n   do k=1,size(val)\n      a(row(k),col(k))=val(k)\n      a(col(k),row(k))=val(k)\n   end do\n   exact=[1._wp,-2._wp,3._wp,-4._wp]\n   rhs=matmul(a,exact)\n   print '(a)', 'Ordering   Max solution error   Max residual   Inertia (+,-,0)'\n   do i=1,size(order)\n      block\n         type(qdldl_type) :: factor\n         call factor%analyze(n,row,col,status,ordering=order(i))\n         if (status/=qdldl_success) error stop 'Sparse analysis failed'\n         call factor%factor(val,status)\n         if (status/=qdldl_success) error stop 'Sparse factorization failed'\n         x=rhs\n         call factor%solve(x,status)\n         if (status/=qdldl_success) error stop 'Sparse solve failed'\n         if (.not.all(ieee_is_finite(x))) error stop 'Nonfinite solution'\n         call factor%inertia(positive,negative,zero)\n         err=maxval(abs(x-exact))\n         residual=maxval(abs(matmul(a,x)-rhs))\n         print '(a7,2es19.3,3i4)', names(i),err,residual,positive,negative,zero\n         if (max(err,residual)>1e-11_wp) error stop 'Sparse solution inaccurate'\n         if (positive/=2 .or. negative/=2 .or. zero/=0) error stop 'Incorrect matrix inertia'\n      end block\n   end do\n   print '(a)', 'PASS qdldl-fortran'\nend program\n",
+    "topics": [
+      "fortran",
+      "fortran-package-manager",
+      "ldl-factorization",
+      "linear-algebra",
+      "linear-systems",
+      "numerical-optimization",
+      "sparse-data",
+      "sparse-linear-systems"
+    ],
+    "playground_topics": [
+      "ldlt-factorization",
+      "linear-systems",
+      "matrix-ordering",
+      "quasi-definite",
+      "sparse-linear-algebra"
+    ],
+    "gams": [
+      {
+        "code": "D",
+        "label": "Linear Algebra",
+        "parent": null
+      },
+      {
+        "code": "D2",
+        "label": "Solution of systems of linear equations (including inversion, LU and related decompositions)",
+        "parent": "D"
+      },
+      {
+        "code": "D2b",
+        "label": "Real symmetric matrices",
+        "parent": "D2"
+      },
+      {
+        "code": "D2b4",
+        "label": "Sparse",
+        "parent": "D2b"
+      }
+    ],
+    "gams_procedures": [
+      {
+        "id": "qdldl-fortran-api",
+        "package_id": "qdldl-fortran",
+        "revision": "8ebdd7fa1075bfb89115d0955806b0996b6b29d5",
+        "module": "qdldl_module",
+        "procedure": "qdldl_type%analyze / factor / solve",
+        "gams_codes": [
+          "D2b4"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Sparse symmetric quasi-definite systems; no general-indefinite or pivoting guarantee is inferred. Natural, RCM and AMD orderings are checked.",
+        "evidence": [
+          {
+            "path": "src/qdldl_module.f90",
+            "sha256": "afbd0beefc25c5998522cd2ba8f86fbb96b40848edcf0132d5784ac697df75b9",
+            "line": 28
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_kkt.f90",
+            "sha256": "d1a429384355e642203654c5534ee7dc888e1382c201acb9d952dd0947da597a"
+          }
+        ]
+      }
+    ],
+    "stars_updated_at": "2026-10-28T17:30:42.130830+00:00"
+  },
+  {
+    "id": "lusol",
+    "repository": "jacobwilliams/lusol",
+    "revision": "2d95174d44ec9bf9dabbbd07652c84c11fe56d71",
+    "archive_sha256": "cb6050bc25617e48c09595face9651f2c83ebd88cb72169f90e0e2217e54ea9e",
+    "stars": 2,
+    "category": "Linear algebra",
+    "description": "Sparse LU factorization, linear solves and efficient column updates.",
+    "license": "MIT & BSD",
+    "dependencies": [],
+    "source": "! Factor a sparse matrix once, replace one column, and update the LU factors.\nprogram demo_lusol\n   use lusol, only: lu1fac,lu6sol,lu8rpc\n   use lusol_precision, only: ip,wp=>rp\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   integer(ip), parameter :: n=4, capacity=10000\n   integer(ip) :: indc(capacity),indr(capacity),p(n),q(n),lenc(n),lenr(n),locc(n),locr(n)\n   integer(ip) :: iploc(n),iqloc(n),ipinv(n),iqinv(n),luparm(30),status,i,j,k\n   real(wp) :: a(capacity),parmlu(30),work(n),v(n),x(n),dense(n,n),exact(n),rhs(n),diag,vnorm\n   a=0; indc=0; indr=0\n   dense=0\n   do i=1,n\n      dense(i,i)=4\n      if (i<n) then\n         dense(i,i+1)=-1\n         dense(i+1,i)=-1\n      end if\n   end do\n   k=0\n   do j=1,n\n      do i=1,n\n         if (dense(i,j)==0) cycle\n         k=k+1; indc(k)=i; indr(k)=j; a(k)=dense(i,j)\n      end do\n   end do\n   ! Parameter initialization follows the upstream lusol_ez wrapper.\n   luparm=0\n   luparm(1)=6; luparm(3)=5; luparm(8)=1\n   parmlu=0\n   parmlu(1:8)=[100._wp,10._wp,epsilon(1._wp)**0.8_wp, &\n      epsilon(1._wp)**0.67_wp,epsilon(1._wp)**0.67_wp,3._wp,0.3_wp,0.5_wp]\n   call lu1fac(n,n,k,capacity,luparm,parmlu,a,indc,indr,p,q,lenc,lenr,locc,locr, &\n      iploc,iqloc,ipinv,iqinv,work,status)\n   if (status/=0) error stop 'LU factorization failed'\n   exact=[1._wp,-2._wp,3._wp,-4._wp]\n   call check_solution('Original system')\n   dense(:,2)=[0.5_wp,5._wp,-0.5_wp,0.25_wp]\n   v=dense(:,2)\n   call lu8rpc(1_ip,1_ip,n,n,2_ip,v,work,capacity,luparm,parmlu,a,indc,indr,p,q, &\n      lenc,lenr,locc,locr,status,diag,vnorm)\n   if (status/=0) error stop 'Column update failed'\n   call check_solution('After replacing column 2')\n   print '(a)', 'PASS lusol'\ncontains\n   subroutine check_solution(label)\n      character(*),intent(in) :: label\n      real(wp) :: err,residual\n      rhs=matmul(dense,exact)\n      v=rhs\n      call lu6sol(5_ip,n,n,v,x,capacity,luparm,parmlu,a,indc,indr,p,q,lenc,lenr,locc,locr,status)\n      if (status/=0) error stop 'LU solve failed'\n      if (.not.all(ieee_is_finite(x))) error stop 'Nonfinite solution'\n      err=maxval(abs(x-exact)); residual=maxval(abs(matmul(dense,x)-rhs))\n      print '(a)', label\n      print '(a,4f12.7)', 'Solution: ',x\n      print '(a,2es14.3)', 'Solution error and residual: ',err,residual\n      if (max(err,residual)>1e-11_wp) error stop 'LU solution inaccurate'\n   end subroutine\nend program\n",
+    "topics": [
+      "fortran",
+      "fortran-package-manager",
+      "linear-algebra",
+      "lu-decomposition",
+      "lu-factorization",
+      "lusol",
+      "matrix-factorization",
+      "sparse-linear-algebra",
+      "sparse-matrix"
+    ],
+    "playground_topics": [
+      "linear-systems",
+      "lu-factorization",
+      "matrix-updates",
+      "sparse-linear-algebra"
+    ],
+    "gams": [
+      {
+        "code": "D",
+        "label": "Linear Algebra",
+        "parent": null
+      },
+      {
+        "code": "D2",
+        "label": "Solution of systems of linear equations (including inversion, LU and related decompositions)",
+        "parent": "D"
+      },
+      {
+        "code": "D2a",
+        "label": "Real nonsymmetric matrices",
+        "parent": "D2"
+      },
+      {
+        "code": "D2a4",
+        "label": "Sparse",
+        "parent": "D2a"
+      }
+    ],
+    "gams_procedures": [
+      {
+        "id": "lusol-api",
+        "package_id": "lusol",
+        "revision": "2d95174d44ec9bf9dabbbd07652c84c11fe56d71",
+        "module": "lusol",
+        "procedure": "lu1fac / lu6sol / lu8rpc",
+        "gams_codes": [
+          "D2a4"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Sparse LU factorization, solves and column replacement using an existing factorization; the demo uses the public 64-bit index kind.",
+        "evidence": [
+          {
+            "path": "src/lusol.f90",
+            "sha256": "2372004497e54012d074037e3f52edcc4193222b9d92af1295dd03e89e8391af",
+            "line": 101
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/lusol_test.f90",
+            "sha256": "b96078a020eaf15cecc4e871b85cf63b3ac6aa17fc64666d653f16afc044ce94"
+          }
+        ]
+      }
+    ],
+    "stars_updated_at": "2026-10-28T17:30:42.130830+00:00"
+  },
+  {
+    "id": "carlson-elliptic-integrals",
+    "repository": "jacobwilliams/carlson-elliptic-integrals",
+    "revision": "5f25a59a555b7029505aac71a8341d5851f8abed",
+    "archive_sha256": "2c3f4faa86b9840b36bf34df04801961c6931acfb750182e76a53aa20b2f31ef",
+    "stars": 14,
+    "category": "Special functions",
+    "description": "Carlson symmetric elliptic integrals for pendulum periods and other applications.",
+    "license": "BSD-3",
+    "dependencies": [],
+    "source": "! Pendulum period beyond the small-angle approximation, using Carlson RF.\nprogram demo_carlson\n   use carlson_elliptic_module, only: wp=>carlson_elliptic_module_wp,drf\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   integer,parameter :: intervals=4096\n   real(wp),parameter :: angles(*)=[0._wp,30._wp,90._wp,150._wp],gravity=9.80665_wp\n   real(wp) :: pi,k,elliptic,reference,h,t,sum_integral,period,error\n   integer :: i,j,status\n   pi=acos(-1._wp)\n   if (abs(drf(1._wp,1._wp,1._wp)-1._wp)>1e-13_wp) error stop 'RF identity failed'\n   print '(a)', 'Amplitude (deg)  Period for L=1 m (s)   Ratio to small-angle   Quadrature error'\n   do i=1,size(angles)\n      k=sin(angles(i)*pi/360)\n      elliptic=drf(0._wp,1-k*k,1._wp,status)\n      if (status/=0) error stop 'Elliptic integral failed'\n      ! Independent composite Simpson integration of the defining integral.\n      h=pi/(2*intervals)\n      sum_integral=1._wp+1/sqrt(1-k*k)\n      do j=1,intervals-1\n         t=j*h\n         sum_integral=sum_integral+merge(4._wp,2._wp,mod(j,2)==1)/sqrt(1-(k*sin(t))**2)\n      end do\n      reference=h*sum_integral/3\n      error=abs(elliptic-reference)\n      if (.not.ieee_is_finite(elliptic)) error stop 'Nonfinite integral'\n      if (error>1e-10_wp) error stop 'Elliptic integral differs from quadrature'\n      period=4*elliptic/sqrt(gravity)\n      print '(f12.1,2f23.12,es20.3)',angles(i),period,2*elliptic/pi,error\n   end do\n   print '(a)', 'PASS carlson-elliptic-integrals'\nend program\n",
+    "topics": [],
+    "playground_topics": [
+      "carlson-symmetric-forms",
+      "elliptic-integrals",
+      "pendulum",
+      "special-functions"
+    ],
+    "gams": [
+      {
+        "code": "C",
+        "label": "Elementary and special functions",
+        "parent": null
+      },
+      {
+        "code": "C14",
+        "label": "Elliptic integrals",
+        "parent": "C"
+      }
+    ],
+    "gams_procedures": [
+      {
+        "id": "carlson-elliptic-integrals-api",
+        "package_id": "carlson-elliptic-integrals",
+        "revision": "5f25a59a555b7029505aac71a8341d5851f8abed",
+        "module": "carlson_elliptic_module",
+        "procedure": "drf",
+        "gams_codes": [
+          "C14"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Carlson symmetric RF evaluated for pendulum periods and checked against independent composite Simpson integration.",
+        "evidence": [
+          {
+            "path": "src/carlson_elliptic_module.F90",
+            "sha256": "a40da80250354bdbdee8a1eb30ca6a7ea8a6eae2ad0fc2ff9ef4f687c7c6cfa4",
+            "line": 580
+          }
+        ],
+        "author_examples": []
+      }
+    ],
+    "stars_updated_at": "2026-10-28T17:30:42.130830+00:00"
+  },
+  {
+    "id": "fortran-bessels",
+    "repository": "perazz/fortran-bessels",
+    "revision": "7bf8d6b144b00d4201a782ca65f6ae14a84d49a1",
+    "archive_sha256": "bbfb4be6e3a7f9f01d9ea315b2344bd52274ff7f269c2132fc81edbc874b925c",
+    "stars": 12,
+    "category": "Special functions",
+    "description": "Bessel and modified Bessel functions, demonstrated with fixed orders zero and one.",
+    "license": "MIT",
+    "dependencies": [],
+    "source": "! Modified Bessel functions of fixed orders zero and one.\nprogram demo_bessels\n   use bessels, only: BK,besseli0,besseli1,besselk0,besselk1\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   real(BK),parameter :: x(*)=[0.25_BK,0.5_BK,1._BK,2._BK,8._BK]\n   ! Independent reference values at x=1, not computed using this library.\n   real(BK),parameter :: reference(*)=[1.2660658777520083356_BK,0.5651591039924850272_BK, &\n      0.4210244382407083333_BK,0.6019072301972345747_BK]\n   real(BK) :: values(4),identity_error\n   integer :: i\n   values=[besseli0(1._BK),besseli1(1._BK),besselk0(1._BK),besselk1(1._BK)]\n   if (.not.all(ieee_is_finite(values))) error stop 'Nonfinite reference values'\n   if (maxval(abs(values-reference))>1e-12_BK) error stop 'Bessel reference check failed'\n   print '(a)', 'x            I0(x)            I1(x)            K0(x)            K1(x)     Wronskian error'\n   do i=1,size(x)\n      values=[besseli0(x(i)),besseli1(x(i)),besselk0(x(i)),besselk1(x(i))]\n      if (.not.all(ieee_is_finite(values))) error stop 'Nonfinite Bessel values'\n      identity_error=abs(x(i)*(values(1)*values(4)+values(2)*values(3))-1)\n      print '(f6.2,4es17.8,es16.3)',x(i),values,identity_error\n      if (identity_error>1e-11_BK) error stop 'Bessel Wronskian identity failed'\n   end do\n   print '(a)', 'PASS fortran-bessels'\nend program\n",
+    "topics": [
+      "bessel",
+      "bessel-function",
+      "fortran",
+      "math",
+      "special-functions"
+    ],
+    "playground_topics": [
+      "bessel-functions",
+      "cylindrical-functions",
+      "modified-bessel-functions",
+      "special-functions"
+    ],
+    "gams": [
+      {
+        "code": "C",
+        "label": "Elementary and special functions",
+        "parent": null
+      },
+      {
+        "code": "C10",
+        "label": "Bessel functions",
+        "parent": "C"
+      },
+      {
+        "code": "C10b",
+        "label": "I, K",
+        "parent": "C10"
+      },
+      {
+        "code": "C10b1",
+        "label": "Real argument, integer order",
+        "parent": "C10b"
+      }
+    ],
+    "gams_procedures": [
+      {
+        "id": "fortran-bessels-api",
+        "package_id": "fortran-bessels",
+        "revision": "7bf8d6b144b00d4201a782ca65f6ae14a84d49a1",
+        "module": "bessels",
+        "procedure": "besseli0 / besseli1 / besselk0 / besselk1",
+        "gams_codes": [
+          "C10b1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Real positive arguments and fixed orders zero and one only. Independent values at x=1 and a modified-Bessel Wronskian identity are checked. Upstream documents limitations in other variable-order paths.",
+        "evidence": [
+          {
+            "path": "src/bessels.f90",
+            "sha256": "859f5041eaf7b87320a016b2875857980d991f84bd864d37ee284d7bfcdc2932",
+            "line": 752
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/bessels_test.f90",
+            "sha256": "6f2229cd6ab71296530e5923819095a75d3c17ed235e9e3b33df7a7c66df39db"
+          }
+        ]
+      }
+    ],
+    "stars_updated_at": "2026-10-28T17:30:42.130830+00:00"
+  },
+  {
+    "id": "dynamics",
+    "repository": "jchristopherson/dynamics",
+    "revision": "580d04859a25126d3261e44b3fbec5111835e3a4",
+    "archive_sha256": "9aae4e1bff56b7a4bcf738be61dced3038d778b5b94bbc91ecb9edf58eaa3d87",
+    "stars": 3,
+    "category": "Dynamics and control",
+    "description": "Frequency response, vibration analysis, modal analysis and dynamic-system calculations.",
+    "license": "MIT",
+    "catalog_build": {
+      "metapackages": [
+        "openmp"
+      ],
+      "environment": {
+        "FPM_FFLAGS": "-fopenmp"
+      },
+      "apt_packages": [
+        "libblas-dev=3.12.1-6",
+        "liblapack-dev=3.12.1-6",
+        "libarpack2-dev=3.9.1-6"
+      ],
+      "source_revisions": {
+        "jchristopherson/fortran_test_helper": "1557b1485d8a5b042862042552f1e1a34552ca5e",
+        "jchristopherson/ferror": "9d6c9750f5c14ef2c806104ea8dfdfc9ce91efed",
+        "jchristopherson/collections": "ce37c94e72b3ae5db2e2208489999260a7875f81",
+        "jchristopherson/peaks": "5bd81dc18ddd629ecf3daa08769ff2440def3682",
+        "jchristopherson/fstats": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+        "jchristopherson/spectrum": "5af0d5a85eccf971aa6e0fc72b1c7439c3cef536",
+        "jchristopherson/geompack": "b7a327ca3a13507859c42dd6fba50af0bb5d5c6a",
+        "jchristopherson/linalg": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+        "jchristopherson/nonlin": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+        "jchristopherson/diffeq": "989b320179c23aaff4bfe72994c90e9034f50c74"
+      },
+      "adapter_sha256": "fd73ab30a27bb1299e6630ac45976aec59e1c123d56881471a0cb2065cc97bbc"
+    },
+    "dependencies": [
+      {
+        "repository": "jchristopherson/linalg",
+        "revision": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+        "sha256": "6210b8b167b50694941f48b20ad5d94bdacab026f1eb4720e2d55e8ddde0b59a"
+      },
+      {
+        "repository": "jchristopherson/nonlin",
+        "revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+        "sha256": "3a6f6cf6daa9b352213407f7c90555c22a492ad455cab0e2eb708efc7d34eaba"
+      },
+      {
+        "repository": "jchristopherson/ferror",
+        "revision": "9d6c9750f5c14ef2c806104ea8dfdfc9ce91efed",
+        "sha256": "b2c2c059d263b38484acf6956fa6416f899d739d3669906931aa1c08441510bd"
+      },
+      {
+        "repository": "jchristopherson/diffeq",
+        "revision": "989b320179c23aaff4bfe72994c90e9034f50c74",
+        "sha256": "09f6e92aea1dc8c9eb9233d4052b012e3b53a739e1ce078453d0421ddb1d4e87"
+      },
+      {
+        "repository": "jchristopherson/spectrum",
+        "revision": "5af0d5a85eccf971aa6e0fc72b1c7439c3cef536",
+        "sha256": "20079f9ad017369097d5463fec26732775fb33a868eb2d3c3a308a044cb92e79"
+      },
+      {
+        "repository": "jchristopherson/fstats",
+        "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+        "sha256": "cf6b7367fc2a0d74f46000dc80a4cbedd07fd554e29117144b695b3a9ffa6fef"
+      },
+      {
+        "repository": "jchristopherson/collections",
+        "revision": "ce37c94e72b3ae5db2e2208489999260a7875f81",
+        "sha256": "5d53caf3c0b35e9e2a8bed49f8e96dca1b282434859c8c6f53fae3123528f265"
+      },
+      {
+        "repository": "jchristopherson/fstring",
+        "revision": "1bb1043a1ed34b8bd57f2687166463dd573bce3d",
+        "sha256": "0272f644a9217485fa2a3a18e41010c88f81ccc7398fc855c37518be2ac8eb3f"
+      },
+      {
+        "repository": "jchristopherson/peaks",
+        "revision": "5bd81dc18ddd629ecf3daa08769ff2440def3682",
+        "sha256": "9e960c21152146921544c46a482bb7c3999fd32b1c97a9a4759ed56f9dff6b44"
+      },
+      {
+        "repository": "jchristopherson/fortran_test_helper",
+        "revision": "1557b1485d8a5b042862042552f1e1a34552ca5e",
+        "sha256": "846d7506d044b41eb307619d84369d97afdd8b4838ea19eae6803735dffc10e2"
+      }
+    ],
+    "source": "! Frequency response of m*x''+c*x'+k*x=cos(omega*t).\nmodule playground_dynamics_force\n   use, intrinsic :: iso_fortran_env, only: real64\n   implicit none\ncontains\n   subroutine unit_force(frequency,force,args)\n      real(real64),intent(in) :: frequency\n      complex(real64),intent(out) :: force(:)\n      class(*),optional,intent(inout) :: args\n      force=cmplx(1._real64,0._real64,real64)\n   end subroutine\nend module\nprogram demo_dynamics\n   use playground_dynamics_force\n   use dynamics, only: frf,frequency_response,modal_excite\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   real(real64),parameter :: omega(*)=[0._real64,0.5_real64,1._real64,1.5_real64, &\n      2._real64,2.5_real64,3._real64,4._real64]\n   real(real64) :: mass(1,1),stiffness(1,1),err\n   complex(real64) :: exact\n   type(frf) :: response\n   procedure(modal_excite),pointer :: forcing\n   integer :: i\n   mass=1; stiffness=4\n   forcing=>unit_force\n   ! C=alpha*M+beta*K, so alpha=0.2 and beta=0 give damping c=0.2.\n   response=frequency_response(mass,stiffness,0.2_real64,0._real64,omega,forcing)\n   if (.not.allocated(response%responses)) error stop 'No frequency response'\n   if (size(response%responses,1)/=size(omega)) error stop 'Wrong frequency count'\n   if (.not.all(ieee_is_finite(abs(response%responses)))) error stop 'Nonfinite response'\n   print '(a)', 'Angular frequency    Displacement amplitude    Analytic error'\n   do i=1,size(omega)\n      exact=1/cmplx(4-omega(i)**2,0.2_real64*omega(i),real64)\n      err=abs(response%responses(i,1)-exact)\n      print '(f14.5,f26.12,es18.3)',omega(i),abs(response%responses(i,1)),err\n      if (err>1e-10_real64) error stop 'Frequency response differs from analytic solution'\n   end do\n   print '(a)', 'PASS dynamics'\nend program\n",
+    "topics": [
+      "denavit-hartenberg",
+      "frequency-analysis",
+      "frequency-response",
+      "frf-fitting",
+      "geometric-algorithms",
+      "kinematics",
+      "modal-analysis",
+      "parallel-linkage",
+      "poincare-map",
+      "quaternions",
+      "rotation-matrix",
+      "serial-linkage",
+      "structural-dynamics",
+      "system-identification"
+    ],
+    "playground_topics": [
+      "control-systems",
+      "damping",
+      "frequency-response",
+      "modal-analysis",
+      "vibration"
+    ],
+    "gams": [
+      {
+        "code": "I",
+        "label": "Differential and integral equations",
+        "parent": null
+      },
+      {
+        "code": "I1",
+        "label": "Ordinary differential equations (ODE''s)",
+        "parent": "I"
+      }
+    ],
+    "gams_procedures": [
+      {
+        "id": "dynamics-api",
+        "package_id": "dynamics",
+        "revision": "580d04859a25126d3261e44b3fbec5111835e3a4",
+        "module": "dynamics_frequency_response",
+        "procedure": "frequency_response (frf_modal_prop_damp)",
+        "gams_codes": [
+          "I1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Steady-state harmonic response of a linear second-order ODE system with proportional damping; retain the broad ODE class rather than label this an initial-value integrator.",
+        "evidence": [
+          {
+            "path": "src/frequency/dynamics_frequency_response.f90",
+            "sha256": "5b1700c13c9940f770652f3c3f079a1d640377279306b618681e04d7d9d3095f",
+            "line": 119
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "examples/frf_example_1.f90",
+            "sha256": "d28f69355f302d461fccc865f77d649e6bb64599f600a0036660d159d520c09b"
+          }
+        ]
+      }
+    ],
+    "stars_updated_at": "2026-10-28T17:30:42.130830+00:00"
+  },
+  {
+    "id": "diffstruc",
+    "repository": "nedtaylor/diffstruc",
+    "revision": "88565f8e01792706edc0bd7e70dde957c26122a4",
+    "archive_sha256": "84daa1e2c23f1cd2285b5212f4f5390cf930336c98feae7da0b5eb4534a7e65f",
+    "stars": 32,
+    "category": "Differentiation",
+    "description": "Forward and reverse automatic differentiation with array computation graphs.",
+    "license": "MIT",
+    "catalog_build": {
+      "apt_packages": [
+        "libblas-dev=3.12.1-6",
+        "liblapack-dev=3.12.1-6"
+      ],
+      "adapter_sha256": "fd73ab30a27bb1299e6630ac45976aec59e1c123d56881471a0cb2065cc97bbc"
+    },
+    "dependencies": [
+      {
+        "repository": "nedtaylor/coreutils",
+        "revision": "ead4501f4b695c4f0fe3267f1bf5318544c9b1e2",
+        "sha256": "a2979763627707ba61169b4abacd7ee60b586df9115ac2beb9ee674c25031554"
+      }
+    ],
+    "source": "! Array and forward-mode setup follows test/test_functions.f90 (MIT).\n! f(x1,x2) = x1*x2**2 + x1**2; compare analytical and AD gradients.\nprogram main\n   use diffstruc\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   type(array_type) :: x\n   type(array_type), pointer :: f, derivative\n   real(real32) :: forward(2), reverse(2), exact(2), direction(2), err\n   integer :: j\n\n   call x%allocate(array_shape=[2,1])\n   x%is_temporary = .false.\n   x%val(:,1) = [1.25_real32, -2._real32]\n   call x%set_requires_grad(.true.)\n   f => pack(x,[1],1)*pack(x,[2],1)**2 + pack(x,[1],1)**2\n   f%is_temporary = .false.\n   exact = [x%val(2,1)**2+2*x%val(1,1), 2*x%val(1,1)*x%val(2,1)]\n   do j = 1, 2\n      direction = 0._real32\n      direction(j) = 1._real32\n      call x%set_direction(direction)\n      derivative => f%grad_forward(x)\n      derivative%is_temporary = .false.\n      forward(j) = derivative%val(1,1)\n   end do\n   ! Reverse accumulation also uses direction: enable both components.\n   call x%set_direction([1._real32,1._real32])\n   call f%grad_reverse(reset_graph=.true.)\n   if (.not. associated(x%grad)) error stop 'No reverse gradient'\n   reverse = x%grad%val(:,1)\n   err = max(maxval(abs(forward-exact)),maxval(abs(reverse-exact)))\n   print '(a,f12.6)', 'Function value = ', f%val(1,1)\n   print '(a,2f12.6)', 'Analytical gradient: ', exact\n   print '(a,2f12.6)', 'Forward gradient:    ', forward\n   print '(a,2f12.6)', 'Reverse gradient:    ', reverse\n   if (.not. ieee_is_finite(err) .or. err > 1.e-5_real32) error stop 'Incorrect gradient'\n   print *, 'PASS diffstruc'\nend program main\n",
+    "topics": [
+      "automatic-differentiation",
+      "backpropagation",
+      "differentiation",
+      "fortran",
+      "fortran-package-manager",
+      "forward-mode",
+      "library",
+      "partial-differentiation",
+      "reverse-mode"
+    ],
+    "playground_topics": [
+      "automatic-differentiation",
+      "derivatives",
+      "forward-mode",
+      "gradients",
+      "reverse-mode"
+    ],
+    "gams": [
+      {
+        "code": "H",
+        "label": "Differentiation, integration",
+        "parent": null
+      },
+      {
+        "code": "H1",
+        "label": "Numerical differentiation",
+        "parent": "H"
+      }
+    ],
+    "gams_procedures": [
+      {
+        "id": "diffstruc-api",
+        "package_id": "diffstruc",
+        "revision": "88565f8e01792706edc0bd7e70dde957c26122a4",
+        "module": "diffstruc",
+        "procedure": "array_type%grad_forward / grad_reverse",
+        "gams_codes": [
+          "H1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "automatic differentiation",
+        "notes": "Forward directional derivatives and reverse-mode gradients of array expressions; the demo restores the direction mask before reverse accumulation.",
+        "evidence": [
+          {
+            "path": "src/diffstruc/diffstruc_types_sub.f90",
+            "sha256": "a79fe601b0c1bc5133b89a05953f8f6ccc658a313af9fe93a8124025d65c3dc9",
+            "line": 505
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_functions.f90",
+            "sha256": "ddf07c01c9cb4e4eb971046b5f2d70ff8cbf1ee17fca7a374748c3e772e83182"
+          }
+        ]
+      }
+    ],
+    "stars_updated_at": "2026-10-28T17:54:16.128500+00:00"
+  },
+  {
+    "id": "dnaoad-fpm",
+    "repository": "fpenunuri/DNAOAD-FPM",
+    "revision": "f7f328e89b208a99797d64f4a41e97ba91b85962",
+    "archive_sha256": "eb96a128d723377508e87d6b843afb405ff66cad7248f7916d2664318e56f703",
+    "stars": 0,
+    "category": "Differentiation",
+    "description": "Complex dual numbers for derivatives through configurable order.",
+    "license": "MIT",
+    "dependencies": [],
+    "source": "! Dual-number setup follows the author's app/ex1.f90 (MIT).\nprogram main\n   use config_mod, only: prec\n   use dualzn_mod\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   type(dualzn) :: x, y\n   complex(prec) :: z, exact\n   real(prec) :: err\n   integer :: k, sample\n\n   print *, 'Derivatives 0 through 5 of exp(z) + sin(z)'\n   do sample = 1, 2\n      z = cmplx(0.4_prec, 0.2_prec*(sample-1), kind=prec)\n      x = xto_dzn(0, 5)\n      x%f(0) = z\n      x%f(1) = 1.0_prec\n      y = exp(x) + sin(x)\n      print '(a,2f9.4)', 'z (real, imaginary) = ', real(z), aimag(z)\n      do k = 0, 5\n         select case (mod(k,4))\n         case (0)\n            exact = exp(z) + sin(z)\n         case (1)\n            exact = exp(z) + cos(z)\n         case (2)\n            exact = exp(z) - sin(z)\n         case (3)\n            exact = exp(z) - cos(z)\n         end select\n         err = abs(y%f(k)-exact)\n         if (.not. ieee_is_finite(err) .or. err > 2.e-12_prec) error stop 'Incorrect derivative'\n         print '(i2,2f15.10,a,es10.2)', k, real(y%f(k)), aimag(y%f(k)), ' error ', err\n      end do\n   end do\n   print *, 'PASS dnaoad-fpm'\nend program main\n",
+    "topics": [],
+    "playground_topics": [
+      "automatic-differentiation",
+      "complex-arithmetic",
+      "dual-numbers",
+      "higher-order-derivatives"
+    ],
+    "gams": [
+      {
+        "code": "H",
+        "label": "Differentiation, integration",
+        "parent": null
+      },
+      {
+        "code": "H1",
+        "label": "Numerical differentiation",
+        "parent": "H"
+      }
+    ],
+    "gams_procedures": [
+      {
+        "id": "dnaoad-fpm-api",
+        "package_id": "dnaoad-fpm",
+        "revision": "f7f328e89b208a99797d64f4a41e97ba91b85962",
+        "module": "dualzn_mod",
+        "procedure": "exp / sin for dualzn",
+        "gams_codes": [
+          "H1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "automatic differentiation",
+        "notes": "Dual-number derivatives through the configured maximum order (five in this build); the demo checks orders zero through five at real and complex arguments.",
+        "evidence": [
+          {
+            "path": "src/dualzn_mod.f90",
+            "sha256": "90106eb7645f094511f5a0410917c42721b6475e180b09cad1f22d351b0a2c24",
+            "line": 7
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "app/ex1.f90",
+            "sha256": "45cfee1e4f05e4a9f49e640c11051f7102dc0bfd8e544612b096ecd3b8f31ed7"
+          }
+        ]
+      }
+    ],
+    "stars_updated_at": "2026-10-28T17:54:16.128500+00:00"
+  },
+  {
+    "id": "seiscope-optimization",
+    "repository": "ofmla/seiscope_opt_toolbox_w_ctypes",
+    "revision": "74a25c29d13c506e16f8025eb13a2cf396dc23c0",
+    "archive_sha256": "8915f61094dc4ec7cf3be3cf663638ef3433815dd707e9cfc33fdfdb29efe874",
+    "stars": 32,
+    "category": "Roots and optimization",
+    "description": "Gradient-based optimization with L-BFGS, nonlinear conjugate gradients and truncated Newton methods.",
+    "license": "MIT & BSD-3-Clause",
+    "dependencies": [],
+    "catalog_patches": {
+      "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+      "edits": [
+        {
+          "path": "src/sotb/merged-LBFGS.f90",
+          "sha256": "e11e89d0d264264cb73cf6d138a228406d0682151d2863d6947355bf8401951c",
+          "before": "call descent_LBFGS(n,grad,sk,yk,optim%cpt_lbfgs,&\n                l,descent)",
+          "after": "call descent_LBFGS(n,grad,sk,yk,optim%cpt_lbfgs,&\n                optim%l,descent)"
+        }
+      ]
+    },
+    "source": "!******************************************************************\n!Copyright 2013-2016 SEISCOPE II project, All rights reserved.\n!\n!Redistribution and use in source and binary forms, with or\n!without modification, are permitted provided that the following\n!conditions are met:\n!\n!    *  Redistributions of source code must retain the above copyright\n!       notice, this list of conditions and the following disclaimer.\n!    *  Redistributions in binary form must reproduce the above\n!       copyright notice, this list of conditions and the following\n!       disclaimer in the documentation and/or other materials provided\n!       with the distribution.\n!    *  Neither the name of the SEISCOPE project nor the names of\n!       its contributors may be used to endorse or promote products\n!       derived from this software without specific prior written permission.\n!\n!Warranty Disclaimer:\n!THIS SOFTWARE IS PROVIDED BY THE SEISCOPE PROJECT AND CONTRIBUTORS\n!\"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT\n!LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS\n!FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE\n!SEISCOPE PROJECT OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,\n!INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,\n!BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;\n!LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER\n!CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,\n!STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING\n!IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE\n!POSSIBILITY OF SUCH DAMAGE.\n\n! Adapted from the author's app/LBFGS/test_LBFGS.f90; adds independent checks.\nprogram main\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   use seiscope_optimization_toolbox\n   implicit none\n   type(optim_type) :: optim\n   real :: x(2), grad(2), cost, exact_cost, exact_grad(2)\n   integer :: flag, calls\n\n   x = [1.5, 1.5]\n   call Rosenbrock(x, cost, grad)\n   call set_inputs(optim, cost, 1000, conv=1.e-12, l=10, print_flag=0)\n   flag = 0\n   calls = 0\n   do while (flag /= 2 .and. flag /= 4)\n      calls = calls + 1\n      if (calls > 10000) error stop 'Iteration limit'\n      call LBFGS(2, x, cost, grad, optim, flag)\n      if (flag == 1) call Rosenbrock(x, cost, grad)\n   end do\n   exact_cost = (1.-x(1))**2 + 100.*(x(2)-x(1)**2)**2\n   exact_grad = [2.*(x(1)-1.)-400.*x(1)*(x(2)-x(1)**2), 200.*(x(2)-x(1)**2)]\n   if (flag /= 2 .or. .not. all(ieee_is_finite(x))) error stop 'Optimizer failed'\n   if (maxval(abs(x-1.)) > 2.e-4 .or. exact_cost > 1.e-8) error stop 'Wrong minimum'\n   if (maxval(abs(exact_grad)) > 2.e-3) error stop 'Gradient too large'\n   print '(a,2f13.8)', 'Rosenbrock minimum x = ', x\n   print '(a,es12.4)', 'Objective = ', exact_cost\n   print '(a,i0)', 'Iterations = ', optim%cpt_iter\n   print *, 'PASS seiscope-optimization'\nend program main\n",
+    "topics": [
+      "ctypes-wrapper",
+      "fortran",
+      "fortran-package-manager",
+      "geophysics",
+      "gradient-based-optimisation",
+      "python-bindings",
+      "wrapper-library"
+    ],
+    "playground_topics": [
+      "gradient-based-optimization",
+      "lbfgs",
+      "nonlinear-conjugate-gradient",
+      "optimization",
+      "truncated-newton"
+    ],
+    "gams": [
+      {
+        "code": "G",
+        "label": "Optimization",
+        "parent": null
+      },
+      {
+        "code": "G1",
+        "label": "Unconstrained",
+        "parent": "G"
+      },
+      {
+        "code": "G1b",
+        "label": "Multivariate",
+        "parent": "G1"
+      }
+    ],
+    "gams_procedures": [
+      {
+        "id": "seiscope-optimization-api",
+        "package_id": "seiscope-optimization",
+        "revision": "74a25c29d13c506e16f8025eb13a2cf396dc23c0",
+        "module": "opt_LBFGS",
+        "procedure": "LBFGS",
+        "gams_codes": [
+          "G1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "user first derivatives",
+        "notes": "Unconstrained smooth multivariate minimization requiring user first derivatives. The guarded catalog edit replaces an uninitialized workspace-length actual argument with optim%l.",
+        "evidence": [
+          {
+            "path": "src/sotb/merged-LBFGS.f90",
+            "sha256": "e11e89d0d264264cb73cf6d138a228406d0682151d2863d6947355bf8401951c",
+            "line": 213
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "app/LBFGS/test_LBFGS.f90",
+            "sha256": "f802ce7e82063cba7b0367531f8dcf99bf5ab9b6128435ed049816dd0389944d"
+          }
+        ]
+      }
+    ],
+    "stars_updated_at": "2026-10-28T17:54:16.128500+00:00"
+  },
+  {
+    "id": "gslib",
+    "repository": "exepulveda/gslib2.0",
+    "revision": "5c021000eb3da8703ced3ee9be145d6c0ecb2608",
+    "archive_sha256": "72d7c772e5a9a51cc90c5192bf9f8afb307771764697a8f821873bf36a66f50a",
+    "stars": 5,
+    "category": "Statistics",
+    "description": "Geostatistical covariance models, kriging and spatial simulation routines.",
+    "license": "MIT & GSLIB-1996",
+    "catalog_build": {
+      "manifest_names": {
+        "exepulveda/gslib2.0": "gslib"
+      },
+      "adapter_sha256": "e69f1678e4f5c0963a1794ac1fa804522972481e75f9e530400bd3eec8e92c32"
+    },
+    "dependencies": [],
+    "catalog_patches": {
+      "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+      "edits": [
+        {
+          "path": "fpm.toml",
+          "sha256": "97588f07e2abd5cfa260ca5cbefdc72392a38e38ed03d5d1c3137cdcef38b68d",
+          "before": "source-dir = \"src/legacy\"",
+          "after": "source-dir = \"src/legacy\"\n\n[fortran]\nimplicit-typing = true\nimplicit-external = true"
+        },
+        {
+          "path": "src/legacy/gslib/nscore.f90",
+          "sha256": "5df8f3cf73db2821a44589498a95ebbbdb46a95759741b33e5976b0eb65580f2",
+          "before": "      real      vr(nd),wt(nd),vrg(nd),tmp(nd)",
+          "after": "      real      vr(nd),wt(nd),vrg(nd),tmp(nd)\n      real      d(nd),e(nd),f(nd),g(nd),h(nd)"
+        }
+      ]
+    },
+    "source": "! Ordinary kriging from two observations using GSLIB covariance and solver routines.\n! No data files: observations are value 1 at x=0 and value 3 at x=2.\nprogram main\n   use, intrinsic :: iso_fortran_env, only: real64\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   real(real64) :: rotation(1,3,3), a(6), rhs(3), weights(3), original_rhs(3)\n   real(real64) :: matrix(3,3), corr, expected(3), residual, variance, estimate\n   real :: c0(1), cc(1), ranges(1), cmax, covariance, point\n   integer :: nst(1), model(1), i, j, k, status, sample\n   interface\n      subroutine cova3(x1,y1,z1,x2,y2,z2,ivarg,nst,maxnst,c0,it,cc,aa,irot,maxrot,rotmat,cmax,cova)\n         import real64\n         real :: x1,y1,z1,x2,y2,z2,c0(*),cc(*),aa(*),cmax,cova\n         integer :: ivarg,nst(*),maxnst,it(*),irot,maxrot\n         real(real64) :: rotmat(maxrot,3,3)\n      end subroutine\n      subroutine ksol(nright,neq,nsb,a,r,s,ising)\n         import real64\n         integer :: nright,neq,nsb,ising\n         real(real64) :: a(*),r(*),s(*)\n      end subroutine\n   end interface\n\n   ! Identity rotation; unit sill, zero nugget, exponential covariance exp(-h).\n   rotation = 0._real64\n   do i = 1, 3\n      rotation(1,i,i) = 1._real64\n   end do\n   nst = 1\n   model = 2\n   c0 = 0.\n   cc = 1.\n   ranges = 3.\n   call cova3(0.,0.,0.,2.,0.,0.,1,nst,1,c0,model,cc,ranges,1,1,rotation,cmax,covariance)\n   corr = real(covariance,real64)\n   if (abs(corr-exp(-2._real64)) > 2.e-7_real64) error stop 'Wrong covariance'\n   matrix = reshape([1._real64,corr,1._real64,corr,1._real64,1._real64, &\n                     1._real64,1._real64,0._real64],[3,3])\n   print *, 'Position    Kriging estimate    Variance    System residual'\n   do sample = 0, 4\n      point = 0.5*sample\n      do i = 1, 2\n         call cova3(real(2*(i-1)),0.,0.,point,0.,0.,1,nst,1,c0,model,cc,ranges, &\n                    1,1,rotation,cmax,covariance)\n         rhs(i) = real(covariance,real64)\n         if (abs(rhs(i)-exp(-abs(real(point,real64)-2*(i-1)))) > 2.e-7_real64) &\n            error stop 'Wrong target covariance'\n      end do\n      rhs(3) = 1._real64\n      original_rhs = rhs\n      k = 0\n      do j = 1, 3\n         do i = 1, j\n            k = k+1\n            a(k) = matrix(i,j)\n         end do\n      end do\n      call ksol(1,3,1,a,rhs,weights,status)\n      if (status /= 0 .or. .not. all(ieee_is_finite(weights))) error stop 'Kriging solve failed'\n      expected(1) = 0.5_real64*(1._real64+(original_rhs(1)-original_rhs(2))/(1._real64-corr))\n      expected(2) = 1._real64-expected(1)\n      expected(3) = original_rhs(1)-expected(1)-corr*expected(2)\n      residual = maxval(abs(matmul(matrix,weights)-original_rhs))\n      if (maxval(abs(weights-expected)) > 1.e-10_real64 .or. residual > 1.e-10_real64) &\n         error stop 'Wrong kriging weights'\n      estimate = weights(1)+3._real64*weights(2)\n      variance = 1._real64-dot_product(weights(1:2),original_rhs(1:2))-weights(3)\n      if (.not. ieee_is_finite(estimate) .or. variance < -1.e-10_real64) error stop 'Invalid estimate'\n      if (sample == 0 .and. abs(estimate-1._real64) > 1.e-10_real64) error stop 'Endpoint mismatch'\n      if (sample == 2 .and. abs(estimate-2._real64) > 1.e-10_real64) error stop 'Midpoint mismatch'\n      if (sample == 4 .and. abs(estimate-3._real64) > 1.e-10_real64) error stop 'Endpoint mismatch'\n      print '(f8.2,2f18.8,es18.3)', point, estimate, variance, residual\n   end do\n   print *, 'PASS gslib'\nend program main\n",
+    "topics": [],
+    "playground_topics": [
+      "covariance-models",
+      "gaussian-simulation",
+      "geostatistics",
+      "kriging",
+      "spatial-statistics"
+    ],
+    "gams": [
+      {
+        "code": "E",
+        "label": "Interpolation",
+        "parent": null
+      },
+      {
+        "code": "E2",
+        "label": "Multivariate data (surface fitting)",
+        "parent": "E"
+      },
+      {
+        "code": "L",
+        "label": "Statistics, probability",
+        "parent": null
+      },
+      {
+        "code": "L13",
+        "label": "Covariance structure models",
+        "parent": "L"
+      }
+    ],
+    "gams_procedures": [
+      {
+        "id": "gslib-api",
+        "package_id": "gslib",
+        "revision": "5c021000eb3da8703ced3ee9be145d6c0ecb2608",
+        "module": "external GSLIB routines",
+        "procedure": "cova3 / ksol (ordinary-kriging driver)",
+        "gams_codes": [
+          "E2",
+          "L13"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "The driver assembles an ordinary-kriging system from GSLIB covariance and linear-solver routines. It checks exponential covariances, closed-form weights, endpoint interpolation and independent system residuals. Broad interpolation/covariance classes only; no exhaustive spatial-statistics review.",
+        "evidence": [
+          {
+            "path": "src/legacy/gslib/cova3.f90",
+            "sha256": "51394c56d3e67747f10ef8bffe8d499b7e7f1e6392f51552721371a8a745439c",
+            "line": 1
+          }
+        ],
+        "author_examples": []
+      }
+    ],
+    "stars_updated_at": "2026-10-28T17:54:16.128500+00:00"
+  },
+  {
+    "id": "featom",
+    "repository": "atomic-solvers/featom",
+    "revision": "87872a3266ceeee61a7244e6ecd134dc3bda790f",
+    "archive_sha256": "8f32331778e1e0fb1d6639629f247ddee83878dbead1d59bfd0c39c210a60123",
+    "stars": 13,
+    "category": "Quantum mechanics",
+    "description": "Radial Schroedinger and Dirac equations solved with high-order finite elements.",
+    "license": "MIT",
+    "catalog_build": {
+      "apt_packages": [
+        "libblas-dev=3.12.1-6",
+        "liblapack-dev=3.12.1-6"
+      ],
+      "adapter_sha256": "e69f1678e4f5c0963a1794ac1fa804522972481e75f9e530400bd3eec8e92c32"
+    },
+    "dependencies": [],
+    "source": "! Setup adapted from the author's test/test_coulomb_schroed.f90 (MIT).\n! A one-electron hydrogen Coulomb potential, in atomic units (Hartree energies).\nprogram main\n   use types, only: dp\n   use schroed_dirac_solver, only: total_energy\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   integer, parameter :: ne = 8, p = 20, nq = 43\n   real(dp) :: alpha_j(-7:6), alpha(-7:6), quadrature(nq,ne), error, exact\n   real(dp), allocatable :: energies(:), wavefunctions(:,:,:)\n   integer :: dofs, principal, angular, index\n\n   alpha = 0._dp\n   alpha_j = -2._dp\n   call total_energy(1,100._dp,ne,100._dp,p,nq,dofs,0,0,137.0359895_dp,0, &\n                     -7,alpha_j,alpha,energies,wavefunctions,quadrature)\n   if (.not. all(ieee_is_finite(energies))) error stop 'Nonfinite energy'\n   print '(a,i0)', 'Radial finite-element degrees of freedom: ', dofs\n   print *, ' n  l        Energy (Hartree)          Exact            Absolute error'\n   do principal = 1, 3\n      exact = -0.5_dp/real(principal**2,dp)\n      do angular = 0, principal-1\n         index = (principal-1)*principal/2+angular+1\n         error = abs(energies(index)-exact)\n         print '(2i3,2f21.12,es15.3)', principal,angular,energies(index),exact,error\n         if (error > 1.e-7_dp) error stop 'Hydrogen energy check failed'\n      end do\n   end do\n   print *, 'PASS featom'\nend program main\n",
+    "topics": [
+      "atomic-structures",
+      "dft",
+      "finite-element-methods",
+      "hartree-fock"
+    ],
+    "playground_topics": [
+      "atomic-structure",
+      "dirac-equation",
+      "eigenvalue-problems",
+      "finite-elements",
+      "quantum-mechanics",
+      "schroedinger-equation"
+    ],
+    "gams": [
+      {
+        "code": "I",
+        "label": "Differential and integral equations",
+        "parent": null
+      },
+      {
+        "code": "I1",
+        "label": "Ordinary differential equations (ODE''s)",
+        "parent": "I"
+      },
+      {
+        "code": "I1b",
+        "label": "Multipoint boundary value problems",
+        "parent": "I1"
+      }
+    ],
+    "gams_procedures": [
+      {
+        "id": "featom-api",
+        "package_id": "featom",
+        "revision": "87872a3266ceeee61a7244e6ecd134dc3bda790f",
+        "module": "schroed_dirac_solver",
+        "procedure": "total_energy (nonrelativistic Coulomb branch)",
+        "gams_codes": [
+          "I1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Radial one-dimensional boundary-value eigenproblem solved by finite elements. The demo checks the six n<=3 hydrogen Coulomb energies; no claim of validating the relativistic or self-consistent DFT paths.",
+        "evidence": [
+          {
+            "path": "src/schroed_dirac_solver.f90",
+            "sha256": "ff75ec399ea35ce6e695b04a0596655876dbc41085725187f51240a893b77bdb",
+            "line": 18
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_coulomb_schroed.f90",
+            "sha256": "1ef8206d00e88d898465104b248b1f120f802e96a7d9175acccb3b1ffcf4ec65"
+          }
+        ]
+      }
+    ],
+    "stars_updated_at": "2026-10-28T19:06:33.093926+00:00"
+  },
+  {
+    "id": "econ-toolchain",
+    "repository": "renatomatz/econ-toolchain",
+    "revision": "301d1659ba3d34973195985c552ca6fcfe2d9f29",
+    "archive_sha256": "17f9f11a1e31418ab0211127966d9336068ce6d4662f421a9a513a6daedd70a5",
+    "stars": 0,
+    "category": "Statistics",
+    "description": "Markov chains, stochastic-process discretization and numerical tools for economic models.",
+    "license": "MIT",
+    "catalog_build": {
+      "apt_packages": [
+        "libopenblas-serial-dev=0.3.29+ds-3",
+        "libopenblas-dev=0.3.29+ds-3"
+      ],
+      "environment": {
+        "FPM_FFLAGS": "-fcoarray=single"
+      },
+      "manifest_versions": {
+        "fortran-lang/stdlib": "0.8.1"
+      },
+      "source_revisions": {
+        "fortran-lang/stdlib": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "jacobwilliams/simulated-annealing": "a2fa094d1ee39525c7e081cfd67866975e9e1dc5"
+      },
+      "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+      "shared_dependencies": {
+        "adapter_sha256": "8a85ff125c66db77f139fb6b62e6895fa314413a2b0350e68d8f3126c1d19707",
+        "repositories": [
+          "fortran-lang/stdlib"
+        ]
+      }
+    },
+    "dependencies": [
+      {
+        "repository": "fortran-lang/stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+      },
+      {
+        "repository": "jacobwilliams/simulated-annealing",
+        "revision": "a2fa094d1ee39525c7e081cfd67866975e9e1dc5",
+        "sha256": "d2fb01dfd123ccbda75b4bcfc547da517f3ef9ea8e71a686ef6572253b9b58ba"
+      }
+    ],
+    "source": "! Calls follow the author's test/markov_test.f90 and test/tauchen_test.f90 (MIT).\n! markov_steady_state expects COLUMN-stochastic transitions.\n! tauchen returns ROW-stochastic transitions, so transpose before iteration.\nprogram main\n   use shared_mod, only: wp\n   use dist_mod, only: markov_steady_state, tauchen\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   integer, parameter :: n = 31\n   real(wp) :: transition(2,2), stationary(2), reference(2), residual\n   real(wp) :: nodes(n), probabilities(n,n), distribution(n), mean, variance, exact_variance\n   integer :: status\n\n   transition(1,:) = [0.9_wp,0.2_wp]\n   transition(2,:) = [0.1_wp,0.8_wp]\n   stationary = 0._wp\n   call markov_steady_state(transition,stationary,1.e-14_wp,10000,status)\n   reference = [2._wp/3._wp,1._wp/3._wp]\n   residual = maxval(abs(matmul(transition,stationary)-stationary))\n   if (status /= 0 .or. .not. all(ieee_is_finite(stationary))) error stop 'Stationary iteration failed'\n   if (maxval(abs(stationary-reference)) > 1.e-12_wp .or. residual > 1.e-12_wp) &\n      error stop 'Wrong stationary distribution'\n   print '(a,2f15.10)', 'Two-state equilibrium: ', stationary\n   print '(a,es12.4)', 'Equilibrium residual: ', residual\n\n   call tauchen(n,0._wp,0.8_wp,0.1_wp,3._wp,nodes,probabilities)\n   if (.not. all(ieee_is_finite(probabilities))) error stop 'Nonfinite probability'\n   if (minval(probabilities) < 0._wp .or. maxval(abs(sum(probabilities,dim=2)-1._wp)) > 1.e-12_wp) &\n      error stop 'Invalid transition probabilities'\n   distribution = 0._wp\n   call markov_steady_state(transpose(probabilities),distribution,1.e-14_wp,10000,status)\n   if (status /= 0 .or. .not. all(ieee_is_finite(distribution))) error stop 'Tauchen iteration failed'\n   residual = maxval(abs(matmul(transpose(probabilities),distribution)-distribution))\n   if (minval(distribution) < 0._wp .or. abs(sum(distribution)-1._wp) > 1.e-11_wp &\n       .or. residual > 1.e-12_wp) error stop 'Invalid Tauchen stationary distribution'\n   mean = dot_product(distribution,nodes)\n   variance = dot_product(distribution,(nodes-mean)**2)\n   exact_variance = 0.1_wp**2/(1._wp-0.8_wp**2)\n   ! Finite-grid/truncated AR(1) approximation: variance need not be exact.\n   if (abs(mean) > 1.e-11_wp .or. abs(variance-exact_variance) > 0.05_wp*exact_variance) &\n      error stop 'Unexpected AR(1) approximation error'\n   print '(a,i0)', 'Tauchen AR(1) states: ', n\n   print '(a,es12.4)', 'Mean: ', mean\n   print '(a,2f15.10)', 'Discrete and continuous variance: ', variance,exact_variance\n   print '(a,es12.4)', 'Equilibrium residual: ', residual\n   print *, 'PASS econ-toolchain'\nend program main\n",
+    "topics": [],
+    "playground_topics": [
+      "economics",
+      "markov-chains",
+      "stationary-distributions",
+      "stochastic-processes",
+      "tauchen-discretization"
+    ],
+    "gams": [
+      {
+        "code": "M",
+        "label": "Simulation, stochastic modeling",
+        "parent": null
+      }
+    ],
+    "gams_procedures": [
+      {
+        "id": "econ-toolchain-api",
+        "package_id": "econ-toolchain",
+        "revision": "301d1659ba3d34973195985c552ca6fcfe2d9f29",
+        "module": "dist_mod",
+        "procedure": "markov_steady_state / tauchen",
+        "gams_codes": [
+          "M"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Stochastic-process modeling: deterministic stationary probabilities and AR(1) Markov discretization, not a claim of random sampling. The stationary routine uses column-stochastic matrices, while tauchen returns row-stochastic matrices; the consumer transposes explicitly.",
+        "evidence": [
+          {
+            "path": "src/dist.f90",
+            "sha256": "8d8a2905135114193fdef5b858fd1d40baf615f6b7e16330703194f613619b2b",
+            "line": 62
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/markov_test.f90",
+            "sha256": "9a75d29e32c81203ad5bfdcc68949468557645f4684e3ab40d968336cd361dae"
+          },
+          {
+            "path": "test/tauchen_test.f90",
+            "sha256": "f0875648571516ed6ab67343edade07c4ae301e95d5519552acf635b5061241e"
+          }
+        ]
+      }
+    ],
+    "stars_updated_at": "2026-10-28T19:06:33.093926+00:00"
   }
 ]

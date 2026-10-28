@@ -1,0 +1,37 @@
+{
+  "repository": "mcuntz/jams_fortran",
+  "revision": "687a5dd08b7239466547f333ccb68463ba5137ad",
+  "error": "Source download exceeds its size limit.",
+  "id": "jams-fortran",
+  "phase": "archive preparation",
+  "download_limit_bytes": 16777216,
+  "archive_sha256_note": "Not available: the bounded download stopped before obtaining the complete archive.",
+  "source_tree_bytes": 43309106,
+  "largest_files": [
+    {
+      "path": "netcdf3/netcdf-3.6.3.tar.gz",
+      "size": 11572512
+    },
+    {
+      "path": "test/test_mo_remap/remap_polar2gk4_umm.nc3",
+      "size": 7537828
+    },
+    {
+      "path": "test/test_mo_remap/remap_polar2gk4_umm.nc",
+      "size": 7537752
+    },
+    {
+      "path": "netcdf3/netcdf-3.6.3-corr.tar.gz",
+      "size": 3453243
+    },
+    {
+      "path": "test/test_mo_remap/Polar-JJA-1-5.nc",
+      "size": 1305580
+    },
+    {
+      "path": "test/test_mo_remap/Polar-JJA-1-5.nc3",
+      "size": 1291664
+    }
+  ],
+  "size_note": "Git tree blob sizes, not compressed archive bytes; archive transfer was stopped at the download limit."
+}
