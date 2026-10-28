@@ -3,6 +3,7 @@ import {createEditor} from '../editors.mjs';
 import {serviceOrigin} from '../service_config.mjs';
 import {playgroundConfig} from '../config.mjs';
 import {githubRepository, pinnedSource, projectFiles, zipFiles, download} from './project_export.mjs';
+import {gamsSubclasses} from './gams_classes.mjs';
 
 const get = id => document.getElementById(id);
 const localExecution = document.documentElement?.dataset?.execution === 'local';
@@ -50,6 +51,7 @@ get('compiler').value = 'gfortran';
 get('package-sort').value = 'name';
 get('package-topic-source').value = 'combined';
 get('package-gams').value = '';
+get('package-gams-subclass').value = '';
 
 function controls() {
   const consumer = get('workflow').value === 'consumer';
@@ -86,6 +88,8 @@ function controls() {
   get('package-topic-source').disabled = busy || collectionLoading;
   get('package-gams').disabled = busy || collectionLoading || translatedCollection();
   get('package-gams-controls').hidden = translatedCollection();
+  get('package-gams-subclass').disabled = busy || collectionLoading || translatedCollection()
+    || get('package-gams-subclass').options.length <= 1;
   for (const button of searchButtons) button.disabled = busy;
   for (const button of topicButtons) button.disabled = busy;
   const selected = packages.find(p => p.id === get('available-package').value);
@@ -162,6 +166,27 @@ function renderGams(packageEntry) {
   }
 }
 
+function renderGamsSubclasses() {
+  const parent = get('package-gams').value;
+  const picker = get('package-gams-subclass');
+  const previous = picker.value;
+  const children = Object.entries(gamsSubclasses).filter(([, info]) => info.parent === parent)
+    .sort(([a], [b]) => a.localeCompare(b, 'en', {numeric: true}));
+  const placeholder = document.createElement('option');
+  placeholder.value = ''; placeholder.textContent = 'All subclasses';
+  picker.replaceChildren(placeholder, ...children.map(([code, info]) => {
+    const option = document.createElement('option'); option.value = code;
+    option.textContent = `${code} — ${info.label}`; return option;
+  }));
+  picker.value = children.some(([code]) => code === previous) ? previous : '';
+  get('package-gams-subclass-controls').hidden = translatedCollection() || !children.length;
+}
+
+function matchesGams(classes, code) {
+  // C1 and C10 (also L1 and L10) are siblings, not a string-prefix hierarchy.
+  return classes.some(c => c.code === code || c.parent === code);
+}
+
 function renderTopics(packageEntry) {
   const container = get('package-topics');
   container.replaceChildren();
@@ -193,8 +218,9 @@ function renderPackages() {
   const previous = get('available-package').value;
   const query = get('package-search').value.trim().toLowerCase();
   const category = get('package-category').value;
-  const gamsClass = get('package-gams').value;
-  const gamsQuery = /^gams\s*:?\s*([a-sz])$/i.exec(query)?.[1].toUpperCase();
+  renderGamsSubclasses();
+  const gamsClass = get('package-gams-subclass').value || get('package-gams').value;
+  const gamsQuery = /^gams\s*:?\s*([a-sz](?:[1-9][0-9]*)?)$/i.exec(query)?.[1].toUpperCase();
   get('package-sort').disabled = busy || translatedCollection() || collectionLoading;
   get('package-sort').title = translatedCollection() ? 'Translated R packages share one GitHub repository; sorted by name.' : '';
   if (translatedCollection()) get('package-sort').value = 'name';
@@ -206,8 +232,8 @@ function renderPackages() {
     const classes = p.gams || [];
     const text = `${p.id} ${p.name || ''} ${p.repository} ${p.description} ${packageCategories(p).join(' ')} ${(p.keywords || []).join(' ')} ${searchableTopics(p).join(' ')} ${classes.map(c => c.label).join(' ')}`.toLowerCase();
     return (!category || packageCategories(p).includes(category))
-      && (!gamsClass || classes.some(c => c.code === gamsClass))
-      && (gamsQuery ? classes.some(c => c.code === gamsQuery) : text.includes(query)
+      && (!gamsClass || matchesGams(classes, gamsClass))
+      && (gamsQuery ? matchesGams(classes, gamsQuery) : text.includes(query)
         || text.replace(/[-_]+/g, ' ').includes(query.replace(/[-_]+/g, ' ')));
   }).sort((a, b) => (starSort ? starCount(b) - starCount(a) : 0) || byName(a, b));
   const starLabel = p => !starSort ? '' : starCount(p) < 0 ? ' [stars unavailable]' : ` [${p.stars} stars]`;
@@ -261,7 +287,9 @@ function renderPackages() {
         : gamsQuery ? 'Clear GAMS search' : `Search ${collectionLabels[nextCollection]}`;
       button.addEventListener('click', async () => {
         if (category) get('package-category').value = '';
-        else if (gamsClass) get('package-gams').value = '';
+        else if (gamsClass) {
+          get('package-gams').value = ''; get('package-gams-subclass').value = '';
+        }
         else if (gamsQuery) get('package-search').value = '';
         else {
           get('package-collection').value = nextCollection;
@@ -283,12 +311,14 @@ get('package-category').addEventListener('change', renderPackages);
 get('package-sort').addEventListener('change', renderPackages);
 get('package-topic-source').addEventListener('change', renderPackages);
 get('package-gams').addEventListener('change', renderPackages);
+get('package-gams-subclass').addEventListener('change', renderPackages);
 
 async function selectCollection() {
   if (!allPackagesEnabled && allCollection()) get('package-collection').value = 'general';
   const generation = ++collectionGeneration;
   const translated = translatedCollection();
   get('package-gams').value = '';
+  get('package-gams-subclass').value = '';
   get('subdirectory-label').hidden = !translated;
   get('subdirectory').hidden = !translated;
   if (!translated) {

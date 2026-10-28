@@ -1,6 +1,7 @@
 {
-  "schema": 1,
+  "schema": 2,
   "source": "https://gams.nist.gov/cgi-bin/serve.cgi",
+  "taxonomy_retrieved_on": "2026-10-28",
   "classes": {
     "A": "Arithmetic, error analysis",
     "B": "Number theory",
@@ -22,6 +23,554 @@
     "R": "Service routines",
     "S": "Software development tools",
     "Z": "Other"
+  },
+  "subclasses": {
+    "A1": {
+      "label": "Integer",
+      "parent": "A"
+    },
+    "A2": {
+      "label": "Rational",
+      "parent": "A"
+    },
+    "A3": {
+      "label": "Real",
+      "parent": "A"
+    },
+    "A4": {
+      "label": "Complex",
+      "parent": "A"
+    },
+    "A5": {
+      "label": "Interval",
+      "parent": "A"
+    },
+    "A6": {
+      "label": "Change of representation",
+      "parent": "A"
+    },
+    "A7": {
+      "label": "Sequences (e.g., convergence acceleration)",
+      "parent": "A"
+    },
+    "C1": {
+      "label": "Integer-valued functions (e.g., factorial, binomial coefficient, permutations, combinations, floor, ceiling)",
+      "parent": "C"
+    },
+    "C2": {
+      "label": "Powers, roots, reciprocals",
+      "parent": "C"
+    },
+    "C3": {
+      "label": "Polynomials",
+      "parent": "C"
+    },
+    "C4": {
+      "label": "Elementary transcendental functions",
+      "parent": "C"
+    },
+    "C5": {
+      "label": "Exponential and logarithmic integrals",
+      "parent": "C"
+    },
+    "C6": {
+      "label": "Cosine and sine integrals",
+      "parent": "C"
+    },
+    "C7": {
+      "label": "Gamma",
+      "parent": "C"
+    },
+    "C8": {
+      "label": "Error functions",
+      "parent": "C"
+    },
+    "C9": {
+      "label": "Legendre functions",
+      "parent": "C"
+    },
+    "C10": {
+      "label": "Bessel functions",
+      "parent": "C"
+    },
+    "C11": {
+      "label": "Confluent hypergeometric functions",
+      "parent": "C"
+    },
+    "C12": {
+      "label": "Coulomb wave functions",
+      "parent": "C"
+    },
+    "C13": {
+      "label": "Jacobian elliptic functions, theta functions",
+      "parent": "C"
+    },
+    "C14": {
+      "label": "Elliptic integrals",
+      "parent": "C"
+    },
+    "C15": {
+      "label": "Weierstrass elliptic functions",
+      "parent": "C"
+    },
+    "C16": {
+      "label": "Parabolic cylinder functions",
+      "parent": "C"
+    },
+    "C17": {
+      "label": "Mathieu functions",
+      "parent": "C"
+    },
+    "C18": {
+      "label": "Spheroidal wave functions",
+      "parent": "C"
+    },
+    "C19": {
+      "label": "Other special functions",
+      "parent": "C"
+    },
+    "D1": {
+      "label": "Elementary vector and matrix operations",
+      "parent": "D"
+    },
+    "D2": {
+      "label": "Solution of systems of linear equations (including inversion, LU and related decompositions)",
+      "parent": "D"
+    },
+    "D3": {
+      "label": "Determinants",
+      "parent": "D"
+    },
+    "D4": {
+      "label": "Eigenvalues, eigenvectors",
+      "parent": "D"
+    },
+    "D5": {
+      "label": "QR decomposition, Gram-Schmidt orthogonalization",
+      "parent": "D"
+    },
+    "D6": {
+      "label": "Singular value decomposition",
+      "parent": "D"
+    },
+    "D7": {
+      "label": "Update matrix decompositions",
+      "parent": "D"
+    },
+    "D8": {
+      "label": "Other matrix equations (e.g., AX+XB=C)",
+      "parent": "D"
+    },
+    "D9": {
+      "label": "Singular, overdetermined or underdetermined systems of linear equations, generalized inverses",
+      "parent": "D"
+    },
+    "E1": {
+      "label": "Univariate data (curve fitting)",
+      "parent": "E"
+    },
+    "E2": {
+      "label": "Multivariate data (surface fitting)",
+      "parent": "E"
+    },
+    "E3": {
+      "label": "Service routines for interpolation",
+      "parent": "E"
+    },
+    "F1": {
+      "label": "Single equation",
+      "parent": "F"
+    },
+    "F2": {
+      "label": "System of equations",
+      "parent": "F"
+    },
+    "F3": {
+      "label": "Service routines (e.g., check user-supplied derivatives)",
+      "parent": "F"
+    },
+    "G1": {
+      "label": "Unconstrained",
+      "parent": "G"
+    },
+    "G2": {
+      "label": "Constrained",
+      "parent": "G"
+    },
+    "G3": {
+      "label": "Optimal control",
+      "parent": "G"
+    },
+    "G4": {
+      "label": "Service routines",
+      "parent": "G"
+    },
+    "H1": {
+      "label": "Numerical differentiation",
+      "parent": "H"
+    },
+    "H2": {
+      "label": "Quadrature (numerical evaluation of definite integrals)",
+      "parent": "H"
+    },
+    "I1": {
+      "label": "Ordinary differential equations (ODE''s)",
+      "parent": "I"
+    },
+    "I2": {
+      "label": "Partial differential equations",
+      "parent": "I"
+    },
+    "I3": {
+      "label": "Integral equations",
+      "parent": "I"
+    },
+    "J1": {
+      "label": "Trigonometric transforms including fast Fourier transforms",
+      "parent": "J"
+    },
+    "J2": {
+      "label": "Convolutions",
+      "parent": "J"
+    },
+    "J3": {
+      "label": "Laplace transforms",
+      "parent": "J"
+    },
+    "J4": {
+      "label": "Hilbert transforms",
+      "parent": "J"
+    },
+    "K1": {
+      "label": "Least squares (L-2) approximation",
+      "parent": "K"
+    },
+    "K2": {
+      "label": "Minimax (L-infinity) approximation",
+      "parent": "K"
+    },
+    "K3": {
+      "label": "Least absolute value (L-1) approximation",
+      "parent": "K"
+    },
+    "K4": {
+      "label": "Other analytic approximations (e.g., Taylor polynomial, Pade)",
+      "parent": "K"
+    },
+    "K5": {
+      "label": "Smoothing",
+      "parent": "K"
+    },
+    "K6": {
+      "label": "Service routines for approximation",
+      "parent": "K"
+    },
+    "L1": {
+      "label": "Data summarization",
+      "parent": "L"
+    },
+    "L2": {
+      "label": "Data manipulation",
+      "parent": "L"
+    },
+    "L3": {
+      "label": "Elementary statistical graphics",
+      "parent": "L"
+    },
+    "L4": {
+      "label": "Elementary data analysis",
+      "parent": "L"
+    },
+    "L5": {
+      "label": "Function evaluation",
+      "parent": "L"
+    },
+    "L6": {
+      "label": "Random number generation",
+      "parent": "L"
+    },
+    "L7": {
+      "label": "Analysis of variance (including analysis of covariance)",
+      "parent": "L"
+    },
+    "L8": {
+      "label": "Regression",
+      "parent": "L"
+    },
+    "L9": {
+      "label": "Categorical data analysis",
+      "parent": "L"
+    },
+    "L10": {
+      "label": "Time series analysis",
+      "parent": "L"
+    },
+    "L11": {
+      "label": "Correlation analysis",
+      "parent": "L"
+    },
+    "L12": {
+      "label": "Discriminant analysis",
+      "parent": "L"
+    },
+    "L13": {
+      "label": "Covariance structure models",
+      "parent": "L"
+    },
+    "L14": {
+      "label": "Cluster analysis",
+      "parent": "L"
+    },
+    "L15": {
+      "label": "Life testing, survival analysis",
+      "parent": "L"
+    },
+    "L16": {
+      "label": "Multidimensional scaling",
+      "parent": "L"
+    },
+    "L17": {
+      "label": "Statistical data sets",
+      "parent": "L"
+    },
+    "M1": {
+      "label": "Simulation",
+      "parent": "M"
+    },
+    "M2": {
+      "label": "Queueing",
+      "parent": "M"
+    },
+    "M3": {
+      "label": "Reliability",
+      "parent": "M"
+    },
+    "M4": {
+      "label": "Project optimization (e.g., PERT)",
+      "parent": "M"
+    },
+    "N1": {
+      "label": "Input, output",
+      "parent": "N"
+    },
+    "N2": {
+      "label": "Bit manipulation",
+      "parent": "N"
+    },
+    "N3": {
+      "label": "Character manipulation",
+      "parent": "N"
+    },
+    "N4": {
+      "label": "Storage management (e.g., stacks, heaps, trees)",
+      "parent": "N"
+    },
+    "N5": {
+      "label": "Searching",
+      "parent": "N"
+    },
+    "N6": {
+      "label": "Sorting",
+      "parent": "N"
+    },
+    "N7": {
+      "label": "Merging",
+      "parent": "N"
+    },
+    "N8": {
+      "label": "Permuting",
+      "parent": "N"
+    },
+    "R1": {
+      "label": "Machine-dependent constants",
+      "parent": "R"
+    },
+    "R2": {
+      "label": "Error checking (e.g., check monotonicity)",
+      "parent": "R"
+    },
+    "R3": {
+      "label": "Error handling",
+      "parent": "R"
+    },
+    "R4": {
+      "label": "Documentation retrieval",
+      "parent": "R"
+    },
+    "S1": {
+      "label": "Program transformation tools",
+      "parent": "S"
+    },
+    "S2": {
+      "label": "Static program analysis tools",
+      "parent": "S"
+    },
+    "S3": {
+      "label": "Dynamic program analysis tools",
+      "parent": "S"
+    }
+  },
+  "subclass_assignments": {
+    "fortran-lapack": ["D2", "D4", "D5", "D6", "D9"],
+    "test-drive": ["S3"],
+    "json-fortran": ["N1", "N3"],
+    "toml-f": ["N1", "N3"],
+    "fftpack": ["J1"],
+    "roots-fortran": ["F1"],
+    "m_strings": ["N3"],
+    "stdlib": ["D1", "D2", "L1", "L6", "N3", "N4", "N5", "N6", "R3"],
+    "bspline-fortran": ["E1", "E2"],
+    "pchip": ["E1"],
+    "finterp": ["E1", "E2"],
+    "quadpack": ["H2"],
+    "quadrature-fortran": ["H2"],
+    "dop853": ["I1"],
+    "minpack": ["F2", "G1", "K1"],
+    "mersenne-twister-fortran": ["L6"],
+    "fortran-search-and-sort": ["N5", "N6"],
+    "stringsort": ["N3", "N6"],
+    "flist": ["N4", "N5"],
+    "daglib": ["N4"],
+    "argv-fortran": ["N1", "N3"],
+    "popen-fortran": ["N1"],
+    "fortran_function_parser": ["N3"],
+    "numdiff": ["H1"],
+    "csv-fortran": ["N1"],
+    "m_io": ["N1"],
+    "m_sets": ["N5"],
+    "m_sort": ["N6"],
+    "m_cli2": ["N1", "N3"],
+    "m_attr": ["N1", "N3"],
+    "jonquil": ["N1", "N3"],
+    "orderpack": ["L1", "N6"],
+    "fortran-regex": ["N3", "N5"],
+    "fortran-shlex": ["N3"],
+    "fhash": ["N4", "N5"],
+    "functional-fortran": ["N4"],
+    "forwarddiff": ["H1"],
+    "rational_number": ["A2"],
+    "fortran_test_helper": ["L6", "S3"],
+    "m_match": ["N3", "N5"],
+    "m_list": ["N4", "N5"],
+    "fmin": ["G1"],
+    "slsqp": ["G2"],
+    "lbfgsb": ["G2"],
+    "specfun": ["C7", "C10"],
+    "regridpack": ["E1", "E2"],
+    "splpak": ["K1"],
+    "forgex": ["N3", "N5"],
+    "ferror": ["R3"],
+    "m_framework": ["S3"],
+    "fitpack": ["E1", "E2", "H1", "H2", "K1", "K5"],
+    "lsqr": ["D2", "D9", "K1"],
+    "mpfun2020-var1": ["A3", "A4"],
+    "rklib": ["I1"],
+    "ddeabm": ["I1"],
+    "dvode": ["I1"],
+    "pikaia": ["G2"],
+    "io-fortran-library": ["A6", "N1", "N3"],
+    "collections": ["N4"],
+    "peaks": ["N5"],
+    "powellopt": ["G2"],
+    "fstats": ["L1", "L2", "L4", "L5", "L6", "L8", "M1"],
+    "spectrum": ["J1", "J2", "K5"],
+    "lsmr": ["D2", "D9", "K1"],
+    "nlesolver-fortran": ["F2"],
+    "specialmatrices": ["D1", "D2", "D3"],
+    "forpca": ["D4", "D6"],
+    "neural-fortran": ["G1"],
+    "lightkrylov": ["D2", "D4", "D6"],
+    "polyroots-fortran": ["F1"],
+    "fortran-sqlite3": ["N1", "N5"],
+    "simulated-annealing": ["G2"],
+    "odrpack95": ["G2", "K1", "L8"],
+    "pointsets": ["L6"],
+    "flint": ["I1"],
+    "fortran-string-to-real": ["A6", "N3"],
+    "ad_dnsvm": ["H1"],
+    "integrate_fortran": ["H2"],
+    "rndgen-fortran": ["L6"],
+    "blas-interface": ["D1", "D2"],
+    "fsparse": ["D1"],
+    "minres": ["D2"],
+    "fordiff": ["H1"],
+    "twopnt": ["I1"],
+    "specfunc-fullerton": ["C5", "C7", "C10"],
+    "lib_statistics": ["L8", "L9"],
+    "nlopt-f": ["G1", "G2"],
+    "daskr": ["I1"],
+    "ffilesystem": ["N1"],
+    "utf8-f": ["N3"],
+    "ryu_fortran": ["A6", "N3"],
+    "iso_varying_string": ["N3"],
+    "fortimize": ["G1"],
+    "forimage": ["N1"],
+    "ncio": ["N1"],
+    "fastconv": ["J2", "K5"],
+    "gaussjacobiquad": ["H2"],
+    "kissfft-f": ["J1"],
+    "h5fortran": ["N1"],
+    "m_calculator": ["N3"],
+    "befor64": ["N3"],
+    "fortran-zlib": ["N1"],
+    "linalg": ["D1", "D2", "D3", "D4", "D5", "D6", "D9"],
+    "nonlin": ["F1", "F2", "G1", "K1"],
+    "fortran-pcre2": ["N3", "N5"],
+    "rngff": ["L6"],
+    "fortran-zstd": ["N1"],
+    "paramcard": ["N1", "N3"],
+    "strff": ["N3"],
+    "diffeq": ["I1"],
+    "fjsample": ["L1", "L2", "L4"],
+    "conmin": ["G2"],
+    "opti": ["G2"],
+    "interpolation": ["E1"],
+    "fortran_huffman": ["N1"],
+    "fastmath": ["C2", "C4"],
+    "fortsa": ["L10", "L11"],
+    "fortran-flann": ["N4", "N5"],
+    "fortran_stb_image": ["N1"],
+    "odepack": ["I1"],
+    "kiss": ["D2"],
+    "parff": ["N3"],
+    "conmax": ["G2", "K2"],
+    "graphstruc": ["N4"],
+    "fortran-messagepack": ["N1"],
+    "fmmap": ["N1", "N4"],
+    "fortran_cubatures": ["H2"],
+    "stiff3": ["I1"],
+    "sparse_fortran": ["D1"],
+    "psqp": ["G2"],
+    "optgra": ["G2"],
+    "forinv": ["D2", "D6", "D9"],
+    "forsolver": ["D2", "F1", "F2", "H1"],
+    "dcuhre": ["H2"],
+    "y12m": ["D2"],
+    "foreig": ["D4"],
+    "rkf45": ["I1"],
+    "forlab": ["D1", "D2", "E1", "L1"],
+    "libdogleg-f": ["G1", "K1"],
+    "nafpack": ["D2", "D4", "J1"]
+  },
+  "review_notes": {
+    "stdlib": "Selected subclasses cover documented linear algebra, summary statistics, random numbers, strings, containers, sorting and error handling. A and C remain broad pending a pinned-routine inventory.",
+    "fortran_function_parser": "N3 covers expression text processing. C remains broad; this review does not inventory each supported mathematical function.",
+    "m_calculator": "N3 covers expression text processing. C remains broad pending an inventory of built-in functions; numeric evaluation is not symbolic algebra.",
+    "kinds": "A and R remain broad: precision-kind declarations alone do not establish arithmetic algorithms or a machine-constant API.",
+    "datetime-fortran": "R has no immediate date/time subclass. Calendar services retain the parent assignment.",
+    "m_time": "R has no immediate date/time subclass. Calendar services retain the parent assignment.",
+    "functional-fortran": "N4 covers array/container operations. The general programming support remains at S rather than claiming transformation or analysis tools.",
+    "popen-fortran": "N1 covers captured process output. Process support remains at S; no immediate analysis-tool subclass is claimed.",
+    "quaff": "Dimensioned arithmetic and unit conversion retain A/Z. No immediate arithmetic subtype is claimed without reviewing the representation-specific API.",
+    "metis-fpm": "Sparse-matrix ordering remains at D and graph partitioning at P; this is not a linear-system solver assignment.",
+    "forpca": "D4 and D6 describe the eigenvalue/SVD methods. PCA retains the parent L assignment rather than guessing an immediate statistical subclass.",
+    "neural-fortran": "G1 covers gradient-based network training. K remains broad because the package is not restricted to least-squares fitting.",
+    "spectrum": "J1/J2 cover transforms and convolution, K5 smoothing. General signal-data handling retains N without claiming a specific data-management operation.",
+    "fmin": "G1 denotes scalar minimization using a finite search interval; it does not claim support for general nonlinear constraints.",
+    "powellopt": "G2 is supported by BOBYQA bound constraints and COBYLA constraints. No unconstrained subclass is inferred solely from the Powell family name.",
+    "fstats": "Distribution evaluation, random sampling, summaries, statistical tests, resampling, regression and MCMC support the selected statistical and simulation subclasses.",
+    "daskr": "I1 includes the package's ordinary differential-algebraic systems; this assignment does not claim PDE or integral-equation solvers.",
+    "diffeq": "I1 includes both the ordinary differential and differential-algebraic integrators."
   },
   "packages": {
     "fortran-lapack": ["D"],

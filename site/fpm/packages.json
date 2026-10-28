@@ -40,7 +40,33 @@
     "gams": [
       {
         "code": "D",
-        "label": "Linear Algebra"
+        "label": "Linear Algebra",
+        "parent": null
+      },
+      {
+        "code": "D2",
+        "label": "Solution of systems of linear equations (including inversion, LU and related decompositions)",
+        "parent": "D"
+      },
+      {
+        "code": "D4",
+        "label": "Eigenvalues, eigenvectors",
+        "parent": "D"
+      },
+      {
+        "code": "D5",
+        "label": "QR decomposition, Gram-Schmidt orthogonalization",
+        "parent": "D"
+      },
+      {
+        "code": "D6",
+        "label": "Singular value decomposition",
+        "parent": "D"
+      },
+      {
+        "code": "D9",
+        "label": "Singular, overdetermined or underdetermined systems of linear equations, generalized inverses",
+        "parent": "D"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -69,7 +95,13 @@
     "gams": [
       {
         "code": "S",
-        "label": "Software development tools"
+        "label": "Software development tools",
+        "parent": null
+      },
+      {
+        "code": "S3",
+        "label": "Dynamic program analysis tools",
+        "parent": "S"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -105,7 +137,8 @@
     "gams": [
       {
         "code": "Q",
-        "label": "Graphics"
+        "label": "Graphics",
+        "parent": null
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -134,7 +167,18 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N1",
+        "label": "Input, output",
+        "parent": "N"
+      },
+      {
+        "code": "N3",
+        "label": "Character manipulation",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -166,7 +210,18 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N1",
+        "label": "Input, output",
+        "parent": "N"
+      },
+      {
+        "code": "N3",
+        "label": "Character manipulation",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -199,7 +254,13 @@
     "gams": [
       {
         "code": "J",
-        "label": "Integral transforms"
+        "label": "Integral transforms",
+        "parent": null
+      },
+      {
+        "code": "J1",
+        "label": "Trigonometric transforms including fast Fourier transforms",
+        "parent": "J"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -234,7 +295,13 @@
     "gams": [
       {
         "code": "F",
-        "label": "Solution of nonlinear equations"
+        "label": "Solution of nonlinear equations",
+        "parent": null
+      },
+      {
+        "code": "F1",
+        "label": "Single equation",
+        "parent": "F"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -266,7 +333,13 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N3",
+        "label": "Character manipulation",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -311,27 +384,78 @@
     "gams": [
       {
         "code": "A",
-        "label": "Arithmetic, error analysis"
+        "label": "Arithmetic, error analysis",
+        "parent": null
       },
       {
         "code": "C",
-        "label": "Elementary and special functions"
+        "label": "Elementary and special functions",
+        "parent": null
       },
       {
         "code": "D",
-        "label": "Linear Algebra"
+        "label": "Linear Algebra",
+        "parent": null
+      },
+      {
+        "code": "D1",
+        "label": "Elementary vector and matrix operations",
+        "parent": "D"
+      },
+      {
+        "code": "D2",
+        "label": "Solution of systems of linear equations (including inversion, LU and related decompositions)",
+        "parent": "D"
       },
       {
         "code": "L",
-        "label": "Statistics, probability"
+        "label": "Statistics, probability",
+        "parent": null
+      },
+      {
+        "code": "L1",
+        "label": "Data summarization",
+        "parent": "L"
+      },
+      {
+        "code": "L6",
+        "label": "Random number generation",
+        "parent": "L"
       },
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N3",
+        "label": "Character manipulation",
+        "parent": "N"
+      },
+      {
+        "code": "N4",
+        "label": "Storage management (e.g., stacks, heaps, trees)",
+        "parent": "N"
+      },
+      {
+        "code": "N5",
+        "label": "Searching",
+        "parent": "N"
+      },
+      {
+        "code": "N6",
+        "label": "Sorting",
+        "parent": "N"
       },
       {
         "code": "R",
-        "label": "Service routines"
+        "label": "Service routines",
+        "parent": null
+      },
+      {
+        "code": "R3",
+        "label": "Error handling",
+        "parent": "R"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -367,7 +491,18 @@
     "gams": [
       {
         "code": "E",
-        "label": "Interpolation"
+        "label": "Interpolation",
+        "parent": null
+      },
+      {
+        "code": "E1",
+        "label": "Univariate data (curve fitting)",
+        "parent": "E"
+      },
+      {
+        "code": "E2",
+        "label": "Multivariate data (surface fitting)",
+        "parent": "E"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -400,7 +535,13 @@
     "gams": [
       {
         "code": "E",
-        "label": "Interpolation"
+        "label": "Interpolation",
+        "parent": null
+      },
+      {
+        "code": "E1",
+        "label": "Univariate data (curve fitting)",
+        "parent": "E"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -433,7 +574,18 @@
     "gams": [
       {
         "code": "E",
-        "label": "Interpolation"
+        "label": "Interpolation",
+        "parent": null
+      },
+      {
+        "code": "E1",
+        "label": "Univariate data (curve fitting)",
+        "parent": "E"
+      },
+      {
+        "code": "E2",
+        "label": "Multivariate data (surface fitting)",
+        "parent": "E"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -470,7 +622,13 @@
     "gams": [
       {
         "code": "H",
-        "label": "Differentiation, integration"
+        "label": "Differentiation, integration",
+        "parent": null
+      },
+      {
+        "code": "H2",
+        "label": "Quadrature (numerical evaluation of definite integrals)",
+        "parent": "H"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -504,7 +662,13 @@
     "gams": [
       {
         "code": "H",
-        "label": "Differentiation, integration"
+        "label": "Differentiation, integration",
+        "parent": null
+      },
+      {
+        "code": "H2",
+        "label": "Quadrature (numerical evaluation of definite integrals)",
+        "parent": "H"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -537,7 +701,13 @@
     "gams": [
       {
         "code": "I",
-        "label": "Differential and integral equations"
+        "label": "Differential and integral equations",
+        "parent": null
+      },
+      {
+        "code": "I1",
+        "label": "Ordinary differential equations (ODE''s)",
+        "parent": "I"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -564,15 +734,33 @@
     "gams": [
       {
         "code": "F",
-        "label": "Solution of nonlinear equations"
+        "label": "Solution of nonlinear equations",
+        "parent": null
+      },
+      {
+        "code": "F2",
+        "label": "System of equations",
+        "parent": "F"
       },
       {
         "code": "G",
-        "label": "Optimization"
+        "label": "Optimization",
+        "parent": null
+      },
+      {
+        "code": "G1",
+        "label": "Unconstrained",
+        "parent": "G"
       },
       {
         "code": "K",
-        "label": "Approximation"
+        "label": "Approximation",
+        "parent": null
+      },
+      {
+        "code": "K1",
+        "label": "Least squares (L-2) approximation",
+        "parent": "K"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -605,7 +793,13 @@
     "gams": [
       {
         "code": "L",
-        "label": "Statistics, probability"
+        "label": "Statistics, probability",
+        "parent": null
+      },
+      {
+        "code": "L6",
+        "label": "Random number generation",
+        "parent": "L"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -638,7 +832,18 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N5",
+        "label": "Searching",
+        "parent": "N"
+      },
+      {
+        "code": "N6",
+        "label": "Sorting",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -669,7 +874,18 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N3",
+        "label": "Character manipulation",
+        "parent": "N"
+      },
+      {
+        "code": "N6",
+        "label": "Sorting",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -700,7 +916,18 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N4",
+        "label": "Storage management (e.g., stacks, heaps, trees)",
+        "parent": "N"
+      },
+      {
+        "code": "N5",
+        "label": "Searching",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -734,11 +961,18 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N4",
+        "label": "Storage management (e.g., stacks, heaps, trees)",
+        "parent": "N"
       },
       {
         "code": "P",
-        "label": "Computational geometry"
+        "label": "Computational geometry",
+        "parent": null
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -768,7 +1002,18 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N1",
+        "label": "Input, output",
+        "parent": "N"
+      },
+      {
+        "code": "N3",
+        "label": "Character manipulation",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -798,11 +1043,18 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N1",
+        "label": "Input, output",
+        "parent": "N"
       },
       {
         "code": "S",
-        "label": "Software development tools"
+        "label": "Software development tools",
+        "parent": null
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -832,11 +1084,18 @@
     "gams": [
       {
         "code": "C",
-        "label": "Elementary and special functions"
+        "label": "Elementary and special functions",
+        "parent": null
       },
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N3",
+        "label": "Character manipulation",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -871,7 +1130,13 @@
     "gams": [
       {
         "code": "H",
-        "label": "Differentiation, integration"
+        "label": "Differentiation, integration",
+        "parent": null
+      },
+      {
+        "code": "H1",
+        "label": "Numerical differentiation",
+        "parent": "H"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -902,7 +1167,13 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N1",
+        "label": "Input, output",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -933,7 +1204,8 @@
     "gams": [
       {
         "code": "R",
-        "label": "Service routines"
+        "label": "Service routines",
+        "parent": null
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -965,7 +1237,13 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N1",
+        "label": "Input, output",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -1001,7 +1279,8 @@
     "gams": [
       {
         "code": "R",
-        "label": "Service routines"
+        "label": "Service routines",
+        "parent": null
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -1039,7 +1318,13 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N5",
+        "label": "Searching",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -1073,7 +1358,13 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N6",
+        "label": "Sorting",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -1106,7 +1397,18 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N1",
+        "label": "Input, output",
+        "parent": "N"
+      },
+      {
+        "code": "N3",
+        "label": "Character manipulation",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -1137,7 +1439,18 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N1",
+        "label": "Input, output",
+        "parent": "N"
+      },
+      {
+        "code": "N3",
+        "label": "Character manipulation",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -1176,7 +1489,18 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N1",
+        "label": "Input, output",
+        "parent": "N"
+      },
+      {
+        "code": "N3",
+        "label": "Character manipulation",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -1209,11 +1533,23 @@
     "gams": [
       {
         "code": "L",
-        "label": "Statistics, probability"
+        "label": "Statistics, probability",
+        "parent": null
+      },
+      {
+        "code": "L1",
+        "label": "Data summarization",
+        "parent": "L"
       },
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N6",
+        "label": "Sorting",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -1245,7 +1581,18 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N3",
+        "label": "Character manipulation",
+        "parent": "N"
+      },
+      {
+        "code": "N5",
+        "label": "Searching",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -1278,7 +1625,13 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N3",
+        "label": "Character manipulation",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -1311,7 +1664,8 @@
     "gams": [
       {
         "code": "B",
-        "label": "Number theory"
+        "label": "Number theory",
+        "parent": null
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -1344,7 +1698,18 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N4",
+        "label": "Storage management (e.g., stacks, heaps, trees)",
+        "parent": "N"
+      },
+      {
+        "code": "N5",
+        "label": "Searching",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -1373,11 +1738,18 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N4",
+        "label": "Storage management (e.g., stacks, heaps, trees)",
+        "parent": "N"
       },
       {
         "code": "S",
-        "label": "Software development tools"
+        "label": "Software development tools",
+        "parent": null
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -1409,7 +1781,13 @@
     "gams": [
       {
         "code": "H",
-        "label": "Differentiation, integration"
+        "label": "Differentiation, integration",
+        "parent": null
+      },
+      {
+        "code": "H1",
+        "label": "Numerical differentiation",
+        "parent": "H"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -1434,11 +1812,13 @@
     "gams": [
       {
         "code": "A",
-        "label": "Arithmetic, error analysis"
+        "label": "Arithmetic, error analysis",
+        "parent": null
       },
       {
         "code": "R",
-        "label": "Service routines"
+        "label": "Service routines",
+        "parent": null
       }
     ],
     "stars": 0,
@@ -1476,7 +1856,8 @@
     "gams": [
       {
         "code": "Q",
-        "label": "Graphics"
+        "label": "Graphics",
+        "parent": null
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -1508,7 +1889,13 @@
     "gams": [
       {
         "code": "A",
-        "label": "Arithmetic, error analysis"
+        "label": "Arithmetic, error analysis",
+        "parent": null
+      },
+      {
+        "code": "A2",
+        "label": "Rational",
+        "parent": "A"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -1534,11 +1921,23 @@
     "gams": [
       {
         "code": "L",
-        "label": "Statistics, probability"
+        "label": "Statistics, probability",
+        "parent": null
+      },
+      {
+        "code": "L6",
+        "label": "Random number generation",
+        "parent": "L"
       },
       {
         "code": "S",
-        "label": "Software development tools"
+        "label": "Software development tools",
+        "parent": null
+      },
+      {
+        "code": "S3",
+        "label": "Dynamic program analysis tools",
+        "parent": "S"
       }
     ],
     "stars": 0,
@@ -1571,7 +1970,18 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N3",
+        "label": "Character manipulation",
+        "parent": "N"
+      },
+      {
+        "code": "N5",
+        "label": "Searching",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -1600,7 +2010,18 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N4",
+        "label": "Storage management (e.g., stacks, heaps, trees)",
+        "parent": "N"
+      },
+      {
+        "code": "N5",
+        "label": "Searching",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -1633,7 +2054,8 @@
     "gams": [
       {
         "code": "Q",
-        "label": "Graphics"
+        "label": "Graphics",
+        "parent": null
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -1664,7 +2086,13 @@
     "gams": [
       {
         "code": "G",
-        "label": "Optimization"
+        "label": "Optimization",
+        "parent": null
+      },
+      {
+        "code": "G1",
+        "label": "Unconstrained",
+        "parent": "G"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -1699,7 +2127,13 @@
     "gams": [
       {
         "code": "G",
-        "label": "Optimization"
+        "label": "Optimization",
+        "parent": null
+      },
+      {
+        "code": "G2",
+        "label": "Constrained",
+        "parent": "G"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -1735,7 +2169,13 @@
     "gams": [
       {
         "code": "G",
-        "label": "Optimization"
+        "label": "Optimization",
+        "parent": null
+      },
+      {
+        "code": "G2",
+        "label": "Constrained",
+        "parent": "G"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -1767,7 +2207,18 @@
     "gams": [
       {
         "code": "C",
-        "label": "Elementary and special functions"
+        "label": "Elementary and special functions",
+        "parent": null
+      },
+      {
+        "code": "C7",
+        "label": "Gamma",
+        "parent": "C"
+      },
+      {
+        "code": "C10",
+        "label": "Bessel functions",
+        "parent": "C"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -1801,7 +2252,18 @@
     "gams": [
       {
         "code": "E",
-        "label": "Interpolation"
+        "label": "Interpolation",
+        "parent": null
+      },
+      {
+        "code": "E1",
+        "label": "Univariate data (curve fitting)",
+        "parent": "E"
+      },
+      {
+        "code": "E2",
+        "label": "Multivariate data (surface fitting)",
+        "parent": "E"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -1836,7 +2298,13 @@
     "gams": [
       {
         "code": "K",
-        "label": "Approximation"
+        "label": "Approximation",
+        "parent": null
+      },
+      {
+        "code": "K1",
+        "label": "Least squares (L-2) approximation",
+        "parent": "K"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -1873,11 +2341,13 @@
     "gams": [
       {
         "code": "P",
-        "label": "Computational geometry"
+        "label": "Computational geometry",
+        "parent": null
       },
       {
         "code": "Z",
-        "label": "Other"
+        "label": "Other",
+        "parent": null
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -1909,7 +2379,18 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N3",
+        "label": "Character manipulation",
+        "parent": "N"
+      },
+      {
+        "code": "N5",
+        "label": "Searching",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -1935,7 +2416,13 @@
     "gams": [
       {
         "code": "R",
-        "label": "Service routines"
+        "label": "Service routines",
+        "parent": null
+      },
+      {
+        "code": "R3",
+        "label": "Error handling",
+        "parent": "R"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -1968,7 +2455,13 @@
     "gams": [
       {
         "code": "S",
-        "label": "Software development tools"
+        "label": "Software development tools",
+        "parent": null
+      },
+      {
+        "code": "S3",
+        "label": "Dynamic program analysis tools",
+        "parent": "S"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -2006,15 +2499,48 @@
     "gams": [
       {
         "code": "E",
-        "label": "Interpolation"
+        "label": "Interpolation",
+        "parent": null
+      },
+      {
+        "code": "E1",
+        "label": "Univariate data (curve fitting)",
+        "parent": "E"
+      },
+      {
+        "code": "E2",
+        "label": "Multivariate data (surface fitting)",
+        "parent": "E"
       },
       {
         "code": "H",
-        "label": "Differentiation, integration"
+        "label": "Differentiation, integration",
+        "parent": null
+      },
+      {
+        "code": "H1",
+        "label": "Numerical differentiation",
+        "parent": "H"
+      },
+      {
+        "code": "H2",
+        "label": "Quadrature (numerical evaluation of definite integrals)",
+        "parent": "H"
       },
       {
         "code": "K",
-        "label": "Approximation"
+        "label": "Approximation",
+        "parent": null
+      },
+      {
+        "code": "K1",
+        "label": "Least squares (L-2) approximation",
+        "parent": "K"
+      },
+      {
+        "code": "K5",
+        "label": "Smoothing",
+        "parent": "K"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -2050,11 +2576,28 @@
     "gams": [
       {
         "code": "D",
-        "label": "Linear Algebra"
+        "label": "Linear Algebra",
+        "parent": null
+      },
+      {
+        "code": "D2",
+        "label": "Solution of systems of linear equations (including inversion, LU and related decompositions)",
+        "parent": "D"
+      },
+      {
+        "code": "D9",
+        "label": "Singular, overdetermined or underdetermined systems of linear equations, generalized inverses",
+        "parent": "D"
       },
       {
         "code": "K",
-        "label": "Approximation"
+        "label": "Approximation",
+        "parent": null
+      },
+      {
+        "code": "K1",
+        "label": "Least squares (L-2) approximation",
+        "parent": "K"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -2084,7 +2627,18 @@
     "gams": [
       {
         "code": "A",
-        "label": "Arithmetic, error analysis"
+        "label": "Arithmetic, error analysis",
+        "parent": null
+      },
+      {
+        "code": "A3",
+        "label": "Real",
+        "parent": "A"
+      },
+      {
+        "code": "A4",
+        "label": "Complex",
+        "parent": "A"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -2127,7 +2681,13 @@
     "gams": [
       {
         "code": "I",
-        "label": "Differential and integral equations"
+        "label": "Differential and integral equations",
+        "parent": null
+      },
+      {
+        "code": "I1",
+        "label": "Ordinary differential equations (ODE''s)",
+        "parent": "I"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -2168,7 +2728,13 @@
     "gams": [
       {
         "code": "I",
-        "label": "Differential and integral equations"
+        "label": "Differential and integral equations",
+        "parent": null
+      },
+      {
+        "code": "I1",
+        "label": "Ordinary differential equations (ODE''s)",
+        "parent": "I"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -2201,7 +2767,13 @@
     "gams": [
       {
         "code": "I",
-        "label": "Differential and integral equations"
+        "label": "Differential and integral equations",
+        "parent": null
+      },
+      {
+        "code": "I1",
+        "label": "Ordinary differential equations (ODE''s)",
+        "parent": "I"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -2242,7 +2814,13 @@
     "gams": [
       {
         "code": "G",
-        "label": "Optimization"
+        "label": "Optimization",
+        "parent": null
+      },
+      {
+        "code": "G2",
+        "label": "Constrained",
+        "parent": "G"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -2276,11 +2854,28 @@
     "gams": [
       {
         "code": "A",
-        "label": "Arithmetic, error analysis"
+        "label": "Arithmetic, error analysis",
+        "parent": null
+      },
+      {
+        "code": "A6",
+        "label": "Change of representation",
+        "parent": "A"
       },
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N1",
+        "label": "Input, output",
+        "parent": "N"
+      },
+      {
+        "code": "N3",
+        "label": "Character manipulation",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -2316,7 +2911,13 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N4",
+        "label": "Storage management (e.g., stacks, heaps, trees)",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -2352,7 +2953,13 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N5",
+        "label": "Searching",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -2387,7 +2994,13 @@
     "gams": [
       {
         "code": "G",
-        "label": "Optimization"
+        "label": "Optimization",
+        "parent": null
+      },
+      {
+        "code": "G2",
+        "label": "Constrained",
+        "parent": "G"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -2468,11 +3081,48 @@
     "gams": [
       {
         "code": "L",
-        "label": "Statistics, probability"
+        "label": "Statistics, probability",
+        "parent": null
+      },
+      {
+        "code": "L1",
+        "label": "Data summarization",
+        "parent": "L"
+      },
+      {
+        "code": "L2",
+        "label": "Data manipulation",
+        "parent": "L"
+      },
+      {
+        "code": "L4",
+        "label": "Elementary data analysis",
+        "parent": "L"
+      },
+      {
+        "code": "L5",
+        "label": "Function evaluation",
+        "parent": "L"
+      },
+      {
+        "code": "L6",
+        "label": "Random number generation",
+        "parent": "L"
+      },
+      {
+        "code": "L8",
+        "label": "Regression",
+        "parent": "L"
       },
       {
         "code": "M",
-        "label": "Simulation, stochastic modeling"
+        "label": "Simulation, stochastic modeling",
+        "parent": null
+      },
+      {
+        "code": "M1",
+        "label": "Simulation",
+        "parent": "M"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -2530,15 +3180,33 @@
     "gams": [
       {
         "code": "J",
-        "label": "Integral transforms"
+        "label": "Integral transforms",
+        "parent": null
+      },
+      {
+        "code": "J1",
+        "label": "Trigonometric transforms including fast Fourier transforms",
+        "parent": "J"
+      },
+      {
+        "code": "J2",
+        "label": "Convolutions",
+        "parent": "J"
       },
       {
         "code": "K",
-        "label": "Approximation"
+        "label": "Approximation",
+        "parent": null
+      },
+      {
+        "code": "K5",
+        "label": "Smoothing",
+        "parent": "K"
       },
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -2583,11 +3251,28 @@
     "gams": [
       {
         "code": "D",
-        "label": "Linear Algebra"
+        "label": "Linear Algebra",
+        "parent": null
+      },
+      {
+        "code": "D2",
+        "label": "Solution of systems of linear equations (including inversion, LU and related decompositions)",
+        "parent": "D"
+      },
+      {
+        "code": "D9",
+        "label": "Singular, overdetermined or underdetermined systems of linear equations, generalized inverses",
+        "parent": "D"
       },
       {
         "code": "K",
-        "label": "Approximation"
+        "label": "Approximation",
+        "parent": null
+      },
+      {
+        "code": "K1",
+        "label": "Least squares (L-2) approximation",
+        "parent": "K"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -2657,7 +3342,13 @@
     "gams": [
       {
         "code": "F",
-        "label": "Solution of nonlinear equations"
+        "label": "Solution of nonlinear equations",
+        "parent": null
+      },
+      {
+        "code": "F2",
+        "label": "System of equations",
+        "parent": "F"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -2711,7 +3402,8 @@
     "gams": [
       {
         "code": "Z",
-        "label": "Other"
+        "label": "Other",
+        "parent": null
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -2784,7 +3476,23 @@
     "gams": [
       {
         "code": "D",
-        "label": "Linear Algebra"
+        "label": "Linear Algebra",
+        "parent": null
+      },
+      {
+        "code": "D1",
+        "label": "Elementary vector and matrix operations",
+        "parent": "D"
+      },
+      {
+        "code": "D2",
+        "label": "Solution of systems of linear equations (including inversion, LU and related decompositions)",
+        "parent": "D"
+      },
+      {
+        "code": "D3",
+        "label": "Determinants",
+        "parent": "D"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -2849,11 +3557,13 @@
     "gams": [
       {
         "code": "A",
-        "label": "Arithmetic, error analysis"
+        "label": "Arithmetic, error analysis",
+        "parent": null
       },
       {
         "code": "Z",
-        "label": "Other"
+        "label": "Other",
+        "parent": null
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -2943,11 +3653,23 @@
     "gams": [
       {
         "code": "D",
-        "label": "Linear Algebra"
+        "label": "Linear Algebra",
+        "parent": null
+      },
+      {
+        "code": "D4",
+        "label": "Eigenvalues, eigenvectors",
+        "parent": "D"
+      },
+      {
+        "code": "D6",
+        "label": "Singular value decomposition",
+        "parent": "D"
       },
       {
         "code": "L",
-        "label": "Statistics, probability"
+        "label": "Statistics, probability",
+        "parent": null
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -2980,11 +3702,18 @@
     "gams": [
       {
         "code": "G",
-        "label": "Optimization"
+        "label": "Optimization",
+        "parent": null
+      },
+      {
+        "code": "G1",
+        "label": "Unconstrained",
+        "parent": "G"
       },
       {
         "code": "K",
-        "label": "Approximation"
+        "label": "Approximation",
+        "parent": null
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -3046,7 +3775,23 @@
     "gams": [
       {
         "code": "D",
-        "label": "Linear Algebra"
+        "label": "Linear Algebra",
+        "parent": null
+      },
+      {
+        "code": "D2",
+        "label": "Solution of systems of linear equations (including inversion, LU and related decompositions)",
+        "parent": "D"
+      },
+      {
+        "code": "D4",
+        "label": "Eigenvalues, eigenvectors",
+        "parent": "D"
+      },
+      {
+        "code": "D6",
+        "label": "Singular value decomposition",
+        "parent": "D"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -3090,7 +3835,13 @@
     "gams": [
       {
         "code": "F",
-        "label": "Solution of nonlinear equations"
+        "label": "Solution of nonlinear equations",
+        "parent": null
+      },
+      {
+        "code": "F1",
+        "label": "Single equation",
+        "parent": "F"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -3139,7 +3890,18 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N1",
+        "label": "Input, output",
+        "parent": "N"
+      },
+      {
+        "code": "N5",
+        "label": "Searching",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -3174,7 +3936,8 @@
     "gams": [
       {
         "code": "P",
-        "label": "Computational geometry"
+        "label": "Computational geometry",
+        "parent": null
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -3218,7 +3981,13 @@
     "gams": [
       {
         "code": "G",
-        "label": "Optimization"
+        "label": "Optimization",
+        "parent": null
+      },
+      {
+        "code": "G2",
+        "label": "Constrained",
+        "parent": "G"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -3259,15 +4028,33 @@
     "gams": [
       {
         "code": "G",
-        "label": "Optimization"
+        "label": "Optimization",
+        "parent": null
+      },
+      {
+        "code": "G2",
+        "label": "Constrained",
+        "parent": "G"
       },
       {
         "code": "K",
-        "label": "Approximation"
+        "label": "Approximation",
+        "parent": null
+      },
+      {
+        "code": "K1",
+        "label": "Least squares (L-2) approximation",
+        "parent": "K"
       },
       {
         "code": "L",
-        "label": "Statistics, probability"
+        "label": "Statistics, probability",
+        "parent": null
+      },
+      {
+        "code": "L8",
+        "label": "Regression",
+        "parent": "L"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -3294,11 +4081,18 @@
     "gams": [
       {
         "code": "L",
-        "label": "Statistics, probability"
+        "label": "Statistics, probability",
+        "parent": null
+      },
+      {
+        "code": "L6",
+        "label": "Random number generation",
+        "parent": "L"
       },
       {
         "code": "P",
-        "label": "Computational geometry"
+        "label": "Computational geometry",
+        "parent": null
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -3339,7 +4133,13 @@
     "gams": [
       {
         "code": "I",
-        "label": "Differential and integral equations"
+        "label": "Differential and integral equations",
+        "parent": null
+      },
+      {
+        "code": "I1",
+        "label": "Ordinary differential equations (ODE''s)",
+        "parent": "I"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -3365,11 +4165,23 @@
     "gams": [
       {
         "code": "A",
-        "label": "Arithmetic, error analysis"
+        "label": "Arithmetic, error analysis",
+        "parent": null
+      },
+      {
+        "code": "A6",
+        "label": "Change of representation",
+        "parent": "A"
       },
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N3",
+        "label": "Character manipulation",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -3412,7 +4224,13 @@
     "gams": [
       {
         "code": "H",
-        "label": "Differentiation, integration"
+        "label": "Differentiation, integration",
+        "parent": null
+      },
+      {
+        "code": "H1",
+        "label": "Numerical differentiation",
+        "parent": "H"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -3442,7 +4260,13 @@
     "gams": [
       {
         "code": "H",
-        "label": "Differentiation, integration"
+        "label": "Differentiation, integration",
+        "parent": null
+      },
+      {
+        "code": "H2",
+        "label": "Quadrature (numerical evaluation of definite integrals)",
+        "parent": "H"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -3476,7 +4300,13 @@
     "gams": [
       {
         "code": "L",
-        "label": "Statistics, probability"
+        "label": "Statistics, probability",
+        "parent": null
+      },
+      {
+        "code": "L6",
+        "label": "Random number generation",
+        "parent": "L"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -3510,7 +4340,18 @@
     "gams": [
       {
         "code": "D",
-        "label": "Linear Algebra"
+        "label": "Linear Algebra",
+        "parent": null
+      },
+      {
+        "code": "D1",
+        "label": "Elementary vector and matrix operations",
+        "parent": "D"
+      },
+      {
+        "code": "D2",
+        "label": "Solution of systems of linear equations (including inversion, LU and related decompositions)",
+        "parent": "D"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -3541,7 +4382,13 @@
     "gams": [
       {
         "code": "D",
-        "label": "Linear Algebra"
+        "label": "Linear Algebra",
+        "parent": null
+      },
+      {
+        "code": "D1",
+        "label": "Elementary vector and matrix operations",
+        "parent": "D"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -3574,7 +4421,8 @@
     "gams": [
       {
         "code": "P",
-        "label": "Computational geometry"
+        "label": "Computational geometry",
+        "parent": null
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -3601,7 +4449,13 @@
     "gams": [
       {
         "code": "D",
-        "label": "Linear Algebra"
+        "label": "Linear Algebra",
+        "parent": null
+      },
+      {
+        "code": "D2",
+        "label": "Solution of systems of linear equations (including inversion, LU and related decompositions)",
+        "parent": "D"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -3640,7 +4494,13 @@
     "gams": [
       {
         "code": "H",
-        "label": "Differentiation, integration"
+        "label": "Differentiation, integration",
+        "parent": null
+      },
+      {
+        "code": "H1",
+        "label": "Numerical differentiation",
+        "parent": "H"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -3670,7 +4530,13 @@
     "gams": [
       {
         "code": "I",
-        "label": "Differential and integral equations"
+        "label": "Differential and integral equations",
+        "parent": null
+      },
+      {
+        "code": "I1",
+        "label": "Ordinary differential equations (ODE''s)",
+        "parent": "I"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -3699,7 +4565,23 @@
     "gams": [
       {
         "code": "C",
-        "label": "Elementary and special functions"
+        "label": "Elementary and special functions",
+        "parent": null
+      },
+      {
+        "code": "C5",
+        "label": "Exponential and logarithmic integrals",
+        "parent": "C"
+      },
+      {
+        "code": "C7",
+        "label": "Gamma",
+        "parent": "C"
+      },
+      {
+        "code": "C10",
+        "label": "Bessel functions",
+        "parent": "C"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -3725,7 +4607,18 @@
     "gams": [
       {
         "code": "L",
-        "label": "Statistics, probability"
+        "label": "Statistics, probability",
+        "parent": null
+      },
+      {
+        "code": "L8",
+        "label": "Regression",
+        "parent": "L"
+      },
+      {
+        "code": "L9",
+        "label": "Categorical data analysis",
+        "parent": "L"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -3754,11 +4647,13 @@
     "gams": [
       {
         "code": "P",
-        "label": "Computational geometry"
+        "label": "Computational geometry",
+        "parent": null
       },
       {
         "code": "Z",
-        "label": "Other"
+        "label": "Other",
+        "parent": null
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -3793,7 +4688,18 @@
     "gams": [
       {
         "code": "G",
-        "label": "Optimization"
+        "label": "Optimization",
+        "parent": null
+      },
+      {
+        "code": "G1",
+        "label": "Unconstrained",
+        "parent": "G"
+      },
+      {
+        "code": "G2",
+        "label": "Constrained",
+        "parent": "G"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -3927,7 +4833,13 @@
     "gams": [
       {
         "code": "I",
-        "label": "Differential and integral equations"
+        "label": "Differential and integral equations",
+        "parent": null
+      },
+      {
+        "code": "I1",
+        "label": "Ordinary differential equations (ODE''s)",
+        "parent": "I"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -3960,7 +4872,13 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N1",
+        "label": "Input, output",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -3989,7 +4907,13 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N3",
+        "label": "Character manipulation",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -4018,11 +4942,23 @@
     "gams": [
       {
         "code": "A",
-        "label": "Arithmetic, error analysis"
+        "label": "Arithmetic, error analysis",
+        "parent": null
+      },
+      {
+        "code": "A6",
+        "label": "Change of representation",
+        "parent": "A"
       },
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N3",
+        "label": "Character manipulation",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -4051,7 +4987,13 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N3",
+        "label": "Character manipulation",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -4090,7 +5032,13 @@
     "gams": [
       {
         "code": "G",
-        "label": "Optimization"
+        "label": "Optimization",
+        "parent": null
+      },
+      {
+        "code": "G1",
+        "label": "Unconstrained",
+        "parent": "G"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -4137,11 +5085,18 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N1",
+        "label": "Input, output",
+        "parent": "N"
       },
       {
         "code": "Q",
-        "label": "Graphics"
+        "label": "Graphics",
+        "parent": null
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -4178,7 +5133,13 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N1",
+        "label": "Input, output",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -4205,11 +5166,23 @@
     "gams": [
       {
         "code": "J",
-        "label": "Integral transforms"
+        "label": "Integral transforms",
+        "parent": null
+      },
+      {
+        "code": "J2",
+        "label": "Convolutions",
+        "parent": "J"
       },
       {
         "code": "K",
-        "label": "Approximation"
+        "label": "Approximation",
+        "parent": null
+      },
+      {
+        "code": "K5",
+        "label": "Smoothing",
+        "parent": "K"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -4247,7 +5220,13 @@
     "gams": [
       {
         "code": "H",
-        "label": "Differentiation, integration"
+        "label": "Differentiation, integration",
+        "parent": null
+      },
+      {
+        "code": "H2",
+        "label": "Quadrature (numerical evaluation of definite integrals)",
+        "parent": "H"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -4282,7 +5261,13 @@
     "gams": [
       {
         "code": "J",
-        "label": "Integral transforms"
+        "label": "Integral transforms",
+        "parent": null
+      },
+      {
+        "code": "J1",
+        "label": "Trigonometric transforms including fast Fourier transforms",
+        "parent": "J"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -4323,7 +5308,13 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N1",
+        "label": "Input, output",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -4356,11 +5347,13 @@
     "gams": [
       {
         "code": "D",
-        "label": "Linear Algebra"
+        "label": "Linear Algebra",
+        "parent": null
       },
       {
         "code": "P",
-        "label": "Computational geometry"
+        "label": "Computational geometry",
+        "parent": null
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -4391,11 +5384,18 @@
     "gams": [
       {
         "code": "C",
-        "label": "Elementary and special functions"
+        "label": "Elementary and special functions",
+        "parent": null
       },
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N3",
+        "label": "Character manipulation",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -4432,7 +5432,13 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N3",
+        "label": "Character manipulation",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -4471,7 +5477,13 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N1",
+        "label": "Input, output",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -4542,7 +5554,8 @@
     "gams": [
       {
         "code": "Z",
-        "label": "Other"
+        "label": "Other",
+        "parent": null
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -4591,7 +5604,43 @@
     "gams": [
       {
         "code": "D",
-        "label": "Linear Algebra"
+        "label": "Linear Algebra",
+        "parent": null
+      },
+      {
+        "code": "D1",
+        "label": "Elementary vector and matrix operations",
+        "parent": "D"
+      },
+      {
+        "code": "D2",
+        "label": "Solution of systems of linear equations (including inversion, LU and related decompositions)",
+        "parent": "D"
+      },
+      {
+        "code": "D3",
+        "label": "Determinants",
+        "parent": "D"
+      },
+      {
+        "code": "D4",
+        "label": "Eigenvalues, eigenvectors",
+        "parent": "D"
+      },
+      {
+        "code": "D5",
+        "label": "QR decomposition, Gram-Schmidt orthogonalization",
+        "parent": "D"
+      },
+      {
+        "code": "D6",
+        "label": "Singular value decomposition",
+        "parent": "D"
+      },
+      {
+        "code": "D9",
+        "label": "Singular, overdetermined or underdetermined systems of linear equations, generalized inverses",
+        "parent": "D"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -4648,15 +5697,38 @@
     "gams": [
       {
         "code": "F",
-        "label": "Solution of nonlinear equations"
+        "label": "Solution of nonlinear equations",
+        "parent": null
+      },
+      {
+        "code": "F1",
+        "label": "Single equation",
+        "parent": "F"
+      },
+      {
+        "code": "F2",
+        "label": "System of equations",
+        "parent": "F"
       },
       {
         "code": "G",
-        "label": "Optimization"
+        "label": "Optimization",
+        "parent": null
+      },
+      {
+        "code": "G1",
+        "label": "Unconstrained",
+        "parent": "G"
       },
       {
         "code": "K",
-        "label": "Approximation"
+        "label": "Approximation",
+        "parent": null
+      },
+      {
+        "code": "K1",
+        "label": "Least squares (L-2) approximation",
+        "parent": "K"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -4694,7 +5766,8 @@
     "gams": [
       {
         "code": "P",
-        "label": "Computational geometry"
+        "label": "Computational geometry",
+        "parent": null
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -4736,7 +5809,18 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N3",
+        "label": "Character manipulation",
+        "parent": "N"
+      },
+      {
+        "code": "N5",
+        "label": "Searching",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -4806,7 +5890,8 @@
     "gams": [
       {
         "code": "Z",
-        "label": "Other"
+        "label": "Other",
+        "parent": null
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -4835,7 +5920,13 @@
     "gams": [
       {
         "code": "L",
-        "label": "Statistics, probability"
+        "label": "Statistics, probability",
+        "parent": null
+      },
+      {
+        "code": "L6",
+        "label": "Random number generation",
+        "parent": "L"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -4875,7 +5966,13 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N1",
+        "label": "Input, output",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -4906,7 +6003,18 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N1",
+        "label": "Input, output",
+        "parent": "N"
+      },
+      {
+        "code": "N3",
+        "label": "Character manipulation",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -4951,7 +6059,13 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N3",
+        "label": "Character manipulation",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -5009,7 +6123,13 @@
     "gams": [
       {
         "code": "I",
-        "label": "Differential and integral equations"
+        "label": "Differential and integral equations",
+        "parent": null
+      },
+      {
+        "code": "I1",
+        "label": "Ordinary differential equations (ODE''s)",
+        "parent": "I"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -5042,7 +6162,23 @@
     "gams": [
       {
         "code": "L",
-        "label": "Statistics, probability"
+        "label": "Statistics, probability",
+        "parent": null
+      },
+      {
+        "code": "L1",
+        "label": "Data summarization",
+        "parent": "L"
+      },
+      {
+        "code": "L2",
+        "label": "Data manipulation",
+        "parent": "L"
+      },
+      {
+        "code": "L4",
+        "label": "Elementary data analysis",
+        "parent": "L"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -5075,7 +6211,13 @@
     "gams": [
       {
         "code": "G",
-        "label": "Optimization"
+        "label": "Optimization",
+        "parent": null
+      },
+      {
+        "code": "G2",
+        "label": "Constrained",
+        "parent": "G"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -5131,7 +6273,13 @@
     "gams": [
       {
         "code": "G",
-        "label": "Optimization"
+        "label": "Optimization",
+        "parent": null
+      },
+      {
+        "code": "G2",
+        "label": "Constrained",
+        "parent": "G"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -5186,7 +6334,13 @@
     "gams": [
       {
         "code": "E",
-        "label": "Interpolation"
+        "label": "Interpolation",
+        "parent": null
+      },
+      {
+        "code": "E1",
+        "label": "Univariate data (curve fitting)",
+        "parent": "E"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -5215,7 +6369,13 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N1",
+        "label": "Input, output",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -5247,7 +6407,18 @@
     "gams": [
       {
         "code": "C",
-        "label": "Elementary and special functions"
+        "label": "Elementary and special functions",
+        "parent": null
+      },
+      {
+        "code": "C2",
+        "label": "Powers, roots, reciprocals",
+        "parent": "C"
+      },
+      {
+        "code": "C4",
+        "label": "Elementary transcendental functions",
+        "parent": "C"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -5282,7 +6453,18 @@
     "gams": [
       {
         "code": "L",
-        "label": "Statistics, probability"
+        "label": "Statistics, probability",
+        "parent": null
+      },
+      {
+        "code": "L10",
+        "label": "Time series analysis",
+        "parent": "L"
+      },
+      {
+        "code": "L11",
+        "label": "Correlation analysis",
+        "parent": "L"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -5333,11 +6515,23 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N4",
+        "label": "Storage management (e.g., stacks, heaps, trees)",
+        "parent": "N"
+      },
+      {
+        "code": "N5",
+        "label": "Searching",
+        "parent": "N"
       },
       {
         "code": "P",
-        "label": "Computational geometry"
+        "label": "Computational geometry",
+        "parent": null
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -5364,11 +6558,18 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N1",
+        "label": "Input, output",
+        "parent": "N"
       },
       {
         "code": "Q",
-        "label": "Graphics"
+        "label": "Graphics",
+        "parent": null
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -5406,7 +6607,8 @@
     "gams": [
       {
         "code": "Q",
-        "label": "Graphics"
+        "label": "Graphics",
+        "parent": null
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -5435,7 +6637,8 @@
     "gams": [
       {
         "code": "Z",
-        "label": "Other"
+        "label": "Other",
+        "parent": null
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -5473,7 +6676,13 @@
     "gams": [
       {
         "code": "I",
-        "label": "Differential and integral equations"
+        "label": "Differential and integral equations",
+        "parent": null
+      },
+      {
+        "code": "I1",
+        "label": "Ordinary differential equations (ODE''s)",
+        "parent": "I"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -5510,7 +6719,13 @@
     "gams": [
       {
         "code": "D",
-        "label": "Linear Algebra"
+        "label": "Linear Algebra",
+        "parent": null
+      },
+      {
+        "code": "D2",
+        "label": "Solution of systems of linear equations (including inversion, LU and related decompositions)",
+        "parent": "D"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -5562,7 +6777,13 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N3",
+        "label": "Character manipulation",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -5597,11 +6818,23 @@
     "gams": [
       {
         "code": "G",
-        "label": "Optimization"
+        "label": "Optimization",
+        "parent": null
+      },
+      {
+        "code": "G2",
+        "label": "Constrained",
+        "parent": "G"
       },
       {
         "code": "K",
-        "label": "Approximation"
+        "label": "Approximation",
+        "parent": null
+      },
+      {
+        "code": "K2",
+        "label": "Minimax (L-infinity) approximation",
+        "parent": "K"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -5638,11 +6871,18 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N4",
+        "label": "Storage management (e.g., stacks, heaps, trees)",
+        "parent": "N"
       },
       {
         "code": "P",
-        "label": "Computational geometry"
+        "label": "Computational geometry",
+        "parent": null
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -5670,7 +6910,13 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N1",
+        "label": "Input, output",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -5698,7 +6944,18 @@
     "gams": [
       {
         "code": "N",
-        "label": "Data handling"
+        "label": "Data handling",
+        "parent": null
+      },
+      {
+        "code": "N1",
+        "label": "Input, output",
+        "parent": "N"
+      },
+      {
+        "code": "N4",
+        "label": "Storage management (e.g., stacks, heaps, trees)",
+        "parent": "N"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -5749,7 +7006,13 @@
     "gams": [
       {
         "code": "H",
-        "label": "Differentiation, integration"
+        "label": "Differentiation, integration",
+        "parent": null
+      },
+      {
+        "code": "H2",
+        "label": "Quadrature (numerical evaluation of definite integrals)",
+        "parent": "H"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -5790,7 +7053,13 @@
     "gams": [
       {
         "code": "I",
-        "label": "Differential and integral equations"
+        "label": "Differential and integral equations",
+        "parent": null
+      },
+      {
+        "code": "I1",
+        "label": "Ordinary differential equations (ODE''s)",
+        "parent": "I"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -5817,7 +7086,13 @@
     "gams": [
       {
         "code": "D",
-        "label": "Linear Algebra"
+        "label": "Linear Algebra",
+        "parent": null
+      },
+      {
+        "code": "D1",
+        "label": "Elementary vector and matrix operations",
+        "parent": "D"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -5850,7 +7125,13 @@
     "gams": [
       {
         "code": "G",
-        "label": "Optimization"
+        "label": "Optimization",
+        "parent": null
+      },
+      {
+        "code": "G2",
+        "label": "Constrained",
+        "parent": "G"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -5881,7 +7162,13 @@
     "gams": [
       {
         "code": "G",
-        "label": "Optimization"
+        "label": "Optimization",
+        "parent": null
+      },
+      {
+        "code": "G2",
+        "label": "Constrained",
+        "parent": "G"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -5959,7 +7246,23 @@
     "gams": [
       {
         "code": "D",
-        "label": "Linear Algebra"
+        "label": "Linear Algebra",
+        "parent": null
+      },
+      {
+        "code": "D2",
+        "label": "Solution of systems of linear equations (including inversion, LU and related decompositions)",
+        "parent": "D"
+      },
+      {
+        "code": "D6",
+        "label": "Singular value decomposition",
+        "parent": "D"
+      },
+      {
+        "code": "D9",
+        "label": "Singular, overdetermined or underdetermined systems of linear equations, generalized inverses",
+        "parent": "D"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -6035,15 +7338,38 @@
     "gams": [
       {
         "code": "D",
-        "label": "Linear Algebra"
+        "label": "Linear Algebra",
+        "parent": null
+      },
+      {
+        "code": "D2",
+        "label": "Solution of systems of linear equations (including inversion, LU and related decompositions)",
+        "parent": "D"
       },
       {
         "code": "F",
-        "label": "Solution of nonlinear equations"
+        "label": "Solution of nonlinear equations",
+        "parent": null
+      },
+      {
+        "code": "F1",
+        "label": "Single equation",
+        "parent": "F"
+      },
+      {
+        "code": "F2",
+        "label": "System of equations",
+        "parent": "F"
       },
       {
         "code": "H",
-        "label": "Differentiation, integration"
+        "label": "Differentiation, integration",
+        "parent": null
+      },
+      {
+        "code": "H1",
+        "label": "Numerical differentiation",
+        "parent": "H"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -6079,7 +7405,13 @@
     "gams": [
       {
         "code": "H",
-        "label": "Differentiation, integration"
+        "label": "Differentiation, integration",
+        "parent": null
+      },
+      {
+        "code": "H2",
+        "label": "Quadrature (numerical evaluation of definite integrals)",
+        "parent": "H"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -6106,7 +7438,13 @@
     "gams": [
       {
         "code": "D",
-        "label": "Linear Algebra"
+        "label": "Linear Algebra",
+        "parent": null
+      },
+      {
+        "code": "D2",
+        "label": "Solution of systems of linear equations (including inversion, LU and related decompositions)",
+        "parent": "D"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -6164,7 +7502,13 @@
     "gams": [
       {
         "code": "D",
-        "label": "Linear Algebra"
+        "label": "Linear Algebra",
+        "parent": null
+      },
+      {
+        "code": "D4",
+        "label": "Eigenvalues, eigenvectors",
+        "parent": "D"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -6204,7 +7548,13 @@
     "gams": [
       {
         "code": "I",
-        "label": "Differential and integral equations"
+        "label": "Differential and integral equations",
+        "parent": null
+      },
+      {
+        "code": "I1",
+        "label": "Ordinary differential equations (ODE''s)",
+        "parent": "I"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -6242,15 +7592,38 @@
     "gams": [
       {
         "code": "D",
-        "label": "Linear Algebra"
+        "label": "Linear Algebra",
+        "parent": null
+      },
+      {
+        "code": "D1",
+        "label": "Elementary vector and matrix operations",
+        "parent": "D"
+      },
+      {
+        "code": "D2",
+        "label": "Solution of systems of linear equations (including inversion, LU and related decompositions)",
+        "parent": "D"
       },
       {
         "code": "E",
-        "label": "Interpolation"
+        "label": "Interpolation",
+        "parent": null
+      },
+      {
+        "code": "E1",
+        "label": "Univariate data (curve fitting)",
+        "parent": "E"
       },
       {
         "code": "L",
-        "label": "Statistics, probability"
+        "label": "Statistics, probability",
+        "parent": null
+      },
+      {
+        "code": "L1",
+        "label": "Data summarization",
+        "parent": "L"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -6293,11 +7666,23 @@
     "gams": [
       {
         "code": "G",
-        "label": "Optimization"
+        "label": "Optimization",
+        "parent": null
+      },
+      {
+        "code": "G1",
+        "label": "Unconstrained",
+        "parent": "G"
       },
       {
         "code": "K",
-        "label": "Approximation"
+        "label": "Approximation",
+        "parent": null
+      },
+      {
+        "code": "K1",
+        "label": "Least squares (L-2) approximation",
+        "parent": "K"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -6356,11 +7741,28 @@
     "gams": [
       {
         "code": "D",
-        "label": "Linear Algebra"
+        "label": "Linear Algebra",
+        "parent": null
+      },
+      {
+        "code": "D2",
+        "label": "Solution of systems of linear equations (including inversion, LU and related decompositions)",
+        "parent": "D"
+      },
+      {
+        "code": "D4",
+        "label": "Eigenvalues, eigenvectors",
+        "parent": "D"
       },
       {
         "code": "J",
-        "label": "Integral transforms"
+        "label": "Integral transforms",
+        "parent": null
+      },
+      {
+        "code": "J1",
+        "label": "Trigonometric transforms including fast Fourier transforms",
+        "parent": "J"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"

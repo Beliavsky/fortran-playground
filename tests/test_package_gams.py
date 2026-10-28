@@ -5,7 +5,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from xpackage_gams import gams_data, package_classes, review_text, ROOT, REPORT
+from xpackage_gams import gams_data, package_classes, review_text, subclass_module, ROOT, REPORT
 
 
 class GamsFilterParser(HTMLParser):
@@ -53,6 +53,24 @@ class PackageGamsTests(unittest.TestCase):
         self.assertEqual(data['packages']['dvode'], ['I'])
         self.assertEqual(data['packages']['rational_number'], ['A'])
         self.assertEqual(data['packages']['minpack'], ['F', 'G', 'K'])
+        self.assertEqual(data['subclass_assignments']['mersenne-twister-fortran'], ['L6'])
+        self.assertEqual(data['subclass_assignments']['dvode'], ['I1'])
+        self.assertEqual(data['subclass_assignments']['rational_number'], ['A2'])
+        self.assertEqual(data['subclass_assignments']['minpack'], ['F2', 'G1', 'K1'])
+        self.assertNotIn('datetime-fortran', data['subclass_assignments'])
+        self.assertEqual(package_classes(data, 'datetime-fortran'), [
+            {'code': 'R', 'label': data['classes']['R'], 'parent': None}])
+
+    def test_subclass_tree_generated_module_and_natural_order(self):
+        data = gams_data()
+        self.assertEqual((ROOT / 'site/fpm/gams_classes.mjs').read_text(encoding='utf-8'), subclass_module(data))
+        self.assertEqual(data['subclasses']['L6'], {'label': 'Random number generation', 'parent': 'L'})
+        self.assertEqual(data['subclasses']['C10']['parent'], 'C')
+        self.assertNotEqual(data['subclasses']['C10']['parent'], 'C1')
+        self.assertEqual(data['subclasses']['L10']['parent'], 'L')
+        self.assertNotEqual(data['subclasses']['L10']['parent'], 'L1')
+        self.assertTrue(all(info['parent'] not in 'BOPQZ' for info in data['subclasses'].values()))
+        self.assertEqual([c['code'] for c in package_classes(data, 'specfun')], ['C', 'C7', 'C10'])
 
     def test_filter_matches_all_twenty_official_labels(self):
         parser = GamsFilterParser()
@@ -69,6 +87,8 @@ class PackageGamsTests(unittest.TestCase):
     def test_validation_rejects_missing_unknown_and_duplicate_classes(self):
         data = gams_data()
         data['packages'] = {'example': ['D']}
+        data['subclass_assignments'] = {'example': ['D2']}
+        data['review_notes'] = {}
         invalid = []
         for codes in ([], ['d'], ['D1'], ['T'], ['D', 'D'], [None]):
             broken = copy.deepcopy(data)
@@ -80,6 +100,19 @@ class PackageGamsTests(unittest.TestCase):
             invalid.append(broken)
         broken = copy.deepcopy(data)
         del broken['classes']['Z']
+        invalid.append(broken)
+        for codes in (['D99'], ['d2'], ['D2', 'D2'], ['G1'], ['D'], [], [None]):
+            broken = copy.deepcopy(data)
+            broken['subclass_assignments']['example'] = codes
+            invalid.append(broken)
+        broken = copy.deepcopy(data)
+        broken['subclasses']['D2']['parent'] = 'G'
+        invalid.append(broken)
+        broken = copy.deepcopy(data)
+        broken['subclasses']['D1a'] = {'label': 'Too deep for this schema', 'parent': 'D'}
+        invalid.append(broken)
+        broken = copy.deepcopy(data)
+        broken['subclass_assignments']['unknown'] = ['D2']
         invalid.append(broken)
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

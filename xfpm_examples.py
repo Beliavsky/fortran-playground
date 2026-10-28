@@ -17,8 +17,9 @@ def generate_fpm_examples(site):
     topics = json.loads(topics_path.read_text(encoding='utf-8'))['repositories'] if topics_path.exists() else {}
     from xpackage_topics import playground_topics
     curated = playground_topics(audit.parents[1])
-    from xpackage_gams import gams_data, package_classes
+    from xpackage_gams import gams_data, package_classes, subclass_module
     gams = gams_data(audit.parents[1])
+    (site / 'fpm/gams_classes.mjs').write_text(subclass_module(gams), encoding='utf-8')
     packages = [{**package, 'source': (audit.parents[1] / 'fpm_catalog/demos' /
                  (package['id'] + '.f90')).read_text(encoding='utf-8'),
                  'topics': topics.get(package['repository'].lower(), {}).get('topics', []),

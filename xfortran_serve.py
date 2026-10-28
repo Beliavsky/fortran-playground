@@ -379,7 +379,7 @@ class Handler(BaseHTTPRequestHandler):
             elif parsed.path.startswith('/fpm/ui/'):
                 name = parsed.path.removeprefix('/fpm/ui/')
                 allowed = {'style.css', 'plots.mjs', 'editors.mjs', 'indentation.mjs', 'service_config.mjs', 'config.mjs',
-                           'fpm/fpm.mjs', 'fpm/project_export.mjs', 'fpm/fpm.css',
+                           'fpm/fpm.mjs', 'fpm/project_export.mjs', 'fpm/gams_classes.mjs', 'fpm/fpm.css',
                            'editor-vendor/codemirror.js', 'editor-vendor/fortran.js', 'editor-vendor/codemirror.css'}
                 if name not in allowed:
                     self.reply(404, {'error': 'Not found'})

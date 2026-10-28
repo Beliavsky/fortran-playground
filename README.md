@@ -35,7 +35,7 @@ The online and local source and FPM pages have **Dark mode / Light mode** and **
 
 The FPM playground defaults to **Selected Fortran packages**, the curated catalog, with a separate **Translated R packages** collection. The broader All collection is disabled while its package metadata, GitHub topics, and [compatibility audit results](docs/fpm-discovery-audit.md) are preserved. The external [Fortran packages list](https://beliavsky.github.io/Fortran-packages-list/) remains available for discovery. See [collection details](docs/fpm-mode.md) and [how to restore All](docs/fpm-discovery.md#restoring-the-all-collection).
 
-Selected packages can be filtered by top-level **GAMS class**, alongside text, category, and topic searches. See the [package-by-package GAMS classifications and class counts](docs/fpm-gams.md), with links to NIST definitions. The same search controls work in the main local FPM page.
+Selected packages can be filtered by **GAMS class** and its immediate **Subclass**, alongside text, category, and topic searches. Parent searches include their subclasses; explicit searches such as `GAMS D2` or `GAMS L6` are also supported. See the [package-by-package GAMS classifications, review notes, and class counts](docs/fpm-gams.md), with links to NIST definitions and catalog examples. The same search controls work in the main local FPM page.
 
 The FPM playground also offers a separate **Translated R packages** collection with 596 searchable packages. These download and compile from scratch, online or locally. See [usage and limitations](docs/translated-r-playground.md).
 
