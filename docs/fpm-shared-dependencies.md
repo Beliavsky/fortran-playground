@@ -1,6 +1,6 @@
 # Shared precompiled dependencies
 
-Selected GNU Fortran 16 packages can reuse an immutable dependency archive instead of carrying another copy of its objects and library archives. This currently covers stdlib and its catalog consumers. Other selected packages retain their existing caches. Custom URLs and other compilers still build from source.
+Selected GNU Fortran 16 packages can reuse immutable library archives instead of carrying another copy of their dependencies' objects and archives. Both leaf dependencies and multi-level dependency graphs are supported. Other selected packages retain their existing caches until migrated and verified. Custom URLs and other compilers still build from source.
 
 Sharing requires matching source revision and archive checksum, compiler/FPM recipe, preprocessing settings, compiler and linker flags, and pinned native libraries. A different configuration gets a separate dependency build. For example, econ-toolchain's single-image coarray/OpenBLAS configuration does not reuse the default stdlib variant.
 
@@ -10,13 +10,19 @@ Execution sandboxes read dependency files from their image. They do not mount a 
 
 ## Adding another consumer
 
-First add and pin the package and its dependencies in `fpm_catalog.json`, with an example in `fpm_catalog/demos`. Then opt it into sharing:
+First add and pin the package and its dependencies in `fpm_catalog.json`, with an example in `fpm_catalog/demos`. For a complete shared library graph, including the selected package's own library, use:
 
 ```text
-python xshared_fpm.py --enable PACKAGE_ID
+python xshared_graph.py --enable PACKAGE_ID
 ```
 
-The default shared repository is `fortran-lang/stdlib`. Use `--dependencies OWNER/REPOSITORY` to select another pinned leaf dependency. The initial implementation supports leaf libraries containing Fortran and C sources; it rejects dependencies that themselves depend on another FPM package, patched dependency sources, and source-subset repackaging. It does not assume two independently configured builds are binary compatible.
+This records all pinned libraries automatically. Nodes are processed from dependencies to dependents, and each nonleaf key includes its exact child build keys. A dependency update therefore invalidates its dependent builds, while independent libraries remain reusable. Diamond-shaped graphs contain one node for each compatible library build. Cycles, unresolved dependencies and paths outside the pinned graph are rejected. Prepared source fingerprints distinguish changes to nonleaf library sources as well as manifest and build settings.
+
+Libraries containing Fortran and C sources are supported, including procedural libraries without Fortran modules. Patched sources and source-subset repackaging are not yet supported by graph mode. Different source revisions or build settings deliberately retain separate variants. Matching leaf exports, including existing stdlib exports, keep their original identities. The graph implementation has its own fingerprint and does not invalidate unrelated packages or existing stdlib consumers.
+
+Hosted build copies use small FPM shims and link the shared archives in dependency order, with dependents before their dependencies. Original sources remain available for local downloads. Only the user's main, a small shim, and the optional plotting helper need package-local objects.
+
+The existing stdlib/leaf-only mode remains available with `python xshared_fpm.py --enable PACKAGE_ID`. Its default shared repository is `fortran-lang/stdlib`; use `--dependencies OWNER/REPOSITORY` to select another pinned leaf dependency. Existing consumers can keep that mode without migrating their caches.
 
 Build and verify the selected package using the Python environment containing Modal:
 
@@ -24,7 +30,15 @@ Build and verify the selected package using the Python environment containing Mo
 python xprecompile_fpm.py --packages PACKAGE_ID
 ```
 
-A matching published dependency image is reused. Otherwise the builder exports a compatible existing package image. On a fresh installation without a compatible donor, it first performs a normal source build to establish that dependency variant. Later consumers reuse it. A failed compatibility or integrity check stops publication.
+Alternatively, enable graph sharing and build a batch with one command:
+
+```text
+python xprecompile_fpm.py --share-dependencies --packages PACKAGE_ID OTHER_ID
+```
+
+With `--share-dependencies` and no `--packages`, the builder opts the entire eligible catalog into graph sharing. This can migrate many images, so a small batch is preferable for an initial check. Patched and repackaged entries keep their existing cache recipes. The flag updates `fpm_catalog.json`; regenerate the page metadata with `python xfpm_examples.py` before committing and publishing. Without the flag, ordinary prebuilds retain the catalog's existing choices.
+
+A matching published dependency image is reused. Otherwise the builder exports a compatible existing package image. On a fresh installation without a compatible donor, it first performs a normal source build to establish that dependency variant. All remaining nodes can export that donor's existing objects. Later consumers reuse the archives. A failed compatibility or integrity check stops publication.
 
 After reviewing the changes, deploy with:
 
@@ -36,7 +50,7 @@ The operator's ignored `.fpm-audit-cache` retains donor references and persisten
 
 ## Storage measurements and rollout
 
-The verified migration of nine catalog entries reduced active logical artifacts from **3,983 MiB to 1,180 MiB**, including 3 separately configured stdlib exports counted once each. Econ-toolchain's package-owned artifacts fell from **341.6 MiB to 3.6 MiB**; its shared stdlib archive is accounted for separately. All nine edited-main examples passed in the ordinary restricted sandbox.
+The active catalog's logical artifacts total **1,122 MiB**, down from 3,983 MiB before dependency sharing. Nine entries share stdlib variants; seven more use complete library graphs (Quaff, Parff, Strff, Linalg, Spectrum, Nonlin and Diffeq). The latter migration changed the total from 1,180 MiB to 1,122 MiB. Linalg, Spectrum, Nonlin and Diffeq reference the same Linalg export. All migrated edited-main examples passed in the ordinary restricted sandbox; only the main and executable were rebuilt. Different revisions and compiler settings retain separate variants.
 
 [Validation measurements](fpm-precompiled-validation.json) count package-owned objects/modules/archives plus each shared dependency export **once**. A package's `artifact_bytes` excludes its separately listed `shared_dependencies`. Legacy package measurements still include dependencies and FPM flag variants inside their individual build trees.
 

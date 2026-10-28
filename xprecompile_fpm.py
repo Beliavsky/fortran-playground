@@ -89,6 +89,10 @@ def build_package(app, base_image, package, recipe, *, _shared_plan=None):
         if (shared & {name.lower() for name in options.get('source_packages', {})}
                 or (package.get('catalog_patches') and package['repository'].lower() in shared)):
             raise ValueError('Shared dependencies currently require unpatched library sources.')
+        from fpm_shared_graph import graph_digest
+        if options['shared_dependencies']['adapter_sha256'] == graph_digest(ROOT):
+            from xshared_graph import build_graph_package
+            return build_graph_package(app, base_image, package, recipe)
         from xshared_fpm import build_shared_package
         return build_shared_package(app, base_image, package, recipe)
     import modal
@@ -96,7 +100,10 @@ def build_package(app, base_image, package, recipe, *, _shared_plan=None):
     from xfpm_modal import bundle_sources
     from fpm_catalog_build import CatalogPreparer, validate_build, build_image
     options = validate_build(package)
-    base_image = build_image(app, base_image, options)
+    # Shared coordinators already configure native libraries and flags before
+    # selecting exports. Repeating apt setup would add redundant image layers.
+    if _shared_plan is None:
+        base_image = build_image(app, base_image, options)
     key = cache_identity(package, recipe)
     name = 'fortran-fpm-lib-' + key
     source = (ROOT / 'fpm_catalog/demos' / (package['id'] + '.f90')).read_text(encoding='utf-8')
@@ -112,8 +119,11 @@ def build_package(app, base_image, package, recipe, *, _shared_plan=None):
             from fpm_catalog_patches import apply_patches
             apply_patches(package, Path(temporary) / root)
         if _shared_plan:
+            from fpm_shared_graph import graph_digest, rewrite_graph_sources
             from fpm_shared import rewrite_shared_sources
-            rewrite_shared_sources({repo: path for (repo, _), path in preparer.repositories.items()}, _shared_plan)
+            rewrite = (rewrite_graph_sources if options['shared_dependencies']['adapter_sha256'] == graph_digest(ROOT)
+                       else rewrite_shared_sources)
+            rewrite({repo: path for (repo, _), path in preparer.repositories.items()}, _shared_plan)
         message = {**package, 'key': key, 'recipe': recipe, 'source': source, 'root': root,
                    'records': records, 'bundle': bundle_sources(temporary)}
     prebuild = '/opt/fpm/xfpm_shared_prebuild.py' if _shared_plan else '/opt/fpm/xfpm_prebuild.py'
@@ -318,6 +328,25 @@ def write_validation_report(entries, path):
     path.write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
 
 
+def enable_shared_catalog(names=None):
+    """Explicitly opt a batch into graph sharing; preserve unsupported recipes."""
+    from xshared_graph import enable_packages
+    path = ROOT/'fpm_catalog.json'
+    document = json.loads(path.read_text(encoding='utf-8'))
+    eligible = set()
+    for package in document['packages']:
+        if names is not None and package['id'] not in names:
+            continue
+        if package.get('catalog_patches') or package.get('catalog_build', {}).get('source_packages'):
+            print(package['id']+': retaining existing cache recipe (patched or repackaged sources)', flush=True)
+        else:
+            eligible.add(package['id'])
+    updated = enable_packages(document, eligible, ROOT)
+    if updated != document:
+        path.write_text(json.dumps(updated, indent=2)+'\n', encoding='utf-8')
+    return eligible
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--packages', nargs='+', choices=[p['id'] for p in catalog()])
@@ -325,9 +354,13 @@ def main():
     parser.add_argument('--validation-report', type=Path, help='Write public measurements after verifying the complete catalog.')
     parser.add_argument('--reverify', action='store_true', help='Re-run changed-main verification, retaining compiled libraries.')
     parser.add_argument('--rebuild', action='store_true', help='Force rebuilding selected libraries; default: reuse matching published builds.')
+    parser.add_argument('--share-dependencies', action='store_true',
+                        help='Enable complete dependency graphs for eligible selected packages (all if --packages is omitted); updates fpm_catalog.json.')
     args = parser.parse_args()
     if args.validation_report and args.packages:
         parser.error('--validation-report requires checking the complete catalog; omit --packages.')
+    if args.share_dependencies:
+        enable_shared_catalog(args.packages)
     import modal
     from xfpm_modal import APP_NAME, runtime_image, IMAGE_NAME
     app = modal.App.lookup(APP_NAME, create_if_missing=True)

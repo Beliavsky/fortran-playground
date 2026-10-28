@@ -1,5 +1,5 @@
 {
-  "verified_at": "2026-10-28T20:12:46.423243+00:00",
+  "verified_at": "2026-10-28T21:02:12.241871+00:00",
   "compiler": "GNU Fortran 16.2.0",
   "fpm": "0.12.0",
   "compiler_image": "gcc:16.2.0-trixie@sha256:43978d7710a803d1c3d32f4117c1528ec7285a4ce2c0a51e982ec1a6e3d87d95",
@@ -23,10 +23,49 @@
   },
   "check": "Each edited main ran successfully; library artifacts were unchanged and FPM rebuilt only the main and executable. Plotting returned PNGs; ForImage returned both PNM-to-PNG previews. Cairo and stb_image each returned one PNG preview.",
   "artifact_size_note": "Logical package-owned object/module/archive bytes plus each immutable shared dependency export once. Legacy package measurements include their dependency objects and FPM flag variants. Excludes compiler images, native system libraries, sources and main executables; not compressed storage or billing. Retired rollout images and the operator export Volume are not counted.",
-  "owned_artifact_bytes": 952064935,
-  "shared_artifact_bytes": 285470272,
-  "total_artifact_bytes": 1237535207,
+  "owned_artifact_bytes": 874695639,
+  "shared_artifact_bytes": 301996246,
+  "total_artifact_bytes": 1176691885,
   "shared_dependencies": [
+    {
+      "repository": "jchristopherson/linalg",
+      "key": "163d8789cb6c288ee0f76bd7",
+      "artifact_bytes": 4381236,
+      "manifest_sha256": "c548a6278efc6bd0e781db8932bbb2bb9fd1df35795e804204649d7028464811",
+      "users": [
+        "diffeq",
+        "linalg",
+        "nonlin",
+        "spectrum"
+      ]
+    },
+    {
+      "repository": "jchristopherson/ferror",
+      "key": "1dd6d7de564d577d6efaed3b",
+      "artifact_bytes": 113338,
+      "manifest_sha256": "059b319eb019cda2e998fbc5797bbbd1b55904acfcdb00f94e0c11ad5b76d290",
+      "users": [
+        "nonlin"
+      ]
+    },
+    {
+      "repository": "everythingfunctional/iso_varying_string",
+      "key": "22703271fe630b34558f4a22",
+      "artifact_bytes": 127928,
+      "manifest_sha256": "ca810439c3a36a2de4e377a55dc8c4495985c827bf7f8202f03810ea9782568e",
+      "users": [
+        "strff"
+      ]
+    },
+    {
+      "repository": "jchristopherson/spectrum",
+      "key": "46262dbb0ac3ecba77794485",
+      "artifact_bytes": 1519512,
+      "manifest_sha256": "b1b90bd327c5a99c6f22334d3f7bb8a7da605f0f4b2c660c04e2d2254e15b7bf",
+      "users": [
+        "spectrum"
+      ]
+    },
     {
       "repository": "fortran-lang/stdlib",
       "key": "56ba2ab1f03ac61125bf8f26",
@@ -34,6 +73,78 @@
       "manifest_sha256": "b33065bb286a1fa96937a19763b3455e3ef0931e53222eb1c2f22af0d2600d20",
       "users": [
         "econ-toolchain"
+      ]
+    },
+    {
+      "repository": "jchristopherson/diffeq",
+      "key": "5e33364e51422771bb35db53",
+      "artifact_bytes": 1792336,
+      "manifest_sha256": "6627840b9b42e9228e0342c857efabb61a1fb1ddcd08065b2bfe5bc3ae5b15bc",
+      "users": [
+        "diffeq"
+      ]
+    },
+    {
+      "repository": "everythingfunctional/strff",
+      "key": "630ee337388e4eb317312d8d",
+      "artifact_bytes": 108435,
+      "manifest_sha256": "703d5224e824483ccde58772f47fa69bdea12bebab7d00116d831e42e03948c3",
+      "users": [
+        "parff"
+      ]
+    },
+    {
+      "repository": "jchristopherson/nonlin",
+      "key": "66a7df7d7ee6079c37c7e1ea",
+      "artifact_bytes": 787307,
+      "manifest_sha256": "1b379bf6c0f6021a8097de5ff144538c3619b293a4794472ac34a011ca73133f",
+      "users": [
+        "nonlin"
+      ]
+    },
+    {
+      "repository": "everythingfunctional/erloff",
+      "key": "6a05d44977bc970c23929ce0",
+      "artifact_bytes": 747719,
+      "manifest_sha256": "509c1480a8f8bc21e04a4ac40a05e1e678eec1e7d0d3c61a3e35565070950524",
+      "users": [
+        "quaff"
+      ]
+    },
+    {
+      "repository": "everythingfunctional/iso_varying_string",
+      "key": "6ad39a3138b1579060ed4ff6",
+      "artifact_bytes": 145050,
+      "manifest_sha256": "4b4b339524a7a0442d80b91d251dffb464d1b4d7bcd4680f50680e92ef204d17",
+      "users": [
+        "quaff"
+      ]
+    },
+    {
+      "repository": "everythingfunctional/parff",
+      "key": "73f6d13dfe0f9c94bdbc0b76",
+      "artifact_bytes": 532435,
+      "manifest_sha256": "07f8f962424cc5066bafeeb77b9c61346148196d80a1754428466b80acd9d938",
+      "users": [
+        "quaff"
+      ]
+    },
+    {
+      "repository": "everythingfunctional/parff",
+      "key": "8157854e73a6ed86ee899c47",
+      "artifact_bytes": 524901,
+      "manifest_sha256": "456795a6ea1d9f78488ff8e3666a6393c99f2253839e1538ca8bdf182cc450ba",
+      "users": [
+        "parff"
+      ]
+    },
+    {
+      "repository": "everythingfunctional/strff",
+      "key": "87872fe1b0f36a176657e5ca",
+      "artifact_bytes": 105571,
+      "manifest_sha256": "35336fb98432919e216ed78c84a2224673d0ec58ec3dfa20f88a6e07b7e6a5a2",
+      "users": [
+        "strff"
       ]
     },
     {
@@ -50,6 +161,24 @@
       ]
     },
     {
+      "repository": "everythingfunctional/strff",
+      "key": "9ae76ac3b0497d0075b64869",
+      "artifact_bytes": 111789,
+      "manifest_sha256": "7ac90e641b3103e30e34bbd09e15bb035ca8c76f1411dba3c0ab70899af5b0dc",
+      "users": [
+        "quaff"
+      ]
+    },
+    {
+      "repository": "everythingfunctional/quaff",
+      "key": "ae7c032516c960578080f8fc",
+      "artifact_bytes": 5400489,
+      "manifest_sha256": "968dee5578e6ea59a0f66b945d716189c7a75f6317691360fb13301736030047",
+      "users": [
+        "quaff"
+      ]
+    },
+    {
       "repository": "fortran-lang/stdlib",
       "key": "d7ecdecc5838e3e8fe8781fb",
       "artifact_bytes": 93999232,
@@ -58,6 +187,15 @@
         "codata",
         "specialmatrices",
         "stdlib"
+      ]
+    },
+    {
+      "repository": "everythingfunctional/iso_varying_string",
+      "key": "d886821ecd03d57f2607cff6",
+      "artifact_bytes": 127928,
+      "manifest_sha256": "54163b20eab55414f7d2722d87164bfb528502850f7f9df9845dc67d66113f10",
+      "users": [
+        "parff"
       ]
     }
   ],
@@ -1919,11 +2057,11 @@
           "sha256": "6210b8b167b50694941f48b20ad5d94bdacab026f1eb4720e2d55e8ddde0b59a"
         }
       ],
-      "prebuild_seconds": 8.293,
-      "artifact_bytes": 12108468,
+      "prebuild_seconds": 2.127,
+      "artifact_bytes": 536314,
       "verification": {
-        "seconds": 2.048,
-        "build_seconds": 0.427,
+        "seconds": 2.092,
+        "build_seconds": 0.442,
         "library_reused": true,
         "demo_sha256": "67a3c45d401e844312052026ed6743fdc6234c7f9adb876f5a0dd2b858e93be9",
         "compiled_targets": [
@@ -1932,15 +2070,36 @@
         ]
       },
       "catalog_build": {
-        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
         "metapackages": [],
         "apt_packages": [
           "libblas-dev=3.12.1-6",
           "liblapack-dev=3.12.1-6",
           "libarpack2-dev=3.9.1-6"
-        ]
+        ],
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "jchristopherson/spectrum",
+            "jchristopherson/linalg"
+          ]
+        }
       },
-      "verified_at": "2026-10-27T01:59:01.746663+00:00"
+      "shared_dependencies": [
+        {
+          "repository": "jchristopherson/spectrum",
+          "key": "46262dbb0ac3ecba77794485",
+          "artifact_bytes": 1519512,
+          "manifest_sha256": "b1b90bd327c5a99c6f22334d3f7bb8a7da605f0f4b2c660c04e2d2254e15b7bf"
+        },
+        {
+          "repository": "jchristopherson/linalg",
+          "key": "163d8789cb6c288ee0f76bd7",
+          "artifact_bytes": 4381236,
+          "manifest_sha256": "c548a6278efc6bd0e781db8932bbb2bb9fd1df35795e804204649d7028464811"
+        }
+      ],
+      "verified_at": "2026-10-28T21:02:12.296868+00:00"
     },
     {
       "id": "lsmr",
@@ -2198,11 +2357,11 @@
           "sha256": "614aac0224f2f60d299d3b1ba859e4423553e42f144546b968ee52549f4573a5"
         }
       ],
-      "prebuild_seconds": 13.787,
-      "artifact_bytes": 12235742,
+      "prebuild_seconds": 0.953,
+      "artifact_bytes": 536312,
       "verification": {
-        "seconds": 2.822,
-        "build_seconds": 0.683,
+        "seconds": 2.172,
+        "build_seconds": 0.445,
         "library_reused": true,
         "demo_sha256": "97150dd9ba968dd2b99a8c535b3c47186c6131df075ce688ca6d7a37bdd2f529",
         "compiled_targets": [
@@ -2211,7 +2370,7 @@
         ]
       },
       "catalog_build": {
-        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
         "metapackages": [],
         "git_aliases": {
           "https://gitlab.com/everythingfunctional/erloff": "https://github.com/everythingfunctional/erloff",
@@ -2222,9 +2381,51 @@
         "source_revisions": {
           "everythingfunctional/iso_varying_string": "850391bdb4839ae25baaab449ad83c49be21d774",
           "everythingfunctional/strff": "360d9a47b4cc877438a58978b6fe27651f2fa6a2"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "everythingfunctional/quaff",
+            "everythingfunctional/erloff",
+            "everythingfunctional/iso_varying_string",
+            "everythingfunctional/strff",
+            "everythingfunctional/parff"
+          ]
         }
       },
-      "verified_at": "2026-10-27T01:59:01.746663+00:00"
+      "shared_dependencies": [
+        {
+          "repository": "everythingfunctional/quaff",
+          "key": "ae7c032516c960578080f8fc",
+          "artifact_bytes": 5400489,
+          "manifest_sha256": "968dee5578e6ea59a0f66b945d716189c7a75f6317691360fb13301736030047"
+        },
+        {
+          "repository": "everythingfunctional/parff",
+          "key": "73f6d13dfe0f9c94bdbc0b76",
+          "artifact_bytes": 532435,
+          "manifest_sha256": "07f8f962424cc5066bafeeb77b9c61346148196d80a1754428466b80acd9d938"
+        },
+        {
+          "repository": "everythingfunctional/erloff",
+          "key": "6a05d44977bc970c23929ce0",
+          "artifact_bytes": 747719,
+          "manifest_sha256": "509c1480a8f8bc21e04a4ac40a05e1e678eec1e7d0d3c61a3e35565070950524"
+        },
+        {
+          "repository": "everythingfunctional/strff",
+          "key": "9ae76ac3b0497d0075b64869",
+          "artifact_bytes": 111789,
+          "manifest_sha256": "7ac90e641b3103e30e34bbd09e15bb035ca8c76f1411dba3c0ab70899af5b0dc"
+        },
+        {
+          "repository": "everythingfunctional/iso_varying_string",
+          "key": "6ad39a3138b1579060ed4ff6",
+          "artifact_bytes": 145050,
+          "manifest_sha256": "4b4b339524a7a0442d80b91d251dffb464d1b4d7bcd4680f50680e92ef204d17"
+        }
+      ],
+      "verified_at": "2026-10-28T21:02:12.296868+00:00"
     },
     {
       "id": "forpca",
@@ -3653,11 +3854,11 @@
           "sha256": "6210b8b167b50694941f48b20ad5d94bdacab026f1eb4720e2d55e8ddde0b59a"
         }
       ],
-      "prebuild_seconds": 8.593,
-      "artifact_bytes": 8673426,
+      "prebuild_seconds": 0.735,
+      "artifact_bytes": 536312,
       "verification": {
-        "seconds": 1.938,
-        "build_seconds": 0.472,
+        "seconds": 4.91,
+        "build_seconds": 0.416,
         "library_reused": true,
         "demo_sha256": "75ece43120bc9f62a5d9ae13afd5a42003055c3a2f58ba44fbea27a6f471f94b",
         "compiled_targets": [
@@ -3671,9 +3872,23 @@
           "liblapack-dev=3.12.1-6",
           "libarpack2-dev=3.9.1-6"
         ],
-        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "jchristopherson/linalg"
+          ]
+        }
       },
-      "verified_at": "2026-10-28T00:11:51.121365+00:00"
+      "shared_dependencies": [
+        {
+          "repository": "jchristopherson/linalg",
+          "key": "163d8789cb6c288ee0f76bd7",
+          "artifact_bytes": 4381236,
+          "manifest_sha256": "c548a6278efc6bd0e781db8932bbb2bb9fd1df35795e804204649d7028464811"
+        }
+      ],
+      "verified_at": "2026-10-28T21:02:12.296868+00:00"
     },
     {
       "id": "nonlin",
@@ -3696,11 +3911,11 @@
           "sha256": "6210b8b167b50694941f48b20ad5d94bdacab026f1eb4720e2d55e8ddde0b59a"
         }
       ],
-      "prebuild_seconds": 21.558,
-      "artifact_bytes": 20952248,
+      "prebuild_seconds": 0.579,
+      "artifact_bytes": 536311,
       "verification": {
-        "seconds": 2.712,
-        "build_seconds": 0.573,
+        "seconds": 2.232,
+        "build_seconds": 0.495,
         "library_reused": true,
         "demo_sha256": "4c25ae882446282ee2e168b8a47d004792d76c59ade47021f4babda850b9610e",
         "compiled_targets": [
@@ -3714,9 +3929,37 @@
           "liblapack-dev=3.12.1-6",
           "libarpack2-dev=3.9.1-6"
         ],
-        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "jchristopherson/nonlin",
+            "jchristopherson/ferror",
+            "jchristopherson/linalg"
+          ]
+        }
       },
-      "verified_at": "2026-10-28T00:11:51.121365+00:00"
+      "shared_dependencies": [
+        {
+          "repository": "jchristopherson/nonlin",
+          "key": "66a7df7d7ee6079c37c7e1ea",
+          "artifact_bytes": 787307,
+          "manifest_sha256": "1b379bf6c0f6021a8097de5ff144538c3619b293a4794472ac34a011ca73133f"
+        },
+        {
+          "repository": "jchristopherson/linalg",
+          "key": "163d8789cb6c288ee0f76bd7",
+          "artifact_bytes": 4381236,
+          "manifest_sha256": "c548a6278efc6bd0e781db8932bbb2bb9fd1df35795e804204649d7028464811"
+        },
+        {
+          "repository": "jchristopherson/ferror",
+          "key": "1dd6d7de564d577d6efaed3b",
+          "artifact_bytes": 113338,
+          "manifest_sha256": "059b319eb019cda2e998fbc5797bbbd1b55904acfcdb00f94e0c11ad5b76d290"
+        }
+      ],
+      "verified_at": "2026-10-28T21:02:12.296868+00:00"
     },
     {
       "id": "maptran3d",
@@ -3953,11 +4196,11 @@
           "sha256": "0a2ff49b7eb88218c5de043b5aa3e564e821cd8906354e6f67a2ca480ae0c52e"
         }
       ],
-      "prebuild_seconds": 1.408,
-      "artifact_bytes": 979413,
+      "prebuild_seconds": 1.899,
+      "artifact_bytes": 536313,
       "verification": {
-        "seconds": 1.773,
-        "build_seconds": 0.201,
+        "seconds": 1.936,
+        "build_seconds": 0.374,
         "library_reused": true,
         "demo_sha256": "aefd2f4a035adf89988ba7b21db368142ea4730a3b94009f290ccc6340e0dec5",
         "compiled_targets": [
@@ -3973,9 +4216,30 @@
           "https://gitlab.com/everythingfunctional/exceptional_numbers": "https://github.com/everythingfunctional/exceptional_numbers",
           "https://gitlab.com/everythingfunctional/iso_varying_string": "https://github.com/everythingfunctional/iso_varying_string"
         },
-        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "everythingfunctional/strff",
+            "everythingfunctional/iso_varying_string"
+          ]
+        }
       },
-      "verified_at": "2026-10-28T00:11:51.121365+00:00"
+      "shared_dependencies": [
+        {
+          "repository": "everythingfunctional/strff",
+          "key": "87872fe1b0f36a176657e5ca",
+          "artifact_bytes": 105571,
+          "manifest_sha256": "35336fb98432919e216ed78c84a2224673d0ec58ec3dfa20f88a6e07b7e6a5a2"
+        },
+        {
+          "repository": "everythingfunctional/iso_varying_string",
+          "key": "22703271fe630b34558f4a22",
+          "artifact_bytes": 127928,
+          "manifest_sha256": "ca810439c3a36a2de4e377a55dc8c4495985c827bf7f8202f03810ea9782568e"
+        }
+      ],
+      "verified_at": "2026-10-28T21:02:12.296868+00:00"
     },
     {
       "id": "diffeq",
@@ -3993,11 +4257,11 @@
           "sha256": "6210b8b167b50694941f48b20ad5d94bdacab026f1eb4720e2d55e8ddde0b59a"
         }
       ],
-      "prebuild_seconds": 14.724,
-      "artifact_bytes": 24201860,
+      "prebuild_seconds": 0.63,
+      "artifact_bytes": 536313,
       "verification": {
-        "seconds": 1.894,
-        "build_seconds": 0.467,
+        "seconds": 1.904,
+        "build_seconds": 0.445,
         "library_reused": true,
         "demo_sha256": "eead828109c30eaca4aa69c27bbb32ea354baae23187ab0b0dfca69e1a5ec40e",
         "compiled_targets": [
@@ -4014,9 +4278,30 @@
         "source_revisions": {
           "jchristopherson/linalg": "cb8fb7b1c67986591083cac516eb700f47d69b68"
         },
-        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "jchristopherson/diffeq",
+            "jchristopherson/linalg"
+          ]
+        }
       },
-      "verified_at": "2026-10-28T00:46:44.377165+00:00"
+      "shared_dependencies": [
+        {
+          "repository": "jchristopherson/diffeq",
+          "key": "5e33364e51422771bb35db53",
+          "artifact_bytes": 1792336,
+          "manifest_sha256": "6627840b9b42e9228e0342c857efabb61a1fb1ddcd08065b2bfe5bc3ae5b15bc"
+        },
+        {
+          "repository": "jchristopherson/linalg",
+          "key": "163d8789cb6c288ee0f76bd7",
+          "artifact_bytes": 4381236,
+          "manifest_sha256": "c548a6278efc6bd0e781db8932bbb2bb9fd1df35795e804204649d7028464811"
+        }
+      ],
+      "verified_at": "2026-10-28T21:02:12.296868+00:00"
     },
     {
       "id": "fjsample",
@@ -4486,11 +4771,11 @@
           "sha256": "c0f773e21d2c1a0f7b83bcb51cf6bca4d7103815373e7be9a56d1689b8a5da42"
         }
       ],
-      "prebuild_seconds": 2.707,
-      "artifact_bytes": 1972326,
+      "prebuild_seconds": 2.339,
+      "artifact_bytes": 536312,
       "verification": {
-        "seconds": 2.631,
-        "build_seconds": 0.617,
+        "seconds": 4.011,
+        "build_seconds": 2.976,
         "library_reused": true,
         "demo_sha256": "ccb1e96e2b9a091a3109437ca539dc4a7541412d274e29161baefc725da9e219",
         "compiled_targets": [
@@ -4499,16 +4784,44 @@
         ]
       },
       "catalog_build": {
-        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
         "git_aliases": {
           "https://gitlab.com/everythingfunctional/iso_varying_string": "https://github.com/everythingfunctional/iso_varying_string",
           "https://gitlab.com/everythingfunctional/strff": "https://github.com/everythingfunctional/strff"
         },
         "environment": {
           "FPM_FFLAGS": "-ftrampoline-impl=heap"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "everythingfunctional/parff",
+            "everythingfunctional/iso_varying_string",
+            "everythingfunctional/strff"
+          ]
         }
       },
-      "verified_at": "2026-10-28T01:33:45.255776+00:00"
+      "shared_dependencies": [
+        {
+          "repository": "everythingfunctional/parff",
+          "key": "8157854e73a6ed86ee899c47",
+          "artifact_bytes": 524901,
+          "manifest_sha256": "456795a6ea1d9f78488ff8e3666a6393c99f2253839e1538ca8bdf182cc450ba"
+        },
+        {
+          "repository": "everythingfunctional/strff",
+          "key": "630ee337388e4eb317312d8d",
+          "artifact_bytes": 108435,
+          "manifest_sha256": "703d5224e824483ccde58772f47fa69bdea12bebab7d00116d831e42e03948c3"
+        },
+        {
+          "repository": "everythingfunctional/iso_varying_string",
+          "key": "d886821ecd03d57f2607cff6",
+          "artifact_bytes": 127928,
+          "manifest_sha256": "54163b20eab55414f7d2722d87164bfb528502850f7f9df9845dc67d66113f10"
+        }
+      ],
+      "verified_at": "2026-10-28T21:02:12.296868+00:00"
     },
     {
       "id": "conmax",

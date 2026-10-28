@@ -4942,13 +4942,20 @@
       }
     ],
     "catalog_build": {
-      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+      "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
       "metapackages": [],
       "apt_packages": [
         "libblas-dev=3.12.1-6",
         "liblapack-dev=3.12.1-6",
         "libarpack2-dev=3.9.1-6"
-      ]
+      ],
+      "shared_dependencies": {
+        "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+        "repositories": [
+          "jchristopherson/spectrum",
+          "jchristopherson/linalg"
+        ]
+      }
     },
     "dependents_in_sample": 0,
     "source": "program main\n   use spectrum, only: convolve, remove_mean\n   use iso_fortran_env, only: real64\n   implicit none\n   real(real64), allocatable :: filtered(:), centered(:)\n   real(real64) :: signal(3)\n   signal = [1.0_real64,2.0_real64,3.0_real64]\n   filtered = convolve(signal,[0.5_real64,0.5_real64])\n   if (size(filtered) /= 4) error stop 'incorrect convolution length'\n   if (maxval(abs(filtered-[0.5_real64,1.5_real64,2.5_real64,1.5_real64])) > 1.e-12_real64) &\n      error stop 'incorrect convolution'\n   centered = remove_mean(signal)\n   if (maxval(abs(centered-[-1.0_real64,0.0_real64,1.0_real64])) > 1.e-12_real64) error stop 'incorrect centering'\n   print *, 'Two-point averaging filter (full convolution):', filtered\n   print *, 'Signal with mean removed:', centered\n   print *, 'PASS spectrum'\nend program main\n",
@@ -5493,7 +5500,7 @@
       }
     ],
     "catalog_build": {
-      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+      "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
       "metapackages": [],
       "git_aliases": {
         "https://gitlab.com/everythingfunctional/erloff": "https://github.com/everythingfunctional/erloff",
@@ -5504,6 +5511,16 @@
       "source_revisions": {
         "everythingfunctional/iso_varying_string": "850391bdb4839ae25baaab449ad83c49be21d774",
         "everythingfunctional/strff": "360d9a47b4cc877438a58978b6fe27651f2fa6a2"
+      },
+      "shared_dependencies": {
+        "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+        "repositories": [
+          "everythingfunctional/quaff",
+          "everythingfunctional/erloff",
+          "everythingfunctional/iso_varying_string",
+          "everythingfunctional/strff",
+          "everythingfunctional/parff"
+        ]
       }
     },
     "dependents_in_sample": 0,
@@ -8728,7 +8745,13 @@
         "liblapack-dev=3.12.1-6",
         "libarpack2-dev=3.9.1-6"
       ],
-      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+      "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+      "shared_dependencies": {
+        "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+        "repositories": [
+          "jchristopherson/linalg"
+        ]
+      }
     },
     "source": "program demo_linalg\n   use iso_fortran_env, only: real64, int32\n   use linalg, only: lu_factor, solve_lu, eigen\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   real(real64) :: a(3,3), b(3), x(3), symmetric(2,2)\n   real(real64), allocatable :: lu(:,:), values(:), vectors(:,:)\n   integer(int32), allocatable :: pivots(:)\n   integer :: i\n\n   a = reshape([3._real64, 1._real64, 0._real64, &\n                1._real64, 4._real64, 1._real64, &\n                0._real64, 1._real64, 2._real64], [3,3])\n   b = matmul(a, [1._real64, 2._real64, 3._real64])\n   call lu_factor(a, ipvt=pivots, lu=lu)\n   x = solve_lu(lu, pivots, b)\n   if (.not. all(ieee_is_finite(x))) error stop 'Nonfinite solution'\n   if (maxval(abs(x-[1._real64, 2._real64, 3._real64])) > 1.e-12_real64) error stop 'Incorrect solution'\n   if (maxval(abs(matmul(a,x)-b)) > 1.e-12_real64) error stop 'Linear-system residual'\n   print '(a,3f12.6)', 'Solution:', x\n\n   symmetric = reshape([2._real64, 1._real64, 1._real64, 2._real64], [2,2])\n   call eigen(symmetric, values, vectors)\n   if (.not. all(ieee_is_finite(values))) error stop 'Nonfinite eigenvalues'\n   if (maxval(abs(values-[1._real64, 3._real64])) > 1.e-12_real64) error stop 'Incorrect eigenvalues'\n   if (.not. all(ieee_is_finite(vectors))) error stop 'Nonfinite eigenvectors'\n   do i = 1, 2\n      if (maxval(abs(matmul(symmetric,vectors(:,i))-values(i)*vectors(:,i))) > 1.e-12_real64) &\n         error stop 'Eigenvector residual'\n   end do\n   print '(a,2f12.6)', 'Eigenvalues:', values\n   print *, 'PASS linalg'\nend program demo_linalg\n",
     "topics": [
@@ -8981,7 +9004,15 @@
         "liblapack-dev=3.12.1-6",
         "libarpack2-dev=3.9.1-6"
       ],
-      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+      "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+      "shared_dependencies": {
+        "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+        "repositories": [
+          "jchristopherson/nonlin",
+          "jchristopherson/ferror",
+          "jchristopherson/linalg"
+        ]
+      }
     },
     "source": "module demo_nonlin_equations\n   use iso_fortran_env, only: real64\n   implicit none\ncontains\n   subroutine equations(x, f, args)\n      real(real64), intent(in) :: x(:)\n      real(real64), intent(out) :: f(:)\n      class(*), intent(inout), optional :: args\n      ! A circle and a line intersect at (2,1) and (-1,-2).\n      f(1) = x(1)**2 + x(2)**2 - 5._real64\n      f(2) = x(1) - x(2) - 1._real64\n   end subroutine equations\nend module demo_nonlin_equations\n\nprogram demo_nonlin\n   use nonlin, only: vecfcn_helper, vecfcn, newton_solver, iteration_behavior\n   use demo_nonlin_equations, only: equations, real64\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   type(vecfcn_helper) :: objective\n   type(newton_solver) :: solver\n   type(iteration_behavior) :: tracking\n   procedure(vecfcn), pointer :: callback\n   real(real64) :: x(2), residual(2), checked(2)\n\n   callback => equations\n   call objective%set_fcn(callback, 2, 2)\n   call solver%set_max_fcn_evals(200)\n   call solver%set_fcn_tolerance(1.e-10_real64)\n   call solver%set_var_tolerance(1.e-10_real64)\n   x = [1.8_real64, 0.8_real64]\n   call solver%solve(objective, x, residual, tracking)\n   call equations(x, checked)\n   if (.not. all(ieee_is_finite(x)) .or. .not. all(ieee_is_finite(checked))) &\n      error stop 'Nonfinite nonlinear solution'\n   if (maxval(abs(checked)) > 1.e-8_real64) error stop 'Nonlinear residual check failed'\n   if (maxval(abs(x-[2._real64, 1._real64])) > 1.e-8_real64) error stop 'Unexpected solution'\n   print '(a,2f14.9)', 'Solution:', x\n   print '(a,2es14.4)', 'Residuals:', checked\n   print '(a,i0)', 'Iterations: ', tracking%iter_count\n   print *, 'PASS nonlin'\nend program demo_nonlin\n",
     "topics": [
@@ -9575,7 +9606,14 @@
         "https://gitlab.com/everythingfunctional/exceptional_numbers": "https://github.com/everythingfunctional/exceptional_numbers",
         "https://gitlab.com/everythingfunctional/iso_varying_string": "https://github.com/everythingfunctional/iso_varying_string"
       },
-      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+      "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+      "shared_dependencies": {
+        "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+        "repositories": [
+          "everythingfunctional/strff",
+          "everythingfunctional/iso_varying_string"
+        ]
+      }
     },
     "source": "program demo_strff\n   use strff, only: split_at, join, to_string, operator(.includes.), operator(.startswith.)\n   use iso_varying_string, only: varying_string, char\n   implicit none\n   type(varying_string), allocatable :: words(:)\n   character(:), allocatable :: combined\n   integer :: i\n\n   words = split_at('red,green,blue', ',')\n   if (size(words) /= 3) error stop 'Incorrect token count'\n   if (char(words(1)) /= 'red' .or. char(words(2)) /= 'green' .or. char(words(3)) /= 'blue') &\n      error stop 'Incorrect split result'\n   combined = char(join(words, ' | '))\n   if (combined /= 'red | green | blue') error stop 'Incorrect joined text'\n   if (.not. (combined .includes. 'green')) error stop 'Substring check failed'\n   if (.not. (combined .startswith. 'red')) error stop 'Prefix check failed'\n   if (char(to_string(42)) /= '42') error stop 'Integer-to-string check failed'\n   print '(a)', combined\n   do i = 1, size(words)\n      print '(a)', 'Word '//char(to_string(i))//': '//char(words(i))\n   end do\n   print *, 'PASS strff'\nend program demo_strff\n",
     "topics": [
@@ -9628,7 +9666,14 @@
       "source_revisions": {
         "jchristopherson/linalg": "cb8fb7b1c67986591083cac516eb700f47d69b68"
       },
-      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+      "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+      "shared_dependencies": {
+        "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+        "repositories": [
+          "jchristopherson/diffeq",
+          "jchristopherson/linalg"
+        ]
+      }
     },
     "source": "module oscillator_model\n   use iso_fortran_env, only: dp => real64\n   implicit none\ncontains\n   subroutine rhs(t,y,dydt,args)\n      real(dp), intent(in) :: t, y(:)\n      real(dp), intent(out) :: dydt(:)\n      class(*), optional, intent(inout) :: args\n      dydt = [y(2), -y(1)-0.2_dp*y(2)]\n   end subroutine\nend module\n\nprogram damped_oscillator\n   use diffeq, only: runge_kutta_45, ode_container\n   use oscillator_model, only: dp, rhs\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   type(runge_kutta_45) :: solver\n   type(ode_container) :: model\n   real(dp), allocatable :: solution(:,:), exact(:)\n   real(dp) :: frequency, error\n   integer :: n\n   model%fcn => rhs\n   call solver%set_absolute_tolerance(1.e-10_dp)\n   call solver%set_relative_tolerance(1.e-10_dp)\n   call solver%solve(model,[0.0_dp,10.0_dp],[1.0_dp,0.0_dp])\n   solution = solver%get_solution()\n   n = size(solution,1)\n   if (n<2) error stop 'No solution'\n   if (.not. all(ieee_is_finite(solution))) error stop 'Nonfinite solution'\n   if (abs(solution(n,1)-10.0_dp)>1.e-9_dp) error stop 'Incomplete integration'\n   frequency = sqrt(0.99_dp)\n   exact = exp(-0.1_dp*solution(:,1)) * &\n      (cos(frequency*solution(:,1))+0.1_dp/frequency*sin(frequency*solution(:,1)))\n   error = maxval(abs(solution(:,2)-exact))\n   print '(a,i0)', 'Adaptive solution points: ', n\n   print '(a,f12.8)', 'Displacement at time 10: ', solution(n,2)\n   print '(a,es12.4)', 'Maximum error against analytic solution: ', error\n   if (error>1.e-7_dp) error stop 'Oscillator check'\n   print *, 'PASS diffeq'\nend program\n",
     "topics": [
@@ -10702,13 +10747,21 @@
       }
     ],
     "catalog_build": {
-      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+      "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
       "git_aliases": {
         "https://gitlab.com/everythingfunctional/iso_varying_string": "https://github.com/everythingfunctional/iso_varying_string",
         "https://gitlab.com/everythingfunctional/strff": "https://github.com/everythingfunctional/strff"
       },
       "environment": {
         "FPM_FFLAGS": "-ftrampoline-impl=heap"
+      },
+      "shared_dependencies": {
+        "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+        "repositories": [
+          "everythingfunctional/parff",
+          "everythingfunctional/iso_varying_string",
+          "everythingfunctional/strff"
+        ]
       }
     },
     "source": "program main\n   use iso_varying_string, only: var_str,char\n   use parff, only: parser_output_t,parsed_integer_t,new_state,parse_integer\n   implicit none\n   type(parser_output_t) :: result\n   result=parse_integer(new_state(var_str('-321')))\n   if (.not.result%ok) error stop 'Valid integer was rejected'\n   select type (value=>result%parsed)\n   type is (parsed_integer_t)\n      if (value%value_/=-321) error stop 'Incorrect parsed value'\n      print '(a,i0)', 'Parsed integer: ',value%value_\n   class default\n      error stop 'Unexpected result type'\n   end select\n   result=parse_integer(new_state(var_str('not a number')))\n   if (result%ok) error stop 'Invalid integer was accepted'\n   print '(a,a)', 'Invalid input: ',char(result%message%to_string())\n   print *, 'PASS parff'\nend program\n",

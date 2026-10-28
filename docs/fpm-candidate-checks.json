@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-28T20:12:46.446837+00:00",
+  "checked_at": "2026-10-28T21:02:12.296868+00:00",
   "compiler": "GNU Fortran 16.2.0",
   "fpm": "0.12.0",
   "validation": "fpm-precompiled-validation.json",
@@ -1012,12 +1012,12 @@
       "repository": "jchristopherson/linalg",
       "revision": "cb8fb7b1c67986591083cac516eb700f47d69b68",
       "archive_sha256": "6210b8b167b50694941f48b20ad5d94bdacab026f1eb4720e2d55e8ddde0b59a",
-      "checked_at": "2026-10-28T00:11:51.121365+00:00",
+      "checked_at": "2026-10-28T21:02:12.296868+00:00",
       "status": "verified",
       "example": "../fpm_catalog/demos/linalg.f90",
       "verification": {
-        "seconds": 1.938,
-        "build_seconds": 0.472,
+        "seconds": 4.91,
+        "build_seconds": 0.416,
         "library_reused": true,
         "demo_sha256": "75ece43120bc9f62a5d9ae13afd5a42003055c3a2f58ba44fbea27a6f471f94b",
         "compiled_targets": [
@@ -1031,7 +1031,13 @@
           "liblapack-dev=3.12.1-6",
           "libarpack2-dev=3.9.1-6"
         ],
-        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "jchristopherson/linalg"
+          ]
+        }
       }
     },
     {
@@ -1039,12 +1045,12 @@
       "repository": "jchristopherson/nonlin",
       "revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
       "archive_sha256": "3a6f6cf6daa9b352213407f7c90555c22a492ad455cab0e2eb708efc7d34eaba",
-      "checked_at": "2026-10-28T00:11:51.121365+00:00",
+      "checked_at": "2026-10-28T21:02:12.296868+00:00",
       "status": "verified",
       "example": "../fpm_catalog/demos/nonlin.f90",
       "verification": {
-        "seconds": 2.712,
-        "build_seconds": 0.573,
+        "seconds": 2.232,
+        "build_seconds": 0.495,
         "library_reused": true,
         "demo_sha256": "4c25ae882446282ee2e168b8a47d004792d76c59ade47021f4babda850b9610e",
         "compiled_targets": [
@@ -1070,7 +1076,15 @@
           "liblapack-dev=3.12.1-6",
           "libarpack2-dev=3.9.1-6"
         ],
-        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "jchristopherson/nonlin",
+            "jchristopherson/ferror",
+            "jchristopherson/linalg"
+          ]
+        }
       }
     },
     {
@@ -1236,12 +1250,12 @@
       "repository": "everythingfunctional/strff",
       "revision": "50e536cb087123f2c72140cb065c398a01fc5121",
       "archive_sha256": "c0f773e21d2c1a0f7b83bcb51cf6bca4d7103815373e7be9a56d1689b8a5da42",
-      "checked_at": "2026-10-28T00:11:51.121365+00:00",
+      "checked_at": "2026-10-28T21:02:12.296868+00:00",
       "status": "verified",
       "example": "../fpm_catalog/demos/strff.f90",
       "verification": {
-        "seconds": 1.773,
-        "build_seconds": 0.201,
+        "seconds": 1.936,
+        "build_seconds": 0.374,
         "library_reused": true,
         "demo_sha256": "aefd2f4a035adf89988ba7b21db368142ea4730a3b94009f290ccc6340e0dec5",
         "compiled_targets": [
@@ -1264,7 +1278,14 @@
           "https://gitlab.com/everythingfunctional/exceptional_numbers": "https://github.com/everythingfunctional/exceptional_numbers",
           "https://gitlab.com/everythingfunctional/iso_varying_string": "https://github.com/everythingfunctional/iso_varying_string"
         },
-        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "everythingfunctional/strff",
+            "everythingfunctional/iso_varying_string"
+          ]
+        }
       },
       "initial_revision": "ea66eebf0d06ae588fc84be7ed6dd621f2d520cc",
       "initial_archive_sha256": "b532aaafa066bac3de2aa19770f4aaf297b0a5e440ee3a6112c41304f0b74d41",
@@ -1295,12 +1316,12 @@
       "repository": "jchristopherson/diffeq",
       "revision": "989b320179c23aaff4bfe72994c90e9034f50c74",
       "archive_sha256": "09f6e92aea1dc8c9eb9233d4052b012e3b53a739e1ce078453d0421ddb1d4e87",
-      "checked_at": "2026-10-28T00:46:44.377165+00:00",
+      "checked_at": "2026-10-28T21:02:12.296868+00:00",
       "status": "verified",
       "example": "../fpm_catalog/demos/diffeq.f90",
       "verification": {
-        "seconds": 1.894,
-        "build_seconds": 0.467,
+        "seconds": 1.904,
+        "build_seconds": 0.445,
         "library_reused": true,
         "demo_sha256": "eead828109c30eaca4aa69c27bbb32ea354baae23187ab0b0dfca69e1a5ec40e",
         "compiled_targets": [
@@ -1324,7 +1345,14 @@
         "source_revisions": {
           "jchristopherson/linalg": "cb8fb7b1c67986591083cac516eb700f47d69b68"
         },
-        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "jchristopherson/diffeq",
+            "jchristopherson/linalg"
+          ]
+        }
       }
     },
     {
@@ -1788,12 +1816,12 @@
       "repository": "everythingfunctional/parff",
       "revision": "dbce6a04992fbc1e2d13b6c633480d3cd4bbe35c",
       "archive_sha256": "614aac0224f2f60d299d3b1ba859e4423553e42f144546b968ee52549f4573a5",
-      "checked_at": "2026-10-28T01:33:45.255776+00:00",
+      "checked_at": "2026-10-28T21:02:12.296868+00:00",
       "status": "verified",
       "example": "../fpm_catalog/demos/parff.f90",
       "verification": {
-        "seconds": 2.631,
-        "build_seconds": 0.617,
+        "seconds": 4.011,
+        "build_seconds": 2.976,
         "library_reused": true,
         "demo_sha256": "ccb1e96e2b9a091a3109437ca539dc4a7541412d274e29161baefc725da9e219",
         "compiled_targets": [
@@ -1814,13 +1842,21 @@
         }
       ],
       "catalog_build": {
-        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
         "git_aliases": {
           "https://gitlab.com/everythingfunctional/iso_varying_string": "https://github.com/everythingfunctional/iso_varying_string",
           "https://gitlab.com/everythingfunctional/strff": "https://github.com/everythingfunctional/strff"
         },
         "environment": {
           "FPM_FFLAGS": "-ftrampoline-impl=heap"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "everythingfunctional/parff",
+            "everythingfunctional/iso_varying_string",
+            "everythingfunctional/strff"
+          ]
         }
       },
       "initial_attempt": "fpm-candidates/parff/initial-attempt.json"

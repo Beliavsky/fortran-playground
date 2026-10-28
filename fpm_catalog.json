@@ -941,13 +941,20 @@
         }
       ],
       "catalog_build": {
-        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
         "metapackages": [],
         "apt_packages": [
           "libblas-dev=3.12.1-6",
           "liblapack-dev=3.12.1-6",
           "libarpack2-dev=3.9.1-6"
-        ]
+        ],
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "jchristopherson/spectrum",
+            "jchristopherson/linalg"
+          ]
+        }
       },
       "dependents_in_sample": 0
     },
@@ -1143,7 +1150,7 @@
         }
       ],
       "catalog_build": {
-        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
         "metapackages": [],
         "git_aliases": {
           "https://gitlab.com/everythingfunctional/erloff": "https://github.com/everythingfunctional/erloff",
@@ -1154,6 +1161,16 @@
         "source_revisions": {
           "everythingfunctional/iso_varying_string": "850391bdb4839ae25baaab449ad83c49be21d774",
           "everythingfunctional/strff": "360d9a47b4cc877438a58978b6fe27651f2fa6a2"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "everythingfunctional/quaff",
+            "everythingfunctional/erloff",
+            "everythingfunctional/iso_varying_string",
+            "everythingfunctional/strff",
+            "everythingfunctional/parff"
+          ]
         }
       },
       "dependents_in_sample": 0
@@ -2003,7 +2020,13 @@
           "liblapack-dev=3.12.1-6",
           "libarpack2-dev=3.9.1-6"
         ],
-        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "jchristopherson/linalg"
+          ]
+        }
       }
     },
     {
@@ -2033,7 +2056,15 @@
           "liblapack-dev=3.12.1-6",
           "libarpack2-dev=3.9.1-6"
         ],
-        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "jchristopherson/nonlin",
+            "jchristopherson/ferror",
+            "jchristopherson/linalg"
+          ]
+        }
       }
     },
     {
@@ -2188,7 +2219,14 @@
           "https://gitlab.com/everythingfunctional/exceptional_numbers": "https://github.com/everythingfunctional/exceptional_numbers",
           "https://gitlab.com/everythingfunctional/iso_varying_string": "https://github.com/everythingfunctional/iso_varying_string"
         },
-        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "everythingfunctional/strff",
+            "everythingfunctional/iso_varying_string"
+          ]
+        }
       }
     },
     {
@@ -2216,7 +2254,14 @@
         "source_revisions": {
           "jchristopherson/linalg": "cb8fb7b1c67986591083cac516eb700f47d69b68"
         },
-        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "jchristopherson/diffeq",
+            "jchristopherson/linalg"
+          ]
+        }
       }
     },
     {
@@ -2484,13 +2529,21 @@
         }
       ],
       "catalog_build": {
-        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
         "git_aliases": {
           "https://gitlab.com/everythingfunctional/iso_varying_string": "https://github.com/everythingfunctional/iso_varying_string",
           "https://gitlab.com/everythingfunctional/strff": "https://github.com/everythingfunctional/strff"
         },
         "environment": {
           "FPM_FFLAGS": "-ftrampoline-impl=heap"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "everythingfunctional/parff",
+            "everythingfunctional/iso_varying_string",
+            "everythingfunctional/strff"
+          ]
         }
       }
     },
