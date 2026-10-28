@@ -1,0 +1,9 @@
+Solver termination: 1
+Computed variables:     1.4142135624E+00    1.4142135624E+00
+ERROR STOP Known optimum differs
+
+Error termination. Backtrace:
+#0  0x4c1abfb in demo_optgra
+	at C:/python/fortran-playground/.fpm-audit-cache/batch-170/optgra-native/main.f90:44
+#1  0x4c1b22b in main
+	at C:/python/fortran-playground/.fpm-audit-cache/batch-170/optgra-native/main.f90:24

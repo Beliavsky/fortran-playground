@@ -49,7 +49,19 @@ python -m pip install numpy matplotlib
 python xfortran_serve.py --workspace .
 ```
 
-The module, helper Python file, and vendored files must accompany a standalone copy of the local tools: copy `fortran_plot.py` and `vendor/pyplot-fortran/` along with the files listed in the README. Local programs run with your normal account permissions.
+The module, helper Python files, and vendored files must accompany a standalone copy of the local tools: copy `fortran_plot.py`, `fortran_image.py`, and `vendor/pyplot-fortran/` along with the files listed in the README. Local programs run with your normal account permissions.
+
+## ForImage and PNM previews
+
+The hosted FPM playground and local runners also collect PBM, PGM and PPM images produced directly in the working directory, including files with a `.pnm` extension. Both ASCII and binary PNM encodings are supported. The runtime converts these images to PNG and displays them in the existing **Plots** pane, with PNG download links. The Fortran program only needs to save its image normally; no Python calls or pyplot dependency are needed in that program.
+
+The Selected ForImage example generates a color gradient, checks its negative and an image-file round trip, and returns two previews. It uses the upstream ForImage API and works as a normal local FPM program too. Outside a playground, a PNM-capable image viewer can open its original files.
+
+PNM inputs are limited to 16 MiB each. Converted images share the existing limit of four previews and 1 MiB of PNG data with ordinary plots, with at most 4096 pixels per side and eight million pixels. Nested files and symbolic links are omitted. Local runs preview only new or changed files. Original PNM files are not rewritten by conversion; temporary hosted and custom-main files disappear with their jobs.
+
+The converter imports Pillow only when a PNM image is found. Hosted FPM images already include it through Matplotlib. For local previews, install Pillow into the Python environment running the server or runner (`python -m pip install Pillow`); if it is missing, execution results remain available and an explanatory preview note is shown. Ordinary runs do not import Pillow.
+
+This addition requires redeploying the FPM service and restarting local servers. It does not add PNM collection to the separate hosted ordinary-source service. Conversion is a runtime helper outside the compiled-library recipe: existing package libraries retain their identities. Deployment refreshes and checks their runtime layers without recompiling compatible libraries.
 
 ## Independent compilation
 

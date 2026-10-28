@@ -1,0 +1,32 @@
+{
+  "id": "parff",
+  "repository": "everythingfunctional/parff",
+  "revision": "dbce6a04992fbc1e2d13b6c633480d3cd4bbe35c",
+  "archive_sha256": "614aac0224f2f60d299d3b1ba859e4423553e42f144546b968ee52549f4573a5",
+  "stars": 0,
+  "license": "MIT",
+  "category": "Text parsing",
+  "description": "Composable functional parsers for structured text and useful parse errors.",
+  "dependencies": [
+    {
+      "repository": "everythingfunctional/iso_varying_string",
+      "revision": "fb7635a6b21c3d50ac7c8c14f7696a70931cb4a6",
+      "sha256": "0a2ff49b7eb88218c5de043b5aa3e564e821cd8906354e6f67a2ca480ae0c52e"
+    },
+    {
+      "repository": "everythingfunctional/strff",
+      "revision": "50e536cb087123f2c72140cb065c398a01fc5121",
+      "sha256": "c0f773e21d2c1a0f7b83bcb51cf6bca4d7103815373e7be9a56d1689b8a5da42"
+    }
+  ],
+  "catalog_build": {
+    "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+    "git_aliases": {
+      "https://gitlab.com/everythingfunctional/iso_varying_string": "https://github.com/everythingfunctional/iso_varying_string",
+      "https://gitlab.com/everythingfunctional/strff": "https://github.com/everythingfunctional/strff"
+    },
+    "environment": {
+      "FPM_FFLAGS": "-ftrampoline-impl=heap"
+    }
+  }
+}

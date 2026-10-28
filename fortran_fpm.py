@@ -130,7 +130,8 @@ def execute_project(project, name, *, options=None, overrides=None, cancel=None,
                 from fortran_plot import uses_pyplot, install_module, provides_pyplot
                 if uses_pyplot(options['source']) and not provides_pyplot(root):
                     install_module(workdir / 'src')
-            from fortran_plot import plotting_environment, snapshot, collect_plots
+            from fortran_plot import plotting_environment
+            from fortran_image import snapshot, collect_plots
             environment = plotting_environment(environment)
             row['working_directory'] = str(workdir)
             flags = ['--profile', options['profile'], '--compiler', command, '--no-prune']

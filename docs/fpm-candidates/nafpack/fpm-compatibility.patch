@@ -1,0 +1,39 @@
+--- a/fpm.toml
++++ b/fpm.toml
+@@ -9,36 +9,6 @@
+     "NAFPack",
+ ]
+ homepage = "https://github.com/Minard-Jules/NAFPack"
+-
+-[features.release]
+-flags = "-O3"
+-
+-[features.release.gfortran]
+-flags = "-march=native -ffast-math -fimplicit-none -ffree-line-length-2000 -funroll-loops"
+-
+-[features.release.preprocess.cpp]
+-macros = [
+-    "NDEBUG",
+-]
+-
+-[features.debug]
+-flags = "-g -O0"
+-
+-[features.debug.gfortran]
+-flags = "-Wall -Wextra -fcheck=bounds -Wimplicit-procedure -Werror=implicit-procedure -ffree-line-length-2000 -std=f2018-fbacktrace -fbounds-check -frange-check"
+-
+-[features.debug.preprocess.cpp]
+-macros = [
+-    "DEBUG",
+-]
+-
+-[profiles]
+-debug = [
+-    "debug",
+-]
+-release = [
+-    "release",
+-]
+ 
+ [build]
+ auto-executables = true

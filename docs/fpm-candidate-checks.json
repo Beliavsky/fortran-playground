@@ -1,0 +1,2296 @@
+{
+  "checked_at": "2026-10-28T02:10:15.391492+00:00",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "validation": "fpm-precompiled-validation.json",
+  "added": [
+    "odrpack95",
+    "pointsets",
+    "flint",
+    "fortran-string-to-real",
+    "ad_dnsvm",
+    "integrate_fortran",
+    "rndgen-fortran",
+    "blas-interface",
+    "fsparse",
+    "geompack",
+    "minres",
+    "fordiff",
+    "twopnt",
+    "specfunc-fullerton",
+    "lib_statistics",
+    "astro-fortran",
+    "nlopt-f",
+    "ncio",
+    "daskr",
+    "ffilesystem",
+    "utf8-f",
+    "ryu_fortran",
+    "iso_varying_string",
+    "fortimize",
+    "forimage",
+    "fastconv",
+    "gaussjacobiquad",
+    "kissfft-f",
+    "h5fortran",
+    "metis-fpm",
+    "m_calculator",
+    "befor64",
+    "iapws",
+    "fortran-zlib",
+    "linalg",
+    "nonlin",
+    "maptran3d",
+    "fortran-pcre2",
+    "ciaaw",
+    "rngff",
+    "fortran-zstd",
+    "strff",
+    "paramcard",
+    "diffeq",
+    "fjsample",
+    "conmin",
+    "opti",
+    "interpolation",
+    "fortran_huffman",
+    "odepack",
+    "fastmath",
+    "fortsa",
+    "fortran-flann",
+    "fortran_stb_image",
+    "cairo-fortran",
+    "forsudoku",
+    "conmax",
+    "fmmap",
+    "fortran-messagepack",
+    "graphstruc",
+    "kiss",
+    "parff",
+    "forinv",
+    "forsolver",
+    "fortran_cubatures",
+    "optgra",
+    "psqp",
+    "sparse_fortran",
+    "stiff3",
+    "dcuhre",
+    "foreig",
+    "forlab",
+    "libdogleg-f",
+    "nafpack",
+    "rkf45",
+    "y12m"
+  ],
+  "deferred": [
+    {
+      "id": "auto-diff",
+      "repository": "zoziha/Auto-Diff",
+      "revision": "35e62246675cbe6dcd04ce25a81f7885653feabe",
+      "archive_sha256": "1e383b99c89b23534ba87c4c4f987ae03a40d3a2d6636806243ce265f74ee499",
+      "reason": "The expression (a+b*b)*exp(c) at a=2,b=1,c=0 returned zero gradients, not the expected (1,2,3). The upstream demo1 reproduced zero gradients locally with GNU Fortran 17.0.0 (20260510). No source patch was applied."
+    },
+    {
+      "id": "kronrod",
+      "repository": "jacobwilliams/kronrod",
+      "revision": "312278846b6e403fdea410a823d88ef4fb92a3cc",
+      "archive_sha256": "f53b75081ca184120e6594ee2649abb402a5e0c45ca40d391b0b7292eff780ea",
+      "reason": "Application-only layout: the numerical routines are internal to programs under app, without a reusable src library for custom main programs."
+    },
+    {
+      "id": "m_datapac",
+      "repository": "urbanjost/M_datapac",
+      "revision": "9695613622354d6a372fea1e3b4a62e29430bb21",
+      "archive_sha256": "ba308f5432d7ef8f97caac74556da631fd3f02b48ca2356fa36c034ebf72a4e3",
+      "reason": "Archive expands to 71.93 MiB, above the service limit of 64 MiB. The compiler was not reached.",
+      "notes": "fpm-candidate-notes.md#m_datapac"
+    },
+    {
+      "id": "wavepack",
+      "repository": "zoziha/wavepack",
+      "revision": "b31cddb6703fbe237c7d24ece24a67d31feed871",
+      "archive_sha256": "28ed9cfb7a1f0a2bb70ae4cde98057cbe0199ede3dd1bee069b19b682a7e6c52",
+      "reason": "GNU Fortran 16.2.0 rejects an implicit call to ipmpar in src/chisqr.f90:2500. An EXTERNAL declaration shadows the module procedure. Source inspection also found missing explicit FFTPACK imports in wavepack.f90. Version VERSION was normalized to the upstream VERSION file (0.0.1) before this build.",
+      "notes": "fpm-candidate-notes.md#wavepack"
+    },
+    {
+      "id": "forcad",
+      "repository": "gha3mi/forcad",
+      "revision": "790b5a73835d7e594855ba5b3fb5a195c20630b8",
+      "archive_sha256": "f529e954b8dc74e78f7c762a4d4401ac8f6282b4e62e9697f27402d8d6a0ca82",
+      "reason": "GNU 16.2.0 internal compiler error in gfc_resolve_forall; newer source, two older releases and a fallback-guard patch all failed."
+    },
+    "foxy",
+    "yaeos",
+    "sodium",
+    "fast_math",
+    "polynomial_arnoldi"
+  ],
+  "limitations": {
+    "flint": "An event-root-finding consumer built but crashed with SIGSEGV in the GNU 16 hosted sandbox. The admitted consumer uses adaptive integration and dense output, both checked against exp(-t).",
+    "minres": "minres_ez_t wrapper compiled but crashed in the hosted sandbox. The admitted consumer calls minres_solver with module callbacks; it passed solution/residual and changed-main checks.",
+    "parff": "The pinned consumer compiled but crashed in the hosted sandbox. Investigation notes retain source, dependency locks and diagnostics.",
+    "forcad": "GNU 16.2.0 internal compiler error in gfc_resolve_forall; newer source, two older releases and a fallback-guard patch all failed."
+  },
+  "notes": "fpm-candidate-notes.md",
+  "attempts": [
+    {
+      "id": "fsparse",
+      "repository": "jalvesz/FSPARSE",
+      "revision": "fa8233420ab0110bb688d565879164386521a8fc",
+      "archive_sha256": "b7b87843bd2027e60ec865ded63c853ec7c32d9627fa1513135d37727f3f2a23",
+      "checked_at": "2026-10-27T22:36:01.378932+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/fsparse.f90",
+      "verification": {
+        "seconds": 6.902,
+        "build_seconds": 4.308,
+        "library_reused": true,
+        "demo_sha256": "f81550216dfa6804b6832d3a646d0c7d3faf840149a0b6ebfbc202a2c556e0c2",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "geompack",
+      "repository": "jchristopherson/geompack",
+      "revision": "b7a327ca3a13507859c42dd6fba50af0bb5d5c6a",
+      "archive_sha256": "63a1e8af824b6398516b4f51ff5f367fd99c5a79ed0af1e213d18956898cb466",
+      "checked_at": "2026-10-27T22:36:01.378932+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/geompack.f90",
+      "verification": {
+        "seconds": 4.979,
+        "build_seconds": 0.676,
+        "library_reused": true,
+        "demo_sha256": "ddcb5ae0b22edfe9cee615eae2bd7f1a4ee3bf5c345c8bc0dbb8cb449a4334ba",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "minres",
+      "repository": "willdickson/minres",
+      "revision": "c7bb4c7a0ddf13729d3556878ccc688a208a052a",
+      "archive_sha256": "cd1417ed2e800503336fb9e9d9a9acba834c22b81fb3cffe1c359bea2ce58624",
+      "checked_at": "2026-10-27T22:36:01.378932+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/minres.f90",
+      "verification": {
+        "seconds": 4.202,
+        "build_seconds": 2.529,
+        "library_reused": true,
+        "demo_sha256": "4e41f67bb64d01e0e81603f15c419a4febead71fc58dc7bc213ba3844002e22c",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "m_datapac",
+      "repository": "urbanjost/M_datapac",
+      "revision": "9695613622354d6a372fea1e3b4a62e29430bb21",
+      "archive_sha256": "ba308f5432d7ef8f97caac74556da631fd3f02b48ca2356fa36c034ebf72a4e3",
+      "checked_at": "2026-10-27T22:36:01.378932+00:00",
+      "status": "deferred",
+      "expanded_archive_bytes": 75426066,
+      "expanded_archive_entries": 1736,
+      "limit_bytes": 67108864,
+      "compiler_reached": false
+    },
+    {
+      "id": "fordiff",
+      "repository": "gha3mi/fordiff",
+      "revision": "f1a1099a590107645314f1388c432624ff97b9bc",
+      "archive_sha256": "b2881c68306d92df9117f68e3852378ab0378d1cb2a9e0b76060239f94fac7a0",
+      "checked_at": "2026-10-27T22:36:01.378932+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/fordiff.f90",
+      "verification": {
+        "seconds": 4.359,
+        "build_seconds": 0.477,
+        "library_reused": true,
+        "demo_sha256": "c7e2b812e8c7b7cc0fdafa045f0e206e887265ae6587333e086e92cc5e17b496",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "manifest_versions": {
+          "gha3mi/fordiff": "0.1.1"
+        }
+      }
+    },
+    {
+      "id": "wavepack",
+      "repository": "zoziha/wavepack",
+      "revision": "b31cddb6703fbe237c7d24ece24a67d31feed871",
+      "archive_sha256": "28ed9cfb7a1f0a2bb70ae4cde98057cbe0199ede3dd1bee069b19b682a7e6c52",
+      "checked_at": "2026-10-27T22:36:01.378932+00:00",
+      "status": "deferred",
+      "dependencies": [
+        {
+          "repository": "jacobwilliams/fftpack",
+          "revision": "5601a66e02c97c4e4eadcaff3260f9c92dbdde54",
+          "sha256": "81fcad82f410bbffa4fdab5b9ac90c632aabb44a8bf8b20007ccee7a6a6abcd2"
+        }
+      ],
+      "catalog_build": {
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "manifest_versions": {
+          "zoziha/wavepack": "0.0.1"
+        }
+      },
+      "example": "fpm-candidates/wavepack/main.f90",
+      "diagnostic": "fpm-candidates/wavepack/build.log"
+    },
+    {
+      "id": "twopnt",
+      "repository": "perazz/twopnt",
+      "revision": "4ce477215f84a88d879f0ca3937cab9bedfb7762",
+      "archive_sha256": "33884a9ec5fd2cea1d66c64c786dbb42beb9b58100e10ada14a725cbce66a02e",
+      "checked_at": "2026-10-27T22:36:01.378932+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/twopnt.f90",
+      "verification": {
+        "seconds": 1.89,
+        "build_seconds": 0.366,
+        "library_reused": true,
+        "demo_sha256": "c470ef0cd5d304a01ef29f187458c1629fbe4ef684c83290dc0707fbe32c196c",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "specfunc-fullerton",
+      "repository": "arjenmarkus/specfunc-fullerton",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "archive_sha256": "f7910a7403f1653b7917f16db3818a4ed55a080185c86b02d96c6a391164a6f7",
+      "checked_at": "2026-10-27T22:36:01.378932+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/specfunc-fullerton.f90",
+      "verification": {
+        "seconds": 3.867,
+        "build_seconds": 1.943,
+        "library_reused": true,
+        "demo_sha256": "9b81442c57aafb8088b31e9dd80647fe3b98c1d5c5c7266d00a5044bfbd2df2b",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "lib_statistics",
+      "repository": "sebastiandyrda/lib_statistics",
+      "revision": "056740db259fc3599dca0d8858f04e94845a6769",
+      "archive_sha256": "94479fc46f071c05c1cc2940d23a3e6ef2491ae3e3db0f780ed6079adc58e579",
+      "checked_at": "2026-10-27T22:36:01.378932+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/lib_statistics.f90",
+      "verification": {
+        "seconds": 3.755,
+        "build_seconds": 0.496,
+        "library_reused": true,
+        "demo_sha256": "bbdb2e776946afde6ac6f51b271b0865ce62124c1600367cebd3cafb7594c673",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "astro-fortran",
+      "repository": "jacobwilliams/astro-fortran",
+      "revision": "9d61091d225a1b314ff8170153b06a8691aba283",
+      "archive_sha256": "ddbe566788db9e3521bf81e0579ec82ae05c1eb46c5da73383f6f58924b997f0",
+      "checked_at": "2026-10-27T22:36:01.378932+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/astro-fortran.f90",
+      "verification": {
+        "seconds": 5.034,
+        "build_seconds": 2.424,
+        "library_reused": true,
+        "demo_sha256": "52fe6414e51dd37320e2c926c6fcab0b89b5bbde6570217c7d86659bba06d490",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "nlopt-f",
+      "repository": "awvwgk/nlopt-f",
+      "revision": "83d21e7ebda9279a6dd4cc11fe6c735f48eb8689",
+      "archive_sha256": "985586611c8b51836a77c8c3aa2e07b859ff7f6dc56fcb1d6a030580c8f10c2d",
+      "checked_at": "2026-10-27T23:25:35.966397+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/nlopt-f.f90",
+      "verification": {
+        "seconds": 1.147,
+        "build_seconds": 0.197,
+        "library_reused": true,
+        "demo_sha256": "eefa6a6f25ce0ab89c0e89c0d9da0598156c21b2988512d01195d56958b9ab13",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "apt_packages": [
+          "libnlopt-dev=2.7.1-6+b4"
+        ],
+        "environment": {
+          "FPM_FFLAGS": "-cpp -DNLOPT_VERSION=20701"
+        }
+      }
+    },
+    {
+      "id": "ncio",
+      "repository": "alex-robinson/ncio",
+      "revision": "d76d39df3dcaa892bff5d2b5b24770f3dc65abaa",
+      "archive_sha256": "9c4f3ca8c0d8ed53ba4a9e853777b02d24e6bd7372c137760c5f13d6b83040bb",
+      "checked_at": "2026-10-27T23:25:35.966397+00:00",
+      "investigated_revision": "3473c797f6c632c56901255bada2c336f3c9e042",
+      "investigated_archive_sha256": "343ae36439255d87fb0ebe5617d7bc41cc3ee41aa5f5337ba5af0dbe82725331",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/ncio.f90",
+      "verification": {
+        "seconds": 2.548,
+        "build_seconds": 0.572,
+        "library_reused": true,
+        "demo_sha256": "95fe35d43248d10cd9a2b95492c52b0bbc8d34627566fa763ba53551686094d4",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "apt_packages": [
+          "libnetcdff-dev=4.6.0+really4.5.4+ds-3+b4"
+        ],
+        "environment": {
+          "FPM_FFLAGS": "-I/usr/include",
+          "FPM_LDFLAGS": "-lnetcdff -lnetcdf"
+        }
+      }
+    },
+    {
+      "id": "daskr",
+      "repository": "davidpfister/daskr",
+      "revision": "b43533edc5d6900088a846d802e3a86d0f9a06ad",
+      "archive_sha256": "7a636a79cf54271606ca73c4a9c112bc45af75cc17246873cc499b2a5cce7472",
+      "checked_at": "2026-10-27T23:25:35.966397+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/daskr.f90",
+      "verification": {
+        "seconds": 2.157,
+        "build_seconds": 0.646,
+        "library_reused": true,
+        "demo_sha256": "7757aba3067affd2b88ab796913a986223cc538f8891ebb1c29ed60ecb19e138",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_patches": {
+        "adapter_sha256": "86ce9e8662821f1a01dbc6be505d9b18aec81bac32d625ae6f37e85932e464a5",
+        "edits": [
+          {
+            "path": "src/ddaskr.f",
+            "sha256": "ec35cf263c50fa87c5a2b97805f1700af58fc32eb7005bc97f8c9282a12b96ca",
+            "before": "      DIMENSION INFO(20)",
+            "after": "      DIMENSION INFO(20)\n      DIMENSION JROOT(*)"
+          },
+          {
+            "path": "src/ddaskr.f",
+            "sha256": "a716e80358a94f71d40839382c0a54b9e177570bd5d1ea507f094fd9ad583ece",
+            "before": "      DIMENSION Y(*), YP(*), PHI(NEQ,*), PSI(*),\n     *          R0(*), R1(*), RX(*), JROOT(*), RWORK(*), IWORK(*)",
+            "after": "      DIMENSION Y(*), YP(*), PHI(NEQ,*), PSI(*),\n     *          R0(*), R1(*), RX(*), JROOT(*), RWORK(*), IWORK(*)\n      DIMENSION RPAR(*), IPAR(*)"
+          },
+          {
+            "path": "src/dlinpk.f",
+            "sha256": "93689e132f3bc5556ef98856b5e0398d090edc2628ddc04575333063f8a7b395",
+            "before": "      integer lda,n,ipvt(1),info\n",
+            "after": "      integer lda,n,ipvt(*),info\n"
+          },
+          {
+            "path": "src/dlinpk.f",
+            "sha256": "8845628f0a04ece01e8b9f56475fe3841d213f03bbf8b5b9ed4f86a9a97177d7",
+            "before": "      double precision a(lda,1)\n",
+            "after": "      double precision a(lda,*)\n"
+          },
+          {
+            "path": "src/dlinpk.f",
+            "sha256": "684ee80451a1cc45e48d9b6de1e6f3010882efea1c6004edcf82beaee62fec0d",
+            "before": "      integer lda,n,ipvt(1),job\n",
+            "after": "      integer lda,n,ipvt(*),job\n"
+          },
+          {
+            "path": "src/dlinpk.f",
+            "sha256": "04576c53e906be30ef043c9a325f78ea45c6374887649aaef8bd114429ef29e4",
+            "before": "      double precision a(lda,1),b(1)\n",
+            "after": "      double precision a(lda,*),b(*)\n"
+          },
+          {
+            "path": "src/dlinpk.f",
+            "sha256": "9d4a80ca3ab0f7674824da99c23b497a43049f5964d08967a793fbe2fa44177e",
+            "before": "      integer lda,n,ml,mu,ipvt(1),info\n",
+            "after": "      integer lda,n,ml,mu,ipvt(*),info\n"
+          },
+          {
+            "path": "src/dlinpk.f",
+            "sha256": "32437d750a0fdcfa290201830c7590734ae6ad94765125714ea405df28f3b69b",
+            "before": "      double precision abd(lda,1)\n",
+            "after": "      double precision abd(lda,*)\n"
+          },
+          {
+            "path": "src/dlinpk.f",
+            "sha256": "d1e32068c8e0723415bdcf09154c5135d1a42eb827ff86c0d94c81afcf2fa031",
+            "before": "      integer lda,n,ml,mu,ipvt(1),job\n",
+            "after": "      integer lda,n,ml,mu,ipvt(*),job\n"
+          },
+          {
+            "path": "src/dlinpk.f",
+            "sha256": "eb74d051fee23e221591f3f3d14e3ce1bc85d8a25d1ab383f6e378c659b7ca40",
+            "before": "      double precision abd(lda,1),b(1)\n",
+            "after": "      double precision abd(lda,*),b(*)\n"
+          },
+          {
+            "path": "src/dlinpk.f",
+            "sha256": "405c6fb8e7f025b102c79dcb0b25b088c098c0fe83445ca4c596774d168b869e",
+            "before": "      double precision dx(1),dy(1),da\n",
+            "after": "      double precision dx(*),dy(*),da\n"
+          },
+          {
+            "path": "src/dlinpk.f",
+            "sha256": "3bd5b7b85678ffae3fab0145277b8a45e1c204081f5eb092bcbc7c873d29d2a2",
+            "before": "      double precision sx(1),sy(1)\n",
+            "after": "      double precision sx(*),sy(*)\n"
+          },
+          {
+            "path": "src/dlinpk.f",
+            "sha256": "1914c2ed709209b5acf728043a624780689694b4138041fcd5aa9d7af5b587ab",
+            "before": "      double precision da,dx(1)\n",
+            "after": "      double precision da,dx(*)\n"
+          },
+          {
+            "path": "src/dlinpk.f",
+            "sha256": "6fed03ef2aa19a7040bdb9c2058419eb024c401cc38419fb8cdd82dbc6266ab0",
+            "before": "      double precision dx(1),dy(1),dtemp\n",
+            "after": "      double precision dx(*),dy(*),dtemp\n"
+          },
+          {
+            "path": "src/dlinpk.f",
+            "sha256": "b4951c91475bf2bd7fb77a42e4aa74cc5f783f0f02256d1ea31e46456d973230",
+            "before": "      double precision   dx(1), cutlo, cuthi, hitest, sum, xmax,zero,one\n",
+            "after": "      double precision   dx(*), cutlo, cuthi, hitest, sum, xmax,zero,one\n"
+          },
+          {
+            "path": "src/dlinpk.f",
+            "sha256": "3d7b8a406596a84ef2f6704a06f89e59586cf00bbd25bcfd97fa3efabfd670ce",
+            "before": "      double precision dx(1),dmax\n",
+            "after": "      double precision dx(*),dmax\n"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ffilesystem",
+      "repository": "scivision/ffilesystem",
+      "revision": "6387e623aa19325a1078f63fa882eb257518d038",
+      "archive_sha256": "adb5b15176912a3d5ac8aa26eab10574a5c7307817eeb79dd4aeaf712b2db3fd",
+      "checked_at": "2026-10-27T23:25:35.966397+00:00",
+      "investigated_revision": "c31bd919b323fc423b0f467f819e8b2ae8c3200f",
+      "investigated_archive_sha256": "06e8c173e73571f5868942c9b791d856a2525c7cb0c0ea30867a1b56a9169ed9",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/ffilesystem.f90",
+      "verification": {
+        "seconds": 2.353,
+        "build_seconds": 0.751,
+        "library_reused": true,
+        "demo_sha256": "a96d72ed52a4e512de22a04785b6c02ae96b64c18ef4225f5b2f6c703cbd14fc",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "utf8-f",
+      "repository": "St-Maxwell/utf8-f",
+      "revision": "9e89210ba66191295f6565bee277de6e4f9f84de",
+      "archive_sha256": "b6bc86d97586da8007b48d968161bc5ccc57bbd579424e9c12c896d3e56996aa",
+      "checked_at": "2026-10-27T23:25:35.966397+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/utf8-f.f90",
+      "verification": {
+        "seconds": 1.472,
+        "build_seconds": 0.292,
+        "library_reused": true,
+        "demo_sha256": "4606c09a0fae42ad204140f425c8bb20c6336807a4bfac52c64bce9b64729b56",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "ryu_fortran",
+      "repository": "St-Maxwell/ryu_fortran",
+      "revision": "6c508144398d58143618c5598d816f20c40ac053",
+      "archive_sha256": "67b79bc6e4d41941ddc6d8f72241e1da959d77942c7058298b5096ea18d50994",
+      "checked_at": "2026-10-27T23:25:35.966397+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/ryu_fortran.f90",
+      "verification": {
+        "seconds": 3.532,
+        "build_seconds": 0.506,
+        "library_reused": true,
+        "demo_sha256": "c49d0d9b2991d5900fca4e1692e4b3ea099b6e3d6216d33c219b7e21ea8769f6",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "iso_varying_string",
+      "repository": "everythingfunctional/iso_varying_string",
+      "revision": "ba41caa79167835a40310b97bc7251ec689a9bfa",
+      "archive_sha256": "321a9a1c69c580900a19c9245fdb3497c71da343450bd57908df69cdb387087a",
+      "checked_at": "2026-10-27T23:25:35.966397+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/iso_varying_string.f90",
+      "verification": {
+        "seconds": 2.54,
+        "build_seconds": 0.525,
+        "library_reused": true,
+        "demo_sha256": "dcb46b4d6a8a50320d024db5f4ee71c49568b0f0f152b1fba630f66a0b8a85c7",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "fortimize",
+      "repository": "fedebenelli/ForTimize",
+      "revision": "3431b656cd86f89135d0f35bf6afdbd787d9daf3",
+      "archive_sha256": "90b36df70e4f526800a589b33ba35a8d6c90a8b6e960a93f5c0bb5914069618e",
+      "checked_at": "2026-10-27T23:25:35.966397+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/fortimize.f90",
+      "verification": {
+        "seconds": 1.955,
+        "build_seconds": 0.228,
+        "library_reused": true,
+        "demo_sha256": "15d5e2f97e232e8c9bd233ebc0aecce34f04f3e26057d5eaf38f1a3d5a7f4ff3",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "dependencies": [
+        {
+          "repository": "jacobwilliams/NumDiff",
+          "revision": "687157df8d2dec072b5484974bab71f7b14b0e9f",
+          "sha256": "b51fd9daad66ba3579c231266806cc0855dfbbe184959dd68a08c9e69a1fe6e1"
+        }
+      ]
+    },
+    {
+      "id": "forimage",
+      "repository": "gha3mi/forimage",
+      "revision": "65f53ce6a53c3a3ee38f05e6a065505bc3fa0dfb",
+      "archive_sha256": "2147970d0b3e3b10c6f7ea5bc8a79bdfab67331e8e98fc309c2ee22e85003118",
+      "checked_at": "2026-10-27T23:25:35.966397+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/forimage.f90",
+      "verification": {
+        "seconds": 1.757,
+        "build_seconds": 0.212,
+        "library_reused": true,
+        "demo_sha256": "663f584ee57d37be345a184aaa971304e52698e543f3bc72e04edc24d9d6f942",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "preview_count": 2,
+        "preview_names": [
+          "01_gradient.ppm (PNG preview)",
+          "02_negative.ppm (PNG preview)"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "manifest_versions": {
+          "gha3mi/forimage": "0.7.0"
+        }
+      }
+    },
+    {
+      "id": "fastconv",
+      "repository": "gronki/fastconv",
+      "revision": "3aaa2432a291df07a10fc5dade0dcd66d7a06dd0",
+      "archive_sha256": "1c24a23cea35275f937f1c0c65a1d205f9425736d36d48fda65db9455735154e",
+      "checked_at": "2026-10-27T23:52:44.682584+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/fastconv.f90",
+      "verification": {
+        "seconds": 1.886,
+        "build_seconds": 0.341,
+        "library_reused": true,
+        "demo_sha256": "e68b123e60444b7e0e3d92dd5d2649af1ca3500e1be82993bfac1b6db6a9bd4f",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "gaussjacobiquad",
+      "repository": "HaoZeke/GaussJacobiQuad",
+      "revision": "ffb970c68eea0b39b140f80f788c8994547d8bfb",
+      "archive_sha256": "e9975bcfb0bdad7cdbd4b1e32263e8e62949337fe40605d3792a4de9927bb62c",
+      "checked_at": "2026-10-27T23:52:44.682584+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/gaussjacobiquad.f90",
+      "verification": {
+        "seconds": 1.916,
+        "build_seconds": 0.551,
+        "library_reused": true,
+        "demo_sha256": "bd839cf5f7377a82382638bb7836de270e4c3359ef1855f6d9b1a9f64aa6fe25",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "apt_packages": [
+          "libopenblas-dev=0.3.29+ds-3"
+        ],
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+      },
+      "initial_revision": "053096a79fb085c2fac6af04989a44ae67b0e8d0",
+      "initial_archive_sha256": "e0eb1c8e4b6ec537895cd30a162a3e0901faccc604c799af5ffebfae4a486e7d",
+      "compatibility_ref": "v0.1.0",
+      "compatibility_attempts": [
+        {
+          "ref": "v0.2.6",
+          "error": "Package archive contains an unsafe path, link, or special file."
+        },
+        {
+          "ref": "v0.2.0",
+          "error": "Package archive contains an unsafe path, link, or special file."
+        }
+      ]
+    },
+    {
+      "id": "kissfft-f",
+      "repository": "zoziha/kissfft-f",
+      "revision": "b89c5e1d0aff9993db79200fc94a467948ff3923",
+      "archive_sha256": "f7b54c2261190cc8282abf451dd84e215c5be2300ac14aaccb1e36405d9b5b8e",
+      "checked_at": "2026-10-27T23:52:44.682584+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/kissfft-f.f90",
+      "verification": {
+        "seconds": 1.391,
+        "build_seconds": 0.53,
+        "library_reused": true,
+        "demo_sha256": "19e559aa2d6d004c9bbd095f3338ea89a8ec2136bdd266f483f391753e0282e2",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "h5fortran",
+      "repository": "geospace-code/h5fortran",
+      "revision": "9fb7549a2d213c10190ae268edecaac4c4c06d0a",
+      "archive_sha256": "15845b58480c02d289e27e8aa408d9a3be8945e2901e1009f79322fff5bbf8e7",
+      "checked_at": "2026-10-27T23:52:44.682584+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/h5fortran.f90",
+      "verification": {
+        "seconds": 2.658,
+        "build_seconds": 0.758,
+        "library_reused": true,
+        "demo_sha256": "c44ab3eecedf25fc9ebc3d2f19292a687bdef71a9ff61e3d0581682a7c682b34",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "apt_packages": [
+          "libhdf5-dev=1.14.5+repack-3"
+        ],
+        "environment": {
+          "FPM_FFLAGS": "-I/usr/include/hdf5/serial",
+          "FPM_LDFLAGS": "-L/usr/lib/x86_64-linux-gnu/hdf5/serial"
+        },
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+      },
+      "initial_revision": "9c7fe2f404b68ea0836c39f4bea67919c07f25bb",
+      "initial_archive_sha256": "65229da99d33aa568db839c17c9f4875597b50bb6c72920c06b78eb73b47fd0a",
+      "compatibility_ref": "v4.10.6"
+    },
+    {
+      "id": "metis-fpm",
+      "repository": "gnikit/metis-fpm",
+      "revision": "5db1dc1e46fd819a53a86fe2170eaf5464bf17c7",
+      "archive_sha256": "5bb19525e8fcc7b32da5cc4d4ced8c7d3901dcc2805e38c80d08e0a543a64fbe",
+      "checked_at": "2026-10-27T23:52:44.682584+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/metis-fpm.f90",
+      "verification": {
+        "seconds": 1.859,
+        "build_seconds": 0.261,
+        "library_reused": true,
+        "demo_sha256": "0bd10d335f11667074a96ee20f64fe421d48f94d3a635fa35939704fcde6455e",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "dependencies": [
+        {
+          "repository": "gnikit/GKlib",
+          "revision": "3840061283ceab2ac62542c1141e1e3efea3f392",
+          "sha256": "a28812c33bf881881047ba784176a3434684bb0fa9642457b9a4e1063085c0dc"
+        }
+      ]
+    },
+    {
+      "id": "forcad",
+      "repository": "gha3mi/forcad",
+      "revision": "790b5a73835d7e594855ba5b3fb5a195c20630b8",
+      "archive_sha256": "f529e954b8dc74e78f7c762a4d4401ac8f6282b4e62e9697f27402d8d6a0ca82",
+      "dependencies": [
+        {
+          "repository": "rweed/forIGES",
+          "revision": "432c84cbfcdf64eabedf729e48d2f631091be7e1",
+          "sha256": "9ee83428e96b8427a230a5a4f4308702c40944f226172252a04b50963ec8356f"
+        },
+        {
+          "repository": "gha3mi/fordebug",
+          "revision": "8c46daacc37af64aa0e10a0c9babaa9178886971",
+          "sha256": "1136ee4b8cc800b880f4fc33a90323ea91def7ef1ad3ff3f75a73aefa08e313f"
+        },
+        {
+          "repository": "gha3mi/fortime",
+          "revision": "de733e2c775457d4979403fe77ab69cf28e2b159",
+          "sha256": "bccc83cf947693ad4defcfb4684af7cd660db8a6e57084b7f07e7edfd584161d"
+        },
+        {
+          "repository": "szaghi/FACE",
+          "revision": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8",
+          "sha256": "d4cc3c3a2c70e7369607624ae3361a6f7b2ba3f1e9a63ffd94ecb5cd4b019469"
+        }
+      ],
+      "catalog_build": {
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "manifest_versions": {
+          "gha3mi/forcad": "0.16.1",
+          "gha3mi/fordebug": "0.0.0",
+          "gha3mi/fortime": "0.0.0"
+        },
+        "metapackages": [
+          "openmp"
+        ],
+        "source_revisions": {
+          "szaghi/face": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8",
+          "gha3mi/fortime": "de733e2c775457d4979403fe77ab69cf28e2b159"
+        },
+        "environment": {
+          "FPM_FFLAGS": "-cpp -fopenmp -DNOSHOW_PYVISTA -DNOPURE_DEBUG"
+        }
+      },
+      "checked_at": "2026-10-27T23:52:44.682584+00:00",
+      "status": "deferred",
+      "reason": "GNU 16.2.0 internal compiler error in gfc_resolve_forall; newer source, two older releases and a fallback-guard patch all failed.",
+      "example": "fpm-candidates/forcad/main.f90",
+      "diagnostic": "fpm-candidates/forcad/initial-build.log",
+      "investigated_versions": [
+        {
+          "ref": "v0.15.0",
+          "revision": "5589e9eaa4dd1a673526d227d8054f5e3d185d58",
+          "diagnostic": "fpm-candidates/forcad/v0.15-build.log"
+        },
+        {
+          "ref": "v0.10.1",
+          "revision": "7a4cb4601b4a80625a6f0cbe0454ddc4fd3d858f",
+          "diagnostic": "fpm-candidates/forcad/v0.10.1-build.log"
+        }
+      ],
+      "unsuccessful_patch": "fpm-candidates/forcad/gnu16-fallback.patch"
+    },
+    {
+      "id": "m_calculator",
+      "repository": "urbanjost/M_calculator",
+      "revision": "b6bbc08f81eb158a6908a42016059815fe72217d",
+      "archive_sha256": "50081a2e5022fbd40bbb8d9b70759481f9bd7a0c811132b48931a3538e355441",
+      "checked_at": "2026-10-27T23:52:44.682584+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/m_calculator.f90",
+      "verification": {
+        "seconds": 1.628,
+        "build_seconds": 0.378,
+        "library_reused": true,
+        "demo_sha256": "b0a2e2aaf2a00ffd4c58329cfe673ee23f94c0f3b6d6a2320b53952b29d3296f",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "befor64",
+      "repository": "szaghi/BeFoR64",
+      "revision": "1dd004ea296b7e5aca60a9704bab81c610f87cff",
+      "archive_sha256": "961f4b256babeda3db523a3a3a8dfb8271b36cca7ade048f4a1afa969bdc0cac",
+      "checked_at": "2026-10-27T23:52:44.682584+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/befor64.f90",
+      "verification": {
+        "seconds": 2.026,
+        "build_seconds": 0.413,
+        "library_reused": true,
+        "demo_sha256": "5b3968e0d0cd11b2eb02fefeccbcd0b526d44bc1ae31c6d0a43ffc1d712b1840",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "dependencies": [
+        {
+          "repository": "szaghi/PENF",
+          "revision": "65061235982495b158412b70c05b228af4320d94",
+          "sha256": "f8c832e6893d0f12dca9387171f70fb3f0eb60e4b021f385da6937134fcebc74"
+        }
+      ],
+      "initial_revision": "4bf55d6048ee2cd7b477460c3925d6e070d74140",
+      "initial_archive_sha256": "9ffa44115600b327d06fbac74ba5e8072eafc62966702fecac04177a543e9824",
+      "compatibility_ref": "v1.1.15",
+      "compatibility_attempts": [
+        {
+          "ref": "v1.2.3",
+          "error": "Package archive contains an unsafe path, link, or special file."
+        },
+        {
+          "ref": "v1.2.2",
+          "error": "Package archive contains an unsafe path, link, or special file."
+        }
+      ]
+    },
+    {
+      "id": "iapws",
+      "repository": "MilanSkocic/iapws",
+      "revision": "ce3820c011737bcc3a37a02b9ccfeff28616019f",
+      "archive_sha256": "c05e6dd383edc009deca842ee770aaf660ff1ea8be140c28019fa0d6260d0794",
+      "checked_at": "2026-10-27T23:52:44.682584+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/iapws.f90",
+      "verification": {
+        "seconds": 5.374,
+        "build_seconds": 2.706,
+        "library_reused": true,
+        "demo_sha256": "f51514ee1cd242b1cc58bb4ed2b2a9ff3895bb481f3327eb09b0a30a79c3bae3",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "dependencies": [
+        {
+          "repository": "fortran-lang/stdlib",
+          "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+        },
+        {
+          "repository": "urbanjost/M_CLI2",
+          "revision": "a6934890178377cd92444d290aa3d3198ba9954d",
+          "sha256": "55f4bdd7c3be3466f838eae12ed2409b44fe0bd6cc0118bb5194b1d7d578ee28"
+        },
+        {
+          "repository": "MilanSkocic/ciaaw",
+          "revision": "140e0089f78d93eb6333fc8db4ff75aa84893522",
+          "sha256": "30885267d5cd2b48bef63659c3f20df9f22e842cb4dbafe41fade1a86a36e079"
+        }
+      ],
+      "catalog_build": {
+        "manifest_versions": {
+          "milanskocic/iapws": "0.7.1",
+          "fortran-lang/stdlib": "0.0.0",
+          "milanskocic/ciaaw": "1.1.1"
+        },
+        "registry": {
+          "stdlib": {
+            "git": "https://github.com/fortran-lang/stdlib",
+            "rev": "58eb9133966c2797e0593281169ef57c43eccc1d"
+          }
+        },
+        "environment": {
+          "FPM_FFLAGS": "-cpp -DSTDLIB_EXTERNAL_BLAS -DSTDLIB_EXTERNAL_LAPACK -ffunction-sections -fdata-sections",
+          "FPM_LDFLAGS": "-Wl,--gc-sections -llapack -lblas"
+        },
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6"
+        ],
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+      }
+    },
+    {
+      "id": "fortran-zlib",
+      "repository": "interkosmos/fortran-zlib",
+      "revision": "d5afd62acc65bdde39f5f5d60eb85122d0f86a22",
+      "archive_sha256": "5b8ccb92c1950b36ba9714d068cade2c26aeeab24e627ad883bb7a8bb9c743b1",
+      "checked_at": "2026-10-27T23:52:44.682584+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/fortran-zlib.f90",
+      "verification": {
+        "seconds": 2.159,
+        "build_seconds": 0.336,
+        "library_reused": true,
+        "demo_sha256": "a924cdf893c2024f93197ad050134f7648adf5ed6a5875481180c225c4b2d90b",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "apt_packages": [
+          "zlib1g-dev=1:1.3.dfsg+really1.3.1-1+b1"
+        ],
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+      }
+    },
+    {
+      "id": "linalg",
+      "repository": "jchristopherson/linalg",
+      "revision": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+      "archive_sha256": "6210b8b167b50694941f48b20ad5d94bdacab026f1eb4720e2d55e8ddde0b59a",
+      "checked_at": "2026-10-28T00:11:51.121365+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/linalg.f90",
+      "verification": {
+        "seconds": 1.938,
+        "build_seconds": 0.472,
+        "library_reused": true,
+        "demo_sha256": "75ece43120bc9f62a5d9ae13afd5a42003055c3a2f58ba44fbea27a6f471f94b",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6",
+          "libarpack2-dev=3.9.1-6"
+        ],
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+      }
+    },
+    {
+      "id": "nonlin",
+      "repository": "jchristopherson/nonlin",
+      "revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+      "archive_sha256": "3a6f6cf6daa9b352213407f7c90555c22a492ad455cab0e2eb708efc7d34eaba",
+      "checked_at": "2026-10-28T00:11:51.121365+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/nonlin.f90",
+      "verification": {
+        "seconds": 2.712,
+        "build_seconds": 0.573,
+        "library_reused": true,
+        "demo_sha256": "4c25ae882446282ee2e168b8a47d004792d76c59ade47021f4babda850b9610e",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "dependencies": [
+        {
+          "repository": "jchristopherson/ferror",
+          "revision": "9d6c9750f5c14ef2c806104ea8dfdfc9ce91efed",
+          "sha256": "b2c2c059d263b38484acf6956fa6416f899d739d3669906931aa1c08441510bd"
+        },
+        {
+          "repository": "jchristopherson/linalg",
+          "revision": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+          "sha256": "6210b8b167b50694941f48b20ad5d94bdacab026f1eb4720e2d55e8ddde0b59a"
+        }
+      ],
+      "catalog_build": {
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6",
+          "libarpack2-dev=3.9.1-6"
+        ],
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+      }
+    },
+    {
+      "id": "maptran3d",
+      "repository": "geospace-code/maptran3d",
+      "revision": "4ccc2479ae79a58b34d8e491013cfa2f60f65867",
+      "archive_sha256": "061ee9c087d80362dd070e850f11538d0be27c1ce734ac37c369052934def57b",
+      "checked_at": "2026-10-28T00:11:51.121365+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/maptran3d.f90",
+      "verification": {
+        "seconds": 2.994,
+        "build_seconds": 1.879,
+        "library_reused": true,
+        "demo_sha256": "8381fe323889ceda89a5c6a20cfc2b7f0d60844792f03c86aea0ee90845f4672",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "environment": {
+          "FPM_FFLAGS": "-fdefault-real-8 -fdefault-double-8"
+        },
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+      }
+    },
+    {
+      "id": "fortran-pcre2",
+      "repository": "interkosmos/fortran-pcre2",
+      "revision": "44b2fe9aac30272496b51286da8b79a47880cd03",
+      "archive_sha256": "5d1f430685b646ddf9a458c9b0e99096afc79452c82e8c55a96d631f2cc4fd68",
+      "checked_at": "2026-10-28T00:11:51.121365+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/fortran-pcre2.f90",
+      "verification": {
+        "seconds": 2.39,
+        "build_seconds": 0.522,
+        "library_reused": true,
+        "demo_sha256": "cfccbd11c31135e05132f4464b83fec5c693e403183c0ca6f5b32a80ed4bcb53",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "apt_packages": [
+          "libpcre2-dev=10.46-1~deb13u3"
+        ],
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+      }
+    },
+    {
+      "id": "ciaaw",
+      "repository": "MilanSkocic/ciaaw",
+      "revision": "02efd49caea1a7bbff0602b752075d3fe935bd10",
+      "archive_sha256": "58aee500452c9fd1a643eaa5034a2a86481f22d2f868ab9968b1cc3e5ea6d76f",
+      "checked_at": "2026-10-28T00:11:51.121365+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/ciaaw.f90",
+      "verification": {
+        "seconds": 5.049,
+        "build_seconds": 1.713,
+        "library_reused": true,
+        "demo_sha256": "c208861f1e4ce53319caa3b06a4213c372db2d1780740d11955583fc6920e986",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "dependencies": [
+        {
+          "repository": "fortran-lang/stdlib",
+          "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+        },
+        {
+          "repository": "urbanjost/M_CLI2",
+          "revision": "a6934890178377cd92444d290aa3d3198ba9954d",
+          "sha256": "55f4bdd7c3be3466f838eae12ed2409b44fe0bd6cc0118bb5194b1d7d578ee28"
+        },
+        {
+          "repository": "MilanSkocic/codata",
+          "revision": "d0c9b1552f0fa483a364de4a69e82c5e23344caf",
+          "sha256": "47a519277191fa5c9f3e476c1bf17bbafb6bf2eeeaca43fbffd938e7ecb835a3"
+        }
+      ],
+      "catalog_build": {
+        "manifest_versions": {
+          "milanskocic/ciaaw": "1.3.3",
+          "fortran-lang/stdlib": "0.0.0",
+          "milanskocic/codata": "0.0.0"
+        },
+        "registry": {
+          "stdlib": {
+            "git": "https://github.com/fortran-lang/stdlib",
+            "rev": "58eb9133966c2797e0593281169ef57c43eccc1d"
+          }
+        },
+        "environment": {
+          "FPM_FFLAGS": "-cpp -DSTDLIB_EXTERNAL_BLAS -DSTDLIB_EXTERNAL_LAPACK -ffunction-sections -fdata-sections",
+          "FPM_LDFLAGS": "-Wl,--gc-sections -llapack -lblas"
+        },
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6"
+        ],
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+      }
+    },
+    {
+      "id": "rngff",
+      "repository": "Archaeologic-Inc/rngff",
+      "revision": "8eccd1479f35159922a85db25a39bcd58a0c3faa",
+      "archive_sha256": "d20c2dd09772d2b9017f99ce6f93d5bc9460db402a616c9cede0093223730214",
+      "checked_at": "2026-10-28T00:11:51.121365+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/rngff.f90",
+      "verification": {
+        "seconds": 1.189,
+        "build_seconds": 0.318,
+        "library_reused": true,
+        "demo_sha256": "f78c6671247b7da69e340d761b62ffb48f0af9ddb4a0f3f4a3466e91c6aef584",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "fortran-zstd",
+      "repository": "interkosmos/fortran-zstd",
+      "revision": "4cb3e9f4a0db7c7ab24a8eeec06be9b471c52545",
+      "archive_sha256": "cab2468f54f90259e5bf54dc954614fd61f5deb65ec051fdf18ecb56c5047fb0",
+      "checked_at": "2026-10-28T00:11:51.121365+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/fortran-zstd.f90",
+      "verification": {
+        "seconds": 1.591,
+        "build_seconds": 0.272,
+        "library_reused": true,
+        "demo_sha256": "a58ec43c70682d27934e542c34fabaae41758d884d0b053ab2eace249cce0674",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "apt_packages": [
+          "libzstd-dev=1.5.7+dfsg-1"
+        ],
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+      }
+    },
+    {
+      "id": "strff",
+      "repository": "everythingfunctional/strff",
+      "revision": "50e536cb087123f2c72140cb065c398a01fc5121",
+      "archive_sha256": "c0f773e21d2c1a0f7b83bcb51cf6bca4d7103815373e7be9a56d1689b8a5da42",
+      "checked_at": "2026-10-28T00:11:51.121365+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/strff.f90",
+      "verification": {
+        "seconds": 1.773,
+        "build_seconds": 0.201,
+        "library_reused": true,
+        "demo_sha256": "aefd2f4a035adf89988ba7b21db368142ea4730a3b94009f290ccc6340e0dec5",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "dependencies": [
+        {
+          "repository": "everythingfunctional/iso_varying_string",
+          "revision": "fb7635a6b21c3d50ac7c8c14f7696a70931cb4a6",
+          "sha256": "0a2ff49b7eb88218c5de043b5aa3e564e821cd8906354e6f67a2ca480ae0c52e"
+        }
+      ],
+      "catalog_build": {
+        "source_revisions": {
+          "everythingfunctional/iso_varying_string": "fb7635a6b21c3d50ac7c8c14f7696a70931cb4a6"
+        },
+        "git_aliases": {
+          "https://gitlab.com/everythingfunctional/exceptional_numbers": "https://github.com/everythingfunctional/exceptional_numbers",
+          "https://gitlab.com/everythingfunctional/iso_varying_string": "https://github.com/everythingfunctional/iso_varying_string"
+        },
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+      },
+      "initial_revision": "ea66eebf0d06ae588fc84be7ed6dd621f2d520cc",
+      "initial_archive_sha256": "b532aaafa066bac3de2aa19770f4aaf297b0a5e440ee3a6112c41304f0b74d41",
+      "compatibility_version": "3.0.4",
+      "initial_preparation_error": "Current 4.0.0 requires exceptional_numbers from GitLab; its configured author-account GitHub mirror returns HTTP 404. The operator preparer accepts only explicit GitHub sources."
+    },
+    {
+      "id": "paramcard",
+      "repository": "tueda/paramcard",
+      "revision": "ffd6bfc0066f3aaa493333179a01257011b77f78",
+      "archive_sha256": "c8455b59148f73d88618ac058122e7d0aad66020aa328a6db972d85bb4151dc5",
+      "checked_at": "2026-10-28T00:11:51.121365+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/paramcard.f90",
+      "verification": {
+        "seconds": 1.403,
+        "build_seconds": 0.372,
+        "library_reused": true,
+        "demo_sha256": "70b2485d4de08d92c6ea25726ca81d0b4d0baea1dddd93234ded50954c9716f0",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "diffeq",
+      "repository": "jchristopherson/diffeq",
+      "revision": "989b320179c23aaff4bfe72994c90e9034f50c74",
+      "archive_sha256": "09f6e92aea1dc8c9eb9233d4052b012e3b53a739e1ce078453d0421ddb1d4e87",
+      "checked_at": "2026-10-28T00:46:44.377165+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/diffeq.f90",
+      "verification": {
+        "seconds": 1.894,
+        "build_seconds": 0.467,
+        "library_reused": true,
+        "demo_sha256": "eead828109c30eaca4aa69c27bbb32ea354baae23187ab0b0dfca69e1a5ec40e",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "dependencies": [
+        {
+          "repository": "jchristopherson/linalg",
+          "revision": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+          "sha256": "6210b8b167b50694941f48b20ad5d94bdacab026f1eb4720e2d55e8ddde0b59a"
+        }
+      ],
+      "catalog_build": {
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6",
+          "libarpack2-dev=3.9.1-6"
+        ],
+        "source_revisions": {
+          "jchristopherson/linalg": "cb8fb7b1c67986591083cac516eb700f47d69b68"
+        },
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+      }
+    },
+    {
+      "id": "fjsample",
+      "repository": "RJaBi/FJsample",
+      "revision": "8563d2653d1a9d80a355b2064f4b153559698915",
+      "archive_sha256": "4def47fc11f70e1efac048271e43733601a3ad6e8152e0b747df139354742de8",
+      "checked_at": "2026-10-28T00:46:44.377165+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/fjsample.f90",
+      "verification": {
+        "seconds": 1.798,
+        "build_seconds": 0.313,
+        "library_reused": true,
+        "demo_sha256": "3d7cd7e1623d76a45460b4e94d898a42e38f535a402811ac23d5f16e5d40ec32",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "conmin",
+      "repository": "jacobwilliams/conmin",
+      "revision": "201f3b29f023baf7bef13ad8f49b906ffb1c7757",
+      "archive_sha256": "d5c83d31bd415152a05f11c70eb4ec2058df319048bdef6589bda8c20147e6ff",
+      "checked_at": "2026-10-28T00:46:44.377165+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/conmin.f90",
+      "verification": {
+        "seconds": 1.84,
+        "build_seconds": 0.518,
+        "library_reused": true,
+        "demo_sha256": "1a667c58aa19fee029b5107d153c55ebafe65aaf560f9155a844732bbe8b3706",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "opti",
+      "repository": "Konrad1991/opti",
+      "revision": "6fb22db21bd2338e00690ff3706be61a1f101101",
+      "archive_sha256": "db700adb3e72d2f347fc8ef30a32ee61cac3f4c943be9af3354680ad8f9ee003",
+      "checked_at": "2026-10-28T00:46:44.377165+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/opti.f90",
+      "verification": {
+        "seconds": 3.9,
+        "build_seconds": 1.371,
+        "library_reused": true,
+        "demo_sha256": "93c70dc077446872feb4a1962dfa3b4579cc1b661a6e97435a58270736abdaf5",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "dependencies": [
+        {
+          "repository": "fortran-lang/stdlib",
+          "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+        }
+      ],
+      "catalog_build": {
+        "manifest_versions": {
+          "fortran-lang/stdlib": "0.0.0"
+        },
+        "environment": {
+          "FPM_FFLAGS": "-cpp -DSTDLIB_EXTERNAL_BLAS -DSTDLIB_EXTERNAL_LAPACK -ffunction-sections -fdata-sections",
+          "FPM_LDFLAGS": "-Wl,--gc-sections -llapack -lblas"
+        },
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6"
+        ],
+        "source_revisions": {
+          "fortran-lang/stdlib": "58eb9133966c2797e0593281169ef57c43eccc1d"
+        },
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+      },
+      "initial_example_result": "fpm-candidates/opti/initial-example-result.txt"
+    },
+    {
+      "id": "interpolation",
+      "repository": "furstj/interpolation",
+      "revision": "bf6d22ad931855d510dcfb5bdd6870cce8924b22",
+      "archive_sha256": "102b10cbdfe5800b88a64e305718526387feb684e3fb07225e86add69052487b",
+      "checked_at": "2026-10-28T00:46:44.377165+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/interpolation.f90",
+      "verification": {
+        "seconds": 4.704,
+        "build_seconds": 1.872,
+        "library_reused": true,
+        "demo_sha256": "879b7c51c77348937d45c21d5dea071e65c0181976776ccbd784e311e41d27f4",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "dependencies": [
+        {
+          "repository": "fortran-lang/stdlib",
+          "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+        }
+      ],
+      "catalog_build": {
+        "manifest_versions": {
+          "fortran-lang/stdlib": "0.0.0"
+        },
+        "environment": {
+          "FPM_FFLAGS": "-cpp -DSTDLIB_EXTERNAL_BLAS -DSTDLIB_EXTERNAL_LAPACK -ffunction-sections -fdata-sections",
+          "FPM_LDFLAGS": "-Wl,--gc-sections -llapack -lblas"
+        },
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6"
+        ],
+        "registry": {
+          "stdlib": {
+            "git": "https://github.com/fortran-lang/stdlib",
+            "rev": "58eb9133966c2797e0593281169ef57c43eccc1d"
+          }
+        },
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+      }
+    },
+    {
+      "id": "fortran_huffman",
+      "repository": "Euler-37/fortran_huffman",
+      "revision": "c9976192e0db7738fcb65f3e83f209ac49b52880",
+      "archive_sha256": "4945bbcb9370f80dacf58647991a43159210a8468d63b5397828a283cdde631d",
+      "checked_at": "2026-10-28T00:46:44.377165+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/fortran_huffman.f90",
+      "verification": {
+        "seconds": 2.242,
+        "build_seconds": 0.367,
+        "library_reused": true,
+        "demo_sha256": "a2845f7cf7ace98a80fa3109de6ef5ff97f4892d82705bcf95faf97a2fb80c64",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "foxy",
+      "repository": "Fortran-FOSS-Programmers/FoXy",
+      "revision": "f91a269e98171d4b7cad7fd835c96fccd3e044e7",
+      "archive_sha256": "6e24a259fcecaabe6798fb17e9ca7a3fc9db9229d651e424e422b0f23da22ec0",
+      "status": "deferred",
+      "checked_at": "2026-10-28T01:05:15.179912+00:00",
+      "reason": "Current and investigated older archives fail strict extraction; earliest investigated tag has no root FPM manifest. Compiler not reached.",
+      "example": "fpm-candidates/foxy/main.f90",
+      "details": "fpm-candidates/foxy/archive-checks.json"
+    },
+    {
+      "id": "odepack",
+      "repository": "Nicholaswogan/odepack",
+      "revision": "d5db96093dc14fff54e10575cc586fa85392b078",
+      "archive_sha256": "3527e963adfa7c128092d59079cbd33ab3b126837b5e93ecc7c50d2cfc3589fa",
+      "checked_at": "2026-10-28T01:15:41.906948+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/odepack.f90",
+      "verification": {
+        "seconds": 1.665,
+        "build_seconds": 0.381,
+        "library_reused": true,
+        "demo_sha256": "c0357375499d095429bc622d2d1a653eaff678c676350861d69e72071fed6870",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "environment": {
+          "FPM_FFLAGS": "-ftrampoline-impl=heap"
+        }
+      },
+      "initial_result": "fpm-candidates/odepack/hosted-failure.txt"
+    },
+    {
+      "id": "fastmath",
+      "repository": "perazz/fastmath",
+      "revision": "ad0f14c455205c0e6c1b9300cd7f333fafb750e2",
+      "archive_sha256": "cea87a0687612725d0baf1f5b19c802e0d55c3a4c9e595fe7f85d4c4c71d656a",
+      "checked_at": "2026-10-28T01:15:41.906948+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/fastmath.f90",
+      "verification": {
+        "seconds": 1.824,
+        "build_seconds": 0.28,
+        "library_reused": true,
+        "demo_sha256": "ea4c83d7e3471a118d0a32d6ea82292c06099fd0b27ed8a7e955ccf5c7697b47",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "initial_example_result": "fpm-candidates/fastmath/initial-example-result.txt"
+    },
+    {
+      "id": "fortsa",
+      "repository": "zoziha/fortsa",
+      "revision": "d31da12286617ab82e06e9fa0a6f20d11778581c",
+      "archive_sha256": "e2fdf8e436b3ab2919df6298c88cb4f8c4a3d1f74422baab3a5df76765b6caa2",
+      "checked_at": "2026-10-28T01:15:41.906948+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/fortsa.f90",
+      "verification": {
+        "seconds": 2.45,
+        "build_seconds": 0.619,
+        "library_reused": true,
+        "demo_sha256": "7fa0280eee93568dce8f8baca7a38d8170cc567b4b416cc09c13de5d36864265",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "fortran-flann",
+      "repository": "ivan-pi/fortran-flann",
+      "revision": "35370c851602d954d1d01d10c9c14ff82dd96496",
+      "archive_sha256": "a3b9e1b13e4b613e2bf5943decdbfb6ba4f8a866115007dfae9c2eb947fc3075",
+      "checked_at": "2026-10-28T01:15:41.906948+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/fortran-flann.f90",
+      "verification": {
+        "seconds": 1.993,
+        "build_seconds": 0.446,
+        "library_reused": true,
+        "demo_sha256": "3d7aa99307528cbc8c4eac2a1c329cc7036061be2a019068b06a692ce261c658",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "apt_packages": [
+          "libflann1.9=1.9.2+dfsg-2+b2"
+        ]
+      },
+      "catalog_patches": {
+        "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+        "edits": [
+          {
+            "path": "fpm.toml",
+            "sha256": "8d0589030f186cc4528eb4dcbc81254a9261d18e47f754e100987dd08d8445f9",
+            "before": "link = \"flann\"",
+            "after": "link = \":libflann.so.1.9\""
+          }
+        ]
+      },
+      "initial_recipe": "fpm-candidates/fortran-flann/initial-recipe.json"
+    },
+    {
+      "id": "fortran_stb_image",
+      "repository": "lewisfish/fortran_stb_image",
+      "revision": "f5c1633dfbaa1953fe8fa12bd01cb06dab0b6128",
+      "archive_sha256": "2c862559afaab5ae3ea484fdf41ce86940fb91e724c558b60998c903bcca78d1",
+      "checked_at": "2026-10-28T01:15:41.906948+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/fortran_stb_image.f90",
+      "verification": {
+        "seconds": 1.866,
+        "build_seconds": 0.39,
+        "library_reused": true,
+        "demo_sha256": "d7e4c2a3c12208a44f9e73f896cccacfc64d213206e6369fae65ba0e99f911da",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "preview_count": 1,
+        "preview_names": [
+          "gradient.png"
+        ]
+      }
+    },
+    {
+      "id": "cairo-fortran",
+      "repository": "vmagnin/cairo-fortran",
+      "revision": "89c31edd87ac1a5ad37db71165965a30cc9b7d61",
+      "archive_sha256": "eff681f28ed3f725f0bd2d23414883c4ed7a3f6eafc171030d3d321d7a2e84a7",
+      "checked_at": "2026-10-28T01:15:41.906948+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/cairo-fortran.f90",
+      "verification": {
+        "seconds": 1.985,
+        "build_seconds": 0.429,
+        "library_reused": true,
+        "demo_sha256": "cb77368a72462d5a754000b8f0a7b0c81e58be5a483e429db088041088e29c15",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ],
+        "preview_count": 1,
+        "preview_names": [
+          "spiral.png"
+        ]
+      },
+      "catalog_build": {
+        "apt_packages": [
+          "libcairo2-dev=1.18.4-1+b1"
+        ],
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+      }
+    },
+    {
+      "id": "forsudoku",
+      "repository": "vmagnin/ForSudoku",
+      "revision": "a849a7fe87c3e19aea1bd8ed4caef15e651c3208",
+      "archive_sha256": "de5e1af2158505094e91a0a2fd43b85f96b8f02436e1d0aa817a4a4259d08e9d",
+      "checked_at": "2026-10-28T01:15:41.906948+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/forsudoku.f90",
+      "verification": {
+        "seconds": 2.359,
+        "build_seconds": 0.386,
+        "library_reused": true,
+        "demo_sha256": "174a010095521ed72fcb94eef466b8a1ecf0119d4e2ff9106731eee268303316",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "conmax",
+      "repository": "jacobwilliams/conmax",
+      "revision": "ab7f237d30f94f7d13b86997e0c49f3d67bd7c54",
+      "archive_sha256": "f31c31ad41d37957f9794248ac4d0416ec3455fe9d27d9a5d7cb4cadff340580",
+      "checked_at": "2026-10-28T01:33:45.255776+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/conmax.f90",
+      "verification": {
+        "seconds": 1.733,
+        "build_seconds": 0.208,
+        "library_reused": true,
+        "demo_sha256": "6c6109970a1e4b918453bbdfb6c3e6a816b67903b7496644efe21e9e767a71d6",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "fmmap",
+      "repository": "PierUgit/fmmap",
+      "revision": "0ccbb98b7165233bdd5a07728ee4312deed4f8f7",
+      "archive_sha256": "cdfa9d4680ec2d80ce5b51b0e9fe42dbbd14741f17c0ccbf4b06ee6adfc209c2",
+      "checked_at": "2026-10-28T01:33:45.255776+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/fmmap.f90",
+      "verification": {
+        "seconds": 1.74,
+        "build_seconds": 0.404,
+        "library_reused": true,
+        "demo_sha256": "16cca4977d769efb16d77f4c6248a2ab3a07762eac47ba36cfa4f5e89464fdb7",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "fortran-messagepack",
+      "repository": "synthfi/fortran-messagepack",
+      "revision": "2b2c9fc78bf3f7212ec9e35c675febdd508b7830",
+      "archive_sha256": "31e13bba647109382980c5cce645a3f509bd77f807a84f5728e0513c3e71c589",
+      "checked_at": "2026-10-28T01:33:45.255776+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/fortran-messagepack.f90",
+      "verification": {
+        "seconds": 1.655,
+        "build_seconds": 0.388,
+        "library_reused": true,
+        "demo_sha256": "329da28498c7f5d33b6ffc03f23bd964b22941e4a4560438f8d7775fa23228d9",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "graphstruc",
+      "repository": "nedtaylor/graphstruc",
+      "revision": "51e18bedd638b935be8b9ac744b2e9f9e79213e7",
+      "archive_sha256": "24e32c4c7f5d9a673b6d39937e44c4b3da0097aa29f4d4b369dc9441f3b55665",
+      "checked_at": "2026-10-28T01:33:45.255776+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/graphstruc.f90",
+      "verification": {
+        "seconds": 1.874,
+        "build_seconds": 0.163,
+        "library_reused": true,
+        "demo_sha256": "d97a818af17369255cc47ffa5367377232cb18dd4fe123644a5e48ad30a093d1",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "dependencies": [
+        {
+          "repository": "nedtaylor/coreutils",
+          "revision": "ead4501f4b695c4f0fe3267f1bf5318544c9b1e2",
+          "sha256": "a2979763627707ba61169b4abacd7ee60b586df9115ac2beb9ee674c25031554"
+        }
+      ]
+    },
+    {
+      "id": "kiss",
+      "repository": "ivan-pi/kiss",
+      "revision": "55f0f7ccb1601a0628a17928b5b6b79f61da2892",
+      "archive_sha256": "b8a34e012c2c67a313f0f4f94d9674f8869dd525f858ea5ab1811e1e2041c79c",
+      "checked_at": "2026-10-28T01:33:45.255776+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/kiss.f90",
+      "verification": {
+        "seconds": 2.34,
+        "build_seconds": 0.507,
+        "library_reused": true,
+        "demo_sha256": "3f9f9d8e8f920f4e57271c2544a2f8dd08f4408ad928aadff480c99eb363b3c5",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6"
+        ],
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "environment": {
+          "FPM_FFLAGS": "-ftrampoline-impl=heap"
+        }
+      },
+      "initial_attempt": "fpm-candidates/kiss/initial-attempt.json"
+    },
+    {
+      "id": "parff",
+      "repository": "everythingfunctional/parff",
+      "revision": "dbce6a04992fbc1e2d13b6c633480d3cd4bbe35c",
+      "archive_sha256": "614aac0224f2f60d299d3b1ba859e4423553e42f144546b968ee52549f4573a5",
+      "checked_at": "2026-10-28T01:33:45.255776+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/parff.f90",
+      "verification": {
+        "seconds": 2.631,
+        "build_seconds": 0.617,
+        "library_reused": true,
+        "demo_sha256": "ccb1e96e2b9a091a3109437ca539dc4a7541412d274e29161baefc725da9e219",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "dependencies": [
+        {
+          "repository": "everythingfunctional/iso_varying_string",
+          "revision": "fb7635a6b21c3d50ac7c8c14f7696a70931cb4a6",
+          "sha256": "0a2ff49b7eb88218c5de043b5aa3e564e821cd8906354e6f67a2ca480ae0c52e"
+        },
+        {
+          "repository": "everythingfunctional/strff",
+          "revision": "50e536cb087123f2c72140cb065c398a01fc5121",
+          "sha256": "c0f773e21d2c1a0f7b83bcb51cf6bca4d7103815373e7be9a56d1689b8a5da42"
+        }
+      ],
+      "catalog_build": {
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "git_aliases": {
+          "https://gitlab.com/everythingfunctional/iso_varying_string": "https://github.com/everythingfunctional/iso_varying_string",
+          "https://gitlab.com/everythingfunctional/strff": "https://github.com/everythingfunctional/strff"
+        },
+        "environment": {
+          "FPM_FFLAGS": "-ftrampoline-impl=heap"
+        }
+      },
+      "initial_attempt": "fpm-candidates/parff/initial-attempt.json"
+    },
+    {
+      "id": "yaeos",
+      "repository": "ipqa-research/yaeos",
+      "revision": "e886a2316b7703131d0ed9f13de2edc9f64e477d",
+      "archive_sha256": "6c68a58854972f58e5f5a7cdd5c90db3294901007fc1a1564908675b911360fd",
+      "status": "deferred",
+      "checked_at": "2026-10-28T01:33:45.255776+00:00",
+      "reason": "Forbear dependency archive contains a documentation symlink; investigated older releases also have links or no FPM manifest. Compiler not reached.",
+      "example": "fpm-candidates/yaeos/main.f90",
+      "details": "fpm-candidates/yaeos/dependency-archive-checks.json",
+      "preparation": "fpm-candidates/yaeos/preparation.json"
+    },
+    {
+      "id": "sodium",
+      "repository": "freevryheid/sodium",
+      "revision": "805225de601cc1f541fc7699d76a748d6eda58ca",
+      "archive_sha256": "76c6f3498f86457350f7c8cd40e422de0cbceafdf9016186f27dbb35c7412407",
+      "status": "deferred",
+      "checked_at": "2026-10-28T01:33:45.255776+00:00",
+      "reason": "GNU 16 compilation fails: missing C integer kind imports; an import-only fix exposes misspelled parameter declarations in key-derivation modules. Consumer not run.",
+      "example": "fpm-candidates/sodium/main.f90",
+      "initial_recipe": "fpm-candidates/sodium/initial-recipe.json",
+      "attempted_recipe": "fpm-candidates/sodium/attempted-recipe.json",
+      "diagnostic": "fpm-candidates/sodium/initial-build.log",
+      "retry_diagnostic": "fpm-candidates/sodium/import-fix-build.log"
+    },
+    {
+      "id": "forinv",
+      "repository": "gha3mi/forinv",
+      "revision": "80b5dbed9709c001e4309382424276a2ceb984f3",
+      "archive_sha256": "22905d8cc5d0c62d25c937adf9475592d4a1b4c02e2eb64413070c3d4c14426a",
+      "checked_at": "2026-10-28T01:52:04.654432+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/forinv.f90",
+      "verification": {
+        "seconds": 2.396,
+        "build_seconds": 0.421,
+        "library_reused": true,
+        "demo_sha256": "278455b6c771ab1369fa55105672bdf91f8d69bc8ca19f56d40e12849bee82fc",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "dependencies": [
+        {
+          "repository": "gha3mi/forsvd",
+          "revision": "f39bba7afcb048a21947a7a640bdf9a18337f8ac",
+          "sha256": "b9a97d840dca7ad2d11ef00c5986719d180d455b2fa188a4d0b374219414088e"
+        },
+        {
+          "repository": "gha3mi/kinds",
+          "revision": "811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f",
+          "sha256": "495d1133b1630dea4f38d69e5e3189e3279e4ce5836da1a7aec8a822bbe16518"
+        },
+        {
+          "repository": "gha3mi/fortime",
+          "revision": "de733e2c775457d4979403fe77ab69cf28e2b159",
+          "sha256": "bccc83cf947693ad4defcfb4684af7cd660db8a6e57084b7f07e7edfd584161d"
+        },
+        {
+          "repository": "szaghi/FACE",
+          "revision": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8",
+          "sha256": "d4cc3c3a2c70e7369607624ae3361a6f7b2ba3f1e9a63ffd94ecb5cd4b019469"
+        }
+      ],
+      "catalog_build": {
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6"
+        ],
+        "environment": {
+          "FPM_FFLAGS": "-cpp -fopenmp",
+          "FPM_LDFLAGS": "-llapack -lblas"
+        },
+        "source_revisions": {
+          "gha3mi/kinds": "811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f",
+          "gha3mi/forsvd": "f39bba7afcb048a21947a7a640bdf9a18337f8ac",
+          "gha3mi/fortime": "de733e2c775457d4979403fe77ab69cf28e2b159",
+          "szaghi/face": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8",
+          "gha3mi/formatmul": "6a77af418bbd77ffb5323a338db5cdf9368a73f7"
+        },
+        "manifest_versions": {
+          "gha3mi/forinv": "0.0.0",
+          "gha3mi/forsvd": "0.0.0",
+          "gha3mi/fortime": "0.0.0",
+          "gha3mi/kinds": "0.0.0",
+          "gha3mi/formatmul": "0.0.0"
+        },
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+      },
+      "initial_example": "fpm-candidates/forinv/initial-main.f90",
+      "initial_diagnostic": "fpm-candidates/forinv/initial-hosted-failure.txt"
+    },
+    {
+      "id": "forsolver",
+      "repository": "gha3mi/forsolver",
+      "revision": "6c0644b287cb49a7310d883415b9b9ba581d51c5",
+      "archive_sha256": "17a84545ef849f34e43b18eebbeb2cdbab42327979ac3d9c224525c9de3c247d",
+      "checked_at": "2026-10-28T01:52:04.654432+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/forsolver.f90",
+      "verification": {
+        "seconds": 1.494,
+        "build_seconds": 0.218,
+        "library_reused": true,
+        "demo_sha256": "a554011e0ed51d3aa12cf5891f4343b63ff7fdb96f22d372e1175491587f6f61",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "dependencies": [
+        {
+          "repository": "gha3mi/fordiff",
+          "revision": "f1a1099a590107645314f1388c432624ff97b9bc",
+          "sha256": "b2881c68306d92df9117f68e3852378ab0378d1cb2a9e0b76060239f94fac7a0"
+        },
+        {
+          "repository": "gha3mi/forunittest",
+          "revision": "997e9974e52b40f6538ed84cf24259c331a782b3",
+          "sha256": "a325e6e93f839a9b528a99cdfa4ca359e035f5a05414cb4c36a48f30bdaf53f2"
+        },
+        {
+          "repository": "szaghi/FACE",
+          "revision": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8",
+          "sha256": "d4cc3c3a2c70e7369607624ae3361a6f7b2ba3f1e9a63ffd94ecb5cd4b019469"
+        }
+      ],
+      "catalog_build": {
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6"
+        ],
+        "environment": {
+          "FPM_FFLAGS": "-cpp -ftrampoline-impl=heap",
+          "FPM_LDFLAGS": "-llapack -lblas"
+        },
+        "source_revisions": {
+          "gha3mi/fordiff": "f1a1099a590107645314f1388c432624ff97b9bc",
+          "szaghi/face": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8"
+        },
+        "manifest_versions": {
+          "gha3mi/forsolver": "0.0.0",
+          "gha3mi/fordiff": "0.0.0",
+          "gha3mi/forunittest": "0.0.0",
+          "gha3mi/kinds": "0.0.0",
+          "gha3mi/fortime": "0.0.0"
+        },
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+      }
+    },
+    {
+      "id": "fortran_cubatures",
+      "repository": "willklausler/fortran_cubatures",
+      "revision": "aca04975d09aed329fd4210defd7052926dc01c1",
+      "archive_sha256": "5ad21717dd6f860eb607797bcd21c2baf9ad7fa8ee194cd773effb0b49e20d3d",
+      "checked_at": "2026-10-28T01:52:04.654432+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/fortran_cubatures.f90",
+      "verification": {
+        "seconds": 1.667,
+        "build_seconds": 0.223,
+        "library_reused": true,
+        "demo_sha256": "d1890191799fbfc3ce7421e74b3e1342c4148d0548fc682ac9d4b64f847137dc",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+        "environment": {
+          "FPM_FFLAGS": "-Wall -Wextra -fcheck=all -fbacktrace"
+        }
+      },
+      "catalog_patches": {
+        "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+        "edits": [
+          {
+            "path": "fpm.toml",
+            "sha256": "c74acc12363b814d9bae5bb7191fe7e28782221c49b25e8683176838f7b0c2c6",
+            "before": "\n[features.debug.gfortran]\nflags = \"-g -Wall -fbacktrace -fcheck=all -Wextra -Wpedantic -Wuninitialized -Wmaybe-uninitialized -Wimplicit-interface -Wimplicit-procedure -Warray-temporaries -Wrealloc-lhs -finit-real=snan -finit-integer=-2147483648 -finit-logical=true -fstack-protector-all\"\n\n[features.debug.gfortran.linux]\nflags = \"-fsanitize=address,undefined\"\n\n[features.debug.ifx.linux]\nflags = \"-g -check all -warn all -traceback -fpe0 -init=snan,arrays -ftrapuv -fp-stack-check -diag-error-limit 10 -fsanitize=address,undefined\"\n\n[features.debug.ifx.windows]\nflags = \"/Zi /check:all /warn:all /traceback /fpe:0 /Qinit:snan,arrays /Qtrapuv\"\n\n[features.debug.nvfortran]\nflags = \"-g -Minform=inform -Mbounds -Mchkstk -Mstandard -Ktrap=fp -traceback\"\n\n[features.debug.flang]\nflags = \"-g\"\n\n[features.release.gfortran]\nflags = \"-O3 -fbacktrace -march=native -funroll-loops\"\n\n[features.release.ifx.linux]\nflags = \"-O3 -xHost -unroll\"\n\n[features.release.ifx.windows]\nflags = \"/O3 /QxHost /Qunroll\"\n\n[features.release.nvfortran]\nflags = \"-Mrecursive -fast\"\n\n[features.release.flang]\nflags = \"-O3\"\n\n[profiles]\ndebug = [\n    \"debug\",\n]\nrelease = [\n    \"release\",\n]\n",
+            "after": "\n"
+          }
+        ]
+      },
+      "initial_recipe": "fpm-candidates/fortran_cubatures/initial-recipe.json",
+      "initial_diagnostic": "fpm-candidates/fortran_cubatures/initial-build.log"
+    },
+    {
+      "id": "optgra",
+      "repository": "jacobwilliams/optgra",
+      "revision": "914bed713e80faa4a190e03beb3a8307077eb028",
+      "archive_sha256": "576c186c8d8dcb11580f01d4ae618beb2cd65c4a1a7e637b4f1fd0220564a339",
+      "checked_at": "2026-10-28T01:52:04.654432+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/optgra.f90",
+      "verification": {
+        "seconds": 1.586,
+        "build_seconds": 0.246,
+        "library_reused": true,
+        "demo_sha256": "f3043b80361d8ed1e5bda4cd010a265da29c387149f46cdcac263d91fe86712d",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "initial_example": "fpm-candidates/optgra/initial-main.f90",
+      "initial_diagnostic": "fpm-candidates/optgra/initial-hosted-failure.txt"
+    },
+    {
+      "id": "psqp",
+      "repository": "jacobwilliams/psqp",
+      "revision": "57a853e14e3806d69adad6d6d44396d9665d842e",
+      "archive_sha256": "1e885c8e481fa2962d883e6a1a1199117d3ca4ad3975799a8d72634639746531",
+      "checked_at": "2026-10-28T01:52:04.654432+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/psqp.f90",
+      "verification": {
+        "seconds": 2.457,
+        "build_seconds": 0.34,
+        "library_reused": true,
+        "demo_sha256": "8f4edf5eb224200c1d41e75371b19561b33741950215f8deaaa344cb1224abe1",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "sparse_fortran",
+      "repository": "Euler-37/sparse_fortran",
+      "revision": "600f586a1ed099a22054ed283225787de36a31c1",
+      "archive_sha256": "48b5a043ac012c1e5ceb7d047ef477102344b548f61bfa9c44cc5a8325a221e3",
+      "checked_at": "2026-10-28T01:52:04.654432+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/sparse_fortran.f90",
+      "verification": {
+        "seconds": 2.554,
+        "build_seconds": 0.722,
+        "library_reused": true,
+        "demo_sha256": "993bf086caf1f7d4c9632411c093318e7c1a8482cf368a677458707ecae81003",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "stiff3",
+      "repository": "ivan-pi/stiff3",
+      "revision": "70ab5c86c2ac922ed148bbb1182345cca248e077",
+      "archive_sha256": "33c52164ec8e5a1b57b623f529209fadcd2c3db40b6cfcb63adf48de40ed3160",
+      "checked_at": "2026-10-28T01:52:04.654432+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/stiff3.f90",
+      "verification": {
+        "seconds": 2.063,
+        "build_seconds": 0.506,
+        "library_reused": true,
+        "demo_sha256": "24cfc8cf62e358d818c898c4ecaa8ad9aa71c955a442a6415a14cecc09f144bd",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6"
+        ],
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+      }
+    },
+    {
+      "id": "fast_math",
+      "repository": "jalvesz/fast_math",
+      "revision": "a4f93517a2c09c57b6ae74585404ae4457d16716",
+      "archive_sha256": "8ef1a1885737dd86b048c7468b15dae22d678341cab08423393dbb8a44c8fdfe",
+      "status": "deferred",
+      "checked_at": "2026-10-28T01:52:04.654432+00:00",
+      "reason": "Compensated sum/dot result is 100010240 instead of the exact 100010000 for a real32 test vector; hosted numerical check fails and native GNU reproduces it.",
+      "example": "fpm-candidates/fast_math/main.f90",
+      "recipe": "fpm-candidates/fast_math/package.json",
+      "diagnostic": "fpm-candidates/fast_math/hosted-failure.txt",
+      "native_output": "fpm-candidates/fast_math/native-output.txt"
+    },
+    {
+      "id": "dcuhre",
+      "repository": "Zaneham/dcuhre",
+      "revision": "da8becb7f5313c1d7387066ef2106be9e156e20c",
+      "archive_sha256": "f8310453858037e0cbfd81904cb9aebe299a510f73d0925956d7e7020e358549",
+      "checked_at": "2026-10-28T02:10:15.391492+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/dcuhre.f90",
+      "verification": {
+        "seconds": 1.568,
+        "build_seconds": 0.178,
+        "library_reused": true,
+        "demo_sha256": "87739e99718d2575ed4d63ecca092cd9121838b85335f820e1b9ab37f37af95c",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "foreig",
+      "repository": "gha3mi/foreig",
+      "revision": "8fcfcab03e5d7cf5eda8c51c7a1e97fe52954c39",
+      "archive_sha256": "842695c219adfd981a06d7451b87b27d57d3db86c8878612b371b782eb0e02d1",
+      "checked_at": "2026-10-28T02:10:15.391492+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/foreig.f90",
+      "verification": {
+        "seconds": 1.948,
+        "build_seconds": 0.427,
+        "library_reused": true,
+        "demo_sha256": "3f7916c5f9be969450d9c8e643a794e0b380eb2792b51d562207197e130a77a1",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "dependencies": [
+        {
+          "repository": "gha3mi/kinds",
+          "revision": "811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f",
+          "sha256": "495d1133b1630dea4f38d69e5e3189e3279e4ce5836da1a7aec8a822bbe16518"
+        }
+      ],
+      "catalog_build": {
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6"
+        ],
+        "environment": {
+          "FPM_LDFLAGS": "-llapack -lblas"
+        },
+        "manifest_versions": {
+          "gha3mi/foreig": "0.0.0",
+          "gha3mi/kinds": "0.0.0"
+        },
+        "source_revisions": {
+          "gha3mi/kinds": "811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f"
+        },
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+      }
+    },
+    {
+      "id": "forlab",
+      "repository": "zoziha/forlab",
+      "revision": "416e5612167b6133100bef4cec116322890f66f7",
+      "archive_sha256": "784431a7c880c6a6dcfdd7687e3b0f2f8340dc13bd187a3546acd09d883628f3",
+      "checked_at": "2026-10-28T02:10:15.391492+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/forlab.f90",
+      "verification": {
+        "seconds": 1.7,
+        "build_seconds": 0.421,
+        "library_reused": true,
+        "demo_sha256": "83758192f74c1288c8e451e74fe6eceac7fe1b40da0f3fc8625e75e93edc6640",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_patches": {
+        "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+        "edits": [
+          {
+            "path": "src/forlab.F90",
+            "sha256": "4f9be44e66ad2fdb67841ee14d0156b7fa315b137f33333b84abb100f7e48246",
+            "before": "  real(kind = RPRE) function norm1(x, p)\n    real(kind = RPRE), dimension(:), intent(in) :: x\n    real(kind = RPRE), intent(in), optional :: p\n\n    if ((.not. present(p)) .or. (p .eq. 2.)) then\n      norm1 = sqrt(sum(abs(x)**2))\n    elseif (p .eq. 1.) then\n      norm1 = sum(abs(x))\n    else\n      norm1 = (sum(abs(x)**p))**(1.0d0/p)\n    end if\n    return\n  end function norm1\n\n  real(kind = RPRE) function norm2(A, p)\n    real(kind = RPRE), dimension(:,:), intent(in) :: A\n    integer(kind = IPRE), intent(in), optional :: p\n    real(kind = RPRE), dimension(:), allocatable :: w\n\n    if ((.not. present(p)) .or. (p .eq. 2.)) then\n      call svd(A, w)\n      norm2 = maxval(w)\n    elseif (p .eq. 1.) then\n      norm2 = maxval(sum(abs(A), dim = 2))\n    end if\n    return\n  end function norm2",
+            "after": "  real(kind = RPRE) function norm1(x, p)\n    real(kind = RPRE), dimension(:), intent(in) :: x\n    real(kind = RPRE), intent(in), optional :: p\n\n    real(kind = RPRE) :: power\n\n    power = 2\n    if (present(p)) power = p\n    if (power .eq. 2) then\n      norm1 = sqrt(sum(abs(x)**2))\n    elseif (power .eq. 1) then\n      norm1 = sum(abs(x))\n    else\n      norm1 = (sum(abs(x)**power))**(1.0d0/power)\n    end if\n    return\n  end function norm1\n\n  real(kind = RPRE) function norm2(A, p)\n    real(kind = RPRE), dimension(:,:), intent(in) :: A\n    integer(kind = IPRE), intent(in), optional :: p\n    real(kind = RPRE), dimension(:), allocatable :: w\n\n    integer(kind = IPRE) :: power\n\n    power = 2\n    if (present(p)) power = p\n    if (power .eq. 2) then\n      call svd(A, w)\n      norm2 = maxval(w)\n    elseif (power .eq. 1) then\n      norm2 = maxval(sum(abs(A), dim = 2))\n    end if\n    return\n  end function norm2"
+          }
+        ]
+      },
+      "initial_recipe": "fpm-candidates/forlab/initial-recipe.json",
+      "initial_diagnostic": "fpm-candidates/forlab/initial-hosted-failure.txt",
+      "fix": "fpm-candidates/forlab/optional-norm.patch"
+    },
+    {
+      "id": "libdogleg-f",
+      "repository": "ivan-pi/libdogleg-f",
+      "revision": "32b65ae4f880a052768c05d24c24b79920710681",
+      "archive_sha256": "567498c00c9e23382d9359e92a1c08fd02fbb5167a4c531b2fc8018eb9d2a122",
+      "checked_at": "2026-10-28T02:10:15.391492+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/libdogleg-f.f90",
+      "verification": {
+        "seconds": 2.766,
+        "build_seconds": 0.418,
+        "library_reused": true,
+        "demo_sha256": "5ad1e2c19efaab10f94f2d75d6e42c6a3e616d6c6a2e262667d45a51804747b0",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "apt_packages": [
+          "libdogleg-dev=0.16-4+b3",
+          "libsuitesparse-dev=1:7.10.1+dfsg-1",
+          "liblapack-dev=3.12.1-6"
+        ],
+        "environment": {
+          "FPM_LDFLAGS": "-ldogleg"
+        },
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+      }
+    },
+    {
+      "id": "nafpack",
+      "repository": "Minard-Jules/NAFPack",
+      "revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+      "archive_sha256": "fab50ff6999afd7ab8bfeabdf8aaf3a93b3e23f6ff9d8e85c74d84d0664f5a51",
+      "checked_at": "2026-10-28T02:10:15.391492+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/nafpack.f90",
+      "verification": {
+        "seconds": 2.87,
+        "build_seconds": 0.694,
+        "library_reused": true,
+        "demo_sha256": "347789bb31514ff80223015be8b5f5e23e59bbbceff089ce6a5b44a09bf80389",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "apt_packages": [
+          "libfftw3-dev=3.3.10-2+b1"
+        ],
+        "metapackages": [
+          "openmp"
+        ],
+        "manifest_versions": {
+          "minard-jules/nafpack": "0.1.52"
+        },
+        "environment": {
+          "FPM_FFLAGS": "-fopenmp -cpp -I/usr/include -ffree-line-length-none"
+        },
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+      },
+      "catalog_patches": {
+        "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+        "edits": [
+          {
+            "path": "fpm.toml",
+            "sha256": "a23452a807863276e14e7df3644f6b22d588e6dda917100f28edce71790da1e1",
+            "before": "name = \"NAFPack\"\nversion = \"0.1.52\"\nlicense = \"MIT\"\nauthor = \"Jules Minard\"\nmaintainer = \"https://github.com/Minard-Jules/NAFPack/issues\"\ncopyright = \"Copyright 2023, Jules Minard\"\ndescription = \"Numerical Analysis in Fortran Package\"\nkeywords = [\n    \"NAFPack\",\n]\nhomepage = \"https://github.com/Minard-Jules/NAFPack\"\n\n[features.release]\nflags = \"-O3\"\n\n[features.release.gfortran]\nflags = \"-march=native -ffast-math -fimplicit-none -ffree-line-length-2000 -funroll-loops\"\n\n[features.release.preprocess.cpp]\nmacros = [\n    \"NDEBUG\",\n]\n\n[features.debug]\nflags = \"-g -O0\"\n\n[features.debug.gfortran]\nflags = \"-Wall -Wextra -fcheck=bounds -Wimplicit-procedure -Werror=implicit-procedure -ffree-line-length-2000 -std=f2018-fbacktrace -fbounds-check -frange-check\"\n\n[features.debug.preprocess.cpp]\nmacros = [\n    \"DEBUG\",\n]\n\n[profiles]\ndebug = [\n    \"debug\",\n]\nrelease = [\n    \"release\",\n]\n\n[build]\nauto-executables = true\nauto-tests = true\nauto-examples = true\nmodule-naming = false\nlink = [\n    \"fftw3\",\n    \"gomp\",\n]\n\n[install]\nlibrary = false\n\n[fortran]\nimplicit-typing = true\nimplicit-external = true\nsource-form = \"default\"\n\n[dependencies]\n\n[[test]]\nname = \"test_fft\"\nmain = \"test_Fourier_Transform_fft_complex.f90\"\nsource-dir = \"test/Fourier_Transform\"\n",
+            "after": "name = \"NAFPack\"\nversion = \"0.1.52\"\nlicense = \"MIT\"\nauthor = \"Jules Minard\"\nmaintainer = \"https://github.com/Minard-Jules/NAFPack/issues\"\ncopyright = \"Copyright 2023, Jules Minard\"\ndescription = \"Numerical Analysis in Fortran Package\"\nkeywords = [\n    \"NAFPack\",\n]\nhomepage = \"https://github.com/Minard-Jules/NAFPack\"\n\n[build]\nauto-executables = true\nauto-tests = true\nauto-examples = true\nmodule-naming = false\nlink = [\n    \"fftw3\",\n    \"gomp\",\n]\n\n[install]\nlibrary = false\n\n[fortran]\nimplicit-typing = true\nimplicit-external = true\nsource-form = \"default\"\n\n[dependencies]\n\n[[test]]\nname = \"test_fft\"\nmain = \"test_Fourier_Transform_fft_complex.f90\"\nsource-dir = \"test/Fourier_Transform\"\n"
+          }
+        ]
+      }
+    },
+    {
+      "id": "rkf45",
+      "repository": "zoziha/rkf45",
+      "revision": "93cd129369357ee08e34be7868256b21a500cc98",
+      "archive_sha256": "7ba93563d7f60b085708b0866297c7814ffb85592411377af58bb878fc1adfd2",
+      "checked_at": "2026-10-28T02:10:15.391492+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/rkf45.f90",
+      "verification": {
+        "seconds": 1.571,
+        "build_seconds": 0.203,
+        "library_reused": true,
+        "demo_sha256": "7ba540221dc22212c61437f4ea22982026da428de0ff4ab151dfbfeb6160e842",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "environment": {
+          "FPM_FFLAGS": "-DREAL64"
+        },
+        "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+      }
+    },
+    {
+      "id": "y12m",
+      "repository": "ivan-pi/y12m",
+      "revision": "5245418ed3f87c72bff4660432212328640a6322",
+      "archive_sha256": "412cfb698c2eb939db37c649d6eb0516f82850570e93ed58e2f4debae7d01a55",
+      "checked_at": "2026-10-28T02:10:15.391492+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/y12m.f90",
+      "verification": {
+        "seconds": 2.97,
+        "build_seconds": 0.505,
+        "library_reused": true,
+        "demo_sha256": "c01a620520e97528228e175121a4e0cbbe992ba501e998f6e40fa8169a863aed",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "polynomial_arnoldi",
+      "repository": "loiseaujc/polynomial_arnoldi",
+      "revision": "83a6625e94504151bf27aea023568a2eec34256b",
+      "archive_sha256": "dc06ba05cbf5485dd6ce458d70cf77e6f8d92cc76fa45a68ec209843e010990d",
+      "status": "deferred",
+      "checked_at": "2026-10-28T02:10:15.391492+00:00",
+      "reason": "GNU 16.2 internal compiler error in gfc_resolve_forall while compiling SpecialMatrices src/Strang/matvecs.f90; numerical consumer not reached.",
+      "example": "fpm-candidates/polynomial_arnoldi/main.f90",
+      "recipe": "fpm-candidates/polynomial_arnoldi/package.json",
+      "diagnostic": "fpm-candidates/polynomial_arnoldi/build-failure.txt"
+    }
+  ]
+}

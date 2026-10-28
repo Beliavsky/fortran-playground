@@ -1,0 +1,220 @@
+le/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:6579:72:
+
+ 6579 |  80         DL(K) = S*DL(K) + C*V(K,LLP1)
+      |                                                                        1
+Warning: Fortran 2018 deleted feature: DO termination statement which is not END DO or CONTINUE with label 80 at (1)
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:6600:72:
+
+ 6600 |  130     Z(I) = 0.D0
+      |                                                                        1
+Warning: Fortran 2018 deleted feature: DO termination statement which is not END DO or CONTINUE with label 130 at (1)
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:6622:72:
+
+ 6622 |  170              DL(K) = S*DL(K) + C*V(K,IP1)
+      |                                                                        1
+Warning: Fortran 2018 deleted feature: DO termination statement which is not END DO or CONTINUE with label 170 at (1)
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:6627:72:
+
+ 6627 |  180           DL(K) = S*DL(K) + C*V(K,MAXLP1)
+      |                                                                        1
+Warning: Fortran 2018 deleted feature: DO termination statement which is not END DO or CONTINUE with label 180 at (1)
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:6644:72:
+
+ 6644 |  210    R(K) = 0.0D0
+      |                                                                        1
+Warning: Fortran 2018 deleted feature: DO termination statement which is not END DO or CONTINUE with label 210 at (1)
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:6648:72:
+
+ 6648 |  220    Z(K) = 0.0D0
+      |                                                                        1
+Warning: Fortran 2018 deleted feature: DO termination statement which is not END DO or CONTINUE with label 220 at (1)
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:6653:72:
+
+ 6653 |  240    Z(I) = Z(I)/WGHT(I)
+      |                                                                        1
+Warning: Fortran 2018 deleted feature: DO termination statement which is not END DO or CONTINUE with label 240 at (1)
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:6755:72:
+
+ 6755 |  10     VTEM(I) = V(I)/WGHT(I)
+      |                                                                        1
+Warning: Fortran 2018 deleted feature: DO termination statement which is not END DO or CONTINUE with label 10 at (1)
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:6763:72:
+
+ 6763 |  20     Z(I) = Y(I) + VTEM(I)
+      |                                                                        1
+Warning: Fortran 2018 deleted feature: DO termination statement which is not END DO or CONTINUE with label 20 at (1)
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:6777:72:
+
+ 6777 |  70     Z(I) = VTEM(I) - SAVR(I)
+      |                                                                        1
+Warning: Fortran 2018 deleted feature: DO termination statement which is not END DO or CONTINUE with label 70 at (1)
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:6789:72:
+
+ 6789 |  90     Z(I) = Z(I)*WGHT(I)
+      |                                                                        1
+Warning: Fortran 2018 deleted feature: DO termination statement which is not END DO or CONTINUE with label 90 at (1)
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:2488:3:
+
+ 2488 | 770   MSG = 'DASKR--  RUN TERMINATED. APPARENT INFINITE LOOP'
+      |   1
+Warning: Label 770 at (1) defined but not used [-Wunused-label]
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:2206:3:
+
+ 2206 | 540   IF (INFO(3) .NE. 0) GO TO 550
+      |   1
+Warning: Label 540 at (1) defined but not used [-Wunused-label]
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:1744:3:
+
+ 1744 | 300   CONTINUE
+      |   1
+Warning: Label 300 at (1) defined but not used [-Wunused-label]
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:1638:9:
+
+ 1638 |       IF(TOUT .EQ. T)GO TO 719
+      |         1
+Warning: Equality comparison for REAL(8) at (1) [-Wcompare-reals]
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:1792:13:
+
+ 1792 |          IF (H0 .EQ. 0.0D0) GO TO 712
+      |             1
+Warning: Equality comparison for REAL(8) at (1) [-Wcompare-reals]
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:2582:12:
+
+ 2582 |  110    IF (ABS(R0(I)) .EQ. ZERO) ZROOT = .TRUE.
+      |            1
+Warning: Equality comparison for REAL(8) at (1) [-Wcompare-reals]
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:2594:12:
+
+ 2594 |  130    IF (ABS(R0(I)) .EQ. ZERO) ZROOT = .TRUE.
+      |            1
+Warning: Equality comparison for REAL(8) at (1) [-Wcompare-reals]
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:2611:12:
+
+ 2611 |         IF (ABS(R0(I)) .EQ. ZERO) THEN
+      |            1
+Warning: Equality comparison for REAL(8) at (1) [-Wcompare-reals]
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:2636:21:
+
+ 2636 |           JROOT(I) = -SIGN(1.0D0,R0(I))
+      |                     1
+Warning: Possible change of value in conversion from REAL(8) to INTEGER(4) at (1) [-Wconversion]
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:2642:10:
+
+ 2642 |  260  IF (TN .EQ. RWORK(LTLAST)) RETURN
+      |          1
+Warning: Equality comparison for REAL(8) at (1) [-Wcompare-reals]
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:2783:12:
+
+ 2783 |  110    IF (SIGN(1.0D0,R0(I)) .EQ. SIGN(1.0D0,R1(I))) GO TO 120
+      |            1
+Warning: Equality comparison for REAL(8) at (1) [-Wcompare-reals]
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:2842:12:
+
+ 2842 |  210    IF (SIGN(1.0D0,R0(I)) .EQ. SIGN(1.0D0,RX(I))) GO TO 220
+      |            1
+Warning: Equality comparison for REAL(8) at (1) [-Wcompare-reals]
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:2882:12:
+
+ 2882 |         IF (ABS(R1(I)) .EQ. ZERO) THEN
+      |            1
+Warning: Equality comparison for REAL(8) at (1) [-Wcompare-reals]
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:2883:21:
+
+ 2883 |           JROOT(I) = -SIGN(1.0D0,R0(I))
+      |                     1
+Warning: Possible change of value in conversion from REAL(8) to INTEGER(4) at (1) [-Wconversion]
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:2886:12:
+
+ 2886 |         IF (SIGN(1.0D0,R0(I)) .NE. SIGN(1.0D0,R1(I)))
+      |            1
+Warning: Inequality comparison for REAL(8) at (1) [-Wcompare-reals]
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:2887:22:
+
+ 2887 |      1     JROOT(I) = SIGN(1.0D0,R1(I) - R0(I))
+      |                      1
+Warning: Possible change of value in conversion from REAL(8) to INTEGER(4) at (1) [-Wconversion]
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:2899:12:
+
+ 2899 |         IF (ABS(R1(I)) .EQ. ZERO) JROOT(I) = -SIGN(1.0D0,R0(I))
+      |            1
+Warning: Equality comparison for REAL(8) at (1) [-Wcompare-reals]
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:2899:45:
+
+ 2899 |         IF (ABS(R1(I)) .EQ. ZERO) JROOT(I) = -SIGN(1.0D0,R0(I))
+      |                                             1
+Warning: Possible change of value in conversion from REAL(8) to INTEGER(4) at (1) [-Wconversion]
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:1970:9:
+
+ 1970 |       IF(T .EQ. TOUT) GO TO 719
+      |         1
+Warning: Equality comparison for REAL(8) at (1) [-Wcompare-reals]
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:3255:9:
+
+ 3255 |       IF(H.NE.HOLD.OR.K .NE. KOLD) NS = 0
+      |         1
+Warning: Inequality comparison for REAL(8) at (1) [-Wcompare-reals]
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:4725:3:
+
+ 4725 | 375   IF(NONNEG .EQ. 0) GO TO 390
+      |   1
+Warning: Label 375 at (1) defined but not used [-Wunused-label]
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:4653:10:
+
+ 4653 |       IF (CJ .NE. CJLAST) S = 100.D0
+      |          1
+Warning: Inequality comparison for REAL(8) at (1) [-Wcompare-reals]
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:6875:15:
+
+ 6875 |       IF (VNRM + 0.001D0*SNORMW .NE. VNRM) RETURN
+      |               1
+Warning: Inequality comparison for REAL(8) at (1) [-Wcompare-reals]
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:6879:22:
+
+ 6879 |         IF (HES(I,LL) + 0.001D0*TEM .EQ. HES(I,LL)) GO TO 30
+      |                      1
+Warning: Equality comparison for REAL(8) at (1) [-Wcompare-reals]
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:6884:10:
+
+ 6884 |       IF (SUMDSQ .EQ. 0.0D0) RETURN
+      |          1
+Warning: Equality comparison for REAL(8) at (1) [-Wcompare-reals]
+<ERROR> Compilation failed for object " .._sources_bundle_packages_0_daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad_src_ddaskr.f.o "
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:6991:16:
+
+ 6991 |             IF (T2 .NE. 0.0D0) GO TO 30
+      |                1
+Warning: Inequality comparison for REAL(8) at (1) [-Wcompare-reals]
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:7009:16:
+
+ 7009 |             IF (A(K,K) .EQ. 0.0D0) INFO = K
+      |                1
+Warning: Equality comparison for REAL(8) at (1) [-Wcompare-reals]
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:7038:10:
+
+ 7038 |       IF (T2 .NE. 0.0D0) GO TO 110
+      |          1
+Warning: Inequality comparison for REAL(8) at (1) [-Wcompare-reals]
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:7057:10:
+
+ 7057 |       IF (A(N,N) .EQ. 0.0D0) INFO = N
+      |          1
+Warning: Equality comparison for REAL(8) at (1) [-Wcompare-reals]
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:5462:10:
+
+ 5462 |       IF (DELNRM .EQ. 0.0D0) RETURN
+      |          1
+Warning: Equality comparison for REAL(8) at (1) [-Wcompare-reals]
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:5934:13:
+
+ 5934 |          IF (CJ .NE. CJLAST) S = 100.D0
+      |             1
+Warning: Inequality comparison for REAL(8) at (1) [-Wcompare-reals]
+./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f:1932:20:
+
+ 1932 |      *   RWORK(LRX),JROOT,IRT,RWORK(LROUND),INFO(3),
+      |                    1
+Error: Rank mismatch in argument ‘jroot’ at (1) (rank-1 and scalar)
+compilation terminated due to -fmax-errors=1.
+<ERROR> stopping due to failed compilation
+STOP 1
+

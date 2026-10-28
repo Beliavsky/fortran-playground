@@ -85,7 +85,7 @@ Both pages use the same local execution backend as `xfortran_run.py`. The API re
 
 ## Moving the local tools
 
-For source-file and existing-directory FPM operation, copy `xfortran_run.py`, `xfortran_serve.py`, `fortran_fpm.py`, `fpm_targets.py`, `fpm_runner.py`, `fortran_output_diff.py`, `fortran_plot.py`, `vendor/pyplot-fortran/`, and `local_site/` together. The main catalog page additionally needs `local_fpm_catalog.py`, `fpm_collections.py`, `fpm_sources.py`, `fpm_compilers.py`, `fpm_catalog_build.py`, `fpm_catalog_patches.py`, `fpm_catalog.json`, and the shared `site/` frontend assets. It does not need the Modal SDK or execution-service modules. The source catalog and frontend assets can be generated in this repository before copying them.
+For source-file and existing-directory FPM operation, copy `xfortran_run.py`, `xfortran_serve.py`, `fortran_fpm.py`, `fpm_targets.py`, `fpm_runner.py`, `fortran_output_diff.py`, `fortran_plot.py`, `fortran_image.py`, `vendor/pyplot-fortran/`, and `local_site/` together. The main catalog page additionally needs `local_fpm_catalog.py`, `fpm_collections.py`, `fpm_sources.py`, `fpm_compilers.py`, `fpm_catalog_build.py`, `fpm_catalog_patches.py`, `fpm_catalog.json`, and the shared `site/` frontend assets. It does not need the Modal SDK or execution-service modules. The source catalog and frontend assets can be generated in this repository before copying them.
 
 Standalone hosted FPM use additionally needs `xplayground_run.py` and a package-service configuration or `--service-url`. See [plotting](plotting.md) for PNG examples, local Python requirements, and `--plot-dir`.
 

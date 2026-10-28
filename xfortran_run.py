@@ -275,7 +275,8 @@ def build_and_run(files, name, settings=None, extra=None, *, overrides=None, can
     result = {'compiler': name, 'compiler_version': version, 'ok': False, 'status': 'FAIL'}
     try:
         paths = source_paths(files)
-        from fortran_plot import uses_pyplot, install_module, plotting_environment, snapshot, collect_plots
+        from fortran_plot import uses_pyplot, install_module, plotting_environment
+        from fortran_image import snapshot, collect_plots
         plotting = any(uses_pyplot(path.read_text(encoding='utf-8-sig', errors='replace')) for path in paths)
         executable = compiler_executable(name, overrides)
         compile_flags, link_flags = flags_for(name, settings or {}, extra)

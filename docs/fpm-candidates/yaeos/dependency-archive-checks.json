@@ -1,0 +1,52 @@
+[
+  {
+    "repository": "szaghi/forbear",
+    "version": "v1.9.1 / HEAD",
+    "revision": "a31639e80631bdc218e45a7152f007f74dde49ee",
+    "sha256": "6f25ffb3113c92ca1fa063b244197244faf36def501bbf175fa70f43f8cebba6",
+    "links": [
+      {
+        "path": "CONTRIBUTING.md",
+        "target": "docs/guide/contributing.md"
+      }
+    ],
+    "error": "Package archive contains an unsafe path, link, or special file."
+  },
+  {
+    "repository": "szaghi/forbear",
+    "version": "v1.8.0",
+    "revision": "2b7698f3c996db79d9e5037be528a2b23f3f313f",
+    "sha256": "f3c1c822030c751692e1a0d4306761e1dbe9d041938bc69a9ef03beb88e534e6",
+    "links": [
+      {
+        "path": "forbear-2b7698f3c996db79d9e5037be528a2b23f3f313f/CONTRIBUTING.md",
+        "target": "docs/guide/contributing.md"
+      }
+    ],
+    "has_manifest": true,
+    "error": "Package archive contains an unsafe path, link, or special file."
+  },
+  {
+    "repository": "szaghi/forbear",
+    "version": "v1.5.0",
+    "revision": "2ba1690a78cce19d71e67fd5fe28941f6db7f375",
+    "sha256": "aea767dcae2c6f983897b93468bce17c9f4ef06d07d2ab889fc4da5d228fd971",
+    "links": [
+      {
+        "path": "forbear-2ba1690a78cce19d71e67fd5fe28941f6db7f375/CONTRIBUTING.md",
+        "target": "docs/guide/contributing.md"
+      }
+    ],
+    "has_manifest": true,
+    "error": "Package archive contains an unsafe path, link, or special file."
+  },
+  {
+    "repository": "szaghi/forbear",
+    "version": "v0.0.1",
+    "revision": "ffa8ad2acec4ba8c61b00a83c9ad512279bb5677",
+    "sha256": "2a916df6cb8f5eaf74e27411ef9d95d420ef33edd1ec3dea49928ebc16c369ee",
+    "links": [],
+    "has_manifest": false,
+    "error": "This repository has no fpm.toml at its root."
+  }
+]

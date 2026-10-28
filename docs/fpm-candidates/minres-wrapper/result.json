@@ -1,0 +1,77 @@
+{
+  "ok": false,
+  "compiler": "GNU Fortran (GCC) 16.2.0",
+  "compiler_id": "gfortran",
+  "fpm": "0.12.0",
+  "stages": [
+    {
+      "name": "Build",
+      "command": [
+        "fpm",
+        "build",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.734,
+      "ok": true,
+      "exit_code": 0,
+      "error": "",
+      "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+      "stderr": ""
+    },
+    {
+      "name": "Run",
+      "command": [
+        "fpm",
+        "run",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.027,
+      "ok": false,
+      "exit_code": 139,
+      "error": "",
+      "stdout": "",
+      "stderr": "Project is up to date\n\nProgram received signal SIGSEGV: Segmentation fault - invalid memory reference.\n\nBacktrace for this error:\n#0  0x2b214e80af83 in ???\n#1  0x2b214e809b35 in ???\n#2  0x2b214ec9fd6f in ???\n#3  0x7fba5e3e3100 in ???\nSegmentation fault\n<ERROR> Execution for object \" playground-main \" returned exit code  139\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 139\n"
+    }
+  ],
+  "cache": {
+    "package": "minres",
+    "compiler": "GNU Fortran 16.2.0",
+    "library_reused": true,
+    "changed_artifacts": []
+  },
+  "packages": [
+    {
+      "repository": "willdickson/minres",
+      "revision": "c7bb4c7a0ddf13729d3556878ccc688a208a052a",
+      "sha256": "cd1417ed2e800503336fb9e9d9a9acba834c22b81fb3cffe1c359bea2ce58624"
+    }
+  ],
+  "build_ok": true,
+  "target_groups": {
+    "app": [
+      "playground-main"
+    ],
+    "example": [],
+    "test": []
+  },
+  "targets": [
+    "playground-main"
+  ],
+  "plot_notes": []
+}

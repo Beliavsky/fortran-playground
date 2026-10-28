@@ -1,0 +1,57 @@
+{
+  "id": "forinv",
+  "repository": "gha3mi/forinv",
+  "revision": "80b5dbed9709c001e4309382424276a2ceb984f3",
+  "archive_sha256": "22905d8cc5d0c62d25c937adf9475592d4a1b4c02e2eb64413070c3d4c14426a",
+  "stars": 2,
+  "license": "BSD-3-Clause",
+  "category": "Linear algebra",
+  "description": "Matrix inverses and singular-value-decomposition pseudoinverses.",
+  "dependencies": [
+    {
+      "repository": "gha3mi/forsvd",
+      "revision": "f39bba7afcb048a21947a7a640bdf9a18337f8ac",
+      "sha256": "b9a97d840dca7ad2d11ef00c5986719d180d455b2fa188a4d0b374219414088e"
+    },
+    {
+      "repository": "gha3mi/kinds",
+      "revision": "811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f",
+      "sha256": "495d1133b1630dea4f38d69e5e3189e3279e4ce5836da1a7aec8a822bbe16518"
+    },
+    {
+      "repository": "gha3mi/fortime",
+      "revision": "de733e2c775457d4979403fe77ab69cf28e2b159",
+      "sha256": "bccc83cf947693ad4defcfb4684af7cd660db8a6e57084b7f07e7edfd584161d"
+    },
+    {
+      "repository": "szaghi/FACE",
+      "revision": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8",
+      "sha256": "d4cc3c3a2c70e7369607624ae3361a6f7b2ba3f1e9a63ffd94ecb5cd4b019469"
+    }
+  ],
+  "catalog_build": {
+    "apt_packages": [
+      "libblas-dev=3.12.1-6",
+      "liblapack-dev=3.12.1-6"
+    ],
+    "environment": {
+      "FPM_FFLAGS": "-cpp -fopenmp",
+      "FPM_LDFLAGS": "-llapack -lblas"
+    },
+    "source_revisions": {
+      "gha3mi/kinds": "811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f",
+      "gha3mi/forsvd": "f39bba7afcb048a21947a7a640bdf9a18337f8ac",
+      "gha3mi/fortime": "de733e2c775457d4979403fe77ab69cf28e2b159",
+      "szaghi/face": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8",
+      "gha3mi/formatmul": "6a77af418bbd77ffb5323a338db5cdf9368a73f7"
+    },
+    "manifest_versions": {
+      "gha3mi/forinv": "0.0.0",
+      "gha3mi/forsvd": "0.0.0",
+      "gha3mi/fortime": "0.0.0",
+      "gha3mi/kinds": "0.0.0",
+      "gha3mi/formatmul": "0.0.0"
+    },
+    "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+  }
+}

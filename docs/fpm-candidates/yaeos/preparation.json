@@ -1,0 +1,118 @@
+{
+  "id": "yaeos",
+  "repository": "ipqa-research/yaeos",
+  "revision": "e886a2316b7703131d0ed9f13de2edc9f64e477d",
+  "archive_sha256": "6c68a58854972f58e5f5a7cdd5c90db3294901007fc1a1564908675b911360fd",
+  "manifest": {
+    "name": "yaeos",
+    "version": "4.5.4",
+    "license": "MPL",
+    "author": "Federico E. Benelli",
+    "maintainer": "federico.benelli@unc.edu.ar",
+    "copyright": "Copyright 2023, Federico E. Benelli",
+    "build": {
+      "link": [
+        "lapack",
+        "blas"
+      ],
+      "auto-executables": true,
+      "auto-tests": true,
+      "auto-examples": false,
+      "module-naming": false
+    },
+    "install": {
+      "library": true
+    },
+    "fortran": {
+      "implicit-typing": false,
+      "implicit-external": true,
+      "source-form": "free"
+    },
+    "dependencies": {
+      "stdlib": {
+        "git": "https://github.com/fortran-lang/stdlib",
+        "branch": "stdlib-fpm"
+      },
+      "forbear": {
+        "git": "https://github.com/szaghi/forbear"
+      },
+      "json-fortran": {
+        "git": "https://github.com/jacobwilliams/json-fortran"
+      },
+      "forsus": {
+        "git": "https://github.com/ipqa-research/forsus"
+      },
+      "fortime": {
+        "git": "https://github.com/gha3mi/fortime.git"
+      },
+      "PowellOpt": {
+        "git": "https://github.com/jacobwilliams/PowellOpt/"
+      },
+      "minpack": {
+        "git": "https://github.com/fortran-lang/minpack"
+      },
+      "finterp": {
+        "git": "https://github.com/jacobwilliams/finterp.git"
+      }
+    },
+    "dev-dependencies": {
+      "test-drive": {
+        "git": "https://github.com/fortran-lang/test-drive"
+      }
+    },
+    "example": [
+      {
+        "name": "basics",
+        "source-dir": "example/basics",
+        "main": "1_basics.f90"
+      },
+      {
+        "name": "saturation_points",
+        "source-dir": "example/basics",
+        "main": "2_saturation_points.f90"
+      },
+      {
+        "name": "phase_split",
+        "source-dir": "example/basics",
+        "main": "3_phase_split.f90"
+      },
+      {
+        "name": "phase_envelope",
+        "source-dir": "example/basics",
+        "main": "4_phase_envelope.f90"
+      },
+      {
+        "name": "new_alpha_function",
+        "source-dir": "example/advanced",
+        "main": "new_alpha_function.f90"
+      },
+      {
+        "name": "pure_psat",
+        "source-dir": "example/basics",
+        "main": "5_pure_psat.f90"
+      },
+      {
+        "name": "huron_vidal",
+        "source-dir": "example/basics",
+        "main": "7_huron_vidal.f90"
+      }
+    ]
+  },
+  "preparation_error": "Package archive contains an unsafe path, link, or special file.",
+  "attempted_catalog_build": {
+    "manifest_versions": {
+      "fortran-lang/stdlib": "0.0.0"
+    },
+    "source_revisions": {
+      "fortran-lang/stdlib": "58eb9133966c2797e0593281169ef57c43eccc1d"
+    },
+    "apt_packages": [
+      "libblas-dev=3.12.1-6",
+      "liblapack-dev=3.12.1-6"
+    ],
+    "environment": {
+      "FPM_FFLAGS": "-cpp -DSTDLIB_EXTERNAL_BLAS -DSTDLIB_EXTERNAL_LAPACK -ffunction-sections -fdata-sections -ftrampoline-impl=heap",
+      "FPM_LDFLAGS": "-Wl,--gc-sections -llapack -lblas"
+    }
+  }
+}

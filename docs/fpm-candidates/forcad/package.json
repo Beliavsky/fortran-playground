@@ -1,0 +1,46 @@
+{
+  "id": "forcad",
+  "repository": "gha3mi/forcad",
+  "revision": "790b5a73835d7e594855ba5b3fb5a195c20630b8",
+  "archive_sha256": "f529e954b8dc74e78f7c762a4d4401ac8f6282b4e62e9697f27402d8d6a0ca82",
+  "dependencies": [
+    {
+      "repository": "rweed/forIGES",
+      "revision": "432c84cbfcdf64eabedf729e48d2f631091be7e1",
+      "sha256": "9ee83428e96b8427a230a5a4f4308702c40944f226172252a04b50963ec8356f"
+    },
+    {
+      "repository": "gha3mi/fordebug",
+      "revision": "8c46daacc37af64aa0e10a0c9babaa9178886971",
+      "sha256": "1136ee4b8cc800b880f4fc33a90323ea91def7ef1ad3ff3f75a73aefa08e313f"
+    },
+    {
+      "repository": "gha3mi/fortime",
+      "revision": "de733e2c775457d4979403fe77ab69cf28e2b159",
+      "sha256": "bccc83cf947693ad4defcfb4684af7cd660db8a6e57084b7f07e7edfd584161d"
+    },
+    {
+      "repository": "szaghi/FACE",
+      "revision": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8",
+      "sha256": "d4cc3c3a2c70e7369607624ae3361a6f7b2ba3f1e9a63ffd94ecb5cd4b019469"
+    }
+  ],
+  "catalog_build": {
+    "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+    "manifest_versions": {
+      "gha3mi/forcad": "0.16.1",
+      "gha3mi/fordebug": "0.0.0",
+      "gha3mi/fortime": "0.0.0"
+    },
+    "metapackages": [
+      "openmp"
+    ],
+    "source_revisions": {
+      "szaghi/face": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8",
+      "gha3mi/fortime": "de733e2c775457d4979403fe77ab69cf28e2b159"
+    },
+    "environment": {
+      "FPM_FFLAGS": "-cpp -fopenmp -DNOSHOW_PYVISTA -DNOPURE_DEBUG"
+    }
+  }
+}

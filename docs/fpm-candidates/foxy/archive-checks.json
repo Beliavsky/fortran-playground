@@ -1,0 +1,104 @@
+{
+  "id": "foxy",
+  "repository": "Fortran-FOSS-Programmers/FoXy",
+  "revision": "f91a269e98171d4b7cad7fd835c96fccd3e044e7",
+  "archive_sha256": "6e24a259fcecaabe6798fb17e9ca7a3fc9db9229d651e424e422b0f23da22ec0",
+  "error": "Package archive contains an unsafe path, link, or special file.",
+  "archive_attempts": [
+    {
+      "version": "v0.4.0",
+      "revision": "f408b1b4c1f5e15b647eec8991cf031b2720786d",
+      "archive_sha256": "4de2a91856f98e08136dbd4015da1f77b9a5d099c94e057c2be8d46773153e48",
+      "error": "Package archive contains an unsafe path, link, or special file."
+    },
+    {
+      "version": "v0.2.9",
+      "revision": "3da19c35db9c81fd33cec466a7b4a657fe338225",
+      "archive_sha256": "caf77318522de3efc105fbdc227347783a69e6fa5664956b600c7fdfb0c70a07",
+      "error": "Package archive contains an unsafe path, link, or special file.",
+      "links": [
+        {
+          "path": "FoXy-3da19c35db9c81fd33cec466a7b4a657fe338225/CONTRIBUTING.md",
+          "target": "docs/guide/contributing.md"
+        }
+      ]
+    },
+    {
+      "version": "v0.0.8",
+      "revision": "59c052421bdb11edf0aefe92ec458b0adb63a6a5",
+      "archive_sha256": "165a47faf66ec98d8ab77e09c8f170db4887cb60b7ee9390b5e421ecb2bff1a9",
+      "error": "Package archive contains an unsafe path, link, or special file.",
+      "links": [
+        {
+          "path": "FoXy-59c052421bdb11edf0aefe92ec458b0adb63a6a5/doc/README-BeFoR64.md",
+          "target": "../src/third_party/StringiFor/src/third_party/BeFoR64/README.md"
+        },
+        {
+          "path": "FoXy-59c052421bdb11edf0aefe92ec458b0adb63a6a5/doc/README-FoXy.md",
+          "target": "../README.md"
+        },
+        {
+          "path": "FoXy-59c052421bdb11edf0aefe92ec458b0adb63a6a5/doc/README-PENF.md",
+          "target": "../src/third_party/PENF/README.md"
+        },
+        {
+          "path": "FoXy-59c052421bdb11edf0aefe92ec458b0adb63a6a5/src/lib/befor64.F90",
+          "target": "../third_party/StringiFor/src/lib/befor64.F90"
+        },
+        {
+          "path": "FoXy-59c052421bdb11edf0aefe92ec458b0adb63a6a5/src/lib/befor64_pack_data_m.F90",
+          "target": "../third_party/StringiFor/src/lib/befor64_pack_data_m.F90"
+        },
+        {
+          "path": "FoXy-59c052421bdb11edf0aefe92ec458b0adb63a6a5/src/lib/penf.F90",
+          "target": "../third_party/PENF/src/lib/penf.F90"
+        },
+        {
+          "path": "FoXy-59c052421bdb11edf0aefe92ec458b0adb63a6a5/src/lib/stringifor.F90",
+          "target": "../third_party/StringiFor/src/lib/stringifor.F90"
+        },
+        {
+          "path": "FoXy-59c052421bdb11edf0aefe92ec458b0adb63a6a5/src/lib/stringifor_string_t.F90",
+          "target": "../third_party/StringiFor/src/lib/stringifor_string_t.F90"
+        }
+      ]
+    },
+    {
+      "version": "v0.0.1",
+      "revision": "88e06dec99231c50829bb2b633557e7d52e7146e",
+      "archive_sha256": "502627c91292bdd1bd5d06b0c15cd005c054f6c350bc774c9ad2d74a5ccea4fc",
+      "error": "This repository has no fpm.toml at its root."
+    },
+    {
+      "version": "before documentation symlink",
+      "revision": "5688b6e79752ee1700dfd72b4a7c3b2bbe224ee7",
+      "archive_sha256": "9d58d081f6d4b43f17d5b3c255e8c53f530547b53b25dda7b948fd54a9a6cac7",
+      "links": [
+        {
+          "path": "FoXy-5688b6e79752ee1700dfd72b4a7c3b2bbe224ee7/doc/README-BeFoR64.md",
+          "target": "../src/third_party/BeFoR64/README.md"
+        },
+        {
+          "path": "FoXy-5688b6e79752ee1700dfd72b4a7c3b2bbe224ee7/doc/README-PENF.md",
+          "target": "../src/third_party/PENF/README.md"
+        }
+      ],
+      "error": "Package archive contains an unsafe path, link, or special file."
+    }
+  ],
+  "topics": [
+    "dom",
+    "emitter",
+    "fortran",
+    "oop",
+    "parser",
+    "sax",
+    "xml"
+  ],
+  "initial_links": [
+    {
+      "path": "CONTRIBUTING.md",
+      "target": "docs/guide/contributing.md"
+    }
+  ]
+}

@@ -483,7 +483,7 @@ get('load-package').addEventListener('click', () => {
   get('package-url').value = `https://github.com/${selected.repository}`;
   get('revision').value = selected.revision;
   get('subdirectory').value = selected.subdirectory || '';
-  get('preprocess').checked = Boolean(selected.audit?.verification?.preprocess);
+  get('preprocess').checked = Boolean(!selected.source && selected.audit?.verification?.preprocess);
   if (!localExecution && !selected.subdirectory) get('compiler').value = 'gfortran';
   get('connection').textContent = localExecution
     ? `${compilerLabels[get('compiler').value] || 'No compiler found'} · Local FPM · Builds from scratch`

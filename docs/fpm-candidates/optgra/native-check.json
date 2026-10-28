@@ -1,0 +1,12 @@
+{
+  "compiler": "GNU Fortran (GCC) 17.0.0 20260510 (experimental)",
+  "flags": [
+    "-cpp",
+    "-ffree-line-length-none",
+    "-g",
+    "-fcheck=all"
+  ],
+  "operating_system": "Windows",
+  "source": "initial-main.f90",
+  "note": "The OPTGRA diagnostic run also printed solver termination and computed variables before assertions."
+}

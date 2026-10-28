@@ -111,6 +111,40 @@ class CatalogPatchTests(unittest.TestCase):
         changed = self.package(after='different')
         self.assertNotEqual(cache_identity({**base, **package}, 'recipe'), cache_identity({**base, **changed}, 'recipe'))
 
+    def test_manifest_patch_survives_platform_line_endings_but_rejects_content_changes(self):
+        from fpm_catalog_patches import apply_patches
+        original = b'name = "demo"\n[build]\nlink = "flann"\n'
+        package = self.package(data=original, before='link = "flann"',
+                               after='link = ":libflann.so.1.9"', path='fpm.toml')
+        with tempfile.TemporaryDirectory() as temporary:
+            manifest = Path(temporary) / 'fpm.toml'
+            for data in (original, original.replace(b'\n', b'\r\n')):
+                manifest.write_bytes(data)
+                apply_patches(package, temporary)
+                self.assertEqual(manifest.read_bytes(), original.replace(b'"flann"', b'":libflann.so.1.9"'))
+            changed = original.replace(b'"demo"', b'"different"')
+            manifest.write_bytes(changed)
+            with self.assertRaisesRegex(ValueError, 'checksum mismatch'):
+                apply_patches(package, temporary)
+            self.assertEqual(manifest.read_bytes(), changed)
+
+    def test_legacy_patch_keeps_strict_byte_semantics(self):
+        from fpm_catalog_patches import apply_patches, LEGACY_ADAPTER_SHA256, validate_patches
+        package = self.package()
+        package['catalog_patches']['adapter_sha256'] = LEGACY_ADAPTER_SHA256
+        with tempfile.TemporaryDirectory() as temporary:
+            source = Path(temporary) / 'src/code.f90'
+            source.parent.mkdir()
+            source.write_bytes(b'old source\r\n')
+            with self.assertRaisesRegex(ValueError, 'checksum mismatch'):
+                apply_patches(package, temporary)
+            source.write_bytes(b'old source\n')
+            apply_patches(package, temporary)
+            self.assertEqual(source.read_bytes(), b'new source\n')
+        package['catalog_patches']['adapter_sha256'] = '0'*64
+        with self.assertRaisesRegex(ValueError, 'checksum'):
+            validate_patches(package)
+
     def test_patch_rejects_escape_and_ambiguous_matches(self):
         from fpm_catalog_patches import apply_patches, validate_patches
         for path in ('../code.f90', '/code.f90', 'C:/code.f90', 'src\\code.f90'):

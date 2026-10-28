@@ -1,0 +1,41 @@
+ + mkdir -p build/dependencies
+[  0%]              pyplot_module.f90
+[  5%]              pyplot_module.f90  done.
+[  5%]               forcad_kinds.F90
+[ 10%]               forcad_kinds.F90  done.
+[ 10%]                IGES_params.F90
+[ 15%]                IGES_params.F90  done.
+[ 15%]           commandLineUtils.F90
+[ 21%]           commandLineUtils.F90  done.
+[ 21%]               forcad_utils.f90
+[ 26%]               forcad_utils.f90  done.
+[ 26%]                 IGES_utils.F90
+[ 31%]                 IGES_utils.F90  done.
+[ 31%]        forcad_nurbs_volume.f90
+<ERROR> Compilation failed for object " .._sources_bundle_packages_0_forcad-7a4cb4601b4a80625a6f0cbe0454ddc4fd3d858f_src_forcad_nurbs_volume.f90.o "
+[ 36%]        forcad_nurbs_volume.f90  done.
+
+f951: internal compiler error: in gfc_resolve_forall, at fortran/resolve.cc:12853
+0x22ee3f6 diagnostics::context::diagnostic_impl(rich_location*, diagnostics::metadata const*, diagnostics::option_id, char const*, __va_list_tag (*) [1], diagnostics::kind)
+	???:0
+0x22e6b3f internal_error(char const*, ...)
+	???:0
+0x7db321 fancy_abort(char const*, int, char const*)
+	???:0
+0x8da3be gfc_resolve_code(gfc_code*, gfc_namespace*)
+	???:0
+0x8da1c4 gfc_resolve_code(gfc_code*, gfc_namespace*)
+	???:0
+0x8f424b gfc_resolve_blocks(gfc_code*, gfc_namespace*)
+	???:0
+0x8da3be gfc_resolve_code(gfc_code*, gfc_namespace*)
+	???:0
+0x8c80ae gfc_parse_file()
+	???:0
+/usr/local/libexec/gcc/x86_64-linux-gnu/16.2.0/f951 ./././/../sources/bundle/packages/0/forcad-7a4cb4601b4a80625a6f0cbe0454ddc4fd3d858f/src/forcad_nurbs_volume.f90 -cpp=/tmp/ccz2o3si.fii -quiet -I ././././/../sources/bundle/packages/0/forcad-7a4cb4601b4a80625a6f0cbe0454ddc4fd3d858f//../../1/forIGES-432c84cbfcdf64eabedf729e48d2f631091be7e1/include -I build/gfortran_943E132393F7B5F5 -imultiarch x86_64-linux-gnu -D_REENTRANT -D NOSHOW_PYVISTA -D NOPURE_DEBUG ./././/../sources/bundle/packages/0/forcad-7a4cb4601b4a80625a6f0cbe0454ddc4fd3d858f/src/forcad_nurbs_volume.f90 -quiet -dumpdir build/gfortran_943E132393F7B5F5/playground-main/ -dumpbase .._sources_bundle_packages_0_forcad-7a4cb4601b4a80625a6f0cbe0454ddc4fd3d858f_src_forcad_nurbs_volume.f90.f90 -dumpbase-ext .f90 -mtune=generic -march=x86-64 -g -Wall -Wextra -Werror=implicit-interface -fopenmp -fmax-errors=1 -fbounds-check -fcheck=array-temps -fbacktrace -fcoarray=single -fPIC -fimplicit-none -ffree-form -J build/gfortran_943E132393F7B5F5 -fintrinsic-modules-path /usr/local/lib/gcc/x86_64-linux-gnu/16.2.0/finclude -fpre-include=/usr/include/finclude/x86_64-linux-gnu/math-vector-fortran.h -o /tmp/ccmgZLzi.s
+Please submit a full bug report, with preprocessed source (by using -freport-bug).
+Please include the complete backtrace with any bug report.
+See <https://gcc.gnu.org/bugs/> for instructions.
+<ERROR> stopping due to failed compilation
+STOP 1
+

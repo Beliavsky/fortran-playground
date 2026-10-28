@@ -14,7 +14,8 @@ from fpm_sources import extract_archive, validate_request
 from fpm_targets import parse_targets, select_targets, discover_targets
 from fpm_compilers import COMPILERS, compiler_flags, preprocessing_flag
 from fpm_cache import consumer_project, cached_request_matches, library_inventory
-from fortran_plot import uses_pyplot, install_module, collect_plots, plotting_environment, provides_pyplot
+from fortran_plot import uses_pyplot, install_module, plotting_environment, provides_pyplot
+from fortran_image import collect_plots
 
 
 def stage(command, directory, timeout, stdin=''):

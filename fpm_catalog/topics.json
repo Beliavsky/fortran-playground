@@ -789,6 +789,635 @@
         "fortran",
         "functional-programming"
       ]
+    },
+    "hugomvale/odrpack95": {
+      "topics": [
+        "fortran",
+        "fpm",
+        "mathematics",
+        "odr",
+        "regression",
+        "statistics"
+      ]
+    },
+    "arjenmarkus/pointsets": {
+      "topics": []
+    },
+    "princemahajan/flint": {
+      "topics": [
+        "differential-equations",
+        "fortran",
+        "julia",
+        "numerical-integration",
+        "ode",
+        "ode-events",
+        "runge-kutta"
+      ]
+    },
+    "carltoffel/fortran-string-to-real": {
+      "topics": []
+    },
+    "lauvergn/ad_dnsvm": {
+      "topics": [
+        "automatic-differentiation",
+        "fortran"
+      ]
+    },
+    "euler-37/integrate_fortran": {
+      "topics": [
+        "gauss-legendre-integration",
+        "numerical-integration",
+        "quadrature"
+      ]
+    },
+    "wcota/rndgen-fortran": {
+      "topics": [
+        "fortran",
+        "fortran-package-manager",
+        "fpm",
+        "kiss-rng",
+        "random",
+        "random-number-generator",
+        "rng"
+      ]
+    },
+    "awvwgk/blas-interface": {
+      "topics": []
+    },
+    "jalvesz/fsparse": {
+      "topics": [
+        "fortran",
+        "fortran-library",
+        "fortran-package-manager",
+        "sparse-matrices"
+      ]
+    },
+    "jchristopherson/geompack": {
+      "topics": [
+        "delaunay-triangulation",
+        "fortran",
+        "fortran-package-manager",
+        "geometry",
+        "triangulation",
+        "triangulation-delaunay"
+      ]
+    },
+    "willdickson/minres": {
+      "topics": []
+    },
+    "gha3mi/fordiff": {
+      "topics": [
+        "complex-step-differentiation",
+        "derivative",
+        "differentiation",
+        "finite-difference",
+        "fortran",
+        "fortran-package-manager"
+      ]
+    },
+    "perazz/twopnt": {
+      "topics": [
+        "boundary-value-problem",
+        "boundary-value-problems",
+        "bvp",
+        "fortran"
+      ]
+    },
+    "arjenmarkus/specfunc-fullerton": {
+      "topics": [
+        "special-functions"
+      ]
+    },
+    "sebastiandyrda/lib_statistics": {
+      "topics": []
+    },
+    "jacobwilliams/astro-fortran": {
+      "topics": [
+        "astrometry",
+        "astronomy",
+        "fortran-package-manager"
+      ]
+    },
+    "awvwgk/nlopt-f": {
+      "topics": []
+    },
+    "davidpfister/daskr": {
+      "topics": [
+        "dae",
+        "differential-equations",
+        "fortran",
+        "fortran-package-manager",
+        "netlib"
+      ]
+    },
+    "scivision/ffilesystem": {
+      "topics": [
+        "cpp17",
+        "filesystem",
+        "fortran",
+        "libc",
+        "path-manipulation"
+      ]
+    },
+    "st-maxwell/utf8-f": {
+      "topics": [
+        "fortran",
+        "utf-8"
+      ]
+    },
+    "st-maxwell/ryu_fortran": {
+      "topics": [
+        "floating-point",
+        "string"
+      ]
+    },
+    "everythingfunctional/iso_varying_string": {
+      "topics": [
+        "fortran",
+        "iso",
+        "strings"
+      ]
+    },
+    "fedebenelli/fortimize": {
+      "topics": [
+        "fortran",
+        "fortran-",
+        "gradient-descent",
+        "nelder-mead",
+        "optimization",
+        "optimization-algorithms"
+      ]
+    },
+    "gha3mi/forimage": {
+      "topics": [
+        "color",
+        "decimal",
+        "fortran",
+        "fortran-package-manager",
+        "hexadecimal",
+        "hsl",
+        "hsv",
+        "image",
+        "pbm",
+        "pgm",
+        "pnm",
+        "ppm",
+        "rgb"
+      ]
+    },
+    "alex-robinson/ncio": {
+      "topics": []
+    },
+    "gronki/fastconv": {
+      "topics": []
+    },
+    "haozeke/gaussjacobiquad": {
+      "topics": [
+        "f2py",
+        "gauss-jacobi",
+        "meson",
+        "numerical-integration",
+        "quadrature"
+      ]
+    },
+    "zoziha/kissfft-f": {
+      "topics": [
+        "fft",
+        "fortran",
+        "fortran-package-manager",
+        "kissfft",
+        "mesonbuild",
+        "modern-fortran",
+        "oop",
+        "wrapper-api"
+      ]
+    },
+    "geospace-code/h5fortran": {
+      "topics": [
+        "fortran",
+        "hdf5",
+        "object-oriented-fortran"
+      ]
+    },
+    "gnikit/metis-fpm": {
+      "topics": []
+    },
+    "urbanjost/m_calculator": {
+      "topics": [
+        "expression",
+        "expression-evaluator",
+        "fortran",
+        "fortran-package-manager",
+        "parse"
+      ]
+    },
+    "szaghi/befor64": {
+      "topics": [
+        "base64",
+        "decoding",
+        "encoding",
+        "fortran",
+        "oop"
+      ]
+    },
+    "interkosmos/fortran-zlib": {
+      "topics": [
+        "archiving",
+        "compression",
+        "fortran",
+        "fortran-2018",
+        "fortran-package-manager",
+        "zlib"
+      ]
+    },
+    "milanskocic/iapws": {
+      "topics": [
+        "fortran-language",
+        "fortran-library",
+        "fortran-package-manager",
+        "iapws",
+        "science",
+        "water"
+      ]
+    },
+    "jchristopherson/linalg": {
+      "topics": [
+        "blas",
+        "cholesky-decomposition",
+        "compressed-row-storage",
+        "compressed-sparse-row",
+        "eigenvalues",
+        "eigenvectors",
+        "fortran",
+        "lapack",
+        "linear-algebra",
+        "lu-decomposition",
+        "qr-decomposition",
+        "singular-value-decomposition",
+        "sparse-matrix"
+      ]
+    },
+    "jchristopherson/nonlin": {
+      "topics": [
+        "bfgs",
+        "fortran",
+        "least-squares",
+        "levenberg-marquardt",
+        "nelder-mead",
+        "newton-raphson-multivariable",
+        "newtons-method",
+        "nonlinear-equations",
+        "optimization",
+        "polynomials",
+        "quasi-newton"
+      ]
+    },
+    "geospace-code/maptran3d": {
+      "topics": [
+        "coordinate-conversions",
+        "coordinate-transformation",
+        "fortran2018",
+        "geodesy",
+        "modern-fortran"
+      ]
+    },
+    "interkosmos/fortran-pcre2": {
+      "topics": [
+        "fortran",
+        "fortran-2018",
+        "fortran-package-manager",
+        "fpm",
+        "pcre",
+        "pcre2",
+        "regex",
+        "regexp"
+      ]
+    },
+    "milanskocic/ciaaw": {
+      "topics": [
+        "chemistry",
+        "fortran",
+        "fortran-package-manager",
+        "isotopes",
+        "standard-atomic-masses"
+      ]
+    },
+    "archaeologic-inc/rngff": {
+      "topics": [
+        "random",
+        "random-number-generator",
+        "rng"
+      ]
+    },
+    "interkosmos/fortran-zstd": {
+      "topics": [
+        "archiving",
+        "compression",
+        "fortran",
+        "fortran-2018",
+        "fortran-package-manager",
+        "zstandard",
+        "zstd"
+      ]
+    },
+    "tueda/paramcard": {
+      "topics": [
+        "command-line",
+        "fortran",
+        "fortran-library",
+        "fortran2008"
+      ]
+    },
+    "everythingfunctional/strff": {
+      "topics": [
+        "fortran",
+        "string-manipulation"
+      ]
+    },
+    "jchristopherson/diffeq": {
+      "topics": [
+        "adams-bashforth-moulton",
+        "backwards-differentiation-formula",
+        "bdf",
+        "differential-algebraic-equations",
+        "differential-equations",
+        "esdirk",
+        "event-detection",
+        "implicit-runge-kutta",
+        "index-reduction",
+        "kennedy-carpenter",
+        "rosenbrock",
+        "runge-kutta-methods",
+        "tsitouras"
+      ]
+    },
+    "rjabi/fjsample": {
+      "topics": [
+        "bootstrap-resampling",
+        "fortran",
+        "fortran-package-manager",
+        "jackknife-resampling",
+        "meson-python"
+      ]
+    },
+    "jacobwilliams/conmin": {
+      "topics": [
+        "conmin",
+        "constrained-optimization",
+        "fortran",
+        "fortran-package-manager",
+        "numerical-optimization",
+        "optimization"
+      ]
+    },
+    "konrad1991/opti": {
+      "topics": [
+        "numerical-optimization",
+        "particle-swarm-optimization",
+        "pso",
+        "pso-algorithm",
+        "swarm-intelligence",
+        "topology"
+      ]
+    },
+    "furstj/interpolation": {
+      "topics": [
+        "fortran",
+        "interpolation"
+      ]
+    },
+    "euler-37/fortran_huffman": {
+      "topics": [
+        "fortran",
+        "huffman-compression-algorithm"
+      ]
+    },
+    "perazz/fastmath": {
+      "topics": [
+        "exponential",
+        "fast-math",
+        "fortran",
+        "logarithm",
+        "rsqrt"
+      ]
+    },
+    "zoziha/fortsa": {
+      "topics": [
+        "arima",
+        "arma",
+        "bindings",
+        "fortran",
+        "fpm",
+        "time-series",
+        "time-series-analysis",
+        "tsa"
+      ]
+    },
+    "ivan-pi/fortran-flann": {
+      "topics": [
+        "approximate-nearest-neighbor-search",
+        "hierarchical-clustering",
+        "high-dimensional-data",
+        "kdtree",
+        "kmeans-clustering",
+        "nearest-neighbor-search",
+        "spatial-search"
+      ]
+    },
+    "lewisfish/fortran_stb_image": {
+      "topics": []
+    },
+    "vmagnin/cairo-fortran": {
+      "topics": [
+        "bindings",
+        "cairo",
+        "fortran",
+        "fortran-package-manager"
+      ]
+    },
+    "vmagnin/forsudoku": {
+      "topics": [
+        "fortran",
+        "fortran-package-manager",
+        "sudoku"
+      ]
+    },
+    "nicholaswogan/odepack": {
+      "topics": [
+        "fortran-package-manager",
+        "ode",
+        "ode-solver",
+        "odepack"
+      ]
+    },
+    "ivan-pi/kiss": {
+      "topics": []
+    },
+    "everythingfunctional/parff": {
+      "topics": [
+        "fortran",
+        "parser",
+        "parser-combinators",
+        "parser-library"
+      ]
+    },
+    "jacobwilliams/conmax": {
+      "topics": [
+        "conmax",
+        "constrained-optimization",
+        "fortran",
+        "fortran-package-manager",
+        "nonlinear-optimization",
+        "numerical-optimization",
+        "optimization"
+      ]
+    },
+    "nedtaylor/graphstruc": {
+      "topics": [
+        "fortran",
+        "fortran-package-manager",
+        "graph-structures",
+        "graphs",
+        "library"
+      ]
+    },
+    "synthfi/fortran-messagepack": {
+      "topics": [
+        "fortran",
+        "messagepack"
+      ]
+    },
+    "pierugit/fmmap": {
+      "topics": [
+        "fortran",
+        "memory-mapped-file"
+      ]
+    },
+    "willklausler/fortran_cubatures": {
+      "topics": [
+        "cubature",
+        "finite-elements",
+        "fortran",
+        "fpm",
+        "numerical-integration",
+        "quadrature"
+      ]
+    },
+    "ivan-pi/stiff3": {
+      "topics": [
+        "adaptive",
+        "differential",
+        "equation",
+        "fortran",
+        "ode",
+        "solver",
+        "stiff"
+      ]
+    },
+    "euler-37/sparse_fortran": {
+      "topics": []
+    },
+    "jacobwilliams/psqp": {
+      "topics": [
+        "fortran",
+        "fortran-package-manager",
+        "nonlinear-optimization",
+        "numerical-optimization",
+        "optimization",
+        "sqp"
+      ]
+    },
+    "jacobwilliams/optgra": {
+      "topics": [
+        "constrained-optimization",
+        "fortran",
+        "fortran-package-manager",
+        "numerical-optimization",
+        "optimization"
+      ]
+    },
+    "gha3mi/forinv": {
+      "topics": [
+        "fortran",
+        "fortran-package-manager",
+        "inverse",
+        "pseudoinverse",
+        "svd"
+      ]
+    },
+    "gha3mi/forsolver": {
+      "topics": [
+        "complex-step-differentiation",
+        "finite-difference-method",
+        "fortran",
+        "fortran-package-manager",
+        "linear-system-solver",
+        "newton-method",
+        "newton-raphson",
+        "nonlinear-systems",
+        "quasi-newton-method",
+        "solver"
+      ]
+    },
+    "zaneham/dcuhre": {
+      "topics": [
+        "dcuhre",
+        "fortran",
+        "fortran-package-manager",
+        "integration",
+        "mathematics",
+        "multidimensional-integration",
+        "numerical-integration",
+        "quadrature"
+      ]
+    },
+    "ivan-pi/y12m": {
+      "topics": []
+    },
+    "gha3mi/foreig": {
+      "topics": [
+        "eig",
+        "eigenvalues",
+        "eigenvalues-and-eigenvectors",
+        "eigenvectors",
+        "fortran",
+        "fortran-package-manager",
+        "lapack",
+        "mkl"
+      ]
+    },
+    "zoziha/rkf45": {
+      "topics": [
+        "fehlberg",
+        "fortran",
+        "fortran-package-manager",
+        "fourth-fifth-order",
+        "ode",
+        "rkf45",
+        "runge-kutta"
+      ]
+    },
+    "zoziha/forlab": {
+      "topics": []
+    },
+    "ivan-pi/libdogleg-f": {
+      "topics": [
+        "c",
+        "dogleg-method",
+        "fortran",
+        "nonlinear-least-squares",
+        "numerical-optimization"
+      ]
+    },
+    "minard-jules/nafpack": {
+      "topics": [
+        "cmake",
+        "eigenvalues",
+        "fft",
+        "fftw",
+        "fpm",
+        "linear-algebra"
+      ]
     }
   }
 }

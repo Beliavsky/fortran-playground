@@ -2033,5 +2033,2053 @@
       "simulated-annealing",
       "stochastic-optimization"
     ]
+  },
+  {
+    "id": "odrpack95",
+    "repository": "HugoMVale/odrpack95",
+    "revision": "12597b20812a76a4b702f985f6adc82632a18f60",
+    "archive_sha256": "cf92a1d2cfdf67165bf08fbdf01e3c213298ca48f1fc735c53a92272fe0c6c94",
+    "license": "MIT",
+    "stars": 15,
+    "category": "Statistics",
+    "description": "Orthogonal distance regression with errors in both variables and optional parameter bounds.",
+    "dependencies": [],
+    "catalog_build": {
+      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+      "apt_packages": [
+        "libopenblas-serial-dev=0.3.29+ds-3",
+        "libopenblas-dev=0.3.29+ds-3"
+      ]
+    },
+    "source": "module line_model\n   use odrpack_kinds, only: dp\n   use iso_c_binding, only: c_ptr\n   implicit none\ncontains\n   pure subroutine line(n,m,q,np,ldifx,beta,xplusd,ifixb,ifixx,ideval,f,fjacb,fjacd,istop,data)\n      integer, intent(in) :: n,m,q,np,ldifx,ideval,ifixb(np),ifixx(ldifx,m)\n      real(dp), intent(in) :: beta(np),xplusd(n,m)\n      real(dp), intent(out) :: f(n,q),fjacb(n,np,q),fjacd(n,m,q)\n      integer, intent(out) :: istop\n      type(c_ptr), value, intent(in) :: data\n      istop=0\n      if (mod(ideval,10)>0) f(:,1)=beta(1)+beta(2)*xplusd(:,1)\n      if (mod(ideval/10,10)>0) then\n         fjacb(:,1,1)=1._dp\n         fjacb(:,2,1)=xplusd(:,1)\n      end if\n      if (mod(ideval/100,10)>0) fjacd(:,1,1)=beta(2)\n   end subroutine line\nend module line_model\n\nprogram main\n   use line_model\n   use odrpack, only: odr,odrpack_model\n   implicit none\n   type(odrpack_model) :: model\n   real(dp) :: x(6,1),y(6,1),beta(2),xc(6),yc(6),sxx,syy,sxy,slope,intercept\n   integer :: info,i\n   x(:,1)=[(real(i,dp),i=0,5)]\n   y(:,1)=[1.1_dp,2.9_dp,5.1_dp,6.9_dp,9.1_dp,10.9_dp]\n   beta=[0._dp,1._dp]\n   model%fcn=>line\n   ! Orthogonal distance regression treats errors in both x and y.\n   call odr(model,6,1,1,2,beta,y,x,job=20,iprint=0,info=info)\n   xc=x(:,1)-sum(x(:,1))/6\n   yc=y(:,1)-sum(y(:,1))/6\n   sxx=sum(xc**2); syy=sum(yc**2); sxy=sum(xc*yc)\n   slope=(syy-sxx+sqrt((syy-sxx)**2+4*sxy**2))/(2*sxy)\n   intercept=sum(y(:,1))/6-slope*sum(x(:,1))/6\n   if (info<1.or.info>3) error stop 'ODR convergence failed'\n   if (maxval(abs(beta-[intercept,slope]))>1e-5_dp) error stop 'ODR differs from analytic TLS'\n   print '(a,2f12.6)', 'Intercept and slope:',beta\n   print '(a,f12.6)', 'Maximum vertical residual:',maxval(abs(y(:,1)-beta(1)-beta(2)*x(:,1)))\n   print *, 'PASS odrpack95'\nend program main\n",
+    "topics": [
+      "fortran",
+      "fpm",
+      "mathematics",
+      "odr",
+      "regression",
+      "statistics"
+    ]
+  },
+  {
+    "id": "pointsets",
+    "repository": "arjenmarkus/pointsets",
+    "revision": "a1c381777f893d656018366cfabfa4cc7531e4dd",
+    "archive_sha256": "6c326b4ef7ec362376e5f4adabf7203ba17834ff95c8855a2666aa23cd11764a",
+    "license": "MIT (fpm.toml declaration)",
+    "stars": 8,
+    "category": "Random numbers",
+    "description": "Construct uniform, geometric, random and quasi-random point sets and multidimensional grids.",
+    "dependencies": [],
+    "source": "program main\n   use pointsets, only: arithmetic_spacing,geometric_spacing\n   use select_precision, only: wp\n   implicit none\n   real(wp) :: uniform(5),geometric(5)\n   call arithmetic_spacing(uniform,0._wp,1._wp)\n   call geometric_spacing(geometric,0._wp,1._wp,2._wp)\n   if (maxval(abs(uniform-[0._wp,.25_wp,.5_wp,.75_wp,1._wp]))>1e-6_wp) error stop\n   if (maxval(abs(geometric-[0._wp,1._wp,3._wp,7._wp,15._wp]/15))>1e-6_wp) error stop\n   print '(a,5f9.5)', 'Uniform grid:  ',uniform\n   print '(a,5f9.5)', 'Geometric grid:',geometric\n   print *, 'PASS pointsets'\nend program main\n",
+    "topics": []
+  },
+  {
+    "id": "flint",
+    "repository": "princemahajan/FLINT",
+    "revision": "b6322037cb751b11fa64ea66cf23173ae572fff6",
+    "archive_sha256": "8023582792da69e2b317f67b56f2dedbe03c48e4f223cd2877c8b24dffb90e25",
+    "license": "Apache-2.0",
+    "stars": 48,
+    "category": "Differential equations",
+    "description": "Adaptive explicit Runge-Kutta ODE integration with dense output and event detection.",
+    "dependencies": [],
+    "catalog_build": {
+      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+      "environment": {
+        "FPM_FFLAGS": "-cpp"
+      }
+    },
+    "source": "module decay_model\n   use FLINT, wp=>FLINT_WP\n   implicit none\n   type, extends(DiffEqSys) :: decay_system\n   contains\n      procedure :: F=>rhs\n   end type\ncontains\n   function rhs(me,x,y,params) result(dy)\n      class(decay_system), intent(inout) :: me\n      real(wp), intent(in) :: x,y(me%n)\n      real(wp), optional, intent(in) :: params(:)\n      real(wp) :: dy(size(y))\n      dy=-y\n   end function rhs\nend module decay_model\nprogram main\n   use decay_model\n   implicit none\n   type(decay_system), target :: equation\n   type(ERK_class) :: solver\n   real(wp) :: finish,y(1),step,times(5),values(1,5)\n   integer :: i\n   equation%n=1; equation%m=0\n   ! Keep the dense solution, then sample it without integrating again.\n   call solver%Init(equation,1000,ATol=[1e-11_wp],RTol=[1e-11_wp],InterpOn=.true.)\n   if (solver%status/=FLINT_SUCCESS) error stop 'Initialization failed'\n   finish=2._wp\n   step=0._wp\n   call solver%Integrate(0._wp,[1._wp],finish,y,StepSz=step)\n   if (solver%status/=FLINT_SUCCESS) error stop 'Integration failed'\n   times=[(real(i-1,wp)*.5_wp,i=1,5)]\n   call solver%Interpolate(times,values)\n   if (solver%status/=FLINT_SUCCESS) error stop 'Interpolation failed'\n   if (abs(y(1)-exp(-finish))>1e-9_wp) error stop\n   if (maxval(abs(values(1,:)-exp(-times)))>1e-9_wp) error stop\n   print '(a)', '    Time     Dense solution       exp(-t)'\n   do i=1,size(times)\n      print '(f8.2,2f18.12)', times(i),values(1,i),exp(-times(i))\n   end do\n   print *, 'PASS flint'\nend program main\n",
+    "topics": [
+      "differential-equations",
+      "fortran",
+      "julia",
+      "numerical-integration",
+      "ode",
+      "ode-events",
+      "runge-kutta"
+    ]
+  },
+  {
+    "id": "fortran-string-to-real",
+    "repository": "Carltoffel/Fortran-String-to-Real",
+    "revision": "76fb9e4203c6ce73c31bed85b69af920893b033e",
+    "archive_sha256": "cb0e5e0ccc46f81e00ef04c837125b55a782da8a2c3fef84131651821877bfc1",
+    "license": "Not specified upstream",
+    "stars": 9,
+    "category": "Strings",
+    "description": "Experimental conversion of valid decimal and scientific-notation strings to real numbers.",
+    "dependencies": [],
+    "source": "program main\n   use iso_fortran_env, only: real64\n   use str2real_m, only: str2real\n   implicit none\n   character(12), parameter :: text(3)=[character(12)::'12.34E1','-2.5e-2','6.022E3']\n   real(real64), parameter :: expected(3)=[123.4_real64,-.025_real64,6022._real64]\n   real(real64) :: parsed\n   integer :: i\n   ! Supply valid numeric strings; this parser does not validate malformed input.\n   do i=1,size(text)\n      parsed=str2real(trim(text(i)))\n      if (abs(parsed-expected(i))>1e-12_real64*max(1._real64,abs(expected(i)))) error stop\n      print '(a,1x,f14.6)', trim(text(i))//' ->',parsed\n   end do\n   print *, 'PASS fortran-string-to-real'\nend program main\n",
+    "topics": []
+  },
+  {
+    "id": "ad_dnsvm",
+    "repository": "lauvergn/AD_dnSVM",
+    "revision": "32db0bd122ce1dae290e9cf4c1fda4ab8f3de6f1",
+    "archive_sha256": "021f923a7f7d01be51416456b96bcfe4fb3ae3207d04fe0d71d03208b570c554",
+    "license": "MIT",
+    "stars": 31,
+    "category": "Differentiation",
+    "description": "Forward automatic differentiation of scalars, vectors and matrices through third derivatives.",
+    "dependencies": [
+      {
+        "repository": "lauvergn/QDUtilLib",
+        "revision": "8a1fa9ca7cf52683c98cc4bcb40f21dc41df6ed5",
+        "sha256": "797b427653a60b8cf760c13400c35fc7b79fad59915b1fa508eac97de207281b"
+      }
+    ],
+    "catalog_build": {
+      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+      "apt_packages": [
+        "libblas-dev=3.12.1-6",
+        "liblapack-dev=3.12.1-6"
+      ]
+    },
+    "source": "program main\n   use ADdnSVM_m\n   use QDUtil_m, only: Rkind\n   implicit none\n   type(dnS_t) :: x,f\n   real(Rkind), allocatable :: d1(:),d2(:,:),d3(:,:,:)\n   x=Variable(Val=2._Rkind,nderiv=3)\n   f=x**4\n   d1=get_d1(f); d2=get_d2(f); d3=get_d3(f)\n   if (abs(get_d0(f)-16._Rkind)>1e-10_Rkind) error stop\n   if (maxval(abs([d1(1),d2(1,1),d3(1,1,1)]-[32._Rkind,48._Rkind,48._Rkind]))>1e-10_Rkind) error stop\n   print '(a,f10.3)', 'f(x)=x**4 at x=2:',get_d0(f)\n   print '(a,3f10.3)', 'First, second, third derivatives:',d1(1),d2(1,1),d3(1,1,1)\n   print *, 'PASS ad_dnsvm'\nend program main\n",
+    "topics": [
+      "automatic-differentiation",
+      "fortran"
+    ]
+  },
+  {
+    "id": "integrate_fortran",
+    "repository": "Euler-37/integrate_fortran",
+    "revision": "5281426a7407aa8cef7f684ff8cf1f7e4a4df906",
+    "archive_sha256": "f44882c6b3612e4fe45ad048ba05463ff1be23dab09f97aeffbb18208a97bc66",
+    "license": "Not specified upstream",
+    "stars": 3,
+    "category": "Integration",
+    "description": "Gauss-Legendre quadrature for one-dimensional and multidimensional integrals.",
+    "dependencies": [],
+    "source": "module integrand_module\n   implicit none\ncontains\n   function integrand(x) result(value)\n      real(8), intent(in) :: x(:)\n      real(8) :: value\n      value=x(1)*x(2)\n   end function\n   function bounds(x,dimension) result(interval)\n      real(8), intent(in) :: x(:)\n      integer, intent(in) :: dimension\n      real(8) :: interval(2)\n      interval=[0.d0,1.d0]\n      if (dimension==2) interval(2)=x(1)**2+1.d0\n   end function\nend module\nprogram main\n   use gauss_leg_mod, only: gauss_leg_nd\n   use integrand_module\n   implicit none\n   real(8) :: value\n   value=gauss_leg_nd([4,4],integrand,bounds)\n   if (abs(value-7.d0/12)>1d-10) error stop\n   print '(a,f16.12)', 'Integral of x*y over 0<x<1, 0<y<1+x*x:',value\n   print '(a,f16.12)', 'Exact answer 7/12:                    ',7.d0/12\n   print *, 'PASS integrate_fortran'\nend program main\n",
+    "topics": [
+      "gauss-legendre-integration",
+      "numerical-integration",
+      "quadrature"
+    ]
+  },
+  {
+    "id": "rndgen-fortran",
+    "repository": "wcota/rndgen-fortran",
+    "revision": "3fa553608324913eed6cb178b398e7f661e4f63a",
+    "archive_sha256": "1cc8e4216e9b878c16a4369b18cd53147c42fe9eeaf8ea7d33cb5f85b3a4fe08",
+    "license": "GPL-3.0",
+    "stars": 4,
+    "category": "Random numbers",
+    "description": "Seeded KISS random number generators with multiple independent states and replay.",
+    "dependencies": [],
+    "source": "program main\n   use iso_fortran_env, only: real64\n   use rndgen_mod, only: rndgen\n   implicit none\n   type(rndgen) :: first,second\n   real(real64) :: a(5),b(5),replayed(5)\n   integer :: i\n   call first%init(12345)\n   call second%init(67890)\n   do i=1,5\n      a(i)=first%rnd(); b(i)=second%rnd()\n   end do\n   call first%reset()\n   do i=1,5\n      replayed(i)=first%rnd()\n   end do\n   if (any(a<0).or.any(a>=1).or.any(b<0).or.any(b>=1)) error stop\n   if (any(a/=replayed).or.all(a==b)) error stop 'Seed reproducibility failed'\n   print '(a,5f11.7)', 'Seed 12345:',a\n   print '(a,5f11.7)', 'Seed 67890:',b\n   print *, 'Reset reproduces the first sequence.'\n   print *, 'PASS rndgen-fortran'\nend program main\n",
+    "topics": [
+      "fortran",
+      "fortran-package-manager",
+      "fpm",
+      "kiss-rng",
+      "random",
+      "random-number-generator",
+      "rng"
+    ]
+  },
+  {
+    "id": "blas-interface",
+    "repository": "awvwgk/blas-interface",
+    "revision": "552a2e6a41443843003216fedad6419af55f8e35",
+    "archive_sha256": "fcd849471e6a6c3f97ff94fcdc9dfe92d995566828b0f1c50bb1819a87a1c6b8",
+    "license": "Apache-2.0",
+    "stars": 2,
+    "category": "Linear algebra",
+    "description": "Explicit generic Fortran interfaces to BLAS vector and matrix operations.",
+    "dependencies": [],
+    "catalog_build": {
+      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+      "apt_packages": [
+        "libblas-dev=3.12.1-6",
+        "liblapack-dev=3.12.1-6"
+      ]
+    },
+    "source": "program main\n   use iso_fortran_env, only: real64\n   use blas, only: gemm=>blas_gemm\n   implicit none\n   real(real64) :: a(2,2),b(2,2),c(2,2)\n   integer :: row\n   a=reshape([1._real64,3._real64,2._real64,4._real64],[2,2])\n   b=reshape([5._real64,7._real64,6._real64,8._real64],[2,2])\n   c=0\n   call gemm('N','N',2,2,2,1._real64,a,2,b,2,0._real64,c,2)\n   if (maxval(abs(c-matmul(a,b)))>1e-12_real64) error stop\n   print *, 'BLAS matrix product (checked against MATMUL):'\n   do row=1,2\n      print '(2f10.3)', c(row,:)\n   end do\n   print *, 'PASS blas-interface'\nend program main\n",
+    "topics": []
+  },
+  {
+    "id": "fsparse",
+    "repository": "jalvesz/FSPARSE",
+    "revision": "fa8233420ab0110bb688d565879164386521a8fc",
+    "archive_sha256": "b7b87843bd2027e60ec865ded63c853ec7c32d9627fa1513135d37727f3f2a23",
+    "stars": 36,
+    "license": "MIT",
+    "category": "Linear algebra",
+    "description": "Sparse matrix storage, format conversions and matrix-vector products.",
+    "dependencies": [],
+    "source": "program main\n   use fsparse\n   use fsparse_constants, only: dp\n   implicit none\n   type(COO_dp) :: coo\n   real(dp) :: dense(3,3),x(3),y(3),expected(3)\n   dense=reshape([2._dp,0._dp,1._dp,0._dp,3._dp,0._dp,1._dp,0._dp,4._dp],[3,3])\n   x=[1._dp,2._dp,3._dp]\n   expected=matmul(dense,x)\n   call dense2coo(dense,coo)\n   y=0._dp ! MATVEC adds the product to its output vector.\n   call matvec(coo,x,y)\n   if (maxval(abs(y-expected))>1e-12_dp) error stop 'Sparse product differs from MATMUL'\n   print '(a,3f10.4)', 'Sparse product:',y\n   print '(a,3f10.4)', 'Dense product: ',expected\n   print *, 'PASS fsparse'\nend program main\n",
+    "topics": [
+      "fortran",
+      "fortran-library",
+      "fortran-package-manager",
+      "sparse-matrices"
+    ]
+  },
+  {
+    "id": "geompack",
+    "repository": "jchristopherson/geompack",
+    "revision": "b7a327ca3a13507859c42dd6fba50af0bb5d5c6a",
+    "archive_sha256": "63a1e8af824b6398516b4f51ff5f367fd99c5a79ed0af1e213d18956898cb466",
+    "stars": 4,
+    "license": "GPL-3.0",
+    "category": "Geometry",
+    "description": "Delaunay triangulation of planar point sets.",
+    "dependencies": [],
+    "source": "program main\n   use iso_fortran_env, only: real64\n   use geompack, only: r8tris2\n   implicit none\n   real(real64) :: nodes(2,5),a(2),b(2),c(2),area\n   integer :: triangles(3,10),neighbors(3,10),ntri,i\n   nodes=reshape([-1._real64,-1._real64,1._real64,-1._real64, &\n      1._real64,1._real64,-1._real64,1._real64,0._real64,0._real64],[2,5])\n   call r8tris2(5,nodes,ntri,triangles,neighbors)\n   if (ntri/=4) error stop 'Expected four triangles'\n   if (any(triangles(:,:ntri)<1).or.any(triangles(:,:ntri)>5)) error stop\n   area=0._real64\n   do i=1,ntri\n      a=nodes(:,triangles(1,i)); b=nodes(:,triangles(2,i)); c=nodes(:,triangles(3,i))\n      area=area+abs((b(1)-a(1))*(c(2)-a(2))-(b(2)-a(2))*(c(1)-a(1)))/2\n      print '(a,i2,a,3i3)', 'Triangle ',i,':',triangles(:,i)\n   end do\n   if (abs(area-4._real64)>1e-12_real64) error stop 'Incorrect total area'\n   print '(a,f8.3)', 'Total area of square:',area\n   print *, 'PASS geompack'\nend program main\n",
+    "topics": [
+      "delaunay-triangulation",
+      "fortran",
+      "fortran-package-manager",
+      "geometry",
+      "triangulation",
+      "triangulation-delaunay"
+    ]
+  },
+  {
+    "id": "minres",
+    "repository": "willdickson/minres",
+    "revision": "c7bb4c7a0ddf13729d3556878ccc688a208a052a",
+    "archive_sha256": "cd1417ed2e800503336fb9e9d9a9acba834c22b81fb3cffe1c359bea2ce58624",
+    "stars": 0,
+    "license": "MIT",
+    "category": "Linear algebra",
+    "description": "Iterative solution of symmetric sparse systems, including indefinite matrices.",
+    "dependencies": [],
+    "source": "module sparse_operator\n   use iso_fortran_env, only: dp=>real64\n   implicit none\n   integer, parameter :: row(7)=[1,2,3,2,3,1,2],col(7)=[1,2,3,1,2,2,3]\n   real(dp), parameter :: entries(7)=[3._dp,2._dp,1._dp,4._dp,2._dp,4._dp,2._dp]\ncontains\n   subroutine aprod(n,x,y)\n      integer, intent(in) :: n\n      real(dp), intent(in) :: x(n)\n      real(dp), intent(out) :: y(n)\n      integer :: i\n      y=0._dp\n      do i=1,size(entries)\n         y(row(i))=y(row(i))+entries(i)*x(col(i))\n      end do\n   end subroutine\n   subroutine msolve(n,x,y)\n      integer, intent(in) :: n\n      real(dp), intent(in) :: x(n)\n      real(dp), intent(out) :: y(n)\n      y=x\n   end subroutine\nend module\nprogram main\n   use sparse_operator\n   use minres, only: minres_solver\n   implicit none\n   real(dp) :: b(3),x(3),ax(3),anorm,acond,rnorm,arnorm,ynorm,residual\n   integer :: istop,itn\n   call aprod(3,[1._dp,2._dp,3._dp],b)\n   ! Module callbacks avoid the internal-procedure closures in minres_ez_t.\n   call minres_solver(3,aprod,msolve,b,0._dp,.true.,.false.,x,100,0,1e-12_dp, &\n      istop,itn,anorm,acond,rnorm,arnorm,ynorm)\n   call aprod(3,x,ax)\n   residual=maxval(abs(ax-b))\n   if (residual>1e-9_dp.or.maxval(abs(x-[1._dp,2._dp,3._dp]))>1e-9_dp) error stop\n   print '(a,3f12.7)', 'Solution:',x\n   print '(a,i5)', 'Iterations:',itn\n   print '(a,es12.4)', 'Maximum residual:',residual\n   print *, 'PASS minres'\nend program main\n",
+    "topics": []
+  },
+  {
+    "id": "fordiff",
+    "repository": "gha3mi/fordiff",
+    "revision": "f1a1099a590107645314f1388c432624ff97b9bc",
+    "archive_sha256": "b2881c68306d92df9117f68e3852378ab0378d1cb2a9e0b76060239f94fac7a0",
+    "stars": 5,
+    "license": "BSD-3",
+    "category": "Differentiation",
+    "description": "Numerical derivatives using finite differences and complex steps.",
+    "dependencies": [],
+    "catalog_build": {
+      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+      "manifest_versions": {
+        "gha3mi/fordiff": "0.1.1"
+      }
+    },
+    "source": "module derivative_functions\n   use fordiff, only: rk\n   implicit none\ncontains\n   function complex_f(x) result(y)\n      complex(rk), intent(in) :: x\n      complex(rk) :: y\n      y=x*x+2._rk*x\n   end function\n   function real_f(x) result(y)\n      real(rk), intent(in) :: x\n      real(rk) :: y\n      y=x*x+2._rk*x\n   end function\nend module\nprogram main\n   use fordiff, only: derivative\n   use derivative_functions\n   implicit none\n   real(rk) :: cs,central\n   cs=derivative(f=complex_f,x=1._rk,h=1e-20_rk)\n   central=derivative(f=real_f,x=1._rk,h=1e-5_rk,method='central')\n   if (abs(cs-4._rk)>1e-12_rk.or.abs(central-4._rk)>1e-7_rk) error stop\n   print *, 'Derivative of x*x+2*x at x=1 (analytic answer: 4)'\n   print '(a,f18.12)', 'Complex step:      ',cs\n   print '(a,f18.12)', 'Central difference:',central\n   print *, 'PASS fordiff'\nend program main\n",
+    "topics": [
+      "complex-step-differentiation",
+      "derivative",
+      "differentiation",
+      "finite-difference",
+      "fortran",
+      "fortran-package-manager"
+    ]
+  },
+  {
+    "id": "twopnt",
+    "repository": "perazz/twopnt",
+    "revision": "4ce477215f84a88d879f0ca3937cab9bedfb7762",
+    "archive_sha256": "33884a9ec5fd2cea1d66c64c786dbb42beb9b58100e10ada14a725cbce66a02e",
+    "stars": 2,
+    "license": "MIT",
+    "category": "Differential equations",
+    "description": "Boundary-value problem solver with adaptive grids and a modern object interface.",
+    "dependencies": [],
+    "source": "program main\n   use iso_fortran_env, only: output_unit\n   use ieee_arithmetic, only: ieee_is_finite\n   use twopnt_core\n   use twopnt_test, only: SwirlingFlow\n   implicit none\n   type(SwirlingFlow) :: problem\n   logical :: error\n   character(16) :: reason\n   integer :: n\n   call problem%new(error,output_unit)\n   if (error) error stop 'Initialization failed'\n   call problem%run(error,output_unit,reason,problem%U)\n   if (error) error stop 'Boundary-value solver failed'\n   n=problem%domain%points\n   if (.not.all(ieee_is_finite(problem%U(:,:n)))) error stop\n   if (abs(problem%U(5,1)-problem%TZERO)>1e-5_RK) error stop 'First temperature boundary failed'\n   if (abs(problem%U(5,n)-problem%TMAX)>1e-5_RK) error stop 'Last temperature boundary failed'\n   call problem%summary(output_unit)\n   print *, 'PASS twopnt'\nend program main\n",
+    "topics": [
+      "boundary-value-problem",
+      "boundary-value-problems",
+      "bvp",
+      "fortran"
+    ]
+  },
+  {
+    "id": "specfunc-fullerton",
+    "repository": "arjenmarkus/specfunc-fullerton",
+    "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+    "archive_sha256": "f7910a7403f1653b7917f16db3818a4ed55a080185c86b02d96c6a391164a6f7",
+    "stars": 10,
+    "license": "MIT",
+    "category": "Special functions",
+    "description": "Fullerton special functions including gamma, Bessel, Airy and exponential integrals.",
+    "dependencies": [],
+    "source": "program main\n   use fullerton_gamma, only: fgamma,reciprocal_gamma,digamma\n   implicit none\n   real :: x,g,rg,psi_difference\n   integer :: i\n   print '(a)', '      x       Gamma(x)      1/Gamma(x)'\n   do i=1,4\n      x=real(i)+.5\n      g=fgamma(x); rg=reciprocal_gamma(x)\n      if (abs(g-gamma(x))>2e-5*max(1.,abs(g)).or.abs(g*rg-1.)>2e-5) error stop\n      psi_difference=digamma(x+1.)-digamma(x)\n      if (abs(psi_difference-1./x)>2e-5) error stop 'Digamma recurrence failed'\n      print '(f8.2,2f16.7)', x,g,rg\n   end do\n   print *, 'PASS specfunc-fullerton'\nend program main\n",
+    "topics": [
+      "special-functions"
+    ]
+  },
+  {
+    "id": "lib_statistics",
+    "repository": "sebastiandyrda/lib_statistics",
+    "revision": "056740db259fc3599dca0d8858f04e94845a6769",
+    "archive_sha256": "94479fc46f071c05c1cc2940d23a3e6ef2491ae3e3db0f780ed6079adc58e579",
+    "stars": 0,
+    "license": "Not specified upstream",
+    "category": "Statistics",
+    "description": "Logistic regression using iteratively reweighted least squares.",
+    "dependencies": [],
+    "source": "program main\n   use Logistic_Regression, only: logistic,dp\n   implicit none\n   integer, parameter :: groups=6\n   integer :: trials(groups),successes(groups),ndf,ier,i\n   real(dp) :: x(groups,1),beta(0:1),se(0:1),fit(groups),chisq,deviance,expected(groups)\n   ! Two predictor levels, each repeated three times: the exact fitted\n   ! probabilities are 1/4 and 3/4, so beta=(0,log(3)). No data download.\n   x(:,1)=[-1._dp,-1._dp,-1._dp,1._dp,1._dp,1._dp]\n   trials=20; successes=[5,5,5,15,15,15]\n   expected=real(successes,dp)/real(trials,dp)\n   call logistic(groups,x,1,successes,trials,chisq,deviance,ndf,beta,se,ier,fit=fit)\n   if (ier/=0) error stop 'Logistic regression failed'\n   if (maxval(abs(fit-expected))>1e-6_dp) error stop 'Incorrect fitted probabilities'\n   if (abs(beta(0))>1e-6_dp.or.abs(beta(1)-log(3._dp))>1e-6_dp) error stop\n   print '(a,2f14.8)', 'Intercept and slope:',beta\n   do i=1,groups\n      print '(a,f5.1,a,f10.6)', 'x=',x(i,1),'  fitted probability=',fit(i)\n   end do\n   print *, 'PASS lib_statistics'\nend program main\n",
+    "topics": []
+  },
+  {
+    "id": "astro-fortran",
+    "repository": "jacobwilliams/astro-fortran",
+    "revision": "9d61091d225a1b314ff8170153b06a8691aba283",
+    "archive_sha256": "ddbe566788db9e3521bf81e0579ec82ae05c1eb46c5da73383f6f58924b997f0",
+    "stars": 19,
+    "license": "BSD-3-Clause and SOFA Software License (LICENSE.txt)",
+    "category": "Astronomy and orbits",
+    "description": "Fundamental astronomy models and coordinate transformations refactored from IAU SOFA.",
+    "dependencies": [],
+    "source": "program main\n   use iso_fortran_env, only: real64\n   use astro_module, only: G2ICRS,ICRS2G\n   implicit none\n   real(real64) :: longitude,latitude,ra,dec,back_l,back_b\n   longitude=5.5850536063818546461558105_real64\n   latitude=-.7853981633974483096156608_real64\n   call G2ICRS(longitude,latitude,ra,dec)\n   ! Reference values from the upstream SOFA validation example.\n   if (abs(ra-5.9338074302227188048671_real64)>1e-12_real64) error stop\n   if (abs(dec+1.1784870613579944551541_real64)>1e-12_real64) error stop\n   call ICRS2G(ra,dec,back_l,back_b)\n   if (max(abs(back_l-longitude),abs(back_b-latitude))>1e-12_real64) error stop\n   print *, 'Galactic coordinates -> ICRS, angles in radians'\n   print '(a,2f18.12)', 'Longitude, latitude:',longitude,latitude\n   print '(a,2f18.12)', 'RA, declination:    ',ra,dec\n   print *, 'PASS astro-fortran'\nend program main\n",
+    "topics": [
+      "astrometry",
+      "astronomy",
+      "fortran-package-manager"
+    ]
+  },
+  {
+    "id": "nlopt-f",
+    "repository": "awvwgk/nlopt-f",
+    "revision": "83d21e7ebda9279a6dd4cc11fe6c735f48eb8689",
+    "archive_sha256": "985586611c8b51836a77c8c3aa2e07b859ff7f6dc56fcb1d6a030580c8f10c2d",
+    "stars": 0,
+    "license": "MIT",
+    "category": "Roots and optimization",
+    "description": "Modern Fortran bindings to NLopt nonlinear optimization algorithms.",
+    "dependencies": [],
+    "catalog_build": {
+      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+      "apt_packages": [
+        "libnlopt-dev=2.7.1-6+b4"
+      ],
+      "environment": {
+        "FPM_FFLAGS": "-cpp -DNLOPT_VERSION=20701"
+      }
+    },
+    "source": "module rosenbrock_model\n   use iso_fortran_env, only: real64\n   implicit none\ncontains\n   function objective(x,gradient,func_data) result(f)\n      real(real64), intent(in) :: x(:)\n      real(real64), optional, intent(inout) :: gradient(:)\n      class(*), optional, intent(in) :: func_data\n      real(real64) :: f\n      f=(1._real64-x(1))**2+100._real64*(x(2)-x(1)**2)**2\n      if (present(gradient)) then\n         gradient(1)=2*(x(1)-1)-400*x(1)*(x(2)-x(1)**2)\n         gradient(2)=200*(x(2)-x(1)**2)\n      end if\n   end function\nend module\nprogram main\n   use nlopt_wrap\n   use nlopt_enum\n   use rosenbrock_model\n   use ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   type(nlopt_opt) :: opt\n   real(real64) :: x(2),minimum\n   integer :: status\n   call create(opt,algorithm_from_string('LD_LBFGS'),2)\n   associate(f=>nlopt_func(objective))\n      call opt%set_min_objective(f,status)\n      if (status<0) error stop 'Cannot set objective'\n      call opt%set_xtol_rel(1e-9_real64,status)\n      call opt%set_maxeval(1000,status)\n      x=[-1.2_real64,1._real64]\n      call opt%optimize(x,minimum,status)\n   end associate\n   if (status<0.or..not.all(ieee_is_finite(x))) error stop 'Optimization failed'\n   if (maxval(abs(x-1._real64))>1e-5_real64.or.minimum>1e-10_real64) error stop\n   print '(a,2f15.10)', 'Rosenbrock minimizer:',x\n   print '(a,es14.5)', 'Minimum value:',minimum\n   call destroy(opt)\n   print *, 'PASS nlopt-f'\nend program\n",
+    "topics": []
+  },
+  {
+    "id": "daskr",
+    "repository": "davidpfister/daskr",
+    "revision": "b43533edc5d6900088a846d802e3a86d0f9a06ad",
+    "archive_sha256": "7a636a79cf54271606ca73c4a9c112bc45af75cc17246873cc499b2a5cce7472",
+    "stars": 2,
+    "license": "LLNL redistribution license (LICENSE)",
+    "category": "Differential equations",
+    "description": "Differential-algebraic equation solver with root finding and direct or Krylov linear solvers.",
+    "dependencies": [],
+    "catalog_patches": {
+      "adapter_sha256": "86ce9e8662821f1a01dbc6be505d9b18aec81bac32d625ae6f37e85932e464a5",
+      "edits": [
+        {
+          "path": "src/ddaskr.f",
+          "sha256": "ec35cf263c50fa87c5a2b97805f1700af58fc32eb7005bc97f8c9282a12b96ca",
+          "before": "      DIMENSION INFO(20)",
+          "after": "      DIMENSION INFO(20)\n      DIMENSION JROOT(*)"
+        },
+        {
+          "path": "src/ddaskr.f",
+          "sha256": "a716e80358a94f71d40839382c0a54b9e177570bd5d1ea507f094fd9ad583ece",
+          "before": "      DIMENSION Y(*), YP(*), PHI(NEQ,*), PSI(*),\n     *          R0(*), R1(*), RX(*), JROOT(*), RWORK(*), IWORK(*)",
+          "after": "      DIMENSION Y(*), YP(*), PHI(NEQ,*), PSI(*),\n     *          R0(*), R1(*), RX(*), JROOT(*), RWORK(*), IWORK(*)\n      DIMENSION RPAR(*), IPAR(*)"
+        },
+        {
+          "path": "src/dlinpk.f",
+          "sha256": "93689e132f3bc5556ef98856b5e0398d090edc2628ddc04575333063f8a7b395",
+          "before": "      integer lda,n,ipvt(1),info\n",
+          "after": "      integer lda,n,ipvt(*),info\n"
+        },
+        {
+          "path": "src/dlinpk.f",
+          "sha256": "8845628f0a04ece01e8b9f56475fe3841d213f03bbf8b5b9ed4f86a9a97177d7",
+          "before": "      double precision a(lda,1)\n",
+          "after": "      double precision a(lda,*)\n"
+        },
+        {
+          "path": "src/dlinpk.f",
+          "sha256": "684ee80451a1cc45e48d9b6de1e6f3010882efea1c6004edcf82beaee62fec0d",
+          "before": "      integer lda,n,ipvt(1),job\n",
+          "after": "      integer lda,n,ipvt(*),job\n"
+        },
+        {
+          "path": "src/dlinpk.f",
+          "sha256": "04576c53e906be30ef043c9a325f78ea45c6374887649aaef8bd114429ef29e4",
+          "before": "      double precision a(lda,1),b(1)\n",
+          "after": "      double precision a(lda,*),b(*)\n"
+        },
+        {
+          "path": "src/dlinpk.f",
+          "sha256": "9d4a80ca3ab0f7674824da99c23b497a43049f5964d08967a793fbe2fa44177e",
+          "before": "      integer lda,n,ml,mu,ipvt(1),info\n",
+          "after": "      integer lda,n,ml,mu,ipvt(*),info\n"
+        },
+        {
+          "path": "src/dlinpk.f",
+          "sha256": "32437d750a0fdcfa290201830c7590734ae6ad94765125714ea405df28f3b69b",
+          "before": "      double precision abd(lda,1)\n",
+          "after": "      double precision abd(lda,*)\n"
+        },
+        {
+          "path": "src/dlinpk.f",
+          "sha256": "d1e32068c8e0723415bdcf09154c5135d1a42eb827ff86c0d94c81afcf2fa031",
+          "before": "      integer lda,n,ml,mu,ipvt(1),job\n",
+          "after": "      integer lda,n,ml,mu,ipvt(*),job\n"
+        },
+        {
+          "path": "src/dlinpk.f",
+          "sha256": "eb74d051fee23e221591f3f3d14e3ce1bc85d8a25d1ab383f6e378c659b7ca40",
+          "before": "      double precision abd(lda,1),b(1)\n",
+          "after": "      double precision abd(lda,*),b(*)\n"
+        },
+        {
+          "path": "src/dlinpk.f",
+          "sha256": "405c6fb8e7f025b102c79dcb0b25b088c098c0fe83445ca4c596774d168b869e",
+          "before": "      double precision dx(1),dy(1),da\n",
+          "after": "      double precision dx(*),dy(*),da\n"
+        },
+        {
+          "path": "src/dlinpk.f",
+          "sha256": "3bd5b7b85678ffae3fab0145277b8a45e1c204081f5eb092bcbc7c873d29d2a2",
+          "before": "      double precision sx(1),sy(1)\n",
+          "after": "      double precision sx(*),sy(*)\n"
+        },
+        {
+          "path": "src/dlinpk.f",
+          "sha256": "1914c2ed709209b5acf728043a624780689694b4138041fcd5aa9d7af5b587ab",
+          "before": "      double precision da,dx(1)\n",
+          "after": "      double precision da,dx(*)\n"
+        },
+        {
+          "path": "src/dlinpk.f",
+          "sha256": "6fed03ef2aa19a7040bdb9c2058419eb024c401cc38419fb8cdd82dbc6266ab0",
+          "before": "      double precision dx(1),dy(1),dtemp\n",
+          "after": "      double precision dx(*),dy(*),dtemp\n"
+        },
+        {
+          "path": "src/dlinpk.f",
+          "sha256": "b4951c91475bf2bd7fb77a42e4aa74cc5f783f0f02256d1ea31e46456d973230",
+          "before": "      double precision   dx(1), cutlo, cuthi, hitest, sum, xmax,zero,one\n",
+          "after": "      double precision   dx(*), cutlo, cuthi, hitest, sum, xmax,zero,one\n"
+        },
+        {
+          "path": "src/dlinpk.f",
+          "sha256": "3d7b8a406596a84ef2f6704a06f89e59586cf00bbd25bcfd97fa3efabfd670ce",
+          "before": "      double precision dx(1),dmax\n",
+          "after": "      double precision dx(*),dmax\n"
+        }
+      ]
+    },
+    "source": "module dae_model\n   use iso_fortran_env, only: real64\n   implicit none\ncontains\n   subroutine residual(t,y,yp,cj,delta,ires,rpar,ipar)\n      real(real64), intent(in) :: t,y(*),yp(*),cj\n      real(real64), intent(out) :: delta(*)\n      integer, intent(inout) :: ires,ipar(*)\n      real(real64), intent(inout) :: rpar(*)\n      delta(1)=yp(1)+y(1)\n      delta(2)=y(2)-y(1)**2\n   end subroutine\n   subroutine unused_callback()\n      error stop 'Unexpected optional callback'\n   end subroutine\nend module\nprogram main\n   use dae_model\n   use ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   interface\n      subroutine ddaskr(res,neq,t,y,yp,tout,info,rtol,atol,idid,rwork,lrw,iwork,liw,rpar,ipar,jac,psol,rt,nrt,jroot)\n         import real64\n         external res,jac,psol,rt\n         integer :: neq,info(*),idid,lrw,iwork(*),liw,ipar(*),nrt,jroot(*)\n         real(real64) :: t,y(*),yp(*),tout,rtol(*),atol(*),rwork(*),rpar(*)\n      end subroutine\n   end interface\n   integer :: info(20),idid,iwork(100),ipar(1),jroot(1)\n   real(real64) :: t,y(2),yp(2),rtol(1),atol(1),rwork(500),rpar(1)\n   info=0; iwork=0; rwork=0; ipar=0; rpar=0\n   t=0; y=1; yp=[-1._real64,-2._real64]\n   rtol=1e-8_real64; atol=1e-10_real64\n   call ddaskr(residual,2,t,y,yp,1._real64,info,rtol,atol,idid,rwork,500,iwork,100, &\n      rpar,ipar,unused_callback,unused_callback,unused_callback,0,jroot)\n   if (idid<0.or..not.all(ieee_is_finite(y))) error stop 'DAE solve failed'\n   if (maxval(abs(y-[exp(-1._real64),exp(-2._real64)]))>1e-6_real64) error stop\n   if (abs(y(2)-y(1)**2)>1e-7_real64) error stop 'Algebraic constraint failed'\n   print '(a,f8.3)', 'Time:',t\n   print '(a,2f16.10)', 'Computed y:',y\n   print '(a,2f16.10)', 'Analytic y:',exp(-1._real64),exp(-2._real64)\n   print *, 'PASS daskr'\nend program\n",
+    "topics": [
+      "dae",
+      "differential-equations",
+      "fortran",
+      "fortran-package-manager",
+      "netlib"
+    ]
+  },
+  {
+    "id": "ffilesystem",
+    "repository": "scivision/ffilesystem",
+    "revision": "6387e623aa19325a1078f63fa882eb257518d038",
+    "archive_sha256": "adb5b15176912a3d5ac8aa26eab10574a5c7307817eeb79dd4aeaf712b2db3fd",
+    "stars": 45,
+    "license": "MIT",
+    "category": "Files and processes",
+    "description": "Portable filesystem and path operations through Fortran, C and C++ interfaces.",
+    "dependencies": [],
+    "source": "program main\n   use filesystem, only: normal,mkdir,is_dir,is_file,copy_file,file_size,remove\n   implicit none\n   integer :: unit\n   logical :: ok\n   character(40) :: text\n   print '(a,a)', 'Normalized path: ',normal('./demo_files//part/../source.txt')\n   call mkdir('demo_files')\n   if (.not.is_dir('demo_files')) error stop 'Directory creation failed'\n   open(newunit=unit,file='demo_files/source.txt',status='replace')\n   write(unit,'(a)') 'Hello from the temporary sandbox'\n   close(unit)\n   call copy_file('demo_files/source.txt','demo_files/copy.txt',ok=ok)\n   if (.not.ok.or..not.is_file('demo_files/copy.txt')) error stop 'Copy failed'\n   if (file_size('demo_files/source.txt')/=file_size('demo_files/copy.txt')) error stop\n   open(newunit=unit,file='demo_files/copy.txt',status='old')\n   read(unit,'(a)') text\n   close(unit)\n   if (trim(text)/='Hello from the temporary sandbox') error stop 'Contents differ'\n   print '(a,i0)', 'Copied file size in bytes: ',file_size('demo_files/copy.txt')\n   print '(a,a)', 'Read back: ',trim(text)\n   call remove('demo_files/copy.txt')\n   call remove('demo_files/source.txt')\n   call remove('demo_files')\n   if (is_dir('demo_files')) error stop 'Cleanup failed'\n   print *, 'PASS ffilesystem'\nend program\n",
+    "topics": [
+      "cpp17",
+      "filesystem",
+      "fortran",
+      "libc",
+      "path-manipulation"
+    ]
+  },
+  {
+    "id": "utf8-f",
+    "repository": "St-Maxwell/utf8-f",
+    "revision": "9e89210ba66191295f6565bee277de6e4f9f84de",
+    "archive_sha256": "b6bc86d97586da8007b48d968161bc5ccc57bbd579424e9c12c896d3e56996aa",
+    "stars": 1,
+    "license": "MIT",
+    "category": "Strings",
+    "description": "UTF-8 character counting, indexing, slicing and text manipulation.",
+    "dependencies": [],
+    "source": "program main\n   use utf8, only: utf8_string,construct_utf8_string,utf8_len,utf8_at\n   implicit none\n   type(utf8_string) :: text\n   integer :: i\n   call construct_utf8_string(text,'\u732b caf\u00e9')\n   if (utf8_len(text)/=6) error stop 'Incorrect character count'\n   if (utf8_at(text,1)/='\u732b'.or.utf8_at(text,6)/='\u00e9') error stop\n   print '(a)', 'Text: \u732b caf\u00e9'\n   print '(a,i0)', 'Characters: ',utf8_len(text)\n   do i=1,utf8_len(text)\n      print '(i3,2x,a)', i,utf8_at(text,i)\n   end do\n   print *, 'PASS utf8-f'\nend program\n",
+    "topics": [
+      "fortran",
+      "utf-8"
+    ]
+  },
+  {
+    "id": "ryu_fortran",
+    "repository": "St-Maxwell/ryu_fortran",
+    "revision": "6c508144398d58143618c5598d816f20c40ac053",
+    "archive_sha256": "67b79bc6e4d41941ddc6d8f72241e1da959d77942c7058298b5096ea18d50994",
+    "stars": 16,
+    "license": "Not specified upstream (manifest placeholder)",
+    "category": "Strings",
+    "description": "Ryu conversion of floating-point numbers to short decimal representations.",
+    "dependencies": [],
+    "source": "program main\n   use iso_fortran_env, only: real64,int64\n   use ryu, only: d2shortest\n   implicit none\n   real(real64), parameter :: values(6)=[.1_real64,-0._real64,acos(-1._real64), &\n      1e-100_real64,1e100_real64,nearest(1._real64,1._real64)]\n   real(real64) :: restored\n   character(:), allocatable :: text\n   integer :: i\n   do i=1,size(values)\n      text=d2shortest(values(i))\n      read(text,*) restored\n      if (transfer(restored,0_int64)/=transfer(values(i),0_int64)) error stop 'Round trip failed'\n      print '(a)', text\n   end do\n   print *, 'All values round-trip with identical bits, including negative zero.'\n   print *, 'PASS ryu_fortran'\nend program\n",
+    "topics": [
+      "floating-point",
+      "string"
+    ]
+  },
+  {
+    "id": "iso_varying_string",
+    "repository": "everythingfunctional/iso_varying_string",
+    "revision": "ba41caa79167835a40310b97bc7251ec689a9bfa",
+    "archive_sha256": "321a9a1c69c580900a19c9245fdb3497c71da343450bd57908df69cdb387087a",
+    "stars": 1,
+    "license": "MIT",
+    "category": "Strings",
+    "description": "Variable-length strings implementing the ISO varying-string specification.",
+    "dependencies": [],
+    "source": "program main\n   use iso_varying_string, only: varying_string,var_str,char,len,index,insert,remove,operator(//)\n   implicit none\n   type(varying_string) :: text\n   text=var_str('Fortran')//' playground'\n   if (len(text)/=18.or.index(text,'playground')/=9) error stop\n   print '(a)', char(text)\n   text=insert(text,8,':')\n   if (char(text)/='Fortran: playground') error stop 'Insertion failed'\n   print '(a)', char(text)\n   text=remove(text,8,8)\n   if (char(text)/='Fortran playground') error stop 'Removal failed'\n   print '(a)', char(text)\n   print *, 'PASS iso_varying_string'\nend program\n",
+    "topics": [
+      "fortran",
+      "iso",
+      "strings"
+    ]
+  },
+  {
+    "id": "fortimize",
+    "repository": "fedebenelli/ForTimize",
+    "revision": "3431b656cd86f89135d0f35bf6afdbd787d9daf3",
+    "archive_sha256": "90b36df70e4f526800a589b33ba35a8d6c90a8b6e960a93f5c0bb5914069618e",
+    "stars": 2,
+    "license": "Not specified upstream (manifest placeholder)",
+    "category": "Roots and optimization",
+    "description": "A common interface to optimization algorithms including Nelder-Mead and gradient descent.",
+    "dependencies": [
+      {
+        "repository": "jacobwilliams/NumDiff",
+        "revision": "687157df8d2dec072b5484974bab71f7b14b0e9f",
+        "sha256": "b51fd9daad66ba3579c231266806cc0855dfbbe184959dd68a08c9e69a1fe6e1"
+      }
+    ],
+    "source": "module quadratic_model\n   use ForTimize, only: pr\n   implicit none\ncontains\n   subroutine objective(x,f,df,data)\n      real(pr), intent(in) :: x(:)\n      real(pr), intent(out) :: f\n      real(pr), optional, intent(out) :: df(:)\n      class(*), optional, intent(inout) :: data\n      f=(x(1)-2._pr)**2+3._pr*(x(2)+1._pr)**2\n      if (present(df)) df=[2*(x(1)-2._pr),6*(x(2)+1._pr)]\n   end subroutine\nend module\nprogram main\n   use ForTimize, only: minimize,NelderMead\n   use quadratic_model\n   use ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   type(NelderMead) :: solver\n   real(pr) :: x(2),f\n   solver%convergence_tolerance=1e-12_pr\n   solver%konvge=20\n   solver%max_iters=1000\n   x=[-3._pr,4._pr]\n   call minimize(objective,x,f,solver)\n   if (.not.all(ieee_is_finite(x))) error stop\n   if (maxval(abs(x-[2._pr,-1._pr]))>1e-4_pr.or.f>1e-8_pr) error stop\n   print '(a,2f14.8)', 'Computed minimum at:',x\n   print '(a,es13.5)', 'Objective:',f\n   print *, 'PASS fortimize'\nend program\n",
+    "topics": [
+      "fortran",
+      "fortran-",
+      "gradient-descent",
+      "nelder-mead",
+      "optimization",
+      "optimization-algorithms"
+    ]
+  },
+  {
+    "id": "forimage",
+    "repository": "gha3mi/forimage",
+    "revision": "65f53ce6a53c3a3ee38f05e6a065505bc3fa0dfb",
+    "archive_sha256": "2147970d0b3e3b10c6f7ea5bc8a79bdfab67331e8e98fc309c2ee22e85003118",
+    "stars": 5,
+    "license": "BSD 3-Clause License",
+    "category": "Images",
+    "description": "Create, read, write and transform PNM images and convert color representations.",
+    "dependencies": [],
+    "catalog_build": {
+      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+      "manifest_versions": {
+        "gha3mi/forimage": "0.7.0"
+      }
+    },
+    "source": "program main\n   use forimage, only: format_pnm,ik\n   implicit none\n   integer, parameter :: width=128,height=96\n   type(format_pnm) :: image,negative,restored\n   integer(ik) :: pixels(height,3*width)\n   integer :: i,j\n   do i=1,height\n      do j=1,width\n         pixels(i,3*j-2)=int(255*(j-1)/(width-1),ik)\n         pixels(i,3*j-1)=int(255*(i-1)/(height-1),ik)\n         pixels(i,3*j)=int(255-255*(j-1)/(width-1),ik)\n      end do\n   end do\n   call image%set_pnm(encoding='binary',file_format='ppm',width=width,height=height, &\n      max_color=255,comment='Generated color gradient',pixels=pixels)\n   call image%export_pnm('01_gradient')\n   negative=image\n   call negative%negative()\n   if (any(negative%pixels/=255_ik-pixels)) error stop 'Color inversion failed'\n   call negative%export_pnm('02_negative')\n   call restored%import_pnm('01_gradient','ppm','binary')\n   if (any(restored%pixels/=pixels)) error stop 'Image round trip failed'\n   print *, 'Original color gradient and its negative are displayed below.'\n   print *, 'PASS forimage'\nend program\n",
+    "topics": [
+      "color",
+      "decimal",
+      "fortran",
+      "fortran-package-manager",
+      "hexadecimal",
+      "hsl",
+      "hsv",
+      "image",
+      "pbm",
+      "pgm",
+      "pnm",
+      "ppm",
+      "rgb"
+    ]
+  },
+  {
+    "id": "ncio",
+    "repository": "alex-robinson/ncio",
+    "revision": "d76d39df3dcaa892bff5d2b5b24770f3dc65abaa",
+    "archive_sha256": "9c4f3ca8c0d8ed53ba4a9e853777b02d24e6bd7372c137760c5f13d6b83040bb",
+    "stars": 24,
+    "license": "MIT (source header)",
+    "category": "Data formats",
+    "description": "Convenient NetCDF array input and output with dimensions, attributes and metadata.",
+    "dependencies": [],
+    "catalog_build": {
+      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+      "apt_packages": [
+        "libnetcdff-dev=4.6.0+really4.5.4+ds-3+b4"
+      ],
+      "environment": {
+        "FPM_FFLAGS": "-I/usr/include",
+        "FPM_LDFLAGS": "-lnetcdff -lnetcdf"
+      }
+    },
+    "source": "program main\n   use iso_fortran_env, only: real64\n   use ncio, only: nc_create,nc_write_dim,nc_write,nc_read,nc_size\n   implicit none\n   real(real64) :: original(4),restored(4)\n   original=[1._real64,2._real64,4._real64,8._real64]\n   call nc_create('sample.nc',description='A small playground NetCDF example')\n   call nc_write_dim('sample.nc','x',x=[0._real64,1._real64,2._real64,3._real64],units='m')\n   call nc_write('sample.nc','temperature',original,dim1='x',units='K')\n   call nc_read('sample.nc','temperature',restored)\n   if (nc_size('sample.nc','x')/=4.or.any(restored/=original)) error stop 'NetCDF round trip failed'\n   print '(a,4f10.3)', 'Read back temperatures (K):',restored\n   print *, 'PASS ncio'\nend program\n",
+    "topics": []
+  },
+  {
+    "id": "fastconv",
+    "repository": "gronki/fastconv",
+    "revision": "3aaa2432a291df07a10fc5dade0dcd66d7a06dd0",
+    "archive_sha256": "1c24a23cea35275f937f1c0c65a1d205f9425736d36d48fda65db9455735154e",
+    "stars": 0,
+    "license": "BSD-3-Clause (LICENSE; manifest says MIT)",
+    "category": "Signal processing",
+    "description": "Small-kernel convolution for smoothing one-, two- and three-dimensional arrays.",
+    "dependencies": [],
+    "source": "program demo_fastconv\n   use iso_fortran_env, only: real32\n   use conv1d_m, only: conv1d_t\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   type(conv1d_t) :: filter\n   real(real32) :: signal(6) = [0., 2., 4., 8., 4., 2.]\n   real(real32), allocatable :: smoothed(:)\n\n   call filter%set_kernel([0.25_real32, 0.5_real32, 0.25_real32])\n   filter%preserve_shape = .false.\n   smoothed = filter%apply(signal)\n   if (size(smoothed) /= 4) error stop 'Unexpected output size'\n   if (.not. all(ieee_is_finite(smoothed))) error stop 'Nonfinite convolution'\n   if (maxval(abs(smoothed - [2., 4.5, 6., 4.5])) > 1.e-5_real32) &\n      error stop 'Convolution check failed'\n   print '(a,*(f6.2))', 'Smoothed signal:', smoothed\n   print *, 'PASS fastconv'\nend program demo_fastconv\n",
+    "topics": []
+  },
+  {
+    "id": "gaussjacobiquad",
+    "repository": "HaoZeke/GaussJacobiQuad",
+    "revision": "ffb970c68eea0b39b140f80f788c8994547d8bfb",
+    "archive_sha256": "e9975bcfb0bdad7cdbd4b1e32263e8e62949337fe40605d3792a4de9927bb62c",
+    "stars": 5,
+    "license": "MIT",
+    "category": "Integration",
+    "description": "Gauss-Jacobi quadrature nodes and weights for weighted numerical integration.",
+    "dependencies": [],
+    "catalog_build": {
+      "apt_packages": [
+        "libopenblas-dev=0.3.29+ds-3"
+      ],
+      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+    },
+    "source": "program demo_gaussjacobiquad\n   use GaussJacobiQuad, only: gauss_jacobi\n   use gjp_types, only: dp\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   real(dp) :: x(5), w(5), integral\n   character(:), allocatable :: method\n\n   ! Integral of (1-x)*(1+x)*x**2 over [-1,1] is 4/15.\n   method = 'gw'\n   call gauss_jacobi(5, 1._dp, 1._dp, x, w, method)\n   integral = sum(w*x**2)\n   if (.not. ieee_is_finite(integral)) error stop 'Nonfinite integral'\n   if (abs(integral - 4._dp/15._dp) > 1.e-12_dp) error stop 'Quadrature check failed'\n   if (any(w <= 0._dp) .or. any(abs(x) >= 1._dp)) error stop 'Invalid nodes or weights'\n   print '(a,f18.14)', 'Weighted integral of x squared: ', integral\n   print *, 'PASS gaussjacobiquad'\nend program demo_gaussjacobiquad\n",
+    "topics": [
+      "f2py",
+      "gauss-jacobi",
+      "meson",
+      "numerical-integration",
+      "quadrature"
+    ]
+  },
+  {
+    "id": "kissfft-f",
+    "repository": "zoziha/kissfft-f",
+    "revision": "b89c5e1d0aff9993db79200fc94a467948ff3923",
+    "archive_sha256": "f7b54c2261190cc8282abf451dd84e215c5be2300ac14aaccb1e36405d9b5b8e",
+    "stars": 3,
+    "license": "BSD-3-Clause",
+    "category": "Transforms",
+    "description": "Fortran bindings to the compact KISS FFT library for fast Fourier transforms.",
+    "dependencies": [],
+    "source": "program demo_kissfft\n   use kissfft, only: fft, kiss_fft_cpx\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   type(fft) :: transform\n   type(kiss_fft_cpx) :: signal(4), spectrum(4), restored(4)\n   integer :: i\n\n   do i = 1, 4\n      signal(i)%re = real(i)\n      signal(i)%im = 0.\n   end do\n   call transform%init(4, 0)\n   call transform%perform(signal, spectrum)\n   if (.not. all(ieee_is_finite(spectrum%re)) .or. &\n      .not. all(ieee_is_finite(spectrum%im))) error stop 'Nonfinite FFT'\n   if (maxval(abs(spectrum%re - [10., -2., -2., -2.])) > 1.e-5) error stop 'FFT real part'\n   if (maxval(abs(spectrum%im - [0., 2., 0., -2.])) > 1.e-5) error stop 'FFT imaginary part'\n   print *, 'Frequency bin       Real       Imaginary'\n   do i = 1, 4\n      print '(i8,2f14.6)', i-1, spectrum(i)%re, spectrum(i)%im\n   end do\n   call transform%init(4, 1)\n   call transform%perform(spectrum, restored)\n   if (.not. all(ieee_is_finite(restored%re)) .or. &\n      .not. all(ieee_is_finite(restored%im))) error stop 'Nonfinite inverse FFT'\n   if (maxval(abs(restored%re/4. - signal%re)) > 1.e-5) error stop 'Inverse FFT check'\n   if (maxval(abs(restored%im)) > 1.e-5) error stop 'Inverse FFT imaginary part'\n   print *, 'Inverse FFT recovered the original signal.'\n   print *, 'PASS kissfft-f'\nend program demo_kissfft\n",
+    "topics": [
+      "fft",
+      "fortran",
+      "fortran-package-manager",
+      "kissfft",
+      "mesonbuild",
+      "modern-fortran",
+      "oop",
+      "wrapper-api"
+    ]
+  },
+  {
+    "id": "h5fortran",
+    "repository": "geospace-code/h5fortran",
+    "revision": "9fb7549a2d213c10190ae268edecaac4c4c06d0a",
+    "archive_sha256": "15845b58480c02d289e27e8aa408d9a3be8945e2901e1009f79322fff5bbf8e7",
+    "stars": 121,
+    "license": "BSD-3-Clause",
+    "category": "Data formats",
+    "description": "High-level HDF5 access for numerical arrays, strings and metadata.",
+    "dependencies": [],
+    "catalog_build": {
+      "apt_packages": [
+        "libhdf5-dev=1.14.5+repack-3"
+      ],
+      "environment": {
+        "FPM_FFLAGS": "-I/usr/include/hdf5/serial",
+        "FPM_LDFLAGS": "-L/usr/lib/x86_64-linux-gnu/hdf5/serial"
+      },
+      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+    },
+    "source": "program demo_h5fortran\n   use iso_fortran_env, only: real64\n   use h5fortran, only: h5write, h5read, h5write_attr, h5read_attr\n   implicit none\n   real(real64) :: original(2,3), restored(2,3)\n   character(32) :: units\n   integer :: i\n\n   original = reshape([1._real64, 2._real64, 3._real64, 4._real64, 5._real64, 6._real64], [2,3])\n   call h5write('sample.h5', '/temperature', original)\n   call h5write_attr('sample.h5', '/temperature', 'units', 'kelvin')\n   call h5read('sample.h5', '/temperature', restored)\n   call h5read_attr('sample.h5', '/temperature', 'units', units)\n   if (any(restored /= original)) error stop 'HDF5 matrix round trip failed'\n   if (units /= 'kelvin') error stop 'HDF5 attribute round trip failed'\n   print '(a)', 'Matrix read from sample.h5 (units: '//trim(units)//')'\n   do i = 1, 2\n      print '(3f8.2)', restored(i,:)\n   end do\n   print *, 'PASS h5fortran'\nend program demo_h5fortran\n",
+    "topics": [
+      "fortran",
+      "hdf5",
+      "object-oriented-fortran"
+    ]
+  },
+  {
+    "id": "metis-fpm",
+    "repository": "gnikit/metis-fpm",
+    "revision": "5db1dc1e46fd819a53a86fe2170eaf5464bf17c7",
+    "archive_sha256": "5bb19525e8fcc7b32da5cc4d4ced8c7d3901dcc2805e38c80d08e0a543a64fbe",
+    "stars": 10,
+    "license": "MIT wrapper; Apache-2.0 METIS and GKlib",
+    "category": "Containers and graphs",
+    "description": "METIS graph partitioning and sparse matrix ordering through a Fortran interface.",
+    "dependencies": [
+      {
+        "repository": "gnikit/GKlib",
+        "revision": "3840061283ceab2ac62542c1141e1e3efea3f392",
+        "sha256": "a28812c33bf881881047ba784176a3434684bb0fa9642457b9a4e1063085c0dc"
+      }
+    ],
+    "source": "program demo_metis\n   use iso_c_binding, only: c_int\n   use metis_c_interface\n   implicit none\n   integer(idx_t) :: xadj(10), adjncy(24), weights(24), options(0:METIS_NOPTIONS-1)\n   integer(idx_t) :: part(9), edgecut, nvtxs, ncon, nparts\n   integer(c_int) :: status\n   integer :: row, col, vertex, next, other, cuts, i\n\n   ! Undirected 3-by-3 grid graph, with zero-based vertex numbers for METIS.\n   next = 1\n   do row = 0, 2\n      do col = 0, 2\n         vertex = 3*row + col\n         xadj(vertex+1) = int(next-1, idx_t)\n         if (row > 0) then\n            adjncy(next) = int(vertex-3, idx_t); next = next+1\n         end if\n         if (row < 2) then\n            adjncy(next) = int(vertex+3, idx_t); next = next+1\n         end if\n         if (col > 0) then\n            adjncy(next) = int(vertex-1, idx_t); next = next+1\n         end if\n         if (col < 2) then\n            adjncy(next) = int(vertex+1, idx_t); next = next+1\n         end if\n      end do\n   end do\n   xadj(10) = int(next-1, idx_t)\n   weights = 1_idx_t\n   nvtxs = 9_idx_t; ncon = 1_idx_t; nparts = 2_idx_t\n   status = METIS_SetDefaultOptions(options)\n   if (status /= METIS_OK) error stop 'METIS default options failed'\n   options(METIS_OPTION_SEED) = 42_idx_t\n   status = METIS_PartGraphRecursive(nvtxs, ncon, xadj, adjncy, adjwgt=weights, &\n      nparts=nparts, options=options, edgecut=edgecut, part=part)\n   if (status /= METIS_OK) error stop 'METIS partition failed'\n   if (any(part < 0_idx_t) .or. any(part >= nparts)) error stop 'Invalid partition'\n   if (count(part == 0) < 3 .or. count(part == 1) < 3) error stop 'Unbalanced partition'\n   cuts = 0\n   do vertex = 1, 9\n      do i = int(xadj(vertex))+1, int(xadj(vertex+1))\n         other = int(adjncy(i))+1\n         if (part(vertex) /= part(other)) cuts = cuts+1\n      end do\n   end do\n   if (cuts/2 /= edgecut) error stop 'Edge cut check failed'\n   print '(a,2i4)', 'Partition sizes:', count(part == 0), count(part == 1)\n   print '(a,i4)', 'Edges crossing partitions:', edgecut\n   do row = 0, 2\n      print '(3i4)', part(3*row+1:3*row+3)\n   end do\n   print *, 'PASS metis-fpm'\nend program demo_metis\n",
+    "topics": []
+  },
+  {
+    "id": "m_calculator",
+    "repository": "urbanjost/M_calculator",
+    "revision": "b6bbc08f81eb158a6908a42016059815fe72217d",
+    "archive_sha256": "50081a2e5022fbd40bbb8d9b70759481f9bd7a0c811132b48931a3538e355441",
+    "stars": 5,
+    "license": "MIT",
+    "category": "Expression parsing",
+    "description": "Evaluate mathematical expressions and named variables supplied as text.",
+    "dependencies": [],
+    "source": "program demo_calculator\n   use M_calculator, only: dnum0\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   double precision :: result\n\n   result = dnum0('radius=3')\n   if (result /= 3.d0) error stop 'Variable assignment failed'\n   result = dnum0('area=acos(-1)*radius**2')\n   if (.not. ieee_is_finite(result)) error stop 'Nonfinite expression result'\n   if (abs(result - acos(-1.d0)*9.d0) > 1.d-10) error stop 'Expression check failed'\n   print '(a,f14.8)', 'Area for radius 3: ', result\n   result = dnum0('sqrt(81)+2**3')\n   if (abs(result-17.d0) > 1.d-12) error stop 'Arithmetic check failed'\n   print '(a,f10.4)', 'sqrt(81)+2**3 = ', result\n   print *, 'PASS m_calculator'\nend program demo_calculator\n",
+    "topics": [
+      "expression",
+      "expression-evaluator",
+      "fortran",
+      "fortran-package-manager",
+      "parse"
+    ]
+  },
+  {
+    "id": "befor64",
+    "repository": "szaghi/BeFoR64",
+    "revision": "1dd004ea296b7e5aca60a9704bab81c610f87cff",
+    "archive_sha256": "961f4b256babeda3db523a3a3a8dfb8271b36cca7ade048f4a1afa969bdc0cac",
+    "stars": 22,
+    "license": "Multiple licenses",
+    "category": "Encoding and compression",
+    "description": "Base64 encoding and decoding of text and numerical data.",
+    "dependencies": [
+      {
+        "repository": "szaghi/PENF",
+        "revision": "65061235982495b158412b70c05b228af4320d94",
+        "sha256": "f8c832e6893d0f12dca9387171f70fb3f0eb60e4b021f385da6937134fcebc74"
+      }
+    ],
+    "source": "program demo_befor64\n   use befor64, only: b64_init, b64_encode, b64_decode\n   use penf, only: I4P\n   implicit none\n   character(:), allocatable :: encoded\n   character(7) :: restored\n   integer(I4P) :: values(3) = [1_I4P, -42_I4P, 12345_I4P], decoded(3)\n\n   call b64_init()\n   call b64_encode(s='Fortran', code=encoded)\n   if (encoded /= 'Rm9ydHJhbg==') error stop 'Known Base64 encoding failed'\n   print '(a)', 'Fortran -> '//encoded\n   call b64_decode(code=encoded, s=restored)\n   if (restored /= 'Fortran') error stop 'Text round trip failed'\n   call b64_encode(n=values, code=encoded)\n   call b64_decode(code=encoded, n=decoded)\n   if (any(decoded /= values)) error stop 'Integer round trip failed'\n   print '(a,3i8)', 'Recovered integers:', decoded\n   print *, 'PASS befor64'\nend program demo_befor64\n",
+    "topics": [
+      "base64",
+      "decoding",
+      "encoding",
+      "fortran",
+      "oop"
+    ]
+  },
+  {
+    "id": "fortran-zlib",
+    "repository": "interkosmos/fortran-zlib",
+    "revision": "d5afd62acc65bdde39f5f5d60eb85122d0f86a22",
+    "archive_sha256": "5b8ccb92c1950b36ba9714d068cade2c26aeeab24e627ad883bb7a8bb9c743b1",
+    "stars": 14,
+    "license": "ISC",
+    "category": "Encoding and compression",
+    "description": "Fortran interfaces to zlib lossless compression and decompression.",
+    "dependencies": [],
+    "catalog_build": {
+      "apt_packages": [
+        "zlib1g-dev=1:1.3.dfsg+really1.3.1-1+b1"
+      ],
+      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+    },
+    "source": "program demo_zlib\n   use zlib\n   implicit none(type, external)\n   character(:), allocatable :: original, compressed, restored\n   integer(z_ulong) :: input_size, compressed_size, output_size\n   integer :: status\n\n   original = repeat('Fortran scientific computing. ', 100)\n   input_size = len(original, kind=z_ulong)\n   compressed_size = compress_bound(input_size)\n   allocate(character(len=compressed_size) :: compressed)\n   status = compress(compressed, compressed_size, original, input_size)\n   if (status /= Z_OK) error stop 'Compression failed'\n   output_size = input_size\n   allocate(character(len=output_size) :: restored)\n   status = uncompress(restored, output_size, compressed, compressed_size)\n   if (status /= Z_OK) error stop 'Decompression failed'\n   if (output_size /= input_size .or. restored /= original) error stop 'Compression round trip failed'\n   if (compressed_size >= input_size) error stop 'Expected repeated text to compress'\n   print '(a,i0)', 'Original bytes:   ', input_size\n   print '(a,i0)', 'Compressed bytes: ', compressed_size\n   print '(a)', 'Decompressed text matches the original.'\n   print *, 'PASS fortran-zlib'\nend program demo_zlib\n",
+    "topics": [
+      "archiving",
+      "compression",
+      "fortran",
+      "fortran-2018",
+      "fortran-package-manager",
+      "zlib"
+    ]
+  },
+  {
+    "id": "iapws",
+    "repository": "MilanSkocic/iapws",
+    "revision": "ce3820c011737bcc3a37a02b9ccfeff28616019f",
+    "archive_sha256": "c05e6dd383edc009deca842ee770aaf660ff1ea8be140c28019fa0d6260d0794",
+    "stars": 7,
+    "license": "MIT",
+    "category": "Physical properties",
+    "description": "IAPWS thermodynamic properties of water, including saturation pressure and temperature.",
+    "dependencies": [
+      {
+        "repository": "fortran-lang/stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+      },
+      {
+        "repository": "urbanjost/M_CLI2",
+        "revision": "a6934890178377cd92444d290aa3d3198ba9954d",
+        "sha256": "55f4bdd7c3be3466f838eae12ed2409b44fe0bd6cc0118bb5194b1d7d578ee28"
+      },
+      {
+        "repository": "MilanSkocic/ciaaw",
+        "revision": "140e0089f78d93eb6333fc8db4ff75aa84893522",
+        "sha256": "30885267d5cd2b48bef63659c3f20df9f22e842cb4dbafe41fade1a86a36e079"
+      }
+    ],
+    "catalog_build": {
+      "manifest_versions": {
+        "milanskocic/iapws": "0.7.1",
+        "fortran-lang/stdlib": "0.0.0",
+        "milanskocic/ciaaw": "1.1.1"
+      },
+      "registry": {
+        "stdlib": {
+          "git": "https://github.com/fortran-lang/stdlib",
+          "rev": "58eb9133966c2797e0593281169ef57c43eccc1d"
+        }
+      },
+      "environment": {
+        "FPM_FFLAGS": "-cpp -DSTDLIB_EXTERNAL_BLAS -DSTDLIB_EXTERNAL_LAPACK -ffunction-sections -fdata-sections",
+        "FPM_LDFLAGS": "-Wl,--gc-sections -llapack -lblas"
+      },
+      "apt_packages": [
+        "libblas-dev=3.12.1-6",
+        "liblapack-dev=3.12.1-6"
+      ],
+      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+    },
+    "source": "program demo_iapws\n   use iso_fortran_env, only: real64\n   use iapws, only: psat, tsat\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   real(real64) :: temperature(3), pressure(3), restored(3)\n   ! IAPWS-IF97 Table 35 reference pressures (MPa), temperatures in kelvin.\n   real(real64), parameter :: reference(3) = [0.00353658941_real64, 2.63889776_real64, 12.3443146_real64]\n   integer :: i\n\n   temperature = [300._real64, 500._real64, 600._real64]\n   call psat(temperature, pressure)\n   if (.not. all(ieee_is_finite(pressure))) error stop 'Nonfinite saturation pressure'\n   if (any(abs(pressure-reference) > 5.e-8_real64)) error stop 'Reference pressure check failed'\n   call tsat(pressure, restored)\n   if (maxval(abs(restored-temperature)) > 1.e-7_real64) error stop 'Temperature round trip failed'\n   print '(a)', 'Temperature (K)    Saturation pressure (MPa)'\n   do i = 1, 3\n      print '(f12.2,f24.10)', temperature(i), pressure(i)\n   end do\n   print *, 'PASS iapws'\nend program demo_iapws\n",
+    "topics": [
+      "fortran-language",
+      "fortran-library",
+      "fortran-package-manager",
+      "iapws",
+      "science",
+      "water"
+    ]
+  },
+  {
+    "id": "linalg",
+    "repository": "jchristopherson/linalg",
+    "revision": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+    "archive_sha256": "6210b8b167b50694941f48b20ad5d94bdacab026f1eb4720e2d55e8ddde0b59a",
+    "stars": 25,
+    "license": "MIT; bundled QRUPDATE GPL-3.0-or-later",
+    "category": "Linear algebra",
+    "description": "Convenient dense and sparse linear algebra interfaces to BLAS, LAPACK and ARPACK.",
+    "dependencies": [],
+    "catalog_build": {
+      "apt_packages": [
+        "libblas-dev=3.12.1-6",
+        "liblapack-dev=3.12.1-6",
+        "libarpack2-dev=3.9.1-6"
+      ],
+      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+    },
+    "source": "program demo_linalg\n   use iso_fortran_env, only: real64, int32\n   use linalg, only: lu_factor, solve_lu, eigen\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   real(real64) :: a(3,3), b(3), x(3), symmetric(2,2)\n   real(real64), allocatable :: lu(:,:), values(:), vectors(:,:)\n   integer(int32), allocatable :: pivots(:)\n   integer :: i\n\n   a = reshape([3._real64, 1._real64, 0._real64, &\n                1._real64, 4._real64, 1._real64, &\n                0._real64, 1._real64, 2._real64], [3,3])\n   b = matmul(a, [1._real64, 2._real64, 3._real64])\n   call lu_factor(a, ipvt=pivots, lu=lu)\n   x = solve_lu(lu, pivots, b)\n   if (.not. all(ieee_is_finite(x))) error stop 'Nonfinite solution'\n   if (maxval(abs(x-[1._real64, 2._real64, 3._real64])) > 1.e-12_real64) error stop 'Incorrect solution'\n   if (maxval(abs(matmul(a,x)-b)) > 1.e-12_real64) error stop 'Linear-system residual'\n   print '(a,3f12.6)', 'Solution:', x\n\n   symmetric = reshape([2._real64, 1._real64, 1._real64, 2._real64], [2,2])\n   call eigen(symmetric, values, vectors)\n   if (.not. all(ieee_is_finite(values))) error stop 'Nonfinite eigenvalues'\n   if (maxval(abs(values-[1._real64, 3._real64])) > 1.e-12_real64) error stop 'Incorrect eigenvalues'\n   if (.not. all(ieee_is_finite(vectors))) error stop 'Nonfinite eigenvectors'\n   do i = 1, 2\n      if (maxval(abs(matmul(symmetric,vectors(:,i))-values(i)*vectors(:,i))) > 1.e-12_real64) &\n         error stop 'Eigenvector residual'\n   end do\n   print '(a,2f12.6)', 'Eigenvalues:', values\n   print *, 'PASS linalg'\nend program demo_linalg\n",
+    "topics": [
+      "blas",
+      "cholesky-decomposition",
+      "compressed-row-storage",
+      "compressed-sparse-row",
+      "eigenvalues",
+      "eigenvectors",
+      "fortran",
+      "lapack",
+      "linear-algebra",
+      "lu-decomposition",
+      "qr-decomposition",
+      "singular-value-decomposition",
+      "sparse-matrix"
+    ]
+  },
+  {
+    "id": "nonlin",
+    "repository": "jchristopherson/nonlin",
+    "revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+    "archive_sha256": "3a6f6cf6daa9b352213407f7c90555c22a492ad455cab0e2eb708efc7d34eaba",
+    "stars": 27,
+    "license": "MIT; linalg dependency bundles GPL-3.0-or-later QRUPDATE",
+    "category": "Roots and optimization",
+    "description": "Object-oriented solvers for nonlinear equations, least squares and optimization.",
+    "dependencies": [
+      {
+        "repository": "jchristopherson/ferror",
+        "revision": "9d6c9750f5c14ef2c806104ea8dfdfc9ce91efed",
+        "sha256": "b2c2c059d263b38484acf6956fa6416f899d739d3669906931aa1c08441510bd"
+      },
+      {
+        "repository": "jchristopherson/linalg",
+        "revision": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+        "sha256": "6210b8b167b50694941f48b20ad5d94bdacab026f1eb4720e2d55e8ddde0b59a"
+      }
+    ],
+    "catalog_build": {
+      "apt_packages": [
+        "libblas-dev=3.12.1-6",
+        "liblapack-dev=3.12.1-6",
+        "libarpack2-dev=3.9.1-6"
+      ],
+      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+    },
+    "source": "module demo_nonlin_equations\n   use iso_fortran_env, only: real64\n   implicit none\ncontains\n   subroutine equations(x, f, args)\n      real(real64), intent(in) :: x(:)\n      real(real64), intent(out) :: f(:)\n      class(*), intent(inout), optional :: args\n      ! A circle and a line intersect at (2,1) and (-1,-2).\n      f(1) = x(1)**2 + x(2)**2 - 5._real64\n      f(2) = x(1) - x(2) - 1._real64\n   end subroutine equations\nend module demo_nonlin_equations\n\nprogram demo_nonlin\n   use nonlin, only: vecfcn_helper, vecfcn, newton_solver, iteration_behavior\n   use demo_nonlin_equations, only: equations, real64\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   type(vecfcn_helper) :: objective\n   type(newton_solver) :: solver\n   type(iteration_behavior) :: tracking\n   procedure(vecfcn), pointer :: callback\n   real(real64) :: x(2), residual(2), checked(2)\n\n   callback => equations\n   call objective%set_fcn(callback, 2, 2)\n   call solver%set_max_fcn_evals(200)\n   call solver%set_fcn_tolerance(1.e-10_real64)\n   call solver%set_var_tolerance(1.e-10_real64)\n   x = [1.8_real64, 0.8_real64]\n   call solver%solve(objective, x, residual, tracking)\n   call equations(x, checked)\n   if (.not. all(ieee_is_finite(x)) .or. .not. all(ieee_is_finite(checked))) &\n      error stop 'Nonfinite nonlinear solution'\n   if (maxval(abs(checked)) > 1.e-8_real64) error stop 'Nonlinear residual check failed'\n   if (maxval(abs(x-[2._real64, 1._real64])) > 1.e-8_real64) error stop 'Unexpected solution'\n   print '(a,2f14.9)', 'Solution:', x\n   print '(a,2es14.4)', 'Residuals:', checked\n   print '(a,i0)', 'Iterations: ', tracking%iter_count\n   print *, 'PASS nonlin'\nend program demo_nonlin\n",
+    "topics": [
+      "bfgs",
+      "fortran",
+      "least-squares",
+      "levenberg-marquardt",
+      "nelder-mead",
+      "newton-raphson-multivariable",
+      "newtons-method",
+      "nonlinear-equations",
+      "optimization",
+      "polynomials",
+      "quasi-newton"
+    ]
+  },
+  {
+    "id": "maptran3d",
+    "repository": "geospace-code/maptran3d",
+    "revision": "4ccc2479ae79a58b34d8e491013cfa2f60f65867",
+    "archive_sha256": "061ee9c087d80362dd070e850f11538d0be27c1ce734ac37c369052934def57b",
+    "stars": 17,
+    "license": "BSD-2-Clause",
+    "category": "Geodesy",
+    "description": "Geographic and Earth-centered Cartesian coordinate transformations.",
+    "dependencies": [],
+    "catalog_build": {
+      "environment": {
+        "FPM_FFLAGS": "-fdefault-real-8 -fdefault-double-8"
+      },
+      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+    },
+    "source": "program demo_maptran3d\n   use iso_fortran_env, only: real64\n   use maptran, only: geodetic2ecef, ecef2geodetic\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   real(real64) :: latitude, longitude, altitude, x, y, z, lat2, lon2, alt2\n\n   latitude = 40.7128_real64\n   longitude = -74.0060_real64\n   altitude = 15._real64\n   call geodetic2ecef(latitude, longitude, altitude, x, y, z, deg=.true.)\n   if (.not. all(ieee_is_finite([x,y,z]))) error stop 'Nonfinite Cartesian coordinates'\n   call ecef2geodetic(x, y, z, lat2, lon2, alt2, deg=.true.)\n   if (.not. all(ieee_is_finite([lat2,lon2,alt2]))) error stop 'Nonfinite geographic coordinates'\n   if (abs(lat2-latitude) > 1.e-7_real64 .or. abs(lon2-longitude) > 1.e-7_real64 .or. &\n       abs(alt2-altitude) > 1.e-3_real64) error stop 'Coordinate round trip failed'\n   print '(a,3f17.5)', 'Earth-centered coordinates (m):', x, y, z\n   print '(a,2f14.7,f12.4)', 'Recovered latitude, longitude, altitude:', lat2, lon2, alt2\n   ! Independent WGS84 reference: zero latitude/longitude lies on the x axis.\n   call geodetic2ecef(0._real64, 0._real64, 0._real64, x, y, z, deg=.true.)\n   if (maxval(abs([x-6378137._real64,y,z])) > 1.e-6_real64) error stop 'WGS84 equator check'\n   print *, 'PASS maptran3d'\nend program demo_maptran3d\n",
+    "topics": [
+      "coordinate-conversions",
+      "coordinate-transformation",
+      "fortran2018",
+      "geodesy",
+      "modern-fortran"
+    ]
+  },
+  {
+    "id": "fortran-pcre2",
+    "repository": "interkosmos/fortran-pcre2",
+    "revision": "44b2fe9aac30272496b51286da8b79a47880cd03",
+    "archive_sha256": "5d1f430685b646ddf9a458c9b0e99096afc79452c82e8c55a96d631f2cc4fd68",
+    "stars": 7,
+    "license": "ISC",
+    "category": "Strings",
+    "description": "Perl-compatible regular expressions, capture groups and text matching through PCRE2.",
+    "dependencies": [],
+    "catalog_build": {
+      "apt_packages": [
+        "libpcre2-dev=10.46-1~deb13u3"
+      ],
+      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+    },
+    "source": "program demo_pcre2\n   use pcre2\n   implicit none(type, external)\n   character(*), parameter :: pattern = '(?<year>[0-9]{4})-(?<month>[0-9]{2})-(?<day>[0-9]{2})'\n   character(*), parameter :: subject = 'Observation date: 2026-10-27'\n   type(c_ptr) :: regex, matches, pointer\n   integer :: error_code, status\n   integer(pcre2_size) :: error_offset\n   integer(pcre2_size), pointer :: offsets(:)\n   character(4) :: year\n   character(2) :: month, day\n\n   regex = pcre2_compile(pattern, len(pattern,kind=pcre2_size), 0, error_code, error_offset, c_null_ptr)\n   if (.not. c_associated(regex)) error stop 'Regular-expression compilation failed'\n   matches = pcre2_match_data_create(4, c_null_ptr)\n   if (.not. c_associated(matches)) error stop 'Match-data allocation failed'\n   status = pcre2_match(regex, subject, len(subject,kind=pcre2_size), &\n      0_pcre2_size, 0, matches, c_null_ptr)\n   if (status /= 4) error stop 'Expected complete match and three capture groups'\n   pointer = pcre2_get_ovector_pointer(matches)\n   if (.not. c_associated(pointer)) error stop 'Missing capture offsets'\n   call c_f_pointer(pointer, offsets, [8])\n   if (any(offsets > len(subject))) error stop 'Capture outside subject'\n   year = subject(offsets(3)+1:offsets(4))\n   month = subject(offsets(5)+1:offsets(6))\n   day = subject(offsets(7)+1:offsets(8))\n   if (year /= '2026' .or. month /= '10' .or. day /= '27') error stop 'Incorrect captured date'\n   print '(a)', subject\n   print '(a)', 'Captured year='//year//', month='//month//', day='//day\n   status = pcre2_match(regex, 'No date here', 12_pcre2_size, 0_pcre2_size, 0, matches, c_null_ptr)\n   if (status /= PCRE2_ERROR_NOMATCH) error stop 'Expected no match'\n   call pcre2_match_data_free(matches)\n   call pcre2_code_free(regex)\n   print *, 'PASS fortran-pcre2'\nend program demo_pcre2\n",
+    "topics": [
+      "fortran",
+      "fortran-2018",
+      "fortran-package-manager",
+      "fpm",
+      "pcre",
+      "pcre2",
+      "regex",
+      "regexp"
+    ]
+  },
+  {
+    "id": "ciaaw",
+    "repository": "MilanSkocic/ciaaw",
+    "revision": "02efd49caea1a7bbff0602b752075d3fe935bd10",
+    "archive_sha256": "58aee500452c9fd1a643eaa5034a2a86481f22d2f868ab9968b1cc3e5ea6d76f",
+    "stars": 5,
+    "license": "MIT",
+    "category": "Physical properties",
+    "description": "Standard atomic weights, isotopic abundances and nuclide masses for chemistry.",
+    "dependencies": [
+      {
+        "repository": "fortran-lang/stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+      },
+      {
+        "repository": "urbanjost/M_CLI2",
+        "revision": "a6934890178377cd92444d290aa3d3198ba9954d",
+        "sha256": "55f4bdd7c3be3466f838eae12ed2409b44fe0bd6cc0118bb5194b1d7d578ee28"
+      },
+      {
+        "repository": "MilanSkocic/codata",
+        "revision": "d0c9b1552f0fa483a364de4a69e82c5e23344caf",
+        "sha256": "47a519277191fa5c9f3e476c1bf17bbafb6bf2eeeaca43fbffd938e7ecb835a3"
+      }
+    ],
+    "catalog_build": {
+      "manifest_versions": {
+        "milanskocic/ciaaw": "1.3.3",
+        "fortran-lang/stdlib": "0.0.0",
+        "milanskocic/codata": "0.0.0"
+      },
+      "registry": {
+        "stdlib": {
+          "git": "https://github.com/fortran-lang/stdlib",
+          "rev": "58eb9133966c2797e0593281169ef57c43eccc1d"
+        }
+      },
+      "environment": {
+        "FPM_FFLAGS": "-cpp -DSTDLIB_EXTERNAL_BLAS -DSTDLIB_EXTERNAL_LAPACK -ffunction-sections -fdata-sections",
+        "FPM_LDFLAGS": "-Wl,--gc-sections -llapack -lblas"
+      },
+      "apt_packages": [
+        "libblas-dev=3.12.1-6",
+        "liblapack-dev=3.12.1-6"
+      ],
+      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+    },
+    "source": "program demo_ciaaw\n   use iso_fortran_env, only: real64\n   use ciaaw, only: saw, ice\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   real(real64) :: hydrogen, oxygen, carbon, water, carbon_dioxide, abundance\n\n   ! Use abridged standard atomic weights, rather than interval endpoints.\n   hydrogen = saw('H', ab=.true.)\n   oxygen = saw('O', ab=.true.)\n   carbon = saw('C', ab=.true.)\n   if (.not. all(ieee_is_finite([hydrogen,oxygen,carbon]))) error stop 'Nonfinite atomic weights'\n   if (abs(hydrogen-1.008_real64) > 0.0001_real64 .or. abs(oxygen-15.999_real64) > 0.001_real64 .or. &\n       abs(carbon-12.011_real64) > 0.001_real64) error stop 'Atomic-weight check failed'\n   water = 2*hydrogen + oxygen\n   carbon_dioxide = carbon + 2*oxygen\n   print '(a,f12.5)', 'Water molar mass (g/mol):          ', water\n   print '(a,f12.5)', 'Carbon dioxide molar mass (g/mol): ', carbon_dioxide\n   abundance = ice('H', A=1) + ice('H', A=2)\n   if (.not. ieee_is_finite(abundance)) error stop 'Nonfinite isotope abundance'\n   if (abs(abundance-1._real64) > 1.e-6_real64) error stop 'Hydrogen isotope fractions do not sum to one'\n   print '(a,f12.8)', 'Hydrogen isotope fractions sum:   ', abundance\n   print *, 'PASS ciaaw'\nend program demo_ciaaw\n",
+    "topics": [
+      "chemistry",
+      "fortran",
+      "fortran-package-manager",
+      "isotopes",
+      "standard-atomic-masses"
+    ]
+  },
+  {
+    "id": "rngff",
+    "repository": "Archaeologic-Inc/rngff",
+    "revision": "8eccd1479f35159922a85db25a39bcd58a0c3faa",
+    "archive_sha256": "d20c2dd09772d2b9017f99ce6f93d5bc9460db402a616c9cede0093223730214",
+    "stars": 8,
+    "license": "MIT",
+    "category": "Random numbers",
+    "description": "A common object-oriented interface to pseudorandom number generators.",
+    "dependencies": [],
+    "source": "program demo_rngff\n   use iso_fortran_env, only: real64, int32\n   use rngff, only: linear_congruential_t\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   type(linear_congruential_t) :: generator, replay\n   real(real64) :: u, again, integral, first(5)\n   integer :: i\n\n   generator = linear_congruential_t(12345_int32, 67890_int32)\n   replay = linear_congruential_t(12345_int32, 67890_int32)\n   integral = 0._real64\n   do i = 1, 20000\n      call generator%next(u)\n      call replay%next(again)\n      if (.not. ieee_is_finite(u)) error stop 'Nonfinite random value'\n      if (u /= again) error stop 'Seeded replay differs'\n      if (u < 0._real64 .or. u >= 1._real64) error stop 'Value outside [0,1)'\n      if (i <= 5) first(i) = u\n      integral = integral + u*u\n   end do\n   integral = integral/20000\n   if (abs(integral-1._real64/3) > 0.015_real64) error stop 'Monte Carlo estimate outside tolerance'\n   print '(a,5f11.7)', 'First five draws:', first\n   print '(a,f12.7)', 'Monte Carlo integral of x squared on [0,1]: ', integral\n   print '(a)', 'The same seeds reproduced all 20000 draws.'\n   print *, 'PASS rngff'\nend program demo_rngff\n",
+    "topics": [
+      "random",
+      "random-number-generator",
+      "rng"
+    ]
+  },
+  {
+    "id": "fortran-zstd",
+    "repository": "interkosmos/fortran-zstd",
+    "revision": "4cb3e9f4a0db7c7ab24a8eeec06be9b471c52545",
+    "archive_sha256": "cab2468f54f90259e5bf54dc954614fd61f5deb65ec051fdf18ecb56c5047fb0",
+    "stars": 11,
+    "license": "ISC",
+    "category": "Encoding and compression",
+    "description": "Fortran interfaces to Zstandard lossless data compression.",
+    "dependencies": [],
+    "catalog_build": {
+      "apt_packages": [
+        "libzstd-dev=1.5.7+dfsg-1"
+      ],
+      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+    },
+    "source": "program demo_zstd\n   use zstd\n   implicit none(type, external)\n   character(:), allocatable :: original, compressed, restored\n   integer(c_size_t) :: input_size, capacity, compressed_size, restored_size\n\n   original = repeat('1.000,2.000,3.000,4.000'//new_line('a'), 128)\n   input_size = len(original, kind=c_size_t)\n   capacity = zstd_compress_bound(input_size)\n   allocate(character(len=capacity) :: compressed)\n   allocate(character(len=input_size) :: restored)\n   compressed_size = zstd_compress(compressed, capacity, original, input_size, zstd_default_c_level())\n   if (zstd_is_error(compressed_size)) error stop 'Zstandard compression failed'\n   restored_size = zstd_decompress(restored, input_size, compressed, compressed_size)\n   if (zstd_is_error(restored_size)) error stop 'Zstandard decompression failed'\n   if (restored_size /= input_size .or. restored /= original) error stop 'Data round trip failed'\n   if (compressed_size >= input_size) error stop 'Repeated data should compress'\n   print '(a,i0)', 'Original CSV bytes: ', input_size\n   print '(a,i0)', 'Compressed bytes:   ', compressed_size\n   print '(a)', 'Decompressed data matches exactly.'\n   print *, 'PASS fortran-zstd'\nend program demo_zstd\n",
+    "topics": [
+      "archiving",
+      "compression",
+      "fortran",
+      "fortran-2018",
+      "fortran-package-manager",
+      "zstandard",
+      "zstd"
+    ]
+  },
+  {
+    "id": "paramcard",
+    "repository": "tueda/paramcard",
+    "revision": "ffd6bfc0066f3aaa493333179a01257011b77f78",
+    "archive_sha256": "c8455b59148f73d88618ac058122e7d0aad66020aa328a6db972d85bb4151dc5",
+    "stars": 8,
+    "license": "MIT",
+    "category": "Command-line tools",
+    "description": "Named input parameters, defaults, string parsing and configuration summaries.",
+    "dependencies": [],
+    "source": "program demo_paramcard\n   use iso_fortran_env, only: real64\n   use paramcard, only: paramcard_parse, paramcard_get, paramcard_summary\n   implicit none\n   integer :: steps\n   real(real64) :: dt\n   character(:), allocatable :: method\n\n   ! Strings can also come from an input file or the playground's stdin box.\n   call paramcard_parse('steps = 250')\n   call paramcard_parse('method = rk4')\n   call paramcard_get('steps', steps, 100)\n   call paramcard_get('dt', dt, 0.01_real64)\n   call paramcard_get('method', method, 'euler')\n   if (steps /= 250 .or. dt /= 0.01_real64 .or. method /= 'rk4') error stop 'Parameter check failed'\n   call paramcard_summary()\n   print '(a,f8.3)', 'Simulated duration: ', steps*dt\n   print *, 'PASS paramcard'\nend program demo_paramcard\n",
+    "topics": [
+      "command-line",
+      "fortran",
+      "fortran-library",
+      "fortran2008"
+    ]
+  },
+  {
+    "id": "strff",
+    "repository": "everythingfunctional/strff",
+    "revision": "50e536cb087123f2c72140cb065c398a01fc5121",
+    "archive_sha256": "c0f773e21d2c1a0f7b83bcb51cf6bca4d7103815373e7be9a56d1689b8a5da42",
+    "stars": 0,
+    "license": "MIT",
+    "category": "Strings",
+    "description": "String splitting, joining, formatting and conversion from intrinsic types.",
+    "dependencies": [
+      {
+        "repository": "everythingfunctional/iso_varying_string",
+        "revision": "fb7635a6b21c3d50ac7c8c14f7696a70931cb4a6",
+        "sha256": "0a2ff49b7eb88218c5de043b5aa3e564e821cd8906354e6f67a2ca480ae0c52e"
+      }
+    ],
+    "catalog_build": {
+      "source_revisions": {
+        "everythingfunctional/iso_varying_string": "fb7635a6b21c3d50ac7c8c14f7696a70931cb4a6"
+      },
+      "git_aliases": {
+        "https://gitlab.com/everythingfunctional/exceptional_numbers": "https://github.com/everythingfunctional/exceptional_numbers",
+        "https://gitlab.com/everythingfunctional/iso_varying_string": "https://github.com/everythingfunctional/iso_varying_string"
+      },
+      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+    },
+    "source": "program demo_strff\n   use strff, only: split_at, join, to_string, operator(.includes.), operator(.startswith.)\n   use iso_varying_string, only: varying_string, char\n   implicit none\n   type(varying_string), allocatable :: words(:)\n   character(:), allocatable :: combined\n   integer :: i\n\n   words = split_at('red,green,blue', ',')\n   if (size(words) /= 3) error stop 'Incorrect token count'\n   if (char(words(1)) /= 'red' .or. char(words(2)) /= 'green' .or. char(words(3)) /= 'blue') &\n      error stop 'Incorrect split result'\n   combined = char(join(words, ' | '))\n   if (combined /= 'red | green | blue') error stop 'Incorrect joined text'\n   if (.not. (combined .includes. 'green')) error stop 'Substring check failed'\n   if (.not. (combined .startswith. 'red')) error stop 'Prefix check failed'\n   if (char(to_string(42)) /= '42') error stop 'Integer-to-string check failed'\n   print '(a)', combined\n   do i = 1, size(words)\n      print '(a)', 'Word '//char(to_string(i))//': '//char(words(i))\n   end do\n   print *, 'PASS strff'\nend program demo_strff\n",
+    "topics": [
+      "fortran",
+      "string-manipulation"
+    ]
+  },
+  {
+    "id": "diffeq",
+    "repository": "jchristopherson/diffeq",
+    "revision": "989b320179c23aaff4bfe72994c90e9034f50c74",
+    "archive_sha256": "09f6e92aea1dc8c9eb9233d4052b012e3b53a739e1ce078453d0421ddb1d4e87",
+    "stars": 8,
+    "license": "MIT",
+    "category": "Differential equations",
+    "description": "Adaptive explicit and implicit integrators for ordinary differential and differential-algebraic equations.",
+    "dependencies": [
+      {
+        "repository": "jchristopherson/linalg",
+        "revision": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+        "sha256": "6210b8b167b50694941f48b20ad5d94bdacab026f1eb4720e2d55e8ddde0b59a"
+      }
+    ],
+    "catalog_build": {
+      "apt_packages": [
+        "libblas-dev=3.12.1-6",
+        "liblapack-dev=3.12.1-6",
+        "libarpack2-dev=3.9.1-6"
+      ],
+      "source_revisions": {
+        "jchristopherson/linalg": "cb8fb7b1c67986591083cac516eb700f47d69b68"
+      },
+      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+    },
+    "source": "module oscillator_model\n   use iso_fortran_env, only: dp => real64\n   implicit none\ncontains\n   subroutine rhs(t,y,dydt,args)\n      real(dp), intent(in) :: t, y(:)\n      real(dp), intent(out) :: dydt(:)\n      class(*), optional, intent(inout) :: args\n      dydt = [y(2), -y(1)-0.2_dp*y(2)]\n   end subroutine\nend module\n\nprogram damped_oscillator\n   use diffeq, only: runge_kutta_45, ode_container\n   use oscillator_model, only: dp, rhs\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   type(runge_kutta_45) :: solver\n   type(ode_container) :: model\n   real(dp), allocatable :: solution(:,:), exact(:)\n   real(dp) :: frequency, error\n   integer :: n\n   model%fcn => rhs\n   call solver%set_absolute_tolerance(1.e-10_dp)\n   call solver%set_relative_tolerance(1.e-10_dp)\n   call solver%solve(model,[0.0_dp,10.0_dp],[1.0_dp,0.0_dp])\n   solution = solver%get_solution()\n   n = size(solution,1)\n   if (n<2) error stop 'No solution'\n   if (.not. all(ieee_is_finite(solution))) error stop 'Nonfinite solution'\n   if (abs(solution(n,1)-10.0_dp)>1.e-9_dp) error stop 'Incomplete integration'\n   frequency = sqrt(0.99_dp)\n   exact = exp(-0.1_dp*solution(:,1)) * &\n      (cos(frequency*solution(:,1))+0.1_dp/frequency*sin(frequency*solution(:,1)))\n   error = maxval(abs(solution(:,2)-exact))\n   print '(a,i0)', 'Adaptive solution points: ', n\n   print '(a,f12.8)', 'Displacement at time 10: ', solution(n,2)\n   print '(a,es12.4)', 'Maximum error against analytic solution: ', error\n   if (error>1.e-7_dp) error stop 'Oscillator check'\n   print *, 'PASS diffeq'\nend program\n",
+    "topics": [
+      "adams-bashforth-moulton",
+      "backwards-differentiation-formula",
+      "bdf",
+      "differential-algebraic-equations",
+      "differential-equations",
+      "esdirk",
+      "event-detection",
+      "implicit-runge-kutta",
+      "index-reduction",
+      "kennedy-carpenter",
+      "rosenbrock",
+      "runge-kutta-methods",
+      "tsitouras"
+    ]
+  },
+  {
+    "id": "fjsample",
+    "repository": "RJaBi/FJsample",
+    "revision": "8563d2653d1a9d80a355b2064f4b153559698915",
+    "archive_sha256": "4def47fc11f70e1efac048271e43733601a3ad6e8152e0b747df139354742de8",
+    "stars": 1,
+    "license": "MIT",
+    "category": "Statistics",
+    "description": "Jackknife and bootstrap resampling, bias estimates and statistical uncertainties.",
+    "dependencies": [],
+    "source": "program jackknife_mean\n   use FJsample, only: WP, Complement, jackError\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   integer, parameter :: n = 6\n   real(WP) :: data(n), jack(0:n), error, bias, expected\n   data = [1, 2, 4, 5, 8, 10]\n   call Complement(jack(0), data)\n   call Complement(n, jack(1:), data)\n   call jackError(n, jack, error, bias)\n   expected = sqrt(sum((data-sum(data)/n)**2)/(n*(n-1)))\n   print '(a,f10.6)', 'Sample mean: ', jack(0)\n   print '(a,f10.6)', 'Jackknife standard error: ', error\n   print '(a,f10.6)', 'Independent standard error: ', expected\n   if (.not. ieee_is_finite(error)) error stop 'Nonfinite estimate'\n   if (abs(error-expected)>1.e-10_WP .or. abs(bias)>1.e-10_WP) error stop 'Jackknife check'\n   print *, 'PASS fjsample'\nend program\n",
+    "topics": [
+      "bootstrap-resampling",
+      "fortran",
+      "fortran-package-manager",
+      "jackknife-resampling",
+      "meson-python"
+    ]
+  },
+  {
+    "id": "conmin",
+    "repository": "jacobwilliams/conmin",
+    "revision": "201f3b29f023baf7bef13ad8f49b906ffb1c7757",
+    "archive_sha256": "d5c83d31bd415152a05f11c70eb4ec2058df319048bdef6589bda8c20147e6ff",
+    "stars": 7,
+    "license": "BSD-3-Clause (modernization); public-domain original",
+    "category": "Roots and optimization",
+    "description": "Constrained nonlinear minimization using feasible directions and reverse communication.",
+    "dependencies": [],
+    "source": "program constrained_quadratic\n   use conmin_module, only: conmin_class, wp => conmin_wp\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   integer, parameter :: n1=4, n2=5, n3=5, n4=5, n5=10\n   type(conmin_class) :: solver\n   real(wp) :: x(n1), lower(n1), upper(n1), g(n2), scal(n1), df(n1), a(n1,n3)\n   real(wp) :: s(n1), g1(n2), g2(n2), b(n3,n3), c(n4), value\n   integer :: isc(n2), ic(n3), ms1(n5), i\n   ! Minimize x**2+y**2 subject to x+y >= 1. Exact optimum: (0.5,0.5).\n   x=1; lower=-10; upper=10; scal=1\n   g=0; df=0; a=0; s=0; g1=0; g2=0; b=0; c=0; isc=0; ic=0; ms1=0\n   solver%ndv=2; solver%ncon=1; solver%nside=1\n   solver%infog=0; solver%info=0; solver%nfdg=0; solver%iprint=0\n   solver%itmax=100; solver%icndir=0; solver%nscal=0; solver%itrm=3\n   solver%ct=-1.e-6_wp; solver%ctmin=1.e-7_wp\n   solver%delfun=1.e-10_wp; solver%dabfun=1.e-10_wp\n   solver%igoto=0\n   do i=1,1000\n      call solver%solve(x,lower,upper,g,scal,df,a,s,g1,g2,b,c,isc,ic,ms1,n1,n2,n3,n4,n5)\n      solver%obj=sum(x(1:2)**2)\n      g(1)=1-x(1)-x(2)\n      if (solver%igoto==0) exit\n   end do\n   value=sum(x(1:2)**2)\n   print '(a,2f12.6)', 'Constrained minimum at: ', x(1:2)\n   print '(a,f12.6)', 'Objective (expected 0.5): ', value\n   print '(a,es12.4)', 'Constraint violation: ', max(0.0_wp,g(1))\n   if (solver%igoto/=0) error stop 'Iteration limit'\n   if (.not. all(ieee_is_finite(x(1:2)))) error stop 'Nonfinite result'\n   if (maxval(abs(x(1:2)-0.5_wp))>1.e-3_wp .or. g(1)>1.e-4_wp) error stop 'Optimum check'\n   print *, 'PASS conmin'\nend program\n",
+    "topics": [
+      "conmin",
+      "constrained-optimization",
+      "fortran",
+      "fortran-package-manager",
+      "numerical-optimization",
+      "optimization"
+    ]
+  },
+  {
+    "id": "opti",
+    "repository": "Konrad1991/opti",
+    "revision": "6fb22db21bd2338e00690ff3706be61a1f101101",
+    "archive_sha256": "db700adb3e72d2f347fc8ef30a32ee61cac3f4c943be9af3354680ad8f9ee003",
+    "stars": 1,
+    "license": "GPL-2.0-or-later",
+    "category": "Roots and optimization",
+    "description": "Particle swarm optimization with star and adaptive neighborhood topologies.",
+    "dependencies": [
+      {
+        "repository": "fortran-lang/stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+      }
+    ],
+    "catalog_build": {
+      "manifest_versions": {
+        "fortran-lang/stdlib": "0.0.0"
+      },
+      "environment": {
+        "FPM_FFLAGS": "-cpp -DSTDLIB_EXTERNAL_BLAS -DSTDLIB_EXTERNAL_LAPACK -ffunction-sections -fdata-sections",
+        "FPM_LDFLAGS": "-Wl,--gc-sections -llapack -lblas"
+      },
+      "apt_packages": [
+        "libblas-dev=3.12.1-6",
+        "liblapack-dev=3.12.1-6"
+      ],
+      "source_revisions": {
+        "fortran-lang/stdlib": "58eb9133966c2797e0593281169ef57c43eccc1d"
+      },
+      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+    },
+    "source": "module objective_function\n   implicit none\ncontains\n   function objective(x,n) result(value)\n      integer, intent(in) :: n\n      real(8), intent(in) :: x(n)\n      real(8) :: value\n      value = sum((x-[1.0d0,-2.0d0])**2)\n   end function\nend module\n\nprogram particle_swarm_demo\n   use psomod, only: optimizer\n   use objective_function, only: objective\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   integer, allocatable :: seed(:)\n   integer :: n\n   real(8) :: lower(2), upper(2), result(2), value\n   call random_seed(size=n)\n   allocate(seed(n),source=314159)\n   call random_seed(put=seed)\n   lower = -5\n   upper = 5\n   result = 0\n   ! Use adaptive neighborhoods; convergence depends on topology and work budget.\n   call optimizer(40,400,2,lower,upper,1.d-10,objective,result,topo=2)\n   value = objective(result,2)\n   print '(a,2f12.6)', 'Particle swarm minimum at: ', result\n   print '(a,es12.4)', 'Squared distance from (1,-2): ', value\n   if (.not. ieee_is_finite(value)) error stop 'Nonfinite objective'\n   if (value>1.d-5) error stop 'Optimization check'\n   print *, 'PASS opti'\nend program\n",
+    "topics": [
+      "numerical-optimization",
+      "particle-swarm-optimization",
+      "pso",
+      "pso-algorithm",
+      "swarm-intelligence",
+      "topology"
+    ]
+  },
+  {
+    "id": "interpolation",
+    "repository": "furstj/interpolation",
+    "revision": "bf6d22ad931855d510dcfb5bdd6870cce8924b22",
+    "archive_sha256": "102b10cbdfe5800b88a64e305718526387feb684e3fb07225e86add69052487b",
+    "stars": 1,
+    "license": "MIT",
+    "category": "Interpolation",
+    "description": "Linear and shape-preserving piecewise cubic interpolation for tabulated data.",
+    "dependencies": [
+      {
+        "repository": "fortran-lang/stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+      }
+    ],
+    "catalog_build": {
+      "manifest_versions": {
+        "fortran-lang/stdlib": "0.0.0"
+      },
+      "environment": {
+        "FPM_FFLAGS": "-cpp -DSTDLIB_EXTERNAL_BLAS -DSTDLIB_EXTERNAL_LAPACK -ffunction-sections -fdata-sections",
+        "FPM_LDFLAGS": "-Wl,--gc-sections -llapack -lblas"
+      },
+      "apt_packages": [
+        "libblas-dev=3.12.1-6",
+        "liblapack-dev=3.12.1-6"
+      ],
+      "registry": {
+        "stdlib": {
+          "git": "https://github.com/fortran-lang/stdlib",
+          "rev": "58eb9133966c2797e0593281169ef57c43eccc1d"
+        }
+      },
+      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+    },
+    "source": "program interpolation_demo\n   use iso_fortran_env, only: dp => real64\n   use interpolation, only: interp1\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   real(dp) :: x(5), y(5), xi(9), linear(9), smooth(9)\n   integer :: i\n   x = [0,1,2,3,4]\n   xi = [(i/2.0_dp,i=0,8)]\n   y = 2*x+1\n   linear = interp1(x,y,xi)\n   if (.not. all(ieee_is_finite(linear))) error stop 'Nonfinite interpolation'\n   if (maxval(abs(linear-(2*xi+1)))>1.e-12_dp) error stop 'Linear check'\n   y = [0,1,1,2,3]\n   smooth = interp1(x,y,xi,method='pchip')\n   if (.not. all(ieee_is_finite(smooth))) error stop 'Nonfinite PCHIP'\n   if (any(smooth(2:)<smooth(:8)-1.e-12_dp)) error stop 'Monotonicity check'\n   if (maxval(abs(smooth(1:9:2)-y))>1.e-12_dp) error stop 'Knot check'\n   print '(a)', '       x      linear       pchip'\n   do i=1,9\n      print '(3f12.5)', xi(i),linear(i),smooth(i)\n   end do\n   print *, 'PASS interpolation'\nend program\n",
+    "topics": [
+      "fortran",
+      "interpolation"
+    ]
+  },
+  {
+    "id": "fortran_huffman",
+    "repository": "Euler-37/fortran_huffman",
+    "revision": "c9976192e0db7738fcb65f3e83f209ac49b52880",
+    "archive_sha256": "4945bbcb9370f80dacf58647991a43159210a8468d63b5397828a283cdde631d",
+    "stars": 0,
+    "license": "Not specified upstream",
+    "category": "Encoding and compression",
+    "description": "Huffman coding of byte streams with file compression and decompression.",
+    "dependencies": [],
+    "source": "program huffman_round_trip\n   use huffman_mod, only: hftree\n   implicit none\n   character(*), parameter :: text = repeat('Fortran compresses repeated text. ',100)\n   character(len(text)) :: restored\n   integer :: unit, original_size, compressed_size, restored_size\n   open(newunit=unit,file='message.txt',status='replace',access='stream',form='unformatted')\n   write(unit) text\n   close(unit)\n   block\n      type(hftree) :: encoder\n      call encoder%encode('message.txt')\n   end block\n   block\n      type(hftree) :: decoder\n      call decoder%decode('message.txt.bin')\n   end block\n   inquire(file='message.txt',size=original_size)\n   inquire(file='message.txt.bin',size=compressed_size)\n   inquire(file='message.txt.bin.txt',size=restored_size)\n   if (restored_size/=len(text)) error stop 'Length mismatch'\n   open(newunit=unit,file='message.txt.bin.txt',access='stream',form='unformatted',status='old')\n   read(unit) restored\n   close(unit)\n   if (restored/=text) error stop 'Round-trip mismatch'\n   print '(a,i0)', 'Original bytes: ', original_size\n   print '(a,i0)', 'Compressed bytes (including tree): ', compressed_size\n   print '(a)', 'Decoded text matches every original byte.'\n   print *, 'PASS fortran_huffman'\nend program\n",
+    "topics": [
+      "fortran",
+      "huffman-compression-algorithm"
+    ]
+  },
+  {
+    "id": "fastmath",
+    "repository": "perazz/fastmath",
+    "revision": "ad0f14c455205c0e6c1b9300cd7f333fafb750e2",
+    "archive_sha256": "cea87a0687612725d0baf1f5b19c802e0d55c3a4c9e595fe7f85d4c4c71d656a",
+    "stars": 17,
+    "license": "MIT",
+    "category": "General utilities",
+    "description": "Approximate exponential, logarithm and inverse-square-root functions.",
+    "dependencies": [],
+    "source": "program approximate_math\n   use iso_fortran_env, only: dp => real64\n   use fast_exp, only: fexp\n   use fast_log, only: flog_quintic\n   use fast_rsqrt, only: frsqrt\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   real(dp) :: x(101), positive(101), exp_value(101), log_value(101), rsqrt_value(101)\n   real(dp) :: exp_error, log_error, rsqrt_error\n   integer :: i\n   x = [(-3.0_dp+6.0_dp*i/100,i=0,100)]\n   positive = exp(x)\n   exp_value = fexp(x)\n   log_value = flog_quintic(positive)\n   rsqrt_value = frsqrt(positive)\n   if (.not. all(ieee_is_finite(exp_value))) error stop 'Nonfinite exponential'\n   if (.not. all(ieee_is_finite(log_value))) error stop 'Nonfinite logarithm'\n   if (.not. all(ieee_is_finite(rsqrt_value))) error stop 'Nonfinite inverse square root'\n   exp_error = maxval(abs(exp_value/exp(x)-1))\n   log_error = maxval(abs(log_value-x))\n   rsqrt_error = maxval(abs(rsqrt_value*sqrt(positive)-1))\n   print '(a)', 'Approximation errors on 101 points, x in [-3,3], positive arguments exp(x):'\n   print '(a,es12.4)', 'exp: maximum relative error = ', exp_error\n   print '(a,es12.4)', 'log (quintic): maximum absolute error = ', log_error\n   print '(a,es12.4)', '1/sqrt: maximum relative error = ', rsqrt_error\n   if (exp_error>1.e-4_dp .or. log_error>1.e-3_dp .or. rsqrt_error>2.e-3_dp) error stop 'Accuracy check'\n   print *, 'PASS fastmath'\nend program\n",
+    "topics": [
+      "exponential",
+      "fast-math",
+      "fortran",
+      "logarithm",
+      "rsqrt"
+    ]
+  },
+  {
+    "id": "fortsa",
+    "repository": "zoziha/fortsa",
+    "revision": "d31da12286617ab82e06e9fa0a6f20d11778581c",
+    "archive_sha256": "e2fdf8e436b3ab2919df6298c88cb4f8c4a3d1f74422baab3a5df76765b6caa2",
+    "stars": 3,
+    "license": "BSD-3-Clause",
+    "category": "Statistics",
+    "description": "Time-series autocorrelations, partial correlations and ARIMA modeling through CTSA.",
+    "dependencies": [],
+    "source": "program time_series_correlations\n   use iso_c_binding, only: c_double, c_int\n   use fortsa_stats_m, only: acvf, acvf_opt, acvf2acf\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   integer(c_int), parameter :: n=64, m=9\n   real(c_double) :: series(n), centered(n), covariance(m), fft_covariance(m), reference(m)\n   integer :: i, lag\n   series = [(sin(2*acos(-1.0_c_double)*i/16)+0.3_c_double*cos(2*acos(-1.0_c_double)*i/8),i=0,n-1)]\n   centered = series-sum(series)/n\n   do lag=0,m-1\n      reference(lag+1) = sum(centered(1:n-lag)*centered(1+lag:n))/n\n   end do\n   call acvf(series,n,covariance,m)\n   call acvf_opt(series,n,1_c_int,fft_covariance,m)\n   if (.not. all(ieee_is_finite(covariance))) error stop 'Nonfinite covariance'\n   if (.not. all(ieee_is_finite(fft_covariance))) error stop 'Nonfinite FFT covariance'\n   if (maxval(abs(covariance-reference))>1.e-10_c_double) error stop 'Direct covariance check'\n   if (maxval(abs(fft_covariance-reference))>1.e-10_c_double) error stop 'FFT covariance check'\n   call acvf2acf(covariance,m)\n   if (maxval(abs(covariance-reference/reference(1)))>1.e-10_c_double) error stop 'Correlation check'\n   print '(a)', 'Autocorrelation of a generated periodic time series:'\n   print '(a)', '  Lag   Correlation'\n   do i=1,m\n      print '(i5,f14.7)', i-1,covariance(i)\n   end do\n   print '(a)', 'Direct and FFT estimates agree with independent sums.'\n   print *, 'PASS fortsa'\nend program\n",
+    "topics": [
+      "arima",
+      "arma",
+      "bindings",
+      "fortran",
+      "fpm",
+      "time-series",
+      "time-series-analysis",
+      "tsa"
+    ]
+  },
+  {
+    "id": "fortran-flann",
+    "repository": "ivan-pi/fortran-flann",
+    "revision": "35370c851602d954d1d01d10c9c14ff82dd96496",
+    "archive_sha256": "a3b9e1b13e4b613e2bf5943decdbfb6ba4f8a866115007dfae9c2eb947fc3075",
+    "stars": 15,
+    "license": "BSD-3-Clause",
+    "category": "Machine learning",
+    "description": "FLANN interfaces for nearest-neighbor searches and spatial indexing.",
+    "dependencies": [],
+    "catalog_build": {
+      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+      "apt_packages": [
+        "libflann1.9=1.9.2+dfsg-2+b2"
+      ]
+    },
+    "catalog_patches": {
+      "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+      "edits": [
+        {
+          "path": "fpm.toml",
+          "sha256": "8d0589030f186cc4528eb4dcbc81254a9261d18e47f754e100987dd08d8445f9",
+          "before": "link = \"flann\"",
+          "after": "link = \":libflann.so.1.9\""
+        }
+      ]
+    },
+    "source": "program nearest_neighbors\n   use iso_c_binding, only: c_float, c_int\n   use flann, only: flann_index, KDTreeSingleIndexParams, search_params\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   integer, parameter :: n=25, nq=3\n   real(c_float), target :: points(2,n)\n   real(c_float) :: queries(2,nq), distances(1,nq), direct(n)\n   integer(c_int) :: indices(1,nq), status\n   type(flann_index) :: tree\n   integer :: i,j,k,expected\n   k=0\n   do j=0,4\n      do i=0,4\n         k=k+1\n         points(:,k) = real([i,j],c_float)\n      end do\n   end do\n   queries = reshape([0.1_c_float,0.2_c_float,2.8_c_float,1.1_c_float,3.9_c_float,3.8_c_float],[2,nq])\n   tree = flann_index(points,KDTreeSingleIndexParams(),'Euclidean')\n   call tree%build_index()\n   indices = -1\n   distances = -1\n   call tree%knn_search(queries,indices,distances,1_c_int,search_params(checks=-1),stat=status)\n   if (status/=0) error stop 'Nearest-neighbor search failed'\n   if (.not. all(ieee_is_finite(distances))) error stop 'Nonfinite distance'\n   print '(a)', ' Query point        Nearest point       Squared distance'\n   do j=1,nq\n      direct = [(sum((points(:,i)-queries(:,j))**2),i=1,n)]\n      expected = minloc(direct,dim=1)\n      ! FLANN returns C-style indices, starting at zero.\n      if (indices(1,j)+1/=expected) error stop 'Neighbor index check'\n      if (abs(distances(1,j)-direct(expected))>1.e-5_c_float) error stop 'Distance check'\n      print '(2f7.2,4x,2f7.2,4x,f12.6)', queries(:,j),points(:,expected),distances(1,j)\n   end do\n   print *, 'PASS fortran-flann'\nend program\n",
+    "topics": [
+      "approximate-nearest-neighbor-search",
+      "hierarchical-clustering",
+      "high-dimensional-data",
+      "kdtree",
+      "kmeans-clustering",
+      "nearest-neighbor-search",
+      "spatial-search"
+    ]
+  },
+  {
+    "id": "fortran_stb_image",
+    "repository": "lewisfish/fortran_stb_image",
+    "revision": "f5c1633dfbaa1953fe8fa12bd01cb06dab0b6128",
+    "archive_sha256": "2c862559afaab5ae3ea484fdf41ce86940fb91e724c558b60998c903bcca78d1",
+    "stars": 2,
+    "license": "MIT",
+    "category": "Images",
+    "description": "Read and write PNG and other raster image formats through the stb libraries.",
+    "dependencies": [],
+    "source": "program png_round_trip\n   use iso_c_binding, only: c_int, c_char, c_ptr, c_null_char, c_associated, c_f_pointer\n   use stb_image_mod, only: c_stbi_load\n   use stb_image_write_mod, only: write_image\n   implicit none\n   integer, parameter :: width=128, height=96\n   integer :: pixels(width,height,3), i,j,k,index,status\n   integer(c_int) :: nx,ny,channels\n   type(c_ptr) :: image\n   character(kind=c_char), pointer :: bytes(:)\n   interface\n      subroutine free_image(p) bind(c,name='stbi_image_free')\n         import :: c_ptr\n         type(c_ptr), value :: p\n      end subroutine\n   end interface\n   do j=1,height\n      do i=1,width\n         pixels(i,j,:) = [255*(i-1)/(width-1),255*(j-1)/(height-1), &\n            merge(220,40,mod((i-1)/16+(j-1)/16,2)==0)]\n      end do\n   end do\n   status = write_image('gradient.png',pixels)\n   if (status/=1) error stop 'PNG write failed'\n   image = c_stbi_load('gradient.png'//c_null_char,nx,ny,channels,3_c_int)\n   if (.not. c_associated(image)) error stop 'PNG read failed'\n   if (nx/=width .or. ny/=height .or. channels/=3) error stop 'Image dimensions'\n   call c_f_pointer(image,bytes,[width*height*3])\n   index = 0\n   do j=1,height\n      do i=1,width\n         do k=1,3\n            index = index+1\n            if (iachar(bytes(index))/=pixels(i,j,k)) error stop 'Pixel mismatch'\n         end do\n      end do\n   end do\n   call free_image(image)\n   nullify(bytes)\n   print '(a,i0,a,i0,a)', 'Verified every RGB pixel in ',width,' x ',height,' gradient.png'\n   print *, 'PASS fortran_stb_image'\nend program\n",
+    "topics": []
+  },
+  {
+    "id": "cairo-fortran",
+    "repository": "vmagnin/cairo-fortran",
+    "revision": "89c31edd87ac1a5ad37db71165965a30cc9b7d61",
+    "archive_sha256": "eff681f28ed3f725f0bd2d23414883c4ed7a3f6eafc171030d3d321d7a2e84a7",
+    "stars": 8,
+    "license": "GPL-3.0-or-later WITH GCC-exception-3.1",
+    "category": "Images",
+    "description": "Cairo bindings for drawing vector graphics into PNG and other output formats.",
+    "dependencies": [],
+    "catalog_build": {
+      "apt_packages": [
+        "libcairo2-dev=1.18.4-1+b1"
+      ],
+      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+    },
+    "source": "program cairo_spiral\n   use iso_c_binding, only: c_ptr, c_associated, c_null_char, c_int\n   use cairo\n   use cairo_enums, only: CAIRO_FORMAT_ARGB32, CAIRO_STATUS_SUCCESS\n   implicit none\n   type(c_ptr) :: surface, context\n   integer(c_int) :: status\n   integer :: i\n   real(8) :: theta, radius, pi\n   surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,400,400)\n   if (.not. c_associated(surface)) error stop 'No surface'\n   context = cairo_create(surface)\n   if (.not. c_associated(context)) error stop 'No drawing context'\n   call cairo_set_source_rgb(context,1.d0,1.d0,1.d0)\n   call cairo_paint(context)\n   pi = acos(-1.d0)\n   call cairo_set_source_rgb(context,0.85d0,0.88d0,0.92d0)\n   call cairo_set_line_width(context,1.d0)\n   do i=1,3\n      call cairo_arc(context,200.d0,200.d0,50.d0*i,0.d0,2*pi)\n      call cairo_stroke(context)\n   end do\n   call cairo_set_source_rgb(context,0.10d0,0.30d0,0.75d0)\n   call cairo_set_line_width(context,3.d0)\n   call cairo_move_to(context,200.d0,200.d0)\n   do i=1,720\n      theta = 6*pi*i/720\n      radius = 8*theta\n      call cairo_line_to(context,200+radius*cos(theta),200+radius*sin(theta))\n   end do\n   call cairo_stroke(context)\n   if (cairo_status(context)/=CAIRO_STATUS_SUCCESS) error stop 'Drawing failed'\n   status = cairo_surface_write_to_png(surface,'spiral.png'//c_null_char)\n   if (status/=CAIRO_STATUS_SUCCESS) error stop 'PNG write failed'\n   if (cairo_image_surface_get_width(surface)/=400) error stop 'Width check'\n   if (cairo_image_surface_get_height(surface)/=400) error stop 'Height check'\n   call cairo_destroy(context)\n   call cairo_surface_destroy(surface)\n   print '(a)', 'Saved spiral.png: an Archimedean spiral r = 8*theta, 0 <= theta <= 6*pi.'\n   print *, 'PASS cairo-fortran'\nend program\n",
+    "topics": [
+      "bindings",
+      "cairo",
+      "fortran",
+      "fortran-package-manager"
+    ]
+  },
+  {
+    "id": "forsudoku",
+    "repository": "vmagnin/ForSudoku",
+    "revision": "a849a7fe87c3e19aea1bd8ed4caef15e651c3208",
+    "archive_sha256": "de5e1af2158505094e91a0a2fd43b85f96b8f02436e1d0aa817a4a4259d08e9d",
+    "stars": 4,
+    "license": "GPL-3.0-or-later",
+    "category": "Games and puzzles",
+    "description": "Solve Sudoku puzzles and generate new grids with configurable clues.",
+    "dependencies": [],
+    "source": "program solve_sudoku\n   use sudoku, only: solve_puzzle\n   implicit none\n   integer :: grid(9,9), given(9,9), i,j,k,values(9)\n   ! Each column here represents one displayed row of the puzzle.\n   grid(:,1) = [5,3,0,0,7,0,0,0,0]\n   grid(:,2) = [6,0,0,1,9,5,0,0,0]\n   grid(:,3) = [0,9,8,0,0,0,0,6,0]\n   grid(:,4) = [8,0,0,0,6,0,0,0,3]\n   grid(:,5) = [4,0,0,8,0,3,0,0,1]\n   grid(:,6) = [7,0,0,0,2,0,0,0,6]\n   grid(:,7) = [0,6,0,0,0,0,2,8,0]\n   grid(:,8) = [0,0,0,4,1,9,0,0,5]\n   grid(:,9) = [0,0,0,0,8,0,0,7,9]\n   given = grid\n   call solve_puzzle(grid)\n   if (any(grid<1) .or. any(grid>9)) error stop 'Incomplete solution'\n   if (any(grid/=given .and. given/=0)) error stop 'Changed a given digit'\n   do i=1,9\n      do k=1,9\n         if (count(grid(:,i)==k)/=1 .or. count(grid(i,:)==k)/=1) error stop 'Row or column check'\n      end do\n   end do\n   do j=1,9,3\n      do i=1,9,3\n         values = reshape(grid(i:i+2,j:j+2),[9])\n         do k=1,9\n            if (count(values==k)/=1) error stop 'Block check'\n         end do\n      end do\n   end do\n   print '(a)', 'Solved Sudoku (rows, columns, blocks and original clues verified):'\n   do j=1,9\n      print '(3(3i2,2x))', grid(:,j)\n   end do\n   print *, 'PASS forsudoku'\nend program\n",
+    "topics": [
+      "fortran",
+      "fortran-package-manager",
+      "sudoku"
+    ]
+  },
+  {
+    "id": "odepack",
+    "repository": "Nicholaswogan/odepack",
+    "revision": "d5db96093dc14fff54e10575cc586fa85392b078",
+    "archive_sha256": "3527e963adfa7c128092d59079cbd33ab3b126837b5e93ecc7c50d2cfc3589fa",
+    "stars": 21,
+    "license": "Public Domain",
+    "category": "Differential equations",
+    "description": "Modern thread-safe interfaces to the LSODA and LSODAR initial-value ODE solvers.",
+    "dependencies": [],
+    "catalog_build": {
+      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+      "environment": {
+        "FPM_FFLAGS": "-ftrampoline-impl=heap"
+      }
+    },
+    "source": "module chemical_kinetics\n   use odepack_mod, only: dp, lsoda_class\n   implicit none\ncontains\n   subroutine robertson(self,neq,t,y,dydt,ierr)\n      class(lsoda_class), intent(inout) :: self\n      integer, intent(in) :: neq\n      real(dp), intent(in) :: t, y(neq)\n      real(dp), intent(out) :: dydt(neq)\n      integer, intent(out) :: ierr\n      dydt(1) = -0.04_dp*y(1)+1.e4_dp*y(2)*y(3)\n      dydt(3) = 3.e7_dp*y(2)**2\n      dydt(2) = -dydt(1)-dydt(3)\n      ierr = 0\n   end subroutine\nend module\n\nprogram stiff_reactions\n   use chemical_kinetics, only: dp, lsoda_class, robertson\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   type(lsoda_class) :: solver\n   real(dp) :: y(3), t, tout, atol(1)\n   real(dp), parameter :: targets(5) = [0.4_dp,4.0_dp,40.0_dp,400.0_dp,4000.0_dp]\n   integer :: state, i\n   call solver%initialize(robertson,3,istate=state)\n   if (state<0) error stop 'Solver initialization'\n   y = [1.0_dp,0.0_dp,0.0_dp]\n   t = 0\n   atol = 1.e-12_dp\n   state = 1\n   print '(a)', '          Time             A             B             C'\n   do i=1,size(targets)\n      tout = targets(i)\n      call solver%integrate(y,t,tout,1.e-8_dp,atol,1,state)\n      if (state<0) error stop 'Integration failed'\n      if (.not. all(ieee_is_finite(y))) error stop 'Nonfinite concentration'\n      if (abs(t-tout)>1.e-7_dp .or. abs(sum(y)-1)>1.e-7_dp) error stop 'Conservation check'\n      if (minval(y)<-1.e-10_dp) error stop 'Negative concentration'\n      print '(4es14.5)', t,y\n   end do\n   ! Standard Robertson reference at t=4000, independent of this solver call.\n   if (maxval(abs(y-[0.183202_dp,8.94237e-7_dp,0.816797_dp]))>3.e-6_dp) error stop 'Reference check'\n   print '(a)', 'Total concentration remains 1; final state agrees with the reference.'\n   print *, 'PASS odepack'\nend program\n",
+    "topics": [
+      "fortran-package-manager",
+      "ode",
+      "ode-solver",
+      "odepack"
+    ]
+  },
+  {
+    "id": "kiss",
+    "repository": "ivan-pi/kiss",
+    "revision": "55f0f7ccb1601a0628a17928b5b6b79f61da2892",
+    "archive_sha256": "b8a34e012c2c67a313f0f4f94d9674f8869dd525f858ea5ab1811e1e2041c79c",
+    "stars": 3,
+    "license": "BSD-3-Clause",
+    "category": "Linear algebra",
+    "description": "Krylov iterative solvers for dense matrices and matrix-free linear operators.",
+    "dependencies": [],
+    "catalog_build": {
+      "apt_packages": [
+        "libblas-dev=3.12.1-6",
+        "liblapack-dev=3.12.1-6"
+      ],
+      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+      "environment": {
+        "FPM_FFLAGS": "-ftrampoline-impl=heap"
+      }
+    },
+    "source": "program conjugate_gradient\n   use kiss, only: wp, cg_dense\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   integer, parameter :: n = 8\n   real(wp) :: a(n,n), b(n), x(n), exact(n), residual\n   integer :: i, info\n   a = 0\n   do i=1,n\n      a(i,i) = 2\n      if (i<n) then\n         a(i,i+1) = -1\n         a(i+1,i) = -1\n      end if\n   end do\n   exact = [(real(i,wp)*(n+1-i),i=1,n)]\n   b = matmul(a,exact)\n   x = 0\n   call cg_dense(a,b,x,atol=1.e-10_wp,info=info)\n   residual = norm2(b-matmul(a,x))\n   print '(a,8f8.3)', 'Discrete Poisson solution: ', x\n   print '(a,es12.4)', 'Residual norm: ', residual\n   print '(a,i0)', 'Solver status: ', info\n   if (.not. all(ieee_is_finite(x))) error stop 'Nonfinite solution'\n   if (residual>1.e-8_wp .or. maxval(abs(x-exact))>1.e-8_wp) error stop 'CG check'\n   print *, 'PASS kiss'\nend program\n",
+    "topics": []
+  },
+  {
+    "id": "parff",
+    "repository": "everythingfunctional/parff",
+    "revision": "dbce6a04992fbc1e2d13b6c633480d3cd4bbe35c",
+    "archive_sha256": "614aac0224f2f60d299d3b1ba859e4423553e42f144546b968ee52549f4573a5",
+    "stars": 0,
+    "license": "MIT",
+    "category": "Text parsing",
+    "description": "Composable functional parsers for structured text and useful parse errors.",
+    "dependencies": [
+      {
+        "repository": "everythingfunctional/iso_varying_string",
+        "revision": "fb7635a6b21c3d50ac7c8c14f7696a70931cb4a6",
+        "sha256": "0a2ff49b7eb88218c5de043b5aa3e564e821cd8906354e6f67a2ca480ae0c52e"
+      },
+      {
+        "repository": "everythingfunctional/strff",
+        "revision": "50e536cb087123f2c72140cb065c398a01fc5121",
+        "sha256": "c0f773e21d2c1a0f7b83bcb51cf6bca4d7103815373e7be9a56d1689b8a5da42"
+      }
+    ],
+    "catalog_build": {
+      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+      "git_aliases": {
+        "https://gitlab.com/everythingfunctional/iso_varying_string": "https://github.com/everythingfunctional/iso_varying_string",
+        "https://gitlab.com/everythingfunctional/strff": "https://github.com/everythingfunctional/strff"
+      },
+      "environment": {
+        "FPM_FFLAGS": "-ftrampoline-impl=heap"
+      }
+    },
+    "source": "program main\n   use iso_varying_string, only: var_str,char\n   use parff, only: parser_output_t,parsed_integer_t,new_state,parse_integer\n   implicit none\n   type(parser_output_t) :: result\n   result=parse_integer(new_state(var_str('-321')))\n   if (.not.result%ok) error stop 'Valid integer was rejected'\n   select type (value=>result%parsed)\n   type is (parsed_integer_t)\n      if (value%value_/=-321) error stop 'Incorrect parsed value'\n      print '(a,i0)', 'Parsed integer: ',value%value_\n   class default\n      error stop 'Unexpected result type'\n   end select\n   result=parse_integer(new_state(var_str('not a number')))\n   if (result%ok) error stop 'Invalid integer was accepted'\n   print '(a,a)', 'Invalid input: ',char(result%message%to_string())\n   print *, 'PASS parff'\nend program\n",
+    "topics": [
+      "fortran",
+      "parser",
+      "parser-combinators",
+      "parser-library"
+    ]
+  },
+  {
+    "id": "conmax",
+    "repository": "jacobwilliams/conmax",
+    "revision": "ab7f237d30f94f7d13b86997e0c49f3d67bd7c54",
+    "archive_sha256": "f31c31ad41d37957f9794248ac4d0416ec3455fe9d27d9a5d7cb4cadff340580",
+    "stars": 5,
+    "license": "BSD-3",
+    "category": "Roots and optimization",
+    "description": "Linear, quadratic and constrained minimax optimization routines.",
+    "dependencies": [],
+    "source": "! Maximize -y subject to x+y >= 2 and x-y <= 4.\n! Their intersection gives the independently known optimum (3,-1).\nprogram demo_conmax\n   use conmax_module, only: slnpro\n   use iso_fortran_env, only: real64\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   real(real64) :: v(7,4), x(3), y(6)\n   integer :: iyrct(6), ixrct(6), iycct(3), indic\n\n   v = 0; x = 0; y = 0\n   iyrct = 0; ixrct = 0; iycct = 0\n   v(1,1:3) = [-1.0_real64,-1.0_real64,-2.0_real64]\n   v(2,1:3) = [ 1.0_real64,-1.0_real64, 4.0_real64]\n   v(3,1:2) = [ 0.0_real64, 1.0_real64]\n   iyrct(1) = -1\n   call slnpro(v,2,2,iyrct,y,ixrct,iycct,2,2,x,indic)\n   if (indic /= 0) error stop 'Solver did not report success'\n   if (.not. all(ieee_is_finite(x(:2)))) error stop 'Nonfinite solution'\n   if (maxval(abs(x(:2)-[3.0_real64,-1.0_real64])) > 1e-9_real64) error stop 'Wrong optimum'\n   if (x(1)+x(2) < 2.0_real64-1e-9_real64) error stop 'First constraint violated'\n   if (x(1)-x(2) > 4.0_real64+1e-9_real64) error stop 'Second constraint violated'\n   print '(a,2f12.6)', 'Optimal x,y: ',x(:2)\n   print '(a,f12.6)', 'Maximum -y: ',-x(2)\n   print '(a)', 'PASS conmax'\nend program\n",
+    "topics": [
+      "conmax",
+      "constrained-optimization",
+      "fortran",
+      "fortran-package-manager",
+      "nonlinear-optimization",
+      "numerical-optimization",
+      "optimization"
+    ]
+  },
+  {
+    "id": "graphstruc",
+    "repository": "nedtaylor/graphstruc",
+    "revision": "51e18bedd638b935be8b9ac744b2e9f9e79213e7",
+    "archive_sha256": "24e32c4c7f5d9a673b6d39937e44c4b3da0097aa29f4d4b369dc9441f3b55665",
+    "stars": 2,
+    "license": "MIT",
+    "category": "Containers and graphs",
+    "description": "Derived types for graphs, vertices, edges and adjacency structures.",
+    "dependencies": [
+      {
+        "repository": "nedtaylor/coreutils",
+        "revision": "ead4501f4b695c4f0fe3267f1bf5318544c9b1e2",
+        "sha256": "a2979763627707ba61169b4abacd7ee60b586df9115ac2beb9ee674c25031554"
+      }
+    ],
+    "source": "program demo_graphstruc\n   use graphstruc, only: graph_type\n   implicit none\n   type(graph_type) :: graph\n   integer :: i\n\n   graph%directed = .false.\n   do i=1,4\n      call graph%add_vertex(feature=[real(i)])\n   end do\n   call graph%add_edge(index=[1,2], weight=1.0)\n   call graph%add_edge(index=[2,3], weight=1.0)\n   call graph%add_edge(index=[3,4], weight=1.0)\n   if (graph%num_vertices /= 4 .or. graph%num_edges /= 3) error stop 'Wrong graph size'\n   if (any([(graph%vertex(i)%degree,i=1,4)] /= [1,2,2,1])) error stop 'Wrong degrees'\n   if (any(graph%adjacency /= transpose(graph%adjacency))) error stop 'Graph is not symmetric'\n   if (count(graph%adjacency /= 0) /= 6) error stop 'Wrong adjacency entries'\n   do i=1,3\n      if (graph%adjacency(i,i+1) == 0) error stop 'Missing edge'\n   end do\n   print '(a)', 'Undirected path: 1 -- 2 -- 3 -- 4'\n   print '(a)', 'Adjacency matrix (edge indices; zero means no edge):'\n   do i=1,4\n      print '(4i4)', graph%adjacency(i,:)\n   end do\n   print '(a,4i3)', 'Vertex degrees:',(graph%vertex(i)%degree,i=1,4)\n   print '(a)', 'PASS graphstruc'\nend program\n",
+    "topics": [
+      "fortran",
+      "fortran-package-manager",
+      "graph-structures",
+      "graphs",
+      "library"
+    ]
+  },
+  {
+    "id": "fortran-messagepack",
+    "repository": "synthfi/fortran-messagepack",
+    "revision": "2b2c9fc78bf3f7212ec9e35c675febdd508b7830",
+    "archive_sha256": "31e13bba647109382980c5cce645a3f509bd77f807a84f5728e0513c3e71c589",
+    "stars": 6,
+    "license": "MIT",
+    "category": "Data formats",
+    "description": "Serialize and deserialize structured values in the compact MessagePack binary format.",
+    "dependencies": [],
+    "source": "program demo_messagepack\n   use messagepack\n   use iso_fortran_env, only: int8, int64\n   implicit none\n   type(msgpack) :: mp\n   type(mp_arr_type) :: record\n   class(mp_value_type), allocatable :: decoded\n   class(mp_arr_type), allocatable :: array\n   integer(int8), allocatable :: buffer(:)\n   integer(int64) :: number\n   character(:), allocatable :: text\n   logical :: valid\n   ! MessagePack fixarray(2), positive fixint(42), fixstr(7), ASCII 'Fortran'.\n   integer, parameter :: expected(*) = [146,42,167,70,111,114,116,114,97,110]\n\n   mp = msgpack()\n   record = mp_arr_type(2)\n   record%values(1)%obj = mp_int_type(42)\n   record%values(2)%obj = mp_str_type('Fortran')\n   call mp%pack_alloc(record,buffer)\n   if (mp%failed()) error stop 'Packing failed'\n   if (size(buffer) /= size(expected)) error stop 'Wrong encoded size'\n   if (any(iand(int(buffer),255) /= expected)) error stop 'Unexpected MessagePack bytes'\n   call mp%unpack(buffer,decoded)\n   if (mp%failed()) error stop 'Unpacking failed'\n   call get_arr_ref(decoded,array,valid)\n   if (.not. valid) error stop 'Decoded value is not an array'\n   if (array%numelements() /= 2) error stop 'Wrong decoded length'\n   call get_int(array%values(1)%obj,number,valid)\n   if (.not. valid .or. number /= 42_int64) error stop 'Integer differs'\n   call get_str(array%values(2)%obj,text,valid)\n   if (.not. valid) error stop 'Decoded value is not text'\n   if (text /= 'Fortran') error stop 'Text differs'\n   print '(a,10(1x,z2.2))', 'MessagePack bytes:',iand(int(buffer),255)\n   print '(a,i0,2a)', 'Decoded record: ',number,', ',text\n   print '(a)', 'PASS fortran-messagepack'\nend program\n",
+    "topics": [
+      "fortran",
+      "messagepack"
+    ]
+  },
+  {
+    "id": "fmmap",
+    "repository": "PierUgit/fmmap",
+    "revision": "0ccbb98b7165233bdd5a07728ee4312deed4f8f7",
+    "archive_sha256": "cdfa9d4680ec2d80ce5b51b0e9fe42dbbd14741f17c0ccbf4b06ee6adfc209c2",
+    "stars": 12,
+    "license": "MIT",
+    "category": "Files and processes",
+    "description": "Map files into memory and access their contents as Fortran arrays.",
+    "dependencies": [],
+    "source": "! Persist a tiny array using an ordinary file, without large allocations.\nprogram demo_fmmap\n   use iso_c_binding, only: c_size_t, c_f_pointer, c_associated\n   use fmmap\n   implicit none\n   type(fmmap_t) :: mapping\n   integer, pointer :: values(:)\n   integer :: i, unit\n   integer(c_size_t) :: n\n\n   n = 8_c_size_t\n   call mapping%create(FMMAP_NEW,'mapped-array.bin',n,mold=0)\n   if (.not. c_associated(mapping%cptr())) error stop 'Could not create mapping'\n   call c_f_pointer(mapping%cptr(),values,[int(n)])\n   values = [(i*i,i=1,int(n))]\n   call mapping%destroy()\n   nullify(values)\n   call mapping%create(FMMAP_OLD,'mapped-array.bin',n,mold=0)\n   if (.not. c_associated(mapping%cptr())) error stop 'Could not reopen mapping'\n   call c_f_pointer(mapping%cptr(),values,[int(n)])\n   if (any(values /= [(i*i,i=1,int(n))])) error stop 'Persisted values differ'\n   print '(a,8i5)', 'Squares read back from mapped file:',values\n   call mapping%destroy()\n   nullify(values)\n   open(newunit=unit,file='mapped-array.bin',status='old')\n   close(unit,status='delete')\n   print '(a)', 'PASS fmmap'\nend program\n",
+    "topics": [
+      "fortran",
+      "memory-mapped-file"
+    ]
+  },
+  {
+    "id": "fortran_cubatures",
+    "repository": "willklausler/fortran_cubatures",
+    "revision": "aca04975d09aed329fd4210defd7052926dc01c1",
+    "archive_sha256": "5ad21717dd6f860eb607797bcd21c2baf9ad7fa8ee194cd773effb0b49e20d3d",
+    "stars": 1,
+    "license": "MIT",
+    "category": "Integration",
+    "description": "Gaussian cubature rules for finite-element reference lines, triangles, quadrilaterals, tetrahedra, hexahedra and wedges.",
+    "dependencies": [],
+    "catalog_patches": {
+      "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+      "edits": [
+        {
+          "path": "fpm.toml",
+          "sha256": "c74acc12363b814d9bae5bb7191fe7e28782221c49b25e8683176838f7b0c2c6",
+          "before": "\n[features.debug.gfortran]\nflags = \"-g -Wall -fbacktrace -fcheck=all -Wextra -Wpedantic -Wuninitialized -Wmaybe-uninitialized -Wimplicit-interface -Wimplicit-procedure -Warray-temporaries -Wrealloc-lhs -finit-real=snan -finit-integer=-2147483648 -finit-logical=true -fstack-protector-all\"\n\n[features.debug.gfortran.linux]\nflags = \"-fsanitize=address,undefined\"\n\n[features.debug.ifx.linux]\nflags = \"-g -check all -warn all -traceback -fpe0 -init=snan,arrays -ftrapuv -fp-stack-check -diag-error-limit 10 -fsanitize=address,undefined\"\n\n[features.debug.ifx.windows]\nflags = \"/Zi /check:all /warn:all /traceback /fpe:0 /Qinit:snan,arrays /Qtrapuv\"\n\n[features.debug.nvfortran]\nflags = \"-g -Minform=inform -Mbounds -Mchkstk -Mstandard -Ktrap=fp -traceback\"\n\n[features.debug.flang]\nflags = \"-g\"\n\n[features.release.gfortran]\nflags = \"-O3 -fbacktrace -march=native -funroll-loops\"\n\n[features.release.ifx.linux]\nflags = \"-O3 -xHost -unroll\"\n\n[features.release.ifx.windows]\nflags = \"/O3 /QxHost /Qunroll\"\n\n[features.release.nvfortran]\nflags = \"-Mrecursive -fast\"\n\n[features.release.flang]\nflags = \"-O3\"\n\n[profiles]\ndebug = [\n    \"debug\",\n]\nrelease = [\n    \"release\",\n]\n",
+          "after": "\n"
+        }
+      ]
+    },
+    "catalog_build": {
+      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133",
+      "environment": {
+        "FPM_FFLAGS": "-Wall -Wextra -fcheck=all -fbacktrace"
+      }
+    },
+    "source": "! Exact simplex integrals: integral x^a y^b = a! b!/(a+b+2)!,\n! and integral x^a y^b z^c = a! b! c!/(a+b+c+3)!.\nprogram demo_cubatures\n   use iso_fortran_env, only: dp => real64\n   use cubatures, only: cubature, CUB_TRI, CUB_TET\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   type(cubature) :: q\n   real(dp) :: total, exact\n\n   q = cubature(CUB_TRI,4)\n   if (.not. q%is_valid()) error stop 'Invalid triangle rule'\n   total = sum(q%weights*q%abscissae(1,:)**2*q%abscissae(2,:))\n   exact = 1.0_dp/60\n   if (.not. ieee_is_finite(total)) error stop 'Nonfinite triangle integral'\n   if (abs(total-exact)>1e-13_dp) error stop 'Triangle integral differs'\n   print '(a,i0,a,2f18.12)', 'Triangle (',q%npoints,' points), integral and exact:',total,exact\n   q = cubature(CUB_TET,4)\n   if (.not. q%is_valid()) error stop 'Invalid tetrahedron rule'\n   total = sum(q%weights*product(q%abscissae,dim=1))\n   exact = 1.0_dp/720\n   if (.not. ieee_is_finite(total)) error stop 'Nonfinite tetrahedron integral'\n   if (abs(total-exact)>1e-13_dp) error stop 'Tetrahedron integral differs'\n   print '(a,i0,a,2f18.12)', 'Tetrahedron (',q%npoints,' points), integral and exact:',total,exact\n   print '(a)', 'PASS fortran_cubatures'\nend program\n",
+    "topics": [
+      "cubature",
+      "finite-elements",
+      "fortran",
+      "fpm",
+      "numerical-integration",
+      "quadrature"
+    ]
+  },
+  {
+    "id": "stiff3",
+    "repository": "ivan-pi/stiff3",
+    "revision": "70ab5c86c2ac922ed148bbb1182345cca248e077",
+    "archive_sha256": "33c52164ec8e5a1b57b623f529209fadcd2c3db40b6cfcb63adf48de40ed3160",
+    "stars": 24,
+    "license": "Apache-2.0",
+    "category": "Differential equations",
+    "description": "Adaptive third-order Rosenbrock solver for stiff autonomous ordinary differential equations.",
+    "dependencies": [],
+    "catalog_build": {
+      "apt_packages": [
+        "libblas-dev=3.12.1-6",
+        "liblapack-dev=3.12.1-6"
+      ],
+      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+    },
+    "source": "module playground_stiff3_rates\n   use stiff3_solver, only: wp => stiff3_wp\n   implicit none\ncontains\n   subroutine rate(n,y,f,ires)\n      integer, intent(in) :: n\n      real(wp), intent(in) :: y(n)\n      real(wp), intent(inout) :: f(n)\n      integer, intent(inout) :: ires\n      f(1) = -0.04_wp*y(1)+1e4_wp*y(2)*y(3)\n      f(3) = 3e7_wp*y(2)**2\n      f(2) = -f(1)-f(3)\n   end subroutine\n   subroutine jacobian(n,y,df)\n      integer, intent(in) :: n\n      real(wp), intent(in) :: y(n)\n      real(wp), intent(inout) :: df(n,n)\n      df(1,:) = [-0.04_wp, 1e4_wp*y(3), 1e4_wp*y(2)]\n      df(3,:) = [0.0_wp, 6e7_wp*y(2), 0.0_wp]\n      df(2,:) = -df(1,:)-df(3,:)\n   end subroutine\nend module\n\nprogram demo_stiff3\n   use stiff3_solver, only: stiff3, wp => stiff3_wp\n   use playground_stiff3_rates, only: rate,jacobian\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   real(wp) :: y(3), weights(3), time, finish, step\n   real(wp), parameter :: reference(3) = [0.183202_wp,8.94237e-7_wp,0.816797_wp]\n   integer :: status, stats(6)\n   y = [1.0_wp,0.0_wp,0.0_wp]\n   weights = [1.0_wp,1e-4_wp,1.0_wp]\n   time = 0; finish = 4000; step = 1e-6_wp\n   call stiff3(3,rate,time,y,finish,jacobian,step,1e-8_wp,weights,status,stats=stats)\n   if (status /= 0) error stop 'Stiff solver failed'\n   if (.not. all(ieee_is_finite(y))) error stop 'Nonfinite concentrations'\n   if (any(y < 0.0_wp)) error stop 'Negative concentration'\n   if (abs(sum(y)-1.0_wp)>1e-7_wp) error stop 'Mass is not conserved'\n   if (maxval(abs(y-reference))>3e-6_wp) error stop 'Reference concentrations differ'\n   print '(a,3es16.7)', 'Robertson concentrations at t=4000:',y\n   print '(a,es12.4)', 'Mass conservation error:',abs(sum(y)-1.0_wp)\n   print '(a,6i8)', 'Accepted/rejected steps, RHS/Jacobian calls, LU/solves:',stats\n   print '(a)', 'PASS stiff3'\nend program\n",
+    "topics": [
+      "adaptive",
+      "differential",
+      "equation",
+      "fortran",
+      "ode",
+      "solver",
+      "stiff"
+    ]
+  },
+  {
+    "id": "sparse_fortran",
+    "repository": "Euler-37/sparse_fortran",
+    "revision": "600f586a1ed099a22054ed283225787de36a31c1",
+    "archive_sha256": "48b5a043ac012c1e5ceb7d047ef477102344b548f61bfa9c44cc5a8325a221e3",
+    "stars": 4,
+    "license": "Not specified upstream",
+    "category": "Linear algebra",
+    "description": "Coordinate and compressed-row sparse matrices with matrix-vector products.",
+    "dependencies": [],
+    "source": "program demo_sparse\n   use sparse_fortran, only: sparse_coo,sparse_csr\n   use iso_fortran_env, only: real64\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   integer, parameter :: n=8\n   type(sparse_coo) :: coo\n   type(sparse_csr) :: csr\n   real(real64) :: dense(n,n),x(n),expected(n),from_coo(n),from_csr(n)\n   integer :: i\n   dense = 0\n   do i=1,n\n      dense(i,i) = 2\n      if (i<n) then\n         dense(i,i+1) = -1\n         dense(i+1,i) = -1\n      end if\n   end do\n   x = [(real(i*(n+1-i),real64),i=1,n)]\n   ! This discrete parabola has second difference -2, including the zero boundaries.\n   expected = 2.0_real64\n   call coo%sparse_init(dense)\n   call csr%sparse_init(dense)\n   from_coo = coo%sparse_product(x)\n   from_csr = csr%sparse_product(x)\n   if (.not. all(ieee_is_finite(from_coo))) error stop 'Nonfinite COO product'\n   if (.not. all(ieee_is_finite(from_csr))) error stop 'Nonfinite CSR product'\n   if (maxval(abs(from_coo-expected))>1e-12_real64) error stop 'Wrong COO product'\n   if (maxval(abs(from_csr-expected))>1e-12_real64) error stop 'Wrong CSR product'\n   if (maxval(abs(matmul(dense,x)-expected))>1e-12_real64) error stop 'Wrong reference'\n   print '(a,8f7.2)', 'Input vector: ',x\n   print '(a,8f7.2)', 'COO product:  ',from_coo\n   print '(a,8f7.2)', 'CSR product:  ',from_csr\n   print '(a)', 'PASS sparse_fortran'\nend program\n",
+    "topics": []
+  },
+  {
+    "id": "psqp",
+    "repository": "jacobwilliams/psqp",
+    "revision": "57a853e14e3806d69adad6d6d44396d9665d842e",
+    "archive_sha256": "1e885c8e481fa2962d883e6a1a1199117d3ca4ad3975799a8d72634639746531",
+    "stars": 6,
+    "license": "LGPL",
+    "category": "Roots and optimization",
+    "description": "Sequential quadratic programming with variable bounds and general nonlinear constraints.",
+    "dependencies": [],
+    "source": "module playground_psqp_functions\n   use psqp_module, only: psqp_class,wp => psqp_wp\n   implicit none\ncontains\n    subroutine obj(me,nf,x,ff)\n\n        !! user supplied subroutine (calculation of ff)\n\n        class(psqp_class),intent(inout) :: me\n        real(wp) :: ff\n        integer  :: nf\n        real(wp) :: x(nf)\n\n        ff = x(1)**2 + x(2)**2 + x(3)  !objective function\n\n    end subroutine obj\n\n    subroutine dobj(me,nf,x,gf)\n\n        !! user supplied subroutine (calculation of gf)\n\n        class(psqp_class),intent(inout) :: me\n        integer  :: nf\n        real(wp) :: gf(nf),x(nf)\n\n        gf(1) = 2.0_wp*x(1)\n        gf(2) = 2.0_wp*x(2)\n        gf(3) = 1.0_wp\n\n    end subroutine dobj\n\n    subroutine con(me,nf,kc,x,fc)\n\n        !! user supplied subroutine (calculation of fc)\n\n        class(psqp_class),intent(inout) :: me\n        real(wp) :: fc\n        integer  :: kc,nf\n        real(wp) :: x(nf)\n\n        select case (kc)\n        case(1)\n            fc = x(1)*x(2) - x(3)       !equality constraint (==0)\n        case(2)\n            fc = x(3) - 1.0_wp          !inequality constraint (>=0)\n        case default\n            error stop 'invalid kc'\n        end select\n\n    end subroutine con\n\n    subroutine dcon(me,nf,kc,x,gc)\n\n        !! user supplied subroutine (calculation of gc)\n\n        class(psqp_class),intent(inout) :: me\n        integer  :: kc,nf\n        real(wp) :: gc(nf),x(nf)\n\n        select case (kc)\n        case(1)\n            gc(1) = x(2)\n            gc(2) = x(1)\n            gc(3) = -1.0_wp\n        case(2)\n            gc(1) = 0.0_wp\n            gc(2) = 0.0_wp\n            gc(3) = 1.0_wp\n        case default\n            error stop 'invalid kc'\n        end select\n\n    end subroutine dcon\n\nend module\n\n! Minimize x1**2+x2**2+x3 with x1*x2=x3 and x3>=1.\n! The minimum is 3 at (1,1,1) or (-1,-1,1).\nprogram demo_psqp\n   use playground_psqp_functions\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   type(psqp_class) :: solver\n   real(wp) :: x(3),xl(3),xu(3),cf(3),cl(2),cu(2),rpar(5),f,cmax,gmax\n   integer :: ix(3),ic(2),ipar(6),status\n   x = [1.0_wp,2.0_wp,3.0_wp]\n   xl = -10; xu = 10; ix = 3\n   ic = [5,1]; cl = 0; cu = 0\n   ipar = [500,1000,0,0,1,1]\n   rpar = [0.0_wp,1e-10_wp,1e-10_wp,1e-8_wp,0.0_wp]\n   call solver%psqpn(3,1,2,x,ix,xl,xu,cf,ic,cl,cu,ipar,rpar,f,cmax,gmax,0,status,obj,dobj,con,dcon)\n   if (status<=0) error stop 'Optimization failed'\n   if (.not. all(ieee_is_finite(x))) error stop 'Nonfinite optimum'\n   if (.not. ieee_is_finite(f)) error stop 'Nonfinite objective'\n   if (maxval(abs(abs(x)-1.0_wp))>1e-5_wp .or. x(3)<0) error stop 'Known optimum differs'\n   if (abs(x(1)*x(2)-x(3))>1e-7_wp .or. x(3)<1.0_wp-1e-7_wp) error stop 'Constraint violated'\n   if (abs(f-3.0_wp)>1e-6_wp) error stop 'Wrong objective'\n   print '(a,3f14.8)', 'Optimal variables: ',x\n   print '(a,f14.8)', 'Minimum objective: ',f\n   print '(a,es12.3)', 'Maximum constraint violation: ',cmax\n   print '(a,i0)', 'Termination code: ',status\n   print '(a)', 'PASS psqp'\nend program\n",
+    "topics": [
+      "fortran",
+      "fortran-package-manager",
+      "nonlinear-optimization",
+      "numerical-optimization",
+      "optimization",
+      "sqp"
+    ]
+  },
+  {
+    "id": "optgra",
+    "repository": "jacobwilliams/optgra",
+    "revision": "914bed713e80faa4a190e03beb3a8307077eb028",
+    "archive_sha256": "576c186c8d8dcb11580f01d4ae618beb2cd65c4a1a7e637b4f1fd0220564a339",
+    "stars": 2,
+    "license": "GPL-3.0-only OR LicenseRef-ESA-ESCL-2.4-Weak-Copyleft",
+    "category": "Roots and optimization",
+    "description": "Constrained optimization designed for nearly linear problems with many constraints.",
+    "dependencies": [],
+    "source": "module playground_optgra_functions\n   use optgra_module, only: optgra,wp => optgra_wp\n   implicit none\ncontains\n   subroutine values(me,x,c,i)\n      class(optgra), intent(inout) :: me\n      real(wp), intent(in) :: x(:)\n      real(wp), intent(out) :: c(:)\n      integer, intent(in) :: i\n      c(1) = sum(x)-3.0_wp\n      c(2) = sum((x-1.0_wp)**2)\n   end subroutine\n   subroutine derivatives(me,x,c,jac)\n      class(optgra), intent(inout) :: me\n      real(wp), intent(in) :: x(:)\n      real(wp), intent(out) :: c(:),jac(:,:)\n      call values(me,x,c,0)\n      jac(1,:) = 1\n      jac(2,:) = 2*(x-1.0_wp)\n   end subroutine\nend module\n\nprogram demo_optgra\n   use playground_optgra_functions\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   type(optgra) :: solver\n   real(wp) :: x(2),c(2)\n   integer :: status,iterations,units(3),i\n   character(len=80), parameter :: cnames(2)=[character(len=80) :: 'x+y-3','objective']\n   character(len=80), parameter :: xnames(2)=[character(len=80) :: 'x','y']\n   do i=1,3\n      open(newunit=units(i),status='scratch',action='readwrite')\n   end do\n   ! Consca specifies convergence thresholds, not unit scale factors.\n   call solver%initialize(2,1,values,derivatives,[1e-4_wp,1e-4_wp],[1,1],[1e-7_wp,1e-9_wp], &\n      cnames,[5,9],[1,-1],1,[1e-5_wp,1e-5_wp],1.0_wp,1.0_wp,100,10,10,10,10, &\n      units(1),0,0,[1.0_wp,1.0_wp],xnames,[1,1],[0,0],units(2),0,0,units(3),0,2)\n   x = [0.0_wp,0.0_wp]\n   call solver%solve(x,c,status,iterations)\n   print '(a,i0)', 'Solver termination: ',status\n   if (.not. all(ieee_is_finite(x))) error stop 'Nonfinite optimum'\n   if (status /= 1) error stop 'Solver did not report a feasible optimum'\n   if (maxval(abs(x-1.5_wp))>1e-5_wp) error stop 'Known optimum differs'\n   if (sum(x)<3.0_wp-1e-7_wp) error stop 'Constraint violated'\n   if (abs(sum((x-1.0_wp)**2)-0.5_wp)>1e-5_wp) error stop 'Wrong objective'\n   print '(a)', 'Minimize (x-1)**2+(y-1)**2 subject to x+y >= 3.'\n   print '(a,2f14.8)', 'Optimal x,y: ',x\n   print '(a,f14.8)', 'Objective:   ',sum((x-1.0_wp)**2)\n   print '(a,es12.3)', 'Constraint violation: ',max(0.0_wp,3.0_wp-sum(x))\n   call solver%destroy()\n   do i=1,3\n      close(units(i))\n   end do\n   print '(a)', 'PASS optgra'\nend program\n",
+    "topics": [
+      "constrained-optimization",
+      "fortran",
+      "fortran-package-manager",
+      "numerical-optimization",
+      "optimization"
+    ]
+  },
+  {
+    "id": "forinv",
+    "repository": "gha3mi/forinv",
+    "revision": "80b5dbed9709c001e4309382424276a2ceb984f3",
+    "archive_sha256": "22905d8cc5d0c62d25c937adf9475592d4a1b4c02e2eb64413070c3d4c14426a",
+    "stars": 2,
+    "license": "BSD-3-Clause",
+    "category": "Linear algebra",
+    "description": "Matrix inverses and singular-value-decomposition pseudoinverses.",
+    "dependencies": [
+      {
+        "repository": "gha3mi/forsvd",
+        "revision": "f39bba7afcb048a21947a7a640bdf9a18337f8ac",
+        "sha256": "b9a97d840dca7ad2d11ef00c5986719d180d455b2fa188a4d0b374219414088e"
+      },
+      {
+        "repository": "gha3mi/kinds",
+        "revision": "811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f",
+        "sha256": "495d1133b1630dea4f38d69e5e3189e3279e4ce5836da1a7aec8a822bbe16518"
+      },
+      {
+        "repository": "gha3mi/fortime",
+        "revision": "de733e2c775457d4979403fe77ab69cf28e2b159",
+        "sha256": "bccc83cf947693ad4defcfb4684af7cd660db8a6e57084b7f07e7edfd584161d"
+      },
+      {
+        "repository": "szaghi/FACE",
+        "revision": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8",
+        "sha256": "d4cc3c3a2c70e7369607624ae3361a6f7b2ba3f1e9a63ffd94ecb5cd4b019469"
+      }
+    ],
+    "catalog_build": {
+      "apt_packages": [
+        "libblas-dev=3.12.1-6",
+        "liblapack-dev=3.12.1-6"
+      ],
+      "environment": {
+        "FPM_FFLAGS": "-cpp -fopenmp",
+        "FPM_LDFLAGS": "-llapack -lblas"
+      },
+      "source_revisions": {
+        "gha3mi/kinds": "811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f",
+        "gha3mi/forsvd": "f39bba7afcb048a21947a7a640bdf9a18337f8ac",
+        "gha3mi/fortime": "de733e2c775457d4979403fe77ab69cf28e2b159",
+        "szaghi/face": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8",
+        "gha3mi/formatmul": "6a77af418bbd77ffb5323a338db5cdf9368a73f7"
+      },
+      "manifest_versions": {
+        "gha3mi/forinv": "0.0.0",
+        "gha3mi/forsvd": "0.0.0",
+        "gha3mi/fortime": "0.0.0",
+        "gha3mi/kinds": "0.0.0",
+        "gha3mi/formatmul": "0.0.0"
+      },
+      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+    },
+    "source": "! A rank-one matrix needs an explicit singular-value cutoff in this API.\nprogram demo_forinv\n   use kinds, only: rk\n   use forinv, only: inv\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   real(rk) :: a(3,2),workspace(3,2),pinv(2,3),b(3),x(2),left(3,3),right(2,2),errors(4)\n   integer :: i\n   a(:,1) = [1.0_rk,2.0_rk,3.0_rk]\n   a(:,2) = 2*a(:,1)\n   b = a(:,1)\n   ! The pinned ForSVD passes its input to LAPACK workspace despite INTENT(IN).\n   ! Preserve the original matrix explicitly for residuals and later use.\n   workspace = a\n   pinv = inv(workspace,tol=1e-10_rk)\n   if (.not. all(ieee_is_finite(pinv))) error stop 'Nonfinite pseudoinverse'\n   left = matmul(a,pinv); right = matmul(pinv,a)\n   errors = [maxval(abs(matmul(left,a)-a)),maxval(abs(matmul(right,pinv)-pinv)), &\n      maxval(abs(transpose(left)-left)),maxval(abs(transpose(right)-right))]\n   if (any(errors>1e-11_rk)) error stop 'Moore-Penrose identities fail'\n   x = matmul(pinv,b)\n   ! All solutions satisfy x1+2*x2=1; the minimum-norm one is (1/5,2/5).\n   if (maxval(abs(x-[0.2_rk,0.4_rk]))>1e-11_rk) error stop 'Wrong minimum-norm solution'\n   if (maxval(abs(matmul(a,x)-b))>1e-11_rk) error stop 'Residual too large'\n   print '(a)', 'Pseudoinverse of a rank-deficient 3 by 2 matrix:'\n   do i=1,2\n      print '(3f14.8)',pinv(i,:)\n   end do\n   print '(a,2f14.8)', 'Minimum-norm solution: ',x\n   print '(a,4es12.3)', 'Four Moore-Penrose identity errors: ',errors\n   print '(a)', 'PASS forinv'\nend program\n",
+    "topics": [
+      "fortran",
+      "fortran-package-manager",
+      "inverse",
+      "pseudoinverse",
+      "svd"
+    ]
+  },
+  {
+    "id": "forsolver",
+    "repository": "gha3mi/forsolver",
+    "revision": "6c0644b287cb49a7310d883415b9b9ba581d51c5",
+    "archive_sha256": "17a84545ef849f34e43b18eebbeb2cdbab42327979ac3d9c224525c9de3c247d",
+    "stars": 8,
+    "license": "BSD-3",
+    "category": "Roots and optimization",
+    "description": "Linear solvers and Newton-type nonlinear solvers with analytic, finite-difference and complex-step derivatives.",
+    "dependencies": [
+      {
+        "repository": "gha3mi/fordiff",
+        "revision": "f1a1099a590107645314f1388c432624ff97b9bc",
+        "sha256": "b2881c68306d92df9117f68e3852378ab0378d1cb2a9e0b76060239f94fac7a0"
+      },
+      {
+        "repository": "gha3mi/forunittest",
+        "revision": "997e9974e52b40f6538ed84cf24259c331a782b3",
+        "sha256": "a325e6e93f839a9b528a99cdfa4ca359e035f5a05414cb4c36a48f30bdaf53f2"
+      },
+      {
+        "repository": "szaghi/FACE",
+        "revision": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8",
+        "sha256": "d4cc3c3a2c70e7369607624ae3361a6f7b2ba3f1e9a63ffd94ecb5cd4b019469"
+      }
+    ],
+    "catalog_build": {
+      "apt_packages": [
+        "libblas-dev=3.12.1-6",
+        "liblapack-dev=3.12.1-6"
+      ],
+      "environment": {
+        "FPM_FFLAGS": "-cpp -ftrampoline-impl=heap",
+        "FPM_LDFLAGS": "-llapack -lblas"
+      },
+      "source_revisions": {
+        "gha3mi/fordiff": "f1a1099a590107645314f1388c432624ff97b9bc",
+        "szaghi/face": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8"
+      },
+      "manifest_versions": {
+        "gha3mi/forsolver": "0.0.0",
+        "gha3mi/fordiff": "0.0.0",
+        "gha3mi/forunittest": "0.0.0",
+        "gha3mi/kinds": "0.0.0",
+        "gha3mi/fortime": "0.0.0"
+      },
+      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+    },
+    "source": "module playground_solver_functions\n   use forsolver, only: rk\n   implicit none\ncontains\n   function f(x) result(y)\n      real(rk), intent(in) :: x\n      real(rk) :: y\n      y = x**3+x-2.0_rk\n   end function\n   function df(x) result(y)\n      real(rk), intent(in) :: x\n      real(rk) :: y\n      y = 3.0_rk*x**2+1.0_rk\n   end function\n   function fc(x) result(y)\n      complex(rk), intent(in) :: x\n      complex(rk) :: y\n      y = x**3+x-2.0_rk\n   end function\nend module\n\nprogram demo_forsolver\n   use forsolver, only: rk,nlsolver\n   use playground_solver_functions, only: f,df,fc\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   type(nlsolver) :: solver\n   real(rk) :: roots(3),residuals(3)\n   complex(rk) :: z\n   integer :: i\n   call solver%set_options(nl_method='newton',maxit=100,TolFun=1e-12_rk,verbosity=0)\n   call solver%solve(F=f,dFdx=df,x0=2.0_rk,x_sol=roots(1))\n   call solver%set_options(nl_method='newton-quasi-fd',fdm_method='central', &\n      fdm_tol=1e-6_rk,maxit=100,TolFun=1e-12_rk,verbosity=0)\n   call solver%solve(F=f,x0=2.0_rk,x_sol=roots(2))\n   call solver%set_options(nl_method='newton-quasi-cs',cs_tol=1e-20_rk, &\n      maxit=100,TolFun=1e-12_rk,verbosity=0)\n   call solver%solve(F=fc,x0=cmplx(2.0_rk,0.0_rk,rk),x_sol=z)\n   roots(3) = real(z,rk)\n   residuals = [(abs(f(roots(i))),i=1,3)]\n   if (.not. all(ieee_is_finite(roots))) error stop 'Nonfinite root'\n   if (abs(aimag(z))>1e-10_rk) error stop 'Unexpected complex root'\n   if (any(abs(roots-1.0_rk)>1e-10_rk)) error stop 'Roots differ from exact solution'\n   if (any(residuals>1e-10_rk)) error stop 'Residual too large'\n   print '(a)', 'Solve x**3+x-2 = 0; the unique real root is 1.'\n   print '(a,2es18.9)', 'Analytic derivative: ',roots(1),residuals(1)\n   print '(a,2es18.9)', 'Central differences: ',roots(2),residuals(2)\n   print '(a,2es18.9)', 'Complex step:        ',roots(3),residuals(3)\n   print '(a)', 'PASS forsolver'\nend program\n",
+    "topics": [
+      "complex-step-differentiation",
+      "finite-difference-method",
+      "fortran",
+      "fortran-package-manager",
+      "linear-system-solver",
+      "newton-method",
+      "newton-raphson",
+      "nonlinear-systems",
+      "quasi-newton-method",
+      "solver"
+    ]
+  },
+  {
+    "id": "dcuhre",
+    "repository": "Zaneham/dcuhre",
+    "revision": "da8becb7f5313c1d7387066ef2106be9e156e20c",
+    "archive_sha256": "f8310453858037e0cbfd81904cb9aebe299a510f73d0925956d7e7020e358549",
+    "stars": 8,
+    "license": "ACM",
+    "category": "Integration",
+    "description": "Adaptive multidimensional integration over hyperrectangles with vector integrands and error estimates.",
+    "dependencies": [],
+    "source": "module playground_dcuhre_functions\n   use iso_fortran_env, only: wp => real64\n   implicit none\ncontains\n   subroutine integrand(ndim,x,nfun,f)\n      integer, intent(in) :: ndim,nfun\n      real(wp), intent(in) :: x(ndim)\n      real(wp), intent(out) :: f(nfun)\n      f(1) = exp(sum(x))\n      f(2) = x(1)**2*x(2)*x(3)\n   end subroutine\nend module\n\nprogram demo_dcuhre\n   use playground_dcuhre_functions, only: wp,integrand\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   integer, parameter :: ndim=3,nfun=2,nwork=100000\n   real(wp) :: lower(ndim),upper(ndim),result(nfun),error(nfun),work(nwork),exact(nfun)\n   integer :: evaluations,status,i\n   interface\n      subroutine dcuhre(ndim,nfun,a,b,minpts,maxpts,fun,epsabs,epsrel,key,nw,restar, &\n                        result,abserr,neval,ifail,work)\n         import wp,integrand\n         integer :: ndim,nfun,minpts,maxpts,key,nw,restar,neval,ifail\n         real(wp) :: a(ndim),b(ndim),epsabs,epsrel,result(nfun),abserr(nfun),work(nw)\n         procedure(integrand) :: fun\n      end subroutine\n   end interface\n   lower = 0; upper = 1\n   exact = [(exp(1.0_wp)-1.0_wp)**3,1.0_wp/12]\n   call dcuhre(ndim,nfun,lower,upper,0,100000,integrand,1e-10_wp,1e-8_wp,0,nwork,0, &\n      result,error,evaluations,status,work)\n   if (status/=0) error stop 'Adaptive integration did not converge'\n   if (.not. all(ieee_is_finite(result))) error stop 'Nonfinite integrals'\n   if (.not. all(ieee_is_finite(error)) .or. any(error<0)) error stop 'Invalid error estimates'\n   if (any(abs(result-exact)>1e-8_wp)) error stop 'Exact integrals differ'\n   print '(a)', 'Integrals over the unit cube: exp(x+y+z) and x**2*y*z'\n   print '(a)', '       Integral             Exact          Estimated error'\n   do i=1,nfun\n      print '(3es20.11)',result(i),exact(i),error(i)\n   end do\n   print '(a,i0)', 'Integrand evaluations: ',evaluations\n   print '(a)', 'PASS dcuhre'\nend program\n",
+    "topics": [
+      "dcuhre",
+      "fortran",
+      "fortran-package-manager",
+      "integration",
+      "mathematics",
+      "multidimensional-integration",
+      "numerical-integration",
+      "quadrature"
+    ]
+  },
+  {
+    "id": "y12m",
+    "repository": "ivan-pi/y12m",
+    "revision": "5245418ed3f87c72bff4660432212328640a6322",
+    "archive_sha256": "412cfb698c2eb939db37c649d6eb0516f82850570e93ed58e2f4debae7d01a55",
+    "stars": 16,
+    "license": "GPL-2.0-only (source template/build headers; manifest unspecified)",
+    "category": "Linear algebra",
+    "description": "Direct sparse LU factorization with pivoting, reordering and reuse for multiple right-hand sides.",
+    "dependencies": [],
+    "source": "! Factor one sparse tridiagonal matrix, then solve two right-hand sides.\nprogram demo_y12m\n   use y12m, only: y12mb,y12mc,y12md\n   use iso_fortran_env, only: wp => real64\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   integer, parameter :: n=8,nn=500\n   real(wp) :: a(nn),pivot(n),b(n),original_rhs(n),flags(8),matrix(n,n),exact(n),residual\n   integer :: columns(nn),rows(nn),ha(n,11),iflag(10),status,nz,i,j,load\n   matrix = 0; a = 0; rows = 0; columns = 0; ha = 0; nz = 0\n   do i=1,n\n      matrix(i,i) = 3\n      if (i<n) then\n         matrix(i,i+1) = -1\n         matrix(i+1,i) = -1\n      end if\n   end do\n   do i=1,n\n      do j=1,n\n         if (matrix(i,j)==0) cycle\n         nz = nz+1; a(nz) = matrix(i,j); rows(nz) = i; columns(nz) = j\n      end do\n   end do\n   iflag = 0; flags = 0\n   iflag(2:5) = [3,1,0,2] ! Keep L for subsequent right-hand sides.\n   flags(1:4) = [16.0_wp,1e-12_wp,1e16_wp,1e-12_wp]\n   exact = 1; b = matmul(matrix,exact)\n   call y12mb(n,nz,a,columns,nn,rows,nn,ha,n,flags,iflag,status)\n   if (status/=0) error stop 'Sparse preparation failed'\n   call y12mc(n,nz,a,columns,nn,rows,nn,pivot,b,ha,n,flags,iflag,status)\n   if (status/=0) error stop 'Sparse factorization failed'\n   do load=1,2\n      if (load==2) then\n         exact = [(real(i,wp),i=1,n)]\n         b = matmul(matrix,exact)\n         iflag(5) = 3 ! Full forward/back substitution using stored factors.\n      end if\n      original_rhs = matmul(matrix,exact)\n      call y12md(n,a,nn,b,pivot,columns,ha,n,iflag,status)\n      if (status/=0) error stop 'Sparse solve failed'\n      if (.not. all(ieee_is_finite(b))) error stop 'Nonfinite solution'\n      residual = maxval(abs(matmul(matrix,b)-original_rhs))\n      if (residual>1e-10_wp .or. maxval(abs(b-exact))>1e-10_wp) error stop 'Sparse solution differs'\n      print '(a,i0,a,8f8.3)', 'Right-hand side ',load,', solution: ',b\n      print '(a,es12.3)', 'Maximum residual: ',residual\n   end do\n   print '(a)', 'One LU factorization used for both right-hand sides.'\n   print '(a)', 'PASS y12m'\nend program\n",
+    "topics": []
+  },
+  {
+    "id": "foreig",
+    "repository": "gha3mi/foreig",
+    "revision": "8fcfcab03e5d7cf5eda8c51c7a1e97fe52954c39",
+    "archive_sha256": "842695c219adfd981a06d7451b87b27d57d3db86c8878612b371b782eb0e02d1",
+    "stars": 2,
+    "license": "BSD-3",
+    "category": "Linear algebra",
+    "description": "LAPACK interfaces for eigenvalues and eigenvectors of real matrices.",
+    "dependencies": [
+      {
+        "repository": "gha3mi/kinds",
+        "revision": "811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f",
+        "sha256": "495d1133b1630dea4f38d69e5e3189e3279e4ce5836da1a7aec8a822bbe16518"
+      }
+    ],
+    "catalog_build": {
+      "apt_packages": [
+        "libblas-dev=3.12.1-6",
+        "liblapack-dev=3.12.1-6"
+      ],
+      "environment": {
+        "FPM_LDFLAGS": "-llapack -lblas"
+      },
+      "manifest_versions": {
+        "gha3mi/foreig": "0.0.0",
+        "gha3mi/kinds": "0.0.0"
+      },
+      "source_revisions": {
+        "gha3mi/kinds": "811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f"
+      },
+      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+    },
+    "source": "! Three unit masses and four unit springs, with both ends fixed.\nprogram demo_foreig\n   use kinds, only: rk\n   use foreig, only: eig\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   real(rk) :: stiffness(3,3),workspace(3,3),identity(3,3),expected(3),residual,orthogonality\n   real(rk), allocatable :: vectors(:,:),values(:)\n   integer :: i\n   stiffness = reshape([2.0_rk,-1.0_rk,0.0_rk,-1.0_rk,2.0_rk,-1.0_rk,0.0_rk,-1.0_rk,2.0_rk],[3,3])\n   workspace = stiffness\n   call eig(workspace,vectors,values,method='syev')\n   if (.not. all(ieee_is_finite(values))) error stop 'Nonfinite eigenvalues'\n   if (.not. all(ieee_is_finite(vectors))) error stop 'Nonfinite eigenvectors'\n   identity = 0\n   do i=1,3\n      identity(i,i) = 1\n      expected(i) = 2.0_rk-2.0_rk*cos(real(i,rk)*acos(-1.0_rk)/4.0_rk)\n      residual = norm2(matmul(stiffness,vectors(:,i))-values(i)*vectors(:,i))\n      if (residual>1e-11_rk) error stop 'Eigenpair residual too large'\n   end do\n   orthogonality = maxval(abs(matmul(transpose(vectors),vectors)-identity))\n   if (orthogonality>1e-11_rk) error stop 'Eigenvectors are not orthonormal'\n   if (maxval(abs(values-expected))>1e-11_rk) error stop 'Analytic eigenvalues differ'\n   print '(a)', 'Mode    Squared angular frequency    Angular frequency'\n   do i=1,3\n      print '(i3,2f25.12)',i,values(i),sqrt(values(i))\n   end do\n   print '(a,es12.3)', 'Orthogonality error: ',orthogonality\n   print '(a)', 'PASS foreig'\nend program\n",
+    "topics": [
+      "eig",
+      "eigenvalues",
+      "eigenvalues-and-eigenvectors",
+      "eigenvectors",
+      "fortran",
+      "fortran-package-manager",
+      "lapack",
+      "mkl"
+    ]
+  },
+  {
+    "id": "rkf45",
+    "repository": "zoziha/rkf45",
+    "revision": "93cd129369357ee08e34be7868256b21a500cc98",
+    "archive_sha256": "7ba93563d7f60b085708b0866297c7814ffb85592411377af58bb878fc1adfd2",
+    "stars": 5,
+    "license": "MIT",
+    "category": "Differential equations",
+    "description": "Classic adaptive Runge-Kutta-Fehlberg fourth/fifth-order ODE integration.",
+    "dependencies": [],
+    "catalog_build": {
+      "environment": {
+        "FPM_FFLAGS": "-DREAL64"
+      },
+      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+    },
+    "source": "module playground_rkf45_oscillator\n   use rkf45_module, only: rk\n   implicit none\ncontains\n   subroutine oscillator(t,y,dy)\n      real(rk), intent(in) :: t,y(:)\n      real(rk), intent(out) :: dy(:)\n      dy = [y(2),-y(1)]\n   end subroutine\nend module\n\nprogram demo_rkf45\n   use rkf45_module, only: rk,rkf45\n   use playground_rkf45_oscillator, only: oscillator\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   real(rk) :: y(2),t,target,relative,absolute,work(15),error,exact(2)\n   integer :: flag,iwork(5),i\n   y = [1.0_rk,0.0_rk]; t = 0\n   relative = 1e-9_rk; absolute = 1e-11_rk\n   work = 0; iwork = 0; flag = 1\n   print '(a)', 'Harmonic oscillator y''''=-y, y(0)=1, y''(0)=0'\n   print '(a)', '       Time          Position          Velocity          Max error'\n   do i=1,8\n      target = real(i,rk)*acos(-1.0_rk)/4.0_rk\n      call rkf45(oscillator,2,y,t,target,relative,absolute,flag,work,iwork)\n      if (flag/=2) error stop 'RKF45 did not reach the requested time'\n      exact = [cos(t),-sin(t)]\n      if (.not. all(ieee_is_finite(y))) error stop 'Nonfinite oscillator state'\n      error = maxval(abs(y-exact))\n      if (error>1e-7_rk) error stop 'Analytic solution differs'\n      print '(4f18.10)',t,y,error\n   end do\n   print '(a)', 'PASS rkf45'\nend program\n",
+    "topics": [
+      "fehlberg",
+      "fortran",
+      "fortran-package-manager",
+      "fourth-fifth-order",
+      "ode",
+      "rkf45",
+      "runge-kutta"
+    ]
+  },
+  {
+    "id": "forlab",
+    "repository": "zoziha/forlab",
+    "revision": "416e5612167b6133100bef4cec116322890f66f7",
+    "archive_sha256": "784431a7c880c6a6dcfdd7687e3b0f2f8340dc13bd187a3546acd09d883628f3",
+    "stars": 8,
+    "license": "MIT",
+    "category": "General utilities",
+    "description": "MATLAB/NumPy-style numerical utilities, linear algebra, interpolation and statistics.",
+    "dependencies": [],
+    "catalog_patches": {
+      "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+      "edits": [
+        {
+          "path": "src/forlab.F90",
+          "sha256": "4f9be44e66ad2fdb67841ee14d0156b7fa315b137f33333b84abb100f7e48246",
+          "before": "  real(kind = RPRE) function norm1(x, p)\n    real(kind = RPRE), dimension(:), intent(in) :: x\n    real(kind = RPRE), intent(in), optional :: p\n\n    if ((.not. present(p)) .or. (p .eq. 2.)) then\n      norm1 = sqrt(sum(abs(x)**2))\n    elseif (p .eq. 1.) then\n      norm1 = sum(abs(x))\n    else\n      norm1 = (sum(abs(x)**p))**(1.0d0/p)\n    end if\n    return\n  end function norm1\n\n  real(kind = RPRE) function norm2(A, p)\n    real(kind = RPRE), dimension(:,:), intent(in) :: A\n    integer(kind = IPRE), intent(in), optional :: p\n    real(kind = RPRE), dimension(:), allocatable :: w\n\n    if ((.not. present(p)) .or. (p .eq. 2.)) then\n      call svd(A, w)\n      norm2 = maxval(w)\n    elseif (p .eq. 1.) then\n      norm2 = maxval(sum(abs(A), dim = 2))\n    end if\n    return\n  end function norm2",
+          "after": "  real(kind = RPRE) function norm1(x, p)\n    real(kind = RPRE), dimension(:), intent(in) :: x\n    real(kind = RPRE), intent(in), optional :: p\n\n    real(kind = RPRE) :: power\n\n    power = 2\n    if (present(p)) power = p\n    if (power .eq. 2) then\n      norm1 = sqrt(sum(abs(x)**2))\n    elseif (power .eq. 1) then\n      norm1 = sum(abs(x))\n    else\n      norm1 = (sum(abs(x)**power))**(1.0d0/power)\n    end if\n    return\n  end function norm1\n\n  real(kind = RPRE) function norm2(A, p)\n    real(kind = RPRE), dimension(:,:), intent(in) :: A\n    integer(kind = IPRE), intent(in), optional :: p\n    real(kind = RPRE), dimension(:), allocatable :: w\n\n    integer(kind = IPRE) :: power\n\n    power = 2\n    if (present(p)) power = p\n    if (power .eq. 2) then\n      call svd(A, w)\n      norm2 = maxval(w)\n    elseif (power .eq. 1) then\n      norm2 = maxval(sum(abs(A), dim = 2))\n    end if\n    return\n  end function norm2"
+        }
+      ]
+    },
+    "source": "! Fit exact quadratic data using the rectangular-system solver.\nprogram demo_forlab\n   use forlab, only: RPRE,linspace,solve,vector_norm => norm\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   real(RPRE) :: x(5),design(5,3),y(5),coefficients(3),residual\n   ! The catalog fixes absent optional norm arguments before evaluating p.\n   if (abs(vector_norm([3.0_RPRE,4.0_RPRE])-5.0_RPRE)>1e-6_RPRE) error stop 'Default norm differs'\n   if (abs(vector_norm([3.0_RPRE,4.0_RPRE],1.0_RPRE)-7.0_RPRE)>1e-6_RPRE) error stop 'Explicit norm differs'\n   if (abs(vector_norm(reshape([3.0_RPRE,0.0_RPRE,0.0_RPRE,4.0_RPRE],[2,2]))-4.0_RPRE)>1e-4_RPRE) &\n      error stop 'Default matrix norm differs'\n   if (abs(vector_norm(reshape([3.0_RPRE,0.0_RPRE,0.0_RPRE,4.0_RPRE],[2,2]),1)-4.0_RPRE)>1e-4_RPRE) &\n      error stop 'Explicit matrix norm differs'\n   x = linspace(-2.0_RPRE,2.0_RPRE,5)\n   design(:,1) = 1; design(:,2) = x; design(:,3) = x*x\n   y = 1.0_RPRE+2.0_RPRE*x-0.5_RPRE*x*x\n   coefficients = solve(design,y)\n   if (.not. all(ieee_is_finite(coefficients))) error stop 'Nonfinite fit coefficients'\n   residual = maxval(abs(matmul(design,coefficients)-y))\n   if (residual>1e-4_RPRE) error stop 'Fit residual too large'\n   if (maxval(abs(coefficients-[1.0_RPRE,2.0_RPRE,-0.5_RPRE]))>1e-4_RPRE) error stop 'Wrong coefficients'\n   print '(a,3f14.7)', 'Fitted constant, linear and quadratic coefficients: ',coefficients\n   print '(a,es12.3)', 'Maximum residual: ',residual\n   print '(a)', 'PASS forlab'\nend program\n",
+    "topics": []
+  },
+  {
+    "id": "libdogleg-f",
+    "repository": "ivan-pi/libdogleg-f",
+    "revision": "32b65ae4f880a052768c05d24c24b79920710681",
+    "archive_sha256": "567498c00c9e23382d9359e92a1c08fd02fbb5167a4c531b2fc8018eb9d2a122",
+    "stars": 6,
+    "license": "LGPL-3.0-or-later",
+    "category": "Roots and optimization",
+    "description": "Fortran interfaces to libdogleg trust-region nonlinear least-squares optimization.",
+    "dependencies": [],
+    "catalog_build": {
+      "apt_packages": [
+        "libdogleg-dev=0.16-4+b3",
+        "libsuitesparse-dev=1:7.10.1+dfsg-1",
+        "liblapack-dev=3.12.1-6"
+      ],
+      "environment": {
+        "FPM_LDFLAGS": "-ldogleg"
+      },
+      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+    },
+    "source": "module playground_dogleg_fit\n   use iso_c_binding, only: wp => c_double\n   implicit none\ncontains\n   subroutine residual(x,f,jac,params)\n      real(wp), intent(in) :: x(:)\n      real(wp), intent(out) :: f(:),jac(:,:)\n      class(*), intent(in), optional :: params\n      real(wp) :: time,exponential,observed\n      integer :: i\n      do i=1,size(f)\n         time = real(i-1,wp)/5\n         exponential = exp(-x(2)*time)\n         observed = 2.5_wp*exp(-0.7_wp*time)\n         f(i) = x(1)*exponential-observed\n         jac(1,i) = exponential\n         jac(2,i) = -time*x(1)*exponential\n      end do\n   end subroutine\nend module\n\nprogram demo_dogleg\n   use dogleg, only: dl_parameters2_t,dl_getDefaultParameters,dl_optimize\n   use playground_dogleg_fit, only: wp,residual\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   type(dl_parameters2_t) :: settings\n   real(wp) :: x(2),objective,f(11),jac(2,11)\n   x = [1.5_wp,0.3_wp]\n   call dl_getDefaultParameters(settings)\n   settings%max_iterations = 100\n   settings%dogleg_debug = 0\n   call dl_optimize(objective,x,11,residual,parameters=settings)\n   if (.not. all(ieee_is_finite(x))) error stop 'Nonfinite fitted parameters'\n   call residual(x,f,jac)\n   if (.not. all(ieee_is_finite(f))) error stop 'Nonfinite residuals'\n   if (maxval(abs(x-[2.5_wp,0.7_wp]))>1e-6_wp) error stop 'Known fit parameters differ'\n   if (norm2(f)>1e-6_wp) error stop 'Fit residual too large'\n   print '(a)', 'Fit amplitude*exp(-rate*t) to eleven exact observations.'\n   print '(a,2f14.8)', 'Recovered amplitude and rate: ',x\n   print '(a,es12.3)', 'Independently evaluated residual norm: ',norm2(f)\n   print '(a)', 'PASS libdogleg-f'\nend program\n",
+    "topics": [
+      "c",
+      "dogleg-method",
+      "fortran",
+      "nonlinear-least-squares",
+      "numerical-optimization"
+    ]
+  },
+  {
+    "id": "nafpack",
+    "repository": "Minard-Jules/NAFPack",
+    "revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+    "archive_sha256": "fab50ff6999afd7ab8bfeabdf8aaf3a93b3e23f6ff9d8e85c74d84d0664f5a51",
+    "stars": 5,
+    "license": "MIT",
+    "category": "General utilities",
+    "description": "Numerical analysis routines for Fourier transforms, linear systems and eigenproblems.",
+    "dependencies": [],
+    "catalog_build": {
+      "apt_packages": [
+        "libfftw3-dev=3.3.10-2+b1"
+      ],
+      "metapackages": [
+        "openmp"
+      ],
+      "manifest_versions": {
+        "minard-jules/nafpack": "0.1.52"
+      },
+      "environment": {
+        "FPM_FFLAGS": "-fopenmp -cpp -I/usr/include -ffree-line-length-none"
+      },
+      "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+    },
+    "catalog_patches": {
+      "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+      "edits": [
+        {
+          "path": "fpm.toml",
+          "sha256": "a23452a807863276e14e7df3644f6b22d588e6dda917100f28edce71790da1e1",
+          "before": "name = \"NAFPack\"\nversion = \"0.1.52\"\nlicense = \"MIT\"\nauthor = \"Jules Minard\"\nmaintainer = \"https://github.com/Minard-Jules/NAFPack/issues\"\ncopyright = \"Copyright 2023, Jules Minard\"\ndescription = \"Numerical Analysis in Fortran Package\"\nkeywords = [\n    \"NAFPack\",\n]\nhomepage = \"https://github.com/Minard-Jules/NAFPack\"\n\n[features.release]\nflags = \"-O3\"\n\n[features.release.gfortran]\nflags = \"-march=native -ffast-math -fimplicit-none -ffree-line-length-2000 -funroll-loops\"\n\n[features.release.preprocess.cpp]\nmacros = [\n    \"NDEBUG\",\n]\n\n[features.debug]\nflags = \"-g -O0\"\n\n[features.debug.gfortran]\nflags = \"-Wall -Wextra -fcheck=bounds -Wimplicit-procedure -Werror=implicit-procedure -ffree-line-length-2000 -std=f2018-fbacktrace -fbounds-check -frange-check\"\n\n[features.debug.preprocess.cpp]\nmacros = [\n    \"DEBUG\",\n]\n\n[profiles]\ndebug = [\n    \"debug\",\n]\nrelease = [\n    \"release\",\n]\n\n[build]\nauto-executables = true\nauto-tests = true\nauto-examples = true\nmodule-naming = false\nlink = [\n    \"fftw3\",\n    \"gomp\",\n]\n\n[install]\nlibrary = false\n\n[fortran]\nimplicit-typing = true\nimplicit-external = true\nsource-form = \"default\"\n\n[dependencies]\n\n[[test]]\nname = \"test_fft\"\nmain = \"test_Fourier_Transform_fft_complex.f90\"\nsource-dir = \"test/Fourier_Transform\"\n",
+          "after": "name = \"NAFPack\"\nversion = \"0.1.52\"\nlicense = \"MIT\"\nauthor = \"Jules Minard\"\nmaintainer = \"https://github.com/Minard-Jules/NAFPack/issues\"\ncopyright = \"Copyright 2023, Jules Minard\"\ndescription = \"Numerical Analysis in Fortran Package\"\nkeywords = [\n    \"NAFPack\",\n]\nhomepage = \"https://github.com/Minard-Jules/NAFPack\"\n\n[build]\nauto-executables = true\nauto-tests = true\nauto-examples = true\nmodule-naming = false\nlink = [\n    \"fftw3\",\n    \"gomp\",\n]\n\n[install]\nlibrary = false\n\n[fortran]\nimplicit-typing = true\nimplicit-external = true\nsource-form = \"default\"\n\n[dependencies]\n\n[[test]]\nname = \"test_fft\"\nmain = \"test_Fourier_Transform_fft_complex.f90\"\nsource-dir = \"test/Fourier_Transform\"\n"
+        }
+      ]
+    },
+    "source": "program demo_nafpack\n   use NAFPack_kinds, only: sp\n   use NAFPack_Fourier_Transform, only: Fourier_Transform,ALG_RADIX2_DIT,idft\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   integer, parameter :: n=16\n   type(Fourier_Transform) :: transform\n   complex(sp) :: signal(n),expected(n),spectrum(n)\n   complex(sp), allocatable :: recovered(:)\n   real(sp) :: theta,real_part(n),imaginary_part(n),spectrum_error,roundtrip_error\n   integer :: i\n   do i=1,n\n      theta = 2*acos(-1.0_sp)*real(i-1,sp)/n\n      signal(i) = cmplx(cos(3*theta),sin(3*theta),sp)+0.25_sp*cmplx(cos(5*theta),sin(5*theta),sp)\n   end do\n   expected = cmplx(0.0_sp,0.0_sp,sp)\n   expected(4) = real(n,sp); expected(6) = real(n,sp)/4\n   call transform%create_fft_plan_sp(n,algorithm=ALG_RADIX2_DIT)\n   call transform%execute_fft_plan_sp(real(signal,sp),aimag(signal),real_part,imaginary_part)\n   spectrum = cmplx(real_part,imaginary_part,sp)\n   call transform%destroy_fft_plan_sp()\n   recovered = idft(spectrum)\n   if (.not. all(ieee_is_finite(real(spectrum)))) error stop 'Nonfinite spectrum'\n   if (.not. all(ieee_is_finite(aimag(spectrum)))) error stop 'Nonfinite spectrum'\n   if (.not. all(ieee_is_finite(real(recovered)))) error stop 'Nonfinite reconstruction'\n   if (.not. all(ieee_is_finite(aimag(recovered)))) error stop 'Nonfinite reconstruction'\n   spectrum_error = maxval(abs(spectrum-expected))\n   roundtrip_error = maxval(abs(recovered-signal))\n   if (spectrum_error>1e-4_sp) error stop 'Known frequency amplitudes differ'\n   if (roundtrip_error>1e-5_sp) error stop 'Inverse transform differs'\n   print '(a)', 'Sixteen complex samples: frequency 3 plus frequency 5 at quarter amplitude.'\n   print '(a)', 'Frequency   Fourier amplitude'\n   do i=1,n\n      if (abs(spectrum(i))>1e-4_sp) print '(i6,f20.8)',i-1,abs(spectrum(i))\n   end do\n   print '(a,es12.3)', 'Maximum spectral error: ',spectrum_error\n   print '(a,es12.3)', 'Maximum round-trip error: ',roundtrip_error\n   print '(a)', 'PASS nafpack'\nend program\n",
+    "topics": [
+      "cmake",
+      "eigenvalues",
+      "fft",
+      "fftw",
+      "fpm",
+      "linear-algebra"
+    ]
   }
 ]

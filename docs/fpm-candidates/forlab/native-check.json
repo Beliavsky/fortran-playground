@@ -1,0 +1,14 @@
+{
+  "compiler": "GNU Fortran (GCC) 17.0.0 20260510 (experimental)",
+  "system": "Windows",
+  "flags": [
+    "-cpp",
+    "-ffree-line-length-none",
+    "-g",
+    "-fcheck=all"
+  ],
+  "original": "initial-main.f90",
+  "fix": "optional-norm.patch",
+  "corrected_main": "../../../fpm_catalog/demos/forlab.f90",
+  "note": "Initial main crashes in norm1; corrected main checks default/explicit vector and matrix norms and the rectangular least-squares fit."
+}

@@ -1,0 +1,34 @@
+{
+  "environment": "Native Windows, no gVisor",
+  "compiler": "GNU Fortran (GCC) 17.0.0 20260510 (experimental)",
+  "command": [
+    "fpm",
+    "run",
+    "--profile",
+    "debug",
+    "--compiler",
+    "gfortran",
+    "--no-prune"
+  ],
+  "sources": [
+    {
+      "repository": "everythingfunctional/parff",
+      "revision": "dbce6a04992fbc1e2d13b6c633480d3cd4bbe35c",
+      "sha256": "614aac0224f2f60d299d3b1ba859e4423553e42f144546b968ee52549f4573a5"
+    },
+    {
+      "repository": "everythingfunctional/iso_varying_string",
+      "revision": "fb7635a6b21c3d50ac7c8c14f7696a70931cb4a6",
+      "sha256": "0a2ff49b7eb88218c5de043b5aa3e564e821cd8906354e6f67a2ca480ae0c52e"
+    },
+    {
+      "repository": "everythingfunctional/strff",
+      "revision": "50e536cb087123f2c72140cb065c398a01fc5121",
+      "sha256": "c0f773e21d2c1a0f7b83bcb51cf6bca4d7103815373e7be9a56d1689b8a5da42"
+    }
+  ],
+  "note": "Fortran sources were unchanged. Minimal FPM manifests with short local dependency paths avoided Windows build-path/log-name problems. This is not the hosted GNU 16/gVisor environment.",
+  "exit_code": 0,
+  "stdout_tail": "          position_m.f90  done.\n[  8%]         iso_varying_string.f90\n[ 12%]         iso_varying_string.f90  done.\n[ 12%] intermediate_parsed_string_m.f\n[ 16%] intermediate_parsed_string_m.f  done.\n[ 16%]         parsed_character_m.f90\n[ 20%]         parsed_character_m.f90  done.\n[ 20%]           parsed_integer_m.f90\n[ 25%]           parsed_integer_m.f90  done.\n[ 25%]              parsed_item_m.f90\n[ 29%]              parsed_item_m.f90  done.\n[ 29%]           parsed_nothing_m.f90\n[ 33%]           parsed_nothing_m.f90  done.\n[ 33%]          parsed_rational_m.f90\n[ 37%]          parsed_rational_m.f90  done.\n[ 37%]            parsed_string_m.f90\n[ 41%]            parsed_string_m.f90  done.\n[ 41%]                    state_m.f90\n[ 45%]                    state_m.f90  done.\n[ 45%]                      strff.f90\n[ 50%]                      strff.f90  done.\n[ 50%]                  message_m.f90\n[ 54%]                  message_m.f90  done.\n[ 54%]             parsed_items_m.f90\n[ 58%]             parsed_items_m.f90  done.\n[ 58%]         parsed_item_list_m.f90\n[ 62%]         parsed_item_list_m.f90  done.\n[ 62%]      intermediate_repeat_m.f90\n[ 66%]      intermediate_repeat_m.f90  done.\n[ 66%]            parser_output_m.f90\n[ 70%]            parser_output_m.f90  done.\n[ 70%]        parser_interfaces_m.f90\n[ 75%]        parser_interfaces_m.f90  done.\n[ 75%]                  parsers_m.f90\n[ 79%]                  parsers_m.f90  done.\n[ 79%]             parse_result_m.f90\n[ 83%]             parse_result_m.f90  done.\n[ 83%]                      parff.f90\n[ 87%]                      parff.f90  done.\n[ 87%]              libparff-native.a\n[ 91%]              libparff-native.a  done.\n[ 91%]                       main.f90\n[ 95%]                       main.f90  done.\n[ 95%]               parff-native.exe\n[100%]               parff-native.exe  done.\n[100%] Project compiled successfully.\nParsed integer: -321\nInvalid input: At line 1 and column 1\n    found n but expected integer\n PASS parff\n",
+  "stderr": ""
+}

@@ -1,0 +1,28 @@
+{
+  "id": "sodium",
+  "repository": "freevryheid/sodium",
+  "revision": "805225de601cc1f541fc7699d76a748d6eda58ca",
+  "archive_sha256": "76c6f3498f86457350f7c8cd40e422de0cbceafdf9016186f27dbb35c7412407",
+  "stars": 1,
+  "license": "MIT",
+  "category": "Cryptography",
+  "description": "Fortran bindings to libsodium for authenticated encryption and other cryptographic operations.",
+  "dependencies": [],
+  "catalog_build": {
+    "apt_packages": [
+      "libsodium-dev=1.0.18-1+deb13u1"
+    ],
+    "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+  },
+  "catalog_patches": {
+    "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+    "edits": [
+      {
+        "path": "src/crypto_hash_sha256.f",
+        "sha256": "81f40e10e99b3f0b4761c41416f696efb5565e3cc430637bda40c643ee39b8d9",
+        "before": "  implicit none",
+        "after": "  use, intrinsic :: iso_c_binding, only: c_int8_t, c_int32_t, c_int64_t\n  implicit none"
+      }
+    ]
+  }
+}

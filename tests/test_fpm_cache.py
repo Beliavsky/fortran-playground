@@ -131,7 +131,7 @@ class CacheTests(unittest.TestCase):
                 target.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copyfile(root / name, target)
             before = recipe_identity(fixture)
-            for name in ('xfpm_modal.py', 'xfpm_worker.py', 'fpm_api.py', 'fpm_catalog.json'):
+            for name in ('xfpm_modal.py', 'xfpm_worker.py', 'fortran_image.py', 'fpm_api.py', 'fpm_catalog.json'):
                 (fixture / name).write_text('Unrelated change or another catalog entry')
             self.assertEqual(before, recipe_identity(fixture))
             config = json.loads((fixture / 'fpm_build_recipe.json').read_text())

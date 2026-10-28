@@ -51,6 +51,11 @@ const topicFixture = packages.find(p => p.id === 'dvode');
 topicFixture.topics = [...new Set([...(topicFixture.topics || []), 'adams-bashforth', 'fortran'])];
 const translated = JSON.parse(readFileSync(new URL('../site/fpm/translated-r.json', import.meta.url), 'utf8'));
 const allPackages = JSON.parse(readFileSync(new URL('../site/fpm/all-packages.json', import.meta.url), 'utf8'));
+// A retained clean-build audit must not override a selected package's cached recipe.
+for (const entry of [packages[0], allPackages.find(p => p.id === packages[0].id)]) {
+  entry.audit = {tested_at: '2026-10-27', revision: entry.revision, summary: 'Build passed',
+    ...entry.audit, verification: {preprocess: true}};
+}
 let allFetches = 0;
 let translatedFetches = 0;
 const unconfigured = process.argv.includes('--unconfigured');
@@ -213,6 +218,7 @@ if (!legacyService) {
   assert.match(get('connection').textContent, localExecution ? /Local FPM/ : /GNU Fortran 16/);
   assert.equal(get('source').value, packages[0].source);
   assert.equal(get('revision').value, packages[0].revision);
+  assert.equal(get('preprocess').checked, false, 'Selected packages use their recorded build recipe');
   assert.equal(submissions.length, 0, 'Loading a cached package must not submit a job');
 }
 get('available-package').value = packages[1].id;
@@ -376,6 +382,7 @@ if (allEnabled) {
   get('load-package').listeners.click();
   assert.equal(get('revision').value, packages[0].revision, 'Selected pins survive in All');
   assert.equal(get('source').value, packages[0].source);
+  assert.equal(get('preprocess').checked, false, 'Retained discovery audits must not bypass selected caches');
   get('package-collection').value = 'general'; await get('package-collection').listeners.change();
   get('package-collection').value = 'all'; await get('package-collection').listeners.change();
   assert.equal(allFetches, 1, 'Full catalog is cached for this page session');

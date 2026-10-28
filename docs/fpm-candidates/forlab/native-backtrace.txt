@@ -1,0 +1,14 @@
+[New Thread 25680.0x71f0]
+[New Thread 25680.0x3a44]
+[Thread 25680.0x71f0 exited with code 0]
+
+Thread 1 received signal SIGSEGV, Segmentation fault.
+0x00007ff6a5022541 in forlab::norm1 (x=..., p=<error reading variable: Cannot access memory at address 0x0>) at <workspace>\.fpm-audit-cache\batch-180\forlab\forlab-416e5612167b6133100bef4cec116322890f66f7\src\forlab.F90:6251
+6251	    if ((.not. present(p)) .or. (p .eq. 2.)) then
+#0  0x00007ff6a5022541 in forlab::norm1 (x=..., p=<error reading variable: Cannot access memory at address 0x0>) at <workspace>\.fpm-audit-cache\batch-180\forlab\forlab-416e5612167b6133100bef4cec116322890f66f7\src\forlab.F90:6251
+#1  0x00007ff6a4fe317a in forlab::svdsolve (__result=..., a=..., b=..., cutoff=<error reading variable: Cannot access memory at address 0x0>) at <workspace>\.fpm-audit-cache\batch-180\forlab\forlab-416e5612167b6133100bef4cec116322890f66f7\src\forlab.F90:8730
+#2  0x00007ff6a5005316 in forlab::solve (__result=<not allocated>, a=..., b=...) at <workspace>\.fpm-audit-cache\batch-180\forlab\forlab-416e5612167b6133100bef4cec116322890f66f7\src\forlab.F90:7834
+#3  0x00007ff6a50bddc7 in demo_forlab () at main.f90:10
+#4  0x00007ff6a50be349 in main (argc=1, argv=0x27889c67920) at main.f90:3
+#5  0x00007ff6a4fd12ee in __tmainCRTStartup ()
+#6  0x00007ff6a4fd13f6 in mainCRTStartup ()

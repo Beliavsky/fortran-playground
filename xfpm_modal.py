@@ -29,7 +29,7 @@ if modal.is_local():
     from fpm_cache import recipe_identity
     RECIPE_ID = recipe_identity()
     digest = hashlib.sha256()
-    for filename in ('xfpm_modal.py', 'xfpm_worker.py', 'fpm_targets.py', 'fpm_sources.py', 'fpm_compilers.py', 'fortran_plot.py',
+    for filename in ('xfpm_modal.py', 'xfpm_worker.py', 'fpm_targets.py', 'fpm_sources.py', 'fpm_compilers.py', 'fortran_plot.py', 'fortran_image.py',
                      'fpm_cache.py', 'fpm_build.py', 'fpm_build_recipe.json', 'xfpm_prebuild.py', 'fpm_catalog.json',
                      'vendor/pyplot-fortran/src/pyplot_module.F90', 'vendor/pyplot-fortran/upstream.json',
                      'fpm_toolchains/xinstall_gnu17.sh', 'fpm_toolchains/xinstall_intel.sh', 'fpm_toolchains/xinstall_flang.sh'):
@@ -47,6 +47,7 @@ def with_fpm(base, compiler):
     return (base
     .pip_install('matplotlib==' + RECIPE['matplotlib_version'])
     .add_local_file(ROOT / 'fortran_plot.py', '/opt/fpm/fortran_plot.py', copy=True)
+    .add_local_file(ROOT / 'fortran_image.py', '/opt/fpm/fortran_image.py', copy=True)
     .add_local_dir(ROOT / 'vendor/pyplot-fortran', '/opt/fpm/vendor/pyplot-fortran', copy=True)
     .run_commands(
         "python -c \"import urllib.request,hashlib,pathlib; b=urllib.request.urlopen('" + FPM_URL + "').read(); "

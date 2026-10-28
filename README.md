@@ -491,7 +491,7 @@ Reports distinguish Exact match, Formatting only, Numeric match, Within toleranc
 
 ## FPM package feasibility
 
-The FPM page also offers a [searchable catalog of 83 precompiled GNU Fortran 16 packages](docs/fpm-precompiled.md) in 32 categories: numerical methods, machine learning, databases, geodesy, plotting, data formats, dates, containers, files, and command-line utilities. Each has a one-line description and an editable example. Catalog and service edits preserve compatible compiled libraries; other compilers and custom package URLs retain clean builds.
+The FPM page also offers a [searchable catalog of 159 precompiled GNU Fortran 16 packages](docs/fpm-precompiled.md) in 38 categories: numerical methods, machine learning, databases, geodesy, plotting, data formats, dates, containers, files, and command-line utilities. Each has a one-line description and an editable example. Catalog and service edits preserve compatible compiled libraries; other compilers and custom package URLs retain clean builds. [Candidate investigation notes](docs/fpm-candidate-notes.md) retain failed checks, exact revisions, diagnostics, and reproducer programs for work with package authors.
 
 Each catalog selection links to its pinned upstream source. You can download your edited main as a Fortran file or an FPM project ZIP with local build tools, dependency locks, and recorded patches/settings. Package sources download on the first local run; the ZIP README explains setup. Downloads do not submit a compiler job or require the execution service.
 
@@ -499,7 +499,7 @@ The [FPM feasibility audit](docs/fpm-feasibility/README.md) found five packages 
 
 ## Local compiler tools
 
-The independent local tools use **installed gfortran, gfortran17, ifx, LLVM Flang, LFortran, and/or ofort**, with Python's standard library for source-file and existing-directory package operation. The local catalog page additionally needs `tomli-w`. They do not contact the hosted playground, require Modal, or consume hosted quotas. Source-file mode accepts local files; package mode uses installed FPM, which may download dependencies normally. See [moving the local tools](docs/fpm-runners.md#moving-the-local-tools) for the files needed by each interface, including the shared frontend and catalog preparation modules. Source-only command-line use needs `xfortran_run.py`, `fortran_output_diff.py`, and `fortran_plot.py`; plotting also needs the vendored module, NumPy, and Matplotlib.
+The independent local tools use **installed gfortran, gfortran17, ifx, LLVM Flang, LFortran, and/or ofort**, with Python's standard library for source-file and existing-directory package operation. The local catalog page additionally needs `tomli-w`. They do not contact the hosted playground, require Modal, or consume hosted quotas. Source-file mode accepts local files; package mode uses installed FPM, which may download dependencies normally. See [moving the local tools](docs/fpm-runners.md#moving-the-local-tools) for the files needed by each interface, including the shared frontend and catalog preparation modules. Source-only command-line use needs `xfortran_run.py`, `fortran_output_diff.py`, `fortran_plot.py`, and `fortran_image.py`; plotting also needs the vendored module, NumPy, and Matplotlib.
 
 ### Local command-line runner
 

@@ -1,0 +1,150 @@
+ + mkdir -p build/dependencies
+[  0%]              pyplot_module.f90
+[  1%]              pyplot_module.f90  done.
+[  1%]             wavepack_kinds.f90
+[  2%]             wavepack_kinds.f90  done.
+[  2%]                         rk.f90
+[  4%]                         rk.f90  done.
+[  4%]                     chisqr.f90
+[  5%]                     chisqr.f90  done.
+
+./././/../sources/bundle/packages/0/wavepack-b31cddb6703fbe237c7d24ece24a67d31feed871/src/chisqr.f90:561:27:
+
+  561 |         assign 10 to i99999
+      |                           1
+Warning: Deleted feature: ASSIGN statement at (1)
+./././/../sources/bundle/packages/0/wavepack-b31cddb6703fbe237c7d24ece24a67d31feed871/src/chisqr.f90:567:27:
+
+  567 |         assign 20 to i99999
+      |                           1
+Warning: Deleted feature: ASSIGN statement at (1)
+./././/../sources/bundle/packages/0/wavepack-b31cddb6703fbe237c7d24ece24a67d31feed871/src/chisqr.f90:604:27:
+
+  604 |         assign 90 to i99999
+      |                           1
+Warning: Deleted feature: ASSIGN statement at (1)
+./././/../sources/bundle/packages/0/wavepack-b31cddb6703fbe237c7d24ece24a67d31feed871/src/chisqr.f90:627:28:
+
+  627 |         assign 130 to i99999
+      |                            1
+Warning: Deleted feature: ASSIGN statement at (1)
+./././/../sources/bundle/packages/0/wavepack-b31cddb6703fbe237c7d24ece24a67d31feed871/src/chisqr.f90:661:28:
+
+  661 |         assign 200 to i99999
+      |                            1
+Warning: Deleted feature: ASSIGN statement at (1)
+./././/../sources/bundle/packages/0/wavepack-b31cddb6703fbe237c7d24ece24a67d31feed871/src/chisqr.f90:695:28:
+
+  695 |         assign 270 to i99999
+      |                            1
+Warning: Deleted feature: ASSIGN statement at (1)
+./././/../sources/bundle/packages/0/wavepack-b31cddb6703fbe237c7d24ece24a67d31feed871/src/chisqr.f90:804:19:
+
+  804 |         goto i99999
+      |                   1
+Warning: Deleted feature: Assigned GOTO statement at (1)
+./././/../sources/bundle/packages/0/wavepack-b31cddb6703fbe237c7d24ece24a67d31feed871/src/chisqr.f90:900:27:
+
+  900 |         assign 10 to i99999
+      |                           1
+Warning: Deleted feature: ASSIGN statement at (1)
+./././/../sources/bundle/packages/0/wavepack-b31cddb6703fbe237c7d24ece24a67d31feed871/src/chisqr.f90:908:27:
+
+  908 |         assign 20 to i99999
+      |                           1
+Warning: Deleted feature: ASSIGN statement at (1)
+./././/../sources/bundle/packages/0/wavepack-b31cddb6703fbe237c7d24ece24a67d31feed871/src/chisqr.f90:989:28:
+
+  989 |         assign 200 to i99999
+      |                            1
+Warning: Deleted feature: ASSIGN statement at (1)
+./././/../sources/bundle/packages/0/wavepack-b31cddb6703fbe237c7d24ece24a67d31feed871/src/chisqr.f90:1088:19:
+
+ 1088 |         goto i99999
+      |                   1
+Warning: Deleted feature: Assigned GOTO statement at (1)
+./././/../sources/bundle/packages/0/wavepack-b31cddb6703fbe237c7d24ece24a67d31feed871/src/chisqr.f90:1091:4:
+
+ 1091 |     real(rk) function erf(x)
+      |    1
+Warning: ‘erf’ declared at (1) may shadow the intrinsic of the same name.  In order to call the intrinsic, explicit INTRINSIC declarations may be required. [-Wintrinsic-shadow]
+./././/../sources/bundle/packages/0/wavepack-b31cddb6703fbe237c7d24ece24a67d31feed871/src/chisqr.f90:1358:25:
+
+ 1358 |         if (t) 40, 10, 20
+      |                         1
+Warning: Fortran 2018 deleted feature: Arithmetic IF statement at (1)
+./././/../sources/bundle/packages/0/wavepack-b31cddb6703fbe237c7d24ece24a67d31feed871/src/chisqr.f90:1384:4:
+
+ 1384 |     real(rk) function gamma(a)
+      |    1
+Warning: ‘gamma’ declared at (1) may shadow the intrinsic of the same name.  In order to call the intrinsic, explicit INTRINSIC declarations may be required. [-Wintrinsic-shadow]
+./././/../sources/bundle/packages/0/wavepack-b31cddb6703fbe237c7d24ece24a67d31feed871/src/chisqr.f90:1447:25:
+
+ 1447 |         if (m) 40, 30, 10
+      |                         1
+Warning: Fortran 2018 deleted feature: Arithmetic IF statement at (1)
+./././/../sources/bundle/packages/0/wavepack-b31cddb6703fbe237c7d24ece24a67d31feed871/src/chisqr.f90:1843:34:
+
+ 1843 |         if (iop - 2) 280, 290, 300
+      |                                  1
+Warning: Fortran 2018 deleted feature: Arithmetic IF statement at (1)
+./././/../sources/bundle/packages/0/wavepack-b31cddb6703fbe237c7d24ece24a67d31feed871/src/chisqr.f90:1884:34:
+<ERROR> Compilation failed for object " .._sources_bundle_packages_0_wavepack-b31cddb6703fbe237c7d24ece24a67d31feed871_src_chisqr.f90.o "
+
+ 1884 |         if (iop - 2) 340, 350, 360
+      |                                  1
+Warning: Fortran 2018 deleted feature: Arithmetic IF statement at (1)
+./././/../sources/bundle/packages/0/wavepack-b31cddb6703fbe237c7d24ece24a67d31feed871/src/chisqr.f90:992:3:
+
+  992 | 200     fb = fx
+      |   1
+Warning: Label 200 at (1) defined but not used [-Wunused-label]
+./././/../sources/bundle/packages/0/wavepack-b31cddb6703fbe237c7d24ece24a67d31feed871/src/chisqr.f90:914:2:
+
+  914 | 20      if (.not. (fb < 0.0d0)) goto 40
+      |  1
+Warning: Label 20 at (1) defined but not used [-Wunused-label]
+./././/../sources/bundle/packages/0/wavepack-b31cddb6703fbe237c7d24ece24a67d31feed871/src/chisqr.f90:903:2:
+
+  903 | 10      fb = fx
+      |  1
+Warning: Label 10 at (1) defined but not used [-Wunused-label]
+./././/../sources/bundle/packages/0/wavepack-b31cddb6703fbe237c7d24ece24a67d31feed871/src/chisqr.f90:698:3:
+
+  698 | 270     continue
+      |   1
+Warning: Label 270 at (1) defined but not used [-Wunused-label]
+./././/../sources/bundle/packages/0/wavepack-b31cddb6703fbe237c7d24ece24a67d31feed871/src/chisqr.f90:664:3:
+
+  664 | 200     yy = fx
+      |   1
+Warning: Label 200 at (1) defined but not used [-Wunused-label]
+./././/../sources/bundle/packages/0/wavepack-b31cddb6703fbe237c7d24ece24a67d31feed871/src/chisqr.f90:630:3:
+
+  630 | 130     yy = fx
+      |   1
+Warning: Label 130 at (1) defined but not used [-Wunused-label]
+./././/../sources/bundle/packages/0/wavepack-b31cddb6703fbe237c7d24ece24a67d31feed871/src/chisqr.f90:607:2:
+
+  607 | 90      yy = fx
+      |  1
+Warning: Label 90 at (1) defined but not used [-Wunused-label]
+./././/../sources/bundle/packages/0/wavepack-b31cddb6703fbe237c7d24ece24a67d31feed871/src/chisqr.f90:570:2:
+
+  570 | 20      fbig = fx
+      |  1
+Warning: Label 20 at (1) defined but not used [-Wunused-label]
+./././/../sources/bundle/packages/0/wavepack-b31cddb6703fbe237c7d24ece24a67d31feed871/src/chisqr.f90:564:2:
+
+  564 | 10      fsmall = fx
+      |  1
+Warning: Label 10 at (1) defined but not used [-Wunused-label]
+./././/../sources/bundle/packages/0/wavepack-b31cddb6703fbe237c7d24ece24a67d31feed871/src/chisqr.f90:2500:12:
+
+ 2500 |         b = ipmpar(4)
+      |            1
+Error: Procedure ‘ipmpar’ called with an implicit interface at (1) [-Werror=implicit-interface]
+compilation terminated due to -fmax-errors=1.
+<ERROR> stopping due to failed compilation
+STOP 1
+

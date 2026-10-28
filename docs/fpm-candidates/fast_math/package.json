@@ -1,0 +1,17 @@
+{
+  "id": "fast_math",
+  "repository": "jalvesz/fast_math",
+  "revision": "a4f93517a2c09c57b6ae74585404ae4457d16716",
+  "archive_sha256": "8ef1a1885737dd86b048c7468b15dae22d678341cab08423393dbb8a44c8fdfe",
+  "stars": 27,
+  "license": "MIT",
+  "category": "General utilities",
+  "description": "Compensated sums and dot products, plus approximate elementary functions.",
+  "dependencies": [],
+  "catalog_build": {
+    "environment": {
+      "FPM_FFLAGS": "-cpp -ffree-line-length-none"
+    },
+    "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+  }
+}

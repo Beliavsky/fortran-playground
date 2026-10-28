@@ -44,12 +44,30 @@ def verify_cached(app, image, package, key):
         compiled = re.findall(r'\]\s+(.+?)\s+done\.', result['stages'][0].get('stdout', ''))
         if any(name not in {'main.f90', 'playground-main'} for name in compiled):
             raise ValueError('FPM rebuilt library targets: ' + ', '.join(compiled))
-        if package['id'] == 'pyplot-fortran' and not result.get('plots'):
+        if package['id'] in {'pyplot-fortran', 'forimage', 'cairo-fortran', 'fortran_stb_image'} and not result.get('plots'):
             raise ValueError('Plotting verification returned no PNG.')
+        preview_check = {}
+        if package['id'] == 'forimage':
+            import base64
+            if len(result['plots']) != 2:
+                raise ValueError('ForImage must return both original and negative image previews.')
+            directory = ROOT / '.fpm-audit-cache/forimage-previews'
+            directory.mkdir(exist_ok=True, parents=True)
+            for index, plot in enumerate(result['plots'], 1):
+                (directory / f'{index}.png').write_bytes(base64.b64decode(plot['data'], validate=True))
+            preview_check = {'preview_count': 2, 'preview_names': [p['name'] for p in result['plots']]}
+        if package['id'] in {'cairo-fortran', 'fortran_stb_image'}:
+            import base64
+            if len(result['plots']) != 1:
+                raise ValueError('Image example must return exactly one PNG preview.')
+            directory = ROOT / ('.fpm-audit-cache/' + package['id'] + '-previews')
+            directory.mkdir(exist_ok=True, parents=True)
+            (directory / '1.png').write_bytes(base64.b64decode(result['plots'][0]['data'], validate=True))
+            preview_check = {'preview_count': 1, 'preview_names': [result['plots'][0]['name']]}
         return {'seconds': round(time.monotonic() - started, 3),
                 'build_seconds': result['stages'][0]['seconds'], 'library_reused': True,
                 'demo_sha256': demo_sha256,
-                'compiled_targets': compiled}
+                'compiled_targets': compiled, **preview_check}
     finally:
         sandbox.terminate()
 
@@ -113,7 +131,7 @@ def refresh_worker(app, image):
     with tempfile.TemporaryDirectory() as temporary:
         directory = Path(temporary)
         for name in ('fpm_cache.py', 'fpm_build.py', 'fpm_sources.py', 'fpm_compilers.py',
-                     'xfpm_worker.py', 'fpm_targets.py', 'fortran_plot.py'):
+                     'xfpm_worker.py', 'fpm_targets.py', 'fortran_plot.py', 'fortran_image.py'):
             shutil.copyfile(ROOT / name, directory / name)
         shutil.copytree(ROOT / 'vendor/pyplot-fortran', directory / 'vendor/pyplot-fortran')
         return image.add_local_dir(directory, '/opt/fpm', copy=True).env({'FPM_COMPILER': 'gfortran'}).build(app)

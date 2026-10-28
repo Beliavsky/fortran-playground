@@ -1,0 +1,21 @@
+{
+  "id": "forlab",
+  "repository": "zoziha/forlab",
+  "revision": "416e5612167b6133100bef4cec116322890f66f7",
+  "archive_sha256": "784431a7c880c6a6dcfdd7687e3b0f2f8340dc13bd187a3546acd09d883628f3",
+  "stars": 8,
+  "license": "MIT",
+  "category": "General utilities",
+  "description": "MATLAB/NumPy-style numerical utilities, linear algebra, interpolation and statistics.",
+  "dependencies": [],
+  "catalog_build": {
+    "apt_packages": [
+      "libblas-dev=3.12.1-6",
+      "liblapack-dev=3.12.1-6"
+    ],
+    "environment": {
+      "FPM_LDFLAGS": "-llapack -lblas"
+    },
+    "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+  }
+}

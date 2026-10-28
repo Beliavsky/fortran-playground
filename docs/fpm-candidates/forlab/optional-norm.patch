@@ -1,0 +1,39 @@
+--- a/src/forlab.F90
++++ b/src/forlab.F90
+@@ -6248,12 +6248,16 @@
+     real(kind = RPRE), dimension(:), intent(in) :: x
+     real(kind = RPRE), intent(in), optional :: p
+ 
+-    if ((.not. present(p)) .or. (p .eq. 2.)) then
++    real(kind = RPRE) :: power
++
++    power = 2
++    if (present(p)) power = p
++    if (power .eq. 2) then
+       norm1 = sqrt(sum(abs(x)**2))
+-    elseif (p .eq. 1.) then
++    elseif (power .eq. 1) then
+       norm1 = sum(abs(x))
+     else
+-      norm1 = (sum(abs(x)**p))**(1.0d0/p)
++      norm1 = (sum(abs(x)**power))**(1.0d0/power)
+     end if
+     return
+   end function norm1
+@@ -6263,10 +6267,14 @@
+     integer(kind = IPRE), intent(in), optional :: p
+     real(kind = RPRE), dimension(:), allocatable :: w
+ 
+-    if ((.not. present(p)) .or. (p .eq. 2.)) then
++    integer(kind = IPRE) :: power
++
++    power = 2
++    if (present(p)) power = p
++    if (power .eq. 2) then
+       call svd(A, w)
+       norm2 = maxval(w)
+-    elseif (p .eq. 1.) then
++    elseif (power .eq. 1) then
+       norm2 = maxval(sum(abs(A), dim = 2))
+     end if
+     return

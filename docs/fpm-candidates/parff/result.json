@@ -1,0 +1,87 @@
+{
+  "ok": false,
+  "compiler": "GNU Fortran (GCC) 16.2.0",
+  "compiler_id": "gfortran",
+  "fpm": "0.12.0",
+  "stages": [
+    {
+      "name": "Build",
+      "command": [
+        "fpm",
+        "build",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.405,
+      "ok": true,
+      "exit_code": 0,
+      "error": "",
+      "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+      "stderr": ""
+    },
+    {
+      "name": "Run",
+      "command": [
+        "fpm",
+        "run",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.046,
+      "ok": false,
+      "exit_code": 139,
+      "error": "",
+      "stdout": "",
+      "stderr": "Project is up to date\n\nProgram received signal SIGSEGV: Segmentation fault - invalid memory reference.\n\nBacktrace for this error:\n#0  0x2b81e545ef83 in ???\n#1  0x2b81e545db35 in ???\n#2  0x2b81e58f3d6f in ???\n#3  0x7f861c03ff40 in ???\nSegmentation fault\n<ERROR> Execution for object \" playground-main \" returned exit code  139\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 139\n"
+    }
+  ],
+  "cache": {
+    "package": "parff",
+    "compiler": "GNU Fortran 16.2.0",
+    "library_reused": true,
+    "changed_artifacts": []
+  },
+  "packages": [
+    {
+      "repository": "everythingfunctional/parff",
+      "revision": "dbce6a04992fbc1e2d13b6c633480d3cd4bbe35c",
+      "sha256": "614aac0224f2f60d299d3b1ba859e4423553e42f144546b968ee52549f4573a5"
+    },
+    {
+      "repository": "everythingfunctional/iso_varying_string",
+      "revision": "fb7635a6b21c3d50ac7c8c14f7696a70931cb4a6",
+      "sha256": "0a2ff49b7eb88218c5de043b5aa3e564e821cd8906354e6f67a2ca480ae0c52e"
+    },
+    {
+      "repository": "everythingfunctional/strff",
+      "revision": "50e536cb087123f2c72140cb065c398a01fc5121",
+      "sha256": "c0f773e21d2c1a0f7b83bcb51cf6bca4d7103815373e7be9a56d1689b8a5da42"
+    }
+  ],
+  "build_ok": true,
+  "target_groups": {
+    "app": [
+      "playground-main"
+    ],
+    "example": [],
+    "test": []
+  },
+  "targets": [
+    "playground-main"
+  ],
+  "plot_notes": []
+}

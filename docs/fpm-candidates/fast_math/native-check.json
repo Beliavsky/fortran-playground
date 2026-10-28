@@ -1,0 +1,12 @@
+{
+  "compiler": "GNU Fortran (GCC) 17.0.0 20260510 (experimental)",
+  "flags": [
+    "-cpp",
+    "-ffree-line-length-none",
+    "-g",
+    "-fcheck=all"
+  ],
+  "operating_system": "Windows",
+  "source": "native-diagnostic.f90",
+  "note": "Assertions omitted from diagnostic main to print all failing values."
+}

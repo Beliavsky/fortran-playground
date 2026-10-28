@@ -1,0 +1,7 @@
+Real64 reference:      100010000.0
+Real32 method            Result       Absolute error
+Intrinsic SUM         100000000.0           10000.0
+Chunked sum           100010080.0              80.0
+Compensated sum       100010240.0             240.0
+Compensated dot       100010240.0             240.0
+Diagnostic only: assertions omitted to display the failing values.

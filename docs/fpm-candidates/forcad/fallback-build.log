@@ -1,0 +1,65 @@
+ + mkdir -p build/dependencies
+[  0%]              pyplot_module.f90
+[  4%]              pyplot_module.f90  done.
+[  4%]               forcad_kinds.F90
+[  8%]               forcad_kinds.F90  done.
+[  8%]                IGES_params.F90
+[ 12%]                IGES_params.F90  done.
+[ 12%]           commandLineUtils.F90
+[ 16%]           commandLineUtils.F90  done.
+[ 16%]                       face.F90
+[ 20%]                       face.F90  done.
+[ 20%]               forcad_utils.F90
+[ 25%]               forcad_utils.F90  done.
+[ 25%]                 IGES_utils.F90
+[ 29%]                 IGES_utils.F90  done.
+[ 29%]                    fortime.F90
+[ 33%]                    fortime.F90  done.
+[ 33%]           forcad_interface.F90
+[ 37%]           forcad_interface.F90  done.
+[ 37%]              IGES_Dsection.F90
+[ 41%]              IGES_Dsection.F90  done.
+[ 41%]              IGES_Gsection.F90
+[ 45%]              IGES_Gsection.F90  done.
+[ 45%]              IGES_Psection.F90
+[ 50%]              IGES_Psection.F90  done.
+[ 50%]                   fordebug.F90
+[ 54%]                   fordebug.F90  done.
+[ 54%]        forcad_nurbs_volume.F90
+[ 58%]        forcad_nurbs_volume.F90  done.
+[ 58%]                     DElist.F90
+[ 62%]                     DElist.F90  done.
+[ 62%]                     PElist.F90
+[ 66%]                     PElist.F90  done.
+[ 66%]              fordebug_smod.F90
+[ 70%]              fordebug_smod.F90  done.
+[ 70%]                    forIGES.F90
+[ 75%]                    forIGES.F90  done.
+[ 75%]         forcad_nurbs_curve.F90
+<ERROR> Compilation failed for object " .._sources_bundle_packages_0_forcad-790b5a73835d7e594855ba5b3fb5a195c20630b8_src_forcad_nurbs_curve.F90.o "
+[ 79%]         forcad_nurbs_curve.F90  done.
+
+f951: internal compiler error: in gfc_resolve_forall, at fortran/resolve.cc:12853
+0x22ee3f6 diagnostics::context::diagnostic_impl(rich_location*, diagnostics::metadata const*, diagnostics::option_id, char const*, __va_list_tag (*) [1], diagnostics::kind)
+	???:0
+0x22e6b3f internal_error(char const*, ...)
+	???:0
+0x7db321 fancy_abort(char const*, int, char const*)
+	???:0
+0x8da3be gfc_resolve_code(gfc_code*, gfc_namespace*)
+	???:0
+0x8da1c4 gfc_resolve_code(gfc_code*, gfc_namespace*)
+	???:0
+0x8f424b gfc_resolve_blocks(gfc_code*, gfc_namespace*)
+	???:0
+0x8da3be gfc_resolve_code(gfc_code*, gfc_namespace*)
+	???:0
+0x8c80ae gfc_parse_file()
+	???:0
+/usr/local/libexec/gcc/x86_64-linux-gnu/16.2.0/f951 ./././/../sources/bundle/packages/0/forcad-790b5a73835d7e594855ba5b3fb5a195c20630b8/src/forcad_nurbs_curve.F90 -cpp=/tmp/ccDifSys.fii -quiet -I ././././/../sources/bundle/packages/0/forcad-790b5a73835d7e594855ba5b3fb5a195c20630b8//../../1/forIGES-432c84cbfcdf64eabedf729e48d2f631091be7e1/include -I build/gfortran_CE0AFA2794802726 -I build/gfortran_BF0DC15206E97AAA -imultiarch x86_64-linux-gnu -D_REENTRANT -D NOSHOW_PYVISTA -D NOPURE_DEBUG ./././/../sources/bundle/packages/0/forcad-790b5a73835d7e594855ba5b3fb5a195c20630b8/src/forcad_nurbs_curve.F90 -quiet -dumpdir build/gfortran_CE0AFA2794802726/playground-main/ -dumpbase .._sources_bundle_packages_0_forcad-790b5a73835d7e594855ba5b3fb5a195c20630b8_src_forcad_nurbs_curve.F90.F90 -dumpbase-ext .F90 -mtune=generic -march=x86-64 -g -Wall -Wextra -Werror=implicit-interface -fopenmp -fmax-errors=1 -fbounds-check -fcheck=array-temps -fbacktrace -fcoarray=single -fPIC -fimplicit-none -ffree-form -J build/gfortran_CE0AFA2794802726 -fintrinsic-modules-path /usr/local/lib/gcc/x86_64-linux-gnu/16.2.0/finclude -fpre-include=/usr/include/finclude/x86_64-linux-gnu/math-vector-fortran.h -o /tmp/ccSHOaFd.s
+Please submit a full bug report, with preprocessed source (by using -freport-bug).
+Please include the complete backtrace with any bug report.
+See <https://gcc.gnu.org/bugs/> for instructions.
+<ERROR> stopping due to failed compilation
+STOP 1
+

@@ -1,0 +1,10 @@
+{
+  "repository": "gha3mi/forcad",
+  "revision": "790b5a73835d7e594855ba5b3fb5a195c20630b8",
+  "archive_sha256": "f529e954b8dc74e78f7c762a4d4401ac8f6282b4e62e9697f27402d8d6a0ca82",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "profile": "debug",
+  "flags": "-cpp -fopenmp -DNOSHOW_PYVISTA -DNOPURE_DEBUG",
+  "error": "Internal compiler error in gfc_resolve_forall, fortran/resolve.cc:12853; forcad_nurbs_curve.F90"
+}

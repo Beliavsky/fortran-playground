@@ -1,0 +1,52 @@
+{
+  "id": "polynomial_arnoldi",
+  "repository": "loiseaujc/polynomial_arnoldi",
+  "revision": "83a6625e94504151bf27aea023568a2eec34256b",
+  "archive_sha256": "dc06ba05cbf5485dd6ce458d70cf77e6f8d92cc76fa45a68ec209843e010990d",
+  "stars": 0,
+  "license": "license",
+  "category": "Linear algebra",
+  "description": "Polynomial-preconditioned GMRES and Arnoldi methods for Poisson systems.",
+  "dependencies": [
+    {
+      "repository": "fortran-lang/stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+    },
+    {
+      "repository": "loiseaujc/SpecialMatrices",
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "sha256": "b44d6c7e8806a2588fcbfde53fa280a867e0ce9fe31bd2d68828c6131194ce22"
+    },
+    {
+      "repository": "nshalle/fftpack",
+      "revision": "73745a4e82f5f9c3fa07f49cac0439c21ba50829",
+      "sha256": "6fdc6a1fdf2642c94aa0f2c294ed012fe3d99b1ef4efe05395a9367bd06af8b6"
+    }
+  ],
+  "catalog_build": {
+    "apt_packages": [
+      "libblas-dev=3.12.1-6",
+      "liblapack-dev=3.12.1-6"
+    ],
+    "registry": {
+      "stdlib": {
+        "git": "https://github.com/fortran-lang/stdlib",
+        "rev": "58eb9133966c2797e0593281169ef57c43eccc1d"
+      }
+    },
+    "source_revisions": {
+      "fortran-lang/stdlib": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "loiseaujc/specialmatrices": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "nshalle/fftpack": "73745a4e82f5f9c3fa07f49cac0439c21ba50829"
+    },
+    "manifest_versions": {
+      "fortran-lang/stdlib": "0.0.0"
+    },
+    "environment": {
+      "FPM_FFLAGS": "-cpp -DSTDLIB_EXTERNAL_BLAS -DSTDLIB_EXTERNAL_LAPACK -ffunction-sections -fdata-sections",
+      "FPM_LDFLAGS": "-Wl,--gc-sections -llapack -lblas"
+    },
+    "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+  }
+}

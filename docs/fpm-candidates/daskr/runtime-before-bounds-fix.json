@@ -1,0 +1,77 @@
+{
+  "ok": false,
+  "compiler": "GNU Fortran (GCC) 16.2.0",
+  "compiler_id": "gfortran",
+  "fpm": "0.12.0",
+  "stages": [
+    {
+      "name": "Build",
+      "command": [
+        "fpm",
+        "build",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.335,
+      "ok": true,
+      "exit_code": 0,
+      "error": "",
+      "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+      "stderr": ""
+    },
+    {
+      "name": "Run",
+      "command": [
+        "fpm",
+        "run",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.032,
+      "ok": false,
+      "exit_code": 2,
+      "error": "",
+      "stdout": "",
+      "stderr": "Project is up to date\nAt line 868 of file ./././/../sources/bundle/packages/0/daskr-b43533edc5d6900088a846d802e3a86d0f9a06ad/src/dlinpk.f\nFortran runtime error: Index '2' of dimension 1 of array 'dx' above upper bound of 1\n\nError termination. Backtrace:\n#0  0x2b410debff83 in ???\n#1  0x2b410dec0c39 in ???\n#2  0x2b410dec121b in ???\n#3  0x41e442 in ???\n#4  0x41e662 in ???\n#5  0x408eb0 in ???\n#6  0x41b7d1 in ???\n#7  0x40c280 in ???\n#8  0x416252 in ???\n#9  0x40144b in MAIN__\n\tat app/main.f90:35\n#10  0x4018f6 in main\n\tat app/main.f90:18\n<ERROR> Execution for object \" playground-main \" returned exit code  2\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 2\n"
+    }
+  ],
+  "cache": {
+    "package": "daskr",
+    "compiler": "GNU Fortran 16.2.0",
+    "library_reused": true,
+    "changed_artifacts": []
+  },
+  "packages": [
+    {
+      "repository": "davidpfister/daskr",
+      "revision": "b43533edc5d6900088a846d802e3a86d0f9a06ad",
+      "sha256": "7a636a79cf54271606ca73c4a9c112bc45af75cc17246873cc499b2a5cce7472"
+    }
+  ],
+  "build_ok": true,
+  "target_groups": {
+    "app": [
+      "playground-main"
+    ],
+    "example": [],
+    "test": []
+  },
+  "targets": [
+    "playground-main"
+  ],
+  "plot_notes": []
+}

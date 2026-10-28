@@ -1,0 +1,41 @@
+ + mkdir -p build/dependencies
+[  0%]              pyplot_module.f90
+[  1%]              pyplot_module.f90  done.
+[  1%]                       common.f
+[  2%]                       common.f  done.
+[  2%]                         core.f
+[  4%]                         core.f  done.
+[  4%] crypto_box_curve25519xchacha20
+[  5%] crypto_box_curve25519xchacha20  done.
+[  5%]          crypto_core_ed25519.f
+[  7%]          crypto_core_ed25519.f  done.
+[  7%]        crypto_core_hchacha20.f
+[  8%]        crypto_core_hchacha20.f  done.
+[  8%]         crypto_core_hsalsa20.f
+[ 10%]         crypto_core_hsalsa20.f  done.
+[ 10%]     crypto_core_ristretto255.f
+[ 11%]     crypto_core_ristretto255.f  done.
+[ 11%]          crypto_core_salsa20.f
+[ 13%]          crypto_core_salsa20.f  done.
+[ 13%]        crypto_core_salsa2012.f
+[ 14%]        crypto_core_salsa2012.f  done.
+[ 14%]         crypto_core_salsa208.f
+[ 16%]         crypto_core_salsa208.f  done.
+[ 16%]   crypto_generichash_blake2b.f
+[ 17%]   crypto_generichash_blake2b.f  done.
+[ 17%]           crypto_hash_sha256.f
+[ 19%]           crypto_hash_sha256.f  done.
+[ 19%]           crypto_hash_sha512.f
+[ 20%]           crypto_hash_sha512.f  done.
+[ 20%]           crypto_kdf_blake2b.f
+<ERROR> Compilation failed for object " .._sources_bundle_packages_0_sodium-805225de601cc1f541fc7699d76a748d6eda58ca_src_crypto_kdf_blake2b.f.o "
+[ 22%]           crypto_kdf_blake2b.f  done.
+
+./././/../sources/bundle/packages/0/sodium-805225de601cc1f541fc7699d76a748d6eda58ca/src/crypto_kdf_blake2b.f:12:26:
+
+   12 |   integer(kind=c_size_t), paremeter, public :: SODIUM_crypto_kdf_blake2b_BYTES_MIN    = 16
+      |                          1
+Error: Invalid character in name at (1)
+compilation terminated due to -fmax-errors=1.
+<ERROR> stopping due to failed compilation
+STOP 1

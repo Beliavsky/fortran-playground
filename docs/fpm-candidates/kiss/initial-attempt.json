@@ -1,0 +1,24 @@
+{
+  "id": "kiss",
+  "repository": "ivan-pi/kiss",
+  "revision": "55f0f7ccb1601a0628a17928b5b6b79f61da2892",
+  "archive_sha256": "b8a34e012c2c67a313f0f4f94d9674f8869dd525f858ea5ab1811e1e2041c79c",
+  "stars": 3,
+  "license": "BSD-3-Clause",
+  "category": "Linear algebra",
+  "description": "Krylov iterative solvers for dense matrices and matrix-free linear operators.",
+  "dependencies": [],
+  "catalog_build": {
+    "apt_packages": [
+      "libblas-dev=3.12.1-6",
+      "liblapack-dev=3.12.1-6"
+    ],
+    "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+  },
+  "status": "deferred",
+  "checked_at": "2026-10-28T00:36:57.463470+00:00",
+  "reason": "Compiles with hosted GNU 16.2, but conjugate-gradient consumer exits 139/SIGSEGV under gVisor. Internal matvec callback is a possible trampoline issue; root cause unconfirmed.",
+  "example": "fpm-candidates/kiss/main.f90",
+  "diagnostic": "fpm-candidates/kiss/hosted-failure.txt",
+  "recipe": "fpm-candidates/kiss/package.json"
+}

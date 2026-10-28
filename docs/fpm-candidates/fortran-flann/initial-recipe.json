@@ -1,0 +1,17 @@
+{
+  "id": "fortran-flann",
+  "repository": "ivan-pi/fortran-flann",
+  "revision": "35370c851602d954d1d01d10c9c14ff82dd96496",
+  "archive_sha256": "a3b9e1b13e4b613e2bf5943decdbfb6ba4f8a866115007dfae9c2eb947fc3075",
+  "stars": 15,
+  "license": "BSD-3-Clause",
+  "category": "Machine learning",
+  "description": "FLANN interfaces for nearest-neighbor searches and spatial indexing.",
+  "dependencies": [],
+  "catalog_build": {
+    "apt_packages": [
+      "libflann-dev=1.9.2+dfsg-2+b2"
+    ],
+    "adapter_sha256": "2406f4594114fb2a8304dc9005cfb4e595bfcf02439ea97707e2826b89c02133"
+  }
+}
