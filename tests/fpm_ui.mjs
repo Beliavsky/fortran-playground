@@ -21,6 +21,13 @@ if (localExecution) {
   globalThis.sessionStorage = {getItem() {return 'private';}, setItem() {}};
   globalThis.history = {replaceState() {}};
 }
+const linkedPackage = process.argv.includes('--package-link') ? 'fortran-lapack'
+  : process.argv.includes('--unknown-package-link') ? 'missing-package' : '';
+if (linkedPackage) {
+  globalThis.location ||= new URL('https://example.test/fpm/');
+  globalThis.location.searchParams.set('package', linkedPackage);
+  globalThis.location.searchParams.set('collection', 'translated-r');
+}
 const elements = new Map();
 const downloads = [], blobs = new Map();
 URL.createObjectURL = blob => {const url = `blob:export-${blobs.size}`; blobs.set(url, blob); return url;};
@@ -104,6 +111,18 @@ globalThis.fetch = async (url, options = {}) => {
 const originalTimeout = globalThis.setTimeout;
 globalThis.setTimeout = fn => {queueMicrotask(fn); return 1;};
 const {resultText, programOutputText} = await import('../site/fpm/fpm.mjs');
+if (linkedPackage === 'fortran-lapack') {
+  assert.equal(get('available-package').value, 'fortran-lapack');
+  if (!unconfigured && !legacyService || localExecution) {
+    assert.equal(get('source').value, packages[0].source, 'Package links load the catalog example without running it');
+    assert.equal(get('package-url').value, `https://github.com/${packages[0].repository}`);
+    assert.equal(get('revision').value, packages[0].revision);
+  }
+  assert.equal(submissions.length, 0, 'Opening a package link never submits a job');
+} else if (linkedPackage) {
+  assert.match(get('package-note').textContent, /not found in this catalog/);
+  assert.equal(submissions.length, 0);
+}
 // Downloads do not depend on API health and must not submit jobs.
 get('package-url').value = `https://github.com/${packages[0].repository}`;
 get('revision').value = packages[0].revision;

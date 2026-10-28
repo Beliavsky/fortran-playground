@@ -10,6 +10,8 @@ For Python clients and a local browser analog, see [FPM runners and the local pa
 
 Select a starter example, or enter a public GitHub repository URL with an `fpm.toml` at its root. Enter a branch, tag, or commit separately, or leave the revision blank for the repository's default HEAD. Each repository is resolved to a commit, and results show all downloaded repositories, commit IDs, build commands, diagnostics, and output.
 
+Links such as [`?package=fortran-lapack`](https://beliavsky.github.io/fortran-playground/fpm/?package=fortran-lapack) select a catalog package and load its example when loading is available, without submitting a job. Unknown IDs show a message. The `package` parameter selects from the curated collection and takes precedence over `collection`. These links also work in the main local FPM interface and are included in the [portable catalog export](catalog-export.md).
+
 The **Collection** menu offers Selected and Translated R packages. All is currently disabled; its retained functionality is documented below for future restoration:
 
 - **Selected Fortran packages** (default): the curated catalog, with pinned revisions, example main programs, and verified GNU 16 libraries where deployed. See [the selected catalog and build instructions](fpm-precompiled.md).

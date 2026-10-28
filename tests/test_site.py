@@ -169,6 +169,10 @@ class SiteTests(unittest.TestCase):
             self.assertEqual(json.loads((destination / 'service.json').read_text()),
                              json.loads((ROOT / 'site/service.json').read_text()))
             self.assertTrue((destination / 'run/index.html').is_file())
+            from catalog_export import validate_export, FEED_NAME, SCHEMA_NAME
+            feed = validate_export(json.loads((destination / 'catalog' / FEED_NAME).read_text(encoding='utf-8')))
+            self.assertEqual(len(feed['projects']), len(json.loads((ROOT / 'fpm_catalog.json').read_text())['packages']))
+            self.assertTrue((destination / 'catalog' / SCHEMA_NAME).is_file())
 
     def test_no_transpiler_or_python_controls(self):
         html = (ROOT / 'site/index.html').read_text(encoding='utf-8')

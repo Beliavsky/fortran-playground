@@ -734,8 +734,18 @@ async function initialize() {
     ? 'Choose a package to load its pinned revision and a working main program. Loading does not run a job.'
     : 'Precompiled packages have not been deployed on this service yet. The existing examples and custom URLs remain available.';
   controls();
-  const linkedCollection = typeof location !== 'undefined' ? new URLSearchParams(location.search).get('collection') : '';
-  if (linkedCollection === 'translated-r' || (linkedCollection === 'all' && allPackagesEnabled)) {
+  const linkedSettings = new URLSearchParams(typeof location !== 'undefined' ? location.search : '');
+  const linkedCollection = linkedSettings.get('collection');
+  const linkedPackage = linkedSettings.get('package');
+  if (linkedPackage) {
+    const selected = generalPackages.find(p => p.id === linkedPackage);
+    if (selected) {
+      get('available-package').value = selected.id;
+      selectAndLoadPackage();
+    } else {
+      get('package-note').textContent = `The selected package link was not found in this catalog: ${linkedPackage}`;
+    }
+  } else if (linkedCollection === 'translated-r' || (linkedCollection === 'all' && allPackagesEnabled)) {
     get('package-collection').value = linkedCollection;
     await selectCollection();
   }
