@@ -279,12 +279,15 @@ The selected catalog includes a saved snapshot of repository topics, exact star 
 
 ```text
 python xgithub_topics.py
+python xpackage_topics.py
 python xfpm_examples.py
 ```
 
 The refresh command uses [GitHub's repository API](https://docs.github.com/en/rest/repos/repos#get-a-repository) to retrieve topics and `stargazers_count` together. It reads `GITHUB_TOKEN` or `GH_TOKEN` when available; a complete refresh of this catalog may exceed the unauthenticated API allowance. Alternatively, read topics and exact star counts from public repository pages with `python xgithub_topics.py --html`, then run `python xfpm_examples.py`. Rounded counts such as `1.2k` are never used. Failed refreshes preserve the previous complete snapshot.
 
 Normal site builds read the saved snapshot and make no GitHub requests. Commit the snapshot and generated `site/fpm/packages.json` and `site/fpm/all-packages.json` to publish updated metadata. These updates require no backend deployment or library recompilation, and the online and local catalog pages use the same metadata. Refreshes are explicit; no scheduled action is installed. The translated R collection uses name sorting because all its entries share a repository.
+
+Playground topics are maintained separately in `fpm_catalog/playground-topics.json`, keyed by selected package ID. GitHub refreshes never overwrite these editorial additions. The browser defaults to searching both sources and offers **Topics: GitHub only**. See [the package-by-package review](fpm-package-topics.md), grouped by category with both sources side by side and a topic index. After editing our topics, run `python xpackage_topics.py` and `python xfpm_examples.py`; neither command builds packages or redeploys the backend.
 
 ### Package builds
 

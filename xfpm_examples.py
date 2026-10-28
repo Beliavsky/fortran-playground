@@ -15,9 +15,12 @@ def generate_fpm_examples(site):
     from fpm_cache import catalog
     topics_path = audit.parents[1] / 'fpm_catalog/topics.json'
     topics = json.loads(topics_path.read_text(encoding='utf-8'))['repositories'] if topics_path.exists() else {}
+    from xpackage_topics import playground_topics
+    curated = playground_topics(audit.parents[1])
     packages = [{**package, 'source': (audit.parents[1] / 'fpm_catalog/demos' /
                  (package['id'] + '.f90')).read_text(encoding='utf-8'),
                  'topics': topics.get(package['repository'].lower(), {}).get('topics', []),
+                 'playground_topics': curated[package['id']],
                  **{key: value for key, value in topics.get(package['repository'].lower(), {}).items()
                     if key in ('stars', 'stars_updated_at')}} for package in catalog()]
     (site / 'fpm/packages.json').write_text(json.dumps(packages, indent=2) + '\n', encoding='utf-8')

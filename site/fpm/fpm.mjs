@@ -48,6 +48,7 @@ const packageCategories = p => p.categories?.length ? p.categories : [p.category
 let exporting = false, exportRuntime;
 get('compiler').value = 'gfortran';
 get('package-sort').value = 'name';
+get('package-topic-source').value = 'combined';
 
 function controls() {
   const consumer = get('workflow').value === 'consumer';
@@ -81,6 +82,7 @@ function controls() {
   get('package-search').disabled = busy || collectionLoading;
   get('package-category').disabled = busy || collectionLoading;
   get('package-sort').disabled = busy || collectionLoading || translatedCollection();
+  get('package-topic-source').disabled = busy || collectionLoading;
   for (const button of searchButtons) button.disabled = busy;
   for (const button of topicButtons) button.disabled = busy;
   const selected = packages.find(p => p.id === get('available-package').value);
@@ -135,24 +137,35 @@ for (const [id, action] of [['use-app-targets', 'run'], ['use-example-targets', 
 }
 get('preprocess').addEventListener('change', () => {resetTargets(); controls();});
 
+function searchableTopics(packageEntry) {
+  return [...new Set([...(packageEntry?.topics || []),
+    ...(get('package-topic-source').value === 'github' ? [] : packageEntry?.playground_topics || [])])];
+}
+
 function renderTopics(packageEntry) {
   const container = get('package-topics');
-  const topics = [...new Set(packageEntry?.topics || [])].sort((a, b) =>
-    Number(genericTopics.has(a)) - Number(genericTopics.has(b)) || a.localeCompare(b));
   container.replaceChildren();
   topicButtons = [];
-  container.hidden = !topics.length;
-  if (!topics.length) return;
-  const label = document.createElement('span'); label.textContent = 'GitHub topics:'; container.appendChild(label);
-  for (const topic of topics) {
-    const button = document.createElement('button'); button.type = 'button'; button.textContent = topic;
-    button.disabled = busy;
-    button.addEventListener('click', () => {
-      get('package-search').value = topic;
-      get('package-category').value = '';
-      renderPackages();
-    });
-    topicButtons.push(button); container.appendChild(button);
+  container.hidden = !searchableTopics(packageEntry).length;
+  const sources = [
+    ['Playground topics:', get('package-topic-source').value === 'github' ? [] : packageEntry?.playground_topics || []],
+    ['GitHub topics:', packageEntry?.topics || []],
+  ];
+  for (const [name, entries] of sources) {
+    const topics = [...new Set(entries)].sort((a, b) =>
+      Number(genericTopics.has(a)) - Number(genericTopics.has(b)) || a.localeCompare(b));
+    if (!topics.length) continue;
+    const label = document.createElement('span'); label.textContent = name; container.appendChild(label);
+    for (const topic of topics) {
+      const button = document.createElement('button'); button.type = 'button'; button.textContent = topic;
+      button.disabled = busy;
+      button.addEventListener('click', () => {
+        get('package-search').value = topic;
+        get('package-category').value = '';
+        renderPackages();
+      });
+      topicButtons.push(button); container.appendChild(button);
+    }
   }
 }
 
@@ -168,7 +181,7 @@ function renderPackages() {
   const byName = (a, b) => (a.name || a.id).localeCompare(b.name || b.id, 'en', {sensitivity: 'base', numeric: true})
     || a.repository.localeCompare(b.repository, 'en');
   const visible = packages.filter(p => {
-    const text = `${p.id} ${p.name || ''} ${p.repository} ${p.description} ${packageCategories(p).join(' ')} ${(p.keywords || []).join(' ')} ${(p.topics || []).join(' ')}`.toLowerCase();
+    const text = `${p.id} ${p.name || ''} ${p.repository} ${p.description} ${packageCategories(p).join(' ')} ${(p.keywords || []).join(' ')} ${searchableTopics(p).join(' ')}`.toLowerCase();
     return (!category || packageCategories(p).includes(category)) && (text.includes(query)
       || text.replace(/[-_]+/g, ' ').includes(query.replace(/[-_]+/g, ' ')));
   }).sort((a, b) => (starSort ? starCount(b) - starCount(a) : 0) || byName(a, b));
@@ -239,6 +252,7 @@ function renderPackages() {
 get('package-search').addEventListener('input', renderPackages);
 get('package-category').addEventListener('change', renderPackages);
 get('package-sort').addEventListener('change', renderPackages);
+get('package-topic-source').addEventListener('change', renderPackages);
 
 async function selectCollection() {
   if (!allPackagesEnabled && allCollection()) get('package-collection').value = 'general';

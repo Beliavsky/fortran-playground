@@ -57,10 +57,14 @@
       <label for="package-sort">Sort by</label>
       <select id="package-sort"><option value="name">Name</option><option value="stars">GitHub stars</option></select>
     </div>
+    <div class="package-filter">
+      <label for="package-topic-source">Topics</label>
+      <select id="package-topic-source"><option value="combined">Combined</option><option value="github">GitHub only</option></select>
+    </div>
   </div>
   <p id="package-stars-note" class="editor-note" hidden></p>
   <p id="package-note">Loading the available package catalog&hellip;</p>
-  <div id="package-topics" class="toolbar" role="group" aria-label="GitHub repository topics" hidden></div>
+  <div id="package-topics" class="toolbar" role="group" aria-label="Package topics by source" hidden></div>
   <div id="package-search-results" class="toolbar" role="group" aria-label="Matching packages" hidden></div>
   <p id="package-source-links" hidden>
     <a id="package-source" target="_blank" rel="noopener noreferrer">Browse pinned source</a>
