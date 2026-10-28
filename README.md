@@ -37,6 +37,8 @@ The FPM playground defaults to **Selected Fortran packages**, the curated catalo
 
 Selected packages can be filtered by **GAMS class** and its **Subclass**, alongside text, category, and topic searches. Parent searches include their subclasses; explicit searches such as `GAMS D2` or `GAMS L6` are also supported. See the [package-by-package GAMS classifications, review notes, and class counts](docs/fpm-gams.md), with links to NIST definitions and catalog examples. The same search controls work in the main local FPM page. The [G1 optimization pilot](docs/gams-g1.md) adds G1a/G1b procedure mappings and three verified driver programs adapted from author examples.
 
+The [numerical package review](docs/gams-numerical.md) maps selected public APIs to more detailed GAMS classes, with pinned source evidence, author example/test references, and a queue of capabilities still needing procedure-level review. Source-reviewed mappings are distinguished from tested drivers.
+
 A [versioned software catalog export](docs/catalog-export.md) makes descriptions, GitHub metadata, curated topics, GAMS classifications, and example references reusable outside the playground. Pages builds publish it automatically; a separate catalog can import updates while preserving its own entries and annotations, including non-FPM software. Generate a local snapshot with `python xcatalog_export.py`.
 
 The FPM playground also offers a separate **Translated R packages** collection with 596 searchable packages. These download and compile from scratch, online or locally. See [usage and limitations](docs/translated-r-playground.md).

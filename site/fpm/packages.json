@@ -49,9 +49,29 @@
         "parent": "D"
       },
       {
+        "code": "D2a",
+        "label": "Real nonsymmetric matrices",
+        "parent": "D2"
+      },
+      {
+        "code": "D2a1",
+        "label": "General",
+        "parent": "D2a"
+      },
+      {
         "code": "D4",
         "label": "Eigenvalues, eigenvectors",
         "parent": "D"
+      },
+      {
+        "code": "D4a",
+        "label": "Ordinary eigenvalue problems (Ax = lambda x)",
+        "parent": "D4"
+      },
+      {
+        "code": "D4a1",
+        "label": "Real symmetric",
+        "parent": "D4a"
       },
       {
         "code": "D5",
@@ -67,9 +87,150 @@
         "code": "D9",
         "label": "Singular, overdetermined or underdetermined systems of linear equations, generalized inverses",
         "parent": "D"
+      },
+      {
+        "code": "D9a",
+        "label": "Unconstrained",
+        "parent": "D9"
+      },
+      {
+        "code": "D9a1",
+        "label": "Least squares (L_2) solution",
+        "parent": "D9a"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "fortran-lapack-solve",
+        "package_id": "fortran-lapack",
+        "revision": "e5e45fdd5a38bfab06d1f703f12b787937aa33bb",
+        "module": "linear_algebra",
+        "procedure": "solve",
+        "gams_codes": [
+          "D2a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Real dense linear systems; the generic API also has other overloads not classified by this record.",
+        "evidence": [
+          {
+            "path": "src/la_solve.f90",
+            "sha256": "ca7b0ea399dad6e2e4ab03785c95f47795a2db957a018cb57ad84f50fa5c944b",
+            "line": 139
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_la_solve.f90",
+            "sha256": "bad47b312ddb22e98bda7dc44ea06c9ba02fe30cce4b143c8da27d8e1bae5232"
+          }
+        ]
+      },
+      {
+        "id": "fortran-lapack-eigh",
+        "package_id": "fortran-lapack",
+        "revision": "e5e45fdd5a38bfab06d1f703f12b787937aa33bb",
+        "module": "linear_algebra",
+        "procedure": "eigh (real symmetric overload)",
+        "gams_codes": [
+          "D4a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Standard real symmetric eigenproblem; complex Hermitian overload is not included in this record.",
+        "evidence": [
+          {
+            "path": "src/la_eigs.f90",
+            "sha256": "2fc9eb41ce23953ab667307bd3491e4df8f596d83434424e1e4c47bb7e2812fb",
+            "line": 209
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_la_eigs.f90",
+            "sha256": "0390b1bc8f2b50ced1ee058d553f6cdd3180c5599e62e5dfa90989ad4f3e8ebd"
+          }
+        ]
+      },
+      {
+        "id": "fortran-lapack-qr",
+        "package_id": "fortran-lapack",
+        "revision": "e5e45fdd5a38bfab06d1f703f12b787937aa33bb",
+        "module": "linear_algebra",
+        "procedure": "qr",
+        "gams_codes": [
+          "D5"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "QR decomposition; inspect the overload for pivoting and arithmetic type.",
+        "evidence": [
+          {
+            "path": "src/la_qr.f90",
+            "sha256": "a5e62f3945abb8525157d2731b7a4a5506ab3c393ba094f6f3ec4edc0b27214f",
+            "line": 56
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_la_qr.f90",
+            "sha256": "331d45304232c7b57f12d3c928d943e96af659d96e41daa4f5c46a2b4ec5201b"
+          }
+        ]
+      },
+      {
+        "id": "fortran-lapack-svd",
+        "package_id": "fortran-lapack",
+        "revision": "e5e45fdd5a38bfab06d1f703f12b787937aa33bb",
+        "module": "linear_algebra",
+        "procedure": "svd",
+        "gams_codes": [
+          "D6"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Singular value decomposition.",
+        "evidence": [
+          {
+            "path": "src/la_svd.f90",
+            "sha256": "29bb0e00f7c8ad36febc5d4f44f5f1b4f2e6da4df4c77a1d8e015664b28e95b8",
+            "line": 47
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_la_svd.f90",
+            "sha256": "f7d8ab0da8c7badb0d8bdc43d30f5a7cd044c7afc4d7605111b44839ecdeb824"
+          }
+        ]
+      },
+      {
+        "id": "fortran-lapack-lstsq",
+        "package_id": "fortran-lapack",
+        "revision": "e5e45fdd5a38bfab06d1f703f12b787937aa33bb",
+        "module": "linear_algebra",
+        "procedure": "lstsq",
+        "gams_codes": [
+          "D9a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Unconstrained linear least-squares solution.",
+        "evidence": [
+          {
+            "path": "src/la_least_squares.f90",
+            "sha256": "19fbb22fafa5d984cd96646cc43374592d700e2c2941ec1899ab3f5adc43802c",
+            "line": 168
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_linalg_lstsq.f90",
+            "sha256": "7c96b67b140d664a8ce61e1d443a27a5e8b3a217dc85e66435e42c9127af4810"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -266,9 +427,46 @@
         "code": "J1",
         "label": "Trigonometric transforms including fast Fourier transforms",
         "parent": "J"
+      },
+      {
+        "code": "J1a",
+        "label": "One-dimensional",
+        "parent": "J1"
+      },
+      {
+        "code": "J1a2",
+        "label": "Complex",
+        "parent": "J1a"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "fftpack-fft",
+        "package_id": "fftpack",
+        "revision": "0fffe7c05a918363a7cc12ae138a695afd115f36",
+        "module": "fftpack",
+        "procedure": "fft, ifft",
+        "gams_codes": [
+          "J1a2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Complex one-dimensional forward and backward Fourier transforms.",
+        "evidence": [
+          {
+            "path": "src/fftpack.f90",
+            "sha256": "8d8ab19d3ee948a764fdd6fcd47d8ad96e19e6384d84753cb7687f34ac8b9857",
+            "line": 222
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_fftpack_fft.f90",
+            "sha256": "eaa5145047364f2f62c6c563a3f126f75a56f297742c12b29f6a8b340c192ca0"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -308,9 +506,36 @@
         "code": "F1",
         "label": "Single equation",
         "parent": "F"
+      },
+      {
+        "code": "F1b",
+        "label": "Nonpolynomial",
+        "parent": "F1"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "roots-fortran-brent",
+        "package_id": "roots-fortran",
+        "revision": "85dc6b98404a61d49944939414f7f56c3f32edd1",
+        "module": "root_module",
+        "procedure": "brent_solver%solve",
+        "gams_codes": [
+          "F1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "none",
+        "notes": "Bracketing solver for a general scalar function; not an optimization routine.",
+        "evidence": [
+          {
+            "path": "src/root_module.F90",
+            "sha256": "a1e4d4337d643384167d963e87973c80b4e805e38869be2fca071876fd306ad2",
+            "line": 123
+          }
+        ],
+        "author_examples": []
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -426,9 +651,29 @@
         "parent": "L"
       },
       {
+        "code": "L1a",
+        "label": "One-dimensional data",
+        "parent": "L1"
+      },
+      {
+        "code": "L1a1",
+        "label": "Raw data",
+        "parent": "L1a"
+      },
+      {
+        "code": "L1a1a",
+        "label": "Location",
+        "parent": "L1a1"
+      },
+      {
         "code": "L6",
         "label": "Random number generation",
         "parent": "L"
+      },
+      {
+        "code": "L6c",
+        "label": "Service routines (e.g., seed)",
+        "parent": "L6"
       },
       {
         "code": "N",
@@ -466,7 +711,112 @@
         "parent": "R"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "stdlib-mean",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_stats",
+        "procedure": "mean",
+        "gams_codes": [
+          "L1a1a"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Mean of numeric data; this record does not review every stdlib numerical facility.",
+        "evidence": [
+          {
+            "path": "src/stdlib_stats.f90",
+            "sha256": "e15ce21ef7f4ae8f3c0df5d99675ad33a5a820167c7565c3b14d3fa2f0acba88",
+            "line": 494
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_mean.f90",
+            "sha256": "afa45a7cd7d843450f04f818358cc8829d91d3dbafd7409c0e5959ccc36ae958"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-solve",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "solve",
+        "gams_codes": [
+          "D2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Generic dense linear solve; retained broad because arithmetic type and matrix structure vary.",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811",
+            "line": 734
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_solve1.f90",
+            "sha256": "b05f205e18917ba05cea70323ed9316b12ad773fbbed716d3cc149afb12d50bb"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-sort",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_sorting",
+        "procedure": "sort",
+        "gams_codes": [
+          "N6"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Ordering array values; not statistical inference.",
+        "evidence": [
+          {
+            "path": "src/stdlib_sorting.F90",
+            "sha256": "03ba3e6359c063da7aaf4c0e239ff74fff6c2808bee768d05cc54ab9eedd0cf5",
+            "line": 695
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_sorting.F90",
+            "sha256": "c6424675bafc1bf89d74d84acacde5de0f51aa9ab28919ff9621eff022652f4a"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-random-seed",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_random",
+        "procedure": "random_seed",
+        "gams_codes": [
+          "L6c"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Random-generator seeding support; distribution generation uses distinct routines.",
+        "evidence": [
+          {
+            "path": "src/stdlib_random.f90",
+            "sha256": "a69b10ab83b48a140fc0909888ea541d10ae67f727c0c9973c1a01211141268e",
+            "line": 28
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_random_seed.f90",
+            "sha256": "b1025f58e68f0cffc10a43bfdb8fa5c93f6c0d1d7f1e47540e62c8de0eace5fa"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -509,12 +859,75 @@
         "parent": "E"
       },
       {
+        "code": "E1a",
+        "label": "Polynomial splines (piecewise polynomials)",
+        "parent": "E1"
+      },
+      {
         "code": "E2",
         "label": "Multivariate data (surface fitting)",
         "parent": "E"
+      },
+      {
+        "code": "E2a",
+        "label": "Gridded",
+        "parent": "E2"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "bspline-fortran-bspline-1d",
+        "package_id": "bspline-fortran",
+        "revision": "047c724451aeee7f883c0d5acba3f7bd22a5de01",
+        "module": "bspline_module",
+        "procedure": "bspline_1d%initialize, evaluate",
+        "gams_codes": [
+          "E1a"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "One-dimensional B-spline interpolation; higher-dimensional classes retain their broader package assignments.",
+        "evidence": [
+          {
+            "path": "src/bspline_oo_module.f90",
+            "sha256": "2b1bd0fb16092ccb4bb2bc4cf499249eb19252c888f582123f4c31c8de29772a",
+            "line": 63
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_oo.f90",
+            "sha256": "da44e4cc9de187984e10fade22525403a42847f79056e13dd154572af486afda"
+          }
+        ]
+      },
+      {
+        "id": "bspline-fortran-bspline-2d",
+        "package_id": "bspline-fortran",
+        "revision": "047c724451aeee7f883c0d5acba3f7bd22a5de01",
+        "module": "bspline_module",
+        "procedure": "bspline_2d%initialize, evaluate",
+        "gams_codes": [
+          "E2a"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Tensor-product two-dimensional interpolation on a rectangular grid.",
+        "evidence": [
+          {
+            "path": "src/bspline_oo_module.f90",
+            "sha256": "2b1bd0fb16092ccb4bb2bc4cf499249eb19252c888f582123f4c31c8de29772a",
+            "line": 87
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_oo.f90",
+            "sha256": "da44e4cc9de187984e10fade22525403a42847f79056e13dd154572af486afda"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -552,9 +965,41 @@
         "code": "E1",
         "label": "Univariate data (curve fitting)",
         "parent": "E"
+      },
+      {
+        "code": "E1a",
+        "label": "Polynomial splines (piecewise polynomials)",
+        "parent": "E1"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "pchip-dpchim",
+        "package_id": "pchip",
+        "revision": "8f5350565072622a2344dd0ec75193832b31eb10",
+        "module": "pchip_module",
+        "procedure": "dpchim, dpchfe",
+        "gams_codes": [
+          "E1a"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "none",
+        "notes": "Shape-preserving piecewise cubic Hermite interpolation; slopes are estimated from tabulated values.",
+        "evidence": [
+          {
+            "path": "src/pchip_module.f90",
+            "sha256": "d92e5471b464d79b742256fd611c1f12ce294bffaac5d864d1d9163784d1fb32",
+            "line": 2216
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/pchip_test.f90",
+            "sha256": "63f9e869e896f9792b2d3b6ccc23fde01e4911a436eb73a158edeaf150742664"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -594,12 +1039,75 @@
         "parent": "E"
       },
       {
+        "code": "E1a",
+        "label": "Polynomial splines (piecewise polynomials)",
+        "parent": "E1"
+      },
+      {
         "code": "E2",
         "label": "Multivariate data (surface fitting)",
         "parent": "E"
+      },
+      {
+        "code": "E2a",
+        "label": "Gridded",
+        "parent": "E2"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "finterp-linear-interp-1d",
+        "package_id": "finterp",
+        "revision": "95aaceaf86f5d4d49328b783c5dff9b006b0bfc9",
+        "module": "linear_interpolation_module",
+        "procedure": "linear_interp_1d%evaluate",
+        "gams_codes": [
+          "E1a"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "One-dimensional piecewise linear interpolation; multidimensional types are separate APIs.",
+        "evidence": [
+          {
+            "path": "src/linear_interpolation_module.F90",
+            "sha256": "ce7c98c39bacbf0b72e5c5c0c9a6e4e55b0bec297b105974263e3554eb038238",
+            "line": 67
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test.f90",
+            "sha256": "2ba3595858555dd5239c1e0b2364d8d135cb400468c232457fd80f5fe04e64d8"
+          }
+        ]
+      },
+      {
+        "id": "finterp-linear-interp-2d",
+        "package_id": "finterp",
+        "revision": "95aaceaf86f5d4d49328b783c5dff9b006b0bfc9",
+        "module": "linear_interpolation_module",
+        "procedure": "linear_interp_2d%evaluate",
+        "gams_codes": [
+          "E2a"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Two-dimensional multilinear interpolation on a rectilinear grid.",
+        "evidence": [
+          {
+            "path": "src/linear_interpolation_module.F90",
+            "sha256": "ce7c98c39bacbf0b72e5c5c0c9a6e4e55b0bec297b105974263e3554eb038238",
+            "line": 81
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test.f90",
+            "sha256": "2ba3595858555dd5239c1e0b2364d8d135cb400468c232457fd80f5fe04e64d8"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -641,9 +1149,56 @@
         "code": "H2",
         "label": "Quadrature (numerical evaluation of definite integrals)",
         "parent": "H"
+      },
+      {
+        "code": "H2a",
+        "label": "One-dimensional integrals",
+        "parent": "H2"
+      },
+      {
+        "code": "H2a1",
+        "label": "Finite interval (general integrand)",
+        "parent": "H2a"
+      },
+      {
+        "code": "H2a1a",
+        "label": "Integrand available via user-defined procedure",
+        "parent": "H2a1"
+      },
+      {
+        "code": "H2a1a1",
+        "label": "Automatic (user need only specify required accuracy)",
+        "parent": "H2a1a"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "quadpack-dqag",
+        "package_id": "quadpack",
+        "revision": "ab42d50794280a8e7996f2ee4cda1f8753dfde5b",
+        "module": "quadpack",
+        "procedure": "dqag",
+        "gams_codes": [
+          "H2a1a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "none",
+        "notes": "Adaptive finite-interval quadrature of a callback; improper and weighted integrals require other routines.",
+        "evidence": [
+          {
+            "path": "src/quadpack_generic.F90",
+            "sha256": "c99ab78b9639e4c66c82ae3acd56efcd53a50026d3b8993ce4737fbaa91e88e8",
+            "line": 96
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/quadpack_test_module.F90",
+            "sha256": "6583d801d13851ac7626444aff65e6714e3e561f7d8442d5424655bcb50c56b4"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -682,9 +1237,56 @@
         "code": "H2",
         "label": "Quadrature (numerical evaluation of definite integrals)",
         "parent": "H"
+      },
+      {
+        "code": "H2a",
+        "label": "One-dimensional integrals",
+        "parent": "H2"
+      },
+      {
+        "code": "H2a1",
+        "label": "Finite interval (general integrand)",
+        "parent": "H2a"
+      },
+      {
+        "code": "H2a1a",
+        "label": "Integrand available via user-defined procedure",
+        "parent": "H2a1"
+      },
+      {
+        "code": "H2a1a1",
+        "label": "Automatic (user need only specify required accuracy)",
+        "parent": "H2a1a"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "quadrature-fortran-integration-class-1d",
+        "package_id": "quadrature-fortran",
+        "revision": "1d208fc59569a97b1c2abf9c45f7c352dcc7b318",
+        "module": "quadrature_module",
+        "procedure": "integration_class_1d%integrate",
+        "gams_codes": [
+          "H2a1a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "none",
+        "notes": "Adaptive finite-interval one-dimensional quadrature.",
+        "evidence": [
+          {
+            "path": "src/quadrature_module.F90",
+            "sha256": "9c407f2553745d6d07ec30f4101199a644b0558cdc9d951602da59c5dfeb315f",
+            "line": 72
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test.f90",
+            "sha256": "c654bec4a4141cfc48a1fca81f670f946d27532d68e0ac4c734dc4fbcad051e3"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -722,9 +1324,51 @@
         "code": "I1",
         "label": "Ordinary differential equations (ODE''s)",
         "parent": "I"
+      },
+      {
+        "code": "I1a",
+        "label": "Initial value problems",
+        "parent": "I1"
+      },
+      {
+        "code": "I1a1",
+        "label": "General, nonstiff or mildly stiff",
+        "parent": "I1a"
+      },
+      {
+        "code": "I1a1a",
+        "label": "One-step methods (e.g., Runge-Kutta)",
+        "parent": "I1a1"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "dop853-dop853-class",
+        "package_id": "dop853",
+        "revision": "1e9d0dbf4dcbc692ca557c0467629112dd1f0ce6",
+        "module": "dop853_module",
+        "procedure": "dop853_class%integrate",
+        "gams_codes": [
+          "I1a1a"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "right-hand side only",
+        "notes": "Explicit eighth-order one-step Runge-Kutta initial-value integration; not a stiff solver.",
+        "evidence": [
+          {
+            "path": "src/dop853_module.F90",
+            "sha256": "ca33da0a609e8ddf7aea4bbc312d958935428d5389187e9d92a7d3f73b1b9321",
+            "line": 204
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/dop853_test.f90",
+            "sha256": "535b26a36faabfa3427838114966be27fab19a0ccce739bd28ef20f522c7ca69"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -836,6 +1480,32 @@
             "sha256": "140de0641ffd3e088ad99036c3e6077a8558802fa10858ce5d027a8d0a8a4577"
           }
         ]
+      },
+      {
+        "id": "minpack-hybrd1",
+        "package_id": "minpack",
+        "revision": "c0b5aea9fcd2b83865af921a7a7e881904f8d3c2",
+        "module": "minpack_module",
+        "procedure": "hybrd1",
+        "gams_codes": [
+          "F2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "finite-difference Jacobian",
+        "notes": "Powell hybrid solver for a square system of nonlinear equations.",
+        "evidence": [
+          {
+            "path": "src/minpack.f90",
+            "sha256": "44ff6b6482af824875c3af49feb4bfe9b63933cd3cf5ecf05159f931353cbe27",
+            "line": 959
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "examples/example_hybrd1.f90",
+            "sha256": "208ec876826340d2481918a2fd648440457c977352826378e5275223acd81cd2"
+          }
+        ]
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -875,9 +1545,46 @@
         "code": "L6",
         "label": "Random number generation",
         "parent": "L"
+      },
+      {
+        "code": "L6a",
+        "label": "Univariate",
+        "parent": "L6"
+      },
+      {
+        "code": "L6a21",
+        "label": "Uniform (continuous, discrete), uniform order statistics",
+        "parent": "L6a"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "mersenne-twister-fortran-genrand64-real2",
+        "package_id": "mersenne-twister-fortran",
+        "revision": "1e3e364f4c022eab3fcd5d07b10a2c2be77a822b",
+        "module": "mt19937_64",
+        "procedure": "mt19937%genrand64_real2",
+        "gams_codes": [
+          "L6a21"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Continuous uniform pseudorandom values in [0,1), with explicit seeded state.",
+        "evidence": [
+          {
+            "path": "src/mt19937-64.f90",
+            "sha256": "e41634731fde9378f0f363079311b45d81c85edd5678b226b8de50e30a1fc047",
+            "line": 63
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/mt19937_64_test.f90",
+            "sha256": "808c5c533d3844c4328f923ba962f92cd704f3a16b55bd7044a2caf7eb601e81"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -1054,7 +1761,34 @@
         "parent": null
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "daglib-toposort",
+        "package_id": "daglib",
+        "revision": "68fa83ebfd33fd6521327918b1d8e5084250a8ff",
+        "module": "dag_module",
+        "procedure": "dag%toposort",
+        "gams_codes": [
+          "P"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Topological ordering of a directed acyclic graph; retain broad computational-geometry/graph-algorithm class.",
+        "evidence": [
+          {
+            "path": "src/dag_module.F90",
+            "sha256": "5795942a4dc3d495dde47b78dd8367948821d277187ed13092b4650043157ae3",
+            "line": 85
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/dag_example.f90",
+            "sha256": "01aecbe9c9b33ab2ae2b86fc3c69afaa4fc837ae09653b988abe610b406bdf02"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -1180,7 +1914,34 @@
         "parent": "N"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "fortran-function-parser-evaluate",
+        "package_id": "fortran_function_parser",
+        "revision": "4c977c925506bea3fb1ee44aac08114c5fa68a71",
+        "module": "function_parser",
+        "procedure": "fparser%evaluate",
+        "gams_codes": [
+          "N3"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Numeric expression evaluation, not a symbolic algebra engine or nonlinear solver.",
+        "evidence": [
+          {
+            "path": "src/function_parser.F90",
+            "sha256": "e66c9eeb438265c3a3137236036120965ea50d079004e2150c278108a2c56202",
+            "line": 240
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/tests.f90",
+            "sha256": "f0b2679fadaf5c3cb4911bf8819bbd3404bed0947299cee686820dca7b9c74ef"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -1222,7 +1983,34 @@
         "parent": "H"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "numdiff-compute-derivative",
+        "package_id": "numdiff",
+        "revision": "687157df8d2dec072b5484974bab71f7b14b0e9f",
+        "module": "diff_module",
+        "procedure": "diff_func%compute_derivative",
+        "gams_codes": [
+          "H1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "function values; estimates derivatives",
+        "notes": "Finite-difference numerical differentiation; sparse Jacobian facilities are not all reviewed here.",
+        "evidence": [
+          {
+            "path": "src/diff_module.f90",
+            "sha256": "78ad89f405de2f82618332a131085deceed4312bb5c2cd8c2ff8a92a41b34557",
+            "line": 33
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/diff_test.f90",
+            "sha256": "1b75497ce9706b8feef11150389161401103d1ef1e8b19dba9d35402845c773a"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -1645,7 +2433,34 @@
         "parent": "N"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "orderpack-rank",
+        "package_id": "orderpack",
+        "revision": "9696eee2670beae1601ae59e125ff9f10e6c88a7",
+        "module": "M_orderpack",
+        "procedure": "rank",
+        "gams_codes": [
+          "N6"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Indices that sort an array; not a statistical rank-based inference procedure.",
+        "evidence": [
+          {
+            "path": "src/M_orderpack.f90",
+            "sha256": "2413fc033ff4a130f83a26329057cc528159cdb80f3e7d17613263b820a66084",
+            "line": 7
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/demo_rank.f90",
+            "sha256": "dad238a2309021a2bd27169ded67a24cc984322de64270a7a96c8a7997363fb2"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -1764,7 +2579,34 @@
         "parent": null
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "fortran-primes-is-prime",
+        "package_id": "fortran-primes",
+        "revision": "817abbf15c2565d2b92c35546d9e18152eb02e2c",
+        "module": "prime_numbers",
+        "procedure": "primes, is_prime",
+        "gams_codes": [
+          "B"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Prime enumeration and primality testing; B has no finer published GAMS children.",
+        "evidence": [
+          {
+            "path": "src/prime_numbers.f90",
+            "sha256": "5086bda43361b5fdf5d523460d54a941f00e6d59b273d916d6127301623cb40d",
+            "line": 40
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_primes.f90",
+            "sha256": "adfd87143ec3021c2241c8caa160152068b6d56a218a81d0e5cda02d8ca68a76"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -1889,7 +2731,34 @@
         "parent": "H"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "forwarddiff-derivative",
+        "package_id": "forwarddiff",
+        "revision": "2388e8ecf300a7bbc0904feab47023413464edf9",
+        "module": "differentia",
+        "procedure": "derivative",
+        "gams_codes": [
+          "H1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "dual-number evaluation; automatic differentiation",
+        "notes": "Forward automatic differentiation, distinct from finite differences.",
+        "evidence": [
+          {
+            "path": "src/differentia_derivative.f90",
+            "sha256": "2e291639fc48df4b60e840153613ba3038fb04f7716abf1b692edbab1f248cc3",
+            "line": 54
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_differentia.f90",
+            "sha256": "203531b65c6cc64b08c3052859d185c7cd318a66ff5fd1509710b61c44e12035"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -2000,7 +2869,29 @@
         "parent": "A"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "rational-number-ratnumadd",
+        "package_id": "rational_number",
+        "revision": "b6ff702a0f51b950798f2a31c5bd81ae0c15385a",
+        "module": "rational_number",
+        "procedure": "ratNumAdd",
+        "gams_codes": [
+          "A2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Arithmetic on integer numerator/denominator pairs.",
+        "evidence": [
+          {
+            "path": "src/rational_number.f90",
+            "sha256": "4b80095ae97ad0932d4c31174b645345d964d4f955883f8dabac1a5e0d90d59d",
+            "line": 144
+          }
+        ],
+        "author_examples": []
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -2033,6 +2924,16 @@
         "parent": "L"
       },
       {
+        "code": "L6a",
+        "label": "Univariate",
+        "parent": "L6"
+      },
+      {
+        "code": "L6a21",
+        "label": "Uniform (continuous, discrete), uniform order statistics",
+        "parent": "L6a"
+      },
+      {
         "code": "S",
         "label": "Software development tools",
         "parent": null
@@ -2043,7 +2944,29 @@
         "parent": "S"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "fortran-test-helper-create-r64-array",
+        "package_id": "fortran_test_helper",
+        "revision": "1557b1485d8a5b042862042552f1e1a34552ca5e",
+        "module": "fortran_test_helper",
+        "procedure": "create_random_array (real64 overload)",
+        "gams_codes": [
+          "L6a21"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Uniform real test arrays generated from RANDOM_NUMBER; assertion routines are separate software-testing tools.",
+        "evidence": [
+          {
+            "path": "src/fth_arrays.f90",
+            "sha256": "88f10fd95539fb964a76bda9ca9fc086230f579b1084d641e66cd41d927d691d",
+            "line": 102
+          }
+        ],
+        "author_examples": []
+      }
+    ],
     "stars": 0,
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -2275,9 +3198,61 @@
         "code": "G2",
         "label": "Constrained",
         "parent": "G"
+      },
+      {
+        "code": "G2h",
+        "label": "General nonlinear programming",
+        "parent": "G2"
+      },
+      {
+        "code": "G2h3",
+        "label": "Nonlinear constraints",
+        "parent": "G2h"
+      },
+      {
+        "code": "G2h3b",
+        "label": "Equality and inequality constraints",
+        "parent": "G2h3"
+      },
+      {
+        "code": "G2h3b1",
+        "label": "Smooth function and constraints",
+        "parent": "G2h3b"
+      },
+      {
+        "code": "G2h3b1b",
+        "label": "User provides first derivatives of function and constraints",
+        "parent": "G2h3b1"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "slsqp-slsqp-solver",
+        "package_id": "slsqp",
+        "revision": "e28b14fc48189fd4fce5f359327164fca55b52be",
+        "module": "slsqp_module",
+        "procedure": "slsqp_solver%optimize",
+        "gams_codes": [
+          "G2h3b1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "user objective gradient and constraint Jacobian in analytic mode",
+        "notes": "Smooth optimization with nonlinear equality and inequality constraints; finite-difference modes are separate configurations.",
+        "evidence": [
+          {
+            "path": "src/slsqp_module.f90",
+            "sha256": "0417f69540016ec21c42ac09f353b3cb9ca7e2ed7dc02b94026a04d599d4c51f",
+            "line": 21
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/slsqp_test.f90",
+            "sha256": "a195f2addfeb7b206b83a327095cc41dc32f95afdda9890e93b7a036d0aa8b4d"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -2318,9 +3293,56 @@
         "code": "G2",
         "label": "Constrained",
         "parent": "G"
+      },
+      {
+        "code": "G2h",
+        "label": "General nonlinear programming",
+        "parent": "G2"
+      },
+      {
+        "code": "G2h1",
+        "label": "Simple bounds",
+        "parent": "G2h"
+      },
+      {
+        "code": "G2h1a",
+        "label": "Smooth function",
+        "parent": "G2h1"
+      },
+      {
+        "code": "G2h1a2",
+        "label": "User provides first derivatives",
+        "parent": "G2h1a"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "lbfgsb-setulb",
+        "package_id": "lbfgsb",
+        "revision": "ce1a9322016d6f31b652393e000a914b63af6fef",
+        "module": "lbfgsb_module",
+        "procedure": "setulb",
+        "gams_codes": [
+          "G2h1a2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "user gradient via reverse communication",
+        "notes": "Smooth bound-constrained minimization with limited-memory BFGS.",
+        "evidence": [
+          {
+            "path": "src/lbfgsb.f90",
+            "sha256": "8562cf29648293f653355e2ebbbab58559b60bce4ad976076e48ebe73a23981e",
+            "line": 88
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/driver1.f90",
+            "sha256": "edd8557304689516d90ca2e4f6befcaa4144586436d7e8027f0b194b09dc5e41"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -2362,9 +3384,36 @@
         "code": "C10",
         "label": "Bessel functions",
         "parent": "C"
+      },
+      {
+        "code": "C19",
+        "label": "Other special functions",
+        "parent": "C"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "specfun-bernob",
+        "package_id": "specfun",
+        "revision": "e74d9c810d5c9248b5d8ffab4b766e7bb22ffd23",
+        "module": "specfun_module",
+        "procedure": "bernob",
+        "gams_codes": [
+          "C19"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Bernoulli numbers; do not classify this procedure as gamma or Bessel just because the package also contains those functions.",
+        "evidence": [
+          {
+            "path": "src/specfun.F90",
+            "sha256": "26954173c4244ded68b347cda4a4af81fff8f9479c142658f9c6393a3dccdeab",
+            "line": 776
+          }
+        ],
+        "author_examples": []
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -2405,12 +3454,39 @@
         "parent": "E"
       },
       {
+        "code": "E1a",
+        "label": "Polynomial splines (piecewise polynomials)",
+        "parent": "E1"
+      },
+      {
         "code": "E2",
         "label": "Multivariate data (surface fitting)",
         "parent": "E"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "regridpack-regrid",
+        "package_id": "regridpack",
+        "revision": "e47346d9244ab93f70367f16364d73217fbc0451",
+        "module": "regridpack_module",
+        "procedure": "regrid",
+        "gams_codes": [
+          "E1a"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "One-dimensional piecewise linear/cubic regridding overload; multidimensional overloads require separate review.",
+        "evidence": [
+          {
+            "path": "src/regridpack_module.f90",
+            "sha256": "1ece7df02a63ae56371c9c9d92cd0327112d35d2ee545442f22be8d4fe7d8bee",
+            "line": 22
+          }
+        ],
+        "author_examples": []
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -2452,7 +3528,34 @@
         "parent": "K"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "splpak-splpak-type",
+        "package_id": "splpak",
+        "revision": "35340cb2d193c7aa44f03978db21660df8297cc0",
+        "module": "splpak_module",
+        "procedure": "splpak_type%initialize, evaluate",
+        "gams_codes": [
+          "K1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Least-squares spline fitting; retain K1 pending a closer match among its finer subclasses.",
+        "evidence": [
+          {
+            "path": "src/splpak.F90",
+            "sha256": "0425b4114c6d9917cefee8b7320987bd74e1f31d6c55dd85bc1cd603ad9ec54d",
+            "line": 45
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/splpak_test.f90",
+            "sha256": "6a26ae73fe6893ab654750cf5e848f4e12f5d415dc9dfebba2b7581ef4bd5b16"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -2496,7 +3599,34 @@
         "parent": null
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "fortran-astrodynamics-toolkit-orbital-elements-to-rv",
+        "package_id": "fortran-astrodynamics-toolkit",
+        "revision": "3cf0a0a8ba2abf8bc4995c6da5b6abae07b45a0a",
+        "module": "fortran_astrodynamics_toolkit",
+        "procedure": "orbital_elements_to_rv",
+        "gams_codes": [
+          "P"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Orbital-element to Cartesian state transformation; no detailed GAMS astronomy branch.",
+        "evidence": [
+          {
+            "path": "src/orbital_mechanics_module.f90",
+            "sha256": "1719bc28b855b52c84469d58212c4abae1adb48df048af921d012f1ce0bdd3b7",
+            "line": 90
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/elements_test.f90",
+            "sha256": "6e07d19804e2b92f6264f2acd909867877b2bfa5fb70ece9a21b91a0ce977b4a"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -2658,6 +3788,11 @@
         "parent": "E"
       },
       {
+        "code": "E1a",
+        "label": "Polynomial splines (piecewise polynomials)",
+        "parent": "E1"
+      },
+      {
         "code": "E2",
         "label": "Multivariate data (surface fitting)",
         "parent": "E"
@@ -2678,6 +3813,26 @@
         "parent": "H"
       },
       {
+        "code": "H2a",
+        "label": "One-dimensional integrals",
+        "parent": "H2"
+      },
+      {
+        "code": "H2a2",
+        "label": "Finite interval (specific or special type integrand including weight functions, oscillating and singular integrands, principal value integrals, splines, etc.)",
+        "parent": "H2a"
+      },
+      {
+        "code": "H2a2b",
+        "label": "Integrand available only on grid",
+        "parent": "H2a2"
+      },
+      {
+        "code": "H2a2b2",
+        "label": "Nonautomatic",
+        "parent": "H2a2b"
+      },
+      {
         "code": "K",
         "label": "Approximation",
         "parent": null
@@ -2693,7 +3848,86 @@
         "parent": "K"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "fitpack-fitpack-curve",
+        "package_id": "fitpack",
+        "revision": "1907c7bad9f5c4557970e906bdd4909eb52b2d4c",
+        "module": "fitpack",
+        "procedure": "fitpack_curve",
+        "gams_codes": [
+          "E1a"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Univariate spline interpolation/fitting interface; smoothing options retain additional package-level K assignments.",
+        "evidence": [
+          {
+            "path": "src/fitpack_curves.f90",
+            "sha256": "2b0617067286348f3b54cbb314450fffe778f479832122c1bb33b954efeee654",
+            "line": 54
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/fitpack_curve_tests.f90",
+            "sha256": "0bb92548cb070e70e245b1f837fb931014e69b6f1c335f8cfdca49c514908847"
+          }
+        ]
+      },
+      {
+        "id": "fitpack-curve-derivative",
+        "package_id": "fitpack",
+        "revision": "1907c7bad9f5c4557970e906bdd4909eb52b2d4c",
+        "module": "fitpack",
+        "procedure": "fitpack_curve%dfdx",
+        "gams_codes": [
+          "H1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "derivatives of fitted spline representation",
+        "notes": "Evaluates derivatives of a fitted spline rather than differentiating an arbitrary callback.",
+        "evidence": [
+          {
+            "path": "src/fitpack_curves.f90",
+            "sha256": "2b0617067286348f3b54cbb314450fffe778f479832122c1bb33b954efeee654",
+            "line": 118
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "examples/example_curve.f90",
+            "sha256": "fa2fa26f553e1fcbb57dd8eef73337e1a43d4d7c5267f06a7874250c9d3d7064"
+          }
+        ]
+      },
+      {
+        "id": "fitpack-integral",
+        "package_id": "fitpack",
+        "revision": "1907c7bad9f5c4557970e906bdd4909eb52b2d4c",
+        "module": "fitpack",
+        "procedure": "fitpack_curve%integral",
+        "gams_codes": [
+          "H2a2b2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Integrates a stored spline representation on a finite interval; not adaptive callback quadrature.",
+        "evidence": [
+          {
+            "path": "src/fitpack_curves.f90",
+            "sha256": "2b0617067286348f3b54cbb314450fffe778f479832122c1bb33b954efeee654",
+            "line": 105
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "examples/example_curve.f90",
+            "sha256": "fa2fa26f553e1fcbb57dd8eef73337e1a43d4d7c5267f06a7874250c9d3d7064"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -2741,6 +3975,16 @@
         "parent": "D"
       },
       {
+        "code": "D9a",
+        "label": "Unconstrained",
+        "parent": "D9"
+      },
+      {
+        "code": "D9a1",
+        "label": "Least squares (L_2) solution",
+        "parent": "D9a"
+      },
+      {
         "code": "K",
         "label": "Approximation",
         "parent": null
@@ -2751,7 +3995,34 @@
         "parent": "K"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "lsqr-lsqr-solver-ez",
+        "package_id": "lsqr",
+        "revision": "4df2ce600ca26a9f7e80dc01bfd0859d538547b3",
+        "module": "lsqr_module",
+        "procedure": "lsqr_solver_ez%solve",
+        "gams_codes": [
+          "D9a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Iterative least-squares solve using sparse matrix products; this is not a direct LU solver.",
+        "evidence": [
+          {
+            "path": "src/lsqr.f90",
+            "sha256": "6a8c1ef2bc79d872106f93b0700790bad5a44e108429f96c83cf7fdd323d071c",
+            "line": 32
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/lsqrtest_ez.f90",
+            "sha256": "ec4dcf395f84de683bc96090cc657d04787634f830f8d13a2871de23c78e8245"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -2788,12 +4059,75 @@
         "parent": "A"
       },
       {
+        "code": "A3c",
+        "label": "Extended precision",
+        "parent": "A3"
+      },
+      {
         "code": "A4",
         "label": "Complex",
         "parent": "A"
+      },
+      {
+        "code": "A4c",
+        "label": "Extended precision",
+        "parent": "A4"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "mpfun2020-var1-mpreal",
+        "package_id": "mpfun2020-var1",
+        "revision": "f2191ad80d811cd5e309d83ffad9b2607d27aabc",
+        "module": "mpmodule",
+        "procedure": "operator(+) for mpreal (mp_addrr)",
+        "gams_codes": [
+          "A3c"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Addition of arbitrary-precision real operands through the public overloaded operator; other arithmetic operations need their own records.",
+        "evidence": [
+          {
+            "path": "src/mpfung1.f90",
+            "sha256": "f39e177daed0e8f3e2b10b01970d17c29526e2d46fbccab08cc98bc5cbd86836",
+            "line": 862
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/tquad.f90",
+            "sha256": "a81e5c19bc429460ef2b00bc54ce72d5469102bfadbc7af19fec68500d69239d"
+          }
+        ]
+      },
+      {
+        "id": "mpfun2020-var1-mpcmplx",
+        "package_id": "mpfun2020-var1",
+        "revision": "f2191ad80d811cd5e309d83ffad9b2607d27aabc",
+        "module": "mpmodule",
+        "procedure": "operator(+) for mpcomplex (mp_addzz)",
+        "gams_codes": [
+          "A4c"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Addition of arbitrary-precision complex operands through the public overloaded operator; precision is not limited to hardware complex kinds.",
+        "evidence": [
+          {
+            "path": "src/mpfung1.f90",
+            "sha256": "f39e177daed0e8f3e2b10b01970d17c29526e2d46fbccab08cc98bc5cbd86836",
+            "line": 942
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/tpphix3.f90",
+            "sha256": "eb6f9cba24cc2eadba647a3fba3c3277e01fa9b4f1d841a2a4bd28ad608d7971"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -2841,9 +4175,46 @@
         "code": "I1",
         "label": "Ordinary differential equations (ODE''s)",
         "parent": "I"
+      },
+      {
+        "code": "I1a",
+        "label": "Initial value problems",
+        "parent": "I1"
+      },
+      {
+        "code": "I1a1",
+        "label": "General, nonstiff or mildly stiff",
+        "parent": "I1a"
+      },
+      {
+        "code": "I1a1a",
+        "label": "One-step methods (e.g., Runge-Kutta)",
+        "parent": "I1a1"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "rklib-rk4",
+        "package_id": "rklib",
+        "revision": "e3d51f9e8a2e6756612e8e53687ab2d4b67dfb76",
+        "module": "rklib_module",
+        "procedure": "rk4_class%integrate",
+        "gams_codes": [
+          "I1a1a"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "right-hand side only",
+        "notes": "Classical explicit fourth-order Runge-Kutta; not a claim about every integrator in the collection.",
+        "evidence": [
+          {
+            "path": "src/rklib_fixed_steps.f90",
+            "sha256": "c9809cb3c27a44c7ff6b4237bfb3258a8d1223ff30917d6d7b1b97c5f579e46a",
+            "line": 203
+          }
+        ],
+        "author_examples": []
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -2889,9 +4260,51 @@
         "code": "I1",
         "label": "Ordinary differential equations (ODE''s)",
         "parent": "I"
+      },
+      {
+        "code": "I1a",
+        "label": "Initial value problems",
+        "parent": "I1"
+      },
+      {
+        "code": "I1a1",
+        "label": "General, nonstiff or mildly stiff",
+        "parent": "I1a"
+      },
+      {
+        "code": "I1a1b",
+        "label": "Multistep methods (e.g., Adams predictor-corrector)",
+        "parent": "I1a1"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "ddeabm-ddeabm-class",
+        "package_id": "ddeabm",
+        "revision": "dba70c8c65388638662df2694339c5ba7feaf12a",
+        "module": "ddeabm_module",
+        "procedure": "ddeabm_class%integrate",
+        "gams_codes": [
+          "I1a1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "right-hand side only",
+        "notes": "Adams-Bashforth-Moulton multistep initial-value integration for nonstiff problems.",
+        "evidence": [
+          {
+            "path": "src/ddeabm_module.F90",
+            "sha256": "d2a2492a5bf5c2c7bb4d91752b8d4dd684a985342087cf21b745f79cc9025d95",
+            "line": 60
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/ddeabm_test.f90",
+            "sha256": "dff53627d9fd4827c9a204203d3083578e52678adb1cb1fee11601e30fddc16d"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -2929,9 +4342,46 @@
         "code": "I1",
         "label": "Ordinary differential equations (ODE''s)",
         "parent": "I"
+      },
+      {
+        "code": "I1a",
+        "label": "Initial value problems",
+        "parent": "I1"
+      },
+      {
+        "code": "I1a2",
+        "label": "Stiff and mixed algebraic- differential equations",
+        "parent": "I1a"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "dvode-dvode-t",
+        "package_id": "dvode",
+        "revision": "59d2eedd1410a4bd6c196c24d08f95a7c20565c0",
+        "module": "dvode_module",
+        "procedure": "dvode_t%solve (BDF mode)",
+        "gams_codes": [
+          "I1a2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "optional user Jacobian; finite-difference fallback",
+        "notes": "Stiff BDF configuration; the package also offers a nonstiff Adams configuration.",
+        "evidence": [
+          {
+            "path": "src/dvode_module.F90",
+            "sha256": "b7eb8a828f2141ff513ab863a18b634f6c091b05236e6f2fb505140906e1b8fc",
+            "line": 251
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/dvdemo.f90",
+            "sha256": "f50f4d66c914ec6722b7d7c8dcbe28afea887ffd0abd5e43a12c9303bbc4794b"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -2977,9 +4427,41 @@
         "code": "G2",
         "label": "Constrained",
         "parent": "G"
+      },
+      {
+        "code": "G2i",
+        "label": "Global solution to nonconvex problems",
+        "parent": "G2"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "pikaia-pikaia-class",
+        "package_id": "pikaia",
+        "revision": "c080c4004896243bf9b8bbb4577e402c9e31c5e3",
+        "module": "pikaia_module",
+        "procedure": "pikaia_class%solve",
+        "gams_codes": [
+          "G2i"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "none",
+        "notes": "Genetic global optimization on bounded search variables; no guarantee of finding the global optimum.",
+        "evidence": [
+          {
+            "path": "src/pikaia_module.f90",
+            "sha256": "e3a8545bb8d88372ac5019ab32ff52685beab689c403626b6dbee54f2f450b71",
+            "line": 65
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/xpk2.f90",
+            "sha256": "e5e70fb83117298e45639f1839c94511d8624777ce119ea5641da2fee2afad0b"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -3035,7 +4517,34 @@
         "parent": "N"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "io-fortran-library-to-file",
+        "package_id": "io-fortran-library",
+        "revision": "15bc3557c36adc174abbd9a077e0686dc11cc4af",
+        "module": "io_fortran_lib",
+        "procedure": "to_file, from_file",
+        "gams_codes": [
+          "N1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Numeric array file I/O; conversion and formatting capabilities are not mathematical solvers.",
+        "evidence": [
+          {
+            "path": "src/modules/io_fortran_lib_mod.f90",
+            "sha256": "1c2fcc3ee6ff94adcc4c9539e44ff77cee64421210c04e557a47812cd8553c31",
+            "line": 982
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/units/file-test-c.f90",
+            "sha256": "7392fd429958efa0dea88db1a372b0d533ce770fdc3eb4c517818fb93ddf3c73"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -3161,9 +4670,51 @@
         "code": "G2",
         "label": "Constrained",
         "parent": "G"
+      },
+      {
+        "code": "G2h",
+        "label": "General nonlinear programming",
+        "parent": "G2"
+      },
+      {
+        "code": "G2h1",
+        "label": "Simple bounds",
+        "parent": "G2h"
+      },
+      {
+        "code": "G2h1a",
+        "label": "Smooth function",
+        "parent": "G2h1"
+      },
+      {
+        "code": "G2h1a1",
+        "label": "User provides no derivatives",
+        "parent": "G2h1a"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "powellopt-bobyqa",
+        "package_id": "powellopt",
+        "revision": "0987cd09d695cec968a3d02c8230d4ce5af33533",
+        "module": "bobyqa_module",
+        "procedure": "bobyqa",
+        "gams_codes": [
+          "G2h1a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "none",
+        "notes": "Bound-constrained smooth derivative-free optimization by quadratic models; COBYLA and other algorithms are separate.",
+        "evidence": [
+          {
+            "path": "src/bobyqa.f90",
+            "sha256": "6fe1483b9f0c45961289b2b8c9276293b5378d79771d0bb4a230460b71a2eebe",
+            "line": 77
+          }
+        ],
+        "author_examples": []
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -3251,6 +4802,26 @@
         "parent": "L"
       },
       {
+        "code": "L1a",
+        "label": "One-dimensional data",
+        "parent": "L1"
+      },
+      {
+        "code": "L1a1",
+        "label": "Raw data",
+        "parent": "L1a"
+      },
+      {
+        "code": "L1a1a",
+        "label": "Location",
+        "parent": "L1a1"
+      },
+      {
+        "code": "L1a1b",
+        "label": "Dispersion",
+        "parent": "L1a1"
+      },
+      {
         "code": "L2",
         "label": "Data manipulation",
         "parent": "L"
@@ -3286,7 +4857,60 @@
         "parent": "M"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "fstats-variance",
+        "package_id": "fstats",
+        "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+        "module": "fstats",
+        "procedure": "variance",
+        "gams_codes": [
+          "L1a1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Sample dispersion/variance; probability distributions, tests, and regression need their own procedure records.",
+        "evidence": [
+          {
+            "path": "src/statistics/fstats_descriptive_statistics.f90",
+            "sha256": "ec18e6e3c31f0d593ba311eccbc8f029640b01c0eeb88be269581551b0a61099",
+            "line": 51
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "examples/allan_example.f90",
+            "sha256": "fd17e90a59a479962df65a2424a99efa4e33ee22577a595904ab4c7794e6d694"
+          }
+        ]
+      },
+      {
+        "id": "fstats-mean",
+        "package_id": "fstats",
+        "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+        "module": "fstats",
+        "procedure": "mean",
+        "gams_codes": [
+          "L1a1a"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Sample location/mean; not a claim to cover every descriptive statistic.",
+        "evidence": [
+          {
+            "path": "src/statistics/fstats_descriptive_statistics.f90",
+            "sha256": "ec18e6e3c31f0d593ba311eccbc8f029640b01c0eeb88be269581551b0a61099",
+            "line": 45
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "examples/anova_example_1.f90",
+            "sha256": "59f76cc4eaf96b1d6569a789023917a9cd158313ac1ca9e30163876f0f509c1b"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -3351,6 +4975,16 @@
         "parent": "J"
       },
       {
+        "code": "J1a",
+        "label": "One-dimensional",
+        "parent": "J1"
+      },
+      {
+        "code": "J1a1",
+        "label": "Real",
+        "parent": "J1a"
+      },
+      {
         "code": "J2",
         "label": "Convolutions",
         "parent": "J"
@@ -3371,7 +5005,60 @@
         "parent": null
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "spectrum-convolve",
+        "package_id": "spectrum",
+        "revision": "5af0d5a85eccf971aa6e0fc72b1c7439c3cef536",
+        "module": "spectrum",
+        "procedure": "convolve",
+        "gams_codes": [
+          "J2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Discrete convolution; filtering and spectral estimation APIs remain broader package-level assignments.",
+        "evidence": [
+          {
+            "path": "src/spectrum_convolve.f90",
+            "sha256": "ebe3af6f2f764024d7a14931af15d248c9b1134d9813ee5e0f3e21d8c9a19995",
+            "line": 41
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "examples/gaussian_filter_example.f90",
+            "sha256": "df0fefca41dc195264ec43df19bd37dee291add4954e89bbfdba324ad543961a"
+          }
+        ]
+      },
+      {
+        "id": "spectrum-rfft",
+        "package_id": "spectrum",
+        "revision": "5af0d5a85eccf971aa6e0fc72b1c7439c3cef536",
+        "module": "spectrum",
+        "procedure": "rfft, irfft",
+        "gams_codes": [
+          "J1a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "One-dimensional real-input Fourier transform and its inverse.",
+        "evidence": [
+          {
+            "path": "src/spectrum_fft.f90",
+            "sha256": "d6b59a5c0e3e923eaa187863a48803564a8a1199d6ecccaedd7376da67099b1c",
+            "line": 48
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/spectrum_fft_tests.f90",
+            "sha256": "e150aac7d74d111733e5d4f21ce921c2bf0cce1ff12f67d534e3e8dfea1e8eca"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -3428,6 +5115,16 @@
         "parent": "D"
       },
       {
+        "code": "D9a",
+        "label": "Unconstrained",
+        "parent": "D9"
+      },
+      {
+        "code": "D9a1",
+        "label": "Least squares (L_2) solution",
+        "parent": "D9a"
+      },
+      {
         "code": "K",
         "label": "Approximation",
         "parent": null
@@ -3438,7 +5135,34 @@
         "parent": "K"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "lsmr-lsmr",
+        "package_id": "lsmr",
+        "revision": "12611e2299c5188441b097437695a66c85369e76",
+        "module": "lsmrModule",
+        "procedure": "lsmr",
+        "gams_codes": [
+          "D9a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Iterative least squares with forward and transpose matrix-product callbacks.",
+        "evidence": [
+          {
+            "path": "src/lsmrModule.f90",
+            "sha256": "6a1cb9be406e8e1a62350468a3b355509ca3240bc06543038ae6452a2dd9aeda",
+            "line": 175
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/lsmrTestModule.f90",
+            "sha256": "c0900f8ef4b781b0d27ac7b2e5896a0a6043d629638e541f2b8dfed336d63a09"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -3515,7 +5239,34 @@
         "parent": "F"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "nlesolver-fortran-nlesolver-type",
+        "package_id": "nlesolver-fortran",
+        "revision": "60f38870a25e6b448dd552f184aa2f8616fc8cb0",
+        "module": "nlesolver_module",
+        "procedure": "nlesolver_type%solve",
+        "gams_codes": [
+          "F2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "analytic or approximated Jacobian, configured at initialization",
+        "notes": "Newton/quasi-Newton nonlinear system solver; callback and matrix configuration matter.",
+        "evidence": [
+          {
+            "path": "src/nlesolver_module.F90",
+            "sha256": "2d8d89acd3e3a8bbc754c10270fa67b14bdb6c9f186f93a92e53c3ba54e8beb1",
+            "line": 97
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/sparse_test.f90",
+            "sha256": "656e876308293a4594bf5d3fbe0e6cfc3051e5a078aad16bfd6984fffa081bae"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -3661,7 +5412,29 @@
         "parent": "D"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "specialmatrices-solve",
+        "package_id": "specialmatrices",
+        "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+        "module": "SpecialMatrices",
+        "procedure": "solve (diagonal matrices)",
+        "gams_codes": [
+          "D2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Structured matrix solve; retain D2 because the generic includes several structures and arithmetic types.",
+        "evidence": [
+          {
+            "path": "src/Diagonal/specialmatrices_diagonal.f90",
+            "sha256": "c0f599c3489b4a1352da6ff5ecd1f545226b2de540411b67b7137ea59e84633f",
+            "line": 191
+          }
+        ],
+        "author_examples": []
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -3733,7 +5506,34 @@
         "parent": null
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "quaff-length-t",
+        "package_id": "quaff",
+        "revision": "f26da3d854045b79102d27bdb4e9f9b072444272",
+        "module": "quaff",
+        "procedure": "length_t, time_t arithmetic",
+        "gams_codes": [
+          "A"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Dimension-aware physical quantities and unit conversions; no narrower numerical algorithm is asserted.",
+        "evidence": [
+          {
+            "path": "src/quaff/length_m.f90",
+            "sha256": "bc26d880ca907c06a0e73f3e4efcc049bc55e26c7417bf8905a47501b5d91443",
+            "line": 60
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/length_test.f90",
+            "sha256": "4331d15a0e6546a356d1600fb9e73f73108ee52ff41fb3219e9698a9c6ba2567"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -3838,9 +5638,47 @@
         "code": "L",
         "label": "Statistics, probability",
         "parent": null
+      },
+      {
+        "code": "L13",
+        "label": "Covariance structure models",
+        "parent": "L"
+      },
+      {
+        "code": "L13b",
+        "label": "Principal components analysis",
+        "parent": "L13"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "forpca-pca",
+        "package_id": "forpca",
+        "revision": "d5d87badc4c25c647b3618f22560e712728d8165",
+        "module": "forpca",
+        "procedure": "tpca%pca (SVD mode)",
+        "gams_codes": [
+          "D6",
+          "L13b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "SVD-based principal components; the numerical decomposition and the statistical analysis are distinct classifications. Principal component analysis; the chosen SVD/eigen algorithm has its own linear-algebra classification.",
+        "evidence": [
+          {
+            "path": "src/forpca.f90",
+            "sha256": "5e37ae9319dff32ec9447f4a6702a03425800d793475b701b3791600eae5fb2f",
+            "line": 29
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test1.f90",
+            "sha256": "abecdc7baaa729877d748a765d74029c10fbf4fb8366d415c4da1502fd46ce46"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -4001,7 +5839,34 @@
         "parent": "D"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "lightkrylov-gmres",
+        "package_id": "lightkrylov",
+        "revision": "849fa1d2f29c14d0181315e76e731bff7f0b2d08",
+        "module": "LightKrylov",
+        "procedure": "gmres",
+        "gams_codes": [
+          "D2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "General linear-operator iterative solve; no matrix sparsity or definiteness is imposed by this record.",
+        "evidence": [
+          {
+            "path": "src/IterativeSolvers/IterativeSolvers.f90",
+            "sha256": "d70d788422278f3dee87f5e4dac7cc143721fdeefe5057a9791af4daa581f726",
+            "line": 379
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/Tests.f90",
+            "sha256": "06c1b1acb449ffd83684741776535e049a850596f6e2967daa53f217bd9d69bf"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -4050,9 +5915,41 @@
         "code": "F1",
         "label": "Single equation",
         "parent": "F"
+      },
+      {
+        "code": "F1a",
+        "label": "Polynomial",
+        "parent": "F1"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "polyroots-fortran-polyroots",
+        "package_id": "polyroots-fortran",
+        "revision": "165ed6fbec98cc23d9ed4784fbc4708adb5e0bcf",
+        "module": "polyroots_module",
+        "procedure": "polyroots",
+        "gams_codes": [
+          "F1a"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "All roots of a polynomial; different coefficient types/algorithms require overload-specific review.",
+        "evidence": [
+          {
+            "path": "src/polyroots_module.F90",
+            "sha256": "3a43efae1e310cf185b1d79e04fe72be29794128b4058ea33d2f60a579b872fb",
+            "line": 2676
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/polyroots_test.f90",
+            "sha256": "9d91d3e972d61e932a93666bd93447a1667bc33e200ca50bf77d3b75bddb6fed"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -4150,7 +6047,34 @@
         "parent": null
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "geodesic-fortran-inverse",
+        "package_id": "geodesic-fortran",
+        "revision": "b16eaf6622baabee7dfb75b99b78e42eaa878440",
+        "module": "geodesic_module",
+        "procedure": "inverse, direct",
+        "gams_codes": [
+          "P"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Direct and inverse geodesic calculations on an ellipsoid; P has no finer published children.",
+        "evidence": [
+          {
+            "path": "src/geodesic_module.F90",
+            "sha256": "147ba7ca6af754b10be54d10e96e051f1190d83c41cba408c491f2283a2e03d0",
+            "line": 556
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/direct_inverse_test.f90",
+            "sha256": "cdd346b924df45011e0f78aa866c466538d80fbd2045c37d3dbe84f698e2cc2e"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -4199,9 +6123,41 @@
         "code": "G2",
         "label": "Constrained",
         "parent": "G"
+      },
+      {
+        "code": "G2i",
+        "label": "Global solution to nonconvex problems",
+        "parent": "G2"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "simulated-annealing-simulated-annealing-type",
+        "package_id": "simulated-annealing",
+        "revision": "a2fa094d1ee39525c7e081cfd67866975e9e1dc5",
+        "module": "simulated_annealing_module",
+        "procedure": "simulated_annealing_type%optimize",
+        "gams_codes": [
+          "G2i"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "none",
+        "notes": "Stochastic bounded global search; convergence in a finite run is not guaranteed.",
+        "evidence": [
+          {
+            "path": "src/simulated_annealing.F90",
+            "sha256": "b9045931c29bb56d8213afa0c7308fdb2f417b79e36e20cc02f2b377c6804bfc",
+            "line": 59
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test.f90",
+            "sha256": "2388f5a4911ac89d6f4c8d6271053a89d801c43f57cfc39f84f68d82f03a2a32"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -4269,7 +6225,34 @@
         "parent": "L"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "odrpack95-odr",
+        "package_id": "odrpack95",
+        "revision": "12597b20812a76a4b702f985f6adc82632a18f60",
+        "module": "odrpack",
+        "procedure": "odr",
+        "gams_codes": [
+          "L8"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "user or finite-difference model derivatives",
+        "notes": "Orthogonal distance regression with errors in variables; no ordinary-least-squares claim.",
+        "evidence": [
+          {
+            "path": "src/odrpack.f90",
+            "sha256": "13c77aae2c6a2069804031b554597a8835e05007cfd260b2052d8d1bbe725bb6",
+            "line": 15
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example1.f90",
+            "sha256": "0039c28aa20db2f7b9550d325af9951e53829ac767312b5683ed486e0e6195cc"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -4303,12 +6286,80 @@
         "parent": "L"
       },
       {
+        "code": "L6a",
+        "label": "Univariate",
+        "parent": "L6"
+      },
+      {
+        "code": "L6a21",
+        "label": "Uniform (continuous, discrete), uniform order statistics",
+        "parent": "L6a"
+      },
+      {
         "code": "P",
         "label": "Computational geometry",
         "parent": null
+      },
+      {
+        "code": "R",
+        "label": "Service routines",
+        "parent": null
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "pointsets-arithmetic-spacing",
+        "package_id": "pointsets",
+        "revision": "a1c381777f893d656018366cfabfa4cc7531e4dd",
+        "module": "pointsets",
+        "procedure": "arithmetic_spacing, geometric_spacing",
+        "gams_codes": [
+          "R"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Deterministic grid generation; these procedures are not random-number generators.",
+        "evidence": [
+          {
+            "path": "src/pointsets.f90",
+            "sha256": "810138ff7cbc9f47e8d4bd3be04b7910914f46ff1ee04f3e8828350f4d57009c",
+            "line": 26
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/pointsets/test_pointsets.f90",
+            "sha256": "0234c57e0c3b578938c909e67d3ea1a24fc45e2873e85db7fed3522a51d7e837"
+          }
+        ]
+      },
+      {
+        "id": "pointsets-random-spacing",
+        "package_id": "pointsets",
+        "revision": "a1c381777f893d656018366cfabfa4cc7531e4dd",
+        "module": "pointsets",
+        "procedure": "random_spacing",
+        "gams_codes": [
+          "L6a21"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Uniform pseudorandom coordinates on an interval; the catalog demonstration uses deterministic spacing instead.",
+        "evidence": [
+          {
+            "path": "src/pointsets.f90",
+            "sha256": "810138ff7cbc9f47e8d4bd3be04b7910914f46ff1ee04f3e8828350f4d57009c",
+            "line": 88
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/pointsets/test_pointsets.f90",
+            "sha256": "0234c57e0c3b578938c909e67d3ea1a24fc45e2873e85db7fed3522a51d7e837"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -4354,9 +6405,51 @@
         "code": "I1",
         "label": "Ordinary differential equations (ODE''s)",
         "parent": "I"
+      },
+      {
+        "code": "I1a",
+        "label": "Initial value problems",
+        "parent": "I1"
+      },
+      {
+        "code": "I1a1",
+        "label": "General, nonstiff or mildly stiff",
+        "parent": "I1a"
+      },
+      {
+        "code": "I1a1a",
+        "label": "One-step methods (e.g., Runge-Kutta)",
+        "parent": "I1a1"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "flint-erk-class",
+        "package_id": "flint",
+        "revision": "b6322037cb751b11fa64ea66cf23173ae572fff6",
+        "module": "FLINT",
+        "procedure": "ERK_class%Integrate",
+        "gams_codes": [
+          "I1a1a"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "right-hand side only",
+        "notes": "Explicit adaptive Runge-Kutta initial-value integration with optional dense output.",
+        "evidence": [
+          {
+            "path": "src/ERK.f90",
+            "sha256": "ba706fe5cfbe60fcbb0d5e7a3c8eafd96a65018c0de5ae348c8b23a3216692fe",
+            "line": 72
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "tests/test_WP.f90",
+            "sha256": "35fa4f2caab02d289115d3ca33629c28e7872b733da781df352849c0645f09d4"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -4399,7 +6492,34 @@
         "parent": "N"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "fortran-string-to-real-str2real",
+        "package_id": "fortran-string-to-real",
+        "revision": "76fb9e4203c6ce73c31bed85b69af920893b033e",
+        "module": "str2real_m",
+        "procedure": "str2real",
+        "gams_codes": [
+          "A6"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Decimal/scientific notation to floating-point conversion, not a special-function approximation.",
+        "evidence": [
+          {
+            "path": "src/str2real_m.f90",
+            "sha256": "51dc7413c4bbc0d7e7150eaf80bc602c78f9070e3b592e69e32a03e87c6b6968",
+            "line": 27
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test.f90",
+            "sha256": "36a8b7201d8d013420c33d99492a0a2b87e6a550e76cb82bc2675a9a4ff2ce89"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -4449,7 +6569,34 @@
         "parent": "H"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "ad-dnsvm-get-dns",
+        "package_id": "ad_dnsvm",
+        "revision": "32db0bd122ce1dae290e9cf4c1fda4ab8f3de6f1",
+        "module": "ADdnSVM_m",
+        "procedure": "get_d1, get_d2, get_d3",
+        "gams_codes": [
+          "H1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "operator-overloaded forward automatic differentiation",
+        "notes": "Derivatives carried by automatic-differentiation types; not a finite-difference solver.",
+        "evidence": [
+          {
+            "path": "SRC/ADdnSVM/dnS_m.f90",
+            "sha256": "88cd7d3889d4e766612171de2e3a40479ec31dda55851c172ad3bdf9602812c2",
+            "line": 236
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "APP/Example_dnS.f90",
+            "sha256": "dd3fb84216fec3e11aeaef600b92aa6a994141a90fe4148eeb27497a198a4315"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -4484,9 +6631,56 @@
         "code": "H2",
         "label": "Quadrature (numerical evaluation of definite integrals)",
         "parent": "H"
+      },
+      {
+        "code": "H2b",
+        "label": "Multidimensional integrals",
+        "parent": "H2"
+      },
+      {
+        "code": "H2b1",
+        "label": "One or more hyper-rectangular regions (includes iterated integrals)",
+        "parent": "H2b"
+      },
+      {
+        "code": "H2b1a",
+        "label": "Integrand available via user-defined procedure",
+        "parent": "H2b1"
+      },
+      {
+        "code": "H2b1a2",
+        "label": "Nonautomatic",
+        "parent": "H2b1a"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "integrate-fortran-gauss-leg-nd",
+        "package_id": "integrate_fortran",
+        "revision": "5281426a7407aa8cef7f684ff8cf1f7e4a4df906",
+        "module": "gauss_leg_mod",
+        "procedure": "gauss_leg_nd",
+        "gams_codes": [
+          "H2b1a2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "none",
+        "notes": "Fixed-rule iterated Gauss-Legendre quadrature over rectangular domains.",
+        "evidence": [
+          {
+            "path": "src/gauss_leg.f90",
+            "sha256": "8e2d23d5dff50e3316b1f6364dd2a5e5e5c3fe190905185ab95d6520a148cbab",
+            "line": 34
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/check.f90",
+            "sha256": "16b5c33a4770e09b7bbca88282f22ded873a4613613b1f1bd91c4f6b2c543068"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -4525,9 +6719,46 @@
         "code": "L6",
         "label": "Random number generation",
         "parent": "L"
+      },
+      {
+        "code": "L6a",
+        "label": "Univariate",
+        "parent": "L6"
+      },
+      {
+        "code": "L6a21",
+        "label": "Uniform (continuous, discrete), uniform order statistics",
+        "parent": "L6a"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "rndgen-fortran-rnd",
+        "package_id": "rndgen-fortran",
+        "revision": "3fa553608324913eed6cb178b398e7f661e4f63a",
+        "module": "rndgen_mod",
+        "procedure": "rndgen%rnd",
+        "gams_codes": [
+          "L6a21"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Uniform pseudorandom generation with independently seeded states.",
+        "evidence": [
+          {
+            "path": "src/rndgen.f90",
+            "sha256": "30663beef8311da766de70db3453626aaa1deecd944127a100c2daa4eb52e5a5",
+            "line": 59
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/PL.f90",
+            "sha256": "cfd506aa3841afc95bb42f6117ca2d73932dcde2fd2a6f62544b80e7da4ce113"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -4568,12 +6799,44 @@
         "parent": "D"
       },
       {
+        "code": "D1b",
+        "label": "Elementary matrix operations",
+        "parent": "D1"
+      },
+      {
+        "code": "D1b6",
+        "label": "Multiplication",
+        "parent": "D1b"
+      },
+      {
         "code": "D2",
         "label": "Solution of systems of linear equations (including inversion, LU and related decompositions)",
         "parent": "D"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "blas-interface-blas-gemm",
+        "package_id": "blas-interface",
+        "revision": "552a2e6a41443843003216fedad6419af55f8e35",
+        "module": "blas",
+        "procedure": "blas_gemm",
+        "gams_codes": [
+          "D1b6"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Matrix-matrix multiplication interface to external BLAS, not a standalone BLAS implementation.",
+        "evidence": [
+          {
+            "path": "src/blas/level3.f90",
+            "sha256": "7cf3eb85c84eb4bc3b3594e67ce8a6b31233b3afb96aed96eca8b4ed7812d97b",
+            "line": 35
+          }
+        ],
+        "author_examples": []
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -4609,9 +6872,77 @@
         "code": "D1",
         "label": "Elementary vector and matrix operations",
         "parent": "D"
+      },
+      {
+        "code": "D1b",
+        "label": "Elementary matrix operations",
+        "parent": "D1"
+      },
+      {
+        "code": "D1b4",
+        "label": "Multiplication by vector",
+        "parent": "D1b"
+      },
+      {
+        "code": "D1b9",
+        "label": "Storage mode conversion",
+        "parent": "D1b"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "fsparse-matvec",
+        "package_id": "fsparse",
+        "revision": "fa8233420ab0110bb688d565879164386521a8fc",
+        "module": "fsparse",
+        "procedure": "matvec",
+        "gams_codes": [
+          "D1b4"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Sparse matrix-vector product; storage conversion is a distinct API.",
+        "evidence": [
+          {
+            "path": "src/matvec/fsparse_matvec.f90",
+            "sha256": "f2da533f16950e8197396b487a6707e010f82702ce429573b4017e47a6a229e8",
+            "line": 14
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_matrices.f90",
+            "sha256": "df71f7ee49f0246207b77243bdf32c1e10642908379a9e303a6a926c3d4a4c1b"
+          }
+        ]
+      },
+      {
+        "id": "fsparse-dense2coo",
+        "package_id": "fsparse",
+        "revision": "fa8233420ab0110bb688d565879164386521a8fc",
+        "module": "fsparse",
+        "procedure": "dense2coo",
+        "gams_codes": [
+          "D1b9"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Converts dense storage to coordinate sparse storage; this does not solve a system.",
+        "evidence": [
+          {
+            "path": "src/conversion/fsparse_conversions.f90",
+            "sha256": "eedaa24f37fb1dca8e86361921abad3ebde355ab8855f92350fdc3d54eea650d",
+            "line": 17
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_matrices.f90",
+            "sha256": "df71f7ee49f0246207b77243bdf32c1e10642908379a9e303a6a926c3d4a4c1b"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -4646,7 +6977,34 @@
         "parent": null
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "geompack-r8tris2",
+        "package_id": "geompack",
+        "revision": "b7a327ca3a13507859c42dd6fba50af0bb5d5c6a",
+        "module": "geompack",
+        "procedure": "r8tris2",
+        "gams_codes": [
+          "P"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Delaunay triangulation of planar point coordinates.",
+        "evidence": [
+          {
+            "path": "src/r8tris2.f90",
+            "sha256": "666b6632d06df0c5aff082caf53caa78078b90d45bcc30657a5cb2521d553a74",
+            "line": 1
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/geompack_test_routines.f90",
+            "sha256": "10c07fdf84fdb03477904aa7e29852b0e009f0ef2293fac657e0e3645b02a4a8"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -4678,9 +7036,46 @@
         "code": "D2",
         "label": "Solution of systems of linear equations (including inversion, LU and related decompositions)",
         "parent": "D"
+      },
+      {
+        "code": "D2b",
+        "label": "Real symmetric matrices",
+        "parent": "D2"
+      },
+      {
+        "code": "D2b4",
+        "label": "Sparse",
+        "parent": "D2b"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "minres-minres-solver",
+        "package_id": "minres",
+        "revision": "c7bb4c7a0ddf13729d3556878ccc688a208a052a",
+        "module": "minres",
+        "procedure": "minres_solver",
+        "gams_codes": [
+          "D2b4"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "MINRES for real symmetric sparse/operator systems, including indefinite systems.",
+        "evidence": [
+          {
+            "path": "src/minres/minres_mod.f90",
+            "sha256": "eb0c478c0cdc848be7759da199d29712d1679c36486b53ffd44a6b3d9665c03c",
+            "line": 40
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/minres_test.f90",
+            "sha256": "bcf9d77d6bb70eef605e41a61e52f1ee6dd63c6d141c0ec5c2b7ceed200cdb32"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -4726,7 +7121,34 @@
         "parent": "H"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "fordiff-derivative",
+        "package_id": "fordiff",
+        "revision": "f1a1099a590107645314f1388c432624ff97b9bc",
+        "module": "fordiff",
+        "procedure": "derivative",
+        "gams_codes": [
+          "H1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "function values; finite differences or complex step",
+        "notes": "Numerical differentiation; the selected method controls callback requirements.",
+        "evidence": [
+          {
+            "path": "src/fordiff.F90",
+            "sha256": "373006ca8ab63222f88daa82344d8da12c8895f316801da4dc63f8116121f5b7",
+            "line": 26
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/demo1.f90",
+            "sha256": "cdaf38f6bdc6794d4bc282ea3e913bc027b5da194f0f422f8dd0e4f207154dd7"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -4761,9 +7183,36 @@
         "code": "I1",
         "label": "Ordinary differential equations (ODE''s)",
         "parent": "I"
+      },
+      {
+        "code": "I1b",
+        "label": "Multipoint boundary value problems",
+        "parent": "I1"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "twopnt-solve",
+        "package_id": "twopnt",
+        "revision": "4ce477215f84a88d879f0ca3937cab9bedfb7762",
+        "module": "twopnt_core",
+        "procedure": "TwoPntBVProblem%run",
+        "gams_codes": [
+          "I1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "problem residual and configured Jacobian handling",
+        "notes": "Adaptive boundary-value solution; retain I1b rather than infer linearity for all supported problems.",
+        "evidence": [
+          {
+            "path": "src/twopnt_core.f90",
+            "sha256": "830a05ba3f3a7c444645826d03dbac8f793652d3318c9cd7752ed6a152dc79fd",
+            "line": 357
+          }
+        ],
+        "author_examples": []
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -4804,12 +7253,75 @@
         "parent": "C"
       },
       {
+        "code": "C7a",
+        "label": "Gamma, log gamma, reciprocal gamma",
+        "parent": "C7"
+      },
+      {
+        "code": "C7c",
+        "label": "Psi function",
+        "parent": "C7"
+      },
+      {
         "code": "C10",
         "label": "Bessel functions",
         "parent": "C"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "specfunc-fullerton-fgamma",
+        "package_id": "specfunc-fullerton",
+        "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+        "module": "fullerton_gamma",
+        "procedure": "fgamma, digamma",
+        "gams_codes": [
+          "C7a"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Gamma evaluation; digamma has a separate C7c classification.",
+        "evidence": [
+          {
+            "path": "src/fullerton_gamma.f90",
+            "sha256": "7609fcd9f17f20a9b66a562a64e2244c48d92e6ef3474261b732c13e24397a05",
+            "line": 14
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/gamma/test_gamma.f90",
+            "sha256": "49a48e63b10b05c318c6696e7b050a808ba5f530117ad518a6b398348d66e1e1"
+          }
+        ]
+      },
+      {
+        "id": "specfunc-fullerton-digamma",
+        "package_id": "specfunc-fullerton",
+        "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+        "module": "fullerton_gamma",
+        "procedure": "digamma",
+        "gams_codes": [
+          "C7c"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Psi/digamma function, distinct from ordinary gamma evaluation.",
+        "evidence": [
+          {
+            "path": "src/fullerton_gamma.f90",
+            "sha256": "7609fcd9f17f20a9b66a562a64e2244c48d92e6ef3474261b732c13e24397a05",
+            "line": 42
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/gamma/test_gamma.f90",
+            "sha256": "49a48e63b10b05c318c6696e7b050a808ba5f530117ad518a6b398348d66e1e1"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -4847,7 +7359,34 @@
         "parent": "L"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "lib-statistics-logistic",
+        "package_id": "lib_statistics",
+        "revision": "056740db259fc3599dca0d8858f04e94845a6769",
+        "module": "Logistic_Regression",
+        "procedure": "logistic",
+        "gams_codes": [
+          "L8"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Logistic regression of binomial data, not ordinary linear least squares.",
+        "evidence": [
+          {
+            "path": "src/mod_logistic.f90",
+            "sha256": "40e89b78f4a1296b8f976b8968d4d1112c87a82871ccc5970decd0a4b3181da5",
+            "line": 36
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "tests/t_lgmc.f90",
+            "sha256": "4b4e4f6e3354149f8aaa2dc791b4c8cb1fcfa5e9accf7a96bdcc3e779f4023d4"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -4883,7 +7422,34 @@
         "parent": null
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "astro-fortran-g2icrs",
+        "package_id": "astro-fortran",
+        "revision": "9d61091d225a1b314ff8170153b06a8691aba283",
+        "module": "astro_module",
+        "procedure": "G2ICRS, ICRS2G",
+        "gams_codes": [
+          "P"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Galactic/equatorial coordinate transformations; no detailed astronomy classification is invented.",
+        "evidence": [
+          {
+            "path": "src/astro_module.f90",
+            "sha256": "91f48eb9a00257d59ead888d7ac6d1ba1d48529aeb19089b97d68d6d5328c6fb",
+            "line": 12646
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/t_sofa_f.f90",
+            "sha256": "152e548f5885a19c10f0c6f612d758df86b754e3b328238a72aa83a57cc69d13"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -5101,9 +7667,46 @@
         "code": "I1",
         "label": "Ordinary differential equations (ODE''s)",
         "parent": "I"
+      },
+      {
+        "code": "I1a",
+        "label": "Initial value problems",
+        "parent": "I1"
+      },
+      {
+        "code": "I1a2",
+        "label": "Stiff and mixed algebraic- differential equations",
+        "parent": "I1a"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "daskr-ddaskr",
+        "package_id": "daskr",
+        "revision": "b43533edc5d6900088a846d802e3a86d0f9a06ad",
+        "module": "external",
+        "procedure": "ddaskr",
+        "gams_codes": [
+          "I1a2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "optional user Jacobian/preconditioner callbacks",
+        "notes": "Differential-algebraic initial-value integration with Newton/Krylov support.",
+        "evidence": [
+          {
+            "path": "src/ddaskr.f",
+            "sha256": "ec35cf263c50fa87c5a2b97805f1700af58fc32eb7005bc97f8c9282a12b96ca",
+            "line": 1
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "examples/web/dweb.f",
+            "sha256": "81a272ce1fe88eb4dd697d755086b9232243163087e73dcef425cc6e809e4817"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -5225,7 +7828,34 @@
         "parent": "N"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "ryu-fortran-d2shortest",
+        "package_id": "ryu_fortran",
+        "revision": "6c508144398d58143618c5598d816f20c40ac053",
+        "module": "ryu",
+        "procedure": "d2shortest",
+        "gams_codes": [
+          "A6"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Shortest round-tripping decimal representation of binary floating-point data.",
+        "evidence": [
+          {
+            "path": "src/real64_to_shortest.f90",
+            "sha256": "984a49e1782e02c2786e40b6e1516956744c71303e881c0c7e3a367fb2dc6e9e",
+            "line": 640
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_d2shortest/test_d2shortest.f90",
+            "sha256": "1b0748c34b29fa18deffe925ee73b410d8af2a2f8eadfa2676479ddbce9333c1"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -5522,7 +8152,29 @@
         "parent": "K"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "fastconv-conv1d-t",
+        "package_id": "fastconv",
+        "revision": "3aaa2432a291df07a10fc5dade0dcd66d7a06dd0",
+        "module": "conv1d_m",
+        "procedure": "conv1d_t%apply",
+        "gams_codes": [
+          "J2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "One-dimensional discrete convolution with a supplied kernel.",
+        "evidence": [
+          {
+            "path": "src/conv1d/conv1d.f90",
+            "sha256": "e3a02572cd64c091e84449265336082eb56a5ccff0f51049fc178c8e2249308d",
+            "line": 139
+          }
+        ],
+        "author_examples": []
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -5565,9 +8217,41 @@
         "code": "H2",
         "label": "Quadrature (numerical evaluation of definite integrals)",
         "parent": "H"
+      },
+      {
+        "code": "H2c",
+        "label": "Service routines (e.g., compute weights and nodes for quadrature formulas)",
+        "parent": "H2"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "gaussjacobiquad-gauss-jacobi",
+        "package_id": "gaussjacobiquad",
+        "revision": "ffb970c68eea0b39b140f80f788c8994547d8bfb",
+        "module": "GaussJacobiQuad",
+        "procedure": "gauss_jacobi",
+        "gams_codes": [
+          "H2c"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Computes Gauss-Jacobi nodes and weights; this procedure does not itself integrate a callback.",
+        "evidence": [
+          {
+            "path": "src/GaussJacobiQuad.f90",
+            "sha256": "1b181131642e42d83fe4ef7c0f236790827b1640a8bdfe46a4a986c5979d9ba2",
+            "line": 45
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "app/gjp_quad.f90",
+            "sha256": "1df551be132ec6989873bb8a8e2662be4f2eb83e58d7b1083ef6058c24da87f0"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -5607,9 +8291,46 @@
         "code": "J1",
         "label": "Trigonometric transforms including fast Fourier transforms",
         "parent": "J"
+      },
+      {
+        "code": "J1a",
+        "label": "One-dimensional",
+        "parent": "J1"
+      },
+      {
+        "code": "J1a2",
+        "label": "Complex",
+        "parent": "J1a"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "kissfft-f-perform",
+        "package_id": "kissfft-f",
+        "revision": "b89c5e1d0aff9993db79200fc94a467948ff3923",
+        "module": "kissfft",
+        "procedure": "fft%perform",
+        "gams_codes": [
+          "J1a2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Complex one-dimensional FFT through KISS FFT bindings.",
+        "evidence": [
+          {
+            "path": "src/kissfft-f.f90",
+            "sha256": "b8284decd81fc5adc335c127c055f0280b941a6cba72945b86e8e4664bb48a26",
+            "line": 11
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/fft.f90",
+            "sha256": "d1caeddf7e4250ae67224e0ffe79c5cd3b091cff2023654467378eae8a18f117"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -5697,7 +8418,29 @@
         "parent": null
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "metis-fpm-metis-partgraphkway",
+        "package_id": "metis-fpm",
+        "revision": "5db1dc1e46fd819a53a86fe2170eaf5464bf17c7",
+        "module": "metis_c_interface",
+        "procedure": "METIS_PartGraphKway",
+        "gams_codes": [
+          "P"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Graph partitioning through an external C library; retain broad graph-algorithm classification.",
+        "evidence": [
+          {
+            "path": "src/metis_c_interface.F90",
+            "sha256": "9332525a4c42db8942fc28f1cdb476d6d1bfa5c7204a969e9f3a43da452580d3",
+            "line": 218
+          }
+        ],
+        "author_examples": []
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -5740,7 +8483,34 @@
         "parent": "N"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "m-calculator-dnum0",
+        "package_id": "m_calculator",
+        "revision": "b6bbc08f81eb158a6908a42016059815fe72217d",
+        "module": "M_calculator",
+        "procedure": "dnum0",
+        "gams_codes": [
+          "N3"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Evaluates numeric expressions in strings; not symbolic computation.",
+        "evidence": [
+          {
+            "path": "src/M_calculator.f90",
+            "sha256": "82b9e626ce3de502daba907258f0cb0b0dda33afc65323df145aec718c375fe9",
+            "line": 3021
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/demo_dnum0.f90",
+            "sha256": "9d9022a7e745e248f0ed7700f679bf87a2e8ac7e0547c0f56bfa4a9ceae65d61"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -5964,6 +8734,16 @@
         "parent": "D"
       },
       {
+        "code": "D2a",
+        "label": "Real nonsymmetric matrices",
+        "parent": "D2"
+      },
+      {
+        "code": "D2a1",
+        "label": "General",
+        "parent": "D2a"
+      },
+      {
         "code": "D3",
         "label": "Determinants",
         "parent": "D"
@@ -5972,6 +8752,16 @@
         "code": "D4",
         "label": "Eigenvalues, eigenvectors",
         "parent": "D"
+      },
+      {
+        "code": "D4a",
+        "label": "Ordinary eigenvalue problems (Ax = lambda x)",
+        "parent": "D4"
+      },
+      {
+        "code": "D4a1",
+        "label": "Real symmetric",
+        "parent": "D4a"
       },
       {
         "code": "D5",
@@ -5987,9 +8777,145 @@
         "code": "D9",
         "label": "Singular, overdetermined or underdetermined systems of linear equations, generalized inverses",
         "parent": "D"
+      },
+      {
+        "code": "D9a",
+        "label": "Unconstrained",
+        "parent": "D9"
+      },
+      {
+        "code": "D9a1",
+        "label": "Least squares (L_2) solution",
+        "parent": "D9a"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "linalg-lu-factor",
+        "package_id": "linalg",
+        "revision": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+        "module": "linalg",
+        "procedure": "lu_factor, solve_lu",
+        "gams_codes": [
+          "D2a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Dense real LU factorization and solution; other generic overloads and algorithms are not covered by this one mapping.",
+        "evidence": [
+          {
+            "path": "src/linalg_lu.f90",
+            "sha256": "94805cf6433a3b6da3ddc91f2650a3b6a018a7c5cf92cf0ea07259aec9e30219",
+            "line": 18
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "examples/linalg_lu_example.f90",
+            "sha256": "6c0079778214da05570172d9e8b835f2f65cbe587840cc4b529220422de7210a"
+          }
+        ]
+      },
+      {
+        "id": "linalg-eigen",
+        "package_id": "linalg",
+        "revision": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+        "module": "linalg",
+        "procedure": "eigen (real symmetric overload)",
+        "gams_codes": [
+          "D4a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Real symmetric standard eigenproblem; generalized and complex overloads require separate classification.",
+        "evidence": [
+          {
+            "path": "src/linalg_eigen.f90",
+            "sha256": "473dd46f94f8e2cf410f9b74ccd4dc7cd1be07f1d64d6f4abf6afe8d0dcde15e",
+            "line": 17
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "tests/test_eigen.f90",
+            "sha256": "6c169ba8530b93f636f1e15c38645f985b41927f688e5231c7b858337383dcb7"
+          }
+        ]
+      },
+      {
+        "id": "linalg-qr-factor",
+        "package_id": "linalg",
+        "revision": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+        "module": "linalg",
+        "procedure": "qr_factor",
+        "gams_codes": [
+          "D5"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "QR factorization.",
+        "evidence": [
+          {
+            "path": "src/linalg_qr.f90",
+            "sha256": "1a733264f5667eaed0399d55cb8ff6ac86823a6f0cd06f7f7f7c713afbbda162",
+            "line": 20
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "examples/linalg_qr_example.f90",
+            "sha256": "358223450ea4c81c235a6060c4810725b9f09625ec1d17a0893a96a58c1940f0"
+          }
+        ]
+      },
+      {
+        "id": "linalg-svd",
+        "package_id": "linalg",
+        "revision": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+        "module": "linalg",
+        "procedure": "svd",
+        "gams_codes": [
+          "D6"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Singular value decomposition.",
+        "evidence": [
+          {
+            "path": "src/linalg_svd.f90",
+            "sha256": "988ab8f129c2edbf6b691c8c0f4c40b6aeb756d8a99f6e9a31414d04006e1ce9",
+            "line": 12
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "tests/test_svd.f90",
+            "sha256": "4abb9d9243a127c17cef29ad305096df6c82d57cf3f84d2c63f4af060b4e46ba"
+          }
+        ]
+      },
+      {
+        "id": "linalg-solve-least-squares",
+        "package_id": "linalg",
+        "revision": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+        "module": "linalg",
+        "procedure": "solve_least_squares",
+        "gams_codes": [
+          "D9a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Unconstrained dense linear least-squares solution.",
+        "evidence": [
+          {
+            "path": "src/linalg_least_squares.f90",
+            "sha256": "525b2de0e9ab0316c914baa9534efabce0a5dbc4f88fef763caad1db7409fbb1",
+            "line": 14
+          }
+        ],
+        "author_examples": []
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -6051,6 +8977,11 @@
         "code": "F1",
         "label": "Single equation",
         "parent": "F"
+      },
+      {
+        "code": "F1b",
+        "label": "Nonpolynomial",
+        "parent": "F1"
       },
       {
         "code": "F2",
@@ -6166,6 +9097,58 @@
             "sha256": "5b3c6e6e1a98864ddc12d1faca3132372f9a2958ba88cf340dc2af5dfcfc7d35"
           }
         ]
+      },
+      {
+        "id": "nonlin-newton-solver",
+        "package_id": "nonlin",
+        "revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+        "module": "nonlin",
+        "procedure": "newton_solver%solve",
+        "gams_codes": [
+          "F2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "optional user Jacobian; finite-difference fallback",
+        "notes": "Newton solution of nonlinear systems through vecfcn_helper.",
+        "evidence": [
+          {
+            "path": "src/nonlin_solve.f90",
+            "sha256": "62139eb882d355d4b3f34ee7fe9a261676623c793814b730ca8e7925976d4130",
+            "line": 83
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "examples/nonlin_newton_example.f90",
+            "sha256": "5bea43535929c2ef5364b3e02df8504c0c60d30899f4815a57f23f016ffbcaa1"
+          }
+        ]
+      },
+      {
+        "id": "nonlin-brent-solver",
+        "package_id": "nonlin",
+        "revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+        "module": "nonlin",
+        "procedure": "brent_solver%solve",
+        "gams_codes": [
+          "F1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "none",
+        "notes": "Scalar bracketing root finding; not Brent minimization.",
+        "evidence": [
+          {
+            "path": "src/nonlin_solve.f90",
+            "sha256": "62139eb882d355d4b3f34ee7fe9a261676623c793814b730ca8e7925976d4130",
+            "line": 92
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "examples/nonlin_brent_example.f90",
+            "sha256": "5bba1305f0ef0d684080bf85e20e2db41f8baff042b525afa001e944aa6a82dc"
+          }
+        ]
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -6207,7 +9190,34 @@
         "parent": null
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "maptran3d-geodetic2ecef",
+        "package_id": "maptran3d",
+        "revision": "4ccc2479ae79a58b34d8e491013cfa2f60f65867",
+        "module": "maptran",
+        "procedure": "geodetic2ecef, ecef2geodetic",
+        "gams_codes": [
+          "P"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Geodetic and Earth-centered Cartesian coordinate transformations.",
+        "evidence": [
+          {
+            "path": "src/ecef.f90",
+            "sha256": "e5a93638df2f5e7a7d335d3632f78ace4d010cf0c70546077efe472fd6321408",
+            "line": 80
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_mod.f90",
+            "sha256": "c9048b7ccd6ba0886177b7f8691783985f096e265e10dfde9c9468b985928dab"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -6367,9 +9377,46 @@
         "code": "L6",
         "label": "Random number generation",
         "parent": "L"
+      },
+      {
+        "code": "L6a",
+        "label": "Univariate",
+        "parent": "L6"
+      },
+      {
+        "code": "L6a21",
+        "label": "Uniform (continuous, discrete), uniform order statistics",
+        "parent": "L6a"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "rngff-linear-congruential-t",
+        "package_id": "rngff",
+        "revision": "8eccd1479f35159922a85db25a39bcd58a0c3faa",
+        "module": "rngff",
+        "procedure": "linear_congruential_t%next",
+        "gams_codes": [
+          "L6a21"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Uniform values from an explicitly selected linear congruential generator.",
+        "evidence": [
+          {
+            "path": "src/rngff/linear_congruential_m.f90",
+            "sha256": "b630229f4e5e50ae2cd5010d5c3f82878a2dea6088a217f7e9ee25fb160e30f5",
+            "line": 14
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/lcg_test.f90",
+            "sha256": "06ea12c4e2dc7e51f273043b36c6085965f0fe3e495ebc4bc6144c85fb29f9c7"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -6574,9 +9621,51 @@
         "code": "I1",
         "label": "Ordinary differential equations (ODE''s)",
         "parent": "I"
+      },
+      {
+        "code": "I1a",
+        "label": "Initial value problems",
+        "parent": "I1"
+      },
+      {
+        "code": "I1a1",
+        "label": "General, nonstiff or mildly stiff",
+        "parent": "I1a"
+      },
+      {
+        "code": "I1a1a",
+        "label": "One-step methods (e.g., Runge-Kutta)",
+        "parent": "I1a1"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "diffeq-runge-kutta-45",
+        "package_id": "diffeq",
+        "revision": "989b320179c23aaff4bfe72994c90e9034f50c74",
+        "module": "diffeq",
+        "procedure": "runge_kutta_45%solve",
+        "gams_codes": [
+          "I1a1a"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "right-hand side only",
+        "notes": "Explicit adaptive Runge-Kutta initial-value integration; implicit methods are separate types.",
+        "evidence": [
+          {
+            "path": "src/singlestep/explicit/diffeq_rk45.f90",
+            "sha256": "d3b7b2711968c1d14fbb9c45b9d7df14c1402557d61a540d041c43f0e101dc37",
+            "line": 32
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "examples/rk45_example.f90",
+            "sha256": "a8c701257c1f3bbf4a05a7379e0e8e2461ea04e8e7680ffafb489358ded97359"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -6626,7 +9715,34 @@
         "parent": "L"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "fjsample-jackerror",
+        "package_id": "fjsample",
+        "revision": "8563d2653d1a9d80a355b2064f4b153559698915",
+        "module": "FJsample",
+        "procedure": "Complement, jackError",
+        "gams_codes": [
+          "L4"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Jackknife resampling uncertainty estimates; keep broad data-analysis class pending a suitable finer match.",
+        "evidence": [
+          {
+            "path": "src/jack.f90",
+            "sha256": "9796190eb7c77a7b7cf8d0341ba9362b8f9ac58d78d4f89334f1cbffc1600d8e",
+            "line": 21
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "app/main.f90",
+            "sha256": "fdf0bee20cc5fc242153abdb5a881ab163b76004061dc1416ff55f87a34623b8"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -6664,9 +9780,66 @@
         "code": "G2",
         "label": "Constrained",
         "parent": "G"
+      },
+      {
+        "code": "G2h",
+        "label": "General nonlinear programming",
+        "parent": "G2"
+      },
+      {
+        "code": "G2h3",
+        "label": "Nonlinear constraints",
+        "parent": "G2h"
+      },
+      {
+        "code": "G2h3b",
+        "label": "Equality and inequality constraints",
+        "parent": "G2h3"
+      },
+      {
+        "code": "G2h3b1",
+        "label": "Smooth function and constraints",
+        "parent": "G2h3b"
+      },
+      {
+        "code": "G2h3b1b",
+        "label": "User provides first derivatives of function and constraints",
+        "parent": "G2h3b1"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "conmin-conmin-class",
+        "package_id": "conmin",
+        "revision": "201f3b29f023baf7bef13ad8f49b906ffb1c7757",
+        "module": "conmin_module",
+        "procedure": "conmin_class%solve",
+        "gams_codes": [
+          "G2h3b1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "configured objective/constraint gradients or internal differences",
+        "notes": "Feasible-directions constrained optimization; analytic-gradient configuration only for this detailed class. Detailed analytic classification requires NFDG=1; NFDG=0 estimates all gradients.",
+        "evidence": [
+          {
+            "path": "src/conmin.F90",
+            "sha256": "c15c117b0afcd10355f7abf8c9d3e123edc5d3a8fed8a94f90de6ec8c21214a0",
+            "line": 46
+          },
+          {
+            "path": "src/conmin.F90",
+            "sha256": "c15c117b0afcd10355f7abf8c9d3e123edc5d3a8fed8a94f90de6ec8c21214a0",
+            "line": 160
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/TP37.f90",
+            "sha256": "516506566d0a246976e2114f641833a3fac8da964d84674aae6dd5f0e83b2d18"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -6727,9 +9900,41 @@
         "code": "G2",
         "label": "Constrained",
         "parent": "G"
+      },
+      {
+        "code": "G2i",
+        "label": "Global solution to nonconvex problems",
+        "parent": "G2"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "opti-optimizer",
+        "package_id": "opti",
+        "revision": "6fb22db21bd2338e00690ff3706be61a1f101101",
+        "module": "psomod",
+        "procedure": "optimizer",
+        "gams_codes": [
+          "G2i"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "none",
+        "notes": "Bounded particle-swarm global search; no global-optimum guarantee.",
+        "evidence": [
+          {
+            "path": "src/particle_swarm.f90",
+            "sha256": "99dbf107e8cdd418b72892545e7064b28fd67570174d072646a16e80ef1ed2a9",
+            "line": 57
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/check.f90",
+            "sha256": "481415e61d3ac9944fb6e0bbb7c0dc8c309f0a2d664fb8052c8ce813d9507d21"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -6789,9 +9994,41 @@
         "code": "E1",
         "label": "Univariate data (curve fitting)",
         "parent": "E"
+      },
+      {
+        "code": "E1a",
+        "label": "Polynomial splines (piecewise polynomials)",
+        "parent": "E1"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "interpolation-interp1",
+        "package_id": "interpolation",
+        "revision": "bf6d22ad931855d510dcfb5bdd6870cce8924b22",
+        "module": "interpolation",
+        "procedure": "interp1",
+        "gams_codes": [
+          "E1a"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Piecewise linear/PCHIP interpolation of one-dimensional tabulated data.",
+        "evidence": [
+          {
+            "path": "src/interpolation.f90",
+            "sha256": "a276bfb926b71441695ec711ddf4bf8c45cd606960aa18ee768eae4b6ccd1422",
+            "line": 14
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/interp1_test.f90",
+            "sha256": "872afc945dadf8933902cd3c90c61439202735df3f6e614b0f0c343731c430c9"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -6869,9 +10106,62 @@
         "code": "C4",
         "label": "Elementary transcendental functions",
         "parent": "C"
+      },
+      {
+        "code": "C4b",
+        "label": "Exponential, logarithmic",
+        "parent": "C4"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "fastmath-fexp",
+        "package_id": "fastmath",
+        "revision": "ad0f14c455205c0e6c1b9300cd7f333fafb750e2",
+        "module": "fast_exp",
+        "procedure": "fexp; fast_log / flog_quintic",
+        "gams_codes": [
+          "C4b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Approximate exponential/logarithm evaluation; accuracy differs from standard intrinsics.",
+        "evidence": [
+          {
+            "path": "src/fast_exp.f90",
+            "sha256": "0f54b553646fc0885190e544826a71556499f48be669e75985a074ef7fef07f0",
+            "line": 76
+          }
+        ],
+        "author_examples": []
+      },
+      {
+        "id": "fastmath-frsqrt",
+        "package_id": "fastmath",
+        "revision": "ad0f14c455205c0e6c1b9300cd7f333fafb750e2",
+        "module": "fast_rsqrt",
+        "procedure": "frsqrt",
+        "gams_codes": [
+          "C2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Approximate reciprocal square root, with documented accuracy tradeoffs.",
+        "evidence": [
+          {
+            "path": "src/fast_rsqrt.f90",
+            "sha256": "54bf8c270c3fbd9bc30abf3d20b7ef953db6cd9459d1e56c5e97a73f3a03653b",
+            "line": 55
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test.f90",
+            "sha256": "6d8276ab02a8f82f9795c7a9abe4e5e89e51f33b26cf081dcb68480eefc3141a"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -6913,12 +10203,54 @@
         "parent": "L"
       },
       {
+        "code": "L10a",
+        "label": "Univariate (search also classes L3a6 and L3a7)",
+        "parent": "L10"
+      },
+      {
+        "code": "L10a2",
+        "label": "Time domain analysis",
+        "parent": "L10a"
+      },
+      {
+        "code": "L10a2a",
+        "label": "Summary statistics",
+        "parent": "L10a2"
+      },
+      {
         "code": "L11",
         "label": "Correlation analysis",
         "parent": "L"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "fortsa-acvf",
+        "package_id": "fortsa",
+        "revision": "d31da12286617ab82e06e9fa0a6f20d11778581c",
+        "module": "fortsa_stats_m",
+        "procedure": "acvf, acvf2acf",
+        "gams_codes": [
+          "L10a2a"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Sample autocovariances and autocorrelations of a single time series; ARIMA fitting is a different API.",
+        "evidence": [
+          {
+            "path": "src/fortsa_stats.f90",
+            "sha256": "fce5c670872c3a7b1c92e9aabd7bb7c35a036d7be826b19a3569cd37c8b15c0a",
+            "line": 18
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/stats/test_stats.f90",
+            "sha256": "22f40ddc4af069a795cdb0dec9148e35028d3949f3d25ffd949cc10657e4bc1d"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -6986,7 +10318,34 @@
         "parent": null
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "fortran-flann-knn-search",
+        "package_id": "fortran-flann",
+        "revision": "35370c851602d954d1d01d10c9c14ff82dd96496",
+        "module": "flann",
+        "procedure": "flann_index%knn_search",
+        "gams_codes": [
+          "N5"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Nearest-neighbor search via FLANN; not a geometric PDE solver.",
+        "evidence": [
+          {
+            "path": "src/flann.f90",
+            "sha256": "6c2fb5c9d062de09209f6b47179a1888859b142f8c5e2a0323f83511383f0005",
+            "line": 91
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/flann_demo.f90",
+            "sha256": "fc9370e98332f5fdad8a22ab8b54b12a014667e1c7af35e57bb82cae791b9e63"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -7139,9 +10498,46 @@
         "code": "I1",
         "label": "Ordinary differential equations (ODE''s)",
         "parent": "I"
+      },
+      {
+        "code": "I1a",
+        "label": "Initial value problems",
+        "parent": "I1"
+      },
+      {
+        "code": "I1a2",
+        "label": "Stiff and mixed algebraic- differential equations",
+        "parent": "I1a"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "odepack-lsoda-class",
+        "package_id": "odepack",
+        "revision": "d5db96093dc14fff54e10575cc586fa85392b078",
+        "module": "odepack_mod",
+        "procedure": "lsoda_class%integrate",
+        "gams_codes": [
+          "I1a2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "optional user Jacobian; internal approximation supported",
+        "notes": "Automatic switching between Adams and BDF; classify stiff capability here without claiming all ODEPACK methods.",
+        "evidence": [
+          {
+            "path": "src/odepack_mod.f90",
+            "sha256": "9d2d19c4a9f6392a9ca6589d3b4e25b032bec4f9481e38bcf3102697ad6b3e8e",
+            "line": 13
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/benchmark.f90",
+            "sha256": "6323b762eb8cb063e9fa1e6fd0a35a71e96b53d76777388602044c9616409fe4"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -7183,9 +10579,51 @@
         "code": "D2",
         "label": "Solution of systems of linear equations (including inversion, LU and related decompositions)",
         "parent": "D"
+      },
+      {
+        "code": "D2b",
+        "label": "Real symmetric matrices",
+        "parent": "D2"
+      },
+      {
+        "code": "D2b1",
+        "label": "General",
+        "parent": "D2b"
+      },
+      {
+        "code": "D2b1b",
+        "label": "Positive definite",
+        "parent": "D2b1"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "kiss-cg-dense",
+        "package_id": "kiss",
+        "revision": "55f0f7ccb1601a0628a17928b5b6b79f61da2892",
+        "module": "kiss",
+        "procedure": "cg_dense",
+        "gams_codes": [
+          "D2b1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Conjugate gradient for real symmetric positive-definite dense systems.",
+        "evidence": [
+          {
+            "path": "src/kiss.F90",
+            "sha256": "2e6ac0f955f8ecd89bc387a95d54704baf56a4be4992cbcbc8d3d41295dc8584",
+            "line": 147
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_kiss.f90",
+            "sha256": "e368e8d682091dcd641d47e5308c089f4ec6ab7ac5083a99b38aecc94f97d074"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -7286,6 +10724,11 @@
         "parent": "G"
       },
       {
+        "code": "G2a",
+        "label": "Linear programming",
+        "parent": "G2"
+      },
+      {
         "code": "K",
         "label": "Approximation",
         "parent": null
@@ -7296,7 +10739,34 @@
         "parent": "K"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "conmax-slnpro",
+        "package_id": "conmax",
+        "revision": "ab7f237d30f94f7d13b86997e0c49f3d67bd7c54",
+        "module": "conmax_module",
+        "procedure": "slnpro",
+        "gams_codes": [
+          "G2a"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Linear-programming entry point; constrained minimax routines are separate.",
+        "evidence": [
+          {
+            "path": "src/conmax.f90",
+            "sha256": "533352fcb0bad345e3a1ab970fefec5f889fd844f4e7625f2f844e4d8f192dca",
+            "line": 1912
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/lp.f90",
+            "sha256": "ab5685c0f1334e4ba68ac41918b7bd64f61661fc338e32c7f3e729a58caf4893"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -7345,7 +10815,34 @@
         "parent": null
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "graphstruc-add-vertex",
+        "package_id": "graphstruc",
+        "revision": "51e18bedd638b935be8b9ac744b2e9f9e79213e7",
+        "module": "graphstruc",
+        "procedure": "graph_type%add_vertex, add_edge",
+        "gams_codes": [
+          "N4"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Graph storage and construction; this entry is not a shortest-path or graph-optimization algorithm.",
+        "evidence": [
+          {
+            "path": "src/graphstruc/graphstruc_types.f90",
+            "sha256": "4bda7ffeacabd9a45415d11f2f5cf104f2b5a2da2f52ec03358e23d87973e77e",
+            "line": 103
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example.f90",
+            "sha256": "24103aa1092487f238dd6743d925856c85fa622b79cbad8da252921e1dcf3b18"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -7476,9 +10973,41 @@
         "code": "H2",
         "label": "Quadrature (numerical evaluation of definite integrals)",
         "parent": "H"
+      },
+      {
+        "code": "H2c",
+        "label": "Service routines (e.g., compute weights and nodes for quadrature formulas)",
+        "parent": "H2"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "fortran-cubatures-cubature",
+        "package_id": "fortran_cubatures",
+        "revision": "aca04975d09aed329fd4210defd7052926dc01c1",
+        "module": "cubatures",
+        "procedure": "cubature",
+        "gams_codes": [
+          "H2c"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Returns cubature nodes and weights for reference elements; not an adaptive integrator.",
+        "evidence": [
+          {
+            "path": "src/cubatures.f90",
+            "sha256": "6d53402e15c1fead86546723ec195f9e4658ee4b641d535fe8f8a11338257b6d",
+            "line": 100
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_cubatures.f90",
+            "sha256": "049cbb33a825108fb242ee7c3278a15ce7f814d1cde503c3b8725195dff2e86f"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -7524,9 +11053,46 @@
         "code": "I1",
         "label": "Ordinary differential equations (ODE''s)",
         "parent": "I"
+      },
+      {
+        "code": "I1a",
+        "label": "Initial value problems",
+        "parent": "I1"
+      },
+      {
+        "code": "I1a2",
+        "label": "Stiff and mixed algebraic- differential equations",
+        "parent": "I1a"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "stiff3-stiff3",
+        "package_id": "stiff3",
+        "revision": "70ab5c86c2ac922ed148bbb1182345cca248e077",
+        "module": "stiff3_solver",
+        "procedure": "stiff3",
+        "gams_codes": [
+          "I1a2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "user Jacobian in reviewed example",
+        "notes": "Third-order Rosenbrock integration for stiff autonomous initial-value systems.",
+        "evidence": [
+          {
+            "path": "src/stiff3_solver.f90",
+            "sha256": "ccdf1358450acc079ab1d338dfeff6cdd6415bf53717a85358bc546dec41a1fa",
+            "line": 71
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/hires.f90",
+            "sha256": "c9851c848a9ff3fa7e709fa66fe9a6360af29e8d897708a803fc848573f75966"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -7558,9 +11124,46 @@
         "code": "D1",
         "label": "Elementary vector and matrix operations",
         "parent": "D"
+      },
+      {
+        "code": "D1b",
+        "label": "Elementary matrix operations",
+        "parent": "D1"
+      },
+      {
+        "code": "D1b4",
+        "label": "Multiplication by vector",
+        "parent": "D1b"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "sparse-fortran-matmul",
+        "package_id": "sparse_fortran",
+        "revision": "600f586a1ed099a22054ed283225787de36a31c1",
+        "module": "sparse_fortran",
+        "procedure": "sparse_coo%sparse_product, sparse_csr%sparse_product",
+        "gams_codes": [
+          "D1b4"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Sparse COO/CSR matrix-vector multiplication; storage conversion has a separate role.",
+        "evidence": [
+          {
+            "path": "src/sparse_coo_fortran.f90",
+            "sha256": "296feccbb3143e78270bbd8003844e8826cae900b01bc48bb4fe1a765fb59c1a",
+            "line": 193
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "app/main.f90",
+            "sha256": "3193d39f04cfce9c08d0140fd42c45f8a62789425d51911d334b6faffd5f4d23"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -7598,9 +11201,61 @@
         "code": "G2",
         "label": "Constrained",
         "parent": "G"
+      },
+      {
+        "code": "G2h",
+        "label": "General nonlinear programming",
+        "parent": "G2"
+      },
+      {
+        "code": "G2h3",
+        "label": "Nonlinear constraints",
+        "parent": "G2h"
+      },
+      {
+        "code": "G2h3b",
+        "label": "Equality and inequality constraints",
+        "parent": "G2h3"
+      },
+      {
+        "code": "G2h3b1",
+        "label": "Smooth function and constraints",
+        "parent": "G2h3b"
+      },
+      {
+        "code": "G2h3b1b",
+        "label": "User provides first derivatives of function and constraints",
+        "parent": "G2h3b1"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "psqp-psqpn",
+        "package_id": "psqp",
+        "revision": "57a853e14e3806d69adad6d6d44396d9665d842e",
+        "module": "psqp_module",
+        "procedure": "psqp_class%psqpn",
+        "gams_codes": [
+          "G2h3b1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "user objective gradient and constraint Jacobian",
+        "notes": "Sequential quadratic programming for smooth nonlinear constraints and bounds.",
+        "evidence": [
+          {
+            "path": "src/psqp_module.f90",
+            "sha256": "fd0411a95a43bad3ddff172f6b93955091407e41a718a436913cf38b5e95ca96",
+            "line": 62
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/tsqp.f90",
+            "sha256": "552c084f09e4f1ac2ee26a3fe5892758affe75ba7d132c7844d878e1d558ae2f"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -7636,9 +11291,61 @@
         "code": "G2",
         "label": "Constrained",
         "parent": "G"
+      },
+      {
+        "code": "G2h",
+        "label": "General nonlinear programming",
+        "parent": "G2"
+      },
+      {
+        "code": "G2h3",
+        "label": "Nonlinear constraints",
+        "parent": "G2h"
+      },
+      {
+        "code": "G2h3b",
+        "label": "Equality and inequality constraints",
+        "parent": "G2h3"
+      },
+      {
+        "code": "G2h3b1",
+        "label": "Smooth function and constraints",
+        "parent": "G2h3b"
+      },
+      {
+        "code": "G2h3b1b",
+        "label": "User provides first derivatives of function and constraints",
+        "parent": "G2h3b1"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "optgra-optgra",
+        "package_id": "optgra",
+        "revision": "914bed713e80faa4a190e03beb3a8307077eb028",
+        "module": "optgra_module",
+        "procedure": "optgra%solve",
+        "gams_codes": [
+          "G2h3b1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "user objective/constraint derivatives in analytic mode",
+        "notes": "Smooth constrained optimization; notes on nearly linear problems do not imply a linear-programming solver.",
+        "evidence": [
+          {
+            "path": "src/optgra.F90",
+            "sha256": "39252e9d069c4183ebdbfa9c6b1b6633e396f435ee88f7fbfcf0e2a774fbe306",
+            "line": 36
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/optgra_test.f90",
+            "sha256": "1f8c3efbf92860dfc015f0e62056fc8a340c1de58fe2dfe97bf9d67534a9e6e5"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -7731,9 +11438,41 @@
         "code": "D9",
         "label": "Singular, overdetermined or underdetermined systems of linear equations, generalized inverses",
         "parent": "D"
+      },
+      {
+        "code": "D9c",
+        "label": "Generalized inverses",
+        "parent": "D9"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "forinv-inv",
+        "package_id": "forinv",
+        "revision": "80b5dbed9709c001e4309382424276a2ceb984f3",
+        "module": "forinv",
+        "procedure": "inv (SVD pseudoinverse)",
+        "gams_codes": [
+          "D9c"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Moore-Penrose inverse with an explicit singular-value cutoff for rank-deficient input.",
+        "evidence": [
+          {
+            "path": "src/forinv.f90",
+            "sha256": "ed8b1df16072a0470f58151ab99390cce208c1214f5d9350492b78d638a9605d",
+            "line": 15
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test1.f90",
+            "sha256": "8224a804d74a9f2c6eb748195d9f13e2f38056084d75fa07826d8b2661395327"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -7826,6 +11565,11 @@
         "parent": "F"
       },
       {
+        "code": "F1b",
+        "label": "Nonpolynomial",
+        "parent": "F1"
+      },
+      {
         "code": "F2",
         "label": "System of equations",
         "parent": "F"
@@ -7841,7 +11585,34 @@
         "parent": "H"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "forsolver-nlsolver",
+        "package_id": "forsolver",
+        "revision": "6c0644b287cb49a7310d883415b9b9ba581d51c5",
+        "module": "forsolver",
+        "procedure": "nlsolver%solve",
+        "gams_codes": [
+          "F1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "analytic, finite-difference, or complex-step derivative by method",
+        "notes": "Reviewed scalar Newton configurations; linear and vector-system APIs are separate.",
+        "evidence": [
+          {
+            "path": "src/forsolver.f90",
+            "sha256": "209008df182f563b148781bf36ff0336bc969f1d54d9572bca03e7c2177416b9",
+            "line": 15
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_solver3.f90",
+            "sha256": "3824ae3ca0c76200ea2faccd34e99df2b6fb1653241f907f9a14af377f4a4d92"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -7882,9 +11653,56 @@
         "code": "H2",
         "label": "Quadrature (numerical evaluation of definite integrals)",
         "parent": "H"
+      },
+      {
+        "code": "H2b",
+        "label": "Multidimensional integrals",
+        "parent": "H2"
+      },
+      {
+        "code": "H2b1",
+        "label": "One or more hyper-rectangular regions (includes iterated integrals)",
+        "parent": "H2b"
+      },
+      {
+        "code": "H2b1a",
+        "label": "Integrand available via user-defined procedure",
+        "parent": "H2b1"
+      },
+      {
+        "code": "H2b1a1",
+        "label": "Automatic (user need only specify required accuracy)",
+        "parent": "H2b1a"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "dcuhre-dcuhre",
+        "package_id": "dcuhre",
+        "revision": "da8becb7f5313c1d7387066ef2106be9e156e20c",
+        "module": "external",
+        "procedure": "dcuhre",
+        "gams_codes": [
+          "H2b1a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "none",
+        "notes": "Adaptive vector-valued integration over hyperrectangles with error estimates.",
+        "evidence": [
+          {
+            "path": "src/dcuhre.f",
+            "sha256": "81a7c80b32794447c47f8ec1c7c2d159e811c0864d7c9c515bf4583d37cb627a",
+            "line": 1
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/dtest1.f",
+            "sha256": "1f75afe36fdb7663ef29fbfe9b8d1c95f7dfac2659a0d41c41e90acc46e603c4"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -7916,9 +11734,46 @@
         "code": "D2",
         "label": "Solution of systems of linear equations (including inversion, LU and related decompositions)",
         "parent": "D"
+      },
+      {
+        "code": "D2a",
+        "label": "Real nonsymmetric matrices",
+        "parent": "D2"
+      },
+      {
+        "code": "D2a4",
+        "label": "Sparse",
+        "parent": "D2a"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "y12m-y12mc",
+        "package_id": "y12m",
+        "revision": "5245418ed3f87c72bff4660432212328640a6322",
+        "module": "y12m",
+        "procedure": "y12mb, y12mc, y12md",
+        "gams_codes": [
+          "D2a4"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Direct real sparse factorization and repeated solves using stored factors.",
+        "evidence": [
+          {
+            "path": "src/y12m.f90",
+            "sha256": "8dd4968f3d1eac005ebcc9387e1ac37b974edecef115e9473824ce7553bc8be1",
+            "line": 91
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_y12mc_errors.F90",
+            "sha256": "0519c3118c4c43c4d6616e63210659dc5248d7e7b360ac0f90739ce05e9324f5"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -7981,9 +11836,46 @@
         "code": "D4",
         "label": "Eigenvalues, eigenvectors",
         "parent": "D"
+      },
+      {
+        "code": "D4a",
+        "label": "Ordinary eigenvalue problems (Ax = lambda x)",
+        "parent": "D4"
+      },
+      {
+        "code": "D4a1",
+        "label": "Real symmetric",
+        "parent": "D4a"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "foreig-eig",
+        "package_id": "foreig",
+        "revision": "8fcfcab03e5d7cf5eda8c51c7a1e97fe52954c39",
+        "module": "foreig",
+        "procedure": "eig (SYEV method)",
+        "gams_codes": [
+          "D4a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Standard real symmetric eigenproblem via LAPACK SYEV; other methods are separate configurations.",
+        "evidence": [
+          {
+            "path": "src/foreig.f90",
+            "sha256": "b28558499863dcd899744bfe6763e0c4a1f0ab05daade5a44ab24691afa54e4c",
+            "line": 11
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test1.f90",
+            "sha256": "2642dc6777286e1fc213d300505a601d58c2a1ab45c9fe7f0e13f6eaa0d74ef4"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -8028,9 +11920,51 @@
         "code": "I1",
         "label": "Ordinary differential equations (ODE''s)",
         "parent": "I"
+      },
+      {
+        "code": "I1a",
+        "label": "Initial value problems",
+        "parent": "I1"
+      },
+      {
+        "code": "I1a1",
+        "label": "General, nonstiff or mildly stiff",
+        "parent": "I1a"
+      },
+      {
+        "code": "I1a1a",
+        "label": "One-step methods (e.g., Runge-Kutta)",
+        "parent": "I1a1"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "rkf45-rkf45",
+        "package_id": "rkf45",
+        "revision": "93cd129369357ee08e34be7868256b21a500cc98",
+        "module": "rkf45_module",
+        "procedure": "rkf45",
+        "gams_codes": [
+          "I1a1a"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "right-hand side only",
+        "notes": "Explicit adaptive Runge-Kutta-Fehlberg fourth/fifth-order initial-value integration.",
+        "evidence": [
+          {
+            "path": "src/rkf45.F90",
+            "sha256": "b9d84e241f910f8cad01b182d765b1f29ecd30b9ddf443f7cf74fbd0cbc06a99",
+            "line": 57
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_rkf45.f90",
+            "sha256": "127d966b1717ace0d1bffc78ef1d540363b694873cfb8c889b23cbb0c7b32182"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -8080,6 +12014,21 @@
         "parent": "D"
       },
       {
+        "code": "D9",
+        "label": "Singular, overdetermined or underdetermined systems of linear equations, generalized inverses",
+        "parent": "D"
+      },
+      {
+        "code": "D9a",
+        "label": "Unconstrained",
+        "parent": "D9"
+      },
+      {
+        "code": "D9a1",
+        "label": "Least squares (L_2) solution",
+        "parent": "D9a"
+      },
+      {
         "code": "E",
         "label": "Interpolation",
         "parent": null
@@ -8100,7 +12049,29 @@
         "parent": "L"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "forlab-solve",
+        "package_id": "forlab",
+        "revision": "416e5612167b6133100bef4cec116322890f66f7",
+        "module": "forlab",
+        "procedure": "solve (rectangular real system)",
+        "gams_codes": [
+          "D9a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Rectangular least-squares solve demonstrated by polynomial fitting; square solves have another classification.",
+        "evidence": [
+          {
+            "path": "src/forlab.F90",
+            "sha256": "4f9be44e66ad2fdb67841ee14d0156b7fa315b137f33333b84abb100f7e48246",
+            "line": 7796
+          }
+        ],
+        "author_examples": []
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -8272,9 +12243,46 @@
         "code": "J1",
         "label": "Trigonometric transforms including fast Fourier transforms",
         "parent": "J"
+      },
+      {
+        "code": "J1a",
+        "label": "One-dimensional",
+        "parent": "J1"
+      },
+      {
+        "code": "J1a2",
+        "label": "Complex",
+        "parent": "J1a"
       }
     ],
-    "gams_procedures": [],
+    "gams_procedures": [
+      {
+        "id": "nafpack-execute-fft-plan-sp",
+        "package_id": "nafpack",
+        "revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+        "module": "NAFPack_Fourier_Transform",
+        "procedure": "Fourier_Transform%execute_fft_plan_sp",
+        "gams_codes": [
+          "J1a2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Single-precision complex one-dimensional Fourier transform; other numerical modules are separate.",
+        "evidence": [
+          {
+            "path": "src/Fourier_Transform/NAFPack_Fourier_Transform.f90",
+            "sha256": "a6d3ea7f7892da95ca51d33a1f862b3edb665ef0338162df4d079275e5f53d78",
+            "line": 37
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/Fourier_Transform/test_Fourier_Transform_fft_complex.f90",
+            "sha256": "8c8786e96bcca6d050c96d12e5b0e068f5997b177c2ec7947cfb23aac2b632c6"
+          }
+        ]
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   }
 ]

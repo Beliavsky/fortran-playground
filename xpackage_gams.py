@@ -9,6 +9,7 @@ import re
 ROOT = Path(__file__).resolve().parent
 REPORT = Path('docs/fpm-gams.md')
 PILOT_REPORT = Path('docs/gams-g1.md')
+NUMERICAL_REPORT = Path('docs/gams-numerical.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
 
 
@@ -65,7 +66,7 @@ def gams_data(root=ROOT):
         if (not re.fullmatch(r'[A-SZ][1-9][0-9]*(?:[a-z][0-9]*)+', code)
                 or not isinstance(info, dict) or not isinstance(info.get('label'), str) or not info['label']
                 or info.get('parent') not in tree or info['parent'] == code
-                or not code.startswith(info['parent']) or len(code) <= len(info['parent'])):
+                or info['parent'] != ''.join(re.findall(r'[A-Z]|[0-9]+|[a-z]', code)[:-1])):
             raise ValueError(f'{code}: invalid detailed GAMS class or parent.')
         ancestors(tree, code)
     mappings = data.get('procedure_mappings', [])
@@ -131,6 +132,118 @@ def procedure_records(data, name):
     return [record for record in data.get('procedure_mappings', []) if record['package_id'] == name]
 
 
+def g1_procedures(data):
+    tree = class_tree(data)
+    return [p for p in data.get('procedure_mappings', [])
+            if any('G1' in ancestors(tree, code) for code in p['gams_codes'])]
+
+
+def numerical_review(root=ROOT, data=None):
+    root = Path(root)
+    data = data or gams_data(root)
+    review = json.loads((root / 'fpm_catalog/gams-numerical-review.json').read_text(encoding='utf-8'))
+    expected = {name for name, codes in data['packages'].items() if set(codes) & set('ABCDEFGHIJKLMP')}
+    if review.get('schema') != 1 or set(review.get('packages', {})) != expected:
+        raise ValueError('Numerical GAMS review must cover every selected A-M/P package.')
+    pins = {p['id']: p for p in json.loads((root / 'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    for name, entry in review['packages'].items():
+        records = procedure_records(data, name)
+        if (entry.get('revision') != pins[name]['revision']
+                or entry.get('archive_sha256') != pins[name]['archive_sha256']
+                or entry.get('status') not in ('procedure-reviewed', 'support-only')
+                or not isinstance(entry.get('notes'), str) or not entry['notes']
+                or entry.get('procedure_ids') != [p['id'] for p in records]
+                or (entry['status'] == 'procedure-reviewed' and not records)
+                or (entry['status'] == 'support-only' and records)):
+            raise ValueError(f'{name}: stale or incomplete numerical GAMS review.')
+        if entry['status'] == 'support-only' and not entry.get('evidence'):
+            raise ValueError(f'{name}: support-only review needs source evidence.')
+    return review
+
+
+def numerical_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    review = numerical_review(root, data)
+    packages = {p['id']: p for p in json.loads((root / 'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    reviewed = review['packages']
+    mappings = [p for p in data['procedure_mappings'] if p['package_id'] in reviewed]
+    supported = sum(p['status'] == 'support-only' for p in reviewed.values())
+    tree = class_tree(data)
+    lines = ['# Numerical package GAMS review', '',
+             f'All {len(reviewed)} selected packages with a top-level A–M or P assignment have been reviewed '
+             f'at their pinned revisions: {len(reviewed) - supported} have procedure mappings and '
+             f'{supported} supplies supporting declarations rather than numerical procedures. '
+             f'There are {len(mappings)} procedure records. This scope includes arithmetic, statistics, '
+             'geometry, and supporting data utilities, alongside numerical solvers.', '',
+             'This is an initial procedure-level coverage pass, not an exhaustive inventory of every routine '
+             'or every overload. Specific assignments require evidence for the named procedure and configuration. '
+             'Other package capabilities remain discovery classifications. Source review does not imply a new '
+             'compilation test, accuracy certification, or benchmark.', '',
+             'The [Netlib GAMS taxonomy](https://netlib.org/misc/gams.html) supplies the additional detailed '
+             'labels and hierarchy; the existing top-level and immediate classifications come from '
+             '[NIST GAMS](https://gams.nist.gov/cgi-bin/serve.cgi). '
+             'Labels such as “General” must be read with their ancestors. C1/C10 and L1/L10 are siblings, '
+             'and explicit parent links preserve that distinction.', '',
+             '## Coverage and remaining work', '',
+             '“Discovery only” lists existing immediate package assignments without a matching procedure record. '
+             'These are a review queue, not evidence that a capability is missing. No class is forced onto a '
+             'package merely to fill a gap.', '',
+             '| Package | Procedure records | Discovery only | Review scope |', '| --- | --- | --- | --- |']
+    def cell(value):
+        return str(value).replace('|', '\\|').replace('\n', ' ')
+    for name, entry in reviewed.items():
+        package = packages[name]
+        records = procedure_records(data, name)
+        mapped = {c for p in records for code in p['gams_codes'] for c in ancestors(tree, code)}
+        remaining = set(data['subclass_assignments'].get(name, [])) - mapped
+        url = f'https://github.com/{package["repository"]}/tree/{entry["revision"]}'
+        codes = ', '.join(sorted(remaining, key=class_order)) or '—'
+        scope = entry['notes'] if entry['status'] == 'support-only' else 'Selected APIs; see evidence below.'
+        lines.append(f'| [{name}]({url}) | {len(records)} | {codes} | {cell(scope)} |')
+    categories = sorted({packages[p['package_id']]['category'] for p in mappings})
+    for category in categories:
+        lines += ['', f'## {category}', '',
+                  '| Package / public API | GAMS | Derivatives or callback requirements | Pinned evidence and author examples/tests | Qualifications |',
+                  '| --- | --- | --- | --- | --- |']
+        for p in sorted((p for p in mappings if packages[p['package_id']]['category'] == category),
+                        key=lambda p: (p['package_id'], p['id'])):
+            package = packages[p['package_id']]
+            base = f'https://github.com/{package["repository"]}/blob/{p["revision"]}/'
+            links = [f'[Source]({base}{e["path"]}#L{e["line"]})' for e in p['evidence']]
+            links += [f'[Author example/test]({base}{e["path"]})' for e in p['author_examples']]
+            if not p['author_examples']:
+                links.append('No matching author example recorded')
+            links.append(f'[Catalog main](../fpm_catalog/demos/{p["package_id"]}.f90)')
+            if p.get('driver_id'):
+                links.append(f'[Verified driver](gams-g1.md)')
+            codes = ', '.join(f'[{code}](https://gams.nist.gov/cgi-bin/serve.cgi/Class/{code})' for code in p['gams_codes'])
+            values = [f'{p["package_id"]}: `{p["module"]}` / `{p["procedure"]}`', codes,
+                      p['derivatives'], ' · '.join(links), p['notes']]
+            lines.append('| ' + ' | '.join(cell(v) for v in values) + ' |')
+    lines += ['', '## Evidence and next steps', '',
+              '- Source archives were downloaded at catalog revisions and checked against the catalog archive SHA-256 hashes. '
+              'Procedure and example records include paths, source SHA-256 hashes, and source line anchors.',
+              '- Author examples and tests are usage candidates, not a promise that they run unchanged within sandbox limits. '
+              'The catalog main may exercise only one of the package’s mapped APIs. '
+              'Only the separately recorded [G1 drivers](gams-g1.md) have the new driver-verification designation.',
+              '- Generic APIs retain broader classes where real/complex arithmetic, matrix structure, derivatives, '
+              'or constraints depend on configuration. Detailed optimization mappings state the derivative mode; '
+              'derivative-free modes need separate records.',
+              '- Next, refine the discovery-only queue, split overloaded APIs where useful, and adapt suitable author '
+              'examples into independently checked drivers. Use common mathematical problems when comparing packages; '
+              'one successful example is not a performance ranking.', '',
+              '## Maintenance', '',
+              'Edit procedure mappings in [gams.json](../fpm_catalog/gams.json) and update the coverage ledger '
+              '[gams-numerical-review.json](../fpm_catalog/gams-numerical-review.json). '
+              'Revision and archive pins must match the selected catalog. The ledger explicitly records supporting '
+              'utilities and prevents a newly added numerical package from silently escaping review.', '',
+              'Run `python xpackage_gams.py` to validate and regenerate the review pages, '
+              '`python xfpm_examples.py` to publish search metadata, and `python xcatalog_export.py` '
+              'to export the reusable classifications. These commands do not compile packages or redeploy Modal.', '']
+    return '\n'.join(lines)
+
+
 def driver_data(root=ROOT, data=None):
     root = Path(root)
     data = data or gams_data(root)
@@ -184,10 +297,13 @@ def review_text(root=ROOT):
              'Broader assignments are retained where an immediate subclass does not fit or requires further review.', '',
              'The [G1 pilot](gams-g1.md) adds Univariate (G1a) and Multivariate (G1b), '
              'with pinned procedure mappings, author-example references, and sandbox-tested demonstrations.', '',
+             'The [numerical package review](gams-numerical.md) extends source-reviewed procedure mappings '
+             'across the selected numerical, statistical, geometry, and supporting packages, '
+             'and records capabilities that still need procedure-level review.', '',
              'These discovery assignments are based on saved descriptions, topics, bundled examples, and '
              'upstream documentation where reviewed. '
              'A class indicates relevant package functionality, not coverage of every problem in that class. '
-             'The G1 pilot provides procedure-level evidence; other branches remain discovery classifications. '
+             'Procedure mappings provide source-level evidence for specific APIs; other capabilities retain discovery classifications. '
              'Comparative benchmarks remain future work.', '',
              '## Searching', '',
              'Choose **GAMS class** in the hosted or main local FPM page. It combines with the text search, '
@@ -269,7 +385,7 @@ def g1_review_text(root=ROOT):
              '## Reviewed procedures', '',
              '| Package | Module / procedure | Class | Derivatives | Source and author examples | Notes |',
              '| --- | --- | --- | --- | --- | --- |']
-    for p in data['procedure_mappings']:
+    for p in g1_procedures(data):
         package = packages[p['package_id']]
         base = f'https://github.com/{package["repository"]}/blob/{p["revision"]}/'
         links = [f'[Source]({base}{e["path"]}#L{e["line"]})' for e in p['evidence']]
@@ -319,7 +435,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--check', action='store_true', help='Fail if the generated review page is out of date')
     args = parser.parse_args()
-    for report, text in ((REPORT, review_text()), (PILOT_REPORT, g1_review_text())):
+    for report, text in ((REPORT, review_text()), (PILOT_REPORT, g1_review_text()),
+                         (NUMERICAL_REPORT, numerical_review_text())):
         path = ROOT / report
         if args.check:
             if not path.exists() or path.read_text(encoding='utf-8') != text:

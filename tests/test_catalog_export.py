@@ -44,7 +44,9 @@ class CatalogExportTests(unittest.TestCase):
                     self.assertNotIn(field, record)
         self.assertEqual(feed['taxonomies']['gams']['classes']['L6']['parent'], 'L')
         self.assertEqual(feed['taxonomies']['gams']['classes']['G1b']['parent'], 'G1')
-        self.assertEqual(sum(len(p['curation'].get('procedures', [])) for p in feed['projects']), 11)
+        self.assertEqual(sum(len(p['curation'].get('procedures', [])) for p in feed['projects']), 132)
+        self.assertEqual(sum('numerical_review' in p['curation'] for p in feed['projects']), 104)
+        self.assertIn('fpm_catalog/gams-numerical-review.json', {r['path'] for r in feed['provenance']['inputs']})
         self.assertEqual(len(feed['demonstrations']), 3)
         for driver in feed['demonstrations']:
             self.assertIn('&example=gams-', driver['url'])
@@ -121,6 +123,8 @@ class CatalogExportTests(unittest.TestCase):
         project['build_systems'] = ['cmake', 'make']
         project['playground'] = None
         project['curation']['gams_codes'] = []
+        project['curation'].pop('procedures', None)
+        project['curation'].pop('numerical_review', None)
         feed['snapshot_id'] = snapshot_id(feed)
         self.assertIs(validate_export(feed), feed)
 
@@ -151,6 +155,8 @@ class CatalogExportTests(unittest.TestCase):
         classes = feed['taxonomies']['gams']['classes']
         classes['G1b'] = {'label': 'Multivariate', 'parent': 'G1'}
         feed['projects'][0]['curation']['gams_codes'] = ['G', 'G1', 'G1b']
+        feed['projects'][0]['curation'].pop('procedures', None)
+        feed['projects'][0]['curation'].pop('numerical_review', None)
         feed['snapshot_id'] = snapshot_id(feed)
         validate_export(feed)
         classes['G1']['parent'] = 'G1b'

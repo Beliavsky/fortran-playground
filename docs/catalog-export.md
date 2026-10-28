@@ -42,6 +42,7 @@ The authoritative schema is [catalog/catalog-v1.schema.json](../catalog/catalog-
 | `curation.topics` | Our curated topics, kept separate from GitHub topics. |
 | `curation.gams_codes` | Explicit parent and subclass assignments referencing the included taxonomy. |
 | `curation.procedures` (optional) | Pinned module/procedure identities, derivative requirements, GAMS codes, source evidence hashes, and author-example references. |
+| `curation.numerical_review` (optional) | Coverage status, archive/revision pins, procedure IDs, and qualifications from the numerical review ledger. Supporting declarations are distinguished from numerical procedures. |
 | `demonstrations` (optional) | Verified drivers with source hashes, licenses, procedure references, load links, and saved validation paths. Importers retain these in the publisher source layer. |
 | `curation.gams_review_level`, `gams_notes`, `reviewed_revision` | Current discovery-review scope, qualifications, and upstream package revision. Inclusion does not claim a procedure-level driver verification. |
 | `playground` | Optional relationship to a selected playground entry, including its revision, example reference, and package-specific URL. It can be absent or null for other software. |
@@ -54,11 +55,12 @@ The current sources are:
 - [fpm_catalog/topics.json](../fpm_catalog/topics.json): saved GitHub metadata.
 - [fpm_catalog/playground-topics.json](../fpm_catalog/playground-topics.json): our topics.
 - [fpm_catalog/gams.json](../fpm_catalog/gams.json): GAMS taxonomy, assignments, and review notes.
+- [fpm_catalog/gams-numerical-review.json](../fpm_catalog/gams-numerical-review.json): numerical-package review coverage and remaining scope.
 - [fpm_catalog/demos](../fpm_catalog/demos): example references.
 
 IDs are independent of package names, compiler versions, and revisions. GitHub account/repository casing is normalized. A repository rename or transfer changes this initial canonical identity; handle that as an explicit migration in the receiving catalog, retaining an alias if desired. The exporter does not guess rename relationships.
 
-The taxonomy includes explicit parent references, so C1 and C10 are siblings. The G1 pilot includes the deeper G1a/G1b classes, linked through G1. Further levels can be added without changing the format; only reviewed assignments should be added. A project lists its assigned ancestors as well as its more specific codes.
+The taxonomy includes explicit parent references, so C1 and C10 are siblings. The [numerical review](gams-numerical.md) adds detailed classes across the numerical areas, retaining every ancestor. For example, I1a1a identifies nonstiff one-step initial-value methods while I1a2 identifies stiff/DAE methods. The detailed taxonomy source is included alongside the existing NIST taxonomy reference. Further levels can be added without changing the format; only reviewed assignments should be added.
 
 ## Reproducible provenance
 

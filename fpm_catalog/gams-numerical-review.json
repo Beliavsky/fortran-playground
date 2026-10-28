@@ -1,0 +1,978 @@
+{
+  "schema": 1,
+  "reviewed_on": "2026-10-28",
+  "scope": "Selected packages with at least one top-level assignment A through M, or P, including supporting utilities. Representative procedure coverage is not an exhaustive routine inventory.",
+  "taxonomy_source": "https://netlib.org/misc/gams.html",
+  "packages": {
+    "ad_dnsvm": {
+      "revision": "32db0bd122ce1dae290e9cf4c1fda4ab8f3de6f1",
+      "archive_sha256": "021f923a7f7d01be51416456b96bcfe4fb3ae3207d04fe0d71d03208b570c554",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "ad-dnsvm-get-dns"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "astro-fortran": {
+      "revision": "9d61091d225a1b314ff8170153b06a8691aba283",
+      "archive_sha256": "ddbe566788db9e3521bf81e0579ec82ae05c1eb46c5da73383f6f58924b997f0",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "astro-fortran-g2icrs"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "blas-interface": {
+      "revision": "552a2e6a41443843003216fedad6419af55f8e35",
+      "archive_sha256": "fcd849471e6a6c3f97ff94fcdc9dfe92d995566828b0f1c50bb1819a87a1c6b8",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "blas-interface-blas-gemm"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "bspline-fortran": {
+      "revision": "047c724451aeee7f883c0d5acba3f7bd22a5de01",
+      "archive_sha256": "08cb59a93ad6af98bd9ecc97704e2da6fd158df8ff044eb99ff4970b46e7289f",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "bspline-fortran-bspline-1d",
+        "bspline-fortran-bspline-2d"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "conmax": {
+      "revision": "ab7f237d30f94f7d13b86997e0c49f3d67bd7c54",
+      "archive_sha256": "f31c31ad41d37957f9794248ac4d0416ec3455fe9d27d9a5d7cb4cadff340580",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "conmax-slnpro"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "conmin": {
+      "revision": "201f3b29f023baf7bef13ad8f49b906ffb1c7757",
+      "archive_sha256": "d5c83d31bd415152a05f11c70eb4ec2058df319048bdef6589bda8c20147e6ff",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "conmin-conmin-class"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "daglib": {
+      "revision": "68fa83ebfd33fd6521327918b1d8e5084250a8ff",
+      "archive_sha256": "914c562ceb1ae8bad0487aecb437d8c5181159faa02af061a2eb7c69484113a6",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "daglib-toposort"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "daskr": {
+      "revision": "b43533edc5d6900088a846d802e3a86d0f9a06ad",
+      "archive_sha256": "7a636a79cf54271606ca73c4a9c112bc45af75cc17246873cc499b2a5cce7472",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "daskr-ddaskr"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "dcuhre": {
+      "revision": "da8becb7f5313c1d7387066ef2106be9e156e20c",
+      "archive_sha256": "f8310453858037e0cbfd81904cb9aebe299a510f73d0925956d7e7020e358549",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "dcuhre-dcuhre"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "ddeabm": {
+      "revision": "dba70c8c65388638662df2694339c5ba7feaf12a",
+      "archive_sha256": "b8e5c3dcd67d8ed7183803cc56388e7cf696b1be5383bab381bd42778c1ad92b",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "ddeabm-ddeabm-class"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "diffeq": {
+      "revision": "989b320179c23aaff4bfe72994c90e9034f50c74",
+      "archive_sha256": "09f6e92aea1dc8c9eb9233d4052b012e3b53a739e1ce078453d0421ddb1d4e87",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "diffeq-runge-kutta-45"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "dop853": {
+      "revision": "1e9d0dbf4dcbc692ca557c0467629112dd1f0ce6",
+      "archive_sha256": "79f073b1502f9cc7bae134f926cd6a492aa62aad3d99db0ee9a488308304828b",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "dop853-dop853-class"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "dvode": {
+      "revision": "59d2eedd1410a4bd6c196c24d08f95a7c20565c0",
+      "archive_sha256": "184807fd631421b32692c7ee37613bea78443f274a8d38954736f13c7c7246d3",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "dvode-dvode-t"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "fastconv": {
+      "revision": "3aaa2432a291df07a10fc5dade0dcd66d7a06dd0",
+      "archive_sha256": "1c24a23cea35275f937f1c0c65a1d205f9425736d36d48fda65db9455735154e",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "fastconv-conv1d-t"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "fastmath": {
+      "revision": "ad0f14c455205c0e6c1b9300cd7f333fafb750e2",
+      "archive_sha256": "cea87a0687612725d0baf1f5b19c802e0d55c3a4c9e595fe7f85d4c4c71d656a",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "fastmath-fexp",
+        "fastmath-frsqrt"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "fftpack": {
+      "revision": "0fffe7c05a918363a7cc12ae138a695afd115f36",
+      "archive_sha256": "c59bc81695ca599ae41a9a83593517bc6aca65478111c3a08c0fc36179133629",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "fftpack-fft"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "finterp": {
+      "revision": "95aaceaf86f5d4d49328b783c5dff9b006b0bfc9",
+      "archive_sha256": "22e8a4ddd74b62f06606107703579db2d04d55f0df70d3d31b43b8c380b10244",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "finterp-linear-interp-1d",
+        "finterp-linear-interp-2d"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "fitpack": {
+      "revision": "1907c7bad9f5c4557970e906bdd4909eb52b2d4c",
+      "archive_sha256": "7920f83f31016a23d2281af30ac5264cbc317b754b6a4c7de1a0efa3efc0d0b9",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "fitpack-fitpack-curve",
+        "fitpack-curve-derivative",
+        "fitpack-integral"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "fjsample": {
+      "revision": "8563d2653d1a9d80a355b2064f4b153559698915",
+      "archive_sha256": "4def47fc11f70e1efac048271e43733601a3ad6e8152e0b747df139354742de8",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "fjsample-jackerror"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "flint": {
+      "revision": "b6322037cb751b11fa64ea66cf23173ae572fff6",
+      "archive_sha256": "8023582792da69e2b317f67b56f2dedbe03c48e4f223cd2877c8b24dffb90e25",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "flint-erk-class"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "fmin": {
+      "revision": "3d094fba0e9b98d132414f8442c7c76d32da1d30",
+      "archive_sha256": "ea895586cc9219dcdf4270a301a02ea2fa7154cea29318f7520cd58cbc4f0e27",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "fmin-scalar"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "fordiff": {
+      "revision": "f1a1099a590107645314f1388c432624ff97b9bc",
+      "archive_sha256": "b2881c68306d92df9117f68e3852378ab0378d1cb2a9e0b76060239f94fac7a0",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "fordiff-derivative"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "foreig": {
+      "revision": "8fcfcab03e5d7cf5eda8c51c7a1e97fe52954c39",
+      "archive_sha256": "842695c219adfd981a06d7451b87b27d57d3db86c8878612b371b782eb0e02d1",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "foreig-eig"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "forinv": {
+      "revision": "80b5dbed9709c001e4309382424276a2ceb984f3",
+      "archive_sha256": "22905d8cc5d0c62d25c937adf9475592d4a1b4c02e2eb64413070c3d4c14426a",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "forinv-inv"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "forlab": {
+      "revision": "416e5612167b6133100bef4cec116322890f66f7",
+      "archive_sha256": "784431a7c880c6a6dcfdd7687e3b0f2f8340dc13bd187a3546acd09d883628f3",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "forlab-solve"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "forpca": {
+      "revision": "d5d87badc4c25c647b3618f22560e712728d8165",
+      "archive_sha256": "e01059bbc49107d7e29ddb275503ea7b789e6a9478c63a33f3f1d864b1a068a4",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "forpca-pca"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "forsolver": {
+      "revision": "6c0644b287cb49a7310d883415b9b9ba581d51c5",
+      "archive_sha256": "17a84545ef849f34e43b18eebbeb2cdbab42327979ac3d9c224525c9de3c247d",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "forsolver-nlsolver"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "fortimize": {
+      "revision": "3431b656cd86f89135d0f35bf6afdbd787d9daf3",
+      "archive_sha256": "90b36df70e4f526800a589b33ba35a8d6c90a8b6e960a93f5c0bb5914069618e",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "fortimize-nelder-mead",
+        "fortimize-gradient-descent"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "fortran-astrodynamics-toolkit": {
+      "revision": "3cf0a0a8ba2abf8bc4995c6da5b6abae07b45a0a",
+      "archive_sha256": "14f756464ce125fae2aef47481996915d87d62b54a65b24ee0a8bed75857ac6f",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "fortran-astrodynamics-toolkit-orbital-elements-to-rv"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "fortran-flann": {
+      "revision": "35370c851602d954d1d01d10c9c14ff82dd96496",
+      "archive_sha256": "a3b9e1b13e4b613e2bf5943decdbfb6ba4f8a866115007dfae9c2eb947fc3075",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "fortran-flann-knn-search"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "fortran-lapack": {
+      "revision": "e5e45fdd5a38bfab06d1f703f12b787937aa33bb",
+      "archive_sha256": "42a5cc095c28818d597c92b94e72715d5bb620be8068866f0efba26cc2454d1b",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "fortran-lapack-solve",
+        "fortran-lapack-eigh",
+        "fortran-lapack-qr",
+        "fortran-lapack-svd",
+        "fortran-lapack-lstsq"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "fortran-primes": {
+      "revision": "817abbf15c2565d2b92c35546d9e18152eb02e2c",
+      "archive_sha256": "1ae02b151c246b976ac7ad34d117ef9990d82cee2a68b4d2946dd100024763c1",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "fortran-primes-is-prime"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "fortran-string-to-real": {
+      "revision": "76fb9e4203c6ce73c31bed85b69af920893b033e",
+      "archive_sha256": "cb0e5e0ccc46f81e00ef04c837125b55a782da8a2c3fef84131651821877bfc1",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "fortran-string-to-real-str2real"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "fortran_cubatures": {
+      "revision": "aca04975d09aed329fd4210defd7052926dc01c1",
+      "archive_sha256": "5ad21717dd6f860eb607797bcd21c2baf9ad7fa8ee194cd773effb0b49e20d3d",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "fortran-cubatures-cubature"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "fortran_function_parser": {
+      "revision": "4c977c925506bea3fb1ee44aac08114c5fa68a71",
+      "archive_sha256": "88a21855bfa2002d480468c73c72f971dd1ab01caf8c23828a390bc1b3691a36",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "fortran-function-parser-evaluate"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "fortran_test_helper": {
+      "revision": "1557b1485d8a5b042862042552f1e1a34552ca5e",
+      "archive_sha256": "846d7506d044b41eb307619d84369d97afdd8b4838ea19eae6803735dffc10e2",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "fortran-test-helper-create-r64-array"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "fortsa": {
+      "revision": "d31da12286617ab82e06e9fa0a6f20d11778581c",
+      "archive_sha256": "e2fdf8e436b3ab2919df6298c88cb4f8c4a3d1f74422baab3a5df76765b6caa2",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "fortsa-acvf"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "forwarddiff": {
+      "revision": "2388e8ecf300a7bbc0904feab47023413464edf9",
+      "archive_sha256": "99643ce39a15906f58a7af9ec7c7edfeaadb161d8f3087e0e5dc8d0961f4f329",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "forwarddiff-derivative"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "fsparse": {
+      "revision": "fa8233420ab0110bb688d565879164386521a8fc",
+      "archive_sha256": "b7b87843bd2027e60ec865ded63c853ec7c32d9627fa1513135d37727f3f2a23",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "fsparse-matvec",
+        "fsparse-dense2coo"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "fstats": {
+      "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "archive_sha256": "cf6b7367fc2a0d74f46000dc80a4cbedd07fd554e29117144b695b3a9ffa6fef",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "fstats-variance",
+        "fstats-mean"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "gaussjacobiquad": {
+      "revision": "ffb970c68eea0b39b140f80f788c8994547d8bfb",
+      "archive_sha256": "e9975bcfb0bdad7cdbd4b1e32263e8e62949337fe40605d3792a4de9927bb62c",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "gaussjacobiquad-gauss-jacobi"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "geodesic-fortran": {
+      "revision": "b16eaf6622baabee7dfb75b99b78e42eaa878440",
+      "archive_sha256": "21dc2d3c0e22fa61a211c6f2013161d5a43f9b6c9415979bada1aef0513552be",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "geodesic-fortran-inverse"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "geompack": {
+      "revision": "b7a327ca3a13507859c42dd6fba50af0bb5d5c6a",
+      "archive_sha256": "63a1e8af824b6398516b4f51ff5f367fd99c5a79ed0af1e213d18956898cb466",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "geompack-r8tris2"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "graphstruc": {
+      "revision": "51e18bedd638b935be8b9ac744b2e9f9e79213e7",
+      "archive_sha256": "24e32c4c7f5d9a673b6d39937e44c4b3da0097aa29f4d4b369dc9441f3b55665",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "graphstruc-add-vertex"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "integrate_fortran": {
+      "revision": "5281426a7407aa8cef7f684ff8cf1f7e4a4df906",
+      "archive_sha256": "f44882c6b3612e4fe45ad048ba05463ff1be23dab09f97aeffbb18208a97bc66",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "integrate-fortran-gauss-leg-nd"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "interpolation": {
+      "revision": "bf6d22ad931855d510dcfb5bdd6870cce8924b22",
+      "archive_sha256": "102b10cbdfe5800b88a64e305718526387feb684e3fb07225e86add69052487b",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "interpolation-interp1"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "io-fortran-library": {
+      "revision": "15bc3557c36adc174abbd9a077e0686dc11cc4af",
+      "archive_sha256": "edfa815c5034803b37586324b0a8b49ffafe362bcd85fb6f8e91f5816bede6c2",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "io-fortran-library-to-file"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "kinds": {
+      "revision": "811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f",
+      "archive_sha256": "495d1133b1630dea4f38d69e5e3189e3279e4ce5836da1a7aec8a822bbe16518",
+      "status": "support-only",
+      "procedure_ids": [],
+      "notes": "Precision-kind constants support numerical code but are not callable numerical algorithms. Retain broad A/R discovery assignments; do not invent a detailed arithmetic-method classification.",
+      "evidence": [
+        {
+          "path": "src/kinds.f90",
+          "sha256": "ccf265746d4d207b42b8967bd7f50ddf12425195a47c7e3b16fc571c4d3a409f",
+          "line": 8
+        }
+      ]
+    },
+    "kiss": {
+      "revision": "55f0f7ccb1601a0628a17928b5b6b79f61da2892",
+      "archive_sha256": "b8a34e012c2c67a313f0f4f94d9674f8869dd525f858ea5ab1811e1e2041c79c",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "kiss-cg-dense"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "kissfft-f": {
+      "revision": "b89c5e1d0aff9993db79200fc94a467948ff3923",
+      "archive_sha256": "f7b54c2261190cc8282abf451dd84e215c5be2300ac14aaccb1e36405d9b5b8e",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "kissfft-f-perform"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "lbfgsb": {
+      "revision": "ce1a9322016d6f31b652393e000a914b63af6fef",
+      "archive_sha256": "2be49cea9582c8766d328d3ec4d16542f397ed3095ab425adf687f7bc5c4de88",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "lbfgsb-setulb"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "lib_statistics": {
+      "revision": "056740db259fc3599dca0d8858f04e94845a6769",
+      "archive_sha256": "94479fc46f071c05c1cc2940d23a3e6ef2491ae3e3db0f780ed6079adc58e579",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "lib-statistics-logistic"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "libdogleg-f": {
+      "revision": "32b65ae4f880a052768c05d24c24b79920710681",
+      "archive_sha256": "567498c00c9e23382d9359e92a1c08fd02fbb5167a4c531b2fc8018eb9d2a122",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "libdogleg-dense"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "lightkrylov": {
+      "revision": "849fa1d2f29c14d0181315e76e731bff7f0b2d08",
+      "archive_sha256": "d1eb50b781520f370535a464ed24963c562866e6ba7ebf7ca5cdce30c61e35e2",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "lightkrylov-gmres"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "linalg": {
+      "revision": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+      "archive_sha256": "6210b8b167b50694941f48b20ad5d94bdacab026f1eb4720e2d55e8ddde0b59a",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "linalg-lu-factor",
+        "linalg-eigen",
+        "linalg-qr-factor",
+        "linalg-svd",
+        "linalg-solve-least-squares"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "lsmr": {
+      "revision": "12611e2299c5188441b097437695a66c85369e76",
+      "archive_sha256": "62fb8a51e5024e2dc6dfe2db0d18a3e336ba1a6008c901a37a1da300eb215a6b",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "lsmr-lsmr"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "lsqr": {
+      "revision": "4df2ce600ca26a9f7e80dc01bfd0859d538547b3",
+      "archive_sha256": "3e5654977d4b207e0123ddd99bc669f0f60cb1526de8456399657e27bdc078fa",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "lsqr-lsqr-solver-ez"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "m_calculator": {
+      "revision": "b6bbc08f81eb158a6908a42016059815fe72217d",
+      "archive_sha256": "50081a2e5022fbd40bbb8d9b70759481f9bd7a0c811132b48931a3538e355441",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "m-calculator-dnum0"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "maptran3d": {
+      "revision": "4ccc2479ae79a58b34d8e491013cfa2f60f65867",
+      "archive_sha256": "061ee9c087d80362dd070e850f11538d0be27c1ce734ac37c369052934def57b",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "maptran3d-geodetic2ecef"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "mersenne-twister-fortran": {
+      "revision": "1e3e364f4c022eab3fcd5d07b10a2c2be77a822b",
+      "archive_sha256": "95d5fa39dc727f587d4b4881cd606d5ea28f41ced883d493eb3576fe23eb1671",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "mersenne-twister-fortran-genrand64-real2"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "metis-fpm": {
+      "revision": "5db1dc1e46fd819a53a86fe2170eaf5464bf17c7",
+      "archive_sha256": "5bb19525e8fcc7b32da5cc4d4ced8c7d3901dcc2805e38c80d08e0a543a64fbe",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "metis-fpm-metis-partgraphkway"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "minpack": {
+      "revision": "c0b5aea9fcd2b83865af921a7a7e881904f8d3c2",
+      "archive_sha256": "7da3f3ef43bf7fa10c518829263b041472022fb75b5a3c5cb85481397390a7b9",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "minpack-lmdif1",
+        "minpack-lmder1",
+        "minpack-hybrd1"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "minres": {
+      "revision": "c7bb4c7a0ddf13729d3556878ccc688a208a052a",
+      "archive_sha256": "cd1417ed2e800503336fb9e9d9a9acba834c22b81fb3cffe1c359bea2ce58624",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "minres-minres-solver"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "mpfun2020-var1": {
+      "revision": "f2191ad80d811cd5e309d83ffad9b2607d27aabc",
+      "archive_sha256": "1373c64f1f5c578e5270ad840b2b90d0468b88837fc3c6a5e83c4bc4f2b7a5a7",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "mpfun2020-var1-mpreal",
+        "mpfun2020-var1-mpcmplx"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "nafpack": {
+      "revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+      "archive_sha256": "fab50ff6999afd7ab8bfeabdf8aaf3a93b3e23f6ff9d8e85c74d84d0664f5a51",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "nafpack-execute-fft-plan-sp"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "neural-fortran": {
+      "revision": "b2073fa542c8dcdf9466d1a192d2888b628a5df3",
+      "archive_sha256": "2e92f6d91db9bb2da0dabb45d3985de12d2eae493a5ee2a6881ba54d7f9e43ba",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "neural-network-train"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "nlesolver-fortran": {
+      "revision": "60f38870a25e6b448dd552f184aa2f8616fc8cb0",
+      "archive_sha256": "0fe03089eaccc651b3f752e93353aa0c0d5dd0379ef5179c0902876dac9ce32d",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "nlesolver-fortran-nlesolver-type"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "nlopt-f": {
+      "revision": "83d21e7ebda9279a6dd4cc11fe6c735f48eb8689",
+      "archive_sha256": "985586611c8b51836a77c8c3aa2e07b859ff7f6dc56fcb1d6a030580c8f10c2d",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "nlopt-lbfgs"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "nonlin": {
+      "revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+      "archive_sha256": "3a6f6cf6daa9b352213407f7c90555c22a492ad455cab0e2eb708efc7d34eaba",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "nonlin-nelder-mead",
+        "nonlin-bfgs",
+        "nonlin-least-squares",
+        "nonlin-newton-solver",
+        "nonlin-brent-solver"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "numdiff": {
+      "revision": "687157df8d2dec072b5484974bab71f7b14b0e9f",
+      "archive_sha256": "b51fd9daad66ba3579c231266806cc0855dfbbe184959dd68a08c9e69a1fe6e1",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "numdiff-compute-derivative"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "odepack": {
+      "revision": "d5db96093dc14fff54e10575cc586fa85392b078",
+      "archive_sha256": "3527e963adfa7c128092d59079cbd33ab3b126837b5e93ecc7c50d2cfc3589fa",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "odepack-lsoda-class"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "odrpack95": {
+      "revision": "12597b20812a76a4b702f985f6adc82632a18f60",
+      "archive_sha256": "cf92a1d2cfdf67165bf08fbdf01e3c213298ca48f1fc735c53a92272fe0c6c94",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "odrpack95-odr"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "optgra": {
+      "revision": "914bed713e80faa4a190e03beb3a8307077eb028",
+      "archive_sha256": "576c186c8d8dcb11580f01d4ae618beb2cd65c4a1a7e637b4f1fd0220564a339",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "optgra-optgra"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "opti": {
+      "revision": "6fb22db21bd2338e00690ff3706be61a1f101101",
+      "archive_sha256": "db700adb3e72d2f347fc8ef30a32ee61cac3f4c943be9af3354680ad8f9ee003",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "opti-optimizer"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "orderpack": {
+      "revision": "9696eee2670beae1601ae59e125ff9f10e6c88a7",
+      "archive_sha256": "54a5156b7b9e10267d742316c42eb87fa05bb7dbe8cad68820fc7e1d59c8e244",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "orderpack-rank"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "pchip": {
+      "revision": "8f5350565072622a2344dd0ec75193832b31eb10",
+      "archive_sha256": "22a2fb25220452a409363a8d8a2c039491fe62df0b91fc89141b28d3dcc115c6",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "pchip-dpchim"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "pikaia": {
+      "revision": "c080c4004896243bf9b8bbb4577e402c9e31c5e3",
+      "archive_sha256": "a3e1a44da80c0497d7211ec5d0f2ceb1f8233369f6ab6312eff728720b36872b",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "pikaia-pikaia-class"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "pointsets": {
+      "revision": "a1c381777f893d656018366cfabfa4cc7531e4dd",
+      "archive_sha256": "6c326b4ef7ec362376e5f4adabf7203ba17834ff95c8855a2666aa23cd11764a",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "pointsets-arithmetic-spacing",
+        "pointsets-random-spacing"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "polyroots-fortran": {
+      "revision": "165ed6fbec98cc23d9ed4784fbc4708adb5e0bcf",
+      "archive_sha256": "2a36e248e8c4eeb877b5497428ac0a46897fa076918204a304f9e00292001f9c",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "polyroots-fortran-polyroots"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "powellopt": {
+      "revision": "0987cd09d695cec968a3d02c8230d4ce5af33533",
+      "archive_sha256": "80eb370f64fd8da6d228ae93dc37bd9a267d35f85d7cef806bb5840b01cb6eef",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "powellopt-bobyqa"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "psqp": {
+      "revision": "57a853e14e3806d69adad6d6d44396d9665d842e",
+      "archive_sha256": "1e885c8e481fa2962d883e6a1a1199117d3ca4ad3975799a8d72634639746531",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "psqp-psqpn"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "quadpack": {
+      "revision": "ab42d50794280a8e7996f2ee4cda1f8753dfde5b",
+      "archive_sha256": "973158fce8508717b04496a0546c3ad1c7a2408ac1d7d5822b0331e116fab7f0",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "quadpack-dqag"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "quadrature-fortran": {
+      "revision": "1d208fc59569a97b1c2abf9c45f7c352dcc7b318",
+      "archive_sha256": "b099c2ee3e5c9c993e888cff0724fd7035dfb36559b09bc516ac94c45a610a34",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "quadrature-fortran-integration-class-1d"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "quaff": {
+      "revision": "f26da3d854045b79102d27bdb4e9f9b072444272",
+      "archive_sha256": "e420a22fd309619e71abed44cd8e0054852eb23e82967903f733bad0e7c4bc78",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "quaff-length-t"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "rational_number": {
+      "revision": "b6ff702a0f51b950798f2a31c5bd81ae0c15385a",
+      "archive_sha256": "1a62823cabbfe76f1957129d84cbb70b27f3ba1d82b361e702d9ed2450630f87",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "rational-number-ratnumadd"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "regridpack": {
+      "revision": "e47346d9244ab93f70367f16364d73217fbc0451",
+      "archive_sha256": "e1fb4cdf060a0c8c3d9112bef5eaad01e4936486b9ffe1072cff8729643503c8",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "regridpack-regrid"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "rkf45": {
+      "revision": "93cd129369357ee08e34be7868256b21a500cc98",
+      "archive_sha256": "7ba93563d7f60b085708b0866297c7814ffb85592411377af58bb878fc1adfd2",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "rkf45-rkf45"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "rklib": {
+      "revision": "e3d51f9e8a2e6756612e8e53687ab2d4b67dfb76",
+      "archive_sha256": "6c70084cb47a59f6d61b326801135cdf2889ec723b7454a82f9e04b3735593d8",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "rklib-rk4"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "rndgen-fortran": {
+      "revision": "3fa553608324913eed6cb178b398e7f661e4f63a",
+      "archive_sha256": "1cc8e4216e9b878c16a4369b18cd53147c42fe9eeaf8ea7d33cb5f85b3a4fe08",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "rndgen-fortran-rnd"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "rngff": {
+      "revision": "8eccd1479f35159922a85db25a39bcd58a0c3faa",
+      "archive_sha256": "d20c2dd09772d2b9017f99ce6f93d5bc9460db402a616c9cede0093223730214",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "rngff-linear-congruential-t"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "roots-fortran": {
+      "revision": "85dc6b98404a61d49944939414f7f56c3f32edd1",
+      "archive_sha256": "77e3839b1df2500887afbba0924a36fc6265c705f5189c2c8a6c48f169cb8228",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "roots-fortran-brent"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "ryu_fortran": {
+      "revision": "6c508144398d58143618c5598d816f20c40ac053",
+      "archive_sha256": "67b79bc6e4d41941ddc6d8f72241e1da959d77942c7058298b5096ea18d50994",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "ryu-fortran-d2shortest"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "simulated-annealing": {
+      "revision": "a2fa094d1ee39525c7e081cfd67866975e9e1dc5",
+      "archive_sha256": "d2fb01dfd123ccbda75b4bcfc547da517f3ef9ea8e71a686ef6572253b9b58ba",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "simulated-annealing-simulated-annealing-type"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "slsqp": {
+      "revision": "e28b14fc48189fd4fce5f359327164fca55b52be",
+      "archive_sha256": "4163e6844f6ffef649e9650c3123173e48ad6140cd1130c9eb2cf4f1d43eef88",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "slsqp-slsqp-solver"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "sparse_fortran": {
+      "revision": "600f586a1ed099a22054ed283225787de36a31c1",
+      "archive_sha256": "48b5a043ac012c1e5ceb7d047ef477102344b548f61bfa9c44cc5a8325a221e3",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "sparse-fortran-matmul"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "specfun": {
+      "revision": "e74d9c810d5c9248b5d8ffab4b766e7bb22ffd23",
+      "archive_sha256": "0aa46035360d2d462e1d8cfe03bac7c433bf44d021f98074215db40984f7c05b",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "specfun-bernob"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "specfunc-fullerton": {
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "archive_sha256": "f7910a7403f1653b7917f16db3818a4ed55a080185c86b02d96c6a391164a6f7",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "specfunc-fullerton-fgamma",
+        "specfunc-fullerton-digamma"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "specialmatrices": {
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "archive_sha256": "b44d6c7e8806a2588fcbfde53fa280a867e0ce9fe31bd2d68828c6131194ce22",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "specialmatrices-solve"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "spectrum": {
+      "revision": "5af0d5a85eccf971aa6e0fc72b1c7439c3cef536",
+      "archive_sha256": "20079f9ad017369097d5463fec26732775fb33a868eb2d3c3a308a044cb92e79",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "spectrum-convolve",
+        "spectrum-rfft"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "splpak": {
+      "revision": "35340cb2d193c7aa44f03978db21660df8297cc0",
+      "archive_sha256": "3909e8aa03c933e98106793f8a68b1843f4ad94bd3e6620c89bf1032a0d1235b",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "splpak-splpak-type"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "stdlib": {
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "archive_sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "stdlib-mean",
+        "stdlib-solve",
+        "stdlib-sort",
+        "stdlib-random-seed"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "stiff3": {
+      "revision": "70ab5c86c2ac922ed148bbb1182345cca248e077",
+      "archive_sha256": "33c52164ec8e5a1b57b623f529209fadcd2c3db40b6cfcb63adf48de40ed3160",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "stiff3-stiff3"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "twopnt": {
+      "revision": "4ce477215f84a88d879f0ca3937cab9bedfb7762",
+      "archive_sha256": "33884a9ec5fd2cea1d66c64c786dbb42beb9b58100e10ada14a725cbce66a02e",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "twopnt-solve"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    },
+    "y12m": {
+      "revision": "5245418ed3f87c72bff4660432212328640a6322",
+      "archive_sha256": "412cfb698c2eb939db37c649d6eb0516f82850570e93ed58e2f4debae7d01a55",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "y12m-y12mc"
+      ],
+      "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
+    }
+  }
+}

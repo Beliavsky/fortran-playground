@@ -51,7 +51,7 @@ def input_provenance(root, paths):
 def build_export(root=ROOT):
     # Import tools need only this module and the standard library; the source
     # catalog and its authoring helpers are needed solely when exporting.
-    from xpackage_gams import gams_data, package_classes, class_tree, procedure_records, driver_data
+    from xpackage_gams import gams_data, package_classes, class_tree, procedure_records, driver_data, numerical_review
     from xpackage_topics import playground_topics
 
     root = Path(root)
@@ -60,10 +60,12 @@ def build_export(root=ROOT):
     curated = playground_topics(root)
     gams = gams_data(root)
     drivers = driver_data(root, gams)
+    review = numerical_review(root, gams)
     inputs = ['fpm_catalog.json', 'fpm_catalog/topics.json', 'fpm_catalog/playground-topics.json',
               'fpm_catalog/gams.json', 'catalog_export.py', 'xpackage_topics.py', 'xpackage_gams.py',
               f'catalog/{SCHEMA_NAME}']
-    inputs.extend(['fpm_catalog/gams-drivers.json', 'docs/gams-g1-validation.json'])
+    inputs.extend(['fpm_catalog/gams-drivers.json', 'docs/gams-g1-validation.json',
+                   'fpm_catalog/gams-numerical-review.json'])
     inputs.extend(sorted({p for d in drivers for p in [d['path'], *d['license_files']]}))
     projects = []
     for package in sorted(packages, key=lambda p: p['repository'].lower()):
@@ -94,12 +96,15 @@ def build_export(root=ROOT):
         procedures = procedure_records(gams, package['id'])
         if procedures:
             projects[-1]['curation']['procedures'] = procedures
+        if package['id'] in review['packages']:
+            projects[-1]['curation']['numerical_review'] = review['packages'][package['id']]
     provenance = input_provenance(root, inputs)
     export = {'$schema': SCHEMA_URL, 'schema_version': 1, 'publisher': PUBLISHER,
               'provenance': provenance,
               'taxonomies': {'gams': {'source': gams['source'],
                   'retrieved_on': gams['taxonomy_retrieved_on'],
-                  'classes': class_tree(gams)}},
+                  'classes': class_tree(gams),
+                  'detailed_taxonomy_source': gams.get('detailed_taxonomy_source')}},
               'demonstrations': [{**d, 'source_sha256': text_hash(root / d['path']),
                   'url': f'{BASE_URL}/fpm/?package={d["package_id"]}&example={d["name"]}',
                   'validation_path': 'docs/gams-g1-validation.json'} for d in drivers],
@@ -244,6 +249,15 @@ def validate_export(data):
             if not record['gams_codes'] or not set(record['gams_codes']).issubset(codes):
                 raise ValueError(f'{identity}: procedure classification lacks package assignment.')
             procedures[record['id']] = record
+        if 'numerical_review' in curation:
+            review = curation['numerical_review']
+            if (not isinstance(review, dict) or review.get('revision') != curation['reviewed_revision']
+                    or not _matches(r'[0-9a-f]{64}', review.get('archive_sha256'))
+                    or review.get('status') not in ('procedure-reviewed', 'support-only')
+                    or review.get('procedure_ids') != [r['id'] for r in records]
+                    or not isinstance(review.get('notes'), str) or not review['notes']
+                    or bool(records) != (review['status'] == 'procedure-reviewed')):
+                raise ValueError(f'{identity}: inconsistent numerical review coverage.')
         if project.get('playground') is not None:
             playground = project['playground']
             if not isinstance(playground, dict) or playground.get('live_service_checked') is not False:

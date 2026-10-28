@@ -391,5 +391,281 @@ export const gamsSubclasses = {
   "G1b": {
     "label": "Multivariate",
     "parent": "G1"
+  },
+  "D2a1": {
+    "label": "General",
+    "parent": "D2a"
+  },
+  "D2a": {
+    "label": "Real nonsymmetric matrices",
+    "parent": "D2"
+  },
+  "J1a2": {
+    "label": "Complex",
+    "parent": "J1a"
+  },
+  "J1a": {
+    "label": "One-dimensional",
+    "parent": "J1"
+  },
+  "F1b": {
+    "label": "Nonpolynomial",
+    "parent": "F1"
+  },
+  "L1a1a": {
+    "label": "Location",
+    "parent": "L1a1"
+  },
+  "L1a1": {
+    "label": "Raw data",
+    "parent": "L1a"
+  },
+  "L1a": {
+    "label": "One-dimensional data",
+    "parent": "L1"
+  },
+  "E1a": {
+    "label": "Polynomial splines (piecewise polynomials)",
+    "parent": "E1"
+  },
+  "H2a1a1": {
+    "label": "Automatic (user need only specify required accuracy)",
+    "parent": "H2a1a"
+  },
+  "H2a1a": {
+    "label": "Integrand available via user-defined procedure",
+    "parent": "H2a1"
+  },
+  "H2a1": {
+    "label": "Finite interval (general integrand)",
+    "parent": "H2a"
+  },
+  "H2a": {
+    "label": "One-dimensional integrals",
+    "parent": "H2"
+  },
+  "I1a1a": {
+    "label": "One-step methods (e.g., Runge-Kutta)",
+    "parent": "I1a1"
+  },
+  "I1a1": {
+    "label": "General, nonstiff or mildly stiff",
+    "parent": "I1a"
+  },
+  "I1a": {
+    "label": "Initial value problems",
+    "parent": "I1"
+  },
+  "L6a21": {
+    "label": "Uniform (continuous, discrete), uniform order statistics",
+    "parent": "L6a"
+  },
+  "L6a": {
+    "label": "Univariate",
+    "parent": "L6"
+  },
+  "G2h3b1b": {
+    "label": "User provides first derivatives of function and constraints",
+    "parent": "G2h3b1"
+  },
+  "G2h3b1": {
+    "label": "Smooth function and constraints",
+    "parent": "G2h3b"
+  },
+  "G2h3b": {
+    "label": "Equality and inequality constraints",
+    "parent": "G2h3"
+  },
+  "G2h3": {
+    "label": "Nonlinear constraints",
+    "parent": "G2h"
+  },
+  "G2h": {
+    "label": "General nonlinear programming",
+    "parent": "G2"
+  },
+  "G2h1a2": {
+    "label": "User provides first derivatives",
+    "parent": "G2h1a"
+  },
+  "G2h1a": {
+    "label": "Smooth function",
+    "parent": "G2h1"
+  },
+  "G2h1": {
+    "label": "Simple bounds",
+    "parent": "G2h"
+  },
+  "D9a1": {
+    "label": "Least squares (L_2) solution",
+    "parent": "D9a"
+  },
+  "D9a": {
+    "label": "Unconstrained",
+    "parent": "D9"
+  },
+  "A3c": {
+    "label": "Extended precision",
+    "parent": "A3"
+  },
+  "I1a1b": {
+    "label": "Multistep methods (e.g., Adams predictor-corrector)",
+    "parent": "I1a1"
+  },
+  "I1a2": {
+    "label": "Stiff and mixed algebraic- differential equations",
+    "parent": "I1a"
+  },
+  "G2i": {
+    "label": "Global solution to nonconvex problems",
+    "parent": "G2"
+  },
+  "G2h1a1": {
+    "label": "User provides no derivatives",
+    "parent": "G2h1a"
+  },
+  "L1a1b": {
+    "label": "Dispersion",
+    "parent": "L1a1"
+  },
+  "F1a": {
+    "label": "Polynomial",
+    "parent": "F1"
+  },
+  "H2b1a2": {
+    "label": "Nonautomatic",
+    "parent": "H2b1a"
+  },
+  "H2b1a": {
+    "label": "Integrand available via user-defined procedure",
+    "parent": "H2b1"
+  },
+  "H2b1": {
+    "label": "One or more hyper-rectangular regions (includes iterated integrals)",
+    "parent": "H2b"
+  },
+  "H2b": {
+    "label": "Multidimensional integrals",
+    "parent": "H2"
+  },
+  "D1b6": {
+    "label": "Multiplication",
+    "parent": "D1b"
+  },
+  "D1b": {
+    "label": "Elementary matrix operations",
+    "parent": "D1"
+  },
+  "D1b4": {
+    "label": "Multiplication by vector",
+    "parent": "D1b"
+  },
+  "D2b4": {
+    "label": "Sparse",
+    "parent": "D2b"
+  },
+  "D2b": {
+    "label": "Real symmetric matrices",
+    "parent": "D2"
+  },
+  "I1b": {
+    "label": "Multipoint boundary value problems",
+    "parent": "I1"
+  },
+  "C7a": {
+    "label": "Gamma, log gamma, reciprocal gamma",
+    "parent": "C7"
+  },
+  "H2c": {
+    "label": "Service routines (e.g., compute weights and nodes for quadrature formulas)",
+    "parent": "H2"
+  },
+  "C4b": {
+    "label": "Exponential, logarithmic",
+    "parent": "C4"
+  },
+  "L10a2a": {
+    "label": "Summary statistics",
+    "parent": "L10a2"
+  },
+  "L10a2": {
+    "label": "Time domain analysis",
+    "parent": "L10a"
+  },
+  "L10a": {
+    "label": "Univariate (search also classes L3a6 and L3a7)",
+    "parent": "L10"
+  },
+  "D2b1b": {
+    "label": "Positive definite",
+    "parent": "D2b1"
+  },
+  "D2b1": {
+    "label": "General",
+    "parent": "D2b"
+  },
+  "G2a": {
+    "label": "Linear programming",
+    "parent": "G2"
+  },
+  "D9c": {
+    "label": "Generalized inverses",
+    "parent": "D9"
+  },
+  "H2b1a1": {
+    "label": "Automatic (user need only specify required accuracy)",
+    "parent": "H2b1a"
+  },
+  "D2a4": {
+    "label": "Sparse",
+    "parent": "D2a"
+  },
+  "D4a1": {
+    "label": "Real symmetric",
+    "parent": "D4a"
+  },
+  "D4a": {
+    "label": "Ordinary eigenvalue problems (Ax = lambda x)",
+    "parent": "D4"
+  },
+  "L6c": {
+    "label": "Service routines (e.g., seed)",
+    "parent": "L6"
+  },
+  "E2a": {
+    "label": "Gridded",
+    "parent": "E2"
+  },
+  "H2a2b2": {
+    "label": "Nonautomatic",
+    "parent": "H2a2b"
+  },
+  "H2a2b": {
+    "label": "Integrand available only on grid",
+    "parent": "H2a2"
+  },
+  "H2a2": {
+    "label": "Finite interval (specific or special type integrand including weight functions, oscillating and singular integrands, principal value integrals, splines, etc.)",
+    "parent": "H2a"
+  },
+  "C7c": {
+    "label": "Psi function",
+    "parent": "C7"
+  },
+  "J1a1": {
+    "label": "Real",
+    "parent": "J1a"
+  },
+  "A4c": {
+    "label": "Extended precision",
+    "parent": "A4"
+  },
+  "D1b9": {
+    "label": "Storage mode conversion",
+    "parent": "D1b"
+  },
+  "L13b": {
+    "label": "Principal components analysis",
+    "parent": "L13"
   }
 };

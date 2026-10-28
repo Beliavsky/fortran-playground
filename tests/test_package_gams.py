@@ -6,7 +6,8 @@ import tempfile
 import unittest
 
 from xpackage_gams import (gams_data, package_classes, review_text, subclass_module, ROOT, REPORT,
-                          driver_data, g1_review_text, PILOT_REPORT)
+                          driver_data, g1_review_text, PILOT_REPORT, g1_procedures,
+                          numerical_review, numerical_review_text, NUMERICAL_REPORT)
 
 
 class GamsFilterParser(HTMLParser):
@@ -71,7 +72,7 @@ class PackageGamsTests(unittest.TestCase):
         self.assertEqual(data['subclasses']['L10']['parent'], 'L')
         self.assertNotEqual(data['subclasses']['L10']['parent'], 'L1')
         self.assertTrue(all(info['parent'] not in 'BOPQZ' for info in data['subclasses'].values()))
-        self.assertEqual([c['code'] for c in package_classes(data, 'specfun')], ['C', 'C7', 'C10'])
+        self.assertEqual([c['code'] for c in package_classes(data, 'specfun')], ['C', 'C7', 'C10', 'C19'])
 
     def test_filter_matches_all_twenty_official_labels(self):
         parser = GamsFilterParser()
@@ -131,7 +132,7 @@ class PackageGamsTests(unittest.TestCase):
 
     def test_g1_procedures_and_verified_drivers(self):
         data = gams_data()
-        mappings = data['procedure_mappings']
+        mappings = g1_procedures(data)
         self.assertEqual(len(mappings), 11)
         self.assertEqual(len({m['package_id'] for m in mappings}), 7)
         self.assertEqual(data['detailed_classes']['G1a']['parent'], 'G1')
@@ -175,6 +176,36 @@ class PackageGamsTests(unittest.TestCase):
             path.write_text(path.read_text(encoding='utf-8') + '\n! Changed source\n', encoding='utf-8')
             with self.assertRaisesRegex(ValueError, 'passing GNU 16 verification'):
                 driver_data(root, data)
+
+    def test_numerical_review_covers_catalog_scope_and_preserves_evidence(self):
+        data = gams_data()
+        review = numerical_review(data=data)
+        self.assertEqual(len(review['packages']), 104)
+        self.assertEqual(sum(e['status'] == 'procedure-reviewed' for e in review['packages'].values()), 103)
+        self.assertEqual(review['packages']['kinds']['status'], 'support-only')
+        self.assertTrue(review['packages']['kinds']['evidence'])
+        self.assertEqual((ROOT / NUMERICAL_REPORT).read_text(encoding='utf-8'), numerical_review_text())
+        by_id = {p['id']: p for p in data['procedure_mappings']}
+        for entry in review['packages'].values():
+            for identity in entry['procedure_ids']:
+                record = by_id[identity]
+                self.assertEqual(entry['revision'], record['revision'])
+                self.assertTrue(record['evidence'])
+        for name, code in [('dop853', 'I1a1a'), ('dvode', 'I1a2'), ('lbfgsb', 'G2h1a2'),
+                           ('gaussjacobiquad', 'H2c'), ('dcuhre', 'H2b1a1'), ('specfun', 'C19')]:
+            self.assertIn(code, {c['code'] for c in package_classes(data, name)})
+        self.assertEqual(data['detailed_classes']['L6a21']['parent'], 'L6a')
+
+    def test_detailed_class_rejects_sibling_as_parent(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / 'fpm_catalog').mkdir()
+            (root / 'fpm_catalog.json').write_bytes((ROOT / 'fpm_catalog.json').read_bytes())
+            data = gams_data()
+            data['detailed_classes']['L10a']['parent'] = 'L1'
+            (root / 'fpm_catalog/gams.json').write_text(json.dumps(data))
+            with self.assertRaisesRegex(ValueError, 'invalid detailed GAMS class or parent'):
+                gams_data(root)
 
 
 if __name__ == '__main__':

@@ -101,6 +101,14 @@
             "topics": {"$ref": "#/$defs/strings"}, "gams_codes": {"$ref": "#/$defs/strings"},
             "gams_review_level": {"enum": ["discovery", "source-reviewed", "driver-verified"]},
             "gams_notes": {"type": "string"}, "reviewed_revision": {"$ref": "#/$defs/commit"},
+            "numerical_review": {
+              "type": "object", "required": ["revision", "archive_sha256", "status", "procedure_ids", "notes"],
+              "properties": {
+                "revision": {"$ref": "#/$defs/commit"}, "archive_sha256": {"$ref": "#/$defs/sha256"},
+                "status": {"enum": ["procedure-reviewed", "support-only"]},
+                "procedure_ids": {"$ref": "#/$defs/strings"}, "notes": {"type": "string"}
+              }
+            },
             "procedures": {
               "type": "array",
               "items": {
