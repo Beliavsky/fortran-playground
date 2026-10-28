@@ -188,6 +188,10 @@ function renderPackages() {
       button.type = 'button'; button.disabled = busy;
       button.textContent = `${item.name || item.id} — ${item.description}`;
       button.addEventListener('click', () => {get('available-package').value = item.id; selectPackage();});
+      button.addEventListener('dblclick', () => {
+        get('available-package').value = item.id;
+        selectAndLoadPackage();
+      });
       searchButtons.push(button);
       matches.appendChild(button);
     }
@@ -527,7 +531,13 @@ function selectPackage() {
   controls();
 }
 get('available-package').addEventListener('change', selectPackage);
-get('load-package').addEventListener('click', () => {
+get('available-package').addEventListener('dblclick', selectAndLoadPackage);
+function selectAndLoadPackage() {
+  selectPackage();
+  loadPackage();
+}
+get('load-package').addEventListener('click', loadPackage);
+function loadPackage() {
   const selected = packages.find(p => p.id === get('available-package').value);
   if (!selected || get('load-package').disabled) return;
   get('package-url').value = `https://github.com/${selected.repository}`;
@@ -543,7 +553,7 @@ get('load-package').addEventListener('click', () => {
   if (selected.source) editor.setValue(selected.source);
   sourceLinks(selected);
   resetTargets(); controls();
-});
+}
 get('load-example').addEventListener('click', () => {
   const example = examples.find(item => item.name === get('example').value);
   if (!example) return;

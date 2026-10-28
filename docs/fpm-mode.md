@@ -20,6 +20,8 @@ The **Collection** menu offers Selected and Translated R packages. All is curren
 
 Selecting a curated entry reuses its precompiled library when you submit a custom main with GNU 16 and the pinned revision. Local execution always builds from scratch.
 
+A single click selects a package for review. Double-click a package in the selector or matching search results to select it and **Load package**, including its example main when available. The Load package button remains available for keyboard and touch use. Loading never compiles or runs a program, and unavailable packages cannot be loaded by double-clicking.
+
 Choose **My main program** to edit a program that uses the package's modules. **Compile and Run** creates a temporary FPM consumer project with the downloaded library as a path dependency. **Build only** compiles without executing the main program. The five starter examples come from the audited programs in [fpm-feasibility/demos](fpm-feasibility/demos); `xfpm_examples.py` regenerates their page catalog when the site is built.
 
 Choose **Package's own programs and tests** to work with the repository itself:

@@ -217,17 +217,30 @@ for (const link of [sourceNote[0], sourceNote[2]]) {
 if (!legacyService) {
   get('compiler').value = 'ifx';
   get('compiler').listeners.change();
-  get('load-package').listeners.click();
+  const beforeSelection = get('source').value;
+  get('available-package').listeners.change();
+  assert.equal(get('source').value, beforeSelection, 'Selecting a package does not load its code');
+  get('available-package').listeners.dblclick();
   assert.equal(get('compiler').value, localExecution ? 'ifx' : 'gfortran');
   assert.match(get('connection').textContent, localExecution ? /Local FPM/ : /GNU Fortran 16/);
   assert.equal(get('source').value, packages[0].source);
   assert.equal(get('revision').value, packages[0].revision);
   assert.equal(get('preprocess').checked, false, 'Selected packages use their recorded build recipe');
   assert.equal(submissions.length, 0, 'Loading a cached package must not submit a job');
+  get('source').value = 'edited program';
+  get('load-package').listeners.click();
+  assert.equal(get('source').value, packages[0].source, 'The Load package button retains the same behavior');
 }
 get('available-package').value = packages[1].id;
 get('available-package').listeners.change();
 assert.equal(get('load-package').disabled, !localExecution, 'Local packages build from source; hosted packages require verification');
+if (!localExecution) {
+  const before = [get('source').value, get('package-url').value, get('revision').value];
+  get('available-package').listeners.dblclick();
+  assert.deepEqual([get('source').value, get('package-url').value, get('revision').value], before,
+    'Double-click must respect disabled loading');
+  assert.equal(submissions.length, 0);
+}
 assert.match(resultText({ok: true, cache: {package: 'fortran-lapack', compiler: 'GNU 16', library_reused: true}}), /library reused/);
 
 get('example').value = examples[0].name;
