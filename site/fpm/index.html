@@ -47,6 +47,32 @@
       <label for="package-category">Category</label>
       <select id="package-category"><option value="">All categories</option></select>
     </div>
+    <div id="package-gams-controls" class="package-filter">
+      <label for="package-gams">GAMS class</label>
+      <select id="package-gams">
+        <option value="">All classes</option>
+        <option value="A">A — Arithmetic, error analysis</option>
+        <option value="B">B — Number theory</option>
+        <option value="C">C — Elementary and special functions</option>
+        <option value="D">D — Linear Algebra</option>
+        <option value="E">E — Interpolation</option>
+        <option value="F">F — Solution of nonlinear equations</option>
+        <option value="G">G — Optimization</option>
+        <option value="H">H — Differentiation, integration</option>
+        <option value="I">I — Differential and integral equations</option>
+        <option value="J">J — Integral transforms</option>
+        <option value="K">K — Approximation</option>
+        <option value="L">L — Statistics, probability</option>
+        <option value="M">M — Simulation, stochastic modeling</option>
+        <option value="N">N — Data handling</option>
+        <option value="O">O — Symbolic computation</option>
+        <option value="P">P — Computational geometry</option>
+        <option value="Q">Q — Graphics</option>
+        <option value="R">R — Service routines</option>
+        <option value="S">S — Software development tools</option>
+        <option value="Z">Z — Other</option>
+      </select>
+    </div>
     <span id="package-count" aria-live="polite"></span>
   </div>
   <div class="toolbar">
@@ -65,6 +91,7 @@
   <p id="package-stars-note" class="editor-note" hidden></p>
   <p id="package-note">Loading the available package catalog&hellip;</p>
   <div id="package-topics" class="toolbar" role="group" aria-label="Package topics by source" hidden></div>
+  <div id="package-gams-details" class="toolbar" role="group" aria-label="GAMS classifications" hidden></div>
   <div id="package-search-results" class="toolbar" role="group" aria-label="Matching packages" hidden></div>
   <p id="package-source-links" hidden>
     <a id="package-source" target="_blank" rel="noopener noreferrer">Browse pinned source</a>

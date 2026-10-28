@@ -37,6 +37,12 @@
       "linear-systems",
       "matrix-factorization"
     ],
+    "gams": [
+      {
+        "code": "D",
+        "label": "Linear Algebra"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -59,6 +65,12 @@
     "playground_topics": [
       "assertions",
       "unit-testing"
+    ],
+    "gams": [
+      {
+        "code": "S",
+        "label": "Software development tools"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -90,6 +102,12 @@
       "python",
       "visualization"
     ],
+    "gams": [
+      {
+        "code": "Q",
+        "label": "Graphics"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -112,6 +130,12 @@
       "file-io",
       "json",
       "serialization"
+    ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -139,6 +163,12 @@
       "parsing",
       "toml"
     ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -165,6 +195,12 @@
       "fft",
       "fourier-transforms",
       "sine-transforms"
+    ],
+    "gams": [
+      {
+        "code": "J",
+        "label": "Integral transforms"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -195,6 +231,12 @@
       "root-finding",
       "scalar-functions"
     ],
+    "gams": [
+      {
+        "code": "F",
+        "label": "Solution of nonlinear equations"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -220,6 +262,12 @@
       "strings",
       "text-processing",
       "tokenization"
+    ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -260,6 +308,32 @@
       "statistics",
       "strings"
     ],
+    "gams": [
+      {
+        "code": "A",
+        "label": "Arithmetic, error analysis"
+      },
+      {
+        "code": "C",
+        "label": "Elementary and special functions"
+      },
+      {
+        "code": "D",
+        "label": "Linear Algebra"
+      },
+      {
+        "code": "L",
+        "label": "Statistics, probability"
+      },
+      {
+        "code": "N",
+        "label": "Data handling"
+      },
+      {
+        "code": "R",
+        "label": "Service routines"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -290,6 +364,12 @@
       "multidimensional",
       "splines"
     ],
+    "gams": [
+      {
+        "code": "E",
+        "label": "Interpolation"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -317,6 +397,12 @@
       "splines",
       "tabulated-data"
     ],
+    "gams": [
+      {
+        "code": "E",
+        "label": "Interpolation"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -343,6 +429,12 @@
       "interpolation",
       "multidimensional",
       "nearest-neighbors"
+    ],
+    "gams": [
+      {
+        "code": "E",
+        "label": "Interpolation"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -375,6 +467,12 @@
       "oscillatory-integrals",
       "quadrature"
     ],
+    "gams": [
+      {
+        "code": "H",
+        "label": "Differentiation, integration"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -403,6 +501,12 @@
       "multidimensional",
       "quadrature"
     ],
+    "gams": [
+      {
+        "code": "H",
+        "label": "Differentiation, integration"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -430,6 +534,12 @@
       "ode",
       "runge-kutta"
     ],
+    "gams": [
+      {
+        "code": "I",
+        "label": "Differential and integral equations"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -450,6 +560,20 @@
       "least-squares",
       "nonlinear-equations",
       "optimization"
+    ],
+    "gams": [
+      {
+        "code": "F",
+        "label": "Solution of nonlinear equations"
+      },
+      {
+        "code": "G",
+        "label": "Optimization"
+      },
+      {
+        "code": "K",
+        "label": "Approximation"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -478,6 +602,12 @@
       "random-numbers",
       "reproducibility"
     ],
+    "gams": [
+      {
+        "code": "L",
+        "label": "Statistics, probability"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -505,6 +635,12 @@
       "sorting",
       "unique-values"
     ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -530,6 +666,12 @@
       "sorting",
       "strings"
     ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -554,6 +696,12 @@
       "dictionaries",
       "linked-lists",
       "polymorphism"
+    ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -583,6 +731,16 @@
       "graphs",
       "topological-sort"
     ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      },
+      {
+        "code": "P",
+        "label": "Computational geometry"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -606,6 +764,12 @@
       "argument-parsing",
       "command-line",
       "strings"
+    ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -631,6 +795,16 @@
       "subprocesses",
       "text-processing"
     ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      },
+      {
+        "code": "S",
+        "label": "Software development tools"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -654,6 +828,16 @@
       "expression-parsing",
       "mathematical-expressions",
       "parsing"
+    ],
+    "gams": [
+      {
+        "code": "C",
+        "label": "Elementary and special functions"
+      },
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -684,6 +868,12 @@
       "jacobians",
       "sparse-matrices"
     ],
+    "gams": [
+      {
+        "code": "H",
+        "label": "Differentiation, integration"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -708,6 +898,12 @@
       "file-io",
       "serialization",
       "tabular-data"
+    ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -734,6 +930,12 @@
       "date-time",
       "durations"
     ],
+    "gams": [
+      {
+        "code": "R",
+        "label": "Service routines"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -759,6 +961,12 @@
       "paths",
       "tabular-data",
       "text-files"
+    ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -789,6 +997,12 @@
       "date-time",
       "formatting",
       "julian-dates"
+    ],
+    "gams": [
+      {
+        "code": "R",
+        "label": "Service routines"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -822,6 +1036,12 @@
       "sets",
       "unique-values"
     ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -850,6 +1070,12 @@
       "quicksort",
       "sorting"
     ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -877,6 +1103,12 @@
       "configuration",
       "help-text"
     ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -901,6 +1133,12 @@
       "command-line",
       "terminal-styling",
       "text-processing"
+    ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -935,6 +1173,12 @@
       "serialization",
       "toml"
     ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -962,6 +1206,16 @@
       "ranking",
       "sorting"
     ],
+    "gams": [
+      {
+        "code": "L",
+        "label": "Statistics, probability"
+      },
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -987,6 +1241,12 @@
       "pattern-matching",
       "regular-expressions",
       "text-processing"
+    ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -1015,6 +1275,12 @@
       "quoting",
       "tokenization"
     ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -1041,6 +1307,12 @@
       "integer-factorization",
       "number-theory",
       "prime-numbers"
+    ],
+    "gams": [
+      {
+        "code": "B",
+        "label": "Number theory"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -1069,6 +1341,12 @@
       "hash-tables",
       "polymorphism"
     ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -1091,6 +1369,16 @@
       "arrays",
       "functional-programming",
       "map-filter-reduce"
+    ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      },
+      {
+        "code": "S",
+        "label": "Software development tools"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -1118,6 +1406,12 @@
       "differentiation",
       "dual-numbers"
     ],
+    "gams": [
+      {
+        "code": "H",
+        "label": "Differentiation, integration"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -1136,6 +1430,16 @@
       "numeric-kinds",
       "portability",
       "precision"
+    ],
+    "gams": [
+      {
+        "code": "A",
+        "label": "Arithmetic, error analysis"
+      },
+      {
+        "code": "R",
+        "label": "Service routines"
+      }
     ],
     "stars": 0,
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -1169,6 +1473,12 @@
       "rgb",
       "visualization"
     ],
+    "gams": [
+      {
+        "code": "Q",
+        "label": "Graphics"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -1195,6 +1505,12 @@
       "number-theory",
       "rational-arithmetic"
     ],
+    "gams": [
+      {
+        "code": "A",
+        "label": "Arithmetic, error analysis"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -1214,6 +1530,16 @@
       "numerical-testing",
       "random-numbers",
       "unit-testing"
+    ],
+    "gams": [
+      {
+        "code": "L",
+        "label": "Statistics, probability"
+      },
+      {
+        "code": "S",
+        "label": "Software development tools"
+      }
     ],
     "stars": 0,
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -1242,6 +1568,12 @@
       "regular-expressions",
       "text-processing"
     ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -1264,6 +1596,12 @@
       "dictionaries",
       "searching",
       "sorted-arrays"
+    ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -1292,6 +1630,12 @@
       "hsv",
       "rgb"
     ],
+    "gams": [
+      {
+        "code": "Q",
+        "label": "Graphics"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -1316,6 +1660,12 @@
       "minimization",
       "optimization",
       "scalar-functions"
+    ],
+    "gams": [
+      {
+        "code": "G",
+        "label": "Optimization"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -1345,6 +1695,12 @@
       "constrained-optimization",
       "optimization",
       "sequential-quadratic-programming"
+    ],
+    "gams": [
+      {
+        "code": "G",
+        "label": "Optimization"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -1376,6 +1732,12 @@
       "optimization",
       "quasi-newton"
     ],
+    "gams": [
+      {
+        "code": "G",
+        "label": "Optimization"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -1401,6 +1763,12 @@
       "bessel-functions",
       "gamma-functions",
       "special-functions"
+    ],
+    "gams": [
+      {
+        "code": "C",
+        "label": "Elementary and special functions"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -1430,6 +1798,12 @@
       "multidimensional",
       "tabulated-data"
     ],
+    "gams": [
+      {
+        "code": "E",
+        "label": "Interpolation"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -1458,6 +1832,12 @@
       "least-squares",
       "multidimensional",
       "splines"
+    ],
+    "gams": [
+      {
+        "code": "K",
+        "label": "Approximation"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -1490,6 +1870,16 @@
       "orbital-mechanics",
       "spacecraft-trajectories"
     ],
+    "gams": [
+      {
+        "code": "P",
+        "label": "Computational geometry"
+      },
+      {
+        "code": "Z",
+        "label": "Other"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -1516,6 +1906,12 @@
       "text-processing",
       "unicode"
     ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -1535,6 +1931,12 @@
       "diagnostics",
       "error-handling",
       "warnings"
+    ],
+    "gams": [
+      {
+        "code": "R",
+        "label": "Service routines"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -1562,6 +1964,12 @@
       "floating-point",
       "numerical-testing",
       "unit-testing"
+    ],
+    "gams": [
+      {
+        "code": "S",
+        "label": "Software development tools"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -1595,6 +2003,20 @@
       "smoothing",
       "splines"
     ],
+    "gams": [
+      {
+        "code": "E",
+        "label": "Interpolation"
+      },
+      {
+        "code": "H",
+        "label": "Differentiation, integration"
+      },
+      {
+        "code": "K",
+        "label": "Approximation"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -1625,6 +2047,16 @@
       "linear-systems",
       "sparse-matrices"
     ],
+    "gams": [
+      {
+        "code": "D",
+        "label": "Linear Algebra"
+      },
+      {
+        "code": "K",
+        "label": "Approximation"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -1648,6 +2080,12 @@
       "precision",
       "real-arithmetic",
       "thread-safe"
+    ],
+    "gams": [
+      {
+        "code": "A",
+        "label": "Arithmetic, error analysis"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -1686,6 +2124,12 @@
       "ode",
       "runge-kutta"
     ],
+    "gams": [
+      {
+        "code": "I",
+        "label": "Differential and integral equations"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -1721,6 +2165,12 @@
       "initial-value-problems",
       "ode"
     ],
+    "gams": [
+      {
+        "code": "I",
+        "label": "Differential and integral equations"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -1747,6 +2197,12 @@
       "multistep-methods",
       "ode",
       "stiff-equations"
+    ],
+    "gams": [
+      {
+        "code": "I",
+        "label": "Differential and integral equations"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -1783,6 +2239,12 @@
       "reproducibility",
       "stochastic-methods"
     ],
+    "gams": [
+      {
+        "code": "G",
+        "label": "Optimization"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -1810,6 +2272,16 @@
       "strings",
       "tabular-data",
       "type-conversion"
+    ],
+    "gams": [
+      {
+        "code": "A",
+        "label": "Arithmetic, error analysis"
+      },
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -1841,6 +2313,12 @@
       "linked-lists",
       "polymorphism"
     ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -1871,6 +2349,12 @@
       "sampled-data",
       "signal-processing"
     ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -1899,6 +2383,12 @@
       "constrained-optimization",
       "derivative-free",
       "optimization"
+    ],
+    "gams": [
+      {
+        "code": "G",
+        "label": "Optimization"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -1975,6 +2465,16 @@
       "regression",
       "statistics"
     ],
+    "gams": [
+      {
+        "code": "L",
+        "label": "Statistics, probability"
+      },
+      {
+        "code": "M",
+        "label": "Simulation, stochastic modeling"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -2027,6 +2527,20 @@
       "signal-processing",
       "spectral-analysis"
     ],
+    "gams": [
+      {
+        "code": "J",
+        "label": "Integral transforms"
+      },
+      {
+        "code": "K",
+        "label": "Approximation"
+      },
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -2065,6 +2579,16 @@
       "linear-algebra",
       "linear-systems",
       "sparse-matrices"
+    ],
+    "gams": [
+      {
+        "code": "D",
+        "label": "Linear Algebra"
+      },
+      {
+        "code": "K",
+        "label": "Approximation"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -2130,6 +2654,12 @@
       "quasi-newton",
       "sparse-matrices"
     ],
+    "gams": [
+      {
+        "code": "F",
+        "label": "Solution of nonlinear equations"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -2177,6 +2707,12 @@
       "physical-constants",
       "physics",
       "uncertainty"
+    ],
+    "gams": [
+      {
+        "code": "Z",
+        "label": "Other"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -2245,6 +2781,12 @@
       "toeplitz-matrices",
       "tridiagonal-matrices"
     ],
+    "gams": [
+      {
+        "code": "D",
+        "label": "Linear Algebra"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -2303,6 +2845,16 @@
       "physical-units",
       "type-safety",
       "unit-conversion"
+    ],
+    "gams": [
+      {
+        "code": "A",
+        "label": "Arithmetic, error analysis"
+      },
+      {
+        "code": "Z",
+        "label": "Other"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -2388,6 +2940,16 @@
       "statistics",
       "svd"
     ],
+    "gams": [
+      {
+        "code": "D",
+        "label": "Linear Algebra"
+      },
+      {
+        "code": "L",
+        "label": "Statistics, probability"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -2414,6 +2976,16 @@
       "gradient-based-optimization",
       "machine-learning",
       "neural-networks"
+    ],
+    "gams": [
+      {
+        "code": "G",
+        "label": "Optimization"
+      },
+      {
+        "code": "K",
+        "label": "Approximation"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -2471,6 +3043,12 @@
       "matrix-exponentials",
       "svd"
     ],
+    "gams": [
+      {
+        "code": "D",
+        "label": "Linear Algebra"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -2508,6 +3086,12 @@
       "complex-arithmetic",
       "polynomials",
       "root-finding"
+    ],
+    "gams": [
+      {
+        "code": "F",
+        "label": "Solution of nonlinear equations"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -2552,6 +3136,12 @@
       "sql",
       "sqlite"
     ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -2580,6 +3170,12 @@
       "ellipsoids",
       "geodesics",
       "geodesy"
+    ],
+    "gams": [
+      {
+        "code": "P",
+        "label": "Computational geometry"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -2619,6 +3215,12 @@
       "simulated-annealing",
       "stochastic-methods"
     ],
+    "gams": [
+      {
+        "code": "G",
+        "label": "Optimization"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -2654,6 +3256,20 @@
       "regression",
       "statistics"
     ],
+    "gams": [
+      {
+        "code": "G",
+        "label": "Optimization"
+      },
+      {
+        "code": "K",
+        "label": "Approximation"
+      },
+      {
+        "code": "L",
+        "label": "Statistics, probability"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -2674,6 +3290,16 @@
       "point-sets",
       "quasi-random",
       "random-numbers"
+    ],
+    "gams": [
+      {
+        "code": "L",
+        "label": "Statistics, probability"
+      },
+      {
+        "code": "P",
+        "label": "Computational geometry"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -2710,6 +3336,12 @@
       "ode",
       "runge-kutta"
     ],
+    "gams": [
+      {
+        "code": "I",
+        "label": "Differential and integral equations"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -2729,6 +3361,16 @@
       "number-parsing",
       "strings",
       "type-conversion"
+    ],
+    "gams": [
+      {
+        "code": "A",
+        "label": "Arithmetic, error analysis"
+      },
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -2767,6 +3409,12 @@
       "differentiation",
       "higher-order-derivatives"
     ],
+    "gams": [
+      {
+        "code": "H",
+        "label": "Differentiation, integration"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -2790,6 +3438,12 @@
       "gaussian-quadrature",
       "multidimensional",
       "quadrature"
+    ],
+    "gams": [
+      {
+        "code": "H",
+        "label": "Differentiation, integration"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -2819,6 +3473,12 @@
       "random-numbers",
       "reproducibility"
     ],
+    "gams": [
+      {
+        "code": "L",
+        "label": "Statistics, probability"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -2847,6 +3507,12 @@
       "matrix-operations",
       "vector-operations"
     ],
+    "gams": [
+      {
+        "code": "D",
+        "label": "Linear Algebra"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -2871,6 +3537,12 @@
       "linear-algebra",
       "matrix-vector-products",
       "sparse-matrices"
+    ],
+    "gams": [
+      {
+        "code": "D",
+        "label": "Linear Algebra"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -2899,6 +3571,12 @@
       "meshes",
       "point-sets"
     ],
+    "gams": [
+      {
+        "code": "P",
+        "label": "Computational geometry"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -2919,6 +3597,12 @@
       "linear-systems",
       "sparse-matrices",
       "symmetric-systems"
+    ],
+    "gams": [
+      {
+        "code": "D",
+        "label": "Linear Algebra"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -2953,6 +3637,12 @@
       "differentiation",
       "finite-differences"
     ],
+    "gams": [
+      {
+        "code": "H",
+        "label": "Differentiation, integration"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -2977,6 +3667,12 @@
       "boundary-value-problems",
       "differential-equations"
     ],
+    "gams": [
+      {
+        "code": "I",
+        "label": "Differential and integral equations"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -3000,6 +3696,12 @@
       "gamma-functions",
       "special-functions"
     ],
+    "gams": [
+      {
+        "code": "C",
+        "label": "Elementary and special functions"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -3019,6 +3721,12 @@
       "logistic-regression",
       "regression",
       "statistics"
+    ],
+    "gams": [
+      {
+        "code": "L",
+        "label": "Statistics, probability"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -3042,6 +3750,16 @@
       "astronomy",
       "coordinate-transformations",
       "iau-sofa"
+    ],
+    "gams": [
+      {
+        "code": "P",
+        "label": "Computational geometry"
+      },
+      {
+        "code": "Z",
+        "label": "Other"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -3071,6 +3789,12 @@
       "nlopt",
       "nonlinear-optimization",
       "optimization"
+    ],
+    "gams": [
+      {
+        "code": "G",
+        "label": "Optimization"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -3200,6 +3924,12 @@
       "krylov-methods",
       "root-finding"
     ],
+    "gams": [
+      {
+        "code": "I",
+        "label": "Differential and integral equations"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -3227,6 +3957,12 @@
       "paths",
       "portability"
     ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -3249,6 +3985,12 @@
       "text-processing",
       "unicode",
       "utf-8"
+    ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -3273,6 +4015,16 @@
       "strings",
       "type-conversion"
     ],
+    "gams": [
+      {
+        "code": "A",
+        "label": "Arithmetic, error analysis"
+      },
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -3295,6 +4047,12 @@
       "strings",
       "text-processing",
       "variable-length-strings"
+    ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -3328,6 +4086,12 @@
       "gradient-descent",
       "nelder-mead",
       "optimization"
+    ],
+    "gams": [
+      {
+        "code": "G",
+        "label": "Optimization"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -3370,6 +4134,16 @@
       "images",
       "pnm"
     ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      },
+      {
+        "code": "Q",
+        "label": "Graphics"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -3401,6 +4175,12 @@
       "netcdf",
       "scientific-data"
     ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -3421,6 +4201,16 @@
       "multidimensional",
       "signal-processing",
       "smoothing"
+    ],
+    "gams": [
+      {
+        "code": "J",
+        "label": "Integral transforms"
+      },
+      {
+        "code": "K",
+        "label": "Approximation"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -3454,6 +4244,12 @@
       "quadrature",
       "weighted-integrals"
     ],
+    "gams": [
+      {
+        "code": "H",
+        "label": "Differentiation, integration"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -3482,6 +4278,12 @@
       "fourier-transforms",
       "language-bindings",
       "signal-processing"
+    ],
+    "gams": [
+      {
+        "code": "J",
+        "label": "Integral transforms"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -3518,6 +4320,12 @@
       "metadata",
       "scientific-data"
     ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -3545,6 +4353,16 @@
       "matrix-ordering",
       "sparse-matrices"
     ],
+    "gams": [
+      {
+        "code": "D",
+        "label": "Linear Algebra"
+      },
+      {
+        "code": "P",
+        "label": "Computational geometry"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -3569,6 +4387,16 @@
       "expression-parsing",
       "mathematical-expressions",
       "parsing"
+    ],
+    "gams": [
+      {
+        "code": "C",
+        "label": "Elementary and special functions"
+      },
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -3600,6 +4428,12 @@
       "base64",
       "encoding",
       "serialization"
+    ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -3633,6 +4467,12 @@
       "language-bindings",
       "lossless-compression",
       "zlib"
+    ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -3699,6 +4539,12 @@
       "thermodynamics",
       "water"
     ],
+    "gams": [
+      {
+        "code": "Z",
+        "label": "Other"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -3741,6 +4587,12 @@
       "lapack",
       "linear-algebra",
       "sparse-matrices"
+    ],
+    "gams": [
+      {
+        "code": "D",
+        "label": "Linear Algebra"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -3793,6 +4645,20 @@
       "optimization",
       "root-finding"
     ],
+    "gams": [
+      {
+        "code": "F",
+        "label": "Solution of nonlinear equations"
+      },
+      {
+        "code": "G",
+        "label": "Optimization"
+      },
+      {
+        "code": "K",
+        "label": "Approximation"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -3824,6 +4690,12 @@
       "coordinate-transformations",
       "geodesy",
       "geographic-coordinates"
+    ],
+    "gams": [
+      {
+        "code": "P",
+        "label": "Computational geometry"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -3860,6 +4732,12 @@
       "pcre2",
       "regular-expressions",
       "text-processing"
+    ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -3925,6 +4803,12 @@
       "isotopes",
       "physical-properties"
     ],
+    "gams": [
+      {
+        "code": "Z",
+        "label": "Other"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -3947,6 +4831,12 @@
       "pseudorandom",
       "random-numbers",
       "reproducibility"
+    ],
+    "gams": [
+      {
+        "code": "L",
+        "label": "Statistics, probability"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -3982,6 +4872,12 @@
       "lossless-compression",
       "zstandard"
     ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -4006,6 +4902,12 @@
       "defaults",
       "input-parameters",
       "parsing"
+    ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -4045,6 +4947,12 @@
       "strings",
       "text-processing",
       "type-conversion"
+    ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -4098,6 +5006,12 @@
       "implicit-methods",
       "ode"
     ],
+    "gams": [
+      {
+        "code": "I",
+        "label": "Differential and integral equations"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -4125,6 +5039,12 @@
       "statistics",
       "uncertainty"
     ],
+    "gams": [
+      {
+        "code": "L",
+        "label": "Statistics, probability"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -4151,6 +5071,12 @@
       "nonlinear-optimization",
       "optimization",
       "reverse-communication"
+    ],
+    "gams": [
+      {
+        "code": "G",
+        "label": "Optimization"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -4202,6 +5128,12 @@
       "particle-swarm",
       "stochastic-methods"
     ],
+    "gams": [
+      {
+        "code": "G",
+        "label": "Optimization"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -4251,6 +5183,12 @@
       "splines",
       "tabulated-data"
     ],
+    "gams": [
+      {
+        "code": "E",
+        "label": "Interpolation"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -4273,6 +5211,12 @@
       "file-io",
       "huffman-coding",
       "lossless-compression"
+    ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -4299,6 +5243,12 @@
       "elementary-functions",
       "exponential-functions",
       "logarithms"
+    ],
+    "gams": [
+      {
+        "code": "C",
+        "label": "Elementary and special functions"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -4328,6 +5278,12 @@
       "autocorrelation",
       "statistics",
       "time-series"
+    ],
+    "gams": [
+      {
+        "code": "L",
+        "label": "Statistics, probability"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -4374,6 +5330,16 @@
       "nearest-neighbors",
       "spatial-indexing"
     ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      },
+      {
+        "code": "P",
+        "label": "Computational geometry"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -4394,6 +5360,16 @@
       "images",
       "language-bindings",
       "png"
+    ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      },
+      {
+        "code": "Q",
+        "label": "Graphics"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -4427,6 +5403,12 @@
       "png",
       "vector-graphics"
     ],
+    "gams": [
+      {
+        "code": "Q",
+        "label": "Graphics"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -4449,6 +5431,12 @@
       "constraint-solving",
       "puzzles",
       "sudoku"
+    ],
+    "gams": [
+      {
+        "code": "Z",
+        "label": "Other"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -4482,6 +5470,12 @@
       "stiff-equations",
       "thread-safe"
     ],
+    "gams": [
+      {
+        "code": "I",
+        "label": "Differential and integral equations"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -4512,6 +5506,12 @@
       "linear-algebra",
       "linear-systems",
       "matrix-free"
+    ],
+    "gams": [
+      {
+        "code": "D",
+        "label": "Linear Algebra"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -4559,6 +5559,12 @@
       "parsing",
       "text-processing"
     ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -4587,6 +5593,16 @@
       "minimax",
       "optimization",
       "quadratic-programming"
+    ],
+    "gams": [
+      {
+        "code": "G",
+        "label": "Optimization"
+      },
+      {
+        "code": "K",
+        "label": "Approximation"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -4619,6 +5635,16 @@
       "containers",
       "graphs"
     ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      },
+      {
+        "code": "P",
+        "label": "Computational geometry"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -4641,6 +5667,12 @@
       "messagepack",
       "serialization"
     ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -4662,6 +5694,12 @@
       "arrays",
       "file-io",
       "memory-mapped-files"
+    ],
+    "gams": [
+      {
+        "code": "N",
+        "label": "Data handling"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -4708,6 +5746,12 @@
       "multidimensional",
       "quadrature"
     ],
+    "gams": [
+      {
+        "code": "H",
+        "label": "Differentiation, integration"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -4743,6 +5787,12 @@
       "rosenbrock-methods",
       "stiff-equations"
     ],
+    "gams": [
+      {
+        "code": "I",
+        "label": "Differential and integral equations"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -4763,6 +5813,12 @@
       "linear-algebra",
       "matrix-vector-products",
       "sparse-matrices"
+    ],
+    "gams": [
+      {
+        "code": "D",
+        "label": "Linear Algebra"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -4791,6 +5847,12 @@
       "optimization",
       "sequential-quadratic-programming"
     ],
+    "gams": [
+      {
+        "code": "G",
+        "label": "Optimization"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -4815,6 +5877,12 @@
       "constrained-optimization",
       "nearly-linear-problems",
       "optimization"
+    ],
+    "gams": [
+      {
+        "code": "G",
+        "label": "Optimization"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -4888,6 +5956,12 @@
       "pseudoinverse",
       "svd"
     ],
+    "gams": [
+      {
+        "code": "D",
+        "label": "Linear Algebra"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -4958,6 +6032,20 @@
       "newton-methods",
       "nonlinear-equations"
     ],
+    "gams": [
+      {
+        "code": "D",
+        "label": "Linear Algebra"
+      },
+      {
+        "code": "F",
+        "label": "Solution of nonlinear equations"
+      },
+      {
+        "code": "H",
+        "label": "Differentiation, integration"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -4988,6 +6076,12 @@
       "multidimensional",
       "quadrature"
     ],
+    "gams": [
+      {
+        "code": "H",
+        "label": "Differentiation, integration"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -5008,6 +6102,12 @@
       "linear-systems",
       "lu-factorization",
       "sparse-matrices"
+    ],
+    "gams": [
+      {
+        "code": "D",
+        "label": "Linear Algebra"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -5061,6 +6161,12 @@
       "lapack",
       "linear-algebra"
     ],
+    "gams": [
+      {
+        "code": "D",
+        "label": "Linear Algebra"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -5095,6 +6201,12 @@
       "ode",
       "runge-kutta"
     ],
+    "gams": [
+      {
+        "code": "I",
+        "label": "Differential and integral equations"
+      }
+    ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
@@ -5126,6 +6238,20 @@
       "matlab-like",
       "numerical-methods",
       "statistics"
+    ],
+    "gams": [
+      {
+        "code": "D",
+        "label": "Linear Algebra"
+      },
+      {
+        "code": "E",
+        "label": "Interpolation"
+      },
+      {
+        "code": "L",
+        "label": "Statistics, probability"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -5163,6 +6289,16 @@
       "least-squares",
       "optimization",
       "trust-region"
+    ],
+    "gams": [
+      {
+        "code": "G",
+        "label": "Optimization"
+      },
+      {
+        "code": "K",
+        "label": "Approximation"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
@@ -5216,6 +6352,16 @@
       "fourier-transforms",
       "linear-systems",
       "numerical-methods"
+    ],
+    "gams": [
+      {
+        "code": "D",
+        "label": "Linear Algebra"
+      },
+      {
+        "code": "J",
+        "label": "Integral transforms"
+      }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   }

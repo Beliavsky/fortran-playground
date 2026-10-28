@@ -49,6 +49,7 @@ let exporting = false, exportRuntime;
 get('compiler').value = 'gfortran';
 get('package-sort').value = 'name';
 get('package-topic-source').value = 'combined';
+get('package-gams').value = '';
 
 function controls() {
   const consumer = get('workflow').value === 'consumer';
@@ -83,6 +84,8 @@ function controls() {
   get('package-category').disabled = busy || collectionLoading;
   get('package-sort').disabled = busy || collectionLoading || translatedCollection();
   get('package-topic-source').disabled = busy || collectionLoading;
+  get('package-gams').disabled = busy || collectionLoading || translatedCollection();
+  get('package-gams-controls').hidden = translatedCollection();
   for (const button of searchButtons) button.disabled = busy;
   for (const button of topicButtons) button.disabled = busy;
   const selected = packages.find(p => p.id === get('available-package').value);
@@ -142,6 +145,23 @@ function searchableTopics(packageEntry) {
     ...(get('package-topic-source').value === 'github' ? [] : packageEntry?.playground_topics || [])])];
 }
 
+function renderGams(packageEntry) {
+  const container = get('package-gams-details');
+  const classes = packageEntry?.gams || [];
+  container.replaceChildren();
+  container.hidden = !classes.length;
+  if (!classes.length) return;
+  const label = document.createElement('span'); label.textContent = 'GAMS classes:'; container.appendChild(label);
+  for (const {code, label} of classes) {
+    const link = document.createElement('a');
+    link.textContent = `${code} — ${label}`;
+    link.href = `https://gams.nist.gov/cgi-bin/serve.cgi/Class/${code}`;
+    link.target = '_blank'; link.rel = 'noopener noreferrer';
+    link.setAttribute('aria-label', `NIST GAMS class ${code}: ${label}`);
+    container.appendChild(link);
+  }
+}
+
 function renderTopics(packageEntry) {
   const container = get('package-topics');
   container.replaceChildren();
@@ -173,6 +193,8 @@ function renderPackages() {
   const previous = get('available-package').value;
   const query = get('package-search').value.trim().toLowerCase();
   const category = get('package-category').value;
+  const gamsClass = get('package-gams').value;
+  const gamsQuery = /^gams\s*:?\s*([a-sz])$/i.exec(query)?.[1].toUpperCase();
   get('package-sort').disabled = busy || translatedCollection() || collectionLoading;
   get('package-sort').title = translatedCollection() ? 'Translated R packages share one GitHub repository; sorted by name.' : '';
   if (translatedCollection()) get('package-sort').value = 'name';
@@ -181,9 +203,12 @@ function renderPackages() {
   const byName = (a, b) => (a.name || a.id).localeCompare(b.name || b.id, 'en', {sensitivity: 'base', numeric: true})
     || a.repository.localeCompare(b.repository, 'en');
   const visible = packages.filter(p => {
-    const text = `${p.id} ${p.name || ''} ${p.repository} ${p.description} ${packageCategories(p).join(' ')} ${(p.keywords || []).join(' ')} ${searchableTopics(p).join(' ')}`.toLowerCase();
-    return (!category || packageCategories(p).includes(category)) && (text.includes(query)
-      || text.replace(/[-_]+/g, ' ').includes(query.replace(/[-_]+/g, ' ')));
+    const classes = p.gams || [];
+    const text = `${p.id} ${p.name || ''} ${p.repository} ${p.description} ${packageCategories(p).join(' ')} ${(p.keywords || []).join(' ')} ${searchableTopics(p).join(' ')} ${classes.map(c => c.label).join(' ')}`.toLowerCase();
+    return (!category || packageCategories(p).includes(category))
+      && (!gamsClass || classes.some(c => c.code === gamsClass))
+      && (gamsQuery ? classes.some(c => c.code === gamsQuery) : text.includes(query)
+        || text.replace(/[-_]+/g, ' ').includes(query.replace(/[-_]+/g, ' ')));
   }).sort((a, b) => (starSort ? starCount(b) - starCount(a) : 0) || byName(a, b));
   const starLabel = p => !starSort ? '' : starCount(p) < 0 ? ' [stars unavailable]' : ` [${p.stars} stars]`;
   const starNote = get('package-stars-note');
@@ -208,6 +233,7 @@ function renderPackages() {
     : visible.some(p => p.id === previous) ? previous : '';
   get('package-count').textContent = `${visible.length} of ${packages.length} packages`;
   renderTopics(packages.find(p => p.id === get('available-package').value));
+  renderGams(packages.find(p => p.id === get('available-package').value));
   const matches = get('package-search-results');
   matches.replaceChildren();
   searchButtons = [];
@@ -227,13 +253,16 @@ function renderPackages() {
     }
     if (!visible.length) {
       const message = document.createElement('span');
-      message.textContent = `No matches in ${collectionLabels[get('package-collection').value]}${category ? ' / ' + category : ''}.`;
+      message.textContent = `No matches in ${collectionLabels[get('package-collection').value]}${category ? ' / ' + category : ''}${gamsClass ? ' / GAMS ' + gamsClass : ''}.`;
       matches.appendChild(message);
       const button = document.createElement('button'); button.type = 'button'; button.disabled = busy;
       const nextCollection = translatedCollection() ? 'general' : allCollection() ? 'translated-r' : allPackagesEnabled ? 'all' : 'translated-r';
-      button.textContent = category ? 'Search all categories' : `Search ${collectionLabels[nextCollection]}`;
+      button.textContent = category ? 'Search all categories' : gamsClass ? 'Search all GAMS classes'
+        : gamsQuery ? 'Clear GAMS search' : `Search ${collectionLabels[nextCollection]}`;
       button.addEventListener('click', async () => {
         if (category) get('package-category').value = '';
+        else if (gamsClass) get('package-gams').value = '';
+        else if (gamsQuery) get('package-search').value = '';
         else {
           get('package-collection').value = nextCollection;
           await selectCollection();
@@ -253,11 +282,13 @@ get('package-search').addEventListener('input', renderPackages);
 get('package-category').addEventListener('change', renderPackages);
 get('package-sort').addEventListener('change', renderPackages);
 get('package-topic-source').addEventListener('change', renderPackages);
+get('package-gams').addEventListener('change', renderPackages);
 
 async function selectCollection() {
   if (!allPackagesEnabled && allCollection()) get('package-collection').value = 'general';
   const generation = ++collectionGeneration;
   const translated = translatedCollection();
+  get('package-gams').value = '';
   get('subdirectory-label').hidden = !translated;
   get('subdirectory').hidden = !translated;
   if (!translated) {
@@ -515,6 +546,7 @@ get('example').addEventListener('change', controls);
 function selectPackage() {
   const selected = packages.find(p => p.id === get('available-package').value);
   renderTopics(selected);
+  renderGams(selected);
   sourceLinks(selected);
   const note = get('package-note');
   note.textContent = selected
