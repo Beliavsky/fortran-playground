@@ -120,7 +120,8 @@
     <button id="load-file" type="button">Load Fortran file</button>
     <input id="file" type="file" accept=".f90,.f95,.f03,.f08,text/plain" hidden>
     <button id="download" type="button">Download Fortran</button>
-    <button id="share" type="button">Copy share link</button>
+    <button id="share" type="button">Copy code link</button>
+    <button id="share-state" type="button" title="Includes code, standard input, and current settings">Copy state link</button>
     <button id="connect" type="button">Reconnect</button>
   </div>
   <p id="file-status" class="version" role="status">Files are read locally; compiling sends source to the service.</p>
@@ -132,9 +133,14 @@
     <p id="owner-status" class="version" role="status">Owner requests bypass usage quotas. The key is kept only in this page.</p>
   </details>
   <p id="share-status" class="version" role="status"></p>
+  <p id="share-state-status" class="version" role="status"></p>
+  <div id="share-state-field" hidden>
+    <label for="share-state-link">State link (includes code and standard input)</label>
+    <input id="share-state-link" type="text" readonly>
+  </div>
   <details id="program-input">
     <summary>Program input (stdin)</summary>
-    <p class="version">Optional UTF-8 text, up to 100 KB. The program receives all input followed by end-of-file. Input is sent only when running and is omitted from share links.</p>
+    <p class="version">Optional UTF-8 text, up to 100 KB. The program receives all input followed by end-of-file. State links include input; code-only links omit it. Input is sent to the execution service only when running.</p>
     <label for="stdin">Input for read(*,*)</label>
     <textarea id="stdin" rows="4" spellcheck="false" aria-describedby="stdin-status"></textarea>
     <button id="load-stdin" type="button">Load input file</button>

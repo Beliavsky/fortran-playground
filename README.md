@@ -48,7 +48,7 @@ FPM packages can also be used from the command line: `python xplayground_run.py 
 1. Choose an example, load a local Fortran file, or write your own program.
 2. Select an available compiler or interpreter and, optionally, a language standard and compiler options.
 3. Click **Compile** to build without execution, or **Compile and Run** to build and execute.
-4. Edit the program and repeat. Use **Download Fortran** to save the source, or **Copy share link** to share it.
+4. Edit the program and repeat. Use **Download Fortran** to save the source, or **Copy code link** to share it.
 
 The editor provides syntax coloring, line counts, undo, and navigation to recognized source errors. A plain-text fallback remains available if the enhanced editor cannot load. Wide screens show the editor and results side by side; narrow screens stack them. Execution controls stay visible above the source pane.
 
@@ -76,9 +76,9 @@ Select a compiler's name in the table to inspect its build log, version, and out
 
 Enable **Show all outputs** above the timing table to display a section for every selected compiler, in submission order, below the editor. Each section shows its status, version, program output, and a collapsible compilation log. Successful build logs start collapsed; failed jobs start with their logs expanded. Empty program output is distinguished from an operation that did not run. Standard output and standard error are shown separately with whitespace preserved. The editor expands when the individual output panes are hidden; Fortitude checks can still be shown. This view updates as results arrive, submits no additional jobs, and is saved as a browser preference. The individual-compiler view remains the default.
 
-**Copy all results** copies the current comparison's compiler versions, settings, effective flags, timings, diagnostics, and program output as plain text. It includes failed and skipped entries and marks results retained from an earlier source/settings snapshot. If clipboard access is unavailable, a selected text area lets you copy the report manually. The report does not include source code, stdin, or owner credentials; use **Copy share link** to share the source separately.
+**Copy all results** copies the current comparison's compiler versions, settings, effective flags, timings, diagnostics, and program output as plain text. It includes failed and skipped entries and marks results retained from an earlier source/settings snapshot. If clipboard access is unavailable, a selected text area lets you copy the report manually. The report does not include source code, stdin, or owner credentials; use **Copy code link** to share the source separately.
 
-Share links preserve the combined source, interface, preprocessing, and coarray image count. Compiler checkbox selections, additional options, other compiler settings, and stdin are not embedded. Opening a comparison link never submits jobs; the recipient chooses compilers and settings before running. The comparison interface uses the existing backend API and needs no backend redeployment.
+Code-only links preserve the combined source, interface, preprocessing, and coarray image count. Compiler checkbox selections, additional options, other compiler settings, and stdin are not embedded. Opening a comparison link never submits jobs; the recipient chooses compilers and settings before running. The comparison interface uses the existing backend API and needs no backend redeployment.
 
 ### Compilers, standards, and execution
 
@@ -149,7 +149,7 @@ External loading requires the updated hosted backend. The service fetches public
 
 ### Editor indentation
 
-Automatic indentation is enabled by default with **three spaces** per level. The **Indent** menu offers 2, 3, or 4 spaces; **Auto-indent** switches automatic indentation on or off. Both preferences are saved in this browser, apply in every interface, and are not included in share links. Changing a preference does not rewrite source or invalidate a compiled executable.
+Automatic indentation is enabled by default with **three spaces** per level. The **Indent** menu offers 2, 3, or 4 spaces; **Auto-indent** switches automatic indentation on or off. Both preferences are saved in this browser and apply in every interface. State links preserve them; code-only links omit them. Changing a preference does not rewrite source or invalidate a compiled executable.
 
 Enter after a recognized loop, block IF, SELECT, program, module, or procedure indents the next line. Closing statements align with their opening statement; ELSE/ELSE IF align with IF, and CASE branches indent under SELECT. Tab inserts spaces or indents selected lines; Shift+Tab unindents. Escape leaves the editor. These controls also work in the plain-text fallback.
 
@@ -180,9 +180,22 @@ Recognized errors in the submitted `input_p.f90` source receive a red line backg
 - Programs run in isolated environments without network access.
 - Compilation, execution, formatting, and checking require an explicit button click.
 
+## Restoring playground state with a link
+
+Use **Copy state link** on the general or FPM playground to save a reproducible page snapshot. Clipboard fallback provides a selected text field for manual copying. Opening a state link restores the page without compiling or running anything.
+
+- **General playground:** edited source and stdin; Simple/Advanced/Compare mode; compiler and comparison selections; standard, preset, flags and per-compiler additional options; preprocessing and coarray images; stop-on-failure and output-comparison settings; indentation preferences; ordered external source rows and their loaded snapshots. External snapshots are restored without downloading their URLs again.
+- **FPM playground:** collection, search/category/topic/GAMS filters, sort and list selection; package URL, revision and subdirectory; edited main and stdin; compiler, workflow, action, target patterns, preprocessing and output-view preference. This works in the hosted and main local FPM pages.
+
+State links include code and standard input, so anyone with the link can read both. Owner keys, service/session tokens, execution results and compiled artifacts are excluded. Browser theme and focus preferences remain local. Local links still require a running local server and the recipient's own local session; tokens are never embedded. Restart an existing local FPM server after this update to serve the new sharing module.
+
+The URL fragment uses a versioned `#state=v1.?` format. Unknown versions, invalid fields and oversized states are rejected. Code and stdin each have a 100 KB limit; combined general/external source keeps its existing 100 KB limit. A long-link notice appears above 8,000 URL characters because some sites truncate large links. There is no server-side link storage or short-link service. Existing code-only and query-setting links continue to work; a state snapshot takes precedence over query settings. Missing compilers/catalog selections are reported, and the user chooses when to run.
+
+No Modal redeployment is required; publish the frontend normally.
+
 ## Sharing code with a link
 
-Click **Copy share link** to create a link containing the current source, selected interface mode, preprocessing setting, and coarray image count when enabled. If clipboard access is unavailable, a selected text field lets you copy it manually. Anyone opening the link sees the code in the editor and chooses when to compile or run it. The link does not include compiler selections, other compiler flags, results, or session tokens.
+Click **Copy code link** to create a link containing the current source, selected interface mode, preprocessing setting, and coarray image count when enabled. If clipboard access is unavailable, a selected text field lets you copy it manually. Anyone opening the link sees the code in the editor and chooses when to compile or run it. The link does not include compiler selections, other compiler flags, results, or session tokens.
 
 The public format is:
 
@@ -190,7 +203,7 @@ The public format is:
 https://beliavsky.github.io/fortran-playground/#code=URL_ENCODED_FORTRAN
 ```
 
-This format, including existing generated links, opens Simple. Append `&interface=advanced` to request Advanced, or `&interface=simple` to select Simple explicitly. **Copy share link** writes the selected mode explicitly. Percent-encode the complete source before appending options; literal ampersands in the program must be encoded as `%26`.
+This format, including existing generated links, opens Simple. Append `&interface=advanced` to request Advanced, or `&interface=simple` to select Simple explicitly. **Copy code link** writes the selected mode explicitly. Percent-encode the complete source before appending options; literal ampersands in the program must be encoded as `%26`.
 
 Append `&preprocess=1` to request preprocessing. It opens Advanced automatically when the interface is unspecified. An explicit `interface=simple` combined with `preprocess=1` is rejected because Simple always turns preprocessing off. Copied links preserve preprocessing when enabled; it defaults to off when absent. `preprocess=0` explicitly requests off. Other compiler settings are not included.
 
@@ -324,7 +337,7 @@ python xplayground_run.py example.f90 --stdin-file data.txt --compilers gfortran
 
 The same input is supplied to each compiler's run, followed by end-of-file. Input is limited to 100 KB of UTF-8 text; an optional BOM is removed and line endings are normalized. `--stdin-file` cannot be combined with `--compile-only`. The service must advertise stdin support; older services report an error before any job is submitted.
 
-In the browser, expand **Program input (stdin)** to type input or load a text file. **Run Again** uses the current input without recompiling. **Compile**, formatting, and checks omit program input. Input is kept only in the current page and is omitted from share links; it is sent to the service when running. Empty input produces immediate end-of-file. For coarray programs, read input on image 1 and distribute values to other images.
+In the browser, expand **Program input (stdin)** to type input or load a text file. **Run Again** uses the current input without recompiling. **Compile**, formatting, and checks omit program input. Input is included in state links and omitted from code-only links; it is sent to the execution service when running. Empty input produces immediate end-of-file. For coarray programs, read input on image 1 and distribute values to other images.
 
 Source arguments can mix local paths and raw HTTPS URLs in compilation order, with modules before their callers. Each URL is downloaded once into client memory before contacting the execution service; all selected compilers receive the same combined snapshot. Downloads use verified HTTPS on port 443, timeouts, at most five redirects, and bounded sizes. HTTP URLs, URL credentials/fragments, compressed responses, HTML pages, empty content, NUL bytes, and invalid UTF-8 are rejected. Use raw-code links rather than GitHub file-view pages. Sources are not downloaded by the backend, and downloading does not consume Modal jobs.
 
@@ -360,7 +373,7 @@ python xplayground_run.py site/examples/22_coarray_exchange.f90 --compilers gfor
 python xplayground_run.py site/examples/22_coarray_exchange.f90 --compiler lfortran --images 2 --terse
 ```
 
-An options file may include `"common": {"images": 2}`. `--images` overrides that default. Every selected compiler must advertise the requested count before any jobs are submitted. Copy share link preserves enabled images using `&images=1`, `&images=2`, or `&images=4`; these links require Advanced and select stable GNU when loaded. As with preprocessing, an unsupported request is blocked rather than silently dropped. Old code links still open Simple by default.
+An options file may include `"common": {"images": 2}`. `--images` overrides that default. Every selected compiler must advertise the requested count before any jobs are submitted. Copy code link preserves enabled images using `&images=1`, `&images=2`, or `&images=4`; these links require Advanced and select stable GNU when loaded. As with preprocessing, an unsupported request is blocked rather than silently dropped. Old code links still open Simple by default.
 
 All images execute inside **one sandbox and count as one job**, sharing its existing CPU, memory, wall-time, output, and concurrency limits. For GNU, the backend sets `GFORTRAN_NUM_IMAGES` to the requested count, a **64 MB** shared-memory segment, and a bounded image-restart limit. For Intel, it initializes the installed MPI environment, sets `FOR_COARRAY_NUM_IMAGES`, selects the `shm` fabric, disables CPU pinning, and enables MPI wait mode. Flang and LFortran launch their executable with `GASNET_PSHM_NODES` set to the bounded image count and a 64 MB maximum GASNet segment per image. Intel multi-image jobs use Modal's isolated VM runtime so Intel MPI receives a real Linux CPU topology; other jobs use gVisor. External network access remains blocked. Run Again preserves the compiled build's image count; changing the selector invalidates it. These runs demonstrate parallel language behavior, not parallel speedup under the current CPU allocation. No arbitrary environment variables or raw coarray flags are accepted from clients.
 

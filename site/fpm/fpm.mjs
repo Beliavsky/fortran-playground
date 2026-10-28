@@ -4,16 +4,19 @@ import {serviceOrigin} from '../service_config.mjs';
 import {playgroundConfig} from '../config.mjs';
 import {githubRepository, pinnedSource, projectFiles, zipFiles, download} from './project_export.mjs';
 import {gamsSubclasses} from './gams_classes.mjs';
+import {captureState, copyStateLink, stateFromHash} from '../state_links.mjs';
 
 const get = id => document.getElementById(id);
 const localExecution = document.documentElement?.dataset?.execution === 'local';
+const initialStateHash = typeof location === 'undefined' ? '' : location.hash;
 let localToken = '';
 if (localExecution) {
   localToken = new URLSearchParams(location.hash.slice(1)).get('session') || '';
   try {
     if (localToken) sessionStorage.setItem('local-fortran-session', localToken);
     else localToken = sessionStorage.getItem('local-fortran-session') || '';
-    history.replaceState(null, '', location.pathname + location.search);
+    history.replaceState(null, '', location.pathname + location.search
+      + (/^#state=v1\.[A-Za-z0-9_-]+$/.test(initialStateHash) ? initialStateHash : ''));
   } catch {}
   for (const [id, path] of [['local-source-link', '/'], ['local-projects-link', '/fpm/projects/']]) {
     get(id).href = path + '#session=' + encodeURIComponent(localToken);
@@ -77,7 +80,8 @@ function controls() {
   if (ready && preprocessingUnavailable()) get('workflow-note').textContent = localExecution
     ? 'Restart the updated local server to enable preprocessing.'
     : 'Preprocessing requires the updated FPM backend deployment. Uncheck Preprocess to use package defaults.';
-  get('submit').disabled = busy || !ready || translatedUnavailable() || examplesUnavailable() || preprocessingUnavailable();
+  get('submit').disabled = busy || !ready || !Object.hasOwn(compilerLabels, get('compiler').value)
+    || translatedUnavailable() || examplesUnavailable() || preprocessingUnavailable();
   get('cancel').disabled = !busy || !job;
   for (const id of ['workflow', 'action', 'package-url', 'revision', 'subdirectory', 'target', 'example', 'package-collection']) get(id).disabled = busy;
   get('compiler').disabled = busy || !ready || !compilerSelection;
@@ -100,6 +104,7 @@ function controls() {
   get('download-main').disabled = busy;
   get('download-project').disabled = busy || exporting;
   get('preprocess').disabled = busy;
+  get('share-state').disabled = busy || collectionLoading;
   renderTargetChoices();
   editor.setReadOnly(busy);
   editor.refresh();
@@ -524,7 +529,8 @@ async function request(path, options = {}) {
 }
 
 async function submit() {
-  if (busy || !ready || translatedUnavailable() || examplesUnavailable() || preprocessingUnavailable()) return;
+  if (busy || !ready || !Object.hasOwn(compilerLabels, get('compiler').value)
+      || translatedUnavailable() || examplesUnavailable() || preprocessingUnavailable()) return;
   busy = true;
   job = '';
   controls();
@@ -696,6 +702,56 @@ get('copy').addEventListener('click', async () => {
   catch {get('output').focus(); get('output').select(); get('status').textContent = 'Select and copy the results';}
 });
 
+get('share-state').addEventListener('click', async () => {
+  get('share-state-field').hidden = true;
+  try {await copyStateLink(location.href, captureState('fpm', get, editor.getValue()), get);}
+  catch (error) {get('share-state-status').textContent = error.message;}
+});
+
+async function loadSharedState(hash, initial = false) {
+  try {
+    const state = stateFromHash(hash, 'fpm');
+    if (!state) return;
+    if (busy || collectionLoading || exporting) throw new Error('Wait for the current operation to finish before restoring state.');
+    if (!initial && !confirm('Replace the current package, code, input, and settings with this state link?')) return;
+    get('package-collection').value = state.values['package-collection'] || 'general';
+    const unavailableCollection = get('package-collection').value === 'all' && !allPackagesEnabled;
+    await selectCollection();
+    const filters = ['package-search', 'package-category', 'package-sort', 'package-topic-source', 'package-gams'];
+    for (const id of filters) if (Object.hasOwn(state.values, id)) get(id).value = state.values[id];
+    renderPackages();
+    if (state.values['package-gams-subclass']) {
+      get('package-gams-subclass').value = state.values['package-gams-subclass']; renderPackages();
+    }
+    const choice = state.values['available-package'] || '';
+    get('available-package').value = [...get('available-package').options].some(o => o.value === choice) ? choice : '';
+    selectPackage();
+    for (const [id, value] of Object.entries(state.values)) {
+      if (!filters.includes(id) && !['package-collection', 'package-gams-subclass', 'available-package', 'compiler'].includes(id)) get(id).value = value;
+    }
+    const compiler = state.values.compiler || 'gfortran';
+    const unavailableCompiler = !Object.hasOwn(compilerLabels, compiler);
+    if (![...get('compiler').options].some(o => o.value === compiler)) {
+      const option = document.createElement('option'); option.value = compiler;
+      option.textContent = `${compiler} (unavailable)`; option.disabled = true; get('compiler').appendChild(option);
+    }
+    get('compiler').value = compiler;
+    for (const [id, value] of Object.entries(state.checks)) get(id).checked = value;
+    editor.setValue(state.source); get('stdin').value = state.stdin;
+    lastResult = null; showBuildDetails = false;
+    get('output').value = ''; get('plot-results').replaceChildren(); renderOutput();
+    get('status').textContent = 'State restored';
+    const repository = githubRepository(get('package-url').value.trim());
+    sourceLinks(repository ? {repository, revision: get('revision').value.trim(), subdirectory: get('subdirectory').value.trim()} : null);
+    resetTargets(); get('target').value = state.values.target || ''; controls();
+    if (unavailableCompiler) get('submit').disabled = true;
+    get('share-state-status').textContent = 'Package state restored, including edited code and standard input. Choose an action when ready.'
+      + (unavailableCompiler ? ` Saved compiler ${compiler} is unavailable on this service.` : '')
+      + (unavailableCollection ? ' The All collection is unavailable; Selected packages is shown.' : '')
+      + (choice && get('available-package').value !== choice ? ' The saved package list selection no longer matches this catalog/filter; its URL and revision are retained.' : '');
+  } catch (error) {get('share-state-status').textContent = error.message;}
+}
+
 async function initialize() {
   controls();
   // Independent initialization: examples and the editor remain usable offline.
@@ -765,6 +821,9 @@ async function initialize() {
     ? 'Choose a package to load its pinned revision and a working main program. Loading does not run a job.'
     : 'Precompiled packages have not been deployed on this service yet. The existing examples and custom URLs remain available.';
   controls();
+  if (initialStateHash.startsWith('#state=')) {
+    await loadSharedState(initialStateHash, true); return;
+  }
   const linkedSettings = new URLSearchParams(typeof location !== 'undefined' ? location.search : '');
   const linkedCollection = linkedSettings.get('collection');
   const linkedPackage = linkedSettings.get('package');
@@ -801,3 +860,6 @@ if (typeof window !== 'undefined') {
   })();
 }
 await initialize();
+globalThis.addEventListener?.('hashchange', async () => {
+  if (location.hash.startsWith('#state=')) await loadSharedState(location.hash);
+});

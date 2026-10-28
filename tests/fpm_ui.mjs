@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
+import {createStateLink, stateFromHash} from '../site/state_links.mjs';
 import {playgroundConfig} from '../site/config.mjs';
 const allEnabled = process.argv.includes('--all-enabled')
   || (!process.argv.includes('--all-link') && playgroundConfig.enableAllFpmPackages === true);
@@ -34,6 +35,29 @@ if (driverLink || badDriverLink) {
   globalThis.location ||= new URL('https://example.test/fpm/');
   globalThis.location.searchParams.set('package', driverLink ? 'minpack' : 'fortran-lapack');
   globalThis.location.searchParams.set('example', 'gams-minpack-bard');
+}
+const stateLinkCase = process.argv.includes('--state-link');
+const translatedState = process.argv.includes('--state-translated');
+const missingStateCompiler = process.argv.includes('--state-unavailable');
+const savedPackage = JSON.parse(readFileSync(new URL(translatedState ? '../site/fpm/translated-r.json' : '../site/fpm/packages.json', import.meta.url), 'utf8'))
+  .find(p => p.id === (translatedState ? 'ABCoptim' : 'minpack'));
+const savedState = {version: 1, kind: 'fpm', source: '! edited main café λ\nprogram saved\nend program\n', stdin: '1.23\n',
+  values: {'package-collection': translatedState ? 'translated-r' : 'general', 'package-search': translatedState ? 'ABCoptim' : 'lmdif1',
+    'package-category': '', 'package-sort': 'name', 'package-topic-source': 'combined',
+    'package-gams': translatedState ? '' : 'G', 'package-gams-subclass': translatedState ? '' : 'G1b',
+    'available-package': savedPackage.id, 'package-url': `https://github.com/${savedPackage.repository}`,
+    revision: savedPackage.revision, subdirectory: savedPackage.subdirectory || '', workflow: 'package', action: 'example',
+    compiler: missingStateCompiler ? 'ifort' : 'gfortran', target: 'demo_* one?', example: ''},
+  checks: {preprocess: true, 'program-output-only': false}};
+const stateEvents = {};
+let copiedState = '', clipboardFailure = false;
+if (stateLinkCase) {
+  globalThis.location = new URL(createStateLink(localExecution ? 'http://localhost:8766/fpm/#session=private' : 'https://example.test/fpm/?owner=1', savedState));
+  globalThis.addEventListener = (event, fn) => {stateEvents[event] = fn;};
+  globalThis.confirm = () => true;
+  Object.defineProperty(globalThis, 'navigator', {configurable: true, value: {clipboard: {async writeText(value) {
+    if (clipboardFailure) throw new Error('Denied'); copiedState = value;
+  }}}});
 }
 const elements = new Map();
 const downloads = [], blobs = new Map();
@@ -118,6 +142,32 @@ globalThis.fetch = async (url, options = {}) => {
 const originalTimeout = globalThis.setTimeout;
 globalThis.setTimeout = fn => {queueMicrotask(fn); return 1;};
 const {resultText, programOutputText} = await import('../site/fpm/fpm.mjs');
+if (stateLinkCase) {
+  assert.equal(get('source').value, savedState.source);
+  assert.equal(get('stdin').value, savedState.stdin);
+  for (const id of ['package-collection', 'available-package', 'package-search', 'package-gams-subclass', 'package-url',
+    'revision', 'subdirectory', 'workflow', 'action', 'target', 'compiler']) assert.equal(get(id).value, savedState.values[id], id);
+  assert.equal(get('preprocess').checked, true);
+  assert.equal(get('program-output-only').checked, false);
+  if (missingStateCompiler) {
+    assert.equal(get('submit').disabled, true);
+    assert.match(get('share-state-status').textContent, /unavailable/);
+    get('stdin').listeners.input?.(); assert.equal(get('submit').disabled, true);
+  }
+  await get('share-state').listeners.click();
+  const roundtrip = stateFromHash(new URL(copiedState).hash, 'fpm');
+  assert.equal(roundtrip.source, savedState.source); assert.equal(roundtrip.stdin, savedState.stdin);
+  assert.deepEqual(roundtrip.values, savedState.values);
+  assert.ok(!copiedState.includes('private'));
+  clipboardFailure = true; await get('share-state').listeners.click();
+  assert.equal(get('share-state-field').hidden, false);
+  location.hash = '#state=v1.INVALID'; await stateEvents.hashchange();
+  assert.equal(get('source').value, savedState.source);
+  assert.match(get('share-state-status').textContent, /Cannot restore/);
+  assert.equal(submissions.length, 0);
+  console.log('FPM state restoration, filters, edited source, targets, stdin, missing compilers and token exclusion passed.');
+  process.exit(0);
+}
 if (driverLink || badDriverLink) {
   assert.equal(submissions.length, 0, 'Driver links never submit jobs');
   const driver = examples.find(e => e.gams_driver_id === 'minpack-bard');

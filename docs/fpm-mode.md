@@ -4,6 +4,12 @@ The separate [FPM page](https://beliavsky.github.io/fortran-playground/fpm/) use
 
 The page enables only compilers advertised by the service. Changing compilers clears target suggestions; it does not submit a job. Old pages continue using GNU 16 when no compiler is specified. The updated page also works with an older GNU-only API. Each submission uses a fresh sandbox. Verified [precompiled GNU 16 packages](fpm-precompiled.md) can reuse their libraries for a custom main program; other submissions build the whole dependency tree. `.mod` files and libraries are never shared across compilers. LFortran and ofort are not included in this package interface.
 
+## Share and restore state
+
+**Copy state link** saves the package URL/revision/subdirectory, current main program and stdin, compiler, workflow/action/targets, preprocessing, output view, and collection/search/category/topic/GAMS filters. The copied URL restores edited code independently of the catalog example. Opening it does not submit a job. The feature also works in the main local FPM page; local session tokens are excluded, so a recipient needs their own running local server/session. If clipboard access fails, a text field lets you copy the link manually.
+
+Anyone with the link can read the code and stdin. Long links may be truncated by messaging services; the page displays a notice. Missing compilers or catalog selections are reported. State links override settings-only query links and require no Modal redeployment. See [state sharing details](../README.md#restoring-playground-state-with-a-link).
+
 ## Using a package
 
 For Python clients and a local browser analog, see [FPM runners and the local package page](fpm-runners.md). The hosted runner uses this package service; local operations use installed FPM and compilers.

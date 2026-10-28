@@ -14,12 +14,14 @@ import {loadAllOutputs, saveAllOutputs, comparisonOutput, comparisonReport} from
 import {loadIndentation, saveIndentation} from './indentation.mjs';
 import {createOutputComparison} from './output_diff_ui.mjs';
 import {parseURLSettings} from './url_settings.mjs';
+import {captureState, copyStateLink, stateFromHash} from './state_links.mjs';
 
 const get = id => document.getElementById(id);
 const outputComparison = createOutputComparison(get);
 const ownerAccessRequested = new URLSearchParams(location.search).get('owner') === '1';
 const {settings: urlSettings, warnings: urlWarnings} = parseURLSettings(location.search);
 let urlSettingsPending = true, sharedLinkLoaded = false;
+let preserveStateOptions = false;
 function showURLWarnings() {
   get('url-settings-status').textContent = urlWarnings.join(' ');
   get('url-settings-status').hidden = !urlWarnings.length;
@@ -222,21 +224,23 @@ function controls() {
   get('compiler').disabled = !token || busy;
   get('download').disabled = !editor.getValue().trim();
   get('share').disabled = !editor.getValue().trim();
+  get('share-state').disabled = busy || connecting;
   const spec = catalog[get('compiler').value];
   const specs = isCompare() ? availableCompilers.map(name => catalog[name]).filter(Boolean) : [spec];
   const supports = predicate => specs.some(item => item && predicate(item));
   for (const option of get('standard').options) option.disabled = option.value !== 'default' && !supports(item => item.standards?.[option.value]);
-  if (get('standard').value !== 'default' && !supports(item => item.standards?.[get('standard').value])) get('standard').value = 'default';
-  get('standard').disabled = !token || busy || !supports(item => Object.keys(item.standards || {}).length);
+  if (!preserveStateOptions && get('standard').value !== 'default' && !supports(item => item.standards?.[get('standard').value])) get('standard').value = 'default';
+  get('standard').disabled = !token || busy || (!supports(item => Object.keys(item.standards || {}).length)
+    && !(preserveStateOptions && get('standard').value !== 'default'));
   get('standard-note').textContent = `Standard selection applies only to user code. ${spec?.standard_note || 'Standard selection is unavailable from this service.'}`;
   for (const option of get('compiler').options) option.title = compilerVersions[option.value] || 'Version unavailable';
   get('compiler-version').textContent = `${interpreted ? 'Interpreter' : 'Compiler'} version: ${compilerVersions[get('compiler').value] || 'unavailable from this service.'}`;
   for (const option of get('preset').options) option.disabled = !supports(item => item.presets?.[option.value]);
-  if (!supports(item => item.presets?.[get('preset').value])) get('preset').value = 'default';
+  if (!preserveStateOptions && !supports(item => item.presets?.[get('preset').value])) get('preset').value = 'default';
   get('preset').disabled = interpreted || !token || busy || !spec;
   for (const [id, key] of [['warnings', 'warnings'], ['fast-math', 'fast_math']]) {
-    if (!supports(item => item.extras?.[key])) get(id).checked = false;
-    get(id).disabled = !token || busy || !supports(item => item.extras?.[key]);
+    if (!preserveStateOptions && !supports(item => item.extras?.[key])) get(id).checked = false;
+    get(id).disabled = !token || busy || (!supports(item => item.extras?.[key]) && !(preserveStateOptions && get(id).checked));
   }
   // A shared link's request must not be silently ignored by an older service.
   get('preprocess').disabled = !token || busy || (!supports(item => item.extras?.preprocess) && !get('preprocess').checked);
@@ -870,6 +874,60 @@ get('share').onclick = async () => {
   } catch (error) { get('share-status').textContent = String(error); }
 };
 
+get('share-state').onclick = async () => {
+  get('share-state-field').hidden = true;
+  try {
+    const compilerOptions = {...additionalByCompiler, [get('compiler').value]: get('additional-options').value};
+    const external = externalRows.slice(0, externalCount).map(row => ({url: row.element('external-url').value.trim(), source: row.source
+      ? Object.fromEntries(['source', 'filename', 'url', 'requestUrl', 'sha256'].map(key => [key, row.source[key]])) : null}));
+    await copyStateLink(location.href, captureState('fortran', get, editor.getValue(), {compilerOptions, external}), get);
+  } catch (error) {get('share-state-status').textContent = error.message;}
+};
+
+function loadSharedState(initial = false) {
+  try {
+    const state = stateFromHash(location.hash, 'fortran');
+    if (!state) return;
+    if (active || connecting || externalLoading) throw new Error('Wait for the current operation to finish before restoring state.');
+    if (!initial && !confirm('Replace the current playground code and settings with this state link?')) return;
+    // A state snapshot takes precedence over settings-only query parameters.
+    urlSettingsPending = false; sharedLinkLoaded = true; preserveStateOptions = true;
+    clearExternal(); invalidateBuild(); clearErrorInfo();
+    interfaceMode = state.values['interface-mode'] || 'advanced';
+    const savedCompiler = state.values.compiler;
+    if (savedCompiler && ![...get('compiler').options].some(o => o.value === savedCompiler)) {
+      const option = document.createElement('option'); option.value = savedCompiler;
+      option.textContent = `${savedCompiler} (unavailable)`; option.disabled = true; get('compiler').appendChild(option);
+    }
+    for (const [id, value] of Object.entries(state.values)) get(id).value = value;
+    for (const [id, value] of Object.entries(state.checks)) get(id).checked = value;
+    for (const name of Object.keys(additionalByCompiler)) delete additionalByCompiler[name];
+    Object.assign(additionalByCompiler, state.compilerOptions);
+    additionalCompiler = get('compiler').value;
+    get('additional-options').value = additionalByCompiler[additionalCompiler] || '';
+    externalCount = Math.max(1, state.external.length);
+    state.external.forEach((row, i) => {
+      externalRows[i].element('external-url').value = row.url;
+      externalRows[i].source = row.source;
+      externalRows[i].message = row.source ? 'Snapshot restored from the state link; the URL was not downloaded again.' : '';
+      externalRows[i].element('external-source').value = row.source?.source || '';
+    });
+    get('stdin').value = state.stdin;
+    indentation = {width: Number(get('indent-width').value), automatic: Boolean(get('auto-indent').checked)};
+    editor.setIndentation(indentation);
+    showAllOutputs = Boolean(get('show-all-outputs').checked);
+    comparisonRows = []; comparisonSnapshot = null; outputComparison.update([]);
+    editor.setValue(state.source, !initial); filename = 'main.f90'; revision++; controls();
+    const unavailable = !isSimple() && !availableCompilers.includes(get('compiler').value);
+    const missing = compareNames.filter(name => state.checks[`compare-${name}`] && !availableCompilers.includes(name));
+    const adjusted = ['warnings', 'fast-math'].filter(id => state.checks[id] && !get(id).checked);
+    get('share-state-status').textContent = 'Playground state restored, including standard input. Choose Compile or Run when ready.'
+      + (unavailable ? ' The saved compiler is unavailable on this service.' : '')
+      + (isCompare() && missing.length ? ` Saved comparison compilers unavailable: ${missing.join(', ')}.` : '')
+      + (adjusted.length ? ` Saved options unavailable: ${adjusted.join(', ')}.` : '');
+  } catch (error) {get('share-state-status').textContent = error.message;}
+}
+
 function loadSharedCode(initial = false) {
   try {
     const shared = sharedCodeFromHash(location.hash);
@@ -883,6 +941,7 @@ function loadSharedCode(initial = false) {
       get('share-status').textContent = 'Shared code was not loaded; your input is unchanged.';
       return;
     }
+    preserveStateOptions = false;
     changeInterface(sharedMode);
     if (hasExternal()) {
       clearExternal(); invalidateBuild(); clearErrorInfo(); revision++; controls();
@@ -904,6 +963,7 @@ function loadSharedCode(initial = false) {
   } catch (error) { get('share-status').textContent = String(error); }
 }
 for (const id of ['compiler', 'standard', 'preset', 'warnings', 'fast-math', 'preprocess', 'images']) get(id).onchange = () => {
+  preserveStateOptions = false;
   if (id === 'compiler') get('additional-options').value = additionalByCompiler[get('compiler').value] || '';
   clearErrorInfo();
   invalidateBuild();
@@ -935,7 +995,9 @@ if (urlSettings.example) {
 showURLWarnings();
 if (typeof location !== 'undefined') {
   loadSharedCode(true);
-  globalThis.addEventListener?.('hashchange', () => loadSharedCode());
+  globalThis.addEventListener?.('hashchange', () => {
+    if (location.hash.startsWith('#state=')) loadSharedState(); else loadSharedCode();
+  });
 }
 if (typeof window !== 'undefined') {
   (async () => {
@@ -949,3 +1011,4 @@ if (typeof window !== 'undefined') {
   })().catch(() => { get('editor-note').textContent = 'Plain-text editor available.'; });
 }
 await connect();
+loadSharedState(true);

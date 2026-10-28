@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
+import {createStateLink, stateFromHash} from '../site/state_links.mjs';
 import {playgroundConfig} from '../site/config.mjs';
 import {examples, exampleLabels} from '../site/examples.generated.mjs';
 import {createShareLink, sourceFromHash, sharedCodeFromHash} from '../site/sharing.mjs';
@@ -27,9 +28,27 @@ const html = readFileSync(new URL('../site/index.html', import.meta.url), 'utf8'
 const htmlIds = new Set([...html.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]));
 const startupSource = 'program shared\nprint *, "shared + café"\nend program shared\n';
 const base = 'https://example.org/fortran-playground/';
+const stateLinkCase = process.argv.includes('--state-link');
+const unavailableState = process.argv.includes('--state-unavailable');
+const savedState = {version: 1, kind: 'fortran', source: 'program saved\nprint *, "λ café"\nend program\n', stdin: '42\n',
+  values: {'interface-mode': 'compare', compiler: 'gfortran', standard: '2018', preset: 'debug', images: '0',
+    'indent-width': '4', 'diff-mode': 'numeric', 'diff-atol': '1e-9', 'diff-rtol': '1e-6'},
+  checks: {'compare-gfortran': true, 'compare-ofort': true, 'auto-indent': true, 'compare-stop-failure': true,
+    'diff-enabled': true, 'show-all-outputs': true, preprocess: true},
+  compilerOptions: {gfortran: '-O2', ofort: ''}, external: [{url: 'https://example.org/module.f90',
+    source: {source: 'module shared_mod\nend module\n', filename: 'module.f90', url: 'https://example.org/module.f90',
+      requestUrl: 'https://example.org/module.f90', sha256: 'a'.repeat(64)}}]};
+if (unavailableState) {
+  savedState.values['interface-mode'] = 'advanced'; savedState.values.compiler = 'ifx';
+  savedState.compilerOptions.ifx = '-O2';
+}
 globalThis.location = new URL(plainVisit ? base : compareLink ? createShareLink(base, startupSource, 'compare') : preprocessingLink ? createShareLink(base, startupSource, 'advanced', true) : advancedLink ? createShareLink(base, startupSource, 'advanced') :
   base + '#code=' + encodeURIComponent(startupSource)); // Existing links have no interface parameter.
 if (ownerLink) location.search = '?owner=1';
+if (stateLinkCase) {
+  location = new URL(createStateLink(base, savedState));
+  location.search = '?compiler=ofort'; // Snapshot takes precedence over query-only defaults.
+}
 if (queryCase) {
   location = new URL(base + settingsQueries[queryCase]);
   if (queryCase === 'shared') location.hash = '#code=' + encodeURIComponent(startupSource);
@@ -125,6 +144,42 @@ globalThis.fetch = async (url, options = {}) => {
   return {ok: true, json: async () => result};
 };
 await import('../site/app.mjs');
+if (stateLinkCase) {
+  assert.equal(submissions, 0);
+  assert.equal(get('fortran').value, savedState.source);
+  assert.equal(get('stdin').value, savedState.stdin);
+  assert.equal(get('compiler').value, savedState.values.compiler);
+  assert.equal(get('interface-mode').value, savedState.values['interface-mode']);
+  if (unavailableState) {
+    assert.equal(get('run').disabled, true);
+    assert.match(get('share-state-status').textContent, /unavailable/);
+  }
+  assert.equal(get('standard').value, '2018');
+  assert.equal(get('preset').value, 'debug');
+  assert.equal(get('indent-width').value, '4');
+  assert.equal(get('compare-stop-failure').checked, true);
+  assert.equal(get('external-source').value, savedState.external[0].source.source);
+  assert.equal(get('additional-options').value, '-O2');
+  get('owner-key').value = 'OWNER-SECRET';
+  await get('share-state').onclick();
+  const restored = stateFromHash(new URL(copiedLink).hash, 'fortran');
+  assert.equal(restored.source, savedState.source);
+  assert.equal(restored.stdin, savedState.stdin);
+  assert.deepEqual(restored.compilerOptions, savedState.compilerOptions);
+  assert.deepEqual(restored.external, savedState.external);
+  assert.ok(!JSON.stringify(restored).includes('OWNER-SECRET'));
+  assert.equal(new URL(copiedLink).search, '');
+  assert.equal(restored.checks['diff-enabled'], true);
+  clipboardFails = true; await get('share-state').onclick();
+  assert.equal(get('share-state-field').hidden, false);
+  const before = get('fortran').value;
+  location.hash = '#state=v1.INVALID'; pageListeners.hashchange();
+  assert.equal(get('fortran').value, before);
+  assert.match(get('share-state-status').textContent, /Cannot restore/);
+  assert.equal(submissions, 0);
+  console.log('General state links restore settings, code, stdin, external snapshots and clipboard fallback without jobs.');
+  process.exit(0);
+}
 if (queryCase) {
   assert.equal(submissions, 0);
   if (queryCase === 'compare') {
