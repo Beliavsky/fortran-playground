@@ -43,6 +43,14 @@ class CatalogExportTests(unittest.TestCase):
                 for field in ('catalog_build', 'catalog_patches', 'dependencies', 'archive_sha256'):
                     self.assertNotIn(field, record)
         self.assertEqual(feed['taxonomies']['gams']['classes']['L6']['parent'], 'L')
+        self.assertEqual(feed['taxonomies']['gams']['classes']['G1b']['parent'], 'G1')
+        self.assertEqual(sum(len(p['curation'].get('procedures', [])) for p in feed['projects']), 11)
+        self.assertEqual(len(feed['demonstrations']), 3)
+        for driver in feed['demonstrations']:
+            self.assertIn('&example=gams-', driver['url'])
+            self.assertIn(driver['path'], {r['path'] for r in feed['provenance']['inputs']})
+        merged = merge_catalog({'schema_version': 1, 'projects': []}, feed)
+        self.assertEqual(merged['sources'][PUBLISHER]['demonstrations'], feed['demonstrations'])
 
     def test_provenance_distinguishes_clean_modified_and_unknown_inputs(self):
         with tempfile.TemporaryDirectory() as temporary:
@@ -99,6 +107,7 @@ class CatalogExportTests(unittest.TestCase):
         self.assertEqual(updated['sources']['other'], {'keep': True})
         empty = copy.deepcopy(feed)
         empty['projects'] = []
+        empty['demonstrations'] = []
         empty['snapshot_id'] = snapshot_id(empty)
         removed = merge_catalog(updated, empty)
         self.assertEqual({p['id'] for p in removed['projects']}, {identity, standalone['id']})
@@ -107,6 +116,7 @@ class CatalogExportTests(unittest.TestCase):
     def test_format_does_not_require_fpm_or_playground_availability(self):
         feed = copy.deepcopy(self.feed)
         feed['projects'] = feed['projects'][:1]
+        feed['demonstrations'] = []
         project = feed['projects'][0]
         project['build_systems'] = ['cmake', 'make']
         project['playground'] = None

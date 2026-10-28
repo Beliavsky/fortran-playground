@@ -5,7 +5,8 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from xpackage_gams import gams_data, package_classes, review_text, subclass_module, ROOT, REPORT
+from xpackage_gams import (gams_data, package_classes, review_text, subclass_module, ROOT, REPORT,
+                          driver_data, g1_review_text, PILOT_REPORT)
 
 
 class GamsFilterParser(HTMLParser):
@@ -89,6 +90,7 @@ class PackageGamsTests(unittest.TestCase):
         data['packages'] = {'example': ['D']}
         data['subclass_assignments'] = {'example': ['D2']}
         data['review_notes'] = {}
+        data['procedure_mappings'] = []
         invalid = []
         for codes in ([], ['d'], ['D1'], ['T'], ['D', 'D'], [None]):
             broken = copy.deepcopy(data)
@@ -126,6 +128,53 @@ class PackageGamsTests(unittest.TestCase):
                         gams_data(root)
             path.write_text(json.dumps(data))
             self.assertEqual(gams_data(root), data)
+
+    def test_g1_procedures_and_verified_drivers(self):
+        data = gams_data()
+        mappings = data['procedure_mappings']
+        self.assertEqual(len(mappings), 11)
+        self.assertEqual(len({m['package_id'] for m in mappings}), 7)
+        self.assertEqual(data['detailed_classes']['G1a']['parent'], 'G1')
+        self.assertEqual(data['detailed_classes']['G1b']['parent'], 'G1')
+        self.assertIn('G1a', {c['code'] for c in package_classes(data, 'fmin')})
+        self.assertIn('G1b', {c['code'] for c in package_classes(data, 'minpack')})
+        self.assertNotIn('G1a', {c['code'] for c in package_classes(data, 'nonlin')})
+        self.assertEqual({d['id'] for d in driver_data()},
+                         {'fmin-sine', 'minpack-bard', 'libdogleg-bard'})
+        self.assertEqual((ROOT / PILOT_REPORT).read_text(encoding='utf-8'), g1_review_text())
+        examples = json.loads((ROOT / 'site/fpm/examples.json').read_text(encoding='utf-8'))
+        for driver in driver_data():
+            example = next(e for e in examples if e.get('gams_driver_id') == driver['id'])
+            self.assertEqual(example['revision'], driver['revision'])
+            self.assertEqual(example['source'], (ROOT / driver['path']).read_text(encoding='utf-8'))
+
+    def test_g1_rejects_stale_procedure_pin(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / 'fpm_catalog').mkdir()
+            (root / 'fpm_catalog.json').write_bytes((ROOT / 'fpm_catalog.json').read_bytes())
+            data = gams_data()
+            data['procedure_mappings'][0]['revision'] = '0' * 40
+            (root / 'fpm_catalog/gams.json').write_text(json.dumps(data))
+            with self.assertRaisesRegex(ValueError, 'stale revision'):
+                gams_data(root)
+
+    def test_changed_driver_requires_new_verification(self):
+        data = gams_data()
+        drivers = driver_data(data=data)
+        paths = ['fpm_catalog/gams-drivers.json', 'docs/gams-g1-validation.json']
+        paths += list({p for d in drivers for p in [d['path'], *d['license_files']]})
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            for path in paths:
+                destination = root / path
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                destination.write_bytes((ROOT / path).read_bytes())
+            self.assertEqual(driver_data(root, data), drivers)
+            path = root / drivers[0]['path']
+            path.write_text(path.read_text(encoding='utf-8') + '\n! Changed source\n', encoding='utf-8')
+            with self.assertRaisesRegex(ValueError, 'passing GNU 16 verification'):
+                driver_data(root, data)
 
 
 if __name__ == '__main__':

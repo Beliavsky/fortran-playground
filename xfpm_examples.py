@@ -17,14 +17,23 @@ def generate_fpm_examples(site):
     topics = json.loads(topics_path.read_text(encoding='utf-8'))['repositories'] if topics_path.exists() else {}
     from xpackage_topics import playground_topics
     curated = playground_topics(audit.parents[1])
-    from xpackage_gams import gams_data, package_classes, subclass_module
+    from xpackage_gams import gams_data, package_classes, subclass_module, driver_data, procedure_records
     gams = gams_data(audit.parents[1])
+    selected_catalog = {p['id']: p for p in catalog()}
+    for driver in driver_data(audit.parents[1], gams):
+        package = selected_catalog[driver['package_id']]
+        examples.append({'name': driver['name'], 'repository': package['repository'],
+                         'revision': driver['revision'], 'category': 'GAMS ' + driver['gams_code'],
+                         'gams_driver_id': driver['id'],
+                         'source': (audit.parents[1] / driver['path']).read_text(encoding='utf-8')})
+    path.write_text(json.dumps(examples, indent=2) + '\n', encoding='utf-8')
     (site / 'fpm/gams_classes.mjs').write_text(subclass_module(gams), encoding='utf-8')
     packages = [{**package, 'source': (audit.parents[1] / 'fpm_catalog/demos' /
                  (package['id'] + '.f90')).read_text(encoding='utf-8'),
                  'topics': topics.get(package['repository'].lower(), {}).get('topics', []),
                  'playground_topics': curated[package['id']],
                  'gams': package_classes(gams, package['id']),
+                 'gams_procedures': procedure_records(gams, package['id']),
                  **{key: value for key, value in topics.get(package['repository'].lower(), {}).items()
                     if key in ('stars', 'stars_updated_at')}} for package in catalog()]
     (site / 'fpm/packages.json').write_text(json.dumps(packages, indent=2) + '\n', encoding='utf-8')

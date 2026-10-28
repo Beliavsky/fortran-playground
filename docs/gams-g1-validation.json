@@ -1,0 +1,89 @@
+{
+  "schema": 1,
+  "validated_at": "2026-10-28T12:55:54.330393+00:00",
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "fmin-sine",
+      "source_revision": "3d094fba0e9b98d132414f8442c7c76d32da1d30",
+      "source_sha256": "75d67528702dd9ed4b2aad9d7e65ba448689f2b89eb2830bed1fcaa103e0916b",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.321,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "GAMS G1a: minimize sin(x) on the search interval [-4,0].\nComputed x:    -1.5707963255\nAbsolute solution error:    1.298E-09\nIndependently evaluated objective:    -1.0000000000\nObjective calls: 9\nPASS fmin-sine\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.024,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "minpack-bard",
+      "source_revision": "c0b5aea9fcd2b83865af921a7a7e881904f8d3c2",
+      "source_sha256": "c6f1186aecfc4bb554805846fd8283db924295e0de32ad251dc707636a9e9edd",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.233,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "GAMS G1b: Bard-15 nonlinear least squares, MINPACK lmdif1.\nParameters:     0.08241056    1.13303606    2.34369521\nMaximum parameter error:    9.355E-07\nIndependent residual norm:   9.06359603E-02\nResidual callback calls: 25\nSolver termination code: 1\nPASS minpack-bard\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.03,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "libdogleg-bard",
+      "source_revision": "32b65ae4f880a052768c05d24c24b79920710681",
+      "source_sha256": "dbceb9f1c7b6f8f43f3bc4599393acd2d68205cf68d71129e87bb0cb709f7f24",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.291,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "GAMS G1b: Bard-15 nonlinear least squares, libdogleg-f.\nParameters:     0.08241058    1.13303665    2.34369464\nMaximum parameter error:    3.611E-07\nIndependent residual norm:   9.06359603E-02\nResidual and analytic Jacobian callback calls: 6\nPASS libdogleg-bard\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.054,
+          "exit_code": 0
+        }
+      ]
+    }
+  ]
+}

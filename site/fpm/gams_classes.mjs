@@ -383,5 +383,13 @@ export const gamsSubclasses = {
   "S3": {
     "label": "Dynamic program analysis tools",
     "parent": "S"
+  },
+  "G1a": {
+    "label": "Univariate",
+    "parent": "G1"
+  },
+  "G1b": {
+    "label": "Multivariate",
+    "parent": "G1"
   }
 };

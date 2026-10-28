@@ -39,6 +39,7 @@ let packages = [], generalPackages = [], allPackages, translatedPackages, precom
 let collectionLoading = false, collectionGeneration = 0;
 let searchButtons = [];
 let topicButtons = [];
+let procedureButtons = [];
 const genericTopics = new Set(['fortran', 'modern-fortran', 'fortran-package-manager', 'fpm']);
 const translatedCollection = () => get('package-collection').value === 'translated-r';
 const allCollection = () => get('package-collection').value === 'all';
@@ -92,6 +93,7 @@ function controls() {
     || get('package-gams-subclass').options.length <= 1;
   for (const button of searchButtons) button.disabled = busy;
   for (const button of topicButtons) button.disabled = busy;
+  for (const button of procedureButtons) button.disabled = busy;
   const selected = packages.find(p => p.id === get('available-package').value);
   get('load-package').disabled = busy || collectionLoading || !selected || !buildable(selected) || (!localExecution && !translatedCollection() && !allCollection() && (!ready
     || precompiled[selected.id]?.revision !== selected.revision));
@@ -150,6 +152,7 @@ function searchableTopics(packageEntry) {
 }
 
 function renderGams(packageEntry) {
+  procedureButtons = [];
   const container = get('package-gams-details');
   const classes = packageEntry?.gams || [];
   container.replaceChildren();
@@ -164,13 +167,39 @@ function renderGams(packageEntry) {
     link.setAttribute('aria-label', `NIST GAMS class ${code}: ${label}`);
     container.appendChild(link);
   }
+  for (const procedure of packageEntry?.gams_procedures || []) {
+    const evidence = procedure.evidence[0];
+    const link = document.createElement('a');
+    link.textContent = `${procedure.module}: ${procedure.procedure} (${procedure.gams_codes.join(', ')})`;
+    link.title = `${procedure.derivatives}. ${procedure.notes}`;
+    link.href = `https://github.com/${packageEntry.repository}/blob/${procedure.revision}/${evidence.path}#L${evidence.line}`;
+    link.target = '_blank'; link.rel = 'noopener noreferrer'; container.appendChild(link);
+    const example = examples.find(e => e.gams_driver_id === procedure.driver_id && procedure.driver_id);
+    if (example) {
+      const button = document.createElement('button'); button.type = 'button';
+      button.disabled = busy; procedureButtons.push(button);
+      button.textContent = `Load ${example.name}`;
+      button.addEventListener('click', () => {
+        if (busy) return;
+        get('example').value = example.name; loadExample();
+      });
+      container.appendChild(button);
+    }
+  }
+}
+
+function descendsFrom(code, parent) {
+  for (let current = code; current; current = gamsSubclasses[current]?.parent) {
+    if (current === parent) return true;
+  }
+  return false;
 }
 
 function renderGamsSubclasses() {
   const parent = get('package-gams').value;
   const picker = get('package-gams-subclass');
   const previous = picker.value;
-  const children = Object.entries(gamsSubclasses).filter(([, info]) => info.parent === parent)
+  const children = Object.entries(gamsSubclasses).filter(([code]) => parent && descendsFrom(code, parent))
     .sort(([a], [b]) => a.localeCompare(b, 'en', {numeric: true}));
   const placeholder = document.createElement('option');
   placeholder.value = ''; placeholder.textContent = 'All subclasses';
@@ -184,7 +213,7 @@ function renderGamsSubclasses() {
 
 function matchesGams(classes, code) {
   // C1 and C10 (also L1 and L10) are siblings, not a string-prefix hierarchy.
-  return classes.some(c => c.code === code || c.parent === code);
+  return classes.some(c => descendsFrom(c.code, code));
 }
 
 function renderTopics(packageEntry) {
@@ -220,7 +249,8 @@ function renderPackages() {
   const category = get('package-category').value;
   renderGamsSubclasses();
   const gamsClass = get('package-gams-subclass').value || get('package-gams').value;
-  const gamsQuery = /^gams\s*:?\s*([a-sz](?:[1-9][0-9]*)?)$/i.exec(query)?.[1].toUpperCase();
+  const rawGamsQuery = /^gams\s*:?\s*([a-sz](?:[1-9][0-9]*[a-z0-9]*)?)$/i.exec(query)?.[1];
+  const gamsQuery = rawGamsQuery ? rawGamsQuery[0].toUpperCase() + rawGamsQuery.slice(1).toLowerCase() : '';
   get('package-sort').disabled = busy || translatedCollection() || collectionLoading;
   get('package-sort').title = translatedCollection() ? 'Translated R packages share one GitHub repository; sorted by name.' : '';
   if (translatedCollection()) get('package-sort').value = 'name';
@@ -230,7 +260,7 @@ function renderPackages() {
     || a.repository.localeCompare(b.repository, 'en');
   const visible = packages.filter(p => {
     const classes = p.gams || [];
-    const text = `${p.id} ${p.name || ''} ${p.repository} ${p.description} ${packageCategories(p).join(' ')} ${(p.keywords || []).join(' ')} ${searchableTopics(p).join(' ')} ${classes.map(c => c.label).join(' ')}`.toLowerCase();
+    const text = `${p.id} ${p.name || ''} ${p.repository} ${p.description} ${packageCategories(p).join(' ')} ${(p.keywords || []).join(' ')} ${searchableTopics(p).join(' ')} ${classes.map(c => c.label).join(' ')} ${(p.gams_procedures || []).map(p => `${p.module} ${p.procedure} ${p.derivatives}`).join(' ')}`.toLowerCase();
     return (!category || packageCategories(p).includes(category))
       && (!gamsClass || matchesGams(classes, gamsClass))
       && (gamsQuery ? matchesGams(classes, gamsQuery) : text.includes(query)
@@ -648,7 +678,7 @@ function loadPackage() {
   sourceLinks(selected);
   resetTargets(); controls();
 }
-get('load-example').addEventListener('click', () => {
+function loadExample() {
   const example = examples.find(item => item.name === get('example').value);
   if (!example) return;
   get('package-url').value = `https://github.com/${example.repository}`;
@@ -659,7 +689,8 @@ get('load-example').addEventListener('click', () => {
   editor.setValue(example.source);
   sourceLinks({repository: example.repository, revision: example.revision});
   resetTargets(); controls();
-});
+}
+get('load-example').addEventListener('click', loadExample);
 get('copy').addEventListener('click', async () => {
   try {await navigator.clipboard.writeText(get('output').value); get('status').textContent = 'Results copied';}
   catch {get('output').focus(); get('output').select(); get('status').textContent = 'Select and copy the results';}
@@ -748,6 +779,14 @@ async function initialize() {
   } else if (linkedCollection === 'translated-r' || (linkedCollection === 'all' && allPackagesEnabled)) {
     get('package-collection').value = linkedCollection;
     await selectCollection();
+  }
+  const linkedExample = linkedSettings.get('example');
+  if (linkedExample) {
+    const example = examples.find(e => e.name === linkedExample);
+    const selected = generalPackages.find(p => p.id === linkedPackage);
+    if (example && (!linkedPackage || selected?.repository === example.repository)) {
+      get('example').value = example.name; loadExample();
+    } else get('package-note').textContent = 'The example link was not found or does not match the selected package.';
   }
 }
 

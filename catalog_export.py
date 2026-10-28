@@ -51,7 +51,7 @@ def input_provenance(root, paths):
 def build_export(root=ROOT):
     # Import tools need only this module and the standard library; the source
     # catalog and its authoring helpers are needed solely when exporting.
-    from xpackage_gams import gams_data, package_classes
+    from xpackage_gams import gams_data, package_classes, class_tree, procedure_records, driver_data
     from xpackage_topics import playground_topics
 
     root = Path(root)
@@ -59,9 +59,12 @@ def build_export(root=ROOT):
     github = json.loads((root / 'fpm_catalog/topics.json').read_text(encoding='utf-8'))
     curated = playground_topics(root)
     gams = gams_data(root)
+    drivers = driver_data(root, gams)
     inputs = ['fpm_catalog.json', 'fpm_catalog/topics.json', 'fpm_catalog/playground-topics.json',
               'fpm_catalog/gams.json', 'catalog_export.py', 'xpackage_topics.py', 'xpackage_gams.py',
               f'catalog/{SCHEMA_NAME}']
+    inputs.extend(['fpm_catalog/gams-drivers.json', 'docs/gams-g1-validation.json'])
+    inputs.extend(sorted({p for d in drivers for p in [d['path'], *d['license_files']]}))
     projects = []
     for package in sorted(packages, key=lambda p: p['repository'].lower()):
         owner, name = package['repository'].split('/')
@@ -88,13 +91,18 @@ def build_export(root=ROOT):
                            'package_revision': package['revision'], 'live_service_checked': False,
                            'example': {'path': example, 'sha256': text_hash(root / example)}},
         })
+        procedures = procedure_records(gams, package['id'])
+        if procedures:
+            projects[-1]['curation']['procedures'] = procedures
     provenance = input_provenance(root, inputs)
     export = {'$schema': SCHEMA_URL, 'schema_version': 1, 'publisher': PUBLISHER,
               'provenance': provenance,
               'taxonomies': {'gams': {'source': gams['source'],
                   'retrieved_on': gams['taxonomy_retrieved_on'],
-                  'classes': {**{code: {'label': label, 'parent': None} for code, label in gams['classes'].items()},
-                              **gams['subclasses']}}},
+                  'classes': class_tree(gams)}},
+              'demonstrations': [{**d, 'source_sha256': text_hash(root / d['path']),
+                  'url': f'{BASE_URL}/fpm/?package={d["package_id"]}&example={d["name"]}',
+                  'validation_path': 'docs/gams-g1-validation.json'} for d in drivers],
               'projects': projects}
     export['snapshot_id'] = snapshot_id(export)
     validate_export(export)
@@ -172,6 +180,7 @@ def validate_export(data):
     if not isinstance(projects, list):
         raise ValueError('Catalog projects must be a list.')
     seen = set()
+    procedures = {}
     for project in projects:
         if not isinstance(project, dict) or not _matches(ID_PATTERN, project.get('id')):
             raise ValueError('Invalid project identity.')
@@ -221,6 +230,20 @@ def validate_export(data):
                 or not isinstance(curation.get('gams_notes'), str)
                 or 'reviewed_revision' not in curation or not _commit(curation['reviewed_revision'])):
             raise ValueError(f'{identity}: invalid classification review metadata.')
+        records = curation.get('procedures', [])
+        if not isinstance(records, list):
+            raise ValueError(f'{identity}: procedures must be a list.')
+        for record in records:
+            if (not isinstance(record, dict) or not _matches(r'[a-z0-9]+(?:-[a-z0-9]+)*', record.get('id'))
+                    or record['id'] in procedures or record.get('revision') != curation['reviewed_revision']
+                    or record.get('review_level') != 'source-reviewed'
+                    or any(not isinstance(record.get(k), str) or not record[k]
+                           for k in ('module', 'procedure', 'derivatives'))):
+                raise ValueError(f'{identity}: invalid procedure mapping.')
+            _strings(record.get('gams_codes'), 'procedure.gams_codes')
+            if not record['gams_codes'] or not set(record['gams_codes']).issubset(codes):
+                raise ValueError(f'{identity}: procedure classification lacks package assignment.')
+            procedures[record['id']] = record
         if project.get('playground') is not None:
             playground = project['playground']
             if not isinstance(playground, dict) or playground.get('live_service_checked') is not False:
@@ -234,6 +257,21 @@ def validate_export(data):
             if (not isinstance(example, dict) or not isinstance(example.get('path'), str)
                     or not example['path'] or not _matches(r'[0-9a-f]{64}', example.get('sha256'))):
                 raise ValueError(f'{identity}: invalid example reference.')
+    demonstrations = data.get('demonstrations', [])
+    if not isinstance(demonstrations, list):
+        raise ValueError('Demonstrations must be a list.')
+    driver_ids = set()
+    for driver in demonstrations:
+        if not isinstance(driver, dict):
+            raise ValueError('Invalid demonstration.')
+        record = procedures.get(driver.get('procedure_id'), {})
+        if (not _matches(r'[a-z0-9]+(?:-[a-z0-9]+)*', driver.get('id')) or driver['id'] in driver_ids
+                or record.get('driver_id') != driver['id'] or driver.get('revision') != record.get('revision')
+                or driver.get('package_id') != record.get('package_id')
+                or driver.get('gams_code') not in record.get('gams_codes', [])
+                or not _matches(r'[0-9a-f]{64}', driver.get('source_sha256'))):
+            raise ValueError('Demonstration and procedure mapping disagree.')
+        driver_ids.add(driver['id'])
     return data
 
 
@@ -302,6 +340,8 @@ def merge_catalog(catalog, feed):
     if not isinstance(sources, dict):
         raise ValueError('Catalog sources must be an object.')
     sources[publisher] = {key: copy.deepcopy(feed[key]) for key in ('schema_version', 'snapshot_id', 'provenance', 'taxonomies')}
+    if 'demonstrations' in feed:
+        sources[publisher]['demonstrations'] = copy.deepcopy(feed['demonstrations'])
     return result
 
 

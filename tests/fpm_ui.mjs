@@ -28,6 +28,13 @@ if (linkedPackage) {
   globalThis.location.searchParams.set('package', linkedPackage);
   globalThis.location.searchParams.set('collection', 'translated-r');
 }
+const driverLink = process.argv.includes('--gams-driver-link');
+const badDriverLink = process.argv.includes('--bad-gams-driver-link');
+if (driverLink || badDriverLink) {
+  globalThis.location ||= new URL('https://example.test/fpm/');
+  globalThis.location.searchParams.set('package', driverLink ? 'minpack' : 'fortran-lapack');
+  globalThis.location.searchParams.set('example', 'gams-minpack-bard');
+}
 const elements = new Map();
 const downloads = [], blobs = new Map();
 URL.createObjectURL = blob => {const url = `blob:export-${blobs.size}`; blobs.set(url, blob); return url;};
@@ -111,6 +118,26 @@ globalThis.fetch = async (url, options = {}) => {
 const originalTimeout = globalThis.setTimeout;
 globalThis.setTimeout = fn => {queueMicrotask(fn); return 1;};
 const {resultText, programOutputText} = await import('../site/fpm/fpm.mjs');
+if (driverLink || badDriverLink) {
+  assert.equal(submissions.length, 0, 'Driver links never submit jobs');
+  const driver = examples.find(e => e.gams_driver_id === 'minpack-bard');
+  if (driverLink) {
+    assert.equal(get('source').value, driver.source);
+    assert.equal(get('revision').value, driver.revision);
+    assert.equal(get('workflow').value, 'consumer');
+    const button = get('package-gams-details').options.find(p => p.textContent === 'Load gams-minpack-bard');
+    assert.ok(button);
+    get('source').value = 'changed'; button.listeners.click();
+    assert.equal(get('source').value, driver.source);
+    assert.ok(get('package-gams-details').options.some(p => p.href?.includes('/blob/' + driver.revision + '/src/minpack.f90#L')));
+  } else {
+    assert.match(get('package-note').textContent, /does not match/);
+    assert.notEqual(get('source').value, driver.source);
+  }
+  assert.equal(submissions.length, 0);
+  console.log('GAMS driver links and load buttons preserve pins and never submit jobs.');
+  process.exit(0);
+}
 if (linkedPackage === 'fortran-lapack') {
   assert.equal(get('available-package').value, 'fortran-lapack');
   if (!unconfigured && !legacyService || localExecution) {
@@ -178,7 +205,8 @@ assert.equal(get('compiler').options.find(option => option.value === 'ifx').disa
 assert.equal(get('source-pane').hidden, false);
 assert.equal(get('test-action').disabled, true);
 assert.equal(get('example-action').disabled, true);
-assert.equal(get('example').options.length, 5);
+assert.equal(get('example').options.length, examples.length);
+assert.equal(examples.filter(e => e.gams_driver_id).length, 3);
 assert.equal(submissions.length, 0, 'Initialization must not submit a job');
 assert.equal(get('package-collection').value, 'general', 'Selected remains the default');
 assert.equal(allFetches, 0, 'Selected does not download the full catalog');
@@ -209,6 +237,20 @@ assert.deepEqual(get('available-package').options.slice(1).map(p => p.value), ['
 get('package-search').value = 'GAMS G1'; get('package-search').listeners.input();
 assert.ok(get('available-package').options.some(p => p.value === 'minpack'));
 assert.ok(!get('available-package').options.some(p => p.value === 'lbfgsb'));
+get('package-search').value = 'gams g1a'; get('package-search').listeners.input();
+assert.deepEqual(get('available-package').options.slice(1).map(p => p.value), ['fmin']);
+get('package-search').value = 'GAMS G1b'; get('package-search').listeners.input();
+assert.ok(get('available-package').options.some(p => p.value === 'minpack'));
+assert.ok(!get('available-package').options.some(p => p.value === 'fmin'));
+get('package-search').value = 'lmdif1'; get('package-search').listeners.input();
+assert.deepEqual(get('available-package').options.slice(1).map(p => p.value), ['minpack']);
+get('package-search').value = ''; get('package-search').listeners.input();
+get('package-gams').value = 'G'; get('package-gams').listeners.change();
+assert.ok(get('package-gams-subclass').options.some(p => p.value === 'G1a'));
+get('package-gams-subclass').value = 'G1b'; get('package-gams-subclass').listeners.change();
+assert.ok(get('available-package').options.some(p => p.value === 'minpack'));
+assert.ok(!get('available-package').options.some(p => p.value === 'fmin'));
+get('package-gams').value = ''; get('package-gams').listeners.change();
 get('package-search').value = ''; get('package-search').listeners.input();
 get('package-gams').value = 'B'; get('package-gams').listeners.change();
 assert.equal(get('package-gams-subclass-controls').hidden, true, 'Parents without published children hide the subclass control');

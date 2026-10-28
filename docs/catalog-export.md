@@ -41,6 +41,8 @@ The authoritative schema is [catalog/catalog-v1.schema.json](../catalog/catalog-
 | `github` | Author-supplied repository topics, star count, and retrieval timestamps. Unknown counts/timestamps can be null. |
 | `curation.topics` | Our curated topics, kept separate from GitHub topics. |
 | `curation.gams_codes` | Explicit parent and subclass assignments referencing the included taxonomy. |
+| `curation.procedures` (optional) | Pinned module/procedure identities, derivative requirements, GAMS codes, source evidence hashes, and author-example references. |
+| `demonstrations` (optional) | Verified drivers with source hashes, licenses, procedure references, load links, and saved validation paths. Importers retain these in the publisher source layer. |
 | `curation.gams_review_level`, `gams_notes`, `reviewed_revision` | Current discovery-review scope, qualifications, and upstream package revision. Inclusion does not claim a procedure-level driver verification. |
 | `playground` | Optional relationship to a selected playground entry, including its revision, example reference, and package-specific URL. It can be absent or null for other software. |
 
@@ -56,7 +58,7 @@ The current sources are:
 
 IDs are independent of package names, compiler versions, and revisions. GitHub account/repository casing is normalized. A repository rename or transfer changes this initial canonical identity; handle that as an explicit migration in the receiving catalog, retaining an alias if desired. The exporter does not guess rename relationships.
 
-The taxonomy includes explicit parent references, so C1 and C10 are siblings. Its representation also permits deeper GAMS levels later without changing the format; only verified assignments should be added. A project lists its assigned ancestors as well as its more specific codes.
+The taxonomy includes explicit parent references, so C1 and C10 are siblings. The G1 pilot includes the deeper G1a/G1b classes, linked through G1. Further levels can be added without changing the format; only reviewed assignments should be added. A project lists its assigned ancestors as well as its more specific codes.
 
 ## Reproducible provenance
 

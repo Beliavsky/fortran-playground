@@ -552,6 +552,327 @@
     "libdogleg-f": ["G1", "K1"],
     "nafpack": ["D2", "D4", "J1"]
   },
+  "detailed_classes": {
+    "G1a": {
+      "label": "Univariate",
+      "parent": "G1"
+    },
+    "G1b": {
+      "label": "Multivariate",
+      "parent": "G1"
+    }
+  },
+  "procedure_mappings": [
+    {
+      "id": "fmin-scalar",
+      "package_id": "fmin",
+      "revision": "3d094fba0e9b98d132414f8442c7c76d32da1d30",
+      "module": "fmin_module",
+      "procedure": "fmin",
+      "gams_codes": [
+        "G1a"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "none",
+      "notes": "Search interval brackets a scalar minimizer; this is not a general constraint solver.",
+      "evidence": [
+        {
+          "path": "src/fmin_module.f90",
+          "line": 94,
+          "sha256": "d63cd59c63c3be05d2f73bdacbf53acef42a70ecef893da770b6a3d087d32182"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test.f90",
+          "sha256": "91e05165572abedfe90111e743b6a1403087130a53bed64d6eab4d973b29c7dd"
+        }
+      ],
+      "driver_id": "fmin-sine"
+    },
+    {
+      "id": "minpack-lmdif1",
+      "package_id": "minpack",
+      "revision": "c0b5aea9fcd2b83865af921a7a7e881904f8d3c2",
+      "module": "minpack_module",
+      "procedure": "lmdif1",
+      "gams_codes": [
+        "G1b"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "finite-difference residual Jacobian",
+      "notes": "Nonlinear least squares using residual values; the scalar objective is their squared norm.",
+      "evidence": [
+        {
+          "path": "src/minpack.f90",
+          "line": 2331,
+          "sha256": "44ff6b6482af824875c3af49feb4bfe9b63933cd3cf5ecf05159f931353cbe27"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "examples/example_lmdif1.f90",
+          "sha256": "f8d8c70137f80a69bfc907cab1ef588184cdbe431307ddca77611981faa9763d"
+        }
+      ],
+      "driver_id": "minpack-bard"
+    },
+    {
+      "id": "minpack-lmder1",
+      "package_id": "minpack",
+      "revision": "c0b5aea9fcd2b83865af921a7a7e881904f8d3c2",
+      "module": "minpack_module",
+      "procedure": "lmder1",
+      "gams_codes": [
+        "G1b"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "user residual Jacobian",
+      "notes": "Nonlinear least squares; requires both residual values and their Jacobian.",
+      "evidence": [
+        {
+          "path": "src/minpack.f90",
+          "line": 1846,
+          "sha256": "44ff6b6482af824875c3af49feb4bfe9b63933cd3cf5ecf05159f931353cbe27"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "examples/example_lmder1.f90",
+          "sha256": "140de0641ffd3e088ad99036c3e6077a8558802fa10858ce5d027a8d0a8a4577"
+        }
+      ]
+    },
+    {
+      "id": "fortimize-nelder-mead",
+      "package_id": "fortimize",
+      "revision": "3431b656cd86f89135d0f35bf6afdbd787d9daf3",
+      "module": "ForTimize",
+      "procedure": "minimize with NelderMead",
+      "gams_codes": [
+        "G1b"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "none",
+      "notes": "The existing catalog quadratic program is an independently written API example. Upstream licensing is unspecified; no upstream example code is copied here.",
+      "evidence": [
+        {
+          "path": "src/minimize.f90",
+          "line": 7,
+          "sha256": "fc82674ed06c2403f8743fca72cdca10f9451b89625c720d8b5f25992871ebe8"
+        },
+        {
+          "path": "src/gradient_free/nelder_mead.f90",
+          "line": 9,
+          "sha256": "431306637efd14f319efa02855d220c6964b98532966dfce4dc471b153a50a48"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "example/gradient.f90",
+          "sha256": "dfdc5b2c20ab4852e8fe4d4230fced87f8bd76b27bcbc84225928da56da73df9"
+        }
+      ]
+    },
+    {
+      "id": "fortimize-gradient-descent",
+      "package_id": "fortimize",
+      "revision": "3431b656cd86f89135d0f35bf6afdbd787d9daf3",
+      "module": "ForTimize",
+      "procedure": "minimize with GradientDescent",
+      "gams_codes": [
+        "G1b"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "user gradient",
+      "notes": "Fixed-iteration gradient descent. The author example is API evidence, not a verified reference for gradient accuracy.",
+      "evidence": [
+        {
+          "path": "src/minimize.f90",
+          "line": 7,
+          "sha256": "fc82674ed06c2403f8743fca72cdca10f9451b89625c720d8b5f25992871ebe8"
+        },
+        {
+          "path": "src/with_derivatives/gradient_descent.f90",
+          "line": 23,
+          "sha256": "3e93955576fc2db98363db6438b9e0758d6b6bcaad67dfcaf0f1d2a82818a066"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "example/gradient.f90",
+          "sha256": "dfdc5b2c20ab4852e8fe4d4230fced87f8bd76b27bcbc84225928da56da73df9"
+        }
+      ]
+    },
+    {
+      "id": "nonlin-nelder-mead",
+      "package_id": "nonlin",
+      "revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+      "module": "nonlin",
+      "procedure": "nelder_mead%solve",
+      "gams_codes": [
+        "G1b"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "none",
+      "notes": "Accepts a scalar objective through fcnnvar_helper.",
+      "evidence": [
+        {
+          "path": "src/nonlin_optimize.f90",
+          "line": 127,
+          "sha256": "51aca88be20946a42cf59c9ec833a481e3f15774eb13d19f5a3e859a41c3cb4d"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "examples/nonlin_nm_opt_example.f90",
+          "sha256": "c0e8ebe4758c59d6701e48aaff0abf2b3f3cff8ba90a48f01f93ea1b97a3560f"
+        }
+      ]
+    },
+    {
+      "id": "nonlin-bfgs",
+      "package_id": "nonlin",
+      "revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+      "module": "nonlin",
+      "procedure": "bfgs%solve",
+      "gams_codes": [
+        "G1b"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "optional user gradient; finite-difference fallback",
+      "notes": "User gradients are registered with fcnnvar_helper%set_gradient_fcn.",
+      "evidence": [
+        {
+          "path": "src/nonlin_optimize.f90",
+          "line": 584,
+          "sha256": "51aca88be20946a42cf59c9ec833a481e3f15774eb13d19f5a3e859a41c3cb4d"
+        },
+        {
+          "path": "src/nonlin_multi_var.f90",
+          "line": 204,
+          "sha256": "d7d000db98bbe779d13dc4e643085711fef6dd817b1127265c05afb50deb49c4"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "examples/nonlin_bfgs_example.f90",
+          "sha256": "d1f6750301ffc98d17659eee49729ac77e78df168036eeb76789229f00e71880"
+        }
+      ]
+    },
+    {
+      "id": "nonlin-least-squares",
+      "package_id": "nonlin",
+      "revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+      "module": "nonlin",
+      "procedure": "least_squares_solver%solve",
+      "gams_codes": [
+        "G1b"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "optional user residual Jacobian",
+      "notes": "The unconstrained least_squares_solver is mapped; constrained_least_squares_solver is a distinct type.",
+      "evidence": [
+        {
+          "path": "src/nonlin_least_squares.f90",
+          "line": 141,
+          "sha256": "cca74546680f2599f994d89415279792ca6b22a56ea5f4e6749bb72aa85b3cb5"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "examples/nonlin_least_squares_example.f90",
+          "sha256": "5b3c6e6e1a98864ddc12d1faca3132372f9a2958ba88cf340dc2af5dfcfc7d35"
+        }
+      ]
+    },
+    {
+      "id": "nlopt-lbfgs",
+      "package_id": "nlopt-f",
+      "revision": "83d21e7ebda9279a6dd4cc11fe6c735f48eb8689",
+      "module": "nlopt_wrap",
+      "procedure": "nlopt_opt%optimize with LD_LBFGS",
+      "gams_codes": [
+        "G1b"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "user gradient",
+      "notes": "The algorithm selection is part of the mapping. test/test_opt.f90 uses constrained LD_MMA and is not accepted as a G1 author example; the existing catalog demo uses LD_LBFGS.",
+      "evidence": [
+        {
+          "path": "src/nlopt_wrap.f90",
+          "line": 268,
+          "sha256": "d38f553f64581e984fd90150ec519177893db60880cb99a00b60fb347d893ba8"
+        },
+        {
+          "path": "src/nlopt_enum.F90",
+          "line": 301,
+          "sha256": "b92bb5362913e941d676b2e485889f4860adea00ff92cfc6c5e6cc3e21ac0b03"
+        }
+      ],
+      "author_examples": []
+    },
+    {
+      "id": "libdogleg-dense",
+      "package_id": "libdogleg-f",
+      "revision": "32b65ae4f880a052768c05d24c24b79920710681",
+      "module": "dogleg",
+      "procedure": "dl_optimize (dl_optimize_dense2)",
+      "gams_codes": [
+        "G1b"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "user residual Jacobian",
+      "notes": "Dense nonlinear least squares; Jacobian layout is parameters by residuals, transposed relative to MINPACK.",
+      "evidence": [
+        {
+          "path": "src/dogleg.f90",
+          "line": 142,
+          "sha256": "55621942815cfc47627fde148cbb04f851501970b78a1f34314648ccbfef4ad9"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "example/lmder_example.f90",
+          "sha256": "8da803a1cfe3e3fc139b4e47f4ea7c6f32bbeb4fa8ad58ce95581000d4e4efc2"
+        }
+      ],
+      "driver_id": "libdogleg-bard"
+    },
+    {
+      "id": "neural-network-train",
+      "package_id": "neural-fortran",
+      "revision": "b2073fa542c8dcdf9466d1a192d2888b628a5df3",
+      "module": "nf",
+      "procedure": "network%train",
+      "gams_codes": [
+        "G1b"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "internal backpropagation",
+      "notes": "Network-specific training with SGD/other optimizer types, not a general scalar-objective callback solver. No small deterministic training benchmark is claimed.",
+      "evidence": [
+        {
+          "path": "src/nf/nf_network.f90",
+          "line": 248,
+          "sha256": "52a5650685f3b959be16e6fdc458c48889adde993374b2f727053162dab71b68"
+        },
+        {
+          "path": "src/nf/nf_optimizers.f90",
+          "line": 123,
+          "sha256": "0704ed1773a418b7b6d2f53882abab206350d5efa55fb3c55bdabbfc69236f14"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "example/quadratic.f90",
+          "sha256": "9d06ad1616a851e327bb5d0a82387dc18500c4465bcb6545c24ffb948340eba4"
+        }
+      ]
+    }
+  ],
   "review_notes": {
     "stdlib": "Selected subclasses cover documented linear algebra, summary statistics, random numbers, strings, containers, sorting and error handling. A and C remain broad pending a pinned-routine inventory.",
     "fortran_function_parser": "N3 covers expression text processing. C remains broad; this review does not inventory each supported mathematical function.",

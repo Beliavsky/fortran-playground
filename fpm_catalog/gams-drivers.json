@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "drivers": [
+    {
+      "id": "fmin-sine",
+      "name": "gams-fmin-sine",
+      "package_id": "fmin",
+      "procedure_id": "fmin-scalar",
+      "gams_code": "G1a",
+      "problem_id": "sine-minimum",
+      "path": "fpm_catalog/gams-drivers/fmin-sine.f90",
+      "author_example": "test/test.f90",
+      "revision": "3d094fba0e9b98d132414f8442c7c76d32da1d30",
+      "reuse": "adapted",
+      "license": "BSD-3-Clause",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fmin-BSD-3.txt"
+      ],
+      "modifications": "Moved callbacks to modules; added finite-value and independent known-solution checks, readable output, and callback counts."
+    },
+    {
+      "id": "minpack-bard",
+      "name": "gams-minpack-bard",
+      "package_id": "minpack",
+      "procedure_id": "minpack-lmdif1",
+      "gams_code": "G1b",
+      "problem_id": "bard-15",
+      "path": "fpm_catalog/gams-drivers/minpack-bard.f90",
+      "author_example": "examples/example_lmdif1.f90",
+      "revision": "c0b5aea9fcd2b83865af921a7a7e881904f8d3c2",
+      "reuse": "adapted",
+      "license": "MIT",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/minpack-MIT.txt"
+      ],
+      "modifications": "Moved callbacks to modules; added finite-value and independent known-solution checks, readable output, and callback counts."
+    },
+    {
+      "id": "libdogleg-bard",
+      "name": "gams-libdogleg-bard",
+      "package_id": "libdogleg-f",
+      "procedure_id": "libdogleg-dense",
+      "gams_code": "G1b",
+      "problem_id": "bard-15",
+      "path": "fpm_catalog/gams-drivers/libdogleg-bard.f90",
+      "author_example": "example/lmder_example.f90",
+      "revision": "32b65ae4f880a052768c05d24c24b79920710681",
+      "reuse": "adapted",
+      "license": "LGPL-3.0-or-later",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/libdogleg-COPYING",
+        "fpm_catalog/gams-drivers/licenses/libdogleg-COPYING.LESSER"
+      ],
+      "modifications": "Moved callbacks to modules; added finite-value and independent known-solution checks, readable output, and callback counts."
+    }
+  ]
+}
