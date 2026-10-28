@@ -112,6 +112,10 @@ end program main
     </section>
     <section class="panel">
       <label for="output">Build and program output</label>
+      <div class="output-controls">
+        <label for="program-output-only"><input id="program-output-only" type="checkbox" checked aria-controls="output"> Program output only</label>
+        <button id="build-details" type="button" disabled aria-controls="output" aria-expanded="false">Show build details</button>
+      </div>
       <textarea id="output" readonly spellcheck="false" aria-label="Build and program output"></textarea>
       <div class="output-buttons"><button id="copy" type="button">Copy results</button></div>
     </section>

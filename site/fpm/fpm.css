@@ -10,6 +10,8 @@
 .package-filters input::placeholder { font-size: .875rem; }
 .editors.package-only { grid-template-columns: 1fr; }
 .editor-note, .output-buttons { margin: 10px 16px; font-size: 13px; }
+.output-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 10px 16px; }
+:root .panel .output-controls label { display: inline-flex; align-items: center; gap: 6px; padding: 0; background: transparent; font-weight: 400; }
 .stdin-panel { margin-top: 18px; }
 .stdin-panel label { display: block; margin-bottom: 8px; }
 .stdin-panel textarea { width: 100%; font: 14px/1.5 Consolas, monospace; padding: 12px; border: 1px solid #aebfba; border-radius: 6px; }

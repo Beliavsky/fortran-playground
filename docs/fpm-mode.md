@@ -39,7 +39,7 @@ The selected and full collections also search saved **GitHub topics**. For examp
 
 **Preprocess** enables compiler preprocessing alongside FPM's debug profile. It requires the updated backend and uses a clean build. Discovered applications, examples, and compiled tests appear in action buttons and a target menu; choosing one never submits a job. Choose Test to build and discover test targets. New discovery entries without supplied main programs start with **Build only**. See the [20-package compatibility audit](fpm-discovery-audit.md) for tested revisions and verified fixes.
 
-Standard input is supplied from the optional text box; there is no interactive terminal. Copy results preserves the captured output, diagnostics, timings, and resolved commits. Loading an example never submits a job automatically.
+Standard input is supplied from the optional text box; there is no interactive terminal. **Program output only** is enabled by default in both the hosted and main local FPM pages. Successful executions show program output; successful builds without execution show a brief confirmation. Failures and target-selection messages always show the full report. **Show build details** reveals retained commands, diagnostics, timings, and resolved commits without rerunning. Uncheck Program output only to always show that report; this preference is saved in your browser. **Copy results** copies the displayed view. Loading an example never submits a job automatically.
 
 ## Supported dependencies and bounds
 

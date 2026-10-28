@@ -12,6 +12,9 @@ for (const id of ['subdirectory', 'subdirectory-label']) {
   assert.match(html, new RegExp(`<[^>]*id="${id}"[^>]*\\bhidden\\b`));
 }
 const localExecution = process.argv.includes('--local');
+const preferences = new Map();
+globalThis.localStorage = {getItem: key => preferences.get(key) ?? null,
+  setItem: (key, value) => preferences.set(key, value)};
 if (localExecution) {
   ids.add('local-source-link'); ids.add('local-projects-link');
   globalThis.location = new URL('http://127.0.0.1:8766/fpm/#session=private');
@@ -31,6 +34,7 @@ globalThis.document = {
       get textContent() {return this.text || '';},
       set textContent(value) {this.text = value; this.options = [];},
       classList: {toggle() {}}, addEventListener(name, fn) {this.listeners[name] = fn;},
+      setAttribute(key, value) {this[key] = value;},
       appendChild(child) {this.options.push(child);}, replaceChildren(...children) {this.options = children;},
       focus() {}, select() {},
     });
@@ -99,7 +103,7 @@ globalThis.fetch = async (url, options = {}) => {
 };
 const originalTimeout = globalThis.setTimeout;
 globalThis.setTimeout = fn => {queueMicrotask(fn); return 1;};
-const {resultText} = await import('../site/fpm/fpm.mjs');
+const {resultText, programOutputText} = await import('../site/fpm/fpm.mjs');
 // Downloads do not depend on API health and must not submit jobs.
 get('package-url').value = `https://github.com/${packages[0].repository}`;
 get('revision').value = packages[0].revision;
@@ -238,6 +242,38 @@ assert.equal(submissions[0].compiler, legacyService ? undefined : localExecution
 assert.equal(submissions[0].source, examples[0].source);
 assert.match(get('output').value, /<script>42<\/script>/, 'Output is plain text, not inserted as HTML');
 assert.equal(get('status').textContent, 'PASS');
+assert.equal(get('program-output-only').checked, true);
+assert.equal(get('output').value, '<script>42</script>');
+assert.equal(get('build-details').disabled, false);
+get('build-details').listeners.click();
+assert.match(get('output').value, /^PASS\nPackage: test\/package/);
+assert.equal(get('build-details')['aria-expanded'], 'true');
+get('build-details').listeners.click();
+assert.equal(get('output').value, '<script>42</script>');
+get('program-output-only').checked = false;
+get('program-output-only').listeners.change();
+assert.equal(preferences.get('fortran-playground-fpm-program-output-only'), 'false');
+assert.match(get('output').value, /^PASS\nPackage:/);
+assert.equal(get('build-details').disabled, true);
+get('program-output-only').checked = true;
+get('program-output-only').listeners.change();
+assert.equal(preferences.get('fortran-playground-fpm-program-output-only'), 'true');
+assert.equal(get('output').value, '<script>42</script>');
+assert.equal(submissions.length, 1, 'Changing the output view must not submit a job');
+const execution = (stdout = '', stderr = '') => ({ok: true, stages: [
+  {name: 'Run', ok: true, seconds: .1, command: ['fpm', 'run'], stdout, stderr, exit_code: 0}]});
+assert.equal(programOutputText(execution('  42\n', 'Project is up to date\r\nwarning\n')), '  42\nwarning\n');
+assert.equal(programOutputText(execution('Project is up to date\n', 'Project is up to date\nProject is up to date\n')),
+  'Project is up to date\nProject is up to date\n', 'Preserve program text matching FPM status');
+assert.equal(programOutputText(execution('', 'Project is up to date\n')), 'Program completed successfully with no output.');
+assert.equal(programOutputText(execution('  \n')), '  \n');
+assert.equal(programOutputText({ok: true, stages: []}), 'Build completed successfully.');
+for (const name of ['Build', 'Run']) {
+  const failed = execution('partial output\n', 'compiler or runtime error');
+  failed.ok = false; failed.stages[0].ok = false; failed.stages[0].name = name;
+  failed.stages[0].exit_code = 1;
+  assert.equal(programOutputText(failed), resultText(failed));
+}
 
 get('workflow').value = 'package';
 get('workflow').listeners.change();
@@ -262,6 +298,8 @@ if (!legacyService) {
 result = {ok: false, needs_target: true, error: 'Choose an application target', targets: ['alpha', 'beta'], stages: []};
 await get('submit').listeners.click();
 assert.equal(get('status').textContent, 'Choose a target');
+assert.match(get('output').value, /Choose an application target/);
+assert.equal(get('build-details').disabled, true);
 assert.deepEqual(get('targets').options.map(option => option.value), ['alpha', 'beta']);
 get('target').value = 'alpha';
 get('stdin').value = '41\n';
@@ -287,6 +325,8 @@ fail = true;
 await get('submit').listeners.click();
 assert.equal(get('submit').disabled, false, 'Admission errors must leave the interface usable');
 assert.match(get('output').value, /slots are busy/);
+get('program-output-only').listeners.change();
+assert.match(get('output').value, /slots are busy/, 'A view change must not restore a stale result after an error');
 fail = false; transportFailure = true;
 await get('submit').listeners.click();
 assert.equal(cancellations, 1, 'A lost connection cancels the known job');

@@ -21,6 +21,10 @@ if (localExecution) {
 const editor = createEditor(get('source'), get('line-count'));
 editor.setIndentation({width: 3, automatic: true});
 let origin = '', examples = [], busy = false, job = '', targetsKey = '', ready = false;
+const outputPreference = 'fortran-playground-fpm-program-output-only';
+let lastResult = null, showBuildDetails = false;
+get('program-output-only').checked = true;
+try {get('program-output-only').checked = localStorage.getItem(outputPreference) !== 'false';} catch {}
 let compilerLabels = {gfortran: 'GNU Fortran 16.2.0'};
 let compilerSelection = false;
 let translatedSupported = false;
@@ -337,6 +341,48 @@ function nothingRun(result) {
     && !result.stages.some(s => s.name !== 'Build'));
 }
 
+function compactEligible(result) {
+  return result.ok && !result.error && !result.needs_target && !nothingRun(result)
+    && !(result.stages ?? []).some(stage => !stage.ok);
+}
+
+export function programOutputText(result) {
+  if (!compactEligible(result)) return resultText(result);
+  const executions = (result.stages ?? []).filter(stage => ['Run', 'Examples', 'Test'].includes(stage.name));
+  if (!executions.length) return 'Build completed successfully.';
+  let output = '';
+  for (const stage of executions) {
+    // FPM writes this leading status line to stderr before executing the program.
+    // Leave stdout and all subsequent stderr lines untouched.
+    const stderr = (stage.stderr || '').replace(/^Project is up to date\r?\n/, '');
+    for (const stream of [stage.stdout || '', stderr]) {
+      if (!stream) continue;
+      if (output && !output.endsWith('\n')) output += '\n';
+      output += stream;
+    }
+  }
+  return output || 'Program completed successfully with no output.';
+}
+
+function renderOutput() {
+  const expandable = Boolean(lastResult && compactEligible(lastResult) && get('program-output-only').checked);
+  const detailed = !expandable || showBuildDetails;
+  get('build-details').disabled = !expandable;
+  get('build-details').textContent = expandable && detailed ? 'Hide build details' : 'Show build details';
+  get('build-details').setAttribute('aria-expanded', String(Boolean(lastResult && detailed)));
+  if (lastResult) get('output').value = detailed ? resultText(lastResult) : programOutputText(lastResult);
+}
+
+get('program-output-only').addEventListener('change', () => {
+  try {localStorage.setItem(outputPreference, String(get('program-output-only').checked));} catch {}
+  showBuildDetails = false;
+  renderOutput();
+});
+get('build-details').addEventListener('click', () => {
+  showBuildDetails = !showBuildDetails;
+  renderOutput();
+});
+
 async function request(path, options = {}) {
   if (localExecution) {
     path = '/api/fpm/catalog' + path.slice('/api'.length);
@@ -357,6 +403,9 @@ async function submit() {
   controls();
   get('status').textContent = 'Submitting…';
   get('output').value = '';
+  lastResult = null;
+  showBuildDetails = false;
+  renderOutput();
   get('plot-results').replaceChildren();
   let terminal = false;
   try {
@@ -380,7 +429,8 @@ async function submit() {
       knownTargetsKey = targetContext();
       knownTargets = result.target_groups || (Array.isArray(result.targets) ? {
         [{example: 'example', test: 'test'}[get('action').value] || 'app']: result.targets} : {});
-      get('output').value = resultText(result);
+      lastResult = result;
+      renderOutput();
       renderPlots(get('plot-results'), result);
       get('status').textContent = nothingRun(result) ? 'BUILD PASS — nothing run'
         : result.needs_target ? 'Choose a target' : result.ok ? 'PASS' : 'FAIL';
