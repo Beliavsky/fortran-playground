@@ -163,6 +163,30 @@ assert.equal(get('example').options.length, 5);
 assert.equal(submissions.length, 0, 'Initialization must not submit a job');
 assert.equal(get('package-collection').value, 'general', 'Selected remains the default');
 assert.equal(allFetches, 0, 'Selected does not download the full catalog');
+assert.equal(get('package-sort').value, 'name');
+const alphabetical = [...packages].sort((a, b) => (a.name || a.id).localeCompare(b.name || b.id, 'en', {sensitivity: 'base', numeric: true})
+  || a.repository.localeCompare(b.repository, 'en'));
+assert.deepEqual(get('available-package').options.slice(1).map(p => p.value), alphabetical.map(p => p.id));
+const savedStars = packages.map(p => [p.stars, p.stars_updated_at]);
+for (const p of packages) {delete p.stars; delete p.stars_updated_at;}
+packages[0].stars = 500; packages[1].stars = 500; packages[2].stars = 0;
+packages[0].stars_updated_at = '2026-10-28T00:00:00+00:00';
+get('available-package').value = packages[1].id;
+get('package-sort').value = 'stars'; get('package-sort').listeners.change();
+assert.deepEqual(get('available-package').options.slice(1, 4).map(p => p.value), packages.slice(0, 3).map(p => p.id),
+  'Stars sort descending, name breaks ties, zero precedes missing counts');
+assert.equal(get('available-package').value, packages[1].id, 'Sorting preserves selection');
+assert.match(get('available-package').options[1].textContent, /\[500 stars\]/);
+assert.match(get('available-package').options[4].textContent, /stars unavailable/);
+assert.match(get('package-stars-note').textContent, /Stars updated 2026-10-28/);
+get('package-search').value = 'fortran'; get('package-search').listeners.input();
+assert.deepEqual(get('package-search-results').options.map(p => p.textContent),
+  get('available-package').options.slice(1, 21).map(p => p.textContent.replace(' [FPM unavailable]', '')),
+  'Search buttons and dropdown use the same ordering and star labels');
+assert.equal(submissions.length, 0, 'Sorting never submits a job');
+packages.forEach((p, i) => {p.stars = savedStars[i][0]; p.stars_updated_at = savedStars[i][1];});
+get('package-sort').value = 'name'; get('package-sort').listeners.change();
+assert.equal(get('package-stars-note').hidden, true);
 get('package-search').value = 'DVODE';
 get('package-search').listeners.input();
 assert.equal(get('available-package').value, 'dvode');
@@ -363,6 +387,7 @@ assert.match(get('package-count').textContent, /596/);
 assert.equal(get('package-topics').hidden, true, 'Translated packages do not inherit repository-wide topic labels');
 get('package-search').value = 'Metrics'; get('package-search').listeners.input();
 assert.ok(get('available-package').options.some(option => option.value === 'Metrics'));
+assert.equal(get('package-sort').disabled, true, 'Translated packages share a repository and use name sorting');
 get('available-package').value = 'Metrics'; get('available-package').listeners.change();
 assert.equal(get('load-package').disabled, false, 'Cold builds do not require a precompiled image');
 get('load-package').listeners.click();

@@ -47,6 +47,7 @@ const buildable = p => !p.fpm_status || p.fpm_status === 'available';
 const packageCategories = p => p.categories?.length ? p.categories : [p.category];
 let exporting = false, exportRuntime;
 get('compiler').value = 'gfortran';
+get('package-sort').value = 'name';
 
 function controls() {
   const consumer = get('workflow').value === 'consumer';
@@ -79,6 +80,7 @@ function controls() {
   get('available-package').disabled = busy;
   get('package-search').disabled = busy || collectionLoading;
   get('package-category').disabled = busy || collectionLoading;
+  get('package-sort').disabled = busy || collectionLoading || translatedCollection();
   for (const button of searchButtons) button.disabled = busy;
   for (const button of topicButtons) button.disabled = busy;
   const selected = packages.find(p => p.id === get('available-package').value);
@@ -158,18 +160,33 @@ function renderPackages() {
   const previous = get('available-package').value;
   const query = get('package-search').value.trim().toLowerCase();
   const category = get('package-category').value;
+  get('package-sort').disabled = busy || translatedCollection() || collectionLoading;
+  get('package-sort').title = translatedCollection() ? 'Translated R packages share one GitHub repository; sorted by name.' : '';
+  if (translatedCollection()) get('package-sort').value = 'name';
+  const starSort = get('package-sort').value === 'stars';
+  const starCount = p => Number.isSafeInteger(p.stars) && p.stars >= 0 ? p.stars : -1;
+  const byName = (a, b) => (a.name || a.id).localeCompare(b.name || b.id, 'en', {sensitivity: 'base', numeric: true})
+    || a.repository.localeCompare(b.repository, 'en');
   const visible = packages.filter(p => {
     const text = `${p.id} ${p.name || ''} ${p.repository} ${p.description} ${packageCategories(p).join(' ')} ${(p.keywords || []).join(' ')} ${(p.topics || []).join(' ')}`.toLowerCase();
     return (!category || packageCategories(p).includes(category)) && (text.includes(query)
       || text.replace(/[-_]+/g, ' ').includes(query.replace(/[-_]+/g, ' ')));
-  });
+  }).sort((a, b) => (starSort ? starCount(b) - starCount(a) : 0) || byName(a, b));
+  const starLabel = p => !starSort ? '' : starCount(p) < 0 ? ' [stars unavailable]' : ` [${p.stars} stars]`;
+  const starNote = get('package-stars-note');
+  starNote.hidden = !starSort;
+  const dates = [...new Set(packages.filter(p => starCount(p) >= 0 && p.stars_updated_at)
+    .map(p => p.stars_updated_at.slice(0, 10)))].sort();
+  starNote.textContent = dates.length
+    ? `Stars updated ${dates[0]}${dates.length > 1 ? ' to ' + dates.at(-1) : ''}. Missing counts appear last. Stars measure popularity, not build verification.`
+    : 'No saved star counts; packages are listed alphabetically.';
   const placeholder = document.createElement('option');
   placeholder.value = ''; placeholder.textContent = localExecution || translatedCollection() || allCollection() ? 'Choose a package…' : 'Choose a precompiled package…';
   get('available-package').replaceChildren(placeholder);
   for (const item of visible) {
     const option = document.createElement('option');
     option.value = item.id;
-    option.textContent = `${item.name || item.id} — ${item.description}${buildable(item) ? '' : ' [FPM unavailable]'}`;
+    option.textContent = `${item.name || item.id}${starLabel(item)} — ${item.description}${buildable(item) ? '' : ' [FPM unavailable]'}`;
     // Discovery-only entries remain selectable so their source and status can be inspected.
     option.disabled = !localExecution && !translatedCollection() && !allCollection() && precompiled[item.id]?.revision !== item.revision;
     get('available-package').appendChild(option);
@@ -186,7 +203,7 @@ function renderPackages() {
     for (const item of visible.slice(0, 20)) {
       const button = document.createElement('button');
       button.type = 'button'; button.disabled = busy;
-      button.textContent = `${item.name || item.id} — ${item.description}`;
+      button.textContent = `${item.name || item.id}${starLabel(item)} — ${item.description}`;
       button.addEventListener('click', () => {get('available-package').value = item.id; selectPackage();});
       button.addEventListener('dblclick', () => {
         get('available-package').value = item.id;
@@ -221,6 +238,7 @@ function renderPackages() {
 
 get('package-search').addEventListener('input', renderPackages);
 get('package-category').addEventListener('change', renderPackages);
+get('package-sort').addEventListener('change', renderPackages);
 
 async function selectCollection() {
   if (!allPackagesEnabled && allCollection()) get('package-collection').value = 'general';

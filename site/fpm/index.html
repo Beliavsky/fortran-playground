@@ -53,7 +53,12 @@
     <label id="package-list-label" for="available-package">Selected packages (GNU Fortran 16)</label>
     <select id="available-package"><option value="">Choose a precompiled package&hellip;</option></select>
     <button id="load-package" type="button" disabled>Load package</button>
+    <div class="package-filter">
+      <label for="package-sort">Sort by</label>
+      <select id="package-sort"><option value="name">Name</option><option value="stars">GitHub stars</option></select>
+    </div>
   </div>
+  <p id="package-stars-note" class="editor-note" hidden></p>
   <p id="package-note">Loading the available package catalog&hellip;</p>
   <div id="package-topics" class="toolbar" role="group" aria-label="GitHub repository topics" hidden></div>
   <div id="package-search-results" class="toolbar" role="group" aria-label="Matching packages" hidden></div>

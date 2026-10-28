@@ -273,18 +273,18 @@ The hosted Python runner also benefits automatically when `--fpm URL --revision 
 
 ## Build, verify, and deploy
 
-### Refresh GitHub topics
+### Refresh GitHub topics and stars
 
-The general catalog includes a saved snapshot of repository topics in `fpm_catalog/topics.json`. Topics describe repositories; package source revisions remain pinned independently. Refresh topics explicitly, then regenerate the public catalog:
+The selected catalog includes a saved snapshot of repository topics, exact star counts, and refresh timestamps in `fpm_catalog/topics.json`. Topics and stars describe repositories; package source revisions remain pinned independently. Refresh this metadata monthly, or whenever desired, then regenerate the public catalog:
 
 ```text
 python xgithub_topics.py
 python xfpm_examples.py
 ```
 
-The refresh command uses GitHub's repository topics API. It reads `GITHUB_TOKEN` or `GH_TOKEN` when available; a complete refresh of this catalog may exceed the unauthenticated API allowance. Alternatively, read the topic labels from the public repository pages with `python xgithub_topics.py --html`, then run `python xfpm_examples.py`. Failed refreshes preserve the previous complete snapshot.
+The refresh command uses [GitHub's repository API](https://docs.github.com/en/rest/repos/repos#get-a-repository) to retrieve topics and `stargazers_count` together. It reads `GITHUB_TOKEN` or `GH_TOKEN` when available; a complete refresh of this catalog may exceed the unauthenticated API allowance. Alternatively, read topics and exact star counts from public repository pages with `python xgithub_topics.py --html`, then run `python xfpm_examples.py`. Rounded counts such as `1.2k` are never used. Failed refreshes preserve the previous complete snapshot.
 
-Normal site builds read the saved snapshot and make no topic API requests. Commit the snapshot and generated `site/fpm/packages.json` to publish updated search metadata. Topic changes require no backend deployment or library recompilation, and the online and local catalog pages use the same metadata.
+Normal site builds read the saved snapshot and make no GitHub requests. Commit the snapshot and generated `site/fpm/packages.json` and `site/fpm/all-packages.json` to publish updated metadata. These updates require no backend deployment or library recompilation, and the online and local catalog pages use the same metadata. Refreshes are explicit; no scheduled action is installed. The translated R collection uses name sorting because all its entries share a repository.
 
 ### Package builds
 

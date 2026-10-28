@@ -28,7 +28,8 @@
       "numpy",
       "singular-values",
       "svd"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "test-drive",
@@ -46,7 +47,8 @@
       "fortran-package-manager",
       "testing-framework",
       "unit-testing"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "pyplot-fortran",
@@ -68,7 +70,8 @@
       "plotting",
       "plotting-in-fortran",
       "pyplot"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "json-fortran",
@@ -85,7 +88,8 @@
       "fortran",
       "fortran-package-manager",
       "json"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "toml-f",
@@ -104,7 +108,8 @@
       "serde",
       "toml",
       "toml-parser"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "fftpack",
@@ -124,7 +129,8 @@
       "fftpack",
       "fortran-library",
       "fortran-package-manager"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "roots-fortran",
@@ -147,7 +153,8 @@
       "regula-falsi",
       "root-finding",
       "zeroin"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "m_strings",
@@ -166,7 +173,8 @@
       "fpm",
       "string-manipulation",
       "strings"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "stdlib",
@@ -174,7 +182,7 @@
     "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
     "archive_sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5",
     "description": "General utilities, statistics, strings, sorting, and numerical routines.",
-    "stars": 1361,
+    "stars": 1363,
     "dependents_in_sample": 11,
     "license": "MIT",
     "category": "General utilities",
@@ -197,7 +205,8 @@
       "statistics",
       "stdlib",
       "strings"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "bspline-fortran",
@@ -220,7 +229,8 @@
       "least-squares-curve-fitting",
       "quadrature-integration",
       "splines"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "pchip",
@@ -240,7 +250,8 @@
       "hermite-interpolation",
       "interpolation",
       "slatec"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "finterp",
@@ -260,7 +271,8 @@
       "interpolation",
       "linear-interpolation",
       "nearest-neighbor-interpolation"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "quadpack",
@@ -284,7 +296,8 @@
       "quadrature",
       "quadrature-integration",
       "slatec"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "quadrature-fortran",
@@ -305,7 +318,8 @@
       "numerical-integration",
       "quadrature",
       "quadrature-integration"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "dop853",
@@ -325,7 +339,8 @@
       "fortran-package-manager",
       "ode",
       "runge-kutta"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "minpack",
@@ -339,7 +354,8 @@
     "dependencies": [],
     "dependents_in_sample": 0,
     "source": "module equations\n   use minpack_module, only: wp\n   implicit none\ncontains\n   subroutine residual(n, x, fvec, iflag)\n      integer, intent(in) :: n\n      real(wp), intent(in) :: x(n)\n      real(wp), intent(out) :: fvec(n)\n      integer, intent(inout) :: iflag\n      fvec = [x(1)**2-2.0_wp, x(2)-3.0_wp]\n   end subroutine\nend module\nprogram main\n   use minpack_module, only: hybrd1\n   use equations\n   implicit none\n   real(wp) :: x(2), fvec(2), work(19)\n   integer :: status\n   x = [1.0_wp,1.0_wp]\n   call hybrd1(residual, 2, x, fvec, 1.e-10_wp, status, work, size(work))\n   if (status /= 1 .or. maxval(abs(fvec)) > 1.e-8_wp) error stop 'nonlinear solve failed'\n   print *, 'Solution (sqrt(2), 3):', x\n   print *, 'PASS minpack'\nend program main\n",
-    "topics": []
+    "topics": [],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "mersenne-twister-fortran",
@@ -359,7 +375,8 @@
       "mersenne-twister",
       "random-number-generators",
       "rng"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "fortran-search-and-sort",
@@ -379,7 +396,8 @@
       "quicksort",
       "searching-algorithms",
       "sorting-algorithms"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "stringsort",
@@ -398,7 +416,8 @@
       "fortran-package-manager",
       "quicksort",
       "sorting-algorithms"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "flist",
@@ -416,7 +435,8 @@
       "fortran",
       "fortran-package-manager",
       "linked-list"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "daglib",
@@ -437,7 +457,8 @@
       "graphviz",
       "graphviz-dot-language",
       "toposort"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "argv-fortran",
@@ -455,7 +476,8 @@
       "argv",
       "fortran",
       "fortran-package-manager"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "popen-fortran",
@@ -473,7 +495,8 @@
       "fortran",
       "fortran-package-manager",
       "popen"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "fortran_function_parser",
@@ -491,7 +514,8 @@
       "expression-parser",
       "fortran",
       "function-parser"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "numdiff",
@@ -513,7 +537,8 @@
       "numerical-methods",
       "optimization",
       "sparsity-optimization"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "csv-fortran",
@@ -531,7 +556,8 @@
       "csv",
       "fortran",
       "fortran-package-manager"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "datetime-fortran",
@@ -550,7 +576,8 @@
       "fortran",
       "strftime",
       "timedelta"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "m_io",
@@ -568,7 +595,8 @@
       "fortran",
       "fortran-package-manager",
       "io"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "m_time",
@@ -591,7 +619,8 @@
       "fortran-package-manager",
       "fpm",
       "time"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "m_sets",
@@ -616,7 +645,8 @@
       "fortran-package-manager",
       "matlab",
       "sets"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "m_sort",
@@ -637,7 +667,8 @@
       "sort",
       "sorting",
       "sorting-algorithms"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "m_cli2",
@@ -657,7 +688,8 @@
       "fortran",
       "fortran-package-manager",
       "parsing"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "m_attr",
@@ -676,7 +708,8 @@
       "fortran",
       "fortran-package-manager",
       "terminal"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "jonquil",
@@ -702,7 +735,8 @@
       "json",
       "json-parser",
       "serde"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "orderpack",
@@ -721,7 +755,8 @@
       "fortran-package-manager",
       "fpm",
       "sort"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "fortran-regex",
@@ -741,7 +776,8 @@
       "regex-parser",
       "regular-expression",
       "regular-expressions"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "fortran-shlex",
@@ -761,7 +797,8 @@
       "regular-expressions",
       "shlex",
       "shlex-library"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "fortran-primes",
@@ -782,7 +819,8 @@
       "modern-fortran",
       "prime-numbers",
       "primes"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "fhash",
@@ -802,7 +840,8 @@
       "fpm",
       "hashmap",
       "hashtable"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "functional-fortran",
@@ -819,7 +858,8 @@
     "topics": [
       "fortran",
       "functional-programming"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "forwarddiff",
@@ -838,7 +878,8 @@
       "autodifferentiation",
       "automatic-differentiation",
       "differential-equations"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "kinds",
@@ -851,7 +892,9 @@
     "dependencies": [],
     "dependents_in_sample": 6,
     "source": "program main\n   use kinds, only: rk, ik, rk64\n   implicit none\n   real(rk) :: x\n   integer(ik) :: n\n   x = sqrt(2.0_rk)\n   n = 100_ik\n   if (precision(1.0_rk64) < 15) error stop 'insufficient double precision'\n   if (abs(x*x-2.0_rk) > 10*epsilon(x)) error stop 'incorrect square root'\n   print *, 'Working real precision:', precision(x), 'digits'\n   print *, 'Integer storage:', storage_size(n), 'bits'\n   print *, 'PASS kinds'\nend program\n",
-    "topics": []
+    "topics": [],
+    "stars": 0,
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "forcolormap",
@@ -875,7 +918,8 @@
       "colormaps",
       "fortran",
       "fortran-package-manager"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "rational_number",
@@ -895,7 +939,8 @@
     ],
     "dependents_in_sample": 0,
     "source": "program main\n   use rational_number\n   implicit none\n   type(rationalnumber_t) :: total\n   total = ratNumAdd(ratNumInit(1,3), ratNumInit(1,6), simplify=.true.)\n   if (ratNumGetNumerator(total) /= 1 .or. ratNumGetDenominator(total) /= 2) &\n      error stop 'incorrect fraction'\n   print *, '1/3 + 1/6 = ', ratNumToStr(total)\n   print *, 'PASS rational_number'\nend program\n",
-    "topics": []
+    "topics": [],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "fortran_test_helper",
@@ -908,7 +953,9 @@
     "dependencies": [],
     "dependents_in_sample": 9,
     "source": "program main\n   use fortran_test_helper, only: assert\n   implicit none\n   real :: x(3)\n   x = [1.0,2.0,3.0]\n   if (.not. assert(x*x, [1.0,4.0,9.0], 1.e-6)) error stop 'array assertion failed'\n   if (assert(1.0, 2.0, 1.e-6)) error stop 'unequal values accepted'\n   print *, 'Checked array arithmetic and unequal scalars.'\n   print *, 'PASS fortran_test_helper'\nend program\n",
-    "topics": []
+    "topics": [],
+    "stars": 0,
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "m_match",
@@ -928,7 +975,8 @@
       "fortran-package-manager",
       "regex",
       "regular-expressions"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "m_list",
@@ -944,7 +992,8 @@
     "source": "program main\n   use M_list, only: locate, insert\n   implicit none\n   integer, allocatable :: values(:)\n   integer :: place\n   ! M_list keeps arrays in descending order.\n   values = [30,10]\n   call locate(values, 20, place)\n   if (place >= 1) error stop 'unexpected existing entry'\n   call insert(values, 20, abs(place))\n   if (any(values /= [30,20,10])) error stop 'incorrect insertion'\n   call locate(values, 20, place)\n   if (place /= 2) error stop 'incorrect lookup'\n   print *, 'Sorted values:', values\n   print *, 'PASS m_list'\nend program\n",
     "topics": [
       "fortran-package-manager"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "m_color",
@@ -963,7 +1012,8 @@
       "color-models",
       "fortran",
       "fortran-package-manager"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "fmin",
@@ -981,7 +1031,8 @@
       "brent",
       "fortran-package-manager",
       "minimization"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "slsqp",
@@ -1003,7 +1054,8 @@
       "numerical-optimization",
       "optimization",
       "sqp"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "lbfgsb",
@@ -1026,7 +1078,8 @@
       "lbfgsb",
       "lbfgsb-solver",
       "numerical-optimization"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "specfun",
@@ -1045,7 +1098,8 @@
       "fortran-package-manager",
       "scipy",
       "special-functions"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "regridpack",
@@ -1066,7 +1120,8 @@
       "linear-interpolation",
       "regridding",
       "spline-interpolation"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "splpak",
@@ -1088,7 +1143,8 @@
       "interpolation",
       "least-squares",
       "splines"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "fortran-astrodynamics-toolkit",
@@ -1112,7 +1168,8 @@
       "orbital-simulation",
       "runge-kutta",
       "runge-kutta-adaptive-step-size"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "forgex",
@@ -1131,7 +1188,8 @@
       "fortran-package-manager",
       "regex",
       "regular-expression"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "ferror",
@@ -1145,7 +1203,8 @@
     "dependents_in_sample": 1,
     "stars": 11,
     "source": "program main\n   use ferror, only: errors\n   implicit none\n   type(errors) :: handler\n   call handler%set_exit_on_error(.false.)\n   call handler%set_suppress_printing(.true.)\n   call handler%report_error('read_sample','Sample count must be positive',42)\n   if (.not. handler%has_error_occurred()) error stop 'missing error'\n   if (handler%get_error_flag() /= 42) error stop 'incorrect error code'\n   print *, 'Handled error:', handler%get_error_flag()\n   call handler%reset_error_status()\n   if (handler%has_error_occurred()) error stop 'error not reset'\n   print *, 'PASS ferror'\nend program\n",
-    "topics": []
+    "topics": [],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "m_framework",
@@ -1164,7 +1223,8 @@
       "fortran-package-manager",
       "fpm",
       "unit-testing"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "fitpack",
@@ -1188,7 +1248,8 @@
       "spline-interpolation",
       "splines",
       "surface-fitting"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "lsqr",
@@ -1210,7 +1271,8 @@
       "linear-algebra",
       "linear-equations",
       "lsqr"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "mpfun2020-var1",
@@ -1226,7 +1288,8 @@
     "source": "program main\n   use mpmodule\n   implicit none\n   integer, parameter :: digits=100, words=digits/mpdpw+2\n   type(mp_real) :: two, root, residual, tolerance\n   two = mpreal(2.0d0,words)\n   root = sqrt(two)\n   residual = abs(root*root-two)\n   tolerance = mpreal(10.0d0,words)**(-90)\n   if (residual > tolerance) error stop 'high-precision identity failed'\n   print *, 'Square root of 2 to 100 decimal places:'\n   call mpwrite(6,digits+10,digits,root)\n   print *, 'Squared result agrees with 2 to at least 90 decimal places.'\n   print *, 'PASS mpfun2020-var1'\nend program main\n",
     "topics": [
       "arbitrary-precision"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "rklib",
@@ -1256,7 +1319,8 @@
       "runge-kutta",
       "runge-kutta-adaptive-step-size",
       "runge-kutta-fehlberg"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "ddeabm",
@@ -1283,7 +1347,8 @@
       "ode",
       "root-finding",
       "slatec"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "dvode",
@@ -1303,7 +1368,8 @@
       "fortran-package-manager",
       "ode",
       "vode"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "pikaia",
@@ -1330,7 +1396,8 @@
       "numerical-optimization",
       "optimization",
       "pikaia"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "io-fortran-library",
@@ -1350,7 +1417,8 @@
       "fortran-package-manager",
       "input-output",
       "modern-fortran"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "collections",
@@ -1373,7 +1441,8 @@
       "linked-list",
       "list",
       "lists"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "peaks",
@@ -1397,7 +1466,8 @@
       "fortran",
       "peak-detection",
       "signal-analysis"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "powellopt",
@@ -1419,7 +1489,8 @@
       "numerical-optimization",
       "optimization",
       "unconstrained-optimization"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "fstats",
@@ -1485,7 +1556,8 @@
       "special-functions",
       "statistical-testing",
       "statistics"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "spectrum",
@@ -1529,7 +1601,8 @@
       "total-variation-filter",
       "total-variation-regularization",
       "transfer-function"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "lsmr",
@@ -1560,7 +1633,8 @@
       "linear-equations",
       "lsmr",
       "sparse-linear-systems"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "nlesolver-fortran",
@@ -1617,7 +1691,8 @@
       "nonlinear-equation-solver",
       "nonlinear-equations",
       "quasi-newton"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "codata",
@@ -1659,7 +1734,8 @@
       "fortran-package-manager",
       "python",
       "science"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "specialmatrices",
@@ -1718,7 +1794,8 @@
       "linear-algebra",
       "sparse-linear-systems",
       "sparse-matrix"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "quaff",
@@ -1770,7 +1847,8 @@
     "topics": [
       "fortran",
       "units-of-measure"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "forpca",
@@ -1846,7 +1924,8 @@
       "fortran-package-manager",
       "pca",
       "principal-component-analysis"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "neural-fortran",
@@ -1866,7 +1945,8 @@
       "machine-learning",
       "neural-network",
       "parallel"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "lightkrylov",
@@ -1913,7 +1993,8 @@
       ]
     },
     "source": "program main\n   use LightKrylov, only: dense_linop_rdp, dense_vector_rdp, dense_vector, gmres\n   use LightKrylov_Constants, only: dp\n   implicit none\n   type(dense_linop_rdp) :: operator\n   type(dense_vector_rdp) :: rhs, solution\n   real(dp) :: matrix(6,6), expected(6), residual\n   integer :: i, info\n   matrix=0._dp; expected=1._dp\n   do i=1,6\n      matrix(i,i)=real(i,dp)\n      if (i<6) matrix(i,i+1)=0.25_dp\n   end do\n   operator%data=matrix\n   rhs=dense_vector(matmul(matrix,expected))\n   solution=dense_vector([0._dp,0._dp,0._dp,0._dp,0._dp,0._dp])\n   ! GMRES uses the operator's matrix-vector action to solve A*x = b.\n   call gmres(operator,rhs,solution,info,rtol=1.e-10_dp,atol=1.e-12_dp)\n   if (info<0) error stop 'GMRES failed'\n   residual=sqrt(sum((matmul(matrix,solution%data)-rhs%data)**2))\n   if (residual>1.e-8_dp) error stop 'large linear-system residual'\n   if (maxval(abs(solution%data-expected))>1.e-8_dp) error stop 'incorrect solution'\n   print *, 'GMRES solution:',solution%data\n   print *, 'Residual norm:',residual\n   print *, 'PASS lightkrylov'\nend program main\n",
-    "topics": []
+    "topics": [],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "polyroots-fortran",
@@ -1945,7 +2026,8 @@
       "polynomial-roots",
       "polynomials",
       "root-finding"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "fortran-sqlite3",
@@ -1981,7 +2063,8 @@
       "fpm",
       "sqlite",
       "sqlite3"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "geodesic-fortran",
@@ -2002,7 +2085,8 @@
       "vincenty-direct",
       "vincenty-formula",
       "vincenty-inverse"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "simulated-annealing",
@@ -2032,7 +2116,8 @@
       "python",
       "simulated-annealing",
       "stochastic-optimization"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "odrpack95",
@@ -2059,7 +2144,8 @@
       "odr",
       "regression",
       "statistics"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "pointsets",
@@ -2072,7 +2158,8 @@
     "description": "Construct uniform, geometric, random and quasi-random point sets and multidimensional grids.",
     "dependencies": [],
     "source": "program main\n   use pointsets, only: arithmetic_spacing,geometric_spacing\n   use select_precision, only: wp\n   implicit none\n   real(wp) :: uniform(5),geometric(5)\n   call arithmetic_spacing(uniform,0._wp,1._wp)\n   call geometric_spacing(geometric,0._wp,1._wp,2._wp)\n   if (maxval(abs(uniform-[0._wp,.25_wp,.5_wp,.75_wp,1._wp]))>1e-6_wp) error stop\n   if (maxval(abs(geometric-[0._wp,1._wp,3._wp,7._wp,15._wp]/15))>1e-6_wp) error stop\n   print '(a,5f9.5)', 'Uniform grid:  ',uniform\n   print '(a,5f9.5)', 'Geometric grid:',geometric\n   print *, 'PASS pointsets'\nend program main\n",
-    "topics": []
+    "topics": [],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "flint",
@@ -2099,7 +2186,8 @@
       "ode",
       "ode-events",
       "runge-kutta"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "fortran-string-to-real",
@@ -2112,7 +2200,8 @@
     "description": "Experimental conversion of valid decimal and scientific-notation strings to real numbers.",
     "dependencies": [],
     "source": "program main\n   use iso_fortran_env, only: real64\n   use str2real_m, only: str2real\n   implicit none\n   character(12), parameter :: text(3)=[character(12)::'12.34E1','-2.5e-2','6.022E3']\n   real(real64), parameter :: expected(3)=[123.4_real64,-.025_real64,6022._real64]\n   real(real64) :: parsed\n   integer :: i\n   ! Supply valid numeric strings; this parser does not validate malformed input.\n   do i=1,size(text)\n      parsed=str2real(trim(text(i)))\n      if (abs(parsed-expected(i))>1e-12_real64*max(1._real64,abs(expected(i)))) error stop\n      print '(a,1x,f14.6)', trim(text(i))//' ->',parsed\n   end do\n   print *, 'PASS fortran-string-to-real'\nend program main\n",
-    "topics": []
+    "topics": [],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "ad_dnsvm",
@@ -2141,7 +2230,8 @@
     "topics": [
       "automatic-differentiation",
       "fortran"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "integrate_fortran",
@@ -2158,7 +2248,8 @@
       "gauss-legendre-integration",
       "numerical-integration",
       "quadrature"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "rndgen-fortran",
@@ -2179,7 +2270,8 @@
       "random",
       "random-number-generator",
       "rng"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "blas-interface",
@@ -2199,7 +2291,8 @@
       ]
     },
     "source": "program main\n   use iso_fortran_env, only: real64\n   use blas, only: gemm=>blas_gemm\n   implicit none\n   real(real64) :: a(2,2),b(2,2),c(2,2)\n   integer :: row\n   a=reshape([1._real64,3._real64,2._real64,4._real64],[2,2])\n   b=reshape([5._real64,7._real64,6._real64,8._real64],[2,2])\n   c=0\n   call gemm('N','N',2,2,2,1._real64,a,2,b,2,0._real64,c,2)\n   if (maxval(abs(c-matmul(a,b)))>1e-12_real64) error stop\n   print *, 'BLAS matrix product (checked against MATMUL):'\n   do row=1,2\n      print '(2f10.3)', c(row,:)\n   end do\n   print *, 'PASS blas-interface'\nend program main\n",
-    "topics": []
+    "topics": [],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "fsparse",
@@ -2217,7 +2310,8 @@
       "fortran-library",
       "fortran-package-manager",
       "sparse-matrices"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "geompack",
@@ -2237,7 +2331,8 @@
       "geometry",
       "triangulation",
       "triangulation-delaunay"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "minres",
@@ -2250,7 +2345,8 @@
     "description": "Iterative solution of symmetric sparse systems, including indefinite matrices.",
     "dependencies": [],
     "source": "module sparse_operator\n   use iso_fortran_env, only: dp=>real64\n   implicit none\n   integer, parameter :: row(7)=[1,2,3,2,3,1,2],col(7)=[1,2,3,1,2,2,3]\n   real(dp), parameter :: entries(7)=[3._dp,2._dp,1._dp,4._dp,2._dp,4._dp,2._dp]\ncontains\n   subroutine aprod(n,x,y)\n      integer, intent(in) :: n\n      real(dp), intent(in) :: x(n)\n      real(dp), intent(out) :: y(n)\n      integer :: i\n      y=0._dp\n      do i=1,size(entries)\n         y(row(i))=y(row(i))+entries(i)*x(col(i))\n      end do\n   end subroutine\n   subroutine msolve(n,x,y)\n      integer, intent(in) :: n\n      real(dp), intent(in) :: x(n)\n      real(dp), intent(out) :: y(n)\n      y=x\n   end subroutine\nend module\nprogram main\n   use sparse_operator\n   use minres, only: minres_solver\n   implicit none\n   real(dp) :: b(3),x(3),ax(3),anorm,acond,rnorm,arnorm,ynorm,residual\n   integer :: istop,itn\n   call aprod(3,[1._dp,2._dp,3._dp],b)\n   ! Module callbacks avoid the internal-procedure closures in minres_ez_t.\n   call minres_solver(3,aprod,msolve,b,0._dp,.true.,.false.,x,100,0,1e-12_dp, &\n      istop,itn,anorm,acond,rnorm,arnorm,ynorm)\n   call aprod(3,x,ax)\n   residual=maxval(abs(ax-b))\n   if (residual>1e-9_dp.or.maxval(abs(x-[1._dp,2._dp,3._dp]))>1e-9_dp) error stop\n   print '(a,3f12.7)', 'Solution:',x\n   print '(a,i5)', 'Iterations:',itn\n   print '(a,es12.4)', 'Maximum residual:',residual\n   print *, 'PASS minres'\nend program main\n",
-    "topics": []
+    "topics": [],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "fordiff",
@@ -2276,7 +2372,8 @@
       "finite-difference",
       "fortran",
       "fortran-package-manager"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "twopnt",
@@ -2294,7 +2391,8 @@
       "boundary-value-problems",
       "bvp",
       "fortran"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "specfunc-fullerton",
@@ -2309,7 +2407,8 @@
     "source": "program main\n   use fullerton_gamma, only: fgamma,reciprocal_gamma,digamma\n   implicit none\n   real :: x,g,rg,psi_difference\n   integer :: i\n   print '(a)', '      x       Gamma(x)      1/Gamma(x)'\n   do i=1,4\n      x=real(i)+.5\n      g=fgamma(x); rg=reciprocal_gamma(x)\n      if (abs(g-gamma(x))>2e-5*max(1.,abs(g)).or.abs(g*rg-1.)>2e-5) error stop\n      psi_difference=digamma(x+1.)-digamma(x)\n      if (abs(psi_difference-1./x)>2e-5) error stop 'Digamma recurrence failed'\n      print '(f8.2,2f16.7)', x,g,rg\n   end do\n   print *, 'PASS specfunc-fullerton'\nend program main\n",
     "topics": [
       "special-functions"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "lib_statistics",
@@ -2322,7 +2421,8 @@
     "description": "Logistic regression using iteratively reweighted least squares.",
     "dependencies": [],
     "source": "program main\n   use Logistic_Regression, only: logistic,dp\n   implicit none\n   integer, parameter :: groups=6\n   integer :: trials(groups),successes(groups),ndf,ier,i\n   real(dp) :: x(groups,1),beta(0:1),se(0:1),fit(groups),chisq,deviance,expected(groups)\n   ! Two predictor levels, each repeated three times: the exact fitted\n   ! probabilities are 1/4 and 3/4, so beta=(0,log(3)). No data download.\n   x(:,1)=[-1._dp,-1._dp,-1._dp,1._dp,1._dp,1._dp]\n   trials=20; successes=[5,5,5,15,15,15]\n   expected=real(successes,dp)/real(trials,dp)\n   call logistic(groups,x,1,successes,trials,chisq,deviance,ndf,beta,se,ier,fit=fit)\n   if (ier/=0) error stop 'Logistic regression failed'\n   if (maxval(abs(fit-expected))>1e-6_dp) error stop 'Incorrect fitted probabilities'\n   if (abs(beta(0))>1e-6_dp.or.abs(beta(1)-log(3._dp))>1e-6_dp) error stop\n   print '(a,2f14.8)', 'Intercept and slope:',beta\n   do i=1,groups\n      print '(a,f5.1,a,f10.6)', 'x=',x(i,1),'  fitted probability=',fit(i)\n   end do\n   print *, 'PASS lib_statistics'\nend program main\n",
-    "topics": []
+    "topics": [],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "astro-fortran",
@@ -2339,7 +2439,8 @@
       "astrometry",
       "astronomy",
       "fortran-package-manager"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "nlopt-f",
@@ -2361,7 +2462,8 @@
       }
     },
     "source": "module rosenbrock_model\n   use iso_fortran_env, only: real64\n   implicit none\ncontains\n   function objective(x,gradient,func_data) result(f)\n      real(real64), intent(in) :: x(:)\n      real(real64), optional, intent(inout) :: gradient(:)\n      class(*), optional, intent(in) :: func_data\n      real(real64) :: f\n      f=(1._real64-x(1))**2+100._real64*(x(2)-x(1)**2)**2\n      if (present(gradient)) then\n         gradient(1)=2*(x(1)-1)-400*x(1)*(x(2)-x(1)**2)\n         gradient(2)=200*(x(2)-x(1)**2)\n      end if\n   end function\nend module\nprogram main\n   use nlopt_wrap\n   use nlopt_enum\n   use rosenbrock_model\n   use ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   type(nlopt_opt) :: opt\n   real(real64) :: x(2),minimum\n   integer :: status\n   call create(opt,algorithm_from_string('LD_LBFGS'),2)\n   associate(f=>nlopt_func(objective))\n      call opt%set_min_objective(f,status)\n      if (status<0) error stop 'Cannot set objective'\n      call opt%set_xtol_rel(1e-9_real64,status)\n      call opt%set_maxeval(1000,status)\n      x=[-1.2_real64,1._real64]\n      call opt%optimize(x,minimum,status)\n   end associate\n   if (status<0.or..not.all(ieee_is_finite(x))) error stop 'Optimization failed'\n   if (maxval(abs(x-1._real64))>1e-5_real64.or.minimum>1e-10_real64) error stop\n   print '(a,2f15.10)', 'Rosenbrock minimizer:',x\n   print '(a,es14.5)', 'Minimum value:',minimum\n   call destroy(opt)\n   print *, 'PASS nlopt-f'\nend program\n",
-    "topics": []
+    "topics": [],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "daskr",
@@ -2481,7 +2583,8 @@
       "fortran",
       "fortran-package-manager",
       "netlib"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "ffilesystem",
@@ -2500,7 +2603,8 @@
       "fortran",
       "libc",
       "path-manipulation"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "utf8-f",
@@ -2516,7 +2620,8 @@
     "topics": [
       "fortran",
       "utf-8"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "ryu_fortran",
@@ -2532,7 +2637,8 @@
     "topics": [
       "floating-point",
       "string"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "iso_varying_string",
@@ -2549,7 +2655,8 @@
       "fortran",
       "iso",
       "strings"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "fortimize",
@@ -2575,7 +2682,8 @@
       "nelder-mead",
       "optimization",
       "optimization-algorithms"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "forimage",
@@ -2608,7 +2716,8 @@
       "pnm",
       "ppm",
       "rgb"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "ncio",
@@ -2631,7 +2740,8 @@
       }
     },
     "source": "program main\n   use iso_fortran_env, only: real64\n   use ncio, only: nc_create,nc_write_dim,nc_write,nc_read,nc_size\n   implicit none\n   real(real64) :: original(4),restored(4)\n   original=[1._real64,2._real64,4._real64,8._real64]\n   call nc_create('sample.nc',description='A small playground NetCDF example')\n   call nc_write_dim('sample.nc','x',x=[0._real64,1._real64,2._real64,3._real64],units='m')\n   call nc_write('sample.nc','temperature',original,dim1='x',units='K')\n   call nc_read('sample.nc','temperature',restored)\n   if (nc_size('sample.nc','x')/=4.or.any(restored/=original)) error stop 'NetCDF round trip failed'\n   print '(a,4f10.3)', 'Read back temperatures (K):',restored\n   print *, 'PASS ncio'\nend program\n",
-    "topics": []
+    "topics": [],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "fastconv",
@@ -2644,7 +2754,8 @@
     "description": "Small-kernel convolution for smoothing one-, two- and three-dimensional arrays.",
     "dependencies": [],
     "source": "program demo_fastconv\n   use iso_fortran_env, only: real32\n   use conv1d_m, only: conv1d_t\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   type(conv1d_t) :: filter\n   real(real32) :: signal(6) = [0., 2., 4., 8., 4., 2.]\n   real(real32), allocatable :: smoothed(:)\n\n   call filter%set_kernel([0.25_real32, 0.5_real32, 0.25_real32])\n   filter%preserve_shape = .false.\n   smoothed = filter%apply(signal)\n   if (size(smoothed) /= 4) error stop 'Unexpected output size'\n   if (.not. all(ieee_is_finite(smoothed))) error stop 'Nonfinite convolution'\n   if (maxval(abs(smoothed - [2., 4.5, 6., 4.5])) > 1.e-5_real32) &\n      error stop 'Convolution check failed'\n   print '(a,*(f6.2))', 'Smoothed signal:', smoothed\n   print *, 'PASS fastconv'\nend program demo_fastconv\n",
-    "topics": []
+    "topics": [],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "gaussjacobiquad",
@@ -2669,7 +2780,8 @@
       "meson",
       "numerical-integration",
       "quadrature"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "kissfft-f",
@@ -2691,7 +2803,8 @@
       "modern-fortran",
       "oop",
       "wrapper-api"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "h5fortran",
@@ -2718,7 +2831,8 @@
       "fortran",
       "hdf5",
       "object-oriented-fortran"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "metis-fpm",
@@ -2737,7 +2851,8 @@
       }
     ],
     "source": "program demo_metis\n   use iso_c_binding, only: c_int\n   use metis_c_interface\n   implicit none\n   integer(idx_t) :: xadj(10), adjncy(24), weights(24), options(0:METIS_NOPTIONS-1)\n   integer(idx_t) :: part(9), edgecut, nvtxs, ncon, nparts\n   integer(c_int) :: status\n   integer :: row, col, vertex, next, other, cuts, i\n\n   ! Undirected 3-by-3 grid graph, with zero-based vertex numbers for METIS.\n   next = 1\n   do row = 0, 2\n      do col = 0, 2\n         vertex = 3*row + col\n         xadj(vertex+1) = int(next-1, idx_t)\n         if (row > 0) then\n            adjncy(next) = int(vertex-3, idx_t); next = next+1\n         end if\n         if (row < 2) then\n            adjncy(next) = int(vertex+3, idx_t); next = next+1\n         end if\n         if (col > 0) then\n            adjncy(next) = int(vertex-1, idx_t); next = next+1\n         end if\n         if (col < 2) then\n            adjncy(next) = int(vertex+1, idx_t); next = next+1\n         end if\n      end do\n   end do\n   xadj(10) = int(next-1, idx_t)\n   weights = 1_idx_t\n   nvtxs = 9_idx_t; ncon = 1_idx_t; nparts = 2_idx_t\n   status = METIS_SetDefaultOptions(options)\n   if (status /= METIS_OK) error stop 'METIS default options failed'\n   options(METIS_OPTION_SEED) = 42_idx_t\n   status = METIS_PartGraphRecursive(nvtxs, ncon, xadj, adjncy, adjwgt=weights, &\n      nparts=nparts, options=options, edgecut=edgecut, part=part)\n   if (status /= METIS_OK) error stop 'METIS partition failed'\n   if (any(part < 0_idx_t) .or. any(part >= nparts)) error stop 'Invalid partition'\n   if (count(part == 0) < 3 .or. count(part == 1) < 3) error stop 'Unbalanced partition'\n   cuts = 0\n   do vertex = 1, 9\n      do i = int(xadj(vertex))+1, int(xadj(vertex+1))\n         other = int(adjncy(i))+1\n         if (part(vertex) /= part(other)) cuts = cuts+1\n      end do\n   end do\n   if (cuts/2 /= edgecut) error stop 'Edge cut check failed'\n   print '(a,2i4)', 'Partition sizes:', count(part == 0), count(part == 1)\n   print '(a,i4)', 'Edges crossing partitions:', edgecut\n   do row = 0, 2\n      print '(3i4)', part(3*row+1:3*row+3)\n   end do\n   print *, 'PASS metis-fpm'\nend program demo_metis\n",
-    "topics": []
+    "topics": [],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "m_calculator",
@@ -2756,7 +2871,8 @@
       "fortran",
       "fortran-package-manager",
       "parse"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "befor64",
@@ -2781,7 +2897,8 @@
       "encoding",
       "fortran",
       "oop"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "fortran-zlib",
@@ -2807,7 +2924,8 @@
       "fortran-2018",
       "fortran-package-manager",
       "zlib"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "iapws",
@@ -2865,7 +2983,8 @@
       "iapws",
       "science",
       "water"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "linalg",
@@ -2900,7 +3019,8 @@
       "qr-decomposition",
       "singular-value-decomposition",
       "sparse-matrix"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "nonlin",
@@ -2944,7 +3064,8 @@
       "optimization",
       "polynomials",
       "quasi-newton"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "maptran3d",
@@ -2969,7 +3090,8 @@
       "fortran2018",
       "geodesy",
       "modern-fortran"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "fortran-pcre2",
@@ -2997,7 +3119,8 @@
       "pcre2",
       "regex",
       "regexp"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "ciaaw",
@@ -3054,7 +3177,8 @@
       "fortran-package-manager",
       "isotopes",
       "standard-atomic-masses"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "rngff",
@@ -3071,7 +3195,8 @@
       "random",
       "random-number-generator",
       "rng"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "fortran-zstd",
@@ -3098,7 +3223,8 @@
       "fortran-package-manager",
       "zstandard",
       "zstd"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "paramcard",
@@ -3116,7 +3242,8 @@
       "fortran",
       "fortran-library",
       "fortran2008"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "strff",
@@ -3148,7 +3275,8 @@
     "topics": [
       "fortran",
       "string-manipulation"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "diffeq",
@@ -3192,7 +3320,8 @@
       "rosenbrock",
       "runge-kutta-methods",
       "tsitouras"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "fjsample",
@@ -3211,7 +3340,8 @@
       "fortran-package-manager",
       "jackknife-resampling",
       "meson-python"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "conmin",
@@ -3231,7 +3361,8 @@
       "fortran-package-manager",
       "numerical-optimization",
       "optimization"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "opti",
@@ -3274,7 +3405,8 @@
       "pso-algorithm",
       "swarm-intelligence",
       "topology"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "interpolation",
@@ -3316,7 +3448,8 @@
     "topics": [
       "fortran",
       "interpolation"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "fortran_huffman",
@@ -3332,7 +3465,8 @@
     "topics": [
       "fortran",
       "huffman-compression-algorithm"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "fastmath",
@@ -3351,7 +3485,8 @@
       "fortran",
       "logarithm",
       "rsqrt"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "fortsa",
@@ -3373,7 +3508,8 @@
       "time-series",
       "time-series-analysis",
       "tsa"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "fortran-flann",
@@ -3411,7 +3547,8 @@
       "kmeans-clustering",
       "nearest-neighbor-search",
       "spatial-search"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "fortran_stb_image",
@@ -3424,7 +3561,8 @@
     "description": "Read and write PNG and other raster image formats through the stb libraries.",
     "dependencies": [],
     "source": "program png_round_trip\n   use iso_c_binding, only: c_int, c_char, c_ptr, c_null_char, c_associated, c_f_pointer\n   use stb_image_mod, only: c_stbi_load\n   use stb_image_write_mod, only: write_image\n   implicit none\n   integer, parameter :: width=128, height=96\n   integer :: pixels(width,height,3), i,j,k,index,status\n   integer(c_int) :: nx,ny,channels\n   type(c_ptr) :: image\n   character(kind=c_char), pointer :: bytes(:)\n   interface\n      subroutine free_image(p) bind(c,name='stbi_image_free')\n         import :: c_ptr\n         type(c_ptr), value :: p\n      end subroutine\n   end interface\n   do j=1,height\n      do i=1,width\n         pixels(i,j,:) = [255*(i-1)/(width-1),255*(j-1)/(height-1), &\n            merge(220,40,mod((i-1)/16+(j-1)/16,2)==0)]\n      end do\n   end do\n   status = write_image('gradient.png',pixels)\n   if (status/=1) error stop 'PNG write failed'\n   image = c_stbi_load('gradient.png'//c_null_char,nx,ny,channels,3_c_int)\n   if (.not. c_associated(image)) error stop 'PNG read failed'\n   if (nx/=width .or. ny/=height .or. channels/=3) error stop 'Image dimensions'\n   call c_f_pointer(image,bytes,[width*height*3])\n   index = 0\n   do j=1,height\n      do i=1,width\n         do k=1,3\n            index = index+1\n            if (iachar(bytes(index))/=pixels(i,j,k)) error stop 'Pixel mismatch'\n         end do\n      end do\n   end do\n   call free_image(image)\n   nullify(bytes)\n   print '(a,i0,a,i0,a)', 'Verified every RGB pixel in ',width,' x ',height,' gradient.png'\n   print *, 'PASS fortran_stb_image'\nend program\n",
-    "topics": []
+    "topics": [],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "cairo-fortran",
@@ -3448,7 +3586,8 @@
       "cairo",
       "fortran",
       "fortran-package-manager"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "forsudoku",
@@ -3465,7 +3604,8 @@
       "fortran",
       "fortran-package-manager",
       "sudoku"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "odepack",
@@ -3489,7 +3629,8 @@
       "ode",
       "ode-solver",
       "odepack"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "kiss",
@@ -3512,7 +3653,8 @@
       }
     },
     "source": "program conjugate_gradient\n   use kiss, only: wp, cg_dense\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   integer, parameter :: n = 8\n   real(wp) :: a(n,n), b(n), x(n), exact(n), residual\n   integer :: i, info\n   a = 0\n   do i=1,n\n      a(i,i) = 2\n      if (i<n) then\n         a(i,i+1) = -1\n         a(i+1,i) = -1\n      end if\n   end do\n   exact = [(real(i,wp)*(n+1-i),i=1,n)]\n   b = matmul(a,exact)\n   x = 0\n   call cg_dense(a,b,x,atol=1.e-10_wp,info=info)\n   residual = norm2(b-matmul(a,x))\n   print '(a,8f8.3)', 'Discrete Poisson solution: ', x\n   print '(a,es12.4)', 'Residual norm: ', residual\n   print '(a,i0)', 'Solver status: ', info\n   if (.not. all(ieee_is_finite(x))) error stop 'Nonfinite solution'\n   if (residual>1.e-8_wp .or. maxval(abs(x-exact))>1.e-8_wp) error stop 'CG check'\n   print *, 'PASS kiss'\nend program\n",
-    "topics": []
+    "topics": [],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "parff",
@@ -3551,7 +3693,8 @@
       "parser",
       "parser-combinators",
       "parser-library"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "conmax",
@@ -3572,7 +3715,8 @@
       "nonlinear-optimization",
       "numerical-optimization",
       "optimization"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "graphstruc",
@@ -3597,7 +3741,8 @@
       "graph-structures",
       "graphs",
       "library"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "fortran-messagepack",
@@ -3613,7 +3758,8 @@
     "topics": [
       "fortran",
       "messagepack"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "fmmap",
@@ -3629,7 +3775,8 @@
     "topics": [
       "fortran",
       "memory-mapped-file"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "fortran_cubatures",
@@ -3666,7 +3813,8 @@
       "fpm",
       "numerical-integration",
       "quadrature"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "stiff3",
@@ -3694,7 +3842,8 @@
       "ode",
       "solver",
       "stiff"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "sparse_fortran",
@@ -3707,7 +3856,8 @@
     "description": "Coordinate and compressed-row sparse matrices with matrix-vector products.",
     "dependencies": [],
     "source": "program demo_sparse\n   use sparse_fortran, only: sparse_coo,sparse_csr\n   use iso_fortran_env, only: real64\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   integer, parameter :: n=8\n   type(sparse_coo) :: coo\n   type(sparse_csr) :: csr\n   real(real64) :: dense(n,n),x(n),expected(n),from_coo(n),from_csr(n)\n   integer :: i\n   dense = 0\n   do i=1,n\n      dense(i,i) = 2\n      if (i<n) then\n         dense(i,i+1) = -1\n         dense(i+1,i) = -1\n      end if\n   end do\n   x = [(real(i*(n+1-i),real64),i=1,n)]\n   ! This discrete parabola has second difference -2, including the zero boundaries.\n   expected = 2.0_real64\n   call coo%sparse_init(dense)\n   call csr%sparse_init(dense)\n   from_coo = coo%sparse_product(x)\n   from_csr = csr%sparse_product(x)\n   if (.not. all(ieee_is_finite(from_coo))) error stop 'Nonfinite COO product'\n   if (.not. all(ieee_is_finite(from_csr))) error stop 'Nonfinite CSR product'\n   if (maxval(abs(from_coo-expected))>1e-12_real64) error stop 'Wrong COO product'\n   if (maxval(abs(from_csr-expected))>1e-12_real64) error stop 'Wrong CSR product'\n   if (maxval(abs(matmul(dense,x)-expected))>1e-12_real64) error stop 'Wrong reference'\n   print '(a,8f7.2)', 'Input vector: ',x\n   print '(a,8f7.2)', 'COO product:  ',from_coo\n   print '(a,8f7.2)', 'CSR product:  ',from_csr\n   print '(a)', 'PASS sparse_fortran'\nend program\n",
-    "topics": []
+    "topics": [],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "psqp",
@@ -3727,7 +3877,8 @@
       "numerical-optimization",
       "optimization",
       "sqp"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "optgra",
@@ -3746,7 +3897,8 @@
       "fortran-package-manager",
       "numerical-optimization",
       "optimization"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "forinv",
@@ -3811,7 +3963,8 @@
       "inverse",
       "pseudoinverse",
       "svd"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "forsolver",
@@ -3873,7 +4026,8 @@
       "nonlinear-systems",
       "quasi-newton-method",
       "solver"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "dcuhre",
@@ -3895,7 +4049,8 @@
       "multidimensional-integration",
       "numerical-integration",
       "quadrature"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "y12m",
@@ -3908,7 +4063,8 @@
     "description": "Direct sparse LU factorization with pivoting, reordering and reuse for multiple right-hand sides.",
     "dependencies": [],
     "source": "! Factor one sparse tridiagonal matrix, then solve two right-hand sides.\nprogram demo_y12m\n   use y12m, only: y12mb,y12mc,y12md\n   use iso_fortran_env, only: wp => real64\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   integer, parameter :: n=8,nn=500\n   real(wp) :: a(nn),pivot(n),b(n),original_rhs(n),flags(8),matrix(n,n),exact(n),residual\n   integer :: columns(nn),rows(nn),ha(n,11),iflag(10),status,nz,i,j,load\n   matrix = 0; a = 0; rows = 0; columns = 0; ha = 0; nz = 0\n   do i=1,n\n      matrix(i,i) = 3\n      if (i<n) then\n         matrix(i,i+1) = -1\n         matrix(i+1,i) = -1\n      end if\n   end do\n   do i=1,n\n      do j=1,n\n         if (matrix(i,j)==0) cycle\n         nz = nz+1; a(nz) = matrix(i,j); rows(nz) = i; columns(nz) = j\n      end do\n   end do\n   iflag = 0; flags = 0\n   iflag(2:5) = [3,1,0,2] ! Keep L for subsequent right-hand sides.\n   flags(1:4) = [16.0_wp,1e-12_wp,1e16_wp,1e-12_wp]\n   exact = 1; b = matmul(matrix,exact)\n   call y12mb(n,nz,a,columns,nn,rows,nn,ha,n,flags,iflag,status)\n   if (status/=0) error stop 'Sparse preparation failed'\n   call y12mc(n,nz,a,columns,nn,rows,nn,pivot,b,ha,n,flags,iflag,status)\n   if (status/=0) error stop 'Sparse factorization failed'\n   do load=1,2\n      if (load==2) then\n         exact = [(real(i,wp),i=1,n)]\n         b = matmul(matrix,exact)\n         iflag(5) = 3 ! Full forward/back substitution using stored factors.\n      end if\n      original_rhs = matmul(matrix,exact)\n      call y12md(n,a,nn,b,pivot,columns,ha,n,iflag,status)\n      if (status/=0) error stop 'Sparse solve failed'\n      if (.not. all(ieee_is_finite(b))) error stop 'Nonfinite solution'\n      residual = maxval(abs(matmul(matrix,b)-original_rhs))\n      if (residual>1e-10_wp .or. maxval(abs(b-exact))>1e-10_wp) error stop 'Sparse solution differs'\n      print '(a,i0,a,8f8.3)', 'Right-hand side ',load,', solution: ',b\n      print '(a,es12.3)', 'Maximum residual: ',residual\n   end do\n   print '(a)', 'One LU factorization used for both right-hand sides.'\n   print '(a)', 'PASS y12m'\nend program\n",
-    "topics": []
+    "topics": [],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "foreig",
@@ -3953,7 +4109,8 @@
       "fortran-package-manager",
       "lapack",
       "mkl"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "rkf45",
@@ -3980,7 +4137,8 @@
       "ode",
       "rkf45",
       "runge-kutta"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "forlab",
@@ -4004,7 +4162,8 @@
       ]
     },
     "source": "! Fit exact quadratic data using the rectangular-system solver.\nprogram demo_forlab\n   use forlab, only: RPRE,linspace,solve,vector_norm => norm\n   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite\n   implicit none\n   real(RPRE) :: x(5),design(5,3),y(5),coefficients(3),residual\n   ! The catalog fixes absent optional norm arguments before evaluating p.\n   if (abs(vector_norm([3.0_RPRE,4.0_RPRE])-5.0_RPRE)>1e-6_RPRE) error stop 'Default norm differs'\n   if (abs(vector_norm([3.0_RPRE,4.0_RPRE],1.0_RPRE)-7.0_RPRE)>1e-6_RPRE) error stop 'Explicit norm differs'\n   if (abs(vector_norm(reshape([3.0_RPRE,0.0_RPRE,0.0_RPRE,4.0_RPRE],[2,2]))-4.0_RPRE)>1e-4_RPRE) &\n      error stop 'Default matrix norm differs'\n   if (abs(vector_norm(reshape([3.0_RPRE,0.0_RPRE,0.0_RPRE,4.0_RPRE],[2,2]),1)-4.0_RPRE)>1e-4_RPRE) &\n      error stop 'Explicit matrix norm differs'\n   x = linspace(-2.0_RPRE,2.0_RPRE,5)\n   design(:,1) = 1; design(:,2) = x; design(:,3) = x*x\n   y = 1.0_RPRE+2.0_RPRE*x-0.5_RPRE*x*x\n   coefficients = solve(design,y)\n   if (.not. all(ieee_is_finite(coefficients))) error stop 'Nonfinite fit coefficients'\n   residual = maxval(abs(matmul(design,coefficients)-y))\n   if (residual>1e-4_RPRE) error stop 'Fit residual too large'\n   if (maxval(abs(coefficients-[1.0_RPRE,2.0_RPRE,-0.5_RPRE]))>1e-4_RPRE) error stop 'Wrong coefficients'\n   print '(a,3f14.7)', 'Fitted constant, linear and quadratic coefficients: ',coefficients\n   print '(a,es12.3)', 'Maximum residual: ',residual\n   print '(a)', 'PASS forlab'\nend program\n",
-    "topics": []
+    "topics": [],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "libdogleg-f",
@@ -4034,7 +4193,8 @@
       "fortran",
       "nonlinear-least-squares",
       "numerical-optimization"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   },
   {
     "id": "nafpack",
@@ -4080,6 +4240,7 @@
       "fftw",
       "fpm",
       "linear-algebra"
-    ]
+    ],
+    "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
   }
 ]

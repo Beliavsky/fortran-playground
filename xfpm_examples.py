@@ -17,7 +17,9 @@ def generate_fpm_examples(site):
     topics = json.loads(topics_path.read_text(encoding='utf-8'))['repositories'] if topics_path.exists() else {}
     packages = [{**package, 'source': (audit.parents[1] / 'fpm_catalog/demos' /
                  (package['id'] + '.f90')).read_text(encoding='utf-8'),
-                 'topics': topics.get(package['repository'].lower(), {}).get('topics', [])} for package in catalog()]
+                 'topics': topics.get(package['repository'].lower(), {}).get('topics', []),
+                 **{key: value for key, value in topics.get(package['repository'].lower(), {}).items()
+                    if key in ('stars', 'stars_updated_at')}} for package in catalog()]
     (site / 'fpm/packages.json').write_text(json.dumps(packages, indent=2) + '\n', encoding='utf-8')
     # Discovery metadata is refreshed explicitly, never during builds/deploys.
     discovery = json.loads((audit.parents[1] / 'fpm_catalog/all-packages.json').read_text(encoding='utf-8'))

@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "retrieved_at": "2026-10-27T13:31:10.945780+00:00",
-  "source": "GitHub repository topic labels",
+  "retrieved_at": "2026-10-28T10:57:46.582127+00:00",
+  "source": "GitHub repository public pages",
   "repositories": {
     "acbbullock/io-fortran-library": {
       "topics": [
@@ -10,16 +10,135 @@
         "fortran-package-manager",
         "input-output",
         "modern-fortran"
-      ]
+      ],
+      "stars": 17,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "alex-robinson/ncio": {
+      "topics": [],
+      "stars": 24,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "archaeologic-inc/rngff": {
+      "topics": [
+        "random",
+        "random-number-generator",
+        "rng"
+      ],
+      "stars": 8,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "arjenmarkus/pointsets": {
+      "topics": [],
+      "stars": 8,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "arjenmarkus/specfunc-fullerton": {
+      "topics": [
+        "special-functions"
+      ],
+      "stars": 10,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "art-rasa/rational_number": {
-      "topics": []
+      "topics": [],
+      "stars": 1,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "awvwgk/blas-interface": {
+      "topics": [],
+      "stars": 2,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "awvwgk/nlopt-f": {
+      "topics": [],
+      "stars": 0,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "carltoffel/fortran-string-to-real": {
+      "topics": [],
+      "stars": 9,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "davidpfister/daskr": {
+      "topics": [
+        "dae",
+        "differential-equations",
+        "fortran",
+        "fortran-package-manager",
+        "netlib"
+      ],
+      "stars": 2,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "euler-37/fortran_huffman": {
+      "topics": [
+        "fortran",
+        "huffman-compression-algorithm"
+      ],
+      "stars": 0,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "euler-37/integrate_fortran": {
+      "topics": [
+        "gauss-legendre-integration",
+        "numerical-integration",
+        "quadrature"
+      ],
+      "stars": 3,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "euler-37/sparse_fortran": {
+      "topics": [],
+      "stars": 4,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "everythingfunctional/iso_varying_string": {
+      "topics": [
+        "fortran",
+        "iso",
+        "strings"
+      ],
+      "stars": 1,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "everythingfunctional/parff": {
+      "topics": [
+        "fortran",
+        "parser",
+        "parser-combinators",
+        "parser-library"
+      ],
+      "stars": 0,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "everythingfunctional/quaff": {
       "topics": [
         "fortran",
         "units-of-measure"
-      ]
+      ],
+      "stars": 11,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "everythingfunctional/strff": {
+      "topics": [
+        "fortran",
+        "string-manipulation"
+      ],
+      "stars": 0,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "fedebenelli/fortimize": {
+      "topics": [
+        "fortran",
+        "fortran-",
+        "gradient-descent",
+        "nelder-mead",
+        "optimization",
+        "optimization-algorithms"
+      ],
+      "stars": 2,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "fortran-lang/fftpack": {
       "topics": [
@@ -29,7 +148,9 @@
         "fftpack",
         "fortran-library",
         "fortran-package-manager"
-      ]
+      ],
+      "stars": 101,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "fortran-lang/stdlib": {
       "topics": [
@@ -50,7 +171,9 @@
         "statistics",
         "stdlib",
         "strings"
-      ]
+      ],
+      "stars": 1363,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "fortran-lang/test-drive": {
       "topics": [
@@ -58,7 +181,93 @@
         "fortran-package-manager",
         "testing-framework",
         "unit-testing"
-      ]
+      ],
+      "stars": 120,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "furstj/interpolation": {
+      "topics": [
+        "fortran",
+        "interpolation"
+      ],
+      "stars": 1,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "geospace-code/h5fortran": {
+      "topics": [
+        "fortran",
+        "hdf5",
+        "object-oriented-fortran"
+      ],
+      "stars": 121,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "geospace-code/maptran3d": {
+      "topics": [
+        "coordinate-conversions",
+        "coordinate-transformation",
+        "fortran2018",
+        "geodesy",
+        "modern-fortran"
+      ],
+      "stars": 17,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "gha3mi/fordiff": {
+      "topics": [
+        "complex-step-differentiation",
+        "derivative",
+        "differentiation",
+        "finite-difference",
+        "fortran",
+        "fortran-package-manager"
+      ],
+      "stars": 5,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "gha3mi/foreig": {
+      "topics": [
+        "eig",
+        "eigenvalues",
+        "eigenvalues-and-eigenvectors",
+        "eigenvectors",
+        "fortran",
+        "fortran-package-manager",
+        "lapack",
+        "mkl"
+      ],
+      "stars": 2,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "gha3mi/forimage": {
+      "topics": [
+        "color",
+        "decimal",
+        "fortran",
+        "fortran-package-manager",
+        "hexadecimal",
+        "hsl",
+        "hsv",
+        "image",
+        "pbm",
+        "pgm",
+        "pnm",
+        "ppm",
+        "rgb"
+      ],
+      "stars": 5,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "gha3mi/forinv": {
+      "topics": [
+        "fortran",
+        "fortran-package-manager",
+        "inverse",
+        "pseudoinverse",
+        "svd"
+      ],
+      "stars": 2,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "gha3mi/forpca": {
       "topics": [
@@ -66,10 +275,77 @@
         "fortran-package-manager",
         "pca",
         "principal-component-analysis"
-      ]
+      ],
+      "stars": 2,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "gha3mi/forsolver": {
+      "topics": [
+        "complex-step-differentiation",
+        "finite-difference-method",
+        "fortran",
+        "fortran-package-manager",
+        "linear-system-solver",
+        "newton-method",
+        "newton-raphson",
+        "nonlinear-systems",
+        "quasi-newton-method",
+        "solver"
+      ],
+      "stars": 8,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "gha3mi/kinds": {
-      "topics": []
+      "topics": [],
+      "stars": 0,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "gnikit/metis-fpm": {
+      "topics": [],
+      "stars": 10,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "gronki/fastconv": {
+      "topics": [],
+      "stars": 0,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "haozeke/gaussjacobiquad": {
+      "topics": [
+        "f2py",
+        "gauss-jacobi",
+        "meson",
+        "numerical-integration",
+        "quadrature"
+      ],
+      "stars": 5,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "hugomvale/odrpack95": {
+      "topics": [
+        "fortran",
+        "fpm",
+        "mathematics",
+        "odr",
+        "regression",
+        "statistics"
+      ],
+      "stars": 15,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "interkosmos/fortran-pcre2": {
+      "topics": [
+        "fortran",
+        "fortran-2018",
+        "fortran-package-manager",
+        "fpm",
+        "pcre",
+        "pcre2",
+        "regex",
+        "regexp"
+      ],
+      "stars": 7,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "interkosmos/fortran-sqlite3": {
       "topics": [
@@ -78,14 +354,99 @@
         "fpm",
         "sqlite",
         "sqlite3"
-      ]
+      ],
+      "stars": 33,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "interkosmos/fortran-zlib": {
+      "topics": [
+        "archiving",
+        "compression",
+        "fortran",
+        "fortran-2018",
+        "fortran-package-manager",
+        "zlib"
+      ],
+      "stars": 14,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "interkosmos/fortran-zstd": {
+      "topics": [
+        "archiving",
+        "compression",
+        "fortran",
+        "fortran-2018",
+        "fortran-package-manager",
+        "zstandard",
+        "zstd"
+      ],
+      "stars": 11,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "ivan-pi/fortran-flann": {
+      "topics": [
+        "approximate-nearest-neighbor-search",
+        "hierarchical-clustering",
+        "high-dimensional-data",
+        "kdtree",
+        "kmeans-clustering",
+        "nearest-neighbor-search",
+        "spatial-search"
+      ],
+      "stars": 15,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "ivan-pi/kiss": {
+      "topics": [],
+      "stars": 3,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "ivan-pi/libdogleg-f": {
+      "topics": [
+        "c",
+        "dogleg-method",
+        "fortran",
+        "nonlinear-least-squares",
+        "numerical-optimization"
+      ],
+      "stars": 6,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "ivan-pi/stiff3": {
+      "topics": [
+        "adaptive",
+        "differential",
+        "equation",
+        "fortran",
+        "ode",
+        "solver",
+        "stiff"
+      ],
+      "stars": 24,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "ivan-pi/y12m": {
+      "topics": [],
+      "stars": 16,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/argv-fortran": {
       "topics": [
         "argv",
         "fortran",
         "fortran-package-manager"
-      ]
+      ],
+      "stars": 7,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "jacobwilliams/astro-fortran": {
+      "topics": [
+        "astrometry",
+        "astronomy",
+        "fortran-package-manager"
+      ],
+      "stars": 19,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/bspline-fortran": {
       "topics": [
@@ -97,14 +458,43 @@
         "least-squares-curve-fitting",
         "quadrature-integration",
         "splines"
-      ]
+      ],
+      "stars": 190,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "jacobwilliams/conmax": {
+      "topics": [
+        "conmax",
+        "constrained-optimization",
+        "fortran",
+        "fortran-package-manager",
+        "nonlinear-optimization",
+        "numerical-optimization",
+        "optimization"
+      ],
+      "stars": 5,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "jacobwilliams/conmin": {
+      "topics": [
+        "conmin",
+        "constrained-optimization",
+        "fortran",
+        "fortran-package-manager",
+        "numerical-optimization",
+        "optimization"
+      ],
+      "stars": 7,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/csv-fortran": {
       "topics": [
         "csv",
         "fortran",
         "fortran-package-manager"
-      ]
+      ],
+      "stars": 123,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/daglib": {
       "topics": [
@@ -114,7 +504,9 @@
         "graphviz",
         "graphviz-dot-language",
         "toposort"
-      ]
+      ],
+      "stars": 28,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/ddeabm": {
       "topics": [
@@ -124,7 +516,9 @@
         "ode",
         "root-finding",
         "slatec"
-      ]
+      ],
+      "stars": 41,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/dop853": {
       "topics": [
@@ -133,7 +527,9 @@
         "fortran-package-manager",
         "ode",
         "runge-kutta"
-      ]
+      ],
+      "stars": 57,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/dvode": {
       "topics": [
@@ -142,7 +538,9 @@
         "fortran-package-manager",
         "ode",
         "vode"
-      ]
+      ],
+      "stars": 10,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/finterp": {
       "topics": [
@@ -151,21 +549,27 @@
         "interpolation",
         "linear-interpolation",
         "nearest-neighbor-interpolation"
-      ]
+      ],
+      "stars": 59,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/flist": {
       "topics": [
         "fortran",
         "fortran-package-manager",
         "linked-list"
-      ]
+      ],
+      "stars": 36,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/fmin": {
       "topics": [
         "brent",
         "fortran-package-manager",
         "minimization"
-      ]
+      ],
+      "stars": 8,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/fortran-astrodynamics-toolkit": {
       "topics": [
@@ -178,7 +582,9 @@
         "orbital-simulation",
         "runge-kutta",
         "runge-kutta-adaptive-step-size"
-      ]
+      ],
+      "stars": 212,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/fortran-search-and-sort": {
       "topics": [
@@ -187,14 +593,18 @@
         "quicksort",
         "searching-algorithms",
         "sorting-algorithms"
-      ]
+      ],
+      "stars": 24,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/fortran_function_parser": {
       "topics": [
         "expression-parser",
         "fortran",
         "function-parser"
-      ]
+      ],
+      "stars": 35,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/geodesic-fortran": {
       "topics": [
@@ -205,14 +615,18 @@
         "vincenty-direct",
         "vincenty-formula",
         "vincenty-inverse"
-      ]
+      ],
+      "stars": 12,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/json-fortran": {
       "topics": [
         "fortran",
         "fortran-package-manager",
         "json"
-      ]
+      ],
+      "stars": 384,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/lbfgsb": {
       "topics": [
@@ -224,7 +638,9 @@
         "lbfgsb",
         "lbfgsb-solver",
         "numerical-optimization"
-      ]
+      ],
+      "stars": 14,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/lsmr": {
       "topics": [
@@ -235,7 +651,9 @@
         "linear-equations",
         "lsmr",
         "sparse-linear-systems"
-      ]
+      ],
+      "stars": 8,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/lsqr": {
       "topics": [
@@ -246,7 +664,9 @@
         "linear-algebra",
         "linear-equations",
         "lsqr"
-      ]
+      ],
+      "stars": 31,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/mersenne-twister-fortran": {
       "topics": [
@@ -255,15 +675,21 @@
         "mersenne-twister",
         "random-number-generators",
         "rng"
-      ]
+      ],
+      "stars": 10,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/minpack": {
-      "topics": []
+      "topics": [],
+      "stars": 4,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/mpfun2020-var1": {
       "topics": [
         "arbitrary-precision"
-      ]
+      ],
+      "stars": 2,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/nlesolver-fortran": {
       "topics": [
@@ -279,7 +705,9 @@
         "nonlinear-equation-solver",
         "nonlinear-equations",
         "quasi-newton"
-      ]
+      ],
+      "stars": 55,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/numdiff": {
       "topics": [
@@ -290,7 +718,20 @@
         "numerical-methods",
         "optimization",
         "sparsity-optimization"
-      ]
+      ],
+      "stars": 76,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "jacobwilliams/optgra": {
+      "topics": [
+        "constrained-optimization",
+        "fortran",
+        "fortran-package-manager",
+        "numerical-optimization",
+        "optimization"
+      ],
+      "stars": 2,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/pchip": {
       "topics": [
@@ -299,7 +740,9 @@
         "hermite-interpolation",
         "interpolation",
         "slatec"
-      ]
+      ],
+      "stars": 33,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/pikaia": {
       "topics": [
@@ -309,7 +752,9 @@
         "numerical-optimization",
         "optimization",
         "pikaia"
-      ]
+      ],
+      "stars": 39,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/polyroots-fortran": {
       "topics": [
@@ -324,14 +769,18 @@
         "polynomial-roots",
         "polynomials",
         "root-finding"
-      ]
+      ],
+      "stars": 29,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/popen-fortran": {
       "topics": [
         "fortran",
         "fortran-package-manager",
         "popen"
-      ]
+      ],
+      "stars": 4,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/powellopt": {
       "topics": [
@@ -342,7 +791,21 @@
         "numerical-optimization",
         "optimization",
         "unconstrained-optimization"
-      ]
+      ],
+      "stars": 39,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "jacobwilliams/psqp": {
+      "topics": [
+        "fortran",
+        "fortran-package-manager",
+        "nonlinear-optimization",
+        "numerical-optimization",
+        "optimization",
+        "sqp"
+      ],
+      "stars": 6,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/pyplot-fortran": {
       "topics": [
@@ -354,7 +817,9 @@
         "plotting",
         "plotting-in-fortran",
         "pyplot"
-      ]
+      ],
+      "stars": 225,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/quadpack": {
       "topics": [
@@ -367,7 +832,9 @@
         "quadrature",
         "quadrature-integration",
         "slatec"
-      ]
+      ],
+      "stars": 88,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/quadrature-fortran": {
       "topics": [
@@ -377,7 +844,9 @@
         "numerical-integration",
         "quadrature",
         "quadrature-integration"
-      ]
+      ],
+      "stars": 43,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/regridpack": {
       "topics": [
@@ -387,7 +856,9 @@
         "linear-interpolation",
         "regridding",
         "spline-interpolation"
-      ]
+      ],
+      "stars": 20,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/rklib": {
       "topics": [
@@ -400,7 +871,9 @@
         "runge-kutta",
         "runge-kutta-adaptive-step-size",
         "runge-kutta-fehlberg"
-      ]
+      ],
+      "stars": 95,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/roots-fortran": {
       "topics": [
@@ -413,7 +886,9 @@
         "regula-falsi",
         "root-finding",
         "zeroin"
-      ]
+      ],
+      "stars": 53,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/simulated-annealing": {
       "topics": [
@@ -426,7 +901,9 @@
         "python",
         "simulated-annealing",
         "stochastic-optimization"
-      ]
+      ],
+      "stars": 34,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/slsqp": {
       "topics": [
@@ -437,7 +914,9 @@
         "numerical-optimization",
         "optimization",
         "sqp"
-      ]
+      ],
+      "stars": 114,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/specfun": {
       "topics": [
@@ -445,7 +924,9 @@
         "fortran-package-manager",
         "scipy",
         "special-functions"
-      ]
+      ],
+      "stars": 8,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/splpak": {
       "topics": [
@@ -456,7 +937,9 @@
         "interpolation",
         "least-squares",
         "splines"
-      ]
+      ],
+      "stars": 12,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jacobwilliams/stringsort": {
       "topics": [
@@ -464,7 +947,19 @@
         "fortran-package-manager",
         "quicksort",
         "sorting-algorithms"
-      ]
+      ],
+      "stars": 19,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "jalvesz/fsparse": {
+      "topics": [
+        "fortran",
+        "fortran-library",
+        "fortran-package-manager",
+        "sparse-matrices"
+      ],
+      "stars": 36,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jchristopherson/collections": {
       "topics": [
@@ -476,13 +971,38 @@
         "linked-list",
         "list",
         "lists"
-      ]
+      ],
+      "stars": 2,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "jchristopherson/diffeq": {
+      "topics": [
+        "adams-bashforth-moulton",
+        "backwards-differentiation-formula",
+        "bdf",
+        "differential-algebraic-equations",
+        "differential-equations",
+        "esdirk",
+        "event-detection",
+        "implicit-runge-kutta",
+        "index-reduction",
+        "kennedy-carpenter",
+        "rosenbrock",
+        "runge-kutta-methods",
+        "tsitouras"
+      ],
+      "stars": 8,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jchristopherson/ferror": {
-      "topics": []
+      "topics": [],
+      "stars": 11,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jchristopherson/fortran_test_helper": {
-      "topics": []
+      "topics": [],
+      "stars": 0,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jchristopherson/fstats": {
       "topics": [
@@ -505,14 +1025,66 @@
         "special-functions",
         "statistical-testing",
         "statistics"
-      ]
+      ],
+      "stars": 16,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "jchristopherson/geompack": {
+      "topics": [
+        "delaunay-triangulation",
+        "fortran",
+        "fortran-package-manager",
+        "geometry",
+        "triangulation",
+        "triangulation-delaunay"
+      ],
+      "stars": 4,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "jchristopherson/linalg": {
+      "topics": [
+        "blas",
+        "cholesky-decomposition",
+        "compressed-row-storage",
+        "compressed-sparse-row",
+        "eigenvalues",
+        "eigenvectors",
+        "fortran",
+        "lapack",
+        "linear-algebra",
+        "lu-decomposition",
+        "qr-decomposition",
+        "singular-value-decomposition",
+        "sparse-matrix"
+      ],
+      "stars": 25,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "jchristopherson/nonlin": {
+      "topics": [
+        "bfgs",
+        "fortran",
+        "least-squares",
+        "levenberg-marquardt",
+        "nelder-mead",
+        "newton-raphson-multivariable",
+        "newtons-method",
+        "nonlinear-equations",
+        "optimization",
+        "polynomials",
+        "quasi-newton"
+      ],
+      "stars": 27,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jchristopherson/peaks": {
       "topics": [
         "fortran",
         "peak-detection",
         "signal-analysis"
-      ]
+      ],
+      "stars": 3,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "jchristopherson/spectrum": {
       "topics": [
@@ -530,7 +1102,34 @@
         "total-variation-filter",
         "total-variation-regularization",
         "transfer-function"
-      ]
+      ],
+      "stars": 5,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "konrad1991/opti": {
+      "topics": [
+        "numerical-optimization",
+        "particle-swarm-optimization",
+        "pso",
+        "pso-algorithm",
+        "swarm-intelligence",
+        "topology"
+      ],
+      "stars": 1,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "lauvergn/ad_dnsvm": {
+      "topics": [
+        "automatic-differentiation",
+        "fortran"
+      ],
+      "stars": 31,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "lewisfish/fortran_stb_image": {
+      "topics": [],
+      "stars": 2,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "lkedward/fhash": {
       "topics": [
@@ -539,14 +1138,29 @@
         "fpm",
         "hashmap",
         "hashtable"
-      ]
+      ],
+      "stars": 42,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "loiseaujc/specialmatrices": {
       "topics": [
         "linear-algebra",
         "sparse-linear-systems",
         "sparse-matrix"
-      ]
+      ],
+      "stars": 4,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "milanskocic/ciaaw": {
+      "topics": [
+        "chemistry",
+        "fortran",
+        "fortran-package-manager",
+        "isotopes",
+        "standard-atomic-masses"
+      ],
+      "stars": 5,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "milanskocic/codata": {
       "topics": [
@@ -557,7 +1171,33 @@
         "fortran-package-manager",
         "python",
         "science"
-      ]
+      ],
+      "stars": 10,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "milanskocic/iapws": {
+      "topics": [
+        "fortran-language",
+        "fortran-library",
+        "fortran-package-manager",
+        "iapws",
+        "science",
+        "water"
+      ],
+      "stars": 7,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "minard-jules/nafpack": {
+      "topics": [
+        "cmake",
+        "eigenvalues",
+        "fft",
+        "fftw",
+        "fpm",
+        "linear-algebra"
+      ],
+      "stars": 5,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "modern-fortran/neural-fortran": {
       "topics": [
@@ -567,10 +1207,25 @@
         "machine-learning",
         "neural-network",
         "parallel"
-      ]
+      ],
+      "stars": 478,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "nedtaylor/graphstruc": {
+      "topics": [
+        "fortran",
+        "fortran-package-manager",
+        "graph-structures",
+        "graphs",
+        "library"
+      ],
+      "stars": 2,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "nekstab/lightkrylov": {
-      "topics": []
+      "topics": [],
+      "stars": 44,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "nicholaswogan/forwarddiff": {
       "topics": [
@@ -578,7 +1233,30 @@
         "autodifferentiation",
         "automatic-differentiation",
         "differential-equations"
-      ]
+      ],
+      "stars": 28,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "nicholaswogan/odepack": {
+      "topics": [
+        "fortran-package-manager",
+        "ode",
+        "ode-solver",
+        "odepack"
+      ],
+      "stars": 21,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "perazz/fastmath": {
+      "topics": [
+        "exponential",
+        "fast-math",
+        "fortran",
+        "logarithm",
+        "rsqrt"
+      ],
+      "stars": 17,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "perazz/fitpack": {
       "topics": [
@@ -591,7 +1269,9 @@
         "spline-interpolation",
         "splines",
         "surface-fitting"
-      ]
+      ],
+      "stars": 75,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "perazz/fortran-lapack": {
       "topics": [
@@ -612,7 +1292,9 @@
         "numpy",
         "singular-values",
         "svd"
-      ]
+      ],
+      "stars": 42,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "perazz/fortran-primes": {
       "topics": [
@@ -622,7 +1304,9 @@
         "modern-fortran",
         "prime-numbers",
         "primes"
-      ]
+      ],
+      "stars": 14,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "perazz/fortran-regex": {
       "topics": [
@@ -631,7 +1315,9 @@
         "regex-parser",
         "regular-expression",
         "regular-expressions"
-      ]
+      ],
+      "stars": 30,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "perazz/fortran-shlex": {
       "topics": [
@@ -640,7 +1326,67 @@
         "regular-expressions",
         "shlex",
         "shlex-library"
-      ]
+      ],
+      "stars": 10,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "perazz/twopnt": {
+      "topics": [
+        "boundary-value-problem",
+        "boundary-value-problems",
+        "bvp",
+        "fortran"
+      ],
+      "stars": 2,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "pierugit/fmmap": {
+      "topics": [
+        "fortran",
+        "memory-mapped-file"
+      ],
+      "stars": 12,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "princemahajan/flint": {
+      "topics": [
+        "differential-equations",
+        "fortran",
+        "julia",
+        "numerical-integration",
+        "ode",
+        "ode-events",
+        "runge-kutta"
+      ],
+      "stars": 48,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "rjabi/fjsample": {
+      "topics": [
+        "bootstrap-resampling",
+        "fortran",
+        "fortran-package-manager",
+        "jackknife-resampling",
+        "meson-python"
+      ],
+      "stars": 1,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "scivision/ffilesystem": {
+      "topics": [
+        "cpp17",
+        "filesystem",
+        "fortran",
+        "libc",
+        "path-manipulation"
+      ],
+      "stars": 45,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "sebastiandyrda/lib_statistics": {
+      "topics": [],
+      "stars": 0,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "shinobuamasaki/forgex": {
       "topics": [
@@ -648,7 +1394,44 @@
         "fortran-package-manager",
         "regex",
         "regular-expression"
-      ]
+      ],
+      "stars": 30,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "st-maxwell/ryu_fortran": {
+      "topics": [
+        "floating-point",
+        "string"
+      ],
+      "stars": 16,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "st-maxwell/utf8-f": {
+      "topics": [
+        "fortran",
+        "utf-8"
+      ],
+      "stars": 1,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "synthfi/fortran-messagepack": {
+      "topics": [
+        "fortran",
+        "messagepack"
+      ],
+      "stars": 6,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "szaghi/befor64": {
+      "topics": [
+        "base64",
+        "decoding",
+        "encoding",
+        "fortran",
+        "oop"
+      ],
+      "stars": 22,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "toml-f/jonquil": {
       "topics": [
@@ -657,7 +1440,9 @@
         "json",
         "json-parser",
         "serde"
-      ]
+      ],
+      "stars": 10,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "toml-f/toml-f": {
       "topics": [
@@ -666,7 +1451,19 @@
         "serde",
         "toml",
         "toml-parser"
-      ]
+      ],
+      "stars": 127,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "tueda/paramcard": {
+      "topics": [
+        "command-line",
+        "fortran",
+        "fortran-library",
+        "fortran2008"
+      ],
+      "stars": 8,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "urbanjost/m_attr": {
       "topics": [
@@ -674,7 +1471,20 @@
         "fortran",
         "fortran-package-manager",
         "terminal"
-      ]
+      ],
+      "stars": 6,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "urbanjost/m_calculator": {
+      "topics": [
+        "expression",
+        "expression-evaluator",
+        "fortran",
+        "fortran-package-manager",
+        "parse"
+      ],
+      "stars": 5,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "urbanjost/m_cli2": {
       "topics": [
@@ -683,7 +1493,9 @@
         "fortran",
         "fortran-package-manager",
         "parsing"
-      ]
+      ],
+      "stars": 26,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "urbanjost/m_color": {
       "topics": [
@@ -691,7 +1503,9 @@
         "color-models",
         "fortran",
         "fortran-package-manager"
-      ]
+      ],
+      "stars": 2,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "urbanjost/m_framework": {
       "topics": [
@@ -699,19 +1513,25 @@
         "fortran-package-manager",
         "fpm",
         "unit-testing"
-      ]
+      ],
+      "stars": 6,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "urbanjost/m_io": {
       "topics": [
         "fortran",
         "fortran-package-manager",
         "io"
-      ]
+      ],
+      "stars": 10,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "urbanjost/m_list": {
       "topics": [
         "fortran-package-manager"
-      ]
+      ],
+      "stars": 1,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "urbanjost/m_match": {
       "topics": [
@@ -720,7 +1540,9 @@
         "fortran-package-manager",
         "regex",
         "regular-expressions"
-      ]
+      ],
+      "stars": 10,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "urbanjost/m_sets": {
       "topics": [
@@ -728,7 +1550,9 @@
         "fortran-package-manager",
         "matlab",
         "sets"
-      ]
+      ],
+      "stars": 9,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "urbanjost/m_sort": {
       "topics": [
@@ -738,7 +1562,9 @@
         "sort",
         "sorting",
         "sorting-algorithms"
-      ]
+      ],
+      "stars": 7,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "urbanjost/m_strings": {
       "topics": [
@@ -747,7 +1573,9 @@
         "fpm",
         "string-manipulation",
         "strings"
-      ]
+      ],
+      "stars": 32,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "urbanjost/m_time": {
       "topics": [
@@ -759,7 +1587,9 @@
         "fortran-package-manager",
         "fpm",
         "time"
-      ]
+      ],
+      "stars": 6,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "urbanjost/orderpack": {
       "topics": [
@@ -767,14 +1597,37 @@
         "fortran-package-manager",
         "fpm",
         "sort"
-      ]
+      ],
+      "stars": 9,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "vmagnin/cairo-fortran": {
+      "topics": [
+        "bindings",
+        "cairo",
+        "fortran",
+        "fortran-package-manager"
+      ],
+      "stars": 8,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "vmagnin/forcolormap": {
       "topics": [
         "colormaps",
         "fortran",
         "fortran-package-manager"
-      ]
+      ],
+      "stars": 26,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "vmagnin/forsudoku": {
+      "topics": [
+        "fortran",
+        "fortran-package-manager",
+        "sudoku"
+      ],
+      "stars": 4,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "wavebitscientific/datetime-fortran": {
       "topics": [
@@ -782,53 +1635,17 @@
         "fortran",
         "strftime",
         "timedelta"
-      ]
+      ],
+      "stars": 152,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "wavebitscientific/functional-fortran": {
       "topics": [
         "fortran",
         "functional-programming"
-      ]
-    },
-    "hugomvale/odrpack95": {
-      "topics": [
-        "fortran",
-        "fpm",
-        "mathematics",
-        "odr",
-        "regression",
-        "statistics"
-      ]
-    },
-    "arjenmarkus/pointsets": {
-      "topics": []
-    },
-    "princemahajan/flint": {
-      "topics": [
-        "differential-equations",
-        "fortran",
-        "julia",
-        "numerical-integration",
-        "ode",
-        "ode-events",
-        "runge-kutta"
-      ]
-    },
-    "carltoffel/fortran-string-to-real": {
-      "topics": []
-    },
-    "lauvergn/ad_dnsvm": {
-      "topics": [
-        "automatic-differentiation",
-        "fortran"
-      ]
-    },
-    "euler-37/integrate_fortran": {
-      "topics": [
-        "gauss-legendre-integration",
-        "numerical-integration",
-        "quadrature"
-      ]
+      ],
+      "stars": 438,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "wcota/rndgen-fortran": {
       "topics": [
@@ -839,459 +1656,14 @@
         "random",
         "random-number-generator",
         "rng"
-      ]
-    },
-    "awvwgk/blas-interface": {
-      "topics": []
-    },
-    "jalvesz/fsparse": {
-      "topics": [
-        "fortran",
-        "fortran-library",
-        "fortran-package-manager",
-        "sparse-matrices"
-      ]
-    },
-    "jchristopherson/geompack": {
-      "topics": [
-        "delaunay-triangulation",
-        "fortran",
-        "fortran-package-manager",
-        "geometry",
-        "triangulation",
-        "triangulation-delaunay"
-      ]
+      ],
+      "stars": 4,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "willdickson/minres": {
-      "topics": []
-    },
-    "gha3mi/fordiff": {
-      "topics": [
-        "complex-step-differentiation",
-        "derivative",
-        "differentiation",
-        "finite-difference",
-        "fortran",
-        "fortran-package-manager"
-      ]
-    },
-    "perazz/twopnt": {
-      "topics": [
-        "boundary-value-problem",
-        "boundary-value-problems",
-        "bvp",
-        "fortran"
-      ]
-    },
-    "arjenmarkus/specfunc-fullerton": {
-      "topics": [
-        "special-functions"
-      ]
-    },
-    "sebastiandyrda/lib_statistics": {
-      "topics": []
-    },
-    "jacobwilliams/astro-fortran": {
-      "topics": [
-        "astrometry",
-        "astronomy",
-        "fortran-package-manager"
-      ]
-    },
-    "awvwgk/nlopt-f": {
-      "topics": []
-    },
-    "davidpfister/daskr": {
-      "topics": [
-        "dae",
-        "differential-equations",
-        "fortran",
-        "fortran-package-manager",
-        "netlib"
-      ]
-    },
-    "scivision/ffilesystem": {
-      "topics": [
-        "cpp17",
-        "filesystem",
-        "fortran",
-        "libc",
-        "path-manipulation"
-      ]
-    },
-    "st-maxwell/utf8-f": {
-      "topics": [
-        "fortran",
-        "utf-8"
-      ]
-    },
-    "st-maxwell/ryu_fortran": {
-      "topics": [
-        "floating-point",
-        "string"
-      ]
-    },
-    "everythingfunctional/iso_varying_string": {
-      "topics": [
-        "fortran",
-        "iso",
-        "strings"
-      ]
-    },
-    "fedebenelli/fortimize": {
-      "topics": [
-        "fortran",
-        "fortran-",
-        "gradient-descent",
-        "nelder-mead",
-        "optimization",
-        "optimization-algorithms"
-      ]
-    },
-    "gha3mi/forimage": {
-      "topics": [
-        "color",
-        "decimal",
-        "fortran",
-        "fortran-package-manager",
-        "hexadecimal",
-        "hsl",
-        "hsv",
-        "image",
-        "pbm",
-        "pgm",
-        "pnm",
-        "ppm",
-        "rgb"
-      ]
-    },
-    "alex-robinson/ncio": {
-      "topics": []
-    },
-    "gronki/fastconv": {
-      "topics": []
-    },
-    "haozeke/gaussjacobiquad": {
-      "topics": [
-        "f2py",
-        "gauss-jacobi",
-        "meson",
-        "numerical-integration",
-        "quadrature"
-      ]
-    },
-    "zoziha/kissfft-f": {
-      "topics": [
-        "fft",
-        "fortran",
-        "fortran-package-manager",
-        "kissfft",
-        "mesonbuild",
-        "modern-fortran",
-        "oop",
-        "wrapper-api"
-      ]
-    },
-    "geospace-code/h5fortran": {
-      "topics": [
-        "fortran",
-        "hdf5",
-        "object-oriented-fortran"
-      ]
-    },
-    "gnikit/metis-fpm": {
-      "topics": []
-    },
-    "urbanjost/m_calculator": {
-      "topics": [
-        "expression",
-        "expression-evaluator",
-        "fortran",
-        "fortran-package-manager",
-        "parse"
-      ]
-    },
-    "szaghi/befor64": {
-      "topics": [
-        "base64",
-        "decoding",
-        "encoding",
-        "fortran",
-        "oop"
-      ]
-    },
-    "interkosmos/fortran-zlib": {
-      "topics": [
-        "archiving",
-        "compression",
-        "fortran",
-        "fortran-2018",
-        "fortran-package-manager",
-        "zlib"
-      ]
-    },
-    "milanskocic/iapws": {
-      "topics": [
-        "fortran-language",
-        "fortran-library",
-        "fortran-package-manager",
-        "iapws",
-        "science",
-        "water"
-      ]
-    },
-    "jchristopherson/linalg": {
-      "topics": [
-        "blas",
-        "cholesky-decomposition",
-        "compressed-row-storage",
-        "compressed-sparse-row",
-        "eigenvalues",
-        "eigenvectors",
-        "fortran",
-        "lapack",
-        "linear-algebra",
-        "lu-decomposition",
-        "qr-decomposition",
-        "singular-value-decomposition",
-        "sparse-matrix"
-      ]
-    },
-    "jchristopherson/nonlin": {
-      "topics": [
-        "bfgs",
-        "fortran",
-        "least-squares",
-        "levenberg-marquardt",
-        "nelder-mead",
-        "newton-raphson-multivariable",
-        "newtons-method",
-        "nonlinear-equations",
-        "optimization",
-        "polynomials",
-        "quasi-newton"
-      ]
-    },
-    "geospace-code/maptran3d": {
-      "topics": [
-        "coordinate-conversions",
-        "coordinate-transformation",
-        "fortran2018",
-        "geodesy",
-        "modern-fortran"
-      ]
-    },
-    "interkosmos/fortran-pcre2": {
-      "topics": [
-        "fortran",
-        "fortran-2018",
-        "fortran-package-manager",
-        "fpm",
-        "pcre",
-        "pcre2",
-        "regex",
-        "regexp"
-      ]
-    },
-    "milanskocic/ciaaw": {
-      "topics": [
-        "chemistry",
-        "fortran",
-        "fortran-package-manager",
-        "isotopes",
-        "standard-atomic-masses"
-      ]
-    },
-    "archaeologic-inc/rngff": {
-      "topics": [
-        "random",
-        "random-number-generator",
-        "rng"
-      ]
-    },
-    "interkosmos/fortran-zstd": {
-      "topics": [
-        "archiving",
-        "compression",
-        "fortran",
-        "fortran-2018",
-        "fortran-package-manager",
-        "zstandard",
-        "zstd"
-      ]
-    },
-    "tueda/paramcard": {
-      "topics": [
-        "command-line",
-        "fortran",
-        "fortran-library",
-        "fortran2008"
-      ]
-    },
-    "everythingfunctional/strff": {
-      "topics": [
-        "fortran",
-        "string-manipulation"
-      ]
-    },
-    "jchristopherson/diffeq": {
-      "topics": [
-        "adams-bashforth-moulton",
-        "backwards-differentiation-formula",
-        "bdf",
-        "differential-algebraic-equations",
-        "differential-equations",
-        "esdirk",
-        "event-detection",
-        "implicit-runge-kutta",
-        "index-reduction",
-        "kennedy-carpenter",
-        "rosenbrock",
-        "runge-kutta-methods",
-        "tsitouras"
-      ]
-    },
-    "rjabi/fjsample": {
-      "topics": [
-        "bootstrap-resampling",
-        "fortran",
-        "fortran-package-manager",
-        "jackknife-resampling",
-        "meson-python"
-      ]
-    },
-    "jacobwilliams/conmin": {
-      "topics": [
-        "conmin",
-        "constrained-optimization",
-        "fortran",
-        "fortran-package-manager",
-        "numerical-optimization",
-        "optimization"
-      ]
-    },
-    "konrad1991/opti": {
-      "topics": [
-        "numerical-optimization",
-        "particle-swarm-optimization",
-        "pso",
-        "pso-algorithm",
-        "swarm-intelligence",
-        "topology"
-      ]
-    },
-    "furstj/interpolation": {
-      "topics": [
-        "fortran",
-        "interpolation"
-      ]
-    },
-    "euler-37/fortran_huffman": {
-      "topics": [
-        "fortran",
-        "huffman-compression-algorithm"
-      ]
-    },
-    "perazz/fastmath": {
-      "topics": [
-        "exponential",
-        "fast-math",
-        "fortran",
-        "logarithm",
-        "rsqrt"
-      ]
-    },
-    "zoziha/fortsa": {
-      "topics": [
-        "arima",
-        "arma",
-        "bindings",
-        "fortran",
-        "fpm",
-        "time-series",
-        "time-series-analysis",
-        "tsa"
-      ]
-    },
-    "ivan-pi/fortran-flann": {
-      "topics": [
-        "approximate-nearest-neighbor-search",
-        "hierarchical-clustering",
-        "high-dimensional-data",
-        "kdtree",
-        "kmeans-clustering",
-        "nearest-neighbor-search",
-        "spatial-search"
-      ]
-    },
-    "lewisfish/fortran_stb_image": {
-      "topics": []
-    },
-    "vmagnin/cairo-fortran": {
-      "topics": [
-        "bindings",
-        "cairo",
-        "fortran",
-        "fortran-package-manager"
-      ]
-    },
-    "vmagnin/forsudoku": {
-      "topics": [
-        "fortran",
-        "fortran-package-manager",
-        "sudoku"
-      ]
-    },
-    "nicholaswogan/odepack": {
-      "topics": [
-        "fortran-package-manager",
-        "ode",
-        "ode-solver",
-        "odepack"
-      ]
-    },
-    "ivan-pi/kiss": {
-      "topics": []
-    },
-    "everythingfunctional/parff": {
-      "topics": [
-        "fortran",
-        "parser",
-        "parser-combinators",
-        "parser-library"
-      ]
-    },
-    "jacobwilliams/conmax": {
-      "topics": [
-        "conmax",
-        "constrained-optimization",
-        "fortran",
-        "fortran-package-manager",
-        "nonlinear-optimization",
-        "numerical-optimization",
-        "optimization"
-      ]
-    },
-    "nedtaylor/graphstruc": {
-      "topics": [
-        "fortran",
-        "fortran-package-manager",
-        "graph-structures",
-        "graphs",
-        "library"
-      ]
-    },
-    "synthfi/fortran-messagepack": {
-      "topics": [
-        "fortran",
-        "messagepack"
-      ]
-    },
-    "pierugit/fmmap": {
-      "topics": [
-        "fortran",
-        "memory-mapped-file"
-      ]
+      "topics": [],
+      "stars": 0,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "willklausler/fortran_cubatures": {
       "topics": [
@@ -1301,63 +1673,9 @@
         "fpm",
         "numerical-integration",
         "quadrature"
-      ]
-    },
-    "ivan-pi/stiff3": {
-      "topics": [
-        "adaptive",
-        "differential",
-        "equation",
-        "fortran",
-        "ode",
-        "solver",
-        "stiff"
-      ]
-    },
-    "euler-37/sparse_fortran": {
-      "topics": []
-    },
-    "jacobwilliams/psqp": {
-      "topics": [
-        "fortran",
-        "fortran-package-manager",
-        "nonlinear-optimization",
-        "numerical-optimization",
-        "optimization",
-        "sqp"
-      ]
-    },
-    "jacobwilliams/optgra": {
-      "topics": [
-        "constrained-optimization",
-        "fortran",
-        "fortran-package-manager",
-        "numerical-optimization",
-        "optimization"
-      ]
-    },
-    "gha3mi/forinv": {
-      "topics": [
-        "fortran",
-        "fortran-package-manager",
-        "inverse",
-        "pseudoinverse",
-        "svd"
-      ]
-    },
-    "gha3mi/forsolver": {
-      "topics": [
-        "complex-step-differentiation",
-        "finite-difference-method",
-        "fortran",
-        "fortran-package-manager",
-        "linear-system-solver",
-        "newton-method",
-        "newton-raphson",
-        "nonlinear-systems",
-        "quasi-newton-method",
-        "solver"
-      ]
+      ],
+      "stars": 1,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "zaneham/dcuhre": {
       "topics": [
@@ -1369,22 +1687,42 @@
         "multidimensional-integration",
         "numerical-integration",
         "quadrature"
-      ]
+      ],
+      "stars": 8,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
-    "ivan-pi/y12m": {
-      "topics": []
+    "zoziha/forlab": {
+      "topics": [],
+      "stars": 8,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
-    "gha3mi/foreig": {
+    "zoziha/fortsa": {
       "topics": [
-        "eig",
-        "eigenvalues",
-        "eigenvalues-and-eigenvectors",
-        "eigenvectors",
+        "arima",
+        "arma",
+        "bindings",
+        "fortran",
+        "fpm",
+        "time-series",
+        "time-series-analysis",
+        "tsa"
+      ],
+      "stars": 3,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
+    },
+    "zoziha/kissfft-f": {
+      "topics": [
+        "fft",
         "fortran",
         "fortran-package-manager",
-        "lapack",
-        "mkl"
-      ]
+        "kissfft",
+        "mesonbuild",
+        "modern-fortran",
+        "oop",
+        "wrapper-api"
+      ],
+      "stars": 3,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     },
     "zoziha/rkf45": {
       "topics": [
@@ -1395,29 +1733,9 @@
         "ode",
         "rkf45",
         "runge-kutta"
-      ]
-    },
-    "zoziha/forlab": {
-      "topics": []
-    },
-    "ivan-pi/libdogleg-f": {
-      "topics": [
-        "c",
-        "dogleg-method",
-        "fortran",
-        "nonlinear-least-squares",
-        "numerical-optimization"
-      ]
-    },
-    "minard-jules/nafpack": {
-      "topics": [
-        "cmake",
-        "eigenvalues",
-        "fft",
-        "fftw",
-        "fpm",
-        "linear-algebra"
-      ]
+      ],
+      "stars": 5,
+      "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
     }
   }
 }
