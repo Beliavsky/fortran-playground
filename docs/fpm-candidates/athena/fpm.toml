@@ -1,0 +1,155 @@
+name = "athena"
+version = "2.1.1"
+license = "MIT"
+author = "Ned Thaddeus Taylor"
+maintainer = "n.t.taylor@exeter.ac.uk"
+description = "A Fortran library for building, training and testing neural networks"
+
+[library]
+source-dir = "src"
+# type = ["static"]
+
+[build]
+auto-executables = true
+auto-tests = true
+auto-examples = false
+module-naming = false
+
+[dependencies]
+coreutils = { git = "https://github.com/nedtaylor/coreutils", tag = "v0.1.0" }
+diffstruc = { git = "https://github.com/nedtaylor/diffstruc", tag = "v1.2.0" }
+graphstruc = { git = "https://github.com/nedtaylor/graphstruc", tag = "v0.2.1" }
+
+[features]
+wandb.dependencies.wandb-fortran = { git = "https://github.com/nedtaylor/wandb-fortran" }
+wandb.dependencies.example_library = { path = "example/example_library" }
+wandb.preprocess.cpp.macros = ["_WANDB"]
+wandb.example = [
+	{ name = "wandb_sine", source-dir = "example/wandb_sine/src", main = "main.f90" },
+	{ name = "wandb_pinn_burgers", source-dir = "example/wandb_pinn_burgers/src", main = "main.f90" },
+	{ name = "wandb_sweep", source-dir = "example/wandb_sweep/src", main = "main.f90" },
+	{ name = "wandb_network_sine", source-dir = "example/wandb_network_sine/src", main = "main.F90" }
+]
+
+[install]
+library = false
+# module-dir = "fortran/modules"
+
+[fortran]
+implicit-typing = false
+implicit-external = false
+source-form = "free"
+
+[preprocess]
+[preprocess.cpp]
+suffixes = ["F90", "f90"]
+
+[[example]]
+name = "sine"
+source-dir = "example/sine/src"
+main = "main.f90"
+
+[example.dependencies]
+example_library = { path = "example/example_library"}
+atomstruc = { git = "https://github.com/nedtaylor/atomstruc", branch = "column-major-order" }
+
+
+[[example]]
+name = "simple"
+source-dir = "example/simple/src"
+main = "main.f90"
+
+[[example]]
+name = "mnist"
+source-dir = "example/mnist/src"
+
+[[example]]
+name = "mnist_addit"
+source-dir = "example/mnist_addit/src"
+
+[[example]]
+name = "mnist_3D"
+source-dir = "example/mnist_3D/src"
+
+[[example]]
+name = "mnist_bn"
+source-dir = "example/mnist_bn/src"
+
+[[example]]
+name = "mnist_drop"
+source-dir = "example/mnist_drop/src"
+
+[[example]]
+name = "msgpass_chemical"
+source-dir = "example/msgpass_chemical/src"
+
+[[example]]
+name = "onnx_gnn"
+source-dir = "example/onnx_gnn/src"
+
+[[example]]
+name = "msgpass_euler"
+source-dir = "example/msgpass_euler/src"
+
+[[example]]
+name = "pinn_chemical"
+source-dir = "example/pinn_chemical/src"
+
+[[example]]
+name = "pinn_burgers"
+source-dir = "example/pinn_burgers/src"
+
+[[example]]
+name = "adam_benchmark"
+source-dir = "example/adam_benchmark/src"
+main = "main.f90"
+
+[[example]]
+name = "custom_forward"
+source-dir = "example/custom_forward/src"
+
+[[example]]
+name = "onnx"
+source-dir = "example/onnx/src"
+
+[[example]]
+name = "onnx_nop"
+source-dir = "example/onnx_nop/src"
+
+[[example]]
+name = "resnet"
+source-dir = "example/resnet/src"
+
+[[example]]
+name = "rnn_timeseries"
+source-dir = "example/rnn_timeseries/src"
+main = "main.f90"
+
+[[example]]
+name = "gno_regression"
+source-dir = "example/gno_regression/src"
+
+[[example]]
+name = "ono_heat"
+source-dir = "example/ono_heat/src"
+main = "main.f90"
+
+[[example]]
+name = "lno_heat"
+source-dir = "example/lno_heat/src"
+main = "main.f90"
+
+[[example]]
+name = "lno_rollout"
+source-dir = "example/lno_rollout/src"
+main = "main.f90"
+
+[[example]]
+name = "ono_attention_heat"
+source-dir = "example/ono_attention_heat/src"
+main = "main.f90"
+
+[[example]]
+name = "inverse_design"
+source-dir = "example/inverse_design/src"
+main = "main.f90"

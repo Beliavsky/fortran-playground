@@ -1,0 +1,50 @@
+{
+  "id": "shunting-yard-fortran",
+  "repository": "14NGiestas/shunting-yard-fortran",
+  "revision": "ff62d83502bc5fdf77f2750c3538b8634a543b91",
+  "archive_sha256": "b72b28673e6fc18e9f54c7e5999db2d224b102673bd02ccc41a446a262e38d1c",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8"
+  },
+  "dependencies": [
+    {
+      "repository": "14NGiestas/fortran-tokenizer",
+      "revision": "4ed3bac4132a9b344b3c327f579ae4919a61393d",
+      "sha256": "99ae76f58775d954d01885a2d48720a16e143782238f45f5db2424c6277cc912"
+    }
+  ],
+  "catalog_patches": {
+    "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+    "edits": [
+      {
+        "path": "src/parser.f90",
+        "sha256": "031c159946ca0d9214c2b82a9021bc926c577f5fdf052d01d3e693b61980b84a",
+        "before": "    function parse(self, infix) result(ans)\n        class(parser_t) :: self\n        character(*) :: infix\n        type(token_list) :: tokens\n        type(token_list) :: postfix\n        type(token_list) :: output\n        type(token_t)    :: ans\n\n        self % tokenizer % validate_token => by_expression\n        tokens = self % tokenizer % tokenize(infix)\n\n        if (is_enclosed(tokens)) then\n            call self % convert_to_RPN(tokens, postfix)\n            call self % eval_expression(postfix, output)\n        else\n            write(error_unit,*) 'Unmatched parenthesis on: '//infix\n            stop\n        end if\n        ans = output % pop()\n    contains\n        logical function by_expression(token)\n            character(*), intent(in) :: token\n            by_expression = .true. &\n            .and. .not. is_ignored(token) &\n            .and. ( &\n                     is_unary(token) &\n                .or. is_binary(token) &\n                .or. is_operand(token) &\n                .or. is_open_paren(token) &\n                .or. is_close_paren(token) &\n            )\n        end function\n    end function\n\n",
+        "after": "    function parse(self, infix) result(ans)\n        class(parser_t) :: self\n        character(*) :: infix\n        type(token_list) :: tokens\n        type(token_list) :: postfix\n        type(token_list) :: output\n        type(token_t)    :: ans\n\n        self % tokenizer % validate_token => by_expression\n        tokens = self % tokenizer % tokenize(infix)\n\n        if (is_enclosed(tokens)) then\n            call self % convert_to_RPN(tokens, postfix)\n            call self % eval_expression(postfix, output)\n        else\n            write(error_unit,*) 'Unmatched parenthesis on: '//infix\n            stop\n        end if\n        ans = output % pop()\n    end function\n\n        logical function by_expression(token)\n            character(*), intent(in) :: token\n            by_expression = .true. &\n            .and. .not. is_ignored(token) &\n            .and. ( &\n                     is_unary(token) &\n                .or. is_binary(token) &\n                .or. is_operand(token) &\n                .or. is_open_paren(token) &\n                .or. is_close_paren(token) &\n            )\n        end function\n\n"
+      }
+    ]
+  },
+  "checked_at": "2026-10-28T23:33:50.254249+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/shunting-yard-fortran.f90",
+  "verification": {
+    "seconds": 2.303,
+    "build_seconds": 0.495,
+    "library_reused": true,
+    "demo_sha256": "b0a9d3f49c2a5165cc45184c21fd6d137fa1e1c2f461aa5f032112445b3cbb33",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Token-based expression parsing with user-supplied callbacks. The main checks precedence, parentheses, right-associative exponentiation, square root and unary minus against five exact results. A checksum-guarded edit moves a host-independent library callback to module scope after the original layout crashed in the sandbox; parsing rules are unchanged. The author documents global registrations, fixed precedences and missing syntax validation; concurrent parsers and malformed expressions are not supported by this example.",
+  "compatibility_edits": [
+    "Move by_expression from an internal function of parse to a module procedure. It uses no host variables. The callback tests and parsing rules are unchanged; the original sandbox crash is retained."
+  ],
+  "known_limitations": [
+    "The author documents global token registrations, fixed operator precedence, and missing syntax validation. The checked main uses one parser and valid expressions only."
+  ]
+}

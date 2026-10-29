@@ -1,0 +1,29 @@
+{
+  "id": "list",
+  "repository": "grofz/list",
+  "revision": "77a0c99686406eaa8d4423e778311d63c6940b43",
+  "archive_sha256": "694c58c6530491a2c95264d31269e472516b20f11dd791eba8ef8a126357aeab",
+  "checked_at": "2026-10-28T21:40:06.974444+00:00",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "shared_dependencies": {
+      "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+      "repositories": [
+        "grofz/list"
+      ]
+    }
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "verification": {
+    "seconds": 2.031,
+    "build_seconds": 0.327,
+    "library_reused": true,
+    "demo_sha256": "2d4554e4e385b8099ee0ca0572fe4ea84aea6b9fc0d96526f22007d1f823a7b4",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  }
+}

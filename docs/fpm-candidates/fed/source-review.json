@@ -1,0 +1,61 @@
+{
+  "id": "fed",
+  "repository": "degawa/fed",
+  "revision": "d735aa2b3bd6b20840bcc16ff569e8cfc0492267",
+  "archive_sha256": "09cd5298480abf152954bc88e8d2792f2d5361a40d8ad77ebd971f3db317cd70",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "registry": {
+      "stdlib": {
+        "git": "https://github.com/fortran-lang/stdlib",
+        "rev": "58eb9133966c2797e0593281169ef57c43eccc1d"
+      }
+    },
+    "manifest_versions": {
+      "fortran-lang/stdlib": "0.8.1"
+    },
+    "shared_dependencies": {
+      "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+      "repositories": [
+        "degawa/fed",
+        "fortran-lang/stdlib",
+        "degawa/enclose",
+        "degawa/enumul"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "repository": "fortran-lang/stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+    },
+    {
+      "repository": "degawa/enclose",
+      "revision": "d3ea2ea989296bf855f4cb07ea8db601020805f2",
+      "sha256": "ce7e3d3f4e5a4f492cf1c0c5d71086b4b77dc56a003977c4348e077f85223088"
+    },
+    {
+      "repository": "degawa/enumul",
+      "revision": "064bba70797b84100b25dc4466b28f1f38147d0e",
+      "sha256": "0bbb1c13ec5780cbf15bd9380de9e288101edfac3572592f13b8a5d1b81cd364"
+    }
+  ],
+  "checked_at": "2026-10-29T01:33:12.542944+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/fed.f90",
+  "verification": {
+    "seconds": 2.154,
+    "build_seconds": 0.309,
+    "library_reused": true,
+    "demo_sha256": "9ac35bada9d3292c1c41bcb1e8cfb8c0b78fd34e7378c16c7c01c7c72c58bddf",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Programmatic Fortran edit descriptors. The main generates and applies integer, character and fixed-decimal real formats, checks exact aligned output, and verifies a zero-padded integer. The registry stdlib dependency is mapped to a pinned Git source and manifest version; compatible stdlib objects are reused. No Fortran source edits. Arrays, complex values, user-defined I/O and every descriptor/control mode are not covered."
+}

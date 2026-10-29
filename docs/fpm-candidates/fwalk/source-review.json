@@ -1,0 +1,28 @@
+{
+  "id": "fwalk",
+  "repository": "freevryheid/fwalk",
+  "revision": "cc95f3d0c55cd90dc96c536e29c4b07ee813efaa",
+  "archive_sha256": "6e0be1bd5495c5a9b291d9fc1b8d43d9c80269958c699c26b6992ee72d38a534",
+  "links": [
+    {
+      "path": "fwalk-cc95f3d0c55cd90dc96c536e29c4b07ee813efaa/src/cwalk.c",
+      "target": "../cwalk/src/cwalk.c"
+    },
+    {
+      "path": "fwalk-cc95f3d0c55cd90dc96c536e29c4b07ee813efaa/src/cwalk.h",
+      "target": "../cwalk/include/cwalk.h"
+    }
+  ],
+  "checked_at": "2026-10-29T00:20:40.491220+00:00",
+  "status": "deferred",
+  "stage": "source preparation",
+  "diagnostic": "Package archive contains an unsafe path, link, or special file.",
+  "reason": "Archive contains symbolic links into its libcwalk Git submodule. Archive extraction rejects links and the submodule implementation is not contained in the archive. Requires an explicit, pinned C-submodule source adapter before an ordinary offline consumer can build. No sandbox build was submitted; no library changes made.",
+  "submodules": [
+    {
+      "path": "cwalk",
+      "mode": "160000",
+      "sha": "08e7520d332b700392248227bc07a68c429dc2bf"
+    }
+  ]
+}

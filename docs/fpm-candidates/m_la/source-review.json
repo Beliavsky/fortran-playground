@@ -1,0 +1,29 @@
+{
+  "id": "m_la",
+  "repository": "urbanjost/M_LA",
+  "revision": "db59eeab0deab7e84eadf2542ad49c1c719dfb94",
+  "archive_sha256": "6c9d8e1e456852e076e14207f31751ecdd4a60cb0b80bb975f7818b15802932c",
+  "checked_at": "2026-10-28T21:40:06.974444+00:00",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "shared_dependencies": {
+      "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+      "repositories": [
+        "urbanjost/m_la"
+      ]
+    }
+  },
+  "license": "Unlicense",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "verification": {
+    "seconds": 1.817,
+    "build_seconds": 0.325,
+    "library_reused": true,
+    "demo_sha256": "3c89dd90d25d689aeca1509f2914fe94e2243be10dfc5e1ca156ed79a223f4de",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  }
+}

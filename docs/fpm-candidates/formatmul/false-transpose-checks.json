@@ -1,0 +1,153 @@
+{
+  "compiler": "GNU Fortran 16.2.0",
+  "revision": "4b5747d49c27f0df92288e7a61d0e479e34ac78e",
+  "checks": {
+    "transa-false": {
+      "ok": false,
+      "stages": [
+        {
+          "name": "Build",
+          "command": [
+            "fpm",
+            "build",
+            "--profile",
+            "debug",
+            "--compiler",
+            "gfortran",
+            "--c-compiler",
+            "gcc",
+            "--cxx-compiler",
+            "g++",
+            "--no-prune"
+          ],
+          "seconds": 0.42,
+          "ok": true,
+          "exit_code": 0,
+          "error": "",
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": ""
+        },
+        {
+          "name": "Run",
+          "command": [
+            "fpm",
+            "run",
+            "--profile",
+            "debug",
+            "--compiler",
+            "gfortran",
+            "--c-compiler",
+            "gcc",
+            "--cxx-compiler",
+            "g++",
+            "--no-prune"
+          ],
+          "seconds": 0.06,
+          "ok": false,
+          "exit_code": 2,
+          "error": "",
+          "stdout": "",
+          "stderr": "Project is up to date\nFortran runtime error: Incorrect extent in argument B in MATMUL intrinsic in dimension 1: is 2, should be 3\n\nError termination. Backtrace:\n#0  0x2b618aeb7f83 in ???\n#1  0x2b618aeb8c39 in ???\n#2  0x2b618aeb90ed in ???\n#3  0x2b618b08447f in ???\n#4  0x439b1d in ???\n#5  0x455726 in ???\n#6  0x404a7b in ???\n#7  0x40d082 in ???\n#8  0x401543 in reproduce_false_transpose\n\tat app/main.f90:9\n#9  0x401e9c in main\n\tat app/main.f90:2\n<ERROR> Execution for object \" playground-main \" returned exit code  2\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 2\n"
+        }
+      ]
+    },
+    "transb-false": {
+      "ok": false,
+      "stages": [
+        {
+          "name": "Build",
+          "command": [
+            "fpm",
+            "build",
+            "--profile",
+            "debug",
+            "--compiler",
+            "gfortran",
+            "--c-compiler",
+            "gcc",
+            "--cxx-compiler",
+            "g++",
+            "--no-prune"
+          ],
+          "seconds": 0.393,
+          "ok": true,
+          "exit_code": 0,
+          "error": "",
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": ""
+        },
+        {
+          "name": "Run",
+          "command": [
+            "fpm",
+            "run",
+            "--profile",
+            "debug",
+            "--compiler",
+            "gfortran",
+            "--c-compiler",
+            "gcc",
+            "--cxx-compiler",
+            "g++",
+            "--no-prune"
+          ],
+          "seconds": 0.123,
+          "ok": false,
+          "exit_code": 2,
+          "error": "",
+          "stdout": "",
+          "stderr": "Project is up to date\nFortran runtime error: Incorrect extent in argument B in MATMUL intrinsic in dimension 1: is 3, should be 2\n\nError termination. Backtrace:\n#0  0x2ad9bb0e7f83 in ???\n#1  0x2ad9bb0e8c39 in ???\n#2  0x2ad9bb0e90ed in ???\n#3  0x2ad9bb36033a in ???\n#4  0x442345 in ???\n#5  0x45ad29 in ???\n#6  0x405961 in ???\n#7  0x40e869 in ???\n#8  0x401545 in reproduce_false_transpose\n\tat app/main.f90:9\n#9  0x401e9e in main\n\tat app/main.f90:2\n<ERROR> Execution for object \" playground-main \" returned exit code  2\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 2\n"
+        }
+      ]
+    },
+    "both-false": {
+      "ok": true,
+      "stages": [
+        {
+          "name": "Build",
+          "command": [
+            "fpm",
+            "build",
+            "--profile",
+            "debug",
+            "--compiler",
+            "gfortran",
+            "--c-compiler",
+            "gcc",
+            "--cxx-compiler",
+            "g++",
+            "--no-prune"
+          ],
+          "seconds": 0.334,
+          "ok": true,
+          "exit_code": 0,
+          "error": "",
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": ""
+        },
+        {
+          "name": "Run",
+          "command": [
+            "fpm",
+            "run",
+            "--profile",
+            "debug",
+            "--compiler",
+            "gfortran",
+            "--c-compiler",
+            "gcc",
+            "--cxx-compiler",
+            "g++",
+            "--no-prune"
+          ],
+          "seconds": 0.047,
+          "ok": true,
+          "exit_code": 0,
+          "error": "",
+          "stdout": "Result shape:    2   2\nPASS explicit false transpose\n",
+          "stderr": "Project is up to date\n"
+        }
+      ]
+    }
+  }
+}

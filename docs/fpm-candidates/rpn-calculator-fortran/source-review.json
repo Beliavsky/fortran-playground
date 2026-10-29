@@ -1,0 +1,41 @@
+{
+  "id": "rpn-calculator-fortran",
+  "repository": "scivision/rpn-calculator-fortran",
+  "revision": "7708e4949f17511d81f4e7dd0271a500f0bc3631",
+  "archive_sha256": "7c34218defbc2d92ef87a9be222acbc9085737121b4894c1235b723cd5644d9c",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8"
+  },
+  "dependencies": [],
+  "catalog_patches": {
+    "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+    "edits": [
+      {
+        "path": "fpm.toml",
+        "sha256": "3b8e601971499140a324bce7fcb5e1ffffe201229c679a66fb237eef3e693ae7",
+        "before": "name = \"rpncalc\"\ndescription = \"Interactive RPN calculator\"\nversion = \"1.4.1\"\n\n[extra.fortitude.check]\nignore = [\n    \"C003\",\n    \"S231\",\n    \"S241\",\n    \"S061\",\n    \"C011\",\n]\n",
+        "after": "name = \"rpncalc\"\ndescription = \"Interactive RPN calculator\"\nversion = \"1.4.1\"\n\n[extra.fortitude.check]\nignore = [\n    \"C003\",\n    \"S231\",\n    \"S241\",\n    \"S061\",\n    \"C011\",\n]\n\n[fortran]\nsource-form = \"default\"\n"
+      }
+    ]
+  },
+  "checked_at": "2026-10-29T00:57:33.593173+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/rpn-calculator-fortran.f90",
+  "verification": {
+    "seconds": 2.065,
+    "build_seconds": 0.62,
+    "library_reused": true,
+    "demo_sha256": "af4f82c0bea3a05b9032fbfbd1d5c5cb051add7b2d5ca4be9fb39e742ce3cce5",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Numerical routines from the RPN calculator, called directly without its interactive interface. The checked main verifies a negative cube root, sinc and sech at zero, beta(2,3), modified Bessel I0 at zero, and integer gcd/lcm against known results. A checksum-guarded manifest correction sets source-form=default so .f and .f90 files use their respective forms. No numerical sources are changed. The tests do not establish accuracy over full argument ranges or validate the complete calculator.",
+  "compatibility_edits": [
+    "Set [fortran] source-form=\"default\" in the prepared manifest. FPM selects fixed form for .f files and free form for .f90 files. No numerical source edits."
+  ]
+}

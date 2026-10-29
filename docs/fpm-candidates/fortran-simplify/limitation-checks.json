@@ -1,0 +1,104 @@
+{
+  "compiler": "GNU Fortran 16.2.0",
+  "revision": "f546422216fb88eba97e2a0f4910935efbcdce83",
+  "checks": {
+    "radial-distance": {
+      "ok": false,
+      "stages": [
+        {
+          "name": "Build",
+          "command": [
+            "fpm",
+            "build",
+            "--profile",
+            "debug",
+            "--compiler",
+            "gfortran",
+            "--c-compiler",
+            "gcc",
+            "--cxx-compiler",
+            "g++",
+            "--no-prune"
+          ],
+          "seconds": 0.588,
+          "ok": true,
+          "exit_code": 0,
+          "error": "",
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": ""
+        },
+        {
+          "name": "Run",
+          "command": [
+            "fpm",
+            "run",
+            "--profile",
+            "debug",
+            "--compiler",
+            "gfortran",
+            "--c-compiler",
+            "gcc",
+            "--cxx-compiler",
+            "g++",
+            "--no-prune"
+          ],
+          "seconds": 0.036,
+          "ok": false,
+          "exit_code": 1,
+          "error": "",
+          "stdout": " Expected 2 points, actual:           3\n",
+          "stderr": "Project is up to date\nERROR STOP Near-duplicate interior point was not removed\n\nError termination. Backtrace:\n#0  0x2ae3633a7f83 in ???\n#1  0x2ae3633a8c39 in ???\n#2  0x2ae3633aa045 in ???\n#3  0x4016fa in radial_probe\n\tat app/main.f90:11\n#4  0x4017a8 in main\n\tat app/main.f90:3\n<ERROR> Execution for object \" playground-main \" returned exit code  1\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 1\n"
+        }
+      ]
+    },
+    "repeated-perpendicular": {
+      "ok": false,
+      "stages": [
+        {
+          "name": "Build",
+          "command": [
+            "fpm",
+            "build",
+            "--profile",
+            "debug",
+            "--compiler",
+            "gfortran",
+            "--c-compiler",
+            "gcc",
+            "--cxx-compiler",
+            "g++",
+            "--no-prune"
+          ],
+          "seconds": 0.392,
+          "ok": true,
+          "exit_code": 0,
+          "error": "",
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": ""
+        },
+        {
+          "name": "Run",
+          "command": [
+            "fpm",
+            "run",
+            "--profile",
+            "debug",
+            "--compiler",
+            "gfortran",
+            "--c-compiler",
+            "gcc",
+            "--cxx-compiler",
+            "g++",
+            "--no-prune"
+          ],
+          "seconds": 0.033,
+          "ok": false,
+          "exit_code": 1,
+          "error": "",
+          "stdout": " Second call expected 3 points, actual:           1\n",
+          "stderr": "Project is up to date\nERROR STOP Repeated call lost corner or endpoints\n\nError termination. Backtrace:\n#0  0x2ac5320f3f83 in ???\n#1  0x2ac5320f4c39 in ???\n#2  0x2ac5320f6045 in ???\n#3  0x401ba9 in repeated_probe\n\tat app/main.f90:13\n#4  0x401c57 in main\n\tat app/main.f90:3\n<ERROR> Execution for object \" playground-main \" returned exit code  1\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 1\n"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "ok": true,
+  "compiler": "GNU Fortran (GCC) 16.2.0",
+  "compiler_id": "gfortran",
+  "fpm": "0.12.0",
+  "stages": [
+    {
+      "name": "Build",
+      "command": [
+        "fpm",
+        "build",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.545,
+      "ok": true,
+      "exit_code": 0,
+      "error": "",
+      "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+      "stderr": ""
+    },
+    {
+      "name": "Run",
+      "command": [
+        "fpm",
+        "run",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.028,
+      "ok": true,
+      "exit_code": 0,
+      "error": "",
+      "stdout": "Quoted field: red,green\nEmpty field checked\nsay \"hi\"\n PASS flibcsv CHANGED MAIN\n",
+      "stderr": "Project is up to date\n"
+    }
+  ],
+  "cache": {
+    "package": "flibcsv",
+    "compiler": "GNU Fortran 16.2.0",
+    "key": "d8927aacc3348e3a7d17d0ce",
+    "library_reused": true,
+    "changed_artifacts": []
+  },
+  "packages": [
+    {
+      "repository": "freevryheid/flibcsv",
+      "revision": "ce19ebe6b08c58f1014527d27f27bdd97b38c835",
+      "sha256": "6736327adc38397d6fd165d3b07f952284d18234b6a3c371225360b306949197"
+    }
+  ],
+  "build_ok": true,
+  "target_groups": {
+    "app": [
+      "playground-main"
+    ],
+    "example": [],
+    "test": []
+  },
+  "targets": [
+    "playground-main"
+  ],
+  "plots": [],
+  "plot_notes": []
+}

@@ -1118,6 +1118,183 @@
         "econ-toolchain-api"
       ],
       "notes": "Stochastic-process modeling: deterministic stationary probabilities and AR(1) Markov discretization, not a claim of random sampling. The stationary routine uses column-stochastic matrices, while tauchen returns row-stochastic matrices; the consumer transposes explicitly. Source review covers these representative procedures, not an exhaustive API inventory."
+    },
+    "m_la": {
+      "revision": "db59eeab0deab7e84eadf2542ad49c1c719dfb94",
+      "archive_sha256": "6c9d8e1e456852e076e14207f31751ecdd4a60cb0b80bb975f7818b15802932c",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "m-la-api"
+      ],
+      "notes": "Matrix construction, illustrated by magic squares of orders three through six with independent row, column, diagonal and permutation checks. This mapping does not classify every other M_LA procedure."
+    },
+    "fglm": {
+      "revision": "e1b6a5404b3e7a266da33173a07166970c16dd86",
+      "archive_sha256": "0d4d3f14d4e408a24d51beac17fed72b7eccec715486b691d70d4ac447c1fa66",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "fglm-api"
+      ],
+      "notes": "Vector addition and component products, and column-major homogeneous translation and rotation matrices. The example checks a known point and a quarter-turn about z; broader geometry functionality is not exhaustively validated."
+    },
+    "strith": {
+      "revision": "da2b1f489a178cb443f636e3f9c89aed6c8702b1",
+      "archive_sha256": "f302587eafa09b1ce11d48464f25f3e114cc2e5a0c81a1b586a3d38287d6f137",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "strith-api"
+      ],
+      "notes": "Signed decimal-string integer addition and subtraction beyond 64-bit range, plus unsigned interpretation of an int64 bit pattern. This is fixed-capacity decimal representation, not unlimited arbitrary precision."
+    },
+    "friction": {
+      "revision": "8e75dcac26f47417a439adfcbaa24834105d89fe",
+      "archive_sha256": "71dddc287abf50fc6c174e610eda1711fa5befc0b970fa931cc854381b1603cb",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "friction-fit",
+        "friction-internal-state"
+      ],
+      "notes": "Constitutive friction models, with nonlinear parameter fitting and internal-state ODE integration in the reviewed source. The checked main covers algebraic Coulomb and Stribeck forces only; it does not validate parameter fitting or dynamic internal-state integration."
+    },
+    "feq-parse": {
+      "revision": "2e80c5940b128a52c5070a3f56909674fb85a379",
+      "archive_sha256": "c230b9725cff8ca429747b916d6e1498a46f5321fe4d523683ada91e5d66abb8",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "feq-parse-evaluate"
+      ],
+      "notes": "Numerical evaluation of expressions parsed from text, not symbolic algebra. The demo checks double-precision multivariable Gaussian and polynomial expressions against direct Fortran formulas."
+    },
+    "fordot": {
+      "revision": "3966625781a9c1dffe037e3032fa4a0b6f958760",
+      "archive_sha256": "6f3017330d5ba4accff12c09e10651f45171ac2a636957d69b123522d3dc4009",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "fordot-products"
+      ],
+      "notes": "Scalar products using methods m1 through m4, each also checked with three unequal blocks against an exact answer. Single-process correctness only; no coarray or performance claim."
+    },
+    "formatmul": {
+      "revision": "4b5747d49c27f0df92288e7a61d0e479e34ac78e",
+      "archive_sha256": "790dbd5cff7a0957bd37672d2524f83584fde9642bcc47295411e00b06d63cbc",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "formatmul-products"
+      ],
+      "notes": "Methods m1 through m4 are checked for rectangular matrix multiplication, all transpose combinations and a matrix-vector product. The demo is single-process and does not validate every implementation or coarray branch. At this pin a single explicitly false transpose flag is misrouted; the demo passes both flags whenever either is specified. Separate failing probes and the successful workaround are retained."
+    },
+    "bstrith": {
+      "revision": "7ed7730e34c7e1f78f2be9426ccc170f9dcaf57e",
+      "archive_sha256": "f7f3c9a98b395f20760b4883b43b7122f7b59eb6d8aa08b5afb211c5ca9d6344",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "bstrith-operations"
+      ],
+      "notes": "Fixed-width binary-string addition, subtraction, shifts and logical operations. The driver checks every eight-bit value, including carry and wraparound. This is not unlimited arbitrary-precision arithmetic."
+    },
+    "heatflow": {
+      "revision": "b0d930caad9160a15f0aeafa238c448f48f28d55",
+      "archive_sha256": "dc323ec732a62a15cf9e42b9d4a9f8989d6e6c3315ca0352e285d7efd397f62c",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "heatflow-sparse",
+        "heatflow-evolution"
+      ],
+      "notes": "Fourier/Cattaneo heat-transport code. The checked main applies its sparse BiCG solver to an independent backward-Euler discretization of the one-dimensional heat equation; it checks the discrete solution, continuous-solution error and independent matrix residuals. It does not exercise the complete evolution/Cattaneo application."
+    },
+    "hrweno": {
+      "revision": "2885105a7ba98351fed299b22e9bc0c67a809d2f",
+      "archive_sha256": "1dc2fffbdd9396735d01df566f3a945e65b934525a16e15162abcb47d1b373a9",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "hrweno-reconstruction",
+        "hrweno-tvd"
+      ],
+      "notes": "WENO spatial reconstruction and explicit TVD Runge-Kutta integration for conservation equations. The main checks a smooth periodic advection problem against exact cell averages and verifies conservation of mass; discontinuous solutions and nonuniform grids are not covered."
+    },
+    "fortran-simplify": {
+      "revision": "f546422216fb88eba97e2a0f4910935efbcdce83",
+      "archive_sha256": "fac116dbcb42131306061eb500eaa04ef49075e7301f0c01f19c80e7196740f6",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "fortran-simplify-perpendicular"
+      ],
+      "notes": "Polyline simplification. The main checks one call of perpendicular-distance reduction against endpoints and an independent interpolation bound, and plots the original and reduced curves. Separate GNU 16 probes confirm incorrect radial-distance filtering and lost endpoints on consecutive perpendicular-distance calls at this pin; see the retained reproducers. The single-call example does not fix those upstream limitations."
+    },
+    "ecx": {
+      "revision": "d30725e3cb9186bc79f81481f3d6fae8d177a7b7",
+      "archive_sha256": "65110c8ee4576328c839d3421b391b72f5258c940a277a8f5971715bc3d64737",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "ecx-impedance"
+      ],
+      "notes": "Electrochemical models with complex-valued equivalent-circuit impedance. The main verifies resistor and capacitor impedances and their series combination against direct complex formulas at four angular frequencies. Kinetics and parameter estimation are not covered. A4 classifies the complex arithmetic interface, not an electrochemistry-specific GAMS class."
+    },
+    "athena": {
+      "revision": "4b81aeac07113628c2c9a476648d5ac2a91b7c91",
+      "archive_sha256": "2cc29f7f0b259e50642c1b05facf6bcb733acd992d0775df45c3ab1f58a6035c",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "athena-dense"
+      ],
+      "notes": "Neural-network function approximation. A fixed-weight dense layer with tanh activation is compared against direct Fortran matrix multiplication and TANH. This does not test training, automatic derivatives, graph convolutions or model accuracy on a dataset. K remains broad."
+    },
+    "orbs": {
+      "revision": "3cf7fcec19798367f6f5bd26bad861c510449265",
+      "archive_sha256": "dcbb0c8eeaa99febd6683dd2270dcf5757e512193eebe77258918c2713f99d23",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "orbs-bitsets"
+      ],
+      "notes": "Fixed-width bitset arithmetic and logical operations. The main computes an x neighbor for every cell of a two-dimensional 4-by-4 Morton grid, checking all sixteen results and wraparound against independent intrinsic integer operations."
+    },
+    "amosf90": {
+      "revision": "b54a4d4a1d8f7c97acd180ed5bbaae8d089a9fa7",
+      "archive_sha256": "bde16c382a398bcf7122d1886fef8ed49e793d66c4f0f862b17ca48162115f1b",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "amosf90-bessel"
+      ],
+      "notes": "AMOS module interfaces for complex-argument Bessel functions with noninteger nonnegative order, including modified Bessel functions. The checked main compares J_0.3 and I_0.3 at 1+0.5i with independent convergent power series and K_0.5 with its closed form. Other argument regions, orders, scaling modes and Airy/Hankel routines are not validated. The upstream README warns of possible bugs."
+    },
+    "linalg_fortran": {
+      "revision": "30e7237ab54ca176e1c8dae4be2d9d44800e1f83",
+      "archive_sha256": "9997e7d13e82b7cbc578e80cb199c33c50971dfa9a63486da9b9cc06a1bfce50",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "linalg-fortran-inverse",
+        "linalg-fortran-eigen"
+      ],
+      "notes": "Typed LAPACK interfaces. The checked real64 main verifies a matrix inverse residual, determinant, known eigenvalues, eigenpair residuals and orthonormality for a symmetric 3-by-3 tridiagonal matrix. Complex, single-precision and other BLAS/LAPACK wrappers are not covered. Legacy implicit external interfaces are explicitly enabled in the pinned package manifest."
+    },
+    "uint-fortran": {
+      "revision": "487f806c76a5d107c5a8982198bafb295065eba7",
+      "archive_sha256": "7f36d0391da9e6877965053a4de3404281c71a82a9aa2ea8a6ae253b40e8ab4d",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "uint-fortran-arithmetic"
+      ],
+      "notes": "Fixed-width unsigned integer derived types. The main checks 16/32-bit upper boundaries, 32-bit arithmetic above the signed boundary, comparisons, modular addition/subtraction and conversion of a negative assignment. It imports the current int_m conversion API explicitly. This is not arbitrary-precision arithmetic or validation of every kind, operation or C interoperability path."
+    },
+    "rpn-calculator-fortran": {
+      "revision": "7708e4949f17511d81f4e7dd0271a500f0bc3631",
+      "archive_sha256": "7c34218defbc2d92ef87a9be222acbc9085737121b4894c1235b723cd5644d9c",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "rpn-elementary",
+        "rpn-special",
+        "rpn-integer"
+      ],
+      "notes": "Numerical routines from the RPN calculator, called directly without its interactive interface. The checked main verifies a negative cube root, sinc and sech at zero, beta(2,3), modified Bessel I0 at zero, and integer gcd/lcm against known results. A checksum-guarded manifest correction sets source-form=default so .f and .f90 files use their respective forms. No numerical sources are changed. The tests do not establish accuracy over full argument ranges or validate the complete calculator."
+    },
+    "kronrod": {
+      "revision": "312278846b6e403fdea410a823d88ef4fb92a3cc",
+      "archive_sha256": "f53b75081ca184120e6594ee2649abb402a5e0c45ca40d391b0b7292eff780ea",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "kronrod-rule"
+      ],
+      "notes": "Gauss-Kronrod quadrature-rule generation. A checksum-guarded adapter exposes the original internal procedures as module playground_kronrod, removes the large driver loop and declares app as the library directory; The consumer uses the wrapped module instead of running the original batch drivers. Procedure bodies, constants and precision settings are unchanged. The main generates the symmetric 7-point rule, checks six even polynomial integrals through degree 10 at 40-decimal-place tolerance with MPFUN arithmetic, and prints double-precision summaries. Only the unchanged MPFUN dependency is shared. This is a rule generator, not an adaptive integrator or full validation of every rule/order."
     }
   }
 }

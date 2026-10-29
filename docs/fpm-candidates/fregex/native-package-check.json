@@ -1,0 +1,13 @@
+{
+  "source": "https://deb.debian.org/debian/dists/trixie/main/binary-amd64/Packages.xz",
+  "packages": {
+    "libpcre3-dev": [],
+    "libpcre3": [],
+    "libnetcdff-dev": [
+      "Package: libnetcdff-dev\nSource: netcdf-fortran (4.6.0+really4.5.4+ds-3)\nVersion: 4.6.0+really4.5.4+ds-3+b4\nInstalled-Size: 1179\nMaintainer: Debian QA Group <packages@qa.debian.org>\nArchitecture: amd64\nDepends: libnetcdff7 (= 4.6.0+really4.5.4+ds-3+b4), libnetcdf-dev\nRecommends: pkg-config\nSuggests: netcdf-bin, netcdf-doc\nDescription: creation, access, and sharing of scientific data in Fortran\nHomepage: https://www.unidata.ucar.edu/software/netcdf/\nDescription-md5: d2445c4e99243782d72a68eddc1e9245\nTag: devel::lang:fortran, devel::library, implemented-in::fortran,\n role::devel-lib\nSection: libdevel\nPriority: optional\nFilename: pool/main/n/netcdf-fortran/libnetcdff-dev_4.6.0+really4.5.4+ds-3+b4_amd64.deb\nSize: 343356\nMD5sum: d2e0f40a2fe000adab53701c724842a2\nSHA256: 1c2ca17254b2a48dc5bcd3277e7f185946834ea8c5c43104ae67678be7c54ed1"
+    ],
+    "libhdf5-dev": [
+      "Package: libhdf5-dev\nSource: hdf5\nVersion: 1.14.5+repack-3\nInstalled-Size: 14729\nMaintainer: Gilles Filippini <pini@debian.org>\nArchitecture: amd64\nReplaces: libhdf5-serial-dev (<< 1.8.12-9~)\nProvides: libhdf5-serial-dev\nDepends: libhdf5-310 (= 1.14.5+repack-3), libhdf5-fortran-310 (= 1.14.5+repack-3), libhdf5-hl-310 (= 1.14.5+repack-3), libhdf5-hl-fortran-310 (= 1.14.5+repack-3), libhdf5-cpp-310 (= 1.14.5+repack-3), libhdf5-hl-cpp-310 (= 1.14.5+repack-3), zlib1g-dev, libjpeg-dev, libaec-dev, libcurl4-openssl-dev | libcurl-dev, libssl-dev, hdf5-helpers\nSuggests: libhdf5-doc\nBreaks: libhdf5-serial-dev (<< 1.8.12-9~)\nDescription: HDF5 - development files - serial version\nHomepage: http://hdfgroup.org/HDF5/\nDescription-md5: 362b5f6dc77ab06d0d5bb4bee15328bf\nTag: devel::lang:c, devel::library, implemented-in::c, role::devel-lib\nSection: libdevel\nPriority: optional\nFilename: pool/main/h/hdf5/libhdf5-dev_1.14.5+repack-3_amd64.deb\nSize: 3164560\nMD5sum: 401f999d478ef426ce96fe1b8f7fc7c0\nSHA256: 87dad961959b1de5218824d4639f7326f0b71249d3d38eba22db0783e01814f9"
+    ]
+  }
+}

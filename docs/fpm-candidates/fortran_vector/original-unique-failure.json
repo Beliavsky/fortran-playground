@@ -1,0 +1,58 @@
+{
+  "ok": false,
+  "compiler": "GNU Fortran (GCC) 16.2.0",
+  "fpm": "0.12.0",
+  "stages": [
+    {
+      "name": "Build",
+      "command": [
+        "fpm",
+        "build",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.359,
+      "ok": true,
+      "exit_code": 0,
+      "error": "",
+      "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+      "stderr": ""
+    },
+    {
+      "name": "Run",
+      "command": [
+        "fpm",
+        "run",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.037,
+      "ok": false,
+      "exit_code": 1,
+      "error": "",
+      "stdout": "",
+      "stderr": "Project is up to date\nERROR STOP Duplicate removal failed\n\nError termination. Backtrace:\n#0  0x2b37a6375f83 in ???\n#1  0x2b37a6376c39 in ???\n#2  0x2b37a6378045 in ???\n#3  0x40142e in editable_integer_vector\n\tat app/main.f90:16\n#4  0x40181c in main\n\tat app/main.f90:2\n<ERROR> Execution for object \" playground-main \" returned exit code  1\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 1\n"
+    }
+  ],
+  "packages": [
+    {
+      "repository": "Euler-37/fortran_vector",
+      "revision": "95469e2ce1162b0ede3ca3435ebd94ec6b6fee79",
+      "sha256": "0701b9fc21b905f986ee247ce7d3981c059cd963040569409de88cbdf04eaa25"
+    }
+  ]
+}

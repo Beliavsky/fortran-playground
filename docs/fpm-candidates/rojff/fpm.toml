@@ -1,0 +1,33 @@
+name = "rojff"
+version = "1.0.1"
+license = "MIT"
+author = "Brad Richardson"
+maintainer = "everythingfunctional@protonmail.com"
+copyright = "Copyright 2021, Brad Richardson"
+
+[dependencies]
+erloff = { git = "https://gitlab.com/everythingfunctional/erloff.git", tag = "v2.2.0" }
+iso_varying_string = { git = "https://gitlab.com/everythingfunctional/iso_varying_string", tag = "v3.0.3" }
+
+[dev-dependencies]
+veggies = { git = "https://gitlab.com/everythingfunctional/veggies", tag = "v1.0.5" }
+
+[[example]]
+name="compactor"
+source-dir="example/compactor"
+main="main.f90"
+
+[[example]]
+name="expander"
+source-dir="example/expander"
+main="main.f90"
+
+[[example]]
+name="custom_types"
+source-dir="example/custom_types"
+main="main.f90"
+
+[[example]]
+name="get_value"
+source-dir="example/get_value"
+main="main.f90"

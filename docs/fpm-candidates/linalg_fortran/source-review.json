@@ -1,0 +1,50 @@
+{
+  "id": "linalg_fortran",
+  "repository": "Euler-37/linalg_fortran",
+  "revision": "30e7237ab54ca176e1c8dae4be2d9d44800e1f83",
+  "archive_sha256": "9997e7d13e82b7cbc578e80cb199c33c50971dfa9a63486da9b9cc06a1bfce50",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "apt_packages": [
+      "libopenblas-dev=0.3.29+ds-3"
+    ]
+  },
+  "dependencies": [],
+  "catalog_patches": {
+    "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+    "edits": [
+      {
+        "path": "fpm.toml",
+        "sha256": "84545d43074953cdbb6f7f998e67e2a2cd806ee88dd9f1fd4ccec23edece4d18",
+        "before": "name = \"iso_linalg_mod\"\nversion = \"0.1.0\"\nlicense = \"license\"\nauthor = \"Euler-37\"\ncopyright = \"Copyright 2022, Euler-37\"\n\n[build]\nauto-executables = true\nauto-tests = true\nauto-examples = true\nlink = [\n    \"openblas\",\n]\n\n[install]\nlibrary = false\n",
+        "after": "name = \"iso_linalg_mod\"\nversion = \"0.1.0\"\nlicense = \"license\"\nauthor = \"Euler-37\"\ncopyright = \"Copyright 2022, Euler-37\"\n\n[build]\nauto-executables = true\nauto-tests = true\nauto-examples = true\nlink = [\n    \"openblas\",\n]\n\n[install]\nlibrary = false\n\n[fortran]\nimplicit-external = true\n"
+      }
+    ]
+  },
+  "checked_at": "2026-10-28T23:12:09.139584+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/linalg_fortran.f90",
+  "verification": {
+    "seconds": 2.049,
+    "build_seconds": 0.448,
+    "library_reused": true,
+    "demo_sha256": "d7dbec89d1c1f73a6e0f32f06b11b245fd29bda7984430627166d9b190916715",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "NOASSERTION",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Typed LAPACK interfaces. The checked real64 main verifies a matrix inverse residual, determinant, known eigenvalues, eigenpair residuals and orthonormality for a symmetric 3-by-3 tridiagonal matrix. Complex, single-precision and other BLAS/LAPACK wrappers are not covered. Legacy implicit external interfaces are explicitly enabled in the pinned package manifest.",
+  "license_status": {
+    "catalog_value": "NOASSERTION",
+    "manifest_value": "license",
+    "root_license_notice_found": false,
+    "notes": "The pinned archive has a placeholder license field and no root license file or license notice found in the reviewed source/README. No license terms are inferred from the placeholder."
+  },
+  "compatibility_edits": [
+    "Enable implicit-external in the package manifest for the original Fortran 77 LAPACK/BLAS calling interfaces. No numerical source or formulas changed."
+  ]
+}

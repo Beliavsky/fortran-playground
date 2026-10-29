@@ -1,0 +1,79 @@
+{
+  "id": "fordot",
+  "repository": "gha3mi/fordot",
+  "revision": "3966625781a9c1dffe037e3032fa4a0b6f958760",
+  "archive_sha256": "6f3017330d5ba4accff12c09e10651f45171ac2a636957d69b123522d3dc4009",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "apt_packages": [
+      "libblas-dev=3.12.1-6",
+      "liblapack-dev=3.12.1-6"
+    ],
+    "environment": {
+      "FPM_FFLAGS": "-cpp -fopenmp",
+      "FPM_LDFLAGS": "-llapack -lblas"
+    },
+    "source_revisions": {
+      "gha3mi/kinds": "811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f",
+      "szaghi/face": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8"
+    },
+    "manifest_versions": {
+      "gha3mi/fordot": "0.2.0",
+      "gha3mi/kinds": "0.0.0",
+      "gha3mi/forunittest": "0.0.0"
+    },
+    "shared_dependencies": {
+      "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+      "repositories": [
+        "gha3mi/fordot",
+        "gha3mi/kinds",
+        "gha3mi/forunittest",
+        "szaghi/face"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "repository": "gha3mi/kinds",
+      "revision": "811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f",
+      "sha256": "495d1133b1630dea4f38d69e5e3189e3279e4ce5836da1a7aec8a822bbe16518"
+    },
+    {
+      "repository": "gha3mi/forunittest",
+      "revision": "997e9974e52b40f6538ed84cf24259c331a782b3",
+      "sha256": "a325e6e93f839a9b528a99cdfa4ca359e035f5a05414cb4c36a48f30bdaf53f2"
+    },
+    {
+      "repository": "szaghi/FACE",
+      "revision": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8",
+      "sha256": "d4cc3c3a2c70e7369607624ae3361a6f7b2ba3f1e9a63ffd94ecb5cd4b019469"
+    }
+  ],
+  "checked_at": "2026-10-28T22:10:17.874400+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/fordot.f90",
+  "verification": {
+    "seconds": 2.866,
+    "build_seconds": 0.594,
+    "library_reused": true,
+    "demo_sha256": "7bfafe2012d6cad882de0d9b86e00a6027e237465f33d005d6a26cf300a8fe5a",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "BSD-3-Clause",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Scalar products using methods m1 through m4, each also checked with three unequal blocks against an exact answer. Single-process correctness only; no coarray or performance claim.",
+  "initial_verification": {
+    "seconds": 2.292,
+    "build_seconds": 0.558,
+    "library_reused": true,
+    "demo_sha256": "7bfafe2012d6cad882de0d9b86e00a6027e237465f33d005d6a26cf300a8fe5a",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  }
+}

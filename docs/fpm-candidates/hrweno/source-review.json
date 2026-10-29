@@ -1,0 +1,51 @@
+{
+  "id": "hrweno",
+  "repository": "HugoMVale/HR-WENO",
+  "revision": "2885105a7ba98351fed299b22e9bc0c67a809d2f",
+  "archive_sha256": "1dc2fffbdd9396735d01df566f3a945e65b934525a16e15162abcb47d1b373a9",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "registry": {
+      "stdlib": {
+        "git": "https://github.com/fortran-lang/stdlib",
+        "rev": "58eb9133966c2797e0593281169ef57c43eccc1d"
+      }
+    },
+    "source_revisions": {
+      "fortran-lang/stdlib": "58eb9133966c2797e0593281169ef57c43eccc1d"
+    },
+    "manifest_versions": {
+      "fortran-lang/stdlib": "0.8.1"
+    },
+    "shared_dependencies": {
+      "adapter_sha256": "8a85ff125c66db77f139fb6b62e6895fa314413a2b0350e68d8f3126c1d19707",
+      "repositories": [
+        "fortran-lang/stdlib"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "repository": "fortran-lang/stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+    }
+  ],
+  "checked_at": "2026-10-28T22:42:59.624262+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/hrweno.f90",
+  "verification": {
+    "seconds": 6.742,
+    "build_seconds": 2.471,
+    "library_reused": true,
+    "demo_sha256": "61e5e6026a35464e89ac1dd44e48d0c8394e1783521cbc2a40aa9482ea7d1f28",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "WENO spatial reconstruction and explicit TVD Runge-Kutta integration for conservation equations. The main checks a smooth periodic advection problem against exact cell averages and verifies conservation of mass; discontinuous solutions and nonuniform grids are not covered."
+}

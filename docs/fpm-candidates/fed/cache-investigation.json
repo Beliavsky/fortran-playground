@@ -1,0 +1,15 @@
+{
+  "accepted_mode": "shared dependency graph",
+  "initial_verification": {
+    "seconds": 4.399,
+    "build_seconds": 2.515,
+    "library_reused": true,
+    "demo_sha256": "9ac35bada9d3292c1c41bcb1e8cfb8c0b78fd34e7378c16c7c01c7c72c58bddf",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "promotion_note": "The first consumer reused the stdlib leaf export. Full-graph promotion did not recognize that leaf-sharing consumer as a donor and established an unshared donor once before exporting Enclose, Enumul and FED. The stdlib graph archive itself was reused. No original catalog entry or build record changed.",
+  "limitation": "A future operator improvement should recognize compatible leaf-sharing donors before initiating a first unshared graph build."
+}

@@ -1,0 +1,43 @@
+{
+  "id": "feq-parse",
+  "repository": "FluidNumerics/feq-parse",
+  "revision": "2e80c5940b128a52c5070a3f56909674fb85a379",
+  "archive_sha256": "c230b9725cff8ca429747b916d6e1498a46f5321fe4d523683ada91e5d66abb8",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "shared_dependencies": {
+      "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+      "repositories": [
+        "fluidnumerics/feq-parse"
+      ]
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-28T22:10:17.874400+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/feq-parse.f90",
+  "verification": {
+    "seconds": 1.564,
+    "build_seconds": 0.399,
+    "library_reused": true,
+    "demo_sha256": "3609f35399080ab8ec554d97fc926c8c5b2bbdb773384d2360cce0b493d5fb65",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "BSD-3-Clause",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Numerical evaluation of expressions parsed from text, not symbolic algebra. The demo checks double-precision multivariable Gaussian and polynomial expressions against direct Fortran formulas.",
+  "initial_verification": {
+    "seconds": 3.87,
+    "build_seconds": 0.385,
+    "library_reused": true,
+    "demo_sha256": "3609f35399080ab8ec554d97fc926c8c5b2bbdb773384d2360cce0b493d5fb65",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  }
+}

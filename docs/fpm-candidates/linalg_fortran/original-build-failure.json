@@ -1,0 +1,4 @@
+{
+  "revision": "30e7237ab54ca176e1c8dae4be2d9d44800e1f83",
+  "diagnostic": " + mkdir -p build/dependencies\n[  0%]              pyplot_module.f90\n[ 20%]              pyplot_module.f90  done.\n[ 20%]             linalg_fortran.f90\n<ERROR> Compilation failed for object \" .._sources_bundle_packages_0_linalg_fortran-30e7237ab54ca176e1c8dae4be2d9d44800e1f83_src_linalg_fortran.f90.o \"\n[ 40%]             linalg_fortran.f90  done.\n\n./././/../sources/bundle/packages/0/linalg_fortran-30e7237ab54ca176e1c8dae4be2d9d44800e1f83/src/linalg_fortran.f90:1182:11:\n\n 1182 |       nb = ilaenv( 1, \"zhetrd\", uplo_, n, -1, -1, -1 )+2\n      |           1\nError: Procedure \u2018ilaenv\u2019 called with an implicit interface at (1) [-Werror=implicit-interface]\ncompilation terminated due to -fmax-errors=1.\n<ERROR> stopping due to failed compilation\nSTOP 1\n"
+}

@@ -1,0 +1,10 @@
+{
+  "original_sha256": "979e08f29ea88ca0b2d8399e9975279698790d938a0caedcf35fd3214864cce7",
+  "wrapped_sha256": "cf7231fc45666a2edc86a32f8b847cc9e56e88349b341e9c32f4d61d917b7fbc",
+  "procedure_bodies_unchanged": true,
+  "changes": [
+    "Expose original internal procedures through module playground_kronrod.",
+    "Remove the batch driver loop; the consumer retains its precision guard.",
+    "Set library source directory to app and disable automatic application/example/test targets."
+  ]
+}

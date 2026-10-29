@@ -1,0 +1,6 @@
+{
+  "revision": "7708e4949f17511d81f4e7dd0271a500f0bc3631",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "diagnostic": " + mkdir -p build/dependencies\n[  0%]              pyplot_module.f90\n[  4%]              pyplot_module.f90  done.\n[  4%]                     assert.F90\n[  8%]                     assert.F90  done.\n[  8%]                       help.f90\n[ 12%]                       help.f90  done.\n[ 12%]                           i1.f\n<ERROR> Compilation failed for object \" .._sources_bundle_packages_0_rpn-calculator-fortran-7708e4949f17511d81f4e7dd0271a500f0bc3631_src_specfun_i1.f.o \"\n[ 16%]                           i1.f  done.\n\n./././/../sources/bundle/packages/0/rpn-calculator-fortran-7708e4949f17511d81f4e7dd0271a500f0bc3631/src/specfun/i1.f:11:1:\n\n   11 | C--------------------------------------------------------------------\n      | 1\nError: Unclassifiable statement at (1)\ncompilation terminated due to -fmax-errors=1.\n<ERROR> stopping due to failed compilation\nSTOP 1\n"
+}

@@ -1,0 +1,43 @@
+# TOML file for fpm as described at https://fpm.fortran-lang.org/en/spec/manifest.html
+name = "M_LA"
+version = "0.1.0"
+license = "CC0-1.0"
+author = "John S. Urban"
+maintainer = "urbanjost@comcast.net"
+copyright = "2020 John S. Urban"
+description = " Linear Algebra and Array-oriented procedures (LICENSE:MIT)"
+categories = ["Linear Algebra"]
+keywords = ["fortran", "Arrays", "Linear Algebra"]
+homepage = "https://github.com/urbanjost/M_LA.git"
+
+#ifdef FPMVERSION >= 0.8.0
+[build]
+module-naming = true
+# pre-version8 compatibility
+[fortran]
+implicit-typing = true
+implicit-external = true
+source-form = "default"
+#endif
+
+[install]
+library=true
+
+[[test]]
+   name="test_suite"
+   source-dir="test"
+   main="test_suite_M_LA.f90"
+   [test.dependencies]
+      #M_framework  =  {  git        =  "https://github.com/urbanjost/M_framework.git"  }
+      #M_framework  =  {  namespace  =  "GPF"                                           }
+      M_framework   =  {  path       =  "GLINKS/M_framework"                            }
+
+#[[executable]]
+#name="mat"
+#source-dir="app"
+#main="mat.f90"
+
+[dependencies]
+#M_strings      = { git = "https://github.com/urbanjost/M_strings.git" }
+#M_CLI2         = { git = "https://github.com/urbanjost/M_CLI2.git" }
+#M_list         = { git = "https://github.com/urbanjost/M_list.git" }

@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-28T21:02:12.296868+00:00",
+  "checked_at": "2026-10-29T01:58:37.812754+00:00",
   "compiler": "GNU Fortran 16.2.0",
   "fpm": "0.12.0",
   "validation": "fpm-precompiled-validation.json",
@@ -95,7 +95,54 @@
     "gslib",
     "seiscope-optimization",
     "econ-toolchain",
-    "featom"
+    "featom",
+    "m_la",
+    "fglm",
+    "fortrandf",
+    "strith",
+    "list",
+    "friction",
+    "feq-parse",
+    "fordot",
+    "formatmul",
+    "bstrith",
+    "heatflow",
+    "hrweno",
+    "fortran-simplify",
+    "ecx",
+    "athena",
+    "orbs",
+    "rearrayfx",
+    "amosf90",
+    "linalg_fortran",
+    "fortran_vector",
+    "scanner",
+    "rojff",
+    "argparse-f",
+    "io_utilities",
+    "uint-fortran",
+    "veggies",
+    "shunting-yard-fortran",
+    "sqliteff",
+    "erloff",
+    "fortran-tokenizer",
+    "integer_set",
+    "smart-pointers",
+    "rpn-calculator-fortran",
+    "nc4fortran",
+    "fundamental_constants",
+    "array_range",
+    "kronrod",
+    "jeyemhex-regex",
+    "fed",
+    "any",
+    "for_fifo_queue",
+    "string-utf-8",
+    "fortime",
+    "fassert",
+    "errstat",
+    "slinked-list",
+    "enclose"
   ],
   "deferred": [
     {
@@ -146,13 +193,34 @@
     "sqpopt",
     "rational-approximation",
     "jams-fortran",
-    "fury"
+    "fury",
+    "maps",
+    {
+      "id": "flap",
+      "repository": "szaghi/FLAP",
+      "revision": "17d58bd8c867206baec6f56cbf8156a1afd3cc4a",
+      "archive_sha256": "7aaa5b5652ee0692b1ff500ad75e61c60b56596a5d79c8da03c02df119ff48b6",
+      "reason": "Latest root archive contains a symlink; an older root passes extraction but explicitly pins FACE 1455c549ae0c1ead96961ca61a73131d8176b6a4, whose archive also contains a symlink. No archive rules were relaxed; compilation was not attempted."
+    },
+    {
+      "id": "stringifor",
+      "repository": "szaghi/StringiFor",
+      "revision": "019fe9c15a89305b7d2052d9e1bf39ec5f215f7e",
+      "archive_sha256": "2ca10a42ed33487cc648ed5a163bee08b5b673c5b90dfc81739bcd3ccb42cc46",
+      "reason": "Latest root archive contains a symlink; an older root passes extraction but explicitly pins FACE 1455c549ae0c1ead96961ca61a73131d8176b6a4, whose archive also contains a symlink. No archive rules were relaxed; compilation was not attempted."
+    }
   ],
   "limitations": {
     "flint": "An event-root-finding consumer built but crashed with SIGSEGV in the GNU 16 hosted sandbox. The admitted consumer uses adaptive integration and dense output, both checked against exp(-t).",
     "minres": "minres_ez_t wrapper compiled but crashed in the hosted sandbox. The admitted consumer calls minres_solver with module callbacks; it passed solution/residual and changed-main checks.",
     "parff": "The pinned consumer compiled but crashed in the hosted sandbox. Investigation notes retain source, dependency locks and diagnostics.",
-    "forcad": "GNU 16.2.0 internal compiler error in gfc_resolve_forall; newer source, two older releases and a fallback-guard patch all failed."
+    "forcad": "GNU 16.2.0 internal compiler error in gfc_resolve_forall; newer source, two older releases and a fallback-guard patch all failed.",
+    "fortran_vector": "The unmodified unique routine fails duplicate removal because it aliases an array element while compacting that array. The selected recipe uses the saved scalar first; original GNU 16 diagnostics are retained.",
+    "shunting-yard-fortran": "The original internal callback layout crashed in the restricted GNU 16 sandbox. A checksum-guarded module-scope callback edit passes the five valid-expression checks. Global registrations and missing syntax validation remain upstream limitations.",
+    "fwalk": "Archive contains symbolic links into its libcwalk Git submodule. Archive extraction rejects links and the submodule implementation is not contained in the archive. Requires an explicit, pinned C-submodule source adapter before an ordinary offline consumer can build. No sandbox build was submitted; no library changes made.",
+    "fregex": "The original PCRE 1 API needs -lpcre. The default Debian 13 (trixie) main amd64 package index contains neither libpcre3 nor libpcre3-dev. PCRE2 is a different API, not a drop-in link substitution. Deferred pending an upstream PCRE2 port or an explicitly maintained native-library recipe.",
+    "time-f": "Compiles, but the supplied strftime maximum length is ignored. The bounded-buffer probe expects zero for a 19-character date with maxsize=5, and fails. The C binding omits VALUE on size_t maxsize. The tm layout also needs platform ABI review before exposing mktime and timezone-dependent formatting; the source declares only nine integers. Deferred rather than publishing a limited example that hides these issues. A direct sandbox ABI probe confirms sizeof(struct tm)=56 bytes versus c_sizeof(time_f tm)=36 bytes.",
+    "flibcsv": "The bounded CSV parser example compiles and passes quoted fields, embedded commas, an empty field and doubled quotes. Deferred before publication: the manifest license is the placeholder \"license\", no repository license file was found, and the Fortran wrapper has no explicit license notice; only bundled C sources identify LGPL-2.1-or-later. Source review also finds incorrect unused C bindings: entry_buf is a character rather than a C pointer, csv_strerror returns a character rather than a C pointer, and csv_write/csv_write2 omit VALUE on pointer arguments. Author clarification and a binding review are needed before presenting this as a ready-to-use library."
   },
   "notes": "fpm-candidate-notes.md",
   "attempts": [
@@ -3168,6 +3236,2084 @@
       "checked_at": "2026-10-28T19:11:13.335283+00:00",
       "reason": "Strict archive preparation rejects a documentation symlink at HEAD; tags v0.8.0 through v0.8.4 also contain links. Compilation was not reached.",
       "diagnostic": "fpm-candidates/fury/preparation.json"
+    },
+    {
+      "id": "m_la",
+      "repository": "urbanjost/M_LA",
+      "revision": "db59eeab0deab7e84eadf2542ad49c1c719dfb94",
+      "archive_sha256": "6c9d8e1e456852e076e14207f31751ecdd4a60cb0b80bb975f7818b15802932c",
+      "checked_at": "2026-10-28T21:40:06.974444+00:00",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "urbanjost/m_la"
+          ]
+        }
+      },
+      "status": "verified",
+      "example": "../fpm_catalog/demos/m_la.f90",
+      "verification": {
+        "seconds": 1.817,
+        "build_seconds": 0.325,
+        "library_reused": true,
+        "demo_sha256": "3c89dd90d25d689aeca1509f2914fe94e2243be10dfc5e1ca156ed79a223f4de",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "fglm",
+      "repository": "jordan4ibanez/fglm",
+      "revision": "e1b6a5404b3e7a266da33173a07166970c16dd86",
+      "archive_sha256": "0d4d3f14d4e408a24d51beac17fed72b7eccec715486b691d70d4ac447c1fa66",
+      "checked_at": "2026-10-28T21:40:06.974444+00:00",
+      "dependencies": [
+        {
+          "repository": "jordan4ibanez/constants_f90",
+          "revision": "22b34d79274429ab391e92a94011befeb996704a",
+          "sha256": "17efd5f858ac6f29a4d1a0a4dbd6dbbc3fa89a8810c2300679702875e385a85a"
+        }
+      ],
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "jordan4ibanez/fglm",
+            "jordan4ibanez/constants_f90"
+          ]
+        }
+      },
+      "status": "verified",
+      "example": "../fpm_catalog/demos/fglm.f90",
+      "verification": {
+        "seconds": 1.838,
+        "build_seconds": 0.388,
+        "library_reused": true,
+        "demo_sha256": "4c0be6163b6b4f283b4e23d81e26a1b9933395f689f354da0a2037e98448aa2b",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "maps",
+      "repository": "degawa/maps",
+      "revision": "453d8b146a659c0111652fe0579e2321477c54cd",
+      "archive_sha256": "65090d0b4fa292b1b5ff069dc5155f5ef0aeaa9ae74cc59db26195572c278e9f",
+      "checked_at": "2026-10-28T21:40:06.974444+00:00",
+      "dependencies": [
+        {
+          "repository": "fortran-lang/stdlib",
+          "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+        },
+        {
+          "repository": "degawa/enumul",
+          "revision": "064bba70797b84100b25dc4466b28f1f38147d0e",
+          "sha256": "0bbb1c13ec5780cbf15bd9380de9e288101edfac3572592f13b8a5d1b81cd364"
+        },
+        {
+          "repository": "degawa/errstat",
+          "revision": "336ee374c82a4525d87444c767a1f23f059d5723",
+          "sha256": "38be949552f3bff87ebb38b922718a19741b854f172b6c8951913d8621294df2"
+        }
+      ],
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "registry": {
+          "stdlib": {
+            "git": "https://github.com/fortran-lang/stdlib",
+            "rev": "58eb9133966c2797e0593281169ef57c43eccc1d"
+          }
+        },
+        "manifest_versions": {
+          "fortran-lang/stdlib": "0.8.1"
+        },
+        "source_revisions": {
+          "fortran-lang/stdlib": "58eb9133966c2797e0593281169ef57c43eccc1d"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "8a85ff125c66db77f139fb6b62e6895fa314413a2b0350e68d8f3126c1d19707",
+          "repositories": [
+            "fortran-lang/stdlib"
+          ]
+        }
+      },
+      "status": "deferred",
+      "reason": "GNU 16 compilation fails against the pinned stdlib revision: stdlib_hashmap_wrappers does not export other_type.",
+      "diagnostic": "fpm-candidates/maps/build-error.txt",
+      "example": "fpm-candidates/maps/main.f90"
+    },
+    {
+      "id": "fortrandf",
+      "repository": "jaiken17/fortranDF",
+      "revision": "58300f8ae39d463e729960e960939fb53e2c7de4",
+      "archive_sha256": "4a615ed4519c1f73bfd7d0cef33ffe374007a2bc0738824f42cc1a1af64a1f19",
+      "checked_at": "2026-10-28T21:40:06.974444+00:00",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "jaiken17/fortrandf"
+          ]
+        }
+      },
+      "status": "verified",
+      "example": "../fpm_catalog/demos/fortrandf.f90",
+      "verification": {
+        "seconds": 2.705,
+        "build_seconds": 0.721,
+        "library_reused": true,
+        "demo_sha256": "07a49525fabd459c52aafe412ace552f644f1c051084f2a9788063ae3d037f1d",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "strith",
+      "repository": "degawa/strith",
+      "revision": "da2b1f489a178cb443f636e3f9c89aed6c8702b1",
+      "archive_sha256": "f302587eafa09b1ce11d48464f25f3e114cc2e5a0c81a1b586a3d38287d6f137",
+      "checked_at": "2026-10-28T21:40:06.974444+00:00",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "degawa/strith"
+          ]
+        }
+      },
+      "status": "verified",
+      "example": "../fpm_catalog/demos/strith.f90",
+      "verification": {
+        "seconds": 1.611,
+        "build_seconds": 0.354,
+        "library_reused": true,
+        "demo_sha256": "3714004b470be72de787902a7bfa8518bd998a6d89600e127e28c7d9e8550152",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "list",
+      "repository": "grofz/list",
+      "revision": "77a0c99686406eaa8d4423e778311d63c6940b43",
+      "archive_sha256": "694c58c6530491a2c95264d31269e472516b20f11dd791eba8ef8a126357aeab",
+      "checked_at": "2026-10-28T21:40:06.974444+00:00",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "grofz/list"
+          ]
+        }
+      },
+      "status": "verified",
+      "example": "../fpm_catalog/demos/list.f90",
+      "verification": {
+        "seconds": 2.031,
+        "build_seconds": 0.327,
+        "library_reused": true,
+        "demo_sha256": "2d4554e4e385b8099ee0ca0572fe4ea84aea6b9fc0d96526f22007d1f823a7b4",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "friction",
+      "repository": "jchristopherson/friction",
+      "revision": "8e75dcac26f47417a439adfcbaa24834105d89fe",
+      "archive_sha256": "71dddc287abf50fc6c174e610eda1711fa5befc0b970fa931cc854381b1603cb",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6",
+          "libarpack2-dev=3.9.1-6"
+        ],
+        "metapackages": [
+          "openmp",
+          "blas",
+          "lapack"
+        ],
+        "environment": {
+          "FPM_FFLAGS": "-fopenmp"
+        },
+        "source_revisions": {
+          "jchristopherson/linalg": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+          "jchristopherson/collections": "ce37c94e72b3ae5db2e2208489999260a7875f81",
+          "jchristopherson/fstring": "1bb1043a1ed34b8bd57f2687166463dd573bce3d",
+          "jchristopherson/diffeq": "989b320179c23aaff4bfe72994c90e9034f50c74",
+          "jchristopherson/fstats": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "jchristopherson/friction",
+            "jchristopherson/diffeq",
+            "jchristopherson/linalg",
+            "jchristopherson/fstats",
+            "jchristopherson/collections",
+            "jchristopherson/fstring"
+          ]
+        }
+      },
+      "dependencies": [
+        {
+          "repository": "jchristopherson/diffeq",
+          "revision": "989b320179c23aaff4bfe72994c90e9034f50c74",
+          "sha256": "09f6e92aea1dc8c9eb9233d4052b012e3b53a739e1ce078453d0421ddb1d4e87"
+        },
+        {
+          "repository": "jchristopherson/linalg",
+          "revision": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+          "sha256": "6210b8b167b50694941f48b20ad5d94bdacab026f1eb4720e2d55e8ddde0b59a"
+        },
+        {
+          "repository": "jchristopherson/fstats",
+          "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+          "sha256": "cf6b7367fc2a0d74f46000dc80a4cbedd07fd554e29117144b695b3a9ffa6fef"
+        },
+        {
+          "repository": "jchristopherson/collections",
+          "revision": "ce37c94e72b3ae5db2e2208489999260a7875f81",
+          "sha256": "5d53caf3c0b35e9e2a8bed49f8e96dca1b282434859c8c6f53fae3123528f265"
+        },
+        {
+          "repository": "jchristopherson/fstring",
+          "revision": "1bb1043a1ed34b8bd57f2687166463dd573bce3d",
+          "sha256": "0272f644a9217485fa2a3a18e41010c88f81ccc7398fc855c37518be2ac8eb3f"
+        }
+      ],
+      "checked_at": "2026-10-28T22:10:17.874400+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/friction.f90",
+      "verification": {
+        "seconds": 3.006,
+        "build_seconds": 0.608,
+        "library_reused": true,
+        "demo_sha256": "0318e4d8e772383e58c39b5b7495fb1d979269753b253a3bc85389a524a556bc",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "feq-parse",
+      "repository": "FluidNumerics/feq-parse",
+      "revision": "2e80c5940b128a52c5070a3f56909674fb85a379",
+      "archive_sha256": "c230b9725cff8ca429747b916d6e1498a46f5321fe4d523683ada91e5d66abb8",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "fluidnumerics/feq-parse"
+          ]
+        }
+      },
+      "dependencies": [],
+      "checked_at": "2026-10-28T22:10:17.874400+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/feq-parse.f90",
+      "verification": {
+        "seconds": 1.564,
+        "build_seconds": 0.399,
+        "library_reused": true,
+        "demo_sha256": "3609f35399080ab8ec554d97fc926c8c5b2bbdb773384d2360cce0b493d5fb65",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "fordot",
+      "repository": "gha3mi/fordot",
+      "revision": "3966625781a9c1dffe037e3032fa4a0b6f958760",
+      "archive_sha256": "6f3017330d5ba4accff12c09e10651f45171ac2a636957d69b123522d3dc4009",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6"
+        ],
+        "environment": {
+          "FPM_FFLAGS": "-cpp -fopenmp",
+          "FPM_LDFLAGS": "-llapack -lblas"
+        },
+        "source_revisions": {
+          "gha3mi/kinds": "811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f",
+          "szaghi/face": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8"
+        },
+        "manifest_versions": {
+          "gha3mi/fordot": "0.2.0",
+          "gha3mi/kinds": "0.0.0",
+          "gha3mi/forunittest": "0.0.0"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "gha3mi/fordot",
+            "gha3mi/kinds",
+            "gha3mi/forunittest",
+            "szaghi/face"
+          ]
+        }
+      },
+      "dependencies": [
+        {
+          "repository": "gha3mi/kinds",
+          "revision": "811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f",
+          "sha256": "495d1133b1630dea4f38d69e5e3189e3279e4ce5836da1a7aec8a822bbe16518"
+        },
+        {
+          "repository": "gha3mi/forunittest",
+          "revision": "997e9974e52b40f6538ed84cf24259c331a782b3",
+          "sha256": "a325e6e93f839a9b528a99cdfa4ca359e035f5a05414cb4c36a48f30bdaf53f2"
+        },
+        {
+          "repository": "szaghi/FACE",
+          "revision": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8",
+          "sha256": "d4cc3c3a2c70e7369607624ae3361a6f7b2ba3f1e9a63ffd94ecb5cd4b019469"
+        }
+      ],
+      "checked_at": "2026-10-28T22:10:17.874400+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/fordot.f90",
+      "verification": {
+        "seconds": 2.866,
+        "build_seconds": 0.594,
+        "library_reused": true,
+        "demo_sha256": "7bfafe2012d6cad882de0d9b86e00a6027e237465f33d005d6a26cf300a8fe5a",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "formatmul",
+      "repository": "gha3mi/formatmul",
+      "revision": "4b5747d49c27f0df92288e7a61d0e479e34ac78e",
+      "archive_sha256": "790dbd5cff7a0957bd37672d2524f83584fde9642bcc47295411e00b06d63cbc",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6"
+        ],
+        "environment": {
+          "FPM_FFLAGS": "-cpp -fopenmp",
+          "FPM_LDFLAGS": "-llapack -lblas"
+        },
+        "source_revisions": {
+          "gha3mi/kinds": "811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f",
+          "gha3mi/fortime": "de733e2c775457d4979403fe77ab69cf28e2b159",
+          "szaghi/face": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8"
+        },
+        "manifest_versions": {
+          "gha3mi/formatmul": "0.8.0",
+          "gha3mi/kinds": "0.0.0",
+          "gha3mi/fortime": "0.0.0",
+          "gha3mi/forunittest": "0.0.0"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "gha3mi/formatmul",
+            "gha3mi/kinds",
+            "gha3mi/fortime",
+            "szaghi/face",
+            "gha3mi/forunittest"
+          ]
+        }
+      },
+      "dependencies": [
+        {
+          "repository": "gha3mi/kinds",
+          "revision": "811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f",
+          "sha256": "495d1133b1630dea4f38d69e5e3189e3279e4ce5836da1a7aec8a822bbe16518"
+        },
+        {
+          "repository": "gha3mi/fortime",
+          "revision": "de733e2c775457d4979403fe77ab69cf28e2b159",
+          "sha256": "bccc83cf947693ad4defcfb4684af7cd660db8a6e57084b7f07e7edfd584161d"
+        },
+        {
+          "repository": "szaghi/FACE",
+          "revision": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8",
+          "sha256": "d4cc3c3a2c70e7369607624ae3361a6f7b2ba3f1e9a63ffd94ecb5cd4b019469"
+        },
+        {
+          "repository": "gha3mi/forunittest",
+          "revision": "997e9974e52b40f6538ed84cf24259c331a782b3",
+          "sha256": "a325e6e93f839a9b528a99cdfa4ca359e035f5a05414cb4c36a48f30bdaf53f2"
+        }
+      ],
+      "checked_at": "2026-10-28T22:10:17.874400+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/formatmul.f90",
+      "verification": {
+        "seconds": 2.019,
+        "build_seconds": 0.502,
+        "library_reused": true,
+        "demo_sha256": "b16b74a755966a26a15b87e109e74351b0d558faf3ea17180a7f51721f7b7985",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "known_limitations": [
+        "A single explicitly false transpose flag selects the wrong branch; omit both flags or pass both. See false-transpose-checks.json."
+      ]
+    },
+    {
+      "id": "bstrith",
+      "repository": "degawa/bstrith",
+      "revision": "7ed7730e34c7e1f78f2be9426ccc170f9dcaf57e",
+      "archive_sha256": "f7f3c9a98b395f20760b4883b43b7122f7b59eb6d8aa08b5afb211c5ca9d6344",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "degawa/bstrith"
+          ]
+        }
+      },
+      "dependencies": [],
+      "checked_at": "2026-10-28T22:10:17.874400+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/bstrith.f90",
+      "verification": {
+        "seconds": 1.852,
+        "build_seconds": 0.369,
+        "library_reused": true,
+        "demo_sha256": "4c42c06abae937b735a93bb813e0dfe0449e971bcfa3db70f171a0d841a7057d",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "heatflow",
+      "repository": "ExeQuantCode/HeatFlow",
+      "revision": "b0d930caad9160a15f0aeafa238c448f48f28d55",
+      "archive_sha256": "dc323ec732a62a15cf9e42b9d4a9f8989d6e6c3315ca0352e285d7efd397f62c",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "exequantcode/heatflow"
+          ]
+        }
+      },
+      "dependencies": [],
+      "checked_at": "2026-10-28T22:10:17.874400+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/heatflow.f90",
+      "verification": {
+        "seconds": 2.084,
+        "build_seconds": 0.514,
+        "library_reused": true,
+        "demo_sha256": "4395fbccc1e2d5130e0cd8c7d5f58fc571c125ae0873393e852262cee539c723",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "hrweno",
+      "repository": "HugoMVale/HR-WENO",
+      "revision": "2885105a7ba98351fed299b22e9bc0c67a809d2f",
+      "archive_sha256": "1dc2fffbdd9396735d01df566f3a945e65b934525a16e15162abcb47d1b373a9",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "registry": {
+          "stdlib": {
+            "git": "https://github.com/fortran-lang/stdlib",
+            "rev": "58eb9133966c2797e0593281169ef57c43eccc1d"
+          }
+        },
+        "source_revisions": {
+          "fortran-lang/stdlib": "58eb9133966c2797e0593281169ef57c43eccc1d"
+        },
+        "manifest_versions": {
+          "fortran-lang/stdlib": "0.8.1"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "8a85ff125c66db77f139fb6b62e6895fa314413a2b0350e68d8f3126c1d19707",
+          "repositories": [
+            "fortran-lang/stdlib"
+          ]
+        }
+      },
+      "dependencies": [
+        {
+          "repository": "fortran-lang/stdlib",
+          "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+        }
+      ],
+      "checked_at": "2026-10-28T22:42:59.624262+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/hrweno.f90",
+      "verification": {
+        "seconds": 6.742,
+        "build_seconds": 2.471,
+        "library_reused": true,
+        "demo_sha256": "61e5e6026a35464e89ac1dd44e48d0c8394e1783521cbc2a40aa9482ea7d1f28",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "fortran-simplify",
+      "repository": "jaiken17/fortran-simplify",
+      "revision": "f546422216fb88eba97e2a0f4910935efbcdce83",
+      "archive_sha256": "fac116dbcb42131306061eb500eaa04ef49075e7301f0c01f19c80e7196740f6",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "registry": {
+          "stdlib": {
+            "git": "https://github.com/fortran-lang/stdlib",
+            "rev": "58eb9133966c2797e0593281169ef57c43eccc1d"
+          }
+        },
+        "source_revisions": {
+          "fortran-lang/stdlib": "58eb9133966c2797e0593281169ef57c43eccc1d"
+        },
+        "manifest_versions": {
+          "fortran-lang/stdlib": "0.8.1"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "8a85ff125c66db77f139fb6b62e6895fa314413a2b0350e68d8f3126c1d19707",
+          "repositories": [
+            "fortran-lang/stdlib"
+          ]
+        }
+      },
+      "dependencies": [
+        {
+          "repository": "fortran-lang/stdlib",
+          "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+        }
+      ],
+      "checked_at": "2026-10-28T22:42:59.624262+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/fortran-simplify.f90",
+      "verification": {
+        "seconds": 3.18,
+        "build_seconds": 0.664,
+        "library_reused": true,
+        "demo_sha256": "e2651c4bb7d9a41b345f04ee18eadb5051c175eabdf8405bd9a89b0c65c3f312",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "known_limitations": [
+        "radial_distance retains a near-duplicate point because its helper computes a dot product instead of squared distance.",
+        "Saved local flags in perpendicular_distance can lose corners and endpoints on consecutive calls; the demo calls it once."
+      ]
+    },
+    {
+      "id": "ecx",
+      "repository": "MilanSkocic/ecx",
+      "revision": "d30725e3cb9186bc79f81481f3d6fae8d177a7b7",
+      "archive_sha256": "65110c8ee4576328c839d3421b391b72f5258c940a277a8f5971715bc3d64737",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "registry": {
+          "stdlib": {
+            "git": "https://github.com/fortran-lang/stdlib",
+            "rev": "58eb9133966c2797e0593281169ef57c43eccc1d"
+          }
+        },
+        "source_revisions": {
+          "fortran-lang/stdlib": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "milanskocic/codata": "d0c9b1552f0fa483a364de4a69e82c5e23344caf",
+          "milanskocic/ciaaw": "02efd49caea1a7bbff0602b752075d3fe935bd10",
+          "urbanjost/m_cli2": "a6934890178377cd92444d290aa3d3198ba9954d"
+        },
+        "manifest_versions": {
+          "fortran-lang/stdlib": "0.8.1",
+          "milanskocic/ecx": "0.1.0",
+          "milanskocic/codata": "0.0.0",
+          "milanskocic/ciaaw": "1.3.3"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "8a85ff125c66db77f139fb6b62e6895fa314413a2b0350e68d8f3126c1d19707",
+          "repositories": [
+            "fortran-lang/stdlib"
+          ]
+        }
+      },
+      "dependencies": [
+        {
+          "repository": "fortran-lang/stdlib",
+          "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+        },
+        {
+          "repository": "MilanSkocic/codata",
+          "revision": "d0c9b1552f0fa483a364de4a69e82c5e23344caf",
+          "sha256": "47a519277191fa5c9f3e476c1bf17bbafb6bf2eeeaca43fbffd938e7ecb835a3"
+        },
+        {
+          "repository": "MilanSkocic/ciaaw",
+          "revision": "02efd49caea1a7bbff0602b752075d3fe935bd10",
+          "sha256": "58aee500452c9fd1a643eaa5034a2a86481f22d2f868ab9968b1cc3e5ea6d76f"
+        },
+        {
+          "repository": "urbanjost/M_CLI2",
+          "revision": "a6934890178377cd92444d290aa3d3198ba9954d",
+          "sha256": "55f4bdd7c3be3466f838eae12ed2409b44fe0bd6cc0118bb5194b1d7d578ee28"
+        }
+      ],
+      "catalog_patches": {
+        "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+        "edits": [
+          {
+            "path": "src/ecx_pec.f90",
+            "sha256": "068a2f0ff9e13b38a7cec95a4c15523d215e1e37eb5e3342f0871d352695153a",
+            "before": "module ecx__pec\n",
+            "after": "module ecx__pec\nuse, intrinsic :: iso_fortran_env, only: real64\n"
+          }
+        ]
+      },
+      "checked_at": "2026-10-28T22:42:59.624262+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/ecx.f90",
+      "verification": {
+        "seconds": 2.734,
+        "build_seconds": 0.265,
+        "library_reused": true,
+        "demo_sha256": "3deee68d105f318abe53018e64015faea80384adef71815e1aaa50933d3da7ca",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "athena",
+      "repository": "nedtaylor/athena",
+      "revision": "4b81aeac07113628c2c9a476648d5ac2a91b7c91",
+      "archive_sha256": "2cc29f7f0b259e50642c1b05facf6bcb733acd992d0775df45c3ab1f58a6035c",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6"
+        ]
+      },
+      "dependencies": [
+        {
+          "repository": "nedtaylor/coreutils",
+          "revision": "ead4501f4b695c4f0fe3267f1bf5318544c9b1e2",
+          "sha256": "a2979763627707ba61169b4abacd7ee60b586df9115ac2beb9ee674c25031554"
+        },
+        {
+          "repository": "nedtaylor/diffstruc",
+          "revision": "88565f8e01792706edc0bd7e70dde957c26122a4",
+          "sha256": "84daa1e2c23f1cd2285b5212f4f5390cf930336c98feae7da0b5eb4534a7e65f"
+        },
+        {
+          "repository": "nedtaylor/graphstruc",
+          "revision": "ad41c6bca04cadd1df20319b29f231469c530dae",
+          "sha256": "4d6a942f76bdc0ccca609ac0a90a7b728d56fc403c4af2f7c597fb764885ea3e"
+        }
+      ],
+      "catalog_patches": {
+        "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+        "edits": [
+          {
+            "path": "fpm.toml",
+            "sha256": "e0158a93d0acef8ed02759a4b54e45f165a8fccd67423c680cc7179d0ee3a194",
+            "before": "name = \"athena\"\nversion = \"2.1.1\"\nlicense = \"MIT\"\nauthor = \"Ned Thaddeus Taylor\"\nmaintainer = \"n.t.taylor@exeter.ac.uk\"\ndescription = \"A Fortran library for building, training and testing neural networks\"\n\n[library]\nsource-dir = \"src\"\n\n[build]\nauto-executables = true\nauto-tests = true\nauto-examples = false\nmodule-naming = false\n\n[dependencies.coreutils]\npath = \"../../1/coreutils-ead4501f4b695c4f0fe3267f1bf5318544c9b1e2\"\n\n[dependencies.diffstruc]\npath = \"../../2/diffstruc-88565f8e01792706edc0bd7e70dde957c26122a4\"\n\n[dependencies.graphstruc]\npath = \"../../3/graphstruc-ad41c6bca04cadd1df20319b29f231469c530dae\"\n\n[features.wandb.dependencies.wandb-fortran]\ngit = \"https://github.com/nedtaylor/wandb-fortran\"\n\n[features.wandb.dependencies.example_library]\npath = \"example/example_library\"\n\n[features.wandb.preprocess.cpp]\nmacros = [\n    \"_WANDB\",\n]\n\n[[features.wandb.example]]\nname = \"wandb_sine\"\nsource-dir = \"example/wandb_sine/src\"\nmain = \"main.f90\"\n\n[[features.wandb.example]]\nname = \"wandb_pinn_burgers\"\nsource-dir = \"example/wandb_pinn_burgers/src\"\nmain = \"main.f90\"\n\n[[features.wandb.example]]\nname = \"wandb_sweep\"\nsource-dir = \"example/wandb_sweep/src\"\nmain = \"main.f90\"\n\n[[features.wandb.example]]\nname = \"wandb_network_sine\"\nsource-dir = \"example/wandb_network_sine/src\"\nmain = \"main.F90\"\n\n[install]\nlibrary = false\n\n[fortran]\nimplicit-typing = false\nimplicit-external = false\nsource-form = \"free\"\n\n[preprocess.cpp]\nsuffixes = [\n    \"F90\",\n    \"f90\",\n]\n\n[[example]]\nname = \"sine\"\nsource-dir = \"example/sine/src\"\nmain = \"main.f90\"\n\n[example.dependencies.example_library]\npath = \"example/example_library\"\n\n[example.dependencies.atomstruc]\ngit = \"https://github.com/nedtaylor/atomstruc\"\nbranch = \"column-major-order\"\n\n[[example]]\nname = \"simple\"\nsource-dir = \"example/simple/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"mnist\"\nsource-dir = \"example/mnist/src\"\n\n[[example]]\nname = \"mnist_addit\"\nsource-dir = \"example/mnist_addit/src\"\n\n[[example]]\nname = \"mnist_3D\"\nsource-dir = \"example/mnist_3D/src\"\n\n[[example]]\nname = \"mnist_bn\"\nsource-dir = \"example/mnist_bn/src\"\n\n[[example]]\nname = \"mnist_drop\"\nsource-dir = \"example/mnist_drop/src\"\n\n[[example]]\nname = \"msgpass_chemical\"\nsource-dir = \"example/msgpass_chemical/src\"\n\n[[example]]\nname = \"onnx_gnn\"\nsource-dir = \"example/onnx_gnn/src\"\n\n[[example]]\nname = \"msgpass_euler\"\nsource-dir = \"example/msgpass_euler/src\"\n\n[[example]]\nname = \"pinn_chemical\"\nsource-dir = \"example/pinn_chemical/src\"\n\n[[example]]\nname = \"pinn_burgers\"\nsource-dir = \"example/pinn_burgers/src\"\n\n[[example]]\nname = \"adam_benchmark\"\nsource-dir = \"example/adam_benchmark/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"custom_forward\"\nsource-dir = \"example/custom_forward/src\"\n\n[[example]]\nname = \"onnx\"\nsource-dir = \"example/onnx/src\"\n\n[[example]]\nname = \"onnx_nop\"\nsource-dir = \"example/onnx_nop/src\"\n\n[[example]]\nname = \"resnet\"\nsource-dir = \"example/resnet/src\"\n\n[[example]]\nname = \"rnn_timeseries\"\nsource-dir = \"example/rnn_timeseries/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"gno_regression\"\nsource-dir = \"example/gno_regression/src\"\n\n[[example]]\nname = \"ono_heat\"\nsource-dir = \"example/ono_heat/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"lno_heat\"\nsource-dir = \"example/lno_heat/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"lno_rollout\"\nsource-dir = \"example/lno_rollout/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"ono_attention_heat\"\nsource-dir = \"example/ono_attention_heat/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"inverse_design\"\nsource-dir = \"example/inverse_design/src\"\nmain = \"main.f90\"\n",
+            "after": "name = \"athena\"\nversion = \"2.1.1\"\nlicense = \"MIT\"\nauthor = \"Ned Thaddeus Taylor\"\nmaintainer = \"n.t.taylor@exeter.ac.uk\"\ndescription = \"A Fortran library for building, training and testing neural networks\"\n\n[library]\nsource-dir = \"src\"\n\n[build]\nauto-executables = true\nauto-tests = true\nauto-examples = false\nmodule-naming = false\nexternal-modules = [\n    \"wf\",\n]\n\n[dependencies.coreutils]\npath = \"../../1/coreutils-ead4501f4b695c4f0fe3267f1bf5318544c9b1e2\"\n\n[dependencies.diffstruc]\npath = \"../../2/diffstruc-88565f8e01792706edc0bd7e70dde957c26122a4\"\n\n[dependencies.graphstruc]\npath = \"../../3/graphstruc-ad41c6bca04cadd1df20319b29f231469c530dae\"\n\n[install]\nlibrary = false\n\n[fortran]\nimplicit-typing = false\nimplicit-external = false\nsource-form = \"free\"\n\n[preprocess.cpp]\nsuffixes = [\n    \"F90\",\n    \"f90\",\n]\n\n[[example]]\nname = \"sine\"\nsource-dir = \"example/sine/src\"\nmain = \"main.f90\"\n\n[example.dependencies.example_library]\npath = \"example/example_library\"\n\n[example.dependencies.atomstruc]\ngit = \"https://github.com/nedtaylor/atomstruc\"\nbranch = \"column-major-order\"\n\n[[example]]\nname = \"simple\"\nsource-dir = \"example/simple/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"mnist\"\nsource-dir = \"example/mnist/src\"\n\n[[example]]\nname = \"mnist_addit\"\nsource-dir = \"example/mnist_addit/src\"\n\n[[example]]\nname = \"mnist_3D\"\nsource-dir = \"example/mnist_3D/src\"\n\n[[example]]\nname = \"mnist_bn\"\nsource-dir = \"example/mnist_bn/src\"\n\n[[example]]\nname = \"mnist_drop\"\nsource-dir = \"example/mnist_drop/src\"\n\n[[example]]\nname = \"msgpass_chemical\"\nsource-dir = \"example/msgpass_chemical/src\"\n\n[[example]]\nname = \"onnx_gnn\"\nsource-dir = \"example/onnx_gnn/src\"\n\n[[example]]\nname = \"msgpass_euler\"\nsource-dir = \"example/msgpass_euler/src\"\n\n[[example]]\nname = \"pinn_chemical\"\nsource-dir = \"example/pinn_chemical/src\"\n\n[[example]]\nname = \"pinn_burgers\"\nsource-dir = \"example/pinn_burgers/src\"\n\n[[example]]\nname = \"adam_benchmark\"\nsource-dir = \"example/adam_benchmark/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"custom_forward\"\nsource-dir = \"example/custom_forward/src\"\n\n[[example]]\nname = \"onnx\"\nsource-dir = \"example/onnx/src\"\n\n[[example]]\nname = \"onnx_nop\"\nsource-dir = \"example/onnx_nop/src\"\n\n[[example]]\nname = \"resnet\"\nsource-dir = \"example/resnet/src\"\n\n[[example]]\nname = \"rnn_timeseries\"\nsource-dir = \"example/rnn_timeseries/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"gno_regression\"\nsource-dir = \"example/gno_regression/src\"\n\n[[example]]\nname = \"ono_heat\"\nsource-dir = \"example/ono_heat/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"lno_heat\"\nsource-dir = \"example/lno_heat/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"lno_rollout\"\nsource-dir = \"example/lno_rollout/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"ono_attention_heat\"\nsource-dir = \"example/ono_attention_heat/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"inverse_design\"\nsource-dir = \"example/inverse_design/src\"\nmain = \"main.f90\"\n"
+          }
+        ]
+      },
+      "checked_at": "2026-10-28T22:42:59.624262+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/athena.f90",
+      "verification": {
+        "seconds": 3.282,
+        "build_seconds": 1.181,
+        "library_reused": true,
+        "demo_sha256": "8f04495cdeb595be7089fec7a5c96844ed5125e0d22847204e29e0931a32a5c3",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "orbs",
+      "repository": "degawa/orbs",
+      "revision": "3cf7fcec19798367f6f5bd26bad861c510449265",
+      "archive_sha256": "dcbb0c8eeaa99febd6683dd2270dcf5757e512193eebe77258918c2713f99d23",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "registry": {
+          "stdlib": {
+            "git": "https://github.com/fortran-lang/stdlib",
+            "rev": "58eb9133966c2797e0593281169ef57c43eccc1d"
+          }
+        },
+        "source_revisions": {
+          "fortran-lang/stdlib": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "degawa/bstrith": "7ed7730e34c7e1f78f2be9426ccc170f9dcaf57e"
+        },
+        "manifest_versions": {
+          "fortran-lang/stdlib": "0.8.1"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "8a85ff125c66db77f139fb6b62e6895fa314413a2b0350e68d8f3126c1d19707",
+          "repositories": [
+            "fortran-lang/stdlib"
+          ]
+        }
+      },
+      "dependencies": [
+        {
+          "repository": "fortran-lang/stdlib",
+          "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+        },
+        {
+          "repository": "degawa/bstrith",
+          "revision": "7ed7730e34c7e1f78f2be9426ccc170f9dcaf57e",
+          "sha256": "f7f3c9a98b395f20760b4883b43b7122f7b59eb6d8aa08b5afb211c5ca9d6344"
+        }
+      ],
+      "checked_at": "2026-10-28T22:42:59.624262+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/orbs.f90",
+      "verification": {
+        "seconds": 1.894,
+        "build_seconds": 0.23,
+        "library_reused": true,
+        "demo_sha256": "11104e37f36be3c44fcc593741d47d68e6d2bcf67bb8349600dee24cb08adbfc",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "rearrayfx",
+      "repository": "aradi/rearrayfx",
+      "revision": "be1a7b08e43b358c8ed27fa80db7896767eb9f6d",
+      "archive_sha256": "0ec62b019b6fb6ef56c8933ad91a1abbee85d0742c3e0738c1391e08591dfd56",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "aradi/rearrayfx"
+          ]
+        }
+      },
+      "dependencies": [],
+      "checked_at": "2026-10-28T22:42:59.624262+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/rearrayfx.f90",
+      "verification": {
+        "seconds": 2.516,
+        "build_seconds": 0.416,
+        "library_reused": true,
+        "demo_sha256": "42ab029721bf925f67b012d87827aab737d3fee492266cfd88919d16e86b892f",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "amosf90",
+      "repository": "Euler-37/amosf90",
+      "revision": "b54a4d4a1d8f7c97acd180ed5bbaae8d089a9fa7",
+      "archive_sha256": "bde16c382a398bcf7122d1886fef8ed49e793d66c4f0f862b17ca48162115f1b",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "euler-37/amosf90"
+          ]
+        }
+      },
+      "dependencies": [],
+      "checked_at": "2026-10-28T23:12:09.139584+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/amosf90.f90",
+      "verification": {
+        "seconds": 1.459,
+        "build_seconds": 0.149,
+        "library_reused": true,
+        "demo_sha256": "85860c7f1e45f3c1e0b9c20149d513a1beea0c30f0e44f7c813d5cc4db7083e6",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "linalg_fortran",
+      "repository": "Euler-37/linalg_fortran",
+      "revision": "30e7237ab54ca176e1c8dae4be2d9d44800e1f83",
+      "archive_sha256": "9997e7d13e82b7cbc578e80cb199c33c50971dfa9a63486da9b9cc06a1bfce50",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "apt_packages": [
+          "libopenblas-dev=0.3.29+ds-3"
+        ]
+      },
+      "dependencies": [],
+      "catalog_patches": {
+        "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+        "edits": [
+          {
+            "path": "fpm.toml",
+            "sha256": "84545d43074953cdbb6f7f998e67e2a2cd806ee88dd9f1fd4ccec23edece4d18",
+            "before": "name = \"iso_linalg_mod\"\nversion = \"0.1.0\"\nlicense = \"license\"\nauthor = \"Euler-37\"\ncopyright = \"Copyright 2022, Euler-37\"\n\n[build]\nauto-executables = true\nauto-tests = true\nauto-examples = true\nlink = [\n    \"openblas\",\n]\n\n[install]\nlibrary = false\n",
+            "after": "name = \"iso_linalg_mod\"\nversion = \"0.1.0\"\nlicense = \"license\"\nauthor = \"Euler-37\"\ncopyright = \"Copyright 2022, Euler-37\"\n\n[build]\nauto-executables = true\nauto-tests = true\nauto-examples = true\nlink = [\n    \"openblas\",\n]\n\n[install]\nlibrary = false\n\n[fortran]\nimplicit-external = true\n"
+          }
+        ]
+      },
+      "checked_at": "2026-10-28T23:12:09.139584+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/linalg_fortran.f90",
+      "verification": {
+        "seconds": 2.049,
+        "build_seconds": 0.448,
+        "library_reused": true,
+        "demo_sha256": "d7dbec89d1c1f73a6e0f32f06b11b245fd29bda7984430627166d9b190916715",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "fortran_vector",
+      "repository": "Euler-37/fortran_vector",
+      "revision": "95469e2ce1162b0ede3ca3435ebd94ec6b6fee79",
+      "archive_sha256": "0701b9fc21b905f986ee247ce7d3981c059cd963040569409de88cbdf04eaa25",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8"
+      },
+      "dependencies": [],
+      "catalog_patches": {
+        "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+        "edits": [
+          {
+            "path": "src/fortran_vector.f90",
+            "sha256": "0ee8dc6b054a18b3154952430a29577527edf494e7416385a4656446cd083833",
+            "before": "call this%remove(this%x_(1))",
+            "after": "call this%remove(first)"
+          }
+        ]
+      },
+      "checked_at": "2026-10-28T23:12:09.139584+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/fortran_vector.f90",
+      "verification": {
+        "seconds": 1.471,
+        "build_seconds": 0.349,
+        "library_reused": true,
+        "demo_sha256": "9cb520eb6b7b278caaa126aa55d078576b5bdc38d7bfefa8d6cf94d53c7af159",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "scanner",
+      "repository": "freevryheid/scanner",
+      "revision": "b0026498c171b615bb3dcfca55a0f20b133e22dc",
+      "archive_sha256": "ebd5b15b10cb7f7f0a7e10d3891cebbb00cf8fcfde32387f4d1e7f0645b0662f",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "source_revisions": {
+          "fortran-lang/stdlib": "58eb9133966c2797e0593281169ef57c43eccc1d"
+        },
+        "manifest_versions": {
+          "fortran-lang/stdlib": "0.8.1"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "8a85ff125c66db77f139fb6b62e6895fa314413a2b0350e68d8f3126c1d19707",
+          "repositories": [
+            "fortran-lang/stdlib"
+          ]
+        }
+      },
+      "dependencies": [
+        {
+          "repository": "fortran-lang/stdlib",
+          "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+        }
+      ],
+      "checked_at": "2026-10-28T23:12:09.139584+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/scanner.f90",
+      "verification": {
+        "seconds": 1.427,
+        "build_seconds": 0.356,
+        "library_reused": true,
+        "demo_sha256": "2a26ac5acd461dd59e4ae78b9ce6f16b14988a2b74b5491bf213418a763e0a28",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "flap",
+      "repository": "szaghi/FLAP",
+      "revision": "17d58bd8c867206baec6f56cbf8156a1afd3cc4a",
+      "archive_sha256": "7aaa5b5652ee0692b1ff500ad75e61c60b56596a5d79c8da03c02df119ff48b6",
+      "license": "MIT",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8"
+      },
+      "dependencies": [],
+      "status": "deferred",
+      "checked_at": "2026-10-28T23:12:22.929576+00:00",
+      "reason": "Latest root archive contains a symlink; an older root passes extraction but explicitly pins FACE 1455c549ae0c1ead96961ca61a73131d8176b6a4, whose archive also contains a symlink. No archive rules were relaxed; compilation was not attempted.",
+      "rejected_head": {
+        "revision": "19cad029681176ce9ae35296e99c5cf42da0212e",
+        "archive_sha256": "2f9f6ba4aadf39c367630763a5c4e566e30fd6abc4b7b59cf1e6762d795bcfe2",
+        "links": [
+          {
+            "path": "FLAP-19cad029681176ce9ae35296e99c5cf42da0212e/CONTRIBUTING.md",
+            "target": "docs/guide/contributing.md"
+          }
+        ],
+        "preparation_error": "Package archive contains an unsafe path, link, or special file."
+      },
+      "blocked_dependency": {
+        "repository": "szaghi/FACE",
+        "revision": "1455c549ae0c1ead96961ca61a73131d8176b6a4",
+        "archive_sha256": "266ede3670cb0ec03685f06d1a13db38c904110ddab6b6426a6c562f263eb47c",
+        "links": [
+          {
+            "path": "FACE-1455c549ae0c1ead96961ca61a73131d8176b6a4/doc/README-FACE.md",
+            "target": "../README.md"
+          }
+        ]
+      },
+      "stage": "source preparation"
+    },
+    {
+      "id": "stringifor",
+      "repository": "szaghi/StringiFor",
+      "revision": "019fe9c15a89305b7d2052d9e1bf39ec5f215f7e",
+      "archive_sha256": "2ca10a42ed33487cc648ed5a163bee08b5b673c5b90dfc81739bcd3ccb42cc46",
+      "license": "MIT",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8"
+      },
+      "dependencies": [
+        {
+          "repository": "szaghi/BeFoR64",
+          "revision": "09b95c08a2ee8995d19cf8551c22b783193f6246",
+          "sha256": "a021cd7e20461a86b2ece6d4e6e39b4f10c116f45d1120bb4d5ab9a31585f5f2"
+        },
+        {
+          "repository": "szaghi/PENF",
+          "revision": "65061235982495b158412b70c05b228af4320d94",
+          "sha256": "f8c832e6893d0f12dca9387171f70fb3f0eb60e4b021f385da6937134fcebc74"
+        }
+      ],
+      "status": "deferred",
+      "checked_at": "2026-10-28T23:12:22.929576+00:00",
+      "reason": "Latest root archive contains a symlink; an older root passes extraction but explicitly pins FACE 1455c549ae0c1ead96961ca61a73131d8176b6a4, whose archive also contains a symlink. No archive rules were relaxed; compilation was not attempted.",
+      "rejected_head": {
+        "revision": "bd218de71aea6218edbfce7bb46c40b4668dc3e2",
+        "archive_sha256": "93d0b77c060f186b140d00babcf669e435aedff2fe3f4c14570eece665507514",
+        "links": [
+          {
+            "path": "StringiFor-bd218de71aea6218edbfce7bb46c40b4668dc3e2/CONTRIBUTING.md",
+            "target": "docs/guide/contributing.md"
+          }
+        ],
+        "preparation_error": "Package archive contains an unsafe path, link, or special file."
+      },
+      "blocked_dependency": {
+        "repository": "szaghi/FACE",
+        "revision": "1455c549ae0c1ead96961ca61a73131d8176b6a4",
+        "archive_sha256": "266ede3670cb0ec03685f06d1a13db38c904110ddab6b6426a6c562f263eb47c",
+        "links": [
+          {
+            "path": "FACE-1455c549ae0c1ead96961ca61a73131d8176b6a4/doc/README-FACE.md",
+            "target": "../README.md"
+          }
+        ]
+      },
+      "stage": "source preparation"
+    },
+    {
+      "id": "rojff",
+      "repository": "everythingfunctional/rojff",
+      "revision": "9f68e5aa4c12b32720d4224f1ac279bfd7d77b93",
+      "archive_sha256": "503529a91c9692cdb830b3b14db5462a3b83bce12f0e002f3c04922447956961",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "git_aliases": {
+          "https://gitlab.com/everythingfunctional/erloff": "https://github.com/everythingfunctional/erloff",
+          "https://gitlab.com/everythingfunctional/iso_varying_string": "https://github.com/everythingfunctional/iso_varying_string",
+          "https://gitlab.com/everythingfunctional/strff": "https://github.com/everythingfunctional/strff",
+          "https://gitlab.com/everythingfunctional/exceptional_numbers": "https://github.com/everythingfunctional/exceptional_numbers",
+          "https://gitlab.com/everythingfunctional/parff": "https://github.com/everythingfunctional/parff",
+          "https://gitlab.com/everythingfunctional/veggies": "https://github.com/everythingfunctional/veggies"
+        },
+        "source_revisions": {
+          "everythingfunctional/erloff": "a4c10605c9263d315d20c07dc96e1f0d18aa2ffa",
+          "everythingfunctional/strff": "37dccc0e615a2fc85de18be80427e0f1a678d87c",
+          "everythingfunctional/iso_varying_string": "48ce6b119e855284a87d5a6eb9c53da8b6785716"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "everythingfunctional/rojff",
+            "everythingfunctional/erloff",
+            "everythingfunctional/iso_varying_string",
+            "everythingfunctional/strff"
+          ]
+        }
+      },
+      "dependencies": [
+        {
+          "repository": "everythingfunctional/erloff",
+          "revision": "a4c10605c9263d315d20c07dc96e1f0d18aa2ffa",
+          "sha256": "6f6033f3ca404088fa992208f0561ccb497f63849a44805e94faef21788882fc"
+        },
+        {
+          "repository": "everythingfunctional/iso_varying_string",
+          "revision": "48ce6b119e855284a87d5a6eb9c53da8b6785716",
+          "sha256": "b1d563dc52c7cb3df41abf3f360ef0c05285b71bec9bd61d090227f88628ba49"
+        },
+        {
+          "repository": "everythingfunctional/strff",
+          "revision": "37dccc0e615a2fc85de18be80427e0f1a678d87c",
+          "sha256": "1aac7b388bcd6f4a181c5d9aea27046f9a7c3f90273184359afa63e11cafc74d"
+        }
+      ],
+      "checked_at": "2026-10-28T23:33:50.254249+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/rojff.f90",
+      "verification": {
+        "seconds": 2.363,
+        "build_seconds": 0.487,
+        "library_reused": true,
+        "demo_sha256": "5025f64999574af56e0316f2174261c30a2509027d5eaddbf5aa32a16cf1749f",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "argparse-f",
+      "repository": "0382/argparse-f",
+      "revision": "435cc1676d6064162a3c36b91f1aa50d926fdd45",
+      "archive_sha256": "c0962d2173daa643130c32c71284f1da12d5b4ae2d357568ae1a34ddab1970b0",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "0382/argparse-f"
+          ]
+        }
+      },
+      "dependencies": [],
+      "checked_at": "2026-10-28T23:33:50.254249+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/argparse-f.f90",
+      "verification": {
+        "seconds": 1.148,
+        "build_seconds": 0.353,
+        "library_reused": true,
+        "demo_sha256": "ca4c6d59fbd34ff7f74a22b5b45a2973965218bc862553dd2d5554dd26571a82",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "io_utilities",
+      "repository": "arjenmarkus/io_utilities",
+      "revision": "f0551aad0b46aa7aac1c442a3c576ecc90028f72",
+      "archive_sha256": "144022adf3379e3bf2ce90a81f674a19819e33a5aa0284f22c0857bf10f26f37",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8"
+      },
+      "dependencies": [],
+      "catalog_patches": {
+        "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+        "edits": [
+          {
+            "path": "fpm.toml",
+            "sha256": "9f6b313149a4b7cb82bb1c9f5a871a299867f5180d7621abf303da10ec775ab7",
+            "before": "name = \"io-utilities\"\nversion = \"0.2.0\"\nlicense = \"MIT\"\nauthor = \"Arjen Markus\"\nmaintainer = \"arjen.markus895@gmail.com\"\ncopyright = \"2024 Arjen Markus\"\nlibrary = [\n    { source-dir = \"src\" },\n]\ntest = [\n    { name = \"test_cmdparse\", source-dir = \"test\", main = \"test_cmdparse.f90\" },\n    { name = \"demo_cmdparse\", source-dir = \"test\", main = \"demo_cmdparse.f90\" },\n    { name = \"test_keyvars\", source-dir = \"test\", main = \"test_keyvars.f90\" },\n    { name = \"test_progressbar\", source-dir = \"test\", main = \"test_progressbar.f90\" },\n    { name = \"test_positional\", source-dir = \"test\", main = \"test_positional.f90\" },\n]\n",
+            "after": "name = \"io-utilities\"\nversion = \"0.2.0\"\nlicense = \"MIT\"\nauthor = \"Arjen Markus\"\nmaintainer = \"arjen.markus895@gmail.com\"\ncopyright = \"2024 Arjen Markus\"\ntest = [\n    { name = \"test_cmdparse\", source-dir = \"test\", main = \"test_cmdparse.f90\" },\n    { name = \"demo_cmdparse\", source-dir = \"test\", main = \"demo_cmdparse.f90\" },\n    { name = \"test_keyvars\", source-dir = \"test\", main = \"test_keyvars.f90\" },\n    { name = \"test_progressbar\", source-dir = \"test\", main = \"test_progressbar.f90\" },\n    { name = \"test_positional\", source-dir = \"test\", main = \"test_positional.f90\" },\n]\n\n[library]\nsource-dir = \"src\"\n"
+          }
+        ]
+      },
+      "checked_at": "2026-10-28T23:33:50.254249+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/io_utilities.f90",
+      "verification": {
+        "seconds": 1.813,
+        "build_seconds": 0.443,
+        "library_reused": true,
+        "demo_sha256": "8c54b6d6efaaed5e53142797ccbcbf744239187b0474504f5fc6720d2faec825",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "uint-fortran",
+      "repository": "ShinobuAmasaki/uint-fortran",
+      "revision": "487f806c76a5d107c5a8982198bafb295065eba7",
+      "archive_sha256": "7f36d0391da9e6877965053a4de3404281c71a82a9aa2ea8a6ae253b40e8ab4d",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "shinobuamasaki/uint-fortran"
+          ]
+        }
+      },
+      "dependencies": [],
+      "checked_at": "2026-10-28T23:33:50.254249+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/uint-fortran.f90",
+      "verification": {
+        "seconds": 2.05,
+        "build_seconds": 0.411,
+        "library_reused": true,
+        "demo_sha256": "5e1eaa1f34cc871f60c32fa95db5efe870004ece24769c368ca48b491f2f577d",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "veggies",
+      "repository": "everythingfunctional/veggies",
+      "revision": "8388f5e2633afa3d08cf5c6e7db1eeb0dcab2dc8",
+      "archive_sha256": "31abfc48cf3b70d47f8253d95edcd659e0116d766083a7161ef1975ded7c7bf3",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "git_aliases": {
+          "https://gitlab.com/everythingfunctional/erloff": "https://github.com/everythingfunctional/erloff",
+          "https://gitlab.com/everythingfunctional/iso_varying_string": "https://github.com/everythingfunctional/iso_varying_string",
+          "https://gitlab.com/everythingfunctional/strff": "https://github.com/everythingfunctional/strff",
+          "https://gitlab.com/everythingfunctional/exceptional_numbers": "https://github.com/everythingfunctional/exceptional_numbers",
+          "https://gitlab.com/everythingfunctional/parff": "https://github.com/everythingfunctional/parff",
+          "https://gitlab.com/everythingfunctional/veggies": "https://github.com/everythingfunctional/veggies"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "everythingfunctional/veggies",
+            "everythingfunctional/iso_varying_string",
+            "everythingfunctional/strff"
+          ]
+        }
+      },
+      "dependencies": [
+        {
+          "repository": "everythingfunctional/iso_varying_string",
+          "revision": "48ce6b119e855284a87d5a6eb9c53da8b6785716",
+          "sha256": "b1d563dc52c7cb3df41abf3f360ef0c05285b71bec9bd61d090227f88628ba49"
+        },
+        {
+          "repository": "everythingfunctional/strff",
+          "revision": "37dccc0e615a2fc85de18be80427e0f1a678d87c",
+          "sha256": "1aac7b388bcd6f4a181c5d9aea27046f9a7c3f90273184359afa63e11cafc74d"
+        }
+      ],
+      "checked_at": "2026-10-28T23:33:50.254249+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/veggies.f90",
+      "verification": {
+        "seconds": 1.737,
+        "build_seconds": 0.394,
+        "library_reused": true,
+        "demo_sha256": "09055ca0bd2a350896922b8abc667d236c3d99a96440709fc740b08d8b001642",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "shunting-yard-fortran",
+      "repository": "14NGiestas/shunting-yard-fortran",
+      "revision": "ff62d83502bc5fdf77f2750c3538b8634a543b91",
+      "archive_sha256": "b72b28673e6fc18e9f54c7e5999db2d224b102673bd02ccc41a446a262e38d1c",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8"
+      },
+      "dependencies": [
+        {
+          "repository": "14NGiestas/fortran-tokenizer",
+          "revision": "4ed3bac4132a9b344b3c327f579ae4919a61393d",
+          "sha256": "99ae76f58775d954d01885a2d48720a16e143782238f45f5db2424c6277cc912"
+        }
+      ],
+      "catalog_patches": {
+        "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+        "edits": [
+          {
+            "path": "src/parser.f90",
+            "sha256": "031c159946ca0d9214c2b82a9021bc926c577f5fdf052d01d3e693b61980b84a",
+            "before": "    function parse(self, infix) result(ans)\n        class(parser_t) :: self\n        character(*) :: infix\n        type(token_list) :: tokens\n        type(token_list) :: postfix\n        type(token_list) :: output\n        type(token_t)    :: ans\n\n        self % tokenizer % validate_token => by_expression\n        tokens = self % tokenizer % tokenize(infix)\n\n        if (is_enclosed(tokens)) then\n            call self % convert_to_RPN(tokens, postfix)\n            call self % eval_expression(postfix, output)\n        else\n            write(error_unit,*) 'Unmatched parenthesis on: '//infix\n            stop\n        end if\n        ans = output % pop()\n    contains\n        logical function by_expression(token)\n            character(*), intent(in) :: token\n            by_expression = .true. &\n            .and. .not. is_ignored(token) &\n            .and. ( &\n                     is_unary(token) &\n                .or. is_binary(token) &\n                .or. is_operand(token) &\n                .or. is_open_paren(token) &\n                .or. is_close_paren(token) &\n            )\n        end function\n    end function\n\n",
+            "after": "    function parse(self, infix) result(ans)\n        class(parser_t) :: self\n        character(*) :: infix\n        type(token_list) :: tokens\n        type(token_list) :: postfix\n        type(token_list) :: output\n        type(token_t)    :: ans\n\n        self % tokenizer % validate_token => by_expression\n        tokens = self % tokenizer % tokenize(infix)\n\n        if (is_enclosed(tokens)) then\n            call self % convert_to_RPN(tokens, postfix)\n            call self % eval_expression(postfix, output)\n        else\n            write(error_unit,*) 'Unmatched parenthesis on: '//infix\n            stop\n        end if\n        ans = output % pop()\n    end function\n\n        logical function by_expression(token)\n            character(*), intent(in) :: token\n            by_expression = .true. &\n            .and. .not. is_ignored(token) &\n            .and. ( &\n                     is_unary(token) &\n                .or. is_binary(token) &\n                .or. is_operand(token) &\n                .or. is_open_paren(token) &\n                .or. is_close_paren(token) &\n            )\n        end function\n\n"
+          }
+        ]
+      },
+      "checked_at": "2026-10-28T23:33:50.254249+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/shunting-yard-fortran.f90",
+      "verification": {
+        "seconds": 2.303,
+        "build_seconds": 0.495,
+        "library_reused": true,
+        "demo_sha256": "b0a9d3f49c2a5165cc45184c21fd6d137fa1e1c2f461aa5f032112445b3cbb33",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "fwalk",
+      "repository": "freevryheid/fwalk",
+      "revision": "cc95f3d0c55cd90dc96c536e29c4b07ee813efaa",
+      "archive_sha256": "6e0be1bd5495c5a9b291d9fc1b8d43d9c80269958c699c26b6992ee72d38a534",
+      "links": [
+        {
+          "path": "fwalk-cc95f3d0c55cd90dc96c536e29c4b07ee813efaa/src/cwalk.c",
+          "target": "../cwalk/src/cwalk.c"
+        },
+        {
+          "path": "fwalk-cc95f3d0c55cd90dc96c536e29c4b07ee813efaa/src/cwalk.h",
+          "target": "../cwalk/include/cwalk.h"
+        }
+      ],
+      "checked_at": "2026-10-29T00:20:40.491220+00:00",
+      "status": "deferred",
+      "stage": "source preparation",
+      "diagnostic": "Package archive contains an unsafe path, link, or special file.",
+      "reason": "Archive contains symbolic links into its libcwalk Git submodule. Archive extraction rejects links and the submodule implementation is not contained in the archive. Requires an explicit, pinned C-submodule source adapter before an ordinary offline consumer can build. No sandbox build was submitted; no library changes made.",
+      "submodules": [
+        {
+          "path": "cwalk",
+          "mode": "160000",
+          "sha": "08e7520d332b700392248227bc07a68c429dc2bf"
+        }
+      ]
+    },
+    {
+      "id": "sqliteff",
+      "repository": "everythingfunctional/sqliteff",
+      "revision": "9b377c976698a7da671536e5e2539146ab734ca6",
+      "archive_sha256": "283728efa90428060030cd1cb541f847cd084a128b506114163e60a312af00df",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "git_aliases": {
+          "https://gitlab.com/everythingfunctional/iso_varying_string": "https://github.com/everythingfunctional/iso_varying_string",
+          "https://gitlab.com/everythingfunctional/strff": "https://github.com/everythingfunctional/strff",
+          "https://gitlab.com/everythingfunctional/exceptional_numbers": "https://github.com/everythingfunctional/exceptional_numbers"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "everythingfunctional/sqliteff",
+            "everythingfunctional/iso_varying_string"
+          ]
+        }
+      },
+      "dependencies": [
+        {
+          "repository": "everythingfunctional/iso_varying_string",
+          "revision": "f330d7a246d81aacfbf92f8085a4eca9d2506820",
+          "sha256": "2fa954b8642f34970253cee4bf36448b46f37dd2bea4930a5ecd2fd26b0dc83b"
+        }
+      ],
+      "checked_at": "2026-10-29T00:34:23.456367+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/sqliteff.f90",
+      "verification": {
+        "seconds": 2.97,
+        "build_seconds": 0.678,
+        "library_reused": true,
+        "demo_sha256": "7ff8d30a09bcc6e1450c62f7bc38957d7e2c0a83da8c25d48dafdd6a2900e6f7",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "erloff",
+      "repository": "everythingfunctional/erloff",
+      "revision": "73dfdbf54dafadb42e4705c45824b93917a20965",
+      "archive_sha256": "71d21f36b77fd638d2cf2f555c7bb1ea978af1755856a815aea33e0758581e75",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "git_aliases": {
+          "https://gitlab.com/everythingfunctional/iso_varying_string": "https://github.com/everythingfunctional/iso_varying_string",
+          "https://gitlab.com/everythingfunctional/strff": "https://github.com/everythingfunctional/strff",
+          "https://gitlab.com/everythingfunctional/exceptional_numbers": "https://github.com/everythingfunctional/exceptional_numbers"
+        },
+        "source_revisions": {
+          "everythingfunctional/strff": "37dccc0e615a2fc85de18be80427e0f1a678d87c",
+          "everythingfunctional/iso_varying_string": "48ce6b119e855284a87d5a6eb9c53da8b6785716"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "everythingfunctional/erloff",
+            "everythingfunctional/iso_varying_string",
+            "everythingfunctional/strff"
+          ]
+        }
+      },
+      "dependencies": [
+        {
+          "repository": "everythingfunctional/iso_varying_string",
+          "revision": "48ce6b119e855284a87d5a6eb9c53da8b6785716",
+          "sha256": "b1d563dc52c7cb3df41abf3f360ef0c05285b71bec9bd61d090227f88628ba49"
+        },
+        {
+          "repository": "everythingfunctional/strff",
+          "revision": "37dccc0e615a2fc85de18be80427e0f1a678d87c",
+          "sha256": "1aac7b388bcd6f4a181c5d9aea27046f9a7c3f90273184359afa63e11cafc74d"
+        }
+      ],
+      "checked_at": "2026-10-29T00:34:23.456367+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/erloff.f90",
+      "verification": {
+        "seconds": 1.627,
+        "build_seconds": 0.475,
+        "library_reused": true,
+        "demo_sha256": "f21e5561c2e5a0c03983e992d9e2778c2d91daa66f77ca77a1a4a38669ead1fa",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "fortran-tokenizer",
+      "repository": "14NGiestas/fortran-tokenizer",
+      "revision": "11ad73ea6102f86593bf2b372d56bf9fbedaebc7",
+      "archive_sha256": "372c3b8d641fd46a9c7de674dceffecf2e87bac1ca6ac9cb5480470528801a55",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "14ngiestas/fortran-tokenizer"
+          ]
+        }
+      },
+      "dependencies": [],
+      "checked_at": "2026-10-29T00:34:23.456367+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/fortran-tokenizer.f90",
+      "verification": {
+        "seconds": 1.772,
+        "build_seconds": 0.309,
+        "library_reused": true,
+        "demo_sha256": "8b9bc4212dcbf78bc1358246225526de629e0ebecface3ff2c29552e5e98f8c6",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "integer_set",
+      "repository": "jordan4ibanez/integer_set",
+      "revision": "85d336319d6593f9768c599835342912ce0b7bb8",
+      "archive_sha256": "a8d4e5251955d88c00675701238f792967a739d58bad851ddaa5b6b15e1e996d",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "jordan4ibanez/integer_set",
+            "jordan4ibanez/constants_f90"
+          ]
+        }
+      },
+      "dependencies": [
+        {
+          "repository": "jordan4ibanez/constants_f90",
+          "revision": "22b34d79274429ab391e92a94011befeb996704a",
+          "sha256": "17efd5f858ac6f29a4d1a0a4dbd6dbbc3fa89a8810c2300679702875e385a85a"
+        }
+      ],
+      "checked_at": "2026-10-29T00:34:23.456367+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/integer_set.f90",
+      "verification": {
+        "seconds": 2.198,
+        "build_seconds": 0.32,
+        "library_reused": true,
+        "demo_sha256": "8128be88e99967deea42424e22b84ddeac5c956e5baae3e430ca78122551480b",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "smart-pointers",
+      "repository": "sourceryinstitute/smart-pointers",
+      "revision": "35130adc4be4384a14b2369e5edd36d4665cd994",
+      "archive_sha256": "4bd34d315fc73d3fbc23af6c314d6f2904bfb584c595ef9aac926c3c826dbf45",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "sourceryinstitute/smart-pointers"
+          ]
+        }
+      },
+      "dependencies": [],
+      "checked_at": "2026-10-29T00:34:23.456367+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/smart-pointers.f90",
+      "verification": {
+        "seconds": 4.359,
+        "build_seconds": 2.736,
+        "library_reused": true,
+        "demo_sha256": "b47909cd67469bbe4c0e212b838aae77f8526191b9da038d842cfb37259b849a",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "fregex",
+      "repository": "14NGiestas/fregex",
+      "revision": "1e20f084fb33b2b9dda8ca887bafae3c847e08c6",
+      "archive_sha256": "f78582f77518f7836c5fb50cec410309fe48c4b44143aca5b87ceb857c2becbb",
+      "checked_at": "2026-10-29T00:49:59.109158+00:00",
+      "status": "deferred",
+      "reason": "The original PCRE 1 API needs -lpcre. The default Debian 13 (trixie) main amd64 package index contains neither libpcre3 nor libpcre3-dev. PCRE2 is a different API, not a drop-in link substitution. Deferred pending an upstream PCRE2 port or an explicitly maintained native-library recipe.",
+      "diagnostic": " + mkdir -p build/dependencies\n[  0%]              pyplot_module.f90\n[ 14%]              pyplot_module.f90  done.\n[ 14%]             pcre_constants.f90\n[ 28%]             pcre_constants.f90  done.\n[ 28%]            pcre_interfaces.f90\n[ 42%]            pcre_interfaces.f90  done.\n[ 42%]                     fregex.f90\n[ 57%]                     fregex.f90  done.\n[ 57%]           libplayground-main.a\n[ 71%]           libplayground-main.a  done.\n[ 71%]                       main.f90\n[ 85%]                       main.f90  done.\n[ 85%]                playground-main\n<ERROR> Compilation failed for object \" playground-main \"\n[100%]                playground-main  done.\n\n/usr/bin/ld: cannot find -lpcre: No such file or directory\ncollect2: error: ld returned 1 exit status\n<ERROR> stopping due to failed compilation\nSTOP 1\n",
+      "reproducer": "docs/fpm-candidates/fregex/main.f90"
+    },
+    {
+      "id": "time-f",
+      "repository": "0382/time-f",
+      "revision": "f0067d85d32082225d3abecbf8e35cee17fe95c4",
+      "archive_sha256": "c6f73f41e7f1563c755f27d41b317e132809dfb71b825da9ae030619042fe2c2",
+      "checked_at": "2026-10-29T00:49:59.109158+00:00",
+      "status": "deferred",
+      "reason": "Compiles, but the supplied strftime maximum length is ignored. The bounded-buffer probe expects zero for a 19-character date with maxsize=5, and fails. The C binding omits VALUE on size_t maxsize. The tm layout also needs platform ABI review before exposing mktime and timezone-dependent formatting; the source declares only nine integers. Deferred rather than publishing a limited example that hides these issues. A direct sandbox ABI probe confirms sizeof(struct tm)=56 bytes versus c_sizeof(time_f tm)=36 bytes.",
+      "diagnostic": "Cached consumer verification failed: {\"ok\": false, \"compiler\": \"GNU Fortran (GCC) 16.2.0\", \"compiler_id\": \"gfortran\", \"fpm\": \"0.12.0\", \"stages\": [{\"name\": \"Build\", \"command\": [\"fpm\", \"build\", \"--profile\", \"debug\", \"--compiler\", \"gfortran\", \"--c-compiler\", \"gcc\", \"--cxx-compiler\", \"g++\", \"--no-prune\"], \"seconds\": 0.307, \"ok\": true, \"exit_code\": 0, \"error\": \"\", \"stdout\": \"[  0%]                       main.f90\\n[ 50%]                       main.f90  done.\\n[ 50%]                playground-main\\n[100%]                playground-main  done.\\n[100%] Project compiled successfully.\\n\", \"stderr\": \"\"}, {\"name\": \"Run\", \"command\": [\"fpm\", \"run\", \"--profile\", \"debug\", \"--compiler\", \"gfortran\", \"--c-compiler\", \"gcc\", \"--cxx-compiler\", \"g++\", \"--no-prune\"], \"seconds\": 0.028, \"ok\": false, \"exit_code\": 1, \"error\": \"\", \"stdout\": \"\", \"stderr\": \"Project is up to date\\nERROR STOP strftime ignored the supplied buffer limit\\n\\nError termination. Backtrace:\\n#0  0x2ad31c886f83 in ???\\n#1  0x2ad31c887c39 in ???\\n#2  0x2ad31c889045 in ???\\n#3  0x401375 in MAIN__\\n\\tat app/main.f90:14\\n#4  0x4015e8 in main\\n\\tat app/main.f90:2\\n<ERROR> Execution for object \\\" playground-main \\\" returned exit code  1\\n<ERROR> *cmd_run*:stopping due to failed executions\\nSTOP 1\\n\"}], \"cache\": {\"package\": \"time-f\", \"compiler\": \"GNU Fortran 16.2.0\", \"key\": \"969634b5556f3a2e2b999580\", \"library_reused\": true, \"changed_artifacts\": []}, \"packages\": [{\"repository\": \"0382/time-f\", \"revision\": \"f0067d85d32082225d3abecbf8e35cee17fe95c4\", \"sha256\": \"c6f73f41e7f1563c755f27d41b317e132809dfb71b825da9ae030619042fe2c2\"}], \"build_ok\": true, \"target_groups\": {\"app\": [\"playground-main\"], \"example\": [], \"test\": []}, \"targets\": [\"playground-main\"], \"plot_notes\": []}",
+      "reproducer": "docs/fpm-candidates/time-f/main.f90",
+      "abi_check": {
+        "path": "docs/fpm-candidates/time-f/abi-check.json",
+        "c_struct_tm_bytes": 56,
+        "fortran_tm_bytes": 36
+      }
+    },
+    {
+      "id": "rpn-calculator-fortran",
+      "repository": "scivision/rpn-calculator-fortran",
+      "revision": "7708e4949f17511d81f4e7dd0271a500f0bc3631",
+      "archive_sha256": "7c34218defbc2d92ef87a9be222acbc9085737121b4894c1235b723cd5644d9c",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8"
+      },
+      "dependencies": [],
+      "catalog_patches": {
+        "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+        "edits": [
+          {
+            "path": "fpm.toml",
+            "sha256": "3b8e601971499140a324bce7fcb5e1ffffe201229c679a66fb237eef3e693ae7",
+            "before": "name = \"rpncalc\"\ndescription = \"Interactive RPN calculator\"\nversion = \"1.4.1\"\n\n[extra.fortitude.check]\nignore = [\n    \"C003\",\n    \"S231\",\n    \"S241\",\n    \"S061\",\n    \"C011\",\n]\n",
+            "after": "name = \"rpncalc\"\ndescription = \"Interactive RPN calculator\"\nversion = \"1.4.1\"\n\n[extra.fortitude.check]\nignore = [\n    \"C003\",\n    \"S231\",\n    \"S241\",\n    \"S061\",\n    \"C011\",\n]\n\n[fortran]\nsource-form = \"default\"\n"
+          }
+        ]
+      },
+      "checked_at": "2026-10-29T00:57:33.593173+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/rpn-calculator-fortran.f90",
+      "verification": {
+        "seconds": 2.065,
+        "build_seconds": 0.62,
+        "library_reused": true,
+        "demo_sha256": "af4f82c0bea3a05b9032fbfbd1d5c5cb051add7b2d5ca4be9fb39e742ce3cce5",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "nc4fortran",
+      "repository": "geospace-code/nc4fortran",
+      "revision": "942ac4f83380acdef463002f555aebf30f3c46ac",
+      "archive_sha256": "f27018e3cffbcab181d422d6cffc2062c95acb03a35314b01f7647cdeca1ec9b",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "apt_packages": [
+          "libnetcdff-dev=4.6.0+really4.5.4+ds-3+b4",
+          "libhdf5-dev=1.14.5+repack-3"
+        ],
+        "environment": {
+          "FPM_FFLAGS": "-I/usr/include -I/usr/include/hdf5/serial",
+          "FPM_LDFLAGS": "-L/usr/lib/x86_64-linux-gnu/hdf5/serial"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "geospace-code/nc4fortran"
+          ]
+        }
+      },
+      "dependencies": [],
+      "checked_at": "2026-10-29T00:57:33.593173+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/nc4fortran.f90",
+      "verification": {
+        "seconds": 2.627,
+        "build_seconds": 0.662,
+        "library_reused": true,
+        "demo_sha256": "2f5698b3827bf052722fa89097c6d1d94116d4304b888e6bda8d15939bdfa814",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "fundamental_constants",
+      "repository": "vmagnin/fundamental_constants",
+      "revision": "3e18620ab7813fd9f02e8dcf05c48f0ca13f2ec0",
+      "archive_sha256": "3c49561725c37c75b9e94a4c0fadbc9a999be0aaea70551d3e4a0f5e2877e54e",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "vmagnin/fundamental_constants"
+          ]
+        }
+      },
+      "dependencies": [],
+      "checked_at": "2026-10-29T00:57:33.593173+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/fundamental_constants.f90",
+      "verification": {
+        "seconds": 2.326,
+        "build_seconds": 0.56,
+        "library_reused": true,
+        "demo_sha256": "f4976cc7b2e3d1fa4ebd8db656192a5a8fa86990f1b65ab5fdbc5beaef83d1b9",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "array_range",
+      "repository": "degawa/array_range",
+      "revision": "cd21ccb982e23de9c2df44c12edab44dd84562dc",
+      "archive_sha256": "269b583b0e6cb353191d88b50859cd6cf80d4807497e9f1178f8207b807df214",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "degawa/array_range"
+          ]
+        }
+      },
+      "dependencies": [],
+      "checked_at": "2026-10-29T00:57:33.593173+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/array_range.f90",
+      "verification": {
+        "seconds": 1.086,
+        "build_seconds": 0.178,
+        "library_reused": true,
+        "demo_sha256": "909543efcb535b0594447d9fa9770cf062f9ad24394b6752cd5a834f9b709381",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "flibcsv",
+      "repository": "freevryheid/flibcsv",
+      "revision": "ce19ebe6b08c58f1014527d27f27bdd97b38c835",
+      "archive_sha256": "6736327adc38397d6fd165d3b07f952284d18234b6a3c371225360b306949197",
+      "checked_at": "2026-10-29T01:08:45.289383+00:00",
+      "status": "deferred",
+      "reason": "The bounded CSV parser example compiles and passes quoted fields, embedded commas, an empty field and doubled quotes. Deferred before publication: the manifest license is the placeholder \"license\", no repository license file was found, and the Fortran wrapper has no explicit license notice; only bundled C sources identify LGPL-2.1-or-later. Source review also finds incorrect unused C bindings: entry_buf is a character rather than a C pointer, csv_strerror returns a character rather than a C pointer, and csv_write/csv_write2 omit VALUE on pointer arguments. Author clarification and a binding review are needed before presenting this as a ready-to-use library.",
+      "example_passed": true,
+      "reproducer": "docs/fpm-candidates/flibcsv/main.f90"
+    },
+    {
+      "id": "kronrod",
+      "repository": "jacobwilliams/kronrod",
+      "revision": "312278846b6e403fdea410a823d88ef4fb92a3cc",
+      "archive_sha256": "f53b75081ca184120e6594ee2649abb402a5e0c45ca40d391b0b7292eff780ea",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "source_revisions": {
+          "jacobwilliams/mpfun2020-var1": "f2191ad80d811cd5e309d83ffad9b2607d27aabc"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "jacobwilliams/mpfun2020-var1"
+          ]
+        }
+      },
+      "dependencies": [
+        {
+          "repository": "jacobwilliams/mpfun2020-var1",
+          "revision": "f2191ad80d811cd5e309d83ffad9b2607d27aabc",
+          "sha256": "1373c64f1f5c578e5270ad840b2b90d0468b88837fc3c6a5e83c4bc4f2b7a5a7"
+        }
+      ],
+      "catalog_patches": {
+        "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+        "edits": [
+          {
+            "path": "fpm.toml",
+            "sha256": "e4515e7c06ad7fb05d01bf91a4029c6de023cf7903f748f5b775c1f919853fe8",
+            "before": "name = \"kronrod\"\nauthor = \"Jacob Williams\"\ncopyright = \"Copyright (c) 2022, Jacob Williams\"\nlicense = \"LGPL\"\ndescription = \"Program for genering Gauss-Kronrod Coefficients\"\nhomepage = \"https://github.com/jacobwilliams/kronrod\"\nkeywords = [\n    \"gauss-kronrod\",\n]\n\n[dependencies.mpfun2020-var1]\npath = \"../../1/mpfun2020-var1-f2191ad80d811cd5e309d83ffad9b2607d27aabc\"\n\n[build]\nauto-executables = true\nauto-examples = true\nauto-tests = true\n",
+            "after": "name = \"kronrod\"\nauthor = \"Jacob Williams\"\ncopyright = \"Copyright (c) 2022, Jacob Williams\"\nlicense = \"LGPL\"\ndescription = \"Program for genering Gauss-Kronrod Coefficients\"\nhomepage = \"https://github.com/jacobwilliams/kronrod\"\nkeywords = [\n    \"gauss-kronrod\",\n]\n\n[dependencies.mpfun2020-var1]\npath = \"../../1/mpfun2020-var1-f2191ad80d811cd5e309d83ffad9b2607d27aabc\"\n\n[build]\nauto-executables = false\nauto-examples = false\nauto-tests = false\n\n[library]\nsource-dir = \"app\"\n"
+          },
+          {
+            "path": "app/main.f90",
+            "sha256": "979e08f29ea88ca0b2d8399e9975279698790d938a0caedcf35fd3214864cce7",
+            "before": "    program main\n\n    use mpmodule\n    use iso_fortran_env, only: wp => real64\n\n    implicit none\n\n",
+            "after": "    module playground_kronrod\n\n    use mpmodule\n    use iso_fortran_env, only: wp => real64\n\n    implicit none\n    private\n    public :: init, kronrod, nwds2\n\n"
+          },
+          {
+            "path": "app/main.f90",
+            "sha256": "fd0910400dc90e64873d18f1d33d0913e9949df5cd86a01d21bfa970047c4f51",
+            "before": "    if (ndp2 > mpipl) then\n        write (6, '(\"Increase default precision in module MPFUNF.\")')\n        stop\n      endif\n\n    call init()\n\n    do icase = 1, size(cases)\n\n        write(*,*) ''\n        write(*,*) '----------------------'\n\n        n = cases(icase)\n\n        if (allocated(w1)) deallocate(w1)\n        if (allocated(w2)) deallocate(w2)\n        if (allocated(x)) deallocate(x)\n\n        allocate(w1(n+1))\n        allocate(w2(n+1))\n        allocate(x(n+1))\n\n        call kronrod ( n, eps, x, w1, w2 )\n\n        write(*,*) ''\n        write(*,*) 'n = ', n\n        write(*,*) ''\n        write(*,*) 'abscissas:'\n        do i = 1, n+1\n            call mpwrite (6, 60, 40, x(i))\n        end do\n        write(*,*) ''\n        write(*,*) 'Gauss-Kronrod weights:'\n        do i = 1, n+1\n            call mpwrite (6, 60, 40, W1(i))\n        end do\n        write(*,*) ''\n        write(*,*) 'Gauss weights:'\n        do i = 1, n+1\n            call mpwrite (6, 60, 40, W2(i))\n        end do\n\n    end do\n\n",
+            "after": ""
+          },
+          {
+            "path": "app/main.f90",
+            "sha256": "31f740775a4d3f08966b034e84b5a0412ada7a03ee71e10e2ac7aaee62a1318c",
+            "before": "    end program main",
+            "after": "    end module playground_kronrod"
+          }
+        ]
+      },
+      "checked_at": "2026-10-29T01:33:12.542944+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/kronrod.f90",
+      "verification": {
+        "seconds": 2.593,
+        "build_seconds": 0.37,
+        "library_reused": true,
+        "demo_sha256": "bafd03bd2eef8a6ac7e8d60909ba717788ab9372c96624678a9666b8199611f9",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "jeyemhex-regex",
+      "repository": "jeyemhex/fortran-regex",
+      "revision": "2ca0043837a86a4f77df494ddad2240c1b70e576",
+      "archive_sha256": "e55cf5358c50d1c99c06841c6911d5cf222099b7c3b63576f255292b251ce1d5",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "jeyemhex/fortran-regex"
+          ]
+        }
+      },
+      "dependencies": [],
+      "checked_at": "2026-10-29T01:33:12.542944+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/jeyemhex-regex.f90",
+      "verification": {
+        "seconds": 5.083,
+        "build_seconds": 3.391,
+        "library_reused": true,
+        "demo_sha256": "54189e2c4ce91df3b0ddc8af3ba7ff956f4612a06a68f251525edc8f43092d43",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "fed",
+      "repository": "degawa/fed",
+      "revision": "d735aa2b3bd6b20840bcc16ff569e8cfc0492267",
+      "archive_sha256": "09cd5298480abf152954bc88e8d2792f2d5361a40d8ad77ebd971f3db317cd70",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "registry": {
+          "stdlib": {
+            "git": "https://github.com/fortran-lang/stdlib",
+            "rev": "58eb9133966c2797e0593281169ef57c43eccc1d"
+          }
+        },
+        "manifest_versions": {
+          "fortran-lang/stdlib": "0.8.1"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "degawa/fed",
+            "fortran-lang/stdlib",
+            "degawa/enclose",
+            "degawa/enumul"
+          ]
+        }
+      },
+      "dependencies": [
+        {
+          "repository": "fortran-lang/stdlib",
+          "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+        },
+        {
+          "repository": "degawa/enclose",
+          "revision": "d3ea2ea989296bf855f4cb07ea8db601020805f2",
+          "sha256": "ce7e3d3f4e5a4f492cf1c0c5d71086b4b77dc56a003977c4348e077f85223088"
+        },
+        {
+          "repository": "degawa/enumul",
+          "revision": "064bba70797b84100b25dc4466b28f1f38147d0e",
+          "sha256": "0bbb1c13ec5780cbf15bd9380de9e288101edfac3572592f13b8a5d1b81cd364"
+        }
+      ],
+      "checked_at": "2026-10-29T01:33:12.542944+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/fed.f90",
+      "verification": {
+        "seconds": 2.154,
+        "build_seconds": 0.309,
+        "library_reused": true,
+        "demo_sha256": "9ac35bada9d3292c1c41bcb1e8cfb8c0b78fd34e7378c16c7c01c7c72c58bddf",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "any",
+      "repository": "degawa/any",
+      "revision": "b9eb5e3fdc8f162ae8f2c5d8d026537ed2397830",
+      "archive_sha256": "2a001b2e843796604ad21652b4899cd1965fdd295c2ee55c8c20a81f92f768c5",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "degawa/any",
+            "degawa/fassert"
+          ]
+        }
+      },
+      "dependencies": [
+        {
+          "repository": "degawa/fassert",
+          "revision": "678fa217df79af318cc537d3c69eab3b7cf68cb7",
+          "sha256": "3e456e3c3b57ca276e96deb1ada542154442c7787d5875b366021e75986c265f"
+        }
+      ],
+      "checked_at": "2026-10-29T01:33:12.542944+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/any.f90",
+      "verification": {
+        "seconds": 3.079,
+        "build_seconds": 1.333,
+        "library_reused": true,
+        "demo_sha256": "c791c7de896c3e6f53988caf9575e7d6f2a0a2a14cf124cf8cfc6caf06b1ca86",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "for_fifo_queue",
+      "repository": "jordan4ibanez/for_fifo_queue",
+      "revision": "b04b536589af8cf041b8e5e53484e57147fc746f",
+      "archive_sha256": "15c6f3fbc9c8eb44ced15ae5694261759f4b4cf24e4b407fe75886bcf3494dc8",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "jordan4ibanez/for_fifo_queue"
+          ]
+        }
+      },
+      "dependencies": [],
+      "checked_at": "2026-10-29T01:33:12.542944+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/for_fifo_queue.f90",
+      "verification": {
+        "seconds": 1.779,
+        "build_seconds": 0.172,
+        "library_reused": true,
+        "demo_sha256": "d89062451085174aeb37a5aabb34a43c4b1a3f55d67999e8242d0c7cca1185e4",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "string-utf-8",
+      "repository": "guntherwillems/fortran-string-utf-8",
+      "revision": "69751115936d5a89439555ddeb1d57537a562e64",
+      "archive_sha256": "6215ef45da9ce5c44948a83ffc7ac7d589e71622f2524e5d09ac9c3ab567a18c",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "guntherwillems/fortran-string-utf-8"
+          ]
+        }
+      },
+      "dependencies": [],
+      "checked_at": "2026-10-29T01:58:37.812754+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/string-utf-8.f90",
+      "verification": {
+        "seconds": 2.496,
+        "build_seconds": 0.349,
+        "library_reused": true,
+        "demo_sha256": "7ba7476905d9a55c14ecdb28ed1fad2e0e0dafcffcb14135f7aef469903deb87",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "fortime",
+      "repository": "gha3mi/fortime",
+      "revision": "5a31be5a47bf2c0bf49c4d0fb7b67415ccc0a1e7",
+      "archive_sha256": "cef276f7fac8b7a9d2b9ba113e553a2167f4c4bb79af16bdfea680087a529d19",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "manifest_versions": {
+          "gha3mi/fortime": "0.0.0"
+        },
+        "source_revisions": {
+          "szaghi/face": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "gha3mi/fortime",
+            "szaghi/face"
+          ]
+        }
+      },
+      "dependencies": [
+        {
+          "repository": "szaghi/FACE",
+          "revision": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8",
+          "sha256": "d4cc3c3a2c70e7369607624ae3361a6f7b2ba3f1e9a63ffd94ecb5cd4b019469"
+        }
+      ],
+      "checked_at": "2026-10-29T01:58:37.812754+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/fortime.f90",
+      "verification": {
+        "seconds": 3.127,
+        "build_seconds": 0.675,
+        "library_reused": true,
+        "demo_sha256": "6d322e08ec284753be5521d2f431288d0f5efd254348341eadc69acc0caa770b",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "fassert",
+      "repository": "degawa/fassert",
+      "revision": "678fa217df79af318cc537d3c69eab3b7cf68cb7",
+      "archive_sha256": "3e456e3c3b57ca276e96deb1ada542154442c7787d5875b366021e75986c265f",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "degawa/fassert"
+          ]
+        }
+      },
+      "dependencies": [],
+      "checked_at": "2026-10-29T01:58:37.812754+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/fassert.f90",
+      "verification": {
+        "seconds": 2.092,
+        "build_seconds": 0.473,
+        "library_reused": true,
+        "demo_sha256": "89c243974f26f51d2d23f7d402317f1197ac544d7490e5993bb90742fea53633",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "errstat",
+      "repository": "degawa/errstat",
+      "revision": "336ee374c82a4525d87444c767a1f23f059d5723",
+      "archive_sha256": "38be949552f3bff87ebb38b922718a19741b854f172b6c8951913d8621294df2",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "degawa/errstat"
+          ]
+        }
+      },
+      "dependencies": [],
+      "checked_at": "2026-10-29T01:58:37.812754+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/errstat.f90",
+      "verification": {
+        "seconds": 2.322,
+        "build_seconds": 0.546,
+        "library_reused": true,
+        "demo_sha256": "96ae8eb80913eeefd5d58cd5c3991a6ad754bc83e0b06e1cef3ca74c39187c31",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "slinked-list",
+      "repository": "zoziha/slinked-list",
+      "revision": "aa04fcb392466e52277200d7380913fe071fe620",
+      "archive_sha256": "7c0817bb083eb2686e23d13a238e3c2058835cf8315043a25f8de0f64e0ad227",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8"
+      },
+      "dependencies": [],
+      "catalog_patches": {
+        "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+        "edits": [
+          {
+            "path": "src/sll_node.f90",
+            "sha256": "a1c19a030622822592ee5c57fca5b0915bdff22afe72ab9ad6e1f49b7fef87f1",
+            "before": "type(node) pure function node_init(data)",
+            "after": "type(node) function node_init(data)"
+          }
+        ]
+      },
+      "checked_at": "2026-10-29T01:58:37.812754+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/slinked-list.f90",
+      "verification": {
+        "seconds": 1.491,
+        "build_seconds": 0.343,
+        "library_reused": true,
+        "demo_sha256": "c15e46b73b6a9b1bb85f8488fa2fac82f0bf0690d8be708a95544f7832d678b3",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "enclose",
+      "repository": "degawa/enclose",
+      "revision": "d3ea2ea989296bf855f4cb07ea8db601020805f2",
+      "archive_sha256": "ce7e3d3f4e5a4f492cf1c0c5d71086b4b77dc56a003977c4348e077f85223088",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "degawa/enclose"
+          ]
+        }
+      },
+      "dependencies": [],
+      "checked_at": "2026-10-29T01:58:37.812754+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/enclose.f90",
+      "verification": {
+        "seconds": 1.909,
+        "build_seconds": 0.31,
+        "library_reused": true,
+        "demo_sha256": "9a0190870e01edb2e86c87b5bcd77339a4abc470c757ae9fa755c622ce1c8e01",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
     }
   ]
 }

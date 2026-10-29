@@ -1,0 +1,9 @@
+PASSED: integer addition
+PASSED: integer array
+PASSED: square root round trip
+Scalar, array and approximate comparisons passed.
+Captured expected failure:
+FAILED: intentional mismatch
+    Expected: 6
+    Actual  : 5
+PASS fassert CHANGED MAIN

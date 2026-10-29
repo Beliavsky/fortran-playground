@@ -1,0 +1,11 @@
+{
+  "id": "flibcsv",
+  "repository": "freevryheid/flibcsv",
+  "revision": "ce19ebe6b08c58f1014527d27f27bdd97b38c835",
+  "archive_sha256": "6736327adc38397d6fd165d3b07f952284d18234b6a3c371225360b306949197",
+  "checked_at": "2026-10-29T01:08:45.289383+00:00",
+  "status": "deferred",
+  "reason": "The bounded CSV parser example compiles and passes quoted fields, embedded commas, an empty field and doubled quotes. Deferred before publication: the manifest license is the placeholder \"license\", no repository license file was found, and the Fortran wrapper has no explicit license notice; only bundled C sources identify LGPL-2.1-or-later. Source review also finds incorrect unused C bindings: entry_buf is a character rather than a C pointer, csv_strerror returns a character rather than a C pointer, and csv_write/csv_write2 omit VALUE on pointer arguments. Author clarification and a binding review are needed before presenting this as a ready-to-use library.",
+  "example_passed": true,
+  "reproducer": "docs/fpm-candidates/flibcsv/main.f90"
+}

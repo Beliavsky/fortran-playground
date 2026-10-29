@@ -1,0 +1,33 @@
+{
+  "id": "jeyemhex-regex",
+  "repository": "jeyemhex/fortran-regex",
+  "revision": "2ca0043837a86a4f77df494ddad2240c1b70e576",
+  "archive_sha256": "e55cf5358c50d1c99c06841c6911d5cf222099b7c3b63576f255292b251ce1d5",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "shared_dependencies": {
+      "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+      "repositories": [
+        "jeyemhex/fortran-regex"
+      ]
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T01:33:12.542944+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/jeyemhex-regex.f90",
+  "verification": {
+    "seconds": 5.083,
+    "build_seconds": 3.391,
+    "library_reused": true,
+    "demo_sha256": "54189e2c4ce91df3b0ddc8af3ba7ff956f4612a06a68f251525edc8f43092d43",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "LGPL-2.1",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Pure Fortran regular expressions by Edward Higgins, distinct from perazz/fortran-regex already selected under fortran-regex. The main checks matching and nonmatching anchored decimal measurements, matched substring, comma/space splitting and replacement. No source edits or native regex library. Pattern whitespace is ignored unless escaped; the author documents missing capture references and other features, so PCRE compatibility and all patterns are not claimed."
+}

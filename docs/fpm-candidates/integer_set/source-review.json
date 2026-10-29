@@ -1,0 +1,40 @@
+{
+  "id": "integer_set",
+  "repository": "jordan4ibanez/integer_set",
+  "revision": "85d336319d6593f9768c599835342912ce0b7bb8",
+  "archive_sha256": "a8d4e5251955d88c00675701238f792967a739d58bad851ddaa5b6b15e1e996d",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "shared_dependencies": {
+      "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+      "repositories": [
+        "jordan4ibanez/integer_set",
+        "jordan4ibanez/constants_f90"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "repository": "jordan4ibanez/constants_f90",
+      "revision": "22b34d79274429ab391e92a94011befeb996704a",
+      "sha256": "17efd5f858ac6f29a4d1a0a4dbd6dbbc3fa89a8810c2300679702875e385a85a"
+    }
+  ],
+  "checked_at": "2026-10-29T00:34:23.456367+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/integer_set.f90",
+  "verification": {
+    "seconds": 2.198,
+    "build_seconds": 0.32,
+    "library_reused": true,
+    "demo_sha256": "8128be88e99967deea42424e22b84ddeac5c956e5baae3e430ca78122551480b",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Simple fixed-width integer sets. The checked main verifies duplicate rejection, removal and sorted contents for 32-bit values, and duplicate rejection for a 64-bit value above the 32-bit range. Membership is checked from public data, not a separate membership API. No source edits. Performance, every boundary and all operations are not validated."
+}

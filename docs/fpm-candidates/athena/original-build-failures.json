@@ -1,0 +1,7 @@
+{
+  "revision": "4b81aeac07113628c2c9a476648d5ac2a91b7c91",
+  "diagnostics": [
+    " + mkdir -p build/dependencies\n<ERROR> *cmd_build* Model error: Key features is not allowed in package file\nSTOP 1\n",
+    " + mkdir -p build/dependencies\n<ERROR> *cmd_build* Target error: Unable to find source for module dependency: \"wf\" used by \"./././/../sources/bundle/packages/0/athena-4b81aeac07113628c2c9a476648d5ac2a91b7c91/src/athena/athena_wandb.F90\"\nSTOP 1\n"
+  ]
+}

@@ -439,18 +439,6 @@
       "dependents_in_sample": 2
     },
     {
-      "id": "fortran-regex",
-      "repository": "perazz/fortran-regex",
-      "revision": "96ab33fe003862a28cec91ddd170ac0e86c26c87",
-      "archive_sha256": "a11de40cd2ac971b4e775a6bac2d537f3efa263562688525df18ba2722b944eb",
-      "license": "MIT",
-      "stars": 30,
-      "category": "Text parsing",
-      "description": "Search text with a lightweight regular expression engine.",
-      "dependencies": [],
-      "dependents_in_sample": 1
-    },
-    {
       "id": "fortran-shlex",
       "repository": "perazz/fortran-shlex",
       "revision": "e20b6f86c82e33fae78b54b074bab5369efde6a3",
@@ -3520,6 +3508,1470 @@
           "sha256": "d2fb01dfd123ccbda75b4bcfc547da517f3ef9ea8e71a686ef6572253b9b58ba"
         }
       ]
+    },
+    {
+      "id": "m_la",
+      "repository": "urbanjost/M_LA",
+      "revision": "db59eeab0deab7e84eadf2542ad49c1c719dfb94",
+      "archive_sha256": "6c9d8e1e456852e076e14207f31751ecdd4a60cb0b80bb975f7818b15802932c",
+      "stars": 3,
+      "license": "Unlicense",
+      "category": "Linear algebra",
+      "description": "Magic squares, reduced row-echelon forms and other small matrix utilities.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "urbanjost/m_la"
+          ]
+        }
+      },
+      "dependencies": []
+    },
+    {
+      "id": "fglm",
+      "repository": "jordan4ibanez/fglm",
+      "revision": "e1b6a5404b3e7a266da33173a07166970c16dd86",
+      "archive_sha256": "0d4d3f14d4e408a24d51beac17fed72b7eccec715486b691d70d4ac447c1fa66",
+      "stars": 0,
+      "license": "MIT",
+      "category": "Linear algebra",
+      "description": "Typed vectors and 4-by-4 matrices for geometric transformations.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "jordan4ibanez/fglm",
+            "jordan4ibanez/constants_f90"
+          ]
+        }
+      },
+      "dependencies": [
+        {
+          "repository": "jordan4ibanez/constants_f90",
+          "revision": "22b34d79274429ab391e92a94011befeb996704a",
+          "sha256": "17efd5f858ac6f29a4d1a0a4dbd6dbbc3fa89a8810c2300679702875e385a85a"
+        }
+      ]
+    },
+    {
+      "id": "fortrandf",
+      "repository": "jaiken17/fortranDF",
+      "revision": "58300f8ae39d463e729960e960939fb53e2c7de4",
+      "archive_sha256": "4a615ed4519c1f73bfd7d0cef33ffe374007a2bc0738824f42cc1a1af64a1f19",
+      "stars": 20,
+      "license": "BSD-3-Clause",
+      "category": "Data formats",
+      "description": "In-memory data frames with named columns of different intrinsic types.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "jaiken17/fortrandf"
+          ]
+        }
+      },
+      "dependencies": []
+    },
+    {
+      "id": "strith",
+      "repository": "degawa/strith",
+      "revision": "da2b1f489a178cb443f636e3f9c89aed6c8702b1",
+      "archive_sha256": "f302587eafa09b1ce11d48464f25f3e114cc2e5a0c81a1b586a3d38287d6f137",
+      "stars": 1,
+      "license": "MIT",
+      "category": "High precision",
+      "description": "Decimal-string arithmetic and signed or unsigned formatting of long integers.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "degawa/strith"
+          ]
+        }
+      },
+      "dependencies": []
+    },
+    {
+      "id": "list",
+      "repository": "grofz/list",
+      "revision": "77a0c99686406eaa8d4423e778311d63c6940b43",
+      "archive_sha256": "694c58c6530491a2c95264d31269e472516b20f11dd791eba8ef8a126357aeab",
+      "stars": 2,
+      "license": "MIT",
+      "category": "Containers and graphs",
+      "description": "Linked lists and tree containers with insertion, searching and sorting operations.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "grofz/list"
+          ]
+        }
+      },
+      "dependencies": []
+    },
+    {
+      "id": "friction",
+      "repository": "jchristopherson/friction",
+      "revision": "8e75dcac26f47417a439adfcbaa24834105d89fe",
+      "archive_sha256": "71dddc287abf50fc6c174e610eda1711fa5befc0b970fa931cc854381b1603cb",
+      "stars": 9,
+      "license": "MIT",
+      "category": "Dynamics and control",
+      "description": "Coulomb, Stribeck and dynamic friction models for contacting bodies.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6",
+          "libarpack2-dev=3.9.1-6"
+        ],
+        "metapackages": [
+          "openmp",
+          "blas",
+          "lapack"
+        ],
+        "environment": {
+          "FPM_FFLAGS": "-fopenmp"
+        },
+        "source_revisions": {
+          "jchristopherson/linalg": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+          "jchristopherson/collections": "ce37c94e72b3ae5db2e2208489999260a7875f81",
+          "jchristopherson/fstring": "1bb1043a1ed34b8bd57f2687166463dd573bce3d",
+          "jchristopherson/diffeq": "989b320179c23aaff4bfe72994c90e9034f50c74",
+          "jchristopherson/fstats": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "jchristopherson/friction",
+            "jchristopherson/diffeq",
+            "jchristopherson/linalg",
+            "jchristopherson/fstats",
+            "jchristopherson/collections",
+            "jchristopherson/fstring"
+          ]
+        }
+      },
+      "dependencies": [
+        {
+          "repository": "jchristopherson/diffeq",
+          "revision": "989b320179c23aaff4bfe72994c90e9034f50c74",
+          "sha256": "09f6e92aea1dc8c9eb9233d4052b012e3b53a739e1ce078453d0421ddb1d4e87"
+        },
+        {
+          "repository": "jchristopherson/linalg",
+          "revision": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+          "sha256": "6210b8b167b50694941f48b20ad5d94bdacab026f1eb4720e2d55e8ddde0b59a"
+        },
+        {
+          "repository": "jchristopherson/fstats",
+          "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+          "sha256": "cf6b7367fc2a0d74f46000dc80a4cbedd07fd554e29117144b695b3a9ffa6fef"
+        },
+        {
+          "repository": "jchristopherson/collections",
+          "revision": "ce37c94e72b3ae5db2e2208489999260a7875f81",
+          "sha256": "5d53caf3c0b35e9e2a8bed49f8e96dca1b282434859c8c6f53fae3123528f265"
+        },
+        {
+          "repository": "jchristopherson/fstring",
+          "revision": "1bb1043a1ed34b8bd57f2687166463dd573bce3d",
+          "sha256": "0272f644a9217485fa2a3a18e41010c88f81ccc7398fc855c37518be2ac8eb3f"
+        }
+      ]
+    },
+    {
+      "id": "feq-parse",
+      "repository": "FluidNumerics/feq-parse",
+      "revision": "2e80c5940b128a52c5070a3f56909674fb85a379",
+      "archive_sha256": "c230b9725cff8ca429747b916d6e1498a46f5321fe4d523683ada91e5d66abb8",
+      "stars": 50,
+      "license": "BSD-3-Clause",
+      "category": "Expression parsing",
+      "description": "Evaluate mathematical expressions supplied as strings at scalar or array inputs.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "fluidnumerics/feq-parse"
+          ]
+        }
+      },
+      "dependencies": []
+    },
+    {
+      "id": "fordot",
+      "repository": "gha3mi/fordot",
+      "revision": "3966625781a9c1dffe037e3032fa4a0b6f958760",
+      "archive_sha256": "6f3017330d5ba4accff12c09e10651f45171ac2a636957d69b123522d3dc4009",
+      "stars": 0,
+      "license": "BSD-3-Clause",
+      "category": "Linear algebra",
+      "description": "Selectable dot-product implementations, including BLAS and blocked calculations.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6"
+        ],
+        "environment": {
+          "FPM_FFLAGS": "-cpp -fopenmp",
+          "FPM_LDFLAGS": "-llapack -lblas"
+        },
+        "source_revisions": {
+          "gha3mi/kinds": "811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f",
+          "szaghi/face": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8"
+        },
+        "manifest_versions": {
+          "gha3mi/fordot": "0.2.0",
+          "gha3mi/kinds": "0.0.0",
+          "gha3mi/forunittest": "0.0.0"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "gha3mi/fordot",
+            "gha3mi/kinds",
+            "gha3mi/forunittest",
+            "szaghi/face"
+          ]
+        }
+      },
+      "dependencies": [
+        {
+          "repository": "gha3mi/kinds",
+          "revision": "811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f",
+          "sha256": "495d1133b1630dea4f38d69e5e3189e3279e4ce5836da1a7aec8a822bbe16518"
+        },
+        {
+          "repository": "gha3mi/forunittest",
+          "revision": "997e9974e52b40f6538ed84cf24259c331a782b3",
+          "sha256": "a325e6e93f839a9b528a99cdfa4ca359e035f5a05414cb4c36a48f30bdaf53f2"
+        },
+        {
+          "repository": "szaghi/FACE",
+          "revision": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8",
+          "sha256": "d4cc3c3a2c70e7369607624ae3361a6f7b2ba3f1e9a63ffd94ecb5cd4b019469"
+        }
+      ]
+    },
+    {
+      "id": "formatmul",
+      "repository": "gha3mi/formatmul",
+      "revision": "4b5747d49c27f0df92288e7a61d0e479e34ac78e",
+      "archive_sha256": "790dbd5cff7a0957bd37672d2524f83584fde9642bcc47295411e00b06d63cbc",
+      "stars": 7,
+      "license": "BSD-3-Clause",
+      "category": "Linear algebra",
+      "description": "Matrix products with transpose options and selectable multiplication methods.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6"
+        ],
+        "environment": {
+          "FPM_FFLAGS": "-cpp -fopenmp",
+          "FPM_LDFLAGS": "-llapack -lblas"
+        },
+        "source_revisions": {
+          "gha3mi/kinds": "811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f",
+          "gha3mi/fortime": "de733e2c775457d4979403fe77ab69cf28e2b159",
+          "szaghi/face": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8"
+        },
+        "manifest_versions": {
+          "gha3mi/formatmul": "0.8.0",
+          "gha3mi/kinds": "0.0.0",
+          "gha3mi/fortime": "0.0.0",
+          "gha3mi/forunittest": "0.0.0"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "gha3mi/formatmul",
+            "gha3mi/kinds",
+            "gha3mi/fortime",
+            "szaghi/face",
+            "gha3mi/forunittest"
+          ]
+        }
+      },
+      "dependencies": [
+        {
+          "repository": "gha3mi/kinds",
+          "revision": "811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f",
+          "sha256": "495d1133b1630dea4f38d69e5e3189e3279e4ce5836da1a7aec8a822bbe16518"
+        },
+        {
+          "repository": "gha3mi/fortime",
+          "revision": "de733e2c775457d4979403fe77ab69cf28e2b159",
+          "sha256": "bccc83cf947693ad4defcfb4684af7cd660db8a6e57084b7f07e7edfd584161d"
+        },
+        {
+          "repository": "szaghi/FACE",
+          "revision": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8",
+          "sha256": "d4cc3c3a2c70e7369607624ae3361a6f7b2ba3f1e9a63ffd94ecb5cd4b019469"
+        },
+        {
+          "repository": "gha3mi/forunittest",
+          "revision": "997e9974e52b40f6538ed84cf24259c331a782b3",
+          "sha256": "a325e6e93f839a9b528a99cdfa4ca359e035f5a05414cb4c36a48f30bdaf53f2"
+        }
+      ]
+    },
+    {
+      "id": "bstrith",
+      "repository": "degawa/bstrith",
+      "revision": "7ed7730e34c7e1f78f2be9426ccc170f9dcaf57e",
+      "archive_sha256": "f7f3c9a98b395f20760b4883b43b7122f7b59eb6d8aa08b5afb211c5ca9d6344",
+      "stars": 1,
+      "license": "MIT",
+      "category": "High precision",
+      "description": "Fixed-width binary-string arithmetic, shifts and logical operations.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "degawa/bstrith"
+          ]
+        }
+      },
+      "dependencies": []
+    },
+    {
+      "id": "heatflow",
+      "repository": "ExeQuantCode/HeatFlow",
+      "revision": "b0d930caad9160a15f0aeafa238c448f48f28d55",
+      "archive_sha256": "dc323ec732a62a15cf9e42b9d4a9f8989d6e6c3315ca0352e285d7efd397f62c",
+      "stars": 5,
+      "license": "GPL-3.0",
+      "category": "Differential equations",
+      "description": "Finite-difference models of Fourier and Cattaneo heat transport.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "exequantcode/heatflow"
+          ]
+        }
+      },
+      "dependencies": []
+    },
+    {
+      "id": "hrweno",
+      "repository": "HugoMVale/HR-WENO",
+      "revision": "2885105a7ba98351fed299b22e9bc0c67a809d2f",
+      "archive_sha256": "1dc2fffbdd9396735d01df566f3a945e65b934525a16e15162abcb47d1b373a9",
+      "stars": 21,
+      "license": "MIT",
+      "category": "Differential equations",
+      "description": "High-resolution WENO reconstruction and TVD integration for conservation equations.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "registry": {
+          "stdlib": {
+            "git": "https://github.com/fortran-lang/stdlib",
+            "rev": "58eb9133966c2797e0593281169ef57c43eccc1d"
+          }
+        },
+        "source_revisions": {
+          "fortran-lang/stdlib": "58eb9133966c2797e0593281169ef57c43eccc1d"
+        },
+        "manifest_versions": {
+          "fortran-lang/stdlib": "0.8.1"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "8a85ff125c66db77f139fb6b62e6895fa314413a2b0350e68d8f3126c1d19707",
+          "repositories": [
+            "fortran-lang/stdlib"
+          ]
+        }
+      },
+      "dependencies": [
+        {
+          "repository": "fortran-lang/stdlib",
+          "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+        }
+      ]
+    },
+    {
+      "id": "fortran-simplify",
+      "repository": "jaiken17/fortran-simplify",
+      "revision": "f546422216fb88eba97e2a0f4910935efbcdce83",
+      "archive_sha256": "fac116dbcb42131306061eb500eaa04ef49075e7301f0c01f19c80e7196740f6",
+      "stars": 1,
+      "license": "BSD-3-Clause",
+      "category": "Geometry",
+      "description": "Reduce the number of polyline points using geometric simplification algorithms.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "registry": {
+          "stdlib": {
+            "git": "https://github.com/fortran-lang/stdlib",
+            "rev": "58eb9133966c2797e0593281169ef57c43eccc1d"
+          }
+        },
+        "source_revisions": {
+          "fortran-lang/stdlib": "58eb9133966c2797e0593281169ef57c43eccc1d"
+        },
+        "manifest_versions": {
+          "fortran-lang/stdlib": "0.8.1"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "8a85ff125c66db77f139fb6b62e6895fa314413a2b0350e68d8f3126c1d19707",
+          "repositories": [
+            "fortran-lang/stdlib"
+          ]
+        }
+      },
+      "dependencies": [
+        {
+          "repository": "fortran-lang/stdlib",
+          "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+        }
+      ]
+    },
+    {
+      "id": "ecx",
+      "repository": "MilanSkocic/ecx",
+      "revision": "d30725e3cb9186bc79f81481f3d6fae8d177a7b7",
+      "archive_sha256": "65110c8ee4576328c839d3421b391b72f5258c940a277a8f5971715bc3d64737",
+      "stars": 2,
+      "license": "MIT",
+      "category": "Physical properties",
+      "description": "Electrochemical kinetics, impedance and photoelectrochemistry calculations.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "registry": {
+          "stdlib": {
+            "git": "https://github.com/fortran-lang/stdlib",
+            "rev": "58eb9133966c2797e0593281169ef57c43eccc1d"
+          }
+        },
+        "source_revisions": {
+          "fortran-lang/stdlib": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "milanskocic/codata": "d0c9b1552f0fa483a364de4a69e82c5e23344caf",
+          "milanskocic/ciaaw": "02efd49caea1a7bbff0602b752075d3fe935bd10",
+          "urbanjost/m_cli2": "a6934890178377cd92444d290aa3d3198ba9954d"
+        },
+        "manifest_versions": {
+          "fortran-lang/stdlib": "0.8.1",
+          "milanskocic/ecx": "0.1.0",
+          "milanskocic/codata": "0.0.0",
+          "milanskocic/ciaaw": "1.3.3"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "8a85ff125c66db77f139fb6b62e6895fa314413a2b0350e68d8f3126c1d19707",
+          "repositories": [
+            "fortran-lang/stdlib"
+          ]
+        }
+      },
+      "dependencies": [
+        {
+          "repository": "fortran-lang/stdlib",
+          "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+        },
+        {
+          "repository": "MilanSkocic/codata",
+          "revision": "d0c9b1552f0fa483a364de4a69e82c5e23344caf",
+          "sha256": "47a519277191fa5c9f3e476c1bf17bbafb6bf2eeeaca43fbffd938e7ecb835a3"
+        },
+        {
+          "repository": "MilanSkocic/ciaaw",
+          "revision": "02efd49caea1a7bbff0602b752075d3fe935bd10",
+          "sha256": "58aee500452c9fd1a643eaa5034a2a86481f22d2f868ab9968b1cc3e5ea6d76f"
+        },
+        {
+          "repository": "urbanjost/M_CLI2",
+          "revision": "a6934890178377cd92444d290aa3d3198ba9954d",
+          "sha256": "55f4bdd7c3be3466f838eae12ed2409b44fe0bd6cc0118bb5194b1d7d578ee28"
+        }
+      ],
+      "catalog_patches": {
+        "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+        "edits": [
+          {
+            "path": "src/ecx_pec.f90",
+            "sha256": "068a2f0ff9e13b38a7cec95a4c15523d215e1e37eb5e3342f0871d352695153a",
+            "before": "module ecx__pec\n",
+            "after": "module ecx__pec\nuse, intrinsic :: iso_fortran_env, only: real64\n"
+          }
+        ]
+      }
+    },
+    {
+      "id": "athena",
+      "repository": "nedtaylor/athena",
+      "revision": "4b81aeac07113628c2c9a476648d5ac2a91b7c91",
+      "archive_sha256": "2cc29f7f0b259e50642c1b05facf6bcb733acd992d0775df45c3ab1f58a6035c",
+      "stars": 38,
+      "license": "MIT",
+      "category": "Machine learning",
+      "description": "Neural networks with convolutional, graph-based and physics-informed layers.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6"
+        ]
+      },
+      "dependencies": [
+        {
+          "repository": "nedtaylor/coreutils",
+          "revision": "ead4501f4b695c4f0fe3267f1bf5318544c9b1e2",
+          "sha256": "a2979763627707ba61169b4abacd7ee60b586df9115ac2beb9ee674c25031554"
+        },
+        {
+          "repository": "nedtaylor/diffstruc",
+          "revision": "88565f8e01792706edc0bd7e70dde957c26122a4",
+          "sha256": "84daa1e2c23f1cd2285b5212f4f5390cf930336c98feae7da0b5eb4534a7e65f"
+        },
+        {
+          "repository": "nedtaylor/graphstruc",
+          "revision": "ad41c6bca04cadd1df20319b29f231469c530dae",
+          "sha256": "4d6a942f76bdc0ccca609ac0a90a7b728d56fc403c4af2f7c597fb764885ea3e"
+        }
+      ],
+      "catalog_patches": {
+        "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+        "edits": [
+          {
+            "path": "fpm.toml",
+            "sha256": "e0158a93d0acef8ed02759a4b54e45f165a8fccd67423c680cc7179d0ee3a194",
+            "before": "name = \"athena\"\nversion = \"2.1.1\"\nlicense = \"MIT\"\nauthor = \"Ned Thaddeus Taylor\"\nmaintainer = \"n.t.taylor@exeter.ac.uk\"\ndescription = \"A Fortran library for building, training and testing neural networks\"\n\n[library]\nsource-dir = \"src\"\n\n[build]\nauto-executables = true\nauto-tests = true\nauto-examples = false\nmodule-naming = false\n\n[dependencies.coreutils]\npath = \"../../1/coreutils-ead4501f4b695c4f0fe3267f1bf5318544c9b1e2\"\n\n[dependencies.diffstruc]\npath = \"../../2/diffstruc-88565f8e01792706edc0bd7e70dde957c26122a4\"\n\n[dependencies.graphstruc]\npath = \"../../3/graphstruc-ad41c6bca04cadd1df20319b29f231469c530dae\"\n\n[features.wandb.dependencies.wandb-fortran]\ngit = \"https://github.com/nedtaylor/wandb-fortran\"\n\n[features.wandb.dependencies.example_library]\npath = \"example/example_library\"\n\n[features.wandb.preprocess.cpp]\nmacros = [\n    \"_WANDB\",\n]\n\n[[features.wandb.example]]\nname = \"wandb_sine\"\nsource-dir = \"example/wandb_sine/src\"\nmain = \"main.f90\"\n\n[[features.wandb.example]]\nname = \"wandb_pinn_burgers\"\nsource-dir = \"example/wandb_pinn_burgers/src\"\nmain = \"main.f90\"\n\n[[features.wandb.example]]\nname = \"wandb_sweep\"\nsource-dir = \"example/wandb_sweep/src\"\nmain = \"main.f90\"\n\n[[features.wandb.example]]\nname = \"wandb_network_sine\"\nsource-dir = \"example/wandb_network_sine/src\"\nmain = \"main.F90\"\n\n[install]\nlibrary = false\n\n[fortran]\nimplicit-typing = false\nimplicit-external = false\nsource-form = \"free\"\n\n[preprocess.cpp]\nsuffixes = [\n    \"F90\",\n    \"f90\",\n]\n\n[[example]]\nname = \"sine\"\nsource-dir = \"example/sine/src\"\nmain = \"main.f90\"\n\n[example.dependencies.example_library]\npath = \"example/example_library\"\n\n[example.dependencies.atomstruc]\ngit = \"https://github.com/nedtaylor/atomstruc\"\nbranch = \"column-major-order\"\n\n[[example]]\nname = \"simple\"\nsource-dir = \"example/simple/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"mnist\"\nsource-dir = \"example/mnist/src\"\n\n[[example]]\nname = \"mnist_addit\"\nsource-dir = \"example/mnist_addit/src\"\n\n[[example]]\nname = \"mnist_3D\"\nsource-dir = \"example/mnist_3D/src\"\n\n[[example]]\nname = \"mnist_bn\"\nsource-dir = \"example/mnist_bn/src\"\n\n[[example]]\nname = \"mnist_drop\"\nsource-dir = \"example/mnist_drop/src\"\n\n[[example]]\nname = \"msgpass_chemical\"\nsource-dir = \"example/msgpass_chemical/src\"\n\n[[example]]\nname = \"onnx_gnn\"\nsource-dir = \"example/onnx_gnn/src\"\n\n[[example]]\nname = \"msgpass_euler\"\nsource-dir = \"example/msgpass_euler/src\"\n\n[[example]]\nname = \"pinn_chemical\"\nsource-dir = \"example/pinn_chemical/src\"\n\n[[example]]\nname = \"pinn_burgers\"\nsource-dir = \"example/pinn_burgers/src\"\n\n[[example]]\nname = \"adam_benchmark\"\nsource-dir = \"example/adam_benchmark/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"custom_forward\"\nsource-dir = \"example/custom_forward/src\"\n\n[[example]]\nname = \"onnx\"\nsource-dir = \"example/onnx/src\"\n\n[[example]]\nname = \"onnx_nop\"\nsource-dir = \"example/onnx_nop/src\"\n\n[[example]]\nname = \"resnet\"\nsource-dir = \"example/resnet/src\"\n\n[[example]]\nname = \"rnn_timeseries\"\nsource-dir = \"example/rnn_timeseries/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"gno_regression\"\nsource-dir = \"example/gno_regression/src\"\n\n[[example]]\nname = \"ono_heat\"\nsource-dir = \"example/ono_heat/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"lno_heat\"\nsource-dir = \"example/lno_heat/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"lno_rollout\"\nsource-dir = \"example/lno_rollout/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"ono_attention_heat\"\nsource-dir = \"example/ono_attention_heat/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"inverse_design\"\nsource-dir = \"example/inverse_design/src\"\nmain = \"main.f90\"\n",
+            "after": "name = \"athena\"\nversion = \"2.1.1\"\nlicense = \"MIT\"\nauthor = \"Ned Thaddeus Taylor\"\nmaintainer = \"n.t.taylor@exeter.ac.uk\"\ndescription = \"A Fortran library for building, training and testing neural networks\"\n\n[library]\nsource-dir = \"src\"\n\n[build]\nauto-executables = true\nauto-tests = true\nauto-examples = false\nmodule-naming = false\nexternal-modules = [\n    \"wf\",\n]\n\n[dependencies.coreutils]\npath = \"../../1/coreutils-ead4501f4b695c4f0fe3267f1bf5318544c9b1e2\"\n\n[dependencies.diffstruc]\npath = \"../../2/diffstruc-88565f8e01792706edc0bd7e70dde957c26122a4\"\n\n[dependencies.graphstruc]\npath = \"../../3/graphstruc-ad41c6bca04cadd1df20319b29f231469c530dae\"\n\n[install]\nlibrary = false\n\n[fortran]\nimplicit-typing = false\nimplicit-external = false\nsource-form = \"free\"\n\n[preprocess.cpp]\nsuffixes = [\n    \"F90\",\n    \"f90\",\n]\n\n[[example]]\nname = \"sine\"\nsource-dir = \"example/sine/src\"\nmain = \"main.f90\"\n\n[example.dependencies.example_library]\npath = \"example/example_library\"\n\n[example.dependencies.atomstruc]\ngit = \"https://github.com/nedtaylor/atomstruc\"\nbranch = \"column-major-order\"\n\n[[example]]\nname = \"simple\"\nsource-dir = \"example/simple/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"mnist\"\nsource-dir = \"example/mnist/src\"\n\n[[example]]\nname = \"mnist_addit\"\nsource-dir = \"example/mnist_addit/src\"\n\n[[example]]\nname = \"mnist_3D\"\nsource-dir = \"example/mnist_3D/src\"\n\n[[example]]\nname = \"mnist_bn\"\nsource-dir = \"example/mnist_bn/src\"\n\n[[example]]\nname = \"mnist_drop\"\nsource-dir = \"example/mnist_drop/src\"\n\n[[example]]\nname = \"msgpass_chemical\"\nsource-dir = \"example/msgpass_chemical/src\"\n\n[[example]]\nname = \"onnx_gnn\"\nsource-dir = \"example/onnx_gnn/src\"\n\n[[example]]\nname = \"msgpass_euler\"\nsource-dir = \"example/msgpass_euler/src\"\n\n[[example]]\nname = \"pinn_chemical\"\nsource-dir = \"example/pinn_chemical/src\"\n\n[[example]]\nname = \"pinn_burgers\"\nsource-dir = \"example/pinn_burgers/src\"\n\n[[example]]\nname = \"adam_benchmark\"\nsource-dir = \"example/adam_benchmark/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"custom_forward\"\nsource-dir = \"example/custom_forward/src\"\n\n[[example]]\nname = \"onnx\"\nsource-dir = \"example/onnx/src\"\n\n[[example]]\nname = \"onnx_nop\"\nsource-dir = \"example/onnx_nop/src\"\n\n[[example]]\nname = \"resnet\"\nsource-dir = \"example/resnet/src\"\n\n[[example]]\nname = \"rnn_timeseries\"\nsource-dir = \"example/rnn_timeseries/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"gno_regression\"\nsource-dir = \"example/gno_regression/src\"\n\n[[example]]\nname = \"ono_heat\"\nsource-dir = \"example/ono_heat/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"lno_heat\"\nsource-dir = \"example/lno_heat/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"lno_rollout\"\nsource-dir = \"example/lno_rollout/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"ono_attention_heat\"\nsource-dir = \"example/ono_attention_heat/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"inverse_design\"\nsource-dir = \"example/inverse_design/src\"\nmain = \"main.f90\"\n"
+          }
+        ]
+      }
+    },
+    {
+      "id": "orbs",
+      "repository": "degawa/orbs",
+      "revision": "3cf7fcec19798367f6f5bd26bad861c510449265",
+      "archive_sha256": "dcbb0c8eeaa99febd6683dd2270dcf5757e512193eebe77258918c2713f99d23",
+      "stars": 0,
+      "license": "MIT",
+      "category": "Containers and graphs",
+      "description": "Arithmetic, logical and shift operators for stdlib-backed bitsets.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "registry": {
+          "stdlib": {
+            "git": "https://github.com/fortran-lang/stdlib",
+            "rev": "58eb9133966c2797e0593281169ef57c43eccc1d"
+          }
+        },
+        "source_revisions": {
+          "fortran-lang/stdlib": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "degawa/bstrith": "7ed7730e34c7e1f78f2be9426ccc170f9dcaf57e"
+        },
+        "manifest_versions": {
+          "fortran-lang/stdlib": "0.8.1"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "8a85ff125c66db77f139fb6b62e6895fa314413a2b0350e68d8f3126c1d19707",
+          "repositories": [
+            "fortran-lang/stdlib"
+          ]
+        }
+      },
+      "dependencies": [
+        {
+          "repository": "fortran-lang/stdlib",
+          "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+        },
+        {
+          "repository": "degawa/bstrith",
+          "revision": "7ed7730e34c7e1f78f2be9426ccc170f9dcaf57e",
+          "sha256": "f7f3c9a98b395f20760b4883b43b7122f7b59eb6d8aa08b5afb211c5ca9d6344"
+        }
+      ]
+    },
+    {
+      "id": "rearrayfx",
+      "repository": "aradi/rearrayfx",
+      "revision": "be1a7b08e43b358c8ed27fa80db7896767eb9f6d",
+      "archive_sha256": "0ec62b019b6fb6ef56c8933ad91a1abbee85d0742c3e0738c1391e08591dfd56",
+      "stars": 1,
+      "license": "BSD-2-Clause-Patent",
+      "category": "Containers and graphs",
+      "description": "Educational growable real arrays with spare capacity to reduce reallocations.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "aradi/rearrayfx"
+          ]
+        }
+      },
+      "dependencies": []
+    },
+    {
+      "id": "amosf90",
+      "repository": "Euler-37/amosf90",
+      "revision": "b54a4d4a1d8f7c97acd180ed5bbaae8d089a9fa7",
+      "archive_sha256": "bde16c382a398bcf7122d1886fef8ed49e793d66c4f0f862b17ca48162115f1b",
+      "stars": 0,
+      "license": "NOASSERTION",
+      "category": "Special functions",
+      "description": "AMOS interfaces for complex-argument, noninteger-order Bessel and related functions.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "euler-37/amosf90"
+          ]
+        }
+      },
+      "dependencies": []
+    },
+    {
+      "id": "linalg_fortran",
+      "repository": "Euler-37/linalg_fortran",
+      "revision": "30e7237ab54ca176e1c8dae4be2d9d44800e1f83",
+      "archive_sha256": "9997e7d13e82b7cbc578e80cb199c33c50971dfa9a63486da9b9cc06a1bfce50",
+      "stars": 0,
+      "license": "NOASSERTION",
+      "category": "Linear algebra",
+      "description": "Typed LAPACK interfaces for matrix inverses, determinants and Hermitian eigenproblems.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "apt_packages": [
+          "libopenblas-dev=0.3.29+ds-3"
+        ]
+      },
+      "dependencies": [],
+      "catalog_patches": {
+        "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+        "edits": [
+          {
+            "path": "fpm.toml",
+            "sha256": "84545d43074953cdbb6f7f998e67e2a2cd806ee88dd9f1fd4ccec23edece4d18",
+            "before": "name = \"iso_linalg_mod\"\nversion = \"0.1.0\"\nlicense = \"license\"\nauthor = \"Euler-37\"\ncopyright = \"Copyright 2022, Euler-37\"\n\n[build]\nauto-executables = true\nauto-tests = true\nauto-examples = true\nlink = [\n    \"openblas\",\n]\n\n[install]\nlibrary = false\n",
+            "after": "name = \"iso_linalg_mod\"\nversion = \"0.1.0\"\nlicense = \"license\"\nauthor = \"Euler-37\"\ncopyright = \"Copyright 2022, Euler-37\"\n\n[build]\nauto-executables = true\nauto-tests = true\nauto-examples = true\nlink = [\n    \"openblas\",\n]\n\n[install]\nlibrary = false\n\n[fortran]\nimplicit-external = true\n"
+          }
+        ]
+      }
+    },
+    {
+      "id": "fortran_vector",
+      "repository": "Euler-37/fortran_vector",
+      "revision": "95469e2ce1162b0ede3ca3435ebd94ec6b6fee79",
+      "archive_sha256": "0701b9fc21b905f986ee247ce7d3981c059cd963040569409de88cbdf04eaa25",
+      "stars": 1,
+      "license": "NOASSERTION",
+      "category": "Containers and graphs",
+      "description": "Growable integer vectors with insertion, removal and duplicate elimination.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8"
+      },
+      "dependencies": [],
+      "catalog_patches": {
+        "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+        "edits": [
+          {
+            "path": "src/fortran_vector.f90",
+            "sha256": "0ee8dc6b054a18b3154952430a29577527edf494e7416385a4656446cd083833",
+            "before": "call this%remove(this%x_(1))",
+            "after": "call this%remove(first)"
+          }
+        ]
+      }
+    },
+    {
+      "id": "scanner",
+      "repository": "freevryheid/scanner",
+      "revision": "b0026498c171b615bb3dcfca55a0f20b133e22dc",
+      "archive_sha256": "ebd5b15b10cb7f7f0a7e10d3891cebbb00cf8fcfde32387f4d1e7f0645b0662f",
+      "stars": 1,
+      "license": "MIT",
+      "category": "Strings",
+      "description": "Character-by-character text scanning with bounded navigation for small parsers.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "source_revisions": {
+          "fortran-lang/stdlib": "58eb9133966c2797e0593281169ef57c43eccc1d"
+        },
+        "manifest_versions": {
+          "fortran-lang/stdlib": "0.8.1"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "8a85ff125c66db77f139fb6b62e6895fa314413a2b0350e68d8f3126c1d19707",
+          "repositories": [
+            "fortran-lang/stdlib"
+          ]
+        }
+      },
+      "dependencies": [
+        {
+          "repository": "fortran-lang/stdlib",
+          "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+        }
+      ]
+    },
+    {
+      "id": "rojff",
+      "repository": "everythingfunctional/rojff",
+      "revision": "9f68e5aa4c12b32720d4224f1ac279bfd7d77b93",
+      "archive_sha256": "503529a91c9692cdb830b3b14db5462a3b83bce12f0e002f3c04922447956961",
+      "stars": 9,
+      "license": "MIT",
+      "category": "Data formats",
+      "description": "Construct, parse and serialize JSON values with explicit error handling.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "git_aliases": {
+          "https://gitlab.com/everythingfunctional/erloff": "https://github.com/everythingfunctional/erloff",
+          "https://gitlab.com/everythingfunctional/iso_varying_string": "https://github.com/everythingfunctional/iso_varying_string",
+          "https://gitlab.com/everythingfunctional/strff": "https://github.com/everythingfunctional/strff",
+          "https://gitlab.com/everythingfunctional/exceptional_numbers": "https://github.com/everythingfunctional/exceptional_numbers",
+          "https://gitlab.com/everythingfunctional/parff": "https://github.com/everythingfunctional/parff",
+          "https://gitlab.com/everythingfunctional/veggies": "https://github.com/everythingfunctional/veggies"
+        },
+        "source_revisions": {
+          "everythingfunctional/erloff": "a4c10605c9263d315d20c07dc96e1f0d18aa2ffa",
+          "everythingfunctional/strff": "37dccc0e615a2fc85de18be80427e0f1a678d87c",
+          "everythingfunctional/iso_varying_string": "48ce6b119e855284a87d5a6eb9c53da8b6785716"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "everythingfunctional/rojff",
+            "everythingfunctional/erloff",
+            "everythingfunctional/iso_varying_string",
+            "everythingfunctional/strff"
+          ]
+        }
+      },
+      "dependencies": [
+        {
+          "repository": "everythingfunctional/erloff",
+          "revision": "a4c10605c9263d315d20c07dc96e1f0d18aa2ffa",
+          "sha256": "6f6033f3ca404088fa992208f0561ccb497f63849a44805e94faef21788882fc"
+        },
+        {
+          "repository": "everythingfunctional/iso_varying_string",
+          "revision": "48ce6b119e855284a87d5a6eb9c53da8b6785716",
+          "sha256": "b1d563dc52c7cb3df41abf3f360ef0c05285b71bec9bd61d090227f88628ba49"
+        },
+        {
+          "repository": "everythingfunctional/strff",
+          "revision": "37dccc0e615a2fc85de18be80427e0f1a678d87c",
+          "sha256": "1aac7b388bcd6f4a181c5d9aea27046f9a7c3f90273184359afa63e11cafc74d"
+        }
+      ]
+    },
+    {
+      "id": "argparse-f",
+      "repository": "0382/argparse-f",
+      "revision": "435cc1676d6064162a3c36b91f1aa50d926fdd45",
+      "archive_sha256": "c0962d2173daa643130c32c71284f1da12d5b4ae2d357568ae1a34ddab1970b0",
+      "stars": 23,
+      "license": "MIT",
+      "category": "Command-line tools",
+      "description": "Object-oriented parsing of typed command-line options, defaults and named arguments.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "0382/argparse-f"
+          ]
+        }
+      },
+      "dependencies": []
+    },
+    {
+      "id": "io_utilities",
+      "repository": "arjenmarkus/io_utilities",
+      "revision": "f0551aad0b46aa7aac1c442a3c576ecc90028f72",
+      "archive_sha256": "144022adf3379e3bf2ce90a81f674a19819e33a5aa0284f22c0857bf10f26f37",
+      "stars": 4,
+      "license": "MIT",
+      "category": "Files and processes",
+      "description": "INI configuration files, command parsing, progress reporting and formatted output.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8"
+      },
+      "dependencies": [],
+      "catalog_patches": {
+        "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+        "edits": [
+          {
+            "path": "fpm.toml",
+            "sha256": "9f6b313149a4b7cb82bb1c9f5a871a299867f5180d7621abf303da10ec775ab7",
+            "before": "name = \"io-utilities\"\nversion = \"0.2.0\"\nlicense = \"MIT\"\nauthor = \"Arjen Markus\"\nmaintainer = \"arjen.markus895@gmail.com\"\ncopyright = \"2024 Arjen Markus\"\nlibrary = [\n    { source-dir = \"src\" },\n]\ntest = [\n    { name = \"test_cmdparse\", source-dir = \"test\", main = \"test_cmdparse.f90\" },\n    { name = \"demo_cmdparse\", source-dir = \"test\", main = \"demo_cmdparse.f90\" },\n    { name = \"test_keyvars\", source-dir = \"test\", main = \"test_keyvars.f90\" },\n    { name = \"test_progressbar\", source-dir = \"test\", main = \"test_progressbar.f90\" },\n    { name = \"test_positional\", source-dir = \"test\", main = \"test_positional.f90\" },\n]\n",
+            "after": "name = \"io-utilities\"\nversion = \"0.2.0\"\nlicense = \"MIT\"\nauthor = \"Arjen Markus\"\nmaintainer = \"arjen.markus895@gmail.com\"\ncopyright = \"2024 Arjen Markus\"\ntest = [\n    { name = \"test_cmdparse\", source-dir = \"test\", main = \"test_cmdparse.f90\" },\n    { name = \"demo_cmdparse\", source-dir = \"test\", main = \"demo_cmdparse.f90\" },\n    { name = \"test_keyvars\", source-dir = \"test\", main = \"test_keyvars.f90\" },\n    { name = \"test_progressbar\", source-dir = \"test\", main = \"test_progressbar.f90\" },\n    { name = \"test_positional\", source-dir = \"test\", main = \"test_positional.f90\" },\n]\n\n[library]\nsource-dir = \"src\"\n"
+          }
+        ]
+      }
+    },
+    {
+      "id": "uint-fortran",
+      "repository": "ShinobuAmasaki/uint-fortran",
+      "revision": "487f806c76a5d107c5a8982198bafb295065eba7",
+      "archive_sha256": "7f36d0391da9e6877965053a4de3404281c71a82a9aa2ea8a6ae253b40e8ab4d",
+      "stars": 9,
+      "license": "MIT",
+      "category": "General utilities",
+      "description": "Unsigned integer derived types with arithmetic, comparisons and conversions.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "shinobuamasaki/uint-fortran"
+          ]
+        }
+      },
+      "dependencies": []
+    },
+    {
+      "id": "veggies",
+      "repository": "everythingfunctional/veggies",
+      "revision": "8388f5e2633afa3d08cf5c6e7db1eeb0dcab2dc8",
+      "archive_sha256": "31abfc48cf3b70d47f8253d95edcd659e0116d766083a7161ef1975ded7c7bf3",
+      "stars": 4,
+      "license": "MIT",
+      "category": "Testing",
+      "description": "Functional unit-testing framework with readable specification-style results.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "git_aliases": {
+          "https://gitlab.com/everythingfunctional/erloff": "https://github.com/everythingfunctional/erloff",
+          "https://gitlab.com/everythingfunctional/iso_varying_string": "https://github.com/everythingfunctional/iso_varying_string",
+          "https://gitlab.com/everythingfunctional/strff": "https://github.com/everythingfunctional/strff",
+          "https://gitlab.com/everythingfunctional/exceptional_numbers": "https://github.com/everythingfunctional/exceptional_numbers",
+          "https://gitlab.com/everythingfunctional/parff": "https://github.com/everythingfunctional/parff",
+          "https://gitlab.com/everythingfunctional/veggies": "https://github.com/everythingfunctional/veggies"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "everythingfunctional/veggies",
+            "everythingfunctional/iso_varying_string",
+            "everythingfunctional/strff"
+          ]
+        }
+      },
+      "dependencies": [
+        {
+          "repository": "everythingfunctional/iso_varying_string",
+          "revision": "48ce6b119e855284a87d5a6eb9c53da8b6785716",
+          "sha256": "b1d563dc52c7cb3df41abf3f360ef0c05285b71bec9bd61d090227f88628ba49"
+        },
+        {
+          "repository": "everythingfunctional/strff",
+          "revision": "37dccc0e615a2fc85de18be80427e0f1a678d87c",
+          "sha256": "1aac7b388bcd6f4a181c5d9aea27046f9a7c3f90273184359afa63e11cafc74d"
+        }
+      ]
+    },
+    {
+      "id": "shunting-yard-fortran",
+      "repository": "14NGiestas/shunting-yard-fortran",
+      "revision": "ff62d83502bc5fdf77f2750c3538b8634a543b91",
+      "archive_sha256": "b72b28673e6fc18e9f54c7e5999db2d224b102673bd02ccc41a446a262e38d1c",
+      "stars": 14,
+      "license": "MIT",
+      "category": "Expression parsing",
+      "description": "Experimental expression parser with token callbacks and fixed operator precedences.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8"
+      },
+      "dependencies": [
+        {
+          "repository": "14NGiestas/fortran-tokenizer",
+          "revision": "4ed3bac4132a9b344b3c327f579ae4919a61393d",
+          "sha256": "99ae76f58775d954d01885a2d48720a16e143782238f45f5db2424c6277cc912"
+        }
+      ],
+      "catalog_patches": {
+        "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+        "edits": [
+          {
+            "path": "src/parser.f90",
+            "sha256": "031c159946ca0d9214c2b82a9021bc926c577f5fdf052d01d3e693b61980b84a",
+            "before": "    function parse(self, infix) result(ans)\n        class(parser_t) :: self\n        character(*) :: infix\n        type(token_list) :: tokens\n        type(token_list) :: postfix\n        type(token_list) :: output\n        type(token_t)    :: ans\n\n        self % tokenizer % validate_token => by_expression\n        tokens = self % tokenizer % tokenize(infix)\n\n        if (is_enclosed(tokens)) then\n            call self % convert_to_RPN(tokens, postfix)\n            call self % eval_expression(postfix, output)\n        else\n            write(error_unit,*) 'Unmatched parenthesis on: '//infix\n            stop\n        end if\n        ans = output % pop()\n    contains\n        logical function by_expression(token)\n            character(*), intent(in) :: token\n            by_expression = .true. &\n            .and. .not. is_ignored(token) &\n            .and. ( &\n                     is_unary(token) &\n                .or. is_binary(token) &\n                .or. is_operand(token) &\n                .or. is_open_paren(token) &\n                .or. is_close_paren(token) &\n            )\n        end function\n    end function\n\n",
+            "after": "    function parse(self, infix) result(ans)\n        class(parser_t) :: self\n        character(*) :: infix\n        type(token_list) :: tokens\n        type(token_list) :: postfix\n        type(token_list) :: output\n        type(token_t)    :: ans\n\n        self % tokenizer % validate_token => by_expression\n        tokens = self % tokenizer % tokenize(infix)\n\n        if (is_enclosed(tokens)) then\n            call self % convert_to_RPN(tokens, postfix)\n            call self % eval_expression(postfix, output)\n        else\n            write(error_unit,*) 'Unmatched parenthesis on: '//infix\n            stop\n        end if\n        ans = output % pop()\n    end function\n\n        logical function by_expression(token)\n            character(*), intent(in) :: token\n            by_expression = .true. &\n            .and. .not. is_ignored(token) &\n            .and. ( &\n                     is_unary(token) &\n                .or. is_binary(token) &\n                .or. is_operand(token) &\n                .or. is_open_paren(token) &\n                .or. is_close_paren(token) &\n            )\n        end function\n\n"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sqliteff",
+      "repository": "everythingfunctional/sqliteff",
+      "revision": "9b377c976698a7da671536e5e2539146ab734ca6",
+      "archive_sha256": "283728efa90428060030cd1cb541f847cd084a128b506114163e60a312af00df",
+      "stars": 3,
+      "license": "MIT",
+      "category": "Databases",
+      "description": "Thin SQLite bindings for database creation, SQL queries and typed result access.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "git_aliases": {
+          "https://gitlab.com/everythingfunctional/iso_varying_string": "https://github.com/everythingfunctional/iso_varying_string",
+          "https://gitlab.com/everythingfunctional/strff": "https://github.com/everythingfunctional/strff",
+          "https://gitlab.com/everythingfunctional/exceptional_numbers": "https://github.com/everythingfunctional/exceptional_numbers"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "everythingfunctional/sqliteff",
+            "everythingfunctional/iso_varying_string"
+          ]
+        }
+      },
+      "dependencies": [
+        {
+          "repository": "everythingfunctional/iso_varying_string",
+          "revision": "f330d7a246d81aacfbf92f8085a4eca9d2506820",
+          "sha256": "2fa954b8642f34970253cee4bf36448b46f37dd2bea4930a5ecd2fd26b0dc83b"
+        }
+      ]
+    },
+    {
+      "id": "erloff",
+      "repository": "everythingfunctional/erloff",
+      "revision": "73dfdbf54dafadb42e4705c45824b93917a20965",
+      "archive_sha256": "71d21f36b77fd638d2cf2f555c7bb1ea978af1755856a815aea33e0758581e75",
+      "stars": 1,
+      "license": "MIT",
+      "category": "Error handling",
+      "description": "Structured error lists and logging with message types and call context.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "git_aliases": {
+          "https://gitlab.com/everythingfunctional/iso_varying_string": "https://github.com/everythingfunctional/iso_varying_string",
+          "https://gitlab.com/everythingfunctional/strff": "https://github.com/everythingfunctional/strff",
+          "https://gitlab.com/everythingfunctional/exceptional_numbers": "https://github.com/everythingfunctional/exceptional_numbers"
+        },
+        "source_revisions": {
+          "everythingfunctional/strff": "37dccc0e615a2fc85de18be80427e0f1a678d87c",
+          "everythingfunctional/iso_varying_string": "48ce6b119e855284a87d5a6eb9c53da8b6785716"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "everythingfunctional/erloff",
+            "everythingfunctional/iso_varying_string",
+            "everythingfunctional/strff"
+          ]
+        }
+      },
+      "dependencies": [
+        {
+          "repository": "everythingfunctional/iso_varying_string",
+          "revision": "48ce6b119e855284a87d5a6eb9c53da8b6785716",
+          "sha256": "b1d563dc52c7cb3df41abf3f360ef0c05285b71bec9bd61d090227f88628ba49"
+        },
+        {
+          "repository": "everythingfunctional/strff",
+          "revision": "37dccc0e615a2fc85de18be80427e0f1a678d87c",
+          "sha256": "1aac7b388bcd6f4a181c5d9aea27046f9a7c3f90273184359afa63e11cafc74d"
+        }
+      ]
+    },
+    {
+      "id": "fortran-tokenizer",
+      "repository": "14NGiestas/fortran-tokenizer",
+      "revision": "11ad73ea6102f86593bf2b372d56bf9fbedaebc7",
+      "archive_sha256": "372c3b8d641fd46a9c7de674dceffecf2e87bac1ca6ac9cb5480470528801a55",
+      "stars": 4,
+      "license": "MIT",
+      "category": "Expression parsing",
+      "description": "Customizable tokenization with validation and ignore callbacks.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "14ngiestas/fortran-tokenizer"
+          ]
+        }
+      },
+      "dependencies": []
+    },
+    {
+      "id": "integer_set",
+      "repository": "jordan4ibanez/integer_set",
+      "revision": "85d336319d6593f9768c599835342912ce0b7bb8",
+      "archive_sha256": "a8d4e5251955d88c00675701238f792967a739d58bad851ddaa5b6b15e1e996d",
+      "stars": 0,
+      "license": "MIT",
+      "category": "Data structures",
+      "description": "Simple 32-bit and 64-bit integer sets with insertion, removal and sorting.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "jordan4ibanez/integer_set",
+            "jordan4ibanez/constants_f90"
+          ]
+        }
+      },
+      "dependencies": [
+        {
+          "repository": "jordan4ibanez/constants_f90",
+          "revision": "22b34d79274429ab391e92a94011befeb996704a",
+          "sha256": "17efd5f858ac6f29a4d1a0a4dbd6dbbc3fa89a8810c2300679702875e385a85a"
+        }
+      ]
+    },
+    {
+      "id": "smart-pointers",
+      "repository": "sourceryinstitute/smart-pointers",
+      "revision": "35130adc4be4384a14b2369e5edd36d4665cd994",
+      "archive_sha256": "4bd34d315fc73d3fbc23af6c314d6f2904bfb584c595ef9aac926c3c826dbf45",
+      "stars": 34,
+      "license": "BSD-3-Clause",
+      "category": "Memory management",
+      "description": "Reference-counted smart pointers with automatic resource cleanup.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "sourceryinstitute/smart-pointers"
+          ]
+        }
+      },
+      "dependencies": []
+    },
+    {
+      "id": "rpn-calculator-fortran",
+      "repository": "scivision/rpn-calculator-fortran",
+      "revision": "7708e4949f17511d81f4e7dd0271a500f0bc3631",
+      "archive_sha256": "7c34218defbc2d92ef87a9be222acbc9085737121b4894c1235b723cd5644d9c",
+      "stars": 26,
+      "license": "MIT",
+      "category": "Special functions",
+      "description": "Numerical functions from an RPN calculator, including special functions, rational arithmetic and conversions.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8"
+      },
+      "dependencies": [],
+      "catalog_patches": {
+        "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+        "edits": [
+          {
+            "path": "fpm.toml",
+            "sha256": "3b8e601971499140a324bce7fcb5e1ffffe201229c679a66fb237eef3e693ae7",
+            "before": "name = \"rpncalc\"\ndescription = \"Interactive RPN calculator\"\nversion = \"1.4.1\"\n\n[extra.fortitude.check]\nignore = [\n    \"C003\",\n    \"S231\",\n    \"S241\",\n    \"S061\",\n    \"C011\",\n]\n",
+            "after": "name = \"rpncalc\"\ndescription = \"Interactive RPN calculator\"\nversion = \"1.4.1\"\n\n[extra.fortitude.check]\nignore = [\n    \"C003\",\n    \"S231\",\n    \"S241\",\n    \"S061\",\n    \"C011\",\n]\n\n[fortran]\nsource-form = \"default\"\n"
+          }
+        ]
+      }
+    },
+    {
+      "id": "nc4fortran",
+      "repository": "geospace-code/nc4fortran",
+      "revision": "942ac4f83380acdef463002f555aebf30f3c46ac",
+      "archive_sha256": "f27018e3cffbcab181d422d6cffc2062c95acb03a35314b01f7647cdeca1ec9b",
+      "stars": 45,
+      "license": "MIT",
+      "category": "Data formats",
+      "description": "Object-oriented NetCDF4 input and output for arrays, scalars and attributes.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "apt_packages": [
+          "libnetcdff-dev=4.6.0+really4.5.4+ds-3+b4",
+          "libhdf5-dev=1.14.5+repack-3"
+        ],
+        "environment": {
+          "FPM_FFLAGS": "-I/usr/include -I/usr/include/hdf5/serial",
+          "FPM_LDFLAGS": "-L/usr/lib/x86_64-linux-gnu/hdf5/serial"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "geospace-code/nc4fortran"
+          ]
+        }
+      },
+      "dependencies": []
+    },
+    {
+      "id": "fundamental_constants",
+      "repository": "vmagnin/fundamental_constants",
+      "revision": "3e18620ab7813fd9f02e8dcf05c48f0ca13f2ec0",
+      "archive_sha256": "3c49561725c37c75b9e94a4c0fadbc9a999be0aaea70551d3e4a0f5e2877e54e",
+      "stars": 16,
+      "license": "MIT",
+      "category": "Physical constants",
+      "description": "CODATA fundamental physical constants with explicitly selectable editions.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "vmagnin/fundamental_constants"
+          ]
+        }
+      },
+      "dependencies": []
+    },
+    {
+      "id": "array_range",
+      "repository": "degawa/array_range",
+      "revision": "cd21ccb982e23de9c2df44c12edab44dd84562dc",
+      "archive_sha256": "269b583b0e6cb353191d88b50859cd6cf80d4807497e9f1178f8207b807df214",
+      "stars": 0,
+      "license": "MIT",
+      "category": "Arrays",
+      "description": "Derived types for managing one-, two- and three-dimensional array bounds.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "degawa/array_range"
+          ]
+        }
+      },
+      "dependencies": []
+    },
+    {
+      "id": "kronrod",
+      "repository": "jacobwilliams/kronrod",
+      "revision": "312278846b6e403fdea410a823d88ef4fb92a3cc",
+      "archive_sha256": "f53b75081ca184120e6594ee2649abb402a5e0c45ca40d391b0b7292eff780ea",
+      "stars": 5,
+      "license": "LGPL-2.1",
+      "category": "Quadrature",
+      "description": "Generate Gauss-Kronrod quadrature nodes and weights using arbitrary precision.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "source_revisions": {
+          "jacobwilliams/mpfun2020-var1": "f2191ad80d811cd5e309d83ffad9b2607d27aabc"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "jacobwilliams/mpfun2020-var1"
+          ]
+        }
+      },
+      "dependencies": [
+        {
+          "repository": "jacobwilliams/mpfun2020-var1",
+          "revision": "f2191ad80d811cd5e309d83ffad9b2607d27aabc",
+          "sha256": "1373c64f1f5c578e5270ad840b2b90d0468b88837fc3c6a5e83c4bc4f2b7a5a7"
+        }
+      ],
+      "catalog_patches": {
+        "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+        "edits": [
+          {
+            "path": "fpm.toml",
+            "sha256": "e4515e7c06ad7fb05d01bf91a4029c6de023cf7903f748f5b775c1f919853fe8",
+            "before": "name = \"kronrod\"\nauthor = \"Jacob Williams\"\ncopyright = \"Copyright (c) 2022, Jacob Williams\"\nlicense = \"LGPL\"\ndescription = \"Program for genering Gauss-Kronrod Coefficients\"\nhomepage = \"https://github.com/jacobwilliams/kronrod\"\nkeywords = [\n    \"gauss-kronrod\",\n]\n\n[dependencies.mpfun2020-var1]\npath = \"../../1/mpfun2020-var1-f2191ad80d811cd5e309d83ffad9b2607d27aabc\"\n\n[build]\nauto-executables = true\nauto-examples = true\nauto-tests = true\n",
+            "after": "name = \"kronrod\"\nauthor = \"Jacob Williams\"\ncopyright = \"Copyright (c) 2022, Jacob Williams\"\nlicense = \"LGPL\"\ndescription = \"Program for genering Gauss-Kronrod Coefficients\"\nhomepage = \"https://github.com/jacobwilliams/kronrod\"\nkeywords = [\n    \"gauss-kronrod\",\n]\n\n[dependencies.mpfun2020-var1]\npath = \"../../1/mpfun2020-var1-f2191ad80d811cd5e309d83ffad9b2607d27aabc\"\n\n[build]\nauto-executables = false\nauto-examples = false\nauto-tests = false\n\n[library]\nsource-dir = \"app\"\n"
+          },
+          {
+            "path": "app/main.f90",
+            "sha256": "979e08f29ea88ca0b2d8399e9975279698790d938a0caedcf35fd3214864cce7",
+            "before": "    program main\n\n    use mpmodule\n    use iso_fortran_env, only: wp => real64\n\n    implicit none\n\n",
+            "after": "    module playground_kronrod\n\n    use mpmodule\n    use iso_fortran_env, only: wp => real64\n\n    implicit none\n    private\n    public :: init, kronrod, nwds2\n\n"
+          },
+          {
+            "path": "app/main.f90",
+            "sha256": "fd0910400dc90e64873d18f1d33d0913e9949df5cd86a01d21bfa970047c4f51",
+            "before": "    if (ndp2 > mpipl) then\n        write (6, '(\"Increase default precision in module MPFUNF.\")')\n        stop\n      endif\n\n    call init()\n\n    do icase = 1, size(cases)\n\n        write(*,*) ''\n        write(*,*) '----------------------'\n\n        n = cases(icase)\n\n        if (allocated(w1)) deallocate(w1)\n        if (allocated(w2)) deallocate(w2)\n        if (allocated(x)) deallocate(x)\n\n        allocate(w1(n+1))\n        allocate(w2(n+1))\n        allocate(x(n+1))\n\n        call kronrod ( n, eps, x, w1, w2 )\n\n        write(*,*) ''\n        write(*,*) 'n = ', n\n        write(*,*) ''\n        write(*,*) 'abscissas:'\n        do i = 1, n+1\n            call mpwrite (6, 60, 40, x(i))\n        end do\n        write(*,*) ''\n        write(*,*) 'Gauss-Kronrod weights:'\n        do i = 1, n+1\n            call mpwrite (6, 60, 40, W1(i))\n        end do\n        write(*,*) ''\n        write(*,*) 'Gauss weights:'\n        do i = 1, n+1\n            call mpwrite (6, 60, 40, W2(i))\n        end do\n\n    end do\n\n",
+            "after": ""
+          },
+          {
+            "path": "app/main.f90",
+            "sha256": "31f740775a4d3f08966b034e84b5a0412ada7a03ee71e10e2ac7aaee62a1318c",
+            "before": "    end program main",
+            "after": "    end module playground_kronrod"
+          }
+        ]
+      }
+    },
+    {
+      "id": "fortran-regex",
+      "repository": "perazz/fortran-regex",
+      "revision": "96ab33fe003862a28cec91ddd170ac0e86c26c87",
+      "archive_sha256": "a11de40cd2ac971b4e775a6bac2d537f3efa263562688525df18ba2722b944eb",
+      "license": "MIT",
+      "stars": 30,
+      "category": "Text parsing",
+      "description": "Search text with a lightweight regular expression engine.",
+      "dependencies": [],
+      "dependents_in_sample": 1
+    },
+    {
+      "id": "fed",
+      "repository": "degawa/fed",
+      "revision": "d735aa2b3bd6b20840bcc16ff569e8cfc0492267",
+      "archive_sha256": "09cd5298480abf152954bc88e8d2792f2d5361a40d8ad77ebd971f3db317cd70",
+      "stars": 1,
+      "license": "MIT",
+      "category": "Text processing",
+      "description": "Construct Fortran format edit descriptors programmatically.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "registry": {
+          "stdlib": {
+            "git": "https://github.com/fortran-lang/stdlib",
+            "rev": "58eb9133966c2797e0593281169ef57c43eccc1d"
+          }
+        },
+        "manifest_versions": {
+          "fortran-lang/stdlib": "0.8.1"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "degawa/fed",
+            "fortran-lang/stdlib",
+            "degawa/enclose",
+            "degawa/enumul"
+          ]
+        }
+      },
+      "dependencies": [
+        {
+          "repository": "fortran-lang/stdlib",
+          "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+        },
+        {
+          "repository": "degawa/enclose",
+          "revision": "d3ea2ea989296bf855f4cb07ea8db601020805f2",
+          "sha256": "ce7e3d3f4e5a4f492cf1c0c5d71086b4b77dc56a003977c4348e077f85223088"
+        },
+        {
+          "repository": "degawa/enumul",
+          "revision": "064bba70797b84100b25dc4466b28f1f38147d0e",
+          "sha256": "0bbb1c13ec5780cbf15bd9380de9e288101edfac3572592f13b8a5d1b81cd364"
+        }
+      ]
+    },
+    {
+      "id": "any",
+      "repository": "degawa/any",
+      "revision": "b9eb5e3fdc8f162ae8f2c5d8d026537ed2397830",
+      "archive_sha256": "2a001b2e843796604ad21652b4899cd1965fdd295c2ee55c8c20a81f92f768c5",
+      "stars": 3,
+      "license": "MIT",
+      "category": "Data structures",
+      "description": "Wrap intrinsic scalar and array values behind a common return type.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "degawa/any",
+            "degawa/fassert"
+          ]
+        }
+      },
+      "dependencies": [
+        {
+          "repository": "degawa/fassert",
+          "revision": "678fa217df79af318cc537d3c69eab3b7cf68cb7",
+          "sha256": "3e456e3c3b57ca276e96deb1ada542154442c7787d5875b366021e75986c265f"
+        }
+      ]
+    },
+    {
+      "id": "for_fifo_queue",
+      "repository": "jordan4ibanez/for_fifo_queue",
+      "revision": "b04b536589af8cf041b8e5e53484e57147fc746f",
+      "archive_sha256": "15c6f3fbc9c8eb44ced15ae5694261759f4b4cf24e4b407fe75886bcf3494dc8",
+      "stars": 0,
+      "license": "MIT",
+      "category": "Data structures",
+      "description": "FIFO queue using C storage for fixed-size values.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "jordan4ibanez/for_fifo_queue"
+          ]
+        }
+      },
+      "dependencies": []
+    },
+    {
+      "id": "jeyemhex-regex",
+      "repository": "jeyemhex/fortran-regex",
+      "revision": "2ca0043837a86a4f77df494ddad2240c1b70e576",
+      "archive_sha256": "e55cf5358c50d1c99c06841c6911d5cf222099b7c3b63576f255292b251ce1d5",
+      "stars": 3,
+      "license": "LGPL-2.1",
+      "category": "Text processing",
+      "description": "Pure Fortran regular-expression matching, splitting and replacement.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "jeyemhex/fortran-regex"
+          ]
+        }
+      },
+      "dependencies": []
+    },
+    {
+      "id": "string-utf-8",
+      "repository": "guntherwillems/fortran-string-utf-8",
+      "revision": "69751115936d5a89439555ddeb1d57537a562e64",
+      "archive_sha256": "6215ef45da9ce5c44948a83ffc7ac7d589e71622f2524e5d09ac9c3ab567a18c",
+      "stars": 0,
+      "license": "MIT",
+      "category": "Text processing",
+      "description": "Manipulate UTF-8 strings as arrays of Unicode code points.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "guntherwillems/fortran-string-utf-8"
+          ]
+        }
+      },
+      "dependencies": []
+    },
+    {
+      "id": "fortime",
+      "repository": "gha3mi/fortime",
+      "revision": "5a31be5a47bf2c0bf49c4d0fb7b67415ccc0a1e7",
+      "archive_sha256": "cef276f7fac8b7a9d2b9ba113e553a2167f4c4bb79af16bdfea680087a529d19",
+      "stars": 10,
+      "license": "BSD-3-Clause",
+      "category": "Timing",
+      "description": "Measure wall-clock and CPU elapsed time, with optional parallel timers.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "manifest_versions": {
+          "gha3mi/fortime": "0.0.0"
+        },
+        "source_revisions": {
+          "szaghi/face": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "gha3mi/fortime",
+            "szaghi/face"
+          ]
+        }
+      },
+      "dependencies": [
+        {
+          "repository": "szaghi/FACE",
+          "revision": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8",
+          "sha256": "d4cc3c3a2c70e7369607624ae3361a6f7b2ba3f1e9a63ffd94ecb5cd4b019469"
+        }
+      ]
+    },
+    {
+      "id": "fassert",
+      "repository": "degawa/fassert",
+      "revision": "678fa217df79af318cc537d3c69eab3b7cf68cb7",
+      "archive_sha256": "3e456e3c3b57ca276e96deb1ada542154442c7787d5875b366021e75986c265f",
+      "stars": 2,
+      "license": "MIT",
+      "category": "Testing",
+      "description": "Extensible assertions for scalar and array values and numerical tolerances.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "degawa/fassert"
+          ]
+        }
+      },
+      "dependencies": []
+    },
+    {
+      "id": "errstat",
+      "repository": "degawa/errstat",
+      "revision": "336ee374c82a4525d87444c767a1f23f059d5723",
+      "archive_sha256": "38be949552f3bff87ebb38b922718a19741b854f172b6c8951913d8621294df2",
+      "stars": 3,
+      "license": "MIT",
+      "category": "Error handling",
+      "description": "Return and inspect structured error statuses and messages.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "degawa/errstat"
+          ]
+        }
+      },
+      "dependencies": []
+    },
+    {
+      "id": "slinked-list",
+      "repository": "zoziha/slinked-list",
+      "revision": "aa04fcb392466e52277200d7380913fe071fe620",
+      "archive_sha256": "7c0817bb083eb2686e23d13a238e3c2058835cf8315043a25f8de0f64e0ad227",
+      "stars": 1,
+      "license": "MIT",
+      "category": "Data structures",
+      "description": "Generic singly linked list with reusable storage for small datasets.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8"
+      },
+      "dependencies": [],
+      "catalog_patches": {
+        "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+        "edits": [
+          {
+            "path": "src/sll_node.f90",
+            "sha256": "a1c19a030622822592ee5c57fca5b0915bdff22afe72ab9ad6e1f49b7fef87f1",
+            "before": "type(node) pure function node_init(data)",
+            "after": "type(node) function node_init(data)"
+          }
+        ]
+      }
+    },
+    {
+      "id": "enclose",
+      "repository": "degawa/enclose",
+      "revision": "d3ea2ea989296bf855f4cb07ea8db601020805f2",
+      "archive_sha256": "ce7e3d3f4e5a4f492cf1c0c5d71086b4b77dc56a003977c4348e077f85223088",
+      "stars": 0,
+      "license": "MIT",
+      "category": "Text processing",
+      "description": "Enclose strings in matching brackets or custom delimiters.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "degawa/enclose"
+          ]
+        }
+      },
+      "dependencies": []
     }
   ]
 }

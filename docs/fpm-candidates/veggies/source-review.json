@@ -1,0 +1,54 @@
+{
+  "id": "veggies",
+  "repository": "everythingfunctional/veggies",
+  "revision": "8388f5e2633afa3d08cf5c6e7db1eeb0dcab2dc8",
+  "archive_sha256": "31abfc48cf3b70d47f8253d95edcd659e0116d766083a7161ef1975ded7c7bf3",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "git_aliases": {
+      "https://gitlab.com/everythingfunctional/erloff": "https://github.com/everythingfunctional/erloff",
+      "https://gitlab.com/everythingfunctional/iso_varying_string": "https://github.com/everythingfunctional/iso_varying_string",
+      "https://gitlab.com/everythingfunctional/strff": "https://github.com/everythingfunctional/strff",
+      "https://gitlab.com/everythingfunctional/exceptional_numbers": "https://github.com/everythingfunctional/exceptional_numbers",
+      "https://gitlab.com/everythingfunctional/parff": "https://github.com/everythingfunctional/parff",
+      "https://gitlab.com/everythingfunctional/veggies": "https://github.com/everythingfunctional/veggies"
+    },
+    "shared_dependencies": {
+      "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+      "repositories": [
+        "everythingfunctional/veggies",
+        "everythingfunctional/iso_varying_string",
+        "everythingfunctional/strff"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "repository": "everythingfunctional/iso_varying_string",
+      "revision": "48ce6b119e855284a87d5a6eb9c53da8b6785716",
+      "sha256": "b1d563dc52c7cb3df41abf3f360ef0c05285b71bec9bd61d090227f88628ba49"
+    },
+    {
+      "repository": "everythingfunctional/strff",
+      "revision": "37dccc0e615a2fc85de18be80427e0f1a678d87c",
+      "sha256": "1aac7b388bcd6f4a181c5d9aea27046f9a7c3f90273184359afa63e11cafc74d"
+    }
+  ],
+  "checked_at": "2026-10-28T23:33:50.254249+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/veggies.f90",
+  "verification": {
+    "seconds": 1.737,
+    "build_seconds": 0.394,
+    "library_reused": true,
+    "demo_sha256": "09055ca0bd2a350896922b8abc667d236c3d99a96440709fc740b08d8b001642",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Functional unit-testing framework. The main runs three specification-style cases checking a small user-written Simpson formula against known constant, linear and quadratic integrals. The numerical formula belongs to the example, not the package. Parallel testing, generators and the complete framework are not validated."
+}

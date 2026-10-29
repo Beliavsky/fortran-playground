@@ -1,0 +1,41 @@
+{
+  "id": "nc4fortran",
+  "repository": "geospace-code/nc4fortran",
+  "revision": "942ac4f83380acdef463002f555aebf30f3c46ac",
+  "archive_sha256": "f27018e3cffbcab181d422d6cffc2062c95acb03a35314b01f7647cdeca1ec9b",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "apt_packages": [
+      "libnetcdff-dev=4.6.0+really4.5.4+ds-3+b4",
+      "libhdf5-dev=1.14.5+repack-3"
+    ],
+    "environment": {
+      "FPM_FFLAGS": "-I/usr/include -I/usr/include/hdf5/serial",
+      "FPM_LDFLAGS": "-L/usr/lib/x86_64-linux-gnu/hdf5/serial"
+    },
+    "shared_dependencies": {
+      "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+      "repositories": [
+        "geospace-code/nc4fortran"
+      ]
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T00:57:33.593173+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/nc4fortran.f90",
+  "verification": {
+    "seconds": 2.627,
+    "build_seconds": 0.662,
+    "library_reused": true,
+    "demo_sha256": "2f5698b3827bf052722fa89097c6d1d94116d4304b888e6bda8d15939bdfa814",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "NetCDF4 array and attribute I/O. The checked main writes a 2-by-3 double-precision array with dimension names and a kelvin units attribute, closes the file, reopens and verifies every value and the attribute, then deletes the sandbox file. Native NetCDF and HDF5 development packages and include/library paths are pinned in the build recipe. No source edits. It does not cover every type/rank, compression, slicing or malformed files."
+}

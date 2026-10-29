@@ -1,0 +1,12 @@
+name = "fortran-tokenizer"
+version = "0.2.0"
+license = "MIT"
+author = "14NGiestas"
+maintainer = "iangiestaspauli@gmail.com"
+copyright = "Copyright 2024, 14NGiestas"
+[build]
+auto-executables = true
+auto-tests = true
+auto-examples = true
+[install]
+library = false

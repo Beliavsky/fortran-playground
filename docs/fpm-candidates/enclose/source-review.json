@@ -1,0 +1,33 @@
+{
+  "id": "enclose",
+  "repository": "degawa/enclose",
+  "revision": "d3ea2ea989296bf855f4cb07ea8db601020805f2",
+  "archive_sha256": "ce7e3d3f4e5a4f492cf1c0c5d71086b4b77dc56a003977c4348e077f85223088",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "shared_dependencies": {
+      "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+      "repositories": [
+        "degawa/enclose"
+      ]
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T01:58:37.812754+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/enclose.f90",
+  "verification": {
+    "seconds": 1.909,
+    "build_seconds": 0.31,
+    "library_reused": true,
+    "demo_sha256": "9a0190870e01edb2e86c87b5bcd77339a4abc470c757ae9fa755c622ce1c8e01",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "String enclosure with automatically matched closing brackets and explicit delimiters. The main checks nested bracket reversal, square brackets, quotation marks, custom opening/closing strings and disabled autoclosing, and prints examples. No source edits; matches the existing FED dependency revision. This is formatting, not parsing or escaping untrusted text."
+}

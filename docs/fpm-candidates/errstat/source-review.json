@@ -1,0 +1,33 @@
+{
+  "id": "errstat",
+  "repository": "degawa/errstat",
+  "revision": "336ee374c82a4525d87444c767a1f23f059d5723",
+  "archive_sha256": "38be949552f3bff87ebb38b922718a19741b854f172b6c8951913d8621294df2",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "shared_dependencies": {
+      "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+      "repositories": [
+        "degawa/errstat"
+      ]
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T01:58:37.812754+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/errstat.f90",
+  "verification": {
+    "seconds": 2.322,
+    "build_seconds": 0.546,
+    "library_reused": true,
+    "demo_sha256": "96ae8eb80913eeefd5d58cd5c3991a6ad754bc83e0b06e1cef3ca74c39187c31",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Error status and message handling. A custom reciprocal routine uses catch_error and set_success. The main checks a successful result, zero rejection with an exact code and message, and a subsequent successful call clearing the error. No source edits. The reciprocal is only a driver, not a mathematical procedure supplied by errstat. Optional omitted-status termination and user-defined task/message repositories are not exercised."
+}

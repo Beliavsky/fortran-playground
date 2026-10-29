@@ -1,0 +1,40 @@
+{
+  "id": "any",
+  "repository": "degawa/any",
+  "revision": "b9eb5e3fdc8f162ae8f2c5d8d026537ed2397830",
+  "archive_sha256": "2a001b2e843796604ad21652b4899cd1965fdd295c2ee55c8c20a81f92f768c5",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "shared_dependencies": {
+      "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+      "repositories": [
+        "degawa/any",
+        "degawa/fassert"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "repository": "degawa/fassert",
+      "revision": "678fa217df79af318cc537d3c69eab3b7cf68cb7",
+      "sha256": "3e456e3c3b57ca276e96deb1ada542154442c7787d5875b366021e75986c265f"
+    }
+  ],
+  "checked_at": "2026-10-29T01:33:12.542944+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/any.f90",
+  "verification": {
+    "seconds": 3.079,
+    "build_seconds": 1.333,
+    "library_reused": true,
+    "demo_sha256": "c791c7de896c3e6f53988caf9575e7d6f2a0a2a14cf124cf8cfc6caf06b1ca86",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Type-erased intrinsic values returned through any_type. The checked main returns an integer, a double-precision real and a character value through one function, retrieves each using its matching type, and checks exact values. No source edits. The author documents undefined results for mismatched type/rank conversions; the example does not validate all ranks, kinds, custom extensions or invalid conversions."
+}

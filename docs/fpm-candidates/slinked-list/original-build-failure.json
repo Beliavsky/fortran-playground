@@ -1,0 +1,6 @@
+{
+  "repository": "zoziha/slinked-list",
+  "revision": "aa04fcb392466e52277200d7380913fe071fe620",
+  "compiler": "GNU Fortran 16.2.0",
+  "diagnostic": " + mkdir -p build/dependencies\n[  0%]              pyplot_module.f90\n[ 12%]              pyplot_module.f90  done.\n[ 12%]                   sll_node.f90\n<ERROR> Compilation failed for object \" .._sources_bundle_packages_0_slinked-list-aa04fcb392466e52277200d7380913fe071fe620_src_sll_node.f90.o \"\n[ 25%]                   sll_node.f90  done.\n\n./././/../sources/bundle/packages/0/slinked-list-aa04fcb392466e52277200d7380913fe071fe620/src/sll_node.f90:18:38:\n\n   18 |     type(node) pure function node_init(data)\n      |                                      1\nError: Result variable \u2018node_init\u2019 of pure function at (1) has polymorphic allocatable component \u2018data\u2019\n<ERROR> stopping due to failed compilation\nSTOP 1\n"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "string-utf-8",
+  "repository": "guntherwillems/fortran-string-utf-8",
+  "revision": "69751115936d5a89439555ddeb1d57537a562e64",
+  "archive_sha256": "6215ef45da9ce5c44948a83ffc7ac7d589e71622f2524e5d09ac9c3ab567a18c",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "shared_dependencies": {
+      "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+      "repositories": [
+        "guntherwillems/fortran-string-utf-8"
+      ]
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T01:58:37.812754+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/string-utf-8.f90",
+  "verification": {
+    "seconds": 2.496,
+    "build_seconds": 0.349,
+    "library_reused": true,
+    "demo_sha256": "7ba7476905d9a55c14ecdb28ed1fad2e0e0dafcffcb14135f7aef469903deb87",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "UTF-8 string handling using one array element per encoded Unicode code point. The main verifies a round trip, code point count, substring, search and replacement of accented text, and prints the results. No source edits. Combining marks remain separate code points; grapheme segmentation, normalization and malformed-input handling are not validated."
+}

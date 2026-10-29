@@ -1,0 +1,33 @@
+{
+  "id": "rearrayfx",
+  "repository": "aradi/rearrayfx",
+  "revision": "be1a7b08e43b358c8ed27fa80db7896767eb9f6d",
+  "archive_sha256": "0ec62b019b6fb6ef56c8933ad91a1abbee85d0742c3e0738c1391e08591dfd56",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "shared_dependencies": {
+      "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+      "repositories": [
+        "aradi/rearrayfx"
+      ]
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-28T22:42:59.624262+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/rearrayfx.f90",
+  "verification": {
+    "seconds": 2.516,
+    "build_seconds": 0.416,
+    "library_reused": true,
+    "demo_sha256": "42ab029721bf925f67b012d87827aab737d3fee492266cfd88919d16e86b892f",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "BSD-2-Clause-Patent",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Growable real rank-two arrays backed by spare capacity. The main checks data preservation across growth within spare capacity, reallocation, shrinking and plain-array assignment. This proof of concept is not a general-purpose container or a test of copying between container instances."
+}

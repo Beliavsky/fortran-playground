@@ -1,0 +1,48 @@
+{
+  "id": "stringifor",
+  "repository": "szaghi/StringiFor",
+  "revision": "019fe9c15a89305b7d2052d9e1bf39ec5f215f7e",
+  "archive_sha256": "2ca10a42ed33487cc648ed5a163bee08b5b673c5b90dfc81739bcd3ccb42cc46",
+  "license": "MIT",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8"
+  },
+  "dependencies": [
+    {
+      "repository": "szaghi/BeFoR64",
+      "revision": "09b95c08a2ee8995d19cf8551c22b783193f6246",
+      "sha256": "a021cd7e20461a86b2ece6d4e6e39b4f10c116f45d1120bb4d5ab9a31585f5f2"
+    },
+    {
+      "repository": "szaghi/PENF",
+      "revision": "65061235982495b158412b70c05b228af4320d94",
+      "sha256": "f8c832e6893d0f12dca9387171f70fb3f0eb60e4b021f385da6937134fcebc74"
+    }
+  ],
+  "status": "deferred",
+  "checked_at": "2026-10-28T23:12:22.929576+00:00",
+  "reason": "Latest root archive contains a symlink; an older root passes extraction but explicitly pins FACE 1455c549ae0c1ead96961ca61a73131d8176b6a4, whose archive also contains a symlink. No archive rules were relaxed; compilation was not attempted.",
+  "rejected_head": {
+    "revision": "bd218de71aea6218edbfce7bb46c40b4668dc3e2",
+    "archive_sha256": "93d0b77c060f186b140d00babcf669e435aedff2fe3f4c14570eece665507514",
+    "links": [
+      {
+        "path": "StringiFor-bd218de71aea6218edbfce7bb46c40b4668dc3e2/CONTRIBUTING.md",
+        "target": "docs/guide/contributing.md"
+      }
+    ],
+    "preparation_error": "Package archive contains an unsafe path, link, or special file."
+  },
+  "blocked_dependency": {
+    "repository": "szaghi/FACE",
+    "revision": "1455c549ae0c1ead96961ca61a73131d8176b6a4",
+    "archive_sha256": "266ede3670cb0ec03685f06d1a13db38c904110ddab6b6426a6c562f263eb47c",
+    "links": [
+      {
+        "path": "FACE-1455c549ae0c1ead96961ca61a73131d8176b6a4/doc/README-FACE.md",
+        "target": "../README.md"
+      }
+    ]
+  },
+  "stage": "source preparation"
+}

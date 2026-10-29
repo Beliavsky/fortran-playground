@@ -1,0 +1,65 @@
+name       = "fordot"
+version    = "VERSION"
+author     = "Seyed Ali Ghasemi"
+maintainer = "info@gha3mi.com"
+copyright  = "Copyright 2023, Seyed Ali Ghasemi"
+license    = "LICENSE"
+
+[preprocess]
+[preprocess.cpp]
+macros = []
+
+[dependencies]
+kinds       = {git="https://github.com/gha3mi/kinds.git"}
+forunittest = {git="https://github.com/gha3mi/forunittest.git"}
+
+[build]
+auto-executables = false
+auto-tests       = false
+auto-examples    = false
+module-naming    = false
+
+[install]
+library = true
+
+[fortran]
+implicit-typing   = false
+implicit-external = false
+source-form       = "free"
+
+[[test]]
+name       = "test1"
+source-dir = "test"
+main       = "test1.f90"
+
+[[test]]
+name       = "test2"
+source-dir = "test"
+main       = "test2.f90"
+
+
+
+
+[extra.ford]
+project             = "ForDot"
+version             = "0.2.0"
+year                = "2023-2025"
+project_github      = "https://github.com/gha3mi/fordot"
+author              = "Seyed Ali Ghasemi"
+email               = "info@gha3mi.com"
+github              = "https://github.com/gha3mi"
+license             = "BSD 3-Clause"
+src_dir             = ["src", "test"]
+output_dir          = "doc"
+source              = true
+incl_src            = true
+graph               = true
+coloured_edges      = true
+search              = true
+print_creation_date = true
+sort                = "permission-alpha"
+display             = ["public", "private", "protected"]
+
+
+[extra.fortitude.check]
+ignore = ["S001", "S061", "C003", "C121" , "C131"]

@@ -1,0 +1,16 @@
+{
+  "id": "time-f",
+  "repository": "0382/time-f",
+  "revision": "f0067d85d32082225d3abecbf8e35cee17fe95c4",
+  "archive_sha256": "c6f73f41e7f1563c755f27d41b317e132809dfb71b825da9ae030619042fe2c2",
+  "checked_at": "2026-10-29T00:49:59.109158+00:00",
+  "status": "deferred",
+  "reason": "Compiles, but the supplied strftime maximum length is ignored. The bounded-buffer probe expects zero for a 19-character date with maxsize=5, and fails. The C binding omits VALUE on size_t maxsize. The tm layout also needs platform ABI review before exposing mktime and timezone-dependent formatting; the source declares only nine integers. Deferred rather than publishing a limited example that hides these issues. A direct sandbox ABI probe confirms sizeof(struct tm)=56 bytes versus c_sizeof(time_f tm)=36 bytes.",
+  "diagnostic": "Cached consumer verification failed: {\"ok\": false, \"compiler\": \"GNU Fortran (GCC) 16.2.0\", \"compiler_id\": \"gfortran\", \"fpm\": \"0.12.0\", \"stages\": [{\"name\": \"Build\", \"command\": [\"fpm\", \"build\", \"--profile\", \"debug\", \"--compiler\", \"gfortran\", \"--c-compiler\", \"gcc\", \"--cxx-compiler\", \"g++\", \"--no-prune\"], \"seconds\": 0.307, \"ok\": true, \"exit_code\": 0, \"error\": \"\", \"stdout\": \"[  0%]                       main.f90\\n[ 50%]                       main.f90  done.\\n[ 50%]                playground-main\\n[100%]                playground-main  done.\\n[100%] Project compiled successfully.\\n\", \"stderr\": \"\"}, {\"name\": \"Run\", \"command\": [\"fpm\", \"run\", \"--profile\", \"debug\", \"--compiler\", \"gfortran\", \"--c-compiler\", \"gcc\", \"--cxx-compiler\", \"g++\", \"--no-prune\"], \"seconds\": 0.028, \"ok\": false, \"exit_code\": 1, \"error\": \"\", \"stdout\": \"\", \"stderr\": \"Project is up to date\\nERROR STOP strftime ignored the supplied buffer limit\\n\\nError termination. Backtrace:\\n#0  0x2ad31c886f83 in ???\\n#1  0x2ad31c887c39 in ???\\n#2  0x2ad31c889045 in ???\\n#3  0x401375 in MAIN__\\n\\tat app/main.f90:14\\n#4  0x4015e8 in main\\n\\tat app/main.f90:2\\n<ERROR> Execution for object \\\" playground-main \\\" returned exit code  1\\n<ERROR> *cmd_run*:stopping due to failed executions\\nSTOP 1\\n\"}], \"cache\": {\"package\": \"time-f\", \"compiler\": \"GNU Fortran 16.2.0\", \"key\": \"969634b5556f3a2e2b999580\", \"library_reused\": true, \"changed_artifacts\": []}, \"packages\": [{\"repository\": \"0382/time-f\", \"revision\": \"f0067d85d32082225d3abecbf8e35cee17fe95c4\", \"sha256\": \"c6f73f41e7f1563c755f27d41b317e132809dfb71b825da9ae030619042fe2c2\"}], \"build_ok\": true, \"target_groups\": {\"app\": [\"playground-main\"], \"example\": [], \"test\": []}, \"targets\": [\"playground-main\"], \"plot_notes\": []}",
+  "reproducer": "docs/fpm-candidates/time-f/main.f90",
+  "abi_check": {
+    "path": "docs/fpm-candidates/time-f/abi-check.json",
+    "c_struct_tm_bytes": 56,
+    "fortran_tm_bytes": 36
+  }
+}

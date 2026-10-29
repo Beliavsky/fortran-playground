@@ -1,0 +1,68 @@
+{
+  "id": "rojff",
+  "repository": "everythingfunctional/rojff",
+  "revision": "9f68e5aa4c12b32720d4224f1ac279bfd7d77b93",
+  "archive_sha256": "503529a91c9692cdb830b3b14db5462a3b83bce12f0e002f3c04922447956961",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "git_aliases": {
+      "https://gitlab.com/everythingfunctional/erloff": "https://github.com/everythingfunctional/erloff",
+      "https://gitlab.com/everythingfunctional/iso_varying_string": "https://github.com/everythingfunctional/iso_varying_string",
+      "https://gitlab.com/everythingfunctional/strff": "https://github.com/everythingfunctional/strff",
+      "https://gitlab.com/everythingfunctional/exceptional_numbers": "https://github.com/everythingfunctional/exceptional_numbers",
+      "https://gitlab.com/everythingfunctional/parff": "https://github.com/everythingfunctional/parff",
+      "https://gitlab.com/everythingfunctional/veggies": "https://github.com/everythingfunctional/veggies"
+    },
+    "source_revisions": {
+      "everythingfunctional/erloff": "a4c10605c9263d315d20c07dc96e1f0d18aa2ffa",
+      "everythingfunctional/strff": "37dccc0e615a2fc85de18be80427e0f1a678d87c",
+      "everythingfunctional/iso_varying_string": "48ce6b119e855284a87d5a6eb9c53da8b6785716"
+    },
+    "shared_dependencies": {
+      "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+      "repositories": [
+        "everythingfunctional/rojff",
+        "everythingfunctional/erloff",
+        "everythingfunctional/iso_varying_string",
+        "everythingfunctional/strff"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "repository": "everythingfunctional/erloff",
+      "revision": "a4c10605c9263d315d20c07dc96e1f0d18aa2ffa",
+      "sha256": "6f6033f3ca404088fa992208f0561ccb497f63849a44805e94faef21788882fc"
+    },
+    {
+      "repository": "everythingfunctional/iso_varying_string",
+      "revision": "48ce6b119e855284a87d5a6eb9c53da8b6785716",
+      "sha256": "b1d563dc52c7cb3df41abf3f360ef0c05285b71bec9bd61d090227f88628ba49"
+    },
+    {
+      "repository": "everythingfunctional/strff",
+      "revision": "37dccc0e615a2fc85de18be80427e0f1a678d87c",
+      "sha256": "1aac7b388bcd6f4a181c5d9aea27046f9a7c3f90273184359afa63e11cafc74d"
+    }
+  ],
+  "checked_at": "2026-10-28T23:33:50.254249+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/rojff.f90",
+  "verification": {
+    "seconds": 2.363,
+    "build_seconds": 0.487,
+    "library_reused": true,
+    "demo_sha256": "5025f64999574af56e0316f2174261c30a2509027d5eaddbf5aa32a16cf1749f",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "JSON parsing and serialization with explicit error values. The main checks numeric/string fields, missing-key reporting, compact serialization round trips and malformed-input rejection. It uses the original Erloff 2.2.0 API with a pinned compatible Strff 3.1.1 and ISO varying string 3.0.3; the Strff 4.0 dependency graph needs an unavailable GitHub mirror. No computational source is patched.",
+  "compatibility_edits": [
+    "Explicit GitLab-to-GitHub aliases; pinned Strff 3.1.1 avoids the unavailable exceptional_numbers mirror while preserving the Erloff 2.2.0 API. No source patches."
+  ]
+}

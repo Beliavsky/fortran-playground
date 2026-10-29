@@ -1,0 +1,55 @@
+{
+  "id": "fortran-simplify",
+  "repository": "jaiken17/fortran-simplify",
+  "revision": "f546422216fb88eba97e2a0f4910935efbcdce83",
+  "archive_sha256": "fac116dbcb42131306061eb500eaa04ef49075e7301f0c01f19c80e7196740f6",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "registry": {
+      "stdlib": {
+        "git": "https://github.com/fortran-lang/stdlib",
+        "rev": "58eb9133966c2797e0593281169ef57c43eccc1d"
+      }
+    },
+    "source_revisions": {
+      "fortran-lang/stdlib": "58eb9133966c2797e0593281169ef57c43eccc1d"
+    },
+    "manifest_versions": {
+      "fortran-lang/stdlib": "0.8.1"
+    },
+    "shared_dependencies": {
+      "adapter_sha256": "8a85ff125c66db77f139fb6b62e6895fa314413a2b0350e68d8f3126c1d19707",
+      "repositories": [
+        "fortran-lang/stdlib"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "repository": "fortran-lang/stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+    }
+  ],
+  "checked_at": "2026-10-28T22:42:59.624262+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/fortran-simplify.f90",
+  "verification": {
+    "seconds": 3.18,
+    "build_seconds": 0.664,
+    "library_reused": true,
+    "demo_sha256": "e2651c4bb7d9a41b345f04ee18eadb5051c175eabdf8405bd9a89b0c65c3f312",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "BSD-3-Clause",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Polyline simplification. The main checks one call of perpendicular-distance reduction against endpoints and an independent interpolation bound, and plots the original and reduced curves. Separate GNU 16 probes confirm incorrect radial-distance filtering and lost endpoints on consecutive perpendicular-distance calls at this pin; see the retained reproducers. The single-call example does not fix those upstream limitations.",
+  "known_limitations": [
+    "radial_distance retains a near-duplicate point because its helper computes a dot product instead of squared distance.",
+    "Saved local flags in perpendicular_distance can lose corners and endpoints on consecutive calls; the demo calls it once."
+  ]
+}

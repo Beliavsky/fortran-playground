@@ -1,0 +1,86 @@
+{
+  "id": "ecx",
+  "repository": "MilanSkocic/ecx",
+  "revision": "d30725e3cb9186bc79f81481f3d6fae8d177a7b7",
+  "archive_sha256": "65110c8ee4576328c839d3421b391b72f5258c940a277a8f5971715bc3d64737",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "registry": {
+      "stdlib": {
+        "git": "https://github.com/fortran-lang/stdlib",
+        "rev": "58eb9133966c2797e0593281169ef57c43eccc1d"
+      }
+    },
+    "source_revisions": {
+      "fortran-lang/stdlib": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "milanskocic/codata": "d0c9b1552f0fa483a364de4a69e82c5e23344caf",
+      "milanskocic/ciaaw": "02efd49caea1a7bbff0602b752075d3fe935bd10",
+      "urbanjost/m_cli2": "a6934890178377cd92444d290aa3d3198ba9954d"
+    },
+    "manifest_versions": {
+      "fortran-lang/stdlib": "0.8.1",
+      "milanskocic/ecx": "0.1.0",
+      "milanskocic/codata": "0.0.0",
+      "milanskocic/ciaaw": "1.3.3"
+    },
+    "shared_dependencies": {
+      "adapter_sha256": "8a85ff125c66db77f139fb6b62e6895fa314413a2b0350e68d8f3126c1d19707",
+      "repositories": [
+        "fortran-lang/stdlib"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "repository": "fortran-lang/stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+    },
+    {
+      "repository": "MilanSkocic/codata",
+      "revision": "d0c9b1552f0fa483a364de4a69e82c5e23344caf",
+      "sha256": "47a519277191fa5c9f3e476c1bf17bbafb6bf2eeeaca43fbffd938e7ecb835a3"
+    },
+    {
+      "repository": "MilanSkocic/ciaaw",
+      "revision": "02efd49caea1a7bbff0602b752075d3fe935bd10",
+      "sha256": "58aee500452c9fd1a643eaa5034a2a86481f22d2f868ab9968b1cc3e5ea6d76f"
+    },
+    {
+      "repository": "urbanjost/M_CLI2",
+      "revision": "a6934890178377cd92444d290aa3d3198ba9954d",
+      "sha256": "55f4bdd7c3be3466f838eae12ed2409b44fe0bd6cc0118bb5194b1d7d578ee28"
+    }
+  ],
+  "catalog_patches": {
+    "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+    "edits": [
+      {
+        "path": "src/ecx_pec.f90",
+        "sha256": "068a2f0ff9e13b38a7cec95a4c15523d215e1e37eb5e3342f0871d352695153a",
+        "before": "module ecx__pec\n",
+        "after": "module ecx__pec\nuse, intrinsic :: iso_fortran_env, only: real64\n"
+      }
+    ]
+  },
+  "checked_at": "2026-10-28T22:42:59.624262+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/ecx.f90",
+  "verification": {
+    "seconds": 2.734,
+    "build_seconds": 0.265,
+    "library_reused": true,
+    "demo_sha256": "3deee68d105f318abe53018e64015faea80384adef71815e1aaa50933d3da7ca",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Electrochemical models with complex-valued equivalent-circuit impedance. The main verifies resistor and capacitor impedances and their series combination against direct complex formulas at four angular frequencies. Kinetics and parameter estimation are not covered. A4 classifies the complex arithmetic interface, not an electrochemistry-specific GAMS class.",
+  "compatibility_edits": [
+    "Import iso_fortran_env real64 in ecx__pec; no formulas changed."
+  ]
+}

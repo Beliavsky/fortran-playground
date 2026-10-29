@@ -975,6 +975,144 @@
     ],
     "featom": [
       "I1"
+    ],
+    "m_la": [
+      "D1"
+    ],
+    "fglm": [
+      "D1"
+    ],
+    "fortrandf": [
+      "N4"
+    ],
+    "strith": [
+      "A1",
+      "A6"
+    ],
+    "list": [
+      "N4",
+      "N5",
+      "N6"
+    ],
+    "friction": [
+      "I1",
+      "L8"
+    ],
+    "feq-parse": [
+      "N3"
+    ],
+    "fordot": [
+      "D1"
+    ],
+    "formatmul": [
+      "D1"
+    ],
+    "bstrith": [
+      "A1",
+      "N2"
+    ],
+    "heatflow": [
+      "D2",
+      "I2"
+    ],
+    "hrweno": [
+      "I1",
+      "I2"
+    ],
+    "ecx": [
+      "A4"
+    ],
+    "orbs": [
+      "A1",
+      "N2"
+    ],
+    "rearrayfx": [
+      "N4"
+    ],
+    "amosf90": [
+      "C10"
+    ],
+    "linalg_fortran": [
+      "D2",
+      "D4"
+    ],
+    "fortran_vector": [
+      "N4"
+    ],
+    "scanner": [
+      "N3"
+    ],
+    "rojff": [
+      "N1",
+      "N3"
+    ],
+    "argparse-f": [
+      "N3"
+    ],
+    "io_utilities": [
+      "N1"
+    ],
+    "uint-fortran": [
+      "A1"
+    ],
+    "veggies": [
+      "S3"
+    ],
+    "shunting-yard-fortran": [
+      "N3"
+    ],
+    "sqliteff": [
+      "N1",
+      "N5"
+    ],
+    "fortran-tokenizer": [
+      "N3"
+    ],
+    "integer_set": [
+      "N4"
+    ],
+    "rpn-calculator-fortran": [
+      "C2",
+      "C4",
+      "C7",
+      "C10"
+    ],
+    "nc4fortran": [
+      "N1"
+    ],
+    "kronrod": [
+      "H2"
+    ],
+    "jeyemhex-regex": [
+      "N3",
+      "N5"
+    ],
+    "fed": [
+      "N1",
+      "N3"
+    ],
+    "any": [
+      "N4"
+    ],
+    "for_fifo_queue": [
+      "N4"
+    ],
+    "string-utf-8": [
+      "N3",
+      "N5"
+    ],
+    "fassert": [
+      "S3",
+      "R2"
+    ],
+    "errstat": [
+      "R3"
+    ],
+    "slinked-list": [
+      "N4"
+    ],
+    "enclose": [
+      "N3"
     ]
   },
   "detailed_classes": {
@@ -5098,6 +5236,1336 @@
           "sha256": "f0875648571516ed6ab67343edade07c4ae301e95d5519552acf635b5061241e"
         }
       ]
+    },
+    {
+      "id": "m-la-api",
+      "package_id": "m_la",
+      "revision": "db59eeab0deab7e84eadf2542ad49c1c719dfb94",
+      "module": "M_LA",
+      "procedure": "mat_magic",
+      "gams_codes": [
+        "D1"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Matrix construction, illustrated by magic squares of orders three through six with independent row, column, diagonal and permutation checks. This mapping does not classify every other M_LA procedure.",
+      "evidence": [
+        {
+          "path": "src/M_LA.f90",
+          "line": 1561,
+          "sha256": "5c15fc609dd2c8222df65e6a005f0704b379f51fa44d73d476be299432c7555a"
+        }
+      ],
+      "author_examples": []
+    },
+    {
+      "id": "fglm-api",
+      "package_id": "fglm",
+      "revision": "e1b6a5404b3e7a266da33173a07166970c16dd86",
+      "module": "vector_3d / matrix_4f",
+      "procedure": "add / multiply / translate / rotate_z",
+      "gams_codes": [
+        "D1"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Vector addition and component products, and column-major homogeneous translation and rotation matrices. The example checks a known point and a quarter-turn about z; broader geometry functionality is not exhaustively validated.",
+      "evidence": [
+        {
+          "path": "src/matrix_4f.f90",
+          "line": 267,
+          "sha256": "70efb588350accfa3b63dfda3f3913a145f5ba2e46fdd720ebf2928dfa512fd9"
+        },
+        {
+          "path": "src/vector_3d.f90",
+          "line": 259,
+          "sha256": "2ea8f8025ab25baa75146fbec0dbbad78af5b83628996ca1ea260d7d66caeca7"
+        }
+      ],
+      "author_examples": []
+    },
+    {
+      "id": "strith-api",
+      "package_id": "strith",
+      "revision": "da2b1f489a178cb443f636e3f9c89aed6c8702b1",
+      "module": "strith_type_strint / strith_util_toString",
+      "procedure": "add / sub / to_string",
+      "gams_codes": [
+        "A1",
+        "A6"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Signed decimal-string integer addition and subtraction beyond 64-bit range, plus unsigned interpretation of an int64 bit pattern. This is fixed-capacity decimal representation, not unlimited arbitrary precision.",
+      "evidence": [
+        {
+          "path": "src/type/strint.f90",
+          "line": 172,
+          "sha256": "ce256be7c61235c255bf5ba095f41ec1215fa912f3bd82e16d324831a3a3f3f0"
+        },
+        {
+          "path": "src/util/toString/toString.f90",
+          "line": 125,
+          "sha256": "8a7b90876386428a9303583e202bfcc49b5ec9acb8ce8eed9fb95b52945199b2"
+        }
+      ],
+      "author_examples": []
+    },
+    {
+      "id": "friction-fit",
+      "package_id": "friction",
+      "revision": "8e75dcac26f47417a439adfcbaa24834105d89fe",
+      "module": "friction_core",
+      "procedure": "friction_model%fit",
+      "gams_codes": [
+        "L8"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Constitutive friction models, with nonlinear parameter fitting and internal-state ODE integration in the reviewed source. The checked main covers algebraic Coulomb and Stribeck forces only; it does not validate parameter fitting or dynamic internal-state integration.",
+      "evidence": [
+        {
+          "path": "src/friction_core.f90",
+          "sha256": "6ad2be97b6ae8ecec8c50ba6e3a363f8a968f00233f5a4216d7edd85c69e9c82",
+          "line": 315
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/friction_model_tests.f90",
+          "sha256": "b50c84375eb9a8909ff88d67bf199e146e24f71669aeef22b5bc8f860cb15e9f"
+        }
+      ]
+    },
+    {
+      "id": "friction-internal-state",
+      "package_id": "friction",
+      "revision": "8e75dcac26f47417a439adfcbaa24834105d89fe",
+      "module": "friction_core",
+      "procedure": "internal_state_odes / internal_var_fit_fcn",
+      "gams_codes": [
+        "I1"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Constitutive friction models, with nonlinear parameter fitting and internal-state ODE integration in the reviewed source. The checked main covers algebraic Coulomb and Stribeck forces only; it does not validate parameter fitting or dynamic internal-state integration.",
+      "evidence": [
+        {
+          "path": "src/friction_core.f90",
+          "sha256": "6ad2be97b6ae8ecec8c50ba6e3a363f8a968f00233f5a4216d7edd85c69e9c82",
+          "line": 221
+        }
+      ],
+      "author_examples": []
+    },
+    {
+      "id": "feq-parse-evaluate",
+      "package_id": "feq-parse",
+      "revision": "2e80c5940b128a52c5070a3f56909674fb85a379",
+      "module": "FEQParse",
+      "procedure": "EquationParser%evaluate",
+      "gams_codes": [
+        "N3"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Numerical evaluation of expressions parsed from text, not symbolic algebra. The demo checks double-precision multivariable Gaussian and polynomial expressions against direct Fortran formulas.",
+      "evidence": [
+        {
+          "path": "src/FEQParse.f90",
+          "sha256": "84e1aef284f03f20b4ff9cf65013537da71507d1527ac4a18dec85ad25746b61",
+          "line": 83
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "example/gaussian_scalar_multivar.f90",
+          "sha256": "102cadb05d1d27720db6a548f3364f39c7cbd748bd92cc9595ce22463e421c89"
+        }
+      ]
+    },
+    {
+      "id": "fordot-products",
+      "package_id": "fordot",
+      "revision": "3966625781a9c1dffe037e3032fa4a0b6f958760",
+      "module": "fordot",
+      "procedure": "dot_product",
+      "gams_codes": [
+        "D1"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Scalar products using methods m1 through m4, each also checked with three unequal blocks against an exact answer. Single-process correctness only; no coarray or performance claim.",
+      "evidence": [
+        {
+          "path": "src/fordot.f90",
+          "sha256": "f8acb8048235f6ff2eab6785560dd8676ec5917b778c1d8c6511c5a355e182d8",
+          "line": 21
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test1.f90",
+          "sha256": "9df1ee66801a4bb1a080346512aa8b38e71e77cc94f1a6207a945630ed1aa0b0"
+        }
+      ]
+    },
+    {
+      "id": "formatmul-products",
+      "package_id": "formatmul",
+      "revision": "4b5747d49c27f0df92288e7a61d0e479e34ac78e",
+      "module": "formatmul",
+      "procedure": "matmul",
+      "gams_codes": [
+        "D1"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Methods m1 through m4 are checked for rectangular matrix multiplication, all transpose combinations and a matrix-vector product. The demo is single-process and does not validate every implementation or coarray branch. At this pin a single explicitly false transpose flag is misrouted; the demo passes both flags whenever either is specified. Separate failing probes and the successful workaround are retained.",
+      "evidence": [
+        {
+          "path": "src/formatmul.f90",
+          "sha256": "01e927ffd8dd4a00f59500dfd120a3f3eb42a152afc0793017102d4d3e865cf9",
+          "line": 585
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test1.f90",
+          "sha256": "d913f9409008e15ee3ed69cc42de5be1c63e28b2095bdb9cc449f403cdf1df68"
+        }
+      ]
+    },
+    {
+      "id": "bstrith-operations",
+      "package_id": "bstrith",
+      "revision": "7ed7730e34c7e1f78f2be9426ccc170f9dcaf57e",
+      "module": "bstrith_arithmetic_basic_add / bstrith_bit_shift",
+      "procedure": "add / sub / shift_l / shift_r",
+      "gams_codes": [
+        "A1",
+        "N2"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Fixed-width binary-string addition, subtraction, shifts and logical operations. The driver checks every eight-bit value, including carry and wraparound. This is not unlimited arbitrary-precision arithmetic.",
+      "evidence": [
+        {
+          "path": "src/arithmetic/basic/add/add.f90",
+          "sha256": "541e826c31ecb31b980345f2853d396f6835a21d19c64b610e948ac84c6bf0a2",
+          "line": 1
+        },
+        {
+          "path": "src/bit/shift/shift.f90",
+          "sha256": "38c84196392ebf938db8e1feedd119c0cf0e519351baab2f34605ec418071102",
+          "line": 20
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "README.md",
+          "sha256": "91f77aaee474e8a73b0b6ef1bb118974b484b473ba9dce335748c4eefc204f71"
+        }
+      ]
+    },
+    {
+      "id": "heatflow-sparse",
+      "package_id": "heatflow",
+      "revision": "b0d930caad9160a15f0aeafa238c448f48f28d55",
+      "module": "solver",
+      "procedure": "SRSin / linbcg",
+      "gams_codes": [
+        "D2"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Fourier/Cattaneo heat-transport code. The checked main applies its sparse BiCG solver to an independent backward-Euler discretization of the one-dimensional heat equation; it checks the discrete solution, continuous-solution error and independent matrix residuals. It does not exercise the complete evolution/Cattaneo application.",
+      "evidence": [
+        {
+          "path": "src/heatflow/mod_Sparse.f90",
+          "sha256": "b313d6445ede687a2c975bbefe6a7b3e3cdb5f64029ee4aa44b6380fbd84ac19",
+          "line": 273
+        }
+      ],
+      "author_examples": []
+    },
+    {
+      "id": "heatflow-evolution",
+      "package_id": "heatflow",
+      "revision": "b0d930caad9160a15f0aeafa238c448f48f28d55",
+      "module": "evolution",
+      "procedure": "simulate",
+      "gams_codes": [
+        "I2"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Fourier/Cattaneo heat-transport code. The checked main applies its sparse BiCG solver to an independent backward-Euler discretization of the one-dimensional heat equation; it checks the discrete solution, continuous-solution error and independent matrix residuals. It does not exercise the complete evolution/Cattaneo application.",
+      "evidence": [
+        {
+          "path": "src/heatflow/mod_evolve.f90",
+          "sha256": "1e4ff67f07501e24ac1bb3b58f6aac3862ac7f34e40f5edf72853cec871448b0",
+          "line": 44
+        }
+      ],
+      "author_examples": []
+    },
+    {
+      "id": "hrweno-reconstruction",
+      "package_id": "hrweno",
+      "revision": "2885105a7ba98351fed299b22e9bc0c67a809d2f",
+      "module": "hrweno_weno",
+      "procedure": "weno%reconstruct",
+      "gams_codes": [
+        "I2"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "WENO spatial reconstruction and explicit TVD Runge-Kutta integration for conservation equations. The main checks a smooth periodic advection problem against exact cell averages and verifies conservation of mass; discontinuous solutions and nonuniform grids are not covered.",
+      "evidence": [
+        {
+          "path": "src/hrweno_weno.f90",
+          "sha256": "2fb3ff8e327d6bb8b12fc743dcdcb02c08ec9e2a1ea419f9f5660f8ddf037c1f",
+          "line": 129
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "example/example1_burgers_1d_fv.f90",
+          "sha256": "37151bd2edea15c4fe262457b417f9fa654f5f0f843e8b223dbd9d06d96706a9"
+        }
+      ]
+    },
+    {
+      "id": "hrweno-tvd",
+      "package_id": "hrweno",
+      "revision": "2885105a7ba98351fed299b22e9bc0c67a809d2f",
+      "module": "hrweno_tvdode",
+      "procedure": "rktvd%integrate",
+      "gams_codes": [
+        "I1"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "WENO spatial reconstruction and explicit TVD Runge-Kutta integration for conservation equations. The main checks a smooth periodic advection problem against exact cell averages and verifies conservation of mass; discontinuous solutions and nonuniform grids are not covered.",
+      "evidence": [
+        {
+          "path": "src/hrweno_tvdode.f90",
+          "sha256": "ef014c717105772adf8a05effce241add2fe35351d30814c1c73e7d213edce62",
+          "line": 97
+        }
+      ],
+      "author_examples": []
+    },
+    {
+      "id": "fortran-simplify-perpendicular",
+      "package_id": "fortran-simplify",
+      "revision": "f546422216fb88eba97e2a0f4910935efbcdce83",
+      "module": "simplify",
+      "procedure": "perpendicular_distance",
+      "gams_codes": [
+        "P",
+        "K"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Polyline simplification. The main checks one call of perpendicular-distance reduction against endpoints and an independent interpolation bound, and plots the original and reduced curves. Separate GNU 16 probes confirm incorrect radial-distance filtering and lost endpoints on consecutive perpendicular-distance calls at this pin; see the retained reproducers. The single-call example does not fix those upstream limitations.",
+      "evidence": [
+        {
+          "path": "src/simplify.f90",
+          "sha256": "c8606e0e0ebdab544827ab7300489171adc02f9813143962e511f9702d1449b5",
+          "line": 559
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "example/simplify_example.f90",
+          "sha256": "678a13f8a2b533550465606c04f38db0f21aff9fbd82336857478cab5149365c"
+        }
+      ]
+    },
+    {
+      "id": "ecx-impedance",
+      "package_id": "ecx",
+      "revision": "d30725e3cb9186bc79f81481f3d6fae8d177a7b7",
+      "module": "ecx__api / ecx__eis",
+      "procedure": "z / zr / zc",
+      "gams_codes": [
+        "A4"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Electrochemical models with complex-valued equivalent-circuit impedance. The main verifies resistor and capacitor impedances and their series combination against direct complex formulas at four angular frequencies. Kinetics and parameter estimation are not covered. A4 classifies the complex arithmetic interface, not an electrochemistry-specific GAMS class.",
+      "evidence": [
+        {
+          "path": "src/ecx_api.f90",
+          "sha256": "0d58382714be58fe13111801a48e95215bfcb30e02574f978d1627092ca9abb7",
+          "line": 1
+        },
+        {
+          "path": "src/ecx_eis.f90",
+          "sha256": "f860f6e5054217a00e40038e58844c9e5dbaa82dfcbe2885e2cc7b4a64de6ac8",
+          "line": 15
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "example/example.f90",
+          "sha256": "41014b75e7eb9d070f9c2ced74977331605e1b0344eee20a2f79f9d96c1e23f7"
+        }
+      ]
+    },
+    {
+      "id": "athena-dense",
+      "package_id": "athena",
+      "revision": "4b81aeac07113628c2c9a476648d5ac2a91b7c91",
+      "module": "athena__full_layer",
+      "procedure": "full_layer_type%forward",
+      "gams_codes": [
+        "K"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Neural-network function approximation. A fixed-weight dense layer with tanh activation is compared against direct Fortran matrix multiplication and TANH. This does not test training, automatic derivatives, graph convolutions or model accuracy on a dataset. K remains broad.",
+      "evidence": [
+        {
+          "path": "src/athena/athena_full_layer.f90",
+          "sha256": "3adf76bb010817848295767e7da7a5d3a61ffc23159f73308af43bd713fbdc09",
+          "line": 839
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_full_layer.f90",
+          "sha256": "5a87fd9d549312f85a5c18ca3226750cefbf1dbac269d88b920eaf03dd6f66ee"
+        }
+      ]
+    },
+    {
+      "id": "orbs-bitsets",
+      "package_id": "orbs",
+      "revision": "3cf7fcec19798367f6f5bd26bad861c510449265",
+      "module": "orbs",
+      "procedure": "operable_bitset / arithmetic and logical operators",
+      "gams_codes": [
+        "A1",
+        "N2"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Fixed-width bitset arithmetic and logical operations. The main computes an x neighbor for every cell of a two-dimensional 4-by-4 Morton grid, checking all sixteen results and wraparound against independent intrinsic integer operations.",
+      "evidence": [
+        {
+          "path": "src/orbs.f90",
+          "sha256": "cba32ebdc46fa9e4d313a48384a513c41520677916bea365098c43bd0807efb6",
+          "line": 1
+        }
+      ],
+      "author_examples": []
+    },
+    {
+      "id": "rearrayfx-storage",
+      "package_id": "rearrayfx",
+      "revision": "be1a7b08e43b358c8ed27fa80db7896767eb9f6d",
+      "module": "rearrayfx",
+      "procedure": "rearray_real64_r2%allocate / assign_array",
+      "gams_codes": [
+        "N4"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Growable real rank-two arrays backed by spare capacity. The main checks data preservation across growth within spare capacity, reallocation, shrinking and plain-array assignment. This proof of concept is not a general-purpose container or a test of copying between container instances.",
+      "evidence": [
+        {
+          "path": "src/rearrayfx.f90",
+          "sha256": "4dc832f9a2bf2ef9d2a31b6a790b9cb3e01afd78021c8665764a02e2dd53b76d",
+          "line": 33
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "app/main.f90",
+          "sha256": "ab06c4a47886066568aabf5bedfe7234564998eac75c699406ef13980ce06942"
+        }
+      ]
+    },
+    {
+      "id": "amosf90-bessel",
+      "package_id": "amosf90",
+      "revision": "b54a4d4a1d8f7c97acd180ed5bbaae8d089a9fa7",
+      "module": "amos",
+      "procedure": "f90_zbesj / f90_zbesi / f90_zbesk",
+      "gams_codes": [
+        "C10"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "AMOS module interfaces for complex-argument Bessel functions with noninteger nonnegative order, including modified Bessel functions. The checked main compares J_0.3 and I_0.3 at 1+0.5i with independent convergent power series and K_0.5 with its closed form. Other argument regions, orders, scaling modes and Airy/Hankel routines are not validated. The upstream README warns of possible bugs.",
+      "evidence": [
+        {
+          "path": "src/amos.f90",
+          "sha256": "acffb85c0777b62444a99e2ac83c7c346777cc037f1a642f2704030d06d34797",
+          "line": 4548
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/check.f90",
+          "sha256": "64fccdc69f84154351ee18ba767dad018f98ce3c820f12be4be02f04c91e6dcd"
+        }
+      ]
+    },
+    {
+      "id": "linalg-fortran-inverse",
+      "package_id": "linalg_fortran",
+      "revision": "30e7237ab54ca176e1c8dae4be2d9d44800e1f83",
+      "module": "linalg_fortran",
+      "procedure": "linalg%inv / linalg%det",
+      "gams_codes": [
+        "D2"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Typed LAPACK interfaces. The checked real64 main verifies a matrix inverse residual, determinant, known eigenvalues, eigenpair residuals and orthonormality for a symmetric 3-by-3 tridiagonal matrix. Complex, single-precision and other BLAS/LAPACK wrappers are not covered. Legacy implicit external interfaces are explicitly enabled in the pinned package manifest.",
+      "evidence": [
+        {
+          "path": "src/linalg_fortran.f90",
+          "sha256": "4ffa256e60df96dcaf51f283bef4f2e8f8138ffa9f5627e2fcadcd13298f8233",
+          "line": 489
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/check.f90",
+          "sha256": "09519034680543664024a34463c4d7613cc66055867b2b50b5493a296ec1c4f7"
+        }
+      ]
+    },
+    {
+      "id": "linalg-fortran-eigen",
+      "package_id": "linalg_fortran",
+      "revision": "30e7237ab54ca176e1c8dae4be2d9d44800e1f83",
+      "module": "linalg_fortran",
+      "procedure": "linalg%eigh",
+      "gams_codes": [
+        "D4"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Typed LAPACK interfaces. The checked real64 main verifies a matrix inverse residual, determinant, known eigenvalues, eigenpair residuals and orthonormality for a symmetric 3-by-3 tridiagonal matrix. Complex, single-precision and other BLAS/LAPACK wrappers are not covered. Legacy implicit external interfaces are explicitly enabled in the pinned package manifest.",
+      "evidence": [
+        {
+          "path": "src/linalg_fortran.f90",
+          "sha256": "4ffa256e60df96dcaf51f283bef4f2e8f8138ffa9f5627e2fcadcd13298f8233",
+          "line": 672
+        }
+      ],
+      "author_examples": []
+    },
+    {
+      "id": "fortran-vector-storage",
+      "package_id": "fortran_vector",
+      "revision": "95469e2ce1162b0ede3ca3435ebd94ec6b6fee79",
+      "module": "fortran_vector",
+      "procedure": "vector_int%append / unique / delete",
+      "gams_codes": [
+        "N4"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Growable integer vectors. The checked main verifies growth from a two-element capacity, appended arrays, stable duplicate removal, remove/delete/pop and final compaction against independent expected contents. A checksum-guarded one-line edit fixes aliasing in unique: remove the already saved first value instead of the first array element while that array is being compacted. Empty-vector unique and all invalid-input cases are not covered.",
+      "evidence": [
+        {
+          "path": "src/fortran_vector.f90",
+          "sha256": "0ee8dc6b054a18b3154952430a29577527edf494e7416385a4656446cd083833",
+          "line": 78
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/check.f90",
+          "sha256": "fb03bf61a1de30537d9ac4625fed25b2a57326c2a7255f4c534187db5f1b9117"
+        }
+      ]
+    },
+    {
+      "id": "scanner-text",
+      "package_id": "scanner",
+      "revision": "b0026498c171b615bb3dcfca55a0f20b133e22dc",
+      "module": "scanner",
+      "procedure": "textscanner%new / current / next / peek / jump_to",
+      "gams_codes": [
+        "N3"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Character-by-character text scanning. The main reconstructs a configuration record through current/next, verifies navigation and end boundaries, and checks that peek does not move the cursor. The recovered fields are converted with ordinary internal READ and compared with known values; this is a small parser example, not a full parsing language.",
+      "evidence": [
+        {
+          "path": "src/scanner.f90",
+          "sha256": "611e90e368cb66ac7d2f29128d4e7d968e27ec1bb74b989d2af5898137116a26",
+          "line": 41
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "app/main.f90",
+          "sha256": "653f0d75d9f739e84957dc481b9eeaa368fce97c2e1596c11c1410ce863632bf"
+        }
+      ]
+    },
+    {
+      "id": "rojff-json",
+      "package_id": "rojff",
+      "revision": "9f68e5aa4c12b32720d4224f1ac279bfd7d77b93",
+      "module": "rojff_parser_m / rojff_json_value_m",
+      "procedure": "parse_json_from_string / json_value_t%to_compact_string",
+      "gams_codes": [
+        "N1",
+        "N3"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "JSON parsing and serialization with explicit error values. The main checks numeric/string fields, missing-key reporting, compact serialization round trips and malformed-input rejection. It uses the original Erloff 2.2.0 API with a pinned compatible Strff 3.1.1 and ISO varying string 3.0.3; the Strff 4.0 dependency graph needs an unavailable GitHub mirror. No computational source is patched.",
+      "evidence": [
+        {
+          "path": "src/rojff/parser/parser_m.f90",
+          "sha256": "45e104f8a23d863175fe364656d7979bd307ee158a2d9dd74cf34fb61f5e9364",
+          "line": 18
+        },
+        {
+          "path": "src/rojff/json_types/value_m.f90",
+          "sha256": "84492c4656ddc33a51d661bb9307215bee813458fe991ab446a07b3c27a69600",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "example/get_value/main.f90",
+          "sha256": "713cecc42442652ca14dcd87578621074ba23ad098b0bbe8a1ac05c7b3634d68"
+        }
+      ]
+    },
+    {
+      "id": "argparse-f-options",
+      "package_id": "argparse-f",
+      "revision": "435cc1676d6064162a3c36b91f1aa50d926fdd45",
+      "module": "argparse",
+      "procedure": "argparser%parse / typed option getters",
+      "gams_codes": [
+        "N3"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Typed process command-line parsing. The main launches itself once with fixed example arguments, then checks an integer, double, string, logical flag and untouched default. No supplied files or playground argument-setting changes are needed. Error exits, positional/named arguments, truncation and every syntax variant are not covered.",
+      "evidence": [
+        {
+          "path": "src/argparse-f.f90",
+          "sha256": "8223c2b84b512164df7a70b8b3583b8abddd3b24bd979874fe9a518c8692526a",
+          "line": 143
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/check.f90",
+          "sha256": "e0dadf4984269ec263260b31889ea01dfc73baf86f5f1378a71fd8c42705cef6"
+        }
+      ]
+    },
+    {
+      "id": "io-utilities-keyvars",
+      "package_id": "io_utilities",
+      "revision": "f0551aad0b46aa7aac1c442a3c576ecc90028f72",
+      "module": "keyvars",
+      "procedure": "keyvar / get_values",
+      "gams_codes": [
+        "N1"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Key/value configuration input. The main creates and reads a tiny INI-style file with a section, comment, integer, double, logical and string, verifies known values and deletes it. A checksum-guarded manifest correction changes the invalid one-element library array into a library table; Fortran sources are unchanged. Other I/O modules and malformed-input handling are not covered.",
+      "evidence": [
+        {
+          "path": "src/keyvars.f90",
+          "sha256": "cc25737533ca307437f6e2706a400d07048fc80c4cc564d1f5a84758a7288970",
+          "line": 45
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_keyvars.f90",
+          "sha256": "28072c7e87541ff1dddcd30b1a331aab07320128eb1f81de88baaa85b395ae76"
+        }
+      ]
+    },
+    {
+      "id": "uint-fortran-arithmetic",
+      "package_id": "uint-fortran",
+      "revision": "487f806c76a5d107c5a8982198bafb295065eba7",
+      "module": "unsigned_m / addition_m / int_m",
+      "procedure": "uint16 / uint32 / arithmetic operators / int",
+      "gams_codes": [
+        "A1"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Fixed-width unsigned integer derived types. The main checks 16/32-bit upper boundaries, 32-bit arithmetic above the signed boundary, comparisons, modular addition/subtraction and conversion of a negative assignment. It imports the current int_m conversion API explicitly. This is not arbitrary-precision arithmetic or validation of every kind, operation or C interoperability path.",
+      "evidence": [
+        {
+          "path": "src/types/uint32_t.f90",
+          "sha256": "2762ad640ff97116e6c97cfe3f1c082b35644d0c8ae346dce4f1471f1a3cf4f9",
+          "line": 10
+        },
+        {
+          "path": "src/intrinsic_operators_overload/the_four_arithmetic_operations/addition_m.f90",
+          "sha256": "98c8be1a1a7620ad34ba3d5dea778c6d83724c24ff1752882bb493f778e79864",
+          "line": 1
+        },
+        {
+          "path": "src/intrinsic_functions_overload/int_m.f90",
+          "sha256": "8bbfcd149ac96e31657f0d5ba7c2ef4763f12fa14a550770ac415600c0a750b5",
+          "line": 25
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/check-assign-negative_uint32.f90",
+          "sha256": "5835847506ba4a190bb452d61d72efd7ea441a2282181bb2b63ceff00e359d5b"
+        }
+      ]
+    },
+    {
+      "id": "veggies-tests",
+      "package_id": "veggies",
+      "revision": "8388f5e2633afa3d08cf5c6e7db1eeb0dcab2dc8",
+      "module": "veggies",
+      "procedure": "describe / it / assert_equals / run_tests",
+      "gams_codes": [
+        "S3"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Functional unit-testing framework. The main runs three specification-style cases checking a small user-written Simpson formula against known constant, linear and quadratic integrals. The numerical formula belongs to the example, not the package. Parallel testing, generators and the complete framework are not validated.",
+      "evidence": [
+        {
+          "path": "src/veggies/run_tests_m.f90",
+          "sha256": "886c21672e9ac70570e694c9a17c9cb61ab40f23eb6b362f2c43bbebe3606594",
+          "line": 13
+        }
+      ],
+      "author_examples": []
+    },
+    {
+      "id": "shunting-yard-parser",
+      "package_id": "shunting-yard-fortran",
+      "revision": "ff62d83502bc5fdf77f2750c3538b8634a543b91",
+      "module": "parser_module",
+      "procedure": "parser_t%parse / register_operator",
+      "gams_codes": [
+        "N3"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Token-based expression parsing with user-supplied callbacks. The main checks precedence, parentheses, right-associative exponentiation, square root and unary minus against five exact results. A checksum-guarded edit moves a host-independent library callback to module scope after the original layout crashed in the sandbox; parsing rules are unchanged. The author documents global registrations, fixed precedences and missing syntax validation; concurrent parsers and malformed expressions are not supported by this example.",
+      "evidence": [
+        {
+          "path": "src/parser.f90",
+          "sha256": "031c159946ca0d9214c2b82a9021bc926c577f5fdf052d01d3e693b61980b84a",
+          "line": 105
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "app/main.f90",
+          "sha256": "e6a66c253ee988f8c2d76f2dc8362f6bb1f0f6e05c744090216b859439cf760c"
+        }
+      ]
+    },
+    {
+      "id": "sqliteff-database",
+      "package_id": "sqliteff",
+      "revision": "9b377c976698a7da671536e5e2539146ab734ca6",
+      "module": "sqliteff",
+      "procedure": "sqliteff_open / sqliteff_exec / sqliteff_prepare / sqliteff_step",
+      "gams_codes": [
+        "N1",
+        "N5"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "SQLite wrapper with bundled SQLite 3.30.1 C sources. The checked main opens an in-memory database, creates a table, inserts three values, verifies count and average, reaches SQLITE_DONE and closes resources. It does not cover persistent files, concurrent use, transactions or the complete SQLite API. Explicit GitLab-to-GitHub alias pins ISO varying string; no source edits.",
+      "evidence": [
+        {
+          "path": "src/sqliteff.f90",
+          "sha256": "4f6be391fe0f69efeed3b520c7694c25ef55f87975f88032040a5441520d183a",
+          "line": 1
+        }
+      ],
+      "author_examples": []
+    },
+    {
+      "id": "erloff-errors",
+      "package_id": "erloff",
+      "revision": "73dfdbf54dafadb42e4705c45824b93917a20965",
+      "module": "erloff_error_list_m",
+      "procedure": "error_list_t%with_error_appended / operator(.ofType.)",
+      "gams_codes": [
+        "R"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Structured error lists and logging. The checked main collects two fatal validation messages, filters one by OUT_OF_BOUNDS, checks counts and diagnostic text, and prints both messages. The pinned compatible Strff 3.1.1 avoids the unavailable exceptional_numbers mirror requested through Strff 4.0. No library source edits. This does not cover all logging levels, filtering operators or concurrent use.",
+      "evidence": [
+        {
+          "path": "src/erloff/error_list_m.f90",
+          "sha256": "85b56db1c92c4904cf924abb982dda0227bb1c8ca77376322b89941124ec716f",
+          "line": 1
+        }
+      ],
+      "author_examples": []
+    },
+    {
+      "id": "tokenizer-fields",
+      "package_id": "fortran-tokenizer",
+      "revision": "11ad73ea6102f86593bf2b372d56bf9fbedaebc7",
+      "module": "fortran_tokenizer",
+      "procedure": "tokenizer_t%tokenize",
+      "gams_codes": [
+        "N3"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Customizable text tokenization. The checked main uses a module callback to split comma, space and tab-separated fields, verifies all three tokens and checks clearing the list. This is lexical splitting, not expression evaluation. No source edits. Malformed input, every callback combination and token object storage are not covered.",
+      "evidence": [
+        {
+          "path": "src/tokenizer.f90",
+          "sha256": "b7eb5490b37a5f64f82752969fa05d7535f2375da76be1dc06fb547135634008",
+          "line": 1
+        }
+      ],
+      "author_examples": []
+    },
+    {
+      "id": "integer-set-storage",
+      "package_id": "integer_set",
+      "revision": "85d336319d6593f9768c599835342912ce0b7bb8",
+      "module": "integer32_set / integer64_set",
+      "procedure": "push / pop / sort",
+      "gams_codes": [
+        "N4"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Simple fixed-width integer sets. The checked main verifies duplicate rejection, removal and sorted contents for 32-bit values, and duplicate rejection for a 64-bit value above the 32-bit range. Membership is checked from public data, not a separate membership API. No source edits. Performance, every boundary and all operations are not validated.",
+      "evidence": [
+        {
+          "path": "src/integer32_set.f90",
+          "sha256": "a4a3fdfee506038548995f7f4a88dc4d0fb0df8946a47ece05f4ecf3fdecc2b1",
+          "line": 1
+        }
+      ],
+      "author_examples": []
+    },
+    {
+      "id": "smart-pointer-lifetime",
+      "package_id": "smart-pointers",
+      "revision": "35130adc4be4384a14b2369e5edd36d4665cd994",
+      "module": "sp_smart_pointer_m",
+      "procedure": "sp_smart_pointer_t%start_counter / reference_count",
+      "gams_codes": [
+        "R"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Reference-counted resource management. Adapted from the author example: a user type extends sp_smart_pointer_t and implements free. The checked main shares one integer resource, verifies reference counts and shared target, checks no premature cleanup and confirms exactly one cleanup after subroutine return. No source edits. This is not exhaustive compiler finalization conformance testing.",
+      "evidence": [
+        {
+          "path": "src/smart_pointer/sp_smart_pointer_m.f90",
+          "sha256": "4ba59dde067669f5bab6a37c8f2f4402ebdc10e50ce5b4fc765ca25eeae7d257",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "example/user_object_smart_pointer.f90",
+          "sha256": "9aae793e04b1e65fd2eee344c063a1a0e15903c62c03da93fcffa57722fe663e"
+        }
+      ]
+    },
+    {
+      "id": "rpn-elementary",
+      "package_id": "rpn-calculator-fortran",
+      "revision": "7708e4949f17511d81f4e7dd0271a500f0bc3631",
+      "module": "funcs / hyper",
+      "procedure": "cuberoot / sinc / sech",
+      "gams_codes": [
+        "C2",
+        "C4"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Numerical routines from the RPN calculator, called directly without its interactive interface. The checked main verifies a negative cube root, sinc and sech at zero, beta(2,3), modified Bessel I0 at zero, and integer gcd/lcm against known results. A checksum-guarded manifest correction sets source-form=default so .f and .f90 files use their respective forms. No numerical sources are changed. The tests do not establish accuracy over full argument ranges or validate the complete calculator.",
+      "evidence": [
+        {
+          "path": "src/funcs.f90",
+          "sha256": "45efe8c3beb31e519578af744301ddf25d90a8942432fd4def62ba3cc08d7084",
+          "line": 1
+        },
+        {
+          "path": "src/hyper.f90",
+          "sha256": "c6b8444228ccf8accf9d7cf842062d5cdbd6d4e9759c5c26f5c3cec65f2ea26c",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test.f90",
+          "sha256": "e9475b7ba78c098109893540c4e515d2261d972ecf291745563ee64d67b4f2bc"
+        }
+      ]
+    },
+    {
+      "id": "rpn-special",
+      "package_id": "rpn-calculator-fortran",
+      "revision": "7708e4949f17511d81f4e7dd0271a500f0bc3631",
+      "module": "fgamma / i0",
+      "procedure": "beta / besi0",
+      "gams_codes": [
+        "C7",
+        "C10"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Numerical routines from the RPN calculator, called directly without its interactive interface. The checked main verifies a negative cube root, sinc and sech at zero, beta(2,3), modified Bessel I0 at zero, and integer gcd/lcm against known results. A checksum-guarded manifest correction sets source-form=default so .f and .f90 files use their respective forms. No numerical sources are changed. The tests do not establish accuracy over full argument ranges or validate the complete calculator.",
+      "evidence": [
+        {
+          "path": "src/specfun/gamma.f90",
+          "sha256": "c556924514869ff8cd007f48d1a4cf256681a9ec358c030f54b27a1a29ca7344",
+          "line": 1
+        },
+        {
+          "path": "src/specfun/i0.f",
+          "sha256": "b051aff4b48973d3e189f43e567aa2cc0c0484c4693cbf4c3266d79aa1c03a88",
+          "line": 1
+        }
+      ],
+      "author_examples": []
+    },
+    {
+      "id": "rpn-integer",
+      "package_id": "rpn-calculator-fortran",
+      "revision": "7708e4949f17511d81f4e7dd0271a500f0bc3631",
+      "module": "rat",
+      "procedure": "gcd / lcm",
+      "gams_codes": [
+        "B"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Numerical routines from the RPN calculator, called directly without its interactive interface. The checked main verifies a negative cube root, sinc and sech at zero, beta(2,3), modified Bessel I0 at zero, and integer gcd/lcm against known results. A checksum-guarded manifest correction sets source-form=default so .f and .f90 files use their respective forms. No numerical sources are changed. The tests do not establish accuracy over full argument ranges or validate the complete calculator.",
+      "evidence": [
+        {
+          "path": "src/rat.f90",
+          "sha256": "2add4bee4850778b2bb39432749f19cae1f6649d6896bd0b8d003c619485f729",
+          "line": 1
+        }
+      ],
+      "author_examples": []
+    },
+    {
+      "id": "nc4fortran-io",
+      "package_id": "nc4fortran",
+      "revision": "942ac4f83380acdef463002f555aebf30f3c46ac",
+      "module": "nc4fortran",
+      "procedure": "netcdf_file%open / write / read / write_attribute / read_attribute",
+      "gams_codes": [
+        "N1"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "NetCDF4 array and attribute I/O. The checked main writes a 2-by-3 double-precision array with dimension names and a kelvin units attribute, closes the file, reopens and verifies every value and the attribute, then deletes the sandbox file. Native NetCDF and HDF5 development packages and include/library paths are pinned in the build recipe. No source edits. It does not cover every type/rank, compression, slicing or malformed files.",
+      "evidence": [
+        {
+          "path": "src/interface.f90",
+          "sha256": "ea1463569a148abe350e1042ac345d65939221e0a9f9e67978bd5b722b7a627e",
+          "line": 1
+        },
+        {
+          "path": "src/attributes.f90",
+          "sha256": "9a3c28857b4d4f845ff8d11ab456a73bb03d5e6dd3417ee0c9e2a096d98c97b3",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_array.f90",
+          "sha256": "65873c7734d345d4df4f1a86baf378e91d4acfde6f57fb5ffebc18592a1739fe"
+        },
+        {
+          "path": "test/test_attributes.f90",
+          "sha256": "0ebf81f0cda89879b306c97c8518076dc9e56a1e4a10caa5f9fc637e262ce212"
+        }
+      ]
+    },
+    {
+      "id": "fundamental-codata",
+      "package_id": "fundamental_constants",
+      "revision": "3e18620ab7813fd9f02e8dcf05c48f0ca13f2ec0",
+      "module": "CODATA_2022_constants",
+      "procedure": "Planck_constant / speed_of_light_in_vacuum / elementary_charge",
+      "gams_codes": [
+        "R"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "CODATA physical constants. The checked main imports the explicit 2022 edition, computes the energy of a 500 nm photon in joules and electron volts, and compares it with independent decimal reference values. The source modules are pre-generated; no network request or Python generation is needed to use them. No source edits. This is a check of three constants and one calculation, not revalidation of the complete CODATA tables or uncertainty propagation.",
+      "evidence": [
+        {
+          "path": "src/CODATA_2022_constants.f90",
+          "sha256": "e64197ed448efd752673b980ca3ce137e6cf68c5fa4dc3dfd959214936cbe957",
+          "line": 1
+        }
+      ],
+      "author_examples": []
+    },
+    {
+      "id": "array-range-bounds",
+      "package_id": "array_range",
+      "revision": "cd21ccb982e23de9c2df44c12edab44dd84562dc",
+      "module": "arrayRange_type_2d",
+      "procedure": "to_array2d_range / array2d_range_type%to_array",
+      "gams_codes": [
+        "R"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Derived types and constructors for multidimensional array bounds. The checked main reconstructs and round-trips bounds [-1:1,4:5], traverses exactly six elements using stored bounds and verifies their sum of 270. No source edits. It does not cover all dimensions, vector/tensor wrappers, empty arrays or invalid bounds. This is an indexing utility, not a numerical solver.",
+      "evidence": [
+        {
+          "path": "src/type/array2d_range_type.f90",
+          "sha256": "71e6df2a70c3a6c3943e8e15bf8ee2a45e81d61df125cd9dad4642fcf4e3d6af",
+          "line": 1
+        }
+      ],
+      "author_examples": []
+    },
+    {
+      "id": "kronrod-rule",
+      "package_id": "kronrod",
+      "revision": "312278846b6e403fdea410a823d88ef4fb92a3cc",
+      "module": "playground_kronrod (catalog wrapper)",
+      "procedure": "kronrod",
+      "gams_codes": [
+        "H2c"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Gauss-Kronrod quadrature-rule generation. A checksum-guarded adapter exposes the original internal procedures as module playground_kronrod, removes the large driver loop and declares app as the library directory; The consumer uses the wrapped module instead of running the original batch drivers. Procedure bodies, constants and precision settings are unchanged. The main generates the symmetric 7-point rule, checks six even polynomial integrals through degree 10 at 40-decimal-place tolerance with MPFUN arithmetic, and prints double-precision summaries. Only the unchanged MPFUN dependency is shared. This is a rule generator, not an adaptive integrator or full validation of every rule/order.",
+      "evidence": [
+        {
+          "path": "app/main.f90",
+          "sha256": "979e08f29ea88ca0b2d8399e9975279698790d938a0caedcf35fd3214864cce7",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "app/main.f90",
+          "sha256": "979e08f29ea88ca0b2d8399e9975279698790d938a0caedcf35fd3214864cce7"
+        }
+      ]
+    },
+    {
+      "id": "jeyemhex-regex-strings",
+      "package_id": "jeyemhex-regex",
+      "revision": "2ca0043837a86a4f77df494ddad2240c1b70e576",
+      "module": "regex",
+      "procedure": "re_match / re_match_str / re_split / re_replace",
+      "gams_codes": [
+        "N3",
+        "N5"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Pure Fortran regular expressions by Edward Higgins, distinct from perazz/fortran-regex already selected under fortran-regex. The main checks matching and nonmatching anchored decimal measurements, matched substring, comma/space splitting and replacement. No source edits or native regex library. Pattern whitespace is ignored unless escaped; the author documents missing capture references and other features, so PCRE compatibility and all patterns are not claimed.",
+      "evidence": [
+        {
+          "path": "src/regex.f90",
+          "sha256": "0c4353791ee919da9418a127f43eb6fa3869e1539127edcc1dffb204b0392aa2",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "example/re_example.f90",
+          "sha256": "510884d09fa7e656ffea00fc060127a51ace633697c00ad28aaa5ced6a0aa4b7"
+        }
+      ]
+    },
+    {
+      "id": "fed-format",
+      "package_id": "fed",
+      "revision": "d735aa2b3bd6b20840bcc16ff569e8cfc0492267",
+      "module": "fed",
+      "procedure": "format / int / real / char",
+      "gams_codes": [
+        "N1",
+        "N3"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Programmatic Fortran edit descriptors. The main generates and applies integer, character and fixed-decimal real formats, checks exact aligned output, and verifies a zero-padded integer. The registry stdlib dependency is mapped to a pinned Git source and manifest version; compatible stdlib objects are reused. No Fortran source edits. Arrays, complex values, user-defined I/O and every descriptor/control mode are not covered.",
+      "evidence": [
+        {
+          "path": "src/fed.f90",
+          "sha256": "4e6dd0b6f338879e360c056d2d216dfd6416f1bd1bc18adc00e990c4022b4202",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "example/integer.f90",
+          "sha256": "cccc67d148438dc13476cdda9f6ccd8da92104c4c6abaaac436f83a7a8732353"
+        },
+        {
+          "path": "example/real.f90",
+          "sha256": "44d449346997a358306038f533f4b23aa08774b6b72eed519ae657933a882bc5"
+        }
+      ]
+    },
+    {
+      "id": "any-values",
+      "package_id": "any",
+      "revision": "b9eb5e3fdc8f162ae8f2c5d8d026537ed2397830",
+      "module": "any_t",
+      "procedure": "any_type / assignment(=) / as_char",
+      "gams_codes": [
+        "N4"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Type-erased intrinsic values returned through any_type. The checked main returns an integer, a double-precision real and a character value through one function, retrieves each using its matching type, and checks exact values. No source edits. The author documents undefined results for mismatched type/rank conversions; the example does not validate all ranks, kinds, custom extensions or invalid conversions.",
+      "evidence": [
+        {
+          "path": "src/any_t.f90",
+          "sha256": "23cc98fef6ccc1165e25ec69423bb0090519086067d15f31d7a093b271a6dc86",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "example/demo.f90",
+          "sha256": "50eb2bd6761ddd26606a0ad1577ed7012078cdb8512b1668b8c19ad11ad45631"
+        }
+      ]
+    },
+    {
+      "id": "fifo-queue-values",
+      "package_id": "for_fifo_queue",
+      "revision": "b04b536589af8cf041b8e5e53484e57147fc746f",
+      "module": "fifo_queue",
+      "procedure": "new_fifo_queue / fifo%push / pop / count / destroy",
+      "gams_codes": [
+        "N4"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "FIFO container using C allocations and byte copies. The main enqueues four 64-bit C-interoperable integers, verifies count and exact retrieval order, frees every popped allocation with C free, checks empty-pop behavior and destroys the queue. No source edits. The implementation uses GNU LOC and raw byte storage; the example makes no portability claim for arbitrary derived types, pointer-owning values, threading or every compiler.",
+      "evidence": [
+        {
+          "path": "src/fifo_queue.f90",
+          "sha256": "4a316e13281710c0467460c906029613d057996cf781eda942d879242396ec2c",
+          "line": 1
+        },
+        {
+          "path": "src/fifo_queue.c",
+          "sha256": "7b30bb7afe4cc5cd12e5f79181f405bb52db33e94d53f01138a940958bfcefa9",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/tutorial.f90",
+          "sha256": "c9a7f8bf73a4f99a96c885a3c7ab83dba477039bea68e7e7bb064d1419276aee"
+        }
+      ]
+    },
+    {
+      "id": "utf8-strings",
+      "package_id": "string-utf-8",
+      "revision": "69751115936d5a89439555ddeb1d57537a562e64",
+      "module": "string_utf_8",
+      "procedure": "chars_array / chars / substr / indexof / str_replace_all",
+      "gams_codes": [
+        "N3",
+        "N5"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "UTF-8 string handling using one array element per encoded Unicode code point. The main verifies a round trip, code point count, substring, search and replacement of accented text, and prints the results. No source edits. Combining marks remain separate code points; grapheme segmentation, normalization and malformed-input handling are not validated.",
+      "evidence": [
+        {
+          "path": "src/string_utf_8.f90",
+          "sha256": "3aaf269cdfb147365f9b288005fdc719316a968846a2b43fa73d2b20b179a72f",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "app/example.f90",
+          "sha256": "6386ad113502fdce96e8a02ae5bffca704abd8b71991e79cd4da7590bb693345"
+        }
+      ]
+    },
+    {
+      "id": "serial-timers",
+      "package_id": "fortime",
+      "revision": "5a31be5a47bf2c0bf49c4d0fb7b67415ccc0a1e7",
+      "module": "fortime",
+      "procedure": "timer%timer_start / timer_stop / ctimer_start / ctimer_stop",
+      "gams_codes": [
+        "R"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Serial system_clock and CPU timers. The checked main computes the exact sum of integers 1 through 100000, checks finite nonnegative elapsed times and prints the sum and timings. The root manifest VERSION placeholder is replaced with adapter version 0.0.0; the pinned source commit identifies the actual library. FACE is pinned to an already used revision. No Fortran source edits. MPI/OpenMP timers are not enabled or tested; sandbox timings vary and are not benchmark guarantees.",
+      "evidence": [
+        {
+          "path": "src/fortime.F90",
+          "sha256": "25c0130c5908356e253b94bd4bbc626e341545bf86d9ce3f2d16ea93e89dee72",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "example/example1.f90",
+          "sha256": "fadbcb08f3249fe07f78212b2c730b257a067c4ea0e0a95ff1a381bd714d0e86"
+        },
+        {
+          "path": "example/example3.f90",
+          "sha256": "fa1ee42d66b73178e432a0ec6f81df1ef90f34e5d3a3e7e72f4c42429caad717"
+        }
+      ]
+    },
+    {
+      "id": "assert-values",
+      "package_id": "fassert",
+      "revision": "678fa217df79af318cc537d3c69eab3b7cf68cb7",
+      "module": "fassert",
+      "procedure": "assert_equal / assert_approx_equal / expect_equal",
+      "gams_codes": [
+        "S3",
+        "R2"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Assertions for integer scalars and arrays plus approximate real comparison with an explicit tolerance. The main captures an intentional failed comparison as a logical status and message, checks both, and continues successfully. No source edits; matches the existing Any dependency revision. Not a validation of every type, rank, tolerance convention, custom comparator or test-framework integration.",
+      "evidence": [
+        {
+          "path": "src/fassert.f90",
+          "sha256": "41a17434eb7360615fd4893901e7d2db704463374a46eeededa8545c4e0130ac",
+          "line": 1
+        },
+        {
+          "path": "src/approxEqual/assertApproxEqual.f90",
+          "sha256": "b857c0d82d8cfff4602fc1a6a17f49aa474d0634962f5039a8a2eecf032637e2",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "example/collab/testdrive.f90",
+          "sha256": "b7307cf28fc71daf607d8477ac8026da89e7a3a4d2433ca816eda2d70eb58b48"
+        }
+      ]
+    },
+    {
+      "id": "error-status",
+      "package_id": "errstat",
+      "revision": "336ee374c82a4525d87444c767a1f23f059d5723",
+      "module": "errstat",
+      "procedure": "catch_error / set_success / error_stat_type",
+      "gams_codes": [
+        "R3"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Error status and message handling. A custom reciprocal routine uses catch_error and set_success. The main checks a successful result, zero rejection with an exact code and message, and a subsequent successful call clearing the error. No source edits. The reciprocal is only a driver, not a mathematical procedure supplied by errstat. Optional omitted-status termination and user-defined task/message repositories are not exercised.",
+      "evidence": [
+        {
+          "path": "src/errstat.f90",
+          "sha256": "b8bc5eff47dfeadb22e18893f95d5cf8bad98f315dcc73551e9bbfa3aa0463ea",
+          "line": 1
+        },
+        {
+          "path": "src/type/errorStat/errorStat.f90",
+          "sha256": "db08663cdbfd2710a2eb8bcea502202f898c5f774d952407580d283e1cd30624",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "example/error/err_code.f90",
+          "sha256": "db58edcd0187969b13bfb70b39ec12f807375dbb3e2d6a2c5d5c5225e5863fdc"
+        }
+      ]
+    },
+    {
+      "id": "linked-list-values",
+      "package_id": "slinked-list",
+      "revision": "aa04fcb392466e52277200d7380913fe071fe620",
+      "module": "sll_module",
+      "procedure": "sll%push_back / empty / size / iterator%next",
+      "gams_codes": [
+        "N4"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Generic singly linked list for small datasets. The main checks integer and real payloads in insertion order, list size, iteration count, emptying, retained capacity and the value stored after reuse; iterator and list cleanup are explicit. A checksum-guarded compatibility edit removes PURE from node_init, whose result has a polymorphic allocatable component. Constructor allocation and copying are unchanged, and the call sites are impure. This patched root retains its own small archive instead of sharing an unmodified graph export. No display dependency is needed for the custom consumer. Large-data performance, all mutation operations and ownership of pointer-containing derived types are not validated.",
+      "evidence": [
+        {
+          "path": "src/sll_linked_list.f90",
+          "sha256": "292aa0f950a72cbbe7b7203a324a3b71e618f1915b85ad63ae4e479d30945f5a",
+          "line": 1
+        },
+        {
+          "path": "src/sll_iterator.f90",
+          "sha256": "3add761beb7b1cc638f0af2ad20dda11afd559fd0cb8d7c3cc0886afb9b62273",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "example/example_reuse.f90",
+          "sha256": "8a0b8f40f7aa3ea53b1ce32be8a8c5234aa8e0a83d6edbe5e0ee95d41be40c91"
+        }
+      ]
+    },
+    {
+      "id": "enclose-strings",
+      "package_id": "enclose",
+      "revision": "d3ea2ea989296bf855f4cb07ea8db601020805f2",
+      "module": "strings_enclose",
+      "procedure": "enclose / get_closing_brackets",
+      "gams_codes": [
+        "N3"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "String enclosure with automatically matched closing brackets and explicit delimiters. The main checks nested bracket reversal, square brackets, quotation marks, custom opening/closing strings and disabled autoclosing, and prints examples. No source edits; matches the existing FED dependency revision. This is formatting, not parsing or escaping untrusted text.",
+      "evidence": [
+        {
+          "path": "src/enclose.f90",
+          "sha256": "435eb8146ce3632f9aee8f9d87cdf711aea201b831d6550824e0ea56711eeb9f",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "example/demo.f90",
+          "sha256": "467512cae8a27aee264667ac5ba5cb0d906b8f896506493659bcb61950708a63"
+        }
+      ]
     }
   ],
   "review_notes": {
@@ -5118,7 +6586,54 @@
     "powellopt": "G2 is supported by BOBYQA bound constraints and COBYLA constraints. No unconstrained subclass is inferred solely from the Powell family name.",
     "fstats": "Distribution evaluation, random sampling, summaries, statistical tests, resampling, regression and MCMC support the selected statistical and simulation subclasses.",
     "daskr": "I1 includes the package's ordinary differential-algebraic systems; this assignment does not claim PDE or integral-equation solvers.",
-    "diffeq": "I1 includes both the ordinary differential and differential-algebraic integrators."
+    "diffeq": "I1 includes both the ordinary differential and differential-algebraic integrators.",
+    "m_la": "Matrix construction, illustrated by magic squares of orders three through six with independent row, column, diagonal and permutation checks. This mapping does not classify every other M_LA procedure.",
+    "fglm": "Vector addition and component products, and column-major homogeneous translation and rotation matrices. The example checks a known point and a quarter-turn about z; broader geometry functionality is not exhaustively validated.",
+    "fortrandf": "Named heterogeneous in-memory columns; retrieval and a calibration update are checked. This is a storage example, not a statistical estimation library.",
+    "strith": "Signed decimal-string integer addition and subtraction beyond 64-bit range, plus unsigned interpretation of an int64 bit pattern. This is fixed-capacity decimal representation, not unlimited arbitrary precision.",
+    "list": "Linked-list storage, lookup, duplicate counts, sorting, removal and clearing; the demo uses a module comparator.",
+    "friction": "Constitutive friction models, with nonlinear parameter fitting and internal-state ODE integration in the reviewed source. The checked main covers algebraic Coulomb and Stribeck forces only; it does not validate parameter fitting or dynamic internal-state integration.",
+    "feq-parse": "Numerical evaluation of expressions parsed from text, not symbolic algebra. The demo checks double-precision multivariable Gaussian and polynomial expressions against direct Fortran formulas.",
+    "fordot": "Scalar products using methods m1 through m4, each also checked with three unequal blocks against an exact answer. Single-process correctness only; no coarray or performance claim.",
+    "formatmul": "Methods m1 through m4 are checked for rectangular matrix multiplication, all transpose combinations and a matrix-vector product. The demo is single-process and does not validate every implementation or coarray branch. At this pin a single explicitly false transpose flag is misrouted; the demo passes both flags whenever either is specified. Separate failing probes and the successful workaround are retained.",
+    "bstrith": "Fixed-width binary-string addition, subtraction, shifts and logical operations. The driver checks every eight-bit value, including carry and wraparound. This is not unlimited arbitrary-precision arithmetic.",
+    "heatflow": "Fourier/Cattaneo heat-transport code. The checked main applies its sparse BiCG solver to an independent backward-Euler discretization of the one-dimensional heat equation; it checks the discrete solution, continuous-solution error and independent matrix residuals. It does not exercise the complete evolution/Cattaneo application.",
+    "hrweno": "WENO spatial reconstruction and explicit TVD Runge-Kutta integration for conservation equations. The main checks a smooth periodic advection problem against exact cell averages and verifies conservation of mass; discontinuous solutions and nonuniform grids are not covered.",
+    "fortran-simplify": "Polyline simplification. The main checks one call of perpendicular-distance reduction against endpoints and an independent interpolation bound, and plots the original and reduced curves. Separate GNU 16 probes confirm incorrect radial-distance filtering and lost endpoints on consecutive perpendicular-distance calls at this pin; see the retained reproducers. The single-call example does not fix those upstream limitations.",
+    "ecx": "Electrochemical models with complex-valued equivalent-circuit impedance. The main verifies resistor and capacitor impedances and their series combination against direct complex formulas at four angular frequencies. Kinetics and parameter estimation are not covered. A4 classifies the complex arithmetic interface, not an electrochemistry-specific GAMS class.",
+    "athena": "Neural-network function approximation. A fixed-weight dense layer with tanh activation is compared against direct Fortran matrix multiplication and TANH. This does not test training, automatic derivatives, graph convolutions or model accuracy on a dataset. K remains broad.",
+    "orbs": "Fixed-width bitset arithmetic and logical operations. The main computes an x neighbor for every cell of a two-dimensional 4-by-4 Morton grid, checking all sixteen results and wraparound against independent intrinsic integer operations.",
+    "rearrayfx": "Growable real rank-two arrays backed by spare capacity. The main checks data preservation across growth within spare capacity, reallocation, shrinking and plain-array assignment. This proof of concept is not a general-purpose container or a test of copying between container instances.",
+    "amosf90": "AMOS module interfaces for complex-argument Bessel functions with noninteger nonnegative order, including modified Bessel functions. The checked main compares J_0.3 and I_0.3 at 1+0.5i with independent convergent power series and K_0.5 with its closed form. Other argument regions, orders, scaling modes and Airy/Hankel routines are not validated. The upstream README warns of possible bugs.",
+    "linalg_fortran": "Typed LAPACK interfaces. The checked real64 main verifies a matrix inverse residual, determinant, known eigenvalues, eigenpair residuals and orthonormality for a symmetric 3-by-3 tridiagonal matrix. Complex, single-precision and other BLAS/LAPACK wrappers are not covered. Legacy implicit external interfaces are explicitly enabled in the pinned package manifest.",
+    "fortran_vector": "Growable integer vectors. The checked main verifies growth from a two-element capacity, appended arrays, stable duplicate removal, remove/delete/pop and final compaction against independent expected contents. A checksum-guarded one-line edit fixes aliasing in unique: remove the already saved first value instead of the first array element while that array is being compacted. Empty-vector unique and all invalid-input cases are not covered.",
+    "scanner": "Character-by-character text scanning. The main reconstructs a configuration record through current/next, verifies navigation and end boundaries, and checks that peek does not move the cursor. The recovered fields are converted with ordinary internal READ and compared with known values; this is a small parser example, not a full parsing language.",
+    "rojff": "JSON parsing and serialization with explicit error values. The main checks numeric/string fields, missing-key reporting, compact serialization round trips and malformed-input rejection. It uses the original Erloff 2.2.0 API with a pinned compatible Strff 3.1.1 and ISO varying string 3.0.3; the Strff 4.0 dependency graph needs an unavailable GitHub mirror. No computational source is patched.",
+    "argparse-f": "Typed process command-line parsing. The main launches itself once with fixed example arguments, then checks an integer, double, string, logical flag and untouched default. No supplied files or playground argument-setting changes are needed. Error exits, positional/named arguments, truncation and every syntax variant are not covered.",
+    "io_utilities": "Key/value configuration input. The main creates and reads a tiny INI-style file with a section, comment, integer, double, logical and string, verifies known values and deletes it. A checksum-guarded manifest correction changes the invalid one-element library array into a library table; Fortran sources are unchanged. Other I/O modules and malformed-input handling are not covered.",
+    "uint-fortran": "Fixed-width unsigned integer derived types. The main checks 16/32-bit upper boundaries, 32-bit arithmetic above the signed boundary, comparisons, modular addition/subtraction and conversion of a negative assignment. It imports the current int_m conversion API explicitly. This is not arbitrary-precision arithmetic or validation of every kind, operation or C interoperability path.",
+    "veggies": "Functional unit-testing framework. The main runs three specification-style cases checking a small user-written Simpson formula against known constant, linear and quadratic integrals. The numerical formula belongs to the example, not the package. Parallel testing, generators and the complete framework are not validated.",
+    "shunting-yard-fortran": "Token-based expression parsing with user-supplied callbacks. The main checks precedence, parentheses, right-associative exponentiation, square root and unary minus against five exact results. A checksum-guarded edit moves a host-independent library callback to module scope after the original layout crashed in the sandbox; parsing rules are unchanged. The author documents global registrations, fixed precedences and missing syntax validation; concurrent parsers and malformed expressions are not supported by this example.",
+    "sqliteff": "SQLite wrapper with bundled SQLite 3.30.1 C sources. The checked main opens an in-memory database, creates a table, inserts three values, verifies count and average, reaches SQLITE_DONE and closes resources. It does not cover persistent files, concurrent use, transactions or the complete SQLite API. Explicit GitLab-to-GitHub alias pins ISO varying string; no source edits.",
+    "erloff": "Structured error lists and logging. The checked main collects two fatal validation messages, filters one by OUT_OF_BOUNDS, checks counts and diagnostic text, and prints both messages. The pinned compatible Strff 3.1.1 avoids the unavailable exceptional_numbers mirror requested through Strff 4.0. No library source edits. This does not cover all logging levels, filtering operators or concurrent use.",
+    "fortran-tokenizer": "Customizable text tokenization. The checked main uses a module callback to split comma, space and tab-separated fields, verifies all three tokens and checks clearing the list. This is lexical splitting, not expression evaluation. No source edits. Malformed input, every callback combination and token object storage are not covered.",
+    "integer_set": "Simple fixed-width integer sets. The checked main verifies duplicate rejection, removal and sorted contents for 32-bit values, and duplicate rejection for a 64-bit value above the 32-bit range. Membership is checked from public data, not a separate membership API. No source edits. Performance, every boundary and all operations are not validated.",
+    "smart-pointers": "Reference-counted resource management. Adapted from the author example: a user type extends sp_smart_pointer_t and implements free. The checked main shares one integer resource, verifies reference counts and shared target, checks no premature cleanup and confirms exactly one cleanup after subroutine return. No source edits. This is not exhaustive compiler finalization conformance testing.",
+    "rpn-calculator-fortran": "Numerical routines from the RPN calculator, called directly without its interactive interface. The checked main verifies a negative cube root, sinc and sech at zero, beta(2,3), modified Bessel I0 at zero, and integer gcd/lcm against known results. A checksum-guarded manifest correction sets source-form=default so .f and .f90 files use their respective forms. No numerical sources are changed. The tests do not establish accuracy over full argument ranges or validate the complete calculator.",
+    "nc4fortran": "NetCDF4 array and attribute I/O. The checked main writes a 2-by-3 double-precision array with dimension names and a kelvin units attribute, closes the file, reopens and verifies every value and the attribute, then deletes the sandbox file. Native NetCDF and HDF5 development packages and include/library paths are pinned in the build recipe. No source edits. It does not cover every type/rank, compression, slicing or malformed files.",
+    "fundamental_constants": "CODATA physical constants. The checked main imports the explicit 2022 edition, computes the energy of a 500 nm photon in joules and electron volts, and compares it with independent decimal reference values. The source modules are pre-generated; no network request or Python generation is needed to use them. No source edits. This is a check of three constants and one calculation, not revalidation of the complete CODATA tables or uncertainty propagation.",
+    "array_range": "Derived types and constructors for multidimensional array bounds. The checked main reconstructs and round-trips bounds [-1:1,4:5], traverses exactly six elements using stored bounds and verifies their sum of 270. No source edits. It does not cover all dimensions, vector/tensor wrappers, empty arrays or invalid bounds. This is an indexing utility, not a numerical solver.",
+    "kronrod": "Gauss-Kronrod quadrature-rule generation. A checksum-guarded adapter exposes the original internal procedures as module playground_kronrod, removes the large driver loop and declares app as the library directory; The consumer uses the wrapped module instead of running the original batch drivers. Procedure bodies, constants and precision settings are unchanged. The main generates the symmetric 7-point rule, checks six even polynomial integrals through degree 10 at 40-decimal-place tolerance with MPFUN arithmetic, and prints double-precision summaries. Only the unchanged MPFUN dependency is shared. This is a rule generator, not an adaptive integrator or full validation of every rule/order.",
+    "jeyemhex-regex": "Pure Fortran regular expressions by Edward Higgins, distinct from perazz/fortran-regex already selected under fortran-regex. The main checks matching and nonmatching anchored decimal measurements, matched substring, comma/space splitting and replacement. No source edits or native regex library. Pattern whitespace is ignored unless escaped; the author documents missing capture references and other features, so PCRE compatibility and all patterns are not claimed.",
+    "fed": "Programmatic Fortran edit descriptors. The main generates and applies integer, character and fixed-decimal real formats, checks exact aligned output, and verifies a zero-padded integer. The registry stdlib dependency is mapped to a pinned Git source and manifest version; compatible stdlib objects are reused. No Fortran source edits. Arrays, complex values, user-defined I/O and every descriptor/control mode are not covered.",
+    "any": "Type-erased intrinsic values returned through any_type. The checked main returns an integer, a double-precision real and a character value through one function, retrieves each using its matching type, and checks exact values. No source edits. The author documents undefined results for mismatched type/rank conversions; the example does not validate all ranks, kinds, custom extensions or invalid conversions.",
+    "for_fifo_queue": "FIFO container using C allocations and byte copies. The main enqueues four 64-bit C-interoperable integers, verifies count and exact retrieval order, frees every popped allocation with C free, checks empty-pop behavior and destroys the queue. No source edits. The implementation uses GNU LOC and raw byte storage; the example makes no portability claim for arbitrary derived types, pointer-owning values, threading or every compiler.",
+    "string-utf-8": "UTF-8 string handling using one array element per encoded Unicode code point. The main verifies a round trip, code point count, substring, search and replacement of accented text, and prints the results. No source edits. Combining marks remain separate code points; grapheme segmentation, normalization and malformed-input handling are not validated.",
+    "fortime": "Serial system_clock and CPU timers. The checked main computes the exact sum of integers 1 through 100000, checks finite nonnegative elapsed times and prints the sum and timings. The root manifest VERSION placeholder is replaced with adapter version 0.0.0; the pinned source commit identifies the actual library. FACE is pinned to an already used revision. No Fortran source edits. MPI/OpenMP timers are not enabled or tested; sandbox timings vary and are not benchmark guarantees.",
+    "fassert": "Assertions for integer scalars and arrays plus approximate real comparison with an explicit tolerance. The main captures an intentional failed comparison as a logical status and message, checks both, and continues successfully. No source edits; matches the existing Any dependency revision. Not a validation of every type, rank, tolerance convention, custom comparator or test-framework integration.",
+    "errstat": "Error status and message handling. A custom reciprocal routine uses catch_error and set_success. The main checks a successful result, zero rejection with an exact code and message, and a subsequent successful call clearing the error. No source edits. The reciprocal is only a driver, not a mathematical procedure supplied by errstat. Optional omitted-status termination and user-defined task/message repositories are not exercised.",
+    "slinked-list": "Generic singly linked list for small datasets. The main checks integer and real payloads in insertion order, list size, iteration count, emptying, retained capacity and the value stored after reuse; iterator and list cleanup are explicit. A checksum-guarded compatibility edit removes PURE from node_init, whose result has a polymorphic allocatable component. Constructor allocation and copying are unchanged, and the call sites are impure. This patched root retains its own small archive instead of sharing an unmodified graph export. No display dependency is needed for the custom consumer. Large-data performance, all mutation operations and ownership of pointer-containing derived types are not validated.",
+    "enclose": "String enclosure with automatically matched closing brackets and explicit delimiters. The main checks nested bracket reversal, square brackets, quotation marks, custom opening/closing strings and disabled autoclosing, and prints examples. No source edits; matches the existing FED dependency revision. This is formatting, not parsing or escaping untrusted text."
   },
   "packages": {
     "fortran-lapack": [
@@ -5696,6 +7211,156 @@
     ],
     "econ-toolchain": [
       "M"
+    ],
+    "m_la": [
+      "D"
+    ],
+    "fglm": [
+      "D"
+    ],
+    "fortrandf": [
+      "N"
+    ],
+    "strith": [
+      "A"
+    ],
+    "list": [
+      "N"
+    ],
+    "friction": [
+      "I",
+      "L"
+    ],
+    "feq-parse": [
+      "C",
+      "N"
+    ],
+    "fordot": [
+      "D"
+    ],
+    "formatmul": [
+      "D"
+    ],
+    "bstrith": [
+      "A",
+      "N"
+    ],
+    "heatflow": [
+      "D",
+      "I"
+    ],
+    "hrweno": [
+      "I"
+    ],
+    "fortran-simplify": [
+      "K",
+      "P"
+    ],
+    "ecx": [
+      "A",
+      "Z"
+    ],
+    "athena": [
+      "K"
+    ],
+    "orbs": [
+      "A",
+      "N"
+    ],
+    "rearrayfx": [
+      "N"
+    ],
+    "amosf90": [
+      "C"
+    ],
+    "linalg_fortran": [
+      "D"
+    ],
+    "fortran_vector": [
+      "N"
+    ],
+    "scanner": [
+      "N"
+    ],
+    "rojff": [
+      "N"
+    ],
+    "argparse-f": [
+      "N"
+    ],
+    "io_utilities": [
+      "N"
+    ],
+    "uint-fortran": [
+      "A"
+    ],
+    "veggies": [
+      "S"
+    ],
+    "shunting-yard-fortran": [
+      "N"
+    ],
+    "sqliteff": [
+      "N"
+    ],
+    "erloff": [
+      "R"
+    ],
+    "fortran-tokenizer": [
+      "N"
+    ],
+    "integer_set": [
+      "N"
+    ],
+    "smart-pointers": [
+      "R"
+    ],
+    "rpn-calculator-fortran": [
+      "B",
+      "C"
+    ],
+    "nc4fortran": [
+      "N"
+    ],
+    "fundamental_constants": [
+      "R"
+    ],
+    "array_range": [
+      "R"
+    ],
+    "kronrod": [
+      "H"
+    ],
+    "jeyemhex-regex": [
+      "N"
+    ],
+    "fed": [
+      "N"
+    ],
+    "any": [
+      "N"
+    ],
+    "for_fifo_queue": [
+      "N"
+    ],
+    "string-utf-8": [
+      "N"
+    ],
+    "fortime": [
+      "R"
+    ],
+    "fassert": [
+      "S",
+      "R"
+    ],
+    "errstat": [
+      "R"
+    ],
+    "slinked-list": [
+      "N"
+    ],
+    "enclose": [
+      "N"
     ]
   },
   "detailed_taxonomy_source": {

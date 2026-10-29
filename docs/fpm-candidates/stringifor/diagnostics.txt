@@ -1,0 +1,27 @@
+Latest root archive contains a symlink; an older root passes extraction but explicitly pins FACE 1455c549ae0c1ead96961ca61a73131d8176b6a4, whose archive also contains a symlink. No archive rules were relaxed; compilation was not attempted.
+
+Root HEAD:
+{
+  "revision": "bd218de71aea6218edbfce7bb46c40b4668dc3e2",
+  "archive_sha256": "93d0b77c060f186b140d00babcf669e435aedff2fe3f4c14570eece665507514",
+  "links": [
+    {
+      "path": "StringiFor-bd218de71aea6218edbfce7bb46c40b4668dc3e2/CONTRIBUTING.md",
+      "target": "docs/guide/contributing.md"
+    }
+  ],
+  "preparation_error": "Package archive contains an unsafe path, link, or special file."
+}
+
+Blocked FACE archive:
+{
+  "repository": "szaghi/FACE",
+  "revision": "1455c549ae0c1ead96961ca61a73131d8176b6a4",
+  "archive_sha256": "266ede3670cb0ec03685f06d1a13db38c904110ddab6b6426a6c562f263eb47c",
+  "links": [
+    {
+      "path": "FACE-1455c549ae0c1ead96961ca61a73131d8176b6a4/doc/README-FACE.md",
+      "target": "../README.md"
+    }
+  ]
+}

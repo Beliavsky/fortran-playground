@@ -1,0 +1,8 @@
+{
+  "c_struct_tm_bytes": 56,
+  "fortran_tm_bytes": 36,
+  "revision": "f0067d85d32082225d3abecbf8e35cee17fe95c4",
+  "compiler": "GNU Fortran 16.2.0",
+  "c_probe": "#include <time.h>\n#include <stdio.h>\nint main(void) { printf(\"%zu\\n\", sizeof(struct tm)); return 0; }\n",
+  "fortran_probe": "program probe\nuse iso_c_binding, only:c_sizeof\nuse time_f, only:tm\nimplicit none\ntype(tm)::date\nprint *,c_sizeof(date)\nend program\n"
+}

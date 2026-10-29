@@ -1,0 +1,33 @@
+{
+  "id": "fundamental_constants",
+  "repository": "vmagnin/fundamental_constants",
+  "revision": "3e18620ab7813fd9f02e8dcf05c48f0ca13f2ec0",
+  "archive_sha256": "3c49561725c37c75b9e94a4c0fadbc9a999be0aaea70551d3e4a0f5e2877e54e",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "shared_dependencies": {
+      "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+      "repositories": [
+        "vmagnin/fundamental_constants"
+      ]
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T00:57:33.593173+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/fundamental_constants.f90",
+  "verification": {
+    "seconds": 2.326,
+    "build_seconds": 0.56,
+    "library_reused": true,
+    "demo_sha256": "f4976cc7b2e3d1fa4ebd8db656192a5a8fa86990f1b65ab5fdbc5beaef83d1b9",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "CODATA physical constants. The checked main imports the explicit 2022 edition, computes the energy of a 500 nm photon in joules and electron volts, and compares it with independent decimal reference values. The source modules are pre-generated; no network request or Python generation is needed to use them. No source edits. This is a check of three constants and one calculation, not revalidation of the complete CODATA tables or uncertainty propagation."
+}

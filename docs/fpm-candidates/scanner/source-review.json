@@ -1,0 +1,45 @@
+{
+  "id": "scanner",
+  "repository": "freevryheid/scanner",
+  "revision": "b0026498c171b615bb3dcfca55a0f20b133e22dc",
+  "archive_sha256": "ebd5b15b10cb7f7f0a7e10d3891cebbb00cf8fcfde32387f4d1e7f0645b0662f",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "source_revisions": {
+      "fortran-lang/stdlib": "58eb9133966c2797e0593281169ef57c43eccc1d"
+    },
+    "manifest_versions": {
+      "fortran-lang/stdlib": "0.8.1"
+    },
+    "shared_dependencies": {
+      "adapter_sha256": "8a85ff125c66db77f139fb6b62e6895fa314413a2b0350e68d8f3126c1d19707",
+      "repositories": [
+        "fortran-lang/stdlib"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "repository": "fortran-lang/stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+    }
+  ],
+  "checked_at": "2026-10-28T23:12:09.139584+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/scanner.f90",
+  "verification": {
+    "seconds": 1.427,
+    "build_seconds": 0.356,
+    "library_reused": true,
+    "demo_sha256": "2a26ac5acd461dd59e4ae78b9ce6f16b14988a2b74b5491bf213418a763e0a28",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Character-by-character text scanning. The main reconstructs a configuration record through current/next, verifies navigation and end boundaries, and checks that peek does not move the cursor. The recovered fields are converted with ordinary internal READ and compared with known values; this is a small parser example, not a full parsing language."
+}

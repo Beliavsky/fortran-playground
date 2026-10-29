@@ -1,0 +1,27 @@
+name = "fassert"
+version = "0.5.0"
+license = "MIT"
+author = "Tomohiro Degawa"
+maintainer = "degawa.tomohiro@gmail.com"
+copyright = "Copyright 2023, Tomohiro Degawa"
+
+[build]
+auto-executables = false
+auto-tests = true
+auto-examples = true
+
+[install]
+library = true
+
+[preprocess]
+[preprocess.cpp]
+
+[dependencies]
+
+[dev-dependencies]
+test-drive = {git = "https://github.com/fortran-lang/test-drive"}
+testdrive_util = {git = "https://github.com/degawa/testdrive_util"}
+newunit = {git = "https://github.com/degawa/newunit"}
+enclose = {git = "https://github.com/degawa/enclose.git"}
+par-funnel = {git = "https://github.com/degawa/par-funnel.git"}
+strith = {git = "https://github.com/degawa/strith.git"}

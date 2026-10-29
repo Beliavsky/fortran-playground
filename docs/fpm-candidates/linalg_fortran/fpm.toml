@@ -1,0 +1,13 @@
+name = "iso_linalg_mod"
+version = "0.1.0"
+license = "license"
+author = "Euler-37"
+copyright = "Copyright 2022, Euler-37"
+[build]
+auto-executables = true
+auto-tests = true
+auto-examples = true
+link = ["openblas"]
+
+[install]
+library = false

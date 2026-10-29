@@ -1,0 +1,48 @@
+{
+  "id": "maps",
+  "repository": "degawa/maps",
+  "revision": "453d8b146a659c0111652fe0579e2321477c54cd",
+  "archive_sha256": "65090d0b4fa292b1b5ff069dc5155f5ef0aeaa9ae74cc59db26195572c278e9f",
+  "checked_at": "2026-10-28T21:40:06.974444+00:00",
+  "dependencies": [
+    {
+      "repository": "fortran-lang/stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+    },
+    {
+      "repository": "degawa/enumul",
+      "revision": "064bba70797b84100b25dc4466b28f1f38147d0e",
+      "sha256": "0bbb1c13ec5780cbf15bd9380de9e288101edfac3572592f13b8a5d1b81cd364"
+    },
+    {
+      "repository": "degawa/errstat",
+      "revision": "336ee374c82a4525d87444c767a1f23f059d5723",
+      "sha256": "38be949552f3bff87ebb38b922718a19741b854f172b6c8951913d8621294df2"
+    }
+  ],
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "registry": {
+      "stdlib": {
+        "git": "https://github.com/fortran-lang/stdlib",
+        "rev": "58eb9133966c2797e0593281169ef57c43eccc1d"
+      }
+    },
+    "manifest_versions": {
+      "fortran-lang/stdlib": "0.8.1"
+    },
+    "source_revisions": {
+      "fortran-lang/stdlib": "58eb9133966c2797e0593281169ef57c43eccc1d"
+    },
+    "shared_dependencies": {
+      "adapter_sha256": "8a85ff125c66db77f139fb6b62e6895fa314413a2b0350e68d8f3126c1d19707",
+      "repositories": [
+        "fortran-lang/stdlib"
+      ]
+    }
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0"
+}

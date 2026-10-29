@@ -1,0 +1,47 @@
+{
+  "id": "fortran_vector",
+  "repository": "Euler-37/fortran_vector",
+  "revision": "95469e2ce1162b0ede3ca3435ebd94ec6b6fee79",
+  "archive_sha256": "0701b9fc21b905f986ee247ce7d3981c059cd963040569409de88cbdf04eaa25",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8"
+  },
+  "dependencies": [],
+  "catalog_patches": {
+    "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+    "edits": [
+      {
+        "path": "src/fortran_vector.f90",
+        "sha256": "0ee8dc6b054a18b3154952430a29577527edf494e7416385a4656446cd083833",
+        "before": "call this%remove(this%x_(1))",
+        "after": "call this%remove(first)"
+      }
+    ]
+  },
+  "checked_at": "2026-10-28T23:12:09.139584+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/fortran_vector.f90",
+  "verification": {
+    "seconds": 1.471,
+    "build_seconds": 0.349,
+    "library_reused": true,
+    "demo_sha256": "9cb520eb6b7b278caaa126aa55d078576b5bdc38d7bfefa8d6cf94d53c7af159",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "NOASSERTION",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Growable integer vectors. The checked main verifies growth from a two-element capacity, appended arrays, stable duplicate removal, remove/delete/pop and final compaction against independent expected contents. A checksum-guarded one-line edit fixes aliasing in unique: remove the already saved first value instead of the first array element while that array is being compacted. Empty-vector unique and all invalid-input cases are not covered.",
+  "license_status": {
+    "catalog_value": "NOASSERTION",
+    "manifest_value": "license",
+    "root_license_notice_found": false,
+    "notes": "The pinned archive has a placeholder license field and no root license file or license notice found in the reviewed source/README. No license terms are inferred from the placeholder."
+  },
+  "compatibility_edits": [
+    "unique passes its saved first value to remove, avoiding aliasing with the array remove compacts. The exact checksum-guarded source edit is retained."
+  ]
+}

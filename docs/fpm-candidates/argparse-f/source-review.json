@@ -1,0 +1,33 @@
+{
+  "id": "argparse-f",
+  "repository": "0382/argparse-f",
+  "revision": "435cc1676d6064162a3c36b91f1aa50d926fdd45",
+  "archive_sha256": "c0962d2173daa643130c32c71284f1da12d5b4ae2d357568ae1a34ddab1970b0",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "shared_dependencies": {
+      "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+      "repositories": [
+        "0382/argparse-f"
+      ]
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-28T23:33:50.254249+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/argparse-f.f90",
+  "verification": {
+    "seconds": 1.148,
+    "build_seconds": 0.353,
+    "library_reused": true,
+    "demo_sha256": "ca4c6d59fbd34ff7f74a22b5b45a2973965218bc862553dd2d5554dd26571a82",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Typed process command-line parsing. The main launches itself once with fixed example arguments, then checks an integer, double, string, logical flag and untouched default. No supplied files or playground argument-setting changes are needed. Error exits, positional/named arguments, truncation and every syntax variant are not covered."
+}

@@ -1,0 +1,55 @@
+{
+  "id": "erloff",
+  "repository": "everythingfunctional/erloff",
+  "revision": "73dfdbf54dafadb42e4705c45824b93917a20965",
+  "archive_sha256": "71d21f36b77fd638d2cf2f555c7bb1ea978af1755856a815aea33e0758581e75",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "git_aliases": {
+      "https://gitlab.com/everythingfunctional/iso_varying_string": "https://github.com/everythingfunctional/iso_varying_string",
+      "https://gitlab.com/everythingfunctional/strff": "https://github.com/everythingfunctional/strff",
+      "https://gitlab.com/everythingfunctional/exceptional_numbers": "https://github.com/everythingfunctional/exceptional_numbers"
+    },
+    "source_revisions": {
+      "everythingfunctional/strff": "37dccc0e615a2fc85de18be80427e0f1a678d87c",
+      "everythingfunctional/iso_varying_string": "48ce6b119e855284a87d5a6eb9c53da8b6785716"
+    },
+    "shared_dependencies": {
+      "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+      "repositories": [
+        "everythingfunctional/erloff",
+        "everythingfunctional/iso_varying_string",
+        "everythingfunctional/strff"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "repository": "everythingfunctional/iso_varying_string",
+      "revision": "48ce6b119e855284a87d5a6eb9c53da8b6785716",
+      "sha256": "b1d563dc52c7cb3df41abf3f360ef0c05285b71bec9bd61d090227f88628ba49"
+    },
+    {
+      "repository": "everythingfunctional/strff",
+      "revision": "37dccc0e615a2fc85de18be80427e0f1a678d87c",
+      "sha256": "1aac7b388bcd6f4a181c5d9aea27046f9a7c3f90273184359afa63e11cafc74d"
+    }
+  ],
+  "checked_at": "2026-10-29T00:34:23.456367+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/erloff.f90",
+  "verification": {
+    "seconds": 1.627,
+    "build_seconds": 0.475,
+    "library_reused": true,
+    "demo_sha256": "f21e5561c2e5a0c03983e992d9e2778c2d91daa66f77ca77a1a4a38669ead1fa",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Structured error lists and logging. The checked main collects two fatal validation messages, filters one by OUT_OF_BOUNDS, checks counts and diagnostic text, and prints both messages. The pinned compatible Strff 3.1.1 avoids the unavailable exceptional_numbers mirror requested through Strff 4.0. No library source edits. This does not cover all logging levels, filtering operators or concurrent use."
+}

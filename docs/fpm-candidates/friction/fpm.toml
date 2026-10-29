@@ -1,0 +1,33 @@
+name = "friction"
+version = "1.3.0"
+license = "MIT"
+author = "Jason Christopherson"
+maintainer = "Jason Christopherson"
+copyright = "Copyright 2026, Jason Christopherson"
+description = "A library containing routines for calculating the frictional response of contacting bodies."
+homepage = "https://github.com/jchristopherson/friction"
+
+[library]
+source-dir = "src"
+
+[dependencies]
+diffeq = { git = "https://github.com/jchristopherson/diffeq" }
+fstats = { git = "https://github.com/jchristopherson/fstats" }
+collections = { git = "https://github.com/jchristopherson/collections" }
+linalg = { git = "https://github.com/jchristopherson/linalg" }
+
+[dev-dependencies]
+fortran_test_helper = { git = "https://github.com/jchristopherson/fortran_test_helper" }
+
+[install]
+library = true
+
+[build]
+auto-executables = false
+auto-examples = false
+auto-tests = false
+
+[[test]]
+name = "friction_tests"
+source-dir = "test"
+main = "friction_test.f90"

@@ -536,3 +536,444 @@ The conventions matter: `markov_steady_state` multiplies a probability column by
 The [initial preparation](fpm-candidates/econ-toolchain/initial-preparation.json) stopped at stdlib's manifest `VERSION` placeholder. The [initial recipe](fpm-candidates/econ-toolchain/initial-package.json) records that attempt. Final preparation renders the pinned stdlib manifest version as `0.8.1`, the value in its upstream VERSION file, and locks both stdlib and simulated-annealing to existing catalog source revisions. OpenBLAS packages are pinned. `-fcoarray=single` permits compilation of the package's coarray-containing modules; this does not enable multi-image execution in FPM mode. Normal debug checks remain enabled.
 
 The complete library and both dependencies passed ordinary hosted GNU 16 debug and changed-main/cache-reuse checks. An edited main rebuilt only the main and executable in about 1.77 seconds. Logical library artifacts occupy about 341.6 MiB, including the stdlib dependency and FPM flag variants; this is not compressed storage or a billing measurement. The [MIT license](fpm-candidates/econ-toolchain/licenses/LICENCE) accompanies the adaptation. Verification covers these Markov-chain routines, not every optimization, simulation or coarray path in the package.
+
+## M_LA
+
+Repository: [urbanjost/M_LA](https://github.com/urbanjost/M_LA), commit `db59eeab0deab7e84eadf2542ad49c1c719dfb94`.
+
+The [consumer](../fpm_catalog/demos/m_la.f90) checks magic squares of orders 3, 4, 5 and 6, exercising odd, doubly even and singly even construction. Every row, column and both diagonals must have the exact expected sum, and the entries must be a permutation of 1 through n squared. The common sums are 15, 34, 65 and 111. The example follows the calling convention documented beside the upstream `mat_magic` routine; the checks are original. It does not validate every linear algebra routine in M_LA. See the [pinned source and build record](fpm-candidates/m_la/source-review.json), [verified output](fpm-candidates/m_la/verified-output.txt) and [Unlicense](fpm-candidates/m_la/licenses/LICENSE).
+
+## FGLM
+
+Repository: [jordan4ibanez/fglm](https://github.com/jordan4ibanez/fglm), commit `e1b6a5404b3e7a266da33173a07166970c16dd86`.
+
+The [consumer](../fpm_catalog/demos/fglm.f90) checks double-precision vector addition and component multiplication, followed by single-precision homogeneous translation and a 90-degree rotation about z. Expected values are computed independently of the library. FGLM stores its 4-by-4 matrices in column-major order, so the example reshapes the 16-element data array before applying it to a point. Its `constants_f90` dependency is pinned and has its own shared export. See the [source and build record](fpm-candidates/fglm/source-review.json), [verified output](fpm-candidates/fglm/verified-output.txt) and [MIT license](fpm-candidates/fglm/licenses/LICENSE). This is representative vector/matrix coverage, not a validation of every transform.
+
+## FortranDF
+
+Repository: [jaiken17/fortranDF](https://github.com/jaiken17/fortranDF), commit `58300f8ae39d463e729960e960939fb53e2c7de4`.
+
+The [consumer](../fpm_catalog/demos/fortrandf.f90) creates named integer, character and real columns, checks column retrieval, applies a temperature calibration and checks the updated values. The means before and after calibration are 13 and 13.5 degrees Celsius. Character access uses `getch`; `getc` is the complex accessor. The library source is unmodified. Its manifest has a placeholder license field, but the root [LICENSE](fpm-candidates/fortrandf/licenses/LICENSE) supplies BSD-3-Clause terms. See the [source and build record](fpm-candidates/fortrandf/source-review.json) and [verified output](fpm-candidates/fortrandf/verified-output.txt). CSV/file handling and every supported column operation are outside this example's coverage.
+
+## Strith
+
+Repository: [degawa/strith](https://github.com/degawa/strith), commit `da2b1f489a178cb443f636e3f9c89aed6c8702b1`.
+
+The [consumer](../fpm_catalog/demos/strith.f90) formats an all-one int64 bit pattern as unsigned, adds one to the decimal representation of the unsigned 64-bit maximum, checks a subtraction round trip and adds the signed 64-bit minimum and maximum to obtain -1. Its string constructor requires a sign and a fixed-width, zero-padded decimal representation; the example explicitly supplies that representation. This is fixed-capacity decimal-string arithmetic, not unlimited arbitrary precision. No compiler integer overflow is used to obtain the expected answers. The manifest's placeholder license field is supplemented by the root [MIT license](fpm-candidates/strith/licenses/LICENSE). See the [source and build record](fpm-candidates/strith/source-review.json) and [verified output](fpm-candidates/strith/verified-output.txt).
+
+## List
+
+Repository: [grofz/list](https://github.com/grofz/list), commit `77a0c99686406eaa8d4423e778311d63c6940b43`.
+
+The [consumer](../fpm_catalog/demos/list.f90) appends five integer values, checks duplicate counts, sorts them with a module comparator, traverses and checks every element, finds and removes a value, and clears the list. Its compiler-generated callback does not require an executable-stack trampoline. Several upstream methods are explicitly unimplemented, so this example uses the implemented linked-list API and makes no claim about every tree/container operation. The manifest has a placeholder license field; [LICENSE.txt](fpm-candidates/list/licenses/LICENSE.txt) supplies MIT terms. See the [source and build record](fpm-candidates/list/source-review.json) and [verified output](fpm-candidates/list/verified-output.txt).
+
+## Maps
+
+Repository: [degawa/maps](https://github.com/degawa/maps), commit `453d8b146a659c0111652fe0579e2321477c54cd`.
+
+Maps remains outside Selected. Preparation and all pinned dependency downloads passed the ordinary limits. The manifest declares `stdlib = '*'`; the attempted recipe maps it to our existing stdlib revision `58eb9133966c2797e0593281169ef57c43eccc1d`, with its manifest version rendered as 0.8.1. The existing stdlib export was reused without compilation. GNU 16 compilation then stopped in `src/common/proc/toHashValue.f90`: `stdlib_hashmap_wrappers` no longer exports the `other_type` imported by Maps. No library source was patched and no older stdlib version was validated. This establishes an API incompatibility with the tested revision, rather than a claim that Maps cannot work with another stdlib version.
+
+The [source and attempted recipe](fpm-candidates/maps/source-review.json), [original manifest](fpm-candidates/maps/fpm.toml), [build diagnostic](fpm-candidates/maps/build-error.txt), [MIT license](fpm-candidates/maps/licenses/LICENSE) and [attempted word-count driver](fpm-candidates/maps/main.f90) are retained. Since compilation stopped first, the driver's runtime behavior is unverified. A compatible stdlib pin or an upstream migration to its newer hash-map API would permit another attempt.
+
+To prepare the same source graph locally, run this Python code from the repository root with the repository's Python dependencies installed. It creates a new `maps-reproducer` directory; use another directory name for a second attempt.
+
+```python
+import json
+from pathlib import Path
+from fpm_project_run import prepare
+
+case = Path('docs/fpm-candidates/maps')
+package = json.loads((case / 'source-review.json').read_text(encoding='utf-8'))
+project = Path('maps-reproducer').resolve()
+project.mkdir()
+(project / 'app').mkdir()
+(project / 'app/main.f90').write_bytes((case / 'main.f90').read_bytes())
+settings = {'package': package, 'request': {
+    'url': 'https://github.com/' + package['repository'],
+    'revision': package['revision'], 'workflow': 'consumer', 'action': 'run'}}
+prepare(project, settings)
+```
+
+Then run `fpm build --profile debug --compiler gfortran` from `maps-reproducer`, with GNU Fortran 16 on PATH, to reproduce the compile error. This is a clean source build, without the hosted shared stdlib archive.
+
+## Friction
+
+Repository: [jchristopherson/friction](https://github.com/jchristopherson/friction), commit `8e75dcac26f47417a439adfcbaa24834105d89fe`.
+
+The [consumer](../fpm_catalog/demos/friction.f90) follows the API conventions in the author's `test/friction_model_tests.f90`. It evaluates Coulomb and Stribeck models at five positive, negative and zero velocities under a 20 N normal load. Independent formulas check the signed forces, and both models must report no internal state. The library's signed-friction convention is printed explicitly; applications must apply their chosen force-balance convention. This does not validate fitting, Lu-Gre, Maxwell or other dynamic internal-state models.
+
+The five dependency revisions are locked, including the existing Diffeq, Linalg, Fstats and Collections source pins. BLAS, LAPACK and ARPACK packages are pinned, and OpenMP is enabled for this build context. Those settings require their own compatible shared exports rather than silently mixing default and OpenMP variants. No numerical source is patched. See the [source/build record](fpm-candidates/friction/source-review.json), [verified output](fpm-candidates/friction/verified-output.txt) and [MIT license](fpm-candidates/friction/licenses/LICENSE). GAMS fitting/ODE mappings describe additional reviewed source procedures, not additional validated demonstrations.
+
+## FEqParse
+
+Repository: [FluidNumerics/feq-parse](https://github.com/FluidNumerics/feq-parse), commit `2e80c5940b128a52c5070a3f56909674fb85a379`.
+
+The [consumer](../fpm_catalog/demos/feq-parse.f90) creates parsers for a three-variable Gaussian and a polynomial. At seven input points it compares double-precision evaluation with direct Fortran formulas, checking finite results and errors below `1e-12`. This exercises variable binding, elementary functions, powers and precedence. The calling convention follows the author's multivariable Gaussian example, with new independent checks. Array evaluation, custom functions and every possible input expression are outside its coverage.
+
+The library source is unmodified and has no external dependencies. Although the manifest says `license = "Other"`, the root [LICENSE](fpm-candidates/feq-parse/licenses/LICENSE) supplies BSD-3-Clause terms. See the [source/build record](fpm-candidates/feq-parse/source-review.json) and [verified output](fpm-candidates/feq-parse/verified-output.txt).
+
+## ForDot
+
+Repository: [gha3mi/fordot](https://github.com/gha3mi/fordot), commit `3966625781a9c1dffe037e3032fa4a0b6f958760`.
+
+The [consumer](../fpm_catalog/demos/fordot.f90) checks methods m1 through m4 against the exact dot product 120, using both ordinary evaluation and three unequal blocks of eight elements. This includes the intrinsic, BLAS, explicit-loop and array-expression implementations. It runs in one process and makes no timing, parallel-scaling or coarray claim.
+
+The manifest's `VERSION` placeholder is rendered as the documented version 0.2.0. Kinds, ForUnitTest and FACE are locked, with the previously accepted FACE revision; unused development tests are not pulled into the consumer. Native BLAS/LAPACK packages and compiler/link flags are recorded. Its compatible dependency exports are shared with ForMatmul. See the [source/build record](fpm-candidates/fordot/source-review.json), [verified output](fpm-candidates/fordot/verified-output.txt) and [BSD-3-Clause license](fpm-candidates/fordot/licenses/LICENSE). No computational source is patched.
+
+## ForMatmul
+
+Repository: [gha3mi/formatmul](https://github.com/gha3mi/formatmul), commit `4b5747d49c27f0df92288e7a61d0e479e34ac78e`.
+
+The [consumer](../fpm_catalog/demos/formatmul.f90) checks methods m1 through m4 for rectangular matrix multiplication, all four transpose combinations and matrix-vector products. A separate scalar-loop reference gives the matrix product with rows `(58,64)` and `(139,154)`. It checks both omitted transpose flags and both flags explicitly false. This is single-process correctness coverage; it does not validate every available kernel or coarray branch. Kinds, ForUnitTest and FACE exports are shared with ForDot, and Fortime has its own pinned export. Native BLAS/LAPACK packages and compiler/link settings are pinned. The source is unmodified; [LICENSE](fpm-candidates/formatmul/licenses/LICENSE) supplies BSD-3-Clause terms.
+
+**Confirmed transpose-flag limitation:** passing only `transA=.false.` or only `transB=.false.` incorrectly selects a transposed branch in `mat_mat_rel`, producing an extent error for the rectangular example. Omitting both flags works, as does explicitly passing both flags. The supplied main therefore passes both flags whenever either is specified. The [two failing probes and successful workaround](fpm-candidates/formatmul/false-transpose-checks.json) include the hosted GNU 16 diagnostics. Their standalone sources are [transA false](fpm-candidates/formatmul/transa-false.f90), [transB false](fpm-candidates/formatmul/transb-false.f90) and [both false](fpm-candidates/formatmul/both-false.f90). They can be tried as edited mains using the same pinned package; no upstream issue was submitted.
+
+The [source/build record](fpm-candidates/formatmul/source-review.json) also retains the initial example hash and links its [initial main](fpm-candidates/formatmul/initial-main.f90). The current [verified output](fpm-candidates/formatmul/verified-output.txt) belongs to the final main with the explicit two-flag workaround. The shared cache checks its current source hash independently.
+
+## Bstrith
+
+Repository: [degawa/bstrith](https://github.com/degawa/bstrith), commit `7ed7730e34c7e1f78f2be9426ccc170f9dcaf57e`.
+
+The [consumer](../fpm_catalog/demos/bstrith.f90) exhaustively checks all 256 eight-bit values. It verifies increment with modulo-256 wraparound, subtraction round trips, XOR with the complement, and every left/right shift amount from one through seven. Expected strings come from independent intrinsic integer operations and binary formatting. The printed examples include `11111111 + 00000001 = 00000000`. This is fixed-width binary-string arithmetic; it does not claim unlimited precision or validate every unequal-length/invalid-input case.
+
+The manifest has a placeholder license field; the root [MIT license](fpm-candidates/bstrith/licenses/LICENSE) supplies the actual terms. The library has no dependencies and its computational source is unmodified. See the [source/build record](fpm-candidates/bstrith/source-review.json) and [verified output](fpm-candidates/bstrith/verified-output.txt).
+
+## HeatFlow
+
+Repository: [ExeQuantCode/HeatFlow](https://github.com/ExeQuantCode/HeatFlow), commit `b0d930caad9160a15f0aeafa238c448f48f28d55`.
+
+The [consumer](../fpm_catalog/demos/heatflow.f90) uses HeatFlow's sparse matrix conversion and BiCG solver (`SRSin`, `linbcg`) for an independent backward-Euler discretization of `u_t = u_xx` on `[0,1]`. It uses zero endpoint temperatures, initial temperature `sin(pi*x)`, 31 interior points, a time step of 0.001 and 50 steps. Every step checks an independent dense matrix residual. The final solution is checked against the exact discrete sine-mode solution to `1e-9` and against `exp(-pi*pi*t)*sin(pi*x)` with a 0.004 discretization-error bound.
+
+The observed continuous-solution error was about 0.001719; the final linear-system residual was below `1e-15`. The example uses the sparse solver's `globe_data%ra` matrix and releases its allocated storage. It does not invoke the complete three-dimensional evolution/Cattaneo executable, its file readers or its material models. Everything in this demonstration runs in memory, with no data files or large output files.
+
+The ordinary FPM library preparation excludes the upstream application main while retaining its modules; no source-subset recipe or computational patch is needed. See the [source/build record](fpm-candidates/heatflow/source-review.json), [verified output](fpm-candidates/heatflow/verified-output.txt) and [GPL-3.0 license](fpm-candidates/heatflow/licenses/LICENSE).
+
+## HR-WENO
+
+Repository: [HugoMVale/HR-WENO](https://github.com/HugoMVale/HR-WENO), commit `2885105a7ba98351fed299b22e9bc0c67a809d2f`.
+
+The [consumer](../fpm_catalog/demos/hrweno.f90) solves periodic linear advection with 64 finite-volume cells, fifth-order WENO reconstruction and third-order TVD Runge-Kutta time integration. Three ghost cells at either end impose the periodic boundary condition; the two boundary fluxes agree exactly. The initial and reference solutions are exact cell averages of a sine wave. At time 0.25, the maximum error was about `4.85e-7`, and the mass remained one to the printed twelve decimal places. This checks a smooth solution, rather than discontinuities, nonuniform grids or all reconstruction orders.
+
+Its stdlib dependency uses the existing pinned generated snapshot and shared compiled export. No numerical source is patched. See the [source/build record](fpm-candidates/hrweno/source-review.json), [verified output](fpm-candidates/hrweno/verified-output.txt) and [licenses](fpm-candidates/hrweno/licenses/).
+
+## Fortran-simplify
+
+Repository: [jaiken17/fortran-simplify](https://github.com/jaiken17/fortran-simplify), commit `f546422216fb88eba97e2a0f4910935efbcdce83`.
+
+The [consumer](../fpm_catalog/demos/fortran-simplify.f90) makes a single call to `perpendicular_distance` for a 251-point sine curve. The reduced curve has 126 points; independent endpoint checks and piecewise-linear interpolation give a maximum vertical error of about `0.000316`, below the supplied tolerance 0.005. The original and reduced curves are plotted together, and the changed-main sandbox returned a visually reviewed `simplified.png`. Its [plot check](fpm-candidates/fortran-simplify/plot-check.json) records the preview hash. The stdlib dependency is shared; the computational source is unmodified.
+
+**Confirmed upstream limitations:** this pin's radial-distance helper computes a dot product rather than squared Euclidean distance. The [radial-distance reproducer](fpm-candidates/fortran-simplify/radial-distance.f90) therefore retains a near-duplicate interior point that should be removed. Separately, initialized local flags in `perpendicular_distance` retain their state between calls. The [repeated-call reproducer](fpm-candidates/fortran-simplify/repeated-perpendicular.f90) first simplifies a straight line, then loses the endpoints and corner of a three-point curve, returning just one point. The supplied example calls this routine only once and includes a visible source comment about these limitations. It is not a workaround for general repeated use.
+
+Both failing checks were run with the same hosted GNU 16 package image. Their [diagnostics](fpm-candidates/fortran-simplify/limitation-checks.json), [source/build record](fpm-candidates/fortran-simplify/source-review.json), [successful example output](fpm-candidates/fortran-simplify/verified-output.txt) and [BSD-3-Clause license](fpm-candidates/fortran-simplify/licenses/LICENSE) are retained. No upstream issue was submitted.
+
+## ECX
+
+Repository: [MilanSkocic/ecx](https://github.com/MilanSkocic/ecx), commit `d30725e3cb9186bc79f81481f3d6fae8d177a7b7`.
+
+The [consumer](../fpm_catalog/demos/ecx.f90) evaluates a 100-ohm resistor and 1-millifarad capacitor at four angular frequencies. It checks both finite real/imaginary parts and their series combination against the direct formula `R - i/(omega*C)`. It prints an impedance table; no experimental data or network access is needed. Other electrochemical and photoelectrochemical models are not validated by this example.
+
+The unmodified source failed because `ecx__pec` uses the kind name `real64` without importing it. A checksum-guarded catalog edit adds only `use, intrinsic :: iso_fortran_env, only: real64` to that module; no formulas are changed. The [original diagnostic](fpm-candidates/ecx/original-build-failure.json) and the exact edit in the [source/build record](fpm-candidates/ecx/source-review.json) make the local change reproducible. Stdlib uses its existing compiled export; CIAAW, CODATA and M_CLI2 revisions are locked. Manifest `VERSION` placeholders are rendered explicitly. See the [verified output](fpm-candidates/ecx/verified-output.txt) and [license files](fpm-candidates/ecx/licenses/).
+
+## Orbs
+
+Repository: [degawa/orbs](https://github.com/degawa/orbs), commit `3cf7fcec19798367f6f5bd26bad861c510449265`.
+
+The [consumer](../fpm_catalog/demos/orbs.f90) combines bitset addition and logical masks to find the next x neighbor of an interleaved two-dimensional Morton key. Every cell of a 4-by-4 grid, including wraparound, is checked against an independent reference using intrinsic integer bit operations. For example, key `0011` has x neighbor `1001`. This checks fixed-width arithmetic and masking; it does not validate every bitset operation or invalid input.
+
+The Bstrith revision is locked to the catalog's accepted pin, and stdlib reuses the compatible compiled export. Source code is unmodified. See the [source/build record](fpm-candidates/orbs/source-review.json), [verified output](fpm-candidates/orbs/verified-output.txt) and [MIT license](fpm-candidates/orbs/licenses/LICENSE).
+
+## ReArrayFX
+
+Repository: [aradi/rearrayfx](https://github.com/aradi/rearrayfx), commit `be1a7b08e43b358c8ed27fa80db7896767eb9f6d`.
+
+The [consumer](../fpm_catalog/demos/rearrayfx.f90) grows a rank-two real array with twice the requested backing capacity. It checks preservation of data when growth fits in spare storage and when a new allocation is required, then checks shrinking and assignment from a plain array. The final 2-by-6 matrix contains the integers 1 through 12 and sums to 78. The upstream module prints a debug message when it allocates backing storage; this output is retained. The block scope invokes the container's finalizer.
+
+This is an educational proof of concept with one real-array type. The example does not claim support for copying containers, all element types or concurrent use. It has no dependencies, and its own small compiled library is exported separately for reuse. See the [source/build record](fpm-candidates/rearrayfx/source-review.json), [verified output](fpm-candidates/rearrayfx/verified-output.txt) and [BSD-2-Clause-Patent license](fpm-candidates/rearrayfx/licenses/LICENSE).
+
+## Athena
+
+Repository: [nedtaylor/athena](https://github.com/nedtaylor/athena), commit `4b81aeac07113628c2c9a476648d5ac2a91b7c91`.
+
+The [consumer](../fpm_catalog/demos/athena.f90) performs deterministic inference with one fully connected layer: three inputs, two outputs, fixed weights and biases, and tanh activation. The result is checked against ordinary Fortran `matmul` and `tanh`. This is a small in-memory example, with no training data, training loop or external service. It does not validate training, automatic differentiation or the many convolutional/graph/network APIs.
+
+The initial build failed because FPM 0.12 does not accept the manifest's newer optional `features` table. A checksum-guarded manifest edit removes the W&B feature declaration. FPM 0.12's dependency scanner also sees the preprocessor-disabled `use wf`; the same manifest edit declares `wf` an external module. The compiler removes that branch when `_WANDB` is not defined. **W&B tracking is unavailable in this recipe.** No mathematical source is changed, and simply adding the W&B macro will not install the missing integration.
+
+Coreutils, Diffstruc and Graphstruc are pinned to the revisions resolved from the author's release tags. BLAS/LAPACK development packages have exact versions. This patched-root recipe retains its own compiled artifacts rather than using complete graph sharing, which currently excludes patched roots; the changed-main test still rebuilds only the main and executable. The [initial diagnostics](fpm-candidates/athena/original-build-failures.json), exact manifest edit in the [source/build record](fpm-candidates/athena/source-review.json), [verified output](fpm-candidates/athena/verified-output.txt) and [MIT license](fpm-candidates/athena/licenses/LICENSE) are retained.
+
+## AMOS F90
+
+Repository: [Euler-37/amosf90](https://github.com/Euler-37/amosf90), commit `b54a4d4a1d8f7c97acd180ed5bbaae8d089a9fa7`.
+
+The [consumer](../fpm_catalog/demos/amosf90.f90) demonstrates functionality beyond the standard Fortran Bessel intrinsics: complex arguments, noninteger orders, and modified Bessel functions. At `z = 1 + 0.5i`, it checks `J_0.3(z)` and `I_0.3(z)` against independent convergent power series using the intrinsic real gamma function. It also checks the closed-form expression `K_0.5(z) = sqrt(pi/(2*z))*exp(-z)`. Every routine must return a successful status with no underflows, finite components and an absolute error below `1e-11`.
+
+The source is unmodified and has no dependencies. Its small compiled library is exported separately for reuse. The upstream README explicitly warns of possible bugs; these checks do not validate every order, argument region, scaled mode, Airy routine or Hankel routine. See the [source/build record](fpm-candidates/amosf90/source-review.json) and [verified output](fpm-candidates/amosf90/verified-output.txt).
+
+The manifest's license value is the placeholder `license`; no license notice was found in the reviewed archive. The catalog records `NOASSERTION`, rather than inferring terms from the original AMOS distribution or from the repository being public. The [license-status record](fpm-candidates/amosf90/license-status.json) preserves this unresolved metadata.
+
+## linalg_fortran
+
+Repository: [Euler-37/linalg_fortran](https://github.com/Euler-37/linalg_fortran), commit `30e7237ab54ca176e1c8dae4be2d9d44800e1f83`.
+
+The [consumer](../fpm_catalog/demos/linalg_fortran.f90) checks the real64 inverse, determinant and symmetric eigenproblem interfaces using a 3-by-3 tridiagonal matrix with diagonal 2 and off-diagonal 1. Independent references give determinant 4 and eigenvalues `2-sqrt(2)`, 2 and `2+sqrt(2)`. The main also checks inverse and eigenpair residuals and eigenvector orthonormality. The observed inverse residual was about `1.11e-16`. Single-precision, complex and other wrappers are not validated by this example.
+
+The original build fails the implicit-interface check at the legacy LAPACK helper `ilaenv`. A checksum-guarded manifest edit explicitly enables `implicit-external` for this package's original Fortran 77 BLAS/LAPACK interfaces. Numerical sources and normal runtime checks are retained. OpenBLAS development packages are pinned to `0.3.29+ds-3`; the patched-root recipe keeps its own compiled artifacts. See the [original diagnostic](fpm-candidates/linalg_fortran/original-build-failure.json), exact edit in the [source/build record](fpm-candidates/linalg_fortran/source-review.json) and [verified output](fpm-candidates/linalg_fortran/verified-output.txt).
+
+This archive also has the placeholder license value `license`, with no license notice found in the reviewed files. Its catalog value is `NOASSERTION`; see the [license-status record](fpm-candidates/linalg_fortran/license-status.json).
+
+## fortran_vector
+
+Repository: [Euler-37/fortran_vector](https://github.com/Euler-37/fortran_vector), commit `95469e2ce1162b0ede3ca3435ebd94ec6b6fee79`.
+
+The [consumer](../fpm_catalog/demos/fortran_vector.f90) starts with capacity two, appends the integers 1 through 8 and a short array containing duplicates, then checks stable duplicate elimination. It exercises removal by value, deletion by position, popping and storage compaction. Independent expected contents are `1 3 5 6 7 8` after editing. The example does not cover invalid indices, popping an empty vector or calling `unique` on an empty vector.
+
+**Confirmed upstream aliasing bug:** the original `unique` passes `this%x_(1)` to `remove`, which compacts that same array and changes the argument value during iteration. The main therefore fails its duplicate-count check. The catalog changes exactly one call to `this%remove(first)`, using the scalar value the routine has already saved. The [original GNU 16 failure](fpm-candidates/fortran_vector/original-unique-failure.json), checksum-guarded edit in the [source/build record](fpm-candidates/fortran_vector/source-review.json), and [successful output](fpm-candidates/fortran_vector/verified-output.txt) are retained. The example source itself is unchanged between the failing and successful runs. No upstream issue was submitted.
+
+Its manifest contains the placeholder license value `license`, and no license notice was found in the reviewed archive. The catalog records `NOASSERTION`; see the [license-status record](fpm-candidates/fortran_vector/license-status.json).
+
+## Scanner
+
+Repository: [freevryheid/scanner](https://github.com/freevryheid/scanner), commit `b0026498c171b615bb3dcfca55a0f20b133e22dc`.
+
+The [consumer](../fpm_catalog/demos/scanner.f90) reconstructs `steps=12;dt=0.25` using the scanner's character API. It checks navigation to delimiters, cursor-preserving lookahead, and rejection of movement before the beginning and beyond the end. Ordinary internal `read` converts the recovered fields, which must equal 12 and 0.25. This illustrates the scanner as a building block for a small parser, rather than a complete configuration-file language.
+
+The numerical source is unmodified. Its stdlib dependency uses the existing pinned generated snapshot and compatible compiled export. See the [source/build record](fpm-candidates/scanner/source-review.json), [verified output](fpm-candidates/scanner/verified-output.txt) and [MIT license](fpm-candidates/scanner/licenses/LICENSE).
+
+## FLAP and StringiFor
+
+Repositories: [szaghi/FLAP](https://github.com/szaghi/FLAP) and [szaghi/StringiFor](https://github.com/szaghi/StringiFor). Both remain deferred at source preparation; no compiler failure is claimed.
+
+The inspected HEAD archives contain a `CONTRIBUTING.md` symlink. The ordinary preparer rejects symlinks in every archive, even documentation links. Earlier root commits—FLAP `17d58bd8c867206baec6f56cbf8156a1afd3cc4a` and StringiFor `019fe9c15a89305b7d2052d9e1bf39ec5f215f7e`—pass extraction, but both explicitly pin FACE `1455c549ae0c1ead96961ca61a73131d8176b6a4`. That dependency archive contains `doc/README-FACE.md -> ../README.md` and is rejected by the same rule. StringiFor's pinned BeFoR64 and PENF archives passed extraction before FACE stopped preparation.
+
+These explicit dependency commits were not silently replaced. The [FLAP record](fpm-candidates/flap/source-review.json) and [StringiFor record](fpm-candidates/stringifor/source-review.json) retain the latest-root rejections, older-root pins, original manifests, available dependency locks, blocked FACE archive checksum and exact link paths. Their folders also retain the upstream license files. A useful next step is a source snapshot with no archive links and dependency pins to snapshots that pass the same rule. Neither package has been advertised as precompiled or working in the sandbox.
+
+## Rojff
+
+Repository: [everythingfunctional/rojff](https://github.com/everythingfunctional/rojff), commit `9f68e5aa4c12b32720d4224f1ac279bfd7d77b93`.
+
+The [consumer](../fpm_catalog/demos/rojff.f90) parses a JSON record containing integer, real and string fields, checks their expected values, and verifies a compact serialization round trip. Missing keys and malformed JSON must return explicit failure values. The source is unmodified; this example does not cover the entire JSON grammar, Unicode handling, every constructor or performance.
+
+The author uses GitLab dependencies. Explicit aliases select their GitHub mirrors, with every source revision and archive checksum locked. The requested Erloff 2.2.0 uses Strff 4.0.0, whose `exceptional_numbers` dependency has no available mirror at the configured GitHub URL. Trying the older Erloff 2.1.3 instead fails compilation because Rojff requires a newer error-list constructor. The accepted recipe retains **Erloff 2.2.0**, uses **Strff 3.1.1**, and pins **ISO varying string 3.0.3**. Its complete consumer, including both error paths, passes with that configuration. No mathematical, JSON or error-handling source is patched.
+
+Rojff and Veggies reference the same compatible ISO varying string and Strff compiled exports. See the [dependency investigation](fpm-candidates/rojff/dependency-investigation.json), [source/build record](fpm-candidates/rojff/source-review.json), [verified output](fpm-candidates/rojff/verified-output.txt) and [MIT license](fpm-candidates/rojff/licenses/LICENSE).
+
+## argparse-f
+
+Repository: [0382/argparse-f](https://github.com/0382/argparse-f), commit `435cc1676d6064162a3c36b91f1aa50d926fdd45`.
+
+The [consumer](../fpm_catalog/demos/argparse-f.f90) exercises the real process command-line API. Because a playground main starts without arguments, it launches its own executable once with a fixed example command line: `-t 4 --scale 0.25 --name demo --verbose`. The child checks integer, double-precision and string values, a logical flag, and an untouched default of 20 iterations. The parent checks successful execution. No input files, custom backend argument handling or internal parser state manipulation are needed.
+
+`has_option` is used for the logical flag, as in the author's example; typed values use their corresponding getters. The checked main does not validate error exits, named/positional arguments, long argument truncation or every parsing rule. The source is unmodified and has no dependencies. See the [source/build record](fpm-candidates/argparse-f/source-review.json), [verified output](fpm-candidates/argparse-f/verified-output.txt) and [MIT license](fpm-candidates/argparse-f/licenses/LICENSE).
+
+## io_utilities
+
+Repository: [arjenmarkus/io_utilities](https://github.com/arjenmarkus/io_utilities), commit `f0551aad0b46aa7aac1c442a3c576ecc90028f72`.
+
+The [consumer](../fpm_catalog/demos/io_utilities.f90) creates a tiny INI-style file inside the sandbox, then uses `keyvars` descriptors and `get_values` to fill target variables. It checks integer 12, double 0.25, a logical value written as `yes`, and a string containing a space. The file includes a section header and a trailing comment, and is deleted after the check. Descriptor section matching remains the default wildcard; section-specific filtering, malformed input and the package's other I/O modules are not validated.
+
+The upstream manifest writes `[[library]]`, an array where FPM requires a single `[library]` table. A checksum-guarded manifest edit corrects that declaration while retaining `source-dir = "src"`. No Fortran source is changed. The original manifest and exact replacement are preserved in the [source/build record](fpm-candidates/io_utilities/source-review.json); see also [verified output](fpm-candidates/io_utilities/verified-output.txt) and the [MIT license](fpm-candidates/io_utilities/licenses/LICENSE).
+
+## uint-fortran
+
+Repository: [ShinobuAmasaki/uint-fortran](https://github.com/ShinobuAmasaki/uint-fortran), commit `487f806c76a5d107c5a8982198bafb295065eba7`.
+
+The [consumer](../fpm_catalog/demos/uint-fortran.f90) checks fixed-width unsigned derived types. It verifies `2147483648 + 3 = 2147483651`, unsigned comparison, 32-bit modular addition and subtraction, conversion of a negative assignment, and the 16-bit upper boundary and wraparound. Expected values use ordinary wider signed integers. The current conversion generic is imported explicitly from `int_m`; the checked source does not rely on the README's older `unsigned_m` re-export behavior.
+
+The library source is unmodified and has no dependencies. These checks do not validate every kind or operation, arbitrary-precision arithmetic, or calls across a C interface. See the [source/build record](fpm-candidates/uint-fortran/source-review.json), [verified output](fpm-candidates/uint-fortran/verified-output.txt) and [MIT license](fpm-candidates/uint-fortran/licenses/LICENSE).
+
+## Veggies
+
+Repository: [everythingfunctional/veggies](https://github.com/everythingfunctional/veggies), commit `8388f5e2633afa3d08cf5c6e7db1eeb0dcab2dc8`.
+
+The [consumer](../fpm_catalog/demos/veggies.f90) defines three specification-style tests for a small user-written Simpson integration formula. Constant, linear and quadratic inputs over `[0,2]` must give 6, 2 and `8/3`, respectively. The framework prints each case description and a three-test passing summary; the main also checks `run_tests`' logical result. Module callbacks avoid internal-procedure trampolines. The Simpson formula is part of the example, not a numerical method supplied by Veggies.
+
+The source is unmodified. Explicit GitLab-to-GitHub aliases and source locks retain ISO varying string 3.0.3 and Strff 3.1.1, sharing compatible compiled exports with Rojff. The demonstration does not cover parallel tests, generators, shrinking or the full assertion API. See the [source/build record](fpm-candidates/veggies/source-review.json), [verified output](fpm-candidates/veggies/verified-output.txt) and [MIT license](fpm-candidates/veggies/licenses/LICENSE.md).
+
+## shunting-yard-fortran
+
+Repository: [14NGiestas/shunting-yard-fortran](https://github.com/14NGiestas/shunting-yard-fortran), commit `ff62d83502bc5fdf77f2750c3538b8634a543b91`.
+
+The [consumer](../fpm_catalog/demos/shunting-yard-fortran.f90) supplies module callbacks for numeric operands and arithmetic, then checks five expressions: `2+3*4 = 14`, `(2+3)*4 = 20`, `2^3^2 = 512`, `sqrt(9) = 3` and `-2+6 = 4`. Thus it exercises precedence, parentheses, right associativity, a unary function and unary minus. The tokenizer dependency has an exact source and archive lock.
+
+**Sandbox compatibility edit:** the original library defines `by_expression` as an internal function of `parse` and passes it as a callback. This layout compiled but crashed with SIGSEGV in the restricted GNU 16 sandbox. The callback uses no host variables. A checksum-guarded edit moves it to module scope, retaining its body and the parsing operations unchanged; all five cases then pass. The [original main](fpm-candidates/shunting-yard-fortran/original-main.f90), [original crash](fpm-candidates/shunting-yard-fortran/original-sandbox-failure.json), and exact edit in the [source/build record](fpm-candidates/shunting-yard-fortran/source-review.json) are retained. No upstream issue was submitted.
+
+The author's README describes this as an experimental parser and documents global token registration, fixed operator precedences and absent syntax validation. The example deliberately uses one parser with valid expressions; it is not a demonstration of concurrent parsers or robust malformed-input handling. See [verified output](fpm-candidates/shunting-yard-fortran/verified-output.txt) and the [MIT license](fpm-candidates/shunting-yard-fortran/licenses/LICENSE).
+
+## fwalk
+
+Repository: [freevryheid/fwalk](https://github.com/freevryheid/fwalk), commit `cc95f3d0c55cd90dc96c536e29c4b07ee813efaa`.
+
+**Deferred during source preparation.** Archive contains symbolic links into its libcwalk Git submodule. Archive extraction rejects links and the submodule implementation is not contained in the archive. Requires an explicit, pinned C-submodule source adapter before an ordinary offline consumer can build. No sandbox build was submitted; no library changes made. The original manifest, license and exact symbolic-link targets are retained in the [source preparation record](fpm-candidates/fwalk/source-review.json). This is a packaging limitation of our preparation path, not an observed Fortran compiler failure.
+
+## sqliteff
+
+Repository: [everythingfunctional/sqliteff](https://github.com/everythingfunctional/sqliteff), commit `9b377c976698a7da671536e5e2539146ab734ca6`.
+
+SQLite wrapper with bundled SQLite 3.30.1 C sources. The checked main opens an in-memory database, creates a table, inserts three values, verifies count and average, reaches SQLITE_DONE and closes resources. It does not cover persistent files, concurrent use, transactions or the complete SQLite API. Explicit GitLab-to-GitHub alias pins ISO varying string; no source edits.
+
+See the [checked main](../fpm_catalog/demos/sqliteff.f90), [source/build record](fpm-candidates/sqliteff/source-review.json) and [verified output](fpm-candidates/sqliteff/verified-output.txt).
+
+## erloff
+
+Repository: [everythingfunctional/erloff](https://github.com/everythingfunctional/erloff), commit `73dfdbf54dafadb42e4705c45824b93917a20965`.
+
+Structured error lists and logging. The checked main collects two fatal validation messages, filters one by OUT_OF_BOUNDS, checks counts and diagnostic text, and prints both messages. The pinned compatible Strff 3.1.1 avoids the unavailable exceptional_numbers mirror requested through Strff 4.0. No library source edits. This does not cover all logging levels, filtering operators or concurrent use.
+
+See the [checked main](../fpm_catalog/demos/erloff.f90), [source/build record](fpm-candidates/erloff/source-review.json) and [verified output](fpm-candidates/erloff/verified-output.txt).
+
+## fortran-tokenizer
+
+Repository: [14NGiestas/fortran-tokenizer](https://github.com/14NGiestas/fortran-tokenizer), commit `11ad73ea6102f86593bf2b372d56bf9fbedaebc7`.
+
+Customizable text tokenization. The checked main uses a module callback to split comma, space and tab-separated fields, verifies all three tokens and checks clearing the list. This is lexical splitting, not expression evaluation. No source edits. Malformed input, every callback combination and token object storage are not covered.
+
+See the [checked main](../fpm_catalog/demos/fortran-tokenizer.f90), [source/build record](fpm-candidates/fortran-tokenizer/source-review.json) and [verified output](fpm-candidates/fortran-tokenizer/verified-output.txt).
+
+## integer_set
+
+Repository: [jordan4ibanez/integer_set](https://github.com/jordan4ibanez/integer_set), commit `85d336319d6593f9768c599835342912ce0b7bb8`.
+
+Simple fixed-width integer sets. The checked main verifies duplicate rejection, removal and sorted contents for 32-bit values, and duplicate rejection for a 64-bit value above the 32-bit range. Membership is checked from public data, not a separate membership API. No source edits. Performance, every boundary and all operations are not validated.
+
+See the [checked main](../fpm_catalog/demos/integer_set.f90), [source/build record](fpm-candidates/integer_set/source-review.json) and [verified output](fpm-candidates/integer_set/verified-output.txt).
+
+## smart-pointers
+
+Repository: [sourceryinstitute/smart-pointers](https://github.com/sourceryinstitute/smart-pointers), commit `35130adc4be4384a14b2369e5edd36d4665cd994`.
+
+Reference-counted resource management. Adapted from the author example: a user type extends sp_smart_pointer_t and implements free. The checked main shares one integer resource, verifies reference counts and shared target, checks no premature cleanup and confirms exactly one cleanup after subroutine return. No source edits. This is not exhaustive compiler finalization conformance testing.
+
+See the [checked main](../fpm_catalog/demos/smart-pointers.f90), [source/build record](fpm-candidates/smart-pointers/source-review.json) and [verified output](fpm-candidates/smart-pointers/verified-output.txt).
+
+## fregex
+
+Repository: [14NGiestas/fregex](https://github.com/14NGiestas/fregex), commit `1e20f084fb33b2b9dda8ca887bafae3c847e08c6`.
+
+**Deferred.** The original PCRE 1 API needs -lpcre. The default Debian 13 (trixie) main amd64 package index contains neither libpcre3 nor libpcre3-dev. PCRE2 is a different API, not a drop-in link substitution. Deferred pending an upstream PCRE2 port or an explicitly maintained native-library recipe. See the [reproducer](fpm-candidates/fregex/main.f90) and [source/build record](fpm-candidates/fregex/source-review.json). No issue was submitted upstream.
+
+## time-f
+
+Repository: [0382/time-f](https://github.com/0382/time-f), commit `f0067d85d32082225d3abecbf8e35cee17fe95c4`.
+
+**Deferred.** Compiles, but the supplied strftime maximum length is ignored. The bounded-buffer probe expects zero for a 19-character date with maxsize=5, and fails. The C binding omits VALUE on size_t maxsize. The tm layout also needs platform ABI review before exposing mktime and timezone-dependent formatting; the source declares only nine integers. Deferred rather than publishing a limited example that hides these issues. See the [reproducer](fpm-candidates/time-f/main.f90) and [source/build record](fpm-candidates/time-f/source-review.json). No issue was submitted upstream.
+
+A separate sandbox probe confirms that the host C `struct tm` occupies **56 bytes**, while `c_sizeof` reports **36 bytes** for the library type. The [ABI check](fpm-candidates/time-f/abi-check.json) retains both probe sources and measurements.
+
+The immediate binding correction to investigate is `integer(c_size_t), value :: maxsize` in `strftime_c`, matching the C `size_t` argument. This alone does not establish that the Fortran `tm` type matches the host C ABI. A portable C shim, or verified platform-specific layout, is needed before accepting `mktime` and timezone-dependent formatting. The saved bounded-buffer probe keeps a 32-character actual allocation while requesting a maximum of five, so it detects the return-value error without deliberately overflowing the allocation.
+
+## rpn-calculator-fortran
+
+Repository: [scivision/rpn-calculator-fortran](https://github.com/scivision/rpn-calculator-fortran), commit `7708e4949f17511d81f4e7dd0271a500f0bc3631`.
+
+Numerical routines from the RPN calculator, called directly without its interactive interface. The checked main verifies a negative cube root, sinc and sech at zero, beta(2,3), modified Bessel I0 at zero, and integer gcd/lcm against known results. A checksum-guarded manifest correction sets source-form=default so .f and .f90 files use their respective forms. No numerical sources are changed. The tests do not establish accuracy over full argument ranges or validate the complete calculator.
+
+See the [checked main](../fpm_catalog/demos/rpn-calculator-fortran.f90), [source/build record](fpm-candidates/rpn-calculator-fortran/source-review.json) and [verified output](fpm-candidates/rpn-calculator-fortran/verified-output.txt).
+
+## nc4fortran
+
+Repository: [geospace-code/nc4fortran](https://github.com/geospace-code/nc4fortran), commit `942ac4f83380acdef463002f555aebf30f3c46ac`.
+
+NetCDF4 array and attribute I/O. The checked main writes a 2-by-3 double-precision array with dimension names and a kelvin units attribute, closes the file, reopens and verifies every value and the attribute, then deletes the sandbox file. Native NetCDF and HDF5 development packages and include/library paths are pinned in the build recipe. No source edits. It does not cover every type/rank, compression, slicing or malformed files.
+
+See the [checked main](../fpm_catalog/demos/nc4fortran.f90), [source/build record](fpm-candidates/nc4fortran/source-review.json) and [verified output](fpm-candidates/nc4fortran/verified-output.txt).
+
+## fundamental_constants
+
+Repository: [vmagnin/fundamental_constants](https://github.com/vmagnin/fundamental_constants), commit `3e18620ab7813fd9f02e8dcf05c48f0ca13f2ec0`.
+
+CODATA physical constants. The checked main imports the explicit 2022 edition, computes the energy of a 500 nm photon in joules and electron volts, and compares it with independent decimal reference values. The source modules are pre-generated; no network request or Python generation is needed to use them. No source edits. This is a check of three constants and one calculation, not revalidation of the complete CODATA tables or uncertainty propagation.
+
+See the [checked main](../fpm_catalog/demos/fundamental_constants.f90), [source/build record](fpm-candidates/fundamental_constants/source-review.json) and [verified output](fpm-candidates/fundamental_constants/verified-output.txt).
+
+## array_range
+
+Repository: [degawa/array_range](https://github.com/degawa/array_range), commit `cd21ccb982e23de9c2df44c12edab44dd84562dc`.
+
+Derived types and constructors for multidimensional array bounds. The checked main reconstructs and round-trips bounds [-1:1,4:5], traverses exactly six elements using stored bounds and verifies their sum of 270. No source edits. It does not cover all dimensions, vector/tensor wrappers, empty arrays or invalid bounds. This is an indexing utility, not a numerical solver.
+
+See the [checked main](../fpm_catalog/demos/array_range.f90), [source/build record](fpm-candidates/array_range/source-review.json) and [verified output](fpm-candidates/array_range/verified-output.txt).
+
+## flibcsv
+
+Repository: [freevryheid/flibcsv](https://github.com/freevryheid/flibcsv), commit `ce19ebe6b08c58f1014527d27f27bdd97b38c835`.
+
+**Parser example passed; publication deferred.** The bounded CSV parser example compiles and passes quoted fields, embedded commas, an empty field and doubled quotes. Deferred before publication: the manifest license is the placeholder "license", no repository license file was found, and the Fortran wrapper has no explicit license notice; only bundled C sources identify LGPL-2.1-or-later. Source review also finds incorrect unused C bindings: entry_buf is a character rather than a C pointer, csv_strerror returns a character rather than a C pointer, and csv_write/csv_write2 omit VALUE on pointer arguments. Author clarification and a binding review are needed before presenting this as a ready-to-use library. See the [checked main](fpm-candidates/flibcsv/main.f90), [sandbox result](fpm-candidates/flibcsv/sandbox-parser-check.json) and [source review](fpm-candidates/flibcsv/source-review.json). No issue was submitted upstream.
+
+## jeyemhex-regex
+
+Repository: [jeyemhex/fortran-regex](https://github.com/jeyemhex/fortran-regex), commit `2ca0043837a86a4f77df494ddad2240c1b70e576`.
+
+Pure Fortran regular expressions by Edward Higgins, distinct from perazz/fortran-regex already selected under fortran-regex. The main checks matching and nonmatching anchored decimal measurements, matched substring, comma/space splitting and replacement. No source edits or native regex library. Pattern whitespace is ignored unless escaped; the author documents missing capture references and other features, so PCRE compatibility and all patterns are not claimed.
+
+See the [checked main](../fpm_catalog/demos/jeyemhex-regex.f90), [source/build record](fpm-candidates/jeyemhex-regex/source-review.json) and [verified output](fpm-candidates/jeyemhex-regex/verified-output.txt).
+
+## fed
+
+Repository: [degawa/fed](https://github.com/degawa/fed), commit `d735aa2b3bd6b20840bcc16ff569e8cfc0492267`.
+
+Programmatic Fortran edit descriptors. The main generates and applies integer, character and fixed-decimal real formats, checks exact aligned output, and verifies a zero-padded integer. The registry stdlib dependency is mapped to a pinned Git source and manifest version; compatible stdlib objects are reused. No Fortran source edits. Arrays, complex values, user-defined I/O and every descriptor/control mode are not covered.
+
+See the [checked main](../fpm_catalog/demos/fed.f90), [source/build record](fpm-candidates/fed/source-review.json) and [verified output](fpm-candidates/fed/verified-output.txt).
+
+## any
+
+Repository: [degawa/any](https://github.com/degawa/any), commit `b9eb5e3fdc8f162ae8f2c5d8d026537ed2397830`.
+
+Type-erased intrinsic values returned through any_type. The checked main returns an integer, a double-precision real and a character value through one function, retrieves each using its matching type, and checks exact values. No source edits. The author documents undefined results for mismatched type/rank conversions; the example does not validate all ranks, kinds, custom extensions or invalid conversions.
+
+See the [checked main](../fpm_catalog/demos/any.f90), [source/build record](fpm-candidates/any/source-review.json) and [verified output](fpm-candidates/any/verified-output.txt).
+
+## for_fifo_queue
+
+Repository: [jordan4ibanez/for_fifo_queue](https://github.com/jordan4ibanez/for_fifo_queue), commit `b04b536589af8cf041b8e5e53484e57147fc746f`.
+
+FIFO container using C allocations and byte copies. The main enqueues four 64-bit C-interoperable integers, verifies count and exact retrieval order, frees every popped allocation with C free, checks empty-pop behavior and destroys the queue. No source edits. The implementation uses GNU LOC and raw byte storage; the example makes no portability claim for arbitrary derived types, pointer-owning values, threading or every compiler.
+
+See the [checked main](../fpm_catalog/demos/for_fifo_queue.f90), [source/build record](fpm-candidates/for_fifo_queue/source-review.json) and [verified output](fpm-candidates/for_fifo_queue/verified-output.txt).
+
+## string-utf-8
+
+UTF-8 string handling using one array element per encoded Unicode code point. The main verifies a round trip, code point count, substring, search and replacement of accented text, and prints the results. No source edits. Combining marks remain separate code points; grapheme segmentation, normalization and malformed-input handling are not validated.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/string-utf-8.f90), [source/build record](fpm-candidates/string-utf-8/source-review.json) and [verified output](fpm-candidates/string-utf-8/verified-output.txt).
+
+## fortime
+
+Serial system_clock and CPU timers. The checked main computes the exact sum of integers 1 through 100000, checks finite nonnegative elapsed times and prints the sum and timings. The root manifest VERSION placeholder is replaced with adapter version 0.0.0; the pinned source commit identifies the actual library. FACE is pinned to an already used revision. No Fortran source edits. MPI/OpenMP timers are not enabled or tested; sandbox timings vary and are not benchmark guarantees.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/fortime.f90), [source/build record](fpm-candidates/fortime/source-review.json) and [verified output](fpm-candidates/fortime/verified-output.txt).
+
+## fassert
+
+Assertions for integer scalars and arrays plus approximate real comparison with an explicit tolerance. The main captures an intentional failed comparison as a logical status and message, checks both, and continues successfully. No source edits; matches the existing Any dependency revision. Not a validation of every type, rank, tolerance convention, custom comparator or test-framework integration.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/fassert.f90), [source/build record](fpm-candidates/fassert/source-review.json) and [verified output](fpm-candidates/fassert/verified-output.txt).
+
+## errstat
+
+Error status and message handling. A custom reciprocal routine uses catch_error and set_success. The main checks a successful result, zero rejection with an exact code and message, and a subsequent successful call clearing the error. No source edits. The reciprocal is only a driver, not a mathematical procedure supplied by errstat. Optional omitted-status termination and user-defined task/message repositories are not exercised.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/errstat.f90), [source/build record](fpm-candidates/errstat/source-review.json) and [verified output](fpm-candidates/errstat/verified-output.txt).
+
+## slinked-list
+
+Generic singly linked list for small datasets. The main checks integer and real payloads in insertion order, list size, iteration count, emptying, retained capacity and the value stored after reuse; iterator and list cleanup are explicit. A checksum-guarded compatibility edit removes PURE from node_init, whose result has a polymorphic allocatable component. Constructor allocation and copying are unchanged, and the call sites are impure. This patched root retains its own small archive instead of sharing an unmodified graph export. No display dependency is needed for the custom consumer. Large-data performance, all mutation operations and ownership of pointer-containing derived types are not validated.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/slinked-list.f90), [source/build record](fpm-candidates/slinked-list/source-review.json) and [verified output](fpm-candidates/slinked-list/verified-output.txt).
+
+## enclose
+
+String enclosure with automatically matched closing brackets and explicit delimiters. The main checks nested bracket reversal, square brackets, quotation marks, custom opening/closing strings and disabled autoclosing, and prints examples. No source edits; matches the existing FED dependency revision. This is formatting, not parsing or escaping untrusted text.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/enclose.f90), [source/build record](fpm-candidates/enclose/source-review.json) and [verified output](fpm-candidates/enclose/verified-output.txt).

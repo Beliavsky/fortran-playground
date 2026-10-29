@@ -1,0 +1,33 @@
+{
+  "id": "fortran-tokenizer",
+  "repository": "14NGiestas/fortran-tokenizer",
+  "revision": "11ad73ea6102f86593bf2b372d56bf9fbedaebc7",
+  "archive_sha256": "372c3b8d641fd46a9c7de674dceffecf2e87bac1ca6ac9cb5480470528801a55",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "shared_dependencies": {
+      "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+      "repositories": [
+        "14ngiestas/fortran-tokenizer"
+      ]
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T00:34:23.456367+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/fortran-tokenizer.f90",
+  "verification": {
+    "seconds": 1.772,
+    "build_seconds": 0.309,
+    "library_reused": true,
+    "demo_sha256": "8b9bc4212dcbf78bc1358246225526de629e0ebecface3ff2c29552e5e98f8c6",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Customizable text tokenization. The checked main uses a module callback to split comma, space and tab-separated fields, verifies all three tokens and checks clearing the list. This is lexical splitting, not expression evaluation. No source edits. Malformed input, every callback combination and token object storage are not covered."
+}

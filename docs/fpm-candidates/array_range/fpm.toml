@@ -1,0 +1,13 @@
+name = "array_range"
+version = "0.2.0"
+license = "MIT"
+author = "Tomohiro Degawa"
+maintainer = "@degawa/array_range"
+copyright = "Copyright 2022, Tomohiro Degawa"
+
+[build]
+auto-tests = true
+auto-examples = true
+
+[install]
+library = true

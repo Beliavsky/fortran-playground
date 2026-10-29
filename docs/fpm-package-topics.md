@@ -1,6 +1,6 @@
 # Playground topics by package
 
-175 selected packages; 348 distinct playground topics. GitHub topics were retrieved on 2026-10-28.
+222 selected packages; 446 distinct playground topics. GitHub topics were retrieved on 2026-10-28.
 
 The playground topics below are editorial suggestions based on the saved package descriptions, categories, and GitHub labels. They describe the package, rather than claiming every feature is exercised by its example main program. They are not author-supplied GitHub topics.
 
@@ -18,6 +18,12 @@ python xfpm_examples.py
 ```
 
 The first command validates coverage and regenerates this page; use `--check` to check it without writing. The second updates the public search metadata. Both are offline and require no backend deployment or package recompilation. GitHub metadata refreshes never edit the playground topic file; regenerate this page after refreshing GitHub topics.
+
+## Arrays
+
+| Package and description | Playground topics | GitHub topics |
+| --- | --- | --- |
+| [array_range](https://github.com/degawa/array_range) — Derived types for managing one-, two- and three-dimensional array bounds. | `array-bounds`, `array-indexing`, `multidimensional-arrays` | None supplied |
 
 ## Astronomy and orbits
 
@@ -37,6 +43,7 @@ The first command validates coverage and regenerates this page; use `--check` to
 
 | Package and description | Playground topics | GitHub topics |
 | --- | --- | --- |
+| [argparse-f](https://github.com/0382/argparse-f) — Object-oriented parsing of typed command-line options, defaults and named arguments. | `argument-parsing`, `command-line-options`, `command-line-parsing` | `argparse`, `command-line`, `fortran`, `modern-fortran`, `oop` |
 | [argv-fortran](https://github.com/jacobwilliams/argv-fortran) — Read command-line arguments as allocatable strings. | `argument-parsing`, `command-line`, `strings` | `argv`, `fortran`, `fortran-package-manager` |
 | [m_attr](https://github.com/urbanjost/M_attr) — Terminal styling markup with a plain-text output mode. | `command-line`, `terminal-styling`, `text-processing` | `ansi-escape-sequences`, `fortran`, `fortran-package-manager`, `terminal` |
 | [m_cli2](https://github.com/urbanjost/M_CLI2) — Typed command-line parsing with defaults and help text. | `argument-parsing`, `command-line`, `configuration`, `help-text` | `argument`, `command-line`, `fortran`, `fortran-package-manager`, `parsing` |
@@ -50,10 +57,14 @@ The first command validates coverage and regenerates this page; use `--check` to
 | [daglib](https://github.com/jacobwilliams/daglib) — Directed acyclic graphs and topological ordering of dependencies. | `dependency-ordering`, `directed-acyclic-graphs`, `graphs`, `topological-sort` | `directed-acyclic-graph`, `fortran`, `fortran-package-manager`, `graphviz`, `graphviz-dot-language`, `toposort` |
 | [fhash](https://github.com/LKedward/fhash) — Hash tables with generic keys and values. | `containers`, `dictionaries`, `hash-tables`, `polymorphism` | `fortran`, `fortran-package-manager`, `fpm`, `hashmap`, `hashtable` |
 | [flist](https://github.com/jacobwilliams/flist) — Linked lists storing values of different types under named keys. | `containers`, `dictionaries`, `linked-lists`, `polymorphism` | `fortran`, `fortran-package-manager`, `linked-list` |
+| [fortran_vector](https://github.com/Euler-37/fortran_vector) — Growable integer vectors with insertion, removal and duplicate elimination. | `containers`, `duplicate-removal`, `dynamic-arrays`, `integer-vectors` | None supplied |
 | [graphstruc](https://github.com/nedtaylor/graphstruc) — Derived types for graphs, vertices, edges and adjacency structures. | `adjacency-structures`, `containers`, `graphs` | `fortran`, `fortran-package-manager`, `graph-structures`, `graphs`, `library` |
+| [list](https://github.com/grofz/list) — Linked lists and tree containers with insertion, searching and sorting operations. | `containers`, `linked-lists`, `searching`, `sorting` | `fortran`, `generics`, `linked-lists`, `red-black-tree` |
 | [m_list](https://github.com/urbanjost/M_list) — Maintain sorted arrays and small dictionaries through insertion and lookup. | `containers`, `dictionaries`, `searching`, `sorted-arrays` | `fortran-package-manager` |
 | [m_sets](https://github.com/urbanjost/M_sets) — Union, intersection, membership, and unique values for arrays. | `arrays`, `searching`, `sets`, `unique-values` | `fortran`, `fortran-package-manager`, `matlab`, `sets` |
 | [metis-fpm](https://github.com/gnikit/metis-fpm) — METIS graph partitioning and sparse matrix ordering through a Fortran interface. | `graph-partitioning`, `graphs`, `language-bindings`, `matrix-ordering`, `sparse-matrices` | None supplied |
+| [orbs](https://github.com/degawa/orbs) — Arithmetic, logical and shift operators for stdlib-backed bitsets. | `binary-arithmetic`, `bit-operations`, `bitsets`, `morton-codes` | `bitset`, `bitsets`, `fortran`, `fortran-library`, `fortran-package-manager`, `modern-fortran`, `standard-library`, `wrapper` |
+| [rearrayfx](https://github.com/aradi/rearrayfx) — Educational growable real arrays with spare capacity to reduce reallocations. | `containers`, `dynamic-arrays`, `growable-arrays`, `storage-management` | None supplied |
 
 ## Data formats
 
@@ -61,17 +72,30 @@ The first command validates coverage and regenerates this page; use `--check` to
 | --- | --- | --- |
 | [csv-fortran](https://github.com/jacobwilliams/csv-fortran) — Read and write CSV files with typed columns. | `csv`, `file-io`, `serialization`, `tabular-data` | `csv`, `fortran`, `fortran-package-manager` |
 | [fortran-messagepack](https://github.com/synthfi/fortran-messagepack) — Serialize and deserialize structured values in the compact MessagePack binary format. | `binary-data`, `messagepack`, `serialization` | `fortran`, `messagepack` |
+| [fortrandf](https://github.com/jaiken17/fortranDF) — In-memory data frames with named columns of different intrinsic types. | `containers`, `data-frames`, `heterogeneous-data`, `tabular-data` | `dataframe`, `fortran`, `fortran-package-manager` |
 | [h5fortran](https://github.com/geospace-code/h5fortran) — High-level HDF5 access for numerical arrays, strings and metadata. | `arrays`, `file-io`, `hdf5`, `metadata`, `scientific-data` | `fortran`, `hdf5`, `object-oriented-fortran` |
 | [jonquil](https://github.com/toml-f/jonquil) — JSON parsing and serialization compatible with TOML Fortran types. | `json`, `parsing`, `serialization`, `toml` | `fortran-library`, `fortran-package-manager`, `json`, `json-parser`, `serde` |
 | [json-fortran](https://github.com/jacobwilliams/json-fortran) — Read, write, and manipulate JSON documents. | `file-io`, `json`, `serialization` | `fortran`, `fortran-package-manager`, `json` |
+| [nc4fortran](https://github.com/geospace-code/nc4fortran) — Object-oriented NetCDF4 input and output for arrays, scalars and attributes. | `array-io`, `metadata`, `netcdf`, `scientific-data` | `netcdf4`, `object-oriented-fortran` |
 | [ncio](https://github.com/alex-robinson/ncio) — Convenient NetCDF array input and output with dimensions, attributes and metadata. | `arrays`, `file-io`, `metadata`, `netcdf`, `scientific-data` | None supplied |
+| [rojff](https://github.com/everythingfunctional/rojff) — Construct, parse and serialize JSON values with explicit error handling. | `error-handling`, `json`, `json-parsing`, `serialization` | `fortran`, `json`, `json-parser` |
 | [toml-f](https://github.com/toml-f/toml-f) — Parse and write TOML configuration files. | `configuration`, `file-io`, `parsing`, `toml` | `fortran-library`, `fortran-package-manager`, `serde`, `toml`, `toml-parser` |
+
+## Data structures
+
+| Package and description | Playground topics | GitHub topics |
+| --- | --- | --- |
+| [any](https://github.com/degawa/any) — Wrap intrinsic scalar and array values behind a common return type. | `array-containers`, `generic-values`, `polymorphism`, `type-erasure` | `fortran`, `fortran-library`, `fortran-package-manager`, `modern-fortran`, `object-oriented-programming`, `operator-overloading`, `user-defined-type` |
+| [for_fifo_queue](https://github.com/jordan4ibanez/for_fifo_queue) — FIFO queue using C storage for fixed-size values. | `c-interoperability`, `data-structures`, `fifo`, `queues` | None supplied |
+| [integer_set](https://github.com/jordan4ibanez/integer_set) — Simple 32-bit and 64-bit integer sets with insertion, removal and sorting. | `data-structures`, `integer-arithmetic`, `sets` | None supplied |
+| [slinked-list](https://github.com/zoziha/slinked-list) — Generic singly linked list with reusable storage for small datasets. | `containers`, `data-structures`, `linked-lists`, `polymorphism` | `fortran`, `fortran-package-manager`, `linked-list`, `singly-linked-list` |
 
 ## Databases
 
 | Package and description | Playground topics | GitHub topics |
 | --- | --- | --- |
 | [fortran-sqlite3](https://github.com/interkosmos/fortran-sqlite3) — SQLite database bindings for creating tables, executing SQL and reading query results. | `databases`, `language-bindings`, `sql`, `sqlite` | `fortran`, `fortran-package-manager`, `fpm`, `sqlite`, `sqlite3` |
+| [sqliteff](https://github.com/everythingfunctional/sqliteff) — Thin SQLite bindings for database creation, SQL queries and typed result access. | `c-interoperability`, `database`, `sql`, `sqlite` | `database`, `fortran`, `sqlite`, `sqlite3` |
 
 ## Dates and times
 
@@ -92,6 +116,8 @@ The first command validates coverage and regenerates this page; use `--check` to
 | [dvode](https://github.com/jacobwilliams/dvode) — Variable-coefficient multistep ODE solver for stiff and nonstiff systems. | `initial-value-problems`, `multistep-methods`, `ode`, `stiff-equations` | `adams-bashforth`, `fortran`, `fortran-package-manager`, `ode`, `vode` |
 | [fishpack](https://github.com/jlokimlin/fishpack) — Finite-difference solvers for separable elliptic partial differential equations. | `finite-differences`, `helmholtz-equation`, `partial-differential-equations`, `poisson-equation` | None supplied |
 | [flint](https://github.com/princemahajan/FLINT) — Adaptive explicit Runge-Kutta ODE integration with dense output and event detection. | `adaptive-methods`, `dense-output`, `event-detection`, `ode`, `runge-kutta` | `differential-equations`, `fortran`, `julia`, `numerical-integration`, `ode`, `ode-events`, `runge-kutta` |
+| [heatflow](https://github.com/ExeQuantCode/HeatFlow) — Finite-difference models of Fourier and Cattaneo heat transport. | `cattaneo-model`, `finite-differences`, `heat-equation`, `heat-transfer`, `sparse-linear-systems` | `cattaneo`, `finite-difference`, `finite-difference-time-domain`, `fourier`, `heat-flow`, `heating`, `modelling` |
+| [hrweno](https://github.com/HugoMVale/HR-WENO) — High-resolution WENO reconstruction and TVD integration for conservation equations. | `conservation-laws`, `finite-volumes`, `partial-differential-equations`, `runge-kutta`, `tvd`, `weno` | `fortran`, `fpm`, `high-resolution`, `hyperbolic-equations`, `partial-differential-equations`, `pde`, `reconstruction`, `weno-schemes` |
 | [odepack](https://github.com/Nicholaswogan/odepack) — Modern thread-safe interfaces to the LSODA and LSODAR initial-value ODE solvers. | `event-detection`, `initial-value-problems`, `ode`, `stiff-equations`, `thread-safe` | `fortran-package-manager`, `ode`, `ode-solver`, `odepack` |
 | [rkf45](https://github.com/zoziha/rkf45) — Classic adaptive Runge-Kutta-Fehlberg fourth/fifth-order ODE integration. | `adaptive-methods`, `initial-value-problems`, `ode`, `runge-kutta` | `fehlberg`, `fortran`, `fortran-package-manager`, `fourth-fifth-order`, `ode`, `rkf45`, `runge-kutta` |
 | [rklib](https://github.com/jacobwilliams/rklib) — A collection of fixed- and variable-step Runge-Kutta ODE integration methods. | `adaptive-methods`, `initial-value-problems`, `ode`, `runge-kutta` | `differential-equations`, `fortran`, `fortran-package-manager`, `ode`, `ode-solver`, `root-finding`, `runge-kutta`, `runge-kutta-adaptive-step-size`, `runge-kutta-fehlberg` |
@@ -114,6 +140,7 @@ The first command validates coverage and regenerates this page; use `--check` to
 | Package and description | Playground topics | GitHub topics |
 | --- | --- | --- |
 | [dynamics](https://github.com/jchristopherson/dynamics) — Frequency response, vibration analysis, modal analysis and dynamic-system calculations. | `control-systems`, `damping`, `frequency-response`, `modal-analysis`, `vibration` | `denavit-hartenberg`, `frequency-analysis`, `frequency-response`, `frf-fitting`, `geometric-algorithms`, `kinematics`, `modal-analysis`, `parallel-linkage`, `poincare-map`, `quaternions`, `rotation-matrix`, `serial-linkage`, `structural-dynamics`, `system-identification` |
+| [friction](https://github.com/jchristopherson/friction) — Coulomb, Stribeck and dynamic friction models for contacting bodies. | `constitutive-models`, `contact-mechanics`, `coulomb-friction`, `friction`, `stribeck-friction` | `coulomb`, `friction`, `generalized-maxwell-slip`, `lu-gre`, `maxwell`, `stribeck-friction` |
 
 ## Encoding and compression
 
@@ -128,14 +155,19 @@ The first command validates coverage and regenerates this page; use `--check` to
 
 | Package and description | Playground topics | GitHub topics |
 | --- | --- | --- |
+| [erloff](https://github.com/everythingfunctional/erloff) — Structured error lists and logging with message types and call context. | `diagnostics`, `error-handling`, `logging` | `error-handling`, `fortran`, `logging` |
+| [errstat](https://github.com/degawa/errstat) — Return and inspect structured error statuses and messages. | `diagnostics`, `error-handling`, `status-codes` | `error-handling`, `fortran`, `fortran-package-manager` |
 | [ferror](https://github.com/jchristopherson/ferror) — Structured error and warning reporting with configurable handling. | `diagnostics`, `error-handling`, `warnings` | None supplied |
 
 ## Expression parsing
 
 | Package and description | Playground topics | GitHub topics |
 | --- | --- | --- |
+| [feq-parse](https://github.com/FluidNumerics/feq-parse) — Evaluate mathematical expressions supplied as strings at scalar or array inputs. | `array-evaluation`, `expression-parsing`, `function-evaluation`, `mathematical-expressions` | `equation-parser`, `fortran`, `hpc`, `self-ecosystem` |
+| [fortran-tokenizer](https://github.com/14NGiestas/fortran-tokenizer) — Customizable tokenization with validation and ignore callbacks. | `parsing`, `text-processing`, `tokenization` | `fortran`, `fortran-package-manager`, `parsers`, `strings`, `tokenizer` |
 | [fortran_function_parser](https://github.com/jacobwilliams/fortran_function_parser) — Parse and evaluate mathematical expressions supplied as strings. | `expression-parsing`, `mathematical-expressions`, `parsing` | `expression-parser`, `fortran`, `function-parser` |
 | [m_calculator](https://github.com/urbanjost/M_calculator) — Evaluate mathematical expressions and named variables supplied as text. | `expression-parsing`, `mathematical-expressions`, `parsing` | `expression`, `expression-evaluator`, `fortran`, `fortran-package-manager`, `parse` |
+| [shunting-yard-fortran](https://github.com/14NGiestas/shunting-yard-fortran) — Experimental expression parser with token callbacks and fixed operator precedences. | `expression-parsing`, `operator-precedence`, `shunting-yard-algorithm`, `tokenization` | `fortran`, `fortran-package-manager`, `modern-fortran`, `parsing`, `shunting-yard-algorithm` |
 
 ## Files and processes
 
@@ -144,6 +176,7 @@ The first command validates coverage and regenerates this page; use `--check` to
 | [ffilesystem](https://github.com/scivision/ffilesystem) — Portable filesystem and path operations through Fortran, C and C++ interfaces. | `directories`, `file-io`, `filesystem`, `paths`, `portability` | `cpp17`, `filesystem`, `fortran`, `libc`, `path-manipulation` |
 | [fmmap](https://github.com/PierUgit/fmmap) — Map files into memory and access their contents as Fortran arrays. | `arrays`, `file-io`, `memory-mapped-files` | `fortran`, `memory-mapped-file` |
 | [io-fortran-library](https://github.com/acbbullock/IO-Fortran-Library) — High-level numeric array file I/O, dynamic strings, and numeric/string conversion. | `arrays`, `file-io`, `strings`, `tabular-data`, `type-conversion` | `csv`, `fortran`, `fortran-package-manager`, `input-output`, `modern-fortran` |
+| [io_utilities](https://github.com/arjenmarkus/io_utilities) — INI configuration files, command parsing, progress reporting and formatted output. | `configuration-files`, `file-io`, `formatted-output`, `ini-files` | None supplied |
 | [m_io](https://github.com/urbanjost/M_io) — Convenience routines for reading text files, tables, and paths. | `file-io`, `filesystem`, `paths`, `tabular-data`, `text-files` | `fortran`, `fortran-package-manager`, `io` |
 | [popen-fortran](https://github.com/jacobwilliams/popen-fortran) — Capture the text output of a subprocess. | `processes`, `subprocesses`, `text-processing` | `fortran`, `fortran-package-manager`, `popen` |
 
@@ -163,6 +196,7 @@ The first command validates coverage and regenerates this page; use `--check` to
 | [kinds](https://github.com/gha3mi/kinds) — Named real and integer kinds with configurable working precision. | `numeric-kinds`, `portability`, `precision` | None supplied |
 | [nafpack](https://github.com/Minard-Jules/NAFPack) — Numerical analysis routines for Fourier transforms, linear systems and eigenproblems. | `eigenvalues`, `fourier-transforms`, `linear-systems`, `numerical-methods` | `cmake`, `eigenvalues`, `fft`, `fftw`, `fpm`, `linear-algebra` |
 | [stdlib](https://github.com/fortran-lang/stdlib) — General utilities, statistics, strings, sorting, and numerical routines. | `numerical-methods`, `sorting`, `standard-library`, `statistics`, `strings` | `blas`, `fortran`, `fortran-library`, `fortran-package-manager`, `fortran-stdlib`, `hash`, `lapack`, `linear-algebra`, `numerical-methods`, `numpy`, `probability-distribution`, `quadrature`, `rng`, `sorting`, `statistics`, `stdlib`, `strings` |
+| [uint-fortran](https://github.com/ShinobuAmasaki/uint-fortran) — Unsigned integer derived types with arithmetic, comparisons and conversions. | `c-interoperability`, `integer-arithmetic`, `modular-arithmetic`, `unsigned-integers` | `fortran`, `unsigned-integers` |
 
 ## Geodesy
 
@@ -175,13 +209,16 @@ The first command validates coverage and regenerates this page; use `--check` to
 
 | Package and description | Playground topics | GitHub topics |
 | --- | --- | --- |
+| [fortran-simplify](https://github.com/jaiken17/fortran-simplify) — Reduce the number of polyline points using geometric simplification algorithms. | `computational-geometry`, `curve-approximation`, `polyline-simplification` | `fortran`, `fortran-package-manager`, `noise-reduction`, `polyline`, `polyline-simplification` |
 | [geompack](https://github.com/jchristopherson/geompack) — Delaunay triangulation of planar point sets. | `delaunay-triangulation`, `geometry`, `meshes`, `point-sets` | `delaunay-triangulation`, `fortran`, `fortran-package-manager`, `geometry`, `triangulation`, `triangulation-delaunay` |
 
 ## High precision
 
 | Package and description | Playground topics | GitHub topics |
 | --- | --- | --- |
+| [bstrith](https://github.com/degawa/bstrith) — Fixed-width binary-string arithmetic, shifts and logical operations. | `binary-arithmetic`, `binary-strings`, `bit-operations`, `bit-shifts` | None supplied |
 | [mpfun2020-var1](https://github.com/jacobwilliams/MPFUN2020-var1) — Thread-safe arbitrary-precision real and complex arithmetic. | `arbitrary-precision`, `complex-arithmetic`, `precision`, `real-arithmetic`, `thread-safe` | `arbitrary-precision` |
+| [strith](https://github.com/degawa/strith) — Decimal-string arithmetic and signed or unsigned formatting of long integers. | `decimal-arithmetic`, `integer-arithmetic`, `integer-formatting`, `strings` | `fortran`, `fortran-library`, `fortran-package-manager`, `fortran2008`, `long-integer`, `modern-fortran`, `string` |
 
 ## Images
 
@@ -226,17 +263,22 @@ The first command validates coverage and regenerates this page; use `--check` to
 | Package and description | Playground topics | GitHub topics |
 | --- | --- | --- |
 | [blas-interface](https://github.com/awvwgk/blas-interface) — Explicit generic Fortran interfaces to BLAS vector and matrix operations. | `blas`, `language-bindings`, `linear-algebra`, `matrix-operations`, `vector-operations` | None supplied |
+| [fglm](https://github.com/jordan4ibanez/fglm) — Typed vectors and 4-by-4 matrices for geometric transformations. | `geometry`, `matrices`, `transformations`, `vectors` | None supplied |
+| [fordot](https://github.com/gha3mi/fordot) — Selectable dot-product implementations, including BLAS and blocked calculations. | `blas`, `blocked-algorithms`, `dot-products`, `linear-algebra` | `coarray`, `dot-product`, `fortran`, `fortran-package-manager` |
 | [foreig](https://github.com/gha3mi/foreig) — LAPACK interfaces for eigenvalues and eigenvectors of real matrices. | `eigenvalues`, `eigenvectors`, `lapack`, `linear-algebra` | `eig`, `eigenvalues`, `eigenvalues-and-eigenvectors`, `eigenvectors`, `fortran`, `fortran-package-manager`, `lapack`, `mkl` |
 | [forinv](https://github.com/gha3mi/forinv) — Matrix inverses and singular-value-decomposition pseudoinverses. | `linear-algebra`, `matrix-inverse`, `pseudoinverse`, `svd` | `fortran`, `fortran-package-manager`, `inverse`, `pseudoinverse`, `svd` |
+| [formatmul](https://github.com/gha3mi/formatmul) — Matrix products with transpose options and selectable multiplication methods. | `blas`, `linear-algebra`, `matrix-multiplication`, `matrix-vector-products`, `transpose` | `coarray`, `fortran`, `fortran-package-manager`, `matmul` |
 | [forsvd](https://github.com/gha3mi/forsvd) — Singular value decomposition and truncated low-rank matrix approximations. | `lapack`, `linear-algebra`, `low-rank-approximation`, `singular-value-decomposition` | `fortran`, `fortran-package-manager`, `image-compression`, `low-rank-approximation`, `singular-value-decomposition`, `svd` |
 | [fortran-lapack](https://github.com/perazz/fortran-lapack) — Modern linear algebra: linear systems, eigenvalues, least squares, and matrix factorizations. | `eigenvalues`, `lapack`, `least-squares`, `linear-algebra`, `linear-systems`, `matrix-factorization` | `blas`, `eigenvalues`, `eigenvectors`, `fortran`, `fortran-package-manager`, `lapack`, `lapack95`, `lapacke`, `linear-algebra`, `linear-equations`, `machine-learning`, `matrix-factorization`, `modern-fortran`, `modern-fortran-modules`, `numpy`, `singular-values`, `svd` |
 | [fsparse](https://github.com/jalvesz/FSPARSE) — Sparse matrix storage, format conversions and matrix-vector products. | `format-conversion`, `linear-algebra`, `matrix-vector-products`, `sparse-matrices` | `fortran`, `fortran-library`, `fortran-package-manager`, `sparse-matrices` |
 | [kiss](https://github.com/ivan-pi/kiss) — Krylov iterative solvers for dense matrices and matrix-free linear operators. | `iterative-solvers`, `krylov-methods`, `linear-algebra`, `linear-systems`, `matrix-free` | None supplied |
 | [lightkrylov](https://github.com/nekStab/LightKrylov) — Krylov methods for eigenvalues, linear systems, singular values and matrix exponentials. | `eigenvalues`, `krylov-methods`, `linear-algebra`, `linear-systems`, `matrix-exponentials`, `svd` | None supplied |
 | [linalg](https://github.com/jchristopherson/linalg) — Convenient dense and sparse linear algebra interfaces to BLAS, LAPACK and ARPACK. | `arpack`, `blas`, `lapack`, `linear-algebra`, `sparse-matrices` | `blas`, `cholesky-decomposition`, `compressed-row-storage`, `compressed-sparse-row`, `eigenvalues`, `eigenvectors`, `fortran`, `lapack`, `linear-algebra`, `lu-decomposition`, `qr-decomposition`, `singular-value-decomposition`, `sparse-matrix` |
+| [linalg_fortran](https://github.com/Euler-37/linalg_fortran) — Typed LAPACK interfaces for matrix inverses, determinants and Hermitian eigenproblems. | `determinants`, `eigenvalues`, `lapack`, `linear-algebra`, `matrix-inversion` | `lapack`, `linalg`, `matrix-library` |
 | [lsmr](https://github.com/jacobwilliams/LSMR) — Iterative solution of sparse linear equations and least-squares problems. | `iterative-solvers`, `least-squares`, `linear-algebra`, `linear-systems`, `sparse-matrices` | `fortran`, `fortran-package-manager`, `least-squares`, `linear-algebra`, `linear-equations`, `lsmr`, `sparse-linear-systems` |
 | [lsqr](https://github.com/jacobwilliams/LSQR) — Iterative sparse linear systems and least-squares solver using coordinate storage. | `iterative-solvers`, `least-squares`, `linear-algebra`, `linear-systems`, `sparse-matrices` | `conjugate-gradient`, `fortran`, `fortran-package-manager`, `least-squares`, `linear-algebra`, `linear-equations`, `lsqr` |
 | [lusol](https://github.com/jacobwilliams/lusol) — Sparse LU factorization, linear solves and efficient column updates. | `linear-systems`, `lu-factorization`, `matrix-updates`, `sparse-linear-algebra` | `fortran`, `fortran-package-manager`, `linear-algebra`, `lu-decomposition`, `lu-factorization`, `lusol`, `matrix-factorization`, `sparse-linear-algebra`, `sparse-matrix` |
+| [m_la](https://github.com/urbanjost/M_LA) — Magic squares, reduced row-echelon forms and other small matrix utilities. | `linear-algebra`, `magic-squares`, `matrices`, `row-reduction` | `determinant`, `fortran-package-manager`, `linear-algebra`, `magic-square`, `matrix-inverse` |
 | [minres](https://github.com/willdickson/minres) — Iterative solution of symmetric sparse systems, including indefinite matrices. | `iterative-solvers`, `linear-algebra`, `linear-systems`, `sparse-matrices`, `symmetric-systems` | None supplied |
 | [qdldl-fortran](https://github.com/jacobwilliams/qdldl-fortran) — Sparse LDL-transpose factorization, orderings and solves for quasi-definite systems. | `ldlt-factorization`, `linear-systems`, `matrix-ordering`, `quasi-definite`, `sparse-linear-algebra` | `fortran`, `fortran-package-manager`, `ldl-factorization`, `linear-algebra`, `linear-systems`, `numerical-optimization`, `sparse-data`, `sparse-linear-systems` |
 | [sparse_fortran](https://github.com/Euler-37/sparse_fortran) — Coordinate and compressed-row sparse matrices with matrix-vector products. | `coordinate-storage`, `csr-storage`, `linear-algebra`, `matrix-vector-products`, `sparse-matrices` | None supplied |
@@ -247,8 +289,15 @@ The first command validates coverage and regenerates this page; use `--check` to
 
 | Package and description | Playground topics | GitHub topics |
 | --- | --- | --- |
+| [athena](https://github.com/nedtaylor/athena) — Neural networks with convolutional, graph-based and physics-informed layers. | `automatic-differentiation`, `deep-learning`, `machine-learning`, `neural-networks` | `automatic-differentiation`, `cnn`, `convolution`, `convolutional-neural-networks`, `deep-learning`, `feed-forward-neural-networks`, `fortran`, `fortran-package-manager`, `graph-neural-network`, `inverse-design`, `machine-learning`, `message-passing-neural-network`, `neural-network`, `physics-informed-neural-networks` |
 | [fortran-flann](https://github.com/ivan-pi/fortran-flann) — FLANN interfaces for nearest-neighbor searches and spatial indexing. | `language-bindings`, `machine-learning`, `nearest-neighbors`, `spatial-indexing` | `approximate-nearest-neighbor-search`, `hierarchical-clustering`, `high-dimensional-data`, `kdtree`, `kmeans-clustering`, `nearest-neighbor-search`, `spatial-search` |
 | [neural-fortran](https://github.com/modern-fortran/neural-fortran) — Neural networks with dense and convolutional layers and gradient-based training. | `convolutional-networks`, `gradient-based-optimization`, `machine-learning`, `neural-networks` | `cnn`, `deep-learning`, `fortran`, `machine-learning`, `neural-network`, `parallel` |
+
+## Memory management
+
+| Package and description | Playground topics | GitHub topics |
+| --- | --- | --- |
+| [smart-pointers](https://github.com/sourceryinstitute/smart-pointers) — Reference-counted smart pointers with automatic resource cleanup. | `memory-management`, `reference-counting`, `resource-management` | `garbage-collection`, `reference-counting`, `smart-pointers` |
 
 ## Number theory
 
@@ -262,12 +311,14 @@ The first command validates coverage and regenerates this page; use `--check` to
 | Package and description | Playground topics | GitHub topics |
 | --- | --- | --- |
 | [codata](https://github.com/MilanSkocic/codata) — CODATA physical constants and uncertainties for several published adjustments. | `physical-constants`, `physics`, `uncertainty` | `c`, `codata`, `fortran-language`, `fortran-library`, `fortran-package-manager`, `python`, `science` |
+| [fundamental_constants](https://github.com/vmagnin/fundamental_constants) — CODATA fundamental physical constants with explicitly selectable editions. | `codata`, `nist`, `physical-constants`, `physics` | `codata`, `fortran`, `fortran-package-manager`, `nist` |
 
 ## Physical properties
 
 | Package and description | Playground topics | GitHub topics |
 | --- | --- | --- |
 | [ciaaw](https://github.com/MilanSkocic/ciaaw) — Standard atomic weights, isotopic abundances and nuclide masses for chemistry. | `atomic-weights`, `chemistry`, `isotopes`, `physical-properties` | `chemistry`, `fortran`, `fortran-package-manager`, `isotopes`, `standard-atomic-masses` |
+| [ecx](https://github.com/MilanSkocic/ecx) — Electrochemical kinetics, impedance and photoelectrochemistry calculations. | `electrical-impedance`, `electrochemistry`, `electrode-kinetics`, `equivalent-circuits` | `electrochemistry`, `fortran-language`, `fortran-library`, `fortran-package-manager`, `science` |
 | [iapws](https://github.com/MilanSkocic/iapws) — IAPWS thermodynamic properties of water, including saturation pressure and temperature. | `iapws`, `physical-properties`, `thermodynamics`, `water` | `fortran-language`, `fortran-library`, `fortran-package-manager`, `iapws`, `science`, `water` |
 
 ## Plotting
@@ -275,6 +326,12 @@ The first command validates coverage and regenerates this page; use `--check` to
 | Package and description | Playground topics | GitHub topics |
 | --- | --- | --- |
 | [pyplot-fortran](https://github.com/jacobwilliams/pyplot-fortran) — Create PNG plots from Fortran through Python and Matplotlib. | `matplotlib`, `plotting`, `png`, `python`, `visualization` | `contour-plot`, `fortran`, `fortran-package-manager`, `matplotlib`, `plot`, `plotting`, `plotting-in-fortran`, `pyplot` |
+
+## Quadrature
+
+| Package and description | Playground topics | GitHub topics |
+| --- | --- | --- |
+| [kronrod](https://github.com/jacobwilliams/kronrod) — Generate Gauss-Kronrod quadrature nodes and weights using arbitrary precision. | `arbitrary-precision`, `gauss-kronrod`, `quadrature`, `quadrature-rules` | `fortran`, `fortran-package-manager`, `gauss-kronrod`, `gauss-kronrod-quadrature`, `quadpack` |
 
 ## Quantum mechanics
 
@@ -329,8 +386,10 @@ The first command validates coverage and regenerates this page; use `--check` to
 
 | Package and description | Playground topics | GitHub topics |
 | --- | --- | --- |
+| [amosf90](https://github.com/Euler-37/amosf90) — AMOS interfaces for complex-argument, noninteger-order Bessel and related functions. | `bessel-functions`, `complex-arguments`, `modified-bessel-functions`, `special-functions` | None supplied |
 | [carlson-elliptic-integrals](https://github.com/jacobwilliams/carlson-elliptic-integrals) — Carlson symmetric elliptic integrals for pendulum periods and other applications. | `carlson-symmetric-forms`, `elliptic-integrals`, `pendulum`, `special-functions` | None supplied |
 | [fortran-bessels](https://github.com/perazz/fortran-bessels) — Bessel and modified Bessel functions, demonstrated with fixed orders zero and one. | `bessel-functions`, `cylindrical-functions`, `modified-bessel-functions`, `special-functions` | `bessel`, `bessel-function`, `fortran`, `math`, `special-functions` |
+| [rpn-calculator-fortran](https://github.com/scivision/rpn-calculator-fortran) — Numerical functions from an RPN calculator, including special functions, rational arithmetic and conversions. | `bessel-functions`, `gamma-function`, `rational-arithmetic`, `rpn-calculator`, `special-functions` | `modern-fortran`, `reverse-polish-calculator` |
 | [specfun](https://github.com/jacobwilliams/specfun) — Special functions including Bessel, Airy, gamma, and related functions. | `airy-functions`, `bessel-functions`, `gamma-functions`, `special-functions` | `fortran`, `fortran-package-manager`, `scipy`, `special-functions` |
 | [specfunc-fullerton](https://github.com/arjenmarkus/specfunc-fullerton) — Fullerton special functions including gamma, Bessel, Airy and exponential integrals. | `airy-functions`, `bessel-functions`, `exponential-integrals`, `gamma-functions`, `special-functions` | `special-functions` |
 
@@ -355,6 +414,7 @@ The first command validates coverage and regenerates this page; use `--check` to
 | [fortran-string-to-real](https://github.com/Carltoffel/Fortran-String-to-Real) — Experimental conversion of valid decimal and scientific-notation strings to real numbers. | `floating-point`, `number-parsing`, `strings`, `type-conversion` | None supplied |
 | [iso_varying_string](https://github.com/everythingfunctional/iso_varying_string) — Variable-length strings implementing the ISO varying-string specification. | `strings`, `text-processing`, `variable-length-strings` | `fortran`, `iso`, `strings` |
 | [ryu_fortran](https://github.com/St-Maxwell/ryu_fortran) — Ryu conversion of floating-point numbers to short decimal representations. | `floating-point`, `number-formatting`, `strings`, `type-conversion` | `floating-point`, `string` |
+| [scanner](https://github.com/freevryheid/scanner) — Character-by-character text scanning with bounded navigation for small parsers. | `character-processing`, `parsing`, `strings`, `text-scanning` | `fortran`, `parser`, `scanner` |
 | [strff](https://github.com/everythingfunctional/strff) — String splitting, joining, formatting and conversion from intrinsic types. | `formatting`, `strings`, `text-processing`, `type-conversion` | `fortran`, `string-manipulation` |
 | [utf8-f](https://github.com/St-Maxwell/utf8-f) — UTF-8 character counting, indexing, slicing and text manipulation. | `strings`, `text-processing`, `unicode`, `utf-8` | `fortran`, `utf-8` |
 
@@ -372,9 +432,11 @@ The first command validates coverage and regenerates this page; use `--check` to
 
 | Package and description | Playground topics | GitHub topics |
 | --- | --- | --- |
+| [fassert](https://github.com/degawa/fassert) — Extensible assertions for scalar and array values and numerical tolerances. | `assertions`, `floating-point-comparison`, `testing`, `unit-testing` | `assert`, `assertion`, `assertion-library`, `assertions`, `assertions-library`, `fortran`, `fortran-library`, `fortran-package-manager`, `fortran2008`, `modern-fortran`, `testing` |
 | [fortran_test_helper](https://github.com/jchristopherson/fortran_test_helper) — Assertions and random array generators for numerical tests. | `assertions`, `numerical-testing`, `random-numbers`, `unit-testing` | None supplied |
 | [m_framework](https://github.com/urbanjost/M_framework) — Unit testing, floating-point comparisons, and diagnostic formatting. | `assertions`, `diagnostics`, `floating-point`, `numerical-testing`, `unit-testing` | `fortran`, `fortran-package-manager`, `fpm`, `unit-testing` |
 | [test-drive](https://github.com/fortran-lang/test-drive) — Lightweight unit testing with named tests and assertions. | `assertions`, `unit-testing` | `fortran-library`, `fortran-package-manager`, `testing-framework`, `unit-testing` |
+| [veggies](https://github.com/everythingfunctional/veggies) — Functional unit-testing framework with readable specification-style results. | `bdd`, `functional-programming`, `test-framework`, `unit-testing` | None supplied |
 
 ## Text parsing
 
@@ -385,6 +447,21 @@ The first command validates coverage and regenerates this page; use `--check` to
 | [fortran-shlex](https://github.com/perazz/fortran-shlex) — Split command strings into tokens while respecting quotes. | `command-line`, `parsing`, `quoting`, `tokenization` | `fortran`, `posix`, `regular-expressions`, `shlex`, `shlex-library` |
 | [m_match](https://github.com/urbanjost/M_match) — Pattern matching with a compact grep-style regular expression syntax. | `pattern-matching`, `regular-expressions`, `text-processing` | `bre`, `fortran`, `fortran-package-manager`, `regex`, `regular-expressions` |
 | [parff](https://github.com/everythingfunctional/parff) — Composable functional parsers for structured text and useful parse errors. | `functional-programming`, `parser-combinators`, `parsing`, `text-processing` | `fortran`, `parser`, `parser-combinators`, `parser-library` |
+
+## Text processing
+
+| Package and description | Playground topics | GitHub topics |
+| --- | --- | --- |
+| [enclose](https://github.com/degawa/enclose) — Enclose strings in matching brackets or custom delimiters. | `brackets`, `strings`, `text-formatting` | `fortran`, `fortran-library`, `fortran-package-manager` |
+| [fed](https://github.com/degawa/fed) — Construct Fortran format edit descriptors programmatically. | `format-descriptors`, `formatted-output`, `string-formatting` | `format`, `formatting-text`, `fortran`, `fortran-library`, `fortran-package-manager`, `fortran2008` |
+| [jeyemhex-regex](https://github.com/jeyemhex/fortran-regex) — Pure Fortran regular-expression matching, splitting and replacement. | `pattern-matching`, `pure-fortran`, `regular-expressions`, `text-processing` | None supplied |
+| [string-utf-8](https://github.com/guntherwillems/fortran-string-utf-8) — Manipulate UTF-8 strings as arrays of Unicode code points. | `strings`, `text-processing`, `unicode`, `utf-8` | None supplied |
+
+## Timing
+
+| Package and description | Playground topics | GitHub topics |
+| --- | --- | --- |
+| [fortime](https://github.com/gha3mi/fortime) — Measure wall-clock and CPU elapsed time, with optional parallel timers. | `cpu-time`, `performance-measurement`, `timing`, `wall-clock` | `cpu-time`, `date-and-time`, `debug`, `elapsed-time`, `fortran`, `fortran-package-manager`, `mpi`, `openmp`, `profile`, `time`, `timer` |
 
 ## Transforms
 
@@ -411,58 +488,91 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `adjacency-structures` | 1 |
 | `airy-functions` | 2 |
 | `approximate-math` | 1 |
-| `arbitrary-precision` | 1 |
-| `argument-parsing` | 2 |
+| `arbitrary-precision` | 2 |
+| `argument-parsing` | 3 |
 | `arima` | 1 |
 | `arpack` | 1 |
+| `array-bounds` | 1 |
+| `array-containers` | 1 |
+| `array-evaluation` | 1 |
+| `array-indexing` | 1 |
+| `array-io` | 1 |
 | `arrays` | 11 |
-| `assertions` | 3 |
+| `assertions` | 4 |
 | `astrodynamics` | 1 |
 | `astronomy` | 1 |
 | `atomic-structure` | 1 |
 | `atomic-weights` | 1 |
 | `autocorrelation` | 1 |
-| `automatic-differentiation` | 4 |
+| `automatic-differentiation` | 5 |
 | `b-splines` | 1 |
 | `base64` | 1 |
-| `bessel-functions` | 3 |
+| `bdd` | 1 |
+| `bessel-functions` | 5 |
+| `binary-arithmetic` | 2 |
 | `binary-data` | 1 |
-| `blas` | 2 |
+| `binary-strings` | 1 |
+| `bit-operations` | 2 |
+| `bit-shifts` | 1 |
+| `bitsets` | 1 |
+| `blas` | 4 |
+| `blocked-algorithms` | 1 |
 | `bootstrap` | 2 |
 | `bound-constraints` | 6 |
 | `boundary-value-problems` | 1 |
+| `brackets` | 1 |
+| `c-interoperability` | 3 |
 | `calendar-arithmetic` | 2 |
 | `carlson-symmetric-forms` | 1 |
 | `cartesian-coordinates` | 1 |
+| `cattaneo-model` | 1 |
+| `character-processing` | 1 |
 | `chemistry` | 1 |
 | `circulant-matrices` | 1 |
+| `codata` | 1 |
 | `color-conversion` | 2 |
 | `colormaps` | 1 |
 | `colors` | 2 |
 | `command-line` | 4 |
+| `command-line-options` | 1 |
+| `command-line-parsing` | 1 |
+| `complex-arguments` | 1 |
 | `complex-arithmetic` | 3 |
 | `complex-step` | 2 |
 | `compression` | 3 |
+| `computational-geometry` | 1 |
 | `configuration` | 3 |
+| `configuration-files` | 1 |
+| `conservation-laws` | 1 |
+| `constitutive-models` | 1 |
 | `constrained-optimization` | 6 |
 | `constraint-solving` | 1 |
-| `containers` | 5 |
+| `contact-mechanics` | 1 |
+| `containers` | 10 |
 | `control-systems` | 1 |
 | `convolution` | 2 |
 | `convolutional-networks` | 1 |
 | `coordinate-storage` | 1 |
 | `coordinate-transformations` | 4 |
 | `cosine-transforms` | 1 |
+| `coulomb-friction` | 1 |
 | `covariance-models` | 1 |
+| `cpu-time` | 1 |
 | `csr-storage` | 1 |
 | `csv` | 1 |
 | `cubature` | 2 |
+| `curve-approximation` | 1 |
 | `curve-fitting` | 3 |
 | `cylindrical-functions` | 1 |
 | `dae` | 2 |
 | `damping` | 1 |
+| `data-frames` | 1 |
+| `data-structures` | 3 |
+| `database` | 1 |
 | `databases` | 1 |
 | `date-time` | 2 |
+| `decimal-arithmetic` | 1 |
+| `deep-learning` | 1 |
 | `defaults` | 1 |
 | `delaunay-triangulation` | 1 |
 | `delay-differential-equations` | 1 |
@@ -470,7 +580,8 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `dependency-ordering` | 1 |
 | `derivative-free` | 3 |
 | `derivatives` | 5 |
-| `diagnostics` | 2 |
+| `determinants` | 1 |
+| `diagnostics` | 4 |
 | `dictionaries` | 3 |
 | `differential-equations` | 3 |
 | `differentiation` | 4 |
@@ -481,50 +592,66 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `directed-acyclic-graphs` | 1 |
 | `directories` | 1 |
 | `distances` | 1 |
+| `dot-products` | 1 |
 | `drawing` | 1 |
 | `dual-numbers` | 2 |
+| `duplicate-removal` | 1 |
 | `durations` | 1 |
-| `dynamic-arrays` | 1 |
+| `dynamic-arrays` | 3 |
 | `economics` | 1 |
 | `eigenvalue-problems` | 1 |
-| `eigenvalues` | 5 |
+| `eigenvalues` | 6 |
 | `eigenvectors` | 1 |
+| `electrical-impedance` | 1 |
+| `electrochemistry` | 1 |
+| `electrode-kinetics` | 1 |
 | `elementary-functions` | 1 |
 | `ellipsoids` | 1 |
 | `elliptic-integrals` | 1 |
 | `encoding` | 1 |
+| `equivalent-circuits` | 1 |
 | `error-estimation` | 1 |
-| `error-handling` | 1 |
+| `error-handling` | 4 |
 | `errors-in-variables` | 1 |
 | `event-detection` | 3 |
 | `exact-arithmetic` | 1 |
 | `exponential-functions` | 1 |
 | `exponential-integrals` | 1 |
-| `expression-parsing` | 2 |
+| `expression-parsing` | 4 |
 | `fft` | 2 |
-| `file-io` | 12 |
+| `fifo` | 1 |
+| `file-io` | 13 |
 | `filesystem` | 2 |
 | `filtering` | 1 |
-| `finite-differences` | 4 |
+| `finite-differences` | 5 |
 | `finite-elements` | 2 |
+| `finite-volumes` | 1 |
 | `floating-point` | 3 |
+| `floating-point-comparison` | 1 |
 | `format-conversion` | 1 |
+| `format-descriptors` | 1 |
+| `formatted-output` | 2 |
 | `formatting` | 3 |
 | `forward-mode` | 1 |
 | `fourier-transforms` | 3 |
 | `frequency-response` | 1 |
-| `functional-programming` | 2 |
+| `friction` | 1 |
+| `function-evaluation` | 1 |
+| `functional-programming` | 3 |
+| `gamma-function` | 1 |
 | `gamma-functions` | 2 |
 | `gauss-hermite` | 1 |
 | `gauss-jacobi` | 1 |
+| `gauss-kronrod` | 1 |
 | `gauss-legendre` | 2 |
 | `gaussian-quadrature` | 5 |
 | `gaussian-simulation` | 1 |
+| `generic-values` | 1 |
 | `genetic-algorithms` | 1 |
 | `geodesics` | 1 |
 | `geodesy` | 2 |
 | `geographic-coordinates` | 1 |
-| `geometry` | 1 |
+| `geometry` | 2 |
 | `geostatistics` | 1 |
 | `global-optimization` | 3 |
 | `gradient-based-optimization` | 2 |
@@ -533,11 +660,15 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `graph-partitioning` | 1 |
 | `graphs` | 3 |
 | `grids` | 3 |
+| `growable-arrays` | 1 |
 | `hash-tables` | 1 |
 | `hdf5` | 1 |
 | `heapsort` | 1 |
+| `heat-equation` | 1 |
+| `heat-transfer` | 1 |
 | `helmholtz-equation` | 2 |
 | `help-text` | 1 |
+| `heterogeneous-data` | 1 |
 | `higher-order-derivatives` | 2 |
 | `hls` | 1 |
 | `hsv` | 1 |
@@ -550,69 +681,84 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `images` | 3 |
 | `implicit-methods` | 1 |
 | `improper-integrals` | 1 |
+| `ini-files` | 1 |
 | `initial-value-problems` | 7 |
 | `input-parameters` | 1 |
+| `integer-arithmetic` | 3 |
 | `integer-factorization` | 1 |
+| `integer-formatting` | 1 |
+| `integer-vectors` | 1 |
 | `integral-transforms` | 1 |
 | `interpolation` | 8 |
 | `isotopes` | 1 |
 | `iterative-solvers` | 5 |
 | `jackknife` | 1 |
 | `jacobians` | 1 |
-| `json` | 2 |
+| `json` | 3 |
+| `json-parsing` | 1 |
 | `julian-dates` | 1 |
 | `kiss-generator` | 1 |
 | `kriging` | 1 |
 | `krylov-methods` | 3 |
 | `language-bindings` | 12 |
-| `lapack` | 4 |
+| `lapack` | 5 |
 | `lbfgs` | 1 |
 | `ldlt-factorization` | 1 |
 | `least-squares` | 9 |
 | `limited-memory` | 1 |
-| `linear-algebra` | 16 |
+| `linear-algebra` | 20 |
 | `linear-programming` | 1 |
 | `linear-systems` | 11 |
-| `linked-lists` | 2 |
+| `linked-lists` | 4 |
 | `logarithms` | 1 |
+| `logging` | 1 |
 | `logistic-regression` | 1 |
 | `lossless-compression` | 3 |
 | `low-rank-approximation` | 1 |
 | `lu-factorization` | 2 |
-| `machine-learning` | 2 |
+| `machine-learning` | 3 |
+| `magic-squares` | 1 |
 | `map-filter-reduce` | 1 |
 | `markov-chains` | 1 |
-| `mathematical-expressions` | 2 |
+| `mathematical-expressions` | 3 |
 | `matlab-like` | 1 |
 | `matplotlib` | 1 |
+| `matrices` | 2 |
 | `matrix-exponentials` | 1 |
 | `matrix-factorization` | 1 |
 | `matrix-free` | 1 |
 | `matrix-inverse` | 1 |
+| `matrix-inversion` | 1 |
+| `matrix-multiplication` | 1 |
 | `matrix-operations` | 1 |
 | `matrix-ordering` | 2 |
 | `matrix-updates` | 1 |
-| `matrix-vector-products` | 2 |
+| `matrix-vector-products` | 3 |
 | `mcmc` | 1 |
 | `medians` | 1 |
+| `memory-management` | 1 |
 | `memory-mapped-files` | 1 |
 | `mersenne-twister` | 1 |
 | `meshes` | 1 |
 | `messagepack` | 1 |
-| `metadata` | 2 |
+| `metadata` | 3 |
 | `minimax` | 1 |
 | `minimization` | 1 |
 | `modal-analysis` | 1 |
-| `modified-bessel-functions` | 1 |
+| `modified-bessel-functions` | 2 |
+| `modular-arithmetic` | 1 |
+| `morton-codes` | 1 |
 | `multidimensional` | 10 |
+| `multidimensional-arrays` | 1 |
 | `multistep-methods` | 1 |
 | `natural-sort` | 1 |
 | `nearest-neighbors` | 2 |
 | `nearly-linear-problems` | 1 |
 | `nelder-mead` | 1 |
-| `netcdf` | 1 |
-| `neural-networks` | 1 |
+| `netcdf` | 2 |
+| `neural-networks` | 2 |
 | `newton-methods` | 2 |
+| `nist` | 1 |
 | `nlopt` | 1 |
 | `nonlinear-conjugate-gradient` | 1 |
 | `nonlinear-equations` | 5 |
@@ -624,29 +770,32 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `numerical-methods` | 3 |
 | `numerical-testing` | 2 |
 | `ode` | 9 |
+| `operator-precedence` | 1 |
 | `optimization` | 17 |
 | `orbital-mechanics` | 1 |
 | `order-statistics` | 1 |
 | `oscillatory-integrals` | 1 |
 | `parser-combinators` | 1 |
-| `parsing` | 7 |
-| `partial-differential-equations` | 2 |
+| `parsing` | 9 |
+| `partial-differential-equations` | 3 |
 | `particle-swarm` | 1 |
 | `paths` | 2 |
-| `pattern-matching` | 4 |
+| `pattern-matching` | 5 |
 | `pcre2` | 1 |
 | `peak-detection` | 1 |
 | `pendulum` | 1 |
-| `physical-constants` | 1 |
+| `performance-measurement` | 1 |
+| `physical-constants` | 2 |
 | `physical-properties` | 2 |
 | `physical-units` | 1 |
-| `physics` | 1 |
+| `physics` | 2 |
 | `plotting` | 1 |
 | `png` | 3 |
 | `pnm` | 1 |
 | `point-sets` | 2 |
 | `poisson-equation` | 1 |
-| `polymorphism` | 3 |
+| `polyline-simplification` | 1 |
+| `polymorphism` | 5 |
 | `polynomials` | 1 |
 | `portability` | 2 |
 | `precision` | 2 |
@@ -656,100 +805,126 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `processes` | 1 |
 | `pseudoinverse` | 1 |
 | `pseudorandom` | 3 |
+| `pure-fortran` | 1 |
 | `puzzles` | 1 |
 | `python` | 1 |
 | `quadratic-programming` | 1 |
-| `quadrature` | 7 |
+| `quadrature` | 8 |
+| `quadrature-rules` | 1 |
 | `quantum-mechanics` | 1 |
 | `quasi-definite` | 1 |
 | `quasi-newton` | 2 |
 | `quasi-random` | 1 |
+| `queues` | 1 |
 | `quicksort` | 1 |
 | `quoting` | 1 |
 | `random-numbers` | 5 |
 | `ranking` | 1 |
-| `rational-arithmetic` | 1 |
+| `rational-arithmetic` | 2 |
 | `real-arithmetic` | 1 |
+| `reference-counting` | 1 |
 | `regression` | 3 |
-| `regular-expressions` | 4 |
+| `regular-expressions` | 5 |
 | `reproducibility` | 4 |
 | `resampling` | 2 |
+| `resource-management` | 1 |
 | `reverse-communication` | 1 |
 | `reverse-mode` | 1 |
 | `rgb` | 2 |
 | `root-finding` | 4 |
 | `rosenbrock-methods` | 1 |
-| `runge-kutta` | 4 |
+| `row-reduction` | 1 |
+| `rpn-calculator` | 1 |
+| `runge-kutta` | 5 |
 | `sampled-data` | 1 |
 | `scalar-functions` | 2 |
 | `schroedinger-equation` | 1 |
-| `scientific-data` | 2 |
-| `searching` | 3 |
+| `scientific-data` | 3 |
+| `searching` | 4 |
 | `sequential-quadratic-programming` | 2 |
-| `serialization` | 5 |
-| `sets` | 1 |
+| `serialization` | 6 |
+| `sets` | 2 |
 | `shape-preserving` | 2 |
+| `shunting-yard-algorithm` | 1 |
 | `signal-processing` | 4 |
 | `simulated-annealing` | 1 |
 | `sine-transforms` | 1 |
 | `singular-value-decomposition` | 1 |
 | `smoothing` | 2 |
 | `sorted-arrays` | 1 |
-| `sorting` | 5 |
+| `sorting` | 6 |
 | `spacecraft-trajectories` | 1 |
 | `sparse-linear-algebra` | 2 |
+| `sparse-linear-systems` | 1 |
 | `sparse-matrices` | 10 |
 | `spatial-indexing` | 1 |
 | `spatial-statistics` | 1 |
-| `special-functions` | 4 |
+| `special-functions` | 6 |
 | `spectral-analysis` | 1 |
 | `spherical-harmonics` | 1 |
 | `splines` | 5 |
-| `sql` | 1 |
-| `sqlite` | 1 |
+| `sql` | 2 |
+| `sqlite` | 2 |
 | `standard-library` | 1 |
 | `stationary-distributions` | 1 |
 | `statistics` | 8 |
+| `status-codes` | 1 |
 | `stiff-equations` | 3 |
 | `stochastic-methods` | 3 |
 | `stochastic-processes` | 1 |
-| `strings` | 10 |
+| `storage-management` | 1 |
+| `stribeck-friction` | 1 |
+| `string-formatting` | 1 |
+| `strings` | 14 |
 | `structured-matrices` | 1 |
 | `subprocesses` | 1 |
 | `sudoku` | 1 |
 | `svd` | 3 |
 | `symmetric-systems` | 1 |
-| `tabular-data` | 3 |
+| `tabular-data` | 4 |
 | `tabulated-data` | 3 |
 | `tauchen-discretization` | 1 |
 | `terminal-styling` | 1 |
+| `test-framework` | 1 |
+| `testing` | 1 |
 | `text-files` | 1 |
-| `text-processing` | 11 |
+| `text-formatting` | 1 |
+| `text-processing` | 14 |
+| `text-scanning` | 1 |
 | `thermodynamics` | 1 |
 | `thread-safe` | 2 |
 | `time-series` | 1 |
+| `timing` | 1 |
 | `toeplitz-matrices` | 1 |
-| `tokenization` | 2 |
+| `tokenization` | 4 |
 | `toml` | 2 |
 | `topological-sort` | 1 |
+| `transformations` | 1 |
+| `transpose` | 1 |
 | `tridiagonal-matrices` | 1 |
 | `truncated-newton` | 1 |
 | `trust-region` | 1 |
+| `tvd` | 1 |
 | `type-conversion` | 4 |
+| `type-erasure` | 1 |
 | `type-safety` | 1 |
 | `uncertainty` | 2 |
-| `unicode` | 2 |
+| `unicode` | 3 |
 | `unique-values` | 2 |
 | `unit-conversion` | 1 |
-| `unit-testing` | 3 |
-| `utf-8` | 1 |
+| `unit-testing` | 5 |
+| `unsigned-integers` | 1 |
+| `utf-8` | 2 |
 | `variable-length-strings` | 1 |
 | `vector-graphics` | 1 |
 | `vector-operations` | 1 |
+| `vectors` | 1 |
 | `vibration` | 1 |
 | `visualization` | 2 |
+| `wall-clock` | 1 |
 | `warnings` | 1 |
 | `water` | 1 |
 | `weighted-integrals` | 1 |
+| `weno` | 1 |
 | `zlib` | 1 |
 | `zstandard` | 1 |

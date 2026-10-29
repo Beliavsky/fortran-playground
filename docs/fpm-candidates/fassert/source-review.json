@@ -1,0 +1,33 @@
+{
+  "id": "fassert",
+  "repository": "degawa/fassert",
+  "revision": "678fa217df79af318cc537d3c69eab3b7cf68cb7",
+  "archive_sha256": "3e456e3c3b57ca276e96deb1ada542154442c7787d5875b366021e75986c265f",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "shared_dependencies": {
+      "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+      "repositories": [
+        "degawa/fassert"
+      ]
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T01:58:37.812754+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/fassert.f90",
+  "verification": {
+    "seconds": 2.092,
+    "build_seconds": 0.473,
+    "library_reused": true,
+    "demo_sha256": "89c243974f26f51d2d23f7d402317f1197ac544d7490e5993bb90742fea53633",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Assertions for integer scalars and arrays plus approximate real comparison with an explicit tolerance. The main captures an intentional failed comparison as a logical status and message, checks both, and continues successfully. No source edits; matches the existing Any dependency revision. Not a validation of every type, rank, tolerance convention, custom comparator or test-framework integration."
+}

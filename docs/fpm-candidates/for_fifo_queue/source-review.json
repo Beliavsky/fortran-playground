@@ -1,0 +1,38 @@
+{
+  "id": "for_fifo_queue",
+  "repository": "jordan4ibanez/for_fifo_queue",
+  "revision": "b04b536589af8cf041b8e5e53484e57147fc746f",
+  "archive_sha256": "15c6f3fbc9c8eb44ced15ae5694261759f4b4cf24e4b407fe75886bcf3494dc8",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "shared_dependencies": {
+      "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+      "repositories": [
+        "jordan4ibanez/for_fifo_queue"
+      ]
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T01:33:12.542944+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/for_fifo_queue.f90",
+  "verification": {
+    "seconds": 1.779,
+    "build_seconds": 0.172,
+    "library_reused": true,
+    "demo_sha256": "d89062451085174aeb37a5aabb34a43c4b1a3f55d67999e8242d0c7cca1185e4",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "FIFO container using C allocations and byte copies. The main enqueues four 64-bit C-interoperable integers, verifies count and exact retrieval order, frees every popped allocation with C free, checks empty-pop behavior and destroys the queue. No source edits. The implementation uses GNU LOC and raw byte storage; the example makes no portability claim for arbitrary derived types, pointer-owning values, threading or every compiler.",
+  "known_limitations": [
+    "GNU LOC extension and raw byte copying are used by the implementation.",
+    "A pointer header follows each payload without general alignment padding. The example uses an aligned 8-byte payload on the x86-64 backend; arbitrary payload widths and other architectures are not validated.",
+    "C allocations must be released with C free, as in the consumer."
+  ]
+}

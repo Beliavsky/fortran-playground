@@ -1,0 +1,63 @@
+{
+  "ok": false,
+  "compiler": "GNU Fortran (GCC) 16.2.0",
+  "fpm": "0.12.0",
+  "stages": [
+    {
+      "name": "Build",
+      "command": [
+        "fpm",
+        "build",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.515,
+      "ok": true,
+      "exit_code": 0,
+      "error": "",
+      "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+      "stderr": ""
+    },
+    {
+      "name": "Run",
+      "command": [
+        "fpm",
+        "run",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.058,
+      "ok": false,
+      "exit_code": 139,
+      "error": "",
+      "stdout": "",
+      "stderr": "Project is up to date\n\nProgram received signal SIGSEGV: Segmentation fault - invalid memory reference.\n\nBacktrace for this error:\n#0  0x2b3477ae5f83 in ???\n#1  0x2b3477ae4b35 in ???\n#2  0x2b3477f7ad6f in ???\n#3  0x7f71d2d27190 in ???\nSegmentation fault\n<ERROR> Execution for object \" playground-main \" returned exit code  139\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 139\n"
+    }
+  ],
+  "packages": [
+    {
+      "repository": "14NGiestas/shunting-yard-fortran",
+      "revision": "ff62d83502bc5fdf77f2750c3538b8634a543b91",
+      "sha256": "b72b28673e6fc18e9f54c7e5999db2d224b102673bd02ccc41a446a262e38d1c"
+    },
+    {
+      "repository": "14NGiestas/fortran-tokenizer",
+      "revision": "4ed3bac4132a9b344b3c327f579ae4919a61393d",
+      "sha256": "99ae76f58775d954d01885a2d48720a16e143782238f45f5db2424c6277cc912"
+    }
+  ]
+}

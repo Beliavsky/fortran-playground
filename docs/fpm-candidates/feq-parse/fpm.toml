@@ -1,0 +1,45 @@
+name = "feq-parse"
+license = "Other"
+author = "Fluid Numerics LLC"
+copyright = "Copyright 2020 Fluid Numerics LLC"
+description = "An equation parser class for Modern Fortran"
+homepage = "https://github.com/FluidNumerics/feq-parse"
+version = "2.1.1"
+keywords = ["parser"]
+
+[build]
+auto-executables = false
+auto-examples = false
+auto-tests = true
+
+[library]
+source-dir = "src"
+
+[install]
+library = true
+
+
+[[example]]
+name = "array_with_array_eval"
+source-dir = "example"
+main = "array_with_array_eval.f90"
+
+[[example]]
+name = "array_with_scalar_eval"
+source-dir = "example"
+main = "array_with_scalar_eval.f90"
+
+[[example]]
+name = "scalar_with_scalar_eval"
+source-dir = "example"
+main = "scalar_with_scalar_eval.f90"
+
+[[example]]
+name = "scalar_function_product"
+source-dir = "example"
+main = "scalar_function_product.f90"
+
+[[example]]
+name = "gaussian_scalar_multivar"
+source-dir = "example"
+main = "gaussian_scalar_multivar.f90"

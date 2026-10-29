@@ -1,0 +1,43 @@
+{
+  "id": "slinked-list",
+  "repository": "zoziha/slinked-list",
+  "revision": "aa04fcb392466e52277200d7380913fe071fe620",
+  "archive_sha256": "7c0817bb083eb2686e23d13a238e3c2058835cf8315043a25f8de0f64e0ad227",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8"
+  },
+  "dependencies": [],
+  "catalog_patches": {
+    "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+    "edits": [
+      {
+        "path": "src/sll_node.f90",
+        "sha256": "a1c19a030622822592ee5c57fca5b0915bdff22afe72ab9ad6e1f49b7fef87f1",
+        "before": "type(node) pure function node_init(data)",
+        "after": "type(node) function node_init(data)"
+      }
+    ]
+  },
+  "checked_at": "2026-10-29T01:58:37.812754+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/slinked-list.f90",
+  "verification": {
+    "seconds": 1.491,
+    "build_seconds": 0.343,
+    "library_reused": true,
+    "demo_sha256": "c15e46b73b6a9b1bb85f8488fa2fac82f0bf0690d8be708a95544f7832d678b3",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Generic singly linked list for small datasets. The main checks integer and real payloads in insertion order, list size, iteration count, emptying, retained capacity and the value stored after reuse; iterator and list cleanup are explicit. A checksum-guarded compatibility edit removes PURE from node_init, whose result has a polymorphic allocatable component. Constructor allocation and copying are unchanged, and the call sites are impure. This patched root retains its own small archive instead of sharing an unmodified graph export. No display dependency is needed for the custom consumer. Large-data performance, all mutation operations and ownership of pointer-containing derived types are not validated.",
+  "compatibility_edits": [
+    "Remove PURE from node_init because GNU Fortran 16 rejects its result type with a polymorphic allocatable component. No procedure bodies changed."
+  ],
+  "original_build_failure": "original-build-failure.json",
+  "reproducer": "pure-result-reproducer.f90"
+}

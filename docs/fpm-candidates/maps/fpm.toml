@@ -1,0 +1,17 @@
+name = "maps"
+version = "0.2.0"
+license = "MIT"
+author = "Tomohiro Degawa"
+maintainer = "degawa.tomohiro@gmail.com"
+copyright = "Copyright 2023, Tomohiro Degawa"
+[build]
+auto-executables = true
+auto-tests = true
+auto-examples = true
+[install]
+library = false
+
+[dependencies]
+stdlib = '*'
+enumul =  { git="https://github.com/degawa/enumul"}
+errstat = {git = "https://github.com/degawa/errstat"}

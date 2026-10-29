@@ -1,0 +1,94 @@
+{
+  "id": "friction",
+  "repository": "jchristopherson/friction",
+  "revision": "8e75dcac26f47417a439adfcbaa24834105d89fe",
+  "archive_sha256": "71dddc287abf50fc6c174e610eda1711fa5befc0b970fa931cc854381b1603cb",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "apt_packages": [
+      "libblas-dev=3.12.1-6",
+      "liblapack-dev=3.12.1-6",
+      "libarpack2-dev=3.9.1-6"
+    ],
+    "metapackages": [
+      "openmp",
+      "blas",
+      "lapack"
+    ],
+    "environment": {
+      "FPM_FFLAGS": "-fopenmp"
+    },
+    "source_revisions": {
+      "jchristopherson/linalg": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+      "jchristopherson/collections": "ce37c94e72b3ae5db2e2208489999260a7875f81",
+      "jchristopherson/fstring": "1bb1043a1ed34b8bd57f2687166463dd573bce3d",
+      "jchristopherson/diffeq": "989b320179c23aaff4bfe72994c90e9034f50c74",
+      "jchristopherson/fstats": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f"
+    },
+    "shared_dependencies": {
+      "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+      "repositories": [
+        "jchristopherson/friction",
+        "jchristopherson/diffeq",
+        "jchristopherson/linalg",
+        "jchristopherson/fstats",
+        "jchristopherson/collections",
+        "jchristopherson/fstring"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "repository": "jchristopherson/diffeq",
+      "revision": "989b320179c23aaff4bfe72994c90e9034f50c74",
+      "sha256": "09f6e92aea1dc8c9eb9233d4052b012e3b53a739e1ce078453d0421ddb1d4e87"
+    },
+    {
+      "repository": "jchristopherson/linalg",
+      "revision": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+      "sha256": "6210b8b167b50694941f48b20ad5d94bdacab026f1eb4720e2d55e8ddde0b59a"
+    },
+    {
+      "repository": "jchristopherson/fstats",
+      "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "sha256": "cf6b7367fc2a0d74f46000dc80a4cbedd07fd554e29117144b695b3a9ffa6fef"
+    },
+    {
+      "repository": "jchristopherson/collections",
+      "revision": "ce37c94e72b3ae5db2e2208489999260a7875f81",
+      "sha256": "5d53caf3c0b35e9e2a8bed49f8e96dca1b282434859c8c6f53fae3123528f265"
+    },
+    {
+      "repository": "jchristopherson/fstring",
+      "revision": "1bb1043a1ed34b8bd57f2687166463dd573bce3d",
+      "sha256": "0272f644a9217485fa2a3a18e41010c88f81ccc7398fc855c37518be2ac8eb3f"
+    }
+  ],
+  "checked_at": "2026-10-28T22:10:17.874400+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/friction.f90",
+  "verification": {
+    "seconds": 3.006,
+    "build_seconds": 0.608,
+    "library_reused": true,
+    "demo_sha256": "0318e4d8e772383e58c39b5b7495fb1d979269753b253a3bc85389a524a556bc",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Constitutive friction models, with nonlinear parameter fitting and internal-state ODE integration in the reviewed source. The checked main covers algebraic Coulomb and Stribeck forces only; it does not validate parameter fitting or dynamic internal-state integration.",
+  "initial_verification": {
+    "seconds": 6.609,
+    "build_seconds": 4.105,
+    "library_reused": true,
+    "demo_sha256": "0318e4d8e772383e58c39b5b7495fb1d979269753b253a3bc85389a524a556bc",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  }
+}

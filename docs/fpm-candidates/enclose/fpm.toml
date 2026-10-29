@@ -1,0 +1,19 @@
+name = "enclose"
+description = "provide procedures for enclosing a string in brackets"
+version = "0.3.0"
+license = "MIT"
+author = "Tomohiro Degawa"
+maintainer = "https://github.com/degawa"
+copyright = "Copyright 2023, Tomohiro Degawa"
+
+[build]
+auto-executables = false
+auto-tests = true
+auto-examples = true
+
+[install]
+library = true
+
+[dev-dependencies]
+test-drive = { git="https://github.com/fortran-lang/test-drive" }
+testdrive_util = { git="https://github.com/degawa/testdrive_util" }

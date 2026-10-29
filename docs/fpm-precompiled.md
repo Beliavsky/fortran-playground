@@ -1,13 +1,15 @@
 # Precompiled FPM packages
 
-The Selected catalog contains **175 precompiled packages in 41 categories**, with search and category filters above the **Available packages (GNU Fortran 16)** selector. Each entry has a one-line description and an editable example main program. **Load package** selects GNU Fortran 16.2.0, the exact source revision, and **My main program**. Loading never submits a job. Only builds verified and advertised by the deployed service can be selected.
+The Selected catalog contains **222 precompiled packages in 47 categories**, with search and category filters above the **Available packages (GNU Fortran 16)** selector. Each entry has a one-line description and an editable example main program. **Load package** selects GNU Fortran 16.2.0, the exact source revision, and **My main program**. Loading never submits a job. Only builds verified and advertised by the deployed service can be selected.
 
 | Category | Package | Description |
 | --- | --- | --- |
+| Arrays | [array_range](https://github.com/degawa/array_range) | Derived types for managing one-, two- and three-dimensional array bounds. |
 | Astronomy and orbits | [astro-fortran](https://github.com/jacobwilliams/astro-fortran) | Fundamental astronomy models and coordinate transformations refactored from IAU SOFA. |
 | Astronomy and orbits | [fortran-astrodynamics-toolkit](https://github.com/jacobwilliams/Fortran-Astrodynamics-Toolkit) | Orbital mechanics, coordinate transformations, and spacecraft trajectory tools. |
 | Colors | [forcolormap](https://github.com/vmagnin/forcolormap) | Scientific colormaps mapping scalar values to RGB colors. |
 | Colors | [m_color](https://github.com/urbanjost/M_color) | Convert color names and RGB, HLS, HSV, and other color models. |
+| Command-line tools | [argparse-f](https://github.com/0382/argparse-f) | Object-oriented parsing of typed command-line options, defaults and named arguments. |
 | Command-line tools | [argv-fortran](https://github.com/jacobwilliams/argv-fortran) | Read command-line arguments as allocatable strings. |
 | Command-line tools | [m_attr](https://github.com/urbanjost/M_attr) | Terminal styling markup with a plain-text output mode. |
 | Command-line tools | [m_cli2](https://github.com/urbanjost/M_CLI2) | Typed command-line parsing with defaults and help text. |
@@ -16,18 +18,30 @@ The Selected catalog contains **175 precompiled packages in 41 categories**, wit
 | Containers and graphs | [daglib](https://github.com/jacobwilliams/daglib) | Directed acyclic graphs and topological ordering of dependencies. |
 | Containers and graphs | [fhash](https://github.com/LKedward/fhash) | Hash tables with generic keys and values. |
 | Containers and graphs | [flist](https://github.com/jacobwilliams/flist) | Linked lists storing values of different types under named keys. |
+| Containers and graphs | [fortran_vector](https://github.com/Euler-37/fortran_vector) | Growable integer vectors with insertion, removal and duplicate elimination. |
 | Containers and graphs | [graphstruc](https://github.com/nedtaylor/graphstruc) | Derived types for graphs, vertices, edges and adjacency structures. |
+| Containers and graphs | [list](https://github.com/grofz/list) | Linked lists and tree containers with insertion, searching and sorting operations. |
 | Containers and graphs | [m_list](https://github.com/urbanjost/M_list) | Maintain sorted arrays and small dictionaries through insertion and lookup. |
 | Containers and graphs | [m_sets](https://github.com/urbanjost/M_sets) | Union, intersection, membership, and unique values for arrays. |
 | Containers and graphs | [metis-fpm](https://github.com/gnikit/metis-fpm) | METIS graph partitioning and sparse matrix ordering through a Fortran interface. |
+| Containers and graphs | [orbs](https://github.com/degawa/orbs) | Arithmetic, logical and shift operators for stdlib-backed bitsets. |
+| Containers and graphs | [rearrayfx](https://github.com/aradi/rearrayfx) | Educational growable real arrays with spare capacity to reduce reallocations. |
 | Data formats | [csv-fortran](https://github.com/jacobwilliams/csv-fortran) | Read and write CSV files with typed columns. |
 | Data formats | [fortran-messagepack](https://github.com/synthfi/fortran-messagepack) | Serialize and deserialize structured values in the compact MessagePack binary format. |
+| Data formats | [fortrandf](https://github.com/jaiken17/fortranDF) | In-memory data frames with named columns of different intrinsic types. |
 | Data formats | [h5fortran](https://github.com/geospace-code/h5fortran) | High-level HDF5 access for numerical arrays, strings and metadata. |
 | Data formats | [jonquil](https://github.com/toml-f/jonquil) | JSON parsing and serialization compatible with TOML Fortran types. |
 | Data formats | [json-fortran](https://github.com/jacobwilliams/json-fortran) | Read, write, and manipulate JSON documents. |
+| Data formats | [nc4fortran](https://github.com/geospace-code/nc4fortran) | Object-oriented NetCDF4 input and output for arrays, scalars and attributes. |
 | Data formats | [ncio](https://github.com/alex-robinson/ncio) | Convenient NetCDF array input and output with dimensions, attributes and metadata. |
+| Data formats | [rojff](https://github.com/everythingfunctional/rojff) | Construct, parse and serialize JSON values with explicit error handling. |
 | Data formats | [toml-f](https://github.com/toml-f/toml-f) | Parse and write TOML configuration files. |
+| Data structures | [any](https://github.com/degawa/any) | Wrap intrinsic scalar and array values behind a common return type. |
+| Data structures | [for_fifo_queue](https://github.com/jordan4ibanez/for_fifo_queue) | FIFO queue using C storage for fixed-size values. |
+| Data structures | [integer_set](https://github.com/jordan4ibanez/integer_set) | Simple 32-bit and 64-bit integer sets with insertion, removal and sorting. |
+| Data structures | [slinked-list](https://github.com/zoziha/slinked-list) | Generic singly linked list with reusable storage for small datasets. |
 | Databases | [fortran-sqlite3](https://github.com/interkosmos/fortran-sqlite3) | SQLite database bindings for creating tables, executing SQL and reading query results. |
+| Databases | [sqliteff](https://github.com/everythingfunctional/sqliteff) | Thin SQLite bindings for database creation, SQL queries and typed result access. |
 | Dates and times | [datetime-fortran](https://github.com/wavebitscientific/datetime-fortran) | Date/time objects, durations, and calendar arithmetic. |
 | Dates and times | [m_time](https://github.com/urbanjost/M_time) | Calendar arithmetic, Julian dates, and date/time formatting. |
 | Differential equations | [daskr](https://github.com/davidpfister/daskr) | Differential-algebraic equation solver with root finding and direct or Krylov linear solvers. |
@@ -38,6 +52,8 @@ The Selected catalog contains **175 precompiled packages in 41 categories**, wit
 | Differential equations | [dvode](https://github.com/jacobwilliams/dvode) | Variable-coefficient multistep ODE solver for stiff and nonstiff systems. |
 | Differential equations | [fishpack](https://github.com/jlokimlin/fishpack) | Finite-difference solvers for separable elliptic partial differential equations. |
 | Differential equations | [flint](https://github.com/princemahajan/FLINT) | Adaptive explicit Runge-Kutta ODE integration with dense output and event detection. |
+| Differential equations | [heatflow](https://github.com/ExeQuantCode/HeatFlow) | Finite-difference models of Fourier and Cattaneo heat transport. |
+| Differential equations | [hrweno](https://github.com/HugoMVale/HR-WENO) | High-resolution WENO reconstruction and TVD integration for conservation equations. |
 | Differential equations | [odepack](https://github.com/Nicholaswogan/odepack) | Modern thread-safe interfaces to the LSODA and LSODAR initial-value ODE solvers. |
 | Differential equations | [rkf45](https://github.com/zoziha/rkf45) | Classic adaptive Runge-Kutta-Fehlberg fourth/fifth-order ODE integration. |
 | Differential equations | [rklib](https://github.com/jacobwilliams/rklib) | A collection of fixed- and variable-step Runge-Kutta ODE integration methods. |
@@ -50,16 +66,23 @@ The Selected catalog contains **175 precompiled packages in 41 categories**, wit
 | Differentiation | [forwarddiff](https://github.com/Nicholaswogan/forwarddiff) | Forward automatic differentiation using dual numbers (Differentia). |
 | Differentiation | [numdiff](https://github.com/jacobwilliams/NumDiff) | Numerical derivatives and sparse Jacobian estimation. |
 | Dynamics and control | [dynamics](https://github.com/jchristopherson/dynamics) | Frequency response, vibration analysis, modal analysis and dynamic-system calculations. |
+| Dynamics and control | [friction](https://github.com/jchristopherson/friction) | Coulomb, Stribeck and dynamic friction models for contacting bodies. |
 | Encoding and compression | [befor64](https://github.com/szaghi/BeFoR64) | Base64 encoding and decoding of text and numerical data. |
 | Encoding and compression | [fortran-zlib](https://github.com/interkosmos/fortran-zlib) | Fortran interfaces to zlib lossless compression and decompression. |
 | Encoding and compression | [fortran-zstd](https://github.com/interkosmos/fortran-zstd) | Fortran interfaces to Zstandard lossless data compression. |
 | Encoding and compression | [fortran_huffman](https://github.com/Euler-37/fortran_huffman) | Huffman coding of byte streams with file compression and decompression. |
+| Error handling | [erloff](https://github.com/everythingfunctional/erloff) | Structured error lists and logging with message types and call context. |
+| Error handling | [errstat](https://github.com/degawa/errstat) | Return and inspect structured error statuses and messages. |
 | Error handling | [ferror](https://github.com/jchristopherson/ferror) | Structured error and warning reporting with configurable handling. |
+| Expression parsing | [feq-parse](https://github.com/FluidNumerics/feq-parse) | Evaluate mathematical expressions supplied as strings at scalar or array inputs. |
+| Expression parsing | [fortran-tokenizer](https://github.com/14NGiestas/fortran-tokenizer) | Customizable tokenization with validation and ignore callbacks. |
 | Expression parsing | [fortran_function_parser](https://github.com/jacobwilliams/fortran_function_parser) | Parse and evaluate mathematical expressions supplied as strings. |
 | Expression parsing | [m_calculator](https://github.com/urbanjost/M_calculator) | Evaluate mathematical expressions and named variables supplied as text. |
+| Expression parsing | [shunting-yard-fortran](https://github.com/14NGiestas/shunting-yard-fortran) | Experimental expression parser with token callbacks and fixed operator precedences. |
 | Files and processes | [ffilesystem](https://github.com/scivision/ffilesystem) | Portable filesystem and path operations through Fortran, C and C++ interfaces. |
 | Files and processes | [fmmap](https://github.com/PierUgit/fmmap) | Map files into memory and access their contents as Fortran arrays. |
 | Files and processes | [io-fortran-library](https://github.com/acbbullock/IO-Fortran-Library) | High-level numeric array file I/O, dynamic strings, and numeric/string conversion. |
+| Files and processes | [io_utilities](https://github.com/arjenmarkus/io_utilities) | INI configuration files, command parsing, progress reporting and formatted output. |
 | Files and processes | [m_io](https://github.com/urbanjost/M_io) | Convenience routines for reading text files, tables, and paths. |
 | Files and processes | [popen-fortran](https://github.com/jacobwilliams/popen-fortran) | Capture the text output of a subprocess. |
 | Games and puzzles | [forsudoku](https://github.com/vmagnin/ForSudoku) | Solve Sudoku puzzles and generate new grids with configurable clues. |
@@ -69,10 +92,14 @@ The Selected catalog contains **175 precompiled packages in 41 categories**, wit
 | General utilities | [kinds](https://github.com/gha3mi/kinds) | Named real and integer kinds with configurable working precision. |
 | General utilities | [nafpack](https://github.com/Minard-Jules/NAFPack) | Numerical analysis routines for Fourier transforms, linear systems and eigenproblems. |
 | General utilities | [stdlib](https://github.com/fortran-lang/stdlib) | General utilities, statistics, strings, sorting, and numerical routines. |
+| General utilities | [uint-fortran](https://github.com/ShinobuAmasaki/uint-fortran) | Unsigned integer derived types with arithmetic, comparisons and conversions. |
 | Geodesy | [geodesic-fortran](https://github.com/jacobwilliams/geodesic-fortran) | Distances, bearings and geodetic coordinate transformations on spheres and ellipsoids. |
 | Geodesy | [maptran3d](https://github.com/geospace-code/maptran3d) | Geographic and Earth-centered Cartesian coordinate transformations. |
+| Geometry | [fortran-simplify](https://github.com/jaiken17/fortran-simplify) | Reduce the number of polyline points using geometric simplification algorithms. |
 | Geometry | [geompack](https://github.com/jchristopherson/geompack) | Delaunay triangulation of planar point sets. |
+| High precision | [bstrith](https://github.com/degawa/bstrith) | Fixed-width binary-string arithmetic, shifts and logical operations. |
 | High precision | [mpfun2020-var1](https://github.com/jacobwilliams/MPFUN2020-var1) | Thread-safe arbitrary-precision real and complex arithmetic. |
+| High precision | [strith](https://github.com/degawa/strith) | Decimal-string arithmetic and signed or unsigned formatting of long integers. |
 | Images | [cairo-fortran](https://github.com/vmagnin/cairo-fortran) | Cairo bindings for drawing vector graphics into PNG and other output formats. |
 | Images | [forimage](https://github.com/gha3mi/forimage) | Create, read, write and transform PNM images and convert color representations. |
 | Images | [fortran_stb_image](https://github.com/lewisfish/fortran_stb_image) | Read and write PNG and other raster image formats through the stb libraries. |
@@ -92,30 +119,40 @@ The Selected catalog contains **175 precompiled packages in 41 categories**, wit
 | Interpolation | [regridpack](https://github.com/jacobwilliams/regridpack) | Linear and cubic interpolation between one- to four-dimensional grids. |
 | Interpolation | [splpak](https://github.com/jacobwilliams/splpak) | Least-squares fitting and evaluation of multidimensional cubic splines. |
 | Linear algebra | [blas-interface](https://github.com/awvwgk/blas-interface) | Explicit generic Fortran interfaces to BLAS vector and matrix operations. |
+| Linear algebra | [fglm](https://github.com/jordan4ibanez/fglm) | Typed vectors and 4-by-4 matrices for geometric transformations. |
+| Linear algebra | [fordot](https://github.com/gha3mi/fordot) | Selectable dot-product implementations, including BLAS and blocked calculations. |
 | Linear algebra | [foreig](https://github.com/gha3mi/foreig) | LAPACK interfaces for eigenvalues and eigenvectors of real matrices. |
 | Linear algebra | [forinv](https://github.com/gha3mi/forinv) | Matrix inverses and singular-value-decomposition pseudoinverses. |
+| Linear algebra | [formatmul](https://github.com/gha3mi/formatmul) | Matrix products with transpose options and selectable multiplication methods. |
 | Linear algebra | [forsvd](https://github.com/gha3mi/forsvd) | Singular value decomposition and truncated low-rank matrix approximations. |
 | Linear algebra | [fortran-lapack](https://github.com/perazz/fortran-lapack) | Modern linear algebra: linear systems, eigenvalues, least squares, and matrix factorizations. |
 | Linear algebra | [fsparse](https://github.com/jalvesz/FSPARSE) | Sparse matrix storage, format conversions and matrix-vector products. |
 | Linear algebra | [kiss](https://github.com/ivan-pi/kiss) | Krylov iterative solvers for dense matrices and matrix-free linear operators. |
 | Linear algebra | [lightkrylov](https://github.com/nekStab/LightKrylov) | Krylov methods for eigenvalues, linear systems, singular values and matrix exponentials. |
 | Linear algebra | [linalg](https://github.com/jchristopherson/linalg) | Convenient dense and sparse linear algebra interfaces to BLAS, LAPACK and ARPACK. |
+| Linear algebra | [linalg_fortran](https://github.com/Euler-37/linalg_fortran) | Typed LAPACK interfaces for matrix inverses, determinants and Hermitian eigenproblems. |
 | Linear algebra | [lsmr](https://github.com/jacobwilliams/LSMR) | Iterative solution of sparse linear equations and least-squares problems. |
 | Linear algebra | [lsqr](https://github.com/jacobwilliams/LSQR) | Iterative sparse linear systems and least-squares solver using coordinate storage. |
 | Linear algebra | [lusol](https://github.com/jacobwilliams/lusol) | Sparse LU factorization, linear solves and efficient column updates. |
+| Linear algebra | [m_la](https://github.com/urbanjost/M_LA) | Magic squares, reduced row-echelon forms and other small matrix utilities. |
 | Linear algebra | [minres](https://github.com/willdickson/minres) | Iterative solution of symmetric sparse systems, including indefinite matrices. |
 | Linear algebra | [qdldl-fortran](https://github.com/jacobwilliams/qdldl-fortran) | Sparse LDL-transpose factorization, orderings and solves for quasi-definite systems. |
 | Linear algebra | [sparse_fortran](https://github.com/Euler-37/sparse_fortran) | Coordinate and compressed-row sparse matrices with matrix-vector products. |
 | Linear algebra | [specialmatrices](https://github.com/loiseaujc/SpecialMatrices) | Structured diagonal, circulant, Toeplitz, tridiagonal, and other matrices. |
 | Linear algebra | [y12m](https://github.com/ivan-pi/y12m) | Direct sparse LU factorization with pivoting, reordering and reuse for multiple right-hand sides. |
+| Machine learning | [athena](https://github.com/nedtaylor/athena) | Neural networks with convolutional, graph-based and physics-informed layers. |
 | Machine learning | [fortran-flann](https://github.com/ivan-pi/fortran-flann) | FLANN interfaces for nearest-neighbor searches and spatial indexing. |
 | Machine learning | [neural-fortran](https://github.com/modern-fortran/neural-fortran) | Neural networks with dense and convolutional layers and gradient-based training. |
+| Memory management | [smart-pointers](https://github.com/sourceryinstitute/smart-pointers) | Reference-counted smart pointers with automatic resource cleanup. |
 | Number theory | [fortran-primes](https://github.com/perazz/fortran-primes) | Generate prime numbers, test primality, and factor integers. |
 | Number theory | [rational_number](https://github.com/art-rasa/rational_number) | Exact rational arithmetic with integer numerators and denominators. |
 | Physical constants | [codata](https://github.com/MilanSkocic/codata) | CODATA physical constants and uncertainties for several published adjustments. |
+| Physical constants | [fundamental_constants](https://github.com/vmagnin/fundamental_constants) | CODATA fundamental physical constants with explicitly selectable editions. |
 | Physical properties | [ciaaw](https://github.com/MilanSkocic/ciaaw) | Standard atomic weights, isotopic abundances and nuclide masses for chemistry. |
+| Physical properties | [ecx](https://github.com/MilanSkocic/ecx) | Electrochemical kinetics, impedance and photoelectrochemistry calculations. |
 | Physical properties | [iapws](https://github.com/MilanSkocic/iapws) | IAPWS thermodynamic properties of water, including saturation pressure and temperature. |
 | Plotting | [pyplot-fortran](https://github.com/jacobwilliams/pyplot-fortran) | Create PNG plots from Fortran through Python and Matplotlib. |
+| Quadrature | [kronrod](https://github.com/jacobwilliams/kronrod) | Generate Gauss-Kronrod quadrature nodes and weights using arbitrary precision. |
 | Quantum mechanics | [featom](https://github.com/atomic-solvers/featom) | Radial Schroedinger and Dirac equations solved with high-order finite elements. |
 | Random numbers | [mersenne-twister-fortran](https://github.com/jacobwilliams/mersenne-twister-fortran) | Reproducible 64-bit Mersenne Twister random number generation. |
 | Random numbers | [pointsets](https://github.com/arjenmarkus/pointsets) | Construct uniform, geometric, random and quasi-random point sets and multidimensional grids. |
@@ -145,8 +182,10 @@ The Selected catalog contains **175 precompiled packages in 41 categories**, wit
 | Signal processing | [fastconv](https://github.com/gronki/fastconv) | Small-kernel convolution for smoothing one-, two- and three-dimensional arrays. |
 | Signal processing | [peaks](https://github.com/jchristopherson/peaks) | Detect local maxima and minima in sampled signals using a noise threshold. |
 | Signal processing | [spectrum](https://github.com/jchristopherson/spectrum) | Filtering, spectral estimation, convolution, resampling, and signal analysis. |
+| Special functions | [amosf90](https://github.com/Euler-37/amosf90) | AMOS interfaces for complex-argument, noninteger-order Bessel and related functions. |
 | Special functions | [carlson-elliptic-integrals](https://github.com/jacobwilliams/carlson-elliptic-integrals) | Carlson symmetric elliptic integrals for pendulum periods and other applications. |
 | Special functions | [fortran-bessels](https://github.com/perazz/fortran-bessels) | Bessel and modified Bessel functions, demonstrated with fixed orders zero and one. |
+| Special functions | [rpn-calculator-fortran](https://github.com/scivision/rpn-calculator-fortran) | Numerical functions from an RPN calculator, including special functions, rational arithmetic and conversions. |
 | Special functions | [specfun](https://github.com/jacobwilliams/specfun) | Special functions including Bessel, Airy, gamma, and related functions. |
 | Special functions | [specfunc-fullerton](https://github.com/arjenmarkus/specfunc-fullerton) | Fullerton special functions including gamma, Bessel, Airy and exponential integrals. |
 | Statistics | [econ-toolchain](https://github.com/renatomatz/econ-toolchain) | Markov chains, stochastic-process discretization and numerical tools for economic models. |
@@ -161,6 +200,7 @@ The Selected catalog contains **175 precompiled packages in 41 categories**, wit
 | Strings | [fortran-string-to-real](https://github.com/Carltoffel/Fortran-String-to-Real) | Experimental conversion of valid decimal and scientific-notation strings to real numbers. |
 | Strings | [iso_varying_string](https://github.com/everythingfunctional/iso_varying_string) | Variable-length strings implementing the ISO varying-string specification. |
 | Strings | [ryu_fortran](https://github.com/St-Maxwell/ryu_fortran) | Ryu conversion of floating-point numbers to short decimal representations. |
+| Strings | [scanner](https://github.com/freevryheid/scanner) | Character-by-character text scanning with bounded navigation for small parsers. |
 | Strings | [strff](https://github.com/everythingfunctional/strff) | String splitting, joining, formatting and conversion from intrinsic types. |
 | Strings | [utf8-f](https://github.com/St-Maxwell/utf8-f) | UTF-8 character counting, indexing, slicing and text manipulation. |
 | Strings and sorting | [fortran-search-and-sort](https://github.com/jacobwilliams/fortran-search-and-sort) | Generic sorting, searching, and duplicate removal for arrays. |
@@ -168,14 +208,21 @@ The Selected catalog contains **175 precompiled packages in 41 categories**, wit
 | Strings and sorting | [m_strings](https://github.com/urbanjost/M_strings) | String manipulation, case conversion, tokenization, and formatting. |
 | Strings and sorting | [orderpack](https://github.com/urbanjost/orderpack) | Sorting, ranking, medians, and partial ordering of arrays. |
 | Strings and sorting | [stringsort](https://github.com/jacobwilliams/stringsort) | Lexical and natural sorting of character arrays. |
+| Testing | [fassert](https://github.com/degawa/fassert) | Extensible assertions for scalar and array values and numerical tolerances. |
 | Testing | [fortran_test_helper](https://github.com/jchristopherson/fortran_test_helper) | Assertions and random array generators for numerical tests. |
 | Testing | [m_framework](https://github.com/urbanjost/M_framework) | Unit testing, floating-point comparisons, and diagnostic formatting. |
 | Testing | [test-drive](https://github.com/fortran-lang/test-drive) | Lightweight unit testing with named tests and assertions. |
+| Testing | [veggies](https://github.com/everythingfunctional/veggies) | Functional unit-testing framework with readable specification-style results. |
 | Text parsing | [forgex](https://github.com/ShinobuAmasaki/forgex) | Regular expressions with Unicode support and full or substring matching. |
 | Text parsing | [fortran-regex](https://github.com/perazz/fortran-regex) | Search text with a lightweight regular expression engine. |
 | Text parsing | [fortran-shlex](https://github.com/perazz/fortran-shlex) | Split command strings into tokens while respecting quotes. |
 | Text parsing | [m_match](https://github.com/urbanjost/M_match) | Pattern matching with a compact grep-style regular expression syntax. |
 | Text parsing | [parff](https://github.com/everythingfunctional/parff) | Composable functional parsers for structured text and useful parse errors. |
+| Text processing | [enclose](https://github.com/degawa/enclose) | Enclose strings in matching brackets or custom delimiters. |
+| Text processing | [fed](https://github.com/degawa/fed) | Construct Fortran format edit descriptors programmatically. |
+| Text processing | [jeyemhex-regex](https://github.com/jeyemhex/fortran-regex) | Pure Fortran regular-expression matching, splitting and replacement. |
+| Text processing | [string-utf-8](https://github.com/guntherwillems/fortran-string-utf-8) | Manipulate UTF-8 strings as arrays of Unicode code points. |
+| Timing | [fortime](https://github.com/gha3mi/fortime) | Measure wall-clock and CPU elapsed time, with optional parallel timers. |
 | Transforms | [fftpack](https://github.com/fortran-lang/fftpack) | Fast Fourier, sine, and cosine transforms. |
 | Transforms | [kissfft-f](https://github.com/zoziha/kissfft-f) | Fortran bindings to the compact KISS FFT library for fast Fourier transforms. |
 | Units and quantities | [quaff](https://github.com/everythingfunctional/quaff) | Physical quantities with type-safe arithmetic and automatic unit conversions. |
@@ -295,15 +342,31 @@ The adapter's checksum and per-package settings enter that package's cache key. 
 
 **ForPCA example:** this pin returns the full principal-direction basis even when one component is requested. The example checks the leading direction and explicitly projects centered observations and reconstructs them, rather than relying on the package's scores/reconstruction fields. Its manifest license placeholder is clarified from the upstream BSD-3-Clause LICENSE file. SpecialMatrices also has a placeholder in its manifest; its README declares BSD-3-Clause.
 
+**Conservation equations and geometry:** HR-WENO's periodic-advection example checks exact cell averages and conservation of mass. Fortran-simplify's plotted example checks one perpendicular-distance simplification call. That pin has confirmed bugs in radial-distance filtering and consecutive perpendicular-distance calls; see the [limitations and reproducers](fpm-candidate-notes.md#fortran-simplify) before adapting it for repeated use. Neither package's numerical source is patched.
+
+**ECX and Athena compatibility:** ECX adds a checksum-guarded missing `real64` import; its example verifies a series RC circuit's complex impedance. Athena's manifest removes the optional W&B feature table for FPM 0.12 and declares the preprocessor-disabled `wf` module external for dependency scanning. W&B tracking is unavailable. Its fixed-weight dense-layer example agrees with direct Fortran matrix multiplication and tanh; it does not test training. No mathematical formulas are patched. Exact edits and original diagnostics are retained in the [candidate notes](fpm-candidate-notes.md).
+
+**Bitsets and growable arrays:** Orbs checks Morton-key neighbors for all sixteen cells of a small periodic grid. ReArrayFX checks preservation of matrix elements across growth, reallocation, shrinking and array assignment. These are small in-memory examples with independent expected results.
+
+**Additional numerical interfaces:** AMOS F90 checks complex-argument Bessel functions of noninteger order against independent series and a closed-form identity. The separate `linalg_fortran` package checks inverse/eigenpair residuals, orthonormality and known eigenvalues. Its manifest explicitly enables the original implicit external BLAS/LAPACK interfaces and pins OpenBLAS; no numerical source is changed.
+
+**Integer containers and text scanning:** `fortran_vector` checks growth, stable duplicate removal and editing against expected contents. A checksum-guarded one-line fix avoids aliasing an array element during compaction in `unique`; the original failing run is retained. Scanner checks character navigation, lookahead and boundaries while reading a small configuration record. See the [candidate notes](fpm-candidate-notes.md) for exact checks and limitations. AMOS F90, `linalg_fortran` and `fortran_vector` have placeholder upstream license metadata and no license notice found in the reviewed archives; their catalog value is explicitly `NOASSERTION`.
+
+**JSON and testing:** Rojff verifies JSON fields, serialization round trips, missing-key reporting and malformed-input rejection. Its requested Erloff 2.2.0 API works with pinned Strff 3.1.1 and ISO varying string 3.0.3, avoiding an unavailable transitive GitHub mirror. Veggies uses the same compatible Strff/string exports and runs three specification-style tests of a user-written numerical formula. Explicit GitLab-to-GitHub aliases and all source locks are recorded. These libraries' sources are unchanged.
+
+**Arguments, configuration and unsigned values:** argparse-f's example launches itself once with fixed arguments to check typed values, a logical flag and a default. io_utilities reads checked values from a tiny configuration file created inside the sandbox; its manifest's invalid `[[library]]` array is corrected to `[library]`, without changing Fortran source. uint-fortran checks fixed-width boundaries and wraparound using its unsigned derived types and explicitly imported conversion API.
+
+**Experimental expression parsing:** shunting-yard-fortran's original internal callback layout crashed in the restricted GNU sandbox. A checksum-guarded edit moves that host-independent callback to module scope; precedence, parentheses, exponent associativity, square root and unary minus then pass. Its global token registration, fixed precedences and missing syntax validation remain upstream limitations. The example uses one parser and valid expressions only. Exact edits, failed attempts and successful outputs are retained in the [candidate notes](fpm-candidate-notes.md).
+
 ## How reuse works
 
 Each catalog library is built ahead of time using GNU Fortran **16.2.0**, FPM **0.12.0**, and the same debug profile and base compiler flags as normal package jobs, plus the explicitly recorded catalog-specific build settings above. A separate immutable image contains its sources, dependency revisions, module files, object files, and library archive. Selecting that exact repository/commit in **My main program** mode reuses the image and compiles/links your edited main program. Results explicitly say whether the library was reused.
 
-Compatible stdlib dependencies are shared across nine catalog entries. Seven additional entries use complete shared library graphs: Quaff, Parff, Strff, Linalg, Spectrum, Nonlin and Diffeq. Linalg's same pinned build is shared by four of these entries; dependency updates propagate through the graph keys, and transitive native link requirements are retained. Their pinned source, compiler settings, preprocessing and native-library requirements must match; different configurations retain separate immutable builds. The storage total counts each shared export once. See [shared dependency builds](fpm-shared-dependencies.md) for compatibility rules, operator commands, local downloads, and rollout storage accounting.
+Compatible stdlib dependencies are shared across 14 catalog entries. 42 additional entries use complete shared library graphs, including the numerical and utility libraries listed in the [sharing notes](fpm-shared-dependencies.md). Linalg's same pinned build is shared by four of these entries; dependency updates propagate through the graph keys, and transitive native link requirements are retained. Their pinned source, compiler settings, preprocessing and native-library requirements must match; different configurations retain separate immutable builds. The storage total counts each shared export once. See [shared dependency builds](fpm-shared-dependencies.md) for compatibility rules, operator commands, local downloads, and rollout storage accounting.
 
 Debug symbols are removed from precompiled dependency objects and archives to keep linked executables within the existing 16 MiB file limit. Runtime checks remain enabled; your main program retains its debug information. Backtraces inside a cached dependency may therefore have less detail than a local debug build.
 
-All 175 packages passed the changed-main sandbox check, including PNG previews for pyplot-fortran, ForImage, cairo-fortran and stb_image. The recorded compile/link checks took about 0.14 to 7.88 seconds. Their logical library artifacts total about 1,122 MiB; this excludes compiler layers, native system libraries, sources, and main executables and is not a compressed storage or billing measurement. See [the recorded validation](fpm-precompiled-validation.json), which preserves each package's verification date. Unchanged library checks and builds are retained when the catalog expands.
+All 222 packages passed the changed-main sandbox check, including PNG previews for pyplot-fortran, ForImage, cairo-fortran, stb_image and Fortran-simplify. The recorded compile/link checks took about 0.14 to 7.88 seconds. Their logical library artifacts total about 1,249 MiB; this excludes compiler layers, native system libraries, sources, and main executables and is not a compressed storage or billing measurement. See [the recorded validation](fpm-precompiled-validation.json), which preserves each package's verification date. Unchanged library checks and builds are retained when the catalog expands.
 
 Every job receives its own disposable filesystem copy. User code cannot update the published cache or another user's files. There is no shared writable build directory or package download during a cache hit. The normal job admission, CPU/memory bounds, network restriction, build/run timeouts, and output limits still apply. A changed main still needs compilation/linking; precompilation does not remove compiler/package limitations.
 
@@ -372,10 +435,14 @@ The optional pyplot module is precompiled alongside libraries that do not alread
 
 Verification covers the supplied consumer examples, rather than every routine or compiler. The QUADPACK example uses its 15-point Gauss-Kronrod rule. During testing of this pinned build, the 61-point rule returned approximately 0.333333332987796 for the integral of x squared from zero to one, despite requesting 1e-10 accuracy. That discrepancy remains a recorded numerical limitation; the 15-point example passes its explicit accuracy check.
 
+ForMatmul's checked main passes both transpose flags whenever either is specified. At its pinned revision, passing only `transA=.false.` or only `transB=.false.` selects an incorrect branch; omitting both flags or passing both works. The [confirmed failing probes and workaround](fpm-candidate-notes.md#formatmul) are retained, and the library source is unmodified.
+
 [Candidate investigation notes](fpm-candidate-notes.md) preserve exact source pins, reproduction commands, diagnostics, and attempted examples for authors and future work. These distinguish preparation limits, compile errors, numerical failures, and sandbox-specific behavior.
 
 Some candidates remain deferred:
 
+- **FLAP and StringiFor:** current root archives contain documentation symlinks. Older root commits pass extraction but explicitly pin a FACE archive containing another symlink. Root/dependency pins, archive checksums and exact rejected paths are retained in the [investigation notes](fpm-candidate-notes.md#flap-and-stringifor); compilation was not attempted.
+- **Maps:** its pinned source imports `other_type` from `stdlib_hashmap_wrappers`, which is absent from the tested stdlib revision. The failed recipe, pinned dependencies and word-count driver are retained in the investigation notes.
 - **kronrod:** its source consists of application programs with internal routines, without a reusable library for a custom main.
 - **Auto-Diff:** the checked expression `(a + b*b)*exp(c)` at `(2,1,0)` returned zero gradients instead of `(1,2,3)`. The upstream example reproduced this locally. Its source pin and exclusion are recorded in [the candidate checks](fpm-candidate-checks.json).
 - **M_datapac:** its current archive expands beyond the 64 MiB preparation limit, mainly because it includes generated documentation and archived files; compilation was not attempted.

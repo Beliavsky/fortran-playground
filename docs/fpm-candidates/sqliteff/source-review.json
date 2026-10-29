@@ -1,0 +1,45 @@
+{
+  "id": "sqliteff",
+  "repository": "everythingfunctional/sqliteff",
+  "revision": "9b377c976698a7da671536e5e2539146ab734ca6",
+  "archive_sha256": "283728efa90428060030cd1cb541f847cd084a128b506114163e60a312af00df",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "git_aliases": {
+      "https://gitlab.com/everythingfunctional/iso_varying_string": "https://github.com/everythingfunctional/iso_varying_string",
+      "https://gitlab.com/everythingfunctional/strff": "https://github.com/everythingfunctional/strff",
+      "https://gitlab.com/everythingfunctional/exceptional_numbers": "https://github.com/everythingfunctional/exceptional_numbers"
+    },
+    "shared_dependencies": {
+      "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+      "repositories": [
+        "everythingfunctional/sqliteff",
+        "everythingfunctional/iso_varying_string"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "repository": "everythingfunctional/iso_varying_string",
+      "revision": "f330d7a246d81aacfbf92f8085a4eca9d2506820",
+      "sha256": "2fa954b8642f34970253cee4bf36448b46f37dd2bea4930a5ecd2fd26b0dc83b"
+    }
+  ],
+  "checked_at": "2026-10-29T00:34:23.456367+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/sqliteff.f90",
+  "verification": {
+    "seconds": 2.97,
+    "build_seconds": 0.678,
+    "library_reused": true,
+    "demo_sha256": "7ff8d30a09bcc6e1450c62f7bc38957d7e2c0a83da8c25d48dafdd6a2900e6f7",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "SQLite wrapper with bundled SQLite 3.30.1 C sources. The checked main opens an in-memory database, creates a table, inserts three values, verifies count and average, reaches SQLITE_DONE and closes resources. It does not cover persistent files, concurrent use, transactions or the complete SQLite API. Explicit GitLab-to-GitHub alias pins ISO varying string; no source edits."
+}

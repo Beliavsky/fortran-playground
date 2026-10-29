@@ -1,0 +1,29 @@
+{
+  "id": "strith",
+  "repository": "degawa/strith",
+  "revision": "da2b1f489a178cb443f636e3f9c89aed6c8702b1",
+  "archive_sha256": "f302587eafa09b1ce11d48464f25f3e114cc2e5a0c81a1b586a3d38287d6f137",
+  "checked_at": "2026-10-28T21:40:06.974444+00:00",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "shared_dependencies": {
+      "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+      "repositories": [
+        "degawa/strith"
+      ]
+    }
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "verification": {
+    "seconds": 1.611,
+    "build_seconds": 0.354,
+    "library_reused": true,
+    "demo_sha256": "3714004b470be72de787902a7bfa8518bd998a6d89600e127e28c7d9e8550152",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  }
+}

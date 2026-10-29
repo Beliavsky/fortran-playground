@@ -1,0 +1,43 @@
+{
+  "id": "bstrith",
+  "repository": "degawa/bstrith",
+  "revision": "7ed7730e34c7e1f78f2be9426ccc170f9dcaf57e",
+  "archive_sha256": "f7f3c9a98b395f20760b4883b43b7122f7b59eb6d8aa08b5afb211c5ca9d6344",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "shared_dependencies": {
+      "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+      "repositories": [
+        "degawa/bstrith"
+      ]
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-28T22:10:17.874400+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/bstrith.f90",
+  "verification": {
+    "seconds": 1.852,
+    "build_seconds": 0.369,
+    "library_reused": true,
+    "demo_sha256": "4c42c06abae937b735a93bb813e0dfe0449e971bcfa3db70f171a0d841a7057d",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Fixed-width binary-string addition, subtraction, shifts and logical operations. The driver checks every eight-bit value, including carry and wraparound. This is not unlimited arbitrary-precision arithmetic.",
+  "initial_verification": {
+    "seconds": 1.593,
+    "build_seconds": 0.285,
+    "library_reused": true,
+    "demo_sha256": "4c42c06abae937b735a93bb813e0dfe0449e971bcfa3db70f171a0d841a7057d",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  }
+}

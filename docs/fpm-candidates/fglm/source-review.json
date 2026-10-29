@@ -1,0 +1,37 @@
+{
+  "id": "fglm",
+  "repository": "jordan4ibanez/fglm",
+  "revision": "e1b6a5404b3e7a266da33173a07166970c16dd86",
+  "archive_sha256": "0d4d3f14d4e408a24d51beac17fed72b7eccec715486b691d70d4ac447c1fa66",
+  "checked_at": "2026-10-28T21:40:06.974444+00:00",
+  "dependencies": [
+    {
+      "repository": "jordan4ibanez/constants_f90",
+      "revision": "22b34d79274429ab391e92a94011befeb996704a",
+      "sha256": "17efd5f858ac6f29a4d1a0a4dbd6dbbc3fa89a8810c2300679702875e385a85a"
+    }
+  ],
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "shared_dependencies": {
+      "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+      "repositories": [
+        "jordan4ibanez/fglm",
+        "jordan4ibanez/constants_f90"
+      ]
+    }
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "verification": {
+    "seconds": 1.838,
+    "build_seconds": 0.388,
+    "library_reused": true,
+    "demo_sha256": "4c0be6163b6b4f283b4e23d81e26a1b9933395f689f354da0a2037e98448aa2b",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  }
+}

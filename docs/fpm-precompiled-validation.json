@@ -1,5 +1,5 @@
 {
-  "verified_at": "2026-10-28T21:02:12.241871+00:00",
+  "verified_at": "2026-10-29T01:58:38.300775+00:00",
   "compiler": "GNU Fortran 16.2.0",
   "fpm": "0.12.0",
   "compiler_image": "gcc:16.2.0-trixie@sha256:43978d7710a803d1c3d32f4117c1528ec7285a4ce2c0a51e982ec1a6e3d87d95",
@@ -23,10 +23,29 @@
   },
   "check": "Each edited main ran successfully; library artifacts were unchanged and FPM rebuilt only the main and executable. Plotting returned PNGs; ForImage returned both PNM-to-PNG previews. Cairo and stb_image each returned one PNG preview.",
   "artifact_size_note": "Logical package-owned object/module/archive bytes plus each immutable shared dependency export once. Legacy package measurements include their dependency objects and FPM flag variants. Excludes compiler images, native system libraries, sources and main executables; not compressed storage or billing. Retired rollout images and the operator export Volume are not counted.",
-  "owned_artifact_bytes": 874695639,
-  "shared_artifact_bytes": 301996246,
-  "total_artifact_bytes": 1176691885,
+  "owned_artifact_bytes": 963589285,
+  "shared_artifact_bytes": 345604882,
+  "total_artifact_bytes": 1309194167,
   "shared_dependencies": [
+    {
+      "repository": "everythingfunctional/erloff",
+      "key": "01e3c942e72bf231a5c3cd3b",
+      "artifact_bytes": 752338,
+      "manifest_sha256": "ed6454f82aedfa6f8013f8fdf1f5e912942c69ac4ad128b5c9bca202c6aa195a",
+      "users": [
+        "rojff"
+      ]
+    },
+    {
+      "repository": "jordan4ibanez/constants_f90",
+      "key": "055425e2a30ae3ad986f6591",
+      "artifact_bytes": 4797,
+      "manifest_sha256": "d08e703d7080d11cfb3454fb996c8853a0216149ff47e0776bf48214f940ea49",
+      "users": [
+        "fglm",
+        "integer_set"
+      ]
+    },
     {
       "repository": "jchristopherson/linalg",
       "key": "163d8789cb6c288ee0f76bd7",
@@ -40,12 +59,57 @@
       ]
     },
     {
+      "repository": "degawa/bstrith",
+      "key": "1724df4b0d81adfdf78e5edf",
+      "artifact_bytes": 77574,
+      "manifest_sha256": "fcf40ca76e91741206c3041850c7f709ebc467b8bad31a77caaed3bf7820a7be",
+      "users": [
+        "bstrith"
+      ]
+    },
+    {
+      "repository": "ExeQuantCode/HeatFlow",
+      "key": "1bb7ccfbf47168c58959e364",
+      "artifact_bytes": 677126,
+      "manifest_sha256": "efc26fa9e95090143a56438b2c66b318d90d6ece33870c9a352584028b27629b",
+      "users": [
+        "heatflow"
+      ]
+    },
+    {
+      "repository": "sourceryinstitute/smart-pointers",
+      "key": "1d7f52decc3c99c738988f44",
+      "artifact_bytes": 47905,
+      "manifest_sha256": "5895a02c49070f0d4fd81165680bd667550efd9b80ca51f48f75aef9c8046664",
+      "users": [
+        "smart-pointers"
+      ]
+    },
+    {
+      "repository": "geospace-code/nc4fortran",
+      "key": "1d8c86179aa24a3b4ee7839c",
+      "artifact_bytes": 583686,
+      "manifest_sha256": "bf05dae476974d559adf5b0aa76d1f32c874fdfba8e85fc914a3a5c60808594b",
+      "users": [
+        "nc4fortran"
+      ]
+    },
+    {
       "repository": "jchristopherson/ferror",
       "key": "1dd6d7de564d577d6efaed3b",
       "artifact_bytes": 113338,
       "manifest_sha256": "059b319eb019cda2e998fbc5797bbbd1b55904acfcdb00f94e0c11ad5b76d290",
       "users": [
         "nonlin"
+      ]
+    },
+    {
+      "repository": "ShinobuAmasaki/uint-fortran",
+      "key": "1fbdb0e05918329e09417065",
+      "artifact_bytes": 296973,
+      "manifest_sha256": "207f54dd9a474e7d277fa69a8c6efd3e725e7262860c580a4acd3dc95756b9ef",
+      "users": [
+        "uint-fortran"
       ]
     },
     {
@@ -58,12 +122,106 @@
       ]
     },
     {
+      "repository": "jaiken17/fortranDF",
+      "key": "293c4a1cf6098e3758aed2d4",
+      "artifact_bytes": 1357301,
+      "manifest_sha256": "894908010a578539e53dd968a7c20b55a7f4b8983cf022b511c349e310f94aff",
+      "users": [
+        "fortrandf"
+      ]
+    },
+    {
+      "repository": "everythingfunctional/iso_varying_string",
+      "key": "2ac3b2210f3d1aecc3dcd2b9",
+      "artifact_bytes": 128116,
+      "manifest_sha256": "f6b34e2b0d25643f9a9b42fbeb055614b3fd898a5760f66d71be99e97c65ad67",
+      "users": [
+        "erloff",
+        "rojff",
+        "veggies"
+      ]
+    },
+    {
+      "repository": "grofz/list",
+      "key": "2b470f41712552168f4ea8c7",
+      "artifact_bytes": 194218,
+      "manifest_sha256": "37c2eb9b789a961285d49d050da1f7e20570eea977005dd22c309eaa137aabff",
+      "users": [
+        "list"
+      ]
+    },
+    {
+      "repository": "jordan4ibanez/fglm",
+      "key": "2d45a88461d556bc1d7871b5",
+      "artifact_bytes": 155150,
+      "manifest_sha256": "94e1c18f9de3e464dfd9241e130d52c6cf6e25dfc55f675bdbfc96f9009e3157",
+      "users": [
+        "fglm"
+      ]
+    },
+    {
+      "repository": "degawa/enclose",
+      "key": "31f5662aab212a5975cd8825",
+      "artifact_bytes": 9612,
+      "manifest_sha256": "3132bec1c4ca22f47a6a45830d9f196d1b26c66431045293aae5cfafb539926e",
+      "users": [
+        "enclose",
+        "fed"
+      ]
+    },
+    {
+      "repository": "degawa/fassert",
+      "key": "3b7e7b3c1258a866ea57df6b",
+      "artifact_bytes": 4990004,
+      "manifest_sha256": "539b1d8a8ea964485e2946e85ac7531ea6021e79f0a8d58458fae5e60a234904",
+      "users": [
+        "any",
+        "fassert"
+      ]
+    },
+    {
+      "repository": "jacobwilliams/mpfun2020-var1",
+      "key": "3e1205049d6e0a641c29f743",
+      "artifact_bytes": 8283153,
+      "manifest_sha256": "cfdd024f46b02e254060279ba50c4c5c8cd8d149d45cd52879fd09668d2c9e18",
+      "users": [
+        "kronrod"
+      ]
+    },
+    {
       "repository": "jchristopherson/spectrum",
       "key": "46262dbb0ac3ecba77794485",
       "artifact_bytes": 1519512,
       "manifest_sha256": "b1b90bd327c5a99c6f22334d3f7bb8a7da605f0f4b2c660c04e2d2254e15b7bf",
       "users": [
         "spectrum"
+      ]
+    },
+    {
+      "repository": "jchristopherson/friction",
+      "key": "470126af89a9bb7f66a5c583",
+      "artifact_bytes": 2789269,
+      "manifest_sha256": "39119171d98c6c21a6fe9989bf645bc29cf31ec7f9364a54cbe9d2bb74795156",
+      "users": [
+        "friction"
+      ]
+    },
+    {
+      "repository": "gha3mi/fortime",
+      "key": "4b5bd1a949988ce7558d5ca3",
+      "artifact_bytes": 25830,
+      "manifest_sha256": "a53a47fa604fb7ff43398e56e1f652265ab7db3a26a2e384bf636eabd2a6c73d",
+      "users": [
+        "formatmul"
+      ]
+    },
+    {
+      "repository": "jchristopherson/collections",
+      "key": "4e50d68f00d087415cf2c9b4",
+      "artifact_bytes": 53375,
+      "manifest_sha256": "cd241d54df3aec46beace97480442d0291790fbe953bf32c74c646beac1ffa0d",
+      "users": [
+        "friction"
       ]
     },
     {
@@ -76,12 +234,51 @@
       ]
     },
     {
+      "repository": "everythingfunctional/strff",
+      "key": "59b662d63f78e035f4fa528d",
+      "artifact_bytes": 111365,
+      "manifest_sha256": "badd800f6c78ccaf30819224a12634e0a66ed2460359466ab4c048c6fe625950",
+      "users": [
+        "erloff",
+        "rojff",
+        "veggies"
+      ]
+    },
+    {
+      "repository": "degawa/any",
+      "key": "5b7d4fd69f7c67d6bdf4241f",
+      "artifact_bytes": 3097910,
+      "manifest_sha256": "baa8718116a64882bbaa566f744e8b22bb02b196c54d712f0acd3c5aa971b401",
+      "users": [
+        "any"
+      ]
+    },
+    {
       "repository": "jchristopherson/diffeq",
       "key": "5e33364e51422771bb35db53",
       "artifact_bytes": 1792336,
       "manifest_sha256": "6627840b9b42e9228e0342c857efabb61a1fb1ddcd08065b2bfe5bc3ae5b15bc",
       "users": [
         "diffeq"
+      ]
+    },
+    {
+      "repository": "degawa/errstat",
+      "key": "5fb23a0f6c078f3ce02239b2",
+      "artifact_bytes": 79064,
+      "manifest_sha256": "f7e11ec0eaa109cb924fbd811e7298265226b0a7e82ff0eba62a452c42f26a3a",
+      "users": [
+        "errstat"
+      ]
+    },
+    {
+      "repository": "gha3mi/kinds",
+      "key": "62e0fd3fa631ce9d66142e35",
+      "artifact_bytes": 2815,
+      "manifest_sha256": "d6d5aa2132f37ee3921ab91c2d7c5ecaca46aedaf1d9d5d76c7b8e55b52734e0",
+      "users": [
+        "fordot",
+        "formatmul"
       ]
     },
     {
@@ -121,6 +318,24 @@
       ]
     },
     {
+      "repository": "everythingfunctional/rojff",
+      "key": "71a46e276623116c4ea83712",
+      "artifact_bytes": 1734963,
+      "manifest_sha256": "170b4ce3b4b297ce7bddd0493c8e8d9872f72c7c8a3dae50bedb68b3f8e44120",
+      "users": [
+        "rojff"
+      ]
+    },
+    {
+      "repository": "jeyemhex/fortran-regex",
+      "key": "72b6cba5cda01845d3a5e586",
+      "artifact_bytes": 118852,
+      "manifest_sha256": "49e0f087c40f1740b1d793fdb53b5c05d86f07b139e8ce97db6a4d207f67c2e6",
+      "users": [
+        "jeyemhex-regex"
+      ]
+    },
+    {
       "repository": "everythingfunctional/parff",
       "key": "73f6d13dfe0f9c94bdbc0b76",
       "artifact_bytes": 532435,
@@ -139,12 +354,40 @@
       ]
     },
     {
+      "repository": "everythingfunctional/erloff",
+      "key": "835b239296e586a0885bf2d0",
+      "artifact_bytes": 827863,
+      "manifest_sha256": "7fb90739bbf74a6e773046b06850317ba27a30ec1bf3ad21cfb101ce7b6471be",
+      "users": [
+        "erloff"
+      ]
+    },
+    {
       "repository": "everythingfunctional/strff",
       "key": "87872fe1b0f36a176657e5ca",
       "artifact_bytes": 105571,
       "manifest_sha256": "35336fb98432919e216ed78c84a2224673d0ec58ec3dfa20f88a6e07b7e6a5a2",
       "users": [
         "strff"
+      ]
+    },
+    {
+      "repository": "aradi/rearrayfx",
+      "key": "88252f92321ba6e0c04248e1",
+      "artifact_bytes": 23836,
+      "manifest_sha256": "2502c6bd1ddb0e316db8b761215cc2ff9230dcfa440b1c36327f7a30ba2e1294",
+      "users": [
+        "rearrayfx"
+      ]
+    },
+    {
+      "repository": "gha3mi/forunittest",
+      "key": "88b77b38f5360bf14b0376c5",
+      "artifact_bytes": 129819,
+      "manifest_sha256": "51c9417562db989c052193e2bdc74b074eec48d580da059224514da5680f4cf1",
+      "users": [
+        "fordot",
+        "formatmul"
       ]
     },
     {
@@ -161,12 +404,75 @@
       ]
     },
     {
+      "repository": "jchristopherson/fstats",
+      "key": "95256c3e44215c90cc21b45d",
+      "artifact_bytes": 2954052,
+      "manifest_sha256": "10c09e2b99c9703dd1a1c37490f34a982ff92254604ef0d4e9eb76123b0fea0c",
+      "users": [
+        "friction"
+      ]
+    },
+    {
       "repository": "everythingfunctional/strff",
       "key": "9ae76ac3b0497d0075b64869",
       "artifact_bytes": 111789,
       "manifest_sha256": "7ac90e641b3103e30e34bbd09e15bb035ca8c76f1411dba3c0ab70899af5b0dc",
       "users": [
         "quaff"
+      ]
+    },
+    {
+      "repository": "jchristopherson/fstring",
+      "key": "a01428aaf193eccd0f060755",
+      "artifact_bytes": 139358,
+      "manifest_sha256": "410bc3db7903ed40dc36ceeae5ea343f6383283b3e3e55c6d131c7738e667f70",
+      "users": [
+        "friction"
+      ]
+    },
+    {
+      "repository": "degawa/strith",
+      "key": "a318a8b43891da922e1afc9a",
+      "artifact_bytes": 192026,
+      "manifest_sha256": "0a834651e40e1557023a948c5ba66f05cd97c7aad382a676b3658ce0bf733a89",
+      "users": [
+        "strith"
+      ]
+    },
+    {
+      "repository": "everythingfunctional/sqliteff",
+      "key": "a49343df90026c8484415f8f",
+      "artifact_bytes": 1161893,
+      "manifest_sha256": "7424cd0babd54448b4894faf9a2f06e265ea5ca7f7ad2f7da1533346cbf4faaa",
+      "users": [
+        "sqliteff"
+      ]
+    },
+    {
+      "repository": "vmagnin/fundamental_constants",
+      "key": "aba487b269e1a2871bdbf471",
+      "artifact_bytes": 71225,
+      "manifest_sha256": "d90ae8b72988c9db46cce89942cb79a475f84c18f4e6694ac6f04721b5d46c3e",
+      "users": [
+        "fundamental_constants"
+      ]
+    },
+    {
+      "repository": "urbanjost/M_LA",
+      "key": "ac0aba98988095c8a080c89c",
+      "artifact_bytes": 1094114,
+      "manifest_sha256": "a1199bc71737f0b1db3e12f692a85b8c99e18b910e29f73b790026b1f4da425a",
+      "users": [
+        "m_la"
+      ]
+    },
+    {
+      "repository": "everythingfunctional/iso_varying_string",
+      "key": "ae54200d6e82c4edeecbb664",
+      "artifact_bytes": 127944,
+      "manifest_sha256": "86d75b5ccbf2899843120cb01e9bd14812896787378428ae7fd6451519a188e4",
+      "users": [
+        "sqliteff"
       ]
     },
     {
@@ -179,12 +485,81 @@
       ]
     },
     {
+      "repository": "jchristopherson/diffeq",
+      "key": "b3b24941da8ab5f29f3d3e99",
+      "artifact_bytes": 1792336,
+      "manifest_sha256": "88d253a068f2045823ac4ed9f6e80f5fad0dea69bfc256f0d2747866e892fd31",
+      "users": [
+        "friction"
+      ]
+    },
+    {
+      "repository": "jordan4ibanez/integer_set",
+      "key": "b7227c59d26c8101878273af",
+      "artifact_bytes": 39077,
+      "manifest_sha256": "1a720c8345479b8566ef4db3f6aab16c7522de1a2dc8b022c3d6618cfd99f19e",
+      "users": [
+        "integer_set"
+      ]
+    },
+    {
+      "repository": "degawa/array_range",
+      "key": "c1b6594aa5808c35f42738ec",
+      "artifact_bytes": 50694,
+      "manifest_sha256": "a379891c3e15c4169f3b786a9744abfcb85fa88ce38db8d4931a26c49683f5d1",
+      "users": [
+        "array_range"
+      ]
+    },
+    {
+      "repository": "degawa/enumul",
+      "key": "cd4eba20d584ff7e6efcbc79",
+      "artifact_bytes": 260231,
+      "manifest_sha256": "f07343471d5b46c2f7451789109ad30969c9e40e6135fbc69758e0c88f35616b",
+      "users": [
+        "fed"
+      ]
+    },
+    {
+      "repository": "Euler-37/amosf90",
+      "key": "d611fd6da8598b7be37b9dc7",
+      "artifact_bytes": 273440,
+      "manifest_sha256": "30824a86a88b223de12d60100ad78b498e5023b55d99a823914ece2c9ea90604",
+      "users": [
+        "amosf90"
+      ]
+    },
+    {
+      "repository": "gha3mi/fortime",
+      "key": "d6661efb128f236e5c6fc2d9",
+      "artifact_bytes": 25766,
+      "manifest_sha256": "fcb25cc7c41221beb0145af86d9cd2bd1ce5eff6347a404455b62b7c5f35d981",
+      "users": [
+        "fortime"
+      ]
+    },
+    {
+      "repository": "jchristopherson/linalg",
+      "key": "d78b3bfb6f93ccc2e2db4502",
+      "artifact_bytes": 4089020,
+      "manifest_sha256": "c88ff1a2545ac37ee65feac80ea8de80ea8a012b953a516286f3d49de0a51ad3",
+      "users": [
+        "friction"
+      ]
+    },
+    {
       "repository": "fortran-lang/stdlib",
       "key": "d7ecdecc5838e3e8fe8781fb",
       "artifact_bytes": 93999232,
       "manifest_sha256": "99bdbc76f53cd3b45fecd93ad55283a5acc2730e8c88d4777511bbcda432ce4c",
       "users": [
         "codata",
+        "ecx",
+        "fed",
+        "fortran-simplify",
+        "hrweno",
+        "orbs",
+        "scanner",
         "specialmatrices",
         "stdlib"
       ]
@@ -196,6 +571,106 @@
       "manifest_sha256": "54163b20eab55414f7d2722d87164bfb528502850f7f9df9845dc67d66113f10",
       "users": [
         "parff"
+      ]
+    },
+    {
+      "repository": "14NGiestas/fortran-tokenizer",
+      "key": "d918389b51607816b785f071",
+      "artifact_bytes": 53575,
+      "manifest_sha256": "c54af7a43db0dca898f555e6e48b9b580f87bfecd80710f3152a8e1790f02391",
+      "users": [
+        "fortran-tokenizer"
+      ]
+    },
+    {
+      "repository": "0382/argparse-f",
+      "key": "dc6c2b33094b1436cecbb75c",
+      "artifact_bytes": 205657,
+      "manifest_sha256": "353915caebfa0671a050740fa51499ec28a317aff9ee0f232426dc4f0a11dbb0",
+      "users": [
+        "argparse-f"
+      ]
+    },
+    {
+      "repository": "szaghi/FACE",
+      "key": "df0f2547fec268a5bbe7b7e5",
+      "artifact_bytes": 70927,
+      "manifest_sha256": "760af846349e84e9a6e960c76f575e6a0f676ec87e9c01aba2957fa294d94fdf",
+      "users": [
+        "fortime"
+      ]
+    },
+    {
+      "repository": "everythingfunctional/veggies",
+      "key": "e48dbc96c1ea866794f82af9",
+      "artifact_bytes": 1767487,
+      "manifest_sha256": "72de6b45009597d18b8961a34aa26af51522a38b456a4bcd96035daf901f4494",
+      "users": [
+        "veggies"
+      ]
+    },
+    {
+      "repository": "szaghi/FACE",
+      "key": "e95558d86bfcba9216a1c208",
+      "artifact_bytes": 72015,
+      "manifest_sha256": "6501deb593c499539f9e0374e6ff1e28452c4d6ffc8b27dae45984d95273612f",
+      "users": [
+        "fordot",
+        "formatmul"
+      ]
+    },
+    {
+      "repository": "gha3mi/formatmul",
+      "key": "eccd998724cc0ecfd400a206",
+      "artifact_bytes": 832735,
+      "manifest_sha256": "ca7cd3d647eaa3bdf392a4f1d8c0dcc99131956ac9f7d97ff7ac90f4e379a72f",
+      "users": [
+        "formatmul"
+      ]
+    },
+    {
+      "repository": "guntherwillems/fortran-string-utf-8",
+      "key": "edc77144a688f46eda0b1384",
+      "artifact_bytes": 54515,
+      "manifest_sha256": "e6c19bea234077be591ec189ec8db1f975a81165420310dd3ac4b142af419899",
+      "users": [
+        "string-utf-8"
+      ]
+    },
+    {
+      "repository": "jordan4ibanez/for_fifo_queue",
+      "key": "f22b4a2a8c25644e2fc5c06e",
+      "artifact_bytes": 12327,
+      "manifest_sha256": "dd6e23aab7dd4d8e63fb15c8562ff5738a8b1eee468d2a9210031992f6dddf52",
+      "users": [
+        "for_fifo_queue"
+      ]
+    },
+    {
+      "repository": "gha3mi/fordot",
+      "key": "f2421dae9245be9e661dbce0",
+      "artifact_bytes": 35037,
+      "manifest_sha256": "216e13c89b9b747ce56131376870ab5f45571a47cf1c6226a6aefd5ee8c4ea5f",
+      "users": [
+        "fordot"
+      ]
+    },
+    {
+      "repository": "FluidNumerics/feq-parse",
+      "key": "f562f594bdd560e07529fe17",
+      "artifact_bytes": 870104,
+      "manifest_sha256": "209aa6b5363cfaabf5a9c601f2b55ad1c0313b1cc868a183b5835669fba83219",
+      "users": [
+        "feq-parse"
+      ]
+    },
+    {
+      "repository": "degawa/fed",
+      "key": "f6eebf5c3529abad6a6572ef",
+      "artifact_bytes": 810167,
+      "manifest_sha256": "0426171de6d62cfb0e8d179ea2cecdf6809063200723b573fecffbc569b05ce0",
+      "users": [
+        "fed"
       ]
     }
   ],
@@ -1098,31 +1573,6 @@
         "build_seconds": 0.286,
         "library_reused": true,
         "demo_sha256": "c8dd69f84ff91a5bdf7030b73747a992373f8b345f12f49ca1e79ce242db62f5",
-        "compiled_targets": [
-          "main.f90",
-          "playground-main"
-        ]
-      },
-      "verified_at": "2026-10-27T01:59:01.746663+00:00"
-    },
-    {
-      "id": "fortran-regex",
-      "repository": "perazz/fortran-regex",
-      "revision": "96ab33fe003862a28cec91ddd170ac0e86c26c87",
-      "records": [
-        {
-          "repository": "perazz/fortran-regex",
-          "revision": "96ab33fe003862a28cec91ddd170ac0e86c26c87",
-          "sha256": "a11de40cd2ac971b4e775a6bac2d537f3efa263562688525df18ba2722b944eb"
-        }
-      ],
-      "prebuild_seconds": 1.965,
-      "artifact_bytes": 1425404,
-      "verification": {
-        "seconds": 2.239,
-        "build_seconds": 0.291,
-        "library_reused": true,
-        "demo_sha256": "7d3920a6b5f1c560665ea98f229f29cda121301b36f3c23d2f0c6bfd1f1e8eed",
         "compiled_targets": [
           "main.f90",
           "playground-main"
@@ -6272,6 +6722,2603 @@
         }
       ],
       "verified_at": "2026-10-28T20:12:46.446837+00:00"
+    },
+    {
+      "id": "m_la",
+      "repository": "urbanjost/M_LA",
+      "revision": "db59eeab0deab7e84eadf2542ad49c1c719dfb94",
+      "records": [
+        {
+          "repository": "urbanjost/M_LA",
+          "revision": "db59eeab0deab7e84eadf2542ad49c1c719dfb94",
+          "sha256": "6c9d8e1e456852e076e14207f31751ecdd4a60cb0b80bb975f7818b15802932c"
+        }
+      ],
+      "prebuild_seconds": 2.302,
+      "artifact_bytes": 536309,
+      "verification": {
+        "seconds": 1.817,
+        "build_seconds": 0.325,
+        "library_reused": true,
+        "demo_sha256": "3c89dd90d25d689aeca1509f2914fe94e2243be10dfc5e1ca156ed79a223f4de",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "urbanjost/m_la"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "urbanjost/M_LA",
+          "key": "ac0aba98988095c8a080c89c",
+          "artifact_bytes": 1094114,
+          "manifest_sha256": "a1199bc71737f0b1db3e12f692a85b8c99e18b910e29f73b790026b1f4da425a"
+        }
+      ],
+      "verified_at": "2026-10-28T21:40:06.974444+00:00"
+    },
+    {
+      "id": "fglm",
+      "repository": "jordan4ibanez/fglm",
+      "revision": "e1b6a5404b3e7a266da33173a07166970c16dd86",
+      "records": [
+        {
+          "repository": "jordan4ibanez/fglm",
+          "revision": "e1b6a5404b3e7a266da33173a07166970c16dd86",
+          "sha256": "0d4d3f14d4e408a24d51beac17fed72b7eccec715486b691d70d4ac447c1fa66"
+        },
+        {
+          "repository": "jordan4ibanez/constants_f90",
+          "revision": "22b34d79274429ab391e92a94011befeb996704a",
+          "sha256": "17efd5f858ac6f29a4d1a0a4dbd6dbbc3fa89a8810c2300679702875e385a85a"
+        }
+      ],
+      "prebuild_seconds": 0.954,
+      "artifact_bytes": 536311,
+      "verification": {
+        "seconds": 1.838,
+        "build_seconds": 0.388,
+        "library_reused": true,
+        "demo_sha256": "4c0be6163b6b4f283b4e23d81e26a1b9933395f689f354da0a2037e98448aa2b",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "jordan4ibanez/fglm",
+            "jordan4ibanez/constants_f90"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "jordan4ibanez/fglm",
+          "key": "2d45a88461d556bc1d7871b5",
+          "artifact_bytes": 155150,
+          "manifest_sha256": "94e1c18f9de3e464dfd9241e130d52c6cf6e25dfc55f675bdbfc96f9009e3157"
+        },
+        {
+          "repository": "jordan4ibanez/constants_f90",
+          "key": "055425e2a30ae3ad986f6591",
+          "artifact_bytes": 4797,
+          "manifest_sha256": "d08e703d7080d11cfb3454fb996c8853a0216149ff47e0776bf48214f940ea49"
+        }
+      ],
+      "verified_at": "2026-10-28T21:40:06.974444+00:00"
+    },
+    {
+      "id": "fortrandf",
+      "repository": "jaiken17/fortranDF",
+      "revision": "58300f8ae39d463e729960e960939fb53e2c7de4",
+      "records": [
+        {
+          "repository": "jaiken17/fortranDF",
+          "revision": "58300f8ae39d463e729960e960939fb53e2c7de4",
+          "sha256": "4a615ed4519c1f73bfd7d0cef33ffe374007a2bc0738824f42cc1a1af64a1f19"
+        }
+      ],
+      "prebuild_seconds": 0.633,
+      "artifact_bytes": 536317,
+      "verification": {
+        "seconds": 2.705,
+        "build_seconds": 0.721,
+        "library_reused": true,
+        "demo_sha256": "07a49525fabd459c52aafe412ace552f644f1c051084f2a9788063ae3d037f1d",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "jaiken17/fortrandf"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "jaiken17/fortranDF",
+          "key": "293c4a1cf6098e3758aed2d4",
+          "artifact_bytes": 1357301,
+          "manifest_sha256": "894908010a578539e53dd968a7c20b55a7f4b8983cf022b511c349e310f94aff"
+        }
+      ],
+      "verified_at": "2026-10-28T21:40:06.974444+00:00"
+    },
+    {
+      "id": "strith",
+      "repository": "degawa/strith",
+      "revision": "da2b1f489a178cb443f636e3f9c89aed6c8702b1",
+      "records": [
+        {
+          "repository": "degawa/strith",
+          "revision": "da2b1f489a178cb443f636e3f9c89aed6c8702b1",
+          "sha256": "f302587eafa09b1ce11d48464f25f3e114cc2e5a0c81a1b586a3d38287d6f137"
+        }
+      ],
+      "prebuild_seconds": 0.86,
+      "artifact_bytes": 536312,
+      "verification": {
+        "seconds": 1.611,
+        "build_seconds": 0.354,
+        "library_reused": true,
+        "demo_sha256": "3714004b470be72de787902a7bfa8518bd998a6d89600e127e28c7d9e8550152",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "degawa/strith"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "degawa/strith",
+          "key": "a318a8b43891da922e1afc9a",
+          "artifact_bytes": 192026,
+          "manifest_sha256": "0a834651e40e1557023a948c5ba66f05cd97c7aad382a676b3658ce0bf733a89"
+        }
+      ],
+      "verified_at": "2026-10-28T21:40:06.974444+00:00"
+    },
+    {
+      "id": "list",
+      "repository": "grofz/list",
+      "revision": "77a0c99686406eaa8d4423e778311d63c6940b43",
+      "records": [
+        {
+          "repository": "grofz/list",
+          "revision": "77a0c99686406eaa8d4423e778311d63c6940b43",
+          "sha256": "694c58c6530491a2c95264d31269e472516b20f11dd791eba8ef8a126357aeab"
+        }
+      ],
+      "prebuild_seconds": 0.782,
+      "artifact_bytes": 536311,
+      "verification": {
+        "seconds": 2.031,
+        "build_seconds": 0.327,
+        "library_reused": true,
+        "demo_sha256": "2d4554e4e385b8099ee0ca0572fe4ea84aea6b9fc0d96526f22007d1f823a7b4",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "grofz/list"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "grofz/list",
+          "key": "2b470f41712552168f4ea8c7",
+          "artifact_bytes": 194218,
+          "manifest_sha256": "37c2eb9b789a961285d49d050da1f7e20570eea977005dd22c309eaa137aabff"
+        }
+      ],
+      "verified_at": "2026-10-28T21:40:06.974444+00:00"
+    },
+    {
+      "id": "friction",
+      "repository": "jchristopherson/friction",
+      "revision": "8e75dcac26f47417a439adfcbaa24834105d89fe",
+      "records": [
+        {
+          "repository": "jchristopherson/friction",
+          "revision": "8e75dcac26f47417a439adfcbaa24834105d89fe",
+          "sha256": "71dddc287abf50fc6c174e610eda1711fa5befc0b970fa931cc854381b1603cb"
+        },
+        {
+          "repository": "jchristopherson/diffeq",
+          "revision": "989b320179c23aaff4bfe72994c90e9034f50c74",
+          "sha256": "09f6e92aea1dc8c9eb9233d4052b012e3b53a739e1ce078453d0421ddb1d4e87"
+        },
+        {
+          "repository": "jchristopherson/linalg",
+          "revision": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+          "sha256": "6210b8b167b50694941f48b20ad5d94bdacab026f1eb4720e2d55e8ddde0b59a"
+        },
+        {
+          "repository": "jchristopherson/fstats",
+          "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+          "sha256": "cf6b7367fc2a0d74f46000dc80a4cbedd07fd554e29117144b695b3a9ffa6fef"
+        },
+        {
+          "repository": "jchristopherson/collections",
+          "revision": "ce37c94e72b3ae5db2e2208489999260a7875f81",
+          "sha256": "5d53caf3c0b35e9e2a8bed49f8e96dca1b282434859c8c6f53fae3123528f265"
+        },
+        {
+          "repository": "jchristopherson/fstring",
+          "revision": "1bb1043a1ed34b8bd57f2687166463dd573bce3d",
+          "sha256": "0272f644a9217485fa2a3a18e41010c88f81ccc7398fc855c37518be2ac8eb3f"
+        }
+      ],
+      "prebuild_seconds": 1.602,
+      "artifact_bytes": 536315,
+      "verification": {
+        "seconds": 3.006,
+        "build_seconds": 0.608,
+        "library_reused": true,
+        "demo_sha256": "0318e4d8e772383e58c39b5b7495fb1d979269753b253a3bc85389a524a556bc",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6",
+          "libarpack2-dev=3.9.1-6"
+        ],
+        "metapackages": [
+          "openmp",
+          "blas",
+          "lapack"
+        ],
+        "environment": {
+          "FPM_FFLAGS": "-fopenmp"
+        },
+        "source_revisions": {
+          "jchristopherson/linalg": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+          "jchristopherson/collections": "ce37c94e72b3ae5db2e2208489999260a7875f81",
+          "jchristopherson/fstring": "1bb1043a1ed34b8bd57f2687166463dd573bce3d",
+          "jchristopherson/diffeq": "989b320179c23aaff4bfe72994c90e9034f50c74",
+          "jchristopherson/fstats": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "jchristopherson/friction",
+            "jchristopherson/diffeq",
+            "jchristopherson/linalg",
+            "jchristopherson/fstats",
+            "jchristopherson/collections",
+            "jchristopherson/fstring"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "jchristopherson/friction",
+          "key": "470126af89a9bb7f66a5c583",
+          "artifact_bytes": 2789269,
+          "manifest_sha256": "39119171d98c6c21a6fe9989bf645bc29cf31ec7f9364a54cbe9d2bb74795156"
+        },
+        {
+          "repository": "jchristopherson/fstats",
+          "key": "95256c3e44215c90cc21b45d",
+          "artifact_bytes": 2954052,
+          "manifest_sha256": "10c09e2b99c9703dd1a1c37490f34a982ff92254604ef0d4e9eb76123b0fea0c"
+        },
+        {
+          "repository": "jchristopherson/fstring",
+          "key": "a01428aaf193eccd0f060755",
+          "artifact_bytes": 139358,
+          "manifest_sha256": "410bc3db7903ed40dc36ceeae5ea343f6383283b3e3e55c6d131c7738e667f70"
+        },
+        {
+          "repository": "jchristopherson/diffeq",
+          "key": "b3b24941da8ab5f29f3d3e99",
+          "artifact_bytes": 1792336,
+          "manifest_sha256": "88d253a068f2045823ac4ed9f6e80f5fad0dea69bfc256f0d2747866e892fd31"
+        },
+        {
+          "repository": "jchristopherson/linalg",
+          "key": "d78b3bfb6f93ccc2e2db4502",
+          "artifact_bytes": 4089020,
+          "manifest_sha256": "c88ff1a2545ac37ee65feac80ea8de80ea8a012b953a516286f3d49de0a51ad3"
+        },
+        {
+          "repository": "jchristopherson/collections",
+          "key": "4e50d68f00d087415cf2c9b4",
+          "artifact_bytes": 53375,
+          "manifest_sha256": "cd241d54df3aec46beace97480442d0291790fbe953bf32c74c646beac1ffa0d"
+        }
+      ],
+      "verified_at": "2026-10-28T22:10:17.874400+00:00"
+    },
+    {
+      "id": "feq-parse",
+      "repository": "FluidNumerics/feq-parse",
+      "revision": "2e80c5940b128a52c5070a3f56909674fb85a379",
+      "records": [
+        {
+          "repository": "FluidNumerics/feq-parse",
+          "revision": "2e80c5940b128a52c5070a3f56909674fb85a379",
+          "sha256": "c230b9725cff8ca429747b916d6e1498a46f5321fe4d523683ada91e5d66abb8"
+        }
+      ],
+      "prebuild_seconds": 1.39,
+      "artifact_bytes": 536316,
+      "verification": {
+        "seconds": 1.564,
+        "build_seconds": 0.399,
+        "library_reused": true,
+        "demo_sha256": "3609f35399080ab8ec554d97fc926c8c5b2bbdb773384d2360cce0b493d5fb65",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "fluidnumerics/feq-parse"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "FluidNumerics/feq-parse",
+          "key": "f562f594bdd560e07529fe17",
+          "artifact_bytes": 870104,
+          "manifest_sha256": "209aa6b5363cfaabf5a9c601f2b55ad1c0313b1cc868a183b5835669fba83219"
+        }
+      ],
+      "verified_at": "2026-10-28T22:10:17.874400+00:00"
+    },
+    {
+      "id": "fordot",
+      "repository": "gha3mi/fordot",
+      "revision": "3966625781a9c1dffe037e3032fa4a0b6f958760",
+      "records": [
+        {
+          "repository": "gha3mi/fordot",
+          "revision": "3966625781a9c1dffe037e3032fa4a0b6f958760",
+          "sha256": "6f3017330d5ba4accff12c09e10651f45171ac2a636957d69b123522d3dc4009"
+        },
+        {
+          "repository": "gha3mi/kinds",
+          "revision": "811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f",
+          "sha256": "495d1133b1630dea4f38d69e5e3189e3279e4ce5836da1a7aec8a822bbe16518"
+        },
+        {
+          "repository": "gha3mi/forunittest",
+          "revision": "997e9974e52b40f6538ed84cf24259c331a782b3",
+          "sha256": "a325e6e93f839a9b528a99cdfa4ca359e035f5a05414cb4c36a48f30bdaf53f2"
+        },
+        {
+          "repository": "szaghi/FACE",
+          "revision": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8",
+          "sha256": "d4cc3c3a2c70e7369607624ae3361a6f7b2ba3f1e9a63ffd94ecb5cd4b019469"
+        }
+      ],
+      "prebuild_seconds": 3.959,
+      "artifact_bytes": 536311,
+      "verification": {
+        "seconds": 2.866,
+        "build_seconds": 0.594,
+        "library_reused": true,
+        "demo_sha256": "7bfafe2012d6cad882de0d9b86e00a6027e237465f33d005d6a26cf300a8fe5a",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6"
+        ],
+        "environment": {
+          "FPM_FFLAGS": "-cpp -fopenmp",
+          "FPM_LDFLAGS": "-llapack -lblas"
+        },
+        "source_revisions": {
+          "gha3mi/kinds": "811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f",
+          "szaghi/face": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8"
+        },
+        "manifest_versions": {
+          "gha3mi/fordot": "0.2.0",
+          "gha3mi/kinds": "0.0.0",
+          "gha3mi/forunittest": "0.0.0"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "gha3mi/fordot",
+            "gha3mi/kinds",
+            "gha3mi/forunittest",
+            "szaghi/face"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "gha3mi/fordot",
+          "key": "f2421dae9245be9e661dbce0",
+          "artifact_bytes": 35037,
+          "manifest_sha256": "216e13c89b9b747ce56131376870ab5f45571a47cf1c6226a6aefd5ee8c4ea5f"
+        },
+        {
+          "repository": "gha3mi/kinds",
+          "key": "62e0fd3fa631ce9d66142e35",
+          "artifact_bytes": 2815,
+          "manifest_sha256": "d6d5aa2132f37ee3921ab91c2d7c5ecaca46aedaf1d9d5d76c7b8e55b52734e0"
+        },
+        {
+          "repository": "gha3mi/forunittest",
+          "key": "88b77b38f5360bf14b0376c5",
+          "artifact_bytes": 129819,
+          "manifest_sha256": "51c9417562db989c052193e2bdc74b074eec48d580da059224514da5680f4cf1"
+        },
+        {
+          "repository": "szaghi/FACE",
+          "key": "e95558d86bfcba9216a1c208",
+          "artifact_bytes": 72015,
+          "manifest_sha256": "6501deb593c499539f9e0374e6ff1e28452c4d6ffc8b27dae45984d95273612f"
+        }
+      ],
+      "verified_at": "2026-10-28T22:10:17.874400+00:00"
+    },
+    {
+      "id": "formatmul",
+      "repository": "gha3mi/formatmul",
+      "revision": "4b5747d49c27f0df92288e7a61d0e479e34ac78e",
+      "records": [
+        {
+          "repository": "gha3mi/formatmul",
+          "revision": "4b5747d49c27f0df92288e7a61d0e479e34ac78e",
+          "sha256": "790dbd5cff7a0957bd37672d2524f83584fde9642bcc47295411e00b06d63cbc"
+        },
+        {
+          "repository": "gha3mi/kinds",
+          "revision": "811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f",
+          "sha256": "495d1133b1630dea4f38d69e5e3189e3279e4ce5836da1a7aec8a822bbe16518"
+        },
+        {
+          "repository": "gha3mi/fortime",
+          "revision": "de733e2c775457d4979403fe77ab69cf28e2b159",
+          "sha256": "bccc83cf947693ad4defcfb4684af7cd660db8a6e57084b7f07e7edfd584161d"
+        },
+        {
+          "repository": "szaghi/FACE",
+          "revision": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8",
+          "sha256": "d4cc3c3a2c70e7369607624ae3361a6f7b2ba3f1e9a63ffd94ecb5cd4b019469"
+        },
+        {
+          "repository": "gha3mi/forunittest",
+          "revision": "997e9974e52b40f6538ed84cf24259c331a782b3",
+          "sha256": "a325e6e93f839a9b528a99cdfa4ca359e035f5a05414cb4c36a48f30bdaf53f2"
+        }
+      ],
+      "prebuild_seconds": 1.37,
+      "artifact_bytes": 536315,
+      "verification": {
+        "seconds": 2.019,
+        "build_seconds": 0.502,
+        "library_reused": true,
+        "demo_sha256": "b16b74a755966a26a15b87e109e74351b0d558faf3ea17180a7f51721f7b7985",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6"
+        ],
+        "environment": {
+          "FPM_FFLAGS": "-cpp -fopenmp",
+          "FPM_LDFLAGS": "-llapack -lblas"
+        },
+        "source_revisions": {
+          "gha3mi/kinds": "811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f",
+          "gha3mi/fortime": "de733e2c775457d4979403fe77ab69cf28e2b159",
+          "szaghi/face": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8"
+        },
+        "manifest_versions": {
+          "gha3mi/formatmul": "0.8.0",
+          "gha3mi/kinds": "0.0.0",
+          "gha3mi/fortime": "0.0.0",
+          "gha3mi/forunittest": "0.0.0"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "gha3mi/formatmul",
+            "gha3mi/kinds",
+            "gha3mi/fortime",
+            "szaghi/face",
+            "gha3mi/forunittest"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "gha3mi/formatmul",
+          "key": "eccd998724cc0ecfd400a206",
+          "artifact_bytes": 832735,
+          "manifest_sha256": "ca7cd3d647eaa3bdf392a4f1d8c0dcc99131956ac9f7d97ff7ac90f4e379a72f"
+        },
+        {
+          "repository": "gha3mi/kinds",
+          "key": "62e0fd3fa631ce9d66142e35",
+          "artifact_bytes": 2815,
+          "manifest_sha256": "d6d5aa2132f37ee3921ab91c2d7c5ecaca46aedaf1d9d5d76c7b8e55b52734e0"
+        },
+        {
+          "repository": "gha3mi/forunittest",
+          "key": "88b77b38f5360bf14b0376c5",
+          "artifact_bytes": 129819,
+          "manifest_sha256": "51c9417562db989c052193e2bdc74b074eec48d580da059224514da5680f4cf1"
+        },
+        {
+          "repository": "gha3mi/fortime",
+          "key": "4b5bd1a949988ce7558d5ca3",
+          "artifact_bytes": 25830,
+          "manifest_sha256": "a53a47fa604fb7ff43398e56e1f652265ab7db3a26a2e384bf636eabd2a6c73d"
+        },
+        {
+          "repository": "szaghi/FACE",
+          "key": "e95558d86bfcba9216a1c208",
+          "artifact_bytes": 72015,
+          "manifest_sha256": "6501deb593c499539f9e0374e6ff1e28452c4d6ffc8b27dae45984d95273612f"
+        }
+      ],
+      "verified_at": "2026-10-28T22:10:17.874400+00:00"
+    },
+    {
+      "id": "bstrith",
+      "repository": "degawa/bstrith",
+      "revision": "7ed7730e34c7e1f78f2be9426ccc170f9dcaf57e",
+      "records": [
+        {
+          "repository": "degawa/bstrith",
+          "revision": "7ed7730e34c7e1f78f2be9426ccc170f9dcaf57e",
+          "sha256": "f7f3c9a98b395f20760b4883b43b7122f7b59eb6d8aa08b5afb211c5ca9d6344"
+        }
+      ],
+      "prebuild_seconds": 1.155,
+      "artifact_bytes": 536313,
+      "verification": {
+        "seconds": 1.852,
+        "build_seconds": 0.369,
+        "library_reused": true,
+        "demo_sha256": "4c42c06abae937b735a93bb813e0dfe0449e971bcfa3db70f171a0d841a7057d",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "degawa/bstrith"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "degawa/bstrith",
+          "key": "1724df4b0d81adfdf78e5edf",
+          "artifact_bytes": 77574,
+          "manifest_sha256": "fcf40ca76e91741206c3041850c7f709ebc467b8bad31a77caaed3bf7820a7be"
+        }
+      ],
+      "verified_at": "2026-10-28T22:10:17.874400+00:00"
+    },
+    {
+      "id": "heatflow",
+      "repository": "ExeQuantCode/HeatFlow",
+      "revision": "b0d930caad9160a15f0aeafa238c448f48f28d55",
+      "records": [
+        {
+          "repository": "ExeQuantCode/HeatFlow",
+          "revision": "b0d930caad9160a15f0aeafa238c448f48f28d55",
+          "sha256": "dc323ec732a62a15cf9e42b9d4a9f8989d6e6c3315ca0352e285d7efd397f62c"
+        }
+      ],
+      "prebuild_seconds": 0.854,
+      "artifact_bytes": 536315,
+      "verification": {
+        "seconds": 2.084,
+        "build_seconds": 0.514,
+        "library_reused": true,
+        "demo_sha256": "4395fbccc1e2d5130e0cd8c7d5f58fc571c125ae0873393e852262cee539c723",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "exequantcode/heatflow"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "ExeQuantCode/HeatFlow",
+          "key": "1bb7ccfbf47168c58959e364",
+          "artifact_bytes": 677126,
+          "manifest_sha256": "efc26fa9e95090143a56438b2c66b318d90d6ece33870c9a352584028b27629b"
+        }
+      ],
+      "verified_at": "2026-10-28T22:10:17.874400+00:00"
+    },
+    {
+      "id": "hrweno",
+      "repository": "HugoMVale/HR-WENO",
+      "revision": "2885105a7ba98351fed299b22e9bc0c67a809d2f",
+      "records": [
+        {
+          "repository": "HugoMVale/HR-WENO",
+          "revision": "2885105a7ba98351fed299b22e9bc0c67a809d2f",
+          "sha256": "1dc2fffbdd9396735d01df566f3a945e65b934525a16e15162abcb47d1b373a9"
+        },
+        {
+          "repository": "fortran-lang/stdlib",
+          "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+        }
+      ],
+      "prebuild_seconds": 2.469,
+      "artifact_bytes": 1776034,
+      "verification": {
+        "seconds": 6.742,
+        "build_seconds": 2.471,
+        "library_reused": true,
+        "demo_sha256": "61e5e6026a35464e89ac1dd44e48d0c8394e1783521cbc2a40aa9482ea7d1f28",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "registry": {
+          "stdlib": {
+            "git": "https://github.com/fortran-lang/stdlib",
+            "rev": "58eb9133966c2797e0593281169ef57c43eccc1d"
+          }
+        },
+        "source_revisions": {
+          "fortran-lang/stdlib": "58eb9133966c2797e0593281169ef57c43eccc1d"
+        },
+        "manifest_versions": {
+          "fortran-lang/stdlib": "0.8.1"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "8a85ff125c66db77f139fb6b62e6895fa314413a2b0350e68d8f3126c1d19707",
+          "repositories": [
+            "fortran-lang/stdlib"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "fortran-lang/stdlib",
+          "key": "d7ecdecc5838e3e8fe8781fb",
+          "artifact_bytes": 93999232,
+          "manifest_sha256": "99bdbc76f53cd3b45fecd93ad55283a5acc2730e8c88d4777511bbcda432ce4c"
+        }
+      ],
+      "verified_at": "2026-10-28T22:42:59.624262+00:00"
+    },
+    {
+      "id": "fortran-simplify",
+      "repository": "jaiken17/fortran-simplify",
+      "revision": "f546422216fb88eba97e2a0f4910935efbcdce83",
+      "records": [
+        {
+          "repository": "jaiken17/fortran-simplify",
+          "revision": "f546422216fb88eba97e2a0f4910935efbcdce83",
+          "sha256": "fac116dbcb42131306061eb500eaa04ef49075e7301f0c01f19c80e7196740f6"
+        },
+        {
+          "repository": "fortran-lang/stdlib",
+          "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+        }
+      ],
+      "prebuild_seconds": 5.083,
+      "artifact_bytes": 1826896,
+      "verification": {
+        "seconds": 3.18,
+        "build_seconds": 0.664,
+        "library_reused": true,
+        "demo_sha256": "e2651c4bb7d9a41b345f04ee18eadb5051c175eabdf8405bd9a89b0c65c3f312",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "registry": {
+          "stdlib": {
+            "git": "https://github.com/fortran-lang/stdlib",
+            "rev": "58eb9133966c2797e0593281169ef57c43eccc1d"
+          }
+        },
+        "source_revisions": {
+          "fortran-lang/stdlib": "58eb9133966c2797e0593281169ef57c43eccc1d"
+        },
+        "manifest_versions": {
+          "fortran-lang/stdlib": "0.8.1"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "8a85ff125c66db77f139fb6b62e6895fa314413a2b0350e68d8f3126c1d19707",
+          "repositories": [
+            "fortran-lang/stdlib"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "fortran-lang/stdlib",
+          "key": "d7ecdecc5838e3e8fe8781fb",
+          "artifact_bytes": 93999232,
+          "manifest_sha256": "99bdbc76f53cd3b45fecd93ad55283a5acc2730e8c88d4777511bbcda432ce4c"
+        }
+      ],
+      "verified_at": "2026-10-28T22:42:59.624262+00:00"
+    },
+    {
+      "id": "ecx",
+      "repository": "MilanSkocic/ecx",
+      "revision": "d30725e3cb9186bc79f81481f3d6fae8d177a7b7",
+      "records": [
+        {
+          "repository": "MilanSkocic/ecx",
+          "revision": "d30725e3cb9186bc79f81481f3d6fae8d177a7b7",
+          "sha256": "65110c8ee4576328c839d3421b391b72f5258c940a277a8f5971715bc3d64737"
+        },
+        {
+          "repository": "fortran-lang/stdlib",
+          "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+        },
+        {
+          "repository": "MilanSkocic/codata",
+          "revision": "d0c9b1552f0fa483a364de4a69e82c5e23344caf",
+          "sha256": "47a519277191fa5c9f3e476c1bf17bbafb6bf2eeeaca43fbffd938e7ecb835a3"
+        },
+        {
+          "repository": "MilanSkocic/ciaaw",
+          "revision": "02efd49caea1a7bbff0602b752075d3fe935bd10",
+          "sha256": "58aee500452c9fd1a643eaa5034a2a86481f22d2f868ab9968b1cc3e5ea6d76f"
+        },
+        {
+          "repository": "urbanjost/M_CLI2",
+          "revision": "a6934890178377cd92444d290aa3d3198ba9954d",
+          "sha256": "55f4bdd7c3be3466f838eae12ed2409b44fe0bd6cc0118bb5194b1d7d578ee28"
+        }
+      ],
+      "prebuild_seconds": 7.922,
+      "artifact_bytes": 12065792,
+      "verification": {
+        "seconds": 2.734,
+        "build_seconds": 0.265,
+        "library_reused": true,
+        "demo_sha256": "3deee68d105f318abe53018e64015faea80384adef71815e1aaa50933d3da7ca",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "registry": {
+          "stdlib": {
+            "git": "https://github.com/fortran-lang/stdlib",
+            "rev": "58eb9133966c2797e0593281169ef57c43eccc1d"
+          }
+        },
+        "source_revisions": {
+          "fortran-lang/stdlib": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "milanskocic/codata": "d0c9b1552f0fa483a364de4a69e82c5e23344caf",
+          "milanskocic/ciaaw": "02efd49caea1a7bbff0602b752075d3fe935bd10",
+          "urbanjost/m_cli2": "a6934890178377cd92444d290aa3d3198ba9954d"
+        },
+        "manifest_versions": {
+          "fortran-lang/stdlib": "0.8.1",
+          "milanskocic/ecx": "0.1.0",
+          "milanskocic/codata": "0.0.0",
+          "milanskocic/ciaaw": "1.3.3"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "8a85ff125c66db77f139fb6b62e6895fa314413a2b0350e68d8f3126c1d19707",
+          "repositories": [
+            "fortran-lang/stdlib"
+          ]
+        }
+      },
+      "catalog_patches": {
+        "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+        "edits": [
+          {
+            "path": "src/ecx_pec.f90",
+            "sha256": "068a2f0ff9e13b38a7cec95a4c15523d215e1e37eb5e3342f0871d352695153a",
+            "before": "module ecx__pec\n",
+            "after": "module ecx__pec\nuse, intrinsic :: iso_fortran_env, only: real64\n"
+          }
+        ]
+      },
+      "shared_dependencies": [
+        {
+          "repository": "fortran-lang/stdlib",
+          "key": "d7ecdecc5838e3e8fe8781fb",
+          "artifact_bytes": 93999232,
+          "manifest_sha256": "99bdbc76f53cd3b45fecd93ad55283a5acc2730e8c88d4777511bbcda432ce4c"
+        }
+      ],
+      "verified_at": "2026-10-28T22:42:59.624262+00:00"
+    },
+    {
+      "id": "athena",
+      "repository": "nedtaylor/athena",
+      "revision": "4b81aeac07113628c2c9a476648d5ac2a91b7c91",
+      "records": [
+        {
+          "repository": "nedtaylor/athena",
+          "revision": "4b81aeac07113628c2c9a476648d5ac2a91b7c91",
+          "sha256": "2cc29f7f0b259e50642c1b05facf6bcb733acd992d0775df45c3ab1f58a6035c"
+        },
+        {
+          "repository": "nedtaylor/coreutils",
+          "revision": "ead4501f4b695c4f0fe3267f1bf5318544c9b1e2",
+          "sha256": "a2979763627707ba61169b4abacd7ee60b586df9115ac2beb9ee674c25031554"
+        },
+        {
+          "repository": "nedtaylor/diffstruc",
+          "revision": "88565f8e01792706edc0bd7e70dde957c26122a4",
+          "sha256": "84daa1e2c23f1cd2285b5212f4f5390cf930336c98feae7da0b5eb4534a7e65f"
+        },
+        {
+          "repository": "nedtaylor/graphstruc",
+          "revision": "ad41c6bca04cadd1df20319b29f231469c530dae",
+          "sha256": "4d6a942f76bdc0ccca609ac0a90a7b728d56fc403c4af2f7c597fb764885ea3e"
+        }
+      ],
+      "prebuild_seconds": 31.416,
+      "artifact_bytes": 43034388,
+      "verification": {
+        "seconds": 3.282,
+        "build_seconds": 1.181,
+        "library_reused": true,
+        "demo_sha256": "8f04495cdeb595be7089fec7a5c96844ed5125e0d22847204e29e0931a32a5c3",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "apt_packages": [
+          "libblas-dev=3.12.1-6",
+          "liblapack-dev=3.12.1-6"
+        ]
+      },
+      "catalog_patches": {
+        "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+        "edits": [
+          {
+            "path": "fpm.toml",
+            "sha256": "e0158a93d0acef8ed02759a4b54e45f165a8fccd67423c680cc7179d0ee3a194",
+            "before": "name = \"athena\"\nversion = \"2.1.1\"\nlicense = \"MIT\"\nauthor = \"Ned Thaddeus Taylor\"\nmaintainer = \"n.t.taylor@exeter.ac.uk\"\ndescription = \"A Fortran library for building, training and testing neural networks\"\n\n[library]\nsource-dir = \"src\"\n\n[build]\nauto-executables = true\nauto-tests = true\nauto-examples = false\nmodule-naming = false\n\n[dependencies.coreutils]\npath = \"../../1/coreutils-ead4501f4b695c4f0fe3267f1bf5318544c9b1e2\"\n\n[dependencies.diffstruc]\npath = \"../../2/diffstruc-88565f8e01792706edc0bd7e70dde957c26122a4\"\n\n[dependencies.graphstruc]\npath = \"../../3/graphstruc-ad41c6bca04cadd1df20319b29f231469c530dae\"\n\n[features.wandb.dependencies.wandb-fortran]\ngit = \"https://github.com/nedtaylor/wandb-fortran\"\n\n[features.wandb.dependencies.example_library]\npath = \"example/example_library\"\n\n[features.wandb.preprocess.cpp]\nmacros = [\n    \"_WANDB\",\n]\n\n[[features.wandb.example]]\nname = \"wandb_sine\"\nsource-dir = \"example/wandb_sine/src\"\nmain = \"main.f90\"\n\n[[features.wandb.example]]\nname = \"wandb_pinn_burgers\"\nsource-dir = \"example/wandb_pinn_burgers/src\"\nmain = \"main.f90\"\n\n[[features.wandb.example]]\nname = \"wandb_sweep\"\nsource-dir = \"example/wandb_sweep/src\"\nmain = \"main.f90\"\n\n[[features.wandb.example]]\nname = \"wandb_network_sine\"\nsource-dir = \"example/wandb_network_sine/src\"\nmain = \"main.F90\"\n\n[install]\nlibrary = false\n\n[fortran]\nimplicit-typing = false\nimplicit-external = false\nsource-form = \"free\"\n\n[preprocess.cpp]\nsuffixes = [\n    \"F90\",\n    \"f90\",\n]\n\n[[example]]\nname = \"sine\"\nsource-dir = \"example/sine/src\"\nmain = \"main.f90\"\n\n[example.dependencies.example_library]\npath = \"example/example_library\"\n\n[example.dependencies.atomstruc]\ngit = \"https://github.com/nedtaylor/atomstruc\"\nbranch = \"column-major-order\"\n\n[[example]]\nname = \"simple\"\nsource-dir = \"example/simple/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"mnist\"\nsource-dir = \"example/mnist/src\"\n\n[[example]]\nname = \"mnist_addit\"\nsource-dir = \"example/mnist_addit/src\"\n\n[[example]]\nname = \"mnist_3D\"\nsource-dir = \"example/mnist_3D/src\"\n\n[[example]]\nname = \"mnist_bn\"\nsource-dir = \"example/mnist_bn/src\"\n\n[[example]]\nname = \"mnist_drop\"\nsource-dir = \"example/mnist_drop/src\"\n\n[[example]]\nname = \"msgpass_chemical\"\nsource-dir = \"example/msgpass_chemical/src\"\n\n[[example]]\nname = \"onnx_gnn\"\nsource-dir = \"example/onnx_gnn/src\"\n\n[[example]]\nname = \"msgpass_euler\"\nsource-dir = \"example/msgpass_euler/src\"\n\n[[example]]\nname = \"pinn_chemical\"\nsource-dir = \"example/pinn_chemical/src\"\n\n[[example]]\nname = \"pinn_burgers\"\nsource-dir = \"example/pinn_burgers/src\"\n\n[[example]]\nname = \"adam_benchmark\"\nsource-dir = \"example/adam_benchmark/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"custom_forward\"\nsource-dir = \"example/custom_forward/src\"\n\n[[example]]\nname = \"onnx\"\nsource-dir = \"example/onnx/src\"\n\n[[example]]\nname = \"onnx_nop\"\nsource-dir = \"example/onnx_nop/src\"\n\n[[example]]\nname = \"resnet\"\nsource-dir = \"example/resnet/src\"\n\n[[example]]\nname = \"rnn_timeseries\"\nsource-dir = \"example/rnn_timeseries/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"gno_regression\"\nsource-dir = \"example/gno_regression/src\"\n\n[[example]]\nname = \"ono_heat\"\nsource-dir = \"example/ono_heat/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"lno_heat\"\nsource-dir = \"example/lno_heat/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"lno_rollout\"\nsource-dir = \"example/lno_rollout/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"ono_attention_heat\"\nsource-dir = \"example/ono_attention_heat/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"inverse_design\"\nsource-dir = \"example/inverse_design/src\"\nmain = \"main.f90\"\n",
+            "after": "name = \"athena\"\nversion = \"2.1.1\"\nlicense = \"MIT\"\nauthor = \"Ned Thaddeus Taylor\"\nmaintainer = \"n.t.taylor@exeter.ac.uk\"\ndescription = \"A Fortran library for building, training and testing neural networks\"\n\n[library]\nsource-dir = \"src\"\n\n[build]\nauto-executables = true\nauto-tests = true\nauto-examples = false\nmodule-naming = false\nexternal-modules = [\n    \"wf\",\n]\n\n[dependencies.coreutils]\npath = \"../../1/coreutils-ead4501f4b695c4f0fe3267f1bf5318544c9b1e2\"\n\n[dependencies.diffstruc]\npath = \"../../2/diffstruc-88565f8e01792706edc0bd7e70dde957c26122a4\"\n\n[dependencies.graphstruc]\npath = \"../../3/graphstruc-ad41c6bca04cadd1df20319b29f231469c530dae\"\n\n[install]\nlibrary = false\n\n[fortran]\nimplicit-typing = false\nimplicit-external = false\nsource-form = \"free\"\n\n[preprocess.cpp]\nsuffixes = [\n    \"F90\",\n    \"f90\",\n]\n\n[[example]]\nname = \"sine\"\nsource-dir = \"example/sine/src\"\nmain = \"main.f90\"\n\n[example.dependencies.example_library]\npath = \"example/example_library\"\n\n[example.dependencies.atomstruc]\ngit = \"https://github.com/nedtaylor/atomstruc\"\nbranch = \"column-major-order\"\n\n[[example]]\nname = \"simple\"\nsource-dir = \"example/simple/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"mnist\"\nsource-dir = \"example/mnist/src\"\n\n[[example]]\nname = \"mnist_addit\"\nsource-dir = \"example/mnist_addit/src\"\n\n[[example]]\nname = \"mnist_3D\"\nsource-dir = \"example/mnist_3D/src\"\n\n[[example]]\nname = \"mnist_bn\"\nsource-dir = \"example/mnist_bn/src\"\n\n[[example]]\nname = \"mnist_drop\"\nsource-dir = \"example/mnist_drop/src\"\n\n[[example]]\nname = \"msgpass_chemical\"\nsource-dir = \"example/msgpass_chemical/src\"\n\n[[example]]\nname = \"onnx_gnn\"\nsource-dir = \"example/onnx_gnn/src\"\n\n[[example]]\nname = \"msgpass_euler\"\nsource-dir = \"example/msgpass_euler/src\"\n\n[[example]]\nname = \"pinn_chemical\"\nsource-dir = \"example/pinn_chemical/src\"\n\n[[example]]\nname = \"pinn_burgers\"\nsource-dir = \"example/pinn_burgers/src\"\n\n[[example]]\nname = \"adam_benchmark\"\nsource-dir = \"example/adam_benchmark/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"custom_forward\"\nsource-dir = \"example/custom_forward/src\"\n\n[[example]]\nname = \"onnx\"\nsource-dir = \"example/onnx/src\"\n\n[[example]]\nname = \"onnx_nop\"\nsource-dir = \"example/onnx_nop/src\"\n\n[[example]]\nname = \"resnet\"\nsource-dir = \"example/resnet/src\"\n\n[[example]]\nname = \"rnn_timeseries\"\nsource-dir = \"example/rnn_timeseries/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"gno_regression\"\nsource-dir = \"example/gno_regression/src\"\n\n[[example]]\nname = \"ono_heat\"\nsource-dir = \"example/ono_heat/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"lno_heat\"\nsource-dir = \"example/lno_heat/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"lno_rollout\"\nsource-dir = \"example/lno_rollout/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"ono_attention_heat\"\nsource-dir = \"example/ono_attention_heat/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"inverse_design\"\nsource-dir = \"example/inverse_design/src\"\nmain = \"main.f90\"\n"
+          }
+        ]
+      },
+      "verified_at": "2026-10-28T22:42:59.624262+00:00"
+    },
+    {
+      "id": "orbs",
+      "repository": "degawa/orbs",
+      "revision": "3cf7fcec19798367f6f5bd26bad861c510449265",
+      "records": [
+        {
+          "repository": "degawa/orbs",
+          "revision": "3cf7fcec19798367f6f5bd26bad861c510449265",
+          "sha256": "dcbb0c8eeaa99febd6683dd2270dcf5757e512193eebe77258918c2713f99d23"
+        },
+        {
+          "repository": "fortran-lang/stdlib",
+          "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+        },
+        {
+          "repository": "degawa/bstrith",
+          "revision": "7ed7730e34c7e1f78f2be9426ccc170f9dcaf57e",
+          "sha256": "f7f3c9a98b395f20760b4883b43b7122f7b59eb6d8aa08b5afb211c5ca9d6344"
+        }
+      ],
+      "prebuild_seconds": 2.837,
+      "artifact_bytes": 1730258,
+      "verification": {
+        "seconds": 1.894,
+        "build_seconds": 0.23,
+        "library_reused": true,
+        "demo_sha256": "11104e37f36be3c44fcc593741d47d68e6d2bcf67bb8349600dee24cb08adbfc",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "registry": {
+          "stdlib": {
+            "git": "https://github.com/fortran-lang/stdlib",
+            "rev": "58eb9133966c2797e0593281169ef57c43eccc1d"
+          }
+        },
+        "source_revisions": {
+          "fortran-lang/stdlib": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "degawa/bstrith": "7ed7730e34c7e1f78f2be9426ccc170f9dcaf57e"
+        },
+        "manifest_versions": {
+          "fortran-lang/stdlib": "0.8.1"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "8a85ff125c66db77f139fb6b62e6895fa314413a2b0350e68d8f3126c1d19707",
+          "repositories": [
+            "fortran-lang/stdlib"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "fortran-lang/stdlib",
+          "key": "d7ecdecc5838e3e8fe8781fb",
+          "artifact_bytes": 93999232,
+          "manifest_sha256": "99bdbc76f53cd3b45fecd93ad55283a5acc2730e8c88d4777511bbcda432ce4c"
+        }
+      ],
+      "verified_at": "2026-10-28T22:42:59.624262+00:00"
+    },
+    {
+      "id": "rearrayfx",
+      "repository": "aradi/rearrayfx",
+      "revision": "be1a7b08e43b358c8ed27fa80db7896767eb9f6d",
+      "records": [
+        {
+          "repository": "aradi/rearrayfx",
+          "revision": "be1a7b08e43b358c8ed27fa80db7896767eb9f6d",
+          "sha256": "0ec62b019b6fb6ef56c8933ad91a1abbee85d0742c3e0738c1391e08591dfd56"
+        }
+      ],
+      "prebuild_seconds": 1.372,
+      "artifact_bytes": 536316,
+      "verification": {
+        "seconds": 2.516,
+        "build_seconds": 0.416,
+        "library_reused": true,
+        "demo_sha256": "42ab029721bf925f67b012d87827aab737d3fee492266cfd88919d16e86b892f",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "aradi/rearrayfx"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "aradi/rearrayfx",
+          "key": "88252f92321ba6e0c04248e1",
+          "artifact_bytes": 23836,
+          "manifest_sha256": "2502c6bd1ddb0e316db8b761215cc2ff9230dcfa440b1c36327f7a30ba2e1294"
+        }
+      ],
+      "verified_at": "2026-10-28T22:42:59.624262+00:00"
+    },
+    {
+      "id": "amosf90",
+      "repository": "Euler-37/amosf90",
+      "revision": "b54a4d4a1d8f7c97acd180ed5bbaae8d089a9fa7",
+      "records": [
+        {
+          "repository": "Euler-37/amosf90",
+          "revision": "b54a4d4a1d8f7c97acd180ed5bbaae8d089a9fa7",
+          "sha256": "bde16c382a398bcf7122d1886fef8ed49e793d66c4f0f862b17ca48162115f1b"
+        }
+      ],
+      "prebuild_seconds": 1.215,
+      "artifact_bytes": 536315,
+      "verification": {
+        "seconds": 1.459,
+        "build_seconds": 0.149,
+        "library_reused": true,
+        "demo_sha256": "85860c7f1e45f3c1e0b9c20149d513a1beea0c30f0e44f7c813d5cc4db7083e6",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "euler-37/amosf90"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "Euler-37/amosf90",
+          "key": "d611fd6da8598b7be37b9dc7",
+          "artifact_bytes": 273440,
+          "manifest_sha256": "30824a86a88b223de12d60100ad78b498e5023b55d99a823914ece2c9ea90604"
+        }
+      ],
+      "verified_at": "2026-10-28T23:12:09.139584+00:00"
+    },
+    {
+      "id": "linalg_fortran",
+      "repository": "Euler-37/linalg_fortran",
+      "revision": "30e7237ab54ca176e1c8dae4be2d9d44800e1f83",
+      "records": [
+        {
+          "repository": "Euler-37/linalg_fortran",
+          "revision": "30e7237ab54ca176e1c8dae4be2d9d44800e1f83",
+          "sha256": "9997e7d13e82b7cbc578e80cb199c33c50971dfa9a63486da9b9cc06a1bfce50"
+        }
+      ],
+      "prebuild_seconds": 1.985,
+      "artifact_bytes": 1320060,
+      "verification": {
+        "seconds": 2.049,
+        "build_seconds": 0.448,
+        "library_reused": true,
+        "demo_sha256": "d7dbec89d1c1f73a6e0f32f06b11b245fd29bda7984430627166d9b190916715",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "apt_packages": [
+          "libopenblas-dev=0.3.29+ds-3"
+        ]
+      },
+      "catalog_patches": {
+        "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+        "edits": [
+          {
+            "path": "fpm.toml",
+            "sha256": "84545d43074953cdbb6f7f998e67e2a2cd806ee88dd9f1fd4ccec23edece4d18",
+            "before": "name = \"iso_linalg_mod\"\nversion = \"0.1.0\"\nlicense = \"license\"\nauthor = \"Euler-37\"\ncopyright = \"Copyright 2022, Euler-37\"\n\n[build]\nauto-executables = true\nauto-tests = true\nauto-examples = true\nlink = [\n    \"openblas\",\n]\n\n[install]\nlibrary = false\n",
+            "after": "name = \"iso_linalg_mod\"\nversion = \"0.1.0\"\nlicense = \"license\"\nauthor = \"Euler-37\"\ncopyright = \"Copyright 2022, Euler-37\"\n\n[build]\nauto-executables = true\nauto-tests = true\nauto-examples = true\nlink = [\n    \"openblas\",\n]\n\n[install]\nlibrary = false\n\n[fortran]\nimplicit-external = true\n"
+          }
+        ]
+      },
+      "verified_at": "2026-10-28T23:12:09.139584+00:00"
+    },
+    {
+      "id": "fortran_vector",
+      "repository": "Euler-37/fortran_vector",
+      "revision": "95469e2ce1162b0ede3ca3435ebd94ec6b6fee79",
+      "records": [
+        {
+          "repository": "Euler-37/fortran_vector",
+          "revision": "95469e2ce1162b0ede3ca3435ebd94ec6b6fee79",
+          "sha256": "0701b9fc21b905f986ee247ce7d3981c059cd963040569409de88cbdf04eaa25"
+        }
+      ],
+      "prebuild_seconds": 1.309,
+      "artifact_bytes": 603906,
+      "verification": {
+        "seconds": 1.471,
+        "build_seconds": 0.349,
+        "library_reused": true,
+        "demo_sha256": "9cb520eb6b7b278caaa126aa55d078576b5bdc38d7bfefa8d6cf94d53c7af159",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8"
+      },
+      "catalog_patches": {
+        "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+        "edits": [
+          {
+            "path": "src/fortran_vector.f90",
+            "sha256": "0ee8dc6b054a18b3154952430a29577527edf494e7416385a4656446cd083833",
+            "before": "call this%remove(this%x_(1))",
+            "after": "call this%remove(first)"
+          }
+        ]
+      },
+      "verified_at": "2026-10-28T23:12:09.139584+00:00"
+    },
+    {
+      "id": "scanner",
+      "repository": "freevryheid/scanner",
+      "revision": "b0026498c171b615bb3dcfca55a0f20b133e22dc",
+      "records": [
+        {
+          "repository": "freevryheid/scanner",
+          "revision": "b0026498c171b615bb3dcfca55a0f20b133e22dc",
+          "sha256": "ebd5b15b10cb7f7f0a7e10d3891cebbb00cf8fcfde32387f4d1e7f0645b0662f"
+        },
+        {
+          "repository": "fortran-lang/stdlib",
+          "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+        }
+      ],
+      "prebuild_seconds": 2.993,
+      "artifact_bytes": 1245412,
+      "verification": {
+        "seconds": 1.427,
+        "build_seconds": 0.356,
+        "library_reused": true,
+        "demo_sha256": "2a26ac5acd461dd59e4ae78b9ce6f16b14988a2b74b5491bf213418a763e0a28",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "source_revisions": {
+          "fortran-lang/stdlib": "58eb9133966c2797e0593281169ef57c43eccc1d"
+        },
+        "manifest_versions": {
+          "fortran-lang/stdlib": "0.8.1"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "8a85ff125c66db77f139fb6b62e6895fa314413a2b0350e68d8f3126c1d19707",
+          "repositories": [
+            "fortran-lang/stdlib"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "fortran-lang/stdlib",
+          "key": "d7ecdecc5838e3e8fe8781fb",
+          "artifact_bytes": 93999232,
+          "manifest_sha256": "99bdbc76f53cd3b45fecd93ad55283a5acc2730e8c88d4777511bbcda432ce4c"
+        }
+      ],
+      "verified_at": "2026-10-28T23:12:09.139584+00:00"
+    },
+    {
+      "id": "rojff",
+      "repository": "everythingfunctional/rojff",
+      "revision": "9f68e5aa4c12b32720d4224f1ac279bfd7d77b93",
+      "records": [
+        {
+          "repository": "everythingfunctional/rojff",
+          "revision": "9f68e5aa4c12b32720d4224f1ac279bfd7d77b93",
+          "sha256": "503529a91c9692cdb830b3b14db5462a3b83bce12f0e002f3c04922447956961"
+        },
+        {
+          "repository": "everythingfunctional/erloff",
+          "revision": "a4c10605c9263d315d20c07dc96e1f0d18aa2ffa",
+          "sha256": "6f6033f3ca404088fa992208f0561ccb497f63849a44805e94faef21788882fc"
+        },
+        {
+          "repository": "everythingfunctional/iso_varying_string",
+          "revision": "48ce6b119e855284a87d5a6eb9c53da8b6785716",
+          "sha256": "b1d563dc52c7cb3df41abf3f360ef0c05285b71bec9bd61d090227f88628ba49"
+        },
+        {
+          "repository": "everythingfunctional/strff",
+          "revision": "37dccc0e615a2fc85de18be80427e0f1a678d87c",
+          "sha256": "1aac7b388bcd6f4a181c5d9aea27046f9a7c3f90273184359afa63e11cafc74d"
+        }
+      ],
+      "prebuild_seconds": 0.783,
+      "artifact_bytes": 536312,
+      "verification": {
+        "seconds": 2.363,
+        "build_seconds": 0.487,
+        "library_reused": true,
+        "demo_sha256": "5025f64999574af56e0316f2174261c30a2509027d5eaddbf5aa32a16cf1749f",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "git_aliases": {
+          "https://gitlab.com/everythingfunctional/erloff": "https://github.com/everythingfunctional/erloff",
+          "https://gitlab.com/everythingfunctional/iso_varying_string": "https://github.com/everythingfunctional/iso_varying_string",
+          "https://gitlab.com/everythingfunctional/strff": "https://github.com/everythingfunctional/strff",
+          "https://gitlab.com/everythingfunctional/exceptional_numbers": "https://github.com/everythingfunctional/exceptional_numbers",
+          "https://gitlab.com/everythingfunctional/parff": "https://github.com/everythingfunctional/parff",
+          "https://gitlab.com/everythingfunctional/veggies": "https://github.com/everythingfunctional/veggies"
+        },
+        "source_revisions": {
+          "everythingfunctional/erloff": "a4c10605c9263d315d20c07dc96e1f0d18aa2ffa",
+          "everythingfunctional/strff": "37dccc0e615a2fc85de18be80427e0f1a678d87c",
+          "everythingfunctional/iso_varying_string": "48ce6b119e855284a87d5a6eb9c53da8b6785716"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "everythingfunctional/rojff",
+            "everythingfunctional/erloff",
+            "everythingfunctional/iso_varying_string",
+            "everythingfunctional/strff"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "everythingfunctional/rojff",
+          "key": "71a46e276623116c4ea83712",
+          "artifact_bytes": 1734963,
+          "manifest_sha256": "170b4ce3b4b297ce7bddd0493c8e8d9872f72c7c8a3dae50bedb68b3f8e44120"
+        },
+        {
+          "repository": "everythingfunctional/erloff",
+          "key": "01e3c942e72bf231a5c3cd3b",
+          "artifact_bytes": 752338,
+          "manifest_sha256": "ed6454f82aedfa6f8013f8fdf1f5e912942c69ac4ad128b5c9bca202c6aa195a"
+        },
+        {
+          "repository": "everythingfunctional/strff",
+          "key": "59b662d63f78e035f4fa528d",
+          "artifact_bytes": 111365,
+          "manifest_sha256": "badd800f6c78ccaf30819224a12634e0a66ed2460359466ab4c048c6fe625950"
+        },
+        {
+          "repository": "everythingfunctional/iso_varying_string",
+          "key": "2ac3b2210f3d1aecc3dcd2b9",
+          "artifact_bytes": 128116,
+          "manifest_sha256": "f6b34e2b0d25643f9a9b42fbeb055614b3fd898a5760f66d71be99e97c65ad67"
+        }
+      ],
+      "verified_at": "2026-10-28T23:33:50.254249+00:00"
+    },
+    {
+      "id": "argparse-f",
+      "repository": "0382/argparse-f",
+      "revision": "435cc1676d6064162a3c36b91f1aa50d926fdd45",
+      "records": [
+        {
+          "repository": "0382/argparse-f",
+          "revision": "435cc1676d6064162a3c36b91f1aa50d926fdd45",
+          "sha256": "c0962d2173daa643130c32c71284f1da12d5b4ae2d357568ae1a34ddab1970b0"
+        }
+      ],
+      "prebuild_seconds": 1.065,
+      "artifact_bytes": 536316,
+      "verification": {
+        "seconds": 1.148,
+        "build_seconds": 0.353,
+        "library_reused": true,
+        "demo_sha256": "ca4c6d59fbd34ff7f74a22b5b45a2973965218bc862553dd2d5554dd26571a82",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "0382/argparse-f"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "0382/argparse-f",
+          "key": "dc6c2b33094b1436cecbb75c",
+          "artifact_bytes": 205657,
+          "manifest_sha256": "353915caebfa0671a050740fa51499ec28a317aff9ee0f232426dc4f0a11dbb0"
+        }
+      ],
+      "verified_at": "2026-10-28T23:33:50.254249+00:00"
+    },
+    {
+      "id": "io_utilities",
+      "repository": "arjenmarkus/io_utilities",
+      "revision": "f0551aad0b46aa7aac1c442a3c576ecc90028f72",
+      "records": [
+        {
+          "repository": "arjenmarkus/io_utilities",
+          "revision": "f0551aad0b46aa7aac1c442a3c576ecc90028f72",
+          "sha256": "144022adf3379e3bf2ce90a81f674a19819e33a5aa0284f22c0857bf10f26f37"
+        }
+      ],
+      "prebuild_seconds": 1.199,
+      "artifact_bytes": 791195,
+      "verification": {
+        "seconds": 1.813,
+        "build_seconds": 0.443,
+        "library_reused": true,
+        "demo_sha256": "8c54b6d6efaaed5e53142797ccbcbf744239187b0474504f5fc6720d2faec825",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8"
+      },
+      "catalog_patches": {
+        "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+        "edits": [
+          {
+            "path": "fpm.toml",
+            "sha256": "9f6b313149a4b7cb82bb1c9f5a871a299867f5180d7621abf303da10ec775ab7",
+            "before": "name = \"io-utilities\"\nversion = \"0.2.0\"\nlicense = \"MIT\"\nauthor = \"Arjen Markus\"\nmaintainer = \"arjen.markus895@gmail.com\"\ncopyright = \"2024 Arjen Markus\"\nlibrary = [\n    { source-dir = \"src\" },\n]\ntest = [\n    { name = \"test_cmdparse\", source-dir = \"test\", main = \"test_cmdparse.f90\" },\n    { name = \"demo_cmdparse\", source-dir = \"test\", main = \"demo_cmdparse.f90\" },\n    { name = \"test_keyvars\", source-dir = \"test\", main = \"test_keyvars.f90\" },\n    { name = \"test_progressbar\", source-dir = \"test\", main = \"test_progressbar.f90\" },\n    { name = \"test_positional\", source-dir = \"test\", main = \"test_positional.f90\" },\n]\n",
+            "after": "name = \"io-utilities\"\nversion = \"0.2.0\"\nlicense = \"MIT\"\nauthor = \"Arjen Markus\"\nmaintainer = \"arjen.markus895@gmail.com\"\ncopyright = \"2024 Arjen Markus\"\ntest = [\n    { name = \"test_cmdparse\", source-dir = \"test\", main = \"test_cmdparse.f90\" },\n    { name = \"demo_cmdparse\", source-dir = \"test\", main = \"demo_cmdparse.f90\" },\n    { name = \"test_keyvars\", source-dir = \"test\", main = \"test_keyvars.f90\" },\n    { name = \"test_progressbar\", source-dir = \"test\", main = \"test_progressbar.f90\" },\n    { name = \"test_positional\", source-dir = \"test\", main = \"test_positional.f90\" },\n]\n\n[library]\nsource-dir = \"src\"\n"
+          }
+        ]
+      },
+      "verified_at": "2026-10-28T23:33:50.254249+00:00"
+    },
+    {
+      "id": "uint-fortran",
+      "repository": "ShinobuAmasaki/uint-fortran",
+      "revision": "487f806c76a5d107c5a8982198bafb295065eba7",
+      "records": [
+        {
+          "repository": "ShinobuAmasaki/uint-fortran",
+          "revision": "487f806c76a5d107c5a8982198bafb295065eba7",
+          "sha256": "7f36d0391da9e6877965053a4de3404281c71a82a9aa2ea8a6ae253b40e8ab4d"
+        }
+      ],
+      "prebuild_seconds": 0.833,
+      "artifact_bytes": 536318,
+      "verification": {
+        "seconds": 2.05,
+        "build_seconds": 0.411,
+        "library_reused": true,
+        "demo_sha256": "5e1eaa1f34cc871f60c32fa95db5efe870004ece24769c368ca48b491f2f577d",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "shinobuamasaki/uint-fortran"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "ShinobuAmasaki/uint-fortran",
+          "key": "1fbdb0e05918329e09417065",
+          "artifact_bytes": 296973,
+          "manifest_sha256": "207f54dd9a474e7d277fa69a8c6efd3e725e7262860c580a4acd3dc95756b9ef"
+        }
+      ],
+      "verified_at": "2026-10-28T23:33:50.254249+00:00"
+    },
+    {
+      "id": "veggies",
+      "repository": "everythingfunctional/veggies",
+      "revision": "8388f5e2633afa3d08cf5c6e7db1eeb0dcab2dc8",
+      "records": [
+        {
+          "repository": "everythingfunctional/veggies",
+          "revision": "8388f5e2633afa3d08cf5c6e7db1eeb0dcab2dc8",
+          "sha256": "31abfc48cf3b70d47f8253d95edcd659e0116d766083a7161ef1975ded7c7bf3"
+        },
+        {
+          "repository": "everythingfunctional/iso_varying_string",
+          "revision": "48ce6b119e855284a87d5a6eb9c53da8b6785716",
+          "sha256": "b1d563dc52c7cb3df41abf3f360ef0c05285b71bec9bd61d090227f88628ba49"
+        },
+        {
+          "repository": "everythingfunctional/strff",
+          "revision": "37dccc0e615a2fc85de18be80427e0f1a678d87c",
+          "sha256": "1aac7b388bcd6f4a181c5d9aea27046f9a7c3f90273184359afa63e11cafc74d"
+        }
+      ],
+      "prebuild_seconds": 1.098,
+      "artifact_bytes": 536314,
+      "verification": {
+        "seconds": 1.737,
+        "build_seconds": 0.394,
+        "library_reused": true,
+        "demo_sha256": "09055ca0bd2a350896922b8abc667d236c3d99a96440709fc740b08d8b001642",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "git_aliases": {
+          "https://gitlab.com/everythingfunctional/erloff": "https://github.com/everythingfunctional/erloff",
+          "https://gitlab.com/everythingfunctional/iso_varying_string": "https://github.com/everythingfunctional/iso_varying_string",
+          "https://gitlab.com/everythingfunctional/strff": "https://github.com/everythingfunctional/strff",
+          "https://gitlab.com/everythingfunctional/exceptional_numbers": "https://github.com/everythingfunctional/exceptional_numbers",
+          "https://gitlab.com/everythingfunctional/parff": "https://github.com/everythingfunctional/parff",
+          "https://gitlab.com/everythingfunctional/veggies": "https://github.com/everythingfunctional/veggies"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "everythingfunctional/veggies",
+            "everythingfunctional/iso_varying_string",
+            "everythingfunctional/strff"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "everythingfunctional/veggies",
+          "key": "e48dbc96c1ea866794f82af9",
+          "artifact_bytes": 1767487,
+          "manifest_sha256": "72de6b45009597d18b8961a34aa26af51522a38b456a4bcd96035daf901f4494"
+        },
+        {
+          "repository": "everythingfunctional/strff",
+          "key": "59b662d63f78e035f4fa528d",
+          "artifact_bytes": 111365,
+          "manifest_sha256": "badd800f6c78ccaf30819224a12634e0a66ed2460359466ab4c048c6fe625950"
+        },
+        {
+          "repository": "everythingfunctional/iso_varying_string",
+          "key": "2ac3b2210f3d1aecc3dcd2b9",
+          "artifact_bytes": 128116,
+          "manifest_sha256": "f6b34e2b0d25643f9a9b42fbeb055614b3fd898a5760f66d71be99e97c65ad67"
+        }
+      ],
+      "verified_at": "2026-10-28T23:33:50.254249+00:00"
+    },
+    {
+      "id": "shunting-yard-fortran",
+      "repository": "14NGiestas/shunting-yard-fortran",
+      "revision": "ff62d83502bc5fdf77f2750c3538b8634a543b91",
+      "records": [
+        {
+          "repository": "14NGiestas/shunting-yard-fortran",
+          "revision": "ff62d83502bc5fdf77f2750c3538b8634a543b91",
+          "sha256": "b72b28673e6fc18e9f54c7e5999db2d224b102673bd02ccc41a446a262e38d1c"
+        },
+        {
+          "repository": "14NGiestas/fortran-tokenizer",
+          "revision": "4ed3bac4132a9b344b3c327f579ae4919a61393d",
+          "sha256": "99ae76f58775d954d01885a2d48720a16e143782238f45f5db2424c6277cc912"
+        }
+      ],
+      "prebuild_seconds": 2.069,
+      "artifact_bytes": 1564274,
+      "verification": {
+        "seconds": 2.303,
+        "build_seconds": 0.495,
+        "library_reused": true,
+        "demo_sha256": "b0a9d3f49c2a5165cc45184c21fd6d137fa1e1c2f461aa5f032112445b3cbb33",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8"
+      },
+      "catalog_patches": {
+        "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+        "edits": [
+          {
+            "path": "src/parser.f90",
+            "sha256": "031c159946ca0d9214c2b82a9021bc926c577f5fdf052d01d3e693b61980b84a",
+            "before": "    function parse(self, infix) result(ans)\n        class(parser_t) :: self\n        character(*) :: infix\n        type(token_list) :: tokens\n        type(token_list) :: postfix\n        type(token_list) :: output\n        type(token_t)    :: ans\n\n        self % tokenizer % validate_token => by_expression\n        tokens = self % tokenizer % tokenize(infix)\n\n        if (is_enclosed(tokens)) then\n            call self % convert_to_RPN(tokens, postfix)\n            call self % eval_expression(postfix, output)\n        else\n            write(error_unit,*) 'Unmatched parenthesis on: '//infix\n            stop\n        end if\n        ans = output % pop()\n    contains\n        logical function by_expression(token)\n            character(*), intent(in) :: token\n            by_expression = .true. &\n            .and. .not. is_ignored(token) &\n            .and. ( &\n                     is_unary(token) &\n                .or. is_binary(token) &\n                .or. is_operand(token) &\n                .or. is_open_paren(token) &\n                .or. is_close_paren(token) &\n            )\n        end function\n    end function\n\n",
+            "after": "    function parse(self, infix) result(ans)\n        class(parser_t) :: self\n        character(*) :: infix\n        type(token_list) :: tokens\n        type(token_list) :: postfix\n        type(token_list) :: output\n        type(token_t)    :: ans\n\n        self % tokenizer % validate_token => by_expression\n        tokens = self % tokenizer % tokenize(infix)\n\n        if (is_enclosed(tokens)) then\n            call self % convert_to_RPN(tokens, postfix)\n            call self % eval_expression(postfix, output)\n        else\n            write(error_unit,*) 'Unmatched parenthesis on: '//infix\n            stop\n        end if\n        ans = output % pop()\n    end function\n\n        logical function by_expression(token)\n            character(*), intent(in) :: token\n            by_expression = .true. &\n            .and. .not. is_ignored(token) &\n            .and. ( &\n                     is_unary(token) &\n                .or. is_binary(token) &\n                .or. is_operand(token) &\n                .or. is_open_paren(token) &\n                .or. is_close_paren(token) &\n            )\n        end function\n\n"
+          }
+        ]
+      },
+      "verified_at": "2026-10-28T23:33:50.254249+00:00"
+    },
+    {
+      "id": "sqliteff",
+      "repository": "everythingfunctional/sqliteff",
+      "revision": "9b377c976698a7da671536e5e2539146ab734ca6",
+      "records": [
+        {
+          "repository": "everythingfunctional/sqliteff",
+          "revision": "9b377c976698a7da671536e5e2539146ab734ca6",
+          "sha256": "283728efa90428060030cd1cb541f847cd084a128b506114163e60a312af00df"
+        },
+        {
+          "repository": "everythingfunctional/iso_varying_string",
+          "revision": "f330d7a246d81aacfbf92f8085a4eca9d2506820",
+          "sha256": "2fa954b8642f34970253cee4bf36448b46f37dd2bea4930a5ecd2fd26b0dc83b"
+        }
+      ],
+      "prebuild_seconds": 0.735,
+      "artifact_bytes": 536314,
+      "verification": {
+        "seconds": 2.97,
+        "build_seconds": 0.678,
+        "library_reused": true,
+        "demo_sha256": "7ff8d30a09bcc6e1450c62f7bc38957d7e2c0a83da8c25d48dafdd6a2900e6f7",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "git_aliases": {
+          "https://gitlab.com/everythingfunctional/iso_varying_string": "https://github.com/everythingfunctional/iso_varying_string",
+          "https://gitlab.com/everythingfunctional/strff": "https://github.com/everythingfunctional/strff",
+          "https://gitlab.com/everythingfunctional/exceptional_numbers": "https://github.com/everythingfunctional/exceptional_numbers"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "everythingfunctional/sqliteff",
+            "everythingfunctional/iso_varying_string"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "everythingfunctional/sqliteff",
+          "key": "a49343df90026c8484415f8f",
+          "artifact_bytes": 1161893,
+          "manifest_sha256": "7424cd0babd54448b4894faf9a2f06e265ea5ca7f7ad2f7da1533346cbf4faaa"
+        },
+        {
+          "repository": "everythingfunctional/iso_varying_string",
+          "key": "ae54200d6e82c4edeecbb664",
+          "artifact_bytes": 127944,
+          "manifest_sha256": "86d75b5ccbf2899843120cb01e9bd14812896787378428ae7fd6451519a188e4"
+        }
+      ],
+      "verified_at": "2026-10-29T00:34:23.456367+00:00"
+    },
+    {
+      "id": "erloff",
+      "repository": "everythingfunctional/erloff",
+      "revision": "73dfdbf54dafadb42e4705c45824b93917a20965",
+      "records": [
+        {
+          "repository": "everythingfunctional/erloff",
+          "revision": "73dfdbf54dafadb42e4705c45824b93917a20965",
+          "sha256": "71d21f36b77fd638d2cf2f555c7bb1ea978af1755856a815aea33e0758581e75"
+        },
+        {
+          "repository": "everythingfunctional/iso_varying_string",
+          "revision": "48ce6b119e855284a87d5a6eb9c53da8b6785716",
+          "sha256": "b1d563dc52c7cb3df41abf3f360ef0c05285b71bec9bd61d090227f88628ba49"
+        },
+        {
+          "repository": "everythingfunctional/strff",
+          "revision": "37dccc0e615a2fc85de18be80427e0f1a678d87c",
+          "sha256": "1aac7b388bcd6f4a181c5d9aea27046f9a7c3f90273184359afa63e11cafc74d"
+        }
+      ],
+      "prebuild_seconds": 2.338,
+      "artifact_bytes": 536312,
+      "verification": {
+        "seconds": 1.627,
+        "build_seconds": 0.475,
+        "library_reused": true,
+        "demo_sha256": "f21e5561c2e5a0c03983e992d9e2778c2d91daa66f77ca77a1a4a38669ead1fa",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "git_aliases": {
+          "https://gitlab.com/everythingfunctional/iso_varying_string": "https://github.com/everythingfunctional/iso_varying_string",
+          "https://gitlab.com/everythingfunctional/strff": "https://github.com/everythingfunctional/strff",
+          "https://gitlab.com/everythingfunctional/exceptional_numbers": "https://github.com/everythingfunctional/exceptional_numbers"
+        },
+        "source_revisions": {
+          "everythingfunctional/strff": "37dccc0e615a2fc85de18be80427e0f1a678d87c",
+          "everythingfunctional/iso_varying_string": "48ce6b119e855284a87d5a6eb9c53da8b6785716"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "everythingfunctional/erloff",
+            "everythingfunctional/iso_varying_string",
+            "everythingfunctional/strff"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "everythingfunctional/erloff",
+          "key": "835b239296e586a0885bf2d0",
+          "artifact_bytes": 827863,
+          "manifest_sha256": "7fb90739bbf74a6e773046b06850317ba27a30ec1bf3ad21cfb101ce7b6471be"
+        },
+        {
+          "repository": "everythingfunctional/strff",
+          "key": "59b662d63f78e035f4fa528d",
+          "artifact_bytes": 111365,
+          "manifest_sha256": "badd800f6c78ccaf30819224a12634e0a66ed2460359466ab4c048c6fe625950"
+        },
+        {
+          "repository": "everythingfunctional/iso_varying_string",
+          "key": "2ac3b2210f3d1aecc3dcd2b9",
+          "artifact_bytes": 128116,
+          "manifest_sha256": "f6b34e2b0d25643f9a9b42fbeb055614b3fd898a5760f66d71be99e97c65ad67"
+        }
+      ],
+      "verified_at": "2026-10-29T00:34:23.456367+00:00"
+    },
+    {
+      "id": "fortran-tokenizer",
+      "repository": "14NGiestas/fortran-tokenizer",
+      "revision": "11ad73ea6102f86593bf2b372d56bf9fbedaebc7",
+      "records": [
+        {
+          "repository": "14NGiestas/fortran-tokenizer",
+          "revision": "11ad73ea6102f86593bf2b372d56bf9fbedaebc7",
+          "sha256": "372c3b8d641fd46a9c7de674dceffecf2e87bac1ca6ac9cb5480470528801a55"
+        }
+      ],
+      "prebuild_seconds": 0.529,
+      "artifact_bytes": 536324,
+      "verification": {
+        "seconds": 1.772,
+        "build_seconds": 0.309,
+        "library_reused": true,
+        "demo_sha256": "8b9bc4212dcbf78bc1358246225526de629e0ebecface3ff2c29552e5e98f8c6",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "14ngiestas/fortran-tokenizer"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "14NGiestas/fortran-tokenizer",
+          "key": "d918389b51607816b785f071",
+          "artifact_bytes": 53575,
+          "manifest_sha256": "c54af7a43db0dca898f555e6e48b9b580f87bfecd80710f3152a8e1790f02391"
+        }
+      ],
+      "verified_at": "2026-10-29T00:34:23.456367+00:00"
+    },
+    {
+      "id": "integer_set",
+      "repository": "jordan4ibanez/integer_set",
+      "revision": "85d336319d6593f9768c599835342912ce0b7bb8",
+      "records": [
+        {
+          "repository": "jordan4ibanez/integer_set",
+          "revision": "85d336319d6593f9768c599835342912ce0b7bb8",
+          "sha256": "a8d4e5251955d88c00675701238f792967a739d58bad851ddaa5b6b15e1e996d"
+        },
+        {
+          "repository": "jordan4ibanez/constants_f90",
+          "revision": "22b34d79274429ab391e92a94011befeb996704a",
+          "sha256": "17efd5f858ac6f29a4d1a0a4dbd6dbbc3fa89a8810c2300679702875e385a85a"
+        }
+      ],
+      "prebuild_seconds": 1.095,
+      "artifact_bytes": 536319,
+      "verification": {
+        "seconds": 2.198,
+        "build_seconds": 0.32,
+        "library_reused": true,
+        "demo_sha256": "8128be88e99967deea42424e22b84ddeac5c956e5baae3e430ca78122551480b",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "jordan4ibanez/integer_set",
+            "jordan4ibanez/constants_f90"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "jordan4ibanez/integer_set",
+          "key": "b7227c59d26c8101878273af",
+          "artifact_bytes": 39077,
+          "manifest_sha256": "1a720c8345479b8566ef4db3f6aab16c7522de1a2dc8b022c3d6618cfd99f19e"
+        },
+        {
+          "repository": "jordan4ibanez/constants_f90",
+          "key": "055425e2a30ae3ad986f6591",
+          "artifact_bytes": 4797,
+          "manifest_sha256": "d08e703d7080d11cfb3454fb996c8853a0216149ff47e0776bf48214f940ea49"
+        }
+      ],
+      "verified_at": "2026-10-29T00:34:23.456367+00:00"
+    },
+    {
+      "id": "smart-pointers",
+      "repository": "sourceryinstitute/smart-pointers",
+      "revision": "35130adc4be4384a14b2369e5edd36d4665cd994",
+      "records": [
+        {
+          "repository": "sourceryinstitute/smart-pointers",
+          "revision": "35130adc4be4384a14b2369e5edd36d4665cd994",
+          "sha256": "4bd34d315fc73d3fbc23af6c314d6f2904bfb584c595ef9aac926c3c826dbf45"
+        }
+      ],
+      "prebuild_seconds": 1.352,
+      "artifact_bytes": 536321,
+      "verification": {
+        "seconds": 4.359,
+        "build_seconds": 2.736,
+        "library_reused": true,
+        "demo_sha256": "b47909cd67469bbe4c0e212b838aae77f8526191b9da038d842cfb37259b849a",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "sourceryinstitute/smart-pointers"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "sourceryinstitute/smart-pointers",
+          "key": "1d7f52decc3c99c738988f44",
+          "artifact_bytes": 47905,
+          "manifest_sha256": "5895a02c49070f0d4fd81165680bd667550efd9b80ca51f48f75aef9c8046664"
+        }
+      ],
+      "verified_at": "2026-10-29T00:34:23.456367+00:00"
+    },
+    {
+      "id": "rpn-calculator-fortran",
+      "repository": "scivision/rpn-calculator-fortran",
+      "revision": "7708e4949f17511d81f4e7dd0271a500f0bc3631",
+      "records": [
+        {
+          "repository": "scivision/rpn-calculator-fortran",
+          "revision": "7708e4949f17511d81f4e7dd0271a500f0bc3631",
+          "sha256": "7c34218defbc2d92ef87a9be222acbc9085737121b4894c1235b723cd5644d9c"
+        }
+      ],
+      "prebuild_seconds": 3.217,
+      "artifact_bytes": 3176264,
+      "verification": {
+        "seconds": 2.065,
+        "build_seconds": 0.62,
+        "library_reused": true,
+        "demo_sha256": "af4f82c0bea3a05b9032fbfbd1d5c5cb051add7b2d5ca4be9fb39e742ce3cce5",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8"
+      },
+      "catalog_patches": {
+        "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+        "edits": [
+          {
+            "path": "fpm.toml",
+            "sha256": "3b8e601971499140a324bce7fcb5e1ffffe201229c679a66fb237eef3e693ae7",
+            "before": "name = \"rpncalc\"\ndescription = \"Interactive RPN calculator\"\nversion = \"1.4.1\"\n\n[extra.fortitude.check]\nignore = [\n    \"C003\",\n    \"S231\",\n    \"S241\",\n    \"S061\",\n    \"C011\",\n]\n",
+            "after": "name = \"rpncalc\"\ndescription = \"Interactive RPN calculator\"\nversion = \"1.4.1\"\n\n[extra.fortitude.check]\nignore = [\n    \"C003\",\n    \"S231\",\n    \"S241\",\n    \"S061\",\n    \"C011\",\n]\n\n[fortran]\nsource-form = \"default\"\n"
+          }
+        ]
+      },
+      "verified_at": "2026-10-29T00:57:33.593173+00:00"
+    },
+    {
+      "id": "nc4fortran",
+      "repository": "geospace-code/nc4fortran",
+      "revision": "942ac4f83380acdef463002f555aebf30f3c46ac",
+      "records": [
+        {
+          "repository": "geospace-code/nc4fortran",
+          "revision": "942ac4f83380acdef463002f555aebf30f3c46ac",
+          "sha256": "f27018e3cffbcab181d422d6cffc2062c95acb03a35314b01f7647cdeca1ec9b"
+        }
+      ],
+      "prebuild_seconds": 1.266,
+      "artifact_bytes": 536317,
+      "verification": {
+        "seconds": 2.627,
+        "build_seconds": 0.662,
+        "library_reused": true,
+        "demo_sha256": "2f5698b3827bf052722fa89097c6d1d94116d4304b888e6bda8d15939bdfa814",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "apt_packages": [
+          "libnetcdff-dev=4.6.0+really4.5.4+ds-3+b4",
+          "libhdf5-dev=1.14.5+repack-3"
+        ],
+        "environment": {
+          "FPM_FFLAGS": "-I/usr/include -I/usr/include/hdf5/serial",
+          "FPM_LDFLAGS": "-L/usr/lib/x86_64-linux-gnu/hdf5/serial"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "geospace-code/nc4fortran"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "geospace-code/nc4fortran",
+          "key": "1d8c86179aa24a3b4ee7839c",
+          "artifact_bytes": 583686,
+          "manifest_sha256": "bf05dae476974d559adf5b0aa76d1f32c874fdfba8e85fc914a3a5c60808594b"
+        }
+      ],
+      "verified_at": "2026-10-29T00:57:33.593173+00:00"
+    },
+    {
+      "id": "fundamental_constants",
+      "repository": "vmagnin/fundamental_constants",
+      "revision": "3e18620ab7813fd9f02e8dcf05c48f0ca13f2ec0",
+      "records": [
+        {
+          "repository": "vmagnin/fundamental_constants",
+          "revision": "3e18620ab7813fd9f02e8dcf05c48f0ca13f2ec0",
+          "sha256": "3c49561725c37c75b9e94a4c0fadbc9a999be0aaea70551d3e4a0f5e2877e54e"
+        }
+      ],
+      "prebuild_seconds": 0.843,
+      "artifact_bytes": 536328,
+      "verification": {
+        "seconds": 2.326,
+        "build_seconds": 0.56,
+        "library_reused": true,
+        "demo_sha256": "f4976cc7b2e3d1fa4ebd8db656192a5a8fa86990f1b65ab5fdbc5beaef83d1b9",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "vmagnin/fundamental_constants"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "vmagnin/fundamental_constants",
+          "key": "aba487b269e1a2871bdbf471",
+          "artifact_bytes": 71225,
+          "manifest_sha256": "d90ae8b72988c9db46cce89942cb79a475f84c18f4e6694ac6f04721b5d46c3e"
+        }
+      ],
+      "verified_at": "2026-10-29T00:57:33.593173+00:00"
+    },
+    {
+      "id": "array_range",
+      "repository": "degawa/array_range",
+      "revision": "cd21ccb982e23de9c2df44c12edab44dd84562dc",
+      "records": [
+        {
+          "repository": "degawa/array_range",
+          "revision": "cd21ccb982e23de9c2df44c12edab44dd84562dc",
+          "sha256": "269b583b0e6cb353191d88b50859cd6cf80d4807497e9f1178f8207b807df214"
+        }
+      ],
+      "prebuild_seconds": 0.684,
+      "artifact_bytes": 536318,
+      "verification": {
+        "seconds": 1.086,
+        "build_seconds": 0.178,
+        "library_reused": true,
+        "demo_sha256": "909543efcb535b0594447d9fa9770cf062f9ad24394b6752cd5a834f9b709381",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "degawa/array_range"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "degawa/array_range",
+          "key": "c1b6594aa5808c35f42738ec",
+          "artifact_bytes": 50694,
+          "manifest_sha256": "a379891c3e15c4169f3b786a9744abfcb85fa88ce38db8d4931a26c49683f5d1"
+        }
+      ],
+      "verified_at": "2026-10-29T00:57:33.593173+00:00"
+    },
+    {
+      "id": "kronrod",
+      "repository": "jacobwilliams/kronrod",
+      "revision": "312278846b6e403fdea410a823d88ef4fb92a3cc",
+      "records": [
+        {
+          "repository": "jacobwilliams/kronrod",
+          "revision": "312278846b6e403fdea410a823d88ef4fb92a3cc",
+          "sha256": "f53b75081ca184120e6594ee2649abb402a5e0c45ca40d391b0b7292eff780ea"
+        },
+        {
+          "repository": "jacobwilliams/mpfun2020-var1",
+          "revision": "f2191ad80d811cd5e309d83ffad9b2607d27aabc",
+          "sha256": "1373c64f1f5c578e5270ad840b2b90d0468b88837fc3c6a5e83c4bc4f2b7a5a7"
+        }
+      ],
+      "prebuild_seconds": 1.358,
+      "artifact_bytes": 936430,
+      "verification": {
+        "seconds": 2.593,
+        "build_seconds": 0.37,
+        "library_reused": true,
+        "demo_sha256": "bafd03bd2eef8a6ac7e8d60909ba717788ab9372c96624678a9666b8199611f9",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "source_revisions": {
+          "jacobwilliams/mpfun2020-var1": "f2191ad80d811cd5e309d83ffad9b2607d27aabc"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "jacobwilliams/mpfun2020-var1"
+          ]
+        }
+      },
+      "catalog_patches": {
+        "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+        "edits": [
+          {
+            "path": "fpm.toml",
+            "sha256": "e4515e7c06ad7fb05d01bf91a4029c6de023cf7903f748f5b775c1f919853fe8",
+            "before": "name = \"kronrod\"\nauthor = \"Jacob Williams\"\ncopyright = \"Copyright (c) 2022, Jacob Williams\"\nlicense = \"LGPL\"\ndescription = \"Program for genering Gauss-Kronrod Coefficients\"\nhomepage = \"https://github.com/jacobwilliams/kronrod\"\nkeywords = [\n    \"gauss-kronrod\",\n]\n\n[dependencies.mpfun2020-var1]\npath = \"../../1/mpfun2020-var1-f2191ad80d811cd5e309d83ffad9b2607d27aabc\"\n\n[build]\nauto-executables = true\nauto-examples = true\nauto-tests = true\n",
+            "after": "name = \"kronrod\"\nauthor = \"Jacob Williams\"\ncopyright = \"Copyright (c) 2022, Jacob Williams\"\nlicense = \"LGPL\"\ndescription = \"Program for genering Gauss-Kronrod Coefficients\"\nhomepage = \"https://github.com/jacobwilliams/kronrod\"\nkeywords = [\n    \"gauss-kronrod\",\n]\n\n[dependencies.mpfun2020-var1]\npath = \"../../1/mpfun2020-var1-f2191ad80d811cd5e309d83ffad9b2607d27aabc\"\n\n[build]\nauto-executables = false\nauto-examples = false\nauto-tests = false\n\n[library]\nsource-dir = \"app\"\n"
+          },
+          {
+            "path": "app/main.f90",
+            "sha256": "979e08f29ea88ca0b2d8399e9975279698790d938a0caedcf35fd3214864cce7",
+            "before": "    program main\n\n    use mpmodule\n    use iso_fortran_env, only: wp => real64\n\n    implicit none\n\n",
+            "after": "    module playground_kronrod\n\n    use mpmodule\n    use iso_fortran_env, only: wp => real64\n\n    implicit none\n    private\n    public :: init, kronrod, nwds2\n\n"
+          },
+          {
+            "path": "app/main.f90",
+            "sha256": "fd0910400dc90e64873d18f1d33d0913e9949df5cd86a01d21bfa970047c4f51",
+            "before": "    if (ndp2 > mpipl) then\n        write (6, '(\"Increase default precision in module MPFUNF.\")')\n        stop\n      endif\n\n    call init()\n\n    do icase = 1, size(cases)\n\n        write(*,*) ''\n        write(*,*) '----------------------'\n\n        n = cases(icase)\n\n        if (allocated(w1)) deallocate(w1)\n        if (allocated(w2)) deallocate(w2)\n        if (allocated(x)) deallocate(x)\n\n        allocate(w1(n+1))\n        allocate(w2(n+1))\n        allocate(x(n+1))\n\n        call kronrod ( n, eps, x, w1, w2 )\n\n        write(*,*) ''\n        write(*,*) 'n = ', n\n        write(*,*) ''\n        write(*,*) 'abscissas:'\n        do i = 1, n+1\n            call mpwrite (6, 60, 40, x(i))\n        end do\n        write(*,*) ''\n        write(*,*) 'Gauss-Kronrod weights:'\n        do i = 1, n+1\n            call mpwrite (6, 60, 40, W1(i))\n        end do\n        write(*,*) ''\n        write(*,*) 'Gauss weights:'\n        do i = 1, n+1\n            call mpwrite (6, 60, 40, W2(i))\n        end do\n\n    end do\n\n",
+            "after": ""
+          },
+          {
+            "path": "app/main.f90",
+            "sha256": "31f740775a4d3f08966b034e84b5a0412ada7a03ee71e10e2ac7aaee62a1318c",
+            "before": "    end program main",
+            "after": "    end module playground_kronrod"
+          }
+        ]
+      },
+      "shared_dependencies": [
+        {
+          "repository": "jacobwilliams/mpfun2020-var1",
+          "key": "3e1205049d6e0a641c29f743",
+          "artifact_bytes": 8283153,
+          "manifest_sha256": "cfdd024f46b02e254060279ba50c4c5c8cd8d149d45cd52879fd09668d2c9e18"
+        }
+      ],
+      "verified_at": "2026-10-29T01:33:12.542944+00:00"
+    },
+    {
+      "id": "fortran-regex",
+      "repository": "perazz/fortran-regex",
+      "revision": "96ab33fe003862a28cec91ddd170ac0e86c26c87",
+      "records": [
+        {
+          "repository": "perazz/fortran-regex",
+          "revision": "96ab33fe003862a28cec91ddd170ac0e86c26c87",
+          "sha256": "a11de40cd2ac971b4e775a6bac2d537f3efa263562688525df18ba2722b944eb"
+        }
+      ],
+      "prebuild_seconds": 1.965,
+      "artifact_bytes": 1425404,
+      "verification": {
+        "seconds": 2.239,
+        "build_seconds": 0.291,
+        "library_reused": true,
+        "demo_sha256": "7d3920a6b5f1c560665ea98f229f29cda121301b36f3c23d2f0c6bfd1f1e8eed",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "verified_at": "2026-10-27T01:59:01.746663+00:00"
+    },
+    {
+      "id": "fed",
+      "repository": "degawa/fed",
+      "revision": "d735aa2b3bd6b20840bcc16ff569e8cfc0492267",
+      "records": [
+        {
+          "repository": "degawa/fed",
+          "revision": "d735aa2b3bd6b20840bcc16ff569e8cfc0492267",
+          "sha256": "09cd5298480abf152954bc88e8d2792f2d5361a40d8ad77ebd971f3db317cd70"
+        },
+        {
+          "repository": "fortran-lang/stdlib",
+          "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+        },
+        {
+          "repository": "degawa/enclose",
+          "revision": "d3ea2ea989296bf855f4cb07ea8db601020805f2",
+          "sha256": "ce7e3d3f4e5a4f492cf1c0c5d71086b4b77dc56a003977c4348e077f85223088"
+        },
+        {
+          "repository": "degawa/enumul",
+          "revision": "064bba70797b84100b25dc4466b28f1f38147d0e",
+          "sha256": "0bbb1c13ec5780cbf15bd9380de9e288101edfac3572592f13b8a5d1b81cd364"
+        }
+      ],
+      "prebuild_seconds": 1.514,
+      "artifact_bytes": 536310,
+      "verification": {
+        "seconds": 2.154,
+        "build_seconds": 0.309,
+        "library_reused": true,
+        "demo_sha256": "9ac35bada9d3292c1c41bcb1e8cfb8c0b78fd34e7378c16c7c01c7c72c58bddf",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "registry": {
+          "stdlib": {
+            "git": "https://github.com/fortran-lang/stdlib",
+            "rev": "58eb9133966c2797e0593281169ef57c43eccc1d"
+          }
+        },
+        "manifest_versions": {
+          "fortran-lang/stdlib": "0.8.1"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "degawa/fed",
+            "fortran-lang/stdlib",
+            "degawa/enclose",
+            "degawa/enumul"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "degawa/fed",
+          "key": "f6eebf5c3529abad6a6572ef",
+          "artifact_bytes": 810167,
+          "manifest_sha256": "0426171de6d62cfb0e8d179ea2cecdf6809063200723b573fecffbc569b05ce0"
+        },
+        {
+          "repository": "fortran-lang/stdlib",
+          "key": "d7ecdecc5838e3e8fe8781fb",
+          "artifact_bytes": 93999232,
+          "manifest_sha256": "99bdbc76f53cd3b45fecd93ad55283a5acc2730e8c88d4777511bbcda432ce4c"
+        },
+        {
+          "repository": "degawa/enumul",
+          "key": "cd4eba20d584ff7e6efcbc79",
+          "artifact_bytes": 260231,
+          "manifest_sha256": "f07343471d5b46c2f7451789109ad30969c9e40e6135fbc69758e0c88f35616b"
+        },
+        {
+          "repository": "degawa/enclose",
+          "key": "31f5662aab212a5975cd8825",
+          "artifact_bytes": 9612,
+          "manifest_sha256": "3132bec1c4ca22f47a6a45830d9f196d1b26c66431045293aae5cfafb539926e"
+        }
+      ],
+      "verified_at": "2026-10-29T01:33:12.542944+00:00"
+    },
+    {
+      "id": "any",
+      "repository": "degawa/any",
+      "revision": "b9eb5e3fdc8f162ae8f2c5d8d026537ed2397830",
+      "records": [
+        {
+          "repository": "degawa/any",
+          "revision": "b9eb5e3fdc8f162ae8f2c5d8d026537ed2397830",
+          "sha256": "2a001b2e843796604ad21652b4899cd1965fdd295c2ee55c8c20a81f92f768c5"
+        },
+        {
+          "repository": "degawa/fassert",
+          "revision": "678fa217df79af318cc537d3c69eab3b7cf68cb7",
+          "sha256": "3e456e3c3b57ca276e96deb1ada542154442c7787d5875b366021e75986c265f"
+        }
+      ],
+      "prebuild_seconds": 2.016,
+      "artifact_bytes": 536310,
+      "verification": {
+        "seconds": 3.079,
+        "build_seconds": 1.333,
+        "library_reused": true,
+        "demo_sha256": "c791c7de896c3e6f53988caf9575e7d6f2a0a2a14cf124cf8cfc6caf06b1ca86",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "degawa/any",
+            "degawa/fassert"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "degawa/any",
+          "key": "5b7d4fd69f7c67d6bdf4241f",
+          "artifact_bytes": 3097910,
+          "manifest_sha256": "baa8718116a64882bbaa566f744e8b22bb02b196c54d712f0acd3c5aa971b401"
+        },
+        {
+          "repository": "degawa/fassert",
+          "key": "3b7e7b3c1258a866ea57df6b",
+          "artifact_bytes": 4990004,
+          "manifest_sha256": "539b1d8a8ea964485e2946e85ac7531ea6021e79f0a8d58458fae5e60a234904"
+        }
+      ],
+      "verified_at": "2026-10-29T01:33:12.542944+00:00"
+    },
+    {
+      "id": "for_fifo_queue",
+      "repository": "jordan4ibanez/for_fifo_queue",
+      "revision": "b04b536589af8cf041b8e5e53484e57147fc746f",
+      "records": [
+        {
+          "repository": "jordan4ibanez/for_fifo_queue",
+          "revision": "b04b536589af8cf041b8e5e53484e57147fc746f",
+          "sha256": "15c6f3fbc9c8eb44ced15ae5694261759f4b4cf24e4b407fe75886bcf3494dc8"
+        }
+      ],
+      "prebuild_seconds": 0.745,
+      "artifact_bytes": 536320,
+      "verification": {
+        "seconds": 1.779,
+        "build_seconds": 0.172,
+        "library_reused": true,
+        "demo_sha256": "d89062451085174aeb37a5aabb34a43c4b1a3f55d67999e8242d0c7cca1185e4",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "jordan4ibanez/for_fifo_queue"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "jordan4ibanez/for_fifo_queue",
+          "key": "f22b4a2a8c25644e2fc5c06e",
+          "artifact_bytes": 12327,
+          "manifest_sha256": "dd6e23aab7dd4d8e63fb15c8562ff5738a8b1eee468d2a9210031992f6dddf52"
+        }
+      ],
+      "verified_at": "2026-10-29T01:33:12.542944+00:00"
+    },
+    {
+      "id": "jeyemhex-regex",
+      "repository": "jeyemhex/fortran-regex",
+      "revision": "2ca0043837a86a4f77df494ddad2240c1b70e576",
+      "records": [
+        {
+          "repository": "jeyemhex/fortran-regex",
+          "revision": "2ca0043837a86a4f77df494ddad2240c1b70e576",
+          "sha256": "e55cf5358c50d1c99c06841c6911d5cf222099b7c3b63576f255292b251ce1d5"
+        }
+      ],
+      "prebuild_seconds": 1.32,
+      "artifact_bytes": 536321,
+      "verification": {
+        "seconds": 5.083,
+        "build_seconds": 3.391,
+        "library_reused": true,
+        "demo_sha256": "54189e2c4ce91df3b0ddc8af3ba7ff956f4612a06a68f251525edc8f43092d43",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "jeyemhex/fortran-regex"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "jeyemhex/fortran-regex",
+          "key": "72b6cba5cda01845d3a5e586",
+          "artifact_bytes": 118852,
+          "manifest_sha256": "49e0f087c40f1740b1d793fdb53b5c05d86f07b139e8ce97db6a4d207f67c2e6"
+        }
+      ],
+      "verified_at": "2026-10-29T01:33:12.542944+00:00"
+    },
+    {
+      "id": "string-utf-8",
+      "repository": "guntherwillems/fortran-string-utf-8",
+      "revision": "69751115936d5a89439555ddeb1d57537a562e64",
+      "records": [
+        {
+          "repository": "guntherwillems/fortran-string-utf-8",
+          "revision": "69751115936d5a89439555ddeb1d57537a562e64",
+          "sha256": "6215ef45da9ce5c44948a83ffc7ac7d589e71622f2524e5d09ac9c3ab567a18c"
+        }
+      ],
+      "prebuild_seconds": 1.154,
+      "artifact_bytes": 536326,
+      "verification": {
+        "seconds": 2.496,
+        "build_seconds": 0.349,
+        "library_reused": true,
+        "demo_sha256": "7ba7476905d9a55c14ecdb28ed1fad2e0e0dafcffcb14135f7aef469903deb87",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "guntherwillems/fortran-string-utf-8"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "guntherwillems/fortran-string-utf-8",
+          "key": "edc77144a688f46eda0b1384",
+          "artifact_bytes": 54515,
+          "manifest_sha256": "e6c19bea234077be591ec189ec8db1f975a81165420310dd3ac4b142af419899"
+        }
+      ],
+      "verified_at": "2026-10-29T01:58:37.812754+00:00"
+    },
+    {
+      "id": "fortime",
+      "repository": "gha3mi/fortime",
+      "revision": "5a31be5a47bf2c0bf49c4d0fb7b67415ccc0a1e7",
+      "records": [
+        {
+          "repository": "gha3mi/fortime",
+          "revision": "5a31be5a47bf2c0bf49c4d0fb7b67415ccc0a1e7",
+          "sha256": "cef276f7fac8b7a9d2b9ba113e553a2167f4c4bb79af16bdfea680087a529d19"
+        },
+        {
+          "repository": "szaghi/FACE",
+          "revision": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8",
+          "sha256": "d4cc3c3a2c70e7369607624ae3361a6f7b2ba3f1e9a63ffd94ecb5cd4b019469"
+        }
+      ],
+      "prebuild_seconds": 1.42,
+      "artifact_bytes": 536314,
+      "verification": {
+        "seconds": 3.127,
+        "build_seconds": 0.675,
+        "library_reused": true,
+        "demo_sha256": "6d322e08ec284753be5521d2f431288d0f5efd254348341eadc69acc0caa770b",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "manifest_versions": {
+          "gha3mi/fortime": "0.0.0"
+        },
+        "source_revisions": {
+          "szaghi/face": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8"
+        },
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "gha3mi/fortime",
+            "szaghi/face"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "gha3mi/fortime",
+          "key": "d6661efb128f236e5c6fc2d9",
+          "artifact_bytes": 25766,
+          "manifest_sha256": "fcb25cc7c41221beb0145af86d9cd2bd1ce5eff6347a404455b62b7c5f35d981"
+        },
+        {
+          "repository": "szaghi/FACE",
+          "key": "df0f2547fec268a5bbe7b7e5",
+          "artifact_bytes": 70927,
+          "manifest_sha256": "760af846349e84e9a6e960c76f575e6a0f676ec87e9c01aba2957fa294d94fdf"
+        }
+      ],
+      "verified_at": "2026-10-29T01:58:37.812754+00:00"
+    },
+    {
+      "id": "fassert",
+      "repository": "degawa/fassert",
+      "revision": "678fa217df79af318cc537d3c69eab3b7cf68cb7",
+      "records": [
+        {
+          "repository": "degawa/fassert",
+          "revision": "678fa217df79af318cc537d3c69eab3b7cf68cb7",
+          "sha256": "3e456e3c3b57ca276e96deb1ada542154442c7787d5875b366021e75986c265f"
+        }
+      ],
+      "prebuild_seconds": 3.12,
+      "artifact_bytes": 536315,
+      "verification": {
+        "seconds": 2.092,
+        "build_seconds": 0.473,
+        "library_reused": true,
+        "demo_sha256": "89c243974f26f51d2d23f7d402317f1197ac544d7490e5993bb90742fea53633",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "degawa/fassert"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "degawa/fassert",
+          "key": "3b7e7b3c1258a866ea57df6b",
+          "artifact_bytes": 4990004,
+          "manifest_sha256": "539b1d8a8ea964485e2946e85ac7531ea6021e79f0a8d58458fae5e60a234904"
+        }
+      ],
+      "verified_at": "2026-10-29T01:58:37.812754+00:00"
+    },
+    {
+      "id": "errstat",
+      "repository": "degawa/errstat",
+      "revision": "336ee374c82a4525d87444c767a1f23f059d5723",
+      "records": [
+        {
+          "repository": "degawa/errstat",
+          "revision": "336ee374c82a4525d87444c767a1f23f059d5723",
+          "sha256": "38be949552f3bff87ebb38b922718a19741b854f172b6c8951913d8621294df2"
+        }
+      ],
+      "prebuild_seconds": 1.205,
+      "artifact_bytes": 536314,
+      "verification": {
+        "seconds": 2.322,
+        "build_seconds": 0.546,
+        "library_reused": true,
+        "demo_sha256": "96ae8eb80913eeefd5d58cd5c3991a6ad754bc83e0b06e1cef3ca74c39187c31",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "degawa/errstat"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "degawa/errstat",
+          "key": "5fb23a0f6c078f3ce02239b2",
+          "artifact_bytes": 79064,
+          "manifest_sha256": "f7e11ec0eaa109cb924fbd811e7298265226b0a7e82ff0eba62a452c42f26a3a"
+        }
+      ],
+      "verified_at": "2026-10-29T01:58:37.812754+00:00"
+    },
+    {
+      "id": "slinked-list",
+      "repository": "zoziha/slinked-list",
+      "revision": "aa04fcb392466e52277200d7380913fe071fe620",
+      "records": [
+        {
+          "repository": "zoziha/slinked-list",
+          "revision": "aa04fcb392466e52277200d7380913fe071fe620",
+          "sha256": "7c0817bb083eb2686e23d13a238e3c2058835cf8315043a25f8de0f64e0ad227"
+        }
+      ],
+      "prebuild_seconds": 1.218,
+      "artifact_bytes": 588004,
+      "verification": {
+        "seconds": 1.491,
+        "build_seconds": 0.343,
+        "library_reused": true,
+        "demo_sha256": "c15e46b73b6a9b1bb85f8488fa2fac82f0bf0690d8be708a95544f7832d678b3",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8"
+      },
+      "catalog_patches": {
+        "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+        "edits": [
+          {
+            "path": "src/sll_node.f90",
+            "sha256": "a1c19a030622822592ee5c57fca5b0915bdff22afe72ab9ad6e1f49b7fef87f1",
+            "before": "type(node) pure function node_init(data)",
+            "after": "type(node) function node_init(data)"
+          }
+        ]
+      },
+      "verified_at": "2026-10-29T01:58:37.812754+00:00"
+    },
+    {
+      "id": "enclose",
+      "repository": "degawa/enclose",
+      "revision": "d3ea2ea989296bf855f4cb07ea8db601020805f2",
+      "records": [
+        {
+          "repository": "degawa/enclose",
+          "revision": "d3ea2ea989296bf855f4cb07ea8db601020805f2",
+          "sha256": "ce7e3d3f4e5a4f492cf1c0c5d71086b4b77dc56a003977c4348e077f85223088"
+        }
+      ],
+      "prebuild_seconds": 0.998,
+      "artifact_bytes": 536314,
+      "verification": {
+        "seconds": 1.909,
+        "build_seconds": 0.31,
+        "library_reused": true,
+        "demo_sha256": "9a0190870e01edb2e86c87b5bcd77339a4abc470c757ae9fa755c622ce1c8e01",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      },
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "shared_dependencies": {
+          "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+          "repositories": [
+            "degawa/enclose"
+          ]
+        }
+      },
+      "shared_dependencies": [
+        {
+          "repository": "degawa/enclose",
+          "key": "31f5662aab212a5975cd8825",
+          "artifact_bytes": 9612,
+          "manifest_sha256": "3132bec1c4ca22f47a6a45830d9f196d1b26c66431045293aae5cfafb539926e"
+        }
+      ],
+      "verified_at": "2026-10-29T01:58:37.812754+00:00"
     }
   ],
   "verification_dates_note": "Checks are incremental. Each package records its verification date; unchanged checks are retained, not rerun when the catalog expands. Runtime-only image preview changes leave the library recipe unchanged."

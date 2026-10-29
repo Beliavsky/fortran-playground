@@ -1,0 +1,15 @@
+name = "string_utf_8"
+version = "0.2.1"
+license = "MIT"
+author = "Gunther Willems"
+
+[build]
+auto-executables = true
+auto-tests = true
+auto-examples = false
+module-naming = false
+
+[[test]]
+name="tests"
+source-dir="test"
+main="tests.f90"

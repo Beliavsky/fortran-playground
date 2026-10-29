@@ -1,0 +1,11 @@
+{
+  "id": "fregex",
+  "repository": "14NGiestas/fregex",
+  "revision": "1e20f084fb33b2b9dda8ca887bafae3c847e08c6",
+  "archive_sha256": "f78582f77518f7836c5fb50cec410309fe48c4b44143aca5b87ceb857c2becbb",
+  "checked_at": "2026-10-29T00:49:59.109158+00:00",
+  "status": "deferred",
+  "reason": "The original PCRE 1 API needs -lpcre. The default Debian 13 (trixie) main amd64 package index contains neither libpcre3 nor libpcre3-dev. PCRE2 is a different API, not a drop-in link substitution. Deferred pending an upstream PCRE2 port or an explicitly maintained native-library recipe.",
+  "diagnostic": " + mkdir -p build/dependencies\n[  0%]              pyplot_module.f90\n[ 14%]              pyplot_module.f90  done.\n[ 14%]             pcre_constants.f90\n[ 28%]             pcre_constants.f90  done.\n[ 28%]            pcre_interfaces.f90\n[ 42%]            pcre_interfaces.f90  done.\n[ 42%]                     fregex.f90\n[ 57%]                     fregex.f90  done.\n[ 57%]           libplayground-main.a\n[ 71%]           libplayground-main.a  done.\n[ 71%]                       main.f90\n[ 85%]                       main.f90  done.\n[ 85%]                playground-main\n<ERROR> Compilation failed for object \" playground-main \"\n[100%]                playground-main  done.\n\n/usr/bin/ld: cannot find -lpcre: No such file or directory\ncollect2: error: ld returned 1 exit status\n<ERROR> stopping due to failed compilation\nSTOP 1\n",
+  "reproducer": "docs/fpm-candidates/fregex/main.f90"
+}

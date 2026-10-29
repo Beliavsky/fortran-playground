@@ -1,0 +1,57 @@
+{
+  "id": "orbs",
+  "repository": "degawa/orbs",
+  "revision": "3cf7fcec19798367f6f5bd26bad861c510449265",
+  "archive_sha256": "dcbb0c8eeaa99febd6683dd2270dcf5757e512193eebe77258918c2713f99d23",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "registry": {
+      "stdlib": {
+        "git": "https://github.com/fortran-lang/stdlib",
+        "rev": "58eb9133966c2797e0593281169ef57c43eccc1d"
+      }
+    },
+    "source_revisions": {
+      "fortran-lang/stdlib": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "degawa/bstrith": "7ed7730e34c7e1f78f2be9426ccc170f9dcaf57e"
+    },
+    "manifest_versions": {
+      "fortran-lang/stdlib": "0.8.1"
+    },
+    "shared_dependencies": {
+      "adapter_sha256": "8a85ff125c66db77f139fb6b62e6895fa314413a2b0350e68d8f3126c1d19707",
+      "repositories": [
+        "fortran-lang/stdlib"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "repository": "fortran-lang/stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+    },
+    {
+      "repository": "degawa/bstrith",
+      "revision": "7ed7730e34c7e1f78f2be9426ccc170f9dcaf57e",
+      "sha256": "f7f3c9a98b395f20760b4883b43b7122f7b59eb6d8aa08b5afb211c5ca9d6344"
+    }
+  ],
+  "checked_at": "2026-10-28T22:42:59.624262+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/orbs.f90",
+  "verification": {
+    "seconds": 1.894,
+    "build_seconds": 0.23,
+    "library_reused": true,
+    "demo_sha256": "11104e37f36be3c44fcc593741d47d68e6d2bcf67bb8349600dee24cb08adbfc",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Fixed-width bitset arithmetic and logical operations. The main computes an x neighbor for every cell of a two-dimensional 4-by-4 Morton grid, checking all sixteen results and wraparound against independent intrinsic integer operations."
+}

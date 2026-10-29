@@ -1,0 +1,39 @@
+{
+  "id": "amosf90",
+  "repository": "Euler-37/amosf90",
+  "revision": "b54a4d4a1d8f7c97acd180ed5bbaae8d089a9fa7",
+  "archive_sha256": "bde16c382a398bcf7122d1886fef8ed49e793d66c4f0f862b17ca48162115f1b",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "shared_dependencies": {
+      "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+      "repositories": [
+        "euler-37/amosf90"
+      ]
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-28T23:12:09.139584+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/amosf90.f90",
+  "verification": {
+    "seconds": 1.459,
+    "build_seconds": 0.149,
+    "library_reused": true,
+    "demo_sha256": "85860c7f1e45f3c1e0b9c20149d513a1beea0c30f0e44f7c813d5cc4db7083e6",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "NOASSERTION",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "AMOS module interfaces for complex-argument Bessel functions with noninteger nonnegative order, including modified Bessel functions. The checked main compares J_0.3 and I_0.3 at 1+0.5i with independent convergent power series and K_0.5 with its closed form. Other argument regions, orders, scaling modes and Airy/Hankel routines are not validated. The upstream README warns of possible bugs.",
+  "license_status": {
+    "catalog_value": "NOASSERTION",
+    "manifest_value": "license",
+    "root_license_notice_found": false,
+    "notes": "The pinned archive has a placeholder license field and no root license file or license notice found in the reviewed source/README. No license terms are inferred from the placeholder."
+  }
+}

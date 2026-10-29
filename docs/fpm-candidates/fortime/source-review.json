@@ -1,0 +1,46 @@
+{
+  "id": "fortime",
+  "repository": "gha3mi/fortime",
+  "revision": "5a31be5a47bf2c0bf49c4d0fb7b67415ccc0a1e7",
+  "archive_sha256": "cef276f7fac8b7a9d2b9ba113e553a2167f4c4bb79af16bdfea680087a529d19",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "manifest_versions": {
+      "gha3mi/fortime": "0.0.0"
+    },
+    "source_revisions": {
+      "szaghi/face": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8"
+    },
+    "shared_dependencies": {
+      "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+      "repositories": [
+        "gha3mi/fortime",
+        "szaghi/face"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "repository": "szaghi/FACE",
+      "revision": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8",
+      "sha256": "d4cc3c3a2c70e7369607624ae3361a6f7b2ba3f1e9a63ffd94ecb5cd4b019469"
+    }
+  ],
+  "checked_at": "2026-10-29T01:58:37.812754+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/fortime.f90",
+  "verification": {
+    "seconds": 3.127,
+    "build_seconds": 0.675,
+    "library_reused": true,
+    "demo_sha256": "6d322e08ec284753be5521d2f431288d0f5efd254348341eadc69acc0caa770b",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "BSD-3-Clause",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Serial system_clock and CPU timers. The checked main computes the exact sum of integers 1 through 100000, checks finite nonnegative elapsed times and prints the sum and timings. The root manifest VERSION placeholder is replaced with adapter version 0.0.0; the pinned source commit identifies the actual library. FACE is pinned to an already used revision. No Fortran source edits. MPI/OpenMP timers are not enabled or tested; sandbox timings vary and are not benchmark guarantees."
+}

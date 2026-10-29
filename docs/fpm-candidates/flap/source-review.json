@@ -1,0 +1,37 @@
+{
+  "id": "flap",
+  "repository": "szaghi/FLAP",
+  "revision": "17d58bd8c867206baec6f56cbf8156a1afd3cc4a",
+  "archive_sha256": "7aaa5b5652ee0692b1ff500ad75e61c60b56596a5d79c8da03c02df119ff48b6",
+  "license": "MIT",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8"
+  },
+  "dependencies": [],
+  "status": "deferred",
+  "checked_at": "2026-10-28T23:12:22.929576+00:00",
+  "reason": "Latest root archive contains a symlink; an older root passes extraction but explicitly pins FACE 1455c549ae0c1ead96961ca61a73131d8176b6a4, whose archive also contains a symlink. No archive rules were relaxed; compilation was not attempted.",
+  "rejected_head": {
+    "revision": "19cad029681176ce9ae35296e99c5cf42da0212e",
+    "archive_sha256": "2f9f6ba4aadf39c367630763a5c4e566e30fd6abc4b7b59cf1e6762d795bcfe2",
+    "links": [
+      {
+        "path": "FLAP-19cad029681176ce9ae35296e99c5cf42da0212e/CONTRIBUTING.md",
+        "target": "docs/guide/contributing.md"
+      }
+    ],
+    "preparation_error": "Package archive contains an unsafe path, link, or special file."
+  },
+  "blocked_dependency": {
+    "repository": "szaghi/FACE",
+    "revision": "1455c549ae0c1ead96961ca61a73131d8176b6a4",
+    "archive_sha256": "266ede3670cb0ec03685f06d1a13db38c904110ddab6b6426a6c562f263eb47c",
+    "links": [
+      {
+        "path": "FACE-1455c549ae0c1ead96961ca61a73131d8176b6a4/doc/README-FACE.md",
+        "target": "../README.md"
+      }
+    ]
+  },
+  "stage": "source preparation"
+}

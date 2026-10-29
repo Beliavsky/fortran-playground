@@ -1,0 +1,33 @@
+{
+  "id": "array_range",
+  "repository": "degawa/array_range",
+  "revision": "cd21ccb982e23de9c2df44c12edab44dd84562dc",
+  "archive_sha256": "269b583b0e6cb353191d88b50859cd6cf80d4807497e9f1178f8207b807df214",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "shared_dependencies": {
+      "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+      "repositories": [
+        "degawa/array_range"
+      ]
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T00:57:33.593173+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/array_range.f90",
+  "verification": {
+    "seconds": 1.086,
+    "build_seconds": 0.178,
+    "library_reused": true,
+    "demo_sha256": "909543efcb535b0594447d9fa9770cf062f9ad24394b6752cd5a834f9b709381",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Derived types and constructors for multidimensional array bounds. The checked main reconstructs and round-trips bounds [-1:1,4:5], traverses exactly six elements using stored bounds and verifies their sum of 270. No source edits. It does not cover all dimensions, vector/tensor wrappers, empty arrays or invalid bounds. This is an indexing utility, not a numerical solver."
+}

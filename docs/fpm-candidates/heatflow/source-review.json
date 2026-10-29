@@ -1,0 +1,43 @@
+{
+  "id": "heatflow",
+  "repository": "ExeQuantCode/HeatFlow",
+  "revision": "b0d930caad9160a15f0aeafa238c448f48f28d55",
+  "archive_sha256": "dc323ec732a62a15cf9e42b9d4a9f8989d6e6c3315ca0352e285d7efd397f62c",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "shared_dependencies": {
+      "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+      "repositories": [
+        "exequantcode/heatflow"
+      ]
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-28T22:10:17.874400+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/heatflow.f90",
+  "verification": {
+    "seconds": 2.084,
+    "build_seconds": 0.514,
+    "library_reused": true,
+    "demo_sha256": "4395fbccc1e2d5130e0cd8c7d5f58fc571c125ae0873393e852262cee539c723",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "GPL-3.0",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Fourier/Cattaneo heat-transport code. The checked main applies its sparse BiCG solver to an independent backward-Euler discretization of the one-dimensional heat equation; it checks the discrete solution, continuous-solution error and independent matrix residuals. It does not exercise the complete evolution/Cattaneo application.",
+  "initial_verification": {
+    "seconds": 1.528,
+    "build_seconds": 0.387,
+    "library_reused": true,
+    "demo_sha256": "4395fbccc1e2d5130e0cd8c7d5f58fc571c125ae0873393e852262cee539c723",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  }
+}

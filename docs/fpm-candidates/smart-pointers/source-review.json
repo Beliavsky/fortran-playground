@@ -1,0 +1,33 @@
+{
+  "id": "smart-pointers",
+  "repository": "sourceryinstitute/smart-pointers",
+  "revision": "35130adc4be4384a14b2369e5edd36d4665cd994",
+  "archive_sha256": "4bd34d315fc73d3fbc23af6c314d6f2904bfb584c595ef9aac926c3c826dbf45",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "shared_dependencies": {
+      "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+      "repositories": [
+        "sourceryinstitute/smart-pointers"
+      ]
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T00:34:23.456367+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/smart-pointers.f90",
+  "verification": {
+    "seconds": 4.359,
+    "build_seconds": 2.736,
+    "library_reused": true,
+    "demo_sha256": "b47909cd67469bbe4c0e212b838aae77f8526191b9da038d842cfb37259b849a",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "BSD-3-Clause",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Reference-counted resource management. Adapted from the author example: a user type extends sp_smart_pointer_t and implements free. The checked main shares one integer resource, verifies reference counts and shared target, checks no premature cleanup and confirms exactly one cleanup after subroutine return. No source edits. This is not exhaustive compiler finalization conformance testing."
+}

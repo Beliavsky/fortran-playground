@@ -1,0 +1,61 @@
+{
+  "id": "athena",
+  "repository": "nedtaylor/athena",
+  "revision": "4b81aeac07113628c2c9a476648d5ac2a91b7c91",
+  "archive_sha256": "2cc29f7f0b259e50642c1b05facf6bcb733acd992d0775df45c3ab1f58a6035c",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "apt_packages": [
+      "libblas-dev=3.12.1-6",
+      "liblapack-dev=3.12.1-6"
+    ]
+  },
+  "dependencies": [
+    {
+      "repository": "nedtaylor/coreutils",
+      "revision": "ead4501f4b695c4f0fe3267f1bf5318544c9b1e2",
+      "sha256": "a2979763627707ba61169b4abacd7ee60b586df9115ac2beb9ee674c25031554"
+    },
+    {
+      "repository": "nedtaylor/diffstruc",
+      "revision": "88565f8e01792706edc0bd7e70dde957c26122a4",
+      "sha256": "84daa1e2c23f1cd2285b5212f4f5390cf930336c98feae7da0b5eb4534a7e65f"
+    },
+    {
+      "repository": "nedtaylor/graphstruc",
+      "revision": "ad41c6bca04cadd1df20319b29f231469c530dae",
+      "sha256": "4d6a942f76bdc0ccca609ac0a90a7b728d56fc403c4af2f7c597fb764885ea3e"
+    }
+  ],
+  "catalog_patches": {
+    "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+    "edits": [
+      {
+        "path": "fpm.toml",
+        "sha256": "e0158a93d0acef8ed02759a4b54e45f165a8fccd67423c680cc7179d0ee3a194",
+        "before": "name = \"athena\"\nversion = \"2.1.1\"\nlicense = \"MIT\"\nauthor = \"Ned Thaddeus Taylor\"\nmaintainer = \"n.t.taylor@exeter.ac.uk\"\ndescription = \"A Fortran library for building, training and testing neural networks\"\n\n[library]\nsource-dir = \"src\"\n\n[build]\nauto-executables = true\nauto-tests = true\nauto-examples = false\nmodule-naming = false\n\n[dependencies.coreutils]\npath = \"../../1/coreutils-ead4501f4b695c4f0fe3267f1bf5318544c9b1e2\"\n\n[dependencies.diffstruc]\npath = \"../../2/diffstruc-88565f8e01792706edc0bd7e70dde957c26122a4\"\n\n[dependencies.graphstruc]\npath = \"../../3/graphstruc-ad41c6bca04cadd1df20319b29f231469c530dae\"\n\n[features.wandb.dependencies.wandb-fortran]\ngit = \"https://github.com/nedtaylor/wandb-fortran\"\n\n[features.wandb.dependencies.example_library]\npath = \"example/example_library\"\n\n[features.wandb.preprocess.cpp]\nmacros = [\n    \"_WANDB\",\n]\n\n[[features.wandb.example]]\nname = \"wandb_sine\"\nsource-dir = \"example/wandb_sine/src\"\nmain = \"main.f90\"\n\n[[features.wandb.example]]\nname = \"wandb_pinn_burgers\"\nsource-dir = \"example/wandb_pinn_burgers/src\"\nmain = \"main.f90\"\n\n[[features.wandb.example]]\nname = \"wandb_sweep\"\nsource-dir = \"example/wandb_sweep/src\"\nmain = \"main.f90\"\n\n[[features.wandb.example]]\nname = \"wandb_network_sine\"\nsource-dir = \"example/wandb_network_sine/src\"\nmain = \"main.F90\"\n\n[install]\nlibrary = false\n\n[fortran]\nimplicit-typing = false\nimplicit-external = false\nsource-form = \"free\"\n\n[preprocess.cpp]\nsuffixes = [\n    \"F90\",\n    \"f90\",\n]\n\n[[example]]\nname = \"sine\"\nsource-dir = \"example/sine/src\"\nmain = \"main.f90\"\n\n[example.dependencies.example_library]\npath = \"example/example_library\"\n\n[example.dependencies.atomstruc]\ngit = \"https://github.com/nedtaylor/atomstruc\"\nbranch = \"column-major-order\"\n\n[[example]]\nname = \"simple\"\nsource-dir = \"example/simple/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"mnist\"\nsource-dir = \"example/mnist/src\"\n\n[[example]]\nname = \"mnist_addit\"\nsource-dir = \"example/mnist_addit/src\"\n\n[[example]]\nname = \"mnist_3D\"\nsource-dir = \"example/mnist_3D/src\"\n\n[[example]]\nname = \"mnist_bn\"\nsource-dir = \"example/mnist_bn/src\"\n\n[[example]]\nname = \"mnist_drop\"\nsource-dir = \"example/mnist_drop/src\"\n\n[[example]]\nname = \"msgpass_chemical\"\nsource-dir = \"example/msgpass_chemical/src\"\n\n[[example]]\nname = \"onnx_gnn\"\nsource-dir = \"example/onnx_gnn/src\"\n\n[[example]]\nname = \"msgpass_euler\"\nsource-dir = \"example/msgpass_euler/src\"\n\n[[example]]\nname = \"pinn_chemical\"\nsource-dir = \"example/pinn_chemical/src\"\n\n[[example]]\nname = \"pinn_burgers\"\nsource-dir = \"example/pinn_burgers/src\"\n\n[[example]]\nname = \"adam_benchmark\"\nsource-dir = \"example/adam_benchmark/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"custom_forward\"\nsource-dir = \"example/custom_forward/src\"\n\n[[example]]\nname = \"onnx\"\nsource-dir = \"example/onnx/src\"\n\n[[example]]\nname = \"onnx_nop\"\nsource-dir = \"example/onnx_nop/src\"\n\n[[example]]\nname = \"resnet\"\nsource-dir = \"example/resnet/src\"\n\n[[example]]\nname = \"rnn_timeseries\"\nsource-dir = \"example/rnn_timeseries/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"gno_regression\"\nsource-dir = \"example/gno_regression/src\"\n\n[[example]]\nname = \"ono_heat\"\nsource-dir = \"example/ono_heat/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"lno_heat\"\nsource-dir = \"example/lno_heat/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"lno_rollout\"\nsource-dir = \"example/lno_rollout/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"ono_attention_heat\"\nsource-dir = \"example/ono_attention_heat/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"inverse_design\"\nsource-dir = \"example/inverse_design/src\"\nmain = \"main.f90\"\n",
+        "after": "name = \"athena\"\nversion = \"2.1.1\"\nlicense = \"MIT\"\nauthor = \"Ned Thaddeus Taylor\"\nmaintainer = \"n.t.taylor@exeter.ac.uk\"\ndescription = \"A Fortran library for building, training and testing neural networks\"\n\n[library]\nsource-dir = \"src\"\n\n[build]\nauto-executables = true\nauto-tests = true\nauto-examples = false\nmodule-naming = false\nexternal-modules = [\n    \"wf\",\n]\n\n[dependencies.coreutils]\npath = \"../../1/coreutils-ead4501f4b695c4f0fe3267f1bf5318544c9b1e2\"\n\n[dependencies.diffstruc]\npath = \"../../2/diffstruc-88565f8e01792706edc0bd7e70dde957c26122a4\"\n\n[dependencies.graphstruc]\npath = \"../../3/graphstruc-ad41c6bca04cadd1df20319b29f231469c530dae\"\n\n[install]\nlibrary = false\n\n[fortran]\nimplicit-typing = false\nimplicit-external = false\nsource-form = \"free\"\n\n[preprocess.cpp]\nsuffixes = [\n    \"F90\",\n    \"f90\",\n]\n\n[[example]]\nname = \"sine\"\nsource-dir = \"example/sine/src\"\nmain = \"main.f90\"\n\n[example.dependencies.example_library]\npath = \"example/example_library\"\n\n[example.dependencies.atomstruc]\ngit = \"https://github.com/nedtaylor/atomstruc\"\nbranch = \"column-major-order\"\n\n[[example]]\nname = \"simple\"\nsource-dir = \"example/simple/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"mnist\"\nsource-dir = \"example/mnist/src\"\n\n[[example]]\nname = \"mnist_addit\"\nsource-dir = \"example/mnist_addit/src\"\n\n[[example]]\nname = \"mnist_3D\"\nsource-dir = \"example/mnist_3D/src\"\n\n[[example]]\nname = \"mnist_bn\"\nsource-dir = \"example/mnist_bn/src\"\n\n[[example]]\nname = \"mnist_drop\"\nsource-dir = \"example/mnist_drop/src\"\n\n[[example]]\nname = \"msgpass_chemical\"\nsource-dir = \"example/msgpass_chemical/src\"\n\n[[example]]\nname = \"onnx_gnn\"\nsource-dir = \"example/onnx_gnn/src\"\n\n[[example]]\nname = \"msgpass_euler\"\nsource-dir = \"example/msgpass_euler/src\"\n\n[[example]]\nname = \"pinn_chemical\"\nsource-dir = \"example/pinn_chemical/src\"\n\n[[example]]\nname = \"pinn_burgers\"\nsource-dir = \"example/pinn_burgers/src\"\n\n[[example]]\nname = \"adam_benchmark\"\nsource-dir = \"example/adam_benchmark/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"custom_forward\"\nsource-dir = \"example/custom_forward/src\"\n\n[[example]]\nname = \"onnx\"\nsource-dir = \"example/onnx/src\"\n\n[[example]]\nname = \"onnx_nop\"\nsource-dir = \"example/onnx_nop/src\"\n\n[[example]]\nname = \"resnet\"\nsource-dir = \"example/resnet/src\"\n\n[[example]]\nname = \"rnn_timeseries\"\nsource-dir = \"example/rnn_timeseries/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"gno_regression\"\nsource-dir = \"example/gno_regression/src\"\n\n[[example]]\nname = \"ono_heat\"\nsource-dir = \"example/ono_heat/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"lno_heat\"\nsource-dir = \"example/lno_heat/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"lno_rollout\"\nsource-dir = \"example/lno_rollout/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"ono_attention_heat\"\nsource-dir = \"example/ono_attention_heat/src\"\nmain = \"main.f90\"\n\n[[example]]\nname = \"inverse_design\"\nsource-dir = \"example/inverse_design/src\"\nmain = \"main.f90\"\n"
+      }
+    ]
+  },
+  "checked_at": "2026-10-28T22:42:59.624262+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/athena.f90",
+  "verification": {
+    "seconds": 3.282,
+    "build_seconds": 1.181,
+    "library_reused": true,
+    "demo_sha256": "8f04495cdeb595be7089fec7a5c96844ed5125e0d22847204e29e0931a32a5c3",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Neural-network function approximation. A fixed-weight dense layer with tanh activation is compared against direct Fortran matrix multiplication and TANH. This does not test training, automatic derivatives, graph convolutions or model accuracy on a dataset. K remains broad.",
+  "compatibility_edits": [
+    "Remove the optional W&B features table for FPM 0.12; declare its preprocessor-disabled wf module external for the dependency scanner. W&B tracking is unavailable; mathematical sources are unchanged."
+  ]
+}

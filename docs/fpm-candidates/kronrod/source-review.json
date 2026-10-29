@@ -1,0 +1,80 @@
+{
+  "id": "kronrod",
+  "repository": "jacobwilliams/kronrod",
+  "revision": "312278846b6e403fdea410a823d88ef4fb92a3cc",
+  "archive_sha256": "f53b75081ca184120e6594ee2649abb402a5e0c45ca40d391b0b7292eff780ea",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "source_revisions": {
+      "jacobwilliams/mpfun2020-var1": "f2191ad80d811cd5e309d83ffad9b2607d27aabc"
+    },
+    "shared_dependencies": {
+      "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+      "repositories": [
+        "jacobwilliams/mpfun2020-var1"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "repository": "jacobwilliams/mpfun2020-var1",
+      "revision": "f2191ad80d811cd5e309d83ffad9b2607d27aabc",
+      "sha256": "1373c64f1f5c578e5270ad840b2b90d0468b88837fc3c6a5e83c4bc4f2b7a5a7"
+    }
+  ],
+  "catalog_patches": {
+    "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+    "edits": [
+      {
+        "path": "fpm.toml",
+        "sha256": "e4515e7c06ad7fb05d01bf91a4029c6de023cf7903f748f5b775c1f919853fe8",
+        "before": "name = \"kronrod\"\nauthor = \"Jacob Williams\"\ncopyright = \"Copyright (c) 2022, Jacob Williams\"\nlicense = \"LGPL\"\ndescription = \"Program for genering Gauss-Kronrod Coefficients\"\nhomepage = \"https://github.com/jacobwilliams/kronrod\"\nkeywords = [\n    \"gauss-kronrod\",\n]\n\n[dependencies.mpfun2020-var1]\npath = \"../../1/mpfun2020-var1-f2191ad80d811cd5e309d83ffad9b2607d27aabc\"\n\n[build]\nauto-executables = true\nauto-examples = true\nauto-tests = true\n",
+        "after": "name = \"kronrod\"\nauthor = \"Jacob Williams\"\ncopyright = \"Copyright (c) 2022, Jacob Williams\"\nlicense = \"LGPL\"\ndescription = \"Program for genering Gauss-Kronrod Coefficients\"\nhomepage = \"https://github.com/jacobwilliams/kronrod\"\nkeywords = [\n    \"gauss-kronrod\",\n]\n\n[dependencies.mpfun2020-var1]\npath = \"../../1/mpfun2020-var1-f2191ad80d811cd5e309d83ffad9b2607d27aabc\"\n\n[build]\nauto-executables = false\nauto-examples = false\nauto-tests = false\n\n[library]\nsource-dir = \"app\"\n"
+      },
+      {
+        "path": "app/main.f90",
+        "sha256": "979e08f29ea88ca0b2d8399e9975279698790d938a0caedcf35fd3214864cce7",
+        "before": "    program main\n\n    use mpmodule\n    use iso_fortran_env, only: wp => real64\n\n    implicit none\n\n",
+        "after": "    module playground_kronrod\n\n    use mpmodule\n    use iso_fortran_env, only: wp => real64\n\n    implicit none\n    private\n    public :: init, kronrod, nwds2\n\n"
+      },
+      {
+        "path": "app/main.f90",
+        "sha256": "fd0910400dc90e64873d18f1d33d0913e9949df5cd86a01d21bfa970047c4f51",
+        "before": "    if (ndp2 > mpipl) then\n        write (6, '(\"Increase default precision in module MPFUNF.\")')\n        stop\n      endif\n\n    call init()\n\n    do icase = 1, size(cases)\n\n        write(*,*) ''\n        write(*,*) '----------------------'\n\n        n = cases(icase)\n\n        if (allocated(w1)) deallocate(w1)\n        if (allocated(w2)) deallocate(w2)\n        if (allocated(x)) deallocate(x)\n\n        allocate(w1(n+1))\n        allocate(w2(n+1))\n        allocate(x(n+1))\n\n        call kronrod ( n, eps, x, w1, w2 )\n\n        write(*,*) ''\n        write(*,*) 'n = ', n\n        write(*,*) ''\n        write(*,*) 'abscissas:'\n        do i = 1, n+1\n            call mpwrite (6, 60, 40, x(i))\n        end do\n        write(*,*) ''\n        write(*,*) 'Gauss-Kronrod weights:'\n        do i = 1, n+1\n            call mpwrite (6, 60, 40, W1(i))\n        end do\n        write(*,*) ''\n        write(*,*) 'Gauss weights:'\n        do i = 1, n+1\n            call mpwrite (6, 60, 40, W2(i))\n        end do\n\n    end do\n\n",
+        "after": ""
+      },
+      {
+        "path": "app/main.f90",
+        "sha256": "31f740775a4d3f08966b034e84b5a0412ada7a03ee71e10e2ac7aaee62a1318c",
+        "before": "    end program main",
+        "after": "    end module playground_kronrod"
+      }
+    ]
+  },
+  "checked_at": "2026-10-29T01:33:12.542944+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/kronrod.f90",
+  "verification": {
+    "seconds": 2.593,
+    "build_seconds": 0.37,
+    "library_reused": true,
+    "demo_sha256": "bafd03bd2eef8a6ac7e8d60909ba717788ab9372c96624678a9666b8199611f9",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "LGPL-2.1",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Gauss-Kronrod quadrature-rule generation. A checksum-guarded adapter exposes the original internal procedures as module playground_kronrod, removes the large driver loop and declares app as the library directory; The consumer uses the wrapped module instead of running the original batch drivers. Procedure bodies, constants and precision settings are unchanged. The main generates the symmetric 7-point rule, checks six even polynomial integrals through degree 10 at 40-decimal-place tolerance with MPFUN arithmetic, and prints double-precision summaries. Only the unchanged MPFUN dependency is shared. This is a rule generator, not an adaptive integrator or full validation of every rule/order.",
+  "compatibility_edits": [
+    "Expose original internal procedures through module playground_kronrod.",
+    "Remove the batch driver loop; the consumer retains its precision guard.",
+    "Set library source directory to app and disable automatic application/example/test targets."
+  ],
+  "known_limitations": [
+    "The example checks the 7-point Kronrod rule only; returned Gauss weights are not separately checked.",
+    "Fixed original precision constants and module-global initialization are retained."
+  ]
+}

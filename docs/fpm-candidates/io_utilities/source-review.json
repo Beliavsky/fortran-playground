@@ -1,0 +1,41 @@
+{
+  "id": "io_utilities",
+  "repository": "arjenmarkus/io_utilities",
+  "revision": "f0551aad0b46aa7aac1c442a3c576ecc90028f72",
+  "archive_sha256": "144022adf3379e3bf2ce90a81f674a19819e33a5aa0284f22c0857bf10f26f37",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8"
+  },
+  "dependencies": [],
+  "catalog_patches": {
+    "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+    "edits": [
+      {
+        "path": "fpm.toml",
+        "sha256": "9f6b313149a4b7cb82bb1c9f5a871a299867f5180d7621abf303da10ec775ab7",
+        "before": "name = \"io-utilities\"\nversion = \"0.2.0\"\nlicense = \"MIT\"\nauthor = \"Arjen Markus\"\nmaintainer = \"arjen.markus895@gmail.com\"\ncopyright = \"2024 Arjen Markus\"\nlibrary = [\n    { source-dir = \"src\" },\n]\ntest = [\n    { name = \"test_cmdparse\", source-dir = \"test\", main = \"test_cmdparse.f90\" },\n    { name = \"demo_cmdparse\", source-dir = \"test\", main = \"demo_cmdparse.f90\" },\n    { name = \"test_keyvars\", source-dir = \"test\", main = \"test_keyvars.f90\" },\n    { name = \"test_progressbar\", source-dir = \"test\", main = \"test_progressbar.f90\" },\n    { name = \"test_positional\", source-dir = \"test\", main = \"test_positional.f90\" },\n]\n",
+        "after": "name = \"io-utilities\"\nversion = \"0.2.0\"\nlicense = \"MIT\"\nauthor = \"Arjen Markus\"\nmaintainer = \"arjen.markus895@gmail.com\"\ncopyright = \"2024 Arjen Markus\"\ntest = [\n    { name = \"test_cmdparse\", source-dir = \"test\", main = \"test_cmdparse.f90\" },\n    { name = \"demo_cmdparse\", source-dir = \"test\", main = \"demo_cmdparse.f90\" },\n    { name = \"test_keyvars\", source-dir = \"test\", main = \"test_keyvars.f90\" },\n    { name = \"test_progressbar\", source-dir = \"test\", main = \"test_progressbar.f90\" },\n    { name = \"test_positional\", source-dir = \"test\", main = \"test_positional.f90\" },\n]\n\n[library]\nsource-dir = \"src\"\n"
+      }
+    ]
+  },
+  "checked_at": "2026-10-28T23:33:50.254249+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/io_utilities.f90",
+  "verification": {
+    "seconds": 1.813,
+    "build_seconds": 0.443,
+    "library_reused": true,
+    "demo_sha256": "8c54b6d6efaaed5e53142797ccbcbf744239187b0474504f5fc6720d2faec825",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Key/value configuration input. The main creates and reads a tiny INI-style file with a section, comment, integer, double, logical and string, verifies known values and deletes it. A checksum-guarded manifest correction changes the invalid one-element library array into a library table; Fortran sources are unchanged. Other I/O modules and malformed-input handling are not covered.",
+  "compatibility_edits": [
+    "The original [[library]] array is rendered as the required [library] table. The original manifest and exact checksum-guarded replacement are retained; no Fortran source changed."
+  ]
+}

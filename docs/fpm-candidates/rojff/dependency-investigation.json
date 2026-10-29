@@ -1,0 +1,60 @@
+{
+  "requested_dependencies": {
+    "erloff": {
+      "git": "https://gitlab.com/everythingfunctional/erloff.git",
+      "tag": "v2.2.0"
+    },
+    "iso_varying_string": {
+      "git": "https://gitlab.com/everythingfunctional/iso_varying_string",
+      "tag": "v3.0.3"
+    }
+  },
+  "unavailable_transitive_mirror": "https://api.github.com/repos/everythingfunctional/exceptional_numbers/commits/v0.1.1",
+  "mirror_response": "HTTP 404",
+  "earlier_attempt": {
+    "package": {
+      "id": "rojff",
+      "repository": "everythingfunctional/rojff",
+      "revision": "9f68e5aa4c12b32720d4224f1ac279bfd7d77b93",
+      "archive_sha256": "503529a91c9692cdb830b3b14db5462a3b83bce12f0e002f3c04922447956961",
+      "stars": 9,
+      "license": "MIT",
+      "category": "Data formats",
+      "description": "Construct, parse and serialize JSON values with explicit error handling.",
+      "catalog_build": {
+        "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+        "git_aliases": {
+          "https://gitlab.com/everythingfunctional/erloff": "https://github.com/everythingfunctional/erloff",
+          "https://gitlab.com/everythingfunctional/iso_varying_string": "https://github.com/everythingfunctional/iso_varying_string",
+          "https://gitlab.com/everythingfunctional/strff": "https://github.com/everythingfunctional/strff",
+          "https://gitlab.com/everythingfunctional/exceptional_numbers": "https://github.com/everythingfunctional/exceptional_numbers",
+          "https://gitlab.com/everythingfunctional/parff": "https://github.com/everythingfunctional/parff",
+          "https://gitlab.com/everythingfunctional/veggies": "https://github.com/everythingfunctional/veggies"
+        },
+        "source_revisions": {
+          "everythingfunctional/erloff": "89e92f86c160d4f995d8ae3c2bb6f2671cf6311c",
+          "everythingfunctional/iso_varying_string": "48ce6b119e855284a87d5a6eb9c53da8b6785716"
+        }
+      },
+      "dependencies": [
+        {
+          "repository": "everythingfunctional/erloff",
+          "revision": "89e92f86c160d4f995d8ae3c2bb6f2671cf6311c",
+          "sha256": "d294beaa81d9c5fc039e60e18ab594e9a94fea910fdf7ef7e064c27330ef1df8"
+        },
+        {
+          "repository": "everythingfunctional/iso_varying_string",
+          "revision": "48ce6b119e855284a87d5a6eb9c53da8b6785716",
+          "sha256": "b1d563dc52c7cb3df41abf3f360ef0c05285b71bec9bd61d090227f88628ba49"
+        },
+        {
+          "repository": "everythingfunctional/strff",
+          "revision": "50e536cb087123f2c72140cb065c398a01fc5121",
+          "sha256": "c0f773e21d2c1a0f7b83bcb51cf6bca4d7103815373e7be9a56d1689b8a5da42"
+        }
+      ]
+    },
+    "diagnostic": " + mkdir -p build/dependencies\n[  0%]              pyplot_module.f90\n[  1%]              pyplot_module.f90  done.\n[  1%]                   cursor_m.f90\n[  2%]                   cursor_m.f90  done.\n[  2%]                     sink_m.f90\n[  3%]                     sink_m.f90  done.\n[  3%]                    utils_m.f90\n[  5%]                    utils_m.f90  done.\n[  5%]         iso_varying_string.f90\n[  6%]         iso_varying_string.f90  done.\n[  6%]                    value_m.f90\n[  7%]                    value_m.f90  done.\n[  7%]              file_cursor_m.f90\n[  9%]              file_cursor_m.f90  done.\n[  9%]                file_sink_m.f90\n[ 10%]                file_sink_m.f90  done.\n[ 10%]            string_cursor_m.f90\n[ 11%]            string_cursor_m.f90  done.\n[ 11%]              string_sink_m.f90\n[ 13%]              string_sink_m.f90  done.\n[ 13%]                    utils_s.f90\n[ 14%]                    utils_s.f90  done.\n[ 14%]                   module_m.f90\n[ 15%]                   module_m.f90  done.\n[ 15%]                procedure_m.f90\n[ 17%]                procedure_m.f90  done.\n[ 17%]                      strff.f90\n[ 18%]                      strff.f90  done.\n[ 18%]                     bool_m.f90\n[ 19%]                     bool_m.f90  done.\n[ 19%]                  element_m.f90\n[ 21%]                  element_m.f90  done.\n[ 21%]                  integer_m.f90\n[ 22%]                  integer_m.f90  done.\n[ 22%]                     null_m.f90\n[ 23%]                     null_m.f90  done.\n[ 23%]                   number_m.f90\n[ 25%]                   number_m.f90  done.\n[ 25%]                   string_m.f90\n[ 26%]                   string_m.f90  done.\n[ 26%]                    value_s.f90\n[ 27%]                    value_s.f90  done.\n[ 27%]              file_cursor_s.f90\n[ 28%]              file_cursor_s.f90  done.\n[ 28%]                file_sink_s.f90\n[ 30%]                file_sink_s.f90  done.\n[ 30%]            string_cursor_s.f90\n[ 31%]            string_cursor_s.f90  done.\n[ 31%]              string_sink_s.f90\n[ 32%]              string_sink_s.f90  done.\n[ 32%]         call_stack_entry_m.f90\n[ 34%]         call_stack_entry_m.f90  done.\n[ 34%]              debug_level_m.f90\n[ 35%]              debug_level_m.f90  done.\n[ 35%]             message_type_m.f90\n[ 36%]             message_type_m.f90  done.\n[ 36%]                     bool_s.f90\n[ 38%]                     bool_s.f90  done.\n[ 38%]                  element_s.f90\n[ 39%]                  element_s.f90  done.\n[ 39%]                  integer_s.f90\n[ 40%]                  integer_s.f90  done.\n[ 40%]                   member_m.f90\n[ 42%]                   member_m.f90  done.\n[ 42%]                     null_s.f90\n[ 43%]                     null_s.f90  done.\n[ 43%]                   number_s.f90\n[ 44%]                   number_s.f90  done.\n[ 44%]                   string_s.f90\n[ 46%]                   string_s.f90  done.\n[ 46%]         json_linked_list_m.f90\n[ 47%]         json_linked_list_m.f90  done.\n[ 47%]               call_stack_m.f90\n[ 48%]               call_stack_m.f90  done.\n[ 48%]                   member_s.f90\n[ 50%]                   member_s.f90  done.\n[ 50%]         json_linked_list_s.f90\n[ 51%]         json_linked_list_s.f90  done.\n[ 51%]       member_linked_list_m.f90\n[ 52%]       member_linked_list_m.f90  done.\n[ 52%]                  message_m.f90\n[ 53%]                  message_m.f90  done.\n[ 53%]       member_linked_list_s.f90\n[ 55%]       member_linked_list_s.f90  done.\n[ 55%]                    debug_m.f90\n[ 56%]                    debug_m.f90  done.\n[ 56%]                    error_m.f90\n[ 57%]                    error_m.f90  done.\n[ 57%]                     info_m.f90\n[ 59%]                     info_m.f90  done.\n[ 59%]             message_item_m.f90\n[ 60%]             message_item_m.f90  done.\n[ 60%]                  warning_m.f90\n[ 61%]                  warning_m.f90  done.\n[ 61%]               error_item_m.f90\n[ 63%]               error_item_m.f90  done.\n[ 63%]                    fatal_m.f90\n[ 64%]                    fatal_m.f90  done.\n[ 64%]                 internal_m.f90\n[ 65%]                 internal_m.f90  done.\n[ 65%]             message_list_m.f90\n[ 67%]             message_list_m.f90  done.\n[ 67%]               error_list_m.f90\n[ 68%]               error_list_m.f90  done.\n[ 68%]                     erloff.f90\n[ 69%]                     erloff.f90  done.\n[ 69%]                    value_m.f90\n[ 71%]                    value_m.f90  done.\n[ 71%]                constants_m.f90\n[ 72%]                constants_m.f90  done.\n[ 72%]                  element_m.f90\n[ 73%]                  element_m.f90  done.\n[ 73%]                   string_m.f90\n[ 75%]                   string_m.f90  done.\n[ 75%]                    value_s.f90\n[ 76%]                    value_s.f90  done.\n[ 76%]                    array_m.f90\n[ 77%]                    array_m.f90  done.\n[ 77%]                   object_m.f90\n[ 78%]                   object_m.f90  done.\n[ 78%]                   parser_m.f90\n[ 80%]                   parser_m.f90  done.\n[ 80%]                    array_m.f90\n[ 81%]                    array_m.f90  done.\n[ 81%]                  element_s.f90\n[ 82%]                  element_s.f90  done.\n[ 82%]                   member_m.f90\n[ 84%]                   member_m.f90  done.\n[ 84%]                   string_s.f90\n[ 85%]                   string_s.f90  done.\n[ 85%]                    array_s.f90\n[ 86%]                    array_s.f90  done.\n[ 86%]                   object_s.f90\n[ 88%]                   object_s.f90  done.\n[ 88%]                    array_s.f90\n<ERROR> Compilation failed for object \" .._sources_bundle_packages_0_rojff-9f68e5aa4c12b32720d4224f1ac279bfd7d77b93_src_rojff_fallible_array_s.f90.o \"\n[ 89%]                    array_s.f90  done.\n\n./././/../sources/bundle/packages/0/rojff-9f68e5aa4c12b32720d4224f1ac279bfd7d77b93/src/rojff/fallible/array_s.f90:61:41:\n\n   61 |                 fallible_array%errors = error_list_t(all_errors)\n      |                                         1\nError: Component \u2018errors\u2019 at (1) is a PRIVATE component of \u2018error_list_t\u2019\n<ERROR> stopping due to failed compilation\nSTOP 1\n"
+  },
+  "accepted_configuration": "Original Erloff 2.2.0 with Strff 3.1.1 and ISO varying string 3.0.3, all pinned to commits and archive checksums."
+}

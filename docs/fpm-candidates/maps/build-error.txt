@@ -1,0 +1,20 @@
+ + mkdir -p build/dependencies
+[  0%]              pyplot_module.f90
+[  1%]              pyplot_module.f90  done.
+[  1%]                        key.f90
+[  3%]                        key.f90  done.
+[  3%]                  toHashKey.f90
+[  4%]                  toHashKey.f90  done.
+[  4%]                toHashValue.f90
+<ERROR> Compilation failed for object " .._sources_bundle_packages_0_maps-453d8b146a659c0111652fe0579e2321477c54cd_src_common_proc_toHashValue.f90.o "
+[  6%]                toHashValue.f90  done.
+
+./././/../sources/bundle/packages/0/maps-453d8b146a659c0111652fe0579e2321477c54cd/src/common/proc/toHashValue.f90:3:41:
+
+    3 |     use :: stdlib_hashmap_wrappers, only:other_type, set
+      |                                         1
+Error: Symbol ‘other_type’ referenced at (1) not found in module ‘stdlib_hashmap_wrappers’
+compilation terminated due to -fmax-errors=1.
+<ERROR> stopping due to failed compilation
+STOP 1
+

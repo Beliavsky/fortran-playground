@@ -1,0 +1,8 @@
+Velocity     Coulomb     Stribeck (N)
+   -1.000000   -6.000000   -7.609894
+   -0.250000   -6.000000  -11.047805
+    0.000000    0.000000    0.000000
+    0.250000    6.000000   11.047805
+    1.000000    6.000000    7.609894
+The library reports signed friction; a force balance must use its chosen sign convention.
+PASS friction CHANGED MAIN
