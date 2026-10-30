@@ -35,7 +35,9 @@ The authoritative schema is [catalog/catalog-v1.schema.json](../catalog/catalog-
 | --- | --- |
 | `id` | Lowercase canonical GitHub identity, for example `github:perazz/fortran-lapack`. |
 | `name`, `description`, `categories` | Playground-maintained descriptive metadata. |
-| `repository` | Hosting service, GitHub account owner, repository name, and URL. An account owner is not an authorship list; authors have not been collected. |
+| `repository` | Hosting service, GitHub account owner, repository name, and URL. An account owner is not an authorship list. |
+| `owners` (optional, feed-level) | Shared public GitHub profile metadata keyed by lowercase account ID: display name or null, account type, profile/source URLs, retrieval time. Join using `repository.owner`. Importers retain it in the publisher source layer; it is not an authorship list. |
+| `attributions` (optional, feed-level) | Curated `owner_names` account mappings and `project_authors` source credits, with confirmed/inferred status, scope, rationale, review date and evidence. Only confirmed account mappings override owner labels; source authorship is a separate claim. Importers retain this object in the publisher source layer. |
 | `languages`, `build_systems` | Known technologies. The seed records identify Fortran and FPM; the format accepts other build systems and does not require FPM. |
 | `license.label` | Existing descriptive license text, preserved verbatim. `spdx_expression` is null because these labels have not been systematically normalized into SPDX expressions. |
 | `github` | Author-supplied repository topics, star count, and retrieval timestamps. Unknown counts/timestamps can be null. |
@@ -53,6 +55,8 @@ The current sources are:
 
 - [fpm_catalog.json](../fpm_catalog.json): project descriptions, recorded license labels, categories, revisions, and playground selection.
 - [fpm_catalog/topics.json](../fpm_catalog/topics.json): saved GitHub metadata.
+- [fpm_catalog/owners.json](../fpm_catalog/owners.json): public display names, account types and profile provenance, stored once per GitHub owner.
+- [fpm_catalog/name-attributions.json](../fpm_catalog/name-attributions.json): curated public name mappings and source-author credits; see the [review table](name-attributions.md).
 - [fpm_catalog/playground-topics.json](../fpm_catalog/playground-topics.json): our topics.
 - [fpm_catalog/gams.json](../fpm_catalog/gams.json): GAMS taxonomy, assignments, and review notes.
 - [fpm_catalog/gams-numerical-review.json](../fpm_catalog/gams-numerical-review.json): numerical-package review coverage and remaining scope.

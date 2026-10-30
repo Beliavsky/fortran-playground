@@ -5,6 +5,8 @@ assert.ok(matchesSearch('D2 Linear systems JacobWilliams LAPACK', 'jacobwilliams
 assert.ok(!matchesSearch('D2 Linear systems', 'D2 optimization'));
 assert.ok(matchesSearch('Bessel functions', '  BESSEL  '));
 assert.ok(matchesSearch('Bessel functions', ''));
+assert.ok(matchesSearch('Federico Perini (perazz) LAPACK', 'federico perini'));
+assert.ok(matchesSearch('Federico Perini (perazz) LAPACK', 'perazz'));
 
 const element = () => ({hidden: true, value: '', listeners: {},
   addEventListener(type, fn) {this.listeners[type] = fn;}, focus() {this.focused = true;}});
@@ -25,4 +27,7 @@ elements['clear-search'].listeners.click();
 assert.ok(cards.every(c => !c.hidden));
 assert.equal(updated.searchParams.has('q'), false);
 assert.equal(elements['package-search'].focused, true);
+elements['result-count'].dataset = {resultUnit: 'owners'};
+initializeSearch(doc, win);
+assert.equal(elements['result-count'].textContent, '1 of 2 owners');
 console.log('GAMS search: combined terms, restored query, empty results and clearing passed.');

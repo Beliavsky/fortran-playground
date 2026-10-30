@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "owner_names": {
+    "lauvergn": {
+      "name": "David Lauvergnat",
+      "status": "inferred",
+      "scope": "Possible account-to-person connection; not used as an owner display-name override.",
+      "rationale": "The public source credits David Lauvergnat as author and copyright holder. This supports source authorship but does not independently establish the identity behind the repository-owner account.",
+      "reviewed_on": "2026-10-30",
+      "evidence": [
+        {
+          "url": "https://github.com/lauvergn/AD_dnSVM/blob/32db0bd122ce1dae290e9cf4c1fda4ab8f3de6f1/APP/Example_dnS.f90#L53",
+          "description": "Explicit public author credit in the pinned example source."
+        }
+      ]
+    }
+  },
+  "project_authors": {
+    "github:lauvergn/ad_dnsvm": [
+      {
+        "name": "David Lauvergnat",
+        "status": "confirmed",
+        "scope": "Author credited in APP/Example_dnS.f90.",
+        "rationale": "The pinned example explicitly names David Lauvergnat in its author annotation and copyright notice. This records the stated source credit, not sole authorship of the package or ownership of the GitHub account.",
+        "reviewed_on": "2026-10-30",
+        "evidence": [
+          {
+            "url": "https://github.com/lauvergn/AD_dnSVM/blob/32db0bd122ce1dae290e9cf4c1fda4ab8f3de6f1/APP/Example_dnS.f90#L53",
+            "description": "Explicit author annotation."
+          },
+          {
+            "url": "https://github.com/lauvergn/AD_dnSVM/blob/32db0bd122ce1dae290e9cf4c1fda4ab8f3de6f1/APP/Example_dnS.f90#L8",
+            "description": "Copyright notice naming the same author."
+          }
+        ]
+      }
+    ]
+  }
+}

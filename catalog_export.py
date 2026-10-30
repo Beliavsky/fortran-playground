@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 import re
 import subprocess
+from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parent
 PUBLISHER = 'fortran-playground'
@@ -25,9 +26,76 @@ def text_hash(path):
     return hashlib.sha256(Path(path).read_text(encoding='utf-8').encode('utf-8')).hexdigest()
 
 
+def validate_owners(records):
+    """Validate shared profile snapshots without requiring the refresh tool."""
+    if not isinstance(records, dict):
+        raise ValueError('GitHub owners must be a mapping.')
+    for key, record in records.items():
+        if (not isinstance(key, str) or not re.fullmatch(r'[a-z0-9_.-]+', key)
+                or not isinstance(record, dict) or not isinstance(record.get('login'), str)
+                or record['login'].lower() != key
+                or record.get('account_type') not in ('User', 'Organization', 'Bot')
+                or record.get('profile_url') != 'https://github.com/' + record['login']
+                or 'display_name' not in record
+                or record.get('source_url') not in ('https://api.github.com/users/' + key, record['profile_url'])):
+            raise ValueError(f'{key}: invalid public GitHub owner record.')
+        name = record.get('display_name')
+        if name is not None and (not isinstance(name, str) or not name.strip() or len(name) > 256
+                                 or name != ' '.join(name.split())):
+            raise ValueError(f'{key}: invalid public display name.')
+        try:
+            timestamp = datetime.fromisoformat(record['retrieved_at'])
+            if timestamp.tzinfo is None:
+                raise ValueError()
+        except (KeyError, TypeError, ValueError):
+            raise ValueError(f'{key}: owner retrieval time needs a time zone.') from None
+    return records
+
+
 def snapshot_id(data):
     return 'sha256:' + hashlib.sha256(canonical_json({key: value for key, value in data.items()
                                                    if key != 'snapshot_id'})).hexdigest()
+
+
+def validate_attributions(data):
+    """Keep public project credits distinct from reviewed account identities."""
+    if not isinstance(data, dict) or data.get('schema') != 1:
+        raise ValueError('Invalid manual name attribution schema.')
+    for field, pattern in [('owner_names', r'[a-z0-9_.-]+'), ('project_authors', ID_PATTERN)]:
+        mapping = data.get(field)
+        if not isinstance(mapping, dict):
+            raise ValueError(f'{field}: expected a mapping.')
+        for key, value in mapping.items():
+            if not isinstance(key, str) or not re.fullmatch(pattern, key):
+                raise ValueError('Invalid name attribution identity.')
+            records = value if field == 'project_authors' else [value]
+            if not isinstance(records, list) or not records:
+                raise ValueError(f'{key}: at least one author credit is required.')
+            for record in records:
+                if not isinstance(record, dict) or record.get('status') not in ('confirmed', 'inferred'):
+                    raise ValueError(f'{key}: attribution needs a review status.')
+                for name in ('name', 'scope', 'rationale'):
+                    text = record.get(name)
+                    if not isinstance(text, str) or not text.strip() or text != ' '.join(text.split()):
+                        raise ValueError(f'{key}: attribution needs {name}.')
+                if len(record['name']) > 256:
+                    raise ValueError(f'{key}: attribution name is too long.')
+                try:
+                    date.fromisoformat(record['reviewed_on'])
+                except (KeyError, TypeError, ValueError):
+                    raise ValueError(f'{key}: attribution needs a review date.') from None
+                evidence = record.get('evidence')
+                if not isinstance(evidence, list) or not evidence:
+                    raise ValueError(f'{key}: public attribution evidence is required.')
+                for item in evidence:
+                    if not isinstance(item, dict) or not isinstance(item.get('url'), str):
+                        raise ValueError(f'{key}: invalid attribution evidence.')
+                    url = urlsplit(item['url'])
+                    if (url.scheme != 'https' or not url.hostname or url.username or url.password
+                            or any(c.isspace() for c in item['url'])
+                            or not isinstance(item.get('description'), str) or not item['description'].strip()):
+                        raise ValueError(f'{key}: attribution evidence requires an HTTPS link and description.')
+    return data
 
 
 def input_provenance(root, paths):
@@ -53,17 +121,25 @@ def build_export(root=ROOT):
     # catalog and its authoring helpers are needed solely when exporting.
     from xpackage_gams import gams_data, package_classes, class_tree, procedure_records, driver_data, numerical_review
     from xpackage_topics import playground_topics
+    from xgithub_owners import load_owners
+    from xpackage_attributions import load_attributions
 
     root = Path(root)
     packages = json.loads((root / 'fpm_catalog.json').read_text(encoding='utf-8'))['packages']
     github = json.loads((root / 'fpm_catalog/topics.json').read_text(encoding='utf-8'))
     curated = playground_topics(root)
+    owner_records = load_owners(root)
+    attributions = load_attributions(root)
     gams = gams_data(root)
     drivers = driver_data(root, gams)
     review = numerical_review(root, gams)
     inputs = ['fpm_catalog.json', 'fpm_catalog/topics.json', 'fpm_catalog/playground-topics.json',
               'fpm_catalog/gams.json', 'catalog_export.py', 'xpackage_topics.py', 'xpackage_gams.py',
-              f'catalog/{SCHEMA_NAME}']
+                   f'catalog/{SCHEMA_NAME}']
+    if (root / 'fpm_catalog/owners.json').exists():
+        inputs.append('fpm_catalog/owners.json')
+    if (root / 'fpm_catalog/name-attributions.json').exists():
+        inputs.append('fpm_catalog/name-attributions.json')
     inputs.extend(['fpm_catalog/gams-drivers.json', 'docs/gams-g1-validation.json',
                    'fpm_catalog/gams-numerical-review.json'])
     inputs.extend(sorted({p for d in drivers for p in [d['path'], *d['license_files']]}))
@@ -109,6 +185,12 @@ def build_export(root=ROOT):
                   'url': f'{BASE_URL}/fpm/?package={d["package_id"]}&example={d["name"]}',
                   'validation_path': 'docs/gams-g1-validation.json'} for d in drivers],
               'projects': projects}
+    selected_owners = {p['repository']['owner'].lower() for p in projects}
+    export['owners'] = {key: value for key, value in owner_records.items() if key in selected_owners}
+    export['attributions'] = {'schema': 1,
+        'owner_names': {key: value for key, value in attributions['owner_names'].items() if key in selected_owners},
+        'project_authors': {key: value for key, value in attributions['project_authors'].items()
+                            if key in {project['id'] for project in projects}}}
     export['snapshot_id'] = snapshot_id(export)
     validate_export(export)
     return export
@@ -120,6 +202,10 @@ def validate_export(data):
         raise ValueError('Unsupported catalog schema_version; expected 1.')
     if data.get('publisher') != PUBLISHER:
         raise ValueError('Unexpected catalog publisher.')
+    if 'owners' in data:
+        validate_owners(data['owners'])
+    if 'attributions' in data:
+        validate_attributions(data['attributions'])
     if data.get('$schema') != SCHEMA_URL:
         raise ValueError('Unexpected catalog schema reference.')
     if not _matches(r'sha256:[0-9a-f]{64}', data.get('snapshot_id')):
@@ -356,6 +442,10 @@ def merge_catalog(catalog, feed):
     sources[publisher] = {key: copy.deepcopy(feed[key]) for key in ('schema_version', 'snapshot_id', 'provenance', 'taxonomies')}
     if 'demonstrations' in feed:
         sources[publisher]['demonstrations'] = copy.deepcopy(feed['demonstrations'])
+    if 'owners' in feed:
+        sources[publisher]['owners'] = copy.deepcopy(feed['owners'])
+    if 'attributions' in feed:
+        sources[publisher]['attributions'] = copy.deepcopy(feed['attributions'])
     return result
 
 

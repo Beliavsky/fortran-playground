@@ -6,12 +6,18 @@ Class pages include packages explicitly assigned to that class or its descendant
 
 Package lists and navigation are present in the HTML and work without JavaScript. Optional browser search combines words across names, GitHub owners, descriptions, categories, author and curated topics, class labels and procedure names. Search changes the `q` parameter, so a filtered page can be bookmarked or shared.
 
+Repository owner names are clickable on package cards and detail pages. An owner page lists that account's selected precompiled packages and links to its GitHub profile. The [owner index](https://beliavsky.github.io/fortran-playground/gams/authors/) searches both public display names and account names. Names appear as “Federico Perini (perazz)” when a public display name is supplied; otherwise the account name is shown. Organizations use the same convention. These are repository owners, not necessarily the original or sole authors.
+
+The [curated attribution review](name-attributions.md) records explicit public source credits separately from account identities. Confirmed source authors are searchable and shown with their scope and evidence under **Name attribution** on package and owner pages. An author credited in an example is not automatically identified as the owner of the account.
+
 ## Addresses
 
 - Index: `/fortran-playground/gams/`
 - Linear systems: `/fortran-playground/gams/D2/`
 - Multivariate unconstrained optimization: `/fortran-playground/gams/G1b/`
 - Package details: `/fortran-playground/gams/packages/fortran-lapack/`
+- Repository owners: `/fortran-playground/gams/authors/`
+- An owner's packages: `/fortran-playground/gams/authors/perazz/`
 - Search: `/fortran-playground/gams/?q=jacobwilliams+optimization`
 - Sitemap: `/fortran-playground/gams/sitemap.xml`
 
@@ -30,6 +36,39 @@ python xfpm_examples.py
 Every normal `python xsite.py` build publishes the portable catalog feed and passes that same data to `xgams_site.py`. The generator writes class pages, package pages and a sitemap into `_site/gams/`. Counts and membership are computed from the feed, so there is no second classification list to maintain. Obsolete generated class/package HTML is removed on a rebuild. CSS and browser search live in `site/gams/`; generated HTML is not committed.
 
 GitHub Actions already runs `xsite.py` when changes reach `main`. Publishing these pages requires no backend redeployment, package recompilation or Modal jobs. The playground loads only its own existing assets; the new pages and their search script are separate.
+
+## Public owner names
+
+`fpm_catalog/owners.json` stores each owner's public GitHub display name once, keyed by the lowercase account ID. Each record contains its account type, profile/source URLs and retrieval time. The portable catalog exports this shared mapping too. Site builds read the saved snapshot offline; account names remain the fallback for a newly added owner without saved metadata.
+
+Fetch profiles for newly added accounts:
+
+```text
+python xgithub_owners.py --refresh --missing
+```
+
+Periodically refresh all accounts with `python xgithub_owners.py --refresh`. To update just one, use `python xgithub_owners.py --refresh --owners perazz`. The API reader uses `GITHUB_TOKEN` or `GH_TOKEN` when present. If the public API is rate-limited, wait before retrying or explicitly read the public profile headings instead:
+
+```text
+python xgithub_owners.py --refresh --missing --html
+```
+
+Refresh errors retain saved names. A successful refresh with no public name clears the previous name. Names are read only from public profile fields/headings; they are not inferred from account names, README acknowledgments, commits or email addresses. Run `python xgithub_owners.py` to validate the snapshot and report coverage without network access. Commit the snapshot, then publish through the ordinary Pages build.
+
+## Curated names and source credits
+
+Edit `fpm_catalog/name-attributions.json` for manual research. `owner_names` holds account-name mappings; `project_authors` holds credits for specific projects or source files. Each record requires a name, confirmed/inferred status, scope, rationale, review date and public evidence links. Prefer exact commit and line links. Do not collect unrelated personal information. Source credits establish authorship within their stated scope; they do not alone establish an account identity or sole authorship of a project.
+
+Only confirmed account mappings override owner labels. Display order is confirmed manual account name, saved GitHub display name, then account ID. Inferred account mappings remain in the review table and portable feed, but do not rename accounts. Confirmed project/source credits are displayed and searched independently. Differences between a manual name and a GitHub display name are flagged in the review table and explained on the owner page. GitHub profile refreshes never overwrite curated records.
+
+After editing the manual file or refreshing profiles, regenerate the review table:
+
+```text
+python xpackage_attributions.py
+python xpackage_attributions.py --check
+```
+
+The site build exports these records and renders the name-attribution sections automatically. The initial AD_dnSVM record credits David Lauvergnat for `APP/Example_dnS.f90`; the possible connection to account `lauvergn` is recorded separately as inferred.
 
 ## Preview and verification
 

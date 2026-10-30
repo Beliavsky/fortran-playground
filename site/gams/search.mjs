@@ -9,6 +9,8 @@ export function initializeSearch(doc = document, win = window) {
   if (!input) return;
   const cards = [...doc.querySelectorAll('[data-search]')];
   const url = new URL(win.location.href);
+  const counter = doc.getElementById('result-count');
+  const unit = counter.dataset?.resultUnit || 'packages';
   input.value = url.searchParams.get('q') || '';
   function filter() {
     let count = 0;
@@ -16,7 +18,7 @@ export function initializeSearch(doc = document, win = window) {
       card.hidden = !matchesSearch(card.dataset.search, input.value);
       if (!card.hidden) count++;
     }
-    doc.getElementById('result-count').textContent = `${count} of ${cards.length} packages`;
+    counter.textContent = `${count} of ${cards.length} ${unit}`;
     doc.getElementById('no-results').hidden = count !== 0;
     if (input.value.trim()) url.searchParams.set('q', input.value.trim());
     else url.searchParams.delete('q');

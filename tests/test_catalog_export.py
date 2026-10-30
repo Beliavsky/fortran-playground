@@ -57,6 +57,23 @@ class CatalogExportTests(unittest.TestCase):
             self.assertIn(driver['path'], {r['path'] for r in feed['provenance']['inputs']})
         merged = merge_catalog({'schema_version': 1, 'projects': []}, feed)
         self.assertEqual(merged['sources'][PUBLISHER]['demonstrations'], feed['demonstrations'])
+        self.assertEqual(feed['owners']['perazz']['display_name'], 'Federico Perini')
+        self.assertEqual(merged['sources'][PUBLISHER]['owners'], feed['owners'])
+        self.assertIn('fpm_catalog/owners.json', {r['path'] for r in feed['provenance']['inputs']})
+        self.assertEqual(merged['sources'][PUBLISHER]['attributions'], feed['attributions'])
+        self.assertIn('fpm_catalog/name-attributions.json', {r['path'] for r in feed['provenance']['inputs']})
+
+    def test_older_feeds_without_owners_are_accepted_and_bad_profiles_rejected(self):
+        older = copy.deepcopy(self.feed)
+        older.pop('owners')
+        older.pop('attributions')
+        older['snapshot_id'] = snapshot_id(older)
+        self.assertIs(validate_export(older), older)
+        broken = copy.deepcopy(self.feed)
+        broken['owners']['perazz']['profile_url'] = 'https://example.test/wrong-profile'
+        broken['snapshot_id'] = snapshot_id(broken)
+        with self.assertRaises(ValueError):
+            validate_export(broken)
 
     def test_provenance_distinguishes_clean_modified_and_unknown_inputs(self):
         with tempfile.TemporaryDirectory() as temporary:
