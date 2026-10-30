@@ -127,6 +127,25 @@
           }
         },
         "description": {"type": "string"},
+        "dependencies": {
+          "type": "object", "required": ["scope", "root_revision", "verified_at", "packages"],
+          "properties": {
+            "scope": {"const": "resolved-build-repositories"},
+            "root_revision": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+            "verified_at": {"type": "string", "format": "date-time"},
+            "packages": {
+              "type": "array",
+              "items": {
+                "type": "object", "required": ["id", "repository", "revision"],
+                "properties": {
+                  "id": {"type": "string", "pattern": "^github:[a-z0-9_.-]+/[a-z0-9_.-]+$"},
+                  "repository": {"type": "string", "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"},
+                  "revision": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+                }
+              }
+            }
+          }
+        },
         "languages": {"$ref": "#/$defs/strings"},
         "build_systems": {"$ref": "#/$defs/strings"},
         "categories": {"$ref": "#/$defs/strings"},

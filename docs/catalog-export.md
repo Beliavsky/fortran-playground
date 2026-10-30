@@ -39,6 +39,7 @@ The authoritative schema is [catalog/catalog-v1.schema.json](../catalog/catalog-
 | `owners` (optional, feed-level) | Shared public GitHub profile metadata keyed by lowercase account ID: display name or null, account type, profile/source URLs, retrieval time. Join using `repository.owner`. Importers retain it in the publisher source layer; it is not an authorship list. |
 | `attributions` (optional, feed-level) | Curated `owner_names` account mappings and `project_authors` source credits, with confirmed/inferred status, scope, rationale, review date and evidence. Only confirmed account mappings override owner labels; source authorship is a separate claim. Importers retain this object in the publisher source layer. |
 | `languages`, `build_systems` | Known technologies. The seed records identify Fortran and FPM; the format accepts other build systems and does not require FPM. |
+| `dependencies` (optional) | Verified-build resolved GitHub repository pins: `scope = "resolved-build-repositories"`, `root_revision`, `verified_at`, and `packages` containing canonical project IDs, repository names and exact revisions. Direct and indirect dependencies are combined. This is not a direct-edge graph and excludes internal modules and native libraries. Missing information is distinct from a recorded empty package list. |
 | `license.label` | Existing descriptive license text, preserved verbatim. `spdx_expression` is null because these labels have not been systematically normalized into SPDX expressions. |
 | `github` | Author-supplied repository topics, star count, and retrieval timestamps. Unknown counts/timestamps can be null. |
 | `curation.topics` | Our curated topics, kept separate from GitHub topics. |
@@ -57,6 +58,7 @@ The current sources are:
 - [fpm_catalog/topics.json](../fpm_catalog/topics.json): saved GitHub metadata.
 - [fpm_catalog/owners.json](../fpm_catalog/owners.json): public display names, account types and profile provenance, stored once per GitHub owner.
 - [fpm_catalog/name-attributions.json](../fpm_catalog/name-attributions.json): curated public name mappings and source-author credits; see the [review table](name-attributions.md).
+- [docs/fpm-precompiled-validation.json](fpm-precompiled-validation.json): verified build/source records used for dependency lists. Their root revision must match the selected package. Reverse dependencies are derived from these resolved records, preserving the consumer's dependency revision even when it differs from the selected dependency package.
 - [fpm_catalog/playground-topics.json](../fpm_catalog/playground-topics.json): our topics.
 - [fpm_catalog/gams.json](../fpm_catalog/gams.json): GAMS taxonomy, assignments, and review notes.
 - [fpm_catalog/gams-numerical-review.json](../fpm_catalog/gams-numerical-review.json): numerical-package review coverage and remaining scope.

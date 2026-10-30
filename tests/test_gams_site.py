@@ -149,3 +149,28 @@ class GamsSiteTests(unittest.TestCase):
             self.assertIn('Packages from David Lauvergnat (lauvergn)', owner)
             self.assertIn('Different Public Name', owner)
             self.assertIn('recorded for review', owner)
+
+    def test_forward_and_reverse_dependencies_link_pins_without_assuming_direct_edges(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects'] if p['id'] in ('github:toml-f/jonquil', 'github:toml-f/toml-f')]
+        jonquil = next(p for p in feed['projects'] if p['name']=='jonquil')
+        toml = next(p for p in feed['projects'] if p['name']=='toml-f')
+        self.assertNotEqual(jonquil['dependencies']['packages'][0]['revision'], toml['curation']['reviewed_revision'])
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination, feed)
+            forward = (destination/'packages/jonquil/index.html').read_text(encoding='utf-8')
+            reverse = (destination/'packages/toml-f/index.html').read_text(encoding='utf-8')
+            self.assertIn('combining direct and indirect dependencies', forward)
+            self.assertIn('../../packages/toml-f/', Page(forward).links)
+            self.assertIn('differs from the selected catalog revision', forward)
+            self.assertIn('Used by (1 selected package)', reverse)
+            self.assertIn('../../packages/jonquil/', Page(reverse).links)
+            self.assertIn('uses a different revision', reverse)
+            self.assertIn('No additional GitHub package dependencies', reverse)
+            toml.pop('dependencies')
+            generate_gams_site(destination, feed)
+            reverse = (destination/'packages/toml-f/index.html').read_text(encoding='utf-8')
+            self.assertIn('Dependency information has not been recorded', reverse)
+            self.assertIn('Used by (1 selected package)', reverse)

@@ -22,6 +22,11 @@ def generate_gams_site(destination, feed, *, asset_version=None):
     destination = Path(destination)
     tree = feed['taxonomies']['gams']['classes']
     projects = sorted(feed['projects'], key=lambda p: p['name'].casefold())
+    by_id = {p['id']: p for p in projects}
+    used_by = {}
+    for project in projects:
+        for dependency in (project.get('dependencies') or {}).get('packages', []):
+            used_by.setdefault(dependency['id'], []).append((project, dependency))
     by_class = {code: [p for p in projects if code in p['curation']['gams_codes']] for code in tree}
     demos = feed.get('demonstrations', [])
     owners = feed.get('owners', {})
@@ -149,6 +154,40 @@ def generate_gams_site(destination, feed, *, asset_version=None):
 <div class="package-grid">{''.join(card(p, prefix, code) for p in items)}</div>
 </section>'''
 
+    def dependency_section(project):
+        dependency_data = project.get('dependencies')
+        result = '<section id="dependencies"><h2>Package dependencies</h2>'
+        if dependency_data is None:
+            result += '<p>Dependency information has not been recorded for this package.</p>'
+        else:
+            result += ('<p>Resolved GitHub repositories used by the verified playground build, combining direct and indirect dependencies. '
+                       'This list does not describe internal module dependencies or native system libraries.</p>')
+            result += '<h3>Required by this build</h3>'
+            rows = []
+            for dependency in dependency_data['packages']:
+                selected = by_id.get(dependency['id'])
+                url = 'https://github.com/'+dependency['repository']
+                name = link('../../'+package_path(selected), selected['name']) if selected else link(url, dependency['repository'])
+                pin = link(url+'/tree/'+dependency['revision'], dependency['revision'][:12])
+                note = ' — differs from the selected catalog revision' if selected and dependency['revision'] != selected['curation']['reviewed_revision'] else ''
+                rows.append('<li>'+name+' · source at '+pin+note+'</li>')
+            result += '<ul>'+''.join(rows)+'</ul>' if rows else '<p>No additional GitHub package dependencies were recorded for this verified build.</p>'
+            result += '<p class="owner">Build record verified '+e(dependency_data['verified_at'][:10])+'.</p>'
+        consumers = used_by.get(project['id'], [])
+        result += f'<h3>Used by ({len(consumers)} selected {"package" if len(consumers)==1 else "packages"})</h3>'
+        if consumers:
+            result += '<p>These selected builds include this repository directly or indirectly. Each link to source identifies the revision that build uses.</p>'
+            rows = []
+            for consumer, dependency in consumers:
+                pin = link('https://github.com/'+dependency['repository']+'/tree/'+dependency['revision'], dependency['revision'][:12])
+                note = ' — uses a different revision' if dependency['revision'] != project['curation']['reviewed_revision'] else ''
+                rows.append('<li>'+link('../../'+package_path(consumer), consumer['name'])+' · dependency source at '+pin+note+'</li>')
+            entries = '<ul>'+''.join(rows)+'</ul>'
+            result += '<details><summary>Show all dependent packages</summary>'+entries+'</details>' if len(rows)>10 else entries
+        else:
+            result += '<p>No other selected build records this repository as a dependency. This is not a measure of usage outside the catalog.</p>'
+        return result+'</section>'
+
     def children(parent, prefix):
         codes = sorted((c for c, info in tree.items() if info['parent'] == parent), key=class_order)
         if not codes:
@@ -252,7 +291,7 @@ def generate_gams_site(destination, feed, *, asset_version=None):
             procedures += '<p>No procedure-level mapping is recorded yet. The classifications describe package capabilities.</p>'
         procedures += '</section>'
         page(package_path(project), project['name'], project['description'],
-             intro+name_attribution(project['repository']['owner'].lower(), [project])+codes+details+procedures, depth=2)
+             intro+name_attribution(project['repository']['owner'].lower(), [project])+codes+details+dependency_section(project)+procedures, depth=2)
 
     sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
     sitemap += ''.join('<url><loc>'+xml_escape(url)+'</loc></url>\n' for url in written) + '</urlset>\n'

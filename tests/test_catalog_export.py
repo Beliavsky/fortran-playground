@@ -40,7 +40,7 @@ class CatalogExportTests(unittest.TestCase):
                 self.assertIn('?package=' + package['id'], record['playground']['url'])
                 self.assertFalse(record['playground']['live_service_checked'])
                 self.assertNotIn('authors', record)
-                for field in ('catalog_build', 'catalog_patches', 'dependencies', 'archive_sha256'):
+                for field in ('catalog_build', 'catalog_patches', 'archive_sha256'):
                     self.assertNotIn(field, record)
         self.assertEqual(feed['taxonomies']['gams']['classes']['L6']['parent'], 'L')
         self.assertEqual(feed['taxonomies']['gams']['classes']['G1b']['parent'], 'G1')
@@ -74,6 +74,33 @@ class CatalogExportTests(unittest.TestCase):
         broken['snapshot_id'] = snapshot_id(broken)
         with self.assertRaises(ValueError):
             validate_export(broken)
+
+    def test_dependencies_preserve_verified_source_pins_and_reject_false_relationships(self):
+        by_id = {p['id']: p for p in self.feed['projects']}
+        dftd4 = by_id['github:dftd4/dftd4']
+        dependencies = dftd4['dependencies']
+        self.assertEqual(dependencies['scope'], 'resolved-build-repositories')
+        self.assertEqual({d['id'] for d in dependencies['packages']}, {
+            'github:grimme-lab/mctc-lib', 'github:toml-f/jonquil', 'github:toml-f/toml-f', 'github:grimme-lab/multicharge'})
+        self.assertIn('docs/fpm-precompiled-validation.json', {r['path'] for r in self.feed['provenance']['inputs']})
+        for mutate in (
+            lambda d: d.update(scope='direct'),
+            lambda d: d.update(root_revision='0'*40),
+            lambda d: d['packages'].append(copy.deepcopy(d['packages'][0])),
+            lambda d: d['packages'][0].update(id=dftd4['id'], repository='dftd4/dftd4'),
+            lambda d: d['packages'][0].update(revision='main'),
+        ):
+            feed = copy.deepcopy(self.feed)
+            project = next(p for p in feed['projects'] if p['id'] == dftd4['id'])
+            mutate(project['dependencies'])
+            feed['snapshot_id'] = snapshot_id(feed)
+            with self.subTest(mutate=mutate), self.assertRaises(ValueError):
+                validate_export(feed)
+        legacy = copy.deepcopy(self.feed)
+        for project in legacy['projects']:
+            project.pop('dependencies', None)
+        legacy['snapshot_id'] = snapshot_id(legacy)
+        self.assertIs(validate_export(legacy), legacy)
 
     def test_provenance_distinguishes_clean_modified_and_unknown_inputs(self):
         with tempfile.TemporaryDirectory() as temporary:

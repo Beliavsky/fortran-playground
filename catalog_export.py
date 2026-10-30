@@ -142,6 +142,8 @@ def build_export(root=ROOT):
     gams = gams_data(root)
     drivers = driver_data(root, gams)
     review = numerical_review(root, gams)
+    builds = json.loads((root / 'docs/fpm-precompiled-validation.json').read_text(encoding='utf-8'))
+    verified_builds = {entry['id']: entry for entry in builds['packages']}
     inputs = ['fpm_catalog.json', 'fpm_catalog/topics.json', 'fpm_catalog/playground-topics.json',
               'fpm_catalog/gams.json', 'catalog_export.py', 'xpackage_topics.py', 'xpackage_gams.py',
                    f'catalog/{SCHEMA_NAME}']
@@ -150,7 +152,7 @@ def build_export(root=ROOT):
     if (root / 'fpm_catalog/name-attributions.json').exists():
         inputs.append('fpm_catalog/name-attributions.json')
     inputs.extend(['fpm_catalog/gams-drivers.json', 'docs/gams-g1-validation.json',
-                   'fpm_catalog/gams-numerical-review.json'])
+                   'fpm_catalog/gams-numerical-review.json', 'docs/fpm-precompiled-validation.json'])
     inputs.extend(sorted({p for d in drivers for p in [d['path'], *d['license_files']]}))
     projects = []
     for package in sorted(packages, key=lambda p: p['repository'].lower()):
@@ -178,6 +180,18 @@ def build_export(root=ROOT):
                            'package_revision': package['revision'], 'live_service_checked': False,
                            'example': {'path': example, 'sha256': text_hash(root / example)}},
         })
+        build = verified_builds.get(package['id'], {})
+        if build.get('revision') != package['revision'] or build.get('repository', '').lower() != package['repository'].lower():
+            raise ValueError(f'{package["id"]}: dependency information requires a matching verified build record.')
+        records = build.get('records', [])
+        if not any(r['repository'].lower() == package['repository'].lower() and r['revision'] == package['revision'] for r in records):
+            raise ValueError(f'{package["id"]}: verified source records do not contain the selected root revision.')
+        projects[-1]['dependencies'] = {
+            'scope': 'resolved-build-repositories', 'root_revision': package['revision'],
+            'verified_at': build['verified_at'],
+            'packages': sorted([{'id': 'github:'+r['repository'].lower(), 'repository': r['repository'], 'revision': r['revision']}
+                                for r in records if r['repository'].lower() != package['repository'].lower()],
+                               key=lambda r: r['id'])}
         procedures = procedure_records(gams, package['id'])
         if procedures:
             projects[-1]['curation']['procedures'] = procedures
@@ -330,6 +344,23 @@ def validate_export(data):
                 or not isinstance(curation.get('gams_notes'), str)
                 or 'reviewed_revision' not in curation or not _commit(curation['reviewed_revision'])):
             raise ValueError(f'{identity}: invalid classification review metadata.')
+        dependencies = project.get('dependencies')
+        if 'dependencies' in project:
+            if (not isinstance(dependencies, dict) or dependencies.get('scope') != 'resolved-build-repositories'
+                    or dependencies.get('root_revision') != curation['reviewed_revision']
+                    or not _commit(dependencies.get('root_revision')) or dependencies.get('root_revision') is None
+                    or not isinstance(dependencies.get('packages'), list) or not dependencies.get('verified_at')):
+                raise ValueError(f'{identity}: invalid resolved build dependencies.')
+            _timestamp(dependencies['verified_at'], f'{identity}.dependencies.verified_at')
+            dependency_ids = set()
+            for dependency in dependencies['packages']:
+                if (not isinstance(dependency, dict) or not _matches(ID_PATTERN, dependency.get('id'))
+                        or dependency['id'] == identity or dependency['id'] in dependency_ids
+                        or not isinstance(dependency.get('repository'), str)
+                        or 'github:'+dependency['repository'].lower() != dependency['id']
+                        or not _matches(r'[0-9a-f]{40}', dependency.get('revision'))):
+                    raise ValueError(f'{identity}: invalid or duplicate dependency repository pin.')
+                dependency_ids.add(dependency['id'])
         records = curation.get('procedures', [])
         if not isinstance(records, list):
             raise ValueError(f'{identity}: procedures must be a list.')
