@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "repository": "swig-fortran/flibcpp",
+  "revision": "334b2250230afbb419402ca2f1c0649c3b12a693",
+  "license": "MIT",
+  "configuration": {
+    "options": [
+      "-DFLIBCPP_BUILD_EXAMPLES=OFF",
+      "-DFLIBCPP_BUILD_TESTS=OFF",
+      "-DFLIBCPP_USE_SWIG=OFF",
+      "-DBUILD_SHARED_LIBS=OFF"
+    ],
+    "sources": [
+      "playground-generated/flibcpp_version.cpp",
+      "src/flc.f90",
+      "src/flcFORTRAN_wrap.cxx",
+      "src/flc_algorithm.f90",
+      "src/flc_algorithmFORTRAN_wrap.cxx",
+      "src/flc_map.f90",
+      "src/flc_mapFORTRAN_wrap.cxx",
+      "src/flc_random.f90",
+      "src/flc_randomFORTRAN_wrap.cxx",
+      "src/flc_set.f90",
+      "src/flc_setFORTRAN_wrap.cxx",
+      "src/flc_string.f90",
+      "src/flc_stringFORTRAN_wrap.cxx",
+      "src/flc_vector.f90",
+      "src/flc_vectorFORTRAN_wrap.cxx"
+    ],
+    "fortran_macros": []
+  },
+  "inputs": {
+    "CMakeLists.txt": "38caccd90f4590dd1c40ee70918474d7ce37c5aec83a7a82731df83136c53cd3",
+    "cmake/CgvFindVersion.cmake": "1eb76fcba52faf65ba8a50540c3de670aaee6478526d122319ff8836d27563e1",
+    "cmake/FindSphinx.cmake": "b75f7922fe9af5738b12544b49a0ba3c3a40fc707fd206c3c4adf459d4de47a9",
+    "cmake/FlibUtils.cmake": "ca81bb922694fb02d5aa193f42a7930d587f9459bd8a6279cdb8b8c615a5ee1f",
+    "cmake/FlibcppConfig.cmake.in": "5d6bf6b6c7cc49325cfa8c12314fa63c113964b7febc5a204bb46c5fc151cd6c",
+    "cmake/backport-cmake-318/FindSWIG.cmake": "03d8a21af35e4ec774439d97aa5299d2d31b0508d2474909f581c0a05cc2b236",
+    "cmake/backport-cmake-318/UseSWIG/ManageSupportFiles.cmake": "3c269505dd982b4462a4f3c4ae8e6f48dc35d4b206e39039a5b960f0ecbe28aa",
+    "cmake/backport-cmake-318/UseSWIG.cmake": "ede96c52ad412637fb32e89ec41b0fe6c5ed76e7471f5e9b4339f627be83a019",
+    "cmake/flibcpp_version.cpp.in": "68f4490f61af0f962c2d7815a9d4689e84e5250b28d6472757073e63e14635e8",
+    "doc/CMakeLists.txt": "4d844cfed3003a7298248281918747f8b87ea410cfa3b71625696ad269d54fd3",
+    "doc/version.json.in": "50238914023612f3f36c5e2d1262f4e8f50243a6d82232f147ef6696b78f0149",
+    "example/CMakeLists.txt": "351128ef331edf2229a3ac7b4994202750fb9486f1a57bcc021f3fe469b3dfb3",
+    "test/CMakeLists.txt": "287aa888cbfc55009c4cdf17118b25585912ca0ce31ee8fb3db1586e0a8a63b4"
+  },
+  "files": {
+    "playground-generated/flibcpp_version.cpp": "extern \"C\" const char flibcpp_version[] = \"1.0.4\";\nextern \"C\" const int flibcpp_version_major = 1;\nextern \"C\" const int flibcpp_version_minor = 0;\nextern \"C\" const int flibcpp_version_patch = 4;\n"
+  }
+}

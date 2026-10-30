@@ -1,0 +1,9 @@
+{
+  "note": "The initial consumer lacked explicit routine interfaces. The final driver uses the upstream slicot module or explicitly declares the classic ARPACK interfaces; library sources are unchanged.",
+  "diagnostics": [
+    {
+      "attempt": "algebra",
+      "diagnostic": " + mkdir -p build/dependencies\n[  0%]              pyplot_module.f90\n[  1%]              pyplot_module.f90  done.\n[  1%]                       main.f90\n<ERROR> Compilation failed for object \" app_main.f90.o \"\n[  2%]                       main.f90  done.\n\napp/main.f90:22:91:\n\n   22 |       call dsaupd(ido,'I',n,'SM',nev,tol,resid,ncv,v,n,iparam,ipntr,workd,workl,lwork,info)\n      |                                                                                           1\nError: Procedure \u2018dsaupd\u2019 called with an implicit interface at (1) [-Werror=implicit-interface]\ncompilation terminated due to -fmax-errors=1.\n<ERROR> stopping due to failed compilation\nSTOP 1\n"
+    }
+  ]
+}

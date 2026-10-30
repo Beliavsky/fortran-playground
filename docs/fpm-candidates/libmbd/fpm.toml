@@ -1,0 +1,14 @@
+name="libmbd"
+version="0.0.0"
+license="MPL-2.0"
+[library]
+source-dir="playground-library"
+include-dir=["src", "playground-generated"]
+[build]
+auto-executables=false
+auto-examples=false
+auto-tests=false
+external-modules=["mbd_blacs", "mbd_elsi", "mbd_mpi", "mbd_scalapack"]
+link=["openblas"]
+[install]
+library=true

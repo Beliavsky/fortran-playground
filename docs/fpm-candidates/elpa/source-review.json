@@ -1,0 +1,174 @@
+{
+  "id": "elpa",
+  "repository": "marekandreas/elpa",
+  "revision": "6119b4cfcd7422d8493cc0c33e8b8a2264cd81d0",
+  "release_probes": [
+    {
+      "tag": "new_release_2026.02.002",
+      "revision": "202e14d535cb07e1193fdc5e5cea726eb5faa44f",
+      "archive_sha256": "4716ab58c41e7f202b09af674fc99d86abe63cbbfe15a28fc929564a989af234",
+      "archive_bytes": 8271081,
+      "links": [
+        {
+          "path": "elpa-202e14d535cb07e1193fdc5e5cea726eb5faa44f/fdep/test_project/fdep",
+          "target": ".."
+        },
+        {
+          "path": "elpa-202e14d535cb07e1193fdc5e5cea726eb5faa44f/src/shipped_srcs/ONECCL_TESTS/GPU",
+          "target": "../../GPU"
+        },
+        {
+          "path": "elpa-202e14d535cb07e1193fdc5e5cea726eb5faa44f/src/shipped_srcs/ONECCL_TESTS/elpa-oneccl-wrapper.h",
+          "target": "../../GPU/SYCL/onecclFunctions_template.h"
+        },
+        {
+          "path": "elpa-202e14d535cb07e1193fdc5e5cea726eb5faa44f/src/shipped_srcs/ONECCL_TESTS/general",
+          "target": "../../general"
+        },
+        {
+          "path": "elpa-202e14d535cb07e1193fdc5e5cea726eb5faa44f/src/shipped_srcs/ONECCL_TESTS/helpers",
+          "target": "../../helpers"
+        },
+        {
+          "path": "elpa-202e14d535cb07e1193fdc5e5cea726eb5faa44f/src/shipped_srcs/ONECCL_TESTS/syclCommon.cpp",
+          "target": "../../GPU/SYCL/syclCommon.cpp"
+        },
+        {
+          "path": "elpa-202e14d535cb07e1193fdc5e5cea726eb5faa44f/src/shipped_srcs/ONECCL_TESTS/syclCommon.hpp",
+          "target": "../../GPU/SYCL/syclCommon.hpp"
+        },
+        {
+          "path": "elpa-202e14d535cb07e1193fdc5e5cea726eb5faa44f/src/shipped_srcs/SYCL_KERNEL/src/compute_hh.cpp",
+          "target": "../../../elpa2/GPU/SYCL/ev_tridi_band_sycl_gpu_real.cpp"
+        },
+        {
+          "path": "elpa-202e14d535cb07e1193fdc5e5cea726eb5faa44f/src/shipped_srcs/SYCL_KERNEL/src/cuda/compute_hh_cuda_complex.cu",
+          "target": "../../../../elpa2/GPU/CUDA/ev_tridi_band_nvidia_gpu_complex.cu"
+        },
+        {
+          "path": "elpa-202e14d535cb07e1193fdc5e5cea726eb5faa44f/src/shipped_srcs/SYCL_KERNEL/src/rocm/compute_hh_kernel_complex.hpp",
+          "target": "../../../../elpa2/GPU/ROCm/ev_tridi_band_amd_gpu_complex.hip"
+        },
+        {
+          "path": "elpa-202e14d535cb07e1193fdc5e5cea726eb5faa44f/src/shipped_srcs/SYCL_KERNEL/src/rocm/compute_hh_kernel_real.hpp",
+          "target": "../../../../elpa2/GPU/ROCm/ev_tridi_band_amd_gpu_real.hip"
+        }
+      ],
+      "status": "preparation-failed",
+      "reason": "Package archive contains an unsafe path, link, or special file."
+    },
+    {
+      "tag": "new_release_2026_02_001",
+      "revision": "2f09197d8342243f431025686ed59f7bbf2cc6fa",
+      "archive_sha256": "8cd38dcdd6232ba6f76d479d35f2db4c4db9d4fa9480deb2ecc921801371d480",
+      "archive_bytes": 8270927,
+      "links": [
+        {
+          "path": "elpa-2f09197d8342243f431025686ed59f7bbf2cc6fa/fdep/test_project/fdep",
+          "target": ".."
+        },
+        {
+          "path": "elpa-2f09197d8342243f431025686ed59f7bbf2cc6fa/src/shipped_srcs/ONECCL_TESTS/GPU",
+          "target": "../../GPU"
+        },
+        {
+          "path": "elpa-2f09197d8342243f431025686ed59f7bbf2cc6fa/src/shipped_srcs/ONECCL_TESTS/elpa-oneccl-wrapper.h",
+          "target": "../../GPU/SYCL/onecclFunctions_template.h"
+        },
+        {
+          "path": "elpa-2f09197d8342243f431025686ed59f7bbf2cc6fa/src/shipped_srcs/ONECCL_TESTS/general",
+          "target": "../../general"
+        },
+        {
+          "path": "elpa-2f09197d8342243f431025686ed59f7bbf2cc6fa/src/shipped_srcs/ONECCL_TESTS/helpers",
+          "target": "../../helpers"
+        },
+        {
+          "path": "elpa-2f09197d8342243f431025686ed59f7bbf2cc6fa/src/shipped_srcs/ONECCL_TESTS/syclCommon.cpp",
+          "target": "../../GPU/SYCL/syclCommon.cpp"
+        },
+        {
+          "path": "elpa-2f09197d8342243f431025686ed59f7bbf2cc6fa/src/shipped_srcs/ONECCL_TESTS/syclCommon.hpp",
+          "target": "../../GPU/SYCL/syclCommon.hpp"
+        },
+        {
+          "path": "elpa-2f09197d8342243f431025686ed59f7bbf2cc6fa/src/shipped_srcs/SYCL_KERNEL/src/compute_hh.cpp",
+          "target": "../../../elpa2/GPU/SYCL/ev_tridi_band_sycl_gpu_real.cpp"
+        },
+        {
+          "path": "elpa-2f09197d8342243f431025686ed59f7bbf2cc6fa/src/shipped_srcs/SYCL_KERNEL/src/cuda/compute_hh_cuda_complex.cu",
+          "target": "../../../../elpa2/GPU/CUDA/ev_tridi_band_nvidia_gpu_complex.cu"
+        },
+        {
+          "path": "elpa-2f09197d8342243f431025686ed59f7bbf2cc6fa/src/shipped_srcs/SYCL_KERNEL/src/rocm/compute_hh_kernel_complex.hpp",
+          "target": "../../../../elpa2/GPU/ROCm/ev_tridi_band_amd_gpu_complex.hip"
+        },
+        {
+          "path": "elpa-2f09197d8342243f431025686ed59f7bbf2cc6fa/src/shipped_srcs/SYCL_KERNEL/src/rocm/compute_hh_kernel_real.hpp",
+          "target": "../../../../elpa2/GPU/ROCm/ev_tridi_band_amd_gpu_real.hip"
+        }
+      ],
+      "status": "preparation-failed",
+      "reason": "Package archive contains an unsafe path, link, or special file."
+    }
+  ],
+  "checked_at": "2026-10-30T11:26:42.570969+00:00",
+  "status": "preparation-failed",
+  "stage": "preparation",
+  "compiler_invoked": false,
+  "verified_in_playground": false,
+  "error": "Package archive contains an unsafe path, link, or special file.",
+  "archive_sha256": "494c5fde339830946730e8c4db69fd3e5a2b0dceec44036994adedf040fe05aa",
+  "links": [
+    {
+      "path": "elpa-6119b4cfcd7422d8493cc0c33e8b8a2264cd81d0/fdep/test_project/fdep",
+      "target": ".."
+    },
+    {
+      "path": "elpa-6119b4cfcd7422d8493cc0c33e8b8a2264cd81d0/src/shipped_srcs/ONECCL_TESTS/GPU",
+      "target": "../../GPU"
+    },
+    {
+      "path": "elpa-6119b4cfcd7422d8493cc0c33e8b8a2264cd81d0/src/shipped_srcs/ONECCL_TESTS/elpa-oneccl-wrapper.h",
+      "target": "../../GPU/SYCL/onecclFunctions_template.h"
+    },
+    {
+      "path": "elpa-6119b4cfcd7422d8493cc0c33e8b8a2264cd81d0/src/shipped_srcs/ONECCL_TESTS/general",
+      "target": "../../general"
+    },
+    {
+      "path": "elpa-6119b4cfcd7422d8493cc0c33e8b8a2264cd81d0/src/shipped_srcs/ONECCL_TESTS/helpers",
+      "target": "../../helpers"
+    },
+    {
+      "path": "elpa-6119b4cfcd7422d8493cc0c33e8b8a2264cd81d0/src/shipped_srcs/ONECCL_TESTS/syclCommon.cpp",
+      "target": "../../GPU/SYCL/syclCommon.cpp"
+    },
+    {
+      "path": "elpa-6119b4cfcd7422d8493cc0c33e8b8a2264cd81d0/src/shipped_srcs/ONECCL_TESTS/syclCommon.hpp",
+      "target": "../../GPU/SYCL/syclCommon.hpp"
+    },
+    {
+      "path": "elpa-6119b4cfcd7422d8493cc0c33e8b8a2264cd81d0/src/shipped_srcs/SYCL_KERNEL/src/compute_hh.cpp",
+      "target": "../../../elpa2/GPU/SYCL/ev_tridi_band_sycl_gpu_real.cpp"
+    },
+    {
+      "path": "elpa-6119b4cfcd7422d8493cc0c33e8b8a2264cd81d0/src/shipped_srcs/SYCL_KERNEL/src/cuda/compute_hh_cuda_complex.cu",
+      "target": "../../../../elpa2/GPU/CUDA/ev_tridi_band_nvidia_gpu_complex.cu"
+    },
+    {
+      "path": "elpa-6119b4cfcd7422d8493cc0c33e8b8a2264cd81d0/src/shipped_srcs/SYCL_KERNEL/src/rocm/compute_hh_kernel_complex.hpp",
+      "target": "../../../../elpa2/GPU/ROCm/ev_tridi_band_amd_gpu_complex.hip"
+    },
+    {
+      "path": "elpa-6119b4cfcd7422d8493cc0c33e8b8a2264cd81d0/src/shipped_srcs/SYCL_KERNEL/src/rocm/compute_hh_kernel_real.hpp",
+      "target": "../../../../elpa2/GPU/ROCm/ev_tridi_band_amd_gpu_real.hip"
+    }
+  ],
+  "upstream": "https://gitlab.mpcdf.mpg.de/elpa/elpa",
+  "mirror_evidence": "https://elpa.mpcdf.mpg.de/elpa_userguide.pdf",
+  "reason": "The declared GitHub mirror archive and both probed 2026.02 release tags contain symbolic links, including a parent-directory link under fdep/test_project and GPU/test source links. The unchanged extractor rejects them before configuration or compilation. No compiler or eigensolver failure is established.",
+  "proposed_next_step": "Obtain a pinned regular-file source distribution or separately review safe handling of these links; then configure the documented non-MPI CPU build and check eigenvalues, residuals and orthogonality.",
+  "archive_bytes": 8274857,
+  "archive_expanded_bytes": 17101771
+}

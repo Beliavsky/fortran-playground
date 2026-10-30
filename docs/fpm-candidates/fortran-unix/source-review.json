@@ -1,0 +1,41 @@
+{
+  "id": "fortran-unix",
+  "repository": "interkosmos/fortran-unix",
+  "revision": "50dc6df511c1cf5a245a4ab14cd4f705d4e66c2f",
+  "archive_sha256": "25aab1c736298d47777dfabb4a6e3257914e80f93f95a12bbc0e308d0e9e2ae6",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "environment": {
+      "FPM_FFLAGS": "-D__linux__"
+    }
+  },
+  "dependencies": [],
+  "catalog_patches": {
+    "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+    "edits": [
+      {
+        "path": "fpm.toml",
+        "sha256": "d91d511d87b724c4eec0add815444b6d8872e8ac65728057c42d1f766377303d",
+        "before": "name = \"fortran-unix\"\nversion = \"0.5.0\"\nlicense = \"ISC\"\nauthor = \"Philipp Engel\"\nmaintainer = \"@interkosmos\"\ncopyright = \"Copyright (c) 2022, Philipp Engel\"\ndescription = \"Fortran 2018 ISO C binding interfaces to SysV/POSIX\"\nkeywords = [\n    \"posix\",\n    \"sysv\",\n    \"system\",\n    \"unix\",\n    \"linux\",\n    \"freebsd\",\n]\n\n[features.debug.gfortran.linux]\nflags = \"-D__linux__\"\n\n[features.debug.gfortran.freebsd]\nflags = \"-D__FreeBSD__\"\n\n[features.release.gfortran.linux]\nflags = \"-D__linux__\"\n\n[features.release.gfortran.freebsd]\nflags = \"-D__FreeBSD__\"\n\n[profiles]\ndebug = [\n    \"debug\",\n]\nrelease = [\n    \"release\",\n]\n\n[library]\nsource-dir = \"src\"\n\n[install]\nlibrary = true\n\n[[example]]\nname = \"dirent\"\nsource-dir = \"examples/dirent\"\nmain = \"dirent.f90\"\n\n[[example]]\nname = \"fifo\"\nsource-dir = \"examples/fifo\"\nmain = \"fifo.f90\"\n\n[[example]]\nname = \"fork\"\nsource-dir = \"examples/fork\"\nmain = \"fork.f90\"\n\n[[example]]\nname = \"irc\"\nsource-dir = \"examples/irc\"\nmain = \"irc.f90\"\n\n[[example]]\nname = \"key\"\nsource-dir = \"examples/key\"\nmain = \"key.f90\"\n\n[[example]]\nname = \"mqueue\"\nsource-dir = \"examples/mqueue\"\nmain = \"mqueue.f90\"\nlink = \"rt\"\n\n[[example]]\nname = \"msg\"\nsource-dir = \"examples/msg\"\nmain = \"msg.f90\"\n\n[[example]]\nname = \"mutex\"\nsource-dir = \"examples/mutex\"\nmain = \"mutex.f90\"\nlink = \"pthread\"\n\n[[example]]\nname = \"os\"\nsource-dir = \"examples/os\"\nmain = \"os.F90\"\n\n[[example]]\nname = \"pid\"\nsource-dir = \"examples/pid\"\nmain = \"pid.f90\"\n\n[[example]]\nname = \"pipe\"\nsource-dir = \"examples/pipe\"\nmain = \"pipe.f90\"\n\n[[example]]\nname = \"pthread\"\nsource-dir = \"examples/pthread\"\nmain = \"pthread.f90\"\nlink = \"pthread\"\n\n[[example]]\nname = \"regex\"\nsource-dir = \"examples/regex\"\nmain = \"regex.f90\"\n\n[[example]]\nname = \"semaphore\"\nsource-dir = \"examples/semaphore\"\nmain = \"semaphore.f90\"\nlink = \"pthread\"\n\n[[example]]\nname = \"serial\"\nsource-dir = \"examples/serial\"\nmain = \"serial.f90\"\n\n[[example]]\nname = \"signal\"\nsource-dir = \"examples/signal\"\nmain = \"signal.f90\"\n\n[[example]]\nname = \"socket\"\nsource-dir = \"examples/socket\"\nmain = \"socket.f90\"\n\n[[example]]\nname = \"spawn\"\nsource-dir = \"examples/spawn\"\nmain = \"spawn.f90\"\n\n[[example]]\nname = \"stat\"\nsource-dir = \"examples/stat\"\nmain = \"stat.f90\"\n\n[[example]]\nname = \"time\"\nsource-dir = \"examples/time\"\nmain = \"time.f90\"\n\n[[example]]\nname = \"uname\"\nsource-dir = \"examples/uname\"\nmain = \"uname.f90\"\n\n[[example]]\nname = \"uptime\"\nsource-dir = \"examples/uptime\"\nmain = \"uptime.f90\"\n",
+        "after": "name = \"fortran-unix\"\nversion = \"0.5.0\"\nlicense = \"ISC\"\nauthor = \"Philipp Engel\"\nmaintainer = \"@interkosmos\"\ncopyright = \"Copyright (c) 2022, Philipp Engel\"\ndescription = \"Fortran 2018 ISO C binding interfaces to SysV/POSIX\"\nkeywords = [\n    \"posix\",\n    \"sysv\",\n    \"system\",\n    \"unix\",\n    \"linux\",\n    \"freebsd\",\n]\n\n[library]\nsource-dir = \"src\"\n\n[install]\nlibrary = true\n\n[[example]]\nname = \"dirent\"\nsource-dir = \"examples/dirent\"\nmain = \"dirent.f90\"\n\n[[example]]\nname = \"fifo\"\nsource-dir = \"examples/fifo\"\nmain = \"fifo.f90\"\n\n[[example]]\nname = \"fork\"\nsource-dir = \"examples/fork\"\nmain = \"fork.f90\"\n\n[[example]]\nname = \"irc\"\nsource-dir = \"examples/irc\"\nmain = \"irc.f90\"\n\n[[example]]\nname = \"key\"\nsource-dir = \"examples/key\"\nmain = \"key.f90\"\n\n[[example]]\nname = \"mqueue\"\nsource-dir = \"examples/mqueue\"\nmain = \"mqueue.f90\"\nlink = \"rt\"\n\n[[example]]\nname = \"msg\"\nsource-dir = \"examples/msg\"\nmain = \"msg.f90\"\n\n[[example]]\nname = \"mutex\"\nsource-dir = \"examples/mutex\"\nmain = \"mutex.f90\"\nlink = \"pthread\"\n\n[[example]]\nname = \"os\"\nsource-dir = \"examples/os\"\nmain = \"os.F90\"\n\n[[example]]\nname = \"pid\"\nsource-dir = \"examples/pid\"\nmain = \"pid.f90\"\n\n[[example]]\nname = \"pipe\"\nsource-dir = \"examples/pipe\"\nmain = \"pipe.f90\"\n\n[[example]]\nname = \"pthread\"\nsource-dir = \"examples/pthread\"\nmain = \"pthread.f90\"\nlink = \"pthread\"\n\n[[example]]\nname = \"regex\"\nsource-dir = \"examples/regex\"\nmain = \"regex.f90\"\n\n[[example]]\nname = \"semaphore\"\nsource-dir = \"examples/semaphore\"\nmain = \"semaphore.f90\"\nlink = \"pthread\"\n\n[[example]]\nname = \"serial\"\nsource-dir = \"examples/serial\"\nmain = \"serial.f90\"\n\n[[example]]\nname = \"signal\"\nsource-dir = \"examples/signal\"\nmain = \"signal.f90\"\n\n[[example]]\nname = \"socket\"\nsource-dir = \"examples/socket\"\nmain = \"socket.f90\"\n\n[[example]]\nname = \"spawn\"\nsource-dir = \"examples/spawn\"\nmain = \"spawn.f90\"\n\n[[example]]\nname = \"stat\"\nsource-dir = \"examples/stat\"\nmain = \"stat.f90\"\n\n[[example]]\nname = \"time\"\nsource-dir = \"examples/time\"\nmain = \"time.f90\"\n\n[[example]]\nname = \"uname\"\nsource-dir = \"examples/uname\"\nmain = \"uname.f90\"\n\n[[example]]\nname = \"uptime\"\nsource-dir = \"examples/uptime\"\nmain = \"uptime.f90\"\n"
+      }
+    ]
+  },
+  "checked_at": "2026-10-29T13:30:57.553160+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/fortran-unix.f90",
+  "verification": {
+    "seconds": 3.895,
+    "build_seconds": 0.314,
+    "library_reused": true,
+    "demo_sha256": "949a6762cf02a6a06593058dfe1656244f47a38d287fcb025d2fd0c49a78aa2b",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "ISC",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "POSIX/SysV bindings on the playground 64-bit Linux/glibc environment. The source library is unchanged. The manifest features/profiles tables are removed for FPM 0.12 compatibility and their Linux preprocessor flag is supplied explicitly. A 13-byte sandbox-local file is created, its size is checked through c_stat, then c_unlink removes it and Fortran INQUIRE confirms removal. Other operating systems, process creation, networking, IPC, signals, threads and all ABI structures are not validated or promised in the restricted sandbox."
+}

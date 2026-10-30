@@ -1,0 +1,42 @@
+{
+  "id": "qnstop",
+  "repository": "vtopt/qnstop",
+  "revision": "39e8273247f586fca8305ef3d8e879b27b6512d0",
+  "archive_sha256": "7a7c95f9f1990dda7284bfab28b8ec7cce80eedebb0d6a6cc3979174b1cb7b65",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "source_packages": {
+      "vtopt/qnstop": {
+        "manifest": "name = \"qnstop\"\nversion = \"0.0.0\"\nlicense = \"MIT\"\n[library]\nsource-dir = \"playground-library\"\ninclude-dir = [\"src\", \".\"]\n[build]\nauto-executables = false\nauto-examples = false\nauto-tests = false\n[install]\nlibrary = true\n[fortran]\nimplicit-typing = true\nimplicit-external = true\nsource-form = \"default\"\n[preprocess.cpp]\nsuffixes = [\"f95\"]\n",
+        "sources": [
+          "src/real_precision.f95",
+          "src/zigarray.f95",
+          "src/qnstops.f95",
+          "src/blas.f",
+          "src/lapack.f"
+        ]
+      }
+    },
+    "environment": {
+      "FPM_FFLAGS": "-fallow-argument-mismatch -std=legacy"
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T13:30:57.553160+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/qnstop.f90",
+  "verification": {
+    "seconds": 3.663,
+    "build_seconds": 0.46,
+    "library_reused": true,
+    "demo_sha256": "105572adfcf27d0389cc2046ac5a1e2b4ef01bb8ca2935e416138cf1f60166be",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Serial QNSTOP for bound-constrained stochastic and global optimization. An FPM wrapper selects unmodified REAL_PRECISION, ZIGARRAY, QNSTOPS and bundled BLAS/LAPACK sources. Explicit CPP suffix handling lets FPM discover .f95 files. Legacy implicit typing/interfaces and argument-mismatch compatibility retain the upstream calling conventions. The seeded two-variable quadratic example checks normal stopping status, bounds, objective value and distance from its known minimizer. It is an accuracy smoke test, not a general global-optimum guarantee. The parallel QNSTOPP driver, noisy objectives, all stopping rules and performance are not validated."
+}

@@ -1,0 +1,50 @@
+{
+  "id": "dftatom",
+  "repository": "certik/dftatom",
+  "revision": "e49b3042de6e2471afe5eea992c9ba50dac08f95",
+  "archive_sha256": "69e20740d8cfd35de9c226ff626837f3eb7aef699ff96ee47a0b1ea1705baa27",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "source_packages": {
+      "certik/dftatom": {
+        "manifest": "name = \"dftatom\"\nversion = \"0.0.0\"\nlicense = \"MIT\"\n[library]\nsource-dir = \"playground-library\"\n[build]\nauto-executables = false\nauto-examples = false\nauto-tests = false\n[install]\nlibrary = true\n",
+        "sources": [
+          "src/constants.f90",
+          "src/dft.f90",
+          "src/dft_data.f90",
+          "src/dftatom.f90",
+          "src/drivers.f90",
+          "src/energies.f90",
+          "src/mesh.f90",
+          "src/mixings.f90",
+          "src/ode1d.f90",
+          "src/rdirac.f90",
+          "src/reigen.f90",
+          "src/rpoisson.f90",
+          "src/rschroed.f90",
+          "src/states.f90",
+          "src/types.f90",
+          "src/utils.f90"
+        ]
+      }
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T18:44:12.105846+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/dftatom.f90",
+  "verification": {
+    "seconds": 1.494,
+    "build_seconds": 0.233,
+    "library_reused": true,
+    "demo_sha256": "8ee70aa55e5cbc3d9794b4560a78f806920df204cd87c21d575dcb5c0fcac373",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Unmodified Fortran library sources selected from the upstream native makefile and wrapped for FPM. The checked example adapts the upstream hydrogen test to Z=1 and computes all six (n,l) states through n=3 on an exponential radial mesh. It requires solver convergence, finite energies and agreement with the analytical nonrelativistic energies -1/(2*n**2) within 1e-7 Hartree. Relativistic Dirac, Poisson and self-consistent density-functional calculations are present in the library but not exercised by this example. C/Python bindings and optional extra integration/interpolation/LAPACK sources are outside the selected native source set."
+}

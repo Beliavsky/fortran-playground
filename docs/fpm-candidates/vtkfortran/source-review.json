@@ -1,0 +1,42 @@
+{
+  "id": "vtkfortran",
+  "repository": "szaghi/VTKFortran",
+  "revision": "bca0eb0bafe9c59ade72ed7be6f9bc124290c5f0",
+  "archive_sha256": "e3bf198ac5fedcab2db4ff2fb4b889a809cf7f96841379fc111cc40faf1e614f",
+  "checked_at": "2026-10-29T23:19:16.972096+00:00",
+  "status": "deferred",
+  "stage": "preparation",
+  "reason": "The current archive and tags v3.0.0, v2.0.10 and v2.0.9 contain a CONTRIBUTING.md symbolic link. The unchanged archive extractor rejects links before compilation. No compiler failure is claimed. A safe upstream source distribution is required before the proposed mesh-file example can be verified.",
+  "links": [
+    {
+      "path": "VTKFortran-bca0eb0bafe9c59ade72ed7be6f9bc124290c5f0/CONTRIBUTING.md",
+      "target": "docs/guide/contributing.md"
+    }
+  ],
+  "release_probes": [
+    {
+      "tag": "v3.0.0",
+      "revision": "47210711ec64c02a3d026f1d4b2b0e451343f798",
+      "links": [
+        "VTKFortran-47210711ec64c02a3d026f1d4b2b0e451343f798/CONTRIBUTING.md"
+      ],
+      "archive_sha256": "31fee0e970b7f7954dec515956064d28922d6c28e750d4d0abec7dd3ddb1b277"
+    },
+    {
+      "tag": "v2.0.10",
+      "revision": "2680e1f5b23f8c41308ce07c2dcfc7bde5d54d3e",
+      "links": [
+        "VTKFortran-2680e1f5b23f8c41308ce07c2dcfc7bde5d54d3e/CONTRIBUTING.md"
+      ],
+      "archive_sha256": "9d1df497247042ab111096d413f3ce703d026338d0b014adb67c8d4c6ec4e7c0"
+    },
+    {
+      "tag": "v2.0.9",
+      "revision": "2f0bc1c63886a777d0584d80fd7147fc6a50e1b3",
+      "links": [
+        "VTKFortran-2f0bc1c63886a777d0584d80fd7147fc6a50e1b3/CONTRIBUTING.md"
+      ],
+      "archive_sha256": "d3978fdf990b9d66865987e0403ab8e71ea8d74696c4d348bec099ecb3eccc87"
+    }
+  ]
+}

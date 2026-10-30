@@ -173,6 +173,9 @@ class SiteTests(unittest.TestCase):
             feed = validate_export(json.loads((destination / 'catalog' / FEED_NAME).read_text(encoding='utf-8')))
             self.assertEqual(len(feed['projects']), len(json.loads((ROOT / 'fpm_catalog.json').read_text())['packages']))
             self.assertTrue((destination / 'catalog' / SCHEMA_NAME).is_file())
+            self.assertTrue((destination / 'gams/D2/index.html').is_file())
+            self.assertTrue((destination / 'gams/catalog.css').is_file())
+            self.assertIn(f'search.mjs?v={version}', (destination / 'gams/index.html').read_text(encoding='utf-8'))
 
     def test_no_transpiler_or_python_controls(self):
         html = (ROOT / 'site/index.html').read_text(encoding='utf-8')

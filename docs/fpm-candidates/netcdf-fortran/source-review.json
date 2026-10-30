@@ -1,0 +1,60 @@
+{
+  "id": "netcdf-fortran",
+  "repository": "Unidata/netcdf-fortran",
+  "revision": "48d67b73cb2a671d6d27075eb7e53085d5f9538a",
+  "archive_sha256": "8b87f76ae3ff419c474da6f2b273e0796ef547f13ab51b6c877d0b866f33732c",
+  "catalog_build": {
+    "adapter_sha256": "66e8249cbc0eb57ffecf9f04801ede2060312d64ba2fa2d839b07fdc746f5f8c",
+    "apt_packages": [
+      "libnetcdf-dev=1:4.9.3-1"
+    ],
+    "environment": {
+      "FPM_FFLAGS": "-DHAVE_F2008 -DHAVE_TS29113_SUPPORT -DNO_NETCDF_2"
+    },
+    "source_packages": {
+      "unidata/netcdf-fortran": {
+        "manifest": "name = \"netcdf-fortran\"\nversion = \"0.0.0\"\nlicense = \"NetCDF AND Apache-2.0\"\n[library]\nsource-dir = \"playground-library\"\ninclude-dir = [\"fortran\"]\n[build]\nlink = [\"netcdf\"]\nauto-executables = false\nauto-examples = false\nauto-tests = false\n[install]\nlibrary = true\n[fortran]\nimplicit-typing = true\nimplicit-external = true\nsource-form = \"default\"\n",
+        "sources": [
+          "fortran/typeSizes.F90",
+          "fortran/module_netcdf_nc_data.F90",
+          "fortran/module_netcdf_nc_interfaces.F90",
+          "fortran/module_netcdf_nf_data.F90",
+          "fortran/module_netcdf_nf_interfaces.F90",
+          "fortran/module_netcdf_f03.F90",
+          "fortran/nf_attio.F90",
+          "fortran/nf_control.F90",
+          "fortran/nf_dim.F90",
+          "fortran/nf_misc.F90",
+          "fortran/nf_genatt.F90",
+          "fortran/nf_geninq.F90",
+          "fortran/nf_genvar.F90",
+          "fortran/nf_vario.F90",
+          "fortran/nf_var1io.F90",
+          "fortran/nf_varaio.F90",
+          "fortran/nf_varmio.F90",
+          "fortran/nf_varsio.F90",
+          "fortran/nf_nc_noparallel.F90",
+          "fortran/netcdf.F90"
+        ]
+      }
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T20:13:47.719614+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/netcdf-fortran.f90",
+  "verification": {
+    "seconds": 1.599,
+    "build_seconds": 0.569,
+    "library_reused": true,
+    "demo_sha256": "8ddeb807c1756ebadc44ef51f5c33e0da181b503855c08817ae9ff545da87946",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "NetCDF AND Apache-2.0",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Selected serial classic-format Fortran sources follow the upstream CMake classic-library source set and use the unchanged public netCDF-C API. The operator-owned FPM wrapper retains original include files and sets HAVE_F2008, HAVE_TS29113_SUPPORT and NO_NETCDF_2 for the GNU 16 Linux environment; no library sources are edited. The native libnetcdf-dev package is locked to 1:4.9.3-1. The consumer writes a 3-by-2 real array and units attribute to a classic dataset, reopens it, checks dimension lengths, attribute and every value, then removes the file. NetCDF-4-specific Fortran interfaces, the old V2 API, parallel I/O and all data types are outside this selected build and verification scope. Source exports require the native netCDF C development library."
+}

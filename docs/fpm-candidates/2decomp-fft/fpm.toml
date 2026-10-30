@@ -1,0 +1,16 @@
+name="decomp2d"
+version="0.0.0"
+license="BSD-3-Clause"
+[library]
+source-dir="playground-library"
+include-dir=["src"]
+[build]
+auto-executables=false
+auto-examples=false
+auto-tests=false
+external-modules=["cudafor", "decomp_2d_cumpi", "decomp_2d_nccl", "mpi", "mpi_f08", "nccl", "omp_lib"]
+link=["mpichfort", "mpich"]
+[install]
+library=true
+[preprocess.cpp]
+macros=["DOUBLE_PREC"]

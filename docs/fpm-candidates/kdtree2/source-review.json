@@ -1,0 +1,45 @@
+{
+  "id": "kdtree2",
+  "repository": "jmhodges/kdtree2",
+  "revision": "dc757acec3162948cb228c2e0457d10134ec1edc",
+  "archive_sha256": "1c009c7d231db804c48dfc3c9799b05fb2522073236f0cb27a1407a9fcc2d4ce",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "source_packages": {
+      "jmhodges/kdtree2": {
+        "manifest": "name = \"kdtree2\"\nversion = \"0.0.0\"\nlicense = \"AFL-1.1\"\n[library]\nsource-dir = \"playground-library\"\n[build]\nauto-executables = false\nauto-examples = false\nauto-tests = false\n[install]\nlibrary = true\n",
+        "sources": [
+          "src-f90/kdtree2.f90"
+        ]
+      }
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T12:13:59.407766+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/kdtree2.f90",
+  "verification": {
+    "seconds": 2.022,
+    "build_seconds": 0.431,
+    "library_reused": true,
+    "demo_sha256": "77d3a0763ea8d542d689fc85922be56e12500402d432134b1e0824f44baaa051",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "AFL-1.1",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Nearest-neighbor and radius searches. An FPM wrapper selects unchanged src-f90/kdtree2.f90; the archived upstream single-precision setting is retained. The checked main builds a tree for 30 deterministic 2D points, compares four nearest indices and squared distances against an independent direct search, and checks radius-search count, membership, distances and uniqueness. The original Academic Free License 1.1 is retained. No source edits. The implementation has global search state and is not offered as thread-safe; the old interface, C++ code, every dimension and large-scale performance are not validated.",
+  "source_packaging": {
+    "manifest": "fpm.toml",
+    "sources": [
+      {
+        "path": "src-f90/kdtree2.f90",
+        "sha256": "fc83829b66600b0581728b33d43748bbf06ad41d278914c9558a36730b0e2bde"
+      }
+    ],
+    "note": "Only the listed unchanged library files are copied into playground-library; upstream test/program files are excluded."
+  }
+}

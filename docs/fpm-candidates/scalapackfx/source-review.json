@@ -1,0 +1,75 @@
+{
+  "id": "scalapackfx",
+  "repository": "dftbplus/scalapackfx",
+  "revision": "570cbf45836ed05cf791bc3f404f4f10929e5017",
+  "archive_sha256": "50c1f76ffcfe35aa879eb3e6cbedce6037cac8a6c24f123251fd4d8aa8389461",
+  "catalog_build": {
+    "adapter_sha256": "e27e15d511b0c7a6071e422dd426d023680f5754df7dc8f53326fdb29a4a5927",
+    "apt_packages": [
+      "libmpich-dev=4.3.0+really4.2.1-1",
+      "libscalapack-mpich-dev=2.2.2-1",
+      "libopenblas-dev=0.3.29+ds-3"
+    ],
+    "environment": {
+      "FPM_FFLAGS": "-I/usr/include/x86_64-linux-gnu/mpich",
+      "UCX_TLS": "self,sm"
+    },
+    "source_packages": {
+      "dftbplus/scalapackfx": {
+        "manifest": "name = \"scalapackfx\"\nversion = \"0.0.0\"\nlicense = \"BSD-2-Clause\"\n[library]\nsource-dir = \"playground-library\"\n[build]\nlink = [\"scalapack-mpich\", \"mpichfort\", \"mpich\", \"openblas\"]\nexternal-modules = [\"mpi\", \"mpi_f08\"]\nauto-executables = false\nauto-examples = false\nauto-tests = false\n[install]\nlibrary = true\n[fortran]\nimplicit-typing = true\nimplicit-external = true\nsource-form = \"default\"\n",
+        "sources": [
+          "lib/blacs.fpp",
+          "lib/blacsfx.fpp",
+          "lib/blacsgrid.fpp",
+          "lib/libscalapackfx.fpp",
+          "lib/linecomm.fpp",
+          "lib/pblas.fpp",
+          "lib/pblasfx.fpp",
+          "lib/scalapack.fpp",
+          "lib/scalapackfx.fpp",
+          "lib/scalapackfx_common.fpp",
+          "lib/scalapackfx_tools.fpp"
+        ],
+        "fypp": {
+          "version": "3.2",
+          "outputs": {
+            "lib/blacs.fpp": "a85e61de03c5fce082ed33c52a26e958d102df235e4c8928507a915506eab998",
+            "lib/blacsfx.fpp": "2e6adbab7ef6d9be066ad4afa4948c47884dfcabeafc392b7f40465ada97b17a",
+            "lib/blacsgrid.fpp": "9fb48afe047dab388c9023bc1f97a4b8be781f1a4f6a346bbd45f61a587bdc90",
+            "lib/libscalapackfx.fpp": "3a49a79c63c2d9cf7cc77ada9dc41ccb071c55cee72c3aa8e15ce7673f231eda",
+            "lib/linecomm.fpp": "04b52d4e9b451b0d5be6b7a76443f43e133bb4eb0aa5188f6f860c2692c1003c",
+            "lib/pblas.fpp": "06e81ea45aaf7d413126c64965e54599d85bcaa769826f49c668a938f0f3470c",
+            "lib/pblasfx.fpp": "ecb627152736bdf41ba2d05b901bb074631664398b4dd2b2b9dbffc6fe55a279",
+            "lib/scalapack.fpp": "5ecc095885db013256730a35008f5ef18632963c51d9d6a88b3848d2687419b7",
+            "lib/scalapackfx.fpp": "f732f8ec6622c88e906f565b66a246e622467597e9310d290e63a03e944d2931",
+            "lib/scalapackfx_common.fpp": "2c5501a1a85e4a45e7ca7dd48a2d6ec2e62d4808da25387eaf39fc0cd542a3af",
+            "lib/scalapackfx_tools.fpp": "0d61ef7cea34209e2b2181c03b2120b9e16fcdc4e9094c681bcb650eddec48e6"
+          }
+        }
+      }
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T21:51:26.765767+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/scalapackfx.f90",
+  "verification": {
+    "seconds": 2.664,
+    "build_seconds": 0.897,
+    "library_reused": true,
+    "demo_sha256": "dfc0a74a6d014ee2026cb0dca3ee22c5646a83c8c0f5bdd898ac436c62e8967f",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "BSD-2-Clause",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "The upstream CMake library source list is generated with Fypp 3.2 and exact generated-output checksums. The example uses a 1-by-1 BLACS grid and pinned MPICH, ScaLAPACK and OpenBLAS native libraries. It computes eigenvalues and eigenvectors of a symmetric 3-by-3 tridiagonal matrix using scalafx_psyev, checks eigenvalues against 2-sqrt(2), 2 and 2+sqrt(2), and independently checks eigenpair residuals and orthogonality. All entries must be finite. D4a1 (ordinary real symmetric eigenproblems) applies to the tested eigensolver. This is a one-process API example, not a distributed-performance demonstration; other solvers, generalized eigenproblems and multiple processes are not verified.",
+  "generation_note": "Fypp 3.2 output checksums were independently reproduced on Linux/Python 3.12 from the pinned templates. LF text normalization keeps hashes identical on Windows and Linux.",
+  "runtime_note": "The checked example uses one MPI process. UCX emits a network-discovery diagnostic about /sys/class/net, which the restricted gVisor sandbox does not expose. The program exits successfully and all data/numerical checks pass. The diagnostic is retained verbatim in verified-output.txt.",
+  "initial_consumer_findings": [
+    "The initial example omitted a definition of dp. The corrected main explicitly imports real64 from iso_fortran_env; no upstream library change was required."
+  ]
+}

@@ -1,0 +1,22 @@
+name = "fortran-lmdb"
+version = "0.1.0"
+license = "ISC"
+author = "Philipp Engel"
+maintainer = "@interkosmos"
+copyright = "Copyright (c) 2024, Philipp Engel"
+description = "Fortran 2018 interface bindings to LMDB"
+keywords = [ "lmdb", "database", "db", "key-value" ]
+
+[build]
+link = "lmdb"
+
+[library]
+source-dir = "src"
+
+[install]
+library = true
+
+[[test]]
+name = "test_lmdb"
+source-dir = "test"
+main = "test_lmdb.f90"

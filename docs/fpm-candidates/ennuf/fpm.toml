@@ -1,0 +1,14 @@
+name="ennuf"
+version="0.0.0"
+license="BSD-3-Clause"
+[library]
+source-dir="playground-library"
+[build]
+auto-executables=false
+auto-examples=false
+auto-tests=false
+[fortran]
+implicit-external=true
+implicit-typing=true
+[install]
+library=true

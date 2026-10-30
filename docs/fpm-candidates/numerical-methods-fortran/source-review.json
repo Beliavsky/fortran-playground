@@ -1,0 +1,20 @@
+{
+  "id": "numerical-methods-fortran",
+  "repository": "c-planelles/numerical-methods-fortran",
+  "revision": "adec2977efac83c3a5297d01cbeaac4ac50e3d11",
+  "archive_sha256": "d61432850f58b13ff58fe754abd070f9fd71ae0fe1cac9c3c9e61fd572b2922b",
+  "checked_at": "2026-10-30T13:32:41.790005+00:00",
+  "status": "numerical-check-failed",
+  "stage": "execution",
+  "compiler_invoked": true,
+  "verified_in_playground": false,
+  "compiler": "GNU Fortran (GCC) 17.0.0 20260510 (experimental), local Windows",
+  "reason": "The unchanged quadrature module compiles locally, but rectangle, trapezoidal and Simpson all return 1.111111164 for the integral of 1 on [0,1] with n=10 (expected 1). Each uses step=(b-a)/(n-1) while iterating n intervals. The checked constant-integrand reproducer exits unsuccessfully. Other modules have not been validated; no full-package or GNU 16 sandbox verification is claimed.",
+  "follow_up": "Ask the author to correct the quadrature interval count, then check polynomial integrals, Newton solves and an ODE example before catalog/cache verification.",
+  "evidence": [
+    {
+      "path": "modules/module_integrate.f90",
+      "sha256": "5332a722150f81bf63199be13b1d5c3dd5c3f98b26d2ea2bef1df5a9b9fbb297"
+    }
+  ]
+}

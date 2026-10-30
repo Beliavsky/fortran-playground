@@ -109,7 +109,7 @@ container_settings = {'FPM_IMAGE_NAME': IMAGE_NAME, 'FPM_OWNER_SECRET': OWNER_SE
                       **({'FPM_PRECOMPILED_FILE': '/root/fpm-precompiled.json'} if PRECOMPILED_FILE
                          else {'FPM_PRECOMPILED': json.dumps(PRECOMPILED)}),
                       'FPM_ENABLED_COMPILERS': json.dumps(ENABLED_COMPILERS)}
-broker_image = (modal.Image.debian_slim(python_version='3.12').pip_install('tomli-w==1.2.0')
+broker_image = (modal.Image.debian_slim(python_version='3.12').pip_install('tomli-w==1.2.0', 'fypp==3.2')
     .env(container_settings)
     .add_local_file(ROOT / 'fpm_compilers.py', '/root/fpm_compilers.py', copy=True)
     .add_local_file(ROOT / 'fpm_cache.py', '/root/fpm_cache.py', copy=True)
@@ -119,6 +119,7 @@ broker_image = (modal.Image.debian_slim(python_version='3.12').pip_install('toml
     .add_local_file(ROOT / 'fpm_sources.py', '/root/fpm_sources.py', copy=True)
     .add_local_file(ROOT / 'fpm_collections.py', '/root/fpm_collections.py', copy=True))
 broker_image = broker_image.add_local_file(ROOT / 'fpm_targets.py', '/root/fpm_targets.py', copy=True)
+broker_image = broker_image.add_local_dir(ROOT / 'fpm_catalog/generated', '/root/fpm_catalog/generated', copy=True)
 api_image = (modal.Image.debian_slim(python_version='3.12').pip_install('fastapi==0.142.2')
     .env({**container_settings,
           'FPM_ORIGINS': os.environ.get('FPM_ORIGINS',

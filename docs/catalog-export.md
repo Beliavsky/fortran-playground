@@ -1,8 +1,8 @@
 # Reusable Fortran software catalog
 
-The playground publishes a portable metadata feed to seed a separate Fortran software catalog. Its initial collection is the 159 selected packages. A receiving catalog can add GitHub projects using any build system, including projects without FPM manifests or playground support.
+The playground publishes a portable metadata feed covering its selected packages. A receiving catalog can add GitHub projects using any build system, including projects without FPM manifests or playground support.
 
-The feed and the importer are a foundation for the separate catalog; this change does not create its search website or move ownership of the existing metadata.
+The [standalone GAMS browsing site](https://beliavsky.github.io/fortran-playground/gams/) uses this same feed. The feed and importer also support a separate, broader catalog; see [GAMS site maintenance](gams-site.md).
 
 ## Published feed
 

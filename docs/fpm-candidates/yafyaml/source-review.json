@@ -1,0 +1,133 @@
+{
+  "id": "yafyaml",
+  "repository": "Goddard-Fortran-Ecosystem/yaFyaml",
+  "revision": "d6005c9f635c02d7be54d09b205b6f16c54f46b5",
+  "archive_sha256": "d7fc5a813736b9dda7640aeb4a132413b7e7876552b5d5f1f85d07c10be9e30c",
+  "catalog_build": {
+    "adapter_sha256": "e34f911192ec7459f4becd43da08a8df4dd8a5fd89707941f2cbffc607e82c25",
+    "source_packages": {
+      "goddard-fortran-ecosystem/gftl": {
+        "manifest": "name=\"gftl\"\nversion=\"0.0.0\"\nlicense=\"Apache-2.0\"\n[library]\nsource-dir=\"playground-library\"\ninclude-dir=[\"include\"]\n[build]\nauto-executables=false\nauto-examples=false\nauto-tests=false\n[install]\nlibrary=true\n[preprocess.cpp]\nmacros=[\"PLAYGROUND_CATALOG_2432761DA5C9C0F095908B33BA362954C2EBFA5DA97799C8279D375E0789CDE6\"]\n",
+        "sources": [
+          "playground-generated/integer_vector.F90"
+        ],
+        "generated": {
+          "asset": "gftl-4af86210b6cc6ac46d3298b6861571aa26bd6acc.json",
+          "sha256": "7433dc719afdcb6f77d49730b990e19a9854ad9282fa57ef59cfed98943e4f51"
+        }
+      },
+      "goddard-fortran-ecosystem/gftl-shared": {
+        "manifest": "name=\"gftl-shared\"\nversion=\"0.0.0\"\nlicense=\"Apache-2.0\"\n[library]\nsource-dir=\"playground-library\"\ninclude-dir=[]\n[build]\nauto-executables=false\nauto-examples=false\nauto-tests=false\n[install]\nlibrary=true\n[dependencies]\ngftl={git=\"https://github.com/Goddard-Fortran-Ecosystem/gFTL\",rev=\"4af86210b6cc6ac46d3298b6861571aa26bd6acc\"}\n[preprocess.cpp]\nmacros=[\"PLAYGROUND_CATALOG_3F4E7D67E6A8EF25433DAB440FB61FE84C3EB3F6BFE484A858666A13C9629663\"]\n",
+        "sources": [
+          "src/v1/Integer32Vector.F90",
+          "src/v1/Integer64Vector.F90",
+          "src/v1/IntegerVector.F90",
+          "src/v1/Real64Vector.F90",
+          "src/v1/StringVector.F90",
+          "src/v1/UnlimitedVector.F90",
+          "src/v1/StringStringMap.F90",
+          "src/v1/Integer32Real64Map.F90",
+          "playground-generated/v2_Integer32Vector.F90",
+          "playground-generated/v2_Real64Vector.F90",
+          "playground-generated/v2_StringVector.F90",
+          "playground-generated/v2_UnlimitedVector.F90"
+        ],
+        "generated": {
+          "asset": "gftl-shared-8009755e846560fbb389c01d76e013ddf14a7f98.json",
+          "sha256": "40955e611024923c3b4a27111656507c9398475f9241fddf3cf0824f6d07a48d"
+        }
+      },
+      "goddard-fortran-ecosystem/yafyaml": {
+        "manifest": "name=\"yafyaml\"\nversion=\"0.0.0\"\nlicense=\"Apache-2.0\"\n[library]\nsource-dir=\"playground-library\"\ninclude-dir=[\"include\", \"src\"]\n[build]\nauto-executables=false\nauto-examples=false\nauto-tests=false\n[install]\nlibrary=true\n[dependencies]\ngftl={git=\"https://github.com/Goddard-Fortran-Ecosystem/gFTL\",rev=\"4af86210b6cc6ac46d3298b6861571aa26bd6acc\"}\ngftl-shared={git=\"https://github.com/Goddard-Fortran-Ecosystem/gFTL-shared\",rev=\"8009755e846560fbb389c01d76e013ddf14a7f98\"}\n",
+        "sources": [
+          "src/ArrayWrapper.F90",
+          "src/AbstractFile.F90",
+          "src/File.F90",
+          "src/StringNodeMap.F90",
+          "src/String.F90",
+          "src/Tokens.F90",
+          "src/TokenVector.F90",
+          "src/AbstractTextStream.F90",
+          "src/TextStream.F90",
+          "src/EscapedTextStream.F90",
+          "src/FileStream.F90",
+          "src/Reader.F90",
+          "src/Lexer.F90",
+          "src/Parser.F90",
+          "src/AbstractSchema.F90",
+          "src/FailsafeSchema.F90",
+          "src/JSONSchema.F90",
+          "src/CoreSchema.F90",
+          "src/KeywordEnforcer.F90",
+          "src/ErrorCodes.F90",
+          "src/SimpleKey.F90",
+          "src/ErrorHandling.F90",
+          "src/IntegerSimpleKeyMap.F90",
+          "src/Nodes/YAML_Node.F90",
+          "src/Nodes/BaseNode.F90",
+          "src/Nodes/BaseNode_implementation.F90",
+          "src/Nodes/SequenceNode.F90",
+          "src/Nodes/SequenceNode_implementation.F90",
+          "src/Nodes/MappingNode.F90",
+          "src/Nodes/MappingNode_implementation.F90",
+          "src/Nodes/BoolNode.F90",
+          "src/Nodes/BoolNode_implementation.F90",
+          "src/Nodes/IntNode.F90",
+          "src/Nodes/IntNode_implementation.F90",
+          "src/Nodes/FloatNode.F90",
+          "src/Nodes/FloatNode_implementation.F90",
+          "src/Nodes/StringNode.F90",
+          "src/Nodes/StringNode_implementation.F90",
+          "src/Nodes/Sequence.F90",
+          "src/Nodes/Mapping.F90",
+          "src/Nodes/NullIterator.F90",
+          "src/Nodes/Nodes.F90",
+          "src/yafyaml.F90"
+        ]
+      }
+    },
+    "environment": {
+      "FPM_FFLAGS": "-D_INT_DEFAULT_KIND_IS_INT32 -D_REAL_DEFAULT_KIND_IS_REAL32 -D_DOUBLE_DEFAULT_KIND_IS_REAL64"
+    },
+    "shared_dependencies": {
+      "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+      "repositories": [
+        "goddard-fortran-ecosystem/gftl",
+        "goddard-fortran-ecosystem/gftl-shared"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "repository": "Goddard-Fortran-Ecosystem/gFTL",
+      "revision": "4af86210b6cc6ac46d3298b6861571aa26bd6acc",
+      "sha256": "c106e125718110c8321b0f8b914ef80ad4cf4afbd6be38762802a8dba2d61a2f"
+    },
+    {
+      "repository": "Goddard-Fortran-Ecosystem/gFTL-shared",
+      "revision": "8009755e846560fbb389c01d76e013ddf14a7f98",
+      "sha256": "43344c22bd55dbde62820e262a71b25859b9599bd5fef07542ec1d0056727984"
+    }
+  ],
+  "checked_at": "2026-10-29T22:23:34.035577+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/yafyaml.f90",
+  "verification": {
+    "seconds": 1.905,
+    "build_seconds": 0.519,
+    "library_reused": true,
+    "demo_sha256": "fb50dd73a83690c0c629db930a85d6d72de2b3baad503fb0cffb71ccb5fb979c",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "Apache-2.0",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "The upstream YAML library is wrapped for FPM with pinned gFTL and the selected gFTL-shared containers. The checked main writes a tiny local configuration, parses an integer, a boolean, a string and an integer sequence, checks every returned value and verifies that an absent key is reported missing. Input files are removed afterwards. N1 covers configuration input and N3 covers parsing character data. The upstream parser supports a subset of YAML; full YAML conformance, all schemas and malformed-input recovery are not claimed. Source-recipe-tagged immutable dependency exports retain compatible gFTL builds.",
+  "generated_source_support": "See ../../fpm-generated-sources.md. Audited assets and original input hashes are included in local project exports; CMake and m4 do not run during visitor preparation.",
+  "initial_consumer_findings": [
+    "The first wrapper omitted the original src directory from include-dir, so compilation stopped at unused_dummy.fh. The verified wrapper includes both include and src; no upstream library code was patched."
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "id": "gftl-shared",
+  "repository": "Goddard-Fortran-Ecosystem/gFTL-shared",
+  "revision": "8009755e846560fbb389c01d76e013ddf14a7f98",
+  "archive_sha256": "43344c22bd55dbde62820e262a71b25859b9599bd5fef07542ec1d0056727984",
+  "catalog_build": {
+    "adapter_sha256": "e34f911192ec7459f4becd43da08a8df4dd8a5fd89707941f2cbffc607e82c25",
+    "source_packages": {
+      "goddard-fortran-ecosystem/gftl": {
+        "manifest": "name=\"gftl\"\nversion=\"0.0.0\"\nlicense=\"Apache-2.0\"\n[library]\nsource-dir=\"playground-library\"\ninclude-dir=[\"include\"]\n[build]\nauto-executables=false\nauto-examples=false\nauto-tests=false\n[install]\nlibrary=true\n[preprocess.cpp]\nmacros=[\"PLAYGROUND_CATALOG_2432761DA5C9C0F095908B33BA362954C2EBFA5DA97799C8279D375E0789CDE6\"]\n",
+        "sources": [
+          "playground-generated/integer_vector.F90"
+        ],
+        "generated": {
+          "asset": "gftl-4af86210b6cc6ac46d3298b6861571aa26bd6acc.json",
+          "sha256": "7433dc719afdcb6f77d49730b990e19a9854ad9282fa57ef59cfed98943e4f51"
+        }
+      },
+      "goddard-fortran-ecosystem/gftl-shared": {
+        "manifest": "name=\"gftl-shared\"\nversion=\"0.0.0\"\nlicense=\"Apache-2.0\"\n[library]\nsource-dir=\"playground-library\"\ninclude-dir=[]\n[build]\nauto-executables=false\nauto-examples=false\nauto-tests=false\n[install]\nlibrary=true\n[dependencies]\ngftl={git=\"https://github.com/Goddard-Fortran-Ecosystem/gFTL\",rev=\"4af86210b6cc6ac46d3298b6861571aa26bd6acc\"}\n[preprocess.cpp]\nmacros=[\"PLAYGROUND_CATALOG_3F4E7D67E6A8EF25433DAB440FB61FE84C3EB3F6BFE484A858666A13C9629663\"]\n",
+        "sources": [
+          "src/v1/Integer32Vector.F90",
+          "src/v1/Integer64Vector.F90",
+          "src/v1/IntegerVector.F90",
+          "src/v1/Real64Vector.F90",
+          "src/v1/StringVector.F90",
+          "src/v1/UnlimitedVector.F90",
+          "src/v1/StringStringMap.F90",
+          "src/v1/Integer32Real64Map.F90",
+          "playground-generated/v2_Integer32Vector.F90",
+          "playground-generated/v2_Real64Vector.F90",
+          "playground-generated/v2_StringVector.F90",
+          "playground-generated/v2_UnlimitedVector.F90"
+        ],
+        "generated": {
+          "asset": "gftl-shared-8009755e846560fbb389c01d76e013ddf14a7f98.json",
+          "sha256": "40955e611024923c3b4a27111656507c9398475f9241fddf3cf0824f6d07a48d"
+        }
+      }
+    },
+    "environment": {
+      "FPM_FFLAGS": "-D_INT_DEFAULT_KIND_IS_INT32 -D_REAL_DEFAULT_KIND_IS_REAL32 -D_DOUBLE_DEFAULT_KIND_IS_REAL64"
+    },
+    "shared_dependencies": {
+      "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+      "repositories": [
+        "goddard-fortran-ecosystem/gftl"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "repository": "Goddard-Fortran-Ecosystem/gFTL",
+      "revision": "4af86210b6cc6ac46d3298b6861571aa26bd6acc",
+      "sha256": "c106e125718110c8321b0f8b914ef80ad4cf4afbd6be38762802a8dba2d61a2f"
+    }
+  ],
+  "checked_at": "2026-10-29T22:23:34.035577+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/gftl-shared.f90",
+  "verification": {
+    "seconds": 1.864,
+    "build_seconds": 0.325,
+    "library_reused": true,
+    "demo_sha256": "12d3f268cf0045b799330964bfa41a16e9f29d9d5844d39120c7ac218ee12987",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "Apache-2.0",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "The catalog builds an explicitly selected subset: v1 Integer32, Integer64, default Integer, Real64, String and Unlimited vectors; StringString and Integer32Real64 maps; and v2 Integer32, Real64, String and Unlimited vectors. The consumer inserts and retrieves eight vector elements and eight map entries and verifies their sum 204. Generated v2 vector wrappers apply the upstream CMake substitutions; the original templates and Apache-2.0 notices remain intact. N4 covers container storage and N5 covers key lookup. Other upstream instantiations, sets, queues and stacks are outside this selected build and test scope. Compatible dependencies are shared through immutable exports; a source-recipe fingerprint in the FPM preprocessing profile binds generated assets and source selection to the dependency identity.",
+  "generated_source_support": "See ../../fpm-generated-sources.md. Audited assets and original input hashes are included in local project exports; CMake and m4 do not run during visitor preparation.",
+  "resolved_preparation_blocker": "The earlier missing-header probe is preserved in previous-investigation.json. Generated headers are now reproduced and staged under a common include root. Integer64Vector is included because FPM scans the alternate-kind branch in IntegerVector."
+}

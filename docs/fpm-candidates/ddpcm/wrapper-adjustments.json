@@ -1,0 +1,8 @@
+{
+  "findings": [
+    "FPM defaults to free-form source interpretation; the original llgnew.f is fixed form. Setting source-form=\"default\" in this reviewed manifest preserves compiler extension-based form selection, without rewriting the quadrature code. The consumer embeds the author formaldehyde data and replaces unused length-one dummy arrays with full-sized arrays; library algorithms and reference parameters are unchanged."
+  ],
+  "diagnostics": {
+    "consumers": " + mkdir -p build/dependencies\n[  0%]              pyplot_module.f90\n[  8%]              pyplot_module.f90  done.\n[  8%]                    ddcosmo.f90\n[ 16%]                    ddcosmo.f90  done.\n[ 16%]                       efld.f90\n[ 25%]                       efld.f90  done.\n[ 25%]                jacobi_diis.f90\n[ 33%]                jacobi_diis.f90  done.\n[ 33%]                       llgnew.f\n<ERROR> Compilation failed for object \" .._sources_bundle_packages_0_ddPCM-36f22feb86c81c6ba1f59c373ef215368d3e3c13_playground-library_llgnew.f.o \"\n[ 41%]                       llgnew.f  done.\n\n./././/../sources/bundle/packages/0/ddPCM-36f22feb86c81c6ba1f59c373ef215368d3e3c13/playground-library/llgnew.f:1:1:\n\n    1 | c\n      | 1\nError: Unclassifiable statement at (1)\ncompilation terminated due to -fmax-errors=1.\n<ERROR> stopping due to failed compilation\nSTOP 1\n"
+  }
+}

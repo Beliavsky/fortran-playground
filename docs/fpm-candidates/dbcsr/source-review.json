@@ -1,0 +1,733 @@
+{
+  "id": "dbcsr",
+  "repository": "cp2k/dbcsr",
+  "revision": "cd6f522ec5005da8c59d2883975a89a2da607eac",
+  "archive_sha256": "a92dbde8e23b2e1cf3447a67f4ffd08679ff70af0812ca99fef3ae9879f80ff9",
+  "catalog_build": {
+    "adapter_sha256": "3bd5fbb173561ecf82a9a62c5e896c26236f10bef6d0d5ba0a9813d186fa6a30",
+    "source_packages": {
+      "cp2k/dbcsr": {
+        "manifest": "name=\"dbcsr\"\nversion=\"0.0.0\"\nlicense=\"GPL-2.0-or-later\"\n[library]\nsource-dir=\"playground-library\"\ninclude-dir=[\"src\", \"src/acc\", \"src/acc/cuda\", \"src/acc/hip\", \"src/base\", \"src/block\", \"src/core\", \"src/data\", \"src/dist\", \"src/mm\", \"src/mpi\", \"src/ops\", \"src/tas\", \"src/tensors\", \"src/utils\", \"src/work\"]\n[build]\nauto-executables=false\nauto-examples=false\nauto-tests=false\nexternal-modules=[\"libxs\", \"libxs_jit\", \"mpi\", \"mpi_f08\", \"omp_lib\"]\nlink=[\"openblas\"]\n[install]\nlibrary=true\n[preprocess.cpp]\nmacros=[\"NDEBUG\", \"__STATM_TOTAL\", \"__SHORT_FILE__=__FILE__\"]\n[fortran]\nimplicit-external=true\n",
+        "sources": [
+          "src/acc/cuda/dbcsr_cuda_profiling.F",
+          "src/acc/dbcsr_acc_device.F",
+          "src/acc/dbcsr_acc_devmem.F",
+          "src/acc/dbcsr_acc_event.F",
+          "src/acc/dbcsr_acc_hostmem.F",
+          "src/acc/dbcsr_acc_init.F",
+          "src/acc/dbcsr_acc_stream.F",
+          "src/acc/dbcsr_acc_timings.F",
+          "src/acc/hip/dbcsr_hip_profiling.F",
+          "src/base/dbcsr_base_hooks.F",
+          "src/base/dbcsr_kinds.F",
+          "src/base/dbcsr_machine.F",
+          "src/base/dbcsr_machine_internal.F",
+          "src/block/dbcsr_block_access.F",
+          "src/block/dbcsr_block_operations.F",
+          "src/block/dbcsr_index_operations.F",
+          "src/block/dbcsr_iterator_operations.F",
+          "src/core/dbcsr_array_types.F",
+          "src/core/dbcsr_config.F",
+          "src/core/dbcsr_dict.F",
+          "src/core/dbcsr_error_handling.F",
+          "src/core/dbcsr_iter_types.F",
+          "src/core/dbcsr_lib.F",
+          "src/core/dbcsr_list.F",
+          "src/core/dbcsr_list_callstackentry.F",
+          "src/core/dbcsr_list_routinereport.F",
+          "src/core/dbcsr_list_routinestat.F",
+          "src/core/dbcsr_list_timerenv.F",
+          "src/core/dbcsr_log_handling.F",
+          "src/core/dbcsr_methods.F",
+          "src/core/dbcsr_print_messages.F",
+          "src/core/dbcsr_timings.F",
+          "src/core/dbcsr_timings_base_type.F",
+          "src/core/dbcsr_timings_report.F",
+          "src/core/dbcsr_timings_types.F",
+          "src/core/dbcsr_types.F",
+          "src/data/dbcsr_data_methods.F",
+          "src/data/dbcsr_data_methods_low.F",
+          "src/data/dbcsr_data_operations.F",
+          "src/data/dbcsr_data_types.F",
+          "src/data/dbcsr_mem_methods.F",
+          "src/data/dbcsr_ptr_util.F",
+          "src/dbcsr_api.F",
+          "src/dist/dbcsr_dist_methods.F",
+          "src/dist/dbcsr_dist_operations.F",
+          "src/dist/dbcsr_dist_util.F",
+          "src/mm/dbcsr_acc_operations.F",
+          "src/mm/dbcsr_mm.F",
+          "src/mm/dbcsr_mm_3d.F",
+          "src/mm/dbcsr_mm_accdrv.F",
+          "src/mm/dbcsr_mm_cannon.F",
+          "src/mm/dbcsr_mm_common.F",
+          "src/mm/dbcsr_mm_csr.F",
+          "src/mm/dbcsr_mm_dist_operations.F",
+          "src/mm/dbcsr_mm_hostdrv.F",
+          "src/mm/dbcsr_mm_multrec.F",
+          "src/mm/dbcsr_mm_sched.F",
+          "src/mm/dbcsr_mm_types.F",
+          "src/mm/dbcsr_multiply_api.F",
+          "src/mpi/dbcsr_mp_methods.F",
+          "src/mpi/dbcsr_mp_operations.F",
+          "src/mpi/dbcsr_mpiwrap.F",
+          "src/ops/dbcsr_csr_conversions.F",
+          "src/ops/dbcsr_io.F",
+          "src/ops/dbcsr_operations.F",
+          "src/ops/dbcsr_test_methods.F",
+          "src/ops/dbcsr_tests.F",
+          "src/ops/dbcsr_transformations.F",
+          "src/tas/dbcsr_tas_base.F",
+          "src/tas/dbcsr_tas_global.F",
+          "src/tas/dbcsr_tas_io.F",
+          "src/tas/dbcsr_tas_mm.F",
+          "src/tas/dbcsr_tas_reshape_ops.F",
+          "src/tas/dbcsr_tas_split.F",
+          "src/tas/dbcsr_tas_test.F",
+          "src/tas/dbcsr_tas_types.F",
+          "src/tas/dbcsr_tas_util.F",
+          "src/tensors/dbcsr_allocate_wrap.F",
+          "src/tensors/dbcsr_array_list_methods.F",
+          "src/tensors/dbcsr_tensor.F",
+          "src/tensors/dbcsr_tensor_api.F",
+          "src/tensors/dbcsr_tensor_block.F",
+          "src/tensors/dbcsr_tensor_index.F",
+          "src/tensors/dbcsr_tensor_io.F",
+          "src/tensors/dbcsr_tensor_reshape.F",
+          "src/tensors/dbcsr_tensor_split.F",
+          "src/tensors/dbcsr_tensor_test.F",
+          "src/tensors/dbcsr_tensor_types.F",
+          "src/utils/dbcsr_array_sort.F",
+          "src/utils/dbcsr_blas_operations.F",
+          "src/utils/dbcsr_btree.F",
+          "src/utils/dbcsr_files.F",
+          "src/utils/dbcsr_min_heap.F",
+          "src/utils/dbcsr_string_utilities.F",
+          "src/utils/dbcsr_toollib.F",
+          "src/work/dbcsr_work_operations.F"
+        ],
+        "fypp": {
+          "version": "3.2",
+          "outputs": {
+            "src/acc/cuda/dbcsr_cuda_profiling.F": "44c6983c33dcc7c2162b1eac60fe30677981dc8a4b94ae264d1027956efaaff9",
+            "src/acc/dbcsr_acc_device.F": "d4e5af2616989f588677937fac100d38f3b36a066df01a96ae47f3335558f990",
+            "src/acc/dbcsr_acc_devmem.F": "e735229d24c4bff62d0135c75faec67e8b0ca18c40395d570a449c010da85b85",
+            "src/acc/dbcsr_acc_event.F": "9a7146e540036b118060f6156b97bc4a34bfbc9e00112c172ea1085091ac28ef",
+            "src/acc/dbcsr_acc_hostmem.F": "293fcfd9bbd994aba8d9acec1b1ebcb1df009d7e74678a23ce0ccf8e1a4e54f7",
+            "src/acc/dbcsr_acc_init.F": "12a1af6b5172693557c685527ef1d017bb750c30e9d6f94ed2524adb55c2ce84",
+            "src/acc/dbcsr_acc_stream.F": "1220f058a7ad25f98253e40ad52c3481db8a234c62f3b8c2828f77709f572c4f",
+            "src/acc/dbcsr_acc_timings.F": "62c52996d7b3e3a38f70d56f8bbfddba841e63cd28da489bcb8cb783128fbebb",
+            "src/acc/hip/dbcsr_hip_profiling.F": "c475d4697eef54854b3ee6ff7b75aaa276c812b574467e57588b2dcb53fcadc5",
+            "src/base/dbcsr_base_hooks.F": "79da160015c1471ca3f502782c470e59b0953ebd646f8d00e08b3bdd9a4557b1",
+            "src/base/dbcsr_kinds.F": "e4cc318915daea9caa10f8ee6914f71b04a218548988032a49475138005ebc04",
+            "src/base/dbcsr_machine.F": "98973f590d2516a8eaa18f36e31cfc69fa7e516723f0860f5043a26c9c90ba7b",
+            "src/base/dbcsr_machine_internal.F": "bc5e08399f232c0b4ad44422920a966f4310f917df94f17d626df3773b7dcd89",
+            "src/block/dbcsr_block_access.F": "09bb4a16a3db19aba3b4645309b756204e7d81516501fd71dc27a0b96312785b",
+            "src/block/dbcsr_block_operations.F": "4a067837e55ffa52c1c6de46f8713421d0d7ae4985b287ed1fd293a1ac1c50b5",
+            "src/block/dbcsr_index_operations.F": "725a2de2e589e853deafcc84f28e3b31e29d9015cb1cc70d190bb9fe76c513ed",
+            "src/block/dbcsr_iterator_operations.F": "eaed413b37b2314fd7de536b946dd834ed6960f94d20793cfcb9140f4affe8d6",
+            "src/core/dbcsr_array_types.F": "8720a070f5f508873f1fa4d295eee8a8b1973cc2f2f3442d3c2d45049eaf9fb0",
+            "src/core/dbcsr_config.F": "1aa7233256e3389325c29ac2288cd06492a317043dd6914689e5a3d0a689b5df",
+            "src/core/dbcsr_dict.F": "ef3073062a4aa07a32ee90c03b4f44f46fc4afa86ffce8847ea00af2aea68c48",
+            "src/core/dbcsr_error_handling.F": "38f8e2ddede65686a302af4e5befd81b66f9dcaf25db78cafd00aba2d0d28b44",
+            "src/core/dbcsr_iter_types.F": "8c12276446a0574072ae1c28f51fa81203a44d39409eb0af1074ce6573946071",
+            "src/core/dbcsr_lib.F": "9a904940a7b3c249a332538eeb68accd1423c9ea407dee613c26c3417dd8628d",
+            "src/core/dbcsr_list.F": "a44997d7056e007d85a6e6754f31c46d04395300ce1120dae96d9afcffc5b46e",
+            "src/core/dbcsr_list_callstackentry.F": "947c8b63b031f770253985446f789cc1b6c30f93bd058d51082a2ae4d83d6505",
+            "src/core/dbcsr_list_routinereport.F": "46aa5642b7bb3c56137a58c76774cb8205c8f0220eb92b4517d3c7010d5659a5",
+            "src/core/dbcsr_list_routinestat.F": "2f6bfe532dfa2616b1cb382519e45d1ba827ad1e58e4aa3e38c7bef5fe2c8da7",
+            "src/core/dbcsr_list_timerenv.F": "e7be1c303f498eb8a20e3e7a71ed79fef13cef8117690405b4e59e024f722877",
+            "src/core/dbcsr_log_handling.F": "52616c9e258d0501fced4176e9b550fdd45f78744ce4ec107966c55307e1267b",
+            "src/core/dbcsr_methods.F": "7a20858f13999cdcacea1e1e9299ae1a66aad8e1190b511875c4ff6185a6a890",
+            "src/core/dbcsr_print_messages.F": "15ac6c455222a4d767ecbe3008b581e8af73d0e7067b6f820209f8f1aef5a260",
+            "src/core/dbcsr_timings.F": "16bfd37cace9cbf8cb8e3cc5ec18e76f739fb7a4fda50ca3430300a48b71de6f",
+            "src/core/dbcsr_timings_base_type.F": "05dfceb75bbf15975441b637194afec008ddf4bf1a204e363299aae5294c9304",
+            "src/core/dbcsr_timings_report.F": "b7240b52b1e70ed6dac7951b11640a5b82c1333e9d753bf9bbb84578210b38ad",
+            "src/core/dbcsr_timings_types.F": "72190b820834c10755dd9a65ee1df36c07181496cdfa37c6e724a1e9b6301fa4",
+            "src/core/dbcsr_types.F": "27651b5833d6fd9191adbfcd8ac3357d7ae512a9600eb2687e2385067d1e824f",
+            "src/data/dbcsr_data_methods.F": "03624bdf44be5cbb6043fbcad9c5cd9254749ac33cf996f22633abbd73337b67",
+            "src/data/dbcsr_data_methods_low.F": "55e123dfc30e5d0b072d6d339ca01982d865fe25ccee8713e9fa896207d0f405",
+            "src/data/dbcsr_data_operations.F": "1bfd9c530cf5e5e76c29407970741f050bb13dadca72cdc401a2bf3a7969cb37",
+            "src/data/dbcsr_data_types.F": "0ed144b8f14e97cbcc3927e0f50a4e2aa6dc2861fb5e2ece1b28c9e81d039930",
+            "src/data/dbcsr_mem_methods.F": "a7c82b6a74ace076b47ebd53046820ec91ef7c9fbc435909d46bb97a812a9c1a",
+            "src/data/dbcsr_ptr_util.F": "0e428778cbc302bd4ce8d90b87c46901bac3361dce7d8b52c5c5db96df0badb6",
+            "src/dbcsr_api.F": "4bbd95ab36fab95aed6b6ced5dee58de29bd2ad44d45d12c785b43beb046d7c4",
+            "src/dist/dbcsr_dist_methods.F": "5432257c89308a8db4101a079f4ea4e6fc6bfc951f11e3e40aa9a5dbf142d04c",
+            "src/dist/dbcsr_dist_operations.F": "0707fa70746f7fe35f29b15c6d7ae0fc29bd7986db6bc16558548e5ca143f455",
+            "src/dist/dbcsr_dist_util.F": "5f67f301744b9476d537ea5f6f92de05372c8e8fbbfdd7544d69c7aca3bf5b1f",
+            "src/mm/dbcsr_acc_operations.F": "9b64ad8519be8644b794e15f9be49759739fbd7a9958fd184f291f49dcade79e",
+            "src/mm/dbcsr_mm.F": "65782a1bb9eb1feafd2657ba402824a2bbf8cf9f99d1dba71e332abe3d07a911",
+            "src/mm/dbcsr_mm_3d.F": "4e204dafbdb0ab52ebdc166cb386c0bd985bf76b925c0905f01fe2bf652f2ce2",
+            "src/mm/dbcsr_mm_accdrv.F": "20617cffb14025dcad8e0fb4a26cd20f21de890cd90744e584aaffa0daaa98b7",
+            "src/mm/dbcsr_mm_cannon.F": "1654b917a274be795e53a37019eccd864b43a775942e6876e84dbd797d84ecc3",
+            "src/mm/dbcsr_mm_common.F": "573356f5c0323182566f89264b2fc04f7896887c0d21914f3843e340ce34029c",
+            "src/mm/dbcsr_mm_csr.F": "f7324bb7f0346244f0fb139ab800d7bf68f3476be50fb474b9c7881825aaa357",
+            "src/mm/dbcsr_mm_dist_operations.F": "c50e020c32e4d84507d35ffb02a3bca27c977905f86e868795e2b4913a59fcef",
+            "src/mm/dbcsr_mm_hostdrv.F": "8355ebc5bc5f482129f3d49b158342c83fcee9bcacd6a3efb2f9b1607d632bbb",
+            "src/mm/dbcsr_mm_multrec.F": "204fc4401a2cd25178b5f680d973f482126feacfb3736aecd2cc4f42d9fcf0f9",
+            "src/mm/dbcsr_mm_sched.F": "ad7bc3abab580f719d9fec322e4a4e1d6a6701a0c7a8a4e1e129824facb30614",
+            "src/mm/dbcsr_mm_types.F": "97cbc0f216f96457ed02a67a8bc32ec3d70cc62b79d39ec214434d3a063927ea",
+            "src/mm/dbcsr_multiply_api.F": "d7208100b8d003edd589daac84d268aa1f87d60eb3bf9b9eff57acc7eeb1b6de",
+            "src/mpi/dbcsr_mp_methods.F": "66f5dff0d2520c59080eddd02b9e6786db1aac482b8b835330f781e82e7ebbab",
+            "src/mpi/dbcsr_mp_operations.F": "90d8b75572108df08ad3570fed5ac620bc8ccfd8292b7cc61099ac17a17c6e97",
+            "src/mpi/dbcsr_mpiwrap.F": "095805aeb53d7bbf4bd4e67e2bceddc7c4854dc7f17844651bde1670de21ad49",
+            "src/ops/dbcsr_csr_conversions.F": "414501ab8d5560593b233bb54c71fb50872723a8ce222694ea2b705037b010f5",
+            "src/ops/dbcsr_io.F": "9a983dc52d775b82b9aa2888429a5f125ab28ef6508b660c217a850b3a5f04aa",
+            "src/ops/dbcsr_operations.F": "45328fd87b0c6c146501c189dce1a2123163b204d78831e84b15e00a0b15f8f9",
+            "src/ops/dbcsr_test_methods.F": "8319b02f7a7c2765352c5e1af533b03821918b7391259c51a5acdb8d4cfb5880",
+            "src/ops/dbcsr_tests.F": "c4bf7da586f90f33b9f6793e739b4f498b9b890cf227eb6a6980521f7399a848",
+            "src/ops/dbcsr_transformations.F": "c9d3bba5d4c5828efd168f29fdae26276d4ac76c16334a79c28504c1fe9c85f1",
+            "src/tas/dbcsr_tas_base.F": "cad0473cc9772d4b747a1340acfb85ee28924bd87f9dc559554915c9ed87b80e",
+            "src/tas/dbcsr_tas_global.F": "e2c316ecec51c6242fdc71150101bfb293c0a85f547d9901e2e6bb70a10646c5",
+            "src/tas/dbcsr_tas_io.F": "c743fef25eb78316142f522f83d87e6a419ed5f5ffd57a1bdc4ef0b49a16f871",
+            "src/tas/dbcsr_tas_mm.F": "bffbd256be7790a2f800a61973e80af754da579d6fccb9d9b241020a05b7867e",
+            "src/tas/dbcsr_tas_reshape_ops.F": "2229f8fadace7f0a22e7eec1a3f98d9c28670fa5f39c2d7a67f27a080b5b29d7",
+            "src/tas/dbcsr_tas_split.F": "ec8f81b4ecb70d152ad06ddc04011cd5e09108a03a9fe42605188edaee22912b",
+            "src/tas/dbcsr_tas_test.F": "790b44b86ef3a2ad857ee94c06a769536dca066b336561f6d1c52ecd9ce5a653",
+            "src/tas/dbcsr_tas_types.F": "8f652e1c64d2787e2884da608be2fb8fd6ad6d5ff54a5c715e1eb7062dfd582a",
+            "src/tas/dbcsr_tas_util.F": "68d05fc67aa02be28c657c803ec5379bc9687b39660eaf8de282e79d8decc185",
+            "src/tensors/dbcsr_allocate_wrap.F": "1f127cfc75ae232d6c513e5613f5ec469c677f6431bb8a832cc6b43c46aebd9d",
+            "src/tensors/dbcsr_array_list_methods.F": "dc9a936c3d6e27fd4a50718a8fcb5037c85bd952f4080b5a2f4e6e4d9e461957",
+            "src/tensors/dbcsr_tensor.F": "210a1c4076a262b6d0b296153993452d85b05bc9da943bfd6c5d3cc7f8e8342b",
+            "src/tensors/dbcsr_tensor_api.F": "4a2b1183f91a1a46806b0d4614032df4f8a338fb6ae80bdb743719b0f3cca77d",
+            "src/tensors/dbcsr_tensor_block.F": "8392815671d947ffaf6bb5ce24a0e26e68467c3808a01dbf470c5e0b3759a32c",
+            "src/tensors/dbcsr_tensor_index.F": "7543cd4b7c560f5af676c179f2eba63749ae597f7c176965fc78b602c0833dff",
+            "src/tensors/dbcsr_tensor_io.F": "849b71ee89771b8f4ac0f1b8826e1aa021e1a5ddd3af9ef77ec7656dc8328eec",
+            "src/tensors/dbcsr_tensor_reshape.F": "41014ec64caf50a599d00ddc301a412d4bedbbe75ba0684a7c83ce46e1074d71",
+            "src/tensors/dbcsr_tensor_split.F": "a5e5ce8f246013704273c343e5d24231d6b7af8bd517cdaaa86b7f4ce9704ab8",
+            "src/tensors/dbcsr_tensor_test.F": "e9427bb224dbf92e29fdcaf39d6ae085603ac8fb380d39689f62d095bc931c2a",
+            "src/tensors/dbcsr_tensor_types.F": "2f4217cb022ca3bc10b31349d5c2069f96d45d073f7c8b69616596a90f8de73e",
+            "src/utils/dbcsr_array_sort.F": "fa219959fd07de34b8c7cd9c068d2ea65cfe5eaf64136ff71734ef4c2a034655",
+            "src/utils/dbcsr_blas_operations.F": "b9513e84507589aa89e77cc3bd7fa1552a1c469caa7043189078987143826fd1",
+            "src/utils/dbcsr_btree.F": "d86ec78736ebafc918bcc44867eb3da3b25db80c1a73225c6d7dbc117b43c321",
+            "src/utils/dbcsr_files.F": "5553abd479defad0b67c15253824c9536d9e1545de3605997a8c0a4f5906d9b9",
+            "src/utils/dbcsr_min_heap.F": "d15bac766d0ba15b11145c96295905d8652fd6b9317ed384ebdfcbdf889bd8f2",
+            "src/utils/dbcsr_string_utilities.F": "24214f410cc17f175307d8c112604b0f47ad4378b32727ce58f9c6265261ea47",
+            "src/utils/dbcsr_toollib.F": "24d1e3399dededc0f354c74d3fe11184330845fae8835d940f5698e9a493aa3a",
+            "src/work/dbcsr_work_operations.F": "c217b187833ccb220a1ea3b0c74ba549089ffb15a09aa0ab833cb5fd357a561f"
+          }
+        }
+      }
+    },
+    "environment": {
+      "FPM_FFLAGS": "-cpp -ffree-line-length-none"
+    },
+    "apt_packages": [
+      "libopenblas-dev=0.3.29+ds-3"
+    ]
+  },
+  "dependencies": [],
+  "catalog_patches": {
+    "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+    "edits": [
+      {
+        "path": "playground-library/dbcsr_acc_device.f90",
+        "sha256": "d4e5af2616989f588677937fac100d38f3b36a066df01a96ae47f3335558f990",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_acc_devmem.f90",
+        "sha256": "e735229d24c4bff62d0135c75faec67e8b0ca18c40395d570a449c010da85b85",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_acc_event.f90",
+        "sha256": "9a7146e540036b118060f6156b97bc4a34bfbc9e00112c172ea1085091ac28ef",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_acc_hostmem.f90",
+        "sha256": "293fcfd9bbd994aba8d9acec1b1ebcb1df009d7e74678a23ce0ccf8e1a4e54f7",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_acc_init.f90",
+        "sha256": "12a1af6b5172693557c685527ef1d017bb750c30e9d6f94ed2524adb55c2ce84",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_acc_operations.f90",
+        "sha256": "9b64ad8519be8644b794e15f9be49759739fbd7a9958fd184f291f49dcade79e",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_acc_stream.f90",
+        "sha256": "1220f058a7ad25f98253e40ad52c3481db8a234c62f3b8c2828f77709f572c4f",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_acc_timings.f90",
+        "sha256": "62c52996d7b3e3a38f70d56f8bbfddba841e63cd28da489bcb8cb783128fbebb",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_allocate_wrap.f90",
+        "sha256": "1f127cfc75ae232d6c513e5613f5ec469c677f6431bb8a832cc6b43c46aebd9d",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_api.f90",
+        "sha256": "4bbd95ab36fab95aed6b6ced5dee58de29bd2ad44d45d12c785b43beb046d7c4",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_array_list_methods.f90",
+        "sha256": "dc9a936c3d6e27fd4a50718a8fcb5037c85bd952f4080b5a2f4e6e4d9e461957",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_array_types.f90",
+        "sha256": "8720a070f5f508873f1fa4d295eee8a8b1973cc2f2f3442d3c2d45049eaf9fb0",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_blas_operations.f90",
+        "sha256": "b9513e84507589aa89e77cc3bd7fa1552a1c469caa7043189078987143826fd1",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_block_access.f90",
+        "sha256": "09bb4a16a3db19aba3b4645309b756204e7d81516501fd71dc27a0b96312785b",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_block_operations.f90",
+        "sha256": "4a067837e55ffa52c1c6de46f8713421d0d7ae4985b287ed1fd293a1ac1c50b5",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_config.f90",
+        "sha256": "1aa7233256e3389325c29ac2288cd06492a317043dd6914689e5a3d0a689b5df",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_csr_conversions.f90",
+        "sha256": "414501ab8d5560593b233bb54c71fb50872723a8ce222694ea2b705037b010f5",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_cuda_profiling.f90",
+        "sha256": "44c6983c33dcc7c2162b1eac60fe30677981dc8a4b94ae264d1027956efaaff9",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_data_methods.f90",
+        "sha256": "03624bdf44be5cbb6043fbcad9c5cd9254749ac33cf996f22633abbd73337b67",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_data_methods_low.f90",
+        "sha256": "55e123dfc30e5d0b072d6d339ca01982d865fe25ccee8713e9fa896207d0f405",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_data_operations.f90",
+        "sha256": "1bfd9c530cf5e5e76c29407970741f050bb13dadca72cdc401a2bf3a7969cb37",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_data_types.f90",
+        "sha256": "0ed144b8f14e97cbcc3927e0f50a4e2aa6dc2861fb5e2ece1b28c9e81d039930",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_dict.f90",
+        "sha256": "ef3073062a4aa07a32ee90c03b4f44f46fc4afa86ffce8847ea00af2aea68c48",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_dist_methods.f90",
+        "sha256": "5432257c89308a8db4101a079f4ea4e6fc6bfc951f11e3e40aa9a5dbf142d04c",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_dist_operations.f90",
+        "sha256": "0707fa70746f7fe35f29b15c6d7ae0fc29bd7986db6bc16558548e5ca143f455",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_dist_util.f90",
+        "sha256": "5f67f301744b9476d537ea5f6f92de05372c8e8fbbfdd7544d69c7aca3bf5b1f",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_files.f90",
+        "sha256": "5553abd479defad0b67c15253824c9536d9e1545de3605997a8c0a4f5906d9b9",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_index_operations.f90",
+        "sha256": "725a2de2e589e853deafcc84f28e3b31e29d9015cb1cc70d190bb9fe76c513ed",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_io.f90",
+        "sha256": "9a983dc52d775b82b9aa2888429a5f125ab28ef6508b660c217a850b3a5f04aa",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_iterator_operations.f90",
+        "sha256": "eaed413b37b2314fd7de536b946dd834ed6960f94d20793cfcb9140f4affe8d6",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_iter_types.f90",
+        "sha256": "8c12276446a0574072ae1c28f51fa81203a44d39409eb0af1074ce6573946071",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_lib.f90",
+        "sha256": "9a904940a7b3c249a332538eeb68accd1423c9ea407dee613c26c3417dd8628d",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_list.f90",
+        "sha256": "a44997d7056e007d85a6e6754f31c46d04395300ce1120dae96d9afcffc5b46e",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_list_callstackentry.f90",
+        "sha256": "947c8b63b031f770253985446f789cc1b6c30f93bd058d51082a2ae4d83d6505",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_list_routinereport.f90",
+        "sha256": "46aa5642b7bb3c56137a58c76774cb8205c8f0220eb92b4517d3c7010d5659a5",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_list_routinestat.f90",
+        "sha256": "2f6bfe532dfa2616b1cb382519e45d1ba827ad1e58e4aa3e38c7bef5fe2c8da7",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_list_timerenv.f90",
+        "sha256": "e7be1c303f498eb8a20e3e7a71ed79fef13cef8117690405b4e59e024f722877",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_log_handling.f90",
+        "sha256": "52616c9e258d0501fced4176e9b550fdd45f78744ce4ec107966c55307e1267b",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_mem_methods.f90",
+        "sha256": "a7c82b6a74ace076b47ebd53046820ec91ef7c9fbc435909d46bb97a812a9c1a",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_methods.f90",
+        "sha256": "7a20858f13999cdcacea1e1e9299ae1a66aad8e1190b511875c4ff6185a6a890",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_min_heap.f90",
+        "sha256": "d15bac766d0ba15b11145c96295905d8652fd6b9317ed384ebdfcbdf889bd8f2",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_mm.f90",
+        "sha256": "65782a1bb9eb1feafd2657ba402824a2bbf8cf9f99d1dba71e332abe3d07a911",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_mm_3d.f90",
+        "sha256": "4e204dafbdb0ab52ebdc166cb386c0bd985bf76b925c0905f01fe2bf652f2ce2",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_mm_accdrv.f90",
+        "sha256": "20617cffb14025dcad8e0fb4a26cd20f21de890cd90744e584aaffa0daaa98b7",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_mm_cannon.f90",
+        "sha256": "1654b917a274be795e53a37019eccd864b43a775942e6876e84dbd797d84ecc3",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_mm_common.f90",
+        "sha256": "573356f5c0323182566f89264b2fc04f7896887c0d21914f3843e340ce34029c",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_mm_csr.f90",
+        "sha256": "f7324bb7f0346244f0fb139ab800d7bf68f3476be50fb474b9c7881825aaa357",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_mm_dist_operations.f90",
+        "sha256": "c50e020c32e4d84507d35ffb02a3bca27c977905f86e868795e2b4913a59fcef",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_mm_hostdrv.f90",
+        "sha256": "8355ebc5bc5f482129f3d49b158342c83fcee9bcacd6a3efb2f9b1607d632bbb",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_mm_multrec.f90",
+        "sha256": "204fc4401a2cd25178b5f680d973f482126feacfb3736aecd2cc4f42d9fcf0f9",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_mm_sched.f90",
+        "sha256": "ad7bc3abab580f719d9fec322e4a4e1d6a6701a0c7a8a4e1e129824facb30614",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_mpiwrap.f90",
+        "sha256": "095805aeb53d7bbf4bd4e67e2bceddc7c4854dc7f17844651bde1670de21ad49",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_mp_methods.f90",
+        "sha256": "66f5dff0d2520c59080eddd02b9e6786db1aac482b8b835330f781e82e7ebbab",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_mp_operations.f90",
+        "sha256": "90d8b75572108df08ad3570fed5ac620bc8ccfd8292b7cc61099ac17a17c6e97",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_multiply_api.f90",
+        "sha256": "d7208100b8d003edd589daac84d268aa1f87d60eb3bf9b9eff57acc7eeb1b6de",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_operations.f90",
+        "sha256": "45328fd87b0c6c146501c189dce1a2123163b204d78831e84b15e00a0b15f8f9",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_print_messages.f90",
+        "sha256": "15ac6c455222a4d767ecbe3008b581e8af73d0e7067b6f820209f8f1aef5a260",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_ptr_util.f90",
+        "sha256": "0e428778cbc302bd4ce8d90b87c46901bac3361dce7d8b52c5c5db96df0badb6",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_tas_base.f90",
+        "sha256": "cad0473cc9772d4b747a1340acfb85ee28924bd87f9dc559554915c9ed87b80e",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_tas_global.f90",
+        "sha256": "e2c316ecec51c6242fdc71150101bfb293c0a85f547d9901e2e6bb70a10646c5",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_tas_mm.f90",
+        "sha256": "bffbd256be7790a2f800a61973e80af754da579d6fccb9d9b241020a05b7867e",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_tas_reshape_ops.f90",
+        "sha256": "2229f8fadace7f0a22e7eec1a3f98d9c28670fa5f39c2d7a67f27a080b5b29d7",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_tas_split.f90",
+        "sha256": "ec8f81b4ecb70d152ad06ddc04011cd5e09108a03a9fe42605188edaee22912b",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_tas_test.f90",
+        "sha256": "790b44b86ef3a2ad857ee94c06a769536dca066b336561f6d1c52ecd9ce5a653",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_tas_types.f90",
+        "sha256": "8f652e1c64d2787e2884da608be2fb8fd6ad6d5ff54a5c715e1eb7062dfd582a",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_tas_util.f90",
+        "sha256": "68d05fc67aa02be28c657c803ec5379bc9687b39660eaf8de282e79d8decc185",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_tensor.f90",
+        "sha256": "210a1c4076a262b6d0b296153993452d85b05bc9da943bfd6c5d3cc7f8e8342b",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_tensor_block.f90",
+        "sha256": "8392815671d947ffaf6bb5ce24a0e26e68467c3808a01dbf470c5e0b3759a32c",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_tensor_index.f90",
+        "sha256": "7543cd4b7c560f5af676c179f2eba63749ae597f7c176965fc78b602c0833dff",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_tensor_io.f90",
+        "sha256": "849b71ee89771b8f4ac0f1b8826e1aa021e1a5ddd3af9ef77ec7656dc8328eec",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_tensor_reshape.f90",
+        "sha256": "41014ec64caf50a599d00ddc301a412d4bedbbe75ba0684a7c83ce46e1074d71",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_tensor_split.f90",
+        "sha256": "a5e5ce8f246013704273c343e5d24231d6b7af8bd517cdaaa86b7f4ce9704ab8",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_tensor_test.f90",
+        "sha256": "e9427bb224dbf92e29fdcaf39d6ae085603ac8fb380d39689f62d095bc931c2a",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_tensor_types.f90",
+        "sha256": "2f4217cb022ca3bc10b31349d5c2069f96d45d073f7c8b69616596a90f8de73e",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_tests.f90",
+        "sha256": "c4bf7da586f90f33b9f6793e739b4f498b9b890cf227eb6a6980521f7399a848",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_test_methods.f90",
+        "sha256": "8319b02f7a7c2765352c5e1af533b03821918b7391259c51a5acdb8d4cfb5880",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_timings.f90",
+        "sha256": "16bfd37cace9cbf8cb8e3cc5ec18e76f739fb7a4fda50ca3430300a48b71de6f",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_timings_report.f90",
+        "sha256": "b7240b52b1e70ed6dac7951b11640a5b82c1333e9d753bf9bbb84578210b38ad",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_toollib.f90",
+        "sha256": "24d1e3399dededc0f354c74d3fe11184330845fae8835d940f5698e9a493aa3a",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_transformations.f90",
+        "sha256": "c9d3bba5d4c5828efd168f29fdae26276d4ac76c16334a79c28504c1fe9c85f1",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      },
+      {
+        "path": "playground-library/dbcsr_work_operations.f90",
+        "sha256": "c217b187833ccb220a1ea3b0c74ba549089ffb15a09aa0ab833cb5fd357a561f",
+        "before": "#include \"base/dbcsr_base_uses.f90\"",
+        "after": "USE dbcsr_base_hooks, ONLY: dbcsr__a, dbcsr__b, dbcsr__w, dbcsr__l, dbcsr_abort, dbcsr_warn, timeset, timestop\n#include \"base/dbcsr_base_uses.f90\""
+      }
+    ]
+  },
+  "checked_at": "2026-10-30T01:09:50.140826+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/dbcsr.f90",
+  "verification": {
+    "seconds": 2.191,
+    "build_seconds": 0.848,
+    "library_reused": true,
+    "demo_sha256": "9bd59bd3c3f205d6787396d1ff4d538d55dfa40985258d415e8b2f91eae4b9fc",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "GPL-2.0-or-later",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "The upstream CMake-selected serial CPU library is rendered with Fypp 3.2, with exact generated-output hashes. Simple USE lists emitted from Python sets are sorted for reproducibility across Python versions and platforms; numerical algorithms are unchanged. MPI, OpenMP, GPU, LIBXS and LIBXSMM are disabled, and the library links pinned OpenBLAS. The diagnostic filename macro uses __FILE__. The checked main creates two 4-by-4 block-sparse matrices, multiplies them through dbcsr_multiply, reconstructs the result and independently compares it with MATMUL, requiring finite entries and a small maximum error. D1 covers matrix operations. Parallel scaling, accelerators and tensor operations are outside this verification scope. GPL-2.0-or-later notices are retained. The wrapper repeats the base-hooks USE list so FPM can order dependencies hidden in the original include. Its manifest permits legacy implicit external BLAS/LAPACK calls; runtime and bounds checks remain enabled.",
+  "initial_preparation_findings": [
+    "Fypp templates emit unordered USE lists; the adapter sorts simple identifier-only lists, including continuations, before hashing. This produces identical checked Fortran on Windows and GNU/Linux without changing numerical operations. FPM did not discover base-hooks dependencies in the original CPP include; checksum-guarded staging edits repeat exactly that include's USE imports. The source manifest enables implicit external procedures, as required by legacy BLAS/LAPACK calls; an attempted environment warning override was ineffective and is not retained. Runtime and bounds checks remain active. The diagnostic macro uses __FILE__. MPI, OpenMP, LIBXS, LIBXSMM and accelerators are disabled."
+  ],
+  "configuration_record": "../../../fpm_catalog/generated/dbcsr-cd6f522ec5005da8c59d2883975a89a2da607eac.json",
+  "generated_source_support": "See ../../fpm-generated-sources.md. Original sources remain in local exports. DBCSR preparation needs Fypp 3.2; visitors do not run CMake."
+}

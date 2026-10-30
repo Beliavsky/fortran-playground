@@ -1,0 +1,16 @@
+name="gftl-shared"
+version="0.0.0"
+license="Apache-2.0"
+[library]
+source-dir="playground-library"
+include-dir=[]
+[build]
+auto-executables=false
+auto-examples=false
+auto-tests=false
+[install]
+library=true
+[dependencies]
+gftl={git="https://github.com/Goddard-Fortran-Ecosystem/gFTL",rev="4af86210b6cc6ac46d3298b6861571aa26bd6acc"}
+[preprocess.cpp]
+macros=["PLAYGROUND_CATALOG_3F4E7D67E6A8EF25433DAB440FB61FE84C3EB3F6BFE484A858666A13C9629663"]

@@ -1,0 +1,45 @@
+{
+  "id": "npy-for-fortran",
+  "repository": "MRedies/NPY-for-Fortran",
+  "revision": "b76d22c6ece4e820d31d71825b2f774d060cd288",
+  "archive_sha256": "bb6a82c69eddd95b4d7c6bbb3b0ec53c0a33d5de70a6194fc94b1e9b4e50c5ea",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "source_packages": {
+      "mredies/npy-for-fortran": {
+        "manifest": "name = \"npy-for-fortran\"\nversion = \"0.0.0\"\nlicense = \"MIT\"\n[library]\nsource-dir = \"playground-library\"\n[build]\nauto-executables = false\nauto-examples = false\nauto-tests = false\n[install]\nlibrary = true\n",
+        "sources": [
+          "src/npy.f90"
+        ]
+      }
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T12:54:09.059921+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/npy-for-fortran.f90",
+  "verification": {
+    "seconds": 1.236,
+    "build_seconds": 0.399,
+    "library_reused": true,
+    "demo_sha256": "a55cca9864eb37b53ad453ba9b27ebe641d13ae1b47f18ed7a2c8e36ae8bf678",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "NumPy NPY writing. An FPM wrapper selects unchanged src/npy.f90. The main writes a 2-by-3 real64 matrix, checks version-2 magic, dtype/order header, exact binary payload and file size, and prints the matrix and header. A separate hosted probe captures the actual file bytes and NumPy independently loads the expected shape, dtype and exact values with pickle disabled. No source edits. The author no longer actively maintains the project. Other kinds/ranks, big-endian platforms and NPZ archive operations are not validated; the browser displays the checked summary rather than offering a general NPY-file download.",
+  "source_packaging": {
+    "manifest": "fpm.toml",
+    "sources": [
+      {
+        "path": "src/npy.f90",
+        "sha256": "c7c5122f465ff645a54515acfa49fac51df11360d884d2d2a70526e89504c564"
+      }
+    ]
+  },
+  "independent_validation": "numpy-check.json"
+}

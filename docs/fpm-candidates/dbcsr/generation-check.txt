@@ -1,0 +1,141 @@
+-- The Fortran compiler identification is GNU 16.2.0
+-- The C compiler identification is GNU 16.2.0
+-- The CXX compiler identification is GNU 16.2.0
+-- Detecting Fortran compiler ABI info
+-- Detecting Fortran compiler ABI info - done
+-- Check for working Fortran compiler: /usr/local/bin/gfortran - skipped
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/local/bin/gcc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/local/bin/g++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Looking for Fortran sgemm
+-- Looking for Fortran sgemm - not found
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE
+-- Looking for Fortran sgemm
+-- Looking for Fortran sgemm - found
+-- Found BLAS: /usr/lib/x86_64-linux-gnu/libopenblas.so
+-- Looking for Fortran cheev
+-- Looking for Fortran cheev - found
+-- Found LAPACK: /usr/lib/x86_64-linux-gnu/libopenblas.so;-lm;-ldl
+-- Found Python: /usr/local/bin/python3 (found version "3.12.1") found components: Interpreter
+-- Performing Test _fc_has_deprecated_openmp
+-- Performing Test _fc_has_deprecated_openmp - Success
+-- Performing Test f2008-norm2
+-- Performing Test f2008-norm2 - Success
+-- Performing Test f2008-block_construct
+-- Performing Test f2008-block_construct - Success
+-- Performing Test f2008-contiguous
+-- Performing Test f2008-contiguous - Success
+-- Performing Test f95-reshape-order-allocatable
+-- Performing Test f95-reshape-order-allocatable - Success
+-- FYPP preprocessor found.
+-- Configuring done (2.7s)
+-- Generating done (0.0s)
+-- Build files have been written to: /tmp/tmplj6nr8pg/build
+[  0%] Generating dbcsr_api.F
+[  0%] Generating acc/cuda/dbcsr_cuda_profiling.F
+[  0%] Generating acc/dbcsr_acc_device.F
+[  3%] Generating acc/dbcsr_acc_devmem.F
+[  3%] Generating acc/dbcsr_acc_event.F
+[  3%] Generating acc/dbcsr_acc_hostmem.F
+[  6%] Generating acc/dbcsr_acc_init.F
+[  6%] Generating acc/dbcsr_acc_stream.F
+[  6%] Generating acc/dbcsr_acc_timings.F
+[  9%] Generating acc/hip/dbcsr_hip_profiling.F
+[  9%] Generating base/dbcsr_base_hooks.F
+[  9%] Generating base/dbcsr_kinds.F
+[ 12%] Generating base/dbcsr_machine.F
+[ 12%] Generating base/dbcsr_machine_internal.F
+[ 12%] Generating block/dbcsr_block_access.F
+[ 15%] Generating block/dbcsr_block_operations.F
+[ 15%] Generating block/dbcsr_index_operations.F
+[ 15%] Generating block/dbcsr_iterator_operations.F
+[ 18%] Generating core/dbcsr_array_types.F
+[ 18%] Generating core/dbcsr_config.F
+[ 21%] Generating core/dbcsr_lib.F
+[ 21%] Generating core/dbcsr_methods.F
+[ 21%] Generating core/dbcsr_types.F
+[ 21%] Generating core/dbcsr_dict.F
+[ 24%] Generating core/dbcsr_error_handling.F
+[ 24%] Generating core/dbcsr_iter_types.F
+[ 24%] Generating core/dbcsr_list_callstackentry.F
+[ 24%] Generating core/dbcsr_list.F
+[ 27%] Generating core/dbcsr_list_routinereport.F
+[ 27%] Generating core/dbcsr_list_routinestat.F
+[ 27%] Generating core/dbcsr_list_timerenv.F
+[ 30%] Generating core/dbcsr_log_handling.F
+[ 30%] Generating core/dbcsr_print_messages.F
+[ 30%] Generating core/dbcsr_timings_base_type.F
+[ 33%] Generating core/dbcsr_timings.F
+[ 33%] Generating core/dbcsr_timings_report.F
+[ 36%] Generating core/dbcsr_timings_types.F
+[ 36%] Generating data/dbcsr_data_operations.F
+[ 36%] Generating data/dbcsr_data_methods.F
+[ 39%] Generating data/dbcsr_data_methods_low.F
+[ 39%] Generating data/dbcsr_data_types.F
+[ 42%] Generating data/dbcsr_mem_methods.F
+[ 42%] Generating data/dbcsr_ptr_util.F
+[ 45%] Generating dist/dbcsr_dist_methods.F
+[ 45%] Generating dist/dbcsr_dist_operations.F
+[ 45%] Generating dist/dbcsr_dist_util.F
+[ 48%] Generating mm/dbcsr_acc_operations.F
+[ 48%] Generating mm/dbcsr_mm_3d.F
+[ 51%] Generating mm/dbcsr_mm_accdrv.F
+[ 51%] Generating mm/dbcsr_mm_cannon.F
+[ 51%] Generating mm/dbcsr_mm_common.F
+[ 54%] Generating mm/dbcsr_mm_csr.F
+[ 54%] Generating mm/dbcsr_mm_dist_operations.F
+[ 54%] Generating mm/dbcsr_mm.F
+[ 54%] Generating mm/dbcsr_mm_hostdrv.F
+[ 57%] Generating mm/dbcsr_mm_multrec.F
+[ 57%] Generating mm/dbcsr_mm_sched.F
+[ 57%] Generating mm/dbcsr_mm_types.F
+[ 60%] Generating mm/dbcsr_multiply_api.F
+[ 60%] Generating mpi/dbcsr_mp_methods.F
+[ 63%] Generating mpi/dbcsr_mp_operations.F
+[ 63%] Generating mpi/dbcsr_mpiwrap.F
+[ 63%] Generating ops/dbcsr_csr_conversions.F
+[ 66%] Generating ops/dbcsr_io.F
+[ 66%] Generating ops/dbcsr_operations.F
+[ 66%] Generating ops/dbcsr_test_methods.F
+[ 69%] Generating ops/dbcsr_tests.F
+[ 69%] Generating ops/dbcsr_transformations.F
+[ 69%] Generating tas/dbcsr_tas_base.F
+[ 72%] Generating tas/dbcsr_tas_global.F
+[ 72%] Generating tas/dbcsr_tas_io.F
+[ 72%] Generating tas/dbcsr_tas_mm.F
+[ 75%] Generating tas/dbcsr_tas_reshape_ops.F
+[ 75%] Generating tas/dbcsr_tas_split.F
+[ 75%] Generating tas/dbcsr_tas_test.F
+[ 78%] Generating tas/dbcsr_tas_types.F
+[ 78%] Generating tas/dbcsr_tas_util.F
+[ 78%] Generating tensors/dbcsr_allocate_wrap.F
+[ 81%] Generating tensors/dbcsr_array_list_methods.F
+[ 81%] Generating tensors/dbcsr_tensor_api.F
+[ 84%] Generating tensors/dbcsr_tensor_block.F
+[ 84%] Generating tensors/dbcsr_tensor.F
+[ 84%] Generating tensors/dbcsr_tensor_index.F
+[ 84%] Generating tensors/dbcsr_tensor_io.F
+[ 87%] Generating tensors/dbcsr_tensor_reshape.F
+[ 87%] Generating tensors/dbcsr_tensor_split.F
+[ 87%] Generating tensors/dbcsr_tensor_test.F
+[ 90%] Generating tensors/dbcsr_tensor_types.F
+[ 90%] Generating utils/dbcsr_array_sort.F
+[ 90%] Generating utils/dbcsr_blas_operations.F
+[ 93%] Generating utils/dbcsr_btree.F
+[ 93%] Generating utils/dbcsr_files.F
+[ 93%] Generating utils/dbcsr_min_heap.F
+[ 96%] Generating utils/dbcsr_string_utilities.F
+[ 96%] Generating utils/dbcsr_toollib.F
+[100%] Generating work/dbcsr_work_operations.F
+[100%] Built target fypp_DBCSR_FORTRAN_SRCS
+[100%] Built target fypp
+GENERATED dbcsr 0 files; 33313 bytes

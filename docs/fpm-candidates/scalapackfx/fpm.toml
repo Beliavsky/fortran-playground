@@ -1,0 +1,17 @@
+name = "scalapackfx"
+version = "0.0.0"
+license = "BSD-2-Clause"
+[library]
+source-dir = "playground-library"
+[build]
+link = ["scalapack-mpich", "mpichfort", "mpich", "openblas"]
+external-modules = ["mpi", "mpi_f08"]
+auto-executables = false
+auto-examples = false
+auto-tests = false
+[install]
+library = true
+[fortran]
+implicit-typing = true
+implicit-external = true
+source-form = "default"

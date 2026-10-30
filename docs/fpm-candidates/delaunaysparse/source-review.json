@@ -1,0 +1,70 @@
+{
+  "id": "delaunaysparse",
+  "repository": "vtopt/DelaunaySparse",
+  "revision": "f3ffef04e24281aa42a0e5ec81f5c68f6bb5fb01",
+  "archive_sha256": "9632cb8bd406845f3df62786582b9075b5d41eab6278d9bb336e7370c67e761f",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "source_packages": {
+      "vtopt/delaunaysparse": {
+        "manifest": "name = \"delaunaysparse\"\nversion = \"0.0.0\"\nlicense = \"MIT\"\n[library]\nsource-dir = \"playground-library\"\n[build]\nauto-executables = false\nauto-examples = false\nauto-tests = false\n[install]\nlibrary = true\n[fortran]\nsource-form = \"default\"\nimplicit-external = true\nimplicit-typing = true\n",
+        "sources": [
+          "src/delsparse.f90",
+          "src/slatec.f",
+          "src/lapack.f",
+          "src/blas.f"
+        ]
+      }
+    },
+    "environment": {
+      "FPM_FFLAGS": "-fopenmp -fallow-argument-mismatch"
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T12:54:09.059921+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/delaunaysparse.f90",
+  "verification": {
+    "seconds": 1.573,
+    "build_seconds": 0.538,
+    "library_reused": true,
+    "demo_sha256": "2639f6d3c276b1ee5073fa48a4e8fef728eaf0007f649fb32991b65d3358242c",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Version 1 multivariate interpolation using sparse Delaunay simplices. Version 2 bundles BQPD with a research-only redistribution notice, so the selected pin uses the earlier MIT-licensed version 1 with its bundled SLATEC/BLAS/LAPACK sources. An FPM wrapper retains fixed/free source forms, legacy implicit typing/interfaces and -fallow-argument-mismatch for the SLATEC scalar-zero/zero-stride BLAS convention. OpenMP is enabled to link the library; the checked driver uses the serial routine. It verifies exact linear-function reproduction at three interior 2D points, zero status codes, valid simplex indices and barycentric weight sums/signs. No numerical source edits. Convex-hull projection/extrapolation, all degenerate inputs, high-dimensional behavior and parallel variants are not validated.",
+  "source_packaging": {
+    "manifest": "fpm.toml",
+    "sources": [
+      {
+        "path": "src/delsparse.f90",
+        "sha256": "0842e0271d5ec15f746057161d672b99b3dceaffb2c624638f8ac0aa5834cd26"
+      },
+      {
+        "path": "src/slatec.f",
+        "sha256": "1416ac6407bfe61db5db23e8bf6b67da92a410f7a01c36a2012de581b13f110c"
+      },
+      {
+        "path": "src/lapack.f",
+        "sha256": "bbfe8960383efdc74aca75c54d09dec3e1dcf6b681daa74aaf1afa4993d9d7e6"
+      },
+      {
+        "path": "src/blas.f",
+        "sha256": "439f1f865e36e54f190fec200f009287c430152b2374dee663d339b68e619573"
+      }
+    ]
+  },
+  "pin_reason": "Version 2 bundles research-only BQPD; inspect version 1 which uses SLATEC instead.",
+  "upstream_version": "1.0.0",
+  "compatibility_settings": [
+    "FPM source-form default preserves fixed-form legacy .f files.",
+    "The library allows legacy implicit typing and interfaces.",
+    "-fallow-argument-mismatch accepts the documented SLATEC scalar-zero/zero-stride DCOPY call."
+  ],
+  "rejected_version_2": "version-2-investigation.json"
+}

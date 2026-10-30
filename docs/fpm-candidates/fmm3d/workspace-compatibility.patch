@@ -1,0 +1,20 @@
+--- a/src/Laplace/laprouts3d.f
++++ b/src/Laplace/laprouts3d.f
+@@ -1868,7 +1868,7 @@
+ c-----------------------------------------------------------------------
+       implicit none
+       integer *8  nterms,l,j,k,m,ll,mm,iuse,lnew,mnew
+-      real *8 scarray(1),cscale
++      real *8 scarray(*),cscale
+       real *8 d
+       real *8, allocatable :: c(:,:)
+       real *8, allocatable :: sqc(:,:)
+@@ -2147,7 +2147,7 @@
+ c-----------------------------------------------------------------------
+       implicit none
+       integer *8  nterms,l,j,k,m,ll,mm,iuse
+-      real *8 scarray(1)
++      real *8 scarray(*)
+       real *8 d
+       real *8, allocatable :: cs(:,:)
+       real *8, allocatable :: fact(:)

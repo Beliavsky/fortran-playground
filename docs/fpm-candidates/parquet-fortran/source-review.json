@@ -1,0 +1,28 @@
+{
+  "id": "parquet-fortran",
+  "repository": "etempel/parquet-fortran",
+  "revision": "f611cbb7da8951c611f9b3f279b2d7bf7038e9d1",
+  "archive_sha256": "448e67e45a185428d640b2862983b2ce9aec9259b3cce10ceee9df27c9838290",
+  "checked_at": "2026-10-30T11:55:45.971231+00:00",
+  "status": "integration-deferred",
+  "stage": "integration",
+  "verified_in_playground": false,
+  "repository_url": "https://github.com/etempel/parquet-fortran",
+  "compiler_invoked": false,
+  "reason": "The pinned source archive extracts safely. Its documented full Parquet interface requires Apache Arrow >=24.0.0, including libarrow, libarrow-compute and libparquet, and C++20. None of those development packages has a candidate in the current Debian trixie image repositories. The manifest also requires FPM >=0.13 for features/profiles, while the playground uses 0.12, and references a TOML-F fork. Native dependency installation was not attempted from an unpinned external repository; compilation and runtime are not verified. No upstream compiler or Parquet round-trip failure is claimed.",
+  "proposed_next_step": "Prepare a separately reviewed, pinned Arrow/Parquet native dependency image and locked TOML-F fork, adapt the library manifest for the supported FPM version, and verify a small write/read round trip plus edited-main reuse. Do not substitute an unrelated Arrow-free utility demo for the promised Parquet interface.",
+  "source_evidence": [
+    {
+      "path": "README.md",
+      "sha256": "dbdad63b8911e92fc86a4d80a49f95a9e278d8154c029178def4b9df4b49233b"
+    },
+    {
+      "path": "fpm.toml",
+      "sha256": "aed5c192864243c339c0c05f5f0e3d2f59057cff10db8a08b25c3856dcd4c0e1"
+    },
+    {
+      "path": "VERSION.txt",
+      "sha256": "e33ccf6527ddb87b2dc894b17dd846206c5d18334710d253f7f366f2c4403fe0"
+    }
+  ]
+}

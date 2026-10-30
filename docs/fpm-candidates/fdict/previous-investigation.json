@@ -1,0 +1,38 @@
+{
+  "id": "fdict",
+  "repository": "zerothi/fdict",
+  "revision": "c962e6bfd6905bf463f4147ae41c77bf6dfb8bb4",
+  "archive_sha256": "8c6697e2ec4a142510f2e2e00acd1a793eaa8d911daa46dae77382740e5d3377",
+  "status": "deferred",
+  "stage": "compilation",
+  "reason": "Current upstream uses Fypp-generated sources without an FPM manifest. The v0.7.1 fallback also requires generated include files: its checked wrapper build failed at missing variable_interface_.inc. An upstream release ships generated sources, but release-asset redirects are outside the current source preparer. No public downloader or archive rules were relaxed, and no incomplete package is selected.",
+  "latest_head": {
+    "revision": "6ac903d4c0c524d45b948281a18b9656936c0197",
+    "archive_sha256": "6ef5a80706bae78498408a5e75c6ec45c81f947d8cab719093c960fdd365fd8a"
+  },
+  "diagnostic": " + mkdir -p build/dependencies\n[  0%]              pyplot_module.f90\n[ 16%]              pyplot_module.f90  done.\n[ 16%]                variable_pp.F90\n<ERROR> Compilation failed for object \" .._sources_bundle_packages_0_fdict-c962e6bfd6905bf463f4147ae41c77bf6dfb8bb4_playground-library_variable_pp.F90.o \"\n[ 33%]                variable_pp.F90  done.\n\n./././/../sources/bundle/packages/0/fdict-c962e6bfd6905bf463f4147ae41c77bf6dfb8bb4/playground-library/variable_pp.F90:162:2:\n\n  162 |\n      |  1\nFatal Error: variable_interface_.inc: No such file or directory\ncompilation terminated.\n<ERROR> stopping due to failed compilation\nSTOP 1\n",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "source_packages": {
+      "zerothi/fdict": {
+        "manifest": "name = \"fdict\"\nversion = \"0.0.0\"\nlicense = \"MPL-2.0\"\n[library]\ninclude-dir = [\"src\"]\nsource-dir = \"playground-library\"\n[build]\nauto-executables = false\nauto-examples = false\nauto-tests = false\n[install]\nlibrary = true\n[preprocess.cpp]\n",
+        "sources": [
+          "src/variable_pp.F90",
+          "src/dictionary_pp.F90"
+        ]
+      }
+    }
+  },
+  "reproducer": "main.f90",
+  "checked_at": "2026-10-29T12:58:04.007972+00:00",
+  "upstream_generated_release": {
+    "url": "https://github.com/zerothi/fdict/releases/download/v0.7.1/fdict-0.7.1.tar.gz",
+    "sha256": "199e7d72e470d590a686c0af0c2fc67e6b3fd62321691875f4322a4d8cadacd4",
+    "generated_sources": [
+      "sources/src/variable.f90",
+      "sources/src/dictionary.f90"
+    ],
+    "status": "Inspected but not compiled or selected; the current operator source-package adapter does not ingest release assets."
+  },
+  "next_step": "Add reproducible generation for current Fypp sources, or a checksum-locked generated release-asset path that also works in downloaded FPM projects."
+}

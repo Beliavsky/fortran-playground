@@ -1,0 +1,598 @@
+{
+  "id": "foodie",
+  "repository": "Fortran-FOSS-Programmers/FOODIE",
+  "revision": "52487d49e1b2b47e2f1136e24fc4bc1a37a5001a",
+  "archive_sha256": "f0baa674da699354290d0bf140770c4491a1e775587bc627a735501bbedbd38d",
+  "license": null,
+  "checked_at": "2026-10-29T14:30:37.472271+00:00",
+  "status": "deferred",
+  "stage": "preparation",
+  "reason": "The current head and tags v0.4.1 and v0.4.0 contain symlinks, including CONTRIBUTING.md and plotting/benchmark assets. The ordinary source preparer rejects links before compilation. No extraction rules were changed, no incomplete package is selected, and no compiler failure is claimed.",
+  "links": [
+    {
+      "path": "CONTRIBUTING.md",
+      "target": "docs/guide/contributing.md"
+    },
+    {
+      "path": "papers/announcement/caf_benchmark/results-euler-1D-caf/lay_export_all_f",
+      "target": "../../utilities/lay_export_all_f"
+    },
+    {
+      "path": "papers/announcement/caf_benchmark/results-euler-1D-caf/lay_export_all_f.mcr",
+      "target": "../../utilities/lay_export_all_f.mcr"
+    },
+    {
+      "path": "papers/announcement/caf_benchmark/results-euler-1D-caf/strong-cpu-time-comparison.lay",
+      "target": "../utilities-euler-1D-caf/strong-cpu-time-comparison.lay"
+    },
+    {
+      "path": "papers/announcement/caf_benchmark/results-euler-1D-caf/strong-scaling-comparison.lay",
+      "target": "../utilities-euler-1D-caf/strong-scaling-comparison.lay"
+    },
+    {
+      "path": "papers/announcement/caf_benchmark/results-euler-1D-caf/weak-cpu-time-comparison.lay",
+      "target": "../utilities-euler-1D-caf/weak-cpu-time-comparison.lay"
+    },
+    {
+      "path": "papers/announcement/caf_benchmark/results-euler-1D-caf/weak-scaling-comparison.lay",
+      "target": "../utilities-euler-1D-caf/weak-scaling-comparison.lay"
+    },
+    {
+      "path": "papers/announcement/images/caf_benchmark/euler-1D-caf/strong-cpu-time-comparison.png",
+      "target": "../../../caf_benchmark/results-euler-1D-caf/strong-cpu-time-comparison.png"
+    },
+    {
+      "path": "papers/announcement/images/caf_benchmark/euler-1D-caf/strong-scaling-comparison.png",
+      "target": "../../../caf_benchmark/results-euler-1D-caf/strong-scaling-comparison.png"
+    },
+    {
+      "path": "papers/announcement/images/caf_benchmark/euler-1D-caf/weak-cpu-time-comparison.png",
+      "target": "../../../caf_benchmark/results-euler-1D-caf/weak-cpu-time-comparison.png"
+    },
+    {
+      "path": "papers/announcement/images/caf_benchmark/euler-1D-caf/weak-scaling-comparison.png",
+      "target": "../../../caf_benchmark/results-euler-1D-caf/weak-scaling-comparison.png"
+    },
+    {
+      "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-adams-bashforth-1.png",
+      "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-adams-bashforth-1.png"
+    },
+    {
+      "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-adams-bashforth-2.png",
+      "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-adams-bashforth-2.png"
+    },
+    {
+      "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-adams-bashforth-3.png",
+      "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-adams-bashforth-3.png"
+    },
+    {
+      "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-adams-bashforth-4.png",
+      "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-adams-bashforth-4.png"
+    },
+    {
+      "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-adams-bashforth-moulton-1.png",
+      "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-adams-bashforth-moulton-1.png"
+    },
+    {
+      "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-adams-bashforth-moulton-2.png",
+      "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-adams-bashforth-moulton-2.png"
+    },
+    {
+      "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-adams-bashforth-moulton-3.png",
+      "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-adams-bashforth-moulton-3.png"
+    },
+    {
+      "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-adams-bashforth-moulton-4.png",
+      "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-adams-bashforth-moulton-4.png"
+    },
+    {
+      "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-adams-moulton-0.png",
+      "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-adams-moulton-0.png"
+    },
+    {
+      "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-adams-moulton-1.png",
+      "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-adams-moulton-1.png"
+    },
+    {
+      "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-adams-moulton-2.png",
+      "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-adams-moulton-2.png"
+    },
+    {
+      "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-adams-moulton-3.png",
+      "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-adams-moulton-3.png"
+    },
+    {
+      "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-emd-runge-kutta-7.png",
+      "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-emd-runge-kutta-7.png"
+    },
+    {
+      "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-leapfrog-raw.png",
+      "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-leapfrog-raw.png"
+    },
+    {
+      "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-leapfrog.png",
+      "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-leapfrog.png"
+    },
+    {
+      "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-ls-runge-kutta-1.png",
+      "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-ls-runge-kutta-1.png"
+    },
+    {
+      "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-ls-runge-kutta-12.png",
+      "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-ls-runge-kutta-12.png"
+    },
+    {
+      "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-ls-runge-kutta-13.png",
+      "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-ls-runge-kutta-13.png"
+    },
+    {
+      "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-ls-runge-kutta-14.png",
+      "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-ls-runge-kutta-14.png"
+    },
+    {
+      "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-ls-runge-kutta-5.png",
+      "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-ls-runge-kutta-5.png"
+    },
+    {
+      "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-ls-runge-kutta-6.png",
+      "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-ls-runge-kutta-6.png"
+    },
+    {
+      "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-ls-runge-kutta-7.png",
+      "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-ls-runge-kutta-7.png"
+    },
+    {
+      "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-tvd-runge-kutta-1.png",
+      "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-tvd-runge-kutta-1.png"
+    },
+    {
+      "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-tvd-runge-kutta-2.png",
+      "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-tvd-runge-kutta-2.png"
+    },
+    {
+      "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-tvd-runge-kutta-3.png",
+      "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-tvd-runge-kutta-3.png"
+    },
+    {
+      "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-tvd-runge-kutta-5.png",
+      "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-tvd-runge-kutta-5.png"
+    },
+    {
+      "path": "papers/announcement/images/openmp_benchmark/euler-1D-openmp/strong-cpu-time-comparison.png",
+      "target": "../../../openmp_benchmark/results-euler-1D-openmp/strong-cpu-time-comparison.png"
+    },
+    {
+      "path": "papers/announcement/images/openmp_benchmark/euler-1D-openmp/strong-scaling-comparison.png",
+      "target": "../../../openmp_benchmark/results-euler-1D-openmp/strong-scaling-comparison.png"
+    },
+    {
+      "path": "papers/announcement/images/openmp_benchmark/euler-1D-openmp/weak-cpu-time-comparison.png",
+      "target": "../../../openmp_benchmark/results-euler-1D-openmp/weak-cpu-time-comparison.png"
+    },
+    {
+      "path": "papers/announcement/images/openmp_benchmark/euler-1D-openmp/weak-scaling-comparison.png",
+      "target": "../../../openmp_benchmark/results-euler-1D-openmp/weak-scaling-comparison.png"
+    },
+    {
+      "path": "papers/announcement/openmp_benchmark/results-euler-1D-openmp/lay_export_all_f",
+      "target": "../../utilities/lay_export_all_f"
+    },
+    {
+      "path": "papers/announcement/openmp_benchmark/results-euler-1D-openmp/lay_export_all_f.mcr",
+      "target": "../../utilities/lay_export_all_f.mcr"
+    },
+    {
+      "path": "papers/announcement/openmp_benchmark/results-euler-1D-openmp/strong-cpu-time-comparison.lay",
+      "target": "../utilities-euler-1D-openmp/strong-cpu-time-comparison.lay"
+    },
+    {
+      "path": "papers/announcement/openmp_benchmark/results-euler-1D-openmp/strong-scaling-comparison.lay",
+      "target": "../utilities-euler-1D-openmp/strong-scaling-comparison.lay"
+    },
+    {
+      "path": "papers/announcement/openmp_benchmark/results-euler-1D-openmp/weak-cpu-time-comparison.lay",
+      "target": "../utilities-euler-1D-openmp/weak-cpu-time-comparison.lay"
+    },
+    {
+      "path": "papers/announcement/openmp_benchmark/results-euler-1D-openmp/weak-scaling-comparison.lay",
+      "target": "../utilities-euler-1D-openmp/weak-scaling-comparison.lay"
+    }
+  ],
+  "tag_checks": [
+    {
+      "tag": "v0.4.1",
+      "revision": "f395f0653f08cdaa90c3e306fd68398b31359983",
+      "sha256": "4bb3d5648690c06b1211609bb2f42201543d01034e54ab024a75631eccf77069",
+      "links": [
+        {
+          "path": "CONTRIBUTING.md",
+          "target": "docs/guide/contributing.md"
+        },
+        {
+          "path": "papers/announcement/caf_benchmark/results-euler-1D-caf/lay_export_all_f",
+          "target": "../../utilities/lay_export_all_f"
+        },
+        {
+          "path": "papers/announcement/caf_benchmark/results-euler-1D-caf/lay_export_all_f.mcr",
+          "target": "../../utilities/lay_export_all_f.mcr"
+        },
+        {
+          "path": "papers/announcement/caf_benchmark/results-euler-1D-caf/strong-cpu-time-comparison.lay",
+          "target": "../utilities-euler-1D-caf/strong-cpu-time-comparison.lay"
+        },
+        {
+          "path": "papers/announcement/caf_benchmark/results-euler-1D-caf/strong-scaling-comparison.lay",
+          "target": "../utilities-euler-1D-caf/strong-scaling-comparison.lay"
+        },
+        {
+          "path": "papers/announcement/caf_benchmark/results-euler-1D-caf/weak-cpu-time-comparison.lay",
+          "target": "../utilities-euler-1D-caf/weak-cpu-time-comparison.lay"
+        },
+        {
+          "path": "papers/announcement/caf_benchmark/results-euler-1D-caf/weak-scaling-comparison.lay",
+          "target": "../utilities-euler-1D-caf/weak-scaling-comparison.lay"
+        },
+        {
+          "path": "papers/announcement/images/caf_benchmark/euler-1D-caf/strong-cpu-time-comparison.png",
+          "target": "../../../caf_benchmark/results-euler-1D-caf/strong-cpu-time-comparison.png"
+        },
+        {
+          "path": "papers/announcement/images/caf_benchmark/euler-1D-caf/strong-scaling-comparison.png",
+          "target": "../../../caf_benchmark/results-euler-1D-caf/strong-scaling-comparison.png"
+        },
+        {
+          "path": "papers/announcement/images/caf_benchmark/euler-1D-caf/weak-cpu-time-comparison.png",
+          "target": "../../../caf_benchmark/results-euler-1D-caf/weak-cpu-time-comparison.png"
+        },
+        {
+          "path": "papers/announcement/images/caf_benchmark/euler-1D-caf/weak-scaling-comparison.png",
+          "target": "../../../caf_benchmark/results-euler-1D-caf/weak-scaling-comparison.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-adams-bashforth-1.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-adams-bashforth-1.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-adams-bashforth-2.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-adams-bashforth-2.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-adams-bashforth-3.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-adams-bashforth-3.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-adams-bashforth-4.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-adams-bashforth-4.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-adams-bashforth-moulton-1.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-adams-bashforth-moulton-1.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-adams-bashforth-moulton-2.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-adams-bashforth-moulton-2.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-adams-bashforth-moulton-3.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-adams-bashforth-moulton-3.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-adams-bashforth-moulton-4.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-adams-bashforth-moulton-4.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-adams-moulton-0.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-adams-moulton-0.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-adams-moulton-1.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-adams-moulton-1.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-adams-moulton-2.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-adams-moulton-2.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-adams-moulton-3.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-adams-moulton-3.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-emd-runge-kutta-7.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-emd-runge-kutta-7.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-leapfrog-raw.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-leapfrog-raw.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-leapfrog.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-leapfrog.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-ls-runge-kutta-1.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-ls-runge-kutta-1.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-ls-runge-kutta-12.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-ls-runge-kutta-12.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-ls-runge-kutta-13.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-ls-runge-kutta-13.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-ls-runge-kutta-14.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-ls-runge-kutta-14.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-ls-runge-kutta-5.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-ls-runge-kutta-5.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-ls-runge-kutta-6.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-ls-runge-kutta-6.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-ls-runge-kutta-7.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-ls-runge-kutta-7.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-tvd-runge-kutta-1.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-tvd-runge-kutta-1.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-tvd-runge-kutta-2.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-tvd-runge-kutta-2.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-tvd-runge-kutta-3.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-tvd-runge-kutta-3.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-tvd-runge-kutta-5.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-tvd-runge-kutta-5.png"
+        },
+        {
+          "path": "papers/announcement/images/openmp_benchmark/euler-1D-openmp/strong-cpu-time-comparison.png",
+          "target": "../../../openmp_benchmark/results-euler-1D-openmp/strong-cpu-time-comparison.png"
+        },
+        {
+          "path": "papers/announcement/images/openmp_benchmark/euler-1D-openmp/strong-scaling-comparison.png",
+          "target": "../../../openmp_benchmark/results-euler-1D-openmp/strong-scaling-comparison.png"
+        },
+        {
+          "path": "papers/announcement/images/openmp_benchmark/euler-1D-openmp/weak-cpu-time-comparison.png",
+          "target": "../../../openmp_benchmark/results-euler-1D-openmp/weak-cpu-time-comparison.png"
+        },
+        {
+          "path": "papers/announcement/images/openmp_benchmark/euler-1D-openmp/weak-scaling-comparison.png",
+          "target": "../../../openmp_benchmark/results-euler-1D-openmp/weak-scaling-comparison.png"
+        },
+        {
+          "path": "papers/announcement/openmp_benchmark/results-euler-1D-openmp/lay_export_all_f",
+          "target": "../../utilities/lay_export_all_f"
+        },
+        {
+          "path": "papers/announcement/openmp_benchmark/results-euler-1D-openmp/lay_export_all_f.mcr",
+          "target": "../../utilities/lay_export_all_f.mcr"
+        },
+        {
+          "path": "papers/announcement/openmp_benchmark/results-euler-1D-openmp/strong-cpu-time-comparison.lay",
+          "target": "../utilities-euler-1D-openmp/strong-cpu-time-comparison.lay"
+        },
+        {
+          "path": "papers/announcement/openmp_benchmark/results-euler-1D-openmp/strong-scaling-comparison.lay",
+          "target": "../utilities-euler-1D-openmp/strong-scaling-comparison.lay"
+        },
+        {
+          "path": "papers/announcement/openmp_benchmark/results-euler-1D-openmp/weak-cpu-time-comparison.lay",
+          "target": "../utilities-euler-1D-openmp/weak-cpu-time-comparison.lay"
+        },
+        {
+          "path": "papers/announcement/openmp_benchmark/results-euler-1D-openmp/weak-scaling-comparison.lay",
+          "target": "../utilities-euler-1D-openmp/weak-scaling-comparison.lay"
+        }
+      ],
+      "status": "blocked",
+      "reason": "Package archive contains an unsafe path, link, or special file."
+    },
+    {
+      "tag": "v0.4.0",
+      "revision": "d487c98f1601958743096f85834ebe84fe779e4e",
+      "sha256": "185a9dbba755d747924b0b882f551eaaba2e25e7f5bcf7b6978d1cd6e7208dc8",
+      "links": [
+        {
+          "path": "CONTRIBUTING.md",
+          "target": "docs/guide/contributing.md"
+        },
+        {
+          "path": "papers/announcement/caf_benchmark/results-euler-1D-caf/lay_export_all_f",
+          "target": "../../utilities/lay_export_all_f"
+        },
+        {
+          "path": "papers/announcement/caf_benchmark/results-euler-1D-caf/lay_export_all_f.mcr",
+          "target": "../../utilities/lay_export_all_f.mcr"
+        },
+        {
+          "path": "papers/announcement/caf_benchmark/results-euler-1D-caf/strong-cpu-time-comparison.lay",
+          "target": "../utilities-euler-1D-caf/strong-cpu-time-comparison.lay"
+        },
+        {
+          "path": "papers/announcement/caf_benchmark/results-euler-1D-caf/strong-scaling-comparison.lay",
+          "target": "../utilities-euler-1D-caf/strong-scaling-comparison.lay"
+        },
+        {
+          "path": "papers/announcement/caf_benchmark/results-euler-1D-caf/weak-cpu-time-comparison.lay",
+          "target": "../utilities-euler-1D-caf/weak-cpu-time-comparison.lay"
+        },
+        {
+          "path": "papers/announcement/caf_benchmark/results-euler-1D-caf/weak-scaling-comparison.lay",
+          "target": "../utilities-euler-1D-caf/weak-scaling-comparison.lay"
+        },
+        {
+          "path": "papers/announcement/images/caf_benchmark/euler-1D-caf/strong-cpu-time-comparison.png",
+          "target": "../../../caf_benchmark/results-euler-1D-caf/strong-cpu-time-comparison.png"
+        },
+        {
+          "path": "papers/announcement/images/caf_benchmark/euler-1D-caf/strong-scaling-comparison.png",
+          "target": "../../../caf_benchmark/results-euler-1D-caf/strong-scaling-comparison.png"
+        },
+        {
+          "path": "papers/announcement/images/caf_benchmark/euler-1D-caf/weak-cpu-time-comparison.png",
+          "target": "../../../caf_benchmark/results-euler-1D-caf/weak-cpu-time-comparison.png"
+        },
+        {
+          "path": "papers/announcement/images/caf_benchmark/euler-1D-caf/weak-scaling-comparison.png",
+          "target": "../../../caf_benchmark/results-euler-1D-caf/weak-scaling-comparison.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-adams-bashforth-1.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-adams-bashforth-1.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-adams-bashforth-2.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-adams-bashforth-2.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-adams-bashforth-3.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-adams-bashforth-3.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-adams-bashforth-4.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-adams-bashforth-4.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-adams-bashforth-moulton-1.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-adams-bashforth-moulton-1.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-adams-bashforth-moulton-2.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-adams-bashforth-moulton-2.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-adams-bashforth-moulton-3.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-adams-bashforth-moulton-3.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-adams-bashforth-moulton-4.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-adams-bashforth-moulton-4.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-adams-moulton-0.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-adams-moulton-0.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-adams-moulton-1.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-adams-moulton-1.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-adams-moulton-2.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-adams-moulton-2.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-adams-moulton-3.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-adams-moulton-3.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-emd-runge-kutta-7.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-emd-runge-kutta-7.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-leapfrog-raw.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-leapfrog-raw.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-leapfrog.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-leapfrog.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-ls-runge-kutta-1.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-ls-runge-kutta-1.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-ls-runge-kutta-12.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-ls-runge-kutta-12.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-ls-runge-kutta-13.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-ls-runge-kutta-13.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-ls-runge-kutta-14.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-ls-runge-kutta-14.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-ls-runge-kutta-5.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-ls-runge-kutta-5.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-ls-runge-kutta-6.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-ls-runge-kutta-6.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-ls-runge-kutta-7.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-ls-runge-kutta-7.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-tvd-runge-kutta-1.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-tvd-runge-kutta-1.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-tvd-runge-kutta-2.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-tvd-runge-kutta-2.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-tvd-runge-kutta-3.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-tvd-runge-kutta-3.png"
+        },
+        {
+          "path": "papers/announcement/images/errors-analysis/oscillation/errors_analysis-oscillation-tvd-runge-kutta-5.png",
+          "target": "../../../errors_analysis/results-oscillation/errors_analysis-oscillation-tvd-runge-kutta-5.png"
+        },
+        {
+          "path": "papers/announcement/images/openmp_benchmark/euler-1D-openmp/strong-cpu-time-comparison.png",
+          "target": "../../../openmp_benchmark/results-euler-1D-openmp/strong-cpu-time-comparison.png"
+        },
+        {
+          "path": "papers/announcement/images/openmp_benchmark/euler-1D-openmp/strong-scaling-comparison.png",
+          "target": "../../../openmp_benchmark/results-euler-1D-openmp/strong-scaling-comparison.png"
+        },
+        {
+          "path": "papers/announcement/images/openmp_benchmark/euler-1D-openmp/weak-cpu-time-comparison.png",
+          "target": "../../../openmp_benchmark/results-euler-1D-openmp/weak-cpu-time-comparison.png"
+        },
+        {
+          "path": "papers/announcement/images/openmp_benchmark/euler-1D-openmp/weak-scaling-comparison.png",
+          "target": "../../../openmp_benchmark/results-euler-1D-openmp/weak-scaling-comparison.png"
+        },
+        {
+          "path": "papers/announcement/openmp_benchmark/results-euler-1D-openmp/lay_export_all_f",
+          "target": "../../utilities/lay_export_all_f"
+        },
+        {
+          "path": "papers/announcement/openmp_benchmark/results-euler-1D-openmp/lay_export_all_f.mcr",
+          "target": "../../utilities/lay_export_all_f.mcr"
+        },
+        {
+          "path": "papers/announcement/openmp_benchmark/results-euler-1D-openmp/strong-cpu-time-comparison.lay",
+          "target": "../utilities-euler-1D-openmp/strong-cpu-time-comparison.lay"
+        },
+        {
+          "path": "papers/announcement/openmp_benchmark/results-euler-1D-openmp/strong-scaling-comparison.lay",
+          "target": "../utilities-euler-1D-openmp/strong-scaling-comparison.lay"
+        },
+        {
+          "path": "papers/announcement/openmp_benchmark/results-euler-1D-openmp/weak-cpu-time-comparison.lay",
+          "target": "../utilities-euler-1D-openmp/weak-cpu-time-comparison.lay"
+        },
+        {
+          "path": "papers/announcement/openmp_benchmark/results-euler-1D-openmp/weak-scaling-comparison.lay",
+          "target": "../utilities-euler-1D-openmp/weak-scaling-comparison.lay"
+        }
+      ],
+      "status": "blocked",
+      "reason": "Package archive contains an unsafe path, link, or special file."
+    }
+  ],
+  "next_step": "Use a pinned source distribution without symlinks, or add a separately reviewed operator staging mechanism. Then adapt the author oscillator example, check the exact solution and step-halving error reduction, and verify cache reuse. PENF is already available in the catalog; exact dependency compatibility still needs testing."
+}

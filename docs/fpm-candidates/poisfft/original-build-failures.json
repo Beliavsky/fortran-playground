@@ -1,0 +1,13 @@
+{
+  "diagnostics": [
+    {
+      "attempt": "math",
+      "diagnostic": " + mkdir -p build/dependencies\n<ERROR> *cmd_build* Target error: Unable to find source for module dependency: \"pfft\" used by \"./././/../sources/bundle/packages/0/PoisFFT-7e7ebcd75130553ef2cf58548ec519933a3d3426/playground-library/main.f90\"\nSTOP 1\n"
+    },
+    {
+      "attempt": "retry-poisfft",
+      "diagnostic": " + mkdir -p build/dependencies\n[  0%]              pyplot_module.f90\n[ 10%]              pyplot_module.f90  done.\n[ 10%]                customfftw3.f90\n[ 20%]                customfftw3.f90  done.\n[ 20%]                        fft.f90\n<ERROR> Compilation failed for object \" .._sources_bundle_packages_0_PoisFFT-7e7ebcd75130553ef2cf58548ec519933a3d3426_playground-library_fft.f90.o \"\n[ 30%]                        fft.f90  done.\n\n./././/../sources/bundle/packages/0/PoisFFT-7e7ebcd75130553ef2cf58548ec519933a3d3426/src/fft-inc.f90:17:7:\n\n   17 |   use PoisFFT_Precisions\n      |       1\nFatal Error: Cannot open module file \u2018poisfft_precisions.mod\u2019 for reading at (1): No such file or directory\ncompilation terminated.\n<ERROR> stopping due to failed compilation\nSTOP 1\n"
+    }
+  ],
+  "note": "Historical diagnostics; the final compatibility recipe and checked main pass."
+}

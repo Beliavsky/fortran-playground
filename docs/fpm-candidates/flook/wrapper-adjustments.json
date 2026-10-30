@@ -1,0 +1,5 @@
+{
+  "findings": [
+    "The first consumer attempted to create a global table immediately after lua_init and received SIGSEGV. The checked example follows the author examples by loading a Lua chunk first, creating the parameters table, then accessing it through lua_table. All round-trip values are checked independently. No upstream library code was patched."
+  ]
+}

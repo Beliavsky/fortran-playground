@@ -1,0 +1,230 @@
+$ cmake -S /src/fortjson -B /tmp/build -DCMAKE_Fortran_COMPILER=gfortran -DCMAKE_Fortran_FLAGS=-g -O0 -fcheck=all -fbacktrace
+CMake Deprecation Warning at CMakeLists.txt:2 (CMAKE_MINIMUM_REQUIRED):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+-- fortjson will be installed to: /usr/local
+-- The Fortran compiler identification is GNU 16.2.0
+-- Detecting Fortran compiler ABI info
+-- Detecting Fortran compiler ABI info - done
+-- Check for working Fortran compiler: /usr/local/bin/gfortran - skipped
+-- Fortran compiler: /usr/local/bin/gfortran
+-- Configuring done (2.1s)
+-- Generating done (0.1s)
+-- Build files have been written to: /tmp/build
+
+
+$ cmake --build /tmp/build -j2
+[  1%] Building Fortran object src/CMakeFiles/fortjson.dir/fjson_precision.f90.o
+[  2%] Building Fortran object src/CMakeFiles/fortjson.dir/fjson_constants.f90.o
+[  3%] Building Fortran object src/CMakeFiles/fortjson.dir/fjson_datatype.f90.o
+[  4%] Building Fortran object src/CMakeFiles/fortjson.dir/fjson_utilities.f90.o
+[  5%] Building Fortran object src/CMakeFiles/fortjson.dir/fjson_rw.f90.o
+[  7%] Building Fortran object src/CMakeFiles/fortjson.dir/fjson_setup.f90.o
+[  8%] Building Fortran object src/CMakeFiles/fortjson.dir/fortjson.f90.o
+[  9%] Linking Fortran static library ../lib/libfortjson.a
+[  9%] Built target fortjson
+[ 11%] Building Fortran object test/CMakeFiles/fj_empty.dir/unit/fj_empty.f90.o
+[ 11%] Building Fortran object test/CMakeFiles/fj_i4.dir/unit/fj_i4.f90.o
+[ 13%] Linking Fortran executable ../bin/fj_i4
+[ 14%] Linking Fortran executable ../bin/fj_empty
+[ 14%] Built target fj_i4
+[ 14%] Built target fj_empty
+[ 15%] Building Fortran object test/CMakeFiles/fj_i8.dir/unit/fj_i8.f90.o
+[ 16%] Building Fortran object test/CMakeFiles/fj_r4.dir/unit/fj_r4.f90.o
+[ 17%] Linking Fortran executable ../bin/fj_i8
+[ 19%] Linking Fortran executable ../bin/fj_r4
+[ 19%] Built target fj_i8
+[ 19%] Built target fj_r4
+[ 20%] Building Fortran object test/CMakeFiles/fj_str.dir/unit/fj_str.f90.o
+[ 21%] Building Fortran object test/CMakeFiles/fj_r8.dir/unit/fj_r8.f90.o
+[ 22%] Linking Fortran executable ../bin/fj_str
+[ 23%] Linking Fortran executable ../bin/fj_r8
+[ 23%] Built target fj_str
+[ 23%] Built target fj_r8
+[ 25%] Building Fortran object test/CMakeFiles/fj_true.dir/unit/fj_true.f90.o
+[ 26%] Building Fortran object test/CMakeFiles/fj_false.dir/unit/fj_false.f90.o
+[ 27%] Linking Fortran executable ../bin/fj_true
+[ 28%] Linking Fortran executable ../bin/fj_false
+[ 28%] Built target fj_true
+[ 28%] Built target fj_false
+[ 30%] Building Fortran object test/CMakeFiles/fj_array_empty.dir/unit/fj_array_empty.f90.o
+[ 30%] Building Fortran object test/CMakeFiles/fj_null.dir/unit/fj_null.f90.o
+[ 32%] Linking Fortran executable ../bin/fj_array_empty
+[ 33%] Linking Fortran executable ../bin/fj_null
+[ 33%] Built target fj_null
+[ 33%] Built target fj_array_empty
+[ 34%] Building Fortran object test/CMakeFiles/fj_array_object.dir/unit/fj_array_object.f90.o
+[ 35%] Building Fortran object test/CMakeFiles/fj_array_array.dir/unit/fj_array_array.f90.o
+[ 36%] Linking Fortran executable ../bin/fj_array_object
+[ 38%] Linking Fortran executable ../bin/fj_array_array
+[ 38%] Built target fj_array_object
+[ 38%] Built target fj_array_array
+[ 39%] Building Fortran object test/CMakeFiles/fj_array_i4.dir/unit/fj_array_i4.f90.o
+[ 40%] Building Fortran object test/CMakeFiles/fj_array_i8.dir/unit/fj_array_i8.f90.o
+[ 41%] Linking Fortran executable ../bin/fj_array_i4
+[ 42%] Linking Fortran executable ../bin/fj_array_i8
+[ 42%] Built target fj_array_i4
+[ 42%] Built target fj_array_i8
+[ 44%] Building Fortran object test/CMakeFiles/fj_array_r4.dir/unit/fj_array_r4.f90.o
+[ 45%] Building Fortran object test/CMakeFiles/fj_array_r8.dir/unit/fj_array_r8.f90.o
+[ 46%] Linking Fortran executable ../bin/fj_array_r4
+[ 47%] Linking Fortran executable ../bin/fj_array_r8
+[ 47%] Built target fj_array_r4
+[ 47%] Built target fj_array_r8
+[ 48%] Building Fortran object test/CMakeFiles/fj_array_str.dir/unit/fj_array_str.f90.o
+[ 50%] Building Fortran object test/CMakeFiles/fj_array_bool.dir/unit/fj_array_bool.f90.o
+[ 51%] Linking Fortran executable ../bin/fj_array_str
+[ 52%] Linking Fortran executable ../bin/fj_array_bool
+[ 52%] Built target fj_array_str
+[ 52%] Built target fj_array_bool
+[ 53%] Building Fortran object test/CMakeFiles/fj_array_null.dir/unit/fj_array_null.f90.o
+[ 54%] Building Fortran object test/CMakeFiles/fj_array_2val.dir/unit/fj_array_2val.f90.o
+[ 55%] Linking Fortran executable ../bin/fj_array_null
+[ 57%] Linking Fortran executable ../bin/fj_array_2val
+[ 57%] Built target fj_array_null
+[ 57%] Built target fj_array_2val
+[ 58%] Building Fortran object test/CMakeFiles/fj_object_empty.dir/unit/fj_object_empty.f90.o
+[ 59%] Building Fortran object test/CMakeFiles/fj_object_object.dir/unit/fj_object_object.f90.o
+[ 60%] Linking Fortran executable ../bin/fj_object_empty
+[ 61%] Linking Fortran executable ../bin/fj_object_object
+[ 61%] Built target fj_object_empty
+[ 61%] Built target fj_object_object
+[ 63%] Building Fortran object test/CMakeFiles/fj_object_array.dir/unit/fj_object_array.f90.o
+[ 64%] Building Fortran object test/CMakeFiles/fj_object_i4.dir/unit/fj_object_i4.f90.o
+[ 65%] Linking Fortran executable ../bin/fj_object_array
+[ 66%] Linking Fortran executable ../bin/fj_object_i4
+[ 66%] Built target fj_object_array
+[ 66%] Built target fj_object_i4
+[ 67%] Building Fortran object test/CMakeFiles/fj_object_i8.dir/unit/fj_object_i8.f90.o
+[ 69%] Building Fortran object test/CMakeFiles/fj_object_r4.dir/unit/fj_object_r4.f90.o
+[ 70%] Linking Fortran executable ../bin/fj_object_i8
+[ 71%] Linking Fortran executable ../bin/fj_object_r4
+[ 71%] Built target fj_object_i8
+[ 71%] Built target fj_object_r4
+[ 72%] Building Fortran object test/CMakeFiles/fj_object_r8.dir/unit/fj_object_r8.f90.o
+[ 73%] Building Fortran object test/CMakeFiles/fj_object_str.dir/unit/fj_object_str.f90.o
+[ 75%] Linking Fortran executable ../bin/fj_object_r8
+[ 76%] Linking Fortran executable ../bin/fj_object_str
+[ 76%] Built target fj_object_r8
+[ 77%] Building Fortran object test/CMakeFiles/fj_object_true.dir/unit/fj_object_true.f90.o
+[ 77%] Built target fj_object_str
+[ 78%] Building Fortran object test/CMakeFiles/fj_object_false.dir/unit/fj_object_false.f90.o
+[ 79%] Linking Fortran executable ../bin/fj_object_true
+[ 80%] Linking Fortran executable ../bin/fj_object_false
+[ 80%] Built target fj_object_true
+[ 82%] Built target fj_object_false
+[ 82%] Building Fortran object test/CMakeFiles/fj_object_null.dir/unit/fj_object_null.f90.o
+[ 83%] Building Fortran object test/CMakeFiles/fj_object_array_i4.dir/unit/fj_object_array_i4.f90.o
+[ 84%] Linking Fortran executable ../bin/fj_object_null
+[ 85%] Linking Fortran executable ../bin/fj_object_array_i4
+[ 85%] Built target fj_object_null
+[ 85%] Built target fj_object_array_i4
+[ 86%] Building Fortran object test/CMakeFiles/fj_object_array_i8.dir/unit/fj_object_array_i8.f90.o
+[ 88%] Building Fortran object test/CMakeFiles/fj_object_array_r4.dir/unit/fj_object_array_r4.f90.o
+[ 89%] Linking Fortran executable ../bin/fj_object_array_i8
+[ 90%] Linking Fortran executable ../bin/fj_object_array_r4
+[ 90%] Built target fj_object_array_i8
+[ 91%] Built target fj_object_array_r4
+[ 91%] Building Fortran object test/CMakeFiles/fj_object_array_r8.dir/unit/fj_object_array_r8.f90.o
+[ 92%] Building Fortran object test/CMakeFiles/fj_object_array_bool.dir/unit/fj_object_array_bool.f90.o
+[ 94%] Linking Fortran executable ../bin/fj_object_array_r8
+[ 95%] Linking Fortran executable ../bin/fj_object_array_bool
+[ 95%] Built target fj_object_array_r8
+[ 95%] Built target fj_object_array_bool
+[ 96%] Building Fortran object test/CMakeFiles/fj_object_2val.dir/unit/fj_object_2val.f90.o
+[ 97%] Building Fortran object test/CMakeFiles/hello_world.dir/hello_world.f90.o
+[ 98%] Linking Fortran executable ../bin/fj_object_2val
+[100%] Linking Fortran executable ../bin/hello_world
+[100%] Built target fj_object_2val
+[100%] Built target hello_world
+
+
+$ ctest --test-dir /tmp/build --output-on-failure
+Internal ctest changing into directory: /tmp/build
+Test project /tmp/build
+      Start  1: fj_empty
+ 1/38 Test  #1: fj_empty .........................   Passed    0.04 sec
+      Start  2: fj_i4
+ 2/38 Test  #2: fj_i4 ............................   Passed    0.04 sec
+      Start  3: fj_i8
+ 3/38 Test  #3: fj_i8 ............................   Passed    0.04 sec
+      Start  4: fj_r4
+ 4/38 Test  #4: fj_r4 ............................   Passed    0.04 sec
+      Start  5: fj_r8
+ 5/38 Test  #5: fj_r8 ............................   Passed    0.04 sec
+      Start  6: fj_str
+ 6/38 Test  #6: fj_str ...........................   Passed    0.04 sec
+      Start  7: fj_true
+ 7/38 Test  #7: fj_true ..........................   Passed    0.05 sec
+      Start  8: fj_false
+ 8/38 Test  #8: fj_false .........................   Passed    0.04 sec
+      Start  9: fj_null
+ 9/38 Test  #9: fj_null ..........................   Passed    0.04 sec
+      Start 10: fj_array_empty
+10/38 Test #10: fj_array_empty ...................   Passed    0.04 sec
+      Start 11: fj_array_object
+11/38 Test #11: fj_array_object ..................   Passed    0.04 sec
+      Start 12: fj_array_array
+12/38 Test #12: fj_array_array ...................   Passed    0.04 sec
+      Start 13: fj_array_i4
+13/38 Test #13: fj_array_i4 ......................   Passed    0.04 sec
+      Start 14: fj_array_i8
+14/38 Test #14: fj_array_i8 ......................   Passed    0.04 sec
+      Start 15: fj_array_r4
+15/38 Test #15: fj_array_r4 ......................   Passed    0.04 sec
+      Start 16: fj_array_r8
+16/38 Test #16: fj_array_r8 ......................   Passed    0.04 sec
+      Start 17: fj_array_str
+17/38 Test #17: fj_array_str .....................   Passed    0.04 sec
+      Start 18: fj_array_bool
+18/38 Test #18: fj_array_bool ....................   Passed    0.04 sec
+      Start 19: fj_array_null
+19/38 Test #19: fj_array_null ....................   Passed    0.04 sec
+      Start 20: fj_array_2val
+20/38 Test #20: fj_array_2val ....................   Passed    0.04 sec
+      Start 21: fj_object_empty
+21/38 Test #21: fj_object_empty ..................   Passed    0.04 sec
+      Start 22: fj_object_object
+22/38 Test #22: fj_object_object .................   Passed    0.04 sec
+      Start 23: fj_object_array
+23/38 Test #23: fj_object_array ..................   Passed    0.04 sec
+      Start 24: fj_object_i4
+24/38 Test #24: fj_object_i4 .....................   Passed    0.04 sec
+      Start 25: fj_object_i8
+25/38 Test #25: fj_object_i8 .....................   Passed    0.05 sec
+      Start 26: fj_object_r4
+26/38 Test #26: fj_object_r4 .....................   Passed    0.05 sec
+      Start 27: fj_object_r8
+27/38 Test #27: fj_object_r8 .....................   Passed    0.04 sec
+      Start 28: fj_object_str
+28/38 Test #28: fj_object_str ....................   Passed    0.04 sec
+      Start 29: fj_object_true
+29/38 Test #29: fj_object_true ...................   Passed    0.04 sec
+      Start 30: fj_object_false
+30/38 Test #30: fj_object_false ..................   Passed    0.04 sec
+      Start 31: fj_object_null
+31/38 Test #31: fj_object_null ...................   Passed    0.04 sec
+      Start 32: fj_object_array_i4
+32/38 Test #32: fj_object_array_i4 ...............   Passed    0.04 sec
+      Start 33: fj_object_array_i8
+33/38 Test #33: fj_object_array_i8 ...............   Passed    0.04 sec
+      Start 34: fj_object_array_r4
+34/38 Test #34: fj_object_array_r4 ...............   Passed    0.04 sec
+      Start 35: fj_object_array_r8
+35/38 Test #35: fj_object_array_r8 ...............   Passed    0.04 sec
+      Start 36: fj_object_array_bool
+36/38 Test #36: fj_object_array_bool .............   Passed    0.04 sec
+      Start 37: fj_object_2val
+37/38 Test #37: fj_object_2val ...................   Passed    0.04 sec
+      Start 38: hello_world
+38/38 Test #38: hello_world ......................   Passed    0.01 sec
+
+100% tests passed, 0 tests failed out of 38
+
+Total Test time (real) =   1.61 sec

@@ -1,0 +1,15 @@
+ + mkdir -p build/dependencies
+[  0%]              pyplot_module.f90
+[ 20%]              pyplot_module.f90  done.
+[ 20%]                       fgsl.F90
+<ERROR> Compilation failed for object " .._sources_bundle_packages_0_fgsl-27a3e7cc0809623bcfde680c39a6fdcf0f590c4c_playground-library_fgsl.F90.o "
+[ 40%]                       fgsl.F90  done.
+
+./././/../sources/bundle/packages/0/fgsl-27a3e7cc0809623bcfde680c39a6fdcf0f590c4c/playground-library/fgsl.F90:4:2:
+
+    4 | !-------------------------------------------------------------------------------
+      |  1~~~~~~~~~
+Fatal Error: config.h: No such file or directory
+compilation terminated.
+<ERROR> stopping due to failed compilation
+STOP 1

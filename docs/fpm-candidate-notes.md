@@ -977,3 +977,701 @@ String enclosure with automatically matched closing brackets and explicit delimi
 The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
 
 See the [checked main](../fpm_catalog/demos/enclose.f90), [source/build record](fpm-candidates/enclose/source-review.json) and [verified output](fpm-candidates/enclose/verified-output.txt).
+
+## lookup-table-fortran
+
+Linear lookup tables. An operator-owned FPM manifest wraps the unchanged m_lookup_table.f90 file. The main checks exact interpolation of a linear function, the expected interpolation error for a quadratic, an exact grid value, and clamping below/above the endpoints. No mathematical source edits. The 2D interface, nonuniform spacing options, persistence and all boundary cases are not validated by this example.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/lookup-table-fortran.f90), [source/build record](fpm-candidates/lookup-table-fortran/source-review.json) and [verified output](fpm-candidates/lookup-table-fortran/verified-output.txt).
+
+## rng-fortran
+
+Xoroshiro128+ pseudo-random generator. An FPM wrapper selects unchanged m_random.f90 and uses -fwrapv for its intentional signed-integer wraparound. Two fresh generators replay 10000 seeded uniform draws exactly; the main checks the implementation range [0,1), broad uniform/normal/Poisson(4) moment tolerances, nonnegative counts and unit circle/sphere norms. These are deterministic smoke checks, not statistical quality or cryptographic validation. OpenMP, jump independence, large Poisson rates and all distributions are not covered. A separate hosted reproducer confirms that set_seed does not clear the cached second normal after an odd normal() call; use a fresh generator to restart normal sequences. The selected replay uses fresh objects.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/rng-fortran.f90), [source/build record](fpm-candidates/rng-fortran/source-review.json) and [verified output](fpm-candidates/rng-fortran/verified-output.txt).
+
+See also the [normal-reseeding reproducer](fpm-candidates/rng-fortran/reseed-normal-reproducer.f90) and [hosted result](fpm-candidates/rng-fortran/reseed-normal-result.json).
+
+## fortran-fast-float
+
+Numeric text parsing. FPM 0.12 rejects the upstream features/profiles tables; a checksum-guarded manifest adaptation removes them and supplies the intended -fno-range-check compiler setting explicitly. The Fortran sources are unchanged and development-only benchmark dependencies are not built. The main checks decimal/scientific and Fortran D-exponent parsing, the largest positive signed int64, hexadecimal parsing, invalid-input status and exponent-overflow status. Correct rounding for every input, all formats, underflow, platforms and speed claims are not validated.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/fortran-fast-float.f90), [source/build record](fpm-candidates/fortran-fast-float/source-review.json) and [verified output](fpm-candidates/fortran-fast-float/verified-output.txt).
+
+The [original manifest failure](fpm-candidates/fortran-fast-float/original-build-failure.json) is retained with the accepted manifest adaptation.
+
+## config-fortran
+
+Documented configuration values. An FPM wrapper selects unchanged m_config.f90. The main creates its own tiny configuration file, overrides integer, logical, string and grouped real defaults, reads a dynamically sized real array, checks every value and clears the configuration. No uploaded data file or external service is required. Command-line parsing, invalid-file diagnostics and all string/array/grouping behavior are not validated.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/config-fortran.f90), [source/build record](fpm-candidates/config-fortran/source-review.json) and [verified output](fpm-candidates/config-fortran/verified-output.txt).
+
+## kdtree2
+
+Nearest-neighbor and radius searches. An FPM wrapper selects unchanged src-f90/kdtree2.f90; the archived upstream single-precision setting is retained. The checked main builds a tree for 30 deterministic 2D points, compares four nearest indices and squared distances against an independent direct search, and checks radius-search count, membership, distances and uniqueness. The original Academic Free License 1.1 is retained. No source edits. The implementation has global search state and is not offered as thread-safe; the old interface, C++ code, every dimension and large-scale performance are not validated.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/kdtree2.f90), [source/build record](fpm-candidates/kdtree2/source-review.json) and [verified output](fpm-candidates/kdtree2/verified-output.txt).
+
+## penf
+
+Portable numerical kinds, formats and number/string conversions. The latest archive is blocked by a symlink, so this entry uses exactly the older revision already verified as a BeFoR64 dependency. The checked main calls penf_init, verifies integer and real conversion round trips with status checks, zero-padded integer output, real byte size and formatted real output. Sources are unchanged; this adds an independent editable main for the pinned library. Every kind, character encoding, endian platform and invalid conversion is not validated.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/penf.f90), [source/build record](fpm-candidates/penf/source-review.json) and [verified output](fpm-candidates/penf/verified-output.txt).
+
+The [latest-archive rejection](fpm-candidates/penf/latest-archive-rejection.json) is retained with the reason for using the compatible dependency pin.
+
+## differentia
+
+Forward-mode automatic differentiation with dual numbers. The main checks the upstream scalar example against its analytical value and derivative, a two-variable polynomial gradient and a square 2-by-2 Jacobian against exact formulas. GNU heap trampolines support the internal callback procedures in the restricted sandbox. Library sources are unchanged. The author limits jacobian to square problems and documents incomplete intrinsic coverage; sparse interfaces, every overload and all failure modes are not validated.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/differentia.f90), [source/build record](fpm-candidates/differentia/source-review.json) and [verified output](fpm-candidates/differentia/verified-output.txt).
+
+## coretran
+
+Scientific utilities. The main sorts repeated and negative integers, builds a k-d tree for 20 deterministic 2D points and compares the nearest point with an independent direct search. The OpenMP metapackage is resolved explicitly and -fopenmp is enabled; the execution sandbox still uses one thread. No source edits. The broad library is compiled, but this driver does not validate all containers, random generators, mathematical utilities or parallel performance.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/coretran.f90), [source/build record](fpm-candidates/coretran/source-review.json) and [verified output](fpm-candidates/coretran/verified-output.txt).
+
+## delaunaysparse
+
+Version 1 multivariate interpolation using sparse Delaunay simplices. Version 2 bundles BQPD with a research-only redistribution notice, so the selected pin uses the earlier MIT-licensed version 1 with its bundled SLATEC/BLAS/LAPACK sources. An FPM wrapper retains fixed/free source forms, legacy implicit typing/interfaces and -fallow-argument-mismatch for the SLATEC scalar-zero/zero-stride BLAS convention. OpenMP is enabled to link the library; the checked driver uses the serial routine. It verifies exact linear-function reproduction at three interior 2D points, zero status codes, valid simplex indices and barycentric weight sums/signs. No numerical source edits. Convex-hull projection/extrapolation, all degenerate inputs, high-dimensional behavior and parallel variants are not validated.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/delaunaysparse.f90), [source/build record](fpm-candidates/delaunaysparse/source-review.json) and [verified output](fpm-candidates/delaunaysparse/verified-output.txt).
+
+See the [version-2 investigation](fpm-candidates/delaunaysparse/version-2-investigation.json) and [initial wrapper diagnostics](fpm-candidates/delaunaysparse/original-build-failures.json).
+
+## npy-for-fortran
+
+NumPy NPY writing. An FPM wrapper selects unchanged src/npy.f90. The main writes a 2-by-3 real64 matrix, checks version-2 magic, dtype/order header, exact binary payload and file size, and prints the matrix and header. A separate hosted probe captures the actual file bytes and NumPy independently loads the expected shape, dtype and exact values with pickle disabled. No source edits. The author no longer actively maintains the project. Other kinds/ranks, big-endian platforms and NPZ archive operations are not validated; the browser displays the checked summary rather than offering a general NPY-file download.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/npy-for-fortran.f90), [source/build record](fpm-candidates/npy-for-fortran/source-review.json) and [verified output](fpm-candidates/npy-for-fortran/verified-output.txt).
+
+The [independent NumPy check](fpm-candidates/npy-for-fortran/numpy-check.json) records the shape, dtype, file hash and loaded values.
+
+## ftl
+
+Selected Fortran Template Library instantiations: integer dynamic arrays and ftlString-to-integer hash maps, plus their unmodified support modules. A checksum-guarded adapter adds CPP-disabled module/dependency declarations so FPM 0.12 can discover modules emitted by templates. Original and adapted compiler-preprocessed output match apart from blank lines. Implicit-external checking is left at the upstream convention to avoid a GNU diagnostic in a character-length specification expression. The checked main verifies array growth, contents and pop, map insertion/replacement, presence, lookup and erase, then explicitly deletes both containers. Sources otherwise remain unchanged, and template headers remain in the source archive. Other instantiations, general algorithms, regex and every ownership/finalization case are not offered or validated.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/ftl.f90), [source/build record](fpm-candidates/ftl/source-review.json) and [verified output](fpm-candidates/ftl/verified-output.txt).
+
+The [preprocessor comparison](fpm-candidates/ftl/scanner-adapter-check.json) verifies that the scanner declarations do not change compiled code. [Initial diagnostics](fpm-candidates/ftl/original-build-failures.json) are retained.
+
+## qnstop
+
+Serial QNSTOP for bound-constrained stochastic and global optimization. An FPM wrapper selects unmodified REAL_PRECISION, ZIGARRAY, QNSTOPS and bundled BLAS/LAPACK sources. Explicit CPP suffix handling lets FPM discover .f95 files. Legacy implicit typing/interfaces and argument-mismatch compatibility retain the upstream calling conventions. The seeded two-variable quadratic example checks normal stopping status, bounds, objective value and distance from its known minimizer. It is an accuracy smoke test, not a general global-optimum guarantee. The parallel QNSTOPP driver, noisy objectives, all stopping rules and performance are not validated.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/qnstop.f90), [source/build record](fpm-candidates/qnstop/source-review.json) and [verified output](fpm-candidates/qnstop/verified-output.txt).
+
+## poisfft
+
+Serial FFTW Poisson solvers. An FPM wrapper selects the Fortran library modules, retains upstream template includes, adds CPP-disabled USE declarations for the FPM dependency scanner, declares unused MPI/PFFT modules external for scanning, enables CPP and links Debian FFTW 3.3.10 single/double and thread libraries. MPI/PFFT and C/C++ bindings are not offered. The checked double-precision periodic 1D spectral problem compares its solution with sin(2*pi*x) at 32 points. Other boundary conditions, finite-difference modes, nonuniform grids, higher-dimensional solvers, single precision and parallel execution are not validated.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/poisfft.f90), [source/build record](fpm-candidates/poisfft/source-review.json) and [verified output](fpm-candidates/poisfft/verified-output.txt).
+
+## fortran-lmdb
+
+LMDB key-value database bindings with Debian LMDB 0.9.31. A checksum-guarded compatibility edit selects the existing signed-kind fallback rather than GNU unsigned extension kinds, which are unavailable without enabling nondefault unsigned support. The checked consumer creates a small sandbox-local database, inserts and updates a value, verifies committed reads and rollback after an aborted update, deletes the key and checks MDB_NOTFOUND, then closes and removes both database files. No persistent storage is provided. Large mappings, concurrent writers/readers, all cursor interfaces and other platforms are not validated.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/fortran-lmdb.f90), [source/build record](fpm-candidates/fortran-lmdb/source-review.json) and [verified output](fpm-candidates/fortran-lmdb/verified-output.txt).
+
+## fortran-lua54
+
+Fortran bindings to Lua 5.4, linked with Debian Lua 5.4.7. The manifest library name lua-5.4 is adapted to Linux lua5.4; library sources are unchanged. Adapted from the upstream in-memory string example, the consumer defines a Lua function, passes an integer from Fortran, checks Lua load/call status and function type, verifies the returned integer and closes the state. External scripts, callbacks from Lua to Fortran, arbitrary Lua modules and all bindings are not validated.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/fortran-lua54.f90), [source/build record](fpm-candidates/fortran-lua54/source-review.json) and [verified output](fpm-candidates/fortran-lua54/verified-output.txt).
+
+## fortran-unix
+
+POSIX/SysV bindings on the playground 64-bit Linux/glibc environment. The source library is unchanged. The manifest features/profiles tables are removed for FPM 0.12 compatibility and their Linux preprocessor flag is supplied explicitly. A 13-byte sandbox-local file is created, its size is checked through c_stat, then c_unlink removes it and Fortran INQUIRE confirms removal. Other operating systems, process creation, networking, IPC, signals, threads and all ABI structures are not validated or promised in the restricted sandbox.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/fortran-unix.f90), [source/build record](fpm-candidates/fortran-unix/source-review.json) and [verified output](fpm-candidates/fortran-unix/verified-output.txt).
+
+## vtmop
+
+Serial derivative-free, bound-constrained multiobjective optimization. An FPM wrapper selects the unchanged solver, surrogate and test-function sources with bundled SLATEC support and links system LP64 BLAS/LAPACK rather than recompiling those bundled libraries. OpenMP linking is enabled, but the checked run uses the serial driver and one execution thread; heap trampolines support internal callbacks in the sandbox. Adapted from the author serial driver and CONVEX function, the seeded 3-variable/2-objective example uses a small evaluation budget, checks feasible design bounds, recomputes both quadratic objectives independently and verifies that no returned point dominates another. It requires multiple distinct trade-off points. This checks the finite returned set, not convergence to the exact global Pareto front or comparative performance. Parallel evaluation, checkpoint recovery, every surrogate and other problem classes are not validated.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/vtmop.f90), [source/build record](fpm-candidates/vtmop/source-review.json) and [verified output](fpm-candidates/vtmop/verified-output.txt).
+
+## fatode
+
+Selected FATODE explicit Runge-Kutta tangent-linear integrator, linked to native BLAS/LAPACK. The FPM wrapper compiles unchanged TLM/ERK_TLM/ERK_TLM_f90_Integrator.F90; bundled precompiled platform binaries are not used. The example augments exponential decay with a constant rate state and differentiates the initial rate using the tangent-linear model, checking the state, rate, and both sensitivities against analytical formulas. It explicitly selects the supplied analytical Jacobian and enables tangent-variable adaptive error control; the initial default finite-difference Jacobian settings missed the requested sensitivity accuracy. No numerical library edits. Implicit/stiff solvers, adjoint integration, sparse solver variants and all ERK methods are not offered or verified.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/fatode.f90), [source/build record](fpm-candidates/fatode/source-review.json) and [verified output](fpm-candidates/fatode/verified-output.txt).
+
+## slicot
+
+Full upstream SLICOT FPM source library, linked to compatible LP64 BLAS/LAPACK with the manifest BLAS metapackage resolved explicitly. Sources are unchanged; legacy compiler compatibility flags retain upstream conventions. The main uses the author slicot module interface for SB03MD, constructs a stable nondiagonal 2-by-2 continuous Lyapunov problem from a known symmetric solution and checks both the independently computed matrix residual and the recovered solution including the solver scale factor. It requests the condition/error estimates but does not validate those estimates independently. Other matrix equations, model reduction, identification, robust control and every library routine are not validated.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/slicot.f90), [source/build record](fpm-candidates/slicot/source-review.json) and [verified output](fpm-candidates/slicot/verified-output.txt).
+
+## arpack-ng
+
+Serial classic Fortran ARPACK-NG interfaces, built from unchanged SRC .f files, the documented UTIL support set, and upstream debug/statistics initializers. The wrapper uses native LP64 BLAS/LAPACK and excludes PARPACK/MPI and generated C bindings. The upstream second_NONE timing stub disables ARPACK internal elapsed-time statistics; playground build/run timings still work. Adapted from the author symmetric reverse-communication example, the main computes three smallest eigenpairs of a 20-by-20 symmetric tridiagonal operator, checks convergence status/count, analytical eigenvalues and eigenvector residual norms. A deterministic nonzero initial residual avoids dependence on random initialization. Nonsymmetric/complex modes, shift-invert, generalized problems and parallel execution are not validated.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/arpack-ng.f90), [source/build record](fpm-candidates/arpack-ng/source-review.json) and [verified output](fpm-candidates/arpack-ng/verified-output.txt).
+
+## fortran-error-handler
+
+Structured error handling and validation. The upstream FPM library sources are unchanged; unlimited free-form line length accommodates existing long source lines. Adapted from the author example, the main checks a valid bounded integer in a Result object, rejects an out-of-range integer with expected code 105, checks two retained application trace entries, and triggers a custom noncritical warning while execution continues. The example uses fixed values rather than interactive input. All Result ranks/types, critical-error termination, all validation criteria and every trace-propagation path are not validated.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/fortran-error-handler.f90), [source/build record](fpm-candidates/fortran-error-handler/source-review.json) and [verified output](fpm-candidates/fortran-error-handler/verified-output.txt).
+
+## berkeley-assert
+
+Runtime assertion checks in pure procedures, built with ASSERTIONS=1 so enforcement is enabled in the cached library. A checksum-guarded manifest edit adds the upstream include directory; library sources and headers are unchanged. The main checks preconditions and postconditions around a pure square-root function. A separate sandbox probe compiles successfully, intentionally calls assert(.false.), and verifies nonzero termination with the expected descriptive diagnostic and unchanged library artifacts, demonstrating that checks were not compiled away. Multi-image/coarray callbacks and every macro variant are not validated. Full current upstream license terms, including its enhancement-contribution provision, are retained under LicenseRef-Berkeley-Assert rather than labeling them as an unmodified standard BSD license.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/berkeley-assert.f90), [source/build record](fpm-candidates/berkeley-assert/source-review.json) and [verified output](fpm-candidates/berkeley-assert/verified-output.txt).
+
+## foodie
+
+The current head and tags v0.4.1 and v0.4.0 contain symlinks, including CONTRIBUTING.md and plotting/benchmark assets. The ordinary source preparer rejects links before compilation. No extraction rules were changed, no incomplete package is selected, and no compiler failure is claimed.
+
+See the [pinned archive investigation](fpm-candidates/foodie/source-review.json) and the [saved author oscillator guide](fpm-candidates/foodie/upstream-oscillation-example.md). The proposed driver would compare an oscillator against its exact solution and check error reduction after halving the step.
+
+## fmm3d
+
+The pinned native Fortran library compiles with GNU Fortran 16.2.0, but its Laplace example fails the playground bounds-checked run. Adding the upstream quadrature include directory resolves preparation of Helmholtz sources; adapting two scarray(1) dummy declarations passes the isolated workspace check, but the full run then stops at fexpe(2) with declared extent 1 in lpwrouts.f. A separate local GNU 17 checked run also reports an unallocated disabled dipole buffer argument. The package is deferred under the current checked build profile; these findings do not establish failure with the upstream release build settings.
+
+See the [source/build investigation](fpm-candidates/fmm3d/source-review.json), [draft checked main](fpm-candidates/fmm3d/main.f90), [latest sandbox diagnostic](fpm-candidates/fmm3d/latest-sandbox-failure.json), [workspace patch](fpm-candidates/fmm3d/workspace-compatibility.patch) and [isolated workspace check](fpm-candidates/fmm3d/workspace-check.json). No incomplete FMM3D entry is selected.
+
+## fmm2d
+
+Native Fortran FMM2D source set selected from the upstream makefile with optional C++ fast kernels disabled. OpenMP and portable -O2 are enabled; the visitor sandbox uses one execution thread and retains bounds checks. Checksum-guarded compatibility edits skip zero-point multipole/local evaluations and zero-source neighbor calls before passing one-past-end array elements. The inverse reorder helper declares its arrays with the actual n extent rather than the legacy dummy extent 1. Source and target branches receive matching guards; formulas are unchanged. The checked real Laplace driver evaluates 512 deterministic sources at 16 separate targets and compares with an independent charge-weighted log-distance sum. A separate source-and-target probe also checks all source potentials by direct summation with self-interactions excluded, exercising the source-side guards. The code is classified as a structured kernel-matrix application and Green-function evaluation related to PDEs, not as a complete boundary-value solver. Helmholtz, biharmonic/Stokes, dipoles, gradients/Hessians, every complex/vector interface and parallel speedups are not validated. The small accuracy check is not a performance benchmark.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/fmm2d.f90), [source/build record](fpm-candidates/fmm2d/source-review.json) and [verified output](fpm-candidates/fmm2d/verified-output.txt).
+
+The [compatibility patch](fpm-candidates/fmm2d/bounds-compatibility.patch), [original sandbox diagnostics](fpm-candidates/fmm2d/original-sandbox-diagnostics.json), [small reorder reproducer](fpm-candidates/fmm2d/reorder-reproducer.f90) and [additional source/target check](fpm-candidates/fmm2d/source-target-check.json) are saved for review or discussion with the authors.
+
+## fortran-utils
+
+Selected unmodified modules types, utils, lapack, mesh, splines and sorting, wrapped for FPM and linked to compatible LP64 BLAS/LAPACK. HDF5, AMOS/special functions, optimization and other unselected modules are not included. The main reproduces a cubic polynomial with the consistent-boundary cubic spline and checks its value, first derivative and second derivative on a denser grid against exact formulas. It checks exponential-mesh endpoints, monotonicity and the requested last/first spacing ratio, then sorts repeated/negative integers against an exact answer. General nonpolynomial interpolation error, extrapolation, every boundary condition, other sorting interfaces and all utility routines are not validated.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/fortran-utils.f90), [source/build record](fpm-candidates/fortran-utils/source-review.json) and [verified output](fpm-candidates/fortran-utils/verified-output.txt).
+
+## formal
+
+Mimetic vector-calculus library with pinned Julienne and Assert dependencies. A single-image coarray build is used. The checked consumer adapts the author's extended Gauss-divergence example to f=x**2/2 and v=x on a 64-cell unit interval. It checks the two volume integrals against 1/3 and 1/6, the boundary flux against 1/2, finiteness and the conservation residual using single-precision tolerances. The command-line parsing and shell display calls of the upstream example are omitted. Library numerical sources are unchanged. Other 2D/3D operators, time integration and convergence orders are not validated. Original Berkeley Lab license terms, including the enhancements clause, are retained; this is not labeled plain BSD-3-Clause.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/formal.f90), [source/build record](fpm-candidates/formal/source-review.json) and [verified output](fpm-candidates/formal/verified-output.txt).
+
+## dftatom
+
+Unmodified Fortran library sources selected from the upstream native makefile and wrapped for FPM. The checked example adapts the upstream hydrogen test to Z=1 and computes all six (n,l) states through n=3 on an exponential radial mesh. It requires solver convergence, finite energies and agreement with the analytical nonrelativistic energies -1/(2*n**2) within 1e-7 Hartree. Relativistic Dirac, Poisson and self-consistent density-functional calculations are present in the library but not exercised by this example. C/Python bindings and optional extra integration/interpolation/LAPACK sources are outside the selected native source set.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/dftatom.f90), [source/build record](fpm-candidates/dftatom/source-review.json) and [verified output](fpm-candidates/dftatom/verified-output.txt).
+
+## m-system
+
+Unmodified mixed C/Fortran POSIX system library in the Linux/glibc sandbox. The checked example creates a local directory with owner-only permissions, writes and reads back the integer 42, checks directory and regular-file types, removes both and confirms cleanup. Other system calls, processes, networking, permissions changes and Windows portability are not validated or promised. Upstream development dependencies and applications are not part of the consumer demonstration.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/m-system.f90), [source/build record](fpm-candidates/m-system/source-review.json) and [verified output](fpm-candidates/m-system/verified-output.txt).
+
+## fortran-tcl86
+
+Fortran/C bindings linked to pinned Debian Tcl/Tk 8.6 development libraries. A checksum-guarded include edit selects Debian's tcl8.6/tcl.h path for the C macro wrappers; interfaces and calculation code are unchanged. Adapted from the upstream evaluation example, the consumer creates a Tcl interpreter, evaluates an in-memory sum-of-squares script, checks evaluation status and the integer result against Fortran, then destroys the interpreter. Tk graphical windows, extension modules, Tcl stubs and all bindings are not validated; the browser example requires no graphical display or network.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/fortran-tcl86.f90), [source/build record](fpm-candidates/fortran-tcl86/source-review.json) and [verified output](fpm-candidates/fortran-tcl86/verified-output.txt).
+
+## fortranlib
+
+Selected base_types, lib_algebra and lib_array modules, using the pinned revision immediately before the upstream FPM test suite introduced source symlinks. Nine checksum-guarded edits bring lib_array exactly to upstream commit 844611933cba06d71490033e68b355f6f0ff704f, retaining its integration-limit, descending histogram-bin and precision fixes. The other selected modules are unchanged. The ordinary archive policy remains unchanged. A synthetic FPM wrapper uses the already generated Fortran sources, not the Python templates. The checked consumer integrates the affine function 2*x+1 on [0,1], checks linear interpolation at an interior off-grid point, and solves x**2-5*x+6 against the exact roots 2 and 3. Additional checks cover integration limits outside the tabulated range, descending histogram bins and bin-center precision; the expanded example fails with the older unpatched array module and passes with the upstream fixes. GAMS F1 denotes the quadratic solver, not a general iterative root finder. Random sampling, statistics, geometry, HDF5/FITS bindings and other modules are not selected; the example does not validate every routine in the included modules.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/fortranlib.f90), [source/build record](fpm-candidates/fortranlib/source-review.json) and [verified output](fpm-candidates/fortranlib/verified-output.txt).
+
+The [upstream array fixes](fpm-candidates/fortranlib/upstream-array-fixes.patch) are retained together with the [original failing boundary check](fpm-candidates/fortranlib/original-boundary-failure.json).
+
+## fiats
+
+Pinned Fiats tag 0.12.0 (upstream manifest version 0.11.1), named inference-engine at that revision, with an explicitly pinned compatible Julienne 1.3.1 dependency and Assert 1.7.0. Tag 0.14.0 was tried first but its consumer build cannot find Julienne modules because they are declared only as a development dependency. Single-image coarrays and long free-form lines are enabled. Based on the author's write-read-infer example, the checked consumer constructs a two-input ReLU network with known diagonal weights and biases, evaluates negative, zero and positive input pairs, and compares every output with direct formulas. K is a broad function-approximation classification; training algorithms, gradients, model-file round trips and parallel speedups are not verified. The historical version is explicit in the menu description. The original Berkeley Lab license terms, including the enhancements clause, are retained.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/fiats.f90), [source/build record](fpm-candidates/fiats/source-review.json) and [verified output](fpm-candidates/fiats/verified-output.txt).
+
+The [0.14.0 consumer-build failure](fpm-candidates/fiats/0.14.0-consumer-failure.json) explains why the menu explicitly offers the older source revision.
+
+## julienne
+
+Standalone demonstration of the modern Julienne testing framework, with its pinned Assert dependency and single-image coarrays. The numerical source is unchanged. The checked consumer verifies an approximate real comparison and an exact integer sum, then deliberately creates a failed test_diagnosis_t, checks its failure flag and nonempty appended diagnostic and prints it while completing successfully. This demonstrates diagnosis construction and inspection rather than macro assertion termination. The full test harness, automatic test discovery, macro enforcement and multi-image behavior are not validated. Original Berkeley Lab/Sourcery Institute license terms and dependency notices are retained.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/julienne.f90), [source/build record](fpm-candidates/julienne/source-review.json) and [verified output](fpm-candidates/julienne/verified-output.txt).
+
+## m-process
+
+Unmodified Fortran/C POSIX pipe interfaces in the restricted Linux sandbox. Following the upstream process_open_read example, the consumer opens a local printf command, reads and checks the integers 7 and 11, verifies end of output and requires a successful process_close status. Commands run under the ordinary sandbox restrictions; this does not add network or host-system access. Interactive terminals, graphical subprocesses, arbitrary process behavior, write pipes and Windows portability are not verified.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/m-process.f90), [source/build record](fpm-candidates/m-process/source-review.json) and [verified output](fpm-candidates/m-process/verified-output.txt).
+
+## propack
+
+Historical SciPy PROPACK 2.1 sources, whose repository is archived and explicitly points to rmlarsen/propack for the maintained implementation. The current author archive and tags v2.2/v2.1 exceed the unchanged source download limit, largely due to saved example outputs. The menu explicitly identifies this historical source choice. Only the native double-precision serial routines are wrapped, using the portable RISC modified Gram-Schmidt implementation and compatible system LP64 BLAS/LAPACK. Numerical sources are unchanged. A callback supplies multiplication by a rectangular diagonal matrix with known singular values. The consumer passes a writable convergence-count argument, requests the leading three singular triplets, and checks 12, 11 and 10, both A*v-sigma*u and transpose(A)*u-sigma*v residuals, finite values and unit vector norms. The restarted algorithm, other precisions, arbitrary sparse matrices and parallel performance are not verified.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/propack.f90), [source/build record](fpm-candidates/propack/source-review.json) and [verified output](fpm-candidates/propack/verified-output.txt).
+
+## nufft1d
+
+Original one-dimensional nonuniform Fourier code using the dynamically allocated Fortran 90 interface and bundled Netlib FFT implementation. Forty-nine checksum-guarded edits change legacy extent-one FFT dummy-array declarations to assumed size; every changed array is checked against its containing procedure argument list. No local arrays, transform formulas or global bounds-checking settings are changed. Legacy workspace argument type punning is accepted with the package-specific -fallow-argument-mismatch option. The example evaluates a type-1 transform of 96 deterministic nonuniform points into 32 modes for both exponent signs and compares every complex coefficient with an independent direct sum, including the documented 1/nj normalization. Status and finite values are checked. Types 2/3, the static Fortran 77 interface and every bundled FFT routine are not verified.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/nufft1d.f90), [source/build record](fpm-candidates/nufft1d/source-review.json) and [verified output](fpm-candidates/nufft1d/verified-output.txt).
+
+## nufft2d
+
+Original two-dimensional nonuniform Fourier code using the dynamically allocated Fortran 90 interface and bundled Netlib FFT implementation. Forty-nine checksum-guarded edits change legacy extent-one FFT dummy-array declarations to assumed size after checking that each is a procedure argument; no formulas or local arrays change and bounds checking remains enabled. Legacy workspace argument type punning uses the package-specific -fallow-argument-mismatch option. The example transforms 96 deterministic scattered points onto a 16-by-18 mode grid for both exponent signs, checking status, finite values and all coefficients against an independent direct sum with the documented 1/nj normalization. Types 2/3, the static Fortran 77 interface, every FFT routine and multidimensional performance are not verified.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/nufft2d.f90), [source/build record](fpm-candidates/nufft2d/source-review.json) and [verified output](fpm-candidates/nufft2d/verified-output.txt).
+
+## aotus
+
+Mixed C/Fortran source set selected from the upstream Waf library lists, wrapped for FPM with the bundled Lua 5.4.8 core and libraries, the C dump wrapper and GNU-supported extended/quad precision module variants. Lua command-line interpreter/compiler executables and upstream tests are excluded. Sources are unchanged; the operator-only wrapper now permits explicitly listed locked C files, retaining old adapter identities and the ordinary downloader/archive limits. The consumer creates a small Lua configuration, checks a computed integer, a double-precision scalar, two named nested-table entries and a missing-key default with error bits, closes the state and deletes its file. Broader scripting, dump/reload callbacks, every numeric kind and sandbox-restricted system operations are not verified.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/aotus.f90), [source/build record](fpm-candidates/aotus/source-review.json) and [verified output](fpm-candidates/aotus/verified-output.txt).
+
+## PROPACK maintained author sources
+
+The maintained author repository head and tags v2.2 and v2.1 exceed the unchanged 16 MiB source download limit, before compilation. The repository includes large saved example output matrices. Selected propack instead verifies the explicitly labeled historical SciPy version; it does not establish that the maintained author sources compile in the playground.
+
+See the [recorded archive attempts](fpm-candidates/propack-author/source-review.json).
+
+## fox
+
+The pinned head and tagged releases 4.1.2 and 4.1.1 contain symbolic links and are rejected by the unchanged archive extractor before compilation. No compiler failure is claimed. A safe source distribution or a separately reviewed source-preparation facility is needed before an XML round-trip example can be verified.
+
+See the [pinned preparation evidence](fpm-candidates/fox/preparation-failure.json).
+
+## qcontainers
+
+Explicitly selected C and Fortran library sources are wrapped for FPM. Checksum-guarded edits rename the library string conversion helper to qlibc_f_c_string and update its callers, avoiding the Fortran 2023 intrinsic name collision; container algorithms are unchanged. The unrelated qencode.c utility is excluded: its query parser refers to qstrtrim and qlisttbl routines absent from the archive. The library retains vector, list, set, hash-table and tree-table modules and their vendored C dependencies. The checked consumer exercises vector growth, indexing, replacement, array conversion, pop and clear, and string-keyed map insertion, replacement, lookup, missing-key lookup and clear. Block scope invokes finalizers. Integer payloads are used; general pointer ownership, all container methods and threading are not validated.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/qcontainers.f90), [source/build record](fpm-candidates/qcontainers/source-review.json) and [verified output](fpm-candidates/qcontainers/verified-output.txt).
+
+## stdlib-os
+
+Mixed C/Fortran operating-system utilities wrapped for FPM. Two checksum-guarded compatibility edits set the Linux os_name constant and restrict the ISO_C_BINDING import to avoid the Fortran 2023 F_C_STRING name collision. OS_SYSTEM_ID is configured as OS_LINUX. The checked consumer creates nested temporary directories and a 14-byte stream file, checks file size and type, basename/dirname and path normalization, then renames and deletes the file and removes both directories. No external files or user environment are required. This configured recipe and exported project target Linux; Windows branches, processes, user/home lookup and every path utility are not validated.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/stdlib-os.f90), [source/build record](fpm-candidates/stdlib-os/source-review.json) and [verified output](fpm-candidates/stdlib-os/verified-output.txt).
+
+## finer
+
+The current source archive and tags v2.3.0 and v2.2.0 contain a CONTRIBUTING.md symbolic link and are rejected by the unchanged source extractor before compilation. No compiler failure is claimed. The current FPM manifest also pins StringiFor; dependencies were not downloaded after root extraction was rejected.
+
+See the [pinned archive and release checks](fpm-candidates/finer/preparation-failure.json).
+
+## m_draw
+
+Upstream mixed C/Fortran FPM library, with a checksum-guarded manifest edit adding its src/inc header directory. The X11 link dependency is retained but the checked main uses the PPM file driver, requiring no display server or Hershey font files. A 20-segment blue parabola is rendered with the PPM driver; the consumer checks P3 magic, image dimensions, color range, every pixel range and the presence of blue curve pixels. The ordinary image collector converts the generated PPM to a bounded PNG browser preview. The SVG driver aborted during font initialization when no Hershey fonts were supplied; no upstream driver code is patched, and the example uses PPM. Interactive drivers, all drawing primitives, software text/font setup and SVG output are not validated.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/m_draw.f90), [source/build record](fpm-candidates/m_draw/source-review.json) and [verified output](fpm-candidates/m_draw/verified-output.txt).
+
+## fortran-lua53
+
+Upstream Lua 5.3 bindings and source code are unchanged. A checksum-guarded manifest edit links the versioned Debian Lua 5.3 library instead of the unversioned lua name. The native development package is locked to 5.3.6-2+b4. The consumer defines a Lua function in memory, calls it for four integer arguments, independently verifies integer squares and real square roots, checks Lua status and function presence, empties the stack after each call and closes the interpreter. No files or external services are needed. Lua modules, callbacks into Fortran and arbitrary scripts are not comprehensively validated.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/fortran-lua53.f90), [source/build record](fpm-candidates/fortran-lua53/source-review.json) and [verified output](fpm-candidates/fortran-lua53/verified-output.txt).
+
+## netcdf-fortran
+
+Selected serial classic-format Fortran sources follow the upstream CMake classic-library source set and use the unchanged public netCDF-C API. The operator-owned FPM wrapper retains original include files and sets HAVE_F2008, HAVE_TS29113_SUPPORT and NO_NETCDF_2 for the GNU 16 Linux environment; no library sources are edited. The native libnetcdf-dev package is locked to 1:4.9.3-1. The consumer writes a 3-by-2 real array and units attribute to a classic dataset, reopens it, checks dimension lengths, attribute and every value, then removes the file. NetCDF-4-specific Fortran interfaces, the old V2 API, parallel I/O and all data types are outside this selected build and verification scope. Source exports require the native netCDF C development library.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/netcdf-fortran.f90), [source/build record](fpm-candidates/netcdf-fortran/source-review.json) and [verified output](fpm-candidates/netcdf-fortran/verified-output.txt).
+
+## shtools
+
+The current source archive and tags v4.14.1 and v4.14.0 exceed the unchanged 16 MiB source download limit. The source preparer stops before extraction or compilation; no compiler failure is claimed. Complete archive checksums are unavailable because bounded downloads are aborted at the limit. A smaller reproducible source distribution or separately reviewed preparation support is needed.
+
+See the [pinned download attempts](fpm-candidates/shtools/preparation-failure.json).
+
+## scifortran
+
+Selected integration subset, explicitly labeled in the menu: SF_INTEGRATE, GAUSS_QUADRATURE and standalone bundled QUADPACK procedures. Original include files remain in their source directories and the operator FPM wrapper compiles only the listed library files. Checksum-guarded edits promote 478 long coefficient literals from E to D exponents in DATA statements and REAL(8) PARAMETER array initializers in two bundled QUADPACK files. Each target array is checked to be REAL(8), and all decimal digits are retained. This avoids evaluating the supplied coefficients at default-real precision before assignment to double precision; formulas and the default-real compiler mode are unchanged. The linked quadrature-fortran BSD-3-Clause notice is restored as comments in GAUSS_QUADRATURE so source exports retain it. The consumer checks the Simpson and trapezoidal integrals of a sampled cubic against 1/4, adaptive integration of exp(x) over [0,1] against e-1 and exp(-x) over [0,infinity) against 1, and rejects nonfinite results. All six finite-interval Gauss-Kronrod rule choices are also checked against e-1. The example uses module callbacks: an initial consumer with internal callbacks segfaulted in the sandbox. Other SciFortran modules, MPI, linear algebra, the SCIFOR umbrella module, multidimensional/vector quadrature and all integration options are outside this selected build and verification scope.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/scifortran.f90), [source/build record](fpm-candidates/scifortran/source-review.json) and [verified output](fpm-candidates/scifortran/verified-output.txt).
+
+## forpy
+
+The existing generated upstream forpy_mod.F90 source is wrapped for FPM without running Fypp or changing the library. It embeds the sandbox Python 3.12 runtime using the linker flags advertised by python3-config --embed --ldflags, with an explicit runtime library search path. The consumer copies a 2-by-3 Fortran real64 array to NumPy, calls numpy.sum and numpy.linalg.norm, verifies both returned scalars independently in Fortran and checks finite values and every API status. Python references are destroyed before finalization. Other Python versions, no-copy array lifetimes, callbacks, Python extension modules and plotting are not validated. Exported projects need Python and NumPy and linker flags appropriate to the local Python installation.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/forpy.f90), [source/build record](fpm-candidates/forpy/source-review.json) and [verified output](fpm-candidates/forpy/verified-output.txt).
+
+## galahad
+
+The current source archive and tags v5.5.3 and v5.5.2 exceed the unchanged 16 MiB source download limit. Preparation stops before extraction or compilation; no compiler failure is claimed. Complete archive checksums are unavailable because bounded downloads are aborted at the limit. A smaller reproducible source distribution or separately reviewed preparation support is needed.
+
+See the [pinned preparation investigation](fpm-candidates/galahad/source-review.json).
+
+## fkb
+
+The upstream CMake neural library source set is wrapped for FPM in REAL64/INT32 mode with single-image coarrays and OpenMP. The deterministic consumer writes and loads a tiny two-dense-layer ReLU network, checks four predictions against independently calculated weights and biases, and verifies saving and reloading the model. K (Approximation) describes the tested neural-network inference. Training, Keras conversion tools, dropout and batch normalization are not verified; no optimization classification is inferred from their presence.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/fkb.f90), [source/build record](fpm-candidates/fkb/source-review.json) and [verified output](fpm-candidates/fkb/verified-output.txt).
+
+## ntpoly
+
+The upstream Fortran library source set is wrapped for FPM with pinned MPICH and OpenBLAS native dependencies. The verified example uses exactly one MPI process, serialized MPI thread support and shared-memory/self UCX transports in the restricted sandbox. For a real symmetric positive-definite 2-by-2 matrix with eigenvalues 1 and 9, it checks SquareRoot, InverseSquareRoot and Invert against analytic matrices and independent product residuals, rejecting nonfinite values. D covers matrix functions and D2 covers inversion. Multiple MPI processes, distributed scaling, complex matrices and other solver families are outside this verification scope. Local exports require MPI/OpenBLAS development libraries and locally appropriate compiler/linker flags.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/ntpoly.f90), [source/build record](fpm-candidates/ntpoly/source-review.json) and [verified output](fpm-candidates/ntpoly/verified-output.txt).
+
+NTPoly uses a single MPI process. Its UCX runtime prints a network-discovery diagnostic about the sandbox?s unavailable `/sys/class/net`; the checked program exits successfully and passes all analytic and residual checks. The [runtime probe](fpm-candidates/ntpoly/mpi-runtime-probe.txt) and verified output retain this diagnostic. EigenExa remains disabled; its external-module declaration only accommodates FPM dependency scanning of a guarded `USE`.
+
+## mpifx
+
+The upstream CMake library source list is generated with Fypp 3.2, with every generated file checksum locked in the recipe. The example exercises communicator initialization, real-vector broadcast, real and integer all-reduce and in-place maximum reduction on exactly one MPI process, checking API statuses and returned data. MPICH is pinned and UCX transports are limited to self/shared memory. This illustrates typed communication APIs, not parallel execution or speedup; point-to-point messaging, multiple processes and other wrappers are outside verification scope. Classification R covers the tested service routines.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/mpifx.f90), [source/build record](fpm-candidates/mpifx/source-review.json) and [verified output](fpm-candidates/mpifx/verified-output.txt).
+
+## scalapackfx
+
+The upstream CMake library source list is generated with Fypp 3.2 and exact generated-output checksums. The example uses a 1-by-1 BLACS grid and pinned MPICH, ScaLAPACK and OpenBLAS native libraries. It computes eigenvalues and eigenvectors of a symmetric 3-by-3 tridiagonal matrix using scalafx_psyev, checks eigenvalues against 2-sqrt(2), 2 and 2+sqrt(2), and independently checks eigenpair residuals and orthogonality. All entries must be finite. D4a1 (ordinary real symmetric eigenproblems) applies to the tested eigensolver. This is a one-process API example, not a distributed-performance demonstration; other solvers, generalized eigenproblems and multiple processes are not verified.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/scalapackfx.f90), [source/build record](fpm-candidates/scalapackfx/source-review.json) and [verified output](fpm-candidates/scalapackfx/verified-output.txt).
+
+## easy-plplot
+
+The existing upstream FPM package is compiled against pinned PLplot native libraries and the Cairo file driver. The main plots sine and cosine over [0,2*pi] using the pngcairo device, checks that the output file exists and is nontrivial, and the restricted sandbox must return a valid PNG preview for browser display. GUI devices, animation, interactive windows and other plotting routines are outside verification scope. Q describes the tested graphics functionality.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/easy-plplot.f90), [source/build record](fpm-candidates/easy-plplot/source-review.json) and [verified output](fpm-candidates/easy-plplot/verified-output.txt).
+
+The MpiFx and ScalapackFx checks use one MPI process. As for NTPoly, UCX prints a diagnostic about the sandbox?s unavailable `/sys/class/net`; successful numerical/data checks and exit status are recorded alongside the unfiltered diagnostic. The generated-source checksums were also reproduced on Linux/Python 3.12. The initial ScalapackFx and easy_plplot consumer mistakes and their corrections are retained in each package?s source-review record; upstream library sources were not patched.
+
+## gftl
+
+gFTL is a header/template library, not a standalone compiled library. The catalog supplies a small integer-vector instantiation using the upstream v2 template, then verifies growth to 100 elements, retrieval of every stored square, and the independent sum 338350. Audited generated include files are committed as checksum-locked assets, with original m4 input hashes; generation follows the pinned CMake rules while omitting diagnostic line markers. GNU m4 on Windows and Linux reproduces identical assets. N4 covers the tested storage container. Other template/container configurations are not verified.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/gftl.f90), [source/build record](fpm-candidates/gftl/source-review.json) and [verified output](fpm-candidates/gftl/verified-output.txt).
+
+## gftl-shared
+
+The catalog builds an explicitly selected subset: v1 Integer32, Integer64, default Integer, Real64, String and Unlimited vectors; StringString and Integer32Real64 maps; and v2 Integer32, Real64, String and Unlimited vectors. The consumer inserts and retrieves eight vector elements and eight map entries and verifies their sum 204. Generated v2 vector wrappers apply the upstream CMake substitutions; the original templates and Apache-2.0 notices remain intact. N4 covers container storage and N5 covers key lookup. Other upstream instantiations, sets, queues and stacks are outside this selected build and test scope. Compatible dependencies are shared through immutable exports; a source-recipe fingerprint in the FPM preprocessing profile binds generated assets and source selection to the dependency identity.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/gftl-shared.f90), [source/build record](fpm-candidates/gftl-shared/source-review.json) and [verified output](fpm-candidates/gftl-shared/verified-output.txt).
+
+## yafyaml
+
+The upstream YAML library is wrapped for FPM with pinned gFTL and the selected gFTL-shared containers. The checked main writes a tiny local configuration, parses an integer, a boolean, a string and an integer sequence, checks every returned value and verifies that an absent key is reported missing. Input files are removed afterwards. N1 covers configuration input and N3 covers parsing character data. The upstream parser supports a subset of YAML; full YAML conformance, all schemas and malformed-input recovery are not claimed. Source-recipe-tagged immutable dependency exports retain compatible gFTL builds.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/yafyaml.f90), [source/build record](fpm-candidates/yafyaml/source-review.json) and [verified output](fpm-candidates/yafyaml/verified-output.txt).
+
+## pflogger
+
+The serial pFlogger library uses pinned gFTL, selected gFTL-shared containers and yaFyaml. The checked consumer writes YAML configuration, logs four severity levels to a file, and verifies that only the two expected warning/error records were accepted. MPI logging is outside this build scope. Three additional upstream v2 map instantiations are supplied as a separate checksum-locked generated asset, leaving the existing vector asset unchanged. Root COPYRIGHT identifies Apache-2.0; the historical license PDFs are retained alongside it. R covers logging service routines.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/pflogger.f90), [source/build record](fpm-candidates/pflogger/source-review.json) and [verified output](fpm-candidates/pflogger/verified-output.txt).
+
+## flook
+
+The procedural flook interface embeds the repository-bundled Lua 5.3.5 and Aotus bridge. The FPM wrapper selects the upstream procedural library and bundled C sources, excludes standalone Lua interpreters and the alternative Fortran 2003 interface, and links the system math/dynamic-loading libraries. The checked consumer passes parameters to Lua, executes a short script, retrieves its real and integer results and independently checks 14 and 21. The bundled versions have their own build context; they do not replace the separately catalogued Aotus package. MPL-2.0 and the bundled Aotus/Lua notices are retained. S covers language interoperability.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/flook.f90), [source/build record](fpm-candidates/flook/source-review.json) and [verified output](fpm-candidates/flook/verified-output.txt).
+
+## ogpf
+
+The checked example computes a Gaussian grid and uses the upstream contour interface to generate a PNG. A checksum-guarded catalog patch selects the headless pngcairo terminal instead of the upstream window terminal; the numerical and plotting procedures are unchanged. GNUplot is pinned as a native build dependency. The sandbox must return a browser-viewable PNG, and its preview is reviewed. MIT licensing is stated in both LICENSE and the upstream FPM manifest. Q covers graphics.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/ogpf.f90), [source/build record](fpm-candidates/ogpf/source-review.json) and [verified output](fpm-candidates/ogpf/verified-output.txt).
+
+## vtkfortran
+
+The current archive and tags v3.0.0, v2.0.10 and v2.0.9 contain a CONTRIBUTING.md symbolic link. The unchanged archive extractor rejects links before compilation. No compiler failure is claimed. A safe upstream source distribution is required before the proposed mesh-file example can be verified.
+
+See the [source review and checked release pins](fpm-candidates/vtkfortran/source-review.json).
+
+## fgsl
+
+FGSL wraps GSL numerical routines. Broad classifications follow the exported interfaces for special functions, linear algebra, interpolation, root finding, optimization, integration/differentiation, ODEs, transforms, fitting and statistics. The checked consumer adapts the author's QAGS example and independently verifies the integral of log(x)/sqrt(x) on [0,1] against -4, status and error estimate. The procedure mapping covers adaptive one-dimensional finite-interval quadrature; other numerical interfaces are not runtime-verified by this example. Upstream Autoconf probes generated the complete configuration on GNU/Linux LP64 with GSL 2.8. An audited asset stages that header as config.inc; checksum-guarded edits change only its include filename in Fortran and C. The C support object and pinned system GSL libraries are linked. Local exports include the asset and patches; this configuration targets GNU/Linux LP64, and another ABI or GSL version requires regeneration against its local tools. GPL-2.0-or-later notices are retained.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/fgsl.f90), [source/build record](fpm-candidates/fgsl/source-review.json) and [verified output](fpm-candidates/fgsl/verified-output.txt).
+
+## fdict
+
+The current upstream Fypp templates produce fdict_types, variable and dictionary modules. Fypp 3.2 generates a checksum-locked asset with standard integer/real/complex/logical kinds, arrays through rank five, iso_fortran_env, optional extended kinds disabled and the upstream CMake default of non-pure interfaces. No CMake or Fypp runs in visitor preparation. The checked consumer stores and retrieves integer, real64, string and integer-array values, checks each returned value and frees the dictionary. N4 covers container storage and N5 covers key lookup. Earlier v0.7.1 preparation failed on missing generated includes; the current template generation resolves that blocker without downloading release assets or weakening archive checks. MPL-2.0 notices remain intact.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/fdict.f90), [source/build record](fpm-candidates/fdict/source-review.json) and [verified output](fpm-candidates/fdict/verified-output.txt).
+
+## flibcpp
+
+The upstream SWIG-generated Fortran modules and C++ wrappers are built together; SWIG is not run. The upstream CMake configuration supplies only a small version-definition source. FPM 0.12 ignores .cxx, so the catalog stages unchanged wrapper contents as .cpp and preserves all original source files. The checked consumer verifies a sorted seven-element array, an existing-key position and a missing-key result. N5 and N6 classify searching and sorting, while S identifies the interoperability utility. Upstream vector, map, set, string and random facilities are included but not exercised by this consumer. MIT notices and the Apache-2.0 CMake helper notice remain intact. Local exports need compatible C++ and Fortran compilers.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/flibcpp.f90), [source/build record](fpm-candidates/flibcpp/source-review.json) and [verified output](fpm-candidates/flibcpp/verified-output.txt).
+
+## libmbd
+
+The serial Fortran library and Fortran-written C interface are selected from the upstream CMake target and linked with pinned OpenBLAS. MPI/ScaLAPACK and ELSI are disabled. An audited version module uses an explicitly identified 0.0.0 plus pinned-commit suffix for the Git archive, rather than claiming a release version. The checked main adapts the author's argon-dimer tests at four angstrom separation, verifies dispersion energy and gradient norm against upstream reference values, checks finite results and equal/opposite gradients, and checks library exceptions. D4 covers the Hamiltonian diagonalization used by the many-body dispersion calculation; Z denotes the domain-specific physical model, not a general-purpose eigensolver interface. Other molecules, periodic systems, distributed runs and all available models are outside this consumer verification scope. MPL-2.0 notices are retained.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/libmbd.f90), [source/build record](fpm-candidates/libmbd/source-review.json) and [verified output](fpm-candidates/libmbd/verified-output.txt).
+
+## dtfft
+
+The CPU-only Fortran target is configured upstream with FFTW enabled, MPICH, input checks, and no C/C++/Python API, GPU, compression or OpenMP support. Its complete generated configuration header and source selection are checksum-locked. The checked main initializes exactly one MPI process with self/shared-memory UCX transports, transforms an 8-by-8 complex impulse, independently checks that every forward coefficient equals one, then verifies inverse reconstruction after normalization. J1 covers the multidimensional Fourier transform. Multiple processes, distributed performance and other FFT executors are not verified by this example. Local exports require compatible MPICH and FFTW development libraries and locally appropriate include/link flags. GPL-3.0-or-later notices are retained.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/dtfft.f90), [source/build record](fpm-candidates/dtfft/source-review.json) and [verified output](fpm-candidates/dtfft/verified-output.txt).
+
+MPICH/UCX emits a diagnostic about the sandbox lacking /sys/class/net even with self/shared-memory transports selected. It is nonfatal in this verified single-process run; both FFT checks pass with zero maximum error. Multi-process operation is not claimed.
+
+## psblas
+
+Adding the four existing MINRES implementations fixes the earlier undefined-symbol link failure. All 813 library sources and the checked main compile with GNU Fortran 16.2.0, and direct execution as nobody succeeds: solution [1,2,3], three CG iterations, maximum residual 1.7764e-15. However, FPM 0.12 remains CPU-active after producing the executable, without completing its build or writing compile_commands.json. A disposable checkpoint clone also starts another library build rather than providing a completed reusable cache. The operator stopped the original job after observing the post-link stall; this was not a Fortran compiler or numerical failure and not the public service timeout. Ordinary edited-main cache reuse remains unverified, so PSBLAS is not selected.
+
+Investigate FPM post-link processing and stable flag/dependency-cache handling for this large source graph, then finish the standard prebuild and ordinary restricted-sandbox edited-main verification. The temporary checkpoint is not a published or verified library.
+
+See the [pinned investigation](fpm-candidates/psblas/source-review.json), [direct solve](fpm-candidates/psblas/direct-run.json), [build tail](fpm-candidates/psblas/post-link-build.log), and [previous link failure](fpm-candidates/psblas/previous-link-failure.json).
+
+## dbcsr
+
+The upstream CMake-selected serial CPU library is rendered with Fypp 3.2, with exact generated-output hashes. Simple USE lists emitted from Python sets are sorted for reproducibility across Python versions and platforms; numerical algorithms are unchanged. MPI, OpenMP, GPU, LIBXS and LIBXSMM are disabled, and the library links pinned OpenBLAS. The diagnostic filename macro uses __FILE__. The checked main creates two 4-by-4 block-sparse matrices, multiplies them through dbcsr_multiply, reconstructs the result and independently compares it with MATMUL, requiring finite entries and a small maximum error. D1 covers matrix operations. Parallel scaling, accelerators and tensor operations are outside this verification scope. GPL-2.0-or-later notices are retained. The wrapper repeats the base-hooks USE list so FPM can order dependencies hidden in the original include. Its manifest permits legacy implicit external BLAS/LAPACK calls; runtime and bounds checks remain enabled.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/dbcsr.f90), [source/build record](fpm-candidates/dbcsr/source-review.json) and [verified output](fpm-candidates/dbcsr/verified-output.txt).
+
+## 2decomp-fft
+
+The upstream CMake-selected CPU library uses the built-in generic Fourier transform backend, double precision and pinned MPICH. OpenMP is disabled. The example adapts the author-provided complex FFT example, initializes exactly one MPI process with self/shared-memory UCX transports, transforms an 8-by-6-by-4 complex impulse, independently checks that all forward coefficients equal one, and verifies inverse reconstruction after normalization. J1 covers the multidimensional Fourier transform. Multiple MPI processes and distributed performance are not verified. Local exports need compatible MPI development libraries and locally appropriate include/link flags. BSD-3-Clause notices are retained.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/2decomp-fft.f90), [source/build record](fpm-candidates/2decomp-fft/source-review.json) and [verified output](fpm-candidates/2decomp-fft/verified-output.txt).
+
+## ennuf
+
+The pinned upstream neural_net_mod module is compiled with an audited, generated fixed-weight model: two inputs, two ReLU hidden units and one output in REAL32. Operator generation uses the author Model/Dense/Activation API and NumPy 2.2.6; neither TensorFlow, PyTorch nor Python inference runs in visitor jobs. The generator sorts the imported layer routine names for reproducibility; network operations are unchanged. Four inputs exercise positive and clipped hidden units and predictions are checked against independently evaluated weights and biases, including negative and positive outputs and finiteness. K covers inference as approximation; no least-squares fitting or training classification is inferred. The sample network is illustrative, not a trained scientific model. Other network layers, external model conversion and training are not verified. BSD-3-Clause and Crown copyright notices are retained.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/ennuf.f90), [source/build record](fpm-candidates/ennuf/source-review.json) and [verified output](fpm-candidates/ennuf/verified-output.txt).
+
+## ddpcm
+
+The pinned ddCOSMO library and original fixed-form Lebedev quadrature source are wrapped for FPM with extension-based source form and legacy external interfaces. OpenMP directives are inactive in this serial profile and OpenBLAS supplies dense linear algebra. The checked consumer adapts the author main and formaldehyde input, embedding its four-atom coordinates, radii, charges and solver settings. It compares solvation energy and all force components against the author reference output, requires finite values and checks zero net force. Full-sized dummy arrays replace the unused one-element placeholders in the example while leaving library numerical routines unchanged. D2 identifies the Jacobi/DIIS linear-system solution used by cosmo; Z denotes the physical solvation model. Other molecules, solvent parameters, quantum densities and parallel performance are outside this verification scope. LGPL notices and author reference requests remain in the source tree.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/ddpcm.f90), [source/build record](fpm-candidates/ddpcm/source-review.json) and [verified output](fpm-candidates/ddpcm/verified-output.txt).
+
+## paramonte
+
+The reviewed 128 MiB operator allowance passes source staging and prepared-bundle extraction. After checksum-guarded submodule compatibility edits and serial external-module declarations, FPM 0.12 accepts the model and GNU Fortran 16.2.0 starts compilation. The build stops around 24% at pm_sampling_base.F90 because USE pm_sysPath appears inside pm_sampling_base.imp.F90 and the required pm_syspath.mod has not been built. This is a remaining FPM dependency-ordering issue involving a preprocessor include, not the former source-size rejection. Runtime and edited-main cache reuse remain unverified.
+
+Review preprocessing of the staged Fortran includes before FPM dependency discovery, or an operator-only CMake build/import adapter, while preserving source pins, explicit serial settings, public limits and existing cache keys. Then repeat compilation, the checked normal-sampling/CDF consumer and edited-main cache reuse. The draft is not a verified catalog entry.
+
+The [source/build record](fpm-candidates/paramonte/source-review.json) includes the pinned 128 MiB exception and staged compatibility work. The [attempt diagnostics](fpm-candidates/paramonte/build-attempts.json), [draft recipe](fpm-candidates/paramonte/catalog-draft.json) and [unverified driver](fpm-candidates/paramonte/main.f90) are retained for a future retry.
+
+## libnegf
+
+The pinned GitHub archive contains six symbolic links in test directories. The unchanged source extractor rejects links before compilation. This does not establish a compiler or numerical failure.
+
+Obtain a pinned regular-file source distribution or review narrowly scoped safe handling of internal test links; then configure its MPI and BLAS/LAPACK requirements and verify a small author-derived transport example.
+
+See the [pinned source and preparation record](fpm-candidates/libnegf/source-review.json).
+
+## dftd4
+
+The original FPM library and pinned mctc-lib, multicharge, Jonquil and TOML-F dependencies are compiled with GNU Fortran 16.2.0 and pinned OpenBLAS. Jonquil and mctc-lib request different TOML-F tags; the operator recipe resolves both to the mctc-lib-requested 0.4.2 commit, checksummed in the dependency lock. The checked consumer adapts the upstream test_pbed4_mb01 reference and embeds MB16-43/01 geometry from mstore v0.4.0, retaining its Apache-2.0 attribution. PBE-D4 two-body energy is compared with -0.018578752883363366 Hartree to 1e-10 Hartree. It also checks finite results, zero net force, translation invariance and one analytical gradient component against a central finite difference with step 1e-5 bohr and tolerance 1e-6. Z denotes the physical dispersion model; no general-purpose differentiation or linear-system interface is inferred from its internal calculations. Other molecules, periodic systems, D4S, three-body terms and all gradients are outside this consumer verification scope. No numerical library source edits are applied; all dependencies use immutable shared archive exports. LGPL-3.0-or-later and dependency notices are retained.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/dftd4.f90), [source/build record](fpm-candidates/dftd4/source-review.json) and [verified output](fpm-candidates/dftd4/verified-output.txt).
+
+## elpa
+
+The declared GitHub mirror archive and both probed 2026.02 release tags contain symbolic links, including a parent-directory link under fdep/test_project and GPU/test source links. The unchanged extractor rejects them before configuration or compilation. No compiler or eigensolver failure is established.
+
+Obtain a pinned regular-file source distribution or separately review safe handling of these links; then configure the documented non-MPI CPU build and check eigenvalues, residuals and orthogonality.
+
+See the [pinned preparation record](fpm-candidates/elpa/source-review.json).
+
+## progress
+
+The pinned main archive and release tags v1.3.0 and v1.2.0 exceed the unchanged 16 MiB compressed download limit. Downloads stop before complete archive validation, configuration or compilation; no complete archive hash or compiler failure is claimed.
+
+Obtain a smaller upstream source distribution or separately review a narrowly pinned operator download allowance. Then build the required BML dependency and adapt a small numerical example for sandbox verification.
+
+See the [pinned preparation record](fpm-candidates/progress/source-review.json).
+
+## ftorch
+
+The original FTorch Fortran and C++ sources are wrapped for FPM, using pinned Debian CPU LibTorch 2.6.0+dfsg-7, the C++20 mode, C++11 ABI and include/definition settings from the upstream CMake target. The operator C++ flag setting is restricted to a current, unshared source-package recipe; public requests cannot set it and previous cache keys are preserved. The self-contained consumer embeds a reproducibly generated 1,766-byte TorchScript model as hexadecimal text, writes tiny.pt in the sandbox and calls the author tensor/model API in REAL64. Two different five-element inputs exercise y=2*x+1, with each output checked independently for finiteness and absolute error below 1e-12. The second call also verifies that the input tensor observes updated Fortran storage. No Python or model download runs in visitor jobs. This is an illustrative affine inference model, not a trained scientific predictor. K covers inference as function approximation; no training or optimization classification is inferred. GPU use, training, autograd, parallel execution and arbitrary external models are not verified. FTorch MIT notices and native Debian dependency notices are retained. APT estimates about 924 MB of additional native dependencies in the isolated FTorch image; these are separate from the catalog logical library-artifact total.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/ftorch.f90), [source/build record](fpm-candidates/ftorch/source-review.json) and [verified output](fpm-candidates/ftorch/verified-output.txt).
+
+## fortjson
+
+The pinned GitLab source compiles with GNU Fortran 16.2.0 and -fcheck=all; all 38 upstream CMake/CTest tests pass in a network-disabled gVisor operator probe. It is not selected because catalog source preparation and project export currently require GitHub sources or explicitly mapped GitHub mirrors; no usable mirror was found. This is an integration limitation, not a compiler failure. The library writes JSON; a JSON-reading demonstration would be inappropriate.
+
+Separately implement pinned GitLab archive preparation and exported-project support, or obtain an author-maintained GitHub mirror. Then add a JSON-writing consumer and verify ordinary restricted-sandbox edited-main reuse.
+
+See the [pinned investigation](fpm-candidates/fortjson/source-review.json).
+
+## parquet-fortran
+
+The pinned source archive extracts safely. Its documented full Parquet interface requires Apache Arrow >=24.0.0, including libarrow, libarrow-compute and libparquet, and C++20. None of those development packages has a candidate in the current Debian trixie image repositories. The manifest also requires FPM >=0.13 for features/profiles, while the playground uses 0.12, and references a TOML-F fork. Native dependency installation was not attempted from an unpinned external repository; compilation and runtime are not verified. No upstream compiler or Parquet round-trip failure is claimed.
+
+Prepare a separately reviewed, pinned Arrow/Parquet native dependency image and locked TOML-F fork, adapt the library manifest for the supported FPM version, and verify a small write/read round trip plus edited-main reuse. Do not substitute an unrelated Arrow-free utility demo for the promised Parquet interface.
+
+See the [pinned investigation](fpm-candidates/parquet-fortran/source-review.json).
+
+## gpf
+
+The pinned root archive and release tags v3.0.0 and v2.0.0 exceed the unchanged 16 MiB compressed source download limit. Bounded downloads stop before complete archive validation, extraction or compilation; no complete archive hash or compiler failure is claimed. The proposed M_units/M_math example and native dependencies therefore remain unverified.
+
+Obtain a smaller reproducible author source distribution or separately review a narrowly pinned operator source-download allowance. Then audit the native dependencies and check unit conversions and numerical routines; retain all relevant per-file MIT/public-domain notices.
+
+See the [pinned investigation](fpm-candidates/gpf/source-review.json).
+
+## tsunami
+
+Only the author serial Chapter 4 mod_diff and mod_initial modules are wrapped; their contents are unchanged. The main follows the chapter shallow-water time-stepping equations on a 100-cell periodic grid for 200 steps. It checks the centered difference against a discrete sine derivative, the upwind difference against an independently indexed periodic reference, Gaussian peak/symmetry, finite water height/velocity, positive total depth, nontrivial evolution, and conservation of integrated elevation. The example uses REAL32, with REAL64 accumulation of mass. I2 classifies the demonstrated PDE calculation; H1 classifies diff_centered/diff_upwind as numerical differentiation. This is an educational finite-difference demonstration, not validation of a production tsunami model. Other chapters, coarrays and parallel scaling are not verified. MIT notices are retained.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/tsunami.f90), [source/build record](fpm-candidates/tsunami/source-review.json) and [verified output](fpm-candidates/tsunami/verified-output.txt).
+
+## pfunit
+
+The pinned serial pFUnit configuration disables MPI, OpenMP, robust/forked runners and Hamcrest, and uses the author-supported MAX_ASSERT_RANK=2 option (scalars, vectors and matrices) to retain the existing 2 MiB generated-source asset limit. The author CMake configuration supplies source selections and compiler-kind definitions; overload_template.py generates the assertions. fArgParse and its gFTL-shared/gFTL submodules are pinned at the exact upstream gitlinks, with only the required shared container instantiations generated. The FPM scanner sees a NAG-only f90_unix_proc USE even on GNU, so that inactive branch is declared external; inactive robust/Hamcrest interfaces are likewise excluded without altering original library code. A plain Fortran main constructs three TestMethod cases in a TestSuite and checks scalar, vector and matrix assertions through TestRunner/SerialContext, requiring exactly three runs and zero errors/failures. No visitor-side Python, CMake or annotation generation is needed. Higher assertion ranks, matcher DSLs, MPI, OpenMP and process-forking runners are not offered by this configuration. S denotes software testing; no numerical solver classification is inferred. Apache-2.0 and dependency notices are retained.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+An intentional negative-control run changes the expected scalar result to 5 for 2+2: pFUnit reports exactly one failure, the main exits unsuccessfully, and the library is reused. See the [negative-control record](fpm-candidates/pfunit/negative-control.json).
+
+See the [checked main](../fpm_catalog/demos/pfunit.f90), [source/build record](fpm-candidates/pfunit/source-review.json) and [verified output](fpm-candidates/pfunit/verified-output.txt).
+
+## numerical-methods-fortran
+
+The unchanged quadrature module compiles locally, but rectangle, trapezoidal and Simpson all return 1.111111164 for the integral of 1 on [0,1] with n=10 (expected 1). Each uses step=(b-a)/(n-1) while iterating n intervals. The checked constant-integrand reproducer exits unsuccessfully. Other modules have not been validated; no full-package or GNU 16 sandbox verification is claimed.
+
+Ask the author to correct the quadrature interval count, then check polynomial integrals, Newton solves and an ODE example before catalog/cache verification.
+
+See the [pinned investigation](fpm-candidates/numerical-methods-fortran/source-review.json).
+
+## aenet
+
+The pinned main archive and release tags v2.0.5, v2.0.4 and v2.0.3 exceed the unchanged 16 MiB compressed source download limit. Bounded downloads stopped before complete archive validation, extraction, configuration or compilation; no complete archive hash or compiler failure is claimed.
+
+Obtain a smaller pinned author source distribution or separately review a narrowly pinned operator download allowance, then check a tiny energy/force example and cache reuse.
+
+See the [pinned investigation](fpm-candidates/aenet/source-review.json).
+
+## raffle
+
+RAFFLE is pinned to release v1.0.0 because current main and v1.1.1 exceed the unchanged 16 MiB archive limit. The native FPM library is unchanged. The checked main adapts test/test_dist_calcs.f90: a two-atom silicon primitive cell and three equivalent fractional points exercise get_min_dist_between_point_and_atom and get_min_dist. Both distances must be finite and agree with sqrt(3)*0.428 within 3e-6 in REAL32. P denotes the demonstrated periodic geometry; no optimization, structure-prediction accuracy, trained model, or full upstream test-suite validation is claimed. GPL-3.0 notices are retained.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/raffle.f90), [source/build record](fpm-candidates/raffle/source-review.json) and [verified output](fpm-candidates/raffle/verified-output.txt).

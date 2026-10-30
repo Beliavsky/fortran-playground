@@ -1,0 +1,38 @@
+{
+  "id": "slicot",
+  "repository": "SLICOT/SLICOT-Reference",
+  "revision": "5eeb845d84f5a60f6069754b7819dad468951933",
+  "archive_sha256": "22bf29340f5d3019d9adcfc862968c9eb10ccc0afdc821dd5b71cb4661884350",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "apt_packages": [
+      "liblapack-dev=3.12.1-6",
+      "libblas-dev=3.12.1-6"
+    ],
+    "environment": {
+      "FPM_FFLAGS": "-std=legacy -fallow-argument-mismatch",
+      "FPM_LDFLAGS": "-llapack -lblas"
+    },
+    "metapackages": [
+      "blas"
+    ]
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T14:04:20.544152+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/slicot.f90",
+  "verification": {
+    "seconds": 4.572,
+    "build_seconds": 1.943,
+    "library_reused": true,
+    "demo_sha256": "aa5b7af78cadc67c08b78e00f10d95d82c06d4c8b758f8667078f2f7320d6bf9",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "BSD-3-Clause",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Full upstream SLICOT FPM source library, linked to compatible LP64 BLAS/LAPACK with the manifest BLAS metapackage resolved explicitly. Sources are unchanged; legacy compiler compatibility flags retain upstream conventions. The main uses the author slicot module interface for SB03MD, constructs a stable nondiagonal 2-by-2 continuous Lyapunov problem from a known symmetric solution and checks both the independently computed matrix residual and the recovered solution including the solver scale factor. It requests the condition/error estimates but does not validate those estimates independently. Other matrix equations, model reduction, identification, robust control and every library routine are not validated."
+}

@@ -40,7 +40,7 @@ export function projectFiles({source, stdin = '', url, revision, subdirectory = 
   const files = {'app/main.f90': source,
     'fpm.toml': 'name = "playground-main"\n# Run python run.py to prepare the pinned package dependency first.\n',
     'playground.json': JSON.stringify(settings, null, 2) + '\n',
-    'requirements.txt': 'tomli-w>=1,<3\n', ...runtime,
+    'requirements.txt': 'tomli-w>=1,<3\n' + (Object.values(packageSettings.catalog_build?.source_packages || {}).some(s => s.fypp) ? 'fypp==3.2\n' : ''), ...runtime,
     'README.md': `# Downloaded FPM project\n\nYour edited main program is in app/main.f90.\n\n`
       + `Package source: https://github.com/${repository}/tree/${revision || 'HEAD'}${subdirectory ? '/' + encodeURIComponent(subdirectory) : ''}\n\n`
       + 'Requires Python 3.12+, FPM 0.12 or later, and a local GNU Fortran compiler (the catalog was tested with 16.2). Mixed-language packages also require GCC/G++.\n\n'

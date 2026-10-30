@@ -1,0 +1,97 @@
+-- The CXX compiler identification is GNU 16.2.0
+-- The Fortran compiler identification is GNU 16.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/local/bin/g++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Detecting Fortran compiler ABI info
+-- Detecting Fortran compiler ABI info - done
+-- Check for working Fortran compiler: /usr/local/bin/gfortran - skipped
+-- Configuring done (0.9s)
+-- Generating done (0.0s)
+-- Build files have been written to: /tmp/tmpq5ija4z_/build
+GENERATED flibcpp 1 files; 2512 bytes
+-- The Fortran compiler identification is GNU 16.2.0
+-- The C compiler identification is GNU 16.2.0
+-- Detecting Fortran compiler ABI info
+-- Detecting Fortran compiler ABI info - done
+-- Check for working Fortran compiler: /usr/local/bin/gfortran - skipped
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/local/bin/gcc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Looking for Fortran sgemm
+-- Looking for Fortran sgemm - not found
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE
+-- Looking for Fortran sgemm
+-- Looking for Fortran sgemm - found
+-- Found BLAS: /usr/lib/x86_64-linux-gnu/libopenblas.so
+-- Looking for Fortran cheev
+-- Looking for Fortran cheev - found
+-- Found LAPACK: /usr/lib/x86_64-linux-gnu/libopenblas.so;-lm;-ldl
+-- Configuring done (1.3s)
+-- Generating done (0.0s)
+-- Build files have been written to: /tmp/tmpbdwee39o/build
+GENERATED libmbd 1 files; 2153 bytes
+-- The Fortran compiler identification is GNU 16.2.0
+-- The C compiler identification is GNU 16.2.0
+-- The CXX compiler identification is GNU 16.2.0
+-- Detecting Fortran compiler ABI info
+-- Detecting Fortran compiler ABI info - done
+-- Check for working Fortran compiler: /usr/local/bin/gfortran - skipped
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/local/bin/gcc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/local/bin/g++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found MPI_C: /usr/lib/x86_64-linux-gnu/mpich/lib/libmpich.so (found version "4.1")
+-- Found MPI_CXX: /usr/lib/x86_64-linux-gnu/mpich/lib/libmpichcxx.so (found version "4.1")
+-- Found MPI_Fortran: /usr/lib/x86_64-linux-gnu/mpich/lib/libmpichfort.so (found version "4.1")
+-- Found MPI: TRUE (found version "4.1")
+-- Performing Test HAVE_ASSUMED_RANK_AND_TYPE
+-- Performing Test HAVE_ASSUMED_RANK_AND_TYPE - Success
+-- Performing Test HAVE_BLOCK_STATEMENT
+-- Performing Test HAVE_BLOCK_STATEMENT - Success
+-- Found PkgConfig: /usr/bin/pkg-config (found version "1.8.1")
+-- Found FFTW: /usr/include  found components: FLOAT_LIB DOUBLE_LIB
+-- dtFFT configuration summary:
+-- Version                    : 3.2.0
+-- Build type                 : Release
+-- Compiler                   : GNU 16.2.0
+-- Install dir                : /usr/local
+-- Build shared libs          : OFF
+-- Use `mpi` module           : OFF
+-- Build C/C++ API:           : OFF
+-- Build tests                : OFF
+-- Coverage                   : OFF
+-- Profiler                   : OFF
+-- OpenMP enabled             : OFF
+-- CUDA enabled               : OFF
+-- FFTW3 enabled              : ON
+-- MKL enabled                : OFF
+-- Compression enabled        : OFF
+-- Configuring done (4.5s)
+-- Generating done (0.0s)
+-- Build files have been written to: /tmp/tmpcppmqsbd/build
+GENERATED dtfft 1 files; 11152 bytes
+CMake Warning:
+  Manually-specified variables were not used by the project:
+
+    CMAKE_C_COMPILER
+
+
+CMake Warning:
+  Manually-specified variables were not used by the project:
+
+    CMAKE_CXX_COMPILER
+
+

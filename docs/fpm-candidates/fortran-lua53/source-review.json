@@ -1,0 +1,41 @@
+{
+  "id": "fortran-lua53",
+  "repository": "interkosmos/fortran-lua53",
+  "revision": "d0d684978e922bbc8c2f7e4be0cc901f80c29de6",
+  "archive_sha256": "e635fae70f8ff083590e5b0e493c6eeb5c07cf9e229114b5bc3167b51d78fbe7",
+  "catalog_build": {
+    "adapter_sha256": "66e8249cbc0eb57ffecf9f04801ede2060312d64ba2fa2d839b07fdc746f5f8c",
+    "apt_packages": [
+      "liblua5.3-dev=5.3.6-2+b4"
+    ]
+  },
+  "dependencies": [],
+  "catalog_patches": {
+    "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+    "edits": [
+      {
+        "path": "fpm.toml",
+        "sha256": "f19c037ec8f98b41ed8309d3c1da58ec8d0c2e10150b6a17860ab50e5011435c",
+        "before": "link = \"lua\"",
+        "after": "link = [\"lua5.3\"]"
+      }
+    ]
+  },
+  "checked_at": "2026-10-29T20:13:47.719614+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/fortran-lua53.f90",
+  "verification": {
+    "seconds": 1.379,
+    "build_seconds": 0.425,
+    "library_reused": true,
+    "demo_sha256": "7c5089eaea49fbb39a493dd195480bcbf6a093e5e0d08f7f2c8cf3e8681b9a2b",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "ISC",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Upstream Lua 5.3 bindings and source code are unchanged. A checksum-guarded manifest edit links the versioned Debian Lua 5.3 library instead of the unversioned lua name. The native development package is locked to 5.3.6-2+b4. The consumer defines a Lua function in memory, calls it for four integer arguments, independently verifies integer squares and real square roots, checks Lua status and function presence, empties the stack after each call and closes the interpreter. No files or external services are needed. Lua modules, callbacks into Fortran and arbitrary scripts are not comprehensively validated."
+}

@@ -1,0 +1,51 @@
+{
+  "id": "vtmop",
+  "repository": "vtopt/VTMOP",
+  "revision": "794a1de23801731ef6edd1924b52d69b679af6a0",
+  "archive_sha256": "5c49ebb6c9f0ea852161d3e3d28bbba41481eeaf601019f5e2b51aafc31ca5e7",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "source_packages": {
+      "vtopt/vtmop": {
+        "manifest": "name = \"vtmop\"\nversion = \"0.0.0\"\nlicense = \"MIT\"\n[library]\nsource-dir = \"playground-library\"\ninclude-dir = [\"src\", \".\"]\n[build]\nauto-executables = false\nauto-examples = false\nauto-tests = false\n[install]\nlibrary = true\n[fortran]\nimplicit-typing = true\nimplicit-external = true\nsource-form = \"default\"\n",
+        "sources": [
+          "src/shared_modules.f90",
+          "src/slatec.f",
+          "src/qnstop.f90",
+          "src/sVTdirect.f90",
+          "src/bVTdirect.f90",
+          "src/delsparse.f90",
+          "src/linear_shepard.f90",
+          "src/vtmop.f90",
+          "src/vtmop_func.f90"
+        ]
+      }
+    },
+    "apt_packages": [
+      "liblapack-dev=3.12.1-6",
+      "libblas-dev=3.12.1-6"
+    ],
+    "environment": {
+      "FPM_FFLAGS": "-std=legacy -fallow-argument-mismatch -fopenmp -ftrampoline-impl=heap",
+      "FPM_LDFLAGS": "-llapack -lblas"
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T14:04:20.544152+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/vtmop.f90",
+  "verification": {
+    "seconds": 2.859,
+    "build_seconds": 0.645,
+    "library_reused": true,
+    "demo_sha256": "95b24a88eb09b2f229352e69cc91dc8a19c102c3d6b976dfd9401fdb64e4ce48",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Serial derivative-free, bound-constrained multiobjective optimization. An FPM wrapper selects the unchanged solver, surrogate and test-function sources with bundled SLATEC support and links system LP64 BLAS/LAPACK rather than recompiling those bundled libraries. OpenMP linking is enabled, but the checked run uses the serial driver and one execution thread; heap trampolines support internal callbacks in the sandbox. Adapted from the author serial driver and CONVEX function, the seeded 3-variable/2-objective example uses a small evaluation budget, checks feasible design bounds, recomputes both quadratic objectives independently and verifies that no returned point dominates another. It requires multiple distinct trade-off points. This checks the finite returned set, not convergence to the exact global Pareto front or comparative performance. Parallel evaluation, checkpoint recovery, every surrogate and other problem classes are not validated."
+}

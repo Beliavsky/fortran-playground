@@ -1,0 +1,9 @@
+{
+  "note": "Preparation and consumer integration diagnostics preceding the verified recipe; these are not claims that the complete upstream project fails under its own build system.",
+  "attempts": [
+    {
+      "attempt": "plain",
+      "diagnostic": " + mkdir -p build/dependencies\n[  0%]              pyplot_module.f90\n[  7%]              pyplot_module.f90  done.\n[  7%]                     internal.c\n[ 15%]                     internal.c  done.\n[ 15%]                 internal_c.f90\n[ 23%]                 internal_c.f90  done.\n[ 23%]                           os.c\n[ 30%]                           os.c  done.\n[ 30%]                       os_c.f90\n[ 38%]                       os_c.f90  done.\n[ 38%]                      os_path.c\n[ 46%]                      os_path.c  done.\n[ 46%]                  os_path_c.f90\n[ 53%]                  os_path_c.f90  done.\n[ 53%]                   internal.f90\n<ERROR> Compilation failed for object \" .._sources_bundle_packages_0_stdlib_os-60768243de9325d9b57b2e825e7312d70b1e538a_playground-library_internal.f90.o \"\n[ 61%]                   internal.f90  done.\n\n./././/../sources/bundle/packages/0/stdlib_os-60768243de9325d9b57b2e825e7312d70b1e538a/playground-library/internal.f90:34:26:\n\n   34 |   pure function f_c_string(f_string) result(c_string)\n      |                          1\nError: Cannot change attributes of USE-associated symbol f_c_string at (1)\ncompilation terminated due to -fmax-errors=1.\n<ERROR> stopping due to failed compilation\nSTOP 1\n"
+    }
+  ]
+}

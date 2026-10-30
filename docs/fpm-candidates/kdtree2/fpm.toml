@@ -1,0 +1,11 @@
+name = "kdtree2"
+version = "0.0.0"
+license = "AFL-1.1"
+[library]
+source-dir = "playground-library"
+[build]
+auto-executables = false
+auto-examples = false
+auto-tests = false
+[install]
+library = true

@@ -1,0 +1,45 @@
+{
+  "id": "fortran-fast-float",
+  "repository": "perazz/fortran-fast-float",
+  "revision": "195e47d90874cb1ff38598d80a7e4919c49b89d8",
+  "archive_sha256": "6f292344647c5a65c5f5f222e88edbb9d903ddcdffa92dbbfcb3eae24007df1a",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "environment": {
+      "FPM_FFLAGS": "-fno-range-check"
+    }
+  },
+  "dependencies": [],
+  "catalog_patches": {
+    "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+    "edits": [
+      {
+        "path": "fpm.toml",
+        "sha256": "8f826294042f173ef93e2fc11eb32c7ecec65af7396b66ba0c4ee156a8969e27",
+        "before": "name = \"fortran-fast-float\"\nversion = \"0.1.0\"\nlicense = \"MIT OR Apache-2.0 OR BSL-1.0\"\nauthor = \"Federico Perini\"\ncopyright = \"Copyright 2026, Federico Perini\"\ntest = [\n    { name = \"check\", source-dir = \"test\", main = \"check.f90\" },\n    { name = \"benchmark_compare\", source-dir = \"benchmark\", main = \"benchmark_compare.f90\" },\n]\n\n[library]\nsource-dir = \"src\"\n\n[build]\nauto-executables = true\nauto-tests = false\nauto-examples = true\nmodule-naming = false\n\n[install]\nlibrary = false\ntest = false\n\n[fortran]\nimplicit-typing = false\nimplicit-external = false\nsource-form = \"free\"\n\n[features.boz-compat.gfortran]\nflags = \"-fno-range-check \"\n\n[profiles]\ndefault = [\n    \"boz-compat\",\n]\n",
+        "after": "name = \"fortran-fast-float\"\nversion = \"0.1.0\"\nlicense = \"MIT OR Apache-2.0 OR BSL-1.0\"\nauthor = \"Federico Perini\"\ncopyright = \"Copyright 2026, Federico Perini\"\ntest = [\n    { name = \"check\", source-dir = \"test\", main = \"check.f90\" },\n    { name = \"benchmark_compare\", source-dir = \"benchmark\", main = \"benchmark_compare.f90\" },\n]\n\n[library]\nsource-dir = \"src\"\n\n[build]\nauto-executables = true\nauto-tests = false\nauto-examples = true\nmodule-naming = false\n\n[install]\nlibrary = false\ntest = false\n\n[fortran]\nimplicit-typing = false\nimplicit-external = false\nsource-form = \"free\"\n"
+      }
+    ]
+  },
+  "checked_at": "2026-10-29T12:13:59.407766+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/fortran-fast-float.f90",
+  "verification": {
+    "seconds": 1.532,
+    "build_seconds": 0.591,
+    "library_reused": true,
+    "demo_sha256": "3faed9ca14d382bcf516cb861f6520db22a85a275229440a53de4be0dc929834",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT OR Apache-2.0 OR BSL-1.0",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Numeric text parsing. FPM 0.12 rejects the upstream features/profiles tables; a checksum-guarded manifest adaptation removes them and supplies the intended -fno-range-check compiler setting explicitly. The Fortran sources are unchanged and development-only benchmark dependencies are not built. The main checks decimal/scientific and Fortran D-exponent parsing, the largest positive signed int64, hexadecimal parsing, invalid-input status and exponent-overflow status. Correct rounding for every input, all formats, underflow, platforms and speed claims are not validated.",
+  "compatibility_edits": [
+    "Remove unsupported features/profiles manifest tables for FPM 0.12 and supply -fno-range-check explicitly. Mathematical sources unchanged."
+  ],
+  "original_build_failure": "original-build-failure.json"
+}

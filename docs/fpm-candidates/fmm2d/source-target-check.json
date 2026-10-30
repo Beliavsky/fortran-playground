@@ -1,0 +1,57 @@
+{
+  "revision": "7e7509ecd6ebe31b9292cb00825410b478f44808",
+  "source_sha256": "b32f650a69bbad718d97c9f425fb2406e06161ed265e57b0b1e3cc960010165e",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "ok": true,
+  "stages": [
+    {
+      "name": "Build",
+      "command": [
+        "fpm",
+        "build",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.389,
+      "ok": true,
+      "exit_code": 0,
+      "error": "",
+      "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+      "stderr": ""
+    },
+    {
+      "name": "Run",
+      "command": [
+        "fpm",
+        "run",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.069,
+      "ok": true,
+      "exit_code": 0,
+      "error": "",
+      "stdout": "Sources: 512; targets: 16\nRelative maximum error against direct summation:   6.9896E-16\nFirst target potential:  -1.07532838E-01\nRelative source potential error (self terms excluded):   2.1023E-15\nPASS fmm2d source and target probe\n",
+      "stderr": "Project is up to date\n"
+    }
+  ],
+  "cache": {
+    "library_reused": true,
+    "changed_artifacts": []
+  }
+}

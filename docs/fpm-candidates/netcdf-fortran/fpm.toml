@@ -1,0 +1,17 @@
+name = "netcdf-fortran"
+version = "0.0.0"
+license = "NetCDF AND Apache-2.0"
+[library]
+source-dir = "playground-library"
+include-dir = ["fortran"]
+[build]
+link = ["netcdf"]
+auto-executables = false
+auto-examples = false
+auto-tests = false
+[install]
+library = true
+[fortran]
+implicit-typing = true
+implicit-external = true
+source-form = "default"

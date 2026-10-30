@@ -1,0 +1,31 @@
+{
+  "id": "propack-author",
+  "repository": "rmlarsen/propack",
+  "revision": "1323a0c53040e49afbbf18efd7f618c5bc779313",
+  "stage": "preparation",
+  "reason": "The maintained author repository head and tags v2.2 and v2.1 exceed the unchanged 16 MiB source download limit, before compilation. The repository includes large saved example output matrices. Selected propack instead verifies the explicitly labeled historical SciPy version; it does not establish that the maintained author sources compile in the playground.",
+  "attempts": [
+    {
+      "revision": "1323a0c53040e49afbbf18efd7f618c5bc779313",
+      "preparation_error": "Source download exceeds its size limit."
+    },
+    {
+      "tag": "v2.2",
+      "revision": "b96935f97d37448516a3bac8e567e212244c8e99",
+      "ok": false,
+      "reason": "Source download exceeds its size limit."
+    },
+    {
+      "tag": "v2.1",
+      "revision": "753581a22e5588430aa51a4fb7bf2dddb4e42ec2",
+      "ok": false,
+      "reason": "Source download exceeds its size limit."
+    }
+  ],
+  "selected_alternative": {
+    "id": "propack",
+    "repository": "scipy/PROPACK",
+    "revision": "36f95269ecee6ae42af0c00707b3c3cf3f869a35"
+  },
+  "provenance": "https://rmlarsen.github.io/propack/"
+}

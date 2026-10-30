@@ -1,0 +1,1 @@
+The root qContainers license is BSD-2-Clause. The selected vendored C sources also contain ISC-licensed c-algorithms and the RSA Data Security, Inc. MD5 Message-Digest Algorithm. The notices here reproduce the source headers; they remain in the downloaded sources as well.

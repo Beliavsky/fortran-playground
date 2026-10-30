@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {execFileSync} from 'node:child_process';
+import {createHash} from 'node:crypto';
 import {githubRepository, pinnedSource, projectFiles, zipFiles} from '../site/fpm/project_export.mjs';
 
 const packages = JSON.parse(readFileSync(new URL('../site/fpm/packages.json', import.meta.url), 'utf8'));
@@ -15,6 +16,13 @@ for (const packageEntry of packages) {
   const {source: example, ...settings} = packageEntry;
   assert.deepEqual(JSON.parse(files['playground.json']).package, settings, 'All dependency locks, flags and patches survive export');
   assert.equal(files['run.py'], runtime['run.py']);
+  assert.equal(files['requirements.txt'].includes('fypp==3.2'),
+    Object.values(packageEntry.catalog_build?.source_packages || {}).some(s => s.fypp));
+  for (const spec of Object.values(packageEntry.catalog_build?.source_packages || {})) {
+    if (!spec.generated) continue;
+    const text = files['tools/fpm_catalog/generated/' + spec.generated.asset];
+    assert.equal(createHash('sha256').update(text).digest('hex'), spec.generated.sha256);
+  }
 }
 for (const value of ['file:///C:/code', 'https://evil.com/o/r', 'https://github.com/o/r/tree/main',
   'https://u:p@github.com/o/r', 'https://github.com/o/r?x=1']) assert.equal(githubRepository(value), '');

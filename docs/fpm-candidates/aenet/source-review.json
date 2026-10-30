@@ -1,0 +1,29 @@
+{
+  "id": "aenet",
+  "repository": "atomisticnet/aenet",
+  "revision": "8f35990f5e3dd6cb296b953448cb11694d0cff3d",
+  "checked_at": "2026-10-30T13:32:41.790005+00:00",
+  "status": "preparation-failed",
+  "stage": "preparation",
+  "compiler_invoked": false,
+  "verified_in_playground": false,
+  "release_probes": [
+    {
+      "tag": "v2.0.5",
+      "revision": "9403bc59d04e14bb1d82520b3c173fb1a0c56faf",
+      "preparation_error": "Source download exceeds its size limit."
+    },
+    {
+      "tag": "v2.0.4",
+      "revision": "77c2c2895a7bfc5cb916dd75e7e6fbe7706075c8",
+      "preparation_error": "Source download exceeds its size limit."
+    },
+    {
+      "tag": "v2.0.3",
+      "revision": "99b000c8dadca66585fb05e26c6eb1f507df46e4",
+      "preparation_error": "Source download exceeds its size limit."
+    }
+  ],
+  "reason": "The pinned main archive and release tags v2.0.5, v2.0.4 and v2.0.3 exceed the unchanged 16 MiB compressed source download limit. Bounded downloads stopped before complete archive validation, extraction, configuration or compilation; no complete archive hash or compiler failure is claimed.",
+  "follow_up": "Obtain a smaller pinned author source distribution or separately review a narrowly pinned operator download allowance, then check a tiny energy/force example and cache reuse."
+}

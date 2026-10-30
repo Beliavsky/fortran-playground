@@ -1,0 +1,16 @@
+name = "scifortran"
+version = "0.0.0"
+license = "LGPL-3.0-or-later AND CC0-1.0 AND BSD-3-Clause"
+[library]
+source-dir = "playground-library"
+include-dir = ["src/SF_INTEGRATE", "src/quadpack"]
+[build]
+auto-executables = false
+auto-examples = false
+auto-tests = false
+[install]
+library = true
+[fortran]
+implicit-typing = true
+implicit-external = true
+source-form = "default"

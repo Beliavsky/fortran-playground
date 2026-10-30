@@ -1,0 +1,37 @@
+{
+  "id": "easy-plplot",
+  "repository": "zoziha/easy_plplot",
+  "revision": "77b0ac9b30d732196e99438064c35f4c1914eb7c",
+  "archive_sha256": "ce69b49b5ceb75dc69c79b49490b46f033bdc7925b2a4a60b49d68f2aea5b926",
+  "catalog_build": {
+    "adapter_sha256": "e27e15d511b0c7a6071e422dd426d023680f5754df7dc8f53326fdb29a4a5927",
+    "apt_packages": [
+      "libplplot-dev=5.15.0+dfsg2-15+b1",
+      "plplot-driver-cairo=5.15.0+dfsg2-15+b1"
+    ],
+    "environment": {
+      "FPM_FFLAGS": "-I/usr/lib/x86_64-linux-gnu/fortran/modules/plplot"
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T21:51:26.765767+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/easy-plplot.f90",
+  "verification": {
+    "seconds": 2.067,
+    "build_seconds": 0.387,
+    "library_reused": true,
+    "demo_sha256": "a07bfbe9ab19a5e608cfa599d1637f2fefd27c862b3463b91edf7ab96cfb1b29",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "BSD-3-Clause",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "The existing upstream FPM package is compiled against pinned PLplot native libraries and the Cairo file driver. The main plots sine and cosine over [0,2*pi] using the pngcairo device, checks that the output file exists and is nontrivial, and the restricted sandbox must return a valid PNG preview for browser display. GUI devices, animation, interactive windows and other plotting routines are outside verification scope. Q describes the tested graphics functionality.",
+  "initial_consumer_findings": [
+    "The initial example checked for an unnumbered filename although upstream setup enables numbered output families. The verified main follows the author example with %n in the filename and checks trigonometry-1.png; no upstream library change was required."
+  ]
+}

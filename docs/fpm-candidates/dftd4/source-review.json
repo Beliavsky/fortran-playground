@@ -1,0 +1,96 @@
+{
+  "id": "dftd4",
+  "repository": "dftd4/dftd4",
+  "revision": "1107ea7c7c2131719e306fd57a5f4a1579e2577e",
+  "archive_sha256": "87a36c5190e795f12d6a133ff04d47ce2a5d940a1df84f8043914a9c2813c6d5",
+  "catalog_build": {
+    "adapter_sha256": "5afc6d43de793d71797e00b1038d1cbf915f7bf3cb8a43a22b3a4d6e283974c6",
+    "apt_packages": [
+      "libopenblas-dev=0.3.29+ds-3"
+    ],
+    "environment": {
+      "FPM_FFLAGS": "-ffree-line-length-none"
+    },
+    "source_revisions": {
+      "toml-f/toml-f": "51a26158c6d52bbc59cb482bdd13f00d7fd032a3"
+    },
+    "shared_dependencies": {
+      "adapter_sha256": "25d6abc0d3ae3a771d8150f36aaa2fa4f6aa1e372cae465dc6e6c231f3f0e317",
+      "repositories": [
+        "dftd4/dftd4",
+        "grimme-lab/mctc-lib",
+        "toml-f/jonquil",
+        "toml-f/toml-f",
+        "grimme-lab/multicharge"
+      ]
+    }
+  },
+  "dependencies": [
+    {
+      "repository": "grimme-lab/mctc-lib",
+      "revision": "aec7f40ccf1b0dceb9156ae6dc6667fd61206916",
+      "sha256": "6aa323cf4d280cbdf9ed73249ea3e1c878080242cd9c2bc5a8067b286ae2e4a3"
+    },
+    {
+      "repository": "toml-f/jonquil",
+      "revision": "297fb2c2f7344ce4575e5b61b59da071044149bf",
+      "sha256": "7412626a963b914d50a4f06c2951bbe8d69aff23d4025ee2472e6ca8ce027ae7"
+    },
+    {
+      "repository": "toml-f/toml-f",
+      "revision": "51a26158c6d52bbc59cb482bdd13f00d7fd032a3",
+      "sha256": "2f910f4fb002243c502fb1435782f18c3ea163ebfc78afd5a597cac99a535e80"
+    },
+    {
+      "repository": "grimme-lab/multicharge",
+      "revision": "576f499b49eb57f8c2dc1ba6f7017800f1e332d9",
+      "sha256": "14bae8f934d9f7fc214746302b8401da1a9cec0c3f66bee48643f6ad3a956d2e"
+    }
+  ],
+  "checked_at": "2026-10-30T10:39:25.070418+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/dftd4.f90",
+  "verification": {
+    "seconds": 1.228,
+    "build_seconds": 0.433,
+    "library_reused": true,
+    "demo_sha256": "4e2ca8fdf973c1ca39122e76a8c51eac9366c39c6bdebb5e1a165815a4a4e996",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "LGPL-3.0-or-later",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "The original FPM library and pinned mctc-lib, multicharge, Jonquil and TOML-F dependencies are compiled with GNU Fortran 16.2.0 and pinned OpenBLAS. Jonquil and mctc-lib request different TOML-F tags; the operator recipe resolves both to the mctc-lib-requested 0.4.2 commit, checksummed in the dependency lock. The checked consumer adapts the upstream test_pbed4_mb01 reference and embeds MB16-43/01 geometry from mstore v0.4.0, retaining its Apache-2.0 attribution. PBE-D4 two-body energy is compared with -0.018578752883363366 Hartree to 1e-10 Hartree. It also checks finite results, zero net force, translation invariance and one analytical gradient component against a central finite difference with step 1e-5 bohr and tolerance 1e-6. Z denotes the physical dispersion model; no general-purpose differentiation or linear-system interface is inferred from its internal calculations. Other molecules, periodic systems, D4S, three-body terms and all gradients are outside this consumer verification scope. No numerical library source edits are applied; all dependencies use immutable shared archive exports. LGPL-3.0-or-later and dependency notices are retained.",
+  "geometry_provenance": {
+    "repository": "grimme-lab/mstore",
+    "tag": "v0.4.0",
+    "revision": "6a166125738dd2f0edd62afd22c3479d7b8efbeb",
+    "archive_sha256": "c6743437baedfa900fc23220a00ea308750365262b998c73c3de65f7938bb282",
+    "path": "src/mstore/mb16_43.f90",
+    "procedure": "mindless01",
+    "sha256": "28b98d83f20667daea916670f834f6786bceb15951b8a7f1c5fcc2a05d5ced59",
+    "license": "Apache-2.0",
+    "source_url": "https://github.com/grimme-lab/mstore/blob/6a166125738dd2f0edd62afd22c3479d7b8efbeb/src/mstore/mb16_43.f90",
+    "embedded_in_demo": true,
+    "required_runtime_dependency": false
+  },
+  "numerical_check": {
+    "reference_energy_hartree": -0.018578752883363366,
+    "reference_source": "test/unit/test_dftd4.f90: test_pbed4_mb01",
+    "absolute_energy_tolerance": 1e-10,
+    "gradient_finite_difference_step_bohr": 1e-05,
+    "gradient_absolute_tolerance": 1e-06,
+    "net_force_tolerance": 1e-09,
+    "translation_energy_tolerance": 1e-11,
+    "atom_count": 16,
+    "three_body_terms_enabled": false
+  },
+  "initial_preparation_findings": {
+    "conflicting_dependency_tags": "Jonquil requests TOML-F v0.4.0; mctc-lib requests v0.4.2.",
+    "resolution": "Pin TOML-F once at the v0.4.2 commit 51a26158c6d52bbc59cb482bdd13f00d7fd032a3.",
+    "upstream_numerical_sources_modified": false
+  }
+}

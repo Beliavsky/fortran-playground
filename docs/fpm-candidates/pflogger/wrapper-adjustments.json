@@ -1,0 +1,6 @@
+{
+  "findings": [
+    "FPM scans inactive MPI USE statements. The serial wrapper declares those lowercase module names external, while leaving _LOGGER_USE_MPI undefined and excluding MPI implementation sources. No MPI runtime is installed for this recipe.",
+    "The pFlogger-specific gFTL-shared asset adds three maps without modifying the already published vector-only asset. gFTL and gFTL-shared use generated-source fingerprinted shared exports; yaFyaml is compiled in this recipe because ungenerated repackaged sources remain ineligible for shared export."
+  ]
+}

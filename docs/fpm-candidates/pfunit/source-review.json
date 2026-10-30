@@ -1,0 +1,208 @@
+{
+  "id": "pfunit",
+  "repository": "Goddard-Fortran-Ecosystem/pFUnit",
+  "revision": "380524aa4ce4d97b2815a07a1bd24b660841cc6f",
+  "archive_sha256": "dc703807a42eb599d32d8c89b6db7955ea0642aa09a6a9e18f43c64e48a026dd",
+  "catalog_build": {
+    "adapter_sha256": "5f6c9c34de44723216fbd9c86483f4b3319660cf0f37b830aac27098b1dbe580",
+    "environment": {
+      "FPM_FFLAGS": "-cpp -ffree-line-length-none -fallow-argument-mismatch"
+    },
+    "source_packages": {
+      "goddard-fortran-ecosystem/gftl": {
+        "manifest": "name=\"gftl\"\nversion=\"0.0.0\"\nlicense=\"Apache-2.0\"\n[library]\nsource-dir=\"playground-library\"\ninclude-dir=[\"include\"]\n[build]\nauto-executables=false\nauto-examples=false\nauto-tests=false\n[install]\nlibrary=true\n[preprocess.cpp]\nmacros=[\"PLAYGROUND_CATALOG_2432761DA5C9C0F095908B33BA362954C2EBFA5DA97799C8279D375E0789CDE6\"]\n",
+        "sources": [
+          "playground-generated/integer_vector.F90"
+        ],
+        "generated": {
+          "asset": "gftl-4af86210b6cc6ac46d3298b6861571aa26bd6acc.json",
+          "sha256": "7433dc719afdcb6f77d49730b990e19a9854ad9282fa57ef59cfed98943e4f51"
+        }
+      },
+      "goddard-fortran-ecosystem/gftl-shared": {
+        "manifest": "name=\"gftl-shared\"\nversion=\"0.0.0\"\nlicense=\"Apache-2.0\"\n[library]\nsource-dir=\"playground-library\"\ninclude-dir=[]\n[build]\nauto-executables=false\nauto-examples=false\nauto-tests=false\nexternal-modules=[\"gftl2_integer64vector\"]\n[install]\nlibrary=true\n[dependencies]\ngftl={git=\"https://github.com/Goddard-Fortran-Ecosystem/gFTL\",rev=\"4af86210b6cc6ac46d3298b6861571aa26bd6acc\"}\n[preprocess.cpp]\nmacros=[\"HAS_ITERATOR\", \"_DOUBLE_DEFAULT_KIND=8\", \"_DOUBLE_DEFAULT_KIND_IS_REAL64\", \"_GNU\", \"_INT_DEFAULT_KIND=4\", \"_INT_DEFAULT_KIND_IS_INT32\", \"_ISO_INT16=2\", \"_ISO_INT32=4\", \"_ISO_INT64=8\", \"_ISO_INT8=1\", \"_ISO_REAL128=16\", \"_ISO_REAL32=4\", \"_ISO_REAL64=8\", \"_LOGICAL_DEFAULT_KIND=4\", \"_REAL128_IEEE_SUPPORT=T\", \"_REAL32_IEEE_SUPPORT=T\", \"_REAL64_IEEE_SUPPORT=T\", \"_REAL_DEFAULT_KIND=4\", \"_REAL_DEFAULT_KIND_IS_REAL32\"]\n",
+        "sources": [
+          "playground-generated/v2_Integer32Vector.F90",
+          "playground-generated/v2_IntegerVector.F90",
+          "playground-generated/v2_Real32Vector.F90",
+          "playground-generated/v2_Real64Vector.F90",
+          "playground-generated/v2_RealVector.F90",
+          "playground-generated/v2_StringUnlimitedMap.F90",
+          "playground-generated/v2_StringUnlimitedMap_wrap.F90",
+          "playground-generated/v2_StringVector.F90",
+          "playground-generated/v2_StringVector_wrap.F90",
+          "playground-generated/v2_UnlimitedVector.F90"
+        ],
+        "generated": {
+          "asset": "gftl-shared-pfunit-99dec0597bbd1df3f7b3bc46df930b46090ce509.json",
+          "sha256": "d8445e277354c5846e80b515b642e6ad9c7d3987976b8884fed1d89cc55df9e1"
+        }
+      },
+      "goddard-fortran-ecosystem/fargparse": {
+        "manifest": "name=\"fargparse\"\nversion=\"0.0.0\"\nlicense=\"Apache-2.0\"\n[library]\nsource-dir=\"playground-library\"\ninclude-dir=[\"include\"]\n[build]\nauto-executables=false\nauto-examples=false\nauto-tests=false\nexternal-modules=[]\n[install]\nlibrary=true\n[dependencies]\ngftl={git=\"https://github.com/Goddard-Fortran-Ecosystem/gFTL\",rev=\"4af86210b6cc6ac46d3298b6861571aa26bd6acc\"}\ngftl-shared={git=\"https://github.com/Goddard-Fortran-Ecosystem/gFTL-shared\",rev=\"99dec0597bbd1df3f7b3bc46df930b46090ce509\"}\n[preprocess.cpp]\nmacros=[]\n",
+        "sources": [
+          "src/AbstractArgParser.F90",
+          "src/ActionVector.F90",
+          "src/ArgParser.F90",
+          "src/BaseAction.F90",
+          "src/Cast.F90",
+          "src/CommandLineArguments.F90",
+          "src/ErrorCodes.F90",
+          "src/HelpAction.F90",
+          "src/KeywordEnforcer.F90",
+          "src/None.F90",
+          "src/StoreAction.F90",
+          "src/StoreConstAction.F90",
+          "src/StoreFalseAction.F90",
+          "src/StoreTrueAction.F90",
+          "src/String.F90",
+          "src/StringActionMap.F90",
+          "src/fArgParse.F90"
+        ]
+      },
+      "goddard-fortran-ecosystem/pfunit": {
+        "manifest": "name=\"pfunit\"\nversion=\"0.0.0\"\nlicense=\"Apache-2.0\"\n[library]\nsource-dir=\"playground-library\"\ninclude-dir=[\"include\"]\n[build]\nauto-executables=false\nauto-examples=false\nauto-tests=false\nexternal-modules=[\"mpi\", \"mpi_f08\", \"omp_lib\", \"fhamcrest\", \"pf_remoterunner\", \"pf_robustrunner\", \"f90_unix_proc\"]\n[install]\nlibrary=true\n[dependencies]\nfargparse={git=\"https://github.com/Goddard-Fortran-Ecosystem/fArgParse\",rev=\"54c6066edb5bd9c2044274e13838db287ad947a3\"}\ngftl={git=\"https://github.com/Goddard-Fortran-Ecosystem/gFTL\",rev=\"4af86210b6cc6ac46d3298b6861571aa26bd6acc\"}\ngftl-shared={git=\"https://github.com/Goddard-Fortran-Ecosystem/gFTL-shared\",rev=\"99dec0597bbd1df3f7b3bc46df930b46090ce509\"}\n[preprocess.cpp]\nmacros=[\"SKIP_FHAMCREST\", \"_DOUBLE_DEFAULT_KIND=8\", \"_GNU\", \"_INT_DEFAULT_KIND=4\", \"_ISO_INT16=2\", \"_ISO_INT32=4\", \"_ISO_INT64=8\", \"_ISO_INT8=1\", \"_ISO_REAL128=16\", \"_ISO_REAL32=4\", \"_ISO_REAL64=8\", \"_LOGICAL_DEFAULT_KIND=4\", \"_REAL128_IEEE_SUPPORT=T\", \"_REAL32_IEEE_SUPPORT=T\", \"_REAL64_IEEE_SUPPORT=T\", \"_REAL_DEFAULT_KIND=4\"]\n[fortran]\nimplicit-external=true\n",
+        "sources": [
+          "playground-generated/AssertComplex_0d.F90",
+          "playground-generated/AssertComplex_1d.F90",
+          "playground-generated/AssertComplex_2d.F90",
+          "playground-generated/AssertInteger_0d.F90",
+          "playground-generated/AssertInteger_1d.F90",
+          "playground-generated/AssertInteger_2d.F90",
+          "playground-generated/AssertLogical_0d.F90",
+          "playground-generated/AssertLogical_1d.F90",
+          "playground-generated/AssertLogical_2d.F90",
+          "playground-generated/AssertOverloads.F90",
+          "playground-generated/AssertReal_0d.F90",
+          "playground-generated/AssertReal_1d.F90",
+          "playground-generated/AssertReal_2d.F90",
+          "playground-generated/FormatIntrinsic.F90",
+          "playground-generated/Norms_0d.F90",
+          "playground-generated/Norms_1d.F90",
+          "playground-generated/Norms_2d.F90",
+          "src/funit/FUnit.F90",
+          "src/funit/asserts/Assert.F90",
+          "src/funit/asserts/AssertBasic.F90",
+          "src/funit/asserts/AssertString.F90",
+          "src/funit/asserts/AssertUtilities.F90",
+          "src/funit/core/AbstractPattern.F90",
+          "src/funit/core/AbstractPrinter.F90",
+          "src/funit/core/AbstractTestParameter.F90",
+          "src/funit/core/AbstractTestResult.F90",
+          "src/funit/core/BaseTestRunner.F90",
+          "src/funit/core/DebugListener.F90",
+          "src/funit/core/DisableAnnotation.F90",
+          "src/funit/core/DotPattern.F90",
+          "src/funit/core/DynamicTestCase.F90",
+          "src/funit/core/Exception.F90",
+          "src/funit/core/ExceptionList.F90",
+          "src/funit/core/ExceptionVector.F90",
+          "src/funit/core/Expectation.F90",
+          "src/funit/core/FUnit_Core.F90",
+          "src/funit/core/GlobFilter.F90",
+          "src/funit/core/GlobPattern.F90",
+          "src/funit/core/KeywordEnforcer.F90",
+          "src/funit/core/LiteralPattern.F90",
+          "src/funit/core/MatchObject.F90",
+          "src/funit/core/MockCall.F90",
+          "src/funit/core/MockRepository.F90",
+          "src/funit/core/NameFilter.F90",
+          "src/funit/core/None.F90",
+          "src/funit/core/ParallelContext.F90",
+          "src/funit/core/ParameterizedTestCase.F90",
+          "src/funit/core/Params.F90",
+          "src/funit/core/RegexFilter.F90",
+          "src/funit/core/RegularExpression.F90",
+          "src/funit/core/RepeatPattern.F90",
+          "src/funit/core/ResultPrinter.F90",
+          "src/funit/core/SerialContext.F90",
+          "src/funit/core/SourceLocation.F90",
+          "src/funit/core/StringUtilities.F90",
+          "src/funit/core/SurrogateTestCase.F90",
+          "src/funit/core/TapListener.F90",
+          "src/funit/core/Test.F90",
+          "src/funit/core/TestAnnotation.F90",
+          "src/funit/core/TestCase.F90",
+          "src/funit/core/TestFailure.F90",
+          "src/funit/core/TestFailureVector.F90",
+          "src/funit/core/TestFilter.F90",
+          "src/funit/core/TestListener.F90",
+          "src/funit/core/TestListenerVector.F90",
+          "src/funit/core/TestMethod.F90",
+          "src/funit/core/TestResult.F90",
+          "src/funit/core/TestRunner.F90",
+          "src/funit/core/TestSuite.F90",
+          "src/funit/core/TestTimer.F90",
+          "src/funit/core/TestVector.F90",
+          "src/funit/core/ThrowFundamentalTypes.F90",
+          "src/funit/core/TimeoutAnnotation.F90",
+          "src/funit/core/XmlPrinter.F90",
+          "src/funit/core/get_errno.c",
+          "src/funit/core/regex_F.c",
+          "src/funit/core/regex_module.F90",
+          "src/funit/funit_main.F90"
+        ],
+        "generated": {
+          "asset": "pfunit-380524aa4ce4d97b2815a07a1bd24b660841cc6f.json",
+          "sha256": "6231c64d1394dc2b35ffa9ce459c5f54829684e42a174422f79bbee140eb89d6"
+        }
+      }
+    }
+  },
+  "dependencies": [
+    {
+      "repository": "Goddard-Fortran-Ecosystem/fArgParse",
+      "revision": "54c6066edb5bd9c2044274e13838db287ad947a3",
+      "sha256": "da51689cdd9a369bba78f6fa3b5a4fd8d46506a68b5a33e30d617edbd6cd8278"
+    },
+    {
+      "repository": "Goddard-Fortran-Ecosystem/gFTL-shared",
+      "revision": "99dec0597bbd1df3f7b3bc46df930b46090ce509",
+      "sha256": "374be0e590497a88427ff165994a93e2195dff8661bc25a9ca4deb90102a8d96"
+    },
+    {
+      "repository": "Goddard-Fortran-Ecosystem/gFTL",
+      "revision": "4af86210b6cc6ac46d3298b6861571aa26bd6acc",
+      "sha256": "c106e125718110c8321b0f8b914ef80ad4cf4afbd6be38762802a8dba2d61a2f"
+    }
+  ],
+  "checked_at": "2026-10-30T13:13:55.964427+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/pfunit.f90",
+  "verification": {
+    "seconds": 2.463,
+    "build_seconds": 0.966,
+    "library_reused": true,
+    "demo_sha256": "0638bb9cd777962a211f978412d8bf144b6fccc62b50489ce7b4599f9ac514b9",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "Apache-2.0",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "The pinned serial pFUnit configuration disables MPI, OpenMP, robust/forked runners and Hamcrest, and uses the author-supported MAX_ASSERT_RANK=2 option (scalars, vectors and matrices) to retain the existing 2 MiB generated-source asset limit. The author CMake configuration supplies source selections and compiler-kind definitions; overload_template.py generates the assertions. fArgParse and its gFTL-shared/gFTL submodules are pinned at the exact upstream gitlinks, with only the required shared container instantiations generated. The FPM scanner sees a NAG-only f90_unix_proc USE even on GNU, so that inactive branch is declared external; inactive robust/Hamcrest interfaces are likewise excluded without altering original library code. A plain Fortran main constructs three TestMethod cases in a TestSuite and checks scalar, vector and matrix assertions through TestRunner/SerialContext, requiring exactly three runs and zero errors/failures. No visitor-side Python, CMake or annotation generation is needed. Higher assertion ranks, matcher DSLs, MPI, OpenMP and process-forking runners are not offered by this configuration. S denotes software testing; no numerical solver classification is inferred. Apache-2.0 and dependency notices are retained.",
+  "configuration_options": [
+    "-DSKIP_MPI=YES",
+    "-DSKIP_OPENMP=YES",
+    "-DSKIP_ROBUST=YES",
+    "-DSKIP_FHAMCREST=YES",
+    "-DENABLE_TESTS=NO",
+    "-DMAX_ASSERT_RANK=2"
+  ],
+  "maximum_assert_rank": 2,
+  "generation": {
+    "script": "xgenerate_pfunit.py",
+    "script_sha256": "f1fcd1fd28b501e989cde5c388db669a7c748c1dd4595b58f07594a89b816118",
+    "byte_identical_reproduction": true,
+    "visitor_generation": false,
+    "generated_assets_lf": true,
+    "rank_5_probe_asset_bytes": 4235425,
+    "rank_5_note": "The observed rank-5 probe asset size includes Windows JSON line endings. It exceeded the existing 2 MiB text-asset cap. The supported rank-2 configuration is offered explicitly instead; no service limit changed."
+  },
+  "wrapper_adjustments": [
+    "Declare NAG-only f90_unix_proc as external because FPM scans the inactive conditional USE on GNU.",
+    "Set implicit-external=true for pFUnit, matching the upstream procedure() callback declarations rather than FPM strict implicit-interface diagnostics. Original source contents are unchanged."
+  ]
+}

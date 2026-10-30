@@ -1,0 +1,343 @@
+{
+  "id": "nufft2d",
+  "repository": "zgimbutas/nufft2d",
+  "revision": "8353c5fb20cd0a8fe6821fae18355e303ed23ed3",
+  "archive_sha256": "12c15079e3a81fc2c58b95ee568193e70d5010edca08ab28296fd5d4956e12ee",
+  "catalog_build": {
+    "adapter_sha256": "66e8249cbc0eb57ffecf9f04801ede2060312d64ba2fa2d839b07fdc746f5f8c",
+    "environment": {
+      "FPM_FFLAGS": "-std=legacy -fallow-argument-mismatch -ffixed-line-length-none"
+    },
+    "source_packages": {
+      "zgimbutas/nufft2d": {
+        "manifest": "name = \"nufft2d\"\nversion = \"0.0.0\"\nlicense = \"BSD-2-Clause\"\n[library]\nsource-dir = \"playground-library\"\ninclude-dir = [\".\"]\n[build]\nauto-executables = false\nauto-examples = false\nauto-tests = false\n[install]\nlibrary = true\n[fortran]\nimplicit-typing = true\nimplicit-external = true\nsource-form = \"default\"\n",
+        "sources": [
+          "nufft2df90.f",
+          "dfft.f",
+          "next235.f",
+          "dirft2d.f"
+        ]
+      }
+    }
+  },
+  "dependencies": [],
+  "catalog_patches": {
+    "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+    "edits": [
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "4e34b7e5d9c11dcfb1b42ce7de3e309331f579d57ee7af44c7cb2a47d2ffea3d",
+        "before": "      SUBROUTINE ZFFTB (N,C,WSAVE)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       C(1)       ,WSAVE(1)\n",
+        "after": "      SUBROUTINE ZFFTB (N,C,WSAVE)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       C(*)       ,WSAVE(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "bb0ba61207454fe67d6f8982273cd2fd7472fc63299c77f4340aca208c58bb34",
+        "before": "      SUBROUTINE ZFFTB1 (N,C,CH,WA,IFAC)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CH(1)      ,C(1)       ,WA(1)      ,IFAC(*)\n",
+        "after": "      SUBROUTINE ZFFTB1 (N,C,CH,WA,IFAC)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CH(*)      ,C(*)       ,WA(*)      ,IFAC(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "0ce190554ef326ff6fedad25c5841a19c425d661780249c2a0a9e6005b6651f0",
+        "before": "      SUBROUTINE ZFFTF (N,C,WSAVE)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       C(1)       ,WSAVE(1)\n",
+        "after": "      SUBROUTINE ZFFTF (N,C,WSAVE)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       C(*)       ,WSAVE(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "4d83f8a9a1e8684f699a76b89294ed61fdfdb7e5cb24f06d302d264e17ccf89d",
+        "before": "      SUBROUTINE ZFFTF1 (N,C,CH,WA,IFAC)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CH(1)      ,C(1)       ,WA(1)      ,IFAC(*)\n",
+        "after": "      SUBROUTINE ZFFTF1 (N,C,CH,WA,IFAC)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CH(*)      ,C(*)       ,WA(*)      ,IFAC(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "77a6d097193d4addcddaaf27d939310ed730937b4dd20f2db4b294948559c620",
+        "before": "      SUBROUTINE ZFFTI (N,WSAVE)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       WSAVE(1)\n",
+        "after": "      SUBROUTINE ZFFTI (N,WSAVE)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       WSAVE(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "a031513872fca6aee080fd9c3408ea2140c29e6dc6a0488740e65d51e02c1e5d",
+        "before": "      SUBROUTINE ZFFTI1 (N,WA,IFAC)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       WA(1)      ,IFAC(*)    ,NTRYH(4)\n",
+        "after": "      SUBROUTINE ZFFTI1 (N,WA,IFAC)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       WA(*)      ,IFAC(*)    ,NTRYH(4)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "2e580a3280125f4e320e6f390daaee68ecf34a121610fafe99d01139f9f8c301",
+        "before": "      SUBROUTINE DCOSQB (N,X,WSAVE)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       X(*)       ,WSAVE(1)\n",
+        "after": "      SUBROUTINE DCOSQB (N,X,WSAVE)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       X(*)       ,WSAVE(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "62ebf30b161c3d4e8d0424120846f517d23d1c0bbbde585cca99faeb5bb1bc5d",
+        "before": "      SUBROUTINE DCOSQB1 (N,X,W,XH)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       X(*)       ,W(1)       ,XH(*)\n",
+        "after": "      SUBROUTINE DCOSQB1 (N,X,W,XH)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       X(*)       ,W(*)       ,XH(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "9563178e72666817233ea551cc32be1a96c892657f5a938acd63a540df059e48",
+        "before": "      SUBROUTINE DCOSQF (N,X,WSAVE)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       X(*)       ,WSAVE(1)\n",
+        "after": "      SUBROUTINE DCOSQF (N,X,WSAVE)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       X(*)       ,WSAVE(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "6f49b88ff4c71e547cc8c8774606084e0c7d9b2133b908676074212ac0ba96b3",
+        "before": "      SUBROUTINE DCOSQF1 (N,X,W,XH)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       X(*)       ,W(1)       ,XH(*)\n",
+        "after": "      SUBROUTINE DCOSQF1 (N,X,W,XH)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       X(*)       ,W(*)       ,XH(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "53f0553340540079bea2c8a24b7f43f8cd4ed466aabf1085d2e1a904da00f9aa",
+        "before": "      SUBROUTINE DCOSQI (N,WSAVE)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       WSAVE(1)\n",
+        "after": "      SUBROUTINE DCOSQI (N,WSAVE)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       WSAVE(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "37cca9da2e1ff1fcd6c260787ef2c8fb5da3b73c9c8cc624b90255b9361d732d",
+        "before": "      SUBROUTINE DCOST (N,X,WSAVE)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       X(*)       ,WSAVE(1)\n",
+        "after": "      SUBROUTINE DCOST (N,X,WSAVE)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       X(*)       ,WSAVE(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "2ee48d274b861ea49defcef19dcedfa8d8712b9aa3474c416c2fe263fc3e43ed",
+        "before": "      SUBROUTINE DCOSTI (N,WSAVE)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       WSAVE(1)\n",
+        "after": "      SUBROUTINE DCOSTI (N,WSAVE)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       WSAVE(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "2ca9329e45426a173c9a864e3584d337af1b283005690bad24fde9d2a42d658c",
+        "before": "      SUBROUTINE DZFFT1 (N,WA,IFAC)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       WA(1)      ,IFAC(*)    ,NTRYH(4)\n",
+        "after": "      SUBROUTINE DZFFT1 (N,WA,IFAC)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       WA(*)      ,IFAC(*)    ,NTRYH(4)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "b2b4f48565a81dd4a8c48655eddc09fbdcdb7fb00446d22526056e1dc0f4dc6f",
+        "before": "      SUBROUTINE DZFFTB (N,R,AZERO,A,B,WSAVE)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       R(*)       ,A(1)       ,B(1)       ,WSAVE(1)\n",
+        "after": "      SUBROUTINE DZFFTB (N,R,AZERO,A,B,WSAVE)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       R(*)       ,A(*)       ,B(*)       ,WSAVE(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "03dc658d673804fe14a23093d05f99fd453a1435b34b3246cf1f34659dd10cc3",
+        "before": "      SUBROUTINE DZFFTF (N,R,AZERO,A,B,WSAVE)\nC\nC                       VERSION 3  JUNE 1979\nC\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       R(*)       ,A(1)       ,B(1)       ,WSAVE(1)\n",
+        "after": "      SUBROUTINE DZFFTF (N,R,AZERO,A,B,WSAVE)\nC\nC                       VERSION 3  JUNE 1979\nC\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       R(*)       ,A(*)       ,B(*)       ,WSAVE(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "ba7ef50950af5e8323562deab29a3f135a50260c8c69ac248e1eb077514d8d63",
+        "before": "      SUBROUTINE DZFFTI (N,WSAVE)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       WSAVE(1)\n",
+        "after": "      SUBROUTINE DZFFTI (N,WSAVE)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       WSAVE(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "26ea0eec373a1c69989f681122cc5798bb2df93b771515de25f27713d8fc4a8d",
+        "before": "      SUBROUTINE DPASSB (NAC,IDO,IP,L1,IDL1,CC,C1,C2,CH,CH2,WA)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CH(IDO,L1,IP)          ,CC(IDO,IP,L1)          ,\n     1                C1(IDO,L1,IP)          ,WA(1)      ,C2(IDL1,IP),\n",
+        "after": "      SUBROUTINE DPASSB (NAC,IDO,IP,L1,IDL1,CC,C1,C2,CH,CH2,WA)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CH(IDO,L1,IP)          ,CC(IDO,IP,L1)          ,\n     1                C1(IDO,L1,IP)          ,WA(*)      ,C2(IDL1,IP),\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "ad00b331af2ec6d94247c05da94fac885c135cf1df7d6f5a06a0061126a722eb",
+        "before": "      SUBROUTINE DPASSB2 (IDO,L1,CC,CH,WA1)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CC(IDO,2,L1)           ,CH(IDO,L1,2)           ,\n     1                WA1(1)\n",
+        "after": "      SUBROUTINE DPASSB2 (IDO,L1,CC,CH,WA1)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CC(IDO,2,L1)           ,CH(IDO,L1,2)           ,\n     1                WA1(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "ed0306bc98e17a89a700793afc52c9a1a74685a0d34e560806da02da26eb3878",
+        "before": "      SUBROUTINE DPASSB3 (IDO,L1,CC,CH,WA1,WA2)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CC(IDO,3,L1)           ,CH(IDO,L1,3)           ,\n     1                WA1(1)     ,WA2(1)\n",
+        "after": "      SUBROUTINE DPASSB3 (IDO,L1,CC,CH,WA1,WA2)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CC(IDO,3,L1)           ,CH(IDO,L1,3)           ,\n     1                WA1(*)     ,WA2(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "b9c05d8e83e2943df7ece4fd36b3eb7eed757be6a7ed12846ea363e46c41c348",
+        "before": "      SUBROUTINE DPASSB4 (IDO,L1,CC,CH,WA1,WA2,WA3)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CC(IDO,4,L1)           ,CH(IDO,L1,4)           ,\n     1                WA1(1)     ,WA2(1)     ,WA3(1)\n",
+        "after": "      SUBROUTINE DPASSB4 (IDO,L1,CC,CH,WA1,WA2,WA3)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CC(IDO,4,L1)           ,CH(IDO,L1,4)           ,\n     1                WA1(*)     ,WA2(*)     ,WA3(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "4b38ac38d66f9a43eaf2a887bde4cc2644841dc1df92def405d050eb6b0e8c9b",
+        "before": "      SUBROUTINE DPASSB5 (IDO,L1,CC,CH,WA1,WA2,WA3,WA4)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CC(IDO,5,L1)           ,CH(IDO,L1,5)           ,\n     1                WA1(1)     ,WA2(1)     ,WA3(1)     ,WA4(1)\n",
+        "after": "      SUBROUTINE DPASSB5 (IDO,L1,CC,CH,WA1,WA2,WA3,WA4)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CC(IDO,5,L1)           ,CH(IDO,L1,5)           ,\n     1                WA1(*)     ,WA2(*)     ,WA3(*)     ,WA4(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "a296b6b819a555fea8229da360afcb440588dd534776e6a3f8682e97f98a288d",
+        "before": "      SUBROUTINE DPASSF (NAC,IDO,IP,L1,IDL1,CC,C1,C2,CH,CH2,WA)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CH(IDO,L1,IP)          ,CC(IDO,IP,L1)          ,\n     1                C1(IDO,L1,IP)          ,WA(1)      ,C2(IDL1,IP),\n",
+        "after": "      SUBROUTINE DPASSF (NAC,IDO,IP,L1,IDL1,CC,C1,C2,CH,CH2,WA)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CH(IDO,L1,IP)          ,CC(IDO,IP,L1)          ,\n     1                C1(IDO,L1,IP)          ,WA(*)      ,C2(IDL1,IP),\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "fb0ca51609ae438ac5462db89f6c9150f2b999020253b368b9baf3d9e1c274c2",
+        "before": "      SUBROUTINE DPASSF2 (IDO,L1,CC,CH,WA1)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CC(IDO,2,L1)           ,CH(IDO,L1,2)           ,\n     1                WA1(1)\n",
+        "after": "      SUBROUTINE DPASSF2 (IDO,L1,CC,CH,WA1)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CC(IDO,2,L1)           ,CH(IDO,L1,2)           ,\n     1                WA1(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "f72e1e3cb72278b0bf339e18dd6087fc6bd874db47175c00b11c59cf1341d85b",
+        "before": "      SUBROUTINE DPASSF3 (IDO,L1,CC,CH,WA1,WA2)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CC(IDO,3,L1)           ,CH(IDO,L1,3)           ,\n     1                WA1(1)     ,WA2(1)\n",
+        "after": "      SUBROUTINE DPASSF3 (IDO,L1,CC,CH,WA1,WA2)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CC(IDO,3,L1)           ,CH(IDO,L1,3)           ,\n     1                WA1(*)     ,WA2(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "984247617f69845831675780b62ddc7a7e450484f5fe3cbea09ea162de0d2c39",
+        "before": "      SUBROUTINE DPASSF4 (IDO,L1,CC,CH,WA1,WA2,WA3)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CC(IDO,4,L1)           ,CH(IDO,L1,4)           ,\n     1                WA1(1)     ,WA2(1)     ,WA3(1)\n",
+        "after": "      SUBROUTINE DPASSF4 (IDO,L1,CC,CH,WA1,WA2,WA3)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CC(IDO,4,L1)           ,CH(IDO,L1,4)           ,\n     1                WA1(*)     ,WA2(*)     ,WA3(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "2fa5a5819e36799bac7d7e0fca6ea08074cbdfb63158f912b12d3eb8477a67eb",
+        "before": "      SUBROUTINE DPASSF5 (IDO,L1,CC,CH,WA1,WA2,WA3,WA4)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CC(IDO,5,L1)           ,CH(IDO,L1,5)           ,\n     1                WA1(1)     ,WA2(1)     ,WA3(1)     ,WA4(1)\n",
+        "after": "      SUBROUTINE DPASSF5 (IDO,L1,CC,CH,WA1,WA2,WA3,WA4)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CC(IDO,5,L1)           ,CH(IDO,L1,5)           ,\n     1                WA1(*)     ,WA2(*)     ,WA3(*)     ,WA4(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "522f1658fd2594d817ca3a6c5eda7a6b8fd052afa5c8caf4f97be79fde220c49",
+        "before": "      SUBROUTINE DRADB2 (IDO,L1,CC,CH,WA1)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CC(IDO,2,L1)           ,CH(IDO,L1,2)           ,\n     1                WA1(1)\n",
+        "after": "      SUBROUTINE DRADB2 (IDO,L1,CC,CH,WA1)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CC(IDO,2,L1)           ,CH(IDO,L1,2)           ,\n     1                WA1(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "19dd5bac28851acab595086fdcac78b730cd7ed1cf34d22787c711e4a2237e0f",
+        "before": "      SUBROUTINE DRADB3 (IDO,L1,CC,CH,WA1,WA2)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CC(IDO,3,L1)           ,CH(IDO,L1,3)           ,\n     1                WA1(1)     ,WA2(1)\n",
+        "after": "      SUBROUTINE DRADB3 (IDO,L1,CC,CH,WA1,WA2)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CC(IDO,3,L1)           ,CH(IDO,L1,3)           ,\n     1                WA1(*)     ,WA2(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "0d3026ef4012d9301d365368f9c8e42bf0091deb14137636b1d1725eb0d1424b",
+        "before": "      SUBROUTINE DRADB4 (IDO,L1,CC,CH,WA1,WA2,WA3)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CC(IDO,4,L1)           ,CH(IDO,L1,4)           ,\n     1                WA1(1)     ,WA2(1)     ,WA3(1)\n",
+        "after": "      SUBROUTINE DRADB4 (IDO,L1,CC,CH,WA1,WA2,WA3)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CC(IDO,4,L1)           ,CH(IDO,L1,4)           ,\n     1                WA1(*)     ,WA2(*)     ,WA3(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "b39b703e2c15699c9d3b7f5db4cbcf9f9d2acaa4444ffb3a69da503affc0c5f1",
+        "before": "      SUBROUTINE DRADB5 (IDO,L1,CC,CH,WA1,WA2,WA3,WA4)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CC(IDO,5,L1)           ,CH(IDO,L1,5)           ,\n     1                WA1(1)     ,WA2(1)     ,WA3(1)     ,WA4(1)\n",
+        "after": "      SUBROUTINE DRADB5 (IDO,L1,CC,CH,WA1,WA2,WA3,WA4)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CC(IDO,5,L1)           ,CH(IDO,L1,5)           ,\n     1                WA1(*)     ,WA2(*)     ,WA3(*)     ,WA4(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "50c7890e8fdb2998d8820c9679551e707d61ebfa777d8fcb85785248c057eca6",
+        "before": "      SUBROUTINE DRADBG (IDO,IP,L1,IDL1,CC,C1,C2,CH,CH2,WA)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CH(IDO,L1,IP)          ,CC(IDO,IP,L1)          ,\n     1                C1(IDO,L1,IP)          ,C2(IDL1,IP),\n     2                CH2(IDL1,IP)           ,WA(1)\n",
+        "after": "      SUBROUTINE DRADBG (IDO,IP,L1,IDL1,CC,C1,C2,CH,CH2,WA)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CH(IDO,L1,IP)          ,CC(IDO,IP,L1)          ,\n     1                C1(IDO,L1,IP)          ,C2(IDL1,IP),\n     2                CH2(IDL1,IP)           ,WA(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "fe96a72493cdde24397782a38829fc8f3612a18494319b04b3019b48afdc595b",
+        "before": "      SUBROUTINE DRADF2 (IDO,L1,CC,CH,WA1)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CH(IDO,2,L1)           ,CC(IDO,L1,2)           ,\n     1                WA1(1)\n",
+        "after": "      SUBROUTINE DRADF2 (IDO,L1,CC,CH,WA1)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CH(IDO,2,L1)           ,CC(IDO,L1,2)           ,\n     1                WA1(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "cacf52ee9bfed031f1dbbb26591675f341efec1ea8bc6e7a59a7c6ccf5e728db",
+        "before": "      SUBROUTINE DRADF3 (IDO,L1,CC,CH,WA1,WA2)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CH(IDO,3,L1)           ,CC(IDO,L1,3)           ,\n     1                WA1(1)     ,WA2(1)\n",
+        "after": "      SUBROUTINE DRADF3 (IDO,L1,CC,CH,WA1,WA2)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CH(IDO,3,L1)           ,CC(IDO,L1,3)           ,\n     1                WA1(*)     ,WA2(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "ed31ef8432231042644df4fe504e0f48bc240a3fa71ffb9d2f2210af180d6b7a",
+        "before": "      SUBROUTINE DRADF4 (IDO,L1,CC,CH,WA1,WA2,WA3)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CC(IDO,L1,4)           ,CH(IDO,4,L1)           ,\n     1                WA1(1)     ,WA2(1)     ,WA3(1)\n",
+        "after": "      SUBROUTINE DRADF4 (IDO,L1,CC,CH,WA1,WA2,WA3)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CC(IDO,L1,4)           ,CH(IDO,4,L1)           ,\n     1                WA1(*)     ,WA2(*)     ,WA3(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "cda983c9003079f27a5a3ac022ae2f0d77f753200d23179a7f59b39d3a5b8f22",
+        "before": "      SUBROUTINE DRADF5 (IDO,L1,CC,CH,WA1,WA2,WA3,WA4)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CC(IDO,L1,5)           ,CH(IDO,5,L1)           ,\n     1                WA1(1)     ,WA2(1)     ,WA3(1)     ,WA4(1)\n",
+        "after": "      SUBROUTINE DRADF5 (IDO,L1,CC,CH,WA1,WA2,WA3,WA4)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CC(IDO,L1,5)           ,CH(IDO,5,L1)           ,\n     1                WA1(*)     ,WA2(*)     ,WA3(*)     ,WA4(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "f6de4ad975156bed1ed67af00b88a6faaecbfde31eb0113b01333c617365b545",
+        "before": "      SUBROUTINE DRADFG (IDO,IP,L1,IDL1,CC,C1,C2,CH,CH2,WA)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CH(IDO,L1,IP)          ,CC(IDO,IP,L1)          ,\n     1                C1(IDO,L1,IP)          ,C2(IDL1,IP),\n     2                CH2(IDL1,IP)           ,WA(1)\n",
+        "after": "      SUBROUTINE DRADFG (IDO,IP,L1,IDL1,CC,C1,C2,CH,CH2,WA)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CH(IDO,L1,IP)          ,CC(IDO,IP,L1)          ,\n     1                C1(IDO,L1,IP)          ,C2(IDL1,IP),\n     2                CH2(IDL1,IP)           ,WA(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "5262f75676f968ebfd3e1f98c40c3daa4f06544282d7bf0a82e998769e51af7f",
+        "before": "      SUBROUTINE DFFTB (N,R,WSAVE)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       R(*)       ,WSAVE(1)\n",
+        "after": "      SUBROUTINE DFFTB (N,R,WSAVE)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       R(*)       ,WSAVE(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "0e177124b9505cee7d904d23c74421c71a156a99b54bc4adf962d0c71f2c9a1e",
+        "before": "      SUBROUTINE DFFTB1 (N,C,CH,WA,IFAC)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CH(1)      ,C(1)       ,WA(1)      ,IFAC(*)\n",
+        "after": "      SUBROUTINE DFFTB1 (N,C,CH,WA,IFAC)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CH(*)      ,C(*)       ,WA(*)      ,IFAC(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "2f258e66e50fa3f4b515810cad75f62b67840ea3a982c5ac83c0ffa4d0843c05",
+        "before": "      SUBROUTINE DFFTF (N,R,WSAVE)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       R(*)       ,WSAVE(1)\n",
+        "after": "      SUBROUTINE DFFTF (N,R,WSAVE)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       R(*)       ,WSAVE(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "f4477ec85c20a6512160abcbe9bcc9edded8a5475ed643376938ee5fc7ebd018",
+        "before": "      SUBROUTINE DFFTF1 (N,C,CH,WA,IFAC)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CH(1)      ,C(1)       ,WA(1)      ,IFAC(*)\n",
+        "after": "      SUBROUTINE DFFTF1 (N,C,CH,WA,IFAC)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       CH(*)      ,C(*)       ,WA(*)      ,IFAC(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "ef62d71fcdca204fc5d218c6f7ae076139de4e66223ed75957c7822d55230dbd",
+        "before": "      SUBROUTINE DFFTI (N,WSAVE)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       WSAVE(1)\n",
+        "after": "      SUBROUTINE DFFTI (N,WSAVE)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       WSAVE(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "3c83de707f9b5fecb2174b2fd101dea63ac42f8f96a85709a14de698dcae1a08",
+        "before": "      SUBROUTINE DFFTI1 (N,WA,IFAC)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       WA(1)      ,IFAC(*)    ,NTRYH(4)\n",
+        "after": "      SUBROUTINE DFFTI1 (N,WA,IFAC)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       WA(*)      ,IFAC(*)    ,NTRYH(4)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "ba651d8e7e6c1627afd614d2c020e170fe9ffa93760945c6abbd9910eecc1368",
+        "before": "      SUBROUTINE DSINQB (N,X,WSAVE)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       X(*)       ,WSAVE(1)\n",
+        "after": "      SUBROUTINE DSINQB (N,X,WSAVE)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       X(*)       ,WSAVE(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "bdec19f47435e7b009ebc0ea5e406a8d04021f58b60e8785919bfbab4c20d6cc",
+        "before": "      SUBROUTINE DSINQF (N,X,WSAVE)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       X(*)       ,WSAVE(1)\n",
+        "after": "      SUBROUTINE DSINQF (N,X,WSAVE)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       X(*)       ,WSAVE(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "456f386f8bb55de42c4bc127601ff94b0046c651caa1a09497f51fc14f27dc76",
+        "before": "      SUBROUTINE DSINQI (N,WSAVE)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       WSAVE(1)\n",
+        "after": "      SUBROUTINE DSINQI (N,WSAVE)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       WSAVE(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "ea8fc69da215971bb33f20ebf0b6aec030cb901ad0f7ca323ddf8f6cc6889959",
+        "before": "      SUBROUTINE DSINT (N,X,WSAVE)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       X(*)       ,WSAVE(1)\n",
+        "after": "      SUBROUTINE DSINT (N,X,WSAVE)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       X(*)       ,WSAVE(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "9c26c84717bfe319f8893de496fb535baaaa4301a4042da4629a74d4e00028ef",
+        "before": "      SUBROUTINE DSINT1(N,WAR,WAS,XH,X,IFAC)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION WAR(1),WAS(1),X(*),XH(*),IFAC(*)\n",
+        "after": "      SUBROUTINE DSINT1(N,WAR,WAS,XH,X,IFAC)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION WAR(*),WAS(*),X(*),XH(*),IFAC(*)\n"
+      },
+      {
+        "path": "playground-library/dfft.f",
+        "sha256": "dc4d27c6bb97e3be3cb652e402b7c924034dc54ed1b2816ace26522ba9dc7630",
+        "before": "      SUBROUTINE DSINTI (N,WSAVE)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       WSAVE(1)\n",
+        "after": "      SUBROUTINE DSINTI (N,WSAVE)\n\tIMPLICIT DOUBLE PRECISION (A-H,O-Z)\n      DIMENSION       WSAVE(*)\n"
+      }
+    ]
+  },
+  "checked_at": "2026-10-29T19:30:07.012330+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/nufft2d.f90",
+  "verification": {
+    "seconds": 2.031,
+    "build_seconds": 0.438,
+    "library_reused": true,
+    "demo_sha256": "79b500a9e11d45ed81a7b0ea2edef4b672aace42506443cf357590c7ca41aabe",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "BSD-2-Clause",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Original two-dimensional nonuniform Fourier code using the dynamically allocated Fortran 90 interface and bundled Netlib FFT implementation. Forty-nine checksum-guarded edits change legacy extent-one FFT dummy-array declarations to assumed size after checking that each is a procedure argument; no formulas or local arrays change and bounds checking remains enabled. Legacy workspace argument type punning uses the package-specific -fallow-argument-mismatch option. The example transforms 96 deterministic scattered points onto a 16-by-18 mode grid for both exponent signs, checking status, finite values and all coefficients against an independent direct sum with the documented 1/nj normalization. Types 2/3, the static Fortran 77 interface, every FFT routine and multidimensional performance are not verified.",
+  "compatibility_audit": "dummy-array-audit.json",
+  "compatibility_patch": "bounds-compatibility.patch",
+  "compatibility_edit_count": 49
+}

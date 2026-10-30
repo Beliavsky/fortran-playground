@@ -1,0 +1,41 @@
+{
+  "id": "fortran-lua54",
+  "repository": "interkosmos/fortran-lua54",
+  "revision": "b3582591bc82d003ef3933d0772c131509667f49",
+  "archive_sha256": "00faaaf77664484aad3791e77cb570905369e1aec42adabf404b49f50ab34444",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "apt_packages": [
+      "liblua5.4-dev=5.4.7-1+b2"
+    ]
+  },
+  "dependencies": [],
+  "catalog_patches": {
+    "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+    "edits": [
+      {
+        "path": "fpm.toml",
+        "sha256": "1394c27c7a9f58959a30de0fa41be102ca1b3514ab4928467a857e1e1ed515aa",
+        "before": "name = \"fortran-lua54\"\nversion = \"0.2.0\"\nlicense = \"ISC\"\nauthor = \"Philipp Engel\"\nmaintainer = \"@interkosmos\"\ncopyright = \"Copyright (c) 2023, Philipp Engel\"\ndescription = \"Fortran 2008 ISO C binding interfaces to Lua 5.4\"\nkeywords = [\n    \"lua\",\n]\nexecutable = [\n    { source-dir = \"examples/fibonacci\", name = \"fibonacci\", main = \"fibonacci.f90\" },\n    { source-dir = \"examples/string\", name = \"string\", main = \"string.f90\" },\n    { source-dir = \"examples/table\", name = \"table\", main = \"table.f90\" },\n]\n\n[build]\nlink = \"lua-5.4\"\n\n[library]\nsource-dir = \"src\"\n\n[install]\nlibrary = true\n",
+        "after": "name = \"fortran-lua54\"\nversion = \"0.2.0\"\nlicense = \"ISC\"\nauthor = \"Philipp Engel\"\nmaintainer = \"@interkosmos\"\ncopyright = \"Copyright (c) 2023, Philipp Engel\"\ndescription = \"Fortran 2008 ISO C binding interfaces to Lua 5.4\"\nkeywords = [\n    \"lua\",\n]\nexecutable = [\n    { source-dir = \"examples/fibonacci\", name = \"fibonacci\", main = \"fibonacci.f90\" },\n    { source-dir = \"examples/string\", name = \"string\", main = \"string.f90\" },\n    { source-dir = \"examples/table\", name = \"table\", main = \"table.f90\" },\n]\n\n[build]\nlink = \"lua5.4\"\n\n[library]\nsource-dir = \"src\"\n\n[install]\nlibrary = true\n"
+      }
+    ]
+  },
+  "checked_at": "2026-10-29T13:30:57.553160+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/fortran-lua54.f90",
+  "verification": {
+    "seconds": 2.311,
+    "build_seconds": 0.365,
+    "library_reused": true,
+    "demo_sha256": "c9b1a09825deea76782f0cab21f4768c566a9cfea90c343cf41245eb94341719",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "ISC",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Fortran bindings to Lua 5.4, linked with Debian Lua 5.4.7. The manifest library name lua-5.4 is adapted to Linux lua5.4; library sources are unchanged. Adapted from the upstream in-memory string example, the consumer defines a Lua function, passes an integer from Fortran, checks Lua load/call status and function type, verifies the returned integer and closes the state. External scripts, callbacks from Lua to Fortran, arbitrary Lua modules and all bindings are not validated."
+}

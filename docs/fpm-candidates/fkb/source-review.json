@@ -1,0 +1,49 @@
+{
+  "id": "fkb",
+  "repository": "scientific-computing/FKB",
+  "revision": "a1c97d4d66431df87662b59fe8e8a24feaf28a3a",
+  "archive_sha256": "53f813715117928de41f0f740c8767ed35c2fdf97a6bd9c648c302bf1de90cbe",
+  "catalog_build": {
+    "adapter_sha256": "57d6ae25c7ae46d94a499cb7947261010bb800c7c531caf90592e85a5445505d",
+    "environment": {
+      "FPM_FFLAGS": "-DREAL64 -DINT32 -fcoarray=single -fopenmp"
+    },
+    "source_packages": {
+      "scientific-computing/fkb": {
+        "manifest": "name = \"fkb\"\nversion = \"0.0.0\"\nlicense = \"MIT\"\n[library]\nsource-dir = \"playground-library\"\ninclude-dir = [\"src/lib\"]\n[build]\nlink = []\nauto-executables = false\nauto-examples = false\nauto-tests = false\n[install]\nlibrary = true\n[fortran]\nimplicit-typing = true\nimplicit-external = true\nsource-form = \"default\"\n",
+        "sources": [
+          "src/lib/mod_activation.F90",
+          "src/lib/mod_io.F90",
+          "src/lib/mod_kinds.F90",
+          "src/lib/mod_layer.F90",
+          "src/lib/mod_dense_layer.F90",
+          "src/lib/mod_dropout_layer.F90",
+          "src/lib/mod_batchnorm_layer.F90",
+          "src/lib/mod_mnist.F90",
+          "src/lib/mod_network.F90",
+          "src/lib/mod_ensemble.F90",
+          "src/lib/mod_parallel.F90",
+          "src/lib/mod_random.F90"
+        ]
+      }
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T21:18:06.912825+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/fkb.f90",
+  "verification": {
+    "seconds": 4.217,
+    "build_seconds": 1.034,
+    "library_reused": true,
+    "demo_sha256": "638fb20985b3c8f0707e5e038e021ee1a82f136b306081c05b88443d880318b0",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "The upstream CMake neural library source set is wrapped for FPM in REAL64/INT32 mode with single-image coarrays and OpenMP. The deterministic consumer writes and loads a tiny two-dense-layer ReLU network, checks four predictions against independently calculated weights and biases, and verifies saving and reloading the model. K (Approximation) describes the tested neural-network inference. Training, Keras conversion tools, dropout and batch normalization are not verified; no optimization classification is inferred from their presence."
+}

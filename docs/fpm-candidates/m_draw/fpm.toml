@@ -1,0 +1,41 @@
+# TOML file for fpm as described at https://fpm.fortran-lang.org/en/spec/manifest.html
+name = "M_draw"
+version = "1.0.2"
+license = "MIT"
+author = "John S. Urban"
+maintainer = "urbanjost@comcast.net"
+copyright = "2020 John S. Urban"
+description = "basic vector graphics package"
+categories = ["graphics"]
+keywords = ["fortran", "draw", "plot", "graphics"]
+homepage = "https://github.com/urbanjost/M_draw.git"
+
+[build]
+   auto-executables = true  # Toggle automatic discovery of executables
+   auto-examples = true     # Toggle automatic discovery of example programs
+   auto-tests = true        # Toggle automatic discovery of test executables
+   link = ["X11"]           # Linking against libraries
+   module-naming = true
+
+[install]
+   library = true
+
+[fortran]
+# Fortran features
+# enable and disable specific language features
+   implicit-typing = false    # whether default implicit typing should be allowed.  The default option is false.
+   implicit-external = false  # whether external interfaces can be declared implicitly. The default option is false.
+   source-form = "free"       # free|fixed|default
+
+[library]
+   source-dir = "src"
+
+[[executable]]
+   name="make_hershey"
+   source-dir="app/MAKE_HERSHEY"
+   main="make_hershey.f90"
+
+[[executable]]
+   name="h2v"
+   source-dir="app/MAKE_HERSHEY"
+   main="h2v.c"

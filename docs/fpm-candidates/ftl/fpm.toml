@@ -1,0 +1,15 @@
+name = "ftl"
+version = "0.0.0"
+license = "LGPL-3.0-or-later"
+[library]
+include-dir = ["src"]
+source-dir = "playground-library"
+[build]
+auto-executables = false
+auto-examples = false
+auto-tests = false
+[install]
+library = true
+[preprocess.cpp]
+[fortran]
+implicit-external = true

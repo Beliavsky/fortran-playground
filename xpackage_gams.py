@@ -291,6 +291,9 @@ def review_text(root=ROOT):
              f'All {len(packages)} selected packages have one or more top-level assignments from the '
              f'[NIST GAMS classification scheme]({GAMS_URL}). The assignments are maintained by the playground; '
              'they are not NIST or package-author endorsements.', '',
+             'Browse the [standalone GAMS catalog](https://beliavsky.github.io/fortran-playground/gams/) '
+             'for class pages, package details, pinned procedure evidence and playground links. '
+             'It is generated from the same metadata during every Pages build; see [maintenance and local preview](gams-site.md).', '',
              f'{len(data["subclass_assignments"])} packages also have immediate subclass assignments. '
              f'The saved taxonomy contains {len(data["subclasses"])} immediate subclasses, retrieved from the '
              f'linked NIST parent pages on {data["taxonomy_retrieved_on"]}. B, O, P, Q, and Z have no published immediate subclasses. '

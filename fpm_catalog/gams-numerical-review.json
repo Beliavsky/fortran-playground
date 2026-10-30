@@ -1295,6 +1295,324 @@
         "kronrod-rule"
       ],
       "notes": "Gauss-Kronrod quadrature-rule generation. A checksum-guarded adapter exposes the original internal procedures as module playground_kronrod, removes the large driver loop and declares app as the library directory; The consumer uses the wrapped module instead of running the original batch drivers. Procedure bodies, constants and precision settings are unchanged. The main generates the symmetric 7-point rule, checks six even polynomial integrals through degree 10 at 40-decimal-place tolerance with MPFUN arithmetic, and prints double-precision summaries. Only the unchanged MPFUN dependency is shared. This is a rule generator, not an adaptive integrator or full validation of every rule/order."
+    },
+    "lookup-table-fortran": {
+      "revision": "b7dc72359e7c2cc105abfbf79b570c655a7f1d04",
+      "archive_sha256": "0744a0be71d51cf990d67aaf326807132c7ef57f7d7cc594b42c54980be2c5cd",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "lookup-interpolation"
+      ],
+      "notes": "Linear lookup tables. An operator-owned FPM manifest wraps the unchanged m_lookup_table.f90 file. The main checks exact interpolation of a linear function, the expected interpolation error for a quadratic, an exact grid value, and clamping below/above the endpoints. No mathematical source edits. The 2D interface, nonuniform spacing options, persistence and all boundary cases are not validated by this example."
+    },
+    "rng-fortran": {
+      "revision": "5ead95f436323d07fc82acc3613f66550947f256",
+      "archive_sha256": "9de2594251208c855d148f8207c216df95072e62e74d51ba432b0ab77426cb52",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "rng-uniform",
+        "rng-distributions"
+      ],
+      "notes": "Xoroshiro128+ pseudo-random generator. An FPM wrapper selects unchanged m_random.f90 and uses -fwrapv for its intentional signed-integer wraparound. Two fresh generators replay 10000 seeded uniform draws exactly; the main checks the implementation range [0,1), broad uniform/normal/Poisson(4) moment tolerances, nonnegative counts and unit circle/sphere norms. These are deterministic smoke checks, not statistical quality or cryptographic validation. OpenMP, jump independence, large Poisson rates and all distributions are not covered. A separate hosted reproducer confirms that set_seed does not clear the cached second normal after an odd normal() call; use a fresh generator to restart normal sequences. The selected replay uses fresh objects."
+    },
+    "kdtree2": {
+      "revision": "dc757acec3162948cb228c2e0457d10134ec1edc",
+      "archive_sha256": "1c009c7d231db804c48dfc3c9799b05fb2522073236f0cb27a1407a9fcc2d4ce",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "spatial-neighbors"
+      ],
+      "notes": "Nearest-neighbor and radius searches. An FPM wrapper selects unchanged src-f90/kdtree2.f90; the archived upstream single-precision setting is retained. The checked main builds a tree for 30 deterministic 2D points, compares four nearest indices and squared distances against an independent direct search, and checks radius-search count, membership, distances and uniqueness. The original Academic Free License 1.1 is retained. No source edits. The implementation has global search state and is not offered as thread-safe; the old interface, C++ code, every dimension and large-scale performance are not validated."
+    },
+    "differentia": {
+      "revision": "2388e8ecf300a7bbc0904feab47023413464edf9",
+      "archive_sha256": "99643ce39a15906f58a7af9ec7c7edfeaadb161d8f3087e0e5dc8d0961f4f329",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "differentia-ad"
+      ],
+      "notes": "Forward-mode automatic differentiation with dual numbers. The main checks the upstream scalar example against its analytical value and derivative, a two-variable polynomial gradient and a square 2-by-2 Jacobian against exact formulas. GNU heap trampolines support the internal callback procedures in the restricted sandbox. Library sources are unchanged. The author limits jacobian to square problems and documents incomplete intrinsic coverage; sparse interfaces, every overload and all failure modes are not validated."
+    },
+    "coretran": {
+      "revision": "204c4707f6680b6d7d1e4da39077d0fd3acfe37e",
+      "archive_sha256": "29b2e281a6d1bdefd6abe141da563fe015737eb7c2604083c666cfcbe9df19e0",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "coretran-sort",
+        "coretran-neighbor"
+      ],
+      "notes": "Scientific utilities. The main sorts repeated and negative integers, builds a k-d tree for 20 deterministic 2D points and compares the nearest point with an independent direct search. The OpenMP metapackage is resolved explicitly and -fopenmp is enabled; the execution sandbox still uses one thread. No source edits. The broad library is compiled, but this driver does not validate all containers, random generators, mathematical utilities or parallel performance."
+    },
+    "delaunaysparse": {
+      "revision": "f3ffef04e24281aa42a0e5ec81f5c68f6bb5fb01",
+      "archive_sha256": "9632cb8bd406845f3df62786582b9075b5d41eab6278d9bb336e7370c67e761f",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "delaunay-interpolation"
+      ],
+      "notes": "Version 1 multivariate interpolation using sparse Delaunay simplices. Version 2 bundles BQPD with a research-only redistribution notice, so the selected pin uses the earlier MIT-licensed version 1 with its bundled SLATEC/BLAS/LAPACK sources. An FPM wrapper retains fixed/free source forms, legacy implicit typing/interfaces and -fallow-argument-mismatch for the SLATEC scalar-zero/zero-stride BLAS convention. OpenMP is enabled to link the library; the checked driver uses the serial routine. It verifies exact linear-function reproduction at three interior 2D points, zero status codes, valid simplex indices and barycentric weight sums/signs. No numerical source edits. Convex-hull projection/extrapolation, all degenerate inputs, high-dimensional behavior and parallel variants are not validated."
+    },
+    "qnstop": {
+      "revision": "39e8273247f586fca8305ef3d8e879b27b6512d0",
+      "archive_sha256": "7a7c95f9f1990dda7284bfab28b8ec7cce80eedebb0d6a6cc3979174b1cb7b65",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "qnstop-bounded"
+      ],
+      "notes": "Serial QNSTOP for bound-constrained stochastic and global optimization. An FPM wrapper selects unmodified REAL_PRECISION, ZIGARRAY, QNSTOPS and bundled BLAS/LAPACK sources. Explicit CPP suffix handling lets FPM discover .f95 files. Legacy implicit typing/interfaces and argument-mismatch compatibility retain the upstream calling conventions. The seeded two-variable quadratic example checks normal stopping status, bounds, objective value and distance from its known minimizer. It is an accuracy smoke test, not a general global-optimum guarantee. The parallel QNSTOPP driver, noisy objectives, all stopping rules and performance are not validated."
+    },
+    "poisfft": {
+      "revision": "7e7ebcd75130553ef2cf58548ec519933a3d3426",
+      "archive_sha256": "9e33e20c359f8fb4408d70e4d0b39d1c0062408788f1ee9adc37f631c6a46b66",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "poisfft-periodic"
+      ],
+      "notes": "Serial FFTW Poisson solvers. An FPM wrapper selects the Fortran library modules, retains upstream template includes, adds CPP-disabled USE declarations for the FPM dependency scanner, declares unused MPI/PFFT modules external for scanning, enables CPP and links Debian FFTW 3.3.10 single/double and thread libraries. MPI/PFFT and C/C++ bindings are not offered. The checked double-precision periodic 1D spectral problem compares its solution with sin(2*pi*x) at 32 points. Other boundary conditions, finite-difference modes, nonuniform grids, higher-dimensional solvers, single precision and parallel execution are not validated."
+    },
+    "vtmop": {
+      "revision": "794a1de23801731ef6edd1924b52d69b679af6a0",
+      "archive_sha256": "5c49ebb6c9f0ea852161d3e3d28bbba41481eeaf601019f5e2b51aafc31ca5e7",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "vtmop-tradeoffs"
+      ],
+      "notes": "Serial derivative-free, bound-constrained multiobjective optimization. An FPM wrapper selects the unchanged solver, surrogate and test-function sources with bundled SLATEC support and links system LP64 BLAS/LAPACK rather than recompiling those bundled libraries. OpenMP linking is enabled, but the checked run uses the serial driver and one execution thread; heap trampolines support internal callbacks in the sandbox. Adapted from the author serial driver and CONVEX function, the seeded 3-variable/2-objective example uses a small evaluation budget, checks feasible design bounds, recomputes both quadratic objectives independently and verifies that no returned point dominates another. It requires multiple distinct trade-off points. This checks the finite returned set, not convergence to the exact global Pareto front or comparative performance. Parallel evaluation, checkpoint recovery, every surrogate and other problem classes are not validated."
+    },
+    "fatode": {
+      "revision": "3f237c49bd377644a597c2a49ae5a83f090bfab5",
+      "archive_sha256": "ac953c53526ff8f9ce2e8e4c1f71842aae6c86fb52484a21dbdba234805f659e",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "fatode-tangent"
+      ],
+      "notes": "Selected FATODE explicit Runge-Kutta tangent-linear integrator, linked to native BLAS/LAPACK. The FPM wrapper compiles unchanged TLM/ERK_TLM/ERK_TLM_f90_Integrator.F90; bundled precompiled platform binaries are not used. The example augments exponential decay with a constant rate state and differentiates the initial rate using the tangent-linear model, checking the state, rate, and both sensitivities against analytical formulas. It explicitly selects the supplied analytical Jacobian and enables tangent-variable adaptive error control; the initial default finite-difference Jacobian settings missed the requested sensitivity accuracy. No numerical library edits. Implicit/stiff solvers, adjoint integration, sparse solver variants and all ERK methods are not offered or verified."
+    },
+    "slicot": {
+      "revision": "5eeb845d84f5a60f6069754b7819dad468951933",
+      "archive_sha256": "22bf29340f5d3019d9adcfc862968c9eb10ccc0afdc821dd5b71cb4661884350",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "slicot-lyapunov"
+      ],
+      "notes": "Full upstream SLICOT FPM source library, linked to compatible LP64 BLAS/LAPACK with the manifest BLAS metapackage resolved explicitly. Sources are unchanged; legacy compiler compatibility flags retain upstream conventions. The main uses the author slicot module interface for SB03MD, constructs a stable nondiagonal 2-by-2 continuous Lyapunov problem from a known symmetric solution and checks both the independently computed matrix residual and the recovered solution including the solver scale factor. It requests the condition/error estimates but does not validate those estimates independently. Other matrix equations, model reduction, identification, robust control and every library routine are not validated."
+    },
+    "arpack-ng": {
+      "revision": "66faef9e09bb35f5acafe02960885050acc46fa0",
+      "archive_sha256": "39b4a93f6dd7bcbdfba99f0f74a48d5a5e3e5cc9ed9787c9b076be971629fde2",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "arpack-eigenpairs"
+      ],
+      "notes": "Serial classic Fortran ARPACK-NG interfaces, built from unchanged SRC .f files, the documented UTIL support set, and upstream debug/statistics initializers. The wrapper uses native LP64 BLAS/LAPACK and excludes PARPACK/MPI and generated C bindings. The upstream second_NONE timing stub disables ARPACK internal elapsed-time statistics; playground build/run timings still work. Adapted from the author symmetric reverse-communication example, the main computes three smallest eigenpairs of a 20-by-20 symmetric tridiagonal operator, checks convergence status/count, analytical eigenvalues and eigenvector residual norms. A deterministic nonzero initial residual avoids dependence on random initialization. Nonsymmetric/complex modes, shift-invert, generalized problems and parallel execution are not validated."
+    },
+    "fmm2d": {
+      "revision": "7e7509ecd6ebe31b9292cb00825410b478f44808",
+      "archive_sha256": "874797fe0a20353b806c415ff817ad39c0ce0813c89d54145315ab83827470a0",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "fmm2d-potentials"
+      ],
+      "notes": "Native Fortran FMM2D source set selected from the upstream makefile with optional C++ fast kernels disabled. OpenMP and portable -O2 are enabled; the visitor sandbox uses one execution thread and retains bounds checks. Checksum-guarded compatibility edits skip zero-point multipole/local evaluations and zero-source neighbor calls before passing one-past-end array elements. The inverse reorder helper declares its arrays with the actual n extent rather than the legacy dummy extent 1. Source and target branches receive matching guards; formulas are unchanged. The checked real Laplace driver evaluates 512 deterministic sources at 16 separate targets and compares with an independent charge-weighted log-distance sum. A separate source-and-target probe also checks all source potentials by direct summation with self-interactions excluded, exercising the source-side guards. The code is classified as a structured kernel-matrix application and Green-function evaluation related to PDEs, not as a complete boundary-value solver. Helmholtz, biharmonic/Stokes, dipoles, gradients/Hessians, every complex/vector interface and parallel speedups are not validated. The small accuracy check is not a performance benchmark."
+    },
+    "fortran-utils": {
+      "revision": "b43bd24cd421509a5bc6d3b9c3eeae8ce856ed88",
+      "archive_sha256": "2f58fba502b3efcec9b50f64cca2d6487932483a361f72c865f48abc021a34ed",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "fortran-utils-splines"
+      ],
+      "notes": "Selected unmodified modules types, utils, lapack, mesh, splines and sorting, wrapped for FPM and linked to compatible LP64 BLAS/LAPACK. HDF5, AMOS/special functions, optimization and other unselected modules are not included. The main reproduces a cubic polynomial with the consistent-boundary cubic spline and checks its value, first derivative and second derivative on a denser grid against exact formulas. It checks exponential-mesh endpoints, monotonicity and the requested last/first spacing ratio, then sorts repeated/negative integers against an exact answer. General nonpolynomial interpolation error, extrapolation, every boundary condition, other sorting interfaces and all utility routines are not validated."
+    },
+    "formal": {
+      "revision": "d28eee9b37b4b74abe7f21bb2ccbdfb5c17f3e8a",
+      "archive_sha256": "97a65b185354b87ef27aef72cb730b8f3db6acb32b1ce0387f6f845ba64d5d9b",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "formal-divergence"
+      ],
+      "notes": "Mimetic vector-calculus library with pinned Julienne and Assert dependencies. A single-image coarray build is used. The checked consumer adapts the author's extended Gauss-divergence example to f=x**2/2 and v=x on a 64-cell unit interval. It checks the two volume integrals against 1/3 and 1/6, the boundary flux against 1/2, finiteness and the conservation residual using single-precision tolerances. The command-line parsing and shell display calls of the upstream example are omitted. Library numerical sources are unchanged. Other 2D/3D operators, time integration and convergence orders are not validated. Original Berkeley Lab license terms, including the enhancements clause, are retained; this is not labeled plain BSD-3-Clause."
+    },
+    "dftatom": {
+      "revision": "e49b3042de6e2471afe5eea992c9ba50dac08f95",
+      "archive_sha256": "69e20740d8cfd35de9c226ff626837f3eb7aef699ff96ee47a0b1ea1705baa27",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "dftatom-radial"
+      ],
+      "notes": "Unmodified Fortran library sources selected from the upstream native makefile and wrapped for FPM. The checked example adapts the upstream hydrogen test to Z=1 and computes all six (n,l) states through n=3 on an exponential radial mesh. It requires solver convergence, finite energies and agreement with the analytical nonrelativistic energies -1/(2*n**2) within 1e-7 Hartree. Relativistic Dirac, Poisson and self-consistent density-functional calculations are present in the library but not exercised by this example. C/Python bindings and optional extra integration/interpolation/LAPACK sources are outside the selected native source set."
+    },
+    "fortranlib": {
+      "revision": "60fd094d3e137137ce00ec120b085e9b23ebf68b",
+      "archive_sha256": "2306ae4dedaa431c7a77f8cbc15e8ab3c04230de3a8cf0c38654f065db649536",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "fortranlib-numerics"
+      ],
+      "notes": "Selected base_types, lib_algebra and lib_array modules, using the pinned revision immediately before the upstream FPM test suite introduced source symlinks. Nine checksum-guarded edits bring lib_array exactly to upstream commit 844611933cba06d71490033e68b355f6f0ff704f, retaining its integration-limit, descending histogram-bin and precision fixes. The other selected modules are unchanged. The ordinary archive policy remains unchanged. A synthetic FPM wrapper uses the already generated Fortran sources, not the Python templates. The checked consumer integrates the affine function 2*x+1 on [0,1], checks linear interpolation at an interior off-grid point, and solves x**2-5*x+6 against the exact roots 2 and 3. Additional checks cover integration limits outside the tabulated range, descending histogram bins and bin-center precision; the expanded example fails with the older unpatched array module and passes with the upstream fixes. GAMS F1 denotes the quadratic solver, not a general iterative root finder. Random sampling, statistics, geometry, HDF5/FITS bindings and other modules are not selected; the example does not validate every routine in the included modules."
+    },
+    "fiats": {
+      "revision": "7d564b86389460555d6f7d9b7a6b5198588af9df",
+      "archive_sha256": "72e40789bec105d69a2e53e37b7e64f32049c175966a8f1c0debb6a3df6093a5",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "fiats-inference"
+      ],
+      "notes": "Pinned Fiats tag 0.12.0 (upstream manifest version 0.11.1), named inference-engine at that revision, with an explicitly pinned compatible Julienne 1.3.1 dependency and Assert 1.7.0. Tag 0.14.0 was tried first but its consumer build cannot find Julienne modules because they are declared only as a development dependency. Single-image coarrays and long free-form lines are enabled. Based on the author's write-read-infer example, the checked consumer constructs a two-input ReLU network with known diagonal weights and biases, evaluates negative, zero and positive input pairs, and compares every output with direct formulas. K is a broad function-approximation classification; training algorithms, gradients, model-file round trips and parallel speedups are not verified. The historical version is explicit in the menu description. The original Berkeley Lab license terms, including the enhancements clause, are retained."
+    },
+    "propack": {
+      "revision": "36f95269ecee6ae42af0c00707b3c3cf3f869a35",
+      "archive_sha256": "bf950e4758192c196d6a4cdd74d9d6163536557b58ad24e7afa2cb4f5fef60ee",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "propack-partial-svd"
+      ],
+      "notes": "Historical SciPy PROPACK 2.1 sources, whose repository is archived and explicitly points to rmlarsen/propack for the maintained implementation. The current author archive and tags v2.2/v2.1 exceed the unchanged source download limit, largely due to saved example outputs. The menu explicitly identifies this historical source choice. Only the native double-precision serial routines are wrapped, using the portable RISC modified Gram-Schmidt implementation and compatible system LP64 BLAS/LAPACK. Numerical sources are unchanged. A callback supplies multiplication by a rectangular diagonal matrix with known singular values. The consumer passes a writable convergence-count argument, requests the leading three singular triplets, and checks 12, 11 and 10, both A*v-sigma*u and transpose(A)*u-sigma*v residuals, finite values and unit vector norms. The restarted algorithm, other precisions, arbitrary sparse matrices and parallel performance are not verified."
+    },
+    "nufft1d": {
+      "revision": "42a04333f882f474b0674936cae049899784f56e",
+      "archive_sha256": "29835ccf24027743db9d0f47148fb41e2c738a9231a443e4330d0c0b91d56ca7",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "nufft1d-transform"
+      ],
+      "notes": "Original one-dimensional nonuniform Fourier code using the dynamically allocated Fortran 90 interface and bundled Netlib FFT implementation. Forty-nine checksum-guarded edits change legacy extent-one FFT dummy-array declarations to assumed size; every changed array is checked against its containing procedure argument list. No local arrays, transform formulas or global bounds-checking settings are changed. Legacy workspace argument type punning is accepted with the package-specific -fallow-argument-mismatch option. The example evaluates a type-1 transform of 96 deterministic nonuniform points into 32 modes for both exponent signs and compares every complex coefficient with an independent direct sum, including the documented 1/nj normalization. Status and finite values are checked. Types 2/3, the static Fortran 77 interface and every bundled FFT routine are not verified."
+    },
+    "nufft2d": {
+      "revision": "8353c5fb20cd0a8fe6821fae18355e303ed23ed3",
+      "archive_sha256": "12c15079e3a81fc2c58b95ee568193e70d5010edca08ab28296fd5d4956e12ee",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "nufft2d-transform"
+      ],
+      "notes": "Original two-dimensional nonuniform Fourier code using the dynamically allocated Fortran 90 interface and bundled Netlib FFT implementation. Forty-nine checksum-guarded edits change legacy extent-one FFT dummy-array declarations to assumed size after checking that each is a procedure argument; no formulas or local arrays change and bounds checking remains enabled. Legacy workspace argument type punning uses the package-specific -fallow-argument-mismatch option. The example transforms 96 deterministic scattered points onto a 16-by-18 mode grid for both exponent signs, checking status, finite values and all coefficients against an independent direct sum with the documented 1/nj normalization. Types 2/3, the static Fortran 77 interface, every FFT routine and multidimensional performance are not verified."
+    },
+    "scifortran": {
+      "revision": "ca4a55f49cfdf7a94e388bc3475a5db574d5de99",
+      "archive_sha256": "f72bda1fbd2ad63d7d99fb3939317373a7c956c2910d9cf7da5909965d64fd91",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "scifortran-integration"
+      ],
+      "notes": "Selected integration subset, explicitly labeled in the menu: SF_INTEGRATE, GAUSS_QUADRATURE and standalone bundled QUADPACK procedures. Original include files remain in their source directories and the operator FPM wrapper compiles only the listed library files. Checksum-guarded edits promote 478 long coefficient literals from E to D exponents in DATA statements and REAL(8) PARAMETER array initializers in two bundled QUADPACK files. Each target array is checked to be REAL(8), and all decimal digits are retained. This avoids evaluating the supplied coefficients at default-real precision before assignment to double precision; formulas and the default-real compiler mode are unchanged. The linked quadrature-fortran BSD-3-Clause notice is restored as comments in GAUSS_QUADRATURE so source exports retain it. The consumer checks the Simpson and trapezoidal integrals of a sampled cubic against 1/4, adaptive integration of exp(x) over [0,1] against e-1 and exp(-x) over [0,infinity) against 1, and rejects nonfinite results. All six finite-interval Gauss-Kronrod rule choices are also checked against e-1. The example uses module callbacks: an initial consumer with internal callbacks segfaulted in the sandbox. Other SciFortran modules, MPI, linear algebra, the SCIFOR umbrella module, multidimensional/vector quadrature and all integration options are outside this selected build and verification scope."
+    },
+    "fkb": {
+      "revision": "a1c97d4d66431df87662b59fe8e8a24feaf28a3a",
+      "archive_sha256": "53f813715117928de41f0f740c8767ed35c2fdf97a6bd9c648c302bf1de90cbe",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "fkb-inference"
+      ],
+      "notes": "The upstream CMake neural library source set is wrapped for FPM in REAL64/INT32 mode with single-image coarrays and OpenMP. The deterministic consumer writes and loads a tiny two-dense-layer ReLU network, checks four predictions against independently calculated weights and biases, and verifies saving and reloading the model. K (Approximation) describes the tested neural-network inference. Training, Keras conversion tools, dropout and batch normalization are not verified; no optimization classification is inferred from their presence."
+    },
+    "ntpoly": {
+      "revision": "7b3d22f76226af1402e9b0a5be18a496e4addc28",
+      "archive_sha256": "006771f80f6ef604da7eb2480d95c492437cd633be5c8e79ef63b8616a419a7a",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "ntpoly-matrix-square-roots",
+        "ntpoly-inversion"
+      ],
+      "notes": "The upstream Fortran library source set is wrapped for FPM with pinned MPICH and OpenBLAS native dependencies. The verified example uses exactly one MPI process, serialized MPI thread support and shared-memory/self UCX transports in the restricted sandbox. For a real symmetric positive-definite 2-by-2 matrix with eigenvalues 1 and 9, it checks SquareRoot, InverseSquareRoot and Invert against analytic matrices and independent product residuals, rejecting nonfinite values. D covers matrix functions and D2 covers inversion. Multiple MPI processes, distributed scaling, complex matrices and other solver families are outside this verification scope. Local exports require MPI/OpenBLAS development libraries and locally appropriate compiler/linker flags."
+    },
+    "scalapackfx": {
+      "revision": "570cbf45836ed05cf791bc3f404f4f10929e5017",
+      "archive_sha256": "50c1f76ffcfe35aa879eb3e6cbedce6037cac8a6c24f123251fd4d8aa8389461",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "scalapackfx-symmetric-eigenproblem"
+      ],
+      "notes": "The upstream CMake library source list is generated with Fypp 3.2 and exact generated-output checksums. The example uses a 1-by-1 BLACS grid and pinned MPICH, ScaLAPACK and OpenBLAS native libraries. It computes eigenvalues and eigenvectors of a symmetric 3-by-3 tridiagonal matrix using scalafx_psyev, checks eigenvalues against 2-sqrt(2), 2 and 2+sqrt(2), and independently checks eigenpair residuals and orthogonality. All entries must be finite. D4a1 (ordinary real symmetric eigenproblems) applies to the tested eigensolver. This is a one-process API example, not a distributed-performance demonstration; other solvers, generalized eigenproblems and multiple processes are not verified."
+    },
+    "fgsl": {
+      "revision": "27a3e7cc0809623bcfde680c39a6fdcf0f590c4c",
+      "archive_sha256": "2c592ebb37d6ba1303153bac3ba0cee40585232d0d268ef99323b9849e85fbc9",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "fgsl-qags"
+      ],
+      "notes": "FGSL wraps GSL numerical routines. Broad classifications follow the exported interfaces for special functions, linear algebra, interpolation, root finding, optimization, integration/differentiation, ODEs, transforms, fitting and statistics. The checked consumer adapts the author's QAGS example and independently verifies the integral of log(x)/sqrt(x) on [0,1] against -4, status and error estimate. The procedure mapping covers adaptive one-dimensional finite-interval quadrature; other numerical interfaces are not runtime-verified by this example. Upstream Autoconf probes generated the complete configuration on GNU/Linux LP64 with GSL 2.8. An audited asset stages that header as config.inc; checksum-guarded edits change only its include filename in Fortran and C. The C support object and pinned system GSL libraries are linked. Local exports include the asset and patches; this configuration targets GNU/Linux LP64, and another ABI or GSL version requires regeneration against its local tools. GPL-2.0-or-later notices are retained."
+    },
+    "libmbd": {
+      "revision": "77d7ab424d21f43dea9f57734b355ce4ea4d1a42",
+      "archive_sha256": "b772f07bcca8686b0beb25abf434a8180e5230936c6d44cacbcb3a7c3aac0575",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "libmbd-dispersion"
+      ],
+      "notes": "The serial Fortran library and Fortran-written C interface are selected from the upstream CMake target and linked with pinned OpenBLAS. MPI/ScaLAPACK and ELSI are disabled. An audited version module uses an explicitly identified 0.0.0 plus pinned-commit suffix for the Git archive, rather than claiming a release version. The checked main adapts the author's argon-dimer tests at four angstrom separation, verifies dispersion energy and gradient norm against upstream reference values, checks finite results and equal/opposite gradients, and checks library exceptions. D4 covers the Hamiltonian diagonalization used by the many-body dispersion calculation; Z denotes the domain-specific physical model, not a general-purpose eigensolver interface. Other molecules, periodic systems, distributed runs and all available models are outside this consumer verification scope. MPL-2.0 notices are retained."
+    },
+    "dtfft": {
+      "revision": "bbfd6746be7482bd8366ccb09a73b72882573984",
+      "archive_sha256": "9ca97e043f23997f490f73eeba01abe0e3a787005d1a7a37d25b4d196810de48",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "dtfft-cpu-c2c"
+      ],
+      "notes": "The CPU-only Fortran target is configured upstream with FFTW enabled, MPICH, input checks, and no C/C++/Python API, GPU, compression or OpenMP support. Its complete generated configuration header and source selection are checksum-locked. The checked main initializes exactly one MPI process with self/shared-memory UCX transports, transforms an 8-by-8 complex impulse, independently checks that every forward coefficient equals one, then verifies inverse reconstruction after normalization. J1 covers the multidimensional Fourier transform. Multiple processes, distributed performance and other FFT executors are not verified by this example. Local exports require compatible MPICH and FFTW development libraries and locally appropriate include/link flags. GPL-3.0-or-later notices are retained."
+    },
+    "dbcsr": {
+      "revision": "cd6f522ec5005da8c59d2883975a89a2da607eac",
+      "archive_sha256": "a92dbde8e23b2e1cf3447a67f4ffd08679ff70af0812ca99fef3ae9879f80ff9",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "dbcsr-block-multiply"
+      ],
+      "notes": "The upstream CMake-selected serial CPU library is rendered with Fypp 3.2, with exact generated-output hashes. Simple USE lists emitted from Python sets are sorted for reproducibility across Python versions and platforms; numerical algorithms are unchanged. MPI, OpenMP, GPU, LIBXS and LIBXSMM are disabled, and the library links pinned OpenBLAS. The diagnostic filename macro uses __FILE__. The checked main creates two 4-by-4 block-sparse matrices, multiplies them through dbcsr_multiply, reconstructs the result and independently compares it with MATMUL, requiring finite entries and a small maximum error. D1 covers matrix operations. Parallel scaling, accelerators and tensor operations are outside this verification scope. GPL-2.0-or-later notices are retained. The wrapper repeats the base-hooks USE list so FPM can order dependencies hidden in the original include. Its manifest permits legacy implicit external BLAS/LAPACK calls; runtime and bounds checks remain enabled."
+    },
+    "2decomp-fft": {
+      "revision": "4cb38be477b9457cfa5f5624c8fe09387968b190",
+      "archive_sha256": "6522f08ae48a58c93b93378fd3b54ac2f0128f98bcc274b53b323a0a640e15f4",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "2decomp-fft-c2c"
+      ],
+      "notes": "The upstream CMake-selected CPU library uses the built-in generic Fourier transform backend, double precision and pinned MPICH. OpenMP is disabled. The example adapts the author-provided complex FFT example, initializes exactly one MPI process with self/shared-memory UCX transports, transforms an 8-by-6-by-4 complex impulse, independently checks that all forward coefficients equal one, and verifies inverse reconstruction after normalization. J1 covers the multidimensional Fourier transform. Multiple MPI processes and distributed performance are not verified. Local exports need compatible MPI development libraries and locally appropriate include/link flags. BSD-3-Clause notices are retained."
+    },
+    "ennuf": {
+      "revision": "2555a7f1560ef3cb7cf707221fa5bb1b5334ee6f",
+      "archive_sha256": "1854fdfcb0594d79983338991333556a3fdb89b8eaebb827ba93037d833f7cf1",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "ennuf-inference"
+      ],
+      "notes": "The pinned upstream neural_net_mod module is compiled with an audited, generated fixed-weight model: two inputs, two ReLU hidden units and one output in REAL32. Operator generation uses the author Model/Dense/Activation API and NumPy 2.2.6; neither TensorFlow, PyTorch nor Python inference runs in visitor jobs. The generator sorts the imported layer routine names for reproducibility; network operations are unchanged. Four inputs exercise positive and clipped hidden units and predictions are checked against independently evaluated weights and biases, including negative and positive outputs and finiteness. K covers inference as approximation; no least-squares fitting or training classification is inferred. The sample network is illustrative, not a trained scientific model. Other network layers, external model conversion and training are not verified. BSD-3-Clause and Crown copyright notices are retained."
+    },
+    "ddpcm": {
+      "revision": "36f22feb86c81c6ba1f59c373ef215368d3e3c13",
+      "archive_sha256": "a99669b3049317bb2e61cb696eb4252a0fd63b00c2aa60cb9ff2916445f87056",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "ddpcm-solvation"
+      ],
+      "notes": "The pinned ddCOSMO library and original fixed-form Lebedev quadrature source are wrapped for FPM with extension-based source form and legacy external interfaces. OpenMP directives are inactive in this serial profile and OpenBLAS supplies dense linear algebra. The checked consumer adapts the author main and formaldehyde input, embedding its four-atom coordinates, radii, charges and solver settings. It compares solvation energy and all force components against the author reference output, requires finite values and checks zero net force. Full-sized dummy arrays replace the unused one-element placeholders in the example while leaving library numerical routines unchanged. D2 identifies the Jacobi/DIIS linear-system solution used by cosmo; Z denotes the physical solvation model. Other molecules, solvent parameters, quantum densities and parallel performance are outside this verification scope. LGPL notices and author reference requests remain in the source tree."
+    },
+    "ftorch": {
+      "revision": "b1b1bb3b9138642ac51d55608e7f3af9070c43f1",
+      "archive_sha256": "4fd815d3a17e1e23123f80bb7c0ddc5986db194036d667ce242f607a7a706a8c",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "ftorch-inference"
+      ],
+      "notes": "The original FTorch Fortran and C++ sources are wrapped for FPM, using pinned Debian CPU LibTorch 2.6.0+dfsg-7, the C++20 mode, C++11 ABI and include/definition settings from the upstream CMake target. The operator C++ flag setting is restricted to a current, unshared source-package recipe; public requests cannot set it and previous cache keys are preserved. The self-contained consumer embeds a reproducibly generated 1,766-byte TorchScript model as hexadecimal text, writes tiny.pt in the sandbox and calls the author tensor/model API in REAL64. Two different five-element inputs exercise y=2*x+1, with each output checked independently for finiteness and absolute error below 1e-12. The second call also verifies that the input tensor observes updated Fortran storage. No Python or model download runs in visitor jobs. This is an illustrative affine inference model, not a trained scientific predictor. K covers inference as function approximation; no training or optimization classification is inferred. GPU use, training, autograd, parallel execution and arbitrary external models are not verified. FTorch MIT notices and native Debian dependency notices are retained. APT estimates about 924 MB of additional native dependencies in the isolated FTorch image; these are separate from the catalog logical library-artifact total."
+    },
+    "tsunami": {
+      "revision": "70b5702aed42bbea0733335d50e0eb70cb159e08",
+      "archive_sha256": "732c1ff0e223dd3b596305073a66886ac40b497dd3ad32f5b3f156c5648f271e",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "tsunami-periodic-differences"
+      ],
+      "notes": "Only the author serial Chapter 4 mod_diff and mod_initial modules are wrapped; their contents are unchanged. The main follows the chapter shallow-water time-stepping equations on a 100-cell periodic grid for 200 steps. It checks the centered difference against a discrete sine derivative, the upwind difference against an independently indexed periodic reference, Gaussian peak/symmetry, finite water height/velocity, positive total depth, nontrivial evolution, and conservation of integrated elevation. The example uses REAL32, with REAL64 accumulation of mass. I2 classifies the demonstrated PDE calculation; H1 classifies diff_centered/diff_upwind as numerical differentiation. This is an educational finite-difference demonstration, not validation of a production tsunami model. Other chapters, coarrays and parallel scaling are not verified. MIT notices are retained."
+    },
+    "raffle": {
+      "revision": "c152a30a1eaf94965c047bcd1a7edca07873b56f",
+      "archive_sha256": "d13c72eeb2c7c761d65e233f7abe5c856098abe854e34f9cd9c3866a70523cde",
+      "status": "procedure-reviewed",
+      "procedure_ids": [
+        "raffle-periodic-distance"
+      ],
+      "notes": "RAFFLE is pinned to release v1.0.0 because current main and v1.1.1 exceed the unchanged 16 MiB archive limit. The native FPM library is unchanged. The checked main adapts test/test_dist_calcs.f90: a two-atom silicon primitive cell and three equivalent fractional points exercise get_min_dist_between_point_and_atom and get_min_dist. Both distances must be finite and agree with sqrt(3)*0.428 within 3e-6 in REAL32. P denotes the demonstrated periodic geometry; no optimization, structure-prediction accuracy, trained model, or full upstream test-suite validation is claimed. GPL-3.0 notices are retained."
     }
   }
 }

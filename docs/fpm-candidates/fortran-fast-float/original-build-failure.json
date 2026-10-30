@@ -1,0 +1,7 @@
+{
+  "revision": "195e47d90874cb1ff38598d80a7e4919c49b89d8",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "diagnostic": "<ERROR> *cmd_build* Model error: Key features is not allowed in package file; compiler not reached.",
+  "adaptation": "Remove unsupported features/profiles tables from the prepared manifest and supply the same -fno-range-check setting explicitly. Fortran sources unchanged."
+}

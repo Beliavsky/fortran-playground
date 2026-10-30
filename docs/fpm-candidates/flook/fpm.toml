@@ -1,0 +1,13 @@
+name="flook"
+version="0.0.0"
+license="MPL-2.0"
+[library]
+source-dir="playground-library"
+include-dir=["aotus/external/lua-5.3.5/src", "aotus/LuaFortran"]
+[build]
+auto-executables=false
+auto-examples=false
+auto-tests=false
+link=["m", "dl"]
+[install]
+library=true

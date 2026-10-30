@@ -1,0 +1,46 @@
+{
+  "id": "raffle",
+  "repository": "ExeQuantCode/RAFFLE",
+  "revision": "c152a30a1eaf94965c047bcd1a7edca07873b56f",
+  "archive_sha256": "d13c72eeb2c7c761d65e233f7abe5c856098abe854e34f9cd9c3866a70523cde",
+  "catalog_build": {
+    "adapter_sha256": "5f6c9c34de44723216fbd9c86483f4b3319660cf0f37b830aac27098b1dbe580"
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-30T13:33:04.457481+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/raffle.f90",
+  "verification": {
+    "seconds": 2.081,
+    "build_seconds": 0.411,
+    "library_reused": true,
+    "demo_sha256": "5d0ad5ed4a11ae8e412fb8b6b166af902857d0b5b7b37f690877625bb947e2e4",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "GPL-3.0",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "RAFFLE is pinned to release v1.0.0 because current main and v1.1.1 exceed the unchanged 16 MiB archive limit. The native FPM library is unchanged. The checked main adapts test/test_dist_calcs.f90: a two-atom silicon primitive cell and three equivalent fractional points exercise get_min_dist_between_point_and_atom and get_min_dist. Both distances must be finite and agree with sqrt(3)*0.428 within 3e-6 in REAL32. P denotes the demonstrated periodic geometry; no optimization, structure-prediction accuracy, trained model, or full upstream test-suite validation is claimed. GPL-3.0 notices are retained.",
+  "main_revision": "85c2f401b6b4d932778cd96df1a01d757d59b128",
+  "release": "v1.0.0",
+  "release_probes": [
+    {
+      "tag": "working",
+      "revision": "6626796633bf0070e05aa40520913d6a2f86a980",
+      "archive_sha256": "0a750857e04a915c76f590c5ce6ea5bcb4971f46efb4951904bd437244610cc1"
+    },
+    {
+      "tag": "v1.1.1",
+      "revision": "bfeffd9ed56854923c41d0f48f08e3363fedae05",
+      "preparation_error": "Source download exceeds its size limit."
+    },
+    {
+      "tag": "v1.0.0",
+      "revision": "c152a30a1eaf94965c047bcd1a7edca07873b56f",
+      "archive_sha256": "d13c72eeb2c7c761d65e233f7abe5c856098abe854e34f9cd9c3866a70523cde"
+    }
+  ]
+}

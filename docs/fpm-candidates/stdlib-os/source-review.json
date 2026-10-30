@@ -1,0 +1,66 @@
+{
+  "id": "stdlib-os",
+  "repository": "MarDiehl/stdlib_os",
+  "revision": "60768243de9325d9b57b2e825e7312d70b1e538a",
+  "archive_sha256": "7b2d19d648372ab08894bc23598142bf3988e1f25407905e5cc22382c7a1813a",
+  "catalog_build": {
+    "adapter_sha256": "66e8249cbc0eb57ffecf9f04801ede2060312d64ba2fa2d839b07fdc746f5f8c",
+    "environment": {
+      "FPM_FFLAGS": "-DOS_SYSTEM_ID=OS_LINUX"
+    },
+    "source_packages": {
+      "mardiehl/stdlib_os": {
+        "manifest": "name = \"stdlib-os\"\nversion = \"0.0.0\"\nlicense = \"MIT\"\n[library]\nsource-dir = \"playground-library\"\ninclude-dir = [\"src\", \".\"]\n[build]\nauto-executables = false\nauto-examples = false\nauto-tests = false\n[install]\nlibrary = true\n[fortran]\nimplicit-typing = true\nimplicit-external = true\nsource-form = \"default\"\n",
+        "sources": [
+          "src/internal.c",
+          "src/internal.f90",
+          "src/internal_c.f90",
+          "src/os.c",
+          "src/os.F90",
+          "src/os_c.f90",
+          "src/os_path.c",
+          "src/os_path.F90",
+          "src/os_path_c.f90"
+        ]
+      }
+    }
+  },
+  "dependencies": [],
+  "catalog_patches": {
+    "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+    "edits": [
+      {
+        "path": "playground-library/os.F90",
+        "sha256": "8842d3d66329772abd9e3a58ab69be679a2ca6f25f73c45bb1fda289f5a41678",
+        "before": "\"OS_SYSTEM_NAME\"",
+        "after": "\"Linux\""
+      },
+      {
+        "path": "playground-library/internal.f90",
+        "sha256": "154f2a165ef8b7bb5d45480302b0764a308a29d6f12c4af77f52a4c7d6871a4a",
+        "before": "use, intrinsic :: ISO_C_Binding",
+        "after": "use, intrinsic :: ISO_C_Binding, only: C_CHAR, C_NULL_CHAR, C_INT, C_INT64_T, C_DOUBLE"
+      }
+    ]
+  },
+  "checked_at": "2026-10-29T19:54:58.400223+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/stdlib-os.f90",
+  "verification": {
+    "seconds": 2.318,
+    "build_seconds": 0.649,
+    "library_reused": true,
+    "demo_sha256": "e203c0792caa37090663e628d46b81e03f6372ffbf4f1bb04c256407ff654c15",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Mixed C/Fortran operating-system utilities wrapped for FPM. Two checksum-guarded compatibility edits set the Linux os_name constant and restrict the ISO_C_BINDING import to avoid the Fortran 2023 F_C_STRING name collision. OS_SYSTEM_ID is configured as OS_LINUX. The checked consumer creates nested temporary directories and a 14-byte stream file, checks file size and type, basename/dirname and path normalization, then renames and deletes the file and removes both directories. No external files or user environment are required. This configured recipe and exported project target Linux; Windows branches, processes, user/home lookup and every path utility are not validated.",
+  "original_build_checks": [
+    "original-build-failures.json"
+  ]
+}

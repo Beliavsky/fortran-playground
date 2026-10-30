@@ -1,0 +1,139 @@
+--- a/src/laplace/cfmm2d.f
++++ b/src/laplace/cfmm2d.f
+@@ -859,6 +859,7 @@
+                     istart = isrcse(1,jbox)
+                     iend = isrcse(2,jbox)
+                     npts = iend-istart+1
++                    if(npts.le.0) cycle
+                     
+                     call l2dformtac(nd,rscales(ilev),
+      1                   sourcesort(1,istart),npts,
+@@ -897,6 +898,7 @@
+                     istart = isrcse(1,jbox)
+                     iend = isrcse(2,jbox)
+                     npts = iend-istart+1
++                    if(npts.le.0) cycle
+ 
+                     call l2dformtad(nd,rscales(ilev),
+      1                   sourcesort(1,istart),npts,
+@@ -936,6 +938,7 @@
+                     istart = isrcse(1,jbox)
+                     iend = isrcse(2,jbox)
+                     npts = iend-istart+1
++                    if(npts.le.0) cycle
+                     
+                     call l2dformtacd(nd,rscales(ilev),
+      1                   sourcesort(1,istart),npts,
+@@ -1108,7 +1111,7 @@
+           iend = itargse(2,ibox) 
+           npts = iend-istart+1
+ 
+-          if(ifpghtarg.eq.1) then
++          if(ifpghtarg.eq.1 .and. npts.gt.0) then
+             do i=1,nlist3s(ibox)
+               jbox = list3(i,ibox) 
+                   
+@@ -1118,7 +1121,7 @@
+      3         pottarg(1,istart))
+             enddo
+           endif
+-          if(ifpghtarg.eq.2) then
++          if(ifpghtarg.eq.2 .and. npts.gt.0) then
+             do i=1,nlist3s(ibox)
+               jbox = list3(i,ibox)
+               call l2dmpevalg(nd,rscales(ilev+1),
+@@ -1127,7 +1130,7 @@
+      3          pottarg(1,istart),gradtarg(1,istart))
+             enddo
+           endif
+-          if(ifpghtarg.eq.3) then
++          if(ifpghtarg.eq.3 .and. npts.gt.0) then
+             do i=1,nlist3s(ibox)
+               jbox = list3(i,ibox)
+ 
+@@ -1146,7 +1149,7 @@
+           npts = iend-istart+1
+             
+ 
+-          if(ifpgh.eq.1) then
++          if(ifpgh.eq.1 .and. npts.gt.0) then
+             do i=1,nlist3s(ibox)
+               jbox = list3(i,ibox) 
+               call l2dmpevalp(nd,rscales(ilev+1),
+@@ -1155,7 +1158,7 @@
+      3           pot(1,istart))
+             enddo
+           endif
+-          if(ifpgh.eq.2) then
++          if(ifpgh.eq.2 .and. npts.gt.0) then
+             do i=1,nlist3s(ibox)
+               jbox = list3(i,ibox) 
+               call l2dmpevalg(nd,rscales(ilev+1),
+@@ -1164,7 +1167,7 @@
+      3           pot(1,istart),grad(1,istart))
+             enddo
+           endif
+-          if(ifpgh.eq.3) then
++          if(ifpgh.eq.3 .and. npts.gt.0) then
+             do i=1,nlist3s(ibox)
+               jbox = list3(i,ibox) 
+               call l2dmpevalh(nd,rscales(ilev+1),
+@@ -1213,19 +1216,19 @@
+             istart = itargse(1,ibox) 
+             iend = itargse(2,ibox)
+             npts = iend-istart + 1
+-            if(ifpghtarg.eq.1) then
++            if(ifpghtarg.eq.1 .and. npts.gt.0) then
+               call l2dtaevalp(nd,rscales(ilev),
+      1              centers(1,ibox),rmlexp(iaddr(2,ibox)),
+      2              nterms(ilev),targetsort(1,istart),npts,
+      3              pottarg(1,istart))
+             endif
+-            if(ifpghtarg.eq.2) then
++            if(ifpghtarg.eq.2 .and. npts.gt.0) then
+               call l2dtaevalg(nd,rscales(ilev),
+      1          centers(1,ibox),rmlexp(iaddr(2,ibox)),
+      2          nterms(ilev),targetsort(1,istart),npts,
+      3          pottarg(1,istart),gradtarg(1,istart))
+             endif
+-            if(ifpghtarg.eq.3) then
++            if(ifpghtarg.eq.3 .and. npts.gt.0) then
+               call l2dtaevalh(nd,rscales(ilev),
+      1          centers(1,ibox),rmlexp(iaddr(2,ibox)),
+      2          nterms(ilev),targetsort(1,istart),npts,
+@@ -1239,19 +1242,19 @@
+             istart = isrcse(1,ibox)
+             iend = isrcse(2,ibox)
+             npts = iend-istart+1
+-            if(ifpgh.eq.1) then
++            if(ifpgh.eq.1 .and. npts.gt.0) then
+               call l2dtaevalp(nd,rscales(ilev),
+      1           centers(1,ibox),rmlexp(iaddr(2,ibox)),
+      2           nterms(ilev),sourcesort(1,istart),npts,
+      3           pot(1,istart))
+             endif
+-            if(ifpgh.eq.2) then
++            if(ifpgh.eq.2 .and. npts.gt.0) then
+               call l2dtaevalg(nd,rscales(ilev),
+      1           centers(1,ibox),rmlexp(iaddr(2,ibox)),
+      2           nterms(ilev),sourcesort(1,istart),npts,
+      3           pot(1,istart),grad(1,istart))
+             endif
+-            if(ifpgh.eq.3) then
++            if(ifpgh.eq.3 .and. npts.gt.0) then
+               call l2dtaevalh(nd,rscales(ilev),
+      1           centers(1,ibox),rmlexp(iaddr(2,ibox)),
+      2           nterms(ilev),sourcesort(1,istart),npts,
+--- a/src/common/fmmcommon2d.f
++++ b/src/common/fmmcommon2d.f
+@@ -69,8 +69,8 @@
+ 
+       implicit none
+       integer i,idim,ndim,n
+-      double precision arr(ndim,1),arrsort(ndim,1)
+-      integer iarr(1)
++      double precision arr(ndim,n),arrsort(ndim,n)
++      integer iarr(n)
+ 
+ C$OMP PARALLEL DO DEFAULT(SHARED) PRIVATE(i,idim)      
+       do i=1,n

@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "repository": "Goddard-Fortran-Ecosystem/gFTL-shared",
+  "revision": "8009755e846560fbb389c01d76e013ddf14a7f98",
+  "license": "Apache-2.0",
+  "inputs": {
+    "src/v2/map-like/Generic.F90.in": "c9f9afd674f8bef200ac84b03caeecbf908dcd4146bbe3fb54eb3c191e6f39c3",
+    "src/v2/vector-like/Integer32Generic.F90.in": "75f49158b9b061c30db45a9eec9599067376ba5f78697596a35136c4f5cf53b2",
+    "src/v2/vector-like/Real64Generic.F90.in": "5b04e011495f3e1e38fd16b93fe1937b517d30c6d2a1fe64ba3ba9fbb4889c40",
+    "src/v2/vector-like/StringGeneric.F90.in": "65a8f54a4ccc61238a177fce6e3d0cb35972fc702a3ca6dfef20a02c641fe5f1",
+    "src/v2/vector-like/UnlimitedGeneric.F90.in": "4005e757d5ff34c94de13fd62bf89654c4e723c2a77bd6a2cb7a0cb61ee8870c"
+  },
+  "files": {
+    "playground-generated/v2_Integer32Vector.F90": "module gFTL2_Integer32Vector\n  use, intrinsic :: iso_fortran_env, only: INT32\n\n#define T __INTEGER32\n#define Vector Integer32Vector\n#define VectorIterator Integer32VectorIterator\n#define VectorRIterator Integer32VectorRIterator\n#include \"vector/template.inc\"\n#undef VectorRIterator\n#undef VectorIterator\n#undef Vector\n#undef T\n  \nend module gFTL2_Integer32Vector\n",
+    "playground-generated/v2_IntegerStringMap.F90": "module gFTL2_IntegerStringMap\n   use iso_fortran_env\n#define Key __INTEGER\n#define T __CHARACTER_DEFERRED\n\n#define Map IntegerStringMap\n#define MapIterator IntegerStringMapIterator\n#define Pair IntegerStringPair\n\n#include \"map/template.inc\"\n\n#undef Pair\n#undef MapIterator\n#undef Map\n\n#undef T\n#undef Key\nend module gFTL2_IntegerStringMap\n",
+    "playground-generated/v2_Real64Vector.F90": "module gFTL2_Real64Vector\n  use, intrinsic :: iso_fortran_env, only: REAL64\n\n#define T __REAL64\n#define Vector Real64Vector\n#define VectorIterator Real64VectorIterator\n#define VectorRIterator Real64VectorRIterator\n#include \"vector/template.inc\"\n#undef VectorRIterator\n#undef VectorIterator\n#undef Vector\n#undef T\n  \nend module gFTL2_Real64Vector\n",
+    "playground-generated/v2_StringIntegerMap.F90": "module gFTL2_StringIntegerMap\n   use iso_fortran_env\n#define Key __CHARACTER_DEFERRED\n#define T __INTEGER\n\n#define Map StringIntegerMap\n#define MapIterator StringIntegerMapIterator\n#define Pair StringIntegerPair\n\n#include \"map/template.inc\"\n\n#undef Pair\n#undef MapIterator\n#undef Map\n\n#undef T\n#undef Key\nend module gFTL2_StringIntegerMap\n",
+    "playground-generated/v2_StringUnlimitedMap.F90": "module gFTL2_StringUnlimitedMap\n   use iso_fortran_env\n#define Key __CHARACTER_DEFERRED\n#define T __UNLIMITED_POLYMORPHIC\n\n#define Map StringUnlimitedMap\n#define MapIterator StringUnlimitedMapIterator\n#define Pair StringUnlimitedPair\n\n#include \"map/template.inc\"\n\n#undef Pair\n#undef MapIterator\n#undef Map\n\n#undef T\n#undef Key\nend module gFTL2_StringUnlimitedMap\n",
+    "playground-generated/v2_StringVector.F90": "module gFTL2_StringVector\n\n#define T __CHARACTER_DEFERRED\n#define Vector StringVector\n#define VectorIterator StringVectorIterator\n#define VectorRIterator StringVectorRIterator\n#include \"vector/template.inc\"\n#undef VectorRIterator\n#undef VectorIterator\n#undef Vector\n#undef T\n  \nend module gFTL2_StringVector\n",
+    "playground-generated/v2_UnlimitedVector.F90": "module gFTL2_UnlimitedVector\n\n#define T __UNLIMITED_POLYMORPHIC\n#define Vector UnlimitedVector\n#define VectorIterator UnlimitedVectorIterator\n#define VectorRIterator UnlimitedVectorRIterator\n#include \"vector/template.inc\"\n#undef VectorRIterator\n#undef VectorIterator\n#undef Vector\n#undef T\n  \nend module gFTL2_UnlimitedVector\n"
+  }
+}

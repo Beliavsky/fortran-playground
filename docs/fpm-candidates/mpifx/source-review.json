@@ -1,0 +1,90 @@
+{
+  "id": "mpifx",
+  "repository": "dftbplus/mpifx",
+  "revision": "1223bd515bf2ccf39f5575d628ab2867a3d8e155",
+  "archive_sha256": "1d4dd85696fb191e91d6b0c309bdc194854cfa390de4c9b097710d12296467b9",
+  "catalog_build": {
+    "adapter_sha256": "e27e15d511b0c7a6071e422dd426d023680f5754df7dc8f53326fdb29a4a5927",
+    "apt_packages": [
+      "libmpich-dev=4.3.0+really4.2.1-1"
+    ],
+    "environment": {
+      "FPM_FFLAGS": "-I/usr/include/x86_64-linux-gnu/mpich -fallow-argument-mismatch",
+      "UCX_TLS": "self,sm"
+    },
+    "source_packages": {
+      "dftbplus/mpifx": {
+        "manifest": "name = \"mpifx\"\nversion = \"0.0.0\"\nlicense = \"BSD-2-Clause\"\n[library]\nsource-dir = \"playground-library\"\n[build]\nlink = [\"mpichfort\", \"mpich\"]\nexternal-modules = [\"mpi\", \"mpi_f08\"]\nauto-executables = false\nauto-examples = false\nauto-tests = false\n[install]\nlibrary = true\n[fortran]\nimplicit-typing = true\nimplicit-external = true\nsource-form = \"default\"\n",
+        "sources": [
+          "lib/module.fpp",
+          "lib/mpifx_abort.fpp",
+          "lib/mpifx_allgather.fpp",
+          "lib/mpifx_allgatherv.fpp",
+          "lib/mpifx_allreduce.fpp",
+          "lib/mpifx_barrier.fpp",
+          "lib/mpifx_bcast.fpp",
+          "lib/mpifx_comm.fpp",
+          "lib/mpifx_constants.fpp",
+          "lib/mpifx_finalize.fpp",
+          "lib/mpifx_gather.fpp",
+          "lib/mpifx_gatherv.fpp",
+          "lib/mpifx_get_processor_name.fpp",
+          "lib/mpifx_helper.fpp",
+          "lib/mpifx_init.fpp",
+          "lib/mpifx_recv.fpp",
+          "lib/mpifx_reduce.fpp",
+          "lib/mpifx_scatter.fpp",
+          "lib/mpifx_scatterv.fpp",
+          "lib/mpifx_send.fpp",
+          "lib/mpifx_win.fpp"
+        ],
+        "fypp": {
+          "version": "3.2",
+          "outputs": {
+            "lib/module.fpp": "d7acf270f7d008c4aa97def1ddd974b98379ae943dec6755b8fafa9244e29b37",
+            "lib/mpifx_abort.fpp": "f1bad9a84fac828c7945c0262a343127273d2a92ff8c8e6f94879d18ff0e4d66",
+            "lib/mpifx_allgather.fpp": "51c27cbb78db657cd8fb6a55c89110ba4d04f6df55ae27c1820011537396f5d1",
+            "lib/mpifx_allgatherv.fpp": "89dc39cbe34801efd4e782c37af05a7c299f21b7f68fe4a1cfa3ce4fc0d11f2e",
+            "lib/mpifx_allreduce.fpp": "91451acb091da5358894f6a18534424ee2af98af3c13a554bc646a2af5d3ef86",
+            "lib/mpifx_barrier.fpp": "fd77909467c6658fa81dfef2fe72d38d404d5dd7e218633b6c66d017d182e549",
+            "lib/mpifx_bcast.fpp": "f2641936961c7c94b44ed2d3cc98739c8af531eed3cca1eed61b87b525db9c3a",
+            "lib/mpifx_comm.fpp": "9cb117333688afd92815d728b51327f48cb9f5668dcf653e5b2c075a971797ed",
+            "lib/mpifx_constants.fpp": "dd370afc855d68ae286d775afef4b314d5fa5deaa8be44487bd4d9d3c1e71234",
+            "lib/mpifx_finalize.fpp": "adc99e056f46b7fc0363954cadd765ca7aafa98d4b5425058297b00290b08ba6",
+            "lib/mpifx_gather.fpp": "8c5e38f2166cf035aeb0b45dc1045d9499c7b18a51939fd57217ecfbc2299c30",
+            "lib/mpifx_gatherv.fpp": "8b16bdfd70b4d54139630ce58617f5da56adea45da44f1e8272242f7f3cbc1d3",
+            "lib/mpifx_get_processor_name.fpp": "6aeb8833fd07178a2663dc9f514497352131fa59e041e2d0dfb484a823c480fe",
+            "lib/mpifx_helper.fpp": "8d05e17b6e7201a699c4ded67c4c08f1d610364bcaf721b1809077eb31ada93c",
+            "lib/mpifx_init.fpp": "92cee8ddf86e87d6a0e652fe9e1f5ff3b6567148a652d93bcfd8f58fcc66fa24",
+            "lib/mpifx_recv.fpp": "c8d4880b8f653f625bbec39baa87bdde97b1badfd1ab5d42df4cb8896f6d4d43",
+            "lib/mpifx_reduce.fpp": "0d20080c8c894c110dd12b239ad2de2d3fc2887a03aea4d1783786fb4288abe7",
+            "lib/mpifx_scatter.fpp": "8211addc80e447269609cf1e924b9167cf4d6ddefcb4fea278cceb673f2f263a",
+            "lib/mpifx_scatterv.fpp": "5a562b349b6f9a2b89aedeefdae19f90697a7d8f5fe5823eca0e950c362c3b63",
+            "lib/mpifx_send.fpp": "bc050302c2b742953ac240007d0b7e1b056114c87e777024538ebe4fe3b780ac",
+            "lib/mpifx_win.fpp": "8b7ab8f2bc2369a4adab13df099f3572d2fc17a74f2b4ea8b3997232af9f73e4"
+          }
+        }
+      }
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T21:51:26.765767+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/mpifx.f90",
+  "verification": {
+    "seconds": 2.487,
+    "build_seconds": 0.563,
+    "library_reused": true,
+    "demo_sha256": "a91ad18b2c69a047199d362c079e94207b8eb2ea2dcd14c3e8ec8fcdf87556ee",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "BSD-2-Clause",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "The upstream CMake library source list is generated with Fypp 3.2, with every generated file checksum locked in the recipe. The example exercises communicator initialization, real-vector broadcast, real and integer all-reduce and in-place maximum reduction on exactly one MPI process, checking API statuses and returned data. MPICH is pinned and UCX transports are limited to self/shared memory. This illustrates typed communication APIs, not parallel execution or speedup; point-to-point messaging, multiple processes and other wrappers are outside verification scope. Classification R covers the tested service routines.",
+  "generation_note": "Fypp 3.2 output checksums were independently reproduced on Linux/Python 3.12 from the pinned templates. LF text normalization keeps hashes identical on Windows and Linux.",
+  "runtime_note": "The checked example uses one MPI process. UCX emits a network-discovery diagnostic about /sys/class/net, which the restricted gVisor sandbox does not expose. The program exits successfully and all data/numerical checks pass. The diagnostic is retained verbatim in verified-output.txt."
+}

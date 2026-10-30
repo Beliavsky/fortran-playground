@@ -1,0 +1,42 @@
+{
+  "id": "libnegf",
+  "repository": "libnegf/libnegf",
+  "revision": "f34f7e0aebcbc73f3d5bdcbe723a821ded984180",
+  "archive_sha256": "f63e6bd231b7603d5899af22e5a24b396971925bead70096c184c75590ed6114",
+  "checked_at": "2026-10-30T10:34:44.473719+00:00",
+  "status": "preparation-failed",
+  "stage": "preparation",
+  "compiler_invoked": false,
+  "links": [
+    {
+      "path": "libnegf-f34f7e0aebcbc73f3d5bdcbe723a821ded984180/tests/f90Si2x2/matconv.F90",
+      "target": "../f90read_hs/matconv.F90"
+    },
+    {
+      "path": "libnegf-f34f7e0aebcbc73f3d5bdcbe723a821ded984180/tests/f90Si2x2/readHS.F90",
+      "target": "../f90read_hs/readHS.F90"
+    },
+    {
+      "path": "libnegf-f34f7e0aebcbc73f3d5bdcbe723a821ded984180/tests/f90Si_nin/matconv.F90",
+      "target": "../f90read_hs/matconv.F90"
+    },
+    {
+      "path": "libnegf-f34f7e0aebcbc73f3d5bdcbe723a821ded984180/tests/f90Si_nin/readHS.F90",
+      "target": "../f90read_hs/readHS.F90"
+    },
+    {
+      "path": "libnegf-f34f7e0aebcbc73f3d5bdcbe723a821ded984180/tests/f90Si_nin_40pl/matconv.F90",
+      "target": "../f90read_hs/matconv.F90"
+    },
+    {
+      "path": "libnegf-f34f7e0aebcbc73f3d5bdcbe723a821ded984180/tests/f90Si_nin_40pl/readHS.F90",
+      "target": "../f90read_hs/readHS.F90"
+    }
+  ],
+  "error": "Package archive contains an unsafe path, link, or special file.",
+  "reason": "The pinned GitHub archive contains six symbolic links in test directories. The unchanged source extractor rejects links before compilation. This does not establish a compiler or numerical failure.",
+  "proposed_next_step": "Obtain a pinned regular-file source distribution or review narrowly scoped safe handling of internal test links; then configure its MPI and BLAS/LAPACK requirements and verify a small author-derived transport example.",
+  "verified_in_playground": false,
+  "archive_entries": 288,
+  "archive_expanded_bytes": 1488159
+}

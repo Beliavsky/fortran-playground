@@ -1,0 +1,10 @@
+[
+  {
+    "attempt": "containers",
+    "diagnostic": " + mkdir -p build/dependencies\n<ERROR> *cmd_build* Target error: Unable to find source for module dependency: \"ftldynarrayintmodule\" used by \"app/main.f90\"\nSTOP 1\n"
+  },
+  {
+    "attempt": "retry-a",
+    "diagnostic": " + mkdir -p build/dependencies\n[  0%]              pyplot_module.f90\n[ 11%]              pyplot_module.f90  done.\n[ 11%]                   ftlKinds.F90\n[ 22%]                   ftlKinds.F90  done.\n[ 22%]             ftlDynArrayInt.F90\n[ 33%]             ftlDynArrayInt.F90  done.\n[ 33%]                    ftlHash.F90\n[ 44%]                    ftlHash.F90  done.\n[ 44%]                  ftlString.F90\n<ERROR> Compilation failed for object \" .._sources_bundle_packages_0_ftl-e6598dae7db68f68544dc1ca0e64f5bce3744c42_playground-library_ftlString.F90.o \"\n[ 55%]                  ftlString.F90  done.\n\n./././/../sources/bundle/packages/0/ftl-e6598dae7db68f68544dc1ca0e64f5bce3744c42/playground-library/ftlString.F90:806:20:\n\n  806 |       character(len=RawLength(str)) :: raw\n      |                    1\nError: Procedure \u2018rawlength\u2019 called with an implicit interface at (1) [-Werror=implicit-interface]\ncompilation terminated due to -fmax-errors=1.\nf951: some warnings being treated as errors\n<ERROR> stopping due to failed compilation\nSTOP 1\n"
+  }
+]

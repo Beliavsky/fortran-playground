@@ -1,0 +1,17 @@
+name = "fortran-lua53"
+version = "0.2.0"
+license = "ISC"
+author = "Philipp Engel"
+maintainer = "@interkosmos"
+copyright = "Copyright (c) 2021, Philipp Engel"
+description = "Fortran 2008 ISO C binding interfaces to Lua 5.3"
+keywords = [ "lua" ]
+
+[build]
+link = "lua"
+
+[library]
+source-dir = "src"
+
+[install]
+library = true

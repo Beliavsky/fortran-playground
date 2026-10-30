@@ -1,0 +1,45 @@
+{
+  "id": "ogpf",
+  "repository": "kookma/ogpf",
+  "revision": "bd18021949be028856957c9c03832742513d5c67",
+  "archive_sha256": "84eebc385c7d4170a355ff22f8e462b2d4a70d485194e0465d885bae651d09c7",
+  "catalog_build": {
+    "adapter_sha256": "e34f911192ec7459f4becd43da08a8df4dd8a5fd89707941f2cbffc607e82c25",
+    "apt_packages": [
+      "gnuplot-nox=6.0.2+dfsg1-1"
+    ]
+  },
+  "dependencies": [],
+  "catalog_patches": {
+    "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+    "edits": [
+      {
+        "path": "src/ogpf.f90",
+        "sha256": "0b298ed076a7482cef8fff0d86cc0853fd81351301084db110d45148ca54e4ab",
+        "before": "        write(unit=this%file_unit, fmt='(a)') 'set term ' // gnuplot_term_type // &\n            ' size ' // gnuplot_term_size // ' enhanced font \"' // &\n            gnuplot_term_font // '\"' // &\n            ' title \"' // md_name // ': ' // md_rev //'\"'   ! library name and version\n",
+        "after": "    write(unit=this%file_unit, fmt='(a)') 'set term pngcairo size 800,600 enhanced font \"DejaVu Sans,11\"'\n"
+      }
+    ]
+  },
+  "checked_at": "2026-10-29T23:03:22.407960+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/ogpf.f90",
+  "verification": {
+    "seconds": 2.933,
+    "build_seconds": 0.462,
+    "library_reused": true,
+    "demo_sha256": "cfb660e591ebe8908e52cee810763d15b4a121a08d9270d717d5b5fadc0c7308",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "The checked example computes a Gaussian grid and uses the upstream contour interface to generate a PNG. A checksum-guarded catalog patch selects the headless pngcairo terminal instead of the upstream window terminal; the numerical and plotting procedures are unchanged. GNUplot is pinned as a native build dependency. The sandbox must return a browser-viewable PNG, and its preview is reviewed. MIT licensing is stated in both LICENSE and the upstream FPM manifest. Q covers graphics.",
+  "initial_consumer_findings": [
+    "An initial consumer mixed an incremental contour-level option with the contour routine's own automatic-level setting and returned a blank plot. The checked consumer leaves contour level selection to the library; the returned PNG was inspected and shows concentric Gaussian contours.",
+    "The only source patch replaces the window-terminal header with pngcairo for headless execution; it is checksum-guarded and included in local project exports."
+  ]
+}

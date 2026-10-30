@@ -1,0 +1,33 @@
+{
+  "id": "coretran",
+  "repository": "leonfoks/coretran",
+  "revision": "204c4707f6680b6d7d1e4da39077d0fd3acfe37e",
+  "archive_sha256": "29b2e281a6d1bdefd6abe141da563fe015737eb7c2604083c666cfcbe9df19e0",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "environment": {
+      "FPM_FFLAGS": "-fopenmp"
+    },
+    "metapackages": [
+      "openmp"
+    ]
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T12:54:09.059921+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/coretran.f90",
+  "verification": {
+    "seconds": 1.931,
+    "build_seconds": 0.506,
+    "library_reused": true,
+    "demo_sha256": "78caf6f9e958b712d29aa17fd26e11478a930eca880c56739588b3121c95bea1",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "BSD-3-Clause",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Scientific utilities. The main sorts repeated and negative integers, builds a k-d tree for 20 deterministic 2D points and compares the nearest point with an independent direct search. The OpenMP metapackage is resolved explicitly and -fopenmp is enabled; the execution sandbox still uses one thread. No source edits. The broad library is compiled, but this driver does not validate all containers, random generators, mathematical utilities or parallel performance."
+}

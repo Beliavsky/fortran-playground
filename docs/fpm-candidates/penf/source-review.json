@@ -1,0 +1,29 @@
+{
+  "id": "penf",
+  "repository": "szaghi/PENF",
+  "revision": "65061235982495b158412b70c05b228af4320d94",
+  "archive_sha256": "f8c832e6893d0f12dca9387171f70fb3f0eb60e4b021f385da6937134fcebc74",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8"
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T12:13:59.407766+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/penf.f90",
+  "verification": {
+    "seconds": 2.223,
+    "build_seconds": 0.381,
+    "library_reused": true,
+    "demo_sha256": "23fc78b22918aeda32e5738dc68100b13b7813cc46f9135ac19514aa57f1b216",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT OR BSD-2-Clause OR BSD-3-Clause OR GPL-3.0-or-later",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Portable numerical kinds, formats and number/string conversions. The latest archive is blocked by a symlink, so this entry uses exactly the older revision already verified as a BeFoR64 dependency. The checked main calls penf_init, verifies integer and real conversion round trips with status checks, zero-padded integer output, real byte size and formatted real output. Sources are unchanged; this adds an independent editable main for the pinned library. Every kind, character encoding, endian platform and invalid conversion is not validated.",
+  "pin_reason": "Latest archive contains a symlink; the exact older BeFoR64 dependency pin is independently verified here.",
+  "rejected_head": "latest-archive-rejection.json"
+}

@@ -1,0 +1,6 @@
+{
+  "exit_code": 0,
+  "stdout": "[1793363798.298590] [modal:3371 :0]       tcp_iface.c:912  UCX  ERROR scandir(/sys/class/net) failed: No such file or directory\nSolution:    1.0000000   2.0000000   3.0000000\nCG iterations: 3\nMaximum residual:   1.7764E-15\nPASS psblas\n",
+  "stderr": "",
+  "scope": "Direct execution of the checked prebuild executable as nobody; not ordinary edited-main cache verification."
+}

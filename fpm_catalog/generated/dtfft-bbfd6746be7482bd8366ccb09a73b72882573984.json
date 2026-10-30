@@ -1,0 +1,74 @@
+{
+  "schema": 1,
+  "repository": "ShatrovOA/dtFFT",
+  "revision": "bbfd6746be7482bd8366ccb09a73b72882573984",
+  "license": "GPL-3.0-or-later",
+  "configuration": {
+    "options": [
+      "-DDTFFT_WITH_FFTW=ON",
+      "-DDTFFT_BUILD_SHARED=OFF",
+      "-DDTFFT_BUILD_TESTS=OFF",
+      "-DDTFFT_BUILD_C_CXX_API=OFF",
+      "-DDTFFT_BUILD_PYTHON_API=OFF",
+      "-DMPI_Fortran_COMPILER=/usr/bin/mpifort.mpich",
+      "-DMPI_C_COMPILER=/usr/bin/mpicc.mpich",
+      "-DMPI_CXX_COMPILER=/usr/bin/mpicxx.mpich"
+    ],
+    "sources": [
+      "src/dtfft.F90",
+      "src/dtfft_abstract_backend.F90",
+      "src/dtfft_abstract_executor.F90",
+      "src/dtfft_abstract_kernel.F90",
+      "src/dtfft_abstract_reshape_handle.F90",
+      "src/dtfft_backend_mpi.F90",
+      "src/dtfft_config.F90",
+      "src/dtfft_errors.F90",
+      "src/dtfft_kernel_host.F90",
+      "src/dtfft_parameters.F90",
+      "src/dtfft_pencil.F90",
+      "src/dtfft_plan.F90",
+      "src/dtfft_reshape_handle_datatype.F90",
+      "src/dtfft_reshape_handle_generic.F90",
+      "src/dtfft_reshape_plan.F90",
+      "src/dtfft_reshape_plan_base.F90",
+      "src/dtfft_transpose_plan.F90",
+      "src/dtfft_utils.F90",
+      "src/interfaces/fft/fftw/dtfft_executor_fftw_m.F90",
+      "src/interfaces/fft/fftw/dtfft_interface_fftw_m.F90",
+      "src/interfaces/fft/fftw/dtfft_interface_fftw_native_m.F90"
+    ],
+    "fortran_macros": [
+      "ADDR_KIND=int32",
+      "CNT_KIND=int32",
+      "ENABLE_INPUT_CHECK"
+    ]
+  },
+  "inputs": {
+    "CMakeLists.txt": "e4647bc6b06f5839f3dfdad900a426bcad3c5b84be74ba3f051f614c36d7c20f",
+    "MANIFEST.in": "6ab522238d4757bdf529f18ea5f0b06bbbf3c9f7fc1ed1cc75bac383ec8bb06f",
+    "cmake/CheckFFTWFeatures.cmake": "3b0c0836997c3924100482f2c009ef82802ac51f57959106709101592b39515f",
+    "cmake/CheckFortranFeatures.cmake": "cc0a1e81328084d8351bb23a9e6b99b7d7ef38120c8fc7a0baa5c75027f976b5",
+    "cmake/CheckMPIFeatures.cmake": "e1745c0e6e60266f554dc61fe7f4d2bcb4835684cbf03c4ffb63af5947a7b71a",
+    "cmake/CheckNCCLFeatures.cmake": "e878e9d6e4c110335c23e5131ab4d37e6d8f909ed5dd3b18150b6acc57e5d720",
+    "cmake/FindFFTW.cmake": "39873e791b1883542299a3d3b77d421abd876b60cd6358509ac8a793654bb205",
+    "cmake/FindNCCL.cmake": "efba4c77948f4993b6c3b10701756743e944a43c15b1ce1ebb60a2d8c529c4a9",
+    "cmake/dtfftConfig.cmake.in": "31f9bb88ab01ba21adfc28cd7a18005e092b6b7e4315eab16de50e156aa888e0",
+    "include/dtfft_config.h.in": "c22a066b2d8d142917809016fc7bdf8bfb440298ec8492e589da1dbc4481ba3f",
+    "src/CMakeLists.txt": "532e25aa7b867d44ee9413efba75afc61654f1fe5936bfb0a06a22aed37f1e68",
+    "src/interfaces/CMakeLists.txt": "d7b0d65d728f8b21d59559c920b74c2cc1121239b1753a45cc1f5879f12827cf",
+    "src/interfaces/api/CMakeLists.txt": "ecabbcb7d1bc8676ed5de660bdfbb2ba01ea115fd42de24ff9eeb989d9d4cafc",
+    "src/interfaces/external/CMakeLists.txt": "d07ca7c18c2a449ca50a25a0c453cee88b10487cc8afdf6763df2b3012d1a337",
+    "src/interfaces/fft/CMakeLists.txt": "ee2f81f14a3982cd5b2b06b393a8d6b34a53bf24158947f036918d4ab06b50e1",
+    "src/interfaces/fft/cufft/CMakeLists.txt": "ddbf1ea02c83eb596c52ed1261f560d3f9cb8821580a5544d25db6e7b675b171",
+    "src/interfaces/fft/fftw/CMakeLists.txt": "108ab7da56593405c0b76ad6e085a66ff8029967aac17e9d33e6df1b4955280c",
+    "src/interfaces/fft/mkl/CMakeLists.txt": "9e771f0fbec37172befd49a1c67a29351224f5ca2c8a76cd760ef047f5b633fb",
+    "src/interfaces/fft/vkfft/CMakeLists.txt": "32ae6a898bd389440f8e6c3894e40140a55c6786fce64864d7f0f8a2bc39423c",
+    "src/tests/CMakeLists.txt": "5d26ae95191548c0134f69e2dbf381449535ec1bad11bc2fb829d83ebe7bbbd2",
+    "tests/CMakeLists.txt": "be5d3ee3c083f9a1babdd91ad7aeb27294b79dd09e0e1ed61da7563551806784",
+    "tests/install/CMakeLists.txt": "2dbd4a479eaebf88595a38325bca0ebc08a002e9f5313b417766fc33892f9bb6",
+    "tests/python/CMakeLists.txt": "3106d4b31e3086d75c1ce3c7059d2325aca6c0fddbd40cceb9dd64fd552082d0"
+  },
+  "files": {
+    "playground-generated/dtfft_config.h": "#ifndef DTFFT_CONFIG_H\n#define DTFFT_CONFIG_H\n\n/* FFTW3 support is enabled */\n#define DTFFT_WITH_FFTW\n/* MKL support is enabled */\n/* #undef DTFFT_WITH_MKL */\n/* CUFFT support is enabled */\n/* #undef DTFFT_WITH_CUFFT */\n/* VKFFT support is enabled */\n/* #undef DTFFT_WITH_VKFFT */\n/* No FFT libraries were configured */\n/* #undef DTFFT_TRANSPOSE_ONLY */\n/* CUDA support is enabled */\n/* #undef DTFFT_WITH_CUDA */\n/* NCCL support is enabled */\n/* #undef DTFFT_WITH_NCCL */\n/* NVSHMEM-based backends support is enabled */\n/* #undef DTFFT_WITH_NVSHMEM */\n/* COMPRESSED backends support is enabled */\n/* #undef DTFFT_WITH_COMPRESSION */\n/* Debug build*/\n/* #undef DTFFT_DEBUG */\n/* Mock support is enabled */\n/* #undef DTFFT_WITH_MOCK_ENABLED */\n\n\n#define CONF_DTFFT_VERSION_MAJOR 3\n#define CONF_DTFFT_VERSION_MINOR 2\n#define CONF_DTFFT_VERSION_PATCH 0\n#define CONF_DTFFT_VERSION_CODE 302000\n\n#define CONF_DTFFT_VERSION(X,Y,Z) (X) * 100000 + (Y) * 1000 + (Z)\n\n#define CONF_DTFFT_EXECUTE_FORWARD 11\n#define CONF_DTFFT_EXECUTE_BACKWARD 12\n\n#define CONF_DTFFT_TRANSPOSE_X_TO_Y +1\n#define CONF_DTFFT_TRANSPOSE_Y_TO_X (-1)\n#define CONF_DTFFT_TRANSPOSE_Y_TO_Z +2\n#define CONF_DTFFT_TRANSPOSE_Z_TO_Y (-2)\n#define CONF_DTFFT_TRANSPOSE_X_TO_Z +3\n#define CONF_DTFFT_TRANSPOSE_Z_TO_X (-3)\n\n#define CONF_DTFFT_RESHAPE_X_BRICKS_TO_PENCILS 11\n#define CONF_DTFFT_RESHAPE_X_PENCILS_TO_BRICKS 12\n#define CONF_DTFFT_RESHAPE_Z_PENCILS_TO_BRICKS 13\n#define CONF_DTFFT_RESHAPE_Z_BRICKS_TO_PENCILS 14\n\n#define CONF_DTFFT_LAYOUT_X_BRICKS 1\n#define CONF_DTFFT_LAYOUT_X_PENCILS 2\n#define CONF_DTFFT_LAYOUT_X_PENCILS_FOURIER 3\n#define CONF_DTFFT_LAYOUT_Y_PENCILS 4\n#define CONF_DTFFT_LAYOUT_Z_PENCILS 5\n#define CONF_DTFFT_LAYOUT_Z_BRICKS 6\n\n#define CONF_DTFFT_ESTIMATE 0\n#define CONF_DTFFT_MEASURE +1\n#define CONF_DTFFT_PATIENT +2\n#define CONF_DTFFT_EXHAUSTIVE +3\n\n#define CONF_DTFFT_SINGLE 0\n#define CONF_DTFFT_DOUBLE +1\n\n\n#define CONF_DTFFT_DCT_1 +3\n#define CONF_DTFFT_DCT_2 +5\n#define CONF_DTFFT_DCT_3 +4\n#define CONF_DTFFT_DCT_4 +6\n#define CONF_DTFFT_DST_1 +7\n#define CONF_DTFFT_DST_2 +9\n#define CONF_DTFFT_DST_3 +8\n#define CONF_DTFFT_DST_4 +10\n\n\n#define CONF_DTFFT_EXECUTOR_NONE 0\n#define CONF_DTFFT_EXECUTOR_FFTW3 1\n#define CONF_DTFFT_EXECUTOR_MKL 2\n#define CONF_DTFFT_EXECUTOR_CUFFT 3\n#define CONF_DTFFT_EXECUTOR_VKFFT 4\n\n#define CONF_DTFFT_SUCCESS 0\n#define CONF_DTFFT_ERROR_MPI_FINALIZED (-1)\n#define CONF_DTFFT_ERROR_PLAN_NOT_CREATED 1\n#define CONF_DTFFT_ERROR_INVALID_TRANSPOSE_TYPE 2\n#define CONF_DTFFT_ERROR_INVALID_N_DIMENSIONS 3\n#define CONF_DTFFT_ERROR_INVALID_DIMENSION_SIZE 4\n#define CONF_DTFFT_ERROR_INVALID_COMM_TYPE 5\n#define CONF_DTFFT_ERROR_INVALID_PRECISION 6\n#define CONF_DTFFT_ERROR_INVALID_EFFORT_FLAG 7\n#define CONF_DTFFT_ERROR_INVALID_EXECUTOR_TYPE 8\n#define CONF_DTFFT_ERROR_INVALID_COMM_DIMS 9\n#define CONF_DTFFT_ERROR_INVALID_COMM_FAST_DIM 10\n#define CONF_DTFFT_ERROR_MISSING_R2R_KINDS 11\n#define CONF_DTFFT_ERROR_INVALID_R2R_KINDS 12\n#define CONF_DTFFT_ERROR_R2C_TRANSPOSE_PLAN 13\n#define CONF_DTFFT_ERROR_INPLACE_TRANSPOSE 14\n#define CONF_DTFFT_ERROR_INVALID_AUX 15\n#define CONF_DTFFT_ERROR_INVALID_LAYOUT 16\n#define CONF_DTFFT_ERROR_INVALID_USAGE 17\n#define CONF_DTFFT_ERROR_PLAN_IS_CREATED 18\n#define CONF_DTFFT_ERROR_ALLOC_FAILED 19\n#define CONF_DTFFT_ERROR_FREE_FAILED 20\n#define CONF_DTFFT_ERROR_INVALID_ALLOC_BYTES 21\n#define CONF_DTFFT_ERROR_DLOPEN_FAILED 22\n#define CONF_DTFFT_ERROR_DLSYM_FAILED 23\n/* #define CONF_DTFFT_ERROR_R2C_TRANSPOSE_CALLED 24 */\n#define CONF_DTFFT_ERROR_PENCIL_ARRAYS_SIZE_MISMATCH 25\n#define CONF_DTFFT_ERROR_PENCIL_ARRAYS_INVALID_SIZES 26\n#define CONF_DTFFT_ERROR_PENCIL_INVALID_COUNTS 27\n#define CONF_DTFFT_ERROR_PENCIL_INVALID_STARTS 28\n#define CONF_DTFFT_ERROR_PENCIL_SHAPE_MISMATCH 29\n#define CONF_DTFFT_ERROR_PENCIL_OVERLAP 30\n#define CONF_DTFFT_ERROR_PENCIL_NOT_CONTINUOUS 31\n#define CONF_DTFFT_ERROR_PENCIL_NOT_INITIALIZED 32\n#define CONF_DTFFT_ERROR_INVALID_MEASURE_WARMUP_ITERS 33\n#define CONF_DTFFT_ERROR_INVALID_MEASURE_ITERS 34\n#define CONF_DTFFT_ERROR_INVALID_REQUEST 35\n#define CONF_DTFFT_ERROR_TRANSPOSE_ACTIVE 36\n#define CONF_DTFFT_ERROR_TRANSPOSE_NOT_ACTIVE 37\n#define CONF_DTFFT_ERROR_INVALID_RESHAPE_TYPE 38\n#define CONF_DTFFT_ERROR_RESHAPE_ACTIVE 39\n#define CONF_DTFFT_ERROR_RESHAPE_NOT_ACTIVE 40\n#define CONF_DTFFT_ERROR_INPLACE_RESHAPE 41\n/* #define CONF_DTFFT_ERROR_R2C_RESHAPE_CALLED 42 */\n#define CONF_DTFFT_ERROR_INVALID_EXECUTE_TYPE 43\n#define CONF_DTFFT_ERROR_RESHAPE_NOT_SUPPORTED 44\n#define CONF_DTFFT_ERROR_R2C_EXECUTE_CALLED 45\n#define CONF_DTFFT_ERROR_INVALID_CART_COMM 46\n#define CONF_DTFFT_ERROR_INVALID_TRANSPOSE_MODE 47\n#define CONF_DTFFT_ERROR_INVALID_ACCESS_MODE 48\n#define CONF_DTFFT_ERROR_R2R_FFT_NOT_SUPPORTED 101\n#define CONF_DTFFT_ERROR_GPU_INVALID_STREAM 201\n#define CONF_DTFFT_ERROR_INVALID_BACKEND 202\n#define CONF_DTFFT_ERROR_GPU_NOT_SET 203\n#define CONF_DTFFT_ERROR_VKFFT_R2R_2D_PLAN 204\n#define CONF_DTFFT_ERROR_BACKENDS_DISABLED 205\n#define CONF_DTFFT_ERROR_NOT_DEVICE_PTR 300\n#define CONF_DTFFT_ERROR_NOT_NVSHMEM_PTR 301\n\n#define CONF_DTFFT_ERROR_INVALID_PLATFORM 400\n#define CONF_DTFFT_ERROR_INVALID_PLATFORM_EXECUTOR 401\n#define CONF_DTFFT_ERROR_INVALID_PLATFORM_BACKEND 402\n\n#define CONF_DTFFT_ERROR_COMPRESSION_CUDA_NOT_SUPPORTED 500\n#define CONF_DTFFT_ERROR_COMPRESSION_INVALID_RATE 501\n#define CONF_DTFFT_ERROR_COMPRESSION_INVALID_PRECISION 502\n#define CONF_DTFFT_ERROR_COMPRESSION_INVALID_TOLERANCE 503\n#define CONF_DTFFT_ERROR_COMPRESSION_INVALID_MODE 504\n#define CONF_DTFFT_ERROR_COMPRESSION_INVALID_LIBRARY 505\n#define CONF_DTFFT_ERROR_COMPRESSION_NOT_USED 506\n\n#define CONF_DTFFT_BACKEND_MPI_DATATYPE 21\n#define CONF_DTFFT_BACKEND_MPI_P2P 22\n#define CONF_DTFFT_BACKEND_MPI_A2A 23\n#define CONF_DTFFT_BACKEND_NCCL 24\n#define CONF_DTFFT_BACKEND_CUFFTMP 25\n#define CONF_DTFFT_BACKEND_MPI_P2P_PIPELINED 26\n#define CONF_DTFFT_BACKEND_NCCL_PIPELINED 27\n#define CONF_DTFFT_BACKEND_CUFFTMP_PIPELINED 28\n#define CONF_DTFFT_BACKEND_MPI_RMA 29\n#define CONF_DTFFT_BACKEND_MPI_RMA_PIPELINED 30\n#define CONF_DTFFT_BACKEND_MPI_P2P_SCHEDULED 31\n#define CONF_DTFFT_BACKEND_MPI_P2P_FUSED 32\n#define CONF_DTFFT_BACKEND_MPI_RMA_FUSED 33\n#define CONF_DTFFT_BACKEND_MPI_P2P_COMPRESSED 34\n#define CONF_DTFFT_BACKEND_MPI_RMA_COMPRESSED 35\n#define CONF_DTFFT_BACKEND_ADAPTIVE 36\n#define CONF_DTFFT_BACKEND_NCCL_COMPRESSED 37\n/* #define CONF_DTFFT_BACKEND_NVSHMEM 28 */\n/* #define CONF_DTFFT_BACKEND_NVSHMEM_PIPELINED 29 */\n\n\n#define CONF_DTFFT_PLATFORM_HOST 1\n#define CONF_DTFFT_PLATFORM_CUDA 2\n\n#define CONF_DTFFT_MEASURE_WARMUP_ITERS 2\n#define CONF_DTFFT_MEASURE_ITERS 5\n\n#define CONF_DTFFT_TRANSPOSE_MODE_PACK 15\n#define CONF_DTFFT_TRANSPOSE_MODE_UNPACK 16\n\n#define CONF_DTFFT_ACCESS_MODE_WRITE (-1)\n#define CONF_DTFFT_ACCESS_MODE_READ 1\n\n#define CONF_DTFFT_COMPRESSION_MODE_LOSSLESS 1\n#define CONF_DTFFT_COMPRESSION_MODE_FIXED_RATE 2\n#define CONF_DTFFT_COMPRESSION_MODE_FIXED_PRECISION 3\n#define CONF_DTFFT_COMPRESSION_MODE_FIXED_ACCURACY 4\n\n#define CONF_DTFFT_COMPRESSION_LIB_ZFP 11\n\n#define CONF_DTFFT_UNDEFINED (-111)\n\n#endif\n"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "id": "fortran-utils",
+  "repository": "certik/fortran-utils",
+  "revision": "b43bd24cd421509a5bc6d3b9c3eeae8ce856ed88",
+  "archive_sha256": "2f58fba502b3efcec9b50f64cca2d6487932483a361f72c865f48abc021a34ed",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "apt_packages": [
+      "liblapack-dev=3.12.1-6",
+      "libblas-dev=3.12.1-6"
+    ],
+    "environment": {
+      "FPM_LDFLAGS": "-llapack -lblas"
+    },
+    "source_packages": {
+      "certik/fortran-utils": {
+        "manifest": "name = \"fortran-utils\"\nversion = \"0.0.0\"\nlicense = \"MIT\"\n[library]\nsource-dir = \"playground-library\"\ninclude-dir = [\"src\", \".\"]\n[build]\nauto-executables = false\nauto-examples = false\nauto-tests = false\n[install]\nlibrary = true\n[fortran]\nimplicit-typing = true\nimplicit-external = true\nsource-form = \"default\"\n",
+        "sources": [
+          "src/types.f90",
+          "src/utils.f90",
+          "src/lapack.f90",
+          "src/mesh.f90",
+          "src/splines.f90",
+          "src/sorting.f90"
+        ]
+      }
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T15:00:58.306928+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/fortran-utils.f90",
+  "verification": {
+    "seconds": 1.633,
+    "build_seconds": 0.494,
+    "library_reused": true,
+    "demo_sha256": "4f49ae6813366328afcf9f32c485d89e060f4b08252055f080214903d8acda75",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Selected unmodified modules types, utils, lapack, mesh, splines and sorting, wrapped for FPM and linked to compatible LP64 BLAS/LAPACK. HDF5, AMOS/special functions, optimization and other unselected modules are not included. The main reproduces a cubic polynomial with the consistent-boundary cubic spline and checks its value, first derivative and second derivative on a denser grid against exact formulas. It checks exponential-mesh endpoints, monotonicity and the requested last/first spacing ratio, then sorts repeated/negative integers against an exact answer. General nonpolynomial interpolation error, extrapolation, every boundary condition, other sorting interfaces and all utility routines are not validated."
+}

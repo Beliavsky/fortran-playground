@@ -1,0 +1,25 @@
+{
+  "revision": "03ea10778b6f05db6be0b628fd92065f1ca8e0e9",
+  "tag": "0.14.0",
+  "archive_sha256": "82f05eefc35474d49f62748dd845d56578f7124991faee6c9a2568e58d3d85c2",
+  "original_manifest": {
+    "name": "inference-engine",
+    "version": "0.13.1",
+    "license": "see LICENSE.txt",
+    "author": "Damian Rouson, Tan Nguyen, Jordan Welsman, David Torres, Brad Richardson, Katherine Rasmussen, Federica Villani, Dan Bonachea",
+    "maintainer": "rouson@lbl.gov",
+    "dependencies": {
+      "assert": {
+        "git": "https://github.com/sourceryinstitute/assert",
+        "tag": "1.7.0"
+      }
+    },
+    "dev-dependencies": {
+      "julienne": {
+        "git": "https://github.com/berkeleylab/julienne",
+        "tag": "1.3.1"
+      }
+    }
+  },
+  "failure": " + mkdir -p build/dependencies\n<ERROR> *cmd_build* Target error: Unable to find source for module dependency: \"julienne_string_m\" used by \"app/main.f90\"\nSTOP 1\n"
+}

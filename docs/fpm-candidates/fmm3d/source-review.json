@@ -1,0 +1,95 @@
+{
+  "id": "fmm3d",
+  "repository": "flatironinstitute/FMM3D",
+  "revision": "cad293ae9b8ae1218dd8319d459ffcc5f1412875",
+  "archive_sha256": "4527996ec9dba4604243d066c269289d52e1df0e694f192f8e6358aedc9a1b1a",
+  "license": "Apache-2.0",
+  "checked_at": "2026-10-29T15:00:55.087688+00:00",
+  "status": "deferred",
+  "stage": "execution",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "reason": "The pinned native Fortran library compiles with GNU Fortran 16.2.0, but its Laplace example fails the playground bounds-checked run. Adding the upstream quadrature include directory resolves preparation of Helmholtz sources; adapting two scarray(1) dummy declarations passes the isolated workspace check, but the full run then stops at fexpe(2) with declared extent 1 in lpwrouts.f. A separate local GNU 17 checked run also reports an unallocated disabled dipole buffer argument. The package is deferred under the current checked build profile; these findings do not establish failure with the upstream release build settings.",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "environment": {
+      "FPM_FFLAGS": "-O2 -std=legacy -fallow-argument-mismatch -fopenmp"
+    },
+    "source_packages": {
+      "flatironinstitute/fmm3d": {
+        "manifest": "name = \"fmm3d\"\nversion = \"0.0.0\"\nlicense = \"Apache-2.0\"\n[library]\nsource-dir = \"playground-library\"\ninclude-dir = [\"src\", \"src/Helmholtz\", \".\"]\n[build]\nauto-executables = false\nauto-examples = false\nauto-tests = false\n[install]\nlibrary = true\n[fortran]\nimplicit-typing = true\nimplicit-external = true\nsource-form = \"default\"\n",
+        "sources": [
+          "src/Common/besseljs3d.f",
+          "src/Common/cdjseval3d.f",
+          "src/Common/dfft.f",
+          "src/Common/fmmcommon.f",
+          "src/Common/legeexps.f",
+          "src/Common/prini.f",
+          "src/Common/rotgen.f",
+          "src/Common/rotproj.f",
+          "src/Common/rotviarecur.f",
+          "src/Common/tree_routs3d.f",
+          "src/Common/pts_tree3d.f",
+          "src/Common/yrecursion.f",
+          "src/Common/cumsum.f",
+          "src/Helmholtz/h3dcommon.f",
+          "src/Helmholtz/h3dterms.f",
+          "src/Helmholtz/h3dtrans.f",
+          "src/Helmholtz/helmrouts3d.f",
+          "src/Helmholtz/hfmm3d.f",
+          "src/Helmholtz/hfmm3dwrap.f",
+          "src/Helmholtz/hfmm3dwrap_legacy.f",
+          "src/Helmholtz/hfmm3dwrap_vec.f",
+          "src/Helmholtz/hpwrouts.f",
+          "src/Helmholtz/hwts3e.f",
+          "src/Helmholtz/hnumphys.f",
+          "src/Helmholtz/hnumfour.f",
+          "src/Helmholtz/projections.f",
+          "src/Helmholtz/hfmm3d_mps.f90",
+          "src/Helmholtz/hfmm3d_memest.f",
+          "src/Helmholtz/hfmm3d_ndiv.f",
+          "src/Laplace/lwtsexp_sep1.f",
+          "src/Laplace/l3dterms.f",
+          "src/Laplace/l3dtrans.f",
+          "src/Laplace/laprouts3d.f",
+          "src/Laplace/lfmm3d.f",
+          "src/Laplace/lfmm3dwrap.f",
+          "src/Laplace/lfmm3dwrap_legacy.f",
+          "src/Laplace/lfmm3dwrap_vec.f",
+          "src/Laplace/lwtsexp_sep2.f",
+          "src/Laplace/lpwrouts.f",
+          "src/Laplace/lfmm3d_ndiv.f",
+          "src/Stokes/stfmm3d.f",
+          "src/Stokes/stokkernels.f",
+          "src/Maxwell/emfmm3d.f90",
+          "src/Laplace/lapkernels.f",
+          "src/Laplace/lndiv.f",
+          "src/Helmholtz/helmkernels.f",
+          "src/Helmholtz/hndiv.f"
+        ]
+      }
+    }
+  },
+  "attempted_catalog_patches": {
+    "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+    "edits": [
+      {
+        "path": "playground-library/laprouts3d.f",
+        "sha256": "d8132047b974d4f47580bd65a6872dad4686d88dfc7d4dadbdb6f685240f0d80",
+        "before": "      real *8 scarray(1),cscale\n",
+        "after": "      real *8 scarray(*),cscale\n"
+      },
+      {
+        "path": "playground-library/laprouts3d.f",
+        "sha256": "fbb6228afb986bdc92106e969c740141c4a1c14bd4110b65b49d5028f736690e",
+        "before": "      real *8 scarray(1)\n",
+        "after": "      real *8 scarray(*)\n"
+      }
+    ]
+  },
+  "proposed_gams": [
+    "D1",
+    "I2"
+  ],
+  "next_step": "Audit legacy final-extent-1 dummy arrays and disabled/unallocated actual arguments throughout the exercised Laplace path, or design a package-specific legacy compilation profile with clearly stated checks. Re-run the direct-summation numerical comparison and changed-main library-reuse test before selecting it. The two saved workspace edits alone are insufficient."
+}

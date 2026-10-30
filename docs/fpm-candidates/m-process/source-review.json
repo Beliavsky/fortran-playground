@@ -1,0 +1,27 @@
+{
+  "id": "m-process",
+  "repository": "urbanjost/M_process",
+  "revision": "a38afc744f991a602eded0f7782beb2eff87c8cd",
+  "archive_sha256": "b28ad939b6d5f8abf174ef5773e1eac0300ce28f0189c66b5111bd67a0d98c0d",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8"
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T19:04:24.801783+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/m-process.f90",
+  "verification": {
+    "seconds": 3.999,
+    "build_seconds": 2.383,
+    "library_reused": true,
+    "demo_sha256": "f3674d182a3bf395dff8b07eefd55321368436ba85bb1f7550d061cf81688090",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "Unlicense",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Unmodified Fortran/C POSIX pipe interfaces in the restricted Linux sandbox. Following the upstream process_open_read example, the consumer opens a local printf command, reads and checks the integers 7 and 11, verifies end of output and requires a successful process_close status. Commands run under the ordinary sandbox restrictions; this does not add network or host-system access. Interactive terminals, graphical subprocesses, arbitrary process behavior, write pipes and Windows portability are not verified."
+}

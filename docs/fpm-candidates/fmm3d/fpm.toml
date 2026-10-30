@@ -1,0 +1,16 @@
+name = "fmm3d"
+version = "0.0.0"
+license = "Apache-2.0"
+[library]
+source-dir = "playground-library"
+include-dir = ["src", "src/Helmholtz", "."]
+[build]
+auto-executables = false
+auto-examples = false
+auto-tests = false
+[install]
+library = true
+[fortran]
+implicit-typing = true
+implicit-external = true
+source-form = "default"

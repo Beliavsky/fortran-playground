@@ -1,0 +1,20 @@
+{
+  "compiler": "GNU Fortran (GCC) 17.0.0 20260510 (experimental)",
+  "arguments": [
+    "-fcheck=all",
+    "-g"
+  ],
+  "revision": "7e7509ecd6ebe31b9292cb00825410b478f44808",
+  "checks": {
+    "original": {
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "At line 23 of file .fpm-audit-cache\\batch-360\\reorder-probe\\original.f\nFortran runtime error: Index '3' of dimension 2 of array 'arrsort' above upper bound of 1\n\nError termination. Backtrace:\n#0  0xa0ec18ab in dreorderi_\n\tat .fpm-audit-cache/batch-360/reorder-probe/original.f:23\n#1  0xa0ec14fd in MAIN__\n\tat .fpm-audit-cache/batch-360/reorder-probe/main.f90:6\n#2  0xa0ec1630 in main\n\tat .fpm-audit-cache/batch-360/reorder-probe/main.f90:9\n"
+    },
+    "adapted": {
+      "exit_code": 0,
+      "stdout": " PASS checked inverse reorder\n",
+      "stderr": ""
+    }
+  }
+}

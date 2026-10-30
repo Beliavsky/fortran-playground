@@ -1,0 +1,12 @@
+name="fdict"
+version="0.0.0"
+license="MPL-2.0"
+[library]
+source-dir="playground-library"
+include-dir=[".","playground-generated"]
+[build]
+auto-executables=false
+auto-examples=false
+auto-tests=false
+[install]
+library=true

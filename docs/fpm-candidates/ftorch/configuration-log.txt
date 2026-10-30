@@ -1,0 +1,40 @@
+-- The C compiler identification is GNU 16.2.0
+-- The CXX compiler identification is GNU 16.2.0
+-- The Fortran compiler identification is GNU 16.2.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/local/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Detecting Fortran compiler ABI info
+-- Detecting Fortran compiler ABI info - done
+-- Check for working Fortran compiler: /usr/local/bin/gfortran - skipped
+-- Detecting Fortran/C Interface
+-- Detecting Fortran/C Interface - Found GLOBAL and MODULE mangling
+-- Verifying Fortran/CXX Compiler Compatibility
+-- Verifying Fortran/CXX Compiler Compatibility - Success
+-- CPU-only build
+-- Caffe2: Found protobuf with old-style protobuf targets.
+-- Caffe2: Protobuf version 3.21.12
+CMake Warning at /usr/lib/x86_64-linux-gnu/cmake/Torch/TorchConfig.cmake:22 (message):
+  static library kineto_LIBRARY-NOTFOUND not found.
+Call Stack (most recent call first):
+  /usr/lib/x86_64-linux-gnu/cmake/Torch/TorchConfig.cmake:121 (append_torchlib_if_found)
+  CMakeLists.txt:118 (find_package)
+
+
+-- Found Torch: /usr/lib/x86_64-linux-gnu/libtorch.so
+-- Configuring done (3.6s)
+-- Generating done (0.0s)
+-- Build files have been written to: /tmp/config
+
+
+MODEL_SHA256 13b09124005d3c931b04a5da83624973b3f78b231a579217932469ab8179077c 1766
+libtorch-dev	2.6.0+dfsg-7
+libtorch2.6:amd64	2.6.0+dfsg-7
+

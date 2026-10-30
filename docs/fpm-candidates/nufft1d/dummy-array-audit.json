@@ -1,0 +1,335 @@
+[
+  {
+    "procedure": "ZFFTB",
+    "dummy_arrays": [
+      "C",
+      "WSAVE"
+    ]
+  },
+  {
+    "procedure": "ZFFTB1",
+    "dummy_arrays": [
+      "CH",
+      "C",
+      "WA"
+    ]
+  },
+  {
+    "procedure": "ZFFTF",
+    "dummy_arrays": [
+      "C",
+      "WSAVE"
+    ]
+  },
+  {
+    "procedure": "ZFFTF1",
+    "dummy_arrays": [
+      "CH",
+      "C",
+      "WA"
+    ]
+  },
+  {
+    "procedure": "ZFFTI",
+    "dummy_arrays": [
+      "WSAVE"
+    ]
+  },
+  {
+    "procedure": "ZFFTI1",
+    "dummy_arrays": [
+      "WA"
+    ]
+  },
+  {
+    "procedure": "DCOSQB",
+    "dummy_arrays": [
+      "WSAVE"
+    ]
+  },
+  {
+    "procedure": "DCOSQB1",
+    "dummy_arrays": [
+      "W"
+    ]
+  },
+  {
+    "procedure": "DCOSQF",
+    "dummy_arrays": [
+      "WSAVE"
+    ]
+  },
+  {
+    "procedure": "DCOSQF1",
+    "dummy_arrays": [
+      "W"
+    ]
+  },
+  {
+    "procedure": "DCOSQI",
+    "dummy_arrays": [
+      "WSAVE"
+    ]
+  },
+  {
+    "procedure": "DCOST",
+    "dummy_arrays": [
+      "WSAVE"
+    ]
+  },
+  {
+    "procedure": "DCOSTI",
+    "dummy_arrays": [
+      "WSAVE"
+    ]
+  },
+  {
+    "procedure": "DZFFT1",
+    "dummy_arrays": [
+      "WA"
+    ]
+  },
+  {
+    "procedure": "DZFFTB",
+    "dummy_arrays": [
+      "A",
+      "B",
+      "WSAVE"
+    ]
+  },
+  {
+    "procedure": "DZFFTF",
+    "dummy_arrays": [
+      "A",
+      "B",
+      "WSAVE"
+    ]
+  },
+  {
+    "procedure": "DZFFTI",
+    "dummy_arrays": [
+      "WSAVE"
+    ]
+  },
+  {
+    "procedure": "DPASSB",
+    "dummy_arrays": [
+      "WA"
+    ]
+  },
+  {
+    "procedure": "DPASSB2",
+    "dummy_arrays": [
+      "WA1"
+    ]
+  },
+  {
+    "procedure": "DPASSB3",
+    "dummy_arrays": [
+      "WA1",
+      "WA2"
+    ]
+  },
+  {
+    "procedure": "DPASSB4",
+    "dummy_arrays": [
+      "WA1",
+      "WA2",
+      "WA3"
+    ]
+  },
+  {
+    "procedure": "DPASSB5",
+    "dummy_arrays": [
+      "WA1",
+      "WA2",
+      "WA3",
+      "WA4"
+    ]
+  },
+  {
+    "procedure": "DPASSF",
+    "dummy_arrays": [
+      "WA"
+    ]
+  },
+  {
+    "procedure": "DPASSF2",
+    "dummy_arrays": [
+      "WA1"
+    ]
+  },
+  {
+    "procedure": "DPASSF3",
+    "dummy_arrays": [
+      "WA1",
+      "WA2"
+    ]
+  },
+  {
+    "procedure": "DPASSF4",
+    "dummy_arrays": [
+      "WA1",
+      "WA2",
+      "WA3"
+    ]
+  },
+  {
+    "procedure": "DPASSF5",
+    "dummy_arrays": [
+      "WA1",
+      "WA2",
+      "WA3",
+      "WA4"
+    ]
+  },
+  {
+    "procedure": "DRADB2",
+    "dummy_arrays": [
+      "WA1"
+    ]
+  },
+  {
+    "procedure": "DRADB3",
+    "dummy_arrays": [
+      "WA1",
+      "WA2"
+    ]
+  },
+  {
+    "procedure": "DRADB4",
+    "dummy_arrays": [
+      "WA1",
+      "WA2",
+      "WA3"
+    ]
+  },
+  {
+    "procedure": "DRADB5",
+    "dummy_arrays": [
+      "WA1",
+      "WA2",
+      "WA3",
+      "WA4"
+    ]
+  },
+  {
+    "procedure": "DRADBG",
+    "dummy_arrays": [
+      "WA"
+    ]
+  },
+  {
+    "procedure": "DRADF2",
+    "dummy_arrays": [
+      "WA1"
+    ]
+  },
+  {
+    "procedure": "DRADF3",
+    "dummy_arrays": [
+      "WA1",
+      "WA2"
+    ]
+  },
+  {
+    "procedure": "DRADF4",
+    "dummy_arrays": [
+      "WA1",
+      "WA2",
+      "WA3"
+    ]
+  },
+  {
+    "procedure": "DRADF5",
+    "dummy_arrays": [
+      "WA1",
+      "WA2",
+      "WA3",
+      "WA4"
+    ]
+  },
+  {
+    "procedure": "DRADFG",
+    "dummy_arrays": [
+      "WA"
+    ]
+  },
+  {
+    "procedure": "DFFTB",
+    "dummy_arrays": [
+      "WSAVE"
+    ]
+  },
+  {
+    "procedure": "DFFTB1",
+    "dummy_arrays": [
+      "CH",
+      "C",
+      "WA"
+    ]
+  },
+  {
+    "procedure": "DFFTF",
+    "dummy_arrays": [
+      "WSAVE"
+    ]
+  },
+  {
+    "procedure": "DFFTF1",
+    "dummy_arrays": [
+      "CH",
+      "C",
+      "WA"
+    ]
+  },
+  {
+    "procedure": "DFFTI",
+    "dummy_arrays": [
+      "WSAVE"
+    ]
+  },
+  {
+    "procedure": "DFFTI1",
+    "dummy_arrays": [
+      "WA"
+    ]
+  },
+  {
+    "procedure": "DSINQB",
+    "dummy_arrays": [
+      "WSAVE"
+    ]
+  },
+  {
+    "procedure": "DSINQF",
+    "dummy_arrays": [
+      "WSAVE"
+    ]
+  },
+  {
+    "procedure": "DSINQI",
+    "dummy_arrays": [
+      "WSAVE"
+    ]
+  },
+  {
+    "procedure": "DSINT",
+    "dummy_arrays": [
+      "WSAVE"
+    ]
+  },
+  {
+    "procedure": "DSINT1",
+    "dummy_arrays": [
+      "WAR",
+      "WAS"
+    ]
+  },
+  {
+    "procedure": "DSINTI",
+    "dummy_arrays": [
+      "WSAVE"
+    ]
+  }
+]

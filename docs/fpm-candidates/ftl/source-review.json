@@ -1,0 +1,89 @@
+{
+  "id": "ftl",
+  "repository": "SCM-NV/ftl",
+  "revision": "e6598dae7db68f68544dc1ca0e64f5bce3744c42",
+  "archive_sha256": "27aa179ae76ff63051c579102cfc0bb971ddfbe8b4027c99ff33a41108449665",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "source_packages": {
+      "scm-nv/ftl": {
+        "manifest": "name = \"ftl\"\nversion = \"0.0.0\"\nlicense = \"LGPL-3.0-or-later\"\n[library]\ninclude-dir = [\"src\"]\nsource-dir = \"playground-library\"\n[build]\nauto-executables = false\nauto-examples = false\nauto-tests = false\n[install]\nlibrary = true\n[preprocess.cpp]\n[fortran]\nimplicit-external = true\n",
+        "sources": [
+          "src/ftlKinds.F90",
+          "src/ftlHash.F90",
+          "src/ftlString.F90",
+          "instantiations/ftlDynArrayInt.F90",
+          "instantiations/ftlHashMapStringInt.F90"
+        ]
+      }
+    }
+  },
+  "dependencies": [],
+  "catalog_patches": {
+    "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+    "edits": [
+      {
+        "path": "playground-library/ftlDynArrayInt.F90",
+        "sha256": "dd5b5f19a9340a342216fd896e5e10a4f3a79d3a2b89a9bc80709a786335468e",
+        "before": "! Copyright (c) 2016, 2017  Robert R\u00fcger\n!\n! This file is part of of the Fortran Template Library.\n!\n! The Fortran Template Library is free software: you can redistribute it and/or\n! modify it under the terms of the GNU Lesser General Public License as\n! published by the Free Software Foundation, either version 3 of the License, or\n! (at your option) any later version.\n!\n! The Fortran Template Library is distributed in the hope that it will be\n! useful, but WITHOUT ANY WARRANTY; without even the implied warranty of\n! MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser\n! General Public License for more details.\n!\n! You should have received a copy of the GNU Lesser General Public License along\n! with the Fortran Template Library.  If not, see <http://www.gnu.org/licenses/>.\n\n\n#define FTL_TEMPLATE_TYPE integer\n#define FTL_TEMPLATE_TYPE_NAME Int\n#define FTL_INSTANTIATE_TEMPLATE\n#include \"ftlDynArray.F90_template\"\n",
+        "after": "#if 0\n! Module/dependency declarations for FPM 0.12 scanning only.\nmodule ftlDynArrayIntModule\nuse ftlKindsModule\nend module\n#endif\n! Copyright (c) 2016, 2017  Robert R\u00fcger\n!\n! This file is part of of the Fortran Template Library.\n!\n! The Fortran Template Library is free software: you can redistribute it and/or\n! modify it under the terms of the GNU Lesser General Public License as\n! published by the Free Software Foundation, either version 3 of the License, or\n! (at your option) any later version.\n!\n! The Fortran Template Library is distributed in the hope that it will be\n! useful, but WITHOUT ANY WARRANTY; without even the implied warranty of\n! MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser\n! General Public License for more details.\n!\n! You should have received a copy of the GNU Lesser General Public License along\n! with the Fortran Template Library.  If not, see <http://www.gnu.org/licenses/>.\n\n\n#define FTL_TEMPLATE_TYPE integer\n#define FTL_TEMPLATE_TYPE_NAME Int\n#define FTL_INSTANTIATE_TEMPLATE\n#include \"ftlDynArray.F90_template\"\n"
+      },
+      {
+        "path": "playground-library/ftlHashMapStringInt.F90",
+        "sha256": "ae27305f8e861791095f2b023e575d0c06b381b05249f30be1d28acbf2e7e892",
+        "before": "! Copyright (c) 2016, 2017  Robert R\u00fcger\n!\n! This file is part of of the Fortran Template Library.\n!\n! The Fortran Template Library is free software: you can redistribute it and/or\n! modify it under the terms of the GNU Lesser General Public License as\n! published by the Free Software Foundation, either version 3 of the License, or\n! (at your option) any later version.\n!\n! The Fortran Template Library is distributed in the hope that it will be\n! useful, but WITHOUT ANY WARRANTY; without even the implied warranty of\n! MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser\n! General Public License for more details.\n!\n! You should have received a copy of the GNU Lesser General Public License along\n! with the Fortran Template Library.  If not, see <http://www.gnu.org/licenses/>.\n\n\n#define FTL_TEMPLATE_KEYTYPE_IS_FTLSTRING\n#define FTL_TEMPLATE_KEYTYPE_NAME String\n#define FTL_TEMPLATE_TYPE integer\n#define FTL_TEMPLATE_TYPE_NAME Int\n#define FTL_INSTANTIATE_TEMPLATE\n#include <ftlHashMap.F90_template>\n",
+        "after": "#if 0\n! Module/dependency declarations for FPM 0.12 scanning only.\nmodule ftlHashMapStringIntModule\nuse ftlKindsModule\nuse ftlHashModule\nuse ftlStringModule\nend module\n#endif\n! Copyright (c) 2016, 2017  Robert R\u00fcger\n!\n! This file is part of of the Fortran Template Library.\n!\n! The Fortran Template Library is free software: you can redistribute it and/or\n! modify it under the terms of the GNU Lesser General Public License as\n! published by the Free Software Foundation, either version 3 of the License, or\n! (at your option) any later version.\n!\n! The Fortran Template Library is distributed in the hope that it will be\n! useful, but WITHOUT ANY WARRANTY; without even the implied warranty of\n! MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser\n! General Public License for more details.\n!\n! You should have received a copy of the GNU Lesser General Public License along\n! with the Fortran Template Library.  If not, see <http://www.gnu.org/licenses/>.\n\n\n#define FTL_TEMPLATE_KEYTYPE_IS_FTLSTRING\n#define FTL_TEMPLATE_KEYTYPE_NAME String\n#define FTL_TEMPLATE_TYPE integer\n#define FTL_TEMPLATE_TYPE_NAME Int\n#define FTL_INSTANTIATE_TEMPLATE\n#include <ftlHashMap.F90_template>\n"
+      }
+    ]
+  },
+  "checked_at": "2026-10-29T12:54:09.059921+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/ftl.f90",
+  "verification": {
+    "seconds": 1.823,
+    "build_seconds": 0.157,
+    "library_reused": true,
+    "demo_sha256": "718f527c8ba8a7d5d56063f493b03af3c5e74ced04d50c1f9f9b86c1ff81243d",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "LGPL-3.0-or-later",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Selected Fortran Template Library instantiations: integer dynamic arrays and ftlString-to-integer hash maps, plus their unmodified support modules. A checksum-guarded adapter adds CPP-disabled module/dependency declarations so FPM 0.12 can discover modules emitted by templates. Original and adapted compiler-preprocessed output match apart from blank lines. Implicit-external checking is left at the upstream convention to avoid a GNU diagnostic in a character-length specification expression. The checked main verifies array growth, contents and pop, map insertion/replacement, presence, lookup and erase, then explicitly deletes both containers. Sources otherwise remain unchanged, and template headers remain in the source archive. Other instantiations, general algorithms, regex and every ownership/finalization case are not offered or validated.",
+  "source_packaging": {
+    "manifest": "fpm.toml",
+    "sources": [
+      {
+        "path": "src/ftlKinds.F90",
+        "sha256": "eb2496e533791444b782e8856d83a0bbb149fc2236d18ca34b4d33db592a6753"
+      },
+      {
+        "path": "src/ftlHash.F90",
+        "sha256": "17294c17af19acfcd77209ba0ab0ee73f03e40049e1b1773d808572c7383bc8c"
+      },
+      {
+        "path": "src/ftlString.F90",
+        "sha256": "9e069defb2a2ca67acc9102eb7f28578ddcafffc0a0b8ce8a8aa8478b5436625"
+      },
+      {
+        "path": "instantiations/ftlDynArrayInt.F90",
+        "sha256": "dd5b5f19a9340a342216fd896e5e10a4f3a79d3a2b89a9bc80709a786335468e"
+      },
+      {
+        "path": "instantiations/ftlHashMapStringInt.F90",
+        "sha256": "ae27305f8e861791095f2b023e575d0c06b381b05249f30be1d28acbf2e7e892"
+      }
+    ]
+  },
+  "compatibility_edits": [
+    "CPP-disabled module/dependency declarations for FPM scanner; preprocessed nonblank code unchanged."
+  ],
+  "preprocessor_check": "scanner-adapter-check.json",
+  "supported_instantiations": [
+    "ftlDynArrayIntModule",
+    "ftlHashMapStringIntModule"
+  ]
+}

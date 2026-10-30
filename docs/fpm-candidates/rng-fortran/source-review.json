@@ -1,0 +1,53 @@
+{
+  "id": "rng-fortran",
+  "repository": "jannisteunissen/rng_fortran",
+  "revision": "5ead95f436323d07fc82acc3613f66550947f256",
+  "archive_sha256": "9de2594251208c855d148f8207c216df95072e62e74d51ba432b0ab77426cb52",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "source_packages": {
+      "jannisteunissen/rng_fortran": {
+        "manifest": "name = \"rng-fortran\"\nversion = \"0.0.0\"\nlicense = \"GPL-3.0\"\n[library]\nsource-dir = \"playground-library\"\n[build]\nauto-executables = false\nauto-examples = false\nauto-tests = false\n[install]\nlibrary = true\n",
+        "sources": [
+          "m_random.f90"
+        ]
+      }
+    },
+    "environment": {
+      "FPM_FFLAGS": "-fwrapv"
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T12:13:59.407766+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/rng-fortran.f90",
+  "verification": {
+    "seconds": 1.467,
+    "build_seconds": 0.139,
+    "library_reused": true,
+    "demo_sha256": "711acfef0457f1f3e4bae024d97f403847bf18c97df85bf56caf766429c534a8",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "GPL-3.0",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Xoroshiro128+ pseudo-random generator. An FPM wrapper selects unchanged m_random.f90 and uses -fwrapv for its intentional signed-integer wraparound. Two fresh generators replay 10000 seeded uniform draws exactly; the main checks the implementation range [0,1), broad uniform/normal/Poisson(4) moment tolerances, nonnegative counts and unit circle/sphere norms. These are deterministic smoke checks, not statistical quality or cryptographic validation. OpenMP, jump independence, large Poisson rates and all distributions are not covered. A separate hosted reproducer confirms that set_seed does not clear the cached second normal after an odd normal() call; use a fresh generator to restart normal sequences. The selected replay uses fresh objects.",
+  "source_packaging": {
+    "manifest": "fpm.toml",
+    "sources": [
+      {
+        "path": "m_random.f90",
+        "sha256": "6724a27e2cee58df03723071fd62dc5371b294a524c26f461002ffbe6fddf5ae"
+      }
+    ],
+    "note": "Only the listed unchanged library files are copied into playground-library; upstream test/program files are excluded."
+  },
+  "known_limitations": [
+    "set_seed does not discard the cached second normal after an odd normal() call. Restart normal streams with a fresh generator."
+  ],
+  "limitation_reproducer": "reseed-normal-reproducer.f90",
+  "limitation_result": "reseed-normal-result.json"
+}

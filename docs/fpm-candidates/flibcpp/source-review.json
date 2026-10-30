@@ -1,0 +1,57 @@
+{
+  "id": "flibcpp",
+  "repository": "swig-fortran/flibcpp",
+  "revision": "334b2250230afbb419402ca2f1c0649c3b12a693",
+  "archive_sha256": "084bf203a85ff5303beee083cafa51067aefb730a7c8713ce4f4efe6ee187403",
+  "catalog_build": {
+    "adapter_sha256": "63a30c28b5a3f5fc5c4e3a88bdb65c171bdde90b0999773c0d9bad5115f57d90",
+    "source_packages": {
+      "swig-fortran/flibcpp": {
+        "manifest": "name=\"flibcpp\"\nversion=\"0.0.0\"\nlicense=\"MIT\"\n[library]\nsource-dir=\"playground-library\"\ninclude-dir=[\"include\", \"playground-generated\"]\n[build]\nauto-executables=false\nauto-examples=false\nauto-tests=false\nexternal-modules=[]\nlink=[\"stdc++\"]\n[install]\nlibrary=true\n",
+        "sources": [
+          "playground-generated/flibcpp_version.cpp",
+          "src/flc.f90",
+          "src/flcFORTRAN_wrap.cxx",
+          "src/flc_algorithm.f90",
+          "src/flc_algorithmFORTRAN_wrap.cxx",
+          "src/flc_map.f90",
+          "src/flc_mapFORTRAN_wrap.cxx",
+          "src/flc_random.f90",
+          "src/flc_randomFORTRAN_wrap.cxx",
+          "src/flc_set.f90",
+          "src/flc_setFORTRAN_wrap.cxx",
+          "src/flc_string.f90",
+          "src/flc_stringFORTRAN_wrap.cxx",
+          "src/flc_vector.f90",
+          "src/flc_vectorFORTRAN_wrap.cxx"
+        ],
+        "generated": {
+          "asset": "flibcpp-334b2250230afbb419402ca2f1c0649c3b12a693.json",
+          "sha256": "14266da596314ef3548c9d27756bab4402e2ac3fa8459eaf6315fae7bb15793e"
+        }
+      }
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-30T00:29:48.037366+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/flibcpp.f90",
+  "verification": {
+    "seconds": 1.369,
+    "build_seconds": 0.497,
+    "library_reused": true,
+    "demo_sha256": "00b121584e0a4b8cc56e2bb02b0dcdedd6afe298107f682514ae98a0df14e282",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "The upstream SWIG-generated Fortran modules and C++ wrappers are built together; SWIG is not run. The upstream CMake configuration supplies only a small version-definition source. FPM 0.12 ignores .cxx, so the catalog stages unchanged wrapper contents as .cpp and preserves all original source files. The checked consumer verifies a sorted seven-element array, an existing-key position and a missing-key result. N5 and N6 classify searching and sorting, while S identifies the interoperability utility. Upstream vector, map, set, string and random facilities are included but not exercised by this consumer. MIT notices and the Apache-2.0 CMake helper notice remain intact. Local exports need compatible C++ and Fortran compilers.",
+  "initial_preparation_findings": [
+    "The first wrapper staged upstream .cxx files under their original extension. FPM 0.12 did not compile them, and the executable link reported missing SWIG wrapper symbols. The verified adapter copies unchanged C++ contents to .cpp names, checks for renamed-basename collisions, and keeps the originals. The C++/Fortran sandbox consumer then passed sorting and search checks."
+  ],
+  "generated_source_support": "See ../../fpm-generated-sources.md. Audited configuration assets and original input hashes are included in local project exports; CMake is not run for visitors."
+}

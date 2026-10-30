@@ -1,0 +1,15 @@
+name="yafyaml"
+version="0.0.0"
+license="Apache-2.0"
+[library]
+source-dir="playground-library"
+include-dir=["include", "src"]
+[build]
+auto-executables=false
+auto-examples=false
+auto-tests=false
+[install]
+library=true
+[dependencies]
+gftl={git="https://github.com/Goddard-Fortran-Ecosystem/gFTL",rev="4af86210b6cc6ac46d3298b6861571aa26bd6acc"}
+gftl-shared={git="https://github.com/Goddard-Fortran-Ecosystem/gFTL-shared",rev="8009755e846560fbb389c01d76e013ddf14a7f98"}

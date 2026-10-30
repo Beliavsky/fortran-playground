@@ -1,0 +1,178 @@
+name = "parquet-fortran"
+version = "VERSION.txt"
+license = "BSD-3-Clause"
+author = "Elmo Tempel"
+maintainer = "elmo.tempel@ut.ee"
+copyright = "Copyright 2026, Elmo Tempel"
+description = "Parquet Fortran is a Fortran library for reading and writing Parquet files."
+homepage = "https://github.com/etempel/parquet-fortran"
+keywords = ["parquet", "arrow", "io", "columnar", "maml", "data"]
+categories = ["io"]
+
+[[executable]]
+name = "run_parquet_fortran"
+source-dir = "app"
+main = "program.f90"
+
+# One directory per test program, test/<name>/, holding its main file `<name>.f90`.
+[[test]]
+name = "run_tester"
+source-dir = "test/run_tester"
+main = "run_tester.f90"
+
+[[test]]
+name = "run_tester_pf"
+source-dir = "test/run_tester_pf"
+main = "run_tester_pf.f90"
+
+[[test]]
+name = "run_tester_pf_slow"
+source-dir = "test/run_tester_pf_slow"
+main = "run_tester_pf_slow.f90"
+
+[[test]]
+name = "run_tester_cpp"
+source-dir = "test/run_tester_cpp"
+main = "run_tester_cpp.f90"
+
+[[test]]
+name = "run_tester_noundef"
+source-dir = "test/run_tester_noundef"
+main = "run_tester_noundef.f90"
+
+[[test]]
+name = "run_tester_errors"
+source-dir = "test/run_tester_errors"
+main = "run_tester_errors.f90"
+
+[[test]]
+name = "error_scenarios"
+source-dir = "test/error_scenarios"
+main = "error_scenarios.f90"
+
+[dependencies]
+openmp = "*"
+# The TOML parser behind src/parquet_toml.f90, and this package's ONLY real Fortran package
+# dependency -- `openmp` above is fpm's metapackage (a compiler flag, not a package).
+#toml-f.git = "https://github.com/toml-f/toml-f"
+toml-f = {git = "https://github.com/etempel/toml-f", branch = "nagfor_fix"}
+
+[dev-dependencies]
+test-drive.git = "https://github.com/fortran-lang/test-drive"
+# The test modules more than one test program uses (test/support/fpm.toml says why it is a package).
+parquet-fortran-test-support = { path = "test/support" }
+
+[fortran]
+implicit-typing = false
+implicit-external = false
+source-form = "free"
+
+[build]
+auto-executables = false
+auto-tests = false
+auto-examples = false
+module-naming = false
+link = ["arrow", "arrow_compute", "parquet"]
+
+[install]
+library = false
+test = false
+
+[features]
+# NOTE: this table and the feature-list form of `[profiles]` below need fpm 0.13.0 or newer.
+
+# standard
+nagfor.flags = "-f2018 -nan -colour -w=unused -Warn=unkind_real_literal -Warn=double_real_literal -Warn=subnormal"
+
+#nagdeb.flags = "-C=all -g -gline -mtrace"
+nagdeb.flags = "-C=all -g"
+
+nagundefined.flags = "-C=undefined -DUNDEFINED_CHECK"
+
+flangopt.flags = "-O3"
+flangdeb.flags = "-g -O0 -Wall"
+
+# bench: every maintainer-only benchmark and probe program, all in bench/ (app/ holds only the one
+# executable meant for a consumer of this library). fpm builds every executable the manifest
+# declares on every `fpm test`, so these are declared here alone and built only when asked for:
+# `fpm run <name> --features release,bench`. The `release` feature is what `--profile release`
+# applies, so the flags and the build tree are the same; fpm refuses `--profile` and `--features`
+# together. One entry per `program` in bench/; `check_bench_programs_are_declared`
+# (tools/check_source_conventions.py) holds the list to the directory.
+bench.executable = [
+    { name = "benchmark_arrow_release", source-dir = "bench", main = "benchmark_arrow_release.f90" },
+    { name = "benchmark_colindex", source-dir = "bench", main = "benchmark_colindex.f90" },
+    { name = "benchmark_cosmology", source-dir = "bench", main = "benchmark_cosmology.f90" },
+    { name = "benchmark_filter_set", source-dir = "bench", main = "benchmark_filter_set.f90" },
+    { name = "benchmark_healpix", source-dir = "bench", main = "benchmark_healpix.f90" },
+    { name = "benchmark_index", source-dir = "bench", main = "benchmark_index.f90" },
+    { name = "benchmark_integrate", source-dir = "bench", main = "benchmark_integrate.f90" },
+    { name = "benchmark_interpolate", source-dir = "bench", main = "benchmark_interpolate.f90" },
+    { name = "benchmark_join", source-dir = "bench", main = "benchmark_join.f90" },
+    { name = "benchmark_join_crosslib", source-dir = "bench", main = "benchmark_join_crosslib.f90" },
+    { name = "benchmark_kde", source-dir = "bench", main = "benchmark_kde.f90" },
+    { name = "benchmark_linalg", source-dir = "bench", main = "benchmark_linalg.f90" },
+    { name = "benchmark_logging", source-dir = "bench", main = "benchmark_logging.f90" },
+    { name = "benchmark_optimize", source-dir = "bench", main = "benchmark_optimize.f90" },
+    { name = "benchmark_photometry", source-dir = "bench", main = "benchmark_photometry.f90" },
+    { name = "benchmark_random", source-dir = "bench", main = "benchmark_random.f90" },
+    { name = "benchmark_schema", source-dir = "bench", main = "benchmark_schema.f90" },
+    { name = "benchmark_skycoord", source-dir = "bench", main = "benchmark_skycoord.f90" },
+    { name = "benchmark_sort_comparator", source-dir = "bench", main = "benchmark_sort_comparator.f90" },
+    { name = "benchmark_sort_engine", source-dir = "bench", main = "benchmark_sort_engine.f90" },
+    { name = "benchmark_sort_readtime", source-dir = "bench", main = "benchmark_sort_readtime.f90" },
+    { name = "benchmark_sort_tail", source-dir = "bench", main = "benchmark_sort_tail.f90" },
+    { name = "benchmark_spatial", source-dir = "bench", main = "benchmark_spatial.f90" },
+    { name = "benchmark_spatial_crosslib", source-dir = "bench", main = "benchmark_spatial_crosslib.f90" },
+    { name = "benchmark_sphere", source-dir = "bench", main = "benchmark_sphere.f90" },
+    { name = "benchmark_stattest", source-dir = "bench", main = "benchmark_stattest.f90" },
+    { name = "benchmark_stats", source-dir = "bench", main = "benchmark_stats.f90" },
+    { name = "benchmark_strings", source-dir = "bench", main = "benchmark_strings.f90" },
+    { name = "benchmark_table", source-dir = "bench", main = "benchmark_table.f90" },
+    { name = "benchmark_threads", source-dir = "bench", main = "benchmark_threads.f90" },
+    { name = "large_scale", source-dir = "bench", main = "large_scale.f90" },
+    { name = "playground", source-dir = "bench", main = "playground.f90" },
+    { name = "probe_random_perm", source-dir = "bench", main = "probe_random_perm.f90" },
+    { name = "probe_random_philox", source-dir = "bench", main = "probe_random_philox.f90" },
+    { name = "probe_random_practrand", source-dir = "bench", main = "probe_random_practrand.f90" },
+    { name = "probe_weighted_coupling", source-dir = "bench", main = "probe_weighted_coupling.f90" },
+    { name = "random_large_fill", source-dir = "bench", main = "random_large_fill.f90" },
+]
+
+[profiles]
+nag = ["nagfor"]
+nagdeb = ["nagfor", "nagdeb"]
+nagundef = ["nagfor", "nagdeb", "nagundefined"]
+
+flangopt = ["flangopt"]
+flangdeb = ["flangdeb"]
+
+[preprocess]
+[preprocess.cpp]
+suffixes = ["f90"]
+macros=["RELEASE_VERSION={version}"]
+
+[extra.ford]
+project = "parquet-fortran"
+summary = "Fortran library for reading and writing Parquet files"
+src_dir = ["./src"]
+exclude_dir = ["./test"]
+exclude = ["**/parquet_bindings.f90"]
+page_dir = "./doc/pages"
+output_dir = "./ford-doc"
+media_dir = "./doc/media"
+favicon = "./doc/media/favicon.png"
+css = "./doc/user.css"
+display = ["public", "protected"]
+source = true
+graph = false
+search = false
+preprocessor = "cpp -traditional-cpp -E"
+md_extensions = ["markdown.extensions.toc"]
+
+[extra.ford.extra_mods]
+iso_fortran_env = "https://gcc.gnu.org/onlinedocs/gfortran/ISO_005fFORTRAN_005fENV.html"
+iso_c_binding = "https://gcc.gnu.org/onlinedocs/gfortran/ISO_005fC_005fBINDING.html"
+# The TOML parser src/parquet_toml.f90 is built on. Its sources live under build/dependencies/,
+# outside `src_dir`, so FORD cannot resolve `use tomlf` and would report it as an unknown module.
+tomlf = "https://toml-f.readthedocs.io"

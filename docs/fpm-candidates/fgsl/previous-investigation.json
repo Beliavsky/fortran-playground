@@ -1,0 +1,28 @@
+{
+  "id": "fgsl",
+  "repository": "reinh-bader/fgsl",
+  "revision": "27a3e7cc0809623bcfde680c39a6fdcf0f590c4c",
+  "archive_sha256": "2c592ebb37d6ba1303153bac3ba0cee40585232d0d268ef99323b9849e85fbc9",
+  "license": "GPL-2.0-or-later",
+  "checked_at": "2026-10-29T13:23:15.497182+00:00",
+  "status": "deferred",
+  "stage": "compilation",
+  "reason": "The pinned Git archive requires an Autoconf-generated config.h and the fgsl_utils.c support object. The current source wrapper does not run Autoconf or stage mixed C/Fortran generated builds. The checked wrapper reached GNU Fortran compilation and stopped at missing config.h; this is a playground packaging limitation, not a demonstrated defect in FGSL numerical routines.",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "source_packages": {
+      "reinh-bader/fgsl": {
+        "manifest": "name = \"fgsl\"\nversion = \"0.0.0\"\nlicense = \"GPL-2.0-or-later\"\n[library]\nsource-dir = \"playground-library\"\ninclude-dir = [\"src\", \".\"]\n[build]\nauto-executables = false\nauto-examples = false\nauto-tests = false\n[install]\nlibrary = true\n[fortran]\nimplicit-typing = true\nimplicit-external = true\nsource-form = \"default\"\n",
+        "sources": [
+          "fgsl.F90"
+        ]
+      }
+    },
+    "apt_packages": [
+      "libgsl-dev=2.8+dfsg-5"
+    ]
+  },
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "next_step": "Add an operator-only reproducible Autoconf/config-header and mixed-language staging recipe, including fgsl_utils.c and pinned GSL. Validate an integration example after this prerequisite works; do not fabricate a partial config.h or weaken public download rules."
+}

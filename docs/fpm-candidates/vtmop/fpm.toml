@@ -1,0 +1,16 @@
+name = "vtmop"
+version = "0.0.0"
+license = "MIT"
+[library]
+source-dir = "playground-library"
+include-dir = ["src", "."]
+[build]
+auto-executables = false
+auto-examples = false
+auto-tests = false
+[install]
+library = true
+[fortran]
+implicit-typing = true
+implicit-external = true
+source-form = "default"

@@ -1,0 +1,16 @@
+name = "forpy"
+version = "0.0.0"
+license = "LGPL-3.0-or-later"
+[library]
+source-dir = "playground-library"
+include-dir = ["."]
+[build]
+auto-executables = false
+auto-examples = false
+auto-tests = false
+[install]
+library = true
+[fortran]
+implicit-typing = true
+implicit-external = true
+source-form = "default"

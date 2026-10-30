@@ -72,11 +72,14 @@ def generate_fpm_examples(site):
     root = audit.parents[1]
     runtime = {'run.py': (root / 'fpm_project_run.py').read_text(encoding='utf-8')}
     for name in ('fpm_sources.py', 'fpm_collections.py', 'fpm_targets.py', 'fpm_compilers.py', 'fpm_catalog_build.py',
-                 'fpm_catalog_patches.py', 'fortran_plot.py'):
+                 'fpm_catalog_patches.py', 'fortran_plot.py',
+                 'fpm_catalog_limits.py', 'xfpm_catalog_prebuild.py'):
         runtime['tools/' + name] = (root / name).read_text(encoding='utf-8')
     from fortran_plot import module_source
     runtime['tools/pyplot_module.f90'] = module_source()
     runtime['tools/pyplot-LICENSE'] = (root / 'vendor/pyplot-fortran/LICENSE').read_text(encoding='utf-8')
+    for asset in sorted((root / 'fpm_catalog/generated').glob('*.json')):
+        runtime['tools/fpm_catalog/generated/' + asset.name] = asset.read_text(encoding='utf-8')
     (site / 'fpm/project-runtime.json').write_text(json.dumps(runtime, indent=2) + '\n', encoding='utf-8')
 
 

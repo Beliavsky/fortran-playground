@@ -1,0 +1,15 @@
+ + mkdir -p build/dependencies
+[  0%]              pyplot_module.f90
+[ 16%]              pyplot_module.f90  done.
+[ 16%]                variable_pp.F90
+<ERROR> Compilation failed for object " .._sources_bundle_packages_0_fdict-c962e6bfd6905bf463f4147ae41c77bf6dfb8bb4_playground-library_variable_pp.F90.o "
+[ 33%]                variable_pp.F90  done.
+
+./././/../sources/bundle/packages/0/fdict-c962e6bfd6905bf463f4147ae41c77bf6dfb8bb4/playground-library/variable_pp.F90:162:2:
+
+  162 |
+      |  1
+Fatal Error: variable_interface_.inc: No such file or directory
+compilation terminated.
+<ERROR> stopping due to failed compilation
+STOP 1

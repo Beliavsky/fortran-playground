@@ -1,0 +1,16 @@
+name="paramonte"
+version="2.0.0"
+license="MIT"
+[library]
+source-dir="playground-library"
+include-dir=["src/fortran/main"]
+[build]
+external-modules=["mpi","mpi_f08","omp_lib","omp_lib_kinds","ifport","ifcore"]
+auto-executables=false
+auto-examples=false
+auto-tests=false
+link=["pthread"]
+[install]
+library=true
+[preprocess.cpp]
+macros=["BLAS_ENABLED=0", "CAF_ENABLED=0", "CFI_ENABLED=0", "CHECK_ENABLED=1", "CK1_ENABLED=1", "CK2_ENABLED=2", "CK3_ENABLED=3", "CK4_ENABLED=4", "CPP_ENABLED=0", "C_ENABLED=0", "DLL_ENABLED=0", "FORTRAN_ENABLED=1", "GNU_ENABLED=1", "GO_ENABLED=0", "IK1_ENABLED=1", "IK2_ENABLED=2", "IK3_ENABLED=3", "IK4_ENABLED=4", "IK5_ENABLED=5", "INTEL_ENABLED=0", "JAVA_ENABLED=0", "JULIA_ENABLED=0", "LAPACK_ENABLED=0", "LINUX_ENABLED=1", "LK1_ENABLED=1", "LK2_ENABLED=2", "LK3_ENABLED=3", "LK4_ENABLED=4", "LK5_ENABLED=5", "MATHEMATICA_ENABLED=0", "MATLAB_ENABLED=0", "MEXPRINT_ENABLED=0", "MPI_ENABLED=0", "OMP_ENABLED=0", "PDT_ENABLED=0", "PURE=impure", "PYTHON_ENABLED=0", "RK1_ENABLED=1", "RK2_ENABLED=2", "RK3_ENABLED=3", "RK4_ENABLED=4", "R_ENABLED=0", "SK1_ENABLED=1"]

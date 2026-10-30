@@ -14,6 +14,27 @@ ROOT = Path(__file__).resolve().parent
 DEFAULT_REPORT = ROOT / '.fpm-audit-cache/precompiled.json'
 
 
+def generated_source_tag(options, spec):
+    """Bind generated sources to the existing leaf manifest/cache contract."""
+    import copy
+    import tomllib
+    from fpm_shared import digest
+    manifest = tomllib.loads(spec['manifest'])
+    cpp = manifest.setdefault('preprocess', {}).setdefault('cpp', {})
+    cpp['macros'] = [m for m in cpp.get('macros', []) if not m.startswith('PLAYGROUND_CATALOG_')]
+    return 'PLAYGROUND_CATALOG_' + digest({'adapter': options['adapter_sha256'],
+        'source_package': {**copy.deepcopy(spec), 'manifest': manifest}}).upper()
+
+
+def shareable_generated_source(options, spec):
+    import tomllib
+    try:
+        macros = tomllib.loads(spec['manifest']).get('preprocess', {}).get('cpp', {}).get('macros', [])
+        return bool(spec.get('generated')) and generated_source_tag(options, spec) in macros
+    except (KeyError, TypeError, ValueError):
+        return False
+
+
 def write_build_message(writer, message):
     """Drain bounded chunks: source bundles can exceed Modal's stdin buffer."""
     data = (json.dumps(message) + '\n').encode('utf-8')
@@ -54,7 +75,7 @@ def verify_cached(app, image, package, key):
         compiled = re.findall(r'\]\s+(.+?)\s+done\.', result['stages'][0].get('stdout', ''))
         if any(name not in {'main.f90', 'playground-main'} for name in compiled):
             raise ValueError('FPM rebuilt library targets: ' + ', '.join(compiled))
-        if package['id'] in {'pyplot-fortran', 'forimage', 'cairo-fortran', 'fortran_stb_image'} and not result.get('plots'):
+        if package['id'] in {'pyplot-fortran', 'forimage', 'cairo-fortran', 'fortran_stb_image', 'easy-plplot', 'ogpf'} and not result.get('plots'):
             raise ValueError('Plotting verification returned no PNG.')
         preview_check = {}
         if package['id'] == 'forimage':
@@ -86,7 +107,8 @@ def build_package(app, base_image, package, recipe, *, _shared_plan=None):
     if package.get('catalog_build', {}).get('shared_dependencies') and _shared_plan is None:
         options = package['catalog_build']
         shared = {name.lower() for name in options['shared_dependencies']['repositories']}
-        if (shared & {name.lower() for name in options.get('source_packages', {})}
+        if (any(name.lower() in shared and not shareable_generated_source(options, spec)
+                for name, spec in options.get('source_packages', {}).items())
                 or (package.get('catalog_patches') and package['repository'].lower() in shared)):
             raise ValueError('Shared dependencies currently require unpatched library sources.')
         from fpm_shared_graph import graph_digest
@@ -127,6 +149,13 @@ def build_package(app, base_image, package, recipe, *, _shared_plan=None):
         message = {**package, 'key': key, 'recipe': recipe, 'source': source, 'root': root,
                    'records': records, 'bundle': bundle_sources(temporary)}
     prebuild = '/opt/fpm/xfpm_shared_prebuild.py' if _shared_plan else '/opt/fpm/xfpm_prebuild.py'
+    if options.get('source_limit'):
+        if _shared_plan:
+            raise ValueError('Large-source prebuilds currently require the ordinary catalog builder.')
+        base_image = (base_image
+            .add_local_file(ROOT/'fpm_catalog_limits.py', '/opt/fpm/fpm_catalog_limits.py', copy=True)
+            .add_local_file(ROOT/'xfpm_catalog_prebuild.py', '/opt/fpm/xfpm_catalog_prebuild.py', copy=True).build(app))
+        prebuild = '/opt/fpm/xfpm_catalog_prebuild.py'
     sandbox = modal.Sandbox.create('python', prebuild, app=app, image=base_image,
         runtime='gvisor', workdir='/work', timeout=4000, cpu=2, memory=4096,
         block_network=True, secrets=[], volumes={}, include_oidc_identity_token=False,

@@ -1,0 +1,30 @@
+{
+  "id": "fortran-error-handler",
+  "repository": "samharrison7/fortran-error-handler",
+  "revision": "ab840882bb5036de00de8b2580e745fa5314d6fd",
+  "archive_sha256": "2c8459248c95089f9297f350ba1ed937f0563aa2d6aff93eab61a14e8fb56266",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "environment": {
+      "FPM_FFLAGS": "-ffree-line-length-none"
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T14:04:20.544152+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/fortran-error-handler.f90",
+  "verification": {
+    "seconds": 3.329,
+    "build_seconds": 0.539,
+    "library_reused": true,
+    "demo_sha256": "b2731334cf8bb64932b3f3b985c57b2dfa6a3237d08842aca6501716259bb081",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Structured error handling and validation. The upstream FPM library sources are unchanged; unlimited free-form line length accommodates existing long source lines. Adapted from the author example, the main checks a valid bounded integer in a Result object, rejects an out-of-range integer with expected code 105, checks two retained application trace entries, and triggers a custom noncritical warning while execution continues. The example uses fixed values rather than interactive input. All Result ranks/types, critical-error termination, all validation criteria and every trace-propagation path are not validated."
+}

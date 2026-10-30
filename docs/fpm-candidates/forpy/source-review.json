@@ -1,0 +1,39 @@
+{
+  "id": "forpy",
+  "repository": "ylikx/forpy",
+  "revision": "b4fc550c7282ed0751d6559c4d867a60af3718a7",
+  "archive_sha256": "75f63d612bb358be6f837629d0350483fc62cb2ed80e9fe0c30caa2bf0233044",
+  "catalog_build": {
+    "adapter_sha256": "66e8249cbc0eb57ffecf9f04801ede2060312d64ba2fa2d839b07fdc746f5f8c",
+    "environment": {
+      "FPM_LDFLAGS": "-L/usr/local/lib -lpython3.12 -lpthread -ldl -lutil -lm -Wl,-rpath,/usr/local/lib"
+    },
+    "source_packages": {
+      "ylikx/forpy": {
+        "manifest": "name = \"forpy\"\nversion = \"0.0.0\"\nlicense = \"LGPL-3.0-or-later\"\n[library]\nsource-dir = \"playground-library\"\ninclude-dir = [\".\"]\n[build]\nauto-executables = false\nauto-examples = false\nauto-tests = false\n[install]\nlibrary = true\n[fortran]\nimplicit-typing = true\nimplicit-external = true\nsource-form = \"default\"\n",
+        "sources": [
+          "forpy_mod.F90"
+        ]
+      }
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T20:53:30.579816+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/forpy.f90",
+  "verification": {
+    "seconds": 1.524,
+    "build_seconds": 0.391,
+    "library_reused": true,
+    "demo_sha256": "df55ba9f556143bbeeb8122ee2e47bafbcea7b5cb21162d7e818a3ff97815180",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "LGPL-3.0-or-later",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "The existing generated upstream forpy_mod.F90 source is wrapped for FPM without running Fypp or changing the library. It embeds the sandbox Python 3.12 runtime using the linker flags advertised by python3-config --embed --ldflags, with an explicit runtime library search path. The consumer copies a 2-by-3 Fortran real64 array to NumPy, calls numpy.sum and numpy.linalg.norm, verifies both returned scalars independently in Fortran and checks finite values and every API status. Python references are destroyed before finalization. Other Python versions, no-copy array lifetimes, callbacks, Python extension modules and plotting are not validated. Exported projects need Python and NumPy and linker flags appropriate to the local Python installation.",
+  "local_build_note": "Use the local python3-config --embed --ldflags output in place of the hosted /usr/local Python 3.12 linker flags, and install NumPy for that same Python interpreter."
+}

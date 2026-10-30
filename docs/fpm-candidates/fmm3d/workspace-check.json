@@ -1,0 +1,20 @@
+{
+  "compiler": "GNU Fortran (GCC) 17.0.0 20260510 (experimental)",
+  "arguments": [
+    "-fcheck=all",
+    "-g"
+  ],
+  "revision": "cad293ae9b8ae1218dd8319d459ffcc5f1412875",
+  "checks": {
+    "original": {
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "At line 49 of file .fpm-audit-cache\\batch-360\\workspace-probe\\original.f\nFortran runtime error: Index '2' of dimension 1 of array 'scarray' above upper bound of 1\n\nError termination. Backtrace:\n#0  0xc6b823af in l3dtaevalhessdini_\n\tat .fpm-audit-cache/batch-360/workspace-probe/original.f:49\n#1  0xc6b814c6 in MAIN__\n\tat .fpm-audit-cache/batch-360/workspace-probe/main.f90:7\n#2  0xc6b816ca in main\n\tat .fpm-audit-cache/batch-360/workspace-probe/main.f90:3\n"
+    },
+    "adapted": {
+      "exit_code": 0,
+      "stdout": " PASS checked workspace initialization\n",
+      "stderr": ""
+    }
+  }
+}

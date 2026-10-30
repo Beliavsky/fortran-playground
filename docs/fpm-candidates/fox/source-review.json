@@ -1,0 +1,658 @@
+{
+  "id": "fox",
+  "repository": "andreww/fox",
+  "revision": "6f60cf178d0776b21406303e91f1e6b42ff0f204",
+  "archive_sha256": "81156499c40a84cace9fa10c2b83387be1fa175af4e594ccfc3233bd569b5607",
+  "stage": "preparation",
+  "status": "deferred",
+  "reason": "The pinned head and tagged releases 4.1.2 and 4.1.1 contain symbolic links and are rejected by the unchanged archive extractor before compilation. No compiler failure is claimed. A safe source distribution or a separately reviewed source-preparation facility is needed before an XML round-trip example can be verified.",
+  "checked_at": "2026-10-29T19:53:57.905373+00:00",
+  "links": [
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/DoX/index.html",
+      "target": "FoX.html"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/sax/test/test.sh",
+      "target": "../../common/test/test.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wcml/test/test.sh",
+      "target": "../../common/test/test.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wcml/test/test_cmlAddBandList.sh",
+      "target": "test_cml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wcml/test/test_cmlAddCrystal.sh",
+      "target": "test_cml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wcml/test/test_cmlAddEigenValue.sh",
+      "target": "test_cml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wcml/test/test_cmlAddEigenValueVector.sh",
+      "target": "test_cml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wcml/test/test_cmlAddKpoint.sh",
+      "target": "test_cml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wcml/test/test_cmlAddLattice.sh",
+      "target": "test_cml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wcml/test/test_cmlAddMetadata.sh",
+      "target": "test_cml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wcml/test/test_cmlAddMolecule.sh",
+      "target": "test_cml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wcml/test/test_cmlAddNamespace.sh",
+      "target": "test_cml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wcml/test/test_cmlAddParameter.sh",
+      "target": "test_cml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wcml/test/test_cmlAddProperty.sh",
+      "target": "test_cml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wcml/test/test_cmlAddSymmetry.sh",
+      "target": "test_cml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wcml/test/test_cmlBeginFile.sh",
+      "target": "test_cml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wcml/test/test_cmlDumpDec.sh",
+      "target": "test_cml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wcml/test/test_cmlEndBand.sh",
+      "target": "test_cml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wcml/test/test_cmlEndCml.sh",
+      "target": "test_cml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wcml/test/test_cmlEndKpoint.sh",
+      "target": "test_cml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wcml/test/test_cmlEndKpointList.sh",
+      "target": "test_cml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wcml/test/test_cmlEndMetadataList.sh",
+      "target": "test_cml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wcml/test/test_cmlEndModule.sh",
+      "target": "test_cml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wcml/test/test_cmlEndParameterList.sh",
+      "target": "test_cml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wcml/test/test_cmlEndPropertyList.sh",
+      "target": "test_cml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wcml/test/test_cmlEndStep.sh",
+      "target": "test_cml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wcml/test/test_cmlFinishFile.sh",
+      "target": "test_cml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wcml/test/test_cmlStartBand.sh",
+      "target": "test_cml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wcml/test/test_cmlStartCml.sh",
+      "target": "test_cml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wcml/test/test_cmlStartKpoint.sh",
+      "target": "test_cml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wcml/test/test_cmlStartKpointList.sh",
+      "target": "test_cml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wcml/test/test_cmlStartMetadataList.sh",
+      "target": "test_cml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wcml/test/test_cmlStartModule.sh",
+      "target": "test_cml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wcml/test/test_cmlStartParameterList.sh",
+      "target": "test_cml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wcml/test/test_cmlStartPropertyList.sh",
+      "target": "test_cml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wcml/test/test_cmlStartStep.sh",
+      "target": "test_cml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wxml/test/test.sh",
+      "target": "../../common/test/test.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wxml/test/test_xml_AddAttribute.sh",
+      "target": "test_xml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wxml/test/test_xml_AddCharacters.sh",
+      "target": "test_xml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wxml/test/test_xml_AddComment.sh",
+      "target": "test_xml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wxml/test/test_xml_AddDOCTYPE.sh",
+      "target": "test_xml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wxml/test/test_xml_AddExternalEntity.sh",
+      "target": "test_xml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wxml/test/test_xml_AddInternalEntity.sh",
+      "target": "test_xml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wxml/test/test_xml_AddNotation.sh",
+      "target": "test_xml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wxml/test/test_xml_AddParameterEntity.sh",
+      "target": "test_xml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wxml/test/test_xml_AddPseudoAttribute.sh",
+      "target": "test_xml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wxml/test/test_xml_AddXMLDeclaration.sh",
+      "target": "test_xml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wxml/test/test_xml_AddXMLPI.sh",
+      "target": "test_xml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wxml/test/test_xml_AddXMLStylesheet.sh",
+      "target": "test_xml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wxml/test/test_xml_Close.sh",
+      "target": "test_xml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wxml/test/test_xml_EndElement.sh",
+      "target": "test_xml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wxml/test/test_xml_Namespaces.sh",
+      "target": "test_xml.sh"
+    },
+    {
+      "path": "fox-6f60cf178d0776b21406303e91f1e6b42ff0f204/wxml/test/test_xml_NewElement.sh",
+      "target": "test_xml.sh"
+    }
+  ],
+  "release_checks": [
+    {
+      "tag": "4.1.2",
+      "revision": "1b9399b58d80e8cfc907b2a571033cedbf31d5c2",
+      "archive_sha256": "0cd173c82b321c3075020b378f92d5aea6bc5b769b879066a7c72f465fbf1be7",
+      "links": [
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/DoX/index.html",
+          "target": "FoX.html"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/sax/test/test.sh",
+          "target": "../../common/test/test.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wcml/test/test.sh",
+          "target": "../../common/test/test.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wcml/test/test_cmlAddBandList.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wcml/test/test_cmlAddCrystal.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wcml/test/test_cmlAddEigenValue.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wcml/test/test_cmlAddEigenValueVector.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wcml/test/test_cmlAddKpoint.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wcml/test/test_cmlAddLattice.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wcml/test/test_cmlAddMetadata.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wcml/test/test_cmlAddMolecule.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wcml/test/test_cmlAddNamespace.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wcml/test/test_cmlAddParameter.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wcml/test/test_cmlAddProperty.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wcml/test/test_cmlAddSymmetry.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wcml/test/test_cmlBeginFile.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wcml/test/test_cmlEndBand.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wcml/test/test_cmlEndCml.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wcml/test/test_cmlEndKpoint.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wcml/test/test_cmlEndKpointList.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wcml/test/test_cmlEndMetadataList.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wcml/test/test_cmlEndModule.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wcml/test/test_cmlEndParameterList.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wcml/test/test_cmlEndPropertyList.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wcml/test/test_cmlEndStep.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wcml/test/test_cmlFinishFile.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wcml/test/test_cmlStartBand.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wcml/test/test_cmlStartCml.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wcml/test/test_cmlStartKpoint.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wcml/test/test_cmlStartKpointList.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wcml/test/test_cmlStartMetadataList.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wcml/test/test_cmlStartModule.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wcml/test/test_cmlStartParameterList.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wcml/test/test_cmlStartPropertyList.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wcml/test/test_cmlStartStep.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wxml/test/test.sh",
+          "target": "../../common/test/test.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wxml/test/test_xml_AddAttribute.sh",
+          "target": "test_xml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wxml/test/test_xml_AddCharacters.sh",
+          "target": "test_xml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wxml/test/test_xml_AddComment.sh",
+          "target": "test_xml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wxml/test/test_xml_AddDOCTYPE.sh",
+          "target": "test_xml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wxml/test/test_xml_AddExternalEntity.sh",
+          "target": "test_xml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wxml/test/test_xml_AddInternalEntity.sh",
+          "target": "test_xml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wxml/test/test_xml_AddNotation.sh",
+          "target": "test_xml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wxml/test/test_xml_AddParameterEntity.sh",
+          "target": "test_xml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wxml/test/test_xml_AddPseudoAttribute.sh",
+          "target": "test_xml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wxml/test/test_xml_AddXMLDeclaration.sh",
+          "target": "test_xml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wxml/test/test_xml_AddXMLPI.sh",
+          "target": "test_xml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wxml/test/test_xml_AddXMLStylesheet.sh",
+          "target": "test_xml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wxml/test/test_xml_Close.sh",
+          "target": "test_xml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wxml/test/test_xml_EndElement.sh",
+          "target": "test_xml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wxml/test/test_xml_Namespaces.sh",
+          "target": "test_xml.sh"
+        },
+        {
+          "path": "fox-1b9399b58d80e8cfc907b2a571033cedbf31d5c2/wxml/test/test_xml_NewElement.sh",
+          "target": "test_xml.sh"
+        }
+      ],
+      "preparation_error": "Package archive contains an unsafe path, link, or special file."
+    },
+    {
+      "tag": "4.1.1",
+      "revision": "45d42f559553496d72e9f1845e91f0d81f08c907",
+      "archive_sha256": "b160c5c0e84882f02be3045248965b80b2a905267088966841f9e4678a1f9138",
+      "links": [
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/DoX/index.html",
+          "target": "FoX.html"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/sax/test/test.sh",
+          "target": "../../common/test/test.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wcml/test/test.sh",
+          "target": "../../common/test/test.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wcml/test/test_cmlAddBandList.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wcml/test/test_cmlAddCrystal.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wcml/test/test_cmlAddEigenValue.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wcml/test/test_cmlAddEigenValueVector.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wcml/test/test_cmlAddKpoint.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wcml/test/test_cmlAddLattice.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wcml/test/test_cmlAddMetadata.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wcml/test/test_cmlAddMolecule.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wcml/test/test_cmlAddNamespace.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wcml/test/test_cmlAddParameter.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wcml/test/test_cmlAddProperty.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wcml/test/test_cmlAddSymmetry.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wcml/test/test_cmlBeginFile.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wcml/test/test_cmlEndBand.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wcml/test/test_cmlEndCml.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wcml/test/test_cmlEndKpoint.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wcml/test/test_cmlEndKpointList.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wcml/test/test_cmlEndMetadataList.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wcml/test/test_cmlEndModule.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wcml/test/test_cmlEndParameterList.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wcml/test/test_cmlEndPropertyList.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wcml/test/test_cmlEndStep.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wcml/test/test_cmlFinishFile.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wcml/test/test_cmlStartBand.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wcml/test/test_cmlStartCml.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wcml/test/test_cmlStartKpoint.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wcml/test/test_cmlStartKpointList.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wcml/test/test_cmlStartMetadataList.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wcml/test/test_cmlStartModule.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wcml/test/test_cmlStartParameterList.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wcml/test/test_cmlStartPropertyList.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wcml/test/test_cmlStartStep.sh",
+          "target": "test_cml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wxml/test/test.sh",
+          "target": "../../common/test/test.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wxml/test/test_xml_AddAttribute.sh",
+          "target": "test_xml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wxml/test/test_xml_AddCharacters.sh",
+          "target": "test_xml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wxml/test/test_xml_AddComment.sh",
+          "target": "test_xml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wxml/test/test_xml_AddDOCTYPE.sh",
+          "target": "test_xml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wxml/test/test_xml_AddExternalEntity.sh",
+          "target": "test_xml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wxml/test/test_xml_AddInternalEntity.sh",
+          "target": "test_xml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wxml/test/test_xml_AddNotation.sh",
+          "target": "test_xml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wxml/test/test_xml_AddParameterEntity.sh",
+          "target": "test_xml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wxml/test/test_xml_AddPseudoAttribute.sh",
+          "target": "test_xml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wxml/test/test_xml_AddXMLDeclaration.sh",
+          "target": "test_xml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wxml/test/test_xml_AddXMLPI.sh",
+          "target": "test_xml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wxml/test/test_xml_AddXMLStylesheet.sh",
+          "target": "test_xml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wxml/test/test_xml_Close.sh",
+          "target": "test_xml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wxml/test/test_xml_EndElement.sh",
+          "target": "test_xml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wxml/test/test_xml_Namespaces.sh",
+          "target": "test_xml.sh"
+        },
+        {
+          "path": "fox-45d42f559553496d72e9f1845e91f0d81f08c907/wxml/test/test_xml_NewElement.sh",
+          "target": "test_xml.sh"
+        }
+      ],
+      "preparation_error": "Package archive contains an unsafe path, link, or special file."
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "findings": [
+    "An initial consumer mixed an incremental contour-level option with the contour routine's own automatic-level setting and returned a blank plot. The checked consumer leaves contour level selection to the library; the returned PNG was inspected and shows concentric Gaussian contours.",
+    "The only source patch replaces the window-terminal header with pngcairo for headless execution; it is checksum-guarded and included in local project exports."
+  ]
+}

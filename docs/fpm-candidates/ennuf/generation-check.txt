@@ -1,0 +1,92 @@
+-- Building PSBLAS1 version: 3.9.1
+-- The C compiler identification is GNU 16.2.0
+-- The Fortran compiler identification is GNU 16.2.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/local/bin/gcc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting Fortran compiler ABI info
+-- Detecting Fortran compiler ABI info - done
+-- Check for working Fortran compiler: /usr/local/bin/gfortran - skipped
+-- GNU Fortran COMPILER  -frecursive;
+-- cmake flags?  -frecursive;
+-- Using compiler /usr/local/bin/gcc;
+-- Using IPKDEF: #define PSB_IPK4
+-- Using LPKDEF: #define PSB_LPK8
+-- Performing Test HAVE_MOVE_ALLOC
+-- Performing Test HAVE_MOVE_ALLOC - Success
+-- -DHAVE_MOVE_ALLOC
+-- Performing Test HAVE_VOLATILE
+-- Performing Test HAVE_VOLATILE - Success
+-- -DPSB_HAVE_VOLATILE
+-- Performing Test HAVE_ISO_FORTRAN_ENV
+-- Performing Test HAVE_ISO_FORTRAN_ENV - Success
+-- -DPSB_HAVE_ISO_FORTRAN_ENV
+-- Performing Test HAVE_FLUSH_STMT
+-- Performing Test HAVE_FLUSH_STMT - Success
+-- -DPSB_HAVE_FLUSH_STMT
+-- Performing Test HAVE_FINAL
+-- Performing Test HAVE_FINAL - Success
+-- -DPSB_HAVE_FINAL
+-- Performing Test HAVE_MOLD
+-- Performing Test HAVE_MOLD - Success
+-- -DPSB_HAVE_MOLD
+-- Performing Test HAVE_EXTENDS_TYPE_OF
+-- Performing Test HAVE_EXTENDS_TYPE_OF - Success
+-- -DPSB_HAVE_EXTENDS_TYPE_OF
+-- Performing Test HAVE_SAME_TYPE_AS
+-- Performing Test HAVE_SAME_TYPE_AS - Success
+-- -DPSB_HAVE_SAME_TYPE_AS
+-- Found MPI_Fortran: /usr/lib/x86_64-linux-gnu/mpich/lib/libmpichfort.so (found version "4.1")
+-- Found MPI: TRUE (found version "4.1") found components: Fortran
+-- >>> MPI found:  /usr/lib/x86_64-linux-gnu/mpich/lib/libmpichfort.so;/usr/lib/x86_64-linux-gnu/mpich/lib/libmpich.so
+-- MPI include paths: /usr/lib/x86_64-linux-gnu/mpich/include
+-- Fortran link flags:  
+-- Copied mpi.mod from /usr/lib/x86_64-linux-gnu/mpich/include
+-- Defined: -DPSB_MPI_MOD
+-- Looking for Fortran sgemm
+-- Looking for Fortran sgemm - not found
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE
+-- Looking for Fortran sgemm
+-- Looking for Fortran sgemm - found
+-- Found BLAS: /usr/lib/x86_64-linux-gnu/libopenblas.a
+-- Looking for Fortran cheev
+-- Looking for Fortran cheev - found
+-- Found LAPACK: /usr/lib/x86_64-linux-gnu/libopenblas.a;-lm;-ldl
+-- Could NOT find METIS (missing: METIS_INCLUDES METIS_LIBRARIES) 
+-- Could NOT find METIS (missing: METIS_INCLUDES METIS_LIBRARIES) 
+-- Initial CMAKE_INSTALL_LIBDIR: lib
+-- CMAKE_INSTALL_LIBDIR is set to default value lib
+-- CMAKE_INSTALL_INCLUDEDIR is set to default value lib
+-- CMAKE_INSTALL_MODULDIR is set to default value lib
+-- bin dir /tmp/tmp59pkesza/build; source dir /tmp/tmp59pkesza/source;;
+-- fortran module directory /tmp/tmp59pkesza/build/include
+-- Using MPI include at: /usr/lib/x86_64-linux-gnu/mpich/include
+-- include dir := /tmp/tmp59pkesza/build/include
+-- Copied .h files to /tmp/tmp59pkesza/build/include
+-- 		 lib
+-- CMAKE_INSTALL_PREFIX: /usr/local - /usr/local;
+-- CMAKE_INSTALL_LIBDIR: lib - lib;
+-- CMAKE_INSTALL_INCLUDEDIR: include - include;
+-- CMAKE_INSTALL_MODULDIR: modules - modules;
+-- Configuring done (13.4s)
+-- Generating done (0.2s)
+-- Build files have been written to: /tmp/tmp59pkesza/build
+GENERATED psblas 1 files; 38344 bytes
+ENNUF generated asset verified: 7489 bytes
+CMake Warning at cmake/setVersion.cmake:64 (message):
+  Could not extract version from git, falling back on
+  /tmp/tmp59pkesza/source/.VERSION.
+Call Stack (most recent call first):
+  CMakeLists.txt:24 (set_version)
+
+
+CMake Warning:
+  Manually-specified variables were not used by the project:
+
+    CMAKE_CXX_COMPILER
+
+

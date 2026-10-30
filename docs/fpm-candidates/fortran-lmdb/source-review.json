@@ -1,0 +1,44 @@
+{
+  "id": "fortran-lmdb",
+  "repository": "interkosmos/fortran-lmdb",
+  "revision": "34bb1dc10e11fd470e4643135fa31fccacef7cd7",
+  "archive_sha256": "9118828e0b3032ffad65e3aec2dd301a0341d2f38bf100e03c21b0246a0c71d5",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "apt_packages": [
+      "liblmdb-dev=0.9.31-1+b2"
+    ],
+    "environment": {
+      "FPM_FFLAGS": "-D__linux__"
+    }
+  },
+  "dependencies": [],
+  "catalog_patches": {
+    "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+    "edits": [
+      {
+        "path": "src/lmdb.F90",
+        "sha256": "40301b4a9c67d0267ea6951542151c4c2b39ab137d3f83f3e0bf6ff38181a4ff",
+        "before": "#if defined (__flang__) || (defined (__GFORTRAN__) && __GNUC__ > 15) || (defined (__GFORTRAN__) && __GNUC__ == 15 && __GNUC_MINOR__ >= 2)",
+        "after": "#if defined (__flang__)"
+      }
+    ]
+  },
+  "checked_at": "2026-10-29T13:30:57.553160+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/fortran-lmdb.f90",
+  "verification": {
+    "seconds": 2.952,
+    "build_seconds": 0.497,
+    "library_reused": true,
+    "demo_sha256": "7a80deaca5387feac6ab7003abd41eed5d100fc3ca4c9e2150e92ac1b4e84def",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "ISC",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "LMDB key-value database bindings with Debian LMDB 0.9.31. A checksum-guarded compatibility edit selects the existing signed-kind fallback rather than GNU unsigned extension kinds, which are unavailable without enabling nondefault unsigned support. The checked consumer creates a small sandbox-local database, inserts and updates a value, verifies committed reads and rollback after an aborted update, deletes the key and checks MDB_NOTFOUND, then closes and removes both database files. No persistent storage is provided. Large mappings, concurrent writers/readers, all cursor interfaces and other platforms are not validated."
+}

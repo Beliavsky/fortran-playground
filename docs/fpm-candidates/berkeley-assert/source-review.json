@@ -1,0 +1,41 @@
+{
+  "id": "berkeley-assert",
+  "repository": "BerkeleyLab/assert",
+  "revision": "eda03ce48da96c3118ec98d4498f4bd47c0b60ab",
+  "archive_sha256": "f45babe49f86128be7febf49ad8dd21f49c319f69acab607e1c28b6df070172c",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "environment": {
+      "FPM_FFLAGS": "-DASSERTIONS=1 -ffree-line-length-none"
+    }
+  },
+  "dependencies": [],
+  "catalog_patches": {
+    "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+    "edits": [
+      {
+        "path": "fpm.toml",
+        "sha256": "e2b96b5d111f3c9baafc49a1280cba6f9f2515e6e7764053a26d533a1201160f",
+        "before": "name = \"assert\"\n\n[install]\nlibrary = true\n",
+        "after": "name = \"assert\"\n\n[install]\nlibrary = true\n\n[library]\ninclude-dir = [\n    \"include\",\n]\n"
+      }
+    ]
+  },
+  "checked_at": "2026-10-29T14:04:20.544152+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/berkeley-assert.f90",
+  "verification": {
+    "seconds": 1.576,
+    "build_seconds": 0.376,
+    "library_reused": true,
+    "demo_sha256": "a8656a3823bfc6b4252d2b68e7b30f93d67caa8a80c8f87942f9f74d1a8e9f68",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "LicenseRef-Berkeley-Assert",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Runtime assertion checks in pure procedures, built with ASSERTIONS=1 so enforcement is enabled in the cached library. A checksum-guarded manifest edit adds the upstream include directory; library sources and headers are unchanged. The main checks preconditions and postconditions around a pure square-root function. A separate sandbox probe compiles successfully, intentionally calls assert(.false.), and verifies nonzero termination with the expected descriptive diagnostic and unchanged library artifacts, demonstrating that checks were not compiled away. Multi-image/coarray callbacks and every macro variant are not validated. Full current upstream license terms, including its enhancement-contribution provision, are retained under LicenseRef-Berkeley-Assert rather than labeling them as an unmodified standard BSD license."
+}

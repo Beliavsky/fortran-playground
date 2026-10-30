@@ -13,6 +13,31 @@ from fpm_shared import (dependency_contract, digest, build_context, export_depen
 
 
 class SharedTests(unittest.TestCase):
+    def test_generated_source_recipe_is_bound_to_the_leaf_contract(self):
+        from xprecompile_fpm import generated_source_tag, shareable_generated_source
+        options = {'adapter_sha256': 'a'*64}
+        spec = {'manifest': 'name="library"\n[library]\nsource-dir="playground-library"\n',
+                'sources': ['generated/library.F90'],
+                'generated': {'asset': 'library.json', 'sha256': 'b'*64}}
+        tag = generated_source_tag(options, spec)
+        self.assertFalse(shareable_generated_source(options, spec))
+        spec['manifest'] += '[preprocess.cpp]\nmacros=["'+tag+'"]\n'
+        self.assertTrue(shareable_generated_source(options, spec))
+        self.assertEqual(generated_source_tag(options, spec), tag)
+        for changed in ({**spec, 'sources': ['another.F90']},
+                        {**spec, 'generated': {'asset': 'library.json', 'sha256': 'c'*64}},
+                        {**spec, 'manifest': spec['manifest'].replace('library"', 'renamed"')}):
+            self.assertFalse(shareable_generated_source(options, changed))
+        self.assertFalse(shareable_generated_source({'adapter_sha256':'d'*64}, spec))
+        with tempfile.TemporaryDirectory() as temporary:
+            root, pin, _ = self.fixture(temporary)
+            (root/'fpm.toml').write_text(spec['manifest'])
+            before = dependency_contract(pin, root, {'library':root}, {}, 'recipe', 'adapter')
+            replacement = generated_source_tag(options, {**spec, 'sources': ['another.F90']})
+            (root/'fpm.toml').write_text(spec['manifest'].replace(tag, replacement))
+            after = dependency_contract(pin, root, {'library':root}, {}, 'recipe', 'adapter')
+            self.assertNotEqual(digest(before), digest(after))
+
     def test_catalog_sharing_requires_explicit_current_recipe_and_valid_repositories(self):
         from fpm_catalog_build import validate_build, adapter_digest, NAME_ADAPTER_SHA256
         options = {'adapter_sha256': adapter_digest(), 'shared_dependencies': {

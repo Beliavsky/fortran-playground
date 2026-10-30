@@ -1,0 +1,19 @@
+name = "poisfft"
+version = "0.0.0"
+license = "GPL-2.0-or-later"
+[library]
+source-dir = "playground-library"
+include-dir = ["src", "."]
+[build]
+external-modules = ["pfft", "mpi"]
+auto-executables = false
+auto-examples = false
+auto-tests = false
+[install]
+library = true
+[fortran]
+implicit-typing = true
+implicit-external = true
+source-form = "default"
+[preprocess.cpp]
+suffixes = ["f90"]

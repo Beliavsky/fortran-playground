@@ -1,0 +1,45 @@
+{
+  "id": "lookup-table-fortran",
+  "repository": "jannisteunissen/lookup_table_fortran",
+  "revision": "b7dc72359e7c2cc105abfbf79b570c655a7f1d04",
+  "archive_sha256": "0744a0be71d51cf990d67aaf326807132c7ef57f7d7cc594b42c54980be2c5cd",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "source_packages": {
+      "jannisteunissen/lookup_table_fortran": {
+        "manifest": "name = \"lookup-table-fortran\"\nversion = \"0.0.0\"\nlicense = \"GPL-3.0\"\n[library]\nsource-dir = \"playground-library\"\n[build]\nauto-executables = false\nauto-examples = false\nauto-tests = false\n[install]\nlibrary = true\n",
+        "sources": [
+          "m_lookup_table.f90"
+        ]
+      }
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T12:13:59.407766+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/lookup-table-fortran.f90",
+  "verification": {
+    "seconds": 1.626,
+    "build_seconds": 0.598,
+    "library_reused": true,
+    "demo_sha256": "2247c7358e3bfa2ce064b1007bebeb0a994917b06f3e51355f766c5156ba3c92",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "GPL-3.0",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Linear lookup tables. An operator-owned FPM manifest wraps the unchanged m_lookup_table.f90 file. The main checks exact interpolation of a linear function, the expected interpolation error for a quadratic, an exact grid value, and clamping below/above the endpoints. No mathematical source edits. The 2D interface, nonuniform spacing options, persistence and all boundary cases are not validated by this example.",
+  "source_packaging": {
+    "manifest": "fpm.toml",
+    "sources": [
+      {
+        "path": "m_lookup_table.f90",
+        "sha256": "cb8cf06bf3032ed370ca0b9af97af4045ed665c8077cb4cf396f8c6e498e0443"
+      }
+    ],
+    "note": "Only the listed unchanged library files are copied into playground-library; upstream test/program files are excluded."
+  }
+}

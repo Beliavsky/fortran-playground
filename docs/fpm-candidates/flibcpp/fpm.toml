@@ -1,0 +1,14 @@
+name="flibcpp"
+version="0.0.0"
+license="MIT"
+[library]
+source-dir="playground-library"
+include-dir=["include", "playground-generated"]
+[build]
+auto-executables=false
+auto-examples=false
+auto-tests=false
+external-modules=[]
+link=["stdc++"]
+[install]
+library=true

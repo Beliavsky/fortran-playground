@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "repository": "libmbd/libmbd",
+  "revision": "77d7ab424d21f43dea9f57734b355ce4ea4d1a42",
+  "license": "MPL-2.0",
+  "configuration": {
+    "options": [
+      "-DENABLE_SCALAPACK_MPI=OFF",
+      "-DENABLE_C_API=ON",
+      "-DBUILD_TESTING=OFF",
+      "-DBUILD_SHARED_LIBS=OFF"
+    ],
+    "sources": [
+      "playground-generated/mbd_version.f90",
+      "src/mbd.F90",
+      "src/mbd_c_api.F90",
+      "src/mbd_constants.f90",
+      "src/mbd_coulomb.f90",
+      "src/mbd_damping.F90",
+      "src/mbd_defaults.f90",
+      "src/mbd_density.f90",
+      "src/mbd_dipole.F90",
+      "src/mbd_formulas.f90",
+      "src/mbd_geom.F90",
+      "src/mbd_gradients.f90",
+      "src/mbd_hamiltonian.F90",
+      "src/mbd_lapack.f90",
+      "src/mbd_linalg.F90",
+      "src/mbd_matrix.F90",
+      "src/mbd_methods.F90",
+      "src/mbd_rpa.F90",
+      "src/mbd_scs.f90",
+      "src/mbd_ts.F90",
+      "src/mbd_utils.F90",
+      "src/mbd_vdw_param.f90"
+    ],
+    "fortran_macros": []
+  },
+  "inputs": {
+    "CMakeLists.txt": "56fd0bec7a8819d4521cf5166643007ac6f29362019df087d43af28804f13cf9",
+    "cmake/fortran_flags_override.cmake": "5b3fafbe8def5798160af53e1582ae5ae9da8e64073c62e7b9a1ce73e9b79777",
+    "cmake/libMBDVersion.cmake": "a14f94d262db4ba6f9484bf74c2201df76ec4d262f545323c908a87ece9b4010",
+    "src/CMakeLists.txt": "9ed2aa2a62fae7da46c5a9b771862c0b72d70e99733cd2a1d83fa8f9f8bda990",
+    "src/mbd_version.f90.in": "054b7d09e4a3e8ca75b796193c010fb0cc130b363aac30a7c6c446a24713f0ac",
+    "tests/CMakeLists.txt": "4802b59b945704d7dbc52ca7cbf02975e6fb735b5e72ddb0d0c015a715647ef0"
+  },
+  "files": {
+    "playground-generated/mbd_version.f90": "! This Source Code Form is subject to the terms of the Mozilla Public\n! License, v. 2.0. If a copy of the MPL was not distributed with this\n! file, You can obtain one at http://mozilla.org/MPL/2.0/.\nmodule mbd_version\n\nimplicit none\n\ninteger, parameter, public :: MBD_VERSION_MAJOR = 0\ninteger, parameter, public :: MBD_VERSION_MINOR = 0\ninteger, parameter, public :: MBD_VERSION_PATCH = 0\ncharacter(len=30), parameter, public :: MBD_VERSION_SUFFIX = '77d7ab424d21'\n\nend module\n"
+  }
+}

@@ -1,0 +1,11 @@
+name = "lookup-table-fortran"
+version = "0.0.0"
+license = "GPL-3.0"
+[library]
+source-dir = "playground-library"
+[build]
+auto-executables = false
+auto-examples = false
+auto-tests = false
+[install]
+library = true

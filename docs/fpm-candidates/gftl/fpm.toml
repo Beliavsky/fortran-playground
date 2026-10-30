@@ -1,0 +1,12 @@
+name="gftl"
+version="0.0.0"
+license="Apache-2.0"
+[library]
+source-dir="playground-library"
+include-dir=["include"]
+[build]
+auto-executables=false
+auto-examples=false
+auto-tests=false
+[install]
+library=true

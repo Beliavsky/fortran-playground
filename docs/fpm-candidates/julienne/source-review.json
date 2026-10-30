@@ -1,0 +1,36 @@
+{
+  "id": "julienne",
+  "repository": "BerkeleyLab/julienne",
+  "revision": "b2648cc10d8cdd0549d5c286b56d023a642e2a3e",
+  "archive_sha256": "6ffb27a9ea9d69d407eba0c085cc1cef7a710b8d15012834ce1396683c0aa984",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "environment": {
+      "FPM_FFLAGS": "-fcoarray=single -ffree-line-length-none"
+    }
+  },
+  "dependencies": [
+    {
+      "repository": "berkeleylab/assert",
+      "revision": "c1443971bacb7015f1110704bfd86f625f9b22ee",
+      "sha256": "f999b23470400d06c3a0c6f83fadf39bbf33fddee51a07e9e4098562582c220a"
+    }
+  ],
+  "checked_at": "2026-10-29T19:04:24.801783+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/julienne.f90",
+  "verification": {
+    "seconds": 1.573,
+    "build_seconds": 0.344,
+    "library_reused": true,
+    "demo_sha256": "f1104ebd9295314cbe06282d0f528fc8502e75468a7e4a2f786fd4dbda9f6d6c",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "LicenseRef-Berkeley-Julienne",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Standalone demonstration of the modern Julienne testing framework, with its pinned Assert dependency and single-image coarrays. The numerical source is unchanged. The checked consumer verifies an approximate real comparison and an exact integer sum, then deliberately creates a failed test_diagnosis_t, checks its failure flag and nonempty appended diagnostic and prints it while completing successfully. This demonstrates diagnosis construction and inspection rather than macro assertion termination. The full test harness, automatic test discovery, macro enforcement and multi-image behavior are not validated. Original Berkeley Lab/Sourcery Institute license terms and dependency notices are retained."
+}

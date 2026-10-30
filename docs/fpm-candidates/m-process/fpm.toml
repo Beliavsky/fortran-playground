@@ -1,0 +1,21 @@
+# TOML file for fpm as described at https://fpm.fortran-lang.org/en/spec/manifest.html
+name = "M_process"
+version = "0.1.0"
+license = "Public Domain"
+author = "John S. Urban"
+maintainer = "urbanjost@comcast.net"
+copyright = "2020 John S. Urban"
+description = "ISO_C_BINDING interface to popen(3c) and related system procedures "
+categories = ["POSIX system routines"]
+keywords = ["fortran", "POSIX", "system"]
+homepage = "https://github.com/urbanjost/M_process.git"
+
+[build]
+#module-naming = true
+
+[[test]]
+name="test_suite"
+source-dir="test"
+main="test_suite_M_process.f90"
+[test.dependencies]
+M_framework     = { git = "https://github.com/urbanjost/M_framework.git" }

@@ -1,0 +1,11 @@
+name = "fortranlib"
+version = "0.0.0"
+license = "BSD-2-Clause"
+[library]
+source-dir = "playground-library"
+[build]
+auto-executables = false
+auto-examples = false
+auto-tests = false
+[install]
+library = true

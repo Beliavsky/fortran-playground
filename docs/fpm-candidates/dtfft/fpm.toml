@@ -1,0 +1,16 @@
+name="dtfft"
+version="0.0.0"
+license="GPL-3.0-or-later"
+[library]
+source-dir="playground-library"
+include-dir=["src/interfaces/fft/fftw", "include", "src/include", "playground-generated"]
+[build]
+auto-executables=false
+auto-examples=false
+auto-tests=false
+external-modules=["mpi", "mpi_f08", "dtfft_abstract_compressor", "dtfft_backend_cufftmp_m", "dtfft_backend_nccl_m", "dtfft_compressor_zfp", "dtfft_executor_cufft_m", "dtfft_executor_mkl_m", "dtfft_executor_vkfft_m", "dtfft_interface_cuda", "dtfft_interface_cuda_runtime", "dtfft_interface_nccl", "dtfft_interface_nvrtc", "dtfft_interface_nvshmem", "dtfft_kernel_device", "omp_lib"]
+link=["fftw3", "fftw3f", "mpichfort", "mpich"]
+[install]
+library=true
+[preprocess.cpp]
+macros=["ADDR_KIND=int32", "CNT_KIND=int32", "ENABLE_INPUT_CHECK"]

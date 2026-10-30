@@ -1,0 +1,24 @@
+{
+  "id": "shtools",
+  "repository": "SHTOOLS/SHTOOLS",
+  "revision": "a69878128331554dfef4cdd7d754e1ee7ec8562e",
+  "status": "deferred",
+  "stage": "preparation",
+  "checked_at": "2026-10-29T20:44:37.128981+00:00",
+  "limit_bytes": 16777216,
+  "reason": "The current source archive and tags v4.14.1 and v4.14.0 exceed the unchanged 16 MiB source download limit. The source preparer stops before extraction or compilation; no compiler failure is claimed. Complete archive checksums are unavailable because bounded downloads are aborted at the limit. A smaller reproducible source distribution or separately reviewed preparation support is needed.",
+  "release_checks": [
+    {
+      "tag": "v4.14.1",
+      "revision": "98c15efd26b224859e1a8f8ab0c1298368657f59",
+      "limit_bytes": 16777216,
+      "preparation_error": "Source download exceeds its size limit."
+    },
+    {
+      "tag": "v4.14.0",
+      "revision": "3c68f2b558fd09d44a3ca51ffeab5c4dc03c8e75",
+      "limit_bytes": 16777216,
+      "preparation_error": "Source download exceeds its size limit."
+    }
+  ]
+}

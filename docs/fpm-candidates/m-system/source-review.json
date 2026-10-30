@@ -1,0 +1,28 @@
+{
+  "id": "m-system",
+  "repository": "urbanjost/M_system",
+  "revision": "cb558fe8be200783e603e33a66aaba0289b6d3d1",
+  "archive_sha256": "bff0c452c59759716f14775e45720f11d20265134f9307009a03bc2517587b4d",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8"
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T18:44:12.105846+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/m-system.f90",
+  "verification": {
+    "seconds": 1.177,
+    "build_seconds": 0.195,
+    "library_reused": true,
+    "demo_sha256": "90bf33650f228e6e7459b32bf77852d18e1e6d8cd961a1354653fc3e923b69cd",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "Unlicense",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Unmodified mixed C/Fortran POSIX system library in the Linux/glibc sandbox. The checked example creates a local directory with owner-only permissions, writes and reads back the integer 42, checks directory and regular-file types, removes both and confirms cleanup. Other system calls, processes, networking, permissions changes and Windows portability are not validated or promised. Upstream development dependencies and applications are not part of the consumer demonstration.",
+  "license_note": "The upstream fpm.toml labels the package CC0-1.0; the repository LICENSE contains the Unlicense. The catalog identifies that retained license text."
+}

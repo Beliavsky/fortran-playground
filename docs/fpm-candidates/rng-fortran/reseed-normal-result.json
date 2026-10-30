@@ -1,0 +1,79 @@
+{
+  "ok": true,
+  "compiler": "GNU Fortran (GCC) 16.2.0",
+  "compiler_id": "gfortran",
+  "fpm": "0.12.0",
+  "stages": [
+    {
+      "name": "Build",
+      "command": [
+        "fpm",
+        "build",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.363,
+      "ok": true,
+      "exit_code": 0,
+      "error": "",
+      "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+      "stderr": ""
+    },
+    {
+      "name": "Run",
+      "command": [
+        "fpm",
+        "run",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.021,
+      "ok": true,
+      "exit_code": 0,
+      "error": "",
+      "stdout": "Fresh first normal:    0.0180757\nNormal after resetting a used generator:   -1.3762117\nREPRODUCED cached normal survives set_seed\n",
+      "stderr": "Project is up to date\n"
+    }
+  ],
+  "cache": {
+    "package": "rng-fortran",
+    "compiler": "GNU Fortran 16.2.0",
+    "key": "cf1d080e6dbc8f9dc79eeb60",
+    "library_reused": true,
+    "changed_artifacts": []
+  },
+  "packages": [
+    {
+      "repository": "jannisteunissen/rng_fortran",
+      "revision": "5ead95f436323d07fc82acc3613f66550947f256",
+      "sha256": "9de2594251208c855d148f8207c216df95072e62e74d51ba432b0ab77426cb52"
+    }
+  ],
+  "build_ok": true,
+  "target_groups": {
+    "app": [
+      "playground-main"
+    ],
+    "example": [],
+    "test": []
+  },
+  "targets": [
+    "playground-main"
+  ],
+  "plots": [],
+  "plot_notes": []
+}

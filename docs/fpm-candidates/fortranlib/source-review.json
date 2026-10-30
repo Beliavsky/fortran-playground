@@ -1,0 +1,104 @@
+{
+  "id": "fortranlib",
+  "repository": "astrofrog/fortranlib",
+  "revision": "60fd094d3e137137ce00ec120b085e9b23ebf68b",
+  "archive_sha256": "2306ae4dedaa431c7a77f8cbc15e8ab3c04230de3a8cf0c38654f065db649536",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "source_packages": {
+      "astrofrog/fortranlib": {
+        "manifest": "name = \"fortranlib\"\nversion = \"0.0.0\"\nlicense = \"BSD-2-Clause\"\n[library]\nsource-dir = \"playground-library\"\n[build]\nauto-executables = false\nauto-examples = false\nauto-tests = false\n[install]\nlibrary = true\n",
+        "sources": [
+          "src/base_types.f90",
+          "src/lib_algebra.f90",
+          "src/lib_array.f90"
+        ]
+      }
+    }
+  },
+  "dependencies": [],
+  "catalog_patches": {
+    "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+    "edits": [
+      {
+        "path": "playground-library/lib_array.f90",
+        "sha256": "d1c2f979d1498c0e505632c02df66ff5ad240a733d00fa71ab59725d71f458ac",
+        "before": "! MD5 of template: 13982be359376d65d4f966553ef27636\n! Array related routines (Integration, Interpolation, etc.)\n!\n! ------------------------------------------------------------------------------\n! Copyright (c) 2009-13, Thomas P. Robitaille\n!\n! All rights reserved.\n!\n! Redistribution and use in source and binary forms, with or without\n",
+        "after": "! MD5 of template: a4d2f189e6a05079680e0b18e875b696\n! Array related routines (Integration, Interpolation, etc.)\n!\n! ------------------------------------------------------------------------------\n! Copyright (c) 2009-13, Thomas P. Robitaille\n!\n! All rights reserved.\n!\n! Redistribution and use in source and binary forms, with or without\n"
+      },
+      {
+        "path": "playground-library/lib_array.f90",
+        "sha256": "3cfdfbae8f2f8cb2f9b2cabdae9d7482d16d447351f59a4171e2462766e1e034",
+        "before": "\n  real(dp) function integral_general_subset_dp(x,y,x1,x2,f_interp,f_chunk) result(sum)\n    ! Integral of a function between two limits\n\n    implicit none\n\n    real(dp),intent(in) :: x(:),y(:),x1,x2\n    integer :: i1,i2\n    real(dp) :: f1,f2\n    integer :: n\n\n    interface\n       real(dp) function f_interp(x, y, xval,bounds_error,fill_value)\n         import :: dp\n         implicit none\n         real(dp),dimension(:),intent(in) :: x,y\n         real(dp),intent(in) :: xval\n",
+        "after": "\n  real(dp) function integral_general_subset_dp(x,y,x1,x2,f_interp,f_chunk) result(sum)\n    ! Integral of a function between two limits\n\n    implicit none\n\n    real(dp),intent(in) :: x(:),y(:),x1,x2\n    integer :: i1,i2\n    real(dp) :: f1,f2,xx1,xx2\n    integer :: n\n\n    interface\n       real(dp) function f_interp(x, y, xval,bounds_error,fill_value)\n         import :: dp\n         implicit none\n         real(dp),dimension(:),intent(in) :: x,y\n         real(dp),intent(in) :: xval\n"
+      },
+      {
+        "path": "playground-library/lib_array.f90",
+        "sha256": "4349cfad214b7cd1fd4d548e3fdca16958a02aac100b82760b27f584156c0ef3",
+        "before": "    if(x1.gt.x(n).or.x2.lt.x(1)) then\n       sum = 0._dp\n       return\n    end if\n\n    if(x1.gt.x(1)) then\n       i1 = locate(x,x1)\n       f1 = f_interp(x,y,x1)\n    else\n       i1 = 0\n       f1 = 0._dp\n    end if\n\n    if(x2.lt.x(n)) then\n       i2 = locate(x,x2)\n       f2 = f_interp(x,y,x2)\n    else\n       i2 = n\n       f2 = 0._dp\n    end if\n\n    if(i2.gt.i1) then\n\n       ! Add main part\n       if(i2 > i1+1) then\n          sum = integral_general_dp(x(i1+1:i2), y(i1+1:i2), f_chunk)\n       else\n          sum = 0._dp\n       end if\n\n       ! Add extremities\n       sum = sum + f_chunk(x1,f1,x(i1+1),y(i1+1))\n       sum = sum + f_chunk(x(i2),y(i2),x2,f2)\n\n    else\n\n       sum = f_chunk(x1,f1,x2,f2)\n\n    end if\n\n  end function integral_general_subset_dp\n\n  real(dp) function trapezium_dp(x1,y1,x2,y2)\n    implicit none\n    real(dp),intent(in) :: x1,y1,x2,y2\n",
+        "after": "    if(x1.gt.x(n).or.x2.lt.x(1)) then\n       sum = 0._dp\n       return\n    end if\n\n    if(x1.gt.x(1)) then\n       i1 = locate(x,x1)\n       f1 = f_interp(x,y,x1)\n       xx1 = x1\n    else\n       ! Clamp the lower limit to the tabulated range so that no\n       ! spurious area is added outside the domain\n       i1 = 0\n       f1 = y(1)\n       xx1 = x(1)\n    end if\n\n    if(x2.lt.x(n)) then\n       i2 = locate(x,x2)\n       f2 = f_interp(x,y,x2)\n       xx2 = x2\n    else\n       ! Clamp the upper limit to the tabulated range so that no\n       ! spurious area is added outside the domain\n       i2 = n\n       f2 = y(n)\n       xx2 = x(n)\n    end if\n\n    if(i2.gt.i1) then\n\n       ! Add main part\n       if(i2 > i1+1) then\n          sum = integral_general_dp(x(i1+1:i2), y(i1+1:i2), f_chunk)\n       else\n          sum = 0._dp\n       end if\n\n       ! Add extremities\n       sum = sum + f_chunk(xx1,f1,x(i1+1),y(i1+1))\n       sum = sum + f_chunk(x(i2),y(i2),xx2,f2)\n\n    else\n\n       sum = f_chunk(xx1,f1,xx2,f2)\n\n    end if\n\n  end function integral_general_subset_dp\n\n  real(dp) function trapezium_dp(x1,y1,x2,y2)\n    implicit none\n    real(dp),intent(in) :: x1,y1,x2,y2\n"
+      },
+      {
+        "path": "playground-library/lib_array.f90",
+        "sha256": "eebe8fcab9c67c1f503584b2607faa41c21cf2e15d99bf5fcea21991a703972a",
+        "before": "          frac=(x-xmin)/(xmax-xmin)\n          ipos_dp=int(frac*real(nbin, dp))+1\n       else  ! x == xmax\n          ipos_dp = nbin\n       end if\n\n    else\n\n       if(x < xmax) then\n          ipos_dp = 0\n       else if(x > xmin) then\n          ipos_dp = nbin+1\n       else if(x < xmin) then\n          frac=(x-xmin)/(xmax-xmin)\n          ipos_dp=int(frac*real(nbin, dp))+1\n       else  ! x == xmin\n          ipos_dp = nbin\n       end if\n\n    end if\n\n  end function ipos_dp\n\n\n",
+        "after": "          frac=(x-xmin)/(xmax-xmin)\n          ipos_dp=int(frac*real(nbin, dp))+1\n       else  ! x == xmax\n          ipos_dp = nbin\n       end if\n\n    else\n\n       if(x > xmin) then\n          ipos_dp = 0\n       else if(x < xmax) then\n          ipos_dp = nbin+1\n       else if(x > xmax) then\n          frac=(x-xmin)/(xmax-xmin)\n          ipos_dp=int(frac*real(nbin, dp))+1\n       else  ! x == xmax\n          ipos_dp = nbin\n       end if\n\n    end if\n\n  end function ipos_dp\n\n\n"
+      },
+      {
+        "path": "playground-library/lib_array.f90",
+        "sha256": "8c7e06f5048fd2b2acc7e2ba9636d2c63b67846425b2a4020b407a0a579f45b7",
+        "before": "    integer,intent(in) :: i\n    ! the bin number\n\n    integer,intent(in) :: nbin\n    ! number of bins\n\n    real(dp) :: frac\n\n    frac=(real(i-1)+0.5)/real(nbin)\n\n    xval_dp=frac*(xmax-xmin)+xmin\n\n  end function xval_dp\n\n\n  subroutine histogram1d_dp(array,xmin,xmax,nbin,hist_x,hist_y,mask,weights)\n    ! Bin 1D array of values into 1D regular histogram\n",
+        "after": "    integer,intent(in) :: i\n    ! the bin number\n\n    integer,intent(in) :: nbin\n    ! number of bins\n\n    real(dp) :: frac\n\n    frac=(real(i-1,dp)+0.5_dp)/real(nbin,dp)\n\n    xval_dp=frac*(xmax-xmin)+xmin\n\n  end function xval_dp\n\n\n  subroutine histogram1d_dp(array,xmin,xmax,nbin,hist_x,hist_y,mask,weights)\n    ! Bin 1D array of values into 1D regular histogram\n"
+      },
+      {
+        "path": "playground-library/lib_array.f90",
+        "sha256": "ec808eecb2321ea6c37dbe89692f9f669d041bf49c229d7443052fffde26d718",
+        "before": "\n  real(sp) function integral_general_subset_sp(x,y,x1,x2,f_interp,f_chunk) result(sum)\n    ! Integral of a function between two limits\n\n    implicit none\n\n    real(sp),intent(in) :: x(:),y(:),x1,x2\n    integer :: i1,i2\n    real(sp) :: f1,f2\n    integer :: n\n\n    interface\n       real(sp) function f_interp(x, y, xval,bounds_error,fill_value)\n         import :: sp\n         implicit none\n         real(sp),dimension(:),intent(in) :: x,y\n         real(sp),intent(in) :: xval\n",
+        "after": "\n  real(sp) function integral_general_subset_sp(x,y,x1,x2,f_interp,f_chunk) result(sum)\n    ! Integral of a function between two limits\n\n    implicit none\n\n    real(sp),intent(in) :: x(:),y(:),x1,x2\n    integer :: i1,i2\n    real(sp) :: f1,f2,xx1,xx2\n    integer :: n\n\n    interface\n       real(sp) function f_interp(x, y, xval,bounds_error,fill_value)\n         import :: sp\n         implicit none\n         real(sp),dimension(:),intent(in) :: x,y\n         real(sp),intent(in) :: xval\n"
+      },
+      {
+        "path": "playground-library/lib_array.f90",
+        "sha256": "91f85cdd5f947488a623f93b1e86bae8fbc9be43a139bfca82e94f31609d500d",
+        "before": "    if(x1.gt.x(n).or.x2.lt.x(1)) then\n       sum = 0._sp\n       return\n    end if\n\n    if(x1.gt.x(1)) then\n       i1 = locate(x,x1)\n       f1 = f_interp(x,y,x1)\n    else\n       i1 = 0\n       f1 = 0._sp\n    end if\n\n    if(x2.lt.x(n)) then\n       i2 = locate(x,x2)\n       f2 = f_interp(x,y,x2)\n    else\n       i2 = n\n       f2 = 0._sp\n    end if\n\n    if(i2.gt.i1) then\n\n       ! Add main part\n       if(i2 > i1+1) then\n          sum = integral_general_sp(x(i1+1:i2), y(i1+1:i2), f_chunk)\n       else\n          sum = 0._sp\n       end if\n\n       ! Add extremities\n       sum = sum + f_chunk(x1,f1,x(i1+1),y(i1+1))\n       sum = sum + f_chunk(x(i2),y(i2),x2,f2)\n\n    else\n\n       sum = f_chunk(x1,f1,x2,f2)\n\n    end if\n\n  end function integral_general_subset_sp\n\n  real(sp) function trapezium_sp(x1,y1,x2,y2)\n    implicit none\n    real(sp),intent(in) :: x1,y1,x2,y2\n",
+        "after": "    if(x1.gt.x(n).or.x2.lt.x(1)) then\n       sum = 0._sp\n       return\n    end if\n\n    if(x1.gt.x(1)) then\n       i1 = locate(x,x1)\n       f1 = f_interp(x,y,x1)\n       xx1 = x1\n    else\n       ! Clamp the lower limit to the tabulated range so that no\n       ! spurious area is added outside the domain\n       i1 = 0\n       f1 = y(1)\n       xx1 = x(1)\n    end if\n\n    if(x2.lt.x(n)) then\n       i2 = locate(x,x2)\n       f2 = f_interp(x,y,x2)\n       xx2 = x2\n    else\n       ! Clamp the upper limit to the tabulated range so that no\n       ! spurious area is added outside the domain\n       i2 = n\n       f2 = y(n)\n       xx2 = x(n)\n    end if\n\n    if(i2.gt.i1) then\n\n       ! Add main part\n       if(i2 > i1+1) then\n          sum = integral_general_sp(x(i1+1:i2), y(i1+1:i2), f_chunk)\n       else\n          sum = 0._sp\n       end if\n\n       ! Add extremities\n       sum = sum + f_chunk(xx1,f1,x(i1+1),y(i1+1))\n       sum = sum + f_chunk(x(i2),y(i2),xx2,f2)\n\n    else\n\n       sum = f_chunk(xx1,f1,xx2,f2)\n\n    end if\n\n  end function integral_general_subset_sp\n\n  real(sp) function trapezium_sp(x1,y1,x2,y2)\n    implicit none\n    real(sp),intent(in) :: x1,y1,x2,y2\n"
+      },
+      {
+        "path": "playground-library/lib_array.f90",
+        "sha256": "265f8117396b8ec93228950dc584ed0962a9130fb2a5bd8503579887d013cbb9",
+        "before": "          frac=(x-xmin)/(xmax-xmin)\n          ipos_sp=int(frac*real(nbin, sp))+1\n       else  ! x == xmax\n          ipos_sp = nbin\n       end if\n\n    else\n\n       if(x < xmax) then\n          ipos_sp = 0\n       else if(x > xmin) then\n          ipos_sp = nbin+1\n       else if(x < xmin) then\n          frac=(x-xmin)/(xmax-xmin)\n          ipos_sp=int(frac*real(nbin, sp))+1\n       else  ! x == xmin\n          ipos_sp = nbin\n       end if\n\n    end if\n\n  end function ipos_sp\n\n\n",
+        "after": "          frac=(x-xmin)/(xmax-xmin)\n          ipos_sp=int(frac*real(nbin, sp))+1\n       else  ! x == xmax\n          ipos_sp = nbin\n       end if\n\n    else\n\n       if(x > xmin) then\n          ipos_sp = 0\n       else if(x < xmax) then\n          ipos_sp = nbin+1\n       else if(x > xmax) then\n          frac=(x-xmin)/(xmax-xmin)\n          ipos_sp=int(frac*real(nbin, sp))+1\n       else  ! x == xmax\n          ipos_sp = nbin\n       end if\n\n    end if\n\n  end function ipos_sp\n\n\n"
+      },
+      {
+        "path": "playground-library/lib_array.f90",
+        "sha256": "d5f1b9ab5506a6353e32945be39c07349574a6890d781886229a10826f943aca",
+        "before": "    integer,intent(in) :: i\n    ! the bin number\n\n    integer,intent(in) :: nbin\n    ! number of bins\n\n    real(sp) :: frac\n\n    frac=(real(i-1)+0.5)/real(nbin)\n\n    xval_sp=frac*(xmax-xmin)+xmin\n\n  end function xval_sp\n\n\n  subroutine histogram1d_sp(array,xmin,xmax,nbin,hist_x,hist_y,mask,weights)\n    ! Bin 1D array of values into 1D regular histogram\n",
+        "after": "    integer,intent(in) :: i\n    ! the bin number\n\n    integer,intent(in) :: nbin\n    ! number of bins\n\n    real(sp) :: frac\n\n    frac=(real(i-1,sp)+0.5_sp)/real(nbin,sp)\n\n    xval_sp=frac*(xmax-xmin)+xmin\n\n  end function xval_sp\n\n\n  subroutine histogram1d_sp(array,xmin,xmax,nbin,hist_x,hist_y,mask,weights)\n    ! Bin 1D array of values into 1D regular histogram\n"
+      }
+    ]
+  },
+  "checked_at": "2026-10-29T19:04:24.801783+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/fortranlib.f90",
+  "verification": {
+    "seconds": 1.762,
+    "build_seconds": 0.209,
+    "library_reused": true,
+    "demo_sha256": "17aa2eb57471c73ae7b108c6bdc4f174eee77e6b45de5cc28b1050fa89560f7f",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "BSD-2-Clause",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Selected base_types, lib_algebra and lib_array modules, using the pinned revision immediately before the upstream FPM test suite introduced source symlinks. Nine checksum-guarded edits bring lib_array exactly to upstream commit 844611933cba06d71490033e68b355f6f0ff704f, retaining its integration-limit, descending histogram-bin and precision fixes. The other selected modules are unchanged. The ordinary archive policy remains unchanged. A synthetic FPM wrapper uses the already generated Fortran sources, not the Python templates. The checked consumer integrates the affine function 2*x+1 on [0,1], checks linear interpolation at an interior off-grid point, and solves x**2-5*x+6 against the exact roots 2 and 3. Additional checks cover integration limits outside the tabulated range, descending histogram bins and bin-center precision; the expanded example fails with the older unpatched array module and passes with the upstream fixes. GAMS F1 denotes the quadratic solver, not a general iterative root finder. Random sampling, statistics, geometry, HDF5/FITS bindings and other modules are not selected; the example does not validate every routine in the included modules.",
+  "upstream_fixes": {
+    "repository": "astrofrog/fortranlib",
+    "revision": "844611933cba06d71490033e68b355f6f0ff704f",
+    "path": "src/lib_array.f90",
+    "sha256": "07c6f7bb524609bc231d8191e1bb7257775acd83f500a5c791ce42de7a0fbd80",
+    "patch": "upstream-array-fixes.patch",
+    "note": "After normalized-LF checksum-guarded edits, the complete selected lib_array module equals this upstream version. base_types and lib_algebra already match the newer commit."
+  }
+}

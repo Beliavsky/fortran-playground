@@ -1,0 +1,41 @@
+UCX environment {'FPM_COMPILER': 'gfortran', 'FPM_FFLAGS': '-fopenmp -I/usr/include/x86_64-linux-gnu/mpich', 'UCX_TLS': 'self,sm'}
+{} 0 [1793308749.578507] [modal:3    :0]       tcp_iface.c:912  UCX  ERROR scandir(/sys/class/net) failed: No such file or directory
+Matrix square root:
+   2.000000000   1.000000000
+   1.000000000   2.000000000
+Square-root residual:   1.7764E-15
+Inverse-square-root residual:   1.1102E-15
+Matrix-inverse residual:   8.8818E-16
+PASS ntpoly
+ 
+{'UCX_NET_DEVICES': 'lo'} 0 [1793308749.686174] [modal:6    :0]       tcp_iface.c:912  UCX  ERROR scandir(/sys/class/net) failed: No such file or directory
+[1793308749.686339] [modal:6    :0]        memtrack.c:339  UCX  WARN  allocated zero-size block 0x5a20f0 for string_set
+[1793308749.686356] [modal:6    :0]     ucp_context.c:1263 UCX  WARN  network device 'lo' is not available, please use one or more of: 
+Matrix square root:
+   2.000000000   1.000000000
+   1.000000000   2.000000000
+Square-root residual:   1.7764E-15
+Inverse-square-root residual:   1.1102E-15
+Matrix-inverse residual:   8.8818E-16
+PASS ntpoly
+ 
+{'UCX_NET_DEVICES': 'none'} 0 [1793308749.788643] [modal:9    :0]       tcp_iface.c:912  UCX  ERROR scandir(/sys/class/net) failed: No such file or directory
+[1793308749.788804] [modal:9    :0]        memtrack.c:339  UCX  WARN  allocated zero-size block 0x5a20f0 for string_set
+[1793308749.788821] [modal:9    :0]     ucp_context.c:1263 UCX  WARN  network device 'none' is not available, please use one or more of: 
+Matrix square root:
+   2.000000000   1.000000000
+   1.000000000   2.000000000
+Square-root residual:   1.7764E-15
+Inverse-square-root residual:   1.1102E-15
+Matrix-inverse residual:   8.8818E-16
+PASS ntpoly
+ 
+{'UCX_TLS': 'self'} 0 [1793308749.893070] [modal:12   :0]       tcp_iface.c:912  UCX  ERROR scandir(/sys/class/net) failed: No such file or directory
+Matrix square root:
+   2.000000000   1.000000000
+   1.000000000   2.000000000
+Square-root residual:   1.7764E-15
+Inverse-square-root residual:   1.1102E-15
+Matrix-inverse residual:   8.8818E-16
+PASS ntpoly
+ 

@@ -1,0 +1,58 @@
+{
+  "id": "propack",
+  "repository": "scipy/PROPACK",
+  "revision": "36f95269ecee6ae42af0c00707b3c3cf3f869a35",
+  "archive_sha256": "bf950e4758192c196d6a4cdd74d9d6163536557b58ad24e7afa2cb4f5fef60ee",
+  "catalog_build": {
+    "adapter_sha256": "66e8249cbc0eb57ffecf9f04801ede2060312d64ba2fa2d839b07fdc746f5f8c",
+    "apt_packages": [
+      "liblapack-dev=3.12.1-6",
+      "libblas-dev=3.12.1-6"
+    ],
+    "environment": {
+      "FPM_FFLAGS": "-std=legacy -fallow-argument-mismatch -ffixed-line-length-none",
+      "FPM_LDFLAGS": "-llapack -lblas"
+    },
+    "source_packages": {
+      "scipy/propack": {
+        "manifest": "name=\"propack\"\nversion=\"0.0.0\"\nlicense=\"BSD-3-Clause\"\n[library]\nsource-dir=\"playground-library\"\ninclude-dir=[\"double\"]\n[build]\nauto-executables=false\nauto-examples=false\nauto-tests=false\n[install]\nlibrary=true\n[fortran]\nimplicit-typing=true\nimplicit-external=true\nsource-form=\"default\"\n",
+        "sources": [
+          "double/dblasext.F",
+          "double/dbsvd.F",
+          "double/dgemm_ovwr.F",
+          "double/dgetu0.F",
+          "double/dlanbpro.F",
+          "double/dlansvd.F",
+          "double/dlansvd_irl.F",
+          "double/dmgs.risc.F",
+          "double/dreorth.F",
+          "double/dritzvec.F",
+          "double/dsafescal.F",
+          "double/printstat.F"
+        ]
+      }
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T19:30:07.012330+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/propack.f90",
+  "verification": {
+    "seconds": 3.136,
+    "build_seconds": 0.413,
+    "library_reused": true,
+    "demo_sha256": "a01b67fdcdf1fe648c0c5eb7d9829db26d604ac205fa37df8b405d33fec0e71d",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "BSD-3-Clause",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Historical SciPy PROPACK 2.1 sources, whose repository is archived and explicitly points to rmlarsen/propack for the maintained implementation. The current author archive and tags v2.2/v2.1 exceed the unchanged source download limit, largely due to saved example outputs. The menu explicitly identifies this historical source choice. Only the native double-precision serial routines are wrapped, using the portable RISC modified Gram-Schmidt implementation and compatible system LP64 BLAS/LAPACK. Numerical sources are unchanged. A callback supplies multiplication by a rectangular diagonal matrix with known singular values. The consumer passes a writable convergence-count argument, requests the leading three singular triplets, and checks 12, 11 and 10, both A*v-sigma*u and transpose(A)*u-sigma*v residuals, finite values and unit vector norms. The restarted algorithm, other precisions, arbitrary sparse matrices and parallel performance are not verified.",
+  "source_status": "Archived SciPy PROPACK version, formerly used before SciPy 1.17.0; not the maintained author repository.",
+  "maintained_source": "https://github.com/rmlarsen/propack",
+  "precision": "serial real64",
+  "author_source_attempt": "../propack-author/source-review.json"
+}

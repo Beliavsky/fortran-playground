@@ -1,0 +1,8 @@
+{
+  "purpose": "Intentional negative control: expected 5 from 2+2. A failing assertion and nonzero program result are required; this is not the public demonstration.",
+  "program_ok": false,
+  "library_reused": true,
+  "stdout": ".F..\nTime:         0.001 seconds\n  \nFailure\n in: \nPlayground.scalar arithmetic\n  Location: \n[<unknown location>]\nAssertEqual failure:\n      Expected: <5>\n        Actual: <4>\n    Difference: <-1>\n  \n FAILURES!!!\nTests run: 3, Failures: 1, Errors: 0\n, Disabled: 0\n",
+  "stderr": "Project is up to date\nERROR STOP pFUnit checks failed\n\nError termination. Backtrace:\n#0  0x2ab59a9a6f83 in ???\n#1  0x2ab59a9a7c39 in ???\n#2  0x2ab59a9a9045 in ???\n#3  0x4078b5 in MAIN__\n\tat app/main.f90:39\n#4  0x407b15 in main\n\tat app/main.f90:26\n<ERROR> Execution for object \" playground-main \" returned exit code  1\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 1\n",
+  "run_seconds": 0.152
+}

@@ -1,0 +1,45 @@
+{
+  "id": "fortran-tcl86",
+  "repository": "interkosmos/fortran-tcl86",
+  "revision": "5d5cc9dbf39679d75d2a58d149112aedde2567d6",
+  "archive_sha256": "eddf0a8c19ef089cb29d3bb9004eefc5fcdcc6481605383858e2881bfd362fd3",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "apt_packages": [
+      "tcl8.6-dev=8.6.16+dfsg-1",
+      "tk8.6-dev=8.6.16-1"
+    ],
+    "environment": {
+      "FPM_LDFLAGS": "-ltk8.6 -ltcl8.6 -ltclstub8.6"
+    }
+  },
+  "dependencies": [],
+  "catalog_patches": {
+    "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+    "edits": [
+      {
+        "path": "src/tcl_macro.c",
+        "sha256": "5eaca5766b04dbd99fa3df59f36ffa3efef811f7327ca774695bdb4695a152fd",
+        "before": "#include <tcl.h>",
+        "after": "#include <tcl8.6/tcl.h>"
+      }
+    ]
+  },
+  "checked_at": "2026-10-29T18:44:12.105846+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/fortran-tcl86.f90",
+  "verification": {
+    "seconds": 1.582,
+    "build_seconds": 0.267,
+    "library_reused": true,
+    "demo_sha256": "747c628986240974d6ecaec4a00ea0dedbbd4d79915b81dfeb63977823833dfd",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "ISC",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Fortran/C bindings linked to pinned Debian Tcl/Tk 8.6 development libraries. A checksum-guarded include edit selects Debian's tcl8.6/tcl.h path for the C macro wrappers; interfaces and calculation code are unchanged. Adapted from the upstream evaluation example, the consumer creates a Tcl interpreter, evaluates an in-memory sum-of-squares script, checks evaluation status and the integer result against Fortran, then destroys the interpreter. Tk graphical windows, extension modules, Tcl stubs and all bindings are not validated; the browser example requires no graphical display or network."
+}

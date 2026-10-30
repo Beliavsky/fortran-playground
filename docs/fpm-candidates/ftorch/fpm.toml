@@ -1,0 +1,15 @@
+name="ftorch"
+version="2.0.0"
+license="MIT"
+[library]
+source-dir="playground-library"
+include-dir=["src"]
+[build]
+auto-executables=false
+auto-examples=false
+auto-tests=false
+link=["torch","torch_cpu","c10","stdc++"]
+[install]
+library=true
+[preprocess.cpp]
+macros=["GPU_DEVICE=0", "GPU_DEVICE_CUDA=1", "GPU_DEVICE_HIP=1", "GPU_DEVICE_MPS=13", "GPU_DEVICE_NONE=0", "GPU_DEVICE_XPU=12", "USE_C10D_GLOO", "USE_C10D_MPI", "USE_DISTRIBUTED", "USE_RPC", "USE_TENSORPIPE"]

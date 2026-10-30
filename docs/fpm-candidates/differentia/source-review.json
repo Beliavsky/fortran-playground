@@ -1,0 +1,30 @@
+{
+  "id": "differentia",
+  "repository": "Nicholaswogan/Differentia",
+  "revision": "2388e8ecf300a7bbc0904feab47023413464edf9",
+  "archive_sha256": "99643ce39a15906f58a7af9ec7c7edfeaadb161d8f3087e0e5dc8d0961f4f329",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "environment": {
+      "FPM_FFLAGS": "-ftrampoline-impl=heap"
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T12:54:09.059921+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/differentia.f90",
+  "verification": {
+    "seconds": 1.423,
+    "build_seconds": 0.239,
+    "library_reused": true,
+    "demo_sha256": "d2e2713d34eb7f03c91d0df8668b065aa7ce03e2194ccef7ad782dc37183b68f",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Forward-mode automatic differentiation with dual numbers. The main checks the upstream scalar example against its analytical value and derivative, a two-variable polynomial gradient and a square 2-by-2 Jacobian against exact formulas. GNU heap trampolines support the internal callback procedures in the restricted sandbox. Library sources are unchanged. The author limits jacobian to square problems and documents incomplete intrinsic coverage; sparse interfaces, every overload and all failure modes are not validated."
+}

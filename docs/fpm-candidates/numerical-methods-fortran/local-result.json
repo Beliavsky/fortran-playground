@@ -1,0 +1,16 @@
+{
+  "compiler": "GNU Fortran (GCC) 17.0.0 20260510 (experimental)",
+  "build_command": [
+    "gfortran",
+    "-fcheck=all",
+    "C:\\python\\fortran-playground\\.fpm-audit-cache\\batch-506\\numerical-methods-fortran\\source\\numerical-methods-fortran-adec2977efac83c3a5297d01cbeaac4ac50e3d11\\modules\\module_integrate.f90",
+    "main.f90",
+    "-o",
+    "check.exe"
+  ],
+  "build_returncode": 0,
+  "build_stderr": "",
+  "run_returncode": 1,
+  "stdout": "Integral of 1 on [0,1], n=10:    1.111111164   1.111111164   1.111111164\n",
+  "stderr": "ERROR STOP Constant-integrand check failed\n\nError termination. Backtrace:\n#0  0x345b1c17 in ???\n#1  0x345b1c66 in ???\n#2  0x345b12ed in ???\n#3  0x345b13f5 in ???\n#4  0xf61bdda6 in ???\n#5  0xf7c1ee4b in ???\n#6  0xffffffff in ???\n"
+}

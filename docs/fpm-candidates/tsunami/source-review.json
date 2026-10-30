@@ -1,0 +1,43 @@
+{
+  "id": "tsunami",
+  "repository": "modern-fortran/tsunami",
+  "revision": "70b5702aed42bbea0733335d50e0eb70cb159e08",
+  "archive_sha256": "732c1ff0e223dd3b596305073a66886ac40b497dd3ad32f5b3f156c5648f271e",
+  "catalog_build": {
+    "adapter_sha256": "5f6c9c34de44723216fbd9c86483f4b3319660cf0f37b830aac27098b1dbe580",
+    "source_packages": {
+      "modern-fortran/tsunami": {
+        "manifest": "name=\"tsunami\"\nversion=\"0.0.0\"\nlicense=\"MIT\"\n[library]\nsource-dir=\"playground-library\"\n[build]\nauto-executables=false\nauto-examples=false\nauto-tests=false\n[install]\nlibrary=true\n",
+        "sources": [
+          "src/ch04/mod_diff.f90",
+          "src/ch04/mod_initial.f90"
+        ]
+      }
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-30T13:13:55.964427+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/tsunami.f90",
+  "verification": {
+    "seconds": 1.892,
+    "build_seconds": 0.301,
+    "library_reused": true,
+    "demo_sha256": "be49e341413a5bdcef2fee130a81aeba350079e53c26780782c7946e1d7b5694",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Only src/ch04/mod_diff.f90 and src/ch04/mod_initial.f90. The main adapts the author Chapter 4 PDE equations; other chapters and parallel execution are not included.",
+  "numerical_checks": {
+    "grid_cells": 100,
+    "steps": 200,
+    "real_kind": "REAL32; integrated elevation accumulated in REAL64",
+    "mass_absolute_error": 8.9879e-08,
+    "relative_mass_tolerance": 1e-05
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "note": "The initial consumer lacked explicit routine interfaces. The final driver uses the upstream slicot module or explicitly declares the classic ARPACK interfaces; library sources are unchanged.",
+  "diagnostics": [
+    {
+      "attempt": "algebra",
+      "diagnostic": " + mkdir -p build/dependencies\n[  0%]              pyplot_module.f90\n[  0%]              pyplot_module.f90  done.\n[  0%]                       main.f90\n<ERROR> Compilation failed for object \" app_main.f90.o \"\n[  0%]                       main.f90  done.\n\napp/main.f90:15:89:\n\n   15 |    call sb03md('C','B','N','N',n,a,n,u,n,c,n,scale,sep,ferr,wr,wi,iwork,work,ldwork,info)\n      |                                                                                         1\nError: Procedure \u2018sb03md\u2019 called with an implicit interface at (1) [-Werror=implicit-interface]\nf951: some warnings being treated as errors\n<ERROR> stopping due to failed compilation\nSTOP 1\n"
+    }
+  ]
+}

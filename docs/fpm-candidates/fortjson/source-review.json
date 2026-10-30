@@ -1,0 +1,32 @@
+{
+  "id": "fortjson",
+  "repository": "elsi_project/fortjson",
+  "revision": "0126d48f79886ba994612e108117eeb096d9cbc4",
+  "archive_sha256": "fe52ef2cf07990e3bfadfd592848361793d59badce247fb4f0ec975db8d77358",
+  "checked_at": "2026-10-30T11:55:45.971231+00:00",
+  "status": "integration-deferred",
+  "stage": "integration",
+  "verified_in_playground": false,
+  "repository_url": "https://gitlab.com/elsi_project/fortjson",
+  "host": "gitlab.com",
+  "compiler_invoked": true,
+  "compiler": "GNU Fortran 16.2.0",
+  "upstream_tests_passed": 38,
+  "reason": "The pinned GitLab source compiles with GNU Fortran 16.2.0 and -fcheck=all; all 38 upstream CMake/CTest tests pass in a network-disabled gVisor operator probe. It is not selected because catalog source preparation and project export currently require GitHub sources or explicitly mapped GitHub mirrors; no usable mirror was found. This is an integration limitation, not a compiler failure. The library writes JSON; a JSON-reading demonstration would be inappropriate.",
+  "proposed_next_step": "Separately implement pinned GitLab archive preparation and exported-project support, or obtain an author-maintained GitHub mirror. Then add a JSON-writing consumer and verify ordinary restricted-sandbox edited-main reuse.",
+  "mirror_probes": {
+    "https://api.github.com/repos/elsi-project/fortjson": 404,
+    "https://api.github.com/repos/wphuhn/fortjson": 404,
+    "github_search_fortjson_repositories": 0
+  },
+  "source_evidence": [
+    {
+      "path": "CMakeLists.txt",
+      "sha256": "1840aad998a9ec9077b36287f159c02b1f6e9aaf704f729ba7c17b018a9cdc68"
+    },
+    {
+      "path": "src/fjson_rw.f90",
+      "sha256": "c1335af186e96d4a0c42b7bffb4939998d2e78330a46336962c38d7f54a66ece"
+    }
+  ]
+}

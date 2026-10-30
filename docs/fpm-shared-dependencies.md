@@ -50,10 +50,19 @@ The operator's ignored `.fpm-audit-cache` retains donor references and persisten
 
 ## Storage measurements and rollout
 
-The active catalog's logical artifacts total **1,249 MiB**. 14 entries share stdlib variants; 42 more use complete library graphs. Linalg, Spectrum, Nonlin and Diffeq reference the same Linalg export; FGLM exports its constants dependency separately. ForDot and ForMatmul share their compatible Kinds, ForUnitTest and FACE exports. Friction retains a separate OpenMP/native-library build context. HR-WENO, Fortran-simplify, ECX and Orbs reuse the compatible stdlib export. ReArrayFX and AMOS F90 have their own small library exports; Scanner reuses the stdlib export. Rojff and Veggies share compatible ISO varying string and Strff exports. All edited-main examples passed in the ordinary restricted sandbox; only the main and executable were rebuilt. Different revisions and compiler settings retain separate variants.
+The active catalog's logical artifacts total **1,704 MiB**. 14 entries share stdlib variants; 46 more use complete library graphs. Linalg, Spectrum, Nonlin and Diffeq reference the same Linalg export; FGLM exports its constants dependency separately. ForDot and ForMatmul share their compatible Kinds, ForUnitTest and FACE exports. Friction retains a separate OpenMP/native-library build context. HR-WENO, Fortran-simplify, ECX and Orbs reuse the compatible stdlib export. ReArrayFX and AMOS F90 have their own small library exports; Scanner reuses the stdlib export. Rojff and Veggies share compatible ISO varying string and Strff exports. All edited-main examples passed in the ordinary restricted sandbox; only the main and executable were rebuilt. DFT-D4, mctc-lib, multicharge, Jonquil and TOML-F use separate immutable library graph exports. Their exact revisions and build settings determine compatibility; differently pinned TOML-F exports are retained. Different revisions and compiler settings retain separate variants.
 
 [Validation measurements](fpm-precompiled-validation.json) count package-owned objects/modules/archives plus each shared dependency export **once**. A package's `artifact_bytes` excludes its separately listed `shared_dependencies`. Legacy package measurements still include dependencies and FPM flag variants inside their individual build trees.
 
 These are logical artifact sizes, not a measurement of compressed image storage or a monthly bill. Old published package images remain available during rollout, because the public service may still use them until redeployment. The operator export Volume also retains files. Consequently a smaller active catalog does not immediately reclaim all previously stored bytes.
 
 Downloaded local projects retain the original pinned sources and ordinary FPM builds. They do not depend on Modal archives or `/opt/fpm/shared` paths. Existing source patches and native-library requirements remain documented in the catalog.
+
+
+## Generated gFTL dependencies
+
+The gFTL family uses [checksum-locked generated assets](fpm-generated-sources.md). A source-recipe fingerprint in the FPM preprocessing profile binds the selected files, asset and adapter version to the existing immutable export contract. Old package definitions, leaf identities and graph identities remain unchanged. Unfingerprinted source repackaging remains blocked.
+
+## FTorch native runtime
+
+FTorch contributes about 9.6 MiB of logical compiled library artifacts. Its isolated CPU LibTorch dependency image additionally installs about 924 MB according to APT. Native system libraries are excluded from the artifact total above. LibTorch is installed once for this package image; no installation or Python process runs in visitor jobs, and other package images do not acquire this dependency.

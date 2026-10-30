@@ -1,0 +1,43 @@
+{
+  "id": "fdict",
+  "repository": "zerothi/fdict",
+  "revision": "6ac903d4c0c524d45b948281a18b9656936c0197",
+  "archive_sha256": "6ef5a80706bae78498408a5e75c6ec45c81f947d8cab719093c960fdd365fd8a",
+  "catalog_build": {
+    "adapter_sha256": "e34f911192ec7459f4becd43da08a8df4dd8a5fd89707941f2cbffc607e82c25",
+    "source_packages": {
+      "zerothi/fdict": {
+        "manifest": "name=\"fdict\"\nversion=\"0.0.0\"\nlicense=\"MPL-2.0\"\n[library]\nsource-dir=\"playground-library\"\ninclude-dir=[\".\",\"playground-generated\"]\n[build]\nauto-executables=false\nauto-examples=false\nauto-tests=false\n[install]\nlibrary=true\n",
+        "sources": [
+          "playground-generated/fdict_types.f90",
+          "playground-generated/variable.f90",
+          "playground-generated/dictionary.f90"
+        ],
+        "generated": {
+          "asset": "fdict-6ac903d4c0c524d45b948281a18b9656936c0197.json",
+          "sha256": "f203fee499398cf82088648deb2465ea8332ad05afaa0125361d927342eba005"
+        }
+      }
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T23:21:45.294111+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/fdict.f90",
+  "verification": {
+    "seconds": 1.703,
+    "build_seconds": 0.505,
+    "library_reused": true,
+    "demo_sha256": "f99733f2e0e1405eed7bf2940ed17a05275a5f25c4a596ef8ec4cd6201862331",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MPL-2.0",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "The current upstream Fypp templates produce fdict_types, variable and dictionary modules. Fypp 3.2 generates a checksum-locked asset with standard integer/real/complex/logical kinds, arrays through rank five, iso_fortran_env, optional extended kinds disabled and the upstream CMake default of non-pure interfaces. No CMake or Fypp runs in visitor preparation. The checked consumer stores and retrieves integer, real64, string and integer-array values, checks each returned value and frees the dictionary. N4 covers container storage and N5 covers key lookup. Earlier v0.7.1 preparation failed on missing generated includes; the current template generation resolves that blocker without downloading release assets or weakening archive checks. MPL-2.0 notices remain intact.",
+  "generated_source_support": "See ../../fpm-generated-sources.md; exact assets and input hashes are included in local project exports. Generation runs only during operator maintenance.",
+  "resolved_preparation_blocker": "Current Fypp 3.2 templates generate all three library modules; no incomplete v0.7.1 fallback or release-asset redirect is used. The first consumer used an unsupported success keyword on the character lookup; the verified consumer uses the documented character overload and checks its returned value."
+}

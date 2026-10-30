@@ -1,0 +1,45 @@
+# TOML file for fpm as described at https://fpm.fortran-lang.org/en/spec/manifest.html
+name = "M_system"
+version = "0.1.0"
+license = "CC0-1.0"
+author = "John S. Urban"
+maintainer = "urbanjost@comcast.net"
+copyright = "2020 John S. Urban"
+description = "(mostly)POSIX system routine interface"
+categories = ["POSIX", "system"]
+keywords = ["fortran", "system interface"]
+homepage = "https://github.com/urbanjost/M_system.git"
+
+[build]
+auto-executables = false
+#module-naming = true
+
+[library]
+source-dir="src"
+
+[dev-dependencies]
+   M_framework = { git = "https://github.com/urbanjost/M_framework.git" }
+   M_process   = { git = "https://github.com/urbanjost/M_process.git"   }
+   M_time      = { git = "https://github.com/urbanjost/M_time.git"      }
+
+   #M_framework = { namespace = "GPF" }
+   #M_process   = { namespace = "GPF" }
+   ##M_time      = { namespace = "GPF" }
+
+   #M_framework  = { path="GLINKS/M_framework"}
+   #M_process    = { path="GLINKS/M_process"  }
+   ##M_time       = { path="GLINKS/M_time"     }
+
+[[executable]]
+name="penv"
+source-dir="app"
+main="penv.f90"
+[executable.dependencies]
+   M_kracken = {  git                         = "https://github.com/urbanjost/M_kracken.git" }
+   M_strings = {  git                         = "https://github.com/urbanjost/M_strings.git" }
+
+   #M_kracken = {  namespace                   = "GPF"                                        }
+   #M_strings = {  namespace                   = "GPF"                                        }
+
+   #M_kracken  = {  path="GLINKS/M_kracken" }
+   #M_strings  = {  path="GLINKS/M_strings" }

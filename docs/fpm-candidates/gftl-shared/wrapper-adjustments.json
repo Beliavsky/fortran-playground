@@ -1,0 +1,5 @@
+{
+  "plain": "Shared dependencies currently require unpatched library sources.",
+  "generated-cache": " + mkdir -p build/dependencies\n<ERROR> *cmd_build* Target error: Unable to find source for module dependency: \"gftl1_integer64vector\" used by \"./././/../sources/bundle/packages/0/gFTL-shared-8009755e846560fbb389c01d76e013ddf14a7f98/playground-library/IntegerVector.F90\"\nSTOP 1\n",
+  "integer64": " + mkdir -p build/dependencies\n[  0%]              pyplot_module.f90\n[  5%]              pyplot_module.f90  done.\n[  5%]         Integer32Real64Map.F90\n<ERROR> Compilation failed for object \" .._sources_bundle_packages_0_gFTL-shared-8009755e846560fbb389c01d76e013ddf14a7f98_playground-library_Integer32Real64Map.F90.o \"\n[ 11%]         Integer32Real64Map.F90  done.\n\n./././/../sources/bundle/packages/0/gFTL-shared-8009755e846560fbb389c01d76e013ddf14a7f98/playground-library/Integer32Real64Map.F90:12:2:\n\n   12 |\n      |  1\nFatal Error: templates/map.inc: No such file or directory\ncompilation terminated.\n<ERROR> stopping due to failed compilation\nSTOP 1\n"
+}

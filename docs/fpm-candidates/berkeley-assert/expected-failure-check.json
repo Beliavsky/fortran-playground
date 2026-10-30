@@ -1,0 +1,31 @@
+{
+  "status": "verified expected failure",
+  "revision": "eda03ce48da96c3118ec98d4498f4bd47c0b60ab",
+  "source_sha256": "68289bfea65608c9479aac3c59e0c5a532282dd522b6e3241830b3e4470d6049",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "build_ok": true,
+  "run": {
+    "name": "Run",
+    "command": [
+      "fpm",
+      "run",
+      "--profile",
+      "debug",
+      "--compiler",
+      "gfortran",
+      "--c-compiler",
+      "gcc",
+      "--cxx-compiler",
+      "g++",
+      "--no-prune"
+    ],
+    "seconds": 0.057,
+    "ok": false,
+    "exit_code": 1,
+    "error": "",
+    "stdout": "",
+    "stderr": "Project is up to date\nERROR STOP Assertion failure: EXPECTED ASSERTION FAILURE: checks are enabled\n\nError termination. Backtrace:\n#0  0x2b7312320f83 in ???\n#1  0x2b7312321c39 in ???\n#2  0x2b7312323045 in ???\n#3  0x4021a5 in ???\n#4  0x402217 in ???\n#5  0x40124e in MAIN__\n\tat app/main.f90:4\n#6  0x4012f2 in main\n\tat app/main.f90:2\n<ERROR> Execution for object \" playground-main \" returned exit code  1\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 1\n"
+  },
+  "library_reused": true
+}

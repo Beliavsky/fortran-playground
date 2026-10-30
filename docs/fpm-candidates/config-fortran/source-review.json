@@ -1,0 +1,45 @@
+{
+  "id": "config-fortran",
+  "repository": "jannisteunissen/config_fortran",
+  "revision": "106354774b2e6138161952f434c69e7913fa2000",
+  "archive_sha256": "48cf926c894f52353d1b5b2c06541b40257dbf8bff0fee146d17a9c55a5ce329",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "source_packages": {
+      "jannisteunissen/config_fortran": {
+        "manifest": "name = \"config-fortran\"\nversion = \"0.0.0\"\nlicense = \"GPL-3.0\"\n[library]\nsource-dir = \"playground-library\"\n[build]\nauto-executables = false\nauto-examples = false\nauto-tests = false\n[install]\nlibrary = true\n",
+        "sources": [
+          "m_config.f90"
+        ]
+      }
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T12:13:59.407766+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/config-fortran.f90",
+  "verification": {
+    "seconds": 1.544,
+    "build_seconds": 0.414,
+    "library_reused": true,
+    "demo_sha256": "f65f0e8ff44a418236ac15b06b6f6fc8c268aeee982eb5339caef63b5bb33ccb",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "GPL-3.0",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Documented configuration values. An FPM wrapper selects unchanged m_config.f90. The main creates its own tiny configuration file, overrides integer, logical, string and grouped real defaults, reads a dynamically sized real array, checks every value and clears the configuration. No uploaded data file or external service is required. Command-line parsing, invalid-file diagnostics and all string/array/grouping behavior are not validated.",
+  "source_packaging": {
+    "manifest": "fpm.toml",
+    "sources": [
+      {
+        "path": "m_config.f90",
+        "sha256": "568f6e007b8c9ed2e911bfc99a850c79b7873e91afd7e9396ab0f4f80a8cf838"
+      }
+    ],
+    "note": "Only the listed unchanged library files are copied into playground-library; upstream test/program files are excluded."
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "diagnostics": [
+    {
+      "attempt": "native",
+      "diagnostic": " + mkdir -p build/dependencies\n[  0%]              pyplot_module.f90\n[ 20%]              pyplot_module.f90  done.\n[ 20%]                       lmdb.F90\n<ERROR> Compilation failed for object \" .._sources_bundle_packages_0_fortran-lmdb-34bb1dc10e11fd470e4643135fa31fccacef7cd7_src_lmdb.F90.o \"\n[ 40%]                       lmdb.F90  done.\n\n./././/../sources/bundle/packages/0/fortran-lmdb-34bb1dc10e11fd470e4643135fa31fccacef7cd7/src/lmdb.F90:43:24:\n\n   43 |     public :: c_uint32_t\n      |                        1\nError: Symbol \u2018c_uint32_t\u2019 at (1) has no IMPLICIT type; did you mean \u2018c_int32_t\u2019?\ncompilation terminated due to -fmax-errors=1.\n<ERROR> stopping due to failed compilation\nSTOP 1\n"
+    }
+  ],
+  "note": "Historical diagnostics; the final compatibility recipe and checked main pass."
+}

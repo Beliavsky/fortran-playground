@@ -1,0 +1,24 @@
+{
+  "id": "gpf",
+  "repository": "urbanjost/general-purpose-fortran",
+  "revision": "70057310d711ef644460ba61d587052a816a8046",
+  "checked_at": "2026-10-30T13:09:33.759655+00:00",
+  "status": "preparation-failed",
+  "stage": "preparation",
+  "compiler_invoked": false,
+  "verified_in_playground": false,
+  "release_probes": [
+    {
+      "tag": "v3.0.0",
+      "revision": "d7290ddd1ddfd1fc2bed5faf1286b86ed482a14a",
+      "preparation_error": "Source download exceeds its size limit."
+    },
+    {
+      "tag": "v2.0.0",
+      "revision": "dc0210fb6a17ff760cb6a88fc8fec208d288f713",
+      "preparation_error": "Source download exceeds its size limit."
+    }
+  ],
+  "reason": "The pinned root archive and release tags v3.0.0 and v2.0.0 exceed the unchanged 16 MiB compressed source download limit. Bounded downloads stop before complete archive validation, extraction or compilation; no complete archive hash or compiler failure is claimed. The proposed M_units/M_math example and native dependencies therefore remain unverified.",
+  "proposed_next_step": "Obtain a smaller reproducible author source distribution or separately review a narrowly pinned operator source-download allowance. Then audit the native dependencies and check unit conversions and numerical routines; retain all relevant per-file MIT/public-domain notices."
+}

@@ -1,0 +1,15 @@
+{
+  "revision": "7e7ebcd75130553ef2cf58548ec519933a3d3426",
+  "compiler": "GNU Fortran (GCC) 17.0.0 20260510 (experimental)",
+  "arguments": [
+    "-cpp",
+    "-E",
+    "-P",
+    "-I<upstream>/src"
+  ],
+  "original": "src/fft.f90",
+  "adapted": "playground-library/fft.f90",
+  "nonblank_preprocessed_output_identical": true,
+  "preprocessed_sha256": "279f82b32df5dcd1697fc3717db7e1eb64c92ee9fbc8553b5f931bfe5e9ee702",
+  "note": "Only CPP-disabled USE declarations were added for dependency ordering; no executable Fortran source changes."
+}

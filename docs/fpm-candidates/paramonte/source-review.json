@@ -1,0 +1,2523 @@
+{
+  "id": "paramonte",
+  "repository": "cdslaborg/paramonte",
+  "revision": "93a9f4f472894115b9f15ac0c68490af719f44fb",
+  "archive_sha256": "7cbaacf1b28e7e65b78a46f838966d1a3e9bccd8e34c7daaa497412271c42518",
+  "catalog_build": {
+    "adapter_sha256": "54d4595c11c37b6d2e9435fb4746268e31610c6e8ac3367ad3538366583ac0eb",
+    "source_limit": {
+      "mib": 128,
+      "adapter_sha256": "1f36f77d9508486ec4596481e53f358356873e86582b8299782f0be27058b205"
+    },
+    "environment": {
+      "FPM_FFLAGS": "-ffree-line-length-none -fstack-arrays -pthread"
+    },
+    "source_packages": {
+      "cdslaborg/paramonte": {
+        "manifest": "name=\"paramonte\"\nversion=\"2.0.0\"\nlicense=\"MIT\"\n[library]\nsource-dir=\"playground-library\"\ninclude-dir=[\"src/fortran/main\"]\n[build]\nexternal-modules=[\"mpi\",\"mpi_f08\",\"omp_lib\",\"omp_lib_kinds\",\"ifport\",\"ifcore\"]\nauto-executables=false\nauto-examples=false\nauto-tests=false\nlink=[\"pthread\"]\n[install]\nlibrary=true\n[preprocess.cpp]\nmacros=[\"BLAS_ENABLED=0\", \"CAF_ENABLED=0\", \"CFI_ENABLED=0\", \"CHECK_ENABLED=1\", \"CK1_ENABLED=1\", \"CK2_ENABLED=2\", \"CK3_ENABLED=3\", \"CK4_ENABLED=4\", \"CPP_ENABLED=0\", \"C_ENABLED=0\", \"DLL_ENABLED=0\", \"FORTRAN_ENABLED=1\", \"GNU_ENABLED=1\", \"GO_ENABLED=0\", \"IK1_ENABLED=1\", \"IK2_ENABLED=2\", \"IK3_ENABLED=3\", \"IK4_ENABLED=4\", \"IK5_ENABLED=5\", \"INTEL_ENABLED=0\", \"JAVA_ENABLED=0\", \"JULIA_ENABLED=0\", \"LAPACK_ENABLED=0\", \"LINUX_ENABLED=1\", \"LK1_ENABLED=1\", \"LK2_ENABLED=2\", \"LK3_ENABLED=3\", \"LK4_ENABLED=4\", \"LK5_ENABLED=5\", \"MATHEMATICA_ENABLED=0\", \"MATLAB_ENABLED=0\", \"MEXPRINT_ENABLED=0\", \"MPI_ENABLED=0\", \"OMP_ENABLED=0\", \"PDT_ENABLED=0\", \"PURE=impure\", \"PYTHON_ENABLED=0\", \"RK1_ENABLED=1\", \"RK2_ENABLED=2\", \"RK3_ENABLED=3\", \"RK4_ENABLED=4\", \"R_ENABLED=0\", \"SK1_ENABLED=1\"]\n",
+        "sources": [
+          "src/c/main/pm_sys.c",
+          "src/fortran/main/pm_array.F90",
+          "src/fortran/main/pm_arrayCenter.F90",
+          "src/fortran/main/pm_arrayCenter@routines.F90",
+          "src/fortran/main/pm_arrayChange.F90",
+          "src/fortran/main/pm_arrayChange@routines.F90",
+          "src/fortran/main/pm_arrayChoice.F90",
+          "src/fortran/main/pm_arrayChoice@routines.F90",
+          "src/fortran/main/pm_arrayCompact.F90",
+          "src/fortran/main/pm_arrayCompact@routines.F90",
+          "src/fortran/main/pm_arrayCompareLex.F90",
+          "src/fortran/main/pm_arrayCompareLex@routines.F90",
+          "src/fortran/main/pm_arrayComplement.F90",
+          "src/fortran/main/pm_arrayComplement@routines.F90",
+          "src/fortran/main/pm_arrayCopy.F90",
+          "src/fortran/main/pm_arrayCopy@routines.F90",
+          "src/fortran/main/pm_arrayFill.F90",
+          "src/fortran/main/pm_arrayFill@routines.F90",
+          "src/fortran/main/pm_arrayFind.F90",
+          "src/fortran/main/pm_arrayFind@routines.F90",
+          "src/fortran/main/pm_arrayInit.F90",
+          "src/fortran/main/pm_arrayInit@routines.F90",
+          "src/fortran/main/pm_arrayInsert.F90",
+          "src/fortran/main/pm_arrayInsert@routines.F90",
+          "src/fortran/main/pm_arrayMembership.F90",
+          "src/fortran/main/pm_arrayMembership@routines.F90",
+          "src/fortran/main/pm_arrayMerge.F90",
+          "src/fortran/main/pm_arrayMerge@routines.F90",
+          "src/fortran/main/pm_arrayMinMax.F90",
+          "src/fortran/main/pm_arrayMinMax@routines.F90",
+          "src/fortran/main/pm_arrayPad.F90",
+          "src/fortran/main/pm_arrayPad@routines.F90",
+          "src/fortran/main/pm_arrayRange.F90",
+          "src/fortran/main/pm_arrayRange@routines.F90",
+          "src/fortran/main/pm_arrayRank.F90",
+          "src/fortran/main/pm_arrayRank@routines.F90",
+          "src/fortran/main/pm_arrayRebill.F90",
+          "src/fortran/main/pm_arrayRebill@routines.F90",
+          "src/fortran/main/pm_arrayRebind.F90",
+          "src/fortran/main/pm_arrayRebind@routines.F90",
+          "src/fortran/main/pm_arrayRefill.F90",
+          "src/fortran/main/pm_arrayRefill@routines.F90",
+          "src/fortran/main/pm_arrayRefine.F90",
+          "src/fortran/main/pm_arrayRefine@routines.F90",
+          "src/fortran/main/pm_arrayRemap.F90",
+          "src/fortran/main/pm_arrayRemap@routines.F90",
+          "src/fortran/main/pm_arrayRemove.F90",
+          "src/fortran/main/pm_arrayRemove@routines.F90",
+          "src/fortran/main/pm_arrayReplace.F90",
+          "src/fortran/main/pm_arrayReplace@routines.F90",
+          "src/fortran/main/pm_arrayResize.F90",
+          "src/fortran/main/pm_arrayResize@routines.F90",
+          "src/fortran/main/pm_arrayReverse.F90",
+          "src/fortran/main/pm_arrayReverse@routines.F90",
+          "src/fortran/main/pm_arraySearch.F90",
+          "src/fortran/main/pm_arraySearch@routines.F90",
+          "src/fortran/main/pm_arraySelect.F90",
+          "src/fortran/main/pm_arraySelect@routines.F90",
+          "src/fortran/main/pm_arrayShuffle.F90",
+          "src/fortran/main/pm_arrayShuffle@routines.F90",
+          "src/fortran/main/pm_arraySort.F90",
+          "src/fortran/main/pm_arraySort@routines.F90",
+          "src/fortran/main/pm_arraySpace.F90",
+          "src/fortran/main/pm_arraySpace@routines.F90",
+          "src/fortran/main/pm_arraySplit.F90",
+          "src/fortran/main/pm_arraySplit@routines.F90",
+          "src/fortran/main/pm_arrayStrip.F90",
+          "src/fortran/main/pm_arrayStrip@routines.F90",
+          "src/fortran/main/pm_arrayUnique.F90",
+          "src/fortran/main/pm_arrayUnique@routines.F90",
+          "src/fortran/main/pm_arrayVerbose.F90",
+          "src/fortran/main/pm_arrayVerbose@routines.F90",
+          "src/fortran/main/pm_batse.F90",
+          "src/fortran/main/pm_batse@routines.F90",
+          "src/fortran/main/pm_bench.F90",
+          "src/fortran/main/pm_bench@routines.F90",
+          "src/fortran/main/pm_bit.F90",
+          "src/fortran/main/pm_blas.F90",
+          "src/fortran/main/pm_clusKmeans.F90",
+          "src/fortran/main/pm_clusKmeans@routines.F90",
+          "src/fortran/main/pm_clusTest.F90",
+          "src/fortran/main/pm_clusTest@routines.F90",
+          "src/fortran/main/pm_complexAbs.F90",
+          "src/fortran/main/pm_complexAbs@routines.F90",
+          "src/fortran/main/pm_complexCompareAll.F90",
+          "src/fortran/main/pm_complexCompareAll@routines.F90",
+          "src/fortran/main/pm_complexCompareAny.F90",
+          "src/fortran/main/pm_complexCompareAny@routines.F90",
+          "src/fortran/main/pm_complexCompareLex.F90",
+          "src/fortran/main/pm_complexCompareLex@routines.F90",
+          "src/fortran/main/pm_complexDiv.F90",
+          "src/fortran/main/pm_complexDiv@routines.F90",
+          "src/fortran/main/pm_complexMinMax.F90",
+          "src/fortran/main/pm_complexMinMax@routines.F90",
+          "src/fortran/main/pm_container.F90",
+          "src/fortran/main/pm_container@routines.F90",
+          "src/fortran/main/pm_control.F90",
+          "src/fortran/main/pm_cosmicRate.F90",
+          "src/fortran/main/pm_cosmicRate@routines.F90",
+          "src/fortran/main/pm_cosmology.F90",
+          "src/fortran/main/pm_cosmology@routines.F90",
+          "src/fortran/main/pm_dateTime.F90",
+          "src/fortran/main/pm_dateTime@routines.F90",
+          "src/fortran/main/pm_distBand.F90",
+          "src/fortran/main/pm_distBand@routines.F90",
+          "src/fortran/main/pm_distBern.F90",
+          "src/fortran/main/pm_distBern@routines.F90",
+          "src/fortran/main/pm_distBeta.F90",
+          "src/fortran/main/pm_distBeta@routines.F90",
+          "src/fortran/main/pm_distBinom.F90",
+          "src/fortran/main/pm_distBinom@routines.F90",
+          "src/fortran/main/pm_distChol.F90",
+          "src/fortran/main/pm_distChol@routines.F90",
+          "src/fortran/main/pm_distCosRaised.F90",
+          "src/fortran/main/pm_distCosRaised@routines.F90",
+          "src/fortran/main/pm_distCov.F90",
+          "src/fortran/main/pm_distCov@routines.F90",
+          "src/fortran/main/pm_distEggBox.F90",
+          "src/fortran/main/pm_distEggBox@routines.F90",
+          "src/fortran/main/pm_distExp.F90",
+          "src/fortran/main/pm_distExp@routines.F90",
+          "src/fortran/main/pm_distExpGamma.F90",
+          "src/fortran/main/pm_distExpGamma@routines.F90",
+          "src/fortran/main/pm_distGamma.F90",
+          "src/fortran/main/pm_distGamma@routines.F90",
+          "src/fortran/main/pm_distGenExpGamma.F90",
+          "src/fortran/main/pm_distGenExpGamma@routines.F90",
+          "src/fortran/main/pm_distGenGamma.F90",
+          "src/fortran/main/pm_distGenGamma@routines.F90",
+          "src/fortran/main/pm_distGeom.F90",
+          "src/fortran/main/pm_distGeom@routines.F90",
+          "src/fortran/main/pm_distGeomCyclic.F90",
+          "src/fortran/main/pm_distGeomCyclic@routines.F90",
+          "src/fortran/main/pm_distKolm.F90",
+          "src/fortran/main/pm_distKolm@routines.F90",
+          "src/fortran/main/pm_distLogNorm.F90",
+          "src/fortran/main/pm_distLogNorm@routines.F90",
+          "src/fortran/main/pm_distLogUnif.F90",
+          "src/fortran/main/pm_distLogUnif@routines.F90",
+          "src/fortran/main/pm_distMultiNorm.F90",
+          "src/fortran/main/pm_distMultiNorm@routines.F90",
+          "src/fortran/main/pm_distNegExp.F90",
+          "src/fortran/main/pm_distNegExp@routines.F90",
+          "src/fortran/main/pm_distNorm.F90",
+          "src/fortran/main/pm_distNorm@routines.F90",
+          "src/fortran/main/pm_distNormShell.F90",
+          "src/fortran/main/pm_distNormShell@routines.F90",
+          "src/fortran/main/pm_distPareto.F90",
+          "src/fortran/main/pm_distPareto@routines.F90",
+          "src/fortran/main/pm_distPiwiPoweto.F90",
+          "src/fortran/main/pm_distPiwiPoweto@routines.F90",
+          "src/fortran/main/pm_distPois.F90",
+          "src/fortran/main/pm_distPois@routines.F90",
+          "src/fortran/main/pm_distPower.F90",
+          "src/fortran/main/pm_distPower@routines.F90",
+          "src/fortran/main/pm_distPoweto.F90",
+          "src/fortran/main/pm_distPoweto@routines.F90",
+          "src/fortran/main/pm_distUnif.F90",
+          "src/fortran/main/pm_distUnif@routines.F90",
+          "src/fortran/main/pm_distUnifEll.F90",
+          "src/fortran/main/pm_distUnifEll@routines.F90",
+          "src/fortran/main/pm_distUnifElls.F90",
+          "src/fortran/main/pm_distUnifElls@routines.F90",
+          "src/fortran/main/pm_distUnifPar.F90",
+          "src/fortran/main/pm_distUnifPar@routines.F90",
+          "src/fortran/main/pm_distUnifSphere.F90",
+          "src/fortran/main/pm_distUnifSphere@routines.F90",
+          "src/fortran/main/pm_distanceBhat.F90",
+          "src/fortran/main/pm_distanceBhat@routines.F90",
+          "src/fortran/main/pm_distanceEuclid.F90",
+          "src/fortran/main/pm_distanceEuclid@routines.F90",
+          "src/fortran/main/pm_distanceHellinger.F90",
+          "src/fortran/main/pm_distanceHellinger@routines.F90",
+          "src/fortran/main/pm_distanceKolm.F90",
+          "src/fortran/main/pm_distanceKolm@routines.F90",
+          "src/fortran/main/pm_distanceMahal.F90",
+          "src/fortran/main/pm_distanceMahal@routines.F90",
+          "src/fortran/main/pm_ellipsoid.F90",
+          "src/fortran/main/pm_ellipsoid@routines.F90",
+          "src/fortran/main/pm_err.F90",
+          "src/fortran/main/pm_err@routines.F90",
+          "src/fortran/main/pm_except.F90",
+          "src/fortran/main/pm_except@routines.F90",
+          "src/fortran/main/pm_fftnr.F90",
+          "src/fortran/main/pm_fftnr@routines.F90",
+          "src/fortran/main/pm_fftpack.F90",
+          "src/fortran/main/pm_fftpack@routines.F90",
+          "src/fortran/main/pm_io.F90",
+          "src/fortran/main/pm_io@routines.F90",
+          "src/fortran/main/pm_kind.F90",
+          "src/fortran/main/pm_kind@routines.F90",
+          "src/fortran/main/pm_knn.F90",
+          "src/fortran/main/pm_knn@routines.F90",
+          "src/fortran/main/pm_lapack.F90",
+          "src/fortran/main/pm_logicalCompare.F90",
+          "src/fortran/main/pm_logicalCompare@routines.F90",
+          "src/fortran/main/pm_math1mexp.F90",
+          "src/fortran/main/pm_math1mexp@routines.F90",
+          "src/fortran/main/pm_mathBeta.F90",
+          "src/fortran/main/pm_mathBeta@routines.F90",
+          "src/fortran/main/pm_mathCompare.F90",
+          "src/fortran/main/pm_mathCompare@routines.F90",
+          "src/fortran/main/pm_mathConst.F90",
+          "src/fortran/main/pm_mathCumPropExp.F90",
+          "src/fortran/main/pm_mathCumPropExp@routines.F90",
+          "src/fortran/main/pm_mathCumSum.F90",
+          "src/fortran/main/pm_mathCumSum@routines.F90",
+          "src/fortran/main/pm_mathDivMul.F90",
+          "src/fortran/main/pm_mathDivMul@routines.F90",
+          "src/fortran/main/pm_mathErf.F90",
+          "src/fortran/main/pm_mathErf@routines.F90",
+          "src/fortran/main/pm_mathExp.F90",
+          "src/fortran/main/pm_mathExp@routines.F90",
+          "src/fortran/main/pm_mathFactorial.F90",
+          "src/fortran/main/pm_mathFactorial@routines.F90",
+          "src/fortran/main/pm_mathFactoring.F90",
+          "src/fortran/main/pm_mathFactoring@routines.F90",
+          "src/fortran/main/pm_mathFisher.F90",
+          "src/fortran/main/pm_mathFisher@routines.F90",
+          "src/fortran/main/pm_mathGamma.F90",
+          "src/fortran/main/pm_mathGamma@routines.F90",
+          "src/fortran/main/pm_mathGammaAM.F90",
+          "src/fortran/main/pm_mathGammaAM@routines.F90",
+          "src/fortran/main/pm_mathGammaGil.F90",
+          "src/fortran/main/pm_mathGammaGil@routines.F90",
+          "src/fortran/main/pm_mathGammaNR.F90",
+          "src/fortran/main/pm_mathGammaNR@routines.F90",
+          "src/fortran/main/pm_mathLog1p.F90",
+          "src/fortran/main/pm_mathLog1p@routines.F90",
+          "src/fortran/main/pm_mathLogAddExp.F90",
+          "src/fortran/main/pm_mathLogAddExp@routines.F90",
+          "src/fortran/main/pm_mathLogSubExp.F90",
+          "src/fortran/main/pm_mathLogSubExp@routines.F90",
+          "src/fortran/main/pm_mathLogSumExp.F90",
+          "src/fortran/main/pm_mathLogSumExp@routines.F90",
+          "src/fortran/main/pm_mathMinMax.F90",
+          "src/fortran/main/pm_mathMinMax@routines.F90",
+          "src/fortran/main/pm_mathNumSys.F90",
+          "src/fortran/main/pm_mathNumSys@routines.F90",
+          "src/fortran/main/pm_mathRoot.F90",
+          "src/fortran/main/pm_mathRoot@routines.F90",
+          "src/fortran/main/pm_mathRootTest.F90",
+          "src/fortran/main/pm_mathRootTest@routines.F90",
+          "src/fortran/main/pm_mathRound.F90",
+          "src/fortran/main/pm_mathRound@routines.F90",
+          "src/fortran/main/pm_mathSqrt.F90",
+          "src/fortran/main/pm_mathSqrt@routines.F90",
+          "src/fortran/main/pm_mathSubAdd.F90",
+          "src/fortran/main/pm_mathSubAdd@routines.F90",
+          "src/fortran/main/pm_mathSum.F90",
+          "src/fortran/main/pm_mathSum@routines.F90",
+          "src/fortran/main/pm_mathUnsigned.F90",
+          "src/fortran/main/pm_mathUnsigned@routines.F90",
+          "src/fortran/main/pm_matrixChol.F90",
+          "src/fortran/main/pm_matrixChol@routines.F90",
+          "src/fortran/main/pm_matrixClass.F90",
+          "src/fortran/main/pm_matrixClass@routines.F90",
+          "src/fortran/main/pm_matrixCopy.F90",
+          "src/fortran/main/pm_matrixCopy@routines.F90",
+          "src/fortran/main/pm_matrixDet.F90",
+          "src/fortran/main/pm_matrixDet@routines.F90",
+          "src/fortran/main/pm_matrixIndex.F90",
+          "src/fortran/main/pm_matrixIndex@routines.F90",
+          "src/fortran/main/pm_matrixInit.F90",
+          "src/fortran/main/pm_matrixInit@routines.F90",
+          "src/fortran/main/pm_matrixInv.F90",
+          "src/fortran/main/pm_matrixInv@routines.F90",
+          "src/fortran/main/pm_matrixLUP.F90",
+          "src/fortran/main/pm_matrixLUP@routines.F90",
+          "src/fortran/main/pm_matrixMulAdd.F90",
+          "src/fortran/main/pm_matrixMulAdd@routines.F90",
+          "src/fortran/main/pm_matrixMulTri.F90",
+          "src/fortran/main/pm_matrixMulTri@routines.F90",
+          "src/fortran/main/pm_matrixPack.F90",
+          "src/fortran/main/pm_matrixPack@routines.F90",
+          "src/fortran/main/pm_matrixSubset.F90",
+          "src/fortran/main/pm_matrixSubset@routines.F90",
+          "src/fortran/main/pm_matrixTrace.F90",
+          "src/fortran/main/pm_matrixTrace@routines.F90",
+          "src/fortran/main/pm_matrixTrans.F90",
+          "src/fortran/main/pm_matrixTrans@routines.F90",
+          "src/fortran/main/pm_matrixUpdate.F90",
+          "src/fortran/main/pm_matrixUpdate@routines.F90",
+          "src/fortran/main/pm_memory.F90",
+          "src/fortran/main/pm_optimization.F90",
+          "src/fortran/main/pm_optimization@routines.F90",
+          "src/fortran/main/pm_option.F90",
+          "src/fortran/main/pm_option@routines.F90",
+          "src/fortran/main/pm_os.F90",
+          "src/fortran/main/pm_os@routines.F90",
+          "src/fortran/main/pm_parallelism.F90",
+          "src/fortran/main/pm_parallelism@routines.F90",
+          "src/fortran/main/pm_paramonte.F90",
+          "src/fortran/main/pm_physUnit.F90",
+          "src/fortran/main/pm_polation.F90",
+          "src/fortran/main/pm_polation@routines.F90",
+          "src/fortran/main/pm_polynomial.F90",
+          "src/fortran/main/pm_polynomial@routines.F90",
+          "src/fortran/main/pm_quadPack.F90",
+          "src/fortran/main/pm_quadPack@routines.F90",
+          "src/fortran/main/pm_quadRomb.F90",
+          "src/fortran/main/pm_quadRomb@routines.F90",
+          "src/fortran/main/pm_quadTest.F90",
+          "src/fortran/main/pm_quadTest@routines.F90",
+          "src/fortran/main/pm_sampleACT.F90",
+          "src/fortran/main/pm_sampleACT@routines.F90",
+          "src/fortran/main/pm_sampleAffinity.F90",
+          "src/fortran/main/pm_sampleAffinity@routines.F90",
+          "src/fortran/main/pm_sampleCCF.F90",
+          "src/fortran/main/pm_sampleCCF@routines.F90",
+          "src/fortran/main/pm_sampleCor.F90",
+          "src/fortran/main/pm_sampleCor@routines.F90",
+          "src/fortran/main/pm_sampleCov.F90",
+          "src/fortran/main/pm_sampleCov@routines.F90",
+          "src/fortran/main/pm_sampleECDF.F90",
+          "src/fortran/main/pm_sampleECDF@routines.F90",
+          "src/fortran/main/pm_sampleMean.F90",
+          "src/fortran/main/pm_sampleMean@routines.F90",
+          "src/fortran/main/pm_sampleNorm.F90",
+          "src/fortran/main/pm_sampleNorm@routines.F90",
+          "src/fortran/main/pm_sampleQuan.F90",
+          "src/fortran/main/pm_sampleQuan@routines.F90",
+          "src/fortran/main/pm_sampleScale.F90",
+          "src/fortran/main/pm_sampleScale@routines.F90",
+          "src/fortran/main/pm_sampleShift.F90",
+          "src/fortran/main/pm_sampleShift@routines.F90",
+          "src/fortran/main/pm_sampleVar.F90",
+          "src/fortran/main/pm_sampleVar@routines.F90",
+          "src/fortran/main/pm_sampleWeight.F90",
+          "src/fortran/main/pm_sampleWeight@routines.F90",
+          "src/fortran/main/pm_sampling.F90",
+          "src/fortran/main/pm_sampling@routines.F90",
+          "src/fortran/main/pm_sampling_base.F90",
+          "src/fortran/main/pm_sampling_dise.F90",
+          "src/fortran/main/pm_sampling_dram.F90",
+          "src/fortran/main/pm_sampling_kernel.F90",
+          "src/fortran/main/pm_sampling_mcmc.F90",
+          "src/fortran/main/pm_sampling_nest.F90",
+          "src/fortran/main/pm_sampling_proposal.F90",
+          "src/fortran/main/pm_sampling_scio.F90",
+          "src/fortran/main/pm_search.F90",
+          "src/fortran/main/pm_statest.F90",
+          "src/fortran/main/pm_statest@routines.F90",
+          "src/fortran/main/pm_str.F90",
+          "src/fortran/main/pm_str@routines.F90",
+          "src/fortran/main/pm_strANSI.F90",
+          "src/fortran/main/pm_strASCII.F90",
+          "src/fortran/main/pm_strASCII@routines.F90",
+          "src/fortran/main/pm_swap.F90",
+          "src/fortran/main/pm_swap@routines.F90",
+          "src/fortran/main/pm_sysInfo.F90",
+          "src/fortran/main/pm_sysInfo@routines.F90",
+          "src/fortran/main/pm_sysPath.F90",
+          "src/fortran/main/pm_sysPath@routines.F90",
+          "src/fortran/main/pm_sysShell.F90",
+          "src/fortran/main/pm_sysShell@routines.F90",
+          "src/fortran/main/pm_test.F90",
+          "src/fortran/main/pm_timer.F90",
+          "src/fortran/main/pm_val2complex.F90",
+          "src/fortran/main/pm_val2complex@routines.F90",
+          "src/fortran/main/pm_val2int.F90",
+          "src/fortran/main/pm_val2int@routines.F90",
+          "src/fortran/main/pm_val2logical.F90",
+          "src/fortran/main/pm_val2logical@routines.F90",
+          "src/fortran/main/pm_val2real.F90",
+          "src/fortran/main/pm_val2real@routines.F90",
+          "src/fortran/main/pm_val2str.F90",
+          "src/fortran/main/pm_val2str@routines.F90",
+          "src/fortran/main/pm_ziggurat.F90",
+          "src/fortran/main/pm_ziggurat@routines.F90"
+        ],
+        "short_root": true,
+        "generated": {
+          "asset": "paramonte-93a9f4f472894115b9f15ac0c68490af719f44fb.json",
+          "sha256": "d335131dba32a6086fa78392c52d5937800ea7590ada4c13b5e8dede1dff8ff6"
+        }
+      }
+    }
+  },
+  "catalog_patches": {
+    "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+    "edits": [
+      {
+        "path": "playground-library/pm_arrayCenter@routines.F90",
+        "sha256": "fffb1f22935aaab47df00814b15ffe0306698fb4aadae48e174905a619ff3061",
+        "before": "submodule (pm_arrayCenter) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_arrayCenter) pm_arrayCenter_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayCenter@routines.F90",
+        "sha256": "54c6b34d20f8440b2095bd46284cea11c6598384ecf286e6955d4cf2e907e2f3",
+        "before": "end submodule routines",
+        "after": "end submodule pm_arrayCenter_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayChange@routines.F90",
+        "sha256": "0c6c183a7c43dcc4764c4af5754518dd0d592254eee86c7e2b4a8cf424466063",
+        "before": "submodule (pm_arrayChange) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_arrayChange) pm_arrayChange_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayChange@routines.F90",
+        "sha256": "92b03776422225e4e3ceba40378abc739528eacd5d55246649799fae41895643",
+        "before": "end submodule routines",
+        "after": "end submodule pm_arrayChange_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayChoice@routines.F90",
+        "sha256": "8903c7fb17dda840b4a55092b1221df2e15927eec28cf27684cdbd47c9f13e0f",
+        "before": "submodule (pm_arrayChoice) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_arrayChoice) pm_arrayChoice_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayChoice@routines.F90",
+        "sha256": "6b90f6d8a6287cb2cc7361ca210e0601c0ef9bb4059a196a241b235cc38ca5d5",
+        "before": "end submodule routines",
+        "after": "end submodule pm_arrayChoice_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayCompact@routines.F90",
+        "sha256": "6a01469ec98d9e7cbc7ba0773cc20a82726874e2f36263e1409d10b7aafafd1d",
+        "before": "submodule (pm_arrayCompact) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_arrayCompact) pm_arrayCompact_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayCompact@routines.F90",
+        "sha256": "ba220b45a6e41e70e8eb157f8b3b7c6bc16ce262ada2f9981db057bf76ed83ae",
+        "before": "end submodule routines",
+        "after": "end submodule pm_arrayCompact_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayCompareLex@routines.F90",
+        "sha256": "6b6f774230491c95a3d2c879f090d74fbcc6a2734005596203e6116ee9f5d89a",
+        "before": "submodule (pm_arrayCompareLex) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_arrayCompareLex) pm_arrayCompareLex_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayCompareLex@routines.F90",
+        "sha256": "f4fa34bb0236b119e1890055026456614161d4b871029559c5aecb550834f748",
+        "before": "end submodule routines",
+        "after": "end submodule pm_arrayCompareLex_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayComplement@routines.F90",
+        "sha256": "7d2c06f775590a6d3737ae73472a65ac4e3cffc68e319c8bd75291b728480b81",
+        "before": "submodule (pm_arrayComplement) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_arrayComplement) pm_arrayComplement_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayComplement@routines.F90",
+        "sha256": "f87b18bdbead5262026c5b2a37e50b45e44892352a59802ce7e8a8a1ae67383a",
+        "before": "end submodule routines",
+        "after": "end submodule pm_arrayComplement_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayCopy@routines.F90",
+        "sha256": "ed2e7d34a5e00481f9877713430adc1a10518d31425a870f8a84dab30e8ea98d",
+        "before": "submodule (pm_arrayCopy) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_arrayCopy) pm_arrayCopy_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayCopy@routines.F90",
+        "sha256": "dd384b7ce9f22774d795833ab6c0d555b52e13c06cf12e55d0b8106453b50081",
+        "before": "end submodule routines",
+        "after": "end submodule pm_arrayCopy_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayFill@routines.F90",
+        "sha256": "816b8981644b2956939bbaabf154e09d602669eded343463f84253a6e6944690",
+        "before": "submodule (pm_arrayFill) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_arrayFill) pm_arrayFill_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayFill@routines.F90",
+        "sha256": "f0fb978c5746ccc4611e9569b365aa166218bcdb3a452a4a9178450ad6062d64",
+        "before": "end submodule routines",
+        "after": "end submodule pm_arrayFill_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayFind@routines.F90",
+        "sha256": "aafb645a2dd27f3557ed71fdda0fda6e5dca06511a60349f9939f784c4c2e86f",
+        "before": "submodule (pm_arrayFind) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_arrayFind) pm_arrayFind_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayFind@routines.F90",
+        "sha256": "c29c1d58ece27201238f916abf687c9f4c687a86a08fd52fe342ae0b4425a1c8",
+        "before": "end submodule routines",
+        "after": "end submodule pm_arrayFind_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayInit@routines.F90",
+        "sha256": "972f9ecd938947baecbd432e41a27624b65f3041f6785e9ceb9dc95f29cb090a",
+        "before": "submodule (pm_arrayInit) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_arrayInit) pm_arrayInit_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayInit@routines.F90",
+        "sha256": "267f310d8a5e2186cb7fe920b03ac62ca4726f09be1aee45e842d9a1ec59d76d",
+        "before": "end submodule routines",
+        "after": "end submodule pm_arrayInit_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayInsert@routines.F90",
+        "sha256": "b9ac376577b1e4fba4a6155b075a831c5ab573c2d1bde50f055575b4fbb763da",
+        "before": "submodule (pm_arrayInsert) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_arrayInsert) pm_arrayInsert_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayInsert@routines.F90",
+        "sha256": "0a03a39fce8d8a3eb617b00ac31601b993cf408774b70f26c77cb6b9c564b7f4",
+        "before": "end submodule routines",
+        "after": "end submodule pm_arrayInsert_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayMembership@routines.F90",
+        "sha256": "31669bc90afc9a431993613d509bd764479eb97312028d737a8b0c71fb07f882",
+        "before": "submodule (pm_arrayMembership) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_arrayMembership) pm_arrayMembership_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayMembership@routines.F90",
+        "sha256": "51a85bc0a4d093ec2329c7a691f52d5a64969138f0057dcc30e6df0352256799",
+        "before": "end submodule routines",
+        "after": "end submodule pm_arrayMembership_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayMerge@routines.F90",
+        "sha256": "709b4a58270acca90b2e8ef82276fed38c6b6af8f71f9393edc92c8e11d8882e",
+        "before": "submodule (pm_arrayMerge) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_arrayMerge) pm_arrayMerge_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayMerge@routines.F90",
+        "sha256": "f22b273887bb0046b9dd0a96960ec1aa2079014c217d86367db31348096a6f78",
+        "before": "end submodule routines",
+        "after": "end submodule pm_arrayMerge_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayMinMax@routines.F90",
+        "sha256": "df1e861290e3a79a425f054ef1f7b0e22975d9e9b856568590c32ff8c07bf4fc",
+        "before": "submodule (pm_arrayMinMax) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_arrayMinMax) pm_arrayMinMax_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayMinMax@routines.F90",
+        "sha256": "3a58368abed94cd2da6623b62268cce33868f868a3982d5892e0b692b822166e",
+        "before": "end submodule routines",
+        "after": "end submodule pm_arrayMinMax_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayPad@routines.F90",
+        "sha256": "cf740d37a55fe108ca28da957167f03852e427ce56a8bd1022c4d501f94a7a0b",
+        "before": "submodule (pm_arrayPad) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_arrayPad) pm_arrayPad_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayPad@routines.F90",
+        "sha256": "8aa8bfb34bb99517ce7bd4f5272e9e01ff71a84ee9a4e8ee643f7f8445f150f4",
+        "before": "end submodule routines",
+        "after": "end submodule pm_arrayPad_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayRange@routines.F90",
+        "sha256": "2fbb9da45c3011d59e59742f0435b099d43b7f5e021a02d90b01fccae461c244",
+        "before": "submodule (pm_arrayRange) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_arrayRange) pm_arrayRange_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayRange@routines.F90",
+        "sha256": "6d7f4af2727a88fbce39490a21d46e711b2ebe9cc6b01021cc3dcd7223a0016f",
+        "before": "end submodule routines",
+        "after": "end submodule pm_arrayRange_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayRank@routines.F90",
+        "sha256": "b976460f9256dd5592e870b0bbad4e2afbb3100792f3c9e536051e79cd576b86",
+        "before": "submodule (pm_arrayRank) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_arrayRank) pm_arrayRank_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayRank@routines.F90",
+        "sha256": "22cc53d9542e517e091f6ab2d3a8f0ac7106077a101d02d6ed01711c62331647",
+        "before": "end submodule routines",
+        "after": "end submodule pm_arrayRank_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayRebill@routines.F90",
+        "sha256": "75c332d2cd00f685947903cc79cae8e91809e68f9e3b66228583b93271d7eae1",
+        "before": "submodule (pm_arrayRebill) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_arrayRebill) pm_arrayRebill_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayRebill@routines.F90",
+        "sha256": "a3c65993488adced1ab2cf4d8a8a91e0ac5be577f3f31ee1313c6c5e52fa66f1",
+        "before": "end submodule routines",
+        "after": "end submodule pm_arrayRebill_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayRebind@routines.F90",
+        "sha256": "00582b8d80e39384f015c06bf04dcaff9149396ceb0d923ff2b6b7c5dd41f5d8",
+        "before": "submodule (pm_arrayRebind) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_arrayRebind) pm_arrayRebind_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayRebind@routines.F90",
+        "sha256": "57c1d424551c52e3cb58907970072fe94c847586197681aa952d0efc1e3e2bc4",
+        "before": "end submodule routines",
+        "after": "end submodule pm_arrayRebind_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayRefill@routines.F90",
+        "sha256": "5e40c9ed205a63583931f546c46c127ef0dcdaeda50b68a5ca617c4d973e6bb1",
+        "before": "submodule (pm_arrayRefill) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_arrayRefill) pm_arrayRefill_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayRefill@routines.F90",
+        "sha256": "16716340f289dab6a893ba7b602ed9f438fde0c377a656386fc0bc4b10aeab3f",
+        "before": "end submodule routines",
+        "after": "end submodule pm_arrayRefill_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayRefine@routines.F90",
+        "sha256": "dbd8c820c893322b61823d6641c9e5161c041b2b1b264df77c759c6e78646aa0",
+        "before": "submodule (pm_arrayRefine) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_arrayRefine) pm_arrayRefine_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayRefine@routines.F90",
+        "sha256": "2c467b2521ec5425f7c3cc46028843da2c99b7a31bc94e9422969c8ea9540b46",
+        "before": "end submodule routines",
+        "after": "end submodule pm_arrayRefine_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayRemap@routines.F90",
+        "sha256": "27fd3dd076be2bc45335c8d5064693cad55bec6aa5f49e4e40fd6a949fec2743",
+        "before": "submodule (pm_arrayRemap) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_arrayRemap) pm_arrayRemap_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayRemap@routines.F90",
+        "sha256": "70f8bb40609168beab1fbbf875d34facd9114d3e7266fdbe788a193a37461f99",
+        "before": "end submodule routines",
+        "after": "end submodule pm_arrayRemap_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayRemove@routines.F90",
+        "sha256": "8c2295f6f7d1a6c395b74d0b851dd459ec91f9075cabaed61f5f5290a030dc58",
+        "before": "submodule (pm_arrayRemove) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_arrayRemove) pm_arrayRemove_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayRemove@routines.F90",
+        "sha256": "70db989e7ddaa7411f79054b8baf10430f1fc258b2a9ceb24ecdcbc4521a4710",
+        "before": "end submodule routines",
+        "after": "end submodule pm_arrayRemove_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayReplace@routines.F90",
+        "sha256": "dda304c8a3e6be33484efcc7b88ad1b632ca014515ffc9bd579681a6cc991658",
+        "before": "submodule (pm_arrayReplace) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_arrayReplace) pm_arrayReplace_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayReplace@routines.F90",
+        "sha256": "5a4f7648d79e11fe49b313480780b0ca64f7feaf5262d771d493a9f9e14dbb0e",
+        "before": "end submodule routines",
+        "after": "end submodule pm_arrayReplace_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayResize@routines.F90",
+        "sha256": "b75fd2378e879bcb6dd4ace2a959d6d68ae3449515eb04f74a3760e2405d1e5e",
+        "before": "submodule (pm_arrayResize) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_arrayResize) pm_arrayResize_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayResize@routines.F90",
+        "sha256": "51236da19c0be74b9ad997f4787eea02e6761bcf4fcb10ea7181ecccfb6e2121",
+        "before": "end submodule routines",
+        "after": "end submodule pm_arrayResize_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayReverse@routines.F90",
+        "sha256": "ff16a9e6ae555955937be07afb476264442b27a385736b6358e8ad87723a734a",
+        "before": "submodule (pm_arrayReverse) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_arrayReverse) pm_arrayReverse_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayReverse@routines.F90",
+        "sha256": "b1700729bed82ef84a80386560df9294c48baa371c58821be3e3f601358f3bc9",
+        "before": "end submodule routines",
+        "after": "end submodule pm_arrayReverse_routines"
+      },
+      {
+        "path": "playground-library/pm_arraySearch@routines.F90",
+        "sha256": "5863d9ae08e3bf101be761978f84e03bdb9938313ca766471848a423c9365a96",
+        "before": "submodule (pm_arraySearch) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_arraySearch) pm_arraySearch_routines"
+      },
+      {
+        "path": "playground-library/pm_arraySearch@routines.F90",
+        "sha256": "09a9d0f35b5c65ecd1085b73bcdef9da289ab04d09ba63d656d06505c8a01b94",
+        "before": "end submodule routines",
+        "after": "end submodule pm_arraySearch_routines"
+      },
+      {
+        "path": "playground-library/pm_arraySelect@routines.F90",
+        "sha256": "e295e5a3e79c30a3e077e78336bfd492d80722c72217d0c0b4b96d7162328edf",
+        "before": "submodule (pm_arraySelect) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_arraySelect) pm_arraySelect_routines"
+      },
+      {
+        "path": "playground-library/pm_arraySelect@routines.F90",
+        "sha256": "d2af810a791ba48c0dd1765dff70688c7870cf3a03076f1855ac38dbe3397a0e",
+        "before": "end submodule routines",
+        "after": "end submodule pm_arraySelect_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayShuffle@routines.F90",
+        "sha256": "d64566dbfbca82156dc58ffc8d1d14e50ec3cd721ad3709bac9c21800601176b",
+        "before": "submodule (pm_arrayShuffle) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_arrayShuffle) pm_arrayShuffle_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayShuffle@routines.F90",
+        "sha256": "da4748e8ffe4757b1f4e0613afbf136f3bceb6dac49c4c2b32b77219e01743e1",
+        "before": "end submodule routines",
+        "after": "end submodule pm_arrayShuffle_routines"
+      },
+      {
+        "path": "playground-library/pm_arraySort@routines.F90",
+        "sha256": "88cf906c3577f36e9f97c1e6d4c0827ba59c03c7c49c8c7413676de054fc9210",
+        "before": "submodule (pm_arraySort) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_arraySort) pm_arraySort_routines"
+      },
+      {
+        "path": "playground-library/pm_arraySort@routines.F90",
+        "sha256": "179bfef38a37218c14dc1dbe71f67b6e61d557affbe6efcc583a75d72ba7223f",
+        "before": "end submodule routines",
+        "after": "end submodule pm_arraySort_routines"
+      },
+      {
+        "path": "playground-library/pm_arraySpace@routines.F90",
+        "sha256": "d2471dd1b5463f70209fcbd1e14e79316e21a33c4bacec07389bc832cfb29875",
+        "before": "submodule (pm_arraySpace) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_arraySpace) pm_arraySpace_routines"
+      },
+      {
+        "path": "playground-library/pm_arraySpace@routines.F90",
+        "sha256": "37ca3693bd74737d7862dbf572a6328c5b91fe0c8fd75a71d44959323543f766",
+        "before": "end submodule routines",
+        "after": "end submodule pm_arraySpace_routines"
+      },
+      {
+        "path": "playground-library/pm_arraySplit@routines.F90",
+        "sha256": "c2ba1e73c5afff39abedae77536e55c4271f3f3a555131abd05c329257062ef3",
+        "before": "submodule (pm_arraySplit) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_arraySplit) pm_arraySplit_routines"
+      },
+      {
+        "path": "playground-library/pm_arraySplit@routines.F90",
+        "sha256": "2345a987229677fd0477e2b159a8faf4247cb135ae2550ea0c8ff5ceeab7c3c1",
+        "before": "end submodule routines",
+        "after": "end submodule pm_arraySplit_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayStrip@routines.F90",
+        "sha256": "cac47caf8374eacefa131619eb2a9fb5a5b9fd51ac29b5fc167df27876842772",
+        "before": "submodule (pm_arrayStrip) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_arrayStrip) pm_arrayStrip_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayStrip@routines.F90",
+        "sha256": "eb4a5d14212674e97f5335b29beef1058e72168cf95e53abcc52e423e6d4abb7",
+        "before": "end submodule routines",
+        "after": "end submodule pm_arrayStrip_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayUnique@routines.F90",
+        "sha256": "4c4327ee210872af10ac76e246fd85dacc4d76a00684b992164d65bbad67789e",
+        "before": "submodule (pm_arrayUnique) routines",
+        "after": "submodule (pm_arrayUnique) pm_arrayUnique_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayUnique@routines.F90",
+        "sha256": "e91656b94eb4a6fc7e8329dde85abaece4ed44523df6edd3a47738e242dea996",
+        "before": "end submodule routines",
+        "after": "end submodule pm_arrayUnique_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayVerbose@routines.F90",
+        "sha256": "b5553c176ec48bc0fe13eacfa4f4c48e2ce10a5b3f9c4d9926d0c619d30b6755",
+        "before": "submodule (pm_arrayVerbose) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_arrayVerbose) pm_arrayVerbose_routines"
+      },
+      {
+        "path": "playground-library/pm_arrayVerbose@routines.F90",
+        "sha256": "25cf5784ae1697696c0020f1a93625c7aff6bee31a4eb8012d1736f500e63fb7",
+        "before": "end submodule routines",
+        "after": "end submodule pm_arrayVerbose_routines"
+      },
+      {
+        "path": "playground-library/pm_batse@routines.F90",
+        "sha256": "5bcea1f855865cf1a0936596e3cdc8c1326c2c04671ece95f838bcb892fb3003",
+        "before": "submodule (pm_batse) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_batse) pm_batse_routines"
+      },
+      {
+        "path": "playground-library/pm_batse@routines.F90",
+        "sha256": "823aece99a2922f4fe883ed2c6bc3ad6944c010bdd521c1563f21b39ffca5d04",
+        "before": "end submodule routines",
+        "after": "end submodule pm_batse_routines"
+      },
+      {
+        "path": "playground-library/pm_bench@routines.F90",
+        "sha256": "6c394faa990c596549b331c5e5517a0224a880c30031bd1ce2dd58d32820ae0e",
+        "before": "submodule (pm_bench) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_bench) pm_bench_routines"
+      },
+      {
+        "path": "playground-library/pm_bench@routines.F90",
+        "sha256": "1cc2602fa629a3ae642f9c6b4a661d253431080b90de720892f26be5ac6f396e",
+        "before": "end submodule routines",
+        "after": "end submodule pm_bench_routines"
+      },
+      {
+        "path": "playground-library/pm_clusKmeans@routines.F90",
+        "sha256": "453d0e7970b193a196df49a95e58211ca3d4943dcc4b84cd94ed802bc942e0bf",
+        "before": "submodule (pm_clusKmeans) routines",
+        "after": "submodule (pm_clusKmeans) pm_clusKmeans_routines"
+      },
+      {
+        "path": "playground-library/pm_clusKmeans@routines.F90",
+        "sha256": "486ca56e28adcf71c594bb0fbb4f48d028dc90e1a8775e3165b41e6d0e8bd58a",
+        "before": "end submodule routines",
+        "after": "end submodule pm_clusKmeans_routines"
+      },
+      {
+        "path": "playground-library/pm_clusTest@routines.F90",
+        "sha256": "dabc730a0ff63e20d12c8af3ef478578c7f773bbe9494e28c7aba1147a2bcaac",
+        "before": "submodule (pm_clusTest) routines",
+        "after": "submodule (pm_clusTest) pm_clusTest_routines"
+      },
+      {
+        "path": "playground-library/pm_clusTest@routines.F90",
+        "sha256": "6a99027f698865728a037464bcfb1bd86765f13b34cc2cfa2d8dbaa5ca4c6d5e",
+        "before": "end submodule routines",
+        "after": "end submodule pm_clusTest_routines"
+      },
+      {
+        "path": "playground-library/pm_complexAbs@routines.F90",
+        "sha256": "af5f9569e6056b16999ebaa713b059fae7b50fd3989a487999d8ef8a9f9f7b30",
+        "before": "submodule (pm_complexAbs) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_complexAbs) pm_complexAbs_routines"
+      },
+      {
+        "path": "playground-library/pm_complexAbs@routines.F90",
+        "sha256": "9127d86e6ec26a03206c3225019ca9cf54b4358183445231d6067db84d36cb9a",
+        "before": "end submodule routines",
+        "after": "end submodule pm_complexAbs_routines"
+      },
+      {
+        "path": "playground-library/pm_complexCompareAll@routines.F90",
+        "sha256": "b13ee87febe3ca62f5ca1ef83acce5652eca2cacfbec65fd3519fdfc24d67803",
+        "before": "submodule (pm_complexCompareAll) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_complexCompareAll) pm_complexCompareAll_routines"
+      },
+      {
+        "path": "playground-library/pm_complexCompareAll@routines.F90",
+        "sha256": "ba1e81458f91c048f6b45d85e9dff9a3e63ca7a4e970c0ede859a45103b2eacb",
+        "before": "end submodule routines",
+        "after": "end submodule pm_complexCompareAll_routines"
+      },
+      {
+        "path": "playground-library/pm_complexCompareAny@routines.F90",
+        "sha256": "c83553720b8f3d7bd95c49384129f9e3567d050f7673c4048561519564535300",
+        "before": "submodule (pm_complexCompareAny) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_complexCompareAny) pm_complexCompareAny_routines"
+      },
+      {
+        "path": "playground-library/pm_complexCompareAny@routines.F90",
+        "sha256": "d1c8ea006f86f845a82ca196c97bd2f7640181fe573cce81fff031a4c4d62bec",
+        "before": "end submodule routines",
+        "after": "end submodule pm_complexCompareAny_routines"
+      },
+      {
+        "path": "playground-library/pm_complexCompareLex@routines.F90",
+        "sha256": "64c1ce5835fd384af0a0638d9b2df3ce3c5cc4a545aaedf95fda4eeea1ac1a36",
+        "before": "submodule (pm_complexCompareLex) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_complexCompareLex) pm_complexCompareLex_routines"
+      },
+      {
+        "path": "playground-library/pm_complexCompareLex@routines.F90",
+        "sha256": "a63cb9c00c5c126e7d7767e91b201e6f771cc4e48fd8aa12911e21c0b391481d",
+        "before": "end submodule routines",
+        "after": "end submodule pm_complexCompareLex_routines"
+      },
+      {
+        "path": "playground-library/pm_complexDiv@routines.F90",
+        "sha256": "fafe5f33d9375876eac55e559d9785ca4cf9be54b2d8422883b88466b089625a",
+        "before": "submodule (pm_complexDiv) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_complexDiv) pm_complexDiv_routines"
+      },
+      {
+        "path": "playground-library/pm_complexDiv@routines.F90",
+        "sha256": "d263010b21c2e0f88f9e4c9a69b161f8a898e714f202bd4a6eb9f6eb5c42f2e2",
+        "before": "end submodule routines",
+        "after": "end submodule pm_complexDiv_routines"
+      },
+      {
+        "path": "playground-library/pm_complexMinMax@routines.F90",
+        "sha256": "5abf6c7cab21aeab5981969d9bc612406e1e2198a3042782bb2b6415dd1454da",
+        "before": "submodule (pm_complexMinMax) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_complexMinMax) pm_complexMinMax_routines"
+      },
+      {
+        "path": "playground-library/pm_complexMinMax@routines.F90",
+        "sha256": "d7aabd3496565b666c45437c7f1db48c5633fe194da715604a58cbefa32043ef",
+        "before": "end submodule routines",
+        "after": "end submodule pm_complexMinMax_routines"
+      },
+      {
+        "path": "playground-library/pm_container@routines.F90",
+        "sha256": "57078516710fd85dbae26768ab0f43d1e4c1ee3caa699345ac03b122722a423f",
+        "before": "submodule (pm_container) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_container) pm_container_routines"
+      },
+      {
+        "path": "playground-library/pm_container@routines.F90",
+        "sha256": "6d99f72ae39bae8a048c89c090a300ebab1b3dd2e9bf8baed5e9d403ace4f1d6",
+        "before": "end submodule routines",
+        "after": "end submodule pm_container_routines"
+      },
+      {
+        "path": "playground-library/pm_cosmicRate@routines.F90",
+        "sha256": "ed9da75f039c7abccab67a46daafaae6d25c38f71bcbda63b90c1dac1c901425",
+        "before": "submodule (pm_cosmicRate) routines",
+        "after": "submodule (pm_cosmicRate) pm_cosmicRate_routines"
+      },
+      {
+        "path": "playground-library/pm_cosmicRate@routines.F90",
+        "sha256": "7fbe6c3f1cb6a3d1f38b20c664f8f03b1a60b8ef96f9ae64f10c563e02d655f1",
+        "before": "end submodule routines",
+        "after": "end submodule pm_cosmicRate_routines"
+      },
+      {
+        "path": "playground-library/pm_cosmology@routines.F90",
+        "sha256": "bfd74775c0fb018445ef0e0f6f1998b492f495c4c303597efc495e39cbc95348",
+        "before": "submodule (pm_cosmology) routines",
+        "after": "submodule (pm_cosmology) pm_cosmology_routines"
+      },
+      {
+        "path": "playground-library/pm_cosmology@routines.F90",
+        "sha256": "76b9d8d3f1c5b6f3162d8439b27e22573ac4541c13bda9dc2d3e1698ed9ea6af",
+        "before": "end submodule routines",
+        "after": "end submodule pm_cosmology_routines"
+      },
+      {
+        "path": "playground-library/pm_dateTime@routines.F90",
+        "sha256": "9ef5143d794cec23697a9b54c805d3c1b7989c8516e38975e84e53d5bb111225",
+        "before": "submodule (pm_dateTime) routines",
+        "after": "submodule (pm_dateTime) pm_dateTime_routines"
+      },
+      {
+        "path": "playground-library/pm_dateTime@routines.F90",
+        "sha256": "ef0b70bab716cf32eb21771215a06da62f23399bbb99b7a0e9d55bf14e561f96",
+        "before": "end submodule routines",
+        "after": "end submodule pm_dateTime_routines"
+      },
+      {
+        "path": "playground-library/pm_distBand@routines.F90",
+        "sha256": "8e80ab34ca0e8095241e5cc2fd14f4d89460a7c502b129dab44e4bc2bbe63ea2",
+        "before": "submodule (pm_distBand) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_distBand) pm_distBand_routines"
+      },
+      {
+        "path": "playground-library/pm_distBand@routines.F90",
+        "sha256": "076fb0ceca3d1f50819f96ce1c3bf7c0458e5c5be30d98d18efb272e61671538",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distBand_routines"
+      },
+      {
+        "path": "playground-library/pm_distBern@routines.F90",
+        "sha256": "7ec3857c15c2e704214ecce857696bf3ee1c8baff7a16e7c6a336cc9f810a0e1",
+        "before": "submodule (pm_distBern) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_distBern) pm_distBern_routines"
+      },
+      {
+        "path": "playground-library/pm_distBern@routines.F90",
+        "sha256": "f325ddfcf82efbce471d32d5fc92754aa0752708ab4180b76e7efad279d1c51e",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distBern_routines"
+      },
+      {
+        "path": "playground-library/pm_distBeta@routines.F90",
+        "sha256": "399091bfa2a2c5a61a1c65776efbc3d12d5cb50569c5a18750500d9867165452",
+        "before": "submodule (pm_distBeta) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_distBeta) pm_distBeta_routines"
+      },
+      {
+        "path": "playground-library/pm_distBeta@routines.F90",
+        "sha256": "58ea72fdf1b43e62c1e393a015eb2f24b309046f58e23a3f545c066f4e7089dc",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distBeta_routines"
+      },
+      {
+        "path": "playground-library/pm_distBinom@routines.F90",
+        "sha256": "6b5da1332c68aebe2ec1bacffbf1512e0a7966cee7c727d8a296ff6ad0f9e627",
+        "before": "submodule (pm_distBinom) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_distBinom) pm_distBinom_routines"
+      },
+      {
+        "path": "playground-library/pm_distBinom@routines.F90",
+        "sha256": "ee10074322fcc84153e5f646f3f22dae06300af437d309ca9c50d49574b65eb1",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distBinom_routines"
+      },
+      {
+        "path": "playground-library/pm_distChol@routines.F90",
+        "sha256": "2bcfff053e159a22d5e4f92a6a94b4724217c2470e4c9f6f842c286867cf05c7",
+        "before": "submodule (pm_distChol) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_distChol) pm_distChol_routines"
+      },
+      {
+        "path": "playground-library/pm_distChol@routines.F90",
+        "sha256": "5b77318cf24fe0f8d676c3f3ada08d76bd1709ac4d48b8162ed1d182910604f0",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distChol_routines"
+      },
+      {
+        "path": "playground-library/pm_distCosRaised@routines.F90",
+        "sha256": "d8df6150030c39ffaf8d50478222cb133388bb4041841dc1c01cf64abe30cb14",
+        "before": "submodule (pm_distCosRaised) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_distCosRaised) pm_distCosRaised_routines"
+      },
+      {
+        "path": "playground-library/pm_distCosRaised@routines.F90",
+        "sha256": "2bbaf2c824acac71ffa41e5932d0fb154c36e771a95470a568db15508550ce06",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distCosRaised_routines"
+      },
+      {
+        "path": "playground-library/pm_distCov@routines.F90",
+        "sha256": "050038c663e87d04addde29c72cb6262448b7dd7b3b81fbc87d47a754570ea74",
+        "before": "submodule (pm_distCov) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_distCov) pm_distCov_routines"
+      },
+      {
+        "path": "playground-library/pm_distCov@routines.F90",
+        "sha256": "f2713e8197188ed058a83d02f8b8402b858791176978de0f7ca692a6c459a0f3",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distCov_routines"
+      },
+      {
+        "path": "playground-library/pm_distEggBox@routines.F90",
+        "sha256": "eef12e97bb810bdfd0036371b79f8dd76ff2f4e209e2bf6b1cb25f20a7daf6bf",
+        "before": "submodule (pm_distEggBox) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_distEggBox) pm_distEggBox_routines"
+      },
+      {
+        "path": "playground-library/pm_distEggBox@routines.F90",
+        "sha256": "4a438eeca3d6f8954f28d3e7fddd00d466b89c29d6e7514f0c7d084761449320",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distEggBox_routines"
+      },
+      {
+        "path": "playground-library/pm_distExp@routines.F90",
+        "sha256": "318b946e696e21fab39f82f838793e7fcd2ac71bf8dc299cf0f4785a52a196c6",
+        "before": "submodule (pm_distExp) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_distExp) pm_distExp_routines"
+      },
+      {
+        "path": "playground-library/pm_distExp@routines.F90",
+        "sha256": "70cbb7ab159da9f4fc0496eefb6b977371f1d305b530fc2c254cc4d9764e3923",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distExp_routines"
+      },
+      {
+        "path": "playground-library/pm_distExpGamma@routines.F90",
+        "sha256": "05bb3335303548c2e8f341f79727bfae333a529ace118f7f7b48d2b07e816373",
+        "before": "submodule (pm_distExpGamma) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_distExpGamma) pm_distExpGamma_routines"
+      },
+      {
+        "path": "playground-library/pm_distExpGamma@routines.F90",
+        "sha256": "1104c0795da2c2aead8705fc6bdfac859fc4865406d03b4ea027e96241569d0c",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distExpGamma_routines"
+      },
+      {
+        "path": "playground-library/pm_distGamma@routines.F90",
+        "sha256": "79b1140b7f1883b89c5b8ab63583856d930859d1c2f88b53bd57db3e2cca73cf",
+        "before": "submodule (pm_distGamma) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_distGamma) pm_distGamma_routines"
+      },
+      {
+        "path": "playground-library/pm_distGamma@routines.F90",
+        "sha256": "f06bb85930c5f49ec3a0bc468667c34c51b106f96945e5b3115f4e68601476db",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distGamma_routines"
+      },
+      {
+        "path": "playground-library/pm_distGenExpGamma@routines.F90",
+        "sha256": "824d4b764c97a76339751e0e541f3fad7b461e0eaedd835000582c584e4598cb",
+        "before": "submodule (pm_distGenExpGamma) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_distGenExpGamma) pm_distGenExpGamma_routines"
+      },
+      {
+        "path": "playground-library/pm_distGenExpGamma@routines.F90",
+        "sha256": "ca6d52cdab678effafa1330fa2c9146d77c06bf8b44873021d33fba16a27ef1a",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distGenExpGamma_routines"
+      },
+      {
+        "path": "playground-library/pm_distGenGamma@routines.F90",
+        "sha256": "fb1f74682f269bb48d56ed31bf2b93f6a40bee8d7fef89a0e58fdd3a5aa80aa6",
+        "before": "submodule (pm_distGenGamma) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_distGenGamma) pm_distGenGamma_routines"
+      },
+      {
+        "path": "playground-library/pm_distGenGamma@routines.F90",
+        "sha256": "ada6e23502e5270359875d958d1d07a44710c2986602e10d7da021b1f2929d01",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distGenGamma_routines"
+      },
+      {
+        "path": "playground-library/pm_distGeom@routines.F90",
+        "sha256": "9479fef997180d9fac7338b8a216a98dc80ca1418e1237353806bb4617c3d544",
+        "before": "submodule (pm_distGeom) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_distGeom) pm_distGeom_routines"
+      },
+      {
+        "path": "playground-library/pm_distGeom@routines.F90",
+        "sha256": "ad26897ad645db8951fe0ff4ce7f2e100b1b3b281b52bc861e842e5c3c580339",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distGeom_routines"
+      },
+      {
+        "path": "playground-library/pm_distGeomCyclic@routines.F90",
+        "sha256": "eb2c3885a8db6bf1db83ac77850ec27a4da73dddfe60ce03a170cc8c55d4b015",
+        "before": "submodule (pm_distGeomCyclic) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_distGeomCyclic) pm_distGeomCyclic_routines"
+      },
+      {
+        "path": "playground-library/pm_distGeomCyclic@routines.F90",
+        "sha256": "e7b2ecfbda02485ff963238456af491498b10dd66877df8d842be10aff043a51",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distGeomCyclic_routines"
+      },
+      {
+        "path": "playground-library/pm_distKolm@routines.F90",
+        "sha256": "aae333ee97e45f26e69eeb710f453c57b85457816b9f8a33d67f247ba9f01b37",
+        "before": "submodule (pm_distKolm) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_distKolm) pm_distKolm_routines"
+      },
+      {
+        "path": "playground-library/pm_distKolm@routines.F90",
+        "sha256": "246279ef387c08af2f46eaebfe6cecb2fe0ce51aed55ccf54eb207392dc1b4b7",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distKolm_routines"
+      },
+      {
+        "path": "playground-library/pm_distLogNorm@routines.F90",
+        "sha256": "fe1ff4f6b7b5ea1edb439132294626b0eb0eeb541f95931185bbca35d556be16",
+        "before": "submodule (pm_distLogNorm) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_distLogNorm) pm_distLogNorm_routines"
+      },
+      {
+        "path": "playground-library/pm_distLogNorm@routines.F90",
+        "sha256": "2fe12df46ff9194f3820a170a79b3ddc402e08339e88e579cac75cb146400c27",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distLogNorm_routines"
+      },
+      {
+        "path": "playground-library/pm_distLogUnif@routines.F90",
+        "sha256": "3ac48984e3eb46f5e6ecc9cd8c94959073d33ef6d520a92a37a992657f66f75a",
+        "before": "submodule (pm_distLogUnif) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_distLogUnif) pm_distLogUnif_routines"
+      },
+      {
+        "path": "playground-library/pm_distLogUnif@routines.F90",
+        "sha256": "1200001a3b2df0a1390ffa32e5bcff8c57aa61b1023d94f0878142337b4ece0c",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distLogUnif_routines"
+      },
+      {
+        "path": "playground-library/pm_distMultiNorm@routines.F90",
+        "sha256": "4d4e2c1b5bd187bb1c2d45cdede09b55a64245f2a382939600cd8d4a4dff2e35",
+        "before": "submodule (pm_distMultiNorm) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_distMultiNorm) pm_distMultiNorm_routines"
+      },
+      {
+        "path": "playground-library/pm_distMultiNorm@routines.F90",
+        "sha256": "5885d55d4028577f6f36d782de57370015ed8ba2812b064b897332325efe9387",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distMultiNorm_routines"
+      },
+      {
+        "path": "playground-library/pm_distNegExp@routines.F90",
+        "sha256": "e081345ab8691c0fc56a024c89b721113d60cea9e78fdf1dc5ffdc3ed5d051e3",
+        "before": "submodule (pm_distNegExp) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_distNegExp) pm_distNegExp_routines"
+      },
+      {
+        "path": "playground-library/pm_distNegExp@routines.F90",
+        "sha256": "9bbf8cef4830e698f6a42d9da108c39eb0b613ba490c7f67764f1f295f67e403",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distNegExp_routines"
+      },
+      {
+        "path": "playground-library/pm_distNorm@routines.F90",
+        "sha256": "1464134bc12e1745b4f524e57653e85b1d45bdbf0b768722a867585555d8a976",
+        "before": "submodule (pm_distNorm) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_distNorm) pm_distNorm_routines"
+      },
+      {
+        "path": "playground-library/pm_distNorm@routines.F90",
+        "sha256": "1ce2121b7b488ad9bd9088c1dfde2f701f0e92fd36b8286fe28928c7e765eba6",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distNorm_routines"
+      },
+      {
+        "path": "playground-library/pm_distNormShell@routines.F90",
+        "sha256": "a62a33d9d321c47e5d8b7fcee842d752d0ea090420056ff94b25d8ea666e6d16",
+        "before": "submodule (pm_distNormShell) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_distNormShell) pm_distNormShell_routines"
+      },
+      {
+        "path": "playground-library/pm_distNormShell@routines.F90",
+        "sha256": "a9fa058cbfcc7ee55d2d07ea679c2d76c85cedfaec5b81d65c53390b326db09f",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distNormShell_routines"
+      },
+      {
+        "path": "playground-library/pm_distPareto@routines.F90",
+        "sha256": "20521477f38033707cd7d4a06e716bccd1a4e21ab813a93dfc57a24969c3a012",
+        "before": "submodule (pm_distPareto) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_distPareto) pm_distPareto_routines"
+      },
+      {
+        "path": "playground-library/pm_distPareto@routines.F90",
+        "sha256": "2979d8e94fbc89334d8557229223826a97066a01ac5d7cd8b0f1da3d74e78586",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distPareto_routines"
+      },
+      {
+        "path": "playground-library/pm_distPiwiPoweto@routines.F90",
+        "sha256": "581e9e09c28e393fd6d7af2e244662c0adc8adce47d519aba024e44d6fa8c771",
+        "before": "submodule (pm_distPiwiPoweto) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_distPiwiPoweto) pm_distPiwiPoweto_routines"
+      },
+      {
+        "path": "playground-library/pm_distPiwiPoweto@routines.F90",
+        "sha256": "ed605b3c68f585e039e3accd4b9da2c77ab4c480ff655248d458473139b22119",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distPiwiPoweto_routines"
+      },
+      {
+        "path": "playground-library/pm_distPois@routines.F90",
+        "sha256": "f1bfe9a5fde4690c8402c14db63ddd92d49c03a45e1f28056b747c3bbdaccb3e",
+        "before": "submodule (pm_distPois) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_distPois) pm_distPois_routines"
+      },
+      {
+        "path": "playground-library/pm_distPois@routines.F90",
+        "sha256": "6eca1fbe80cd102aa61765ca3f94302746264370f47077c0f0e206a5a6b704c6",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distPois_routines"
+      },
+      {
+        "path": "playground-library/pm_distPower@routines.F90",
+        "sha256": "be237c271710d022f0ae48ae4a4c068e9628137fc2c108148ae715bdbcbdcbf2",
+        "before": "submodule (pm_distPower) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_distPower) pm_distPower_routines"
+      },
+      {
+        "path": "playground-library/pm_distPower@routines.F90",
+        "sha256": "6bac112bff57837275b511da831fcde29a9880841a21c1c69f21cfa6224855cc",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distPower_routines"
+      },
+      {
+        "path": "playground-library/pm_distPoweto@routines.F90",
+        "sha256": "30cdcac64a2da84f6012dccce302b786bdeb0026d6e379dec65e9c71874c556c",
+        "before": "submodule (pm_distPoweto) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_distPoweto) pm_distPoweto_routines"
+      },
+      {
+        "path": "playground-library/pm_distPoweto@routines.F90",
+        "sha256": "095168c403350c3fce0a1673248d2d5120e8d2915adc9922001c445cc1019b04",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distPoweto_routines"
+      },
+      {
+        "path": "playground-library/pm_distUnif@routines.F90",
+        "sha256": "18cbe2387edcc7fd5f361e84e155b2e6047b879e2e7ca12932d4452849b43b37",
+        "before": "submodule (pm_distUnif) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_distUnif) pm_distUnif_routines"
+      },
+      {
+        "path": "playground-library/pm_distUnif@routines.F90",
+        "sha256": "ef8e54365e53c2e29c4140185d826bf3dcaf259fa6c61fc5f17ae6e3f88c1e0a",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distUnif_routines"
+      },
+      {
+        "path": "playground-library/pm_distUnifEll@routines.F90",
+        "sha256": "5e3ffdb4d338b36340c495b4c3378f3e6caca041887bc39b5ffe02626c46e54b",
+        "before": "submodule (pm_distUnifEll) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_distUnifEll) pm_distUnifEll_routines"
+      },
+      {
+        "path": "playground-library/pm_distUnifEll@routines.F90",
+        "sha256": "2f3a8a2fd45b8d28acbab164f15f4e792bede10640fa91077e8994e2780667b7",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distUnifEll_routines"
+      },
+      {
+        "path": "playground-library/pm_distUnifElls@routines.F90",
+        "sha256": "e7aff12e20ac3c875d3bd7f3992e906041acc1ed7ac5faf75fb0dde860dbf205",
+        "before": "submodule (pm_distUnifElls) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_distUnifElls) pm_distUnifElls_routines"
+      },
+      {
+        "path": "playground-library/pm_distUnifElls@routines.F90",
+        "sha256": "63ca677a8bab8a3d9ce5bd64ab84f20072d25427607ee7e28177fc6987ff7fc1",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distUnifElls_routines"
+      },
+      {
+        "path": "playground-library/pm_distUnifPar@routines.F90",
+        "sha256": "68ee213f34ac9a16523a3c078e4bbad958b6be4e7c5b082d1b349b59f68aaf17",
+        "before": "submodule (pm_distUnifPar) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_distUnifPar) pm_distUnifPar_routines"
+      },
+      {
+        "path": "playground-library/pm_distUnifPar@routines.F90",
+        "sha256": "840062e91fa799d4b96763d2e4ba80e3969805c9c9f4365f0446d3950246ee34",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distUnifPar_routines"
+      },
+      {
+        "path": "playground-library/pm_distUnifSphere@routines.F90",
+        "sha256": "7287d88b0b6f26719b4acc9d3920a515dd60f115e6161e8ede39ffea0cba9684",
+        "before": "submodule (pm_distUnifSphere) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_distUnifSphere) pm_distUnifSphere_routines"
+      },
+      {
+        "path": "playground-library/pm_distUnifSphere@routines.F90",
+        "sha256": "edd9113264725abfe7dcbded8ebdd50529918deede9cd8a27f916fa744d0c861",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distUnifSphere_routines"
+      },
+      {
+        "path": "playground-library/pm_distanceBhat@routines.F90",
+        "sha256": "9643f1cfbfd758ae511cdad5e84d84aab3d3ebf9d346a193c0ecf557643f37e8",
+        "before": "submodule (pm_distanceBhat) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_distanceBhat) pm_distanceBhat_routines"
+      },
+      {
+        "path": "playground-library/pm_distanceBhat@routines.F90",
+        "sha256": "e283e4621b0f50cdb613b0f5a6c3aff10215fabce8c53bca6ee0a6768432921e",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distanceBhat_routines"
+      },
+      {
+        "path": "playground-library/pm_distanceEuclid@routines.F90",
+        "sha256": "0be7dec531b7ef87c44bc789432c7fa2cfe6e8d4069aecdb6de3add2b2beba6d",
+        "before": "submodule (pm_distanceEuclid) routines",
+        "after": "submodule (pm_distanceEuclid) pm_distanceEuclid_routines"
+      },
+      {
+        "path": "playground-library/pm_distanceEuclid@routines.F90",
+        "sha256": "1eb3f7ec91f183660d9c2688781fbdd763bfbe194cf658017b7f2a7cbfd4d023",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distanceEuclid_routines"
+      },
+      {
+        "path": "playground-library/pm_distanceHellinger@routines.F90",
+        "sha256": "4abbf0e54a569a2659f1d36a8bc675fb3ff35a9494de6903404870fbc94c0b75",
+        "before": "submodule (pm_distanceHellinger) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_distanceHellinger) pm_distanceHellinger_routines"
+      },
+      {
+        "path": "playground-library/pm_distanceHellinger@routines.F90",
+        "sha256": "9d0b31729f2ed461deeb64863960cda3caa57050ca3beef655fc3e7744e13c85",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distanceHellinger_routines"
+      },
+      {
+        "path": "playground-library/pm_distanceKolm@routines.F90",
+        "sha256": "41f9006cd8eca51ed2c261f3f231f44ce723282fc7f5a6f9f0903cfa5117696c",
+        "before": "submodule (pm_distanceKolm) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_distanceKolm) pm_distanceKolm_routines"
+      },
+      {
+        "path": "playground-library/pm_distanceKolm@routines.F90",
+        "sha256": "19e61e7be4bc6abb41c527f09184a6ed3d458caf20ca1fa23c2ee9216a508fdf",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distanceKolm_routines"
+      },
+      {
+        "path": "playground-library/pm_distanceMahal@routines.F90",
+        "sha256": "52c6fad9581e996de299a2412f2a7bf9e2718d0540b065483c07589b2f9dd9b6",
+        "before": "submodule (pm_distanceMahal) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_distanceMahal) pm_distanceMahal_routines"
+      },
+      {
+        "path": "playground-library/pm_distanceMahal@routines.F90",
+        "sha256": "557e381dc44061a288bdae5b71e066c69cc91ac9c2ea0c16b5af5e5a2ce47e74",
+        "before": "end submodule routines",
+        "after": "end submodule pm_distanceMahal_routines"
+      },
+      {
+        "path": "playground-library/pm_ellipsoid@routines.F90",
+        "sha256": "bebcc39c9bc2b7cbfc68db42a44b881bdb312d3b92b54baa23b7da3c49e6792b",
+        "before": "submodule (pm_ellipsoid) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_ellipsoid) pm_ellipsoid_routines"
+      },
+      {
+        "path": "playground-library/pm_ellipsoid@routines.F90",
+        "sha256": "37e236aee1bdc9016301c51a1914a97f39a0ba6646808007a71d5c139d1c54ee",
+        "before": "end submodule routines",
+        "after": "end submodule pm_ellipsoid_routines"
+      },
+      {
+        "path": "playground-library/pm_err@routines.F90",
+        "sha256": "8af1f9e354fa111781fd37c10fb44a105a57b4e114a2b612cc3adc256d99a3ea",
+        "before": "submodule (pm_err) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_err) pm_err_routines"
+      },
+      {
+        "path": "playground-library/pm_err@routines.F90",
+        "sha256": "48c9ca1e2d851f2b4226bea318906ea19773ca0396b56d1e2a3f947bf7040a66",
+        "before": "end submodule routines",
+        "after": "end submodule pm_err_routines"
+      },
+      {
+        "path": "playground-library/pm_except@routines.F90",
+        "sha256": "ad9b795b14d7b5f9356b8d65079b8d3f76e03a5cfa8c21cb2f748aa00a02f0be",
+        "before": "submodule (pm_except) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_except) pm_except_routines"
+      },
+      {
+        "path": "playground-library/pm_except@routines.F90",
+        "sha256": "36cf4ebfa5069ece4bc6d2228b431d914eb7ca1d8d5fb996fe03b39ac0a7d82a",
+        "before": "end submodule routines",
+        "after": "end submodule pm_except_routines"
+      },
+      {
+        "path": "playground-library/pm_fftnr@routines.F90",
+        "sha256": "982e9babff94f4d9b9f5cbeacf157cbe1445a598141254413bb9afb042ab4fe6",
+        "before": "submodule (pm_fftnr) routines",
+        "after": "submodule (pm_fftnr) pm_fftnr_routines"
+      },
+      {
+        "path": "playground-library/pm_fftnr@routines.F90",
+        "sha256": "b040de9e2ad1a376aa240f65c6e41aed712253af8e7847dc2fcaa985d47c00ed",
+        "before": "end submodule routines",
+        "after": "end submodule pm_fftnr_routines"
+      },
+      {
+        "path": "playground-library/pm_fftpack@routines.F90",
+        "sha256": "b5ff5ce8dbd61a639efc009cb511753a9762fb8506e1b23701c644703ee297a5",
+        "before": "submodule (pm_fftpack) routines",
+        "after": "submodule (pm_fftpack) pm_fftpack_routines"
+      },
+      {
+        "path": "playground-library/pm_fftpack@routines.F90",
+        "sha256": "6d99c7e7b395967a9c955ddede06500ccd13bed35ba9515c78f7900b3579abe6",
+        "before": "end submodule routines",
+        "after": "end submodule pm_fftpack_routines"
+      },
+      {
+        "path": "playground-library/pm_io@routines.F90",
+        "sha256": "20da67f8ef07c0bbfc17aa75eda19e8f4ca344eb65aa8a22983fc06d5208b0c6",
+        "before": "submodule (pm_io) routines",
+        "after": "submodule (pm_io) pm_io_routines"
+      },
+      {
+        "path": "playground-library/pm_io@routines.F90",
+        "sha256": "01ca7c5f836ea16958783904538e5380807fd1ca221fda6663b5b8aa85c3eb03",
+        "before": "end submodule routines",
+        "after": "end submodule pm_io_routines"
+      },
+      {
+        "path": "playground-library/pm_kind@routines.F90",
+        "sha256": "7a0c28294693f3ed9097e7e6c51aa37b07621ff91509d4d426fc1b05b5babc7b",
+        "before": "submodule (pm_kind) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_kind) pm_kind_routines"
+      },
+      {
+        "path": "playground-library/pm_kind@routines.F90",
+        "sha256": "9c2404d7349e36ec5e14aa529adf1c1efcfdbc21c70aff244d91e5c88cdc152a",
+        "before": "end submodule routines",
+        "after": "end submodule pm_kind_routines"
+      },
+      {
+        "path": "playground-library/pm_knn@routines.F90",
+        "sha256": "0d03ab0558c225f6ef2a16b518608623e09e105e6b8fcb2619192dfc5e15a33a",
+        "before": "submodule (pm_knn) routines",
+        "after": "submodule (pm_knn) pm_knn_routines"
+      },
+      {
+        "path": "playground-library/pm_knn@routines.F90",
+        "sha256": "a8c1d2e5c2c27a99cf11331d98040447a9e9ebcc4e16ea55dc973326e341fac9",
+        "before": "end submodule routines",
+        "after": "end submodule pm_knn_routines"
+      },
+      {
+        "path": "playground-library/pm_logicalCompare@routines.F90",
+        "sha256": "e281e79a8425eea4049a6125f780787461716facd1c69d82eafc9417ab0dd37d",
+        "before": "submodule (pm_logicalCompare) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_logicalCompare) pm_logicalCompare_routines"
+      },
+      {
+        "path": "playground-library/pm_logicalCompare@routines.F90",
+        "sha256": "8d8cf6fb955ea9a1e7cda9ed25a2a77b953c117e4cb1c0c89b7cae771e960459",
+        "before": "end submodule routines",
+        "after": "end submodule pm_logicalCompare_routines"
+      },
+      {
+        "path": "playground-library/pm_math1mexp@routines.F90",
+        "sha256": "abe01e67473cfa7740ccd71cf526554a247c5a5e239e0dbb9919d3da5c1d0872",
+        "before": "submodule (pm_math1mexp) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_math1mexp) pm_math1mexp_routines"
+      },
+      {
+        "path": "playground-library/pm_math1mexp@routines.F90",
+        "sha256": "52724277dbdfed1282c519bfd6be947e5dd88f8e9ff06ba1eb71dc2cc0573a33",
+        "before": "end submodule routines",
+        "after": "end submodule pm_math1mexp_routines"
+      },
+      {
+        "path": "playground-library/pm_mathBeta@routines.F90",
+        "sha256": "8bc8760fb5bcb93cbb9ee1e6404bbb0954f2fce45f8133b6c7ffbd0be52363d6",
+        "before": "submodule (pm_mathBeta) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_mathBeta) pm_mathBeta_routines"
+      },
+      {
+        "path": "playground-library/pm_mathBeta@routines.F90",
+        "sha256": "e81959273b636159494bb64fedd8d2f96e06875ffd93cc7558de8995a430d90d",
+        "before": "end submodule routines",
+        "after": "end submodule pm_mathBeta_routines"
+      },
+      {
+        "path": "playground-library/pm_mathCompare@routines.F90",
+        "sha256": "26e58bad8ea61e6ae172328786eaa552cba35206a782a0009888952f72de1c7d",
+        "before": "submodule (pm_mathCompare) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_mathCompare) pm_mathCompare_routines"
+      },
+      {
+        "path": "playground-library/pm_mathCompare@routines.F90",
+        "sha256": "0b3b570799652c69beb93f72d0175e3d0b27d86d12981a7f210fd3c87ffd7c79",
+        "before": "end submodule routines",
+        "after": "end submodule pm_mathCompare_routines"
+      },
+      {
+        "path": "playground-library/pm_mathCumPropExp@routines.F90",
+        "sha256": "d23248f9cbb8a05b7d9d3be4868c4b542b89b8d7e2d32235659bf0d2ca5645c1",
+        "before": "submodule (pm_mathCumPropExp) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_mathCumPropExp) pm_mathCumPropExp_routines"
+      },
+      {
+        "path": "playground-library/pm_mathCumPropExp@routines.F90",
+        "sha256": "c4000bfa42f7eaf3812c530ea293e19bc31a43c7f264b8ab15160548685c5da4",
+        "before": "end submodule routines",
+        "after": "end submodule pm_mathCumPropExp_routines"
+      },
+      {
+        "path": "playground-library/pm_mathCumSum@routines.F90",
+        "sha256": "1aa13f00e9b294c0d5afdb446dffd1a65c0c0a5e0484d1e9db249426e5528e71",
+        "before": "submodule (pm_mathCumSum) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_mathCumSum) pm_mathCumSum_routines"
+      },
+      {
+        "path": "playground-library/pm_mathCumSum@routines.F90",
+        "sha256": "6914ff991b97f908f4cc53a7024722cdaf2b69c76c646ea8370f17acd856052c",
+        "before": "end submodule routines",
+        "after": "end submodule pm_mathCumSum_routines"
+      },
+      {
+        "path": "playground-library/pm_mathDivMul@routines.F90",
+        "sha256": "26d2e8edede999e292192bcb80156caceb2c86ab1010185dab1623fafb681432",
+        "before": "submodule (pm_mathDivMul) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_mathDivMul) pm_mathDivMul_routines"
+      },
+      {
+        "path": "playground-library/pm_mathDivMul@routines.F90",
+        "sha256": "07c8e05a05220c67f110d20799f6fa90572665ea86730273650a933159fc7933",
+        "before": "end submodule routines",
+        "after": "end submodule pm_mathDivMul_routines"
+      },
+      {
+        "path": "playground-library/pm_mathErf@routines.F90",
+        "sha256": "445b81abd8bda613c2446e210c73e730081dfe8244a5be2b7dea5184916473bf",
+        "before": "submodule (pm_mathErf) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_mathErf) pm_mathErf_routines"
+      },
+      {
+        "path": "playground-library/pm_mathErf@routines.F90",
+        "sha256": "05fded0770fb4b7956e1f0ef03c276c16f4a58f2458f0a8caa06ed467b3dff87",
+        "before": "end submodule routines",
+        "after": "end submodule pm_mathErf_routines"
+      },
+      {
+        "path": "playground-library/pm_mathExp@routines.F90",
+        "sha256": "f703c27825dcb2b13140c3b9539b931ad1926796ad78f71ad85e1d15a8a1f0f2",
+        "before": "submodule (pm_mathExp) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_mathExp) pm_mathExp_routines"
+      },
+      {
+        "path": "playground-library/pm_mathExp@routines.F90",
+        "sha256": "c5c9cc33d09fcbe4568fbb3164ea6b55b3ea9d4ea371792bb8ec4837f7718b77",
+        "before": "end submodule routines",
+        "after": "end submodule pm_mathExp_routines"
+      },
+      {
+        "path": "playground-library/pm_mathFactorial@routines.F90",
+        "sha256": "5348fcd90bb72c2ccca20f2cb312dcacce45dbee8e4ca991189fcec719ac4892",
+        "before": "submodule (pm_mathFactorial) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_mathFactorial) pm_mathFactorial_routines"
+      },
+      {
+        "path": "playground-library/pm_mathFactorial@routines.F90",
+        "sha256": "ebcb63c4dad11b97d19a4516ef5efb6f819772883bc7006c1b7e8898066f8e98",
+        "before": "end submodule routines",
+        "after": "end submodule pm_mathFactorial_routines"
+      },
+      {
+        "path": "playground-library/pm_mathFactoring@routines.F90",
+        "sha256": "37d5886f4a4ea80c64fa4a4c4b36418327d5c526dbd15902365b6029e7416acc",
+        "before": "submodule (pm_mathFactoring) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_mathFactoring) pm_mathFactoring_routines"
+      },
+      {
+        "path": "playground-library/pm_mathFactoring@routines.F90",
+        "sha256": "a75034979d91c8848cace7da938cec6d0b76a66c5cbe37c9be9aa26b8b1d72b8",
+        "before": "end submodule routines",
+        "after": "end submodule pm_mathFactoring_routines"
+      },
+      {
+        "path": "playground-library/pm_mathFisher@routines.F90",
+        "sha256": "777e10ac5498d9fc21af9efbf33dfa411a6332b8b5123f3a4d0e9f33c6e78315",
+        "before": "submodule (pm_mathFisher) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_mathFisher) pm_mathFisher_routines"
+      },
+      {
+        "path": "playground-library/pm_mathFisher@routines.F90",
+        "sha256": "30e14f74267462af4a25ef8f3aa688e3399b8d52cec62d77d6cdab23f077476d",
+        "before": "end submodule routines",
+        "after": "end submodule pm_mathFisher_routines"
+      },
+      {
+        "path": "playground-library/pm_mathGamma@routines.F90",
+        "sha256": "b6dcfe16caf9a5abf43af10406370bd3a63a49dc17ca3d3067100f50baf467f0",
+        "before": "submodule (pm_mathGamma) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_mathGamma) pm_mathGamma_routines"
+      },
+      {
+        "path": "playground-library/pm_mathGamma@routines.F90",
+        "sha256": "ab07e55e0c8d4ce6edbd21a9562bd05a6dd5af78161de89e658144b89649db74",
+        "before": "end submodule routines",
+        "after": "end submodule pm_mathGamma_routines"
+      },
+      {
+        "path": "playground-library/pm_mathGammaAM@routines.F90",
+        "sha256": "804d8e0e6f0c82102cc7098b0f543dde64040490354a6ebf257e02a4e4d4fee6",
+        "before": "submodule (pm_mathGammaAM) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_mathGammaAM) pm_mathGammaAM_routines"
+      },
+      {
+        "path": "playground-library/pm_mathGammaAM@routines.F90",
+        "sha256": "5a214768d32ed322389ff201e4c5cb1fa71702dc8d03d1e1ac6eecfd7f1206fd",
+        "before": "end submodule routines",
+        "after": "end submodule pm_mathGammaAM_routines"
+      },
+      {
+        "path": "playground-library/pm_mathGammaGil@routines.F90",
+        "sha256": "6673dc2d47de46bda2116a1d8a933a9caec72b2c3b5d6ef996cfda3255577710",
+        "before": "submodule (pm_mathGammaGil) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_mathGammaGil) pm_mathGammaGil_routines"
+      },
+      {
+        "path": "playground-library/pm_mathGammaGil@routines.F90",
+        "sha256": "896609268b526b66d688e09b844bd15f7e19b882b2f07ea1c8317b3ce9aa9bcd",
+        "before": "end submodule routines",
+        "after": "end submodule pm_mathGammaGil_routines"
+      },
+      {
+        "path": "playground-library/pm_mathGammaNR@routines.F90",
+        "sha256": "9a7c20a2305d82d1cdb0ad52b7574f227dcf0fd9a101d957df7f66e6e664686a",
+        "before": "submodule (pm_mathGammaNR) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_mathGammaNR) pm_mathGammaNR_routines"
+      },
+      {
+        "path": "playground-library/pm_mathGammaNR@routines.F90",
+        "sha256": "5cfcc5a5829ee119563c3d0fe845808261a9e6c6bc4cbd1a8a37a9e37c9400d2",
+        "before": "end submodule routines",
+        "after": "end submodule pm_mathGammaNR_routines"
+      },
+      {
+        "path": "playground-library/pm_mathLog1p@routines.F90",
+        "sha256": "d07d5919ea24d84369a412e2411ebec40e4a6b03c4d6c8e2a3866fbb51bd9e62",
+        "before": "submodule (pm_mathLog1p) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_mathLog1p) pm_mathLog1p_routines"
+      },
+      {
+        "path": "playground-library/pm_mathLog1p@routines.F90",
+        "sha256": "6cf60341f2ee0af6639f6a9d1d3123a4f76f0c44588728f0479a8503d82976d7",
+        "before": "end submodule routines",
+        "after": "end submodule pm_mathLog1p_routines"
+      },
+      {
+        "path": "playground-library/pm_mathLogAddExp@routines.F90",
+        "sha256": "68465c93e2bb44c69f99179f7cc3e8ecee1a201e24e457063c79ab02ff1b7bfa",
+        "before": "submodule (pm_mathLogAddExp) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_mathLogAddExp) pm_mathLogAddExp_routines"
+      },
+      {
+        "path": "playground-library/pm_mathLogAddExp@routines.F90",
+        "sha256": "70495b0d95376a60c18e95d30d8d5f4705ed15e7a243b4f7e2087ebc6db9bd0c",
+        "before": "end submodule routines",
+        "after": "end submodule pm_mathLogAddExp_routines"
+      },
+      {
+        "path": "playground-library/pm_mathLogSubExp@routines.F90",
+        "sha256": "3d6d8cb98b8a0a572ee76ec2cb32516b798833aa38ee246c71c0d2b6fe566a22",
+        "before": "submodule (pm_mathLogSubExp) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_mathLogSubExp) pm_mathLogSubExp_routines"
+      },
+      {
+        "path": "playground-library/pm_mathLogSubExp@routines.F90",
+        "sha256": "4cc9cd4481d0d6e1520558c9401f1ae1585ca00b98783133e956bf3055f83de3",
+        "before": "end submodule routines",
+        "after": "end submodule pm_mathLogSubExp_routines"
+      },
+      {
+        "path": "playground-library/pm_mathLogSumExp@routines.F90",
+        "sha256": "ffac25ce7ebb6a4074c6dca8f8d0d5561ce245398c9780332fb24bcac9571800",
+        "before": "submodule (pm_mathLogSumExp) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_mathLogSumExp) pm_mathLogSumExp_routines"
+      },
+      {
+        "path": "playground-library/pm_mathLogSumExp@routines.F90",
+        "sha256": "0d7c77398e5256c104cd01c35e6e095559157ff619761d83e5aef6a70855e7fb",
+        "before": "end submodule routines",
+        "after": "end submodule pm_mathLogSumExp_routines"
+      },
+      {
+        "path": "playground-library/pm_mathMinMax@routines.F90",
+        "sha256": "c322072e13c9bcfd14b9fdb85f43daf63be6963a4de62a99808259d34f25440b",
+        "before": "submodule (pm_mathMinMax) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_mathMinMax) pm_mathMinMax_routines"
+      },
+      {
+        "path": "playground-library/pm_mathMinMax@routines.F90",
+        "sha256": "85e757cb8fc918d60a543353d82bc03abd0d51c1ec56c07a006247d0c8dc7520",
+        "before": "end submodule routines",
+        "after": "end submodule pm_mathMinMax_routines"
+      },
+      {
+        "path": "playground-library/pm_mathNumSys@routines.F90",
+        "sha256": "a49a4f3a0880d9012b758fb35d66fde1bb69f875adcc4a0f6320d6a278496fd3",
+        "before": "submodule (pm_mathNumSys) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_mathNumSys) pm_mathNumSys_routines"
+      },
+      {
+        "path": "playground-library/pm_mathNumSys@routines.F90",
+        "sha256": "8ae462920c560836040da4c42c36d38c979b3bd5ebac069ed52cae55dab19a88",
+        "before": "end submodule routines",
+        "after": "end submodule pm_mathNumSys_routines"
+      },
+      {
+        "path": "playground-library/pm_mathRoot@routines.F90",
+        "sha256": "b6b449a5c8a54c07b5e0d52bec64c798277c8973b482ffd69c85b159f11d836f",
+        "before": "submodule (pm_mathRoot) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_mathRoot) pm_mathRoot_routines"
+      },
+      {
+        "path": "playground-library/pm_mathRoot@routines.F90",
+        "sha256": "e328209b9b3f13c5c87f4f2d7bf208d064173642d026849e1daf1357f706ccf3",
+        "before": "end submodule routines",
+        "after": "end submodule pm_mathRoot_routines"
+      },
+      {
+        "path": "playground-library/pm_mathRootTest@routines.F90",
+        "sha256": "391f0e4a1d775fd76312bf10236fc30cbf09b313f851522b238ce684b435b444",
+        "before": "submodule (pm_mathRootTest) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_mathRootTest) pm_mathRootTest_routines"
+      },
+      {
+        "path": "playground-library/pm_mathRootTest@routines.F90",
+        "sha256": "10901e042c7a1fa2366297e6a2bea1485be2bddcc56182756097bfa6260481ac",
+        "before": "end submodule routines",
+        "after": "end submodule pm_mathRootTest_routines"
+      },
+      {
+        "path": "playground-library/pm_mathRound@routines.F90",
+        "sha256": "dc05ad1331bd8da968ea7e5b8b9fec11754b37894a96ffca7da1efa46052f449",
+        "before": "submodule (pm_mathRound) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_mathRound) pm_mathRound_routines"
+      },
+      {
+        "path": "playground-library/pm_mathRound@routines.F90",
+        "sha256": "144da61622a5cbfb5c007f7222b05a09397f3d4679c0f165ea3a56b73e6cb89c",
+        "before": "end submodule routines",
+        "after": "end submodule pm_mathRound_routines"
+      },
+      {
+        "path": "playground-library/pm_mathSqrt@routines.F90",
+        "sha256": "97179569b47197aa0f8607c66b3c787796c50493a7a82379fa461895029a2f1f",
+        "before": "submodule (pm_mathSqrt) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_mathSqrt) pm_mathSqrt_routines"
+      },
+      {
+        "path": "playground-library/pm_mathSqrt@routines.F90",
+        "sha256": "7efe2f06920585ebbeb00a2ab5b7bd1f30fab4a854d373df796684320fcc7657",
+        "before": "end submodule routines",
+        "after": "end submodule pm_mathSqrt_routines"
+      },
+      {
+        "path": "playground-library/pm_mathSubAdd@routines.F90",
+        "sha256": "f6eb1dcaa43be3bfa4127ebeff746e82f72a165f684813c0ab04ec6454bc2c4d",
+        "before": "submodule (pm_mathSubAdd) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_mathSubAdd) pm_mathSubAdd_routines"
+      },
+      {
+        "path": "playground-library/pm_mathSubAdd@routines.F90",
+        "sha256": "8ea5eee61ebca6550b0748cea0f9975b3a7961a0bb0bb1bccf5f596d4ef64b7f",
+        "before": "end submodule routines",
+        "after": "end submodule pm_mathSubAdd_routines"
+      },
+      {
+        "path": "playground-library/pm_mathSum@routines.F90",
+        "sha256": "3a1660bf2f76f064d8c89a938f4d41f1a8e61d0e68c46b774977a2c2c427f1ca",
+        "before": "submodule (pm_mathSum) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_mathSum) pm_mathSum_routines"
+      },
+      {
+        "path": "playground-library/pm_mathSum@routines.F90",
+        "sha256": "0c99197cbe8d5abf8507b202c3654fc1f49f3e36c663ed9d268126254c521a93",
+        "before": "end submodule routines",
+        "after": "end submodule pm_mathSum_routines"
+      },
+      {
+        "path": "playground-library/pm_mathUnsigned@routines.F90",
+        "sha256": "808087f8c9f845540be81600610934b9daeb31cfae9e4ccc102b8d3893d05aa4",
+        "before": "submodule (pm_mathUnsigned) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_mathUnsigned) pm_mathUnsigned_routines"
+      },
+      {
+        "path": "playground-library/pm_mathUnsigned@routines.F90",
+        "sha256": "00cf09831745256c0b62bfd8f9b2cbbe969287ab08ae962b10ebd6b1a0a43e66",
+        "before": "end submodule routines",
+        "after": "end submodule pm_mathUnsigned_routines"
+      },
+      {
+        "path": "playground-library/pm_matrixChol@routines.F90",
+        "sha256": "e9b6428bccfbd4c7492c0218ba962b08e25bf43ed1a38d86fa83b609829f79b2",
+        "before": "submodule (pm_matrixChol) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_matrixChol) pm_matrixChol_routines"
+      },
+      {
+        "path": "playground-library/pm_matrixChol@routines.F90",
+        "sha256": "97bc32e7de539eae8f00e6e9b04378a8eb91d4c69089f7c62db88e24911f363d",
+        "before": "end submodule routines",
+        "after": "end submodule pm_matrixChol_routines"
+      },
+      {
+        "path": "playground-library/pm_matrixClass@routines.F90",
+        "sha256": "8ac3d3bd960b27fe519fb2990164cbeae536a828002b47ae04402b7f7456a302",
+        "before": "submodule (pm_matrixClass) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_matrixClass) pm_matrixClass_routines"
+      },
+      {
+        "path": "playground-library/pm_matrixClass@routines.F90",
+        "sha256": "5cf42bfce9599e672d7cce52f3bb97cec0a8bdf1fb0be511297cf04e78a55c81",
+        "before": "end submodule routines",
+        "after": "end submodule pm_matrixClass_routines"
+      },
+      {
+        "path": "playground-library/pm_matrixCopy@routines.F90",
+        "sha256": "cdc15539809b0d34c2377edc52e2aedeb65b6e3b43f2515aa3cbb1942a77257b",
+        "before": "submodule (pm_matrixCopy) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_matrixCopy) pm_matrixCopy_routines"
+      },
+      {
+        "path": "playground-library/pm_matrixCopy@routines.F90",
+        "sha256": "d3001dd29b119e4e63f78ff8863fead3b9e3130d947a8661ec93f968cced6a86",
+        "before": "end submodule routines",
+        "after": "end submodule pm_matrixCopy_routines"
+      },
+      {
+        "path": "playground-library/pm_matrixDet@routines.F90",
+        "sha256": "a7d5734ba631db59e6a46dacb7d242f32b1526f30e9cfac2c92efc0a903d37cf",
+        "before": "submodule (pm_matrixDet) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_matrixDet) pm_matrixDet_routines"
+      },
+      {
+        "path": "playground-library/pm_matrixDet@routines.F90",
+        "sha256": "9824dd80252a3c0cb63055b7acdeb42d26629254978129da4ed71703f4f1b6e0",
+        "before": "end submodule routines",
+        "after": "end submodule pm_matrixDet_routines"
+      },
+      {
+        "path": "playground-library/pm_matrixIndex@routines.F90",
+        "sha256": "2144420c68bfdbfbba4f51fec492c3f2ebe7f41cb72eb899b7a8f4f5a55c4d85",
+        "before": "submodule (pm_matrixIndex) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_matrixIndex) pm_matrixIndex_routines"
+      },
+      {
+        "path": "playground-library/pm_matrixIndex@routines.F90",
+        "sha256": "13944ce8c3c61b4d57eaff38c39dc7b3cf615091a2c7c6ebaf5a0fb6f9c6f7fd",
+        "before": "end submodule routines",
+        "after": "end submodule pm_matrixIndex_routines"
+      },
+      {
+        "path": "playground-library/pm_matrixInit@routines.F90",
+        "sha256": "83b4cf468c15866d0bf9c3fbc51ae5129ea12adaf68f6b74251d106794c211dd",
+        "before": "submodule (pm_matrixInit) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_matrixInit) pm_matrixInit_routines"
+      },
+      {
+        "path": "playground-library/pm_matrixInit@routines.F90",
+        "sha256": "1f68ba4136d160780684013f5d2ec291752aec531c88f16edfaffd508521ba5c",
+        "before": "end submodule routines",
+        "after": "end submodule pm_matrixInit_routines"
+      },
+      {
+        "path": "playground-library/pm_matrixInv@routines.F90",
+        "sha256": "3f76e72f90bfd5873cfcd5125e6b361b26742f9d4c7fb5844ef51ce0770e5f24",
+        "before": "submodule (pm_matrixInv) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_matrixInv) pm_matrixInv_routines"
+      },
+      {
+        "path": "playground-library/pm_matrixInv@routines.F90",
+        "sha256": "b549e3d792765df33eaa3752722e2e2ed526dbdcb2f902d9d9029f02e2c089c4",
+        "before": "end submodule routines",
+        "after": "end submodule pm_matrixInv_routines"
+      },
+      {
+        "path": "playground-library/pm_matrixLUP@routines.F90",
+        "sha256": "d8fdc1c5d88a85484d1c383aa66e016a84fc17f17e03c06bb0b54579fb1c0c0d",
+        "before": "submodule (pm_matrixLUP) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_matrixLUP) pm_matrixLUP_routines"
+      },
+      {
+        "path": "playground-library/pm_matrixLUP@routines.F90",
+        "sha256": "374b28d3f4d324a49630a3bdf96873367dba086e598b0036cb90e74ddf6329f2",
+        "before": "end submodule routines",
+        "after": "end submodule pm_matrixLUP_routines"
+      },
+      {
+        "path": "playground-library/pm_matrixMulAdd@routines.F90",
+        "sha256": "f676b21d5f6bf90dcbd392534ba59ef16b366007128973cae8aab459b5ed7d5d",
+        "before": "submodule (pm_matrixMulAdd) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_matrixMulAdd) pm_matrixMulAdd_routines"
+      },
+      {
+        "path": "playground-library/pm_matrixMulAdd@routines.F90",
+        "sha256": "422b69253bd6245597e1c6c618e556d4ed18986e0ff5ee6ab23e2077edaed703",
+        "before": "end submodule routines",
+        "after": "end submodule pm_matrixMulAdd_routines"
+      },
+      {
+        "path": "playground-library/pm_matrixMulTri@routines.F90",
+        "sha256": "4eec3197742feac72cc8d15cbf73f4738d22a22d946b66c25a78d851f6360bbb",
+        "before": "submodule (pm_matrixMulTri) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_matrixMulTri) pm_matrixMulTri_routines"
+      },
+      {
+        "path": "playground-library/pm_matrixMulTri@routines.F90",
+        "sha256": "0f99abd342e67a4808a8aaef81ca9439052e43ce337a3d36acf1f1ca94180fae",
+        "before": "end submodule routines",
+        "after": "end submodule pm_matrixMulTri_routines"
+      },
+      {
+        "path": "playground-library/pm_matrixPack@routines.F90",
+        "sha256": "b18746c2e6b1a32370530488f44dc040a23225a5c84c34d19d79fd19ac9c0653",
+        "before": "submodule (pm_matrixPack) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_matrixPack) pm_matrixPack_routines"
+      },
+      {
+        "path": "playground-library/pm_matrixPack@routines.F90",
+        "sha256": "2683960dec416747f99525fa5b5001500553029c1cf0859b71b9ca1d1a690a80",
+        "before": "end submodule routines",
+        "after": "end submodule pm_matrixPack_routines"
+      },
+      {
+        "path": "playground-library/pm_matrixSubset@routines.F90",
+        "sha256": "5012abcaaa7fdc466d5ba8b19c2526a2bbf194046dc7cefbf81354171ffe1887",
+        "before": "submodule (pm_matrixSubset) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_matrixSubset) pm_matrixSubset_routines"
+      },
+      {
+        "path": "playground-library/pm_matrixSubset@routines.F90",
+        "sha256": "71240453b25d6731b8d97b9d7057848642900e2f89c0ce95bb39974c97d06401",
+        "before": "end submodule routines",
+        "after": "end submodule pm_matrixSubset_routines"
+      },
+      {
+        "path": "playground-library/pm_matrixTrace@routines.F90",
+        "sha256": "9b8591529ecb1fc09ce948bfb615707b2f7177d12cd303fc2a44b141b0a0a8bb",
+        "before": "submodule (pm_matrixTrace) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_matrixTrace) pm_matrixTrace_routines"
+      },
+      {
+        "path": "playground-library/pm_matrixTrace@routines.F90",
+        "sha256": "3f058c7208c32463bec3bf0fbe8b032391a68ea72d0b2905034a387ec6532adb",
+        "before": "end submodule routines",
+        "after": "end submodule pm_matrixTrace_routines"
+      },
+      {
+        "path": "playground-library/pm_matrixTrans@routines.F90",
+        "sha256": "a014eca12a97e8c8c3d68ef26e238d9c2940daff9cab0c1785e362f5420e3d8a",
+        "before": "submodule (pm_matrixTrans) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_matrixTrans) pm_matrixTrans_routines"
+      },
+      {
+        "path": "playground-library/pm_matrixTrans@routines.F90",
+        "sha256": "b5d6a41f4b0bebe716b9b9d2e5c775574978d399f98d07aa85add4b4d8ac5170",
+        "before": "end submodule routines",
+        "after": "end submodule pm_matrixTrans_routines"
+      },
+      {
+        "path": "playground-library/pm_matrixUpdate@routines.F90",
+        "sha256": "eefd25bbbccafcb02bc744ffe55317e6bf70223ece2a13002e6af7aa7a7f5735",
+        "before": "submodule (pm_matrixUpdate) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_matrixUpdate) pm_matrixUpdate_routines"
+      },
+      {
+        "path": "playground-library/pm_matrixUpdate@routines.F90",
+        "sha256": "8b47559ce74345b4e654575514e9fc0c327f1097d1bb623ed99631c62b02b893",
+        "before": "end submodule routines",
+        "after": "end submodule pm_matrixUpdate_routines"
+      },
+      {
+        "path": "playground-library/pm_optimization@routines.F90",
+        "sha256": "6217fb812064dcb1facbb001b53b905165c4defd70360da5e27720296b0c55b3",
+        "before": "submodule (pm_optimization) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_optimization) pm_optimization_routines"
+      },
+      {
+        "path": "playground-library/pm_optimization@routines.F90",
+        "sha256": "13e515996b9074534b6c23b87fb04d96a8adae95f26ae0978f4278187b16a63a",
+        "before": "end submodule routines",
+        "after": "end submodule pm_optimization_routines"
+      },
+      {
+        "path": "playground-library/pm_option@routines.F90",
+        "sha256": "97452984d9970c5502aef4584d300c1d48ad36eb3b5c3b22b9204182dc44ac97",
+        "before": "submodule (pm_option) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_option) pm_option_routines"
+      },
+      {
+        "path": "playground-library/pm_option@routines.F90",
+        "sha256": "adbbb987642fd9260f9b6c339091c7b71b7a623ada7584e89ea4f9f83e220b1e",
+        "before": "end submodule routines",
+        "after": "end submodule pm_option_routines"
+      },
+      {
+        "path": "playground-library/pm_os@routines.F90",
+        "sha256": "62556e933e45a37f7ce6bfcb8fa03bf8365fbf5dc5451857a0c2ec771cd79a6f",
+        "before": "submodule (pm_os) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_os) pm_os_routines"
+      },
+      {
+        "path": "playground-library/pm_os@routines.F90",
+        "sha256": "0a29097f0b99b21a42faceb47b5d06fea14fe4150b8adfdedcd7d268bb92fcf6",
+        "before": "end submodule routines",
+        "after": "end submodule pm_os_routines"
+      },
+      {
+        "path": "playground-library/pm_parallelism@routines.F90",
+        "sha256": "26d8f680739486061380dfa456e4ca2addb71296bbc7b816eaf5298907ec9fba",
+        "before": "submodule (pm_parallelism) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_parallelism) pm_parallelism_routines"
+      },
+      {
+        "path": "playground-library/pm_parallelism@routines.F90",
+        "sha256": "4636698a4f99103034b7985308c569665ffc03b92cb3c3d0b450511c960265ce",
+        "before": "end submodule routines",
+        "after": "end submodule pm_parallelism_routines"
+      },
+      {
+        "path": "playground-library/pm_polation@routines.F90",
+        "sha256": "908c2f92d0494657e43a7321fa1ff103cc84decf2113eff72edcb95f1ff44f37",
+        "before": "submodule (pm_polation) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_polation) pm_polation_routines"
+      },
+      {
+        "path": "playground-library/pm_polation@routines.F90",
+        "sha256": "094b0332d9dee57bc909facc42c148b5d9319ded09df7937af5763df8d86c0f3",
+        "before": "end submodule routines",
+        "after": "end submodule pm_polation_routines"
+      },
+      {
+        "path": "playground-library/pm_polynomial@routines.F90",
+        "sha256": "bb694bddfbd97bc1d2212e6a090b27eea33f02a4a045674f4c21212f03092e44",
+        "before": "submodule (pm_polynomial) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_polynomial) pm_polynomial_routines"
+      },
+      {
+        "path": "playground-library/pm_polynomial@routines.F90",
+        "sha256": "ae16a1848ae14fecff754f8b2bc4c0f8191f63628d21262b4fe85197ec994264",
+        "before": "end submodule routines",
+        "after": "end submodule pm_polynomial_routines"
+      },
+      {
+        "path": "playground-library/pm_quadPack@routines.F90",
+        "sha256": "1c0ab7cc0836e42efd08e3aef9972a9db9523a8b707b600cfa7ad135ee91ddb3",
+        "before": "submodule (pm_quadPack) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_quadPack) pm_quadPack_routines"
+      },
+      {
+        "path": "playground-library/pm_quadPack@routines.F90",
+        "sha256": "df1bd10f7f9f5b85bac2dca5701d76e45cef1c8d6de035310c9c263172193930",
+        "before": "end submodule routines",
+        "after": "end submodule pm_quadPack_routines"
+      },
+      {
+        "path": "playground-library/pm_quadRomb@routines.F90",
+        "sha256": "2b969e3109381d67830b24dcc460bf9eb7c596cbdf7da2653ec286981e5d05e8",
+        "before": "submodule (pm_quadRomb) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_quadRomb) pm_quadRomb_routines"
+      },
+      {
+        "path": "playground-library/pm_quadRomb@routines.F90",
+        "sha256": "628b85c720121cfd2c10f3b462b620a2a2add5bd92f8f28baf197af596828c8a",
+        "before": "end submodule routines",
+        "after": "end submodule pm_quadRomb_routines"
+      },
+      {
+        "path": "playground-library/pm_quadTest@routines.F90",
+        "sha256": "16b8514ce53d4b8d723f7c05a8ab5390b5ee835aea17e04eb0b009bf3fed9cdf",
+        "before": "submodule (pm_quadTest) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_quadTest) pm_quadTest_routines"
+      },
+      {
+        "path": "playground-library/pm_quadTest@routines.F90",
+        "sha256": "c4f98586e02b4dd1fd58d60df0e85a2d5e6351522c7f9af77f257a89cf083eb0",
+        "before": "end submodule routines",
+        "after": "end submodule pm_quadTest_routines"
+      },
+      {
+        "path": "playground-library/pm_sampleACT@routines.F90",
+        "sha256": "fe807a214fa2745fb59ca7ba04e7b003e92daf494f55afe9d8e7011c1935ba2d",
+        "before": "submodule (pm_sampleACT) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_sampleACT) pm_sampleACT_routines"
+      },
+      {
+        "path": "playground-library/pm_sampleACT@routines.F90",
+        "sha256": "640eee1cfcfc2f0b7ba85bb285c86e498942df3e9a0678534715eeff677b56c1",
+        "before": "end submodule routines",
+        "after": "end submodule pm_sampleACT_routines"
+      },
+      {
+        "path": "playground-library/pm_sampleAffinity@routines.F90",
+        "sha256": "359a6259d0575cfd859c56aa4c412dbff1a5470b4cba3bb2a7a23111aa5149a2",
+        "before": "submodule (pm_sampleAffinity) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_sampleAffinity) pm_sampleAffinity_routines"
+      },
+      {
+        "path": "playground-library/pm_sampleAffinity@routines.F90",
+        "sha256": "86f9b3fdf0440c0d250e7aa00bc8e7d6cf8ba5373a6af7861766b491ae4cae19",
+        "before": "end submodule routines",
+        "after": "end submodule pm_sampleAffinity_routines"
+      },
+      {
+        "path": "playground-library/pm_sampleCCF@routines.F90",
+        "sha256": "495d83c214e6836566719765735356c0b7a4cbc5612370155a90893443897475",
+        "before": "submodule (pm_sampleCCF) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_sampleCCF) pm_sampleCCF_routines"
+      },
+      {
+        "path": "playground-library/pm_sampleCCF@routines.F90",
+        "sha256": "1399a75bb73fa95b45e48ac1cea6c63d0c577a0b77b6c1da843aec7f4f7e3f44",
+        "before": "end submodule routines",
+        "after": "end submodule pm_sampleCCF_routines"
+      },
+      {
+        "path": "playground-library/pm_sampleCor@routines.F90",
+        "sha256": "9ecb7b14b2d7d74b89e7d010027353b410c7feeace8c75d0b7caafe15206eb4b",
+        "before": "submodule (pm_sampleCor) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_sampleCor) pm_sampleCor_routines"
+      },
+      {
+        "path": "playground-library/pm_sampleCor@routines.F90",
+        "sha256": "5973df200ccade5cf34b2af2f6dc78561c6bfff324d4ee3aebb9e3339c1ea412",
+        "before": "end submodule routines",
+        "after": "end submodule pm_sampleCor_routines"
+      },
+      {
+        "path": "playground-library/pm_sampleCov@routines.F90",
+        "sha256": "3bedb61daa1e8c81ed90aed743f44d763399dce630f3b23d7926a298fe6d0940",
+        "before": "submodule (pm_sampleCov) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_sampleCov) pm_sampleCov_routines"
+      },
+      {
+        "path": "playground-library/pm_sampleCov@routines.F90",
+        "sha256": "9a6dc561ebdfeda14b6b47dde9a943cab39578177c6248618af3da62b08d4b97",
+        "before": "end submodule routines",
+        "after": "end submodule pm_sampleCov_routines"
+      },
+      {
+        "path": "playground-library/pm_sampleECDF@routines.F90",
+        "sha256": "715743e83fef1a889536b71545fb43b163f106fd080b487241b766362842fb82",
+        "before": "submodule (pm_sampleECDF) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_sampleECDF) pm_sampleECDF_routines"
+      },
+      {
+        "path": "playground-library/pm_sampleECDF@routines.F90",
+        "sha256": "b6a0b8044795c5ba2fdace6e7a0ee1afc90d0e0d2d477c8c0193c2791ec47636",
+        "before": "end submodule routines",
+        "after": "end submodule pm_sampleECDF_routines"
+      },
+      {
+        "path": "playground-library/pm_sampleMean@routines.F90",
+        "sha256": "67e04b3b2e2db32cbb40c4077a51d7670295c686d40ec483f1e6301a79532177",
+        "before": "submodule (pm_sampleMean) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_sampleMean) pm_sampleMean_routines"
+      },
+      {
+        "path": "playground-library/pm_sampleMean@routines.F90",
+        "sha256": "911ceadfe419878a63eea705b3eb75d71b20538ec9e479d6965ab6e914d0ef8e",
+        "before": "end submodule routines",
+        "after": "end submodule pm_sampleMean_routines"
+      },
+      {
+        "path": "playground-library/pm_sampleNorm@routines.F90",
+        "sha256": "b05f243b01e9861647583c046149b682d88c86ab95582bdff253b181b2899d27",
+        "before": "submodule (pm_sampleNorm) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_sampleNorm) pm_sampleNorm_routines"
+      },
+      {
+        "path": "playground-library/pm_sampleNorm@routines.F90",
+        "sha256": "1793bdafa27c860839b4a790211a134cc03c9b9166cfb64723423e12a5d58c12",
+        "before": "end submodule routines",
+        "after": "end submodule pm_sampleNorm_routines"
+      },
+      {
+        "path": "playground-library/pm_sampleQuan@routines.F90",
+        "sha256": "7a7ef0fa02df3db3fcc59c4630d45cb1820250077ca4f12b12eee961eedb23c5",
+        "before": "submodule (pm_sampleQuan) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_sampleQuan) pm_sampleQuan_routines"
+      },
+      {
+        "path": "playground-library/pm_sampleQuan@routines.F90",
+        "sha256": "3bcba6ef90adc718058cf5ef6cf73be78df6f81faf010b0a05683ec5e5b7bdd8",
+        "before": "end submodule routines",
+        "after": "end submodule pm_sampleQuan_routines"
+      },
+      {
+        "path": "playground-library/pm_sampleScale@routines.F90",
+        "sha256": "6c18e8bd634c9e822e9f01191df2affc6800097630b6d1cb0843369d8afbad02",
+        "before": "submodule (pm_sampleScale) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_sampleScale) pm_sampleScale_routines"
+      },
+      {
+        "path": "playground-library/pm_sampleScale@routines.F90",
+        "sha256": "c91dabbf2c62dfd389be59aad19283c9341edcca1ca6188366ee918d4465a5ab",
+        "before": "end submodule routines",
+        "after": "end submodule pm_sampleScale_routines"
+      },
+      {
+        "path": "playground-library/pm_sampleShift@routines.F90",
+        "sha256": "a2d7d1f605dd19102dd9fe95515997edac0737955ef7eb23690e23abe8b01e70",
+        "before": "submodule (pm_sampleShift) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_sampleShift) pm_sampleShift_routines"
+      },
+      {
+        "path": "playground-library/pm_sampleShift@routines.F90",
+        "sha256": "189bf14646816aa821fc53bf540f087a0c07d8b59d6c5c19fbb6072e6e4eaa79",
+        "before": "end submodule routines",
+        "after": "end submodule pm_sampleShift_routines"
+      },
+      {
+        "path": "playground-library/pm_sampleVar@routines.F90",
+        "sha256": "ebdb40f71a35ff3c587efc9762247049eae3f40a6e12cfa7f11571e9620fb575",
+        "before": "submodule (pm_sampleVar) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_sampleVar) pm_sampleVar_routines"
+      },
+      {
+        "path": "playground-library/pm_sampleVar@routines.F90",
+        "sha256": "340c6cd67eb3258e4eff7aeaefd59d719149151ba548f1d0d8218e5cbee7cb38",
+        "before": "end submodule routines",
+        "after": "end submodule pm_sampleVar_routines"
+      },
+      {
+        "path": "playground-library/pm_sampleWeight@routines.F90",
+        "sha256": "21fb8113712e73d90dfcd33a57bd0c2d6e9a506145fa0f30148b0b6bb8826f1a",
+        "before": "submodule (pm_sampleWeight) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_sampleWeight) pm_sampleWeight_routines"
+      },
+      {
+        "path": "playground-library/pm_sampleWeight@routines.F90",
+        "sha256": "2f6316ce098bb8dd919939f486ca50e6f40412399a11d23a69885dad62e49783",
+        "before": "end submodule routines",
+        "after": "end submodule pm_sampleWeight_routines"
+      },
+      {
+        "path": "playground-library/pm_sampling@routines.F90",
+        "sha256": "1ef713871667f60d11fa68796eae960f474836135c294c7730c52e9400c72af5",
+        "before": "submodule (pm_sampling) routines",
+        "after": "submodule (pm_sampling) pm_sampling_routines"
+      },
+      {
+        "path": "playground-library/pm_sampling@routines.F90",
+        "sha256": "c08cebb3387222b5ebc3f60d6a244c2f0e3d2dd85468abca0dbe1da9d9af13e2",
+        "before": "end submodule routines",
+        "after": "end submodule pm_sampling_routines"
+      },
+      {
+        "path": "playground-library/pm_statest@routines.F90",
+        "sha256": "9d98f8ce023c66861d769d247472ea432b1aff3b4ec9630ea302e7f6b547ccdd",
+        "before": "submodule (pm_statest) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_statest) pm_statest_routines"
+      },
+      {
+        "path": "playground-library/pm_statest@routines.F90",
+        "sha256": "8e5b86029e80110d0db355041611b80650f981aef4aea5c8259bf75850c79905",
+        "before": "end submodule routines",
+        "after": "end submodule pm_statest_routines"
+      },
+      {
+        "path": "playground-library/pm_str@routines.F90",
+        "sha256": "37ae1c8c63382a6bec86f4595263943be0bd0c00e226a3eaba427dfa65795623",
+        "before": "submodule (pm_str) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_str) pm_str_routines"
+      },
+      {
+        "path": "playground-library/pm_str@routines.F90",
+        "sha256": "805f49e0dd6dea6bee561179e7931dd7b4aeff4e11aca623bcc083231e559fd6",
+        "before": "end submodule routines",
+        "after": "end submodule pm_str_routines"
+      },
+      {
+        "path": "playground-library/pm_strASCII@routines.F90",
+        "sha256": "d45982a379db613c36a9e1dfd09360d18c9b10280f043271518cab8a5566b15e",
+        "before": "submodule (pm_strASCII) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_strASCII) pm_strASCII_routines"
+      },
+      {
+        "path": "playground-library/pm_strASCII@routines.F90",
+        "sha256": "99604a30e7cd6f106cbd4537a4f76e728adbe09ed67701ece35289168a9a4508",
+        "before": "end submodule routines",
+        "after": "end submodule pm_strASCII_routines"
+      },
+      {
+        "path": "playground-library/pm_swap@routines.F90",
+        "sha256": "225e91a3e4107d89979813eb71f58f888eee1e91d254b4ebb51fedcf9e1071ae",
+        "before": "submodule (pm_swap) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_swap) pm_swap_routines"
+      },
+      {
+        "path": "playground-library/pm_swap@routines.F90",
+        "sha256": "3537cbc5d25028067c23a1e6b31693e7d3cd1afcd31fa354e5600fd0ae2a042e",
+        "before": "end submodule routines",
+        "after": "end submodule pm_swap_routines"
+      },
+      {
+        "path": "playground-library/pm_sysInfo@routines.F90",
+        "sha256": "f88a8a7696391eea9049bc5ddffa5cb62ce144f3d9cbfef4563a79e359f6c374",
+        "before": "submodule (pm_sysInfo) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_sysInfo) pm_sysInfo_routines"
+      },
+      {
+        "path": "playground-library/pm_sysInfo@routines.F90",
+        "sha256": "e9e0e121ea56e5e8f8794db08b2650469ac5363b495664e49d8d54f872b4d34e",
+        "before": "end submodule routines",
+        "after": "end submodule pm_sysInfo_routines"
+      },
+      {
+        "path": "playground-library/pm_sysPath@routines.F90",
+        "sha256": "a8272862bf032c37308f2a64e1f70bf02f56fda9f7004aa0ee58b31cbc9e5a1a",
+        "before": "submodule (pm_sysPath) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_sysPath) pm_sysPath_routines"
+      },
+      {
+        "path": "playground-library/pm_sysPath@routines.F90",
+        "sha256": "521e2e27c2d937d9140127364c50b86a57d7ad68e94b0dfbabe9ed04acadd432",
+        "before": "end submodule routines",
+        "after": "end submodule pm_sysPath_routines"
+      },
+      {
+        "path": "playground-library/pm_sysShell@routines.F90",
+        "sha256": "ad79e3616d4696b119c2ec45583f813fc107821bc763e836e1f3fc34244a4379",
+        "before": "submodule (pm_sysShell) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_sysShell) pm_sysShell_routines"
+      },
+      {
+        "path": "playground-library/pm_sysShell@routines.F90",
+        "sha256": "69dd20b79e8472f82816d8766f2f0c6c1711c740a570bccabb849203b63498a7",
+        "before": "end submodule routines",
+        "after": "end submodule pm_sysShell_routines"
+      },
+      {
+        "path": "playground-library/pm_val2complex@routines.F90",
+        "sha256": "70641c4767e5a651b88c83546c575d23430c6cc7431983000ec96576317a2fd9",
+        "before": "submodule (pm_val2complex) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_val2complex) pm_val2complex_routines"
+      },
+      {
+        "path": "playground-library/pm_val2complex@routines.F90",
+        "sha256": "8ebbb594f55539a987b1b74ab99ece19dd26afbb91a6430a4eaf37aecaf3ce31",
+        "before": "end submodule routines",
+        "after": "end submodule pm_val2complex_routines"
+      },
+      {
+        "path": "playground-library/pm_val2int@routines.F90",
+        "sha256": "68877dd16e92ccc12a9720216b6eb900eabd72a89bb57026cc9840dd2ca7a387",
+        "before": "submodule (pm_val2int) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_val2int) pm_val2int_routines"
+      },
+      {
+        "path": "playground-library/pm_val2int@routines.F90",
+        "sha256": "a726f2823ff14c9cc5b1852bce75c1bb1f949edc1f303fb3d741b581295cca1e",
+        "before": "end submodule routines",
+        "after": "end submodule pm_val2int_routines"
+      },
+      {
+        "path": "playground-library/pm_val2logical@routines.F90",
+        "sha256": "391c18f617823b028b27f703547ab8439032b87b5b2504111da2328a7c9cc905",
+        "before": "submodule (pm_val2logical) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_val2logical) pm_val2logical_routines"
+      },
+      {
+        "path": "playground-library/pm_val2logical@routines.F90",
+        "sha256": "5b96dce0b7e717a4a58e52a8e40ac2b7063a54a1a81f4f1a3418e5d7183d901b",
+        "before": "end submodule routines",
+        "after": "end submodule pm_val2logical_routines"
+      },
+      {
+        "path": "playground-library/pm_val2real@routines.F90",
+        "sha256": "ac838b304727b7825b7ba1dfb633bb0734961328f49206b14ca440e02a5dd9c7",
+        "before": "submodule (pm_val2real) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_val2real) pm_val2real_routines"
+      },
+      {
+        "path": "playground-library/pm_val2real@routines.F90",
+        "sha256": "5513dac4f9df109f4e073078f294204ced6b004e50682dbe44ea76ed9c29ee04",
+        "before": "end submodule routines",
+        "after": "end submodule pm_val2real_routines"
+      },
+      {
+        "path": "playground-library/pm_val2str@routines.F90",
+        "sha256": "d59cb9e66b10a0011c5dff28d785e1a245926727747c1f9523dd5c29972a2db3",
+        "before": "submodule (pm_val2str) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_val2str) pm_val2str_routines"
+      },
+      {
+        "path": "playground-library/pm_val2str@routines.F90",
+        "sha256": "552887ae42dbf66e2dfa05ac76fa7c4192ca4893cbf4d4e18cd535867b190060",
+        "before": "end submodule routines",
+        "after": "end submodule pm_val2str_routines"
+      },
+      {
+        "path": "playground-library/pm_ziggurat@routines.F90",
+        "sha256": "b9c34ff83a2df9776e8b96cdf815767fe7ac5d479cced757ea208753fb9d9dbd",
+        "before": "submodule (pm_ziggurat) routines ! LCOV_EXCL_LINE",
+        "after": "submodule (pm_ziggurat) pm_ziggurat_routines"
+      },
+      {
+        "path": "playground-library/pm_ziggurat@routines.F90",
+        "sha256": "f367e541a08eff07d8a10da2bac9d5b5922dabdd41fb7071eae0ec0abccbce62",
+        "before": "end submodule routines",
+        "after": "end submodule pm_ziggurat_routines"
+      }
+    ]
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-30T11:09:58.631134+00:00",
+  "status": "build-failed",
+  "stage": "compilation",
+  "reason": "The reviewed 128 MiB operator allowance passes source staging and prepared-bundle extraction. After checksum-guarded submodule compatibility edits and serial external-module declarations, FPM 0.12 accepts the model and GNU Fortran 16.2.0 starts compilation. The build stops around 24% at pm_sampling_base.F90 because USE pm_sysPath appears inside pm_sampling_base.imp.F90 and the required pm_syspath.mod has not been built. This is a remaining FPM dependency-ordering issue involving a preprocessor include, not the former source-size rejection. Runtime and edited-main cache reuse remain unverified.",
+  "proposed_next_step": "Review preprocessing of the staged Fortran includes before FPM dependency discovery, or an operator-only CMake build/import adapter, while preserving source pins, explicit serial settings, public limits and existing cache keys. Then repeat compilation, the checked normal-sampling/CDF consumer and edited-main cache reuse. The draft is not a verified catalog entry.",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "compiler_invoked": true,
+  "verified_in_playground": false,
+  "source_limit_mib": 128,
+  "configured_translation_units": 370,
+  "unique_child_submodules": 174,
+  "fpm_model_verified": true,
+  "example": "main.f90",
+  "draft": "catalog-draft.json",
+  "diagnostics": "build-attempts.json",
+  "generation_record": "../../../fpm_catalog/generated/paramonte-93a9f4f472894115b9f15ac0c68490af719f44fb.json",
+  "evidence": [
+    {
+      "path": "src/fortran/main/pm_sampling_base.F90",
+      "sha256": "a15f4b77238878dd1ecd84fc8e537e96bf4388c276f0c2b6a2e6d443d0856b82"
+    },
+    {
+      "path": "src/fortran/main/pm_sampling_base.imp.F90",
+      "sha256": "6b60895cd1927c37360d4a5a1bc3fc34dd8c38e456197a797df50ca9097b116d"
+    },
+    {
+      "path": "src/fortran/main/pm_sysPath.F90",
+      "sha256": "5530a426c7f3aebde4bc600ed484101cc2f4dff39cfd7a57c0129cdf185c1418"
+    }
+  ]
+}

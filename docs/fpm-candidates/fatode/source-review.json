@@ -1,0 +1,43 @@
+{
+  "id": "fatode",
+  "repository": "ComputationalScienceLaboratory/FATODE",
+  "revision": "3f237c49bd377644a597c2a49ae5a83f090bfab5",
+  "archive_sha256": "ac953c53526ff8f9ce2e8e4c1f71842aae6c86fb52484a21dbdba234805f659e",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "source_packages": {
+      "computationalsciencelaboratory/fatode": {
+        "manifest": "name = \"fatode\"\nversion = \"0.0.0\"\nlicense = \"GPL-3.0-only\"\n[library]\nsource-dir = \"playground-library\"\ninclude-dir = [\"src\", \".\"]\n[build]\nauto-executables = false\nauto-examples = false\nauto-tests = false\n[install]\nlibrary = true\n[fortran]\nimplicit-typing = true\nimplicit-external = true\nsource-form = \"default\"\n",
+        "sources": [
+          "TLM/ERK_TLM/ERK_TLM_f90_Integrator.F90"
+        ]
+      }
+    },
+    "apt_packages": [
+      "liblapack-dev=3.12.1-6",
+      "libblas-dev=3.12.1-6"
+    ],
+    "environment": {
+      "FPM_FFLAGS": "-std=legacy -fallow-argument-mismatch",
+      "FPM_LDFLAGS": "-llapack -lblas"
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T14:04:20.544152+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/fatode.f90",
+  "verification": {
+    "seconds": 1.183,
+    "build_seconds": 0.16,
+    "library_reused": true,
+    "demo_sha256": "554bec760684767a67524d7e477de7c9dec778bb23a5719c549da0945cc3b34c",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "GPL-3.0-only",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Selected FATODE explicit Runge-Kutta tangent-linear integrator, linked to native BLAS/LAPACK. The FPM wrapper compiles unchanged TLM/ERK_TLM/ERK_TLM_f90_Integrator.F90; bundled precompiled platform binaries are not used. The example augments exponential decay with a constant rate state and differentiates the initial rate using the tangent-linear model, checking the state, rate, and both sensitivities against analytical formulas. It explicitly selects the supplied analytical Jacobian and enables tangent-variable adaptive error control; the initial default finite-difference Jacobian settings missed the requested sensitivity accuracy. No numerical library edits. Implicit/stiff solvers, adjoint integration, sparse solver variants and all ERK methods are not offered or verified."
+}

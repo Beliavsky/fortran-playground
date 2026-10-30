@@ -1,0 +1,33 @@
+{
+  "id": "progress",
+  "repository": "lanl/qmd-progress",
+  "revision": "d78a88a905981cb1e91408fdd95fe6f2f2e3a34c",
+  "release_probes": [
+    {
+      "tag": "v1.3.0",
+      "revision": "6c3b0f66de31082c6687753e1cbcee6ab4f0d55a",
+      "status": "preparation-failed",
+      "reason": "Source download exceeds its size limit."
+    },
+    {
+      "tag": "v1.2.0",
+      "revision": "07ff7c5dd59479d4bc15abcfdb48fc03c133f35e",
+      "status": "preparation-failed",
+      "reason": "Source download exceeds its size limit."
+    }
+  ],
+  "checked_at": "2026-10-30T11:26:42.570969+00:00",
+  "status": "preparation-failed",
+  "stage": "preparation",
+  "compiler_invoked": false,
+  "verified_in_playground": false,
+  "error": "Source download exceeds its size limit.",
+  "reason": "The pinned main archive and release tags v1.3.0 and v1.2.0 exceed the unchanged 16 MiB compressed download limit. Downloads stop before complete archive validation, configuration or compilation; no complete archive hash or compiler failure is claimed.",
+  "proposed_next_step": "Obtain a smaller upstream source distribution or separately review a narrowly pinned operator download allowance. Then build the required BML dependency and adapt a small numerical example for sandbox verification.",
+  "dependency_preparation": {
+    "repository": "lanl/bml",
+    "revision": "61a529f79cd9fe019647972d7b4384613b589039",
+    "archive_sha256": "976d7a2480f1751524b4a79ddcc019c1fa8be871ece96ee73f5f2fdf7e419891",
+    "status": "source archive prepared only; not compiled or added"
+  }
+}

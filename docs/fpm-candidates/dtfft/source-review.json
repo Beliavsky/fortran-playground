@@ -1,0 +1,72 @@
+{
+  "id": "dtfft",
+  "repository": "ShatrovOA/dtFFT",
+  "revision": "bbfd6746be7482bd8366ccb09a73b72882573984",
+  "archive_sha256": "9ca97e043f23997f490f73eeba01abe0e3a787005d1a7a37d25b4d196810de48",
+  "catalog_build": {
+    "adapter_sha256": "63a30c28b5a3f5fc5c4e3a88bdb65c171bdde90b0999773c0d9bad5115f57d90",
+    "source_packages": {
+      "shatrovoa/dtfft": {
+        "manifest": "name=\"dtfft\"\nversion=\"0.0.0\"\nlicense=\"GPL-3.0-or-later\"\n[library]\nsource-dir=\"playground-library\"\ninclude-dir=[\"src/interfaces/fft/fftw\", \"include\", \"src/include\", \"playground-generated\"]\n[build]\nauto-executables=false\nauto-examples=false\nauto-tests=false\nexternal-modules=[\"mpi\", \"mpi_f08\", \"dtfft_abstract_compressor\", \"dtfft_backend_cufftmp_m\", \"dtfft_backend_nccl_m\", \"dtfft_compressor_zfp\", \"dtfft_executor_cufft_m\", \"dtfft_executor_mkl_m\", \"dtfft_executor_vkfft_m\", \"dtfft_interface_cuda\", \"dtfft_interface_cuda_runtime\", \"dtfft_interface_nccl\", \"dtfft_interface_nvrtc\", \"dtfft_interface_nvshmem\", \"dtfft_kernel_device\", \"omp_lib\"]\nlink=[\"fftw3\", \"fftw3f\", \"mpichfort\", \"mpich\"]\n[install]\nlibrary=true\n[preprocess.cpp]\nmacros=[\"ADDR_KIND=int32\", \"CNT_KIND=int32\", \"ENABLE_INPUT_CHECK\"]\n",
+        "sources": [
+          "src/dtfft.F90",
+          "src/dtfft_abstract_backend.F90",
+          "src/dtfft_abstract_executor.F90",
+          "src/dtfft_abstract_kernel.F90",
+          "src/dtfft_abstract_reshape_handle.F90",
+          "src/dtfft_backend_mpi.F90",
+          "src/dtfft_config.F90",
+          "src/dtfft_errors.F90",
+          "src/dtfft_kernel_host.F90",
+          "src/dtfft_parameters.F90",
+          "src/dtfft_pencil.F90",
+          "src/dtfft_plan.F90",
+          "src/dtfft_reshape_handle_datatype.F90",
+          "src/dtfft_reshape_handle_generic.F90",
+          "src/dtfft_reshape_plan.F90",
+          "src/dtfft_reshape_plan_base.F90",
+          "src/dtfft_transpose_plan.F90",
+          "src/dtfft_utils.F90",
+          "src/interfaces/fft/fftw/dtfft_executor_fftw_m.F90",
+          "src/interfaces/fft/fftw/dtfft_interface_fftw_m.F90",
+          "src/interfaces/fft/fftw/dtfft_interface_fftw_native_m.F90"
+        ],
+        "generated": {
+          "asset": "dtfft-bbfd6746be7482bd8366ccb09a73b72882573984.json",
+          "sha256": "08d7977782f967f19eee94fa4439ed4e19b20d6b2282e3b9927a23e45144d6ee"
+        }
+      }
+    },
+    "apt_packages": [
+      "libmpich-dev=4.3.0+really4.2.1-1",
+      "libfftw3-dev=3.3.10-2+b1"
+    ],
+    "environment": {
+      "FPM_FFLAGS": "-I/usr/include/x86_64-linux-gnu/mpich -I/usr/include -ffree-line-length-none",
+      "UCX_TLS": "self,sm"
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-30T00:29:48.037366+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/dtfft.f90",
+  "verification": {
+    "seconds": 1.816,
+    "build_seconds": 0.561,
+    "library_reused": true,
+    "demo_sha256": "f51037db5a92c6cc10076759ad32474d544c75effc497180914135c4d629a68b",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "GPL-3.0-or-later",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "The CPU-only Fortran target is configured upstream with FFTW enabled, MPICH, input checks, and no C/C++/Python API, GPU, compression or OpenMP support. Its complete generated configuration header and source selection are checksum-locked. The checked main initializes exactly one MPI process with self/shared-memory UCX transports, transforms an 8-by-8 complex impulse, independently checks that every forward coefficient equals one, then verifies inverse reconstruction after normalization. J1 covers the multidimensional Fourier transform. Multiple processes, distributed performance and other FFT executors are not verified by this example. Local exports require compatible MPICH and FFTW development libraries and locally appropriate include/link flags. GPL-3.0-or-later notices are retained.",
+  "initial_preparation_findings": [
+    "Flattening the selected library sources initially removed the implicit adjacent-directory search for args_execute.i90. The verified wrapper explicitly includes the original src/interfaces/fft/fftw directory for both upstream argument include files. No upstream FFT algorithm was patched. CMake-selected CPU/FFTW sources, definitions and the generated configuration are locked; the sample verifies both the known forward impulse transform and inverse reconstruction in one MPI process."
+  ],
+  "generated_source_support": "See ../../fpm-generated-sources.md. Audited configuration assets and original input hashes are included in local project exports; CMake is not run for visitors.",
+  "runtime_note": "MPICH/UCX emits a diagnostic about the sandbox lacking /sys/class/net even with self/shared-memory transports selected. It is nonfatal in this verified single-process run; both FFT checks pass with zero maximum error. Multi-process operation is not claimed."
+}

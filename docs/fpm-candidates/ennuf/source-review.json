@@ -1,0 +1,59 @@
+{
+  "id": "ennuf",
+  "repository": "MetOffice/ennuf",
+  "revision": "2555a7f1560ef3cb7cf707221fa5bb1b5334ee6f",
+  "archive_sha256": "1854fdfcb0594d79983338991333556a3fdb89b8eaebb827ba93037d833f7cf1",
+  "catalog_build": {
+    "adapter_sha256": "6c8aeaa3de63975428f8d302160907d0fa752820f913fc17c60cab133eaca72d",
+    "source_packages": {
+      "metoffice/ennuf": {
+        "manifest": "name=\"ennuf\"\nversion=\"0.0.0\"\nlicense=\"BSD-3-Clause\"\n[library]\nsource-dir=\"playground-library\"\n[build]\nauto-executables=false\nauto-examples=false\nauto-tests=false\n[fortran]\nimplicit-external=true\nimplicit-typing=true\n[install]\nlibrary=true\n",
+        "sources": [
+          "src/ennuf/_internal/fortran/neural_net_mod.f90",
+          "playground-generated/ennuf_example_mod.f90"
+        ],
+        "generated": {
+          "asset": "ennuf-2555a7f1560ef3cb7cf707221fa5bb1b5334ee6f.json",
+          "sha256": "6f7fc6b3b9943943fd294017179004dfc37567dfdd637aabed2d0908dbdb9a7b"
+        }
+      }
+    },
+    "environment": {
+      "FPM_FFLAGS": "-ffree-line-length-none"
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-30T03:06:28.798191+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/ennuf.f90",
+  "verification": {
+    "seconds": 1.415,
+    "build_seconds": 0.362,
+    "library_reused": true,
+    "demo_sha256": "bdf49713f9e21518812314e3325cf4be2e2e21b290c48a1277e6eaf8f3bee469",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "BSD-3-Clause",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "The pinned upstream neural_net_mod module is compiled with an audited, generated fixed-weight model: two inputs, two ReLU hidden units and one output in REAL32. Operator generation uses the author Model/Dense/Activation API and NumPy 2.2.6; neither TensorFlow, PyTorch nor Python inference runs in visitor jobs. The generator sorts the imported layer routine names for reproducibility; network operations are unchanged. Four inputs exercise positive and clipped hidden units and predictions are checked against independently evaluated weights and biases, including negative and positive outputs and finiteness. K covers inference as approximation; no least-squares fitting or training classification is inferred. The sample network is illustrative, not a trained scientific model. Other network layers, external model conversion and training are not verified. BSD-3-Clause and Crown copyright notices are retained.",
+  "initial_preparation_findings": [
+    "The upstream Model/Dense/Activation API generates a fixed-weight network using only NumPy 2.2.6. Imported procedure names are sorted for platform-independent generation. The original Fortran inference module is unchanged; no Python training framework or interpreter is needed for visitor execution."
+  ],
+  "configuration_record": "../../../fpm_catalog/generated/ennuf-2555a7f1560ef3cb7cf707221fa5bb1b5334ee6f.json",
+  "generated_source_support": "See ../../fpm-generated-sources.md. Configuration is generated and reviewed by the operator; visitors install the locked asset.",
+  "numerical_check": {
+    "expected_predictions": [
+      12,
+      -4.75,
+      2,
+      1
+    ],
+    "absolute_tolerance": 1e-06,
+    "precision": "REAL32",
+    "trained_model": false
+  }
+}

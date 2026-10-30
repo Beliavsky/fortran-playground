@@ -1,0 +1,41 @@
+{
+  "id": "formal",
+  "repository": "BerkeleyLab/formal",
+  "revision": "d28eee9b37b4b74abe7f21bb2ccbdfb5c17f3e8a",
+  "archive_sha256": "97a65b185354b87ef27aef72cb730b8f3db6acb32b1ce0387f6f845ba64d5d9b",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "environment": {
+      "FPM_FFLAGS": "-fcoarray=single -ffree-line-length-none"
+    }
+  },
+  "dependencies": [
+    {
+      "repository": "berkeleylab/julienne",
+      "revision": "974ff80958dda5d0ad7d75b047eec4e7d123dfda",
+      "sha256": "c880b0e5c01495df14751e2229bb35cbfae8a03f27b70ce593597ab913cffa2c"
+    },
+    {
+      "repository": "berkeleylab/assert",
+      "revision": "1eb0cb9ce1421c76b6ab977370b6339918f20918",
+      "sha256": "a40928c0b3dc0b480a281d6730c1bc168128cb41ae00f268c84409b67af7af43"
+    }
+  ],
+  "checked_at": "2026-10-29T18:44:12.105846+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/formal.f90",
+  "verification": {
+    "seconds": 2.464,
+    "build_seconds": 1.001,
+    "library_reused": true,
+    "demo_sha256": "39e8847b80422516e1d613e5fed4a331eb49ccf616cc794e318e86a36c4eca74",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "LicenseRef-Berkeley-Formal",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Mimetic vector-calculus library with pinned Julienne and Assert dependencies. A single-image coarray build is used. The checked consumer adapts the author's extended Gauss-divergence example to f=x**2/2 and v=x on a 64-cell unit interval. It checks the two volume integrals against 1/3 and 1/6, the boundary flux against 1/2, finiteness and the conservation residual using single-precision tolerances. The command-line parsing and shell display calls of the upstream example are omitted. Library numerical sources are unchanged. Other 2D/3D operators, time integration and convergence orders are not validated. Original Berkeley Lab license terms, including the enhancements clause, are retained; this is not labeled plain BSD-3-Clause."
+}

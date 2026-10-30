@@ -1,0 +1,67 @@
+{
+  "id": "libmbd",
+  "repository": "libmbd/libmbd",
+  "revision": "77d7ab424d21f43dea9f57734b355ce4ea4d1a42",
+  "archive_sha256": "b772f07bcca8686b0beb25abf434a8180e5230936c6d44cacbcb3a7c3aac0575",
+  "catalog_build": {
+    "adapter_sha256": "63a30c28b5a3f5fc5c4e3a88bdb65c171bdde90b0999773c0d9bad5115f57d90",
+    "source_packages": {
+      "libmbd/libmbd": {
+        "manifest": "name=\"libmbd\"\nversion=\"0.0.0\"\nlicense=\"MPL-2.0\"\n[library]\nsource-dir=\"playground-library\"\ninclude-dir=[\"src\", \"playground-generated\"]\n[build]\nauto-executables=false\nauto-examples=false\nauto-tests=false\nexternal-modules=[\"mbd_blacs\", \"mbd_elsi\", \"mbd_mpi\", \"mbd_scalapack\"]\nlink=[\"openblas\"]\n[install]\nlibrary=true\n",
+        "sources": [
+          "playground-generated/mbd_version.f90",
+          "src/mbd.F90",
+          "src/mbd_c_api.F90",
+          "src/mbd_constants.f90",
+          "src/mbd_coulomb.f90",
+          "src/mbd_damping.F90",
+          "src/mbd_defaults.f90",
+          "src/mbd_density.f90",
+          "src/mbd_dipole.F90",
+          "src/mbd_formulas.f90",
+          "src/mbd_geom.F90",
+          "src/mbd_gradients.f90",
+          "src/mbd_hamiltonian.F90",
+          "src/mbd_lapack.f90",
+          "src/mbd_linalg.F90",
+          "src/mbd_matrix.F90",
+          "src/mbd_methods.F90",
+          "src/mbd_rpa.F90",
+          "src/mbd_scs.f90",
+          "src/mbd_ts.F90",
+          "src/mbd_utils.F90",
+          "src/mbd_vdw_param.f90"
+        ],
+        "generated": {
+          "asset": "libmbd-77d7ab424d21f43dea9f57734b355ce4ea4d1a42.json",
+          "sha256": "a26b1b66439c6dd0ae9198ff1cecd5ed38bb892e435652fd7ca3d7898cc3b284"
+        }
+      }
+    },
+    "apt_packages": [
+      "libopenblas-dev=0.3.29+ds-3"
+    ]
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-30T00:29:48.037366+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/libmbd.f90",
+  "verification": {
+    "seconds": 1.896,
+    "build_seconds": 0.631,
+    "library_reused": true,
+    "demo_sha256": "4389061fb559e64401d63638bd8ab3ac58a2c5b8b92e82a1aea1f09a0cd6a90a",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MPL-2.0",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "The serial Fortran library and Fortran-written C interface are selected from the upstream CMake target and linked with pinned OpenBLAS. MPI/ScaLAPACK and ELSI are disabled. An audited version module uses an explicitly identified 0.0.0 plus pinned-commit suffix for the Git archive, rather than claiming a release version. The checked main adapts the author's argon-dimer tests at four angstrom separation, verifies dispersion energy and gradient norm against upstream reference values, checks finite results and equal/opposite gradients, and checks library exceptions. D4 covers the Hamiltonian diagonalization used by the many-body dispersion calculation; Z denotes the domain-specific physical model, not a general-purpose eigensolver interface. Other molecules, periodic systems, distributed runs and all available models are outside this consumer verification scope. MPL-2.0 notices are retained.",
+  "initial_preparation_findings": [
+    "The pinned Git archive lacks release-version metadata required by the upstream CMake configuration. Operator configuration supplies an explicit 0.0.0 plus pinned-commit suffix through the upstream version-tag input mechanism. The generated version module changes no numerical procedures. Serial energy, gradient norm and equal/opposite-gradient checks use the upstream argon-dimer reference values."
+  ],
+  "generated_source_support": "See ../../fpm-generated-sources.md. Audited configuration assets and original input hashes are included in local project exports; CMake is not run for visitors."
+}

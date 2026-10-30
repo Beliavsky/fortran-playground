@@ -1,0 +1,91 @@
+{
+  "id": "ntpoly",
+  "repository": "william-dawson/NTPoly",
+  "revision": "7b3d22f76226af1402e9b0a5be18a496e4addc28",
+  "archive_sha256": "006771f80f6ef604da7eb2480d95c492437cd633be5c8e79ef63b8616a419a7a",
+  "catalog_build": {
+    "adapter_sha256": "57d6ae25c7ae46d94a499cb7947261010bb800c7c531caf90592e85a5445505d",
+    "apt_packages": [
+      "libmpich-dev=4.3.0+really4.2.1-1",
+      "libopenblas-dev=0.3.29+ds-3"
+    ],
+    "environment": {
+      "FPM_FFLAGS": "-fopenmp -I/usr/include/x86_64-linux-gnu/mpich",
+      "UCX_TLS": "self,sm"
+    },
+    "source_packages": {
+      "william-dawson/ntpoly": {
+        "manifest": "name = \"ntpoly\"\nversion = \"0.0.0\"\nlicense = \"MIT\"\n[library]\nsource-dir = \"playground-library\"\ninclude-dir = [\"Source/Fortran\"]\n[build]\nexternal-modules = [\"mpi\", \"eigen_libs_mod\"]\nlink = [\"mpichfort\", \"mpich\", \"openblas\"]\nauto-executables = false\nauto-examples = false\nauto-tests = false\n[install]\nlibrary = true\n[fortran]\nimplicit-typing = true\nimplicit-external = true\nsource-form = \"default\"\n",
+        "sources": [
+          "Source/Fortran/AnalysisModule.F90",
+          "Source/Fortran/ChebyshevSolversModule.F90",
+          "Source/Fortran/CholeskySolversModule.F90",
+          "Source/Fortran/ConvergenceMonitorModule.F90",
+          "Source/Fortran/DataTypesModule.F90",
+          "Source/Fortran/DensityMatrixSolversModule.F90",
+          "Source/Fortran/DMatrixModule.F90",
+          "Source/Fortran/EigenBoundsModule.F90",
+          "Source/Fortran/EigenExaModule.F90",
+          "Source/Fortran/EigenSolversModule.F90",
+          "Source/Fortran/ErrorModule.F90",
+          "Source/Fortran/ExponentialSolversModule.F90",
+          "Source/Fortran/FermiOperatorModule.F90",
+          "Source/Fortran/GemmTasksModule.F90",
+          "Source/Fortran/GeometryOptimizationModule.F90",
+          "Source/Fortran/HermiteSolversModule.F90",
+          "Source/Fortran/InverseSolversModule.F90",
+          "Source/Fortran/LinearSolversModule.F90",
+          "Source/Fortran/LoadBalancerModule.F90",
+          "Source/Fortran/LoggingModule.F90",
+          "Source/Fortran/MatrixConversionModule.F90",
+          "Source/Fortran/MatrixMarketModule.F90",
+          "Source/Fortran/MatrixMapsModule.F90",
+          "Source/Fortran/MatrixMemoryPoolModule.F90",
+          "Source/Fortran/MatrixReduceModule.F90",
+          "Source/Fortran/NTMPIModule.F90",
+          "Source/Fortran/PermutationModule.F90",
+          "Source/Fortran/PMatrixMemoryPoolModule.F90",
+          "Source/Fortran/PolynomialSolversModule.F90",
+          "Source/Fortran/ProcessGridModule.F90",
+          "Source/Fortran/PSMatrixAlgebraModule.F90",
+          "Source/Fortran/PSMatrixModule.F90",
+          "Source/Fortran/RootSolversModule.F90",
+          "Source/Fortran/SignSolversModule.F90",
+          "Source/Fortran/SMatrixAlgebraModule.F90",
+          "Source/Fortran/SMatrixModule.F90",
+          "Source/Fortran/SingularValueSolversModule.F90",
+          "Source/Fortran/SolverParametersModule.F90",
+          "Source/Fortran/SquareRootSolversModule.F90",
+          "Source/Fortran/SVectorModule.F90",
+          "Source/Fortran/TimerModule.F90",
+          "Source/Fortran/TrigonometrySolversModule.F90",
+          "Source/Fortran/TripletListModule.F90",
+          "Source/Fortran/TripletModule.F90",
+          "Source/Fortran/test_ntpoly_link.f90"
+        ]
+      }
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-29T21:18:06.912825+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/ntpoly.f90",
+  "verification": {
+    "seconds": 2.247,
+    "build_seconds": 0.574,
+    "library_reused": true,
+    "demo_sha256": "7d4371cca19c9871a0c7e884d0076c9f98b414ac5cdefd939cf1126f87f6c02c",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "The upstream Fortran library source set is wrapped for FPM with pinned MPICH and OpenBLAS native dependencies. The verified example uses exactly one MPI process, serialized MPI thread support and shared-memory/self UCX transports in the restricted sandbox. For a real symmetric positive-definite 2-by-2 matrix with eigenvalues 1 and 9, it checks SquareRoot, InverseSquareRoot and Invert against analytic matrices and independent product residuals, rejecting nonfinite values. D covers matrix functions and D2 covers inversion. Multiple MPI processes, distributed scaling, complex matrices and other solver families are outside this verification scope. Local exports require MPI/OpenBLAS development libraries and locally appropriate compiler/linker flags.",
+  "initial_consumer_findings": [
+    "The initial wrappers omitted external module declarations; FPM stopped scanning first at mpi, then at eigen_libs_mod. The verified wrapper declares both as external. The EigenExa USE is under the upstream #if EIGENEXA guard, which remains disabled; no EigenExa library is required or advertised."
+  ],
+  "runtime_note": "One MPI process only. The operator environment limits UCX transports to self,sm; public requests cannot override it. UCX still emits a network-discovery diagnostic about /sys/class/net, which gVisor does not expose. The verified consumer exits zero and all analytic and residual checks pass. The diagnostic is retained verbatim in verified-output.txt, not hidden or treated as numerical output."
+}

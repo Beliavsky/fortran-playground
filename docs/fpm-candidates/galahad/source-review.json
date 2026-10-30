@@ -1,0 +1,24 @@
+{
+  "id": "galahad",
+  "repository": "ralna/GALAHAD",
+  "revision": "4275b98e4fdf9af1141d302f04ef944bcda23d32",
+  "status": "deferred",
+  "stage": "preparation",
+  "checked_at": "2026-10-29T21:16:38.723984+00:00",
+  "limit_bytes": 16777216,
+  "reason": "The current source archive and tags v5.5.3 and v5.5.2 exceed the unchanged 16 MiB source download limit. Preparation stops before extraction or compilation; no compiler failure is claimed. Complete archive checksums are unavailable because bounded downloads are aborted at the limit. A smaller reproducible source distribution or separately reviewed preparation support is needed.",
+  "release_checks": [
+    {
+      "tag": "v5.5.3",
+      "revision": "4275b98e4fdf9af1141d302f04ef944bcda23d32",
+      "limit_bytes": 16777216,
+      "preparation_error": "Source download exceeds its size limit."
+    },
+    {
+      "tag": "v5.5.2",
+      "revision": "e5b15008643f85144e940676f278035441a58f13",
+      "limit_bytes": 16777216,
+      "preparation_error": "Source download exceeds its size limit."
+    }
+  ]
+}

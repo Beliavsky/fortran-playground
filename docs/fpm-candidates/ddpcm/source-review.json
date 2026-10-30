@@ -1,0 +1,58 @@
+{
+  "id": "ddpcm",
+  "repository": "filippolipparini/ddPCM",
+  "revision": "36f22feb86c81c6ba1f59c373ef215368d3e3c13",
+  "archive_sha256": "a99669b3049317bb2e61cb696eb4252a0fd63b00c2aa60cb9ff2916445f87056",
+  "catalog_build": {
+    "adapter_sha256": "6c8aeaa3de63975428f8d302160907d0fa752820f913fc17c60cab133eaca72d",
+    "source_packages": {
+      "filippolipparini/ddpcm": {
+        "manifest": "name=\"ddpcm\"\nversion=\"0.0.0\"\nlicense=\"LGPL-3.0-or-later\"\n[library]\nsource-dir=\"playground-library\"\n[build]\nlink=[\"openblas\"]\nauto-executables=false\nauto-examples=false\nauto-tests=false\n[fortran]\nsource-form=\"default\"\nimplicit-external=true\nimplicit-typing=true\n[install]\nlibrary=true\n",
+        "sources": [
+          "cosmo.f90",
+          "ddcosmo.f90",
+          "efld.f90",
+          "forces_dd.f90",
+          "jacobi_diis.f90",
+          "llgnew.f",
+          "matvec.f90",
+          "mkrhs.f90"
+        ]
+      }
+    },
+    "apt_packages": [
+      "libopenblas-dev=0.3.29+ds-3"
+    ],
+    "environment": {
+      "FPM_FFLAGS": "-ffree-line-length-none -fallow-argument-mismatch"
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-30T03:06:28.798191+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/ddpcm.f90",
+  "verification": {
+    "seconds": 1.774,
+    "build_seconds": 0.522,
+    "library_reused": true,
+    "demo_sha256": "1cc4c37ad91956ef36fecf878399658b6f21fc2f99704de8746a31f52e4aa4af",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "LGPL-3.0-or-later",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "The pinned ddCOSMO library and original fixed-form Lebedev quadrature source are wrapped for FPM with extension-based source form and legacy external interfaces. OpenMP directives are inactive in this serial profile and OpenBLAS supplies dense linear algebra. The checked consumer adapts the author main and formaldehyde input, embedding its four-atom coordinates, radii, charges and solver settings. It compares solvation energy and all force components against the author reference output, requires finite values and checks zero net force. Full-sized dummy arrays replace the unused one-element placeholders in the example while leaving library numerical routines unchanged. D2 identifies the Jacobi/DIIS linear-system solution used by cosmo; Z denotes the physical solvation model. Other molecules, solvent parameters, quantum densities and parallel performance are outside this verification scope. LGPL notices and author reference requests remain in the source tree.",
+  "initial_preparation_findings": [
+    "FPM defaults to free-form source interpretation; the original llgnew.f is fixed form. Setting source-form=\"default\" in this reviewed manifest preserves compiler extension-based form selection, without rewriting the quadrature code. The consumer embeds the author formaldehyde data and replaces unused length-one dummy arrays with full-sized arrays; library algorithms and reference parameters are unchanged."
+  ],
+  "numerical_check": {
+    "reference_energy_kcal_mol": -0.648257,
+    "energy_tolerance_kcal_mol": 2e-06,
+    "force_component_tolerance_atomic_units": 2e-07,
+    "net_force_tolerance_atomic_units": 1e-07,
+    "atom_count": 4
+  }
+}

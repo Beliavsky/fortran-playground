@@ -1,0 +1,42 @@
+{
+  "id": "finer",
+  "repository": "szaghi/FiNeR",
+  "revision": "e898add18d36456d0bd0d46c02fef51ded741d6d",
+  "archive_sha256": "273df23e7f07031ff9b3a357143085d104ae4c6529a7746442e97b1ce4380622",
+  "links": [
+    {
+      "path": "FiNeR-e898add18d36456d0bd0d46c02fef51ded741d6d/CONTRIBUTING.md",
+      "target": "docs/guide/contributing.md"
+    }
+  ],
+  "status": "deferred",
+  "stage": "preparation",
+  "checked_at": "2026-10-29T20:11:03.353709+00:00",
+  "reason": "The current source archive and tags v2.3.0 and v2.2.0 contain a CONTRIBUTING.md symbolic link and are rejected by the unchanged source extractor before compilation. No compiler failure is claimed. The current FPM manifest also pins StringiFor; dependencies were not downloaded after root extraction was rejected.",
+  "release_checks": [
+    {
+      "tag": "v2.3.0",
+      "revision": "f19c7166228099f6cdbed9eb2bb37f2b0f8d8cd4",
+      "archive_sha256": "7422e3fe0f6e04bea33d4146d6282a9d8cba48e524241719bc42a124024d73d1",
+      "links": [
+        {
+          "path": "FiNeR-f19c7166228099f6cdbed9eb2bb37f2b0f8d8cd4/CONTRIBUTING.md",
+          "target": "docs/guide/contributing.md"
+        }
+      ],
+      "preparation_error": "Package archive contains an unsafe path, link, or special file."
+    },
+    {
+      "tag": "v2.2.0",
+      "revision": "0696206ecdc13a34045796976d2a9b9a59a81706",
+      "archive_sha256": "1c3c514bb6968688bd783fea4d6ad65a06c65c895c8e7d872a185f810836c2a6",
+      "links": [
+        {
+          "path": "FiNeR-0696206ecdc13a34045796976d2a9b9a59a81706/CONTRIBUTING.md",
+          "target": "docs/guide/contributing.md"
+        }
+      ],
+      "preparation_error": "Package archive contains an unsafe path, link, or special file."
+    }
+  ]
+}

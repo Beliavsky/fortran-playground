@@ -1,0 +1,48 @@
+{
+  "latest_attempt": {
+    "revision": "844611933cba06d71490033e68b355f6f0ff704f",
+    "archive_sha256": "d136b293ca7ce0f31cd71c5c67dbde265b6cc0c178df1cdfb8ccf0ef580dffd7",
+    "links": [
+      {
+        "path": "fortranlib-844611933cba06d71490033e68b355f6f0ff704f/test/fpm/src/lib_algebra.f90",
+        "target": "../../../src/lib_algebra.f90"
+      },
+      {
+        "path": "fortranlib-844611933cba06d71490033e68b355f6f0ff704f/test/fpm/src/lib_array.f90",
+        "target": "../../../src/lib_array.f90"
+      },
+      {
+        "path": "fortranlib-844611933cba06d71490033e68b355f6f0ff704f/test/fpm/src/lib_constants.f90",
+        "target": "../../../src/lib_constants.f90"
+      },
+      {
+        "path": "fortranlib-844611933cba06d71490033e68b355f6f0ff704f/test/fpm/src/lib_random.f90",
+        "target": "../../../src/lib_random.f90"
+      },
+      {
+        "path": "fortranlib-844611933cba06d71490033e68b355f6f0ff704f/test/fpm/src/lib_statistics.f90",
+        "target": "../../../src/lib_statistics.f90"
+      },
+      {
+        "path": "fortranlib-844611933cba06d71490033e68b355f6f0ff704f/test/fpm/src/type_angle3d.f90",
+        "target": "../../../src/type_angle3d.f90"
+      },
+      {
+        "path": "fortranlib-844611933cba06d71490033e68b355f6f0ff704f/test/fpm/src/type_pdf.f90",
+        "target": "../../../src/type_pdf.f90"
+      },
+      {
+        "path": "fortranlib-844611933cba06d71490033e68b355f6f0ff704f/test/fpm/src/type_stokes.f90",
+        "target": "../../../src/type_stokes.f90"
+      },
+      {
+        "path": "fortranlib-844611933cba06d71490033e68b355f6f0ff704f/test/fpm/src/type_vector3d.f90",
+        "target": "../../../src/type_vector3d.f90"
+      }
+    ],
+    "preparation_error": "Package archive contains an unsafe path, link, or special file."
+  },
+  "selected_pin": "60fd094d3e137137ce00ec120b085e9b23ebf68b",
+  "selected_archive_sha256": "2306ae4dedaa431c7a77f8cbc15e8ab3c04230de3a8cf0c38654f065db649536",
+  "policy": "No extraction rules changed. The selected revision predates source symlinks in the upstream test suite."
+}

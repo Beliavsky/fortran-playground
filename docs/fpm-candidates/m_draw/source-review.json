@@ -1,0 +1,46 @@
+{
+  "id": "m_draw",
+  "repository": "urbanjost/M_draw",
+  "revision": "a70c305f607cdc1b3e95d5c2ed3b723dcc803204",
+  "archive_sha256": "0ab0d2fec6609319654712ca96daf98c0602f4c64334d206b26704812e16c5fc",
+  "catalog_build": {
+    "adapter_sha256": "66e8249cbc0eb57ffecf9f04801ede2060312d64ba2fa2d839b07fdc746f5f8c",
+    "apt_packages": [
+      "libx11-dev=2:1.8.12-1"
+    ]
+  },
+  "dependencies": [],
+  "catalog_patches": {
+    "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+    "edits": [
+      {
+        "path": "fpm.toml",
+        "sha256": "488da4aae1338c781b1c2e3dc06fab5f1337a43990531847811232c42908d407",
+        "before": "source-dir = \"src\"",
+        "after": "source-dir = \"src\"\ninclude-dir = [\"src/inc\"]"
+      }
+    ]
+  },
+  "checked_at": "2026-10-29T20:13:47.719614+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/m_draw.f90",
+  "verification": {
+    "seconds": 1.729,
+    "build_seconds": 0.513,
+    "library_reused": true,
+    "demo_sha256": "7dfd427c9916881a5336dff723348d77dd14f8d9905ea6d17aa29c13321394f9",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "Unlicense",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Upstream mixed C/Fortran FPM library, with a checksum-guarded manifest edit adding its src/inc header directory. The X11 link dependency is retained but the checked main uses the PPM file driver, requiring no display server or Hershey font files. A 20-segment blue parabola is rendered with the PPM driver; the consumer checks P3 magic, image dimensions, color range, every pixel range and the presence of blue curve pixels. The ordinary image collector converts the generated PPM to a bounded PNG browser preview. The SVG driver aborted during font initialization when no Hershey fonts were supplied; no upstream driver code is patched, and the example uses PPM. Interactive drivers, all drawing primitives, software text/font setup and SVG output are not validated.",
+  "known_limitations": [
+    "The SVG driver aborts during font initialization without a Hershey font. The verified example uses PPM.",
+    "The PPM driver clears its raster to black, irrespective of the selected clear color."
+  ],
+  "license_notes": "Upstream root LICENSE is Unlicense and implementation headers identify public-domain code; the upstream FPM manifest labels the package MIT. Root license and representative source notices are retained."
+}

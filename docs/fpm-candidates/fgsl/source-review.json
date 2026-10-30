@@ -1,0 +1,74 @@
+{
+  "id": "fgsl",
+  "repository": "reinh-bader/fgsl",
+  "revision": "27a3e7cc0809623bcfde680c39a6fdcf0f590c4c",
+  "archive_sha256": "2c592ebb37d6ba1303153bac3ba0cee40585232d0d268ef99323b9849e85fbc9",
+  "catalog_build": {
+    "adapter_sha256": "e34f911192ec7459f4becd43da08a8df4dd8a5fd89707941f2cbffc607e82c25",
+    "source_packages": {
+      "reinh-bader/fgsl": {
+        "manifest": "name=\"fgsl\"\nversion=\"0.0.0\"\nlicense=\"GPL-2.0-or-later\"\n[library]\nsource-dir=\"playground-library\"\ninclude-dir=[\".\",\"playground-generated\"]\n[build]\nauto-executables=false\nauto-examples=false\nauto-tests=false\nlink=[\"gsl\",\"gslcblas\",\"m\"]\n[install]\nlibrary=true\n",
+        "sources": [
+          "fgsl.F90",
+          "fgsl_utils.c"
+        ],
+        "generated": {
+          "asset": "fgsl-27a3e7cc0809623bcfde680c39a6fdcf0f590c4c.json",
+          "sha256": "ec5f27f37d90f1ac547033fddd0949042c2e823e634b66f4d280972ef6c845f5"
+        }
+      }
+    },
+    "apt_packages": [
+      "libgsl-dev=2.8+dfsg-5"
+    ]
+  },
+  "dependencies": [],
+  "catalog_patches": {
+    "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+    "edits": [
+      {
+        "path": "fgsl.F90",
+        "sha256": "b4fdf9b6ecf777be9165f4811988644cd12530cfba7365ca867cea2e07c758c0",
+        "before": "#include \"config.h\"",
+        "after": "#include \"config.inc\""
+      },
+      {
+        "path": "playground-library/fgsl.F90",
+        "sha256": "b4fdf9b6ecf777be9165f4811988644cd12530cfba7365ca867cea2e07c758c0",
+        "before": "#include \"config.h\"",
+        "after": "#include \"config.inc\""
+      },
+      {
+        "path": "fgsl_utils.c",
+        "sha256": "6c80ae980ef06affd7c16035ac1a7e8fddc2118a0382780230f586f84f9630fd",
+        "before": "#include \"config.h\"",
+        "after": "#include \"config.inc\""
+      },
+      {
+        "path": "playground-library/fgsl_utils.c",
+        "sha256": "6c80ae980ef06affd7c16035ac1a7e8fddc2118a0382780230f586f84f9630fd",
+        "before": "#include \"config.h\"",
+        "after": "#include \"config.inc\""
+      }
+    ]
+  },
+  "checked_at": "2026-10-29T23:21:45.294111+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/fgsl.f90",
+  "verification": {
+    "seconds": 2.408,
+    "build_seconds": 0.304,
+    "library_reused": true,
+    "demo_sha256": "bbd46afacb88187d405c33fd1d10fa550799cf8bb1c29e0eb210af3f7d705180",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "GPL-2.0-or-later",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "FGSL wraps GSL numerical routines. Broad classifications follow the exported interfaces for special functions, linear algebra, interpolation, root finding, optimization, integration/differentiation, ODEs, transforms, fitting and statistics. The checked consumer adapts the author's QAGS example and independently verifies the integral of log(x)/sqrt(x) on [0,1] against -4, status and error estimate. The procedure mapping covers adaptive one-dimensional finite-interval quadrature; other numerical interfaces are not runtime-verified by this example. Upstream Autoconf probes generated the complete configuration on GNU/Linux LP64 with GSL 2.8. An audited asset stages that header as config.inc; checksum-guarded edits change only its include filename in Fortran and C. The C support object and pinned system GSL libraries are linked. Local exports include the asset and patches; this configuration targets GNU/Linux LP64, and another ABI or GSL version requires regeneration against its local tools. GPL-2.0-or-later notices are retained.",
+  "generated_source_support": "See ../../fpm-generated-sources.md; exact assets and input hashes are included in local project exports. Generation runs only during operator maintenance.",
+  "resolved_preparation_blocker": "Upstream Autoconf probes generated the complete GNU/Linux LP64 / GSL 2.8 configuration; fgsl_utils.c is compiled and linked with GSL. Only the configuration include filename is patched. The initial consumer also needed an explicit intrinsic c_loc import; no numerical library routine was modified."
+}

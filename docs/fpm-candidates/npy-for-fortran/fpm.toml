@@ -1,0 +1,11 @@
+name = "npy-for-fortran"
+version = "0.0.0"
+license = "MIT"
+[library]
+source-dir = "playground-library"
+[build]
+auto-executables = false
+auto-examples = false
+auto-tests = false
+[install]
+library = true

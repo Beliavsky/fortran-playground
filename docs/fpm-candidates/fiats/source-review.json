@@ -1,0 +1,48 @@
+{
+  "id": "fiats",
+  "repository": "BerkeleyLab/fiats",
+  "revision": "7d564b86389460555d6f7d9b7a6b5198588af9df",
+  "archive_sha256": "72e40789bec105d69a2e53e37b7e64f32049c175966a8f1c0debb6a3df6093a5",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "environment": {
+      "FPM_FFLAGS": "-fcoarray=single -ffree-line-length-none"
+    },
+    "source_revisions": {
+      "berkeleylab/julienne": "1eb98b8c5eb287ed27a94ddf8943656dafe8e8f4"
+    }
+  },
+  "dependencies": [
+    {
+      "repository": "sourceryinstitute/assert",
+      "revision": "0591a21b4f5aeff4b7867e8485c90087d9e4c060",
+      "sha256": "5708d4b043d8289cebedf12f44f95986f9340398c478896b4a6812d27c0bba86"
+    },
+    {
+      "repository": "berkeleylab/julienne",
+      "revision": "1eb98b8c5eb287ed27a94ddf8943656dafe8e8f4",
+      "sha256": "270f17b895177b1f4eaf6e4254875292982badb4151d56d8f464e539fec489ae"
+    }
+  ],
+  "checked_at": "2026-10-29T19:04:24.801783+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/fiats.f90",
+  "verification": {
+    "seconds": 2.244,
+    "build_seconds": 0.498,
+    "library_reused": true,
+    "demo_sha256": "25365b238c2af119f2de00cd38a24810b21c72408a3b3d5a70a5d5e10396a2b5",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "LicenseRef-Berkeley-Fiats",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Pinned Fiats tag 0.12.0 (upstream manifest version 0.11.1), named inference-engine at that revision, with an explicitly pinned compatible Julienne 1.3.1 dependency and Assert 1.7.0. Tag 0.14.0 was tried first but its consumer build cannot find Julienne modules because they are declared only as a development dependency. Single-image coarrays and long free-form lines are enabled. Based on the author's write-read-infer example, the checked consumer constructs a two-input ReLU network with known diagonal weights and biases, evaluates negative, zero and positive input pairs, and compares every output with direct formulas. K is a broad function-approximation classification; training algorithms, gradients, model-file round trips and parallel speedups are not verified. The historical version is explicit in the menu description. The original Berkeley Lab license terms, including the enhancements clause, are retained.",
+  "selected_tag": "0.12.0",
+  "manifest_version": "0.11.1",
+  "compatible_julienne_tag": "1.3.1",
+  "prior_attempt": "0.14.0-consumer-failure.json"
+}

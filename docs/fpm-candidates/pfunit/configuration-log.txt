@@ -1,0 +1,37 @@
+-- The Fortran compiler identification is GNU 16.2.0
+-- The C compiler identification is GNU 16.2.0
+-- Detecting Fortran compiler ABI info
+-- Detecting Fortran compiler ABI info - done
+-- Check for working Fortran compiler: /usr/local/bin/gfortran - skipped
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/local/bin/gcc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- *** Setting default install prefix to /tmp/tmps3g99t84/build/installed.
+-- *** Override with -DCMAKE_INSTALL_PREFIX=<path>.
+-- Setting build type to 'Debug' as none was specified.
+-- Performing Test _LOGICAL_DEFAULT_KIND: SUCCESS (value=4)
+-- Performing Test _INT_DEFAULT_KIND: SUCCESS (value=4)
+-- Performing Test _ISO_INT8: SUCCESS (value=1)
+-- Performing Test _ISO_INT16: SUCCESS (value=2)
+-- Performing Test _ISO_INT32: SUCCESS (value=4)
+-- Performing Test _ISO_INT64: SUCCESS (value=8)
+-- Performing Test _REAL_DEFAULT_KIND: SUCCESS (value=4)
+-- Performing Test _DOUBLE_DEFAULT_KIND: SUCCESS (value=8)
+-- Performing Test _ISO_REAL32: SUCCESS (value=4)
+-- Performing Test _REAL32_IEEE_SUPPORT: SUCCESS (value=T)
+-- Performing Test _ISO_REAL64: SUCCESS (value=8)
+-- Performing Test _REAL64_IEEE_SUPPORT: SUCCESS (value=T)
+-- Performing Test _ISO_REAL128: SUCCESS (value=16)
+-- Performing Test _REAL128_IEEE_SUPPORT: SUCCESS (value=T)
+-- Found Python: /usr/local/bin/python3 (found version "3.12.1") found components: Interpreter
+-- Using submodule /tmp/tmps3g99t84/source/extern/fArgParse
+-- Using submodule /tmp/tmps3g99t84/source/extern/fArgParse/extern/gFTL-shared
+-- Using submodule /tmp/tmps3g99t84/source/extern/fArgParse/extern/gFTL-shared/extern/gFTL
+-- Setting default install prefix to /tmp/tmps3g99t84/build/installed.
+   Override with -DCMAKE_INSTALL_PREFIX=<path>.
+-- cpp is /usr/local/bin/cpp
+-- Configuring done (5.3s)
+-- Generating done (0.2s)
+-- Build files have been written to: /tmp/tmps3g99t84/build

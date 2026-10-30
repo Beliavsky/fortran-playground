@@ -1,0 +1,21 @@
+name="pfunit"
+version="0.0.0"
+license="Apache-2.0"
+[library]
+source-dir="playground-library"
+include-dir=["include"]
+[build]
+auto-executables=false
+auto-examples=false
+auto-tests=false
+external-modules=["mpi", "mpi_f08", "omp_lib", "fhamcrest", "pf_remoterunner", "pf_robustrunner", "f90_unix_proc"]
+[install]
+library=true
+[dependencies]
+fargparse={git="https://github.com/Goddard-Fortran-Ecosystem/fArgParse",rev="54c6066edb5bd9c2044274e13838db287ad947a3"}
+gftl={git="https://github.com/Goddard-Fortran-Ecosystem/gFTL",rev="4af86210b6cc6ac46d3298b6861571aa26bd6acc"}
+gftl-shared={git="https://github.com/Goddard-Fortran-Ecosystem/gFTL-shared",rev="99dec0597bbd1df3f7b3bc46df930b46090ce509"}
+[preprocess.cpp]
+macros=["SKIP_FHAMCREST", "_DOUBLE_DEFAULT_KIND=8", "_GNU", "_INT_DEFAULT_KIND=4", "_ISO_INT16=2", "_ISO_INT32=4", "_ISO_INT64=8", "_ISO_INT8=1", "_ISO_REAL128=16", "_ISO_REAL32=4", "_ISO_REAL64=8", "_LOGICAL_DEFAULT_KIND=4", "_REAL128_IEEE_SUPPORT=T", "_REAL32_IEEE_SUPPORT=T", "_REAL64_IEEE_SUPPORT=T", "_REAL_DEFAULT_KIND=4"]
+[fortran]
+implicit-external=true

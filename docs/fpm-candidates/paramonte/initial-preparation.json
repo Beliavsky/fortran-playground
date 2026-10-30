@@ -1,0 +1,21 @@
+{
+  "id": "paramonte",
+  "repository": "cdslaborg/paramonte",
+  "revision": "93a9f4f472894115b9f15ac0c68490af719f44fb",
+  "archive_sha256": "7cbaacf1b28e7e65b78a46f838966d1a3e9bccd8e34c7daaa497412271c42518",
+  "checked_at": "2026-10-30T10:34:44.473719+00:00",
+  "status": "preparation-failed",
+  "stage": "preparation",
+  "compiler_invoked": false,
+  "error": "Combined dependency sources exceed 64 MiB / 20000 entries.",
+  "original_expanded_bytes": 65416363,
+  "selected_translation_units": 372,
+  "selected_fortran_bytes": 36923660,
+  "scope": "Full main-library staging attempt, excluding include/implementation fragments; CMake configuration and smaller custom subsets not verified.",
+  "reason": "The archive passes the bounded archive validation (65,416,363 expanded bytes), but staging the full main-library translation-unit profile adds 36,923,660 Fortran bytes and exceeds the unchanged combined 64 MiB source limit. No compilation, runtime or cache-reuse result is claimed.",
+  "proposed_next_step": "Review a source-staging approach that avoids duplicating original translation units, or a documented smaller profile; configure with upstream CMake and verify selected modules, includes, macros, licensing and a checked consumer. The full wrapper is a preparation probe, not a build-ready recipe.",
+  "preparation_probe": "preparation-probe.json",
+  "verified_in_playground": false,
+  "archive_entries": 4140,
+  "archive_expanded_bytes": 65416363
+}

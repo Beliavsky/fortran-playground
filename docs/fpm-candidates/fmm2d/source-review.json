@@ -1,0 +1,193 @@
+{
+  "id": "fmm2d",
+  "repository": "flatironinstitute/fmm2d",
+  "revision": "7e7509ecd6ebe31b9292cb00825410b478f44808",
+  "archive_sha256": "874797fe0a20353b806c415ff817ad39c0ce0813c89d54145315ab83827470a0",
+  "catalog_build": {
+    "adapter_sha256": "073bc7a78272acc47c93133034888bc644eda85592c9af0becfe53dad87b82c8",
+    "environment": {
+      "FPM_FFLAGS": "-O2 -std=legacy -fallow-argument-mismatch -fopenmp"
+    },
+    "source_packages": {
+      "flatironinstitute/fmm2d": {
+        "manifest": "name = \"fmm2d\"\nversion = \"0.0.0\"\nlicense = \"Apache-2.0\"\n[library]\nsource-dir = \"playground-library\"\ninclude-dir = [\"src\", \".\"]\n[build]\nauto-executables = false\nauto-examples = false\nauto-tests = false\n[install]\nlibrary = true\n[fortran]\nimplicit-typing = true\nimplicit-external = true\nsource-form = \"default\"\n",
+        "sources": [
+          "src/common/cdjseval2d.f",
+          "src/common/dfft_threadsafe.f",
+          "src/common/fmmcommon2d.f",
+          "src/common/next235.f",
+          "src/common/prini.f",
+          "src/common/tree_routs2d.f",
+          "src/common/pts_tree2d.f",
+          "src/common/cumsum.f",
+          "src/common/hank103.f",
+          "src/helmholtz/h2dcommon.f",
+          "src/helmholtz/h2dterms.f",
+          "src/helmholtz/helmrouts2d.f",
+          "src/helmholtz/hfmm2d.f",
+          "src/helmholtz/hfmm2dwrap.f",
+          "src/helmholtz/wideband2d.f",
+          "src/helmholtz/hfmm2dwrap_vec.f",
+          "src/helmholtz/hndiv2d.f",
+          "src/helmholtz/hfmm2d_ndiv.f",
+          "src/helmholtz/hfmm2d_mps.f",
+          "src/helmholtz/hfmm2d_mps_ndiv.f",
+          "src/laplace/l2dterms.f",
+          "src/laplace/laprouts2d.f",
+          "src/laplace/lfmm2d.f",
+          "src/laplace/lfmm2dwrap.f",
+          "src/laplace/lfmm2dwrap_vec.f",
+          "src/laplace/cfmm2d.f",
+          "src/laplace/cfmm2dwrap.f",
+          "src/laplace/cfmm2dwrap_vec.f",
+          "src/laplace/rfmm2d.f",
+          "src/laplace/rfmm2dwrap.f",
+          "src/laplace/rfmm2dwrap_vec.f",
+          "src/laplace/lndiv2d.f",
+          "src/laplace/rfmm2d_ndiv.f",
+          "src/laplace/lfmm2d_ndiv.f",
+          "src/laplace/cfmm2d_ndiv.f",
+          "src/biharmonic/bh2dterms.f",
+          "src/biharmonic/bhrouts2d.f",
+          "src/biharmonic/bhfmm2d.f",
+          "src/biharmonic/bhndiv2d.f",
+          "src/biharmonic/bhfmm2dwrap.f",
+          "src/stokes/stfmm2d.f",
+          "src/laplace/lapkernels2d.f",
+          "src/laplace/rlapkernels2d.f",
+          "src/laplace/cauchykernels2d.f",
+          "src/helmholtz/helmkernels2d.f",
+          "src/biharmonic/bhkernels2d.f",
+          "src/stokes/stokkernels2d.f"
+        ]
+      }
+    }
+  },
+  "dependencies": [],
+  "catalog_patches": {
+    "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+    "edits": [
+      {
+        "path": "playground-library/cfmm2d.f",
+        "sha256": "b156bbf48a51ffdf05011920aadccf56bc0eccddfd728eabd7b837625f4d75c8",
+        "before": "          if(ifpghtarg.eq.1) then\n            do i=1,nlist3s(ibox)\n",
+        "after": "          if(ifpghtarg.eq.1 .and. npts.gt.0) then\n            do i=1,nlist3s(ibox)\n"
+      },
+      {
+        "path": "playground-library/cfmm2d.f",
+        "sha256": "cbc62f5e7bd1ecc64bab07ca8be300251e38180db154c09eb4d15878d51adaf7",
+        "before": "          if(ifpghtarg.eq.2) then\n            do i=1,nlist3s(ibox)\n",
+        "after": "          if(ifpghtarg.eq.2 .and. npts.gt.0) then\n            do i=1,nlist3s(ibox)\n"
+      },
+      {
+        "path": "playground-library/cfmm2d.f",
+        "sha256": "abc3667662328a0a51fc67ccee9db9974ffbc6ec388b4838e939745b7badd956",
+        "before": "          if(ifpghtarg.eq.3) then\n            do i=1,nlist3s(ibox)\n",
+        "after": "          if(ifpghtarg.eq.3 .and. npts.gt.0) then\n            do i=1,nlist3s(ibox)\n"
+      },
+      {
+        "path": "playground-library/cfmm2d.f",
+        "sha256": "e889c851da100e659da54d8878c870263867ae6492ebe6b892941babee7c70fd",
+        "before": "          if(ifpgh.eq.1) then\n            do i=1,nlist3s(ibox)\n",
+        "after": "          if(ifpgh.eq.1 .and. npts.gt.0) then\n            do i=1,nlist3s(ibox)\n"
+      },
+      {
+        "path": "playground-library/cfmm2d.f",
+        "sha256": "629f060347e80dcb4b3a3d488f7fa19899b9f0f042afee15838c424fd980b4b5",
+        "before": "          if(ifpgh.eq.2) then\n            do i=1,nlist3s(ibox)\n",
+        "after": "          if(ifpgh.eq.2 .and. npts.gt.0) then\n            do i=1,nlist3s(ibox)\n"
+      },
+      {
+        "path": "playground-library/cfmm2d.f",
+        "sha256": "bcbec0058432a29dd5456cbc77aa084384ff571eb0d1597a451e3db7fa726b21",
+        "before": "          if(ifpgh.eq.3) then\n            do i=1,nlist3s(ibox)\n",
+        "after": "          if(ifpgh.eq.3 .and. npts.gt.0) then\n            do i=1,nlist3s(ibox)\n"
+      },
+      {
+        "path": "playground-library/cfmm2d.f",
+        "sha256": "00a841c62747b46e92851c9d82b425b01b000bd4ff552c22d5425149e6f034fa",
+        "before": "            if(ifpghtarg.eq.1) then\n              call l2dtaevalp(nd,rscales(ilev),\n",
+        "after": "            if(ifpghtarg.eq.1 .and. npts.gt.0) then\n              call l2dtaevalp(nd,rscales(ilev),\n"
+      },
+      {
+        "path": "playground-library/cfmm2d.f",
+        "sha256": "95a7e2e97544bb933c13fe5e8eabec7a6ae3e65edaf1c4ef34456fe04acc4492",
+        "before": "            if(ifpghtarg.eq.2) then\n              call l2dtaevalg(nd,rscales(ilev),\n",
+        "after": "            if(ifpghtarg.eq.2 .and. npts.gt.0) then\n              call l2dtaevalg(nd,rscales(ilev),\n"
+      },
+      {
+        "path": "playground-library/cfmm2d.f",
+        "sha256": "f6fee32e820e73a0db8fd5e60ee609d7ccdf55884911acdc7fba7c0153866470",
+        "before": "            if(ifpghtarg.eq.3) then\n              call l2dtaevalh(nd,rscales(ilev),\n",
+        "after": "            if(ifpghtarg.eq.3 .and. npts.gt.0) then\n              call l2dtaevalh(nd,rscales(ilev),\n"
+      },
+      {
+        "path": "playground-library/cfmm2d.f",
+        "sha256": "935ce6cd8cedf245b13566cca491753f1cfd1c3369901d4c745e84ca4d3cc717",
+        "before": "            if(ifpgh.eq.1) then\n              call l2dtaevalp(nd,rscales(ilev),\n",
+        "after": "            if(ifpgh.eq.1 .and. npts.gt.0) then\n              call l2dtaevalp(nd,rscales(ilev),\n"
+      },
+      {
+        "path": "playground-library/cfmm2d.f",
+        "sha256": "de895ade5ca48b8fd05d7f5fa98e5dc41e4535b68d56c701664b81b6d37fe744",
+        "before": "            if(ifpgh.eq.2) then\n              call l2dtaevalg(nd,rscales(ilev),\n",
+        "after": "            if(ifpgh.eq.2 .and. npts.gt.0) then\n              call l2dtaevalg(nd,rscales(ilev),\n"
+      },
+      {
+        "path": "playground-library/cfmm2d.f",
+        "sha256": "eed689a44bc450f50642429d2652a510e4a0923a684e35bcb01c1c6190542d77",
+        "before": "            if(ifpgh.eq.3) then\n              call l2dtaevalh(nd,rscales(ilev),\n",
+        "after": "            if(ifpgh.eq.3 .and. npts.gt.0) then\n              call l2dtaevalh(nd,rscales(ilev),\n"
+      },
+      {
+        "path": "playground-library/fmmcommon2d.f",
+        "sha256": "a058e32a9f76559d28e3a52a9e9cc95c0cfe8fa174c588899a9a2723e9c4da62",
+        "before": "      double precision arr(ndim,1),arrsort(ndim,1)\n      integer iarr(1)",
+        "after": "      double precision arr(ndim,n),arrsort(ndim,n)\n      integer iarr(n)"
+      },
+      {
+        "path": "playground-library/cfmm2d.f",
+        "sha256": "a61989f791ae7f7788572c9dadb3b4b9a57cbb588898fe31b5db5784bb73edac",
+        "before": "                 do i=1,nlist4s(ibox)\n                    jbox = list4(i,ibox)\n                    istart = isrcse(1,jbox)\n                    iend = isrcse(2,jbox)\n                    npts = iend-istart+1\n                    \n                    call l2dformtac(nd,rscales(ilev),\n",
+        "after": "                 do i=1,nlist4s(ibox)\n                    jbox = list4(i,ibox)\n                    istart = isrcse(1,jbox)\n                    iend = isrcse(2,jbox)\n                    npts = iend-istart+1\n                    if(npts.le.0) cycle\n                    \n                    call l2dformtac(nd,rscales(ilev),\n"
+      },
+      {
+        "path": "playground-library/cfmm2d.f",
+        "sha256": "6e09f97e4e0585b2597a2ab5a165275883754a74bbdca844c865881e62bd75c3",
+        "before": "                 do i=1,nlist4s(ibox)\n                    jbox = list4(i,ibox)\n                    istart = isrcse(1,jbox)\n                    iend = isrcse(2,jbox)\n                    npts = iend-istart+1\n\n                    call l2dformtad(nd,rscales(ilev),\n",
+        "after": "                 do i=1,nlist4s(ibox)\n                    jbox = list4(i,ibox)\n                    istart = isrcse(1,jbox)\n                    iend = isrcse(2,jbox)\n                    npts = iend-istart+1\n                    if(npts.le.0) cycle\n\n                    call l2dformtad(nd,rscales(ilev),\n"
+      },
+      {
+        "path": "playground-library/cfmm2d.f",
+        "sha256": "837a42db3dba3a19b4984ea95ea37a01c239a55de7655ad3906f1b000284618b",
+        "before": "                 do i=1,nlist4s(ibox)\n                    jbox = list4(i,ibox)\n                    istart = isrcse(1,jbox)\n                    iend = isrcse(2,jbox)\n                    npts = iend-istart+1\n                    \n                    call l2dformtacd(nd,rscales(ilev),\n",
+        "after": "                 do i=1,nlist4s(ibox)\n                    jbox = list4(i,ibox)\n                    istart = isrcse(1,jbox)\n                    iend = isrcse(2,jbox)\n                    npts = iend-istart+1\n                    if(npts.le.0) cycle\n                    \n                    call l2dformtacd(nd,rscales(ilev),\n"
+      }
+    ]
+  },
+  "checked_at": "2026-10-29T15:00:58.306928+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/fmm2d.f90",
+  "verification": {
+    "seconds": 2.166,
+    "build_seconds": 0.386,
+    "library_reused": true,
+    "demo_sha256": "37b1d799f10587a6bbf4a38ce95df71d79206dbf82254974d85ebfb36da37789",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "Apache-2.0",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Native Fortran FMM2D source set selected from the upstream makefile with optional C++ fast kernels disabled. OpenMP and portable -O2 are enabled; the visitor sandbox uses one execution thread and retains bounds checks. Checksum-guarded compatibility edits skip zero-point multipole/local evaluations and zero-source neighbor calls before passing one-past-end array elements. The inverse reorder helper declares its arrays with the actual n extent rather than the legacy dummy extent 1. Source and target branches receive matching guards; formulas are unchanged. The checked real Laplace driver evaluates 512 deterministic sources at 16 separate targets and compares with an independent charge-weighted log-distance sum. A separate source-and-target probe also checks all source potentials by direct summation with self-interactions excluded, exercising the source-side guards. The code is classified as a structured kernel-matrix application and Green-function evaluation related to PDEs, not as a complete boundary-value solver. Helmholtz, biharmonic/Stokes, dipoles, gradients/Hessians, every complex/vector interface and parallel speedups are not validated. The small accuracy check is not a performance benchmark.",
+  "compatibility_evidence": {
+    "patch": "bounds-compatibility.patch",
+    "original_sandbox_diagnostics": "original-sandbox-diagnostics.json",
+    "reorder_reproducer": "reorder-reproducer.f90",
+    "reorder_check": "reorder-check.json",
+    "additional_source_target_driver": "source-target-probe.f90",
+    "additional_source_target_check": "source-target-check.json"
+  }
+}

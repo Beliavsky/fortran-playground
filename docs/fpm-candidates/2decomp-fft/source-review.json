@@ -1,0 +1,71 @@
+{
+  "id": "2decomp-fft",
+  "repository": "2decomp-fft/2decomp-fft",
+  "revision": "4cb38be477b9457cfa5f5624c8fe09387968b190",
+  "archive_sha256": "6522f08ae48a58c93b93378fd3b54ac2f0128f98bcc274b53b323a0a640e15f4",
+  "catalog_build": {
+    "adapter_sha256": "3bd5fbb173561ecf82a9a62c5e896c26236f10bef6d0d5ba0a9813d186fa6a30",
+    "source_packages": {
+      "2decomp-fft/2decomp-fft": {
+        "manifest": "name=\"decomp2d\"\nversion=\"0.0.0\"\nlicense=\"BSD-3-Clause\"\n[library]\nsource-dir=\"playground-library\"\ninclude-dir=[\"src\"]\n[build]\nauto-executables=false\nauto-examples=false\nauto-tests=false\nexternal-modules=[\"cudafor\", \"decomp_2d_cumpi\", \"decomp_2d_nccl\", \"mpi\", \"mpi_f08\", \"nccl\", \"omp_lib\"]\nlink=[\"mpichfort\", \"mpich\"]\n[install]\nlibrary=true\n[preprocess.cpp]\nmacros=[\"DOUBLE_PREC\"]\n",
+        "sources": [
+          "src/block.f90",
+          "src/decomp_2d.f90",
+          "src/decomp_2d_constants.f90",
+          "src/decomp_2d_mpi.f90",
+          "src/decomp_pool.f90",
+          "src/env_var.f90",
+          "src/factor.f90",
+          "src/fft_generic.f90",
+          "src/fft_log.f90",
+          "src/glassman.f90",
+          "src/halo.f90",
+          "src/info.f90",
+          "src/interp.f90",
+          "src/io_adios_none.f90",
+          "src/io_mpi.f90",
+          "src/io_object_mpi.f90",
+          "src/io_utilities.f90",
+          "src/log.f90",
+          "src/mem_pool.f90",
+          "src/profiler_none.f90",
+          "src/transpose_x_to_y.f90",
+          "src/transpose_y_to_x.f90",
+          "src/transpose_y_to_z.f90",
+          "src/transpose_z_to_y.f90"
+        ]
+      }
+    },
+    "environment": {
+      "FPM_FFLAGS": "-cpp -ffree-line-length-none -I/usr/include/x86_64-linux-gnu/mpich -fallow-argument-mismatch",
+      "UCX_TLS": "self,sm"
+    },
+    "apt_packages": [
+      "libmpich-dev=4.3.0+really4.2.1-1"
+    ]
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-30T01:09:50.140826+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/2decomp-fft.f90",
+  "verification": {
+    "seconds": 2.505,
+    "build_seconds": 0.815,
+    "library_reused": true,
+    "demo_sha256": "23e31566e81c01c70e36ea905d3917ab064eb561edb3893142d8584350b04fab",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "BSD-3-Clause",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "The upstream CMake-selected CPU library uses the built-in generic Fourier transform backend, double precision and pinned MPICH. OpenMP is disabled. The example adapts the author-provided complex FFT example, initializes exactly one MPI process with self/shared-memory UCX transports, transforms an 8-by-6-by-4 complex impulse, independently checks that all forward coefficients equal one, and verifies inverse reconstruction after normalization. J1 covers the multidimensional Fourier transform. Multiple MPI processes and distributed performance are not verified. Local exports need compatible MPI development libraries and locally appropriate include/link flags. BSD-3-Clause notices are retained.",
+  "initial_preparation_findings": [
+    "The upstream archive configuration emits an empty VERSION macro. FPM command quoting removes its string value, so the wrapper omits that optional metadata macro and upstream logging reports the version as unknown. Numerical definitions and algorithms are unchanged. The main imports FFT constants from their defining module and passes variables for the INOUT process-grid arguments. The generic double-precision CPU backend is checked in one MPICH process; no multi-process performance claim is made. A transient concurrent worker-file staging collision was resolved by running verification sequentially."
+  ],
+  "configuration_record": "../../../fpm_catalog/generated/2decomp-fft-4cb38be477b9457cfa5f5624c8fe09387968b190.json",
+  "generated_source_support": "See ../../fpm-generated-sources.md. Original sources remain in local exports. DBCSR preparation needs Fypp 3.2; visitors do not run CMake.",
+  "runtime_diagnostics": "MPICH/UCX emits a nonfatal /sys/class/net scan diagnostic in the restricted sandbox. The worker reports success and both numerical checks pass with self/shared-memory transports."
+}

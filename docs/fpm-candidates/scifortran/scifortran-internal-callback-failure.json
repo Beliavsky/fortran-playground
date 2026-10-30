@@ -1,0 +1,79 @@
+{
+  "ok": false,
+  "compiler": "GNU Fortran (GCC) 16.2.0",
+  "compiler_id": "gfortran",
+  "fpm": "0.12.0",
+  "stages": [
+    {
+      "name": "Build",
+      "command": [
+        "fpm",
+        "build",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.427,
+      "ok": true,
+      "exit_code": 0,
+      "error": "",
+      "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+      "stderr": ""
+    },
+    {
+      "name": "Run",
+      "command": [
+        "fpm",
+        "run",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.04,
+      "ok": false,
+      "exit_code": 139,
+      "error": "",
+      "stdout": "",
+      "stderr": "Project is up to date\n\nProgram received signal SIGSEGV: Segmentation fault - invalid memory reference.\n\nBacktrace for this error:\n#0  0x2b05ec993f83 in ???\n#1  0x2b05ec992b35 in ???\n#2  0x2b05ece28d6f in ???\n#3  0x7f1606de6e8c in ???\nSegmentation fault\n<ERROR> Execution for object \" playground-main \" returned exit code  139\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 139\n"
+    }
+  ],
+  "cache": {
+    "package": "scifortran",
+    "compiler": "GNU Fortran 16.2.0",
+    "key": "da13aad0f83dfeb6052b030a",
+    "library_reused": true,
+    "changed_artifacts": []
+  },
+  "packages": [
+    {
+      "repository": "SciFortran/SciFortran",
+      "revision": "ca4a55f49cfdf7a94e388bc3475a5db574d5de99",
+      "sha256": "f72bda1fbd2ad63d7d99fb3939317373a7c956c2910d9cf7da5909965d64fd91"
+    }
+  ],
+  "build_ok": true,
+  "target_groups": {
+    "app": [
+      "playground-main"
+    ],
+    "example": [],
+    "test": []
+  },
+  "targets": [
+    "playground-main"
+  ],
+  "plots": [],
+  "plot_notes": []
+}

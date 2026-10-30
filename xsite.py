@@ -6,6 +6,7 @@ import shutil
 from xexamples import generate_examples
 from xfpm_examples import generate_fpm_examples
 from catalog_export import publish_export
+from xgams_site import generate_gams_site
 
 
 ASSET_SUFFIXES = {".mjs", ".js", ".css", ".py"}
@@ -41,7 +42,8 @@ def build_site(source: Path, destination: Path) -> str:
 
         (destination / path.relative_to(source)).write_text(
             QUOTED_URL.sub(stamp, path.read_text(encoding="utf-8")), encoding="utf-8")
-    publish_export(destination / 'catalog')
+    feed = publish_export(destination / 'catalog')
+    generate_gams_site(destination / 'gams', feed, asset_version=version)
     return version
 
 

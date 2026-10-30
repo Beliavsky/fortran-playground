@@ -37,6 +37,7 @@ def catalog_page():
         'GitHub sources download into a fresh temporary project for each submission.</p>')
     text = text.replace('Selected packages (GNU Fortran 16)', 'Selected packages (build locally)')
     text = text.replace('Choose a precompiled package&hellip;', 'Choose a package&hellip;')
+    text = text.replace('href="../gams/"', 'href="https://beliavsky.github.io/fortran-playground/gams/"')
     text = text.replace("connect-src 'self' https://*.modal.run", "connect-src 'self'")
     for name in ('style.css', 'editor-vendor/codemirror.css'):
         text = text.replace('href="../' + name + '"', 'href="ui/' + name + '"')
