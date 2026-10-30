@@ -4,7 +4,7 @@ from pathlib import Path
 from urllib.parse import quote
 from xml.sax.saxutils import escape as xml_escape
 
-from catalog_export import BASE_URL, ROOT
+from catalog_export import BASE_URL, ROOT, owner_display_name
 from xpackage_gams import ancestors, class_order
 
 
@@ -43,10 +43,8 @@ def generate_gams_site(destination, feed, *, asset_version=None):
     def owner_label(key):
         metadata = owners.get(key, {})
         login = metadata.get('login', by_owner[key][0]['repository']['owner'])
-        name = metadata.get('display_name')
         manual = manual_names.get(key, {})
-        if manual.get('status') == 'confirmed':
-            name = manual['name']
+        name = owner_display_name(key, {'login': login, **metadata}, manual)
         return f'{name} ({login})' if name and name != login else login
 
     def author_credits(project):

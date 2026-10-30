@@ -5,7 +5,7 @@ import tempfile
 import unittest
 
 from catalog_export import validate_attributions
-from xpackage_attributions import ROOT, REPORT, load_attributions, report_text
+from xpackage_attributions import ROOT, REPORT, OWNER_REPORT, load_attributions, report_text, owner_report_text
 
 
 class AttributionTests(unittest.TestCase):
@@ -16,6 +16,7 @@ class AttributionTests(unittest.TestCase):
         self.assertEqual(credit['status'], 'confirmed')
         self.assertEqual(credit['name'], 'David Lauvergnat')
         self.assertEqual((ROOT/REPORT).read_text(encoding='utf-8'), report_text())
+        self.assertEqual((ROOT/OWNER_REPORT).read_text(encoding='utf-8'), owner_report_text())
 
     def test_bad_attributions_require_evidence_scope_and_review_status(self):
         data = load_attributions()

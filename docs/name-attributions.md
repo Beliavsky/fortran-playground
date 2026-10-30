@@ -1,5 +1,7 @@
 # Curated public name attributions
 
+See the [combined GitHub/name mapping table](github-name-mappings.md) for all selected repository owners, including public profile names and curated records.
+
 These records document public project credits and proposed or confirmed account-name mappings. They are maintained separately from automatically refreshed GitHub profiles. A source author credit does not by itself establish who controls a GitHub account or sole authorship of a package.
 
 Only **confirmed** manual account mappings override owner display names. Inferred account mappings remain a review queue; confirmed project credits are displayed with their stated scope. Search includes confirmed project credits without treating them as account identities.

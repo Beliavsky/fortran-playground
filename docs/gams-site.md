@@ -8,6 +8,8 @@ Package lists and navigation are present in the HTML and work without JavaScript
 
 Repository owner names are clickable on package cards and detail pages. An owner page lists that account's selected precompiled packages and links to its GitHub profile. The [owner index](https://beliavsky.github.io/fortran-playground/gams/authors/) searches both public display names and account names. Names appear as “Federico Perini (perazz)” when a public display name is supplied; otherwise the account name is shown. Organizations use the same convention. These are repository owners, not necessarily the original or sole authors.
 
+The `fortran-lang` account is displayed as **fortran-lang**, since its GitHub display name names the language. Its original public profile metadata remains saved for provenance and search.
+
 The [curated attribution review](name-attributions.md) records explicit public source credits separately from account identities. Confirmed source authors are searchable and shown with their scope and evidence under **Name attribution** on package and owner pages. An author credited in an example is not automatically identified as the owner of the account.
 
 ## Addresses
@@ -39,6 +41,8 @@ GitHub Actions already runs `xsite.py` when changes reach `main`. Publishing the
 
 ## Public owner names
 
+The [combined GitHub/name mapping table](github-name-mappings.md) lists every selected repository owner, the catalog name, profile/manual source, review dates, pending attribution notes, evidence and package links. The [manual attribution review](name-attributions.md) gives the detailed reasoning behind curated records.
+
 `fpm_catalog/owners.json` stores each owner's public GitHub display name once, keyed by the lowercase account ID. Each record contains its account type, profile/source URLs and retrieval time. The portable catalog exports this shared mapping too. Site builds read the saved snapshot offline; account names remain the fallback for a newly added owner without saved metadata.
 
 Fetch profiles for newly added accounts:
@@ -61,7 +65,7 @@ Edit `fpm_catalog/name-attributions.json` for manual research. `owner_names` hol
 
 Only confirmed account mappings override owner labels. Display order is confirmed manual account name, saved GitHub display name, then account ID. Inferred account mappings remain in the review table and portable feed, but do not rename accounts. Confirmed project/source credits are displayed and searched independently. Differences between a manual name and a GitHub display name are flagged in the review table and explained on the owner page. GitHub profile refreshes never overwrite curated records.
 
-After editing the manual file or refreshing profiles, regenerate the review table:
+After editing the manual file, refreshing profiles or adding packages, regenerate both the combined name table and manual review table:
 
 ```text
 python xpackage_attributions.py

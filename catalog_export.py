@@ -57,6 +57,15 @@ def snapshot_id(data):
                                                    if key != 'snapshot_id'})).hexdigest()
 
 
+def owner_display_name(key, profile, manual):
+    """Use the same owner-label policy in the website and combined review table."""
+    if key == 'fortran-lang':
+        return 'fortran-lang'
+    if manual.get('status') == 'confirmed':
+        return manual['name']
+    return profile.get('display_name') or profile.get('login') or key
+
+
 def validate_attributions(data):
     """Keep public project credits distinct from reviewed account identities."""
     if not isinstance(data, dict) or data.get('schema') != 1:
