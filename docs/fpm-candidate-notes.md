@@ -1675,3 +1675,69 @@ RAFFLE is pinned to release v1.0.0 because current main and v1.1.1 exceed the un
 The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
 
 See the [checked main](../fpm_catalog/demos/raffle.f90), [source/build record](fpm-candidates/raffle/source-review.json) and [verified output](fpm-candidates/raffle/verified-output.txt).
+
+## plplot
+
+The unmodified PLplot 5.15.0 modern Fortran binding modules are compiled with GNU Fortran 16 against Debian libplplot 5.15.0+dfsg2-15+b1. The author CMake precision template is configured with c_double to match the native double-precision C core; the generated include is checksum-locked. Original included parameter/interface sources and LGPL notices are retained. The checked main follows the author plinit/plenv/pllab/plline/plend API, checks finite sine samples and known extrema, requests the headless pngcairo driver at 800x500, and verifies the generated PNG signature and nontrivial size. The sandbox must return a browser-viewable PNG, which is visually reviewed. Q covers graphics. Native C/Cairo libraries and fonts are installed only in this package image; no precompiled Debian Fortran module files are used by the consumer. Interactive windows, other output drivers and the full upstream example/test suite are not verified.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/plplot.f90), [source/build record](fpm-candidates/plplot/source-review.json) and [verified output](fpm-candidates/plplot/verified-output.txt).
+
+## fortran-curl
+
+Release 0.8.0 is pinned because its documented libcurl minimum is 8.10.0, compatible with the pinned Debian libcurl 8.14.1-2+deb13u7; current main requires 8.20.0. The original FPM library and C helpers are unchanged. The example adapts examples/url/url.f90 and checks successful URL parsing plus exact host, path, port and query strings, changes the path and checks the reconstructed URL. The C URL handle is released and cleared by the caller, following the 0.8 cleanup semantics. N3 describes parsing/constructing character data. No network request is made; sandbox internet access remains disabled. HTTP transfers, authentication, mail protocols and other libcurl facilities are not runtime-verified. ISC notices are retained.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/fortran-curl.f90), [source/build record](fpm-candidates/fortran-curl/source-review.json) and [verified output](fpm-candidates/fortran-curl/verified-output.txt).
+
+## m_history
+
+The unmodified M_history redo editor records two commands in its scratch history file. The self-contained main supplies editing directives through the optional lun argument, recalls line 1, changes 290 to 300 and checks the result, then recalls line 2 and verifies that its original text remains unchanged. No shell command is executed and no interactive terminal is required. The main follows the author application in using a 1024-character buffer. An initial 120-character buffer triggered an upstream bounds error at cin(1:255); that diagnostic is retained separately, and shorter buffers are not verified/supported by this catalog example. N1/N3 cover command input and character editing; no numerical-method classification is inferred. MIT library notices and the public-domain author application notice are retained.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/m_history.f90), [source/build record](fpm-candidates/m_history/source-review.json) and [verified output](fpm-candidates/m_history/verified-output.txt).
+
+M_history input-buffer limitation: the checked main uses the author example's 1024-character buffer. A 120-character buffer failed an upstream substring bounds check; see [diagnostic and reproducer](fpm-candidates/m_history/short-buffer-failure.txt).
+
+## m_cli
+
+The original M_CLI FPM library is unchanged. The checked consumer adapts the author example/demo3.f90, translating a prototype command into NAMELIST text and checking integer, real, logical, character and three-element real array defaults before using the scaled sum. No stdin or program arguments are required; the editable prototype supplies the defaults. Actual command-line overrides, help/error paths and interactive examples are not runtime-verified here. N1/N3 cover command input and character parsing; no numerical-method classification is inferred. Public-domain/Unlicense notices are retained.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/m_cli.f90), [source/build record](fpm-candidates/m_cli/source-review.json) and [verified output](fpm-candidates/m_cli/verified-output.txt).
+
+## fortran-modbus
+
+The original Fortran 2018 FPM bindings are compiled against pinned Debian libmodbus 3.1.11-2. The consumer checks positive, negative and zero single-precision values through the ABCD, BADC, CDAB and DCBA register conversion APIs and prints register words in hexadecimal. These are offline operations, with no socket, serial port or Modbus device. N2 covers bit/byte representation; the catalog does not claim verified device communication. The author test/test_modbus.f90 documents context use but is not used as a device test. ISC notices are retained.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/fortran-modbus.f90), [source/build record](fpm-candidates/fortran-modbus/source-review.json) and [verified output](fpm-candidates/fortran-modbus/verified-output.txt).
+
+## gtk-fortran
+
+The original gtk-fortran 4.8.0 FPM manifest is unchanged and builds the core bindings and high-level helper modules. GNU 16 compilation initially stopped in gtk-hl-dialog.f90 because f_c_string was resolved as a function rather than the legacy subroutine alias. Eleven checksum-guarded call-name replacements use the equivalent convert_f_string generic already provided by gtk_sup, matching current upstream spelling; arguments and implementations are unchanged. The unpatched diagnostic is retained. This release targets GTK 4.18.4/GLib 2.84.1 and is linked against pinned Debian GTK 4.18.6, with Cairo 1.18.4. The example adapts the author Cairo drawing API to an image surface, checks Cairo statuses and PNG signature/size, and draws curves, circles and text without gtk_init, a window or a display server. The returned browser preview is visually reviewed. Q covers graphics. Desktop widgets, events, interactive GUI sessions and the full upstream tests are not runtime-verified. GPL-3.0-or-later with GCC Runtime Library Exception 3.1 notices are retained.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/gtk-fortran.f90), [source/build record](fpm-candidates/gtk-fortran/source-review.json) and [verified output](fpm-candidates/gtk-fortran/verified-output.txt).
+
+## fycollections
+
+The original FyCollections backend and author examples/list/type_intlist.fpp and type_stringlist.fpp are generated with Fypp 3.2 without changing their algorithms. Six generated Fortran files, checksums of all template/license inputs, and xgenerate_fycollections.py retain a reproducible recipe. The package supplies the author IntList and StringList specializations, not automatic runtime generation for arbitrary user types. Its operator FPM wrapper uses version 0.0.0 to identify no inferred upstream release; the source is pinned by commit. The checked main adapts the author integer/string list examples and checks append, insertion, retrieval, successful/missing searches, integer deletion and allocatable-list finalization. N4/N5 cover storage containers and searching. Pointer/array list specializations and the complete upstream tests are not verified. BSD-2-Clause notices are retained.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/fycollections.f90), [source/build record](fpm-candidates/fycollections/source-review.json) and [verified output](fpm-candidates/fycollections/verified-output.txt).
+
+## fortran-sdl2
+
+The original FPM library and Fortran bindings are unchanged. The image pins SDL 2.32.4, SDL2_image 2.8.8, SDL2_mixer 2.8.1, SDL2_ttf 2.24.0 and GL/GLU development libraries; native link flags are recorded in the catalog build environment. The checked main creates a 640x360 32-bit software surface, fills a background and three bars, checks source pixels, saves a PNG, reloads it through the package IMG_Load API, and checks dimensions plus the file signature/size. The pinned bindings omit IMG_SavePNG, so the main includes only that standard C function declaration. No image encoder or drawing algorithm is substituted for SDL. No video subsystem, window, display server, hardware renderer, audio device or event loop is needed. The returned browser preview is visually reviewed. Q covers graphics. Interactive rendering, audio, fonts and OpenGL/GLU routines are compiled/linked facilities but not runtime-verified by this consumer. ISC notices are retained.
+
+The pinned library and checked consumer passed with GNU Fortran 16.2.0 and FPM 0.12.0. An edited main also passed in the restricted sandbox, rebuilding only the main and executable.
+
+See the [checked main](../fpm_catalog/demos/fortran-sdl2.f90), [source/build record](fpm-candidates/fortran-sdl2/source-review.json) and [verified output](fpm-candidates/fortran-sdl2/verified-output.txt).

@@ -1,0 +1,33 @@
+{
+  "id": "fortran-curl",
+  "repository": "interkosmos/fortran-curl",
+  "revision": "f29cc78fdc7701bc221a82af9bbd9ed04ef52158",
+  "archive_sha256": "e6e98039db3ea2899b057f175661b5d222cbe14e25e2f11172338fbb790669d3",
+  "catalog_build": {
+    "adapter_sha256": "5f6c9c34de44723216fbd9c86483f4b3319660cf0f37b830aac27098b1dbe580",
+    "apt_packages": [
+      "libcurl4-openssl-dev=8.14.1-2+deb13u7"
+    ]
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-30T17:14:08.367055+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/fortran-curl.f90",
+  "verification": {
+    "seconds": 2.01,
+    "build_seconds": 0.515,
+    "library_reused": true,
+    "demo_sha256": "df023220e34b9dc5619cbfaa0f4f34b4155b8a07d4b6d6d7ec37915c1ed76230",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "ISC",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "Release 0.8.0 is pinned because its documented libcurl minimum is 8.10.0, compatible with the pinned Debian libcurl 8.14.1-2+deb13u7; current main requires 8.20.0. The original FPM library and C helpers are unchanged. The example adapts examples/url/url.f90 and checks successful URL parsing plus exact host, path, port and query strings, changes the path and checks the reconstructed URL. The C URL handle is released and cleared by the caller, following the 0.8 cleanup semantics. N3 describes parsing/constructing character data. No network request is made; sandbox internet access remains disabled. HTTP transfers, authentication, mail protocols and other libcurl facilities are not runtime-verified. ISC notices are retained.",
+  "release": "0.8.0",
+  "main_revision": "98734f58425b6bfce4c79e3535530decc12187b2",
+  "configuration": "Release 0.8.0 requires libcurl >=8.10 and is checked against pinned libcurl 8.14.1. Only offline URL operations were exercised."
+}

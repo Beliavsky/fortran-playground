@@ -1,0 +1,81 @@
+Initial consumer used character(len=120) for the line passed to redo. Reproduce by changing len=1024 to len=120 in the checked demo. The author example uses len=1024; the final consumer follows it.
+
+{
+  "ok": false,
+  "compiler": "GNU Fortran (GCC) 16.2.0",
+  "compiler_id": "gfortran",
+  "fpm": "0.12.0",
+  "stages": [
+    {
+      "name": "Build",
+      "command": [
+        "fpm",
+        "build",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.346,
+      "ok": true,
+      "exit_code": 0,
+      "error": "",
+      "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+      "stderr": ""
+    },
+    {
+      "name": "Run",
+      "command": [
+        "fpm",
+        "run",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.031,
+      "ok": false,
+      "exit_code": 2,
+      "error": "",
+      "stdout": "!pressure = 1000\n!temperature = 290\n",
+      "stderr": "Project is up to date\nAt line 452 of file ./././/../sources/bundle/packages/0/M_history-fe7dd940a5d15792653233962d8df9cb3b5443f6/src/M_history.f90\nFortran runtime error: Substring out of bounds: upper bound (255) of 'cin' exceeds string length (121)\n\nError termination. Backtrace:\n#0  0x2b8bd2899f83 in ???\n#1  0x2b8bd289ac39 in ???\n#2  0x2b8bd289b21b in ???\n#3  0x41d23b in ???\n#4  0x420869 in ???\n#5  0x40270f in MAIN__\n\tat app/main.f90:17\n#6  0x402d71 in main\n\tat app/main.f90:4\n<ERROR> Execution for object \" playground-main \" returned exit code  2\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 2\n"
+    }
+  ],
+  "cache": {
+    "package": "m_history",
+    "compiler": "GNU Fortran 16.2.0",
+    "key": "58f3eb823d9d5698af81a29b",
+    "library_reused": true,
+    "changed_artifacts": []
+  },
+  "packages": [
+    {
+      "repository": "urbanjost/M_history",
+      "revision": "fe7dd940a5d15792653233962d8df9cb3b5443f6",
+      "sha256": "8447121b84d05e0d456eaf05bd9d548eb22d28947ddaa2259ba935dbfd0fdd88"
+    }
+  ],
+  "build_ok": true,
+  "target_groups": {
+    "app": [
+      "playground-main"
+    ],
+    "example": [],
+    "test": []
+  },
+  "targets": [
+    "playground-main"
+  ],
+  "plots": [],
+  "plot_notes": []
+}

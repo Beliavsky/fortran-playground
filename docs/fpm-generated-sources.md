@@ -39,6 +39,22 @@ With Fypp 3.2 installed, reproduce the standard-kind, rank-five configuration:
 python xgenerate_fdict.py --source PATH_TO_FDICT --check
 ```
 
+FyCollections uses six Fortran files generated with Fypp 3.2 from the
+[pinned upstream templates](https://github.com/aradi/fycollections/tree/f67b874669e63834f30cd83f2b96889072b4eec7).
+They contain the original backend and the author's `IntList` and `StringList`
+specializations. Other element types require their own template instantiation;
+the playground does not run Fypp on visitor programs. The asset records the
+template and license checksums, and the generated Fortran is included in
+downloaded projects. Reproduce or check it with:
+
+```sh
+python xgenerate_fycollections.py --source PATH_TO_FYCOLLECTIONS --check
+```
+
+The source has no FPM manifest. Its catalog wrapper uses `0.0.0` as a placeholder,
+with the exact upstream commit identifying the version. The BSD-2-Clause
+license remains in the source tree and catalog review records.
+
 FGSL uses the complete configuration header produced by its upstream Autoconf
 probes with GSL 2.8. The catalog stores that header as `config.inc`; guarded
 patches change only the include filename in the original and staged Fortran/C

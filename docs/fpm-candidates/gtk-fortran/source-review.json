@@ -1,0 +1,111 @@
+{
+  "id": "gtk-fortran",
+  "repository": "vmagnin/gtk-fortran",
+  "revision": "6f731807228c55bcc0551d15f6d1f7f50bf1fe49",
+  "archive_sha256": "d5ff1d520b0ff329ea1a795cdb816152286489f9476ff72e7fa327b37fb4ab96",
+  "catalog_build": {
+    "adapter_sha256": "5f6c9c34de44723216fbd9c86483f4b3319660cf0f37b830aac27098b1dbe580",
+    "apt_packages": [
+      "libgtk-4-dev=4.18.6+ds-2",
+      "libcairo2-dev=1.18.4-1+b1"
+    ]
+  },
+  "dependencies": [],
+  "catalog_patches": {
+    "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+    "edits": [
+      {
+        "path": "src/gtk-hl-dialog.f90",
+        "sha256": "7eaed8dfa69029176032414d6216dd371bcf1d84242c3b0592f03c169749dea2",
+        "before": "call f_c_string(name, string)",
+        "after": "call convert_f_string(name, string)"
+      },
+      {
+        "path": "src/gtk-hl-dialog.f90",
+        "sha256": "2fee168c69a29e92379b3dc9494c192839e22b23795842f01ad4d77b127bc062",
+        "before": "call f_c_string(license, string)",
+        "after": "call convert_f_string(license, string)"
+      },
+      {
+        "path": "src/gtk-hl-dialog.f90",
+        "sha256": "fafbaf75c99f88a68773ec1a8bc4628db10153c296c3e0b93e9f9cdb8f57b7b3",
+        "before": "call f_c_string(comments, string)",
+        "after": "call convert_f_string(comments, string)"
+      },
+      {
+        "path": "src/gtk-hl-dialog.f90",
+        "sha256": "72f80a30d1b54d4e9cd59c28a4fed36b8a4792ad8c22c30782f794189ed1ae15",
+        "before": "call f_c_string(website, string)",
+        "after": "call convert_f_string(website, string)"
+      },
+      {
+        "path": "src/gtk-hl-dialog.f90",
+        "sha256": "6630df7dad5b80fdeb097f50f5d07d85020583a504ba9d017721ea79bde1c702",
+        "before": "call f_c_string(website_label, string)",
+        "after": "call convert_f_string(website_label, string)"
+      },
+      {
+        "path": "src/gtk-hl-dialog.f90",
+        "sha256": "a53c78e70ac11286bf4bd145461012896de081a57b1ace60743c4da6726840b9",
+        "before": "call f_c_string(translators, string)",
+        "after": "call convert_f_string(translators, string)"
+      },
+      {
+        "path": "src/gtk-hl-dialog.f90",
+        "sha256": "b12434007de732dafa3d6e3b4689333c36710114a365d5399768ee4286c79de4",
+        "before": "call f_c_string(copyright, string)",
+        "after": "call convert_f_string(copyright, string)"
+      },
+      {
+        "path": "src/gtk-hl-dialog.f90",
+        "sha256": "4be354b559b87ebba4805c87140360f0c83cc4da88fec9e74036c40c40a6d5d8",
+        "before": "call f_c_string(version, string)",
+        "after": "call convert_f_string(version, string)"
+      },
+      {
+        "path": "src/gtk-hl-dialog.f90",
+        "sha256": "baaa59fe247339873bdf427ece98ee855782ebad614cd2e0b4d4453583275503",
+        "before": "call f_c_string(authors(i), string)",
+        "after": "call convert_f_string(authors(i), string)"
+      },
+      {
+        "path": "src/gtk-hl-dialog.f90",
+        "sha256": "0ab101a35ecec9d5f697ece8d69cde9edea723e2965abf9f1df80d4b967eb8cf",
+        "before": "call f_c_string(documenters(i), string)",
+        "after": "call convert_f_string(documenters(i), string)"
+      },
+      {
+        "path": "src/gtk-hl-dialog.f90",
+        "sha256": "6fde51f7fb65cf5e19daf96217872288911ee66823fe08da3a1223a64d941b48",
+        "before": "call f_c_string(artists(i), string)",
+        "after": "call convert_f_string(artists(i), string)"
+      }
+    ]
+  },
+  "checked_at": "2026-10-30T18:16:48.566372+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/gtk-fortran.f90",
+  "verification": {
+    "seconds": 2.556,
+    "build_seconds": 0.682,
+    "library_reused": true,
+    "demo_sha256": "afc6575739b8b1a2d194a790129a6328b9f2c250d6971996b8560a5e0e1a276c",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "GPL-3.0-or-later WITH GCC-exception-3.1",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "The original gtk-fortran 4.8.0 FPM manifest is unchanged and builds the core bindings and high-level helper modules. GNU 16 compilation initially stopped in gtk-hl-dialog.f90 because f_c_string was resolved as a function rather than the legacy subroutine alias. Eleven checksum-guarded call-name replacements use the equivalent convert_f_string generic already provided by gtk_sup, matching current upstream spelling; arguments and implementations are unchanged. The unpatched diagnostic is retained. This release targets GTK 4.18.4/GLib 2.84.1 and is linked against pinned Debian GTK 4.18.6, with Cairo 1.18.4. The example adapts the author Cairo drawing API to an image surface, checks Cairo statuses and PNG signature/size, and draws curves, circles and text without gtk_init, a window or a display server. The returned browser preview is visually reviewed. Q covers graphics. Desktop widgets, events, interactive GUI sessions and the full upstream tests are not runtime-verified. GPL-3.0-or-later with GCC Runtime Library Exception 3.1 notices are retained.",
+  "release": "v4.8.0",
+  "main_revision": "d8ee4b0594921d11f3c7b1dec1604cb341601505",
+  "unpatched_source_sha256": "7eaed8dfa69029176032414d6216dd371bcf1d84242c3b0592f03c169749dea2",
+  "upstream_spelling_reference": {
+    "repository": "vmagnin/gtk-fortran",
+    "revision": "d8ee4b0594921d11f3c7b1dec1604cb341601505",
+    "path": "src/gtk-hl-dialog.f90",
+    "note": "Current upstream calls convert_f_string at the corresponding eleven sites. Only the call names are backported, not the newer GTK API bindings."
+  }
+}

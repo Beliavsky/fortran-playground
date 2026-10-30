@@ -1,0 +1,39 @@
+{
+  "id": "fortran-sdl2",
+  "repository": "interkosmos/fortran-sdl2",
+  "revision": "cac974790420ba757c17f88678e66b01500319e7",
+  "archive_sha256": "eea6a05fc2807fb7d5199cb0cfebb0ba09986e971111bb549820f890cbe161b0",
+  "catalog_build": {
+    "adapter_sha256": "5f6c9c34de44723216fbd9c86483f4b3319660cf0f37b830aac27098b1dbe580",
+    "apt_packages": [
+      "libsdl2-dev=2.32.4+dfsg-1",
+      "libsdl2-image-dev=2.8.8+dfsg-1+deb13u1",
+      "libsdl2-mixer-dev=2.8.1+dfsg-2",
+      "libsdl2-ttf-dev=2.24.0+dfsg-2",
+      "libgl-dev=1.7.0-1+b2",
+      "libglu1-mesa-dev=9.0.2-1.1+b3"
+    ],
+    "environment": {
+      "FPM_LDFLAGS": "-lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -lGL -lGLU"
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-30T18:34:32.649899+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/fortran-sdl2.f90",
+  "verification": {
+    "seconds": 2.976,
+    "build_seconds": 0.618,
+    "library_reused": true,
+    "demo_sha256": "59344bd9f5c0f6372ba31a0beaae76aa32b2e50ca701002582c6c5d64e0152d2",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "ISC",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "The original FPM library and Fortran bindings are unchanged. The image pins SDL 2.32.4, SDL2_image 2.8.8, SDL2_mixer 2.8.1, SDL2_ttf 2.24.0 and GL/GLU development libraries; native link flags are recorded in the catalog build environment. The checked main creates a 640x360 32-bit software surface, fills a background and three bars, checks source pixels, saves a PNG, reloads it through the package IMG_Load API, and checks dimensions plus the file signature/size. The pinned bindings omit IMG_SavePNG, so the main includes only that standard C function declaration. No image encoder or drawing algorithm is substituted for SDL. No video subsystem, window, display server, hardware renderer, audio device or event loop is needed. The returned browser preview is visually reviewed. Q covers graphics. Interactive rendering, audio, fonts and OpenGL/GLU routines are compiled/linked facilities but not runtime-verified by this consumer. ISC notices are retained.",
+  "png_save_interface": "The main declares IMG_SavePNG with ISO_C_BINDING because the pinned package only supplies PNG-loading interfaces. The original library sources are unchanged."
+}

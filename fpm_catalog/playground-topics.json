@@ -290,6 +290,14 @@
     "ftorch": ["pytorch", "torchscript", "neural-networks", "inference", "machine-learning", "interoperability"],
     "tsunami": ["shallow-water-equations", "finite-differences", "partial-differential-equations", "wave-propagation", "educational"],
     "pfunit": ["unit-testing", "test-framework", "assertions", "software-testing", "serial"],
-    "raffle": ["computational-geometry", "periodic-boundary-conditions", "atomistic-structures", "materials-science", "interatomic-distances"]
+    "raffle": ["computational-geometry", "periodic-boundary-conditions", "atomistic-structures", "materials-science", "interatomic-distances"],
+    "m_history": ["command-history", "line-editing", "interactive-input", "text-processing"],
+    "fortran-curl": ["libcurl", "url-parsing", "interoperability", "iso-c-binding", "offline"],
+    "plplot": ["scientific-visualization", "plotting", "png", "cairo", "headless"],
+    "m_cli": ["command-line", "argument-parsing", "namelist", "text-processing"],
+    "fortran-modbus": ["modbus", "libmodbus", "register-conversion", "byte-order", "iso-c-binding", "offline"],
+    "gtk-fortran": ["graphics", "gtk", "cairo", "png", "headless", "gui", "iso-c-binding"],
+    "fycollections": ["containers", "lists", "generic-programming", "fypp", "searching", "data-structures"],
+    "fortran-sdl2": ["graphics", "sdl2", "image-processing", "png", "headless", "iso-c-binding"]
   }
 }

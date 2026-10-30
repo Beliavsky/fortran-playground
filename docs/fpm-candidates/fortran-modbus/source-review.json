@@ -1,0 +1,30 @@
+{
+  "id": "fortran-modbus",
+  "repository": "interkosmos/fortran-modbus",
+  "revision": "1e99906209fbbcdd1f1bf2064a92325cf4bb05fa",
+  "archive_sha256": "5661026f889d951c141d0acb5b959649166d049a3a926b674016a88599530ece",
+  "catalog_build": {
+    "adapter_sha256": "5f6c9c34de44723216fbd9c86483f4b3319660cf0f37b830aac27098b1dbe580",
+    "apt_packages": [
+      "libmodbus-dev=3.1.11-2"
+    ]
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-30T18:16:48.566372+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/fortran-modbus.f90",
+  "verification": {
+    "seconds": 1.876,
+    "build_seconds": 0.387,
+    "library_reused": true,
+    "demo_sha256": "a2a46efd866f1c189edff0c2f9d120b98cf318a9caa8ce05d76ea89d367a1992",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "ISC",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "The original Fortran 2018 FPM bindings are compiled against pinned Debian libmodbus 3.1.11-2. The consumer checks positive, negative and zero single-precision values through the ABCD, BADC, CDAB and DCBA register conversion APIs and prints register words in hexadecimal. These are offline operations, with no socket, serial port or Modbus device. N2 covers bit/byte representation; the catalog does not claim verified device communication. The author test/test_modbus.f90 documents context use but is not used as a device test. ISC notices are retained."
+}

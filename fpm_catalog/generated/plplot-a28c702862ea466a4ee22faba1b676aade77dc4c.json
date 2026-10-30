@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "repository": "PLplot/PLplot",
+  "revision": "a28c702862ea466a4ee22faba1b676aade77dc4c",
+  "files": {
+    "bindings/fortran/included_plplot_configured_types.f90": "    ! Specify configured Fortran types (currently only private_plflt) to\n    ! be used by the fortran binding.\n\n    ! Configured by CMake depending on the floating-point precision\n    ! adopted for the core C PLplot library.\n    integer, parameter :: private_plflt  = c_double\n"
+  }
+}

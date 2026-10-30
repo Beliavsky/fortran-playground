@@ -1,6 +1,6 @@
 # Playground topics by package
 
-290 selected packages; 586 distinct playground topics. GitHub topics were retrieved on 2026-10-28.
+298 selected packages; 605 distinct playground topics. GitHub topics were retrieved on 2026-10-28.
 
 The playground topics below are editorial suggestions based on the saved package descriptions, categories, and GitHub labels. They describe the package, rather than claiming every feature is exercised by its example main program. They are not author-supplied GitHub topics.
 
@@ -44,6 +44,13 @@ The first command validates coverage and regenerates this page; use `--check` to
 | --- | --- | --- |
 | [forcolormap](https://github.com/vmagnin/forcolormap) — Scientific colormaps mapping scalar values to RGB colors. | `colormaps`, `colors`, `rgb`, `visualization` | `colormaps`, `fortran`, `fortran-package-manager` |
 | [m_color](https://github.com/urbanjost/M_color) — Convert color names and RGB, HLS, HSV, and other color models. | `color-conversion`, `colors`, `hls`, `hsv`, `rgb` | `color-conversion`, `color-models`, `fortran`, `fortran-package-manager` |
+
+## Command-line interfaces
+
+| Package and description | Playground topics | GitHub topics |
+| --- | --- | --- |
+| [m_cli](https://github.com/urbanjost/M_CLI) — Command-line parsing through a prototype command and NAMELIST, including typed scalar and array options. | `argument-parsing`, `command-line`, `namelist`, `text-processing` | `argument`, `command`, `command-line`, `commandline-interface`, `fortran`, `fortran-package-manager`, `fpm`, `namelist`, `parsing` |
+| [m_history](https://github.com/urbanjost/M_history) — Command-line history, recall and text editing; the example scripts edits through a scratch input unit. | `command-history`, `interactive-input`, `line-editing`, `text-processing` | `editor`, `fortran`, `fortran-package-manager`, `history`, `input` |
 
 ## Command-line tools
 
@@ -115,6 +122,7 @@ The first command validates coverage and regenerates this page; use `--check` to
 | [any](https://github.com/degawa/any) — Wrap intrinsic scalar and array values behind a common return type. | `array-containers`, `generic-values`, `polymorphism`, `type-erasure` | `fortran`, `fortran-library`, `fortran-package-manager`, `modern-fortran`, `object-oriented-programming`, `operator-overloading`, `user-defined-type` |
 | [for_fifo_queue](https://github.com/jordan4ibanez/for_fifo_queue) — FIFO queue using C storage for fixed-size values. | `c-interoperability`, `data-structures`, `fifo`, `queues` | None supplied |
 | [ftl](https://github.com/SCM-NV/ftl) — Template-based containers and strings with selected precompiled instantiations. | `dynamic-arrays`, `generic-containers`, `hash-maps`, `strings`, `templates` | `containers`, `fortran`, `templates` |
+| [fycollections](https://github.com/aradi/fycollections) — Fypp collection templates with precompiled author IntList and StringList specializations; append, insert, delete, retrieve and search typed lists. | `containers`, `data-structures`, `fypp`, `generic-programming`, `lists`, `searching` | None supplied |
 | [integer_set](https://github.com/jordan4ibanez/integer_set) — Simple 32-bit and 64-bit integer sets with insertion, removal and sorting. | `data-structures`, `integer-arithmetic`, `sets` | None supplied |
 | [slinked-list](https://github.com/zoziha/slinked-list) — Generic singly linked list with reusable storage for small datasets. | `containers`, `data-structures`, `linked-lists`, `polymorphism` | `fortran`, `fortran-package-manager`, `linked-list`, `singly-linked-list` |
 
@@ -269,6 +277,8 @@ The first command validates coverage and regenerates this page; use `--check` to
 
 | Package and description | Playground topics | GitHub topics |
 | --- | --- | --- |
+| [fortran-sdl2](https://github.com/interkosmos/fortran-sdl2) — SDL2 bindings; the checked example draws colored bars on a software surface and saves/reloads a browser-viewable PNG without a window. | `graphics`, `headless`, `image-processing`, `iso-c-binding`, `png`, `sdl2` | `fortran`, `fortran-package-manager`, `fpm`, `game-development`, `gamedev`, `opengl`, `sdl`, `sdl2` |
+| [gtk-fortran](https://github.com/vmagnin/gtk-fortran) — GTK-fortran 4.8 bindings to GTK 4.18 and Cairo; the checked example draws a PNG without a window or display server. | `cairo`, `graphics`, `gtk`, `gui`, `headless`, `iso-c-binding`, `png` | `bindings`, `cross-platform`, `fortran`, `fortran-package-manager`, `graphical-user-interface`, `graphics`, `gtk`, `gtk-fortran`, `gtk4`, `gui` |
 | [m_draw](https://github.com/urbanjost/M_draw) — Portable vector drawing with file-output drivers and a Fortran interface. | `c-interoperability`, `drawing`, `ppm`, `raster-images`, `vector-graphics` | `fortran`, `fortran-package-manager`, `graphics`, `vector` |
 
 ## High precision
@@ -312,7 +322,9 @@ The first command validates coverage and regenerates this page; use `--check` to
 | --- | --- | --- |
 | [flibcpp](https://github.com/swig-fortran/flibcpp) — C++ standard-library wrappers with checked sorting and binary-search examples. | `binary-search`, `containers`, `cpp`, `interoperability`, `random-numbers`, `sorting` | None supplied |
 | [forpy](https://github.com/ylikx/forpy) — Embed Python in Fortran and exchange arrays with NumPy. | `arrays`, `c-bindings`, `interoperability`, `numpy`, `python` | `fortran`, `fortran-library`, `fortran2003`, `interoperability`, `language-bindings`, `numpy`, `python` |
+| [fortran-curl](https://github.com/interkosmos/fortran-curl) — Fortran-curl 0.8.0 bindings to libcurl; checked offline URL parsing and construction. Sandbox internet access remains disabled. | `interoperability`, `iso-c-binding`, `libcurl`, `offline`, `url-parsing` | `curl`, `fortran`, `fortran-2008`, `fortran-package-manager`, `fpm`, `gopher`, `http`, `imap`, `libcurl`, `mqtt`, `smtp` |
 | [fortran-lua53](https://github.com/interkosmos/fortran-lua53) — Fortran bindings for embedding and calling Lua 5.3 scripts. | `c-bindings`, `interoperability`, `lua`, `scripting` | `fortran`, `fortran-package-manager`, `fpm`, `lua`, `lua53` |
+| [fortran-modbus](https://github.com/interkosmos/fortran-modbus) — Fortran bindings to libmodbus; offline floating-point/register conversions in four byte orders. No device connection is required by the example. | `byte-order`, `iso-c-binding`, `libmodbus`, `modbus`, `offline`, `register-conversion` | `automation`, `fortran`, `fortran-2018`, `fortran-package-manager`, `iiot`, `iot`, `libmodbus`, `modbus`, `modbus-rtu`, `modbus-tcp` |
 | [fortran-tcl86](https://github.com/interkosmos/fortran-tcl86) — Fortran bindings for embedding Tcl 8.6 scripting and accessing Tcl/Tk APIs. | `interoperability`, `iso-c-binding`, `scripting`, `tcl` | `fortran`, `fortran-2018`, `fortran-package-manager`, `fpm`, `tcl`, `tcl-tk`, `tk` |
 | [m-process](https://github.com/urbanjost/M_process) — POSIX pipes for reading and writing subprocess streams. | `interoperability`, `pipes`, `posix`, `subprocess` | `fortran`, `fortran-package-manager`, `popen`, `process`, `reading`, `writing` |
 
@@ -438,6 +450,7 @@ The first command validates coverage and regenerates this page; use `--check` to
 | --- | --- | --- |
 | [easy-plplot](https://github.com/zoziha/easy_plplot) — Matplotlib-inspired PLplot interface; PNG plotting example. | `data-visualization`, `graphics`, `plotting`, `plplot`, `png` | `fortran`, `fortran-library`, `fortran-package-manager`, `fpm`, `matplotlib`, `plot`, `plotting`, `plplot`, `plplot-bindings` |
 | [ogpf](https://github.com/kookma/ogpf) — Object-based Gnuplot interface with browser-viewable contour plots. | `contour-plots`, `gnuplot`, `graphics`, `plotting` | `2d-plot`, `3d-graphics`, `animation`, `color-palette`, `contour-plot`, `contours`, `fortran2003`, `fortran2008`, `gnuplot`, `graphics`, `modern-fortran`, `surface-plot` |
+| [plplot](https://github.com/PLplot/PLplot) — PLplot 5.15.0 Fortran bindings, compiled with GNU 16 against the pinned native C library; headless Cairo PNG plots. | `cairo`, `headless`, `plotting`, `png`, `scientific-visualization` | None supplied |
 | [pyplot-fortran](https://github.com/jacobwilliams/pyplot-fortran) — Create PNG plots from Fortran through Python and Matplotlib. | `matplotlib`, `plotting`, `png`, `python`, `visualization` | `contour-plot`, `fortran`, `fortran-package-manager`, `matplotlib`, `plot`, `plotting`, `plotting-in-fortran`, `pyplot` |
 
 ## Quadrature
@@ -613,7 +626,7 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `airy-functions` | 2 |
 | `approximate-math` | 1 |
 | `arbitrary-precision` | 2 |
-| `argument-parsing` | 3 |
+| `argument-parsing` | 4 |
 | `arima` | 1 |
 | `arnoldi` | 1 |
 | `arpack` | 1 |
@@ -652,8 +665,10 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `bound-constraints` | 8 |
 | `boundary-value-problems` | 1 |
 | `brackets` | 1 |
+| `byte-order` | 1 |
 | `c-bindings` | 2 |
 | `c-interoperability` | 10 |
+| `cairo` | 2 |
 | `calendar-arithmetic` | 2 |
 | `carlson-symmetric-forms` | 1 |
 | `cartesian-coordinates` | 1 |
@@ -667,7 +682,8 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `color-conversion` | 2 |
 | `colormaps` | 1 |
 | `colors` | 2 |
-| `command-line` | 4 |
+| `command-history` | 1 |
+| `command-line` | 5 |
 | `command-line-options` | 1 |
 | `command-line-parsing` | 1 |
 | `communication` | 1 |
@@ -683,7 +699,7 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `constrained-optimization` | 6 |
 | `constraint-solving` | 1 |
 | `contact-mechanics` | 1 |
-| `containers` | 15 |
+| `containers` | 16 |
 | `continuum-solvation` | 1 |
 | `contour-plots` | 1 |
 | `control-systems` | 2 |
@@ -708,7 +724,7 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `damping` | 1 |
 | `data-formats` | 1 |
 | `data-frames` | 1 |
-| `data-structures` | 5 |
+| `data-structures` | 6 |
 | `data-visualization` | 1 |
 | `database` | 2 |
 | `databases` | 1 |
@@ -795,6 +811,7 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `function-approximation` | 1 |
 | `function-evaluation` | 1 |
 | `functional-programming` | 3 |
+| `fypp` | 1 |
 | `gamma-function` | 1 |
 | `gamma-functions` | 2 |
 | `gauss-hermite` | 1 |
@@ -804,7 +821,7 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `gaussian-quadrature` | 5 |
 | `gaussian-simulation` | 1 |
 | `generic-containers` | 1 |
-| `generic-programming` | 1 |
+| `generic-programming` | 2 |
 | `generic-values` | 1 |
 | `genetic-algorithms` | 1 |
 | `geodesics` | 1 |
@@ -818,15 +835,18 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `gradient-descent` | 1 |
 | `gradients` | 3 |
 | `graph-partitioning` | 1 |
-| `graphics` | 2 |
+| `graphics` | 4 |
 | `graphs` | 3 |
 | `grids` | 3 |
 | `growable-arrays` | 1 |
 | `gsl` | 1 |
+| `gtk` | 1 |
+| `gui` | 1 |
 | `hash-map` | 1 |
 | `hash-maps` | 1 |
 | `hash-tables` | 2 |
 | `hdf5` | 1 |
+| `headless` | 3 |
 | `heapsort` | 1 |
 | `heat-equation` | 1 |
 | `heat-transfer` | 1 |
@@ -841,7 +861,7 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `iapws` | 1 |
 | `iau-sofa` | 1 |
 | `image-io` | 1 |
-| `image-processing` | 1 |
+| `image-processing` | 2 |
 | `images` | 3 |
 | `implicit-methods` | 1 |
 | `improper-integrals` | 1 |
@@ -856,10 +876,11 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `integer-vectors` | 1 |
 | `integral-transforms` | 1 |
 | `interaction-energy` | 1 |
+| `interactive-input` | 1 |
 | `interatomic-distances` | 1 |
-| `interoperability` | 8 |
+| `interoperability` | 9 |
 | `interpolation` | 10 |
-| `iso-c-binding` | 1 |
+| `iso-c-binding` | 5 |
 | `isotopes` | 1 |
 | `iterative-solvers` | 5 |
 | `jackknife` | 1 |
@@ -882,12 +903,16 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `lbfgs` | 1 |
 | `ldlt-factorization` | 1 |
 | `least-squares` | 9 |
+| `libcurl` | 1 |
+| `libmodbus` | 1 |
 | `limited-memory` | 1 |
+| `line-editing` | 1 |
 | `linear-algebra` | 25 |
 | `linear-interpolation` | 1 |
 | `linear-programming` | 1 |
 | `linear-systems` | 11 |
 | `linked-lists` | 4 |
+| `lists` | 1 |
 | `lmdb` | 1 |
 | `logarithms` | 1 |
 | `logging` | 2 |
@@ -936,6 +961,7 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `minimization` | 1 |
 | `mixed-types` | 1 |
 | `modal-analysis` | 1 |
+| `modbus` | 1 |
 | `model-io` | 1 |
 | `modified-bessel-functions` | 2 |
 | `modular-arithmetic` | 1 |
@@ -951,6 +977,7 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `multistep-methods` | 1 |
 | `multivariate-interpolation` | 1 |
 | `n-body` | 1 |
+| `namelist` | 1 |
 | `natural-sort` | 1 |
 | `nearest-neighbor` | 2 |
 | `nearest-neighbors` | 2 |
@@ -982,6 +1009,7 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `numpy` | 2 |
 | `object-oriented` | 1 |
 | `ode` | 9 |
+| `offline` | 2 |
 | `operator-precedence` | 1 |
 | `optimization` | 19 |
 | `orbital-mechanics` | 1 |
@@ -1006,9 +1034,9 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `physical-units` | 1 |
 | `physics` | 2 |
 | `pipes` | 1 |
-| `plotting` | 3 |
+| `plotting` | 4 |
 | `plplot` | 1 |
-| `png` | 4 |
+| `png` | 7 |
 | `pnm` | 1 |
 | `point-sets` | 2 |
 | `poisson-distribution` | 1 |
@@ -1053,6 +1081,7 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `rational-arithmetic` | 2 |
 | `real-arithmetic` | 1 |
 | `reference-counting` | 1 |
+| `register-conversion` | 1 |
 | `regression` | 3 |
 | `regular-expressions` | 5 |
 | `relu` | 2 |
@@ -1076,8 +1105,10 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `schroedinger-equation` | 1 |
 | `scientific-computing` | 1 |
 | `scientific-data` | 4 |
+| `scientific-visualization` | 1 |
 | `scripting` | 4 |
-| `searching` | 4 |
+| `sdl2` | 1 |
+| `searching` | 5 |
 | `sensitivity-analysis` | 1 |
 | `sequential-quadratic-programming` | 2 |
 | `serial` | 1 |
@@ -1144,7 +1175,7 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `testing` | 1 |
 | `text-files` | 1 |
 | `text-formatting` | 1 |
-| `text-processing` | 15 |
+| `text-processing` | 17 |
 | `text-scanning` | 1 |
 | `thermodynamics` | 1 |
 | `thread-safe` | 2 |
@@ -1173,6 +1204,7 @@ Counts below refer only to our topics; GitHub-only labels are not included.
 | `unit-testing` | 7 |
 | `unix` | 1 |
 | `unsigned-integers` | 1 |
+| `url-parsing` | 1 |
 | `utf-8` | 2 |
 | `variable-length-strings` | 1 |
 | `vector-calculus` | 1 |

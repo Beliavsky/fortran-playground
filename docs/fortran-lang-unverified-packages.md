@@ -1,8 +1,8 @@
 # Fortran-lang packages not yet verified for the FPM playground
 
-Checked on **2026-10-30** against the [Fortran-lang package index](https://fortran-lang.org/packages/) and this repository's **290-package** verified catalog.
+Checked on **2026-10-30** against the [Fortran-lang package index](https://fortran-lang.org/packages/) and this repository's **298-package** verified catalog.
 
-The upstream index data contains **273 projects**. **112** match our verified packages, including confirmed repository renames and recorded GitLab/GitHub mirrors; **161 remain without standalone playground verification**. Of these, **20 have recorded unsuccessful attempts**. For the other **141**, no matching attempt was found in the recorded investigations.
+The upstream index data contains **273 projects**. **120** match our verified packages, including confirmed repository renames and recorded upstream/GitHub source mappings; **153 remain without standalone playground verification**. Of these, **20 have recorded unsuccessful attempts**. For the other **133**, no matching attempt was found in the recorded investigations.
 
 This is an inventory, not a recommendation to precompile every entry. The upstream index also includes scientific applications, command-line tools, code generators, and interfaces needing external software. An unverified entry is not evidence that a package fails to compile. Verification here means a pinned package with a checked consumer example and successful restricted-sandbox cache-reuse test, not testing every upstream feature.
 
@@ -37,12 +37,6 @@ FLAP, StringiFor, FOODIE, FoX, FiNeR and VTKFortran stopped during source prepar
 
 Each project appears once, under its first upstream category; additional categories are shown in the table. No recorded attempt means no matching record was found in the sources listed below. It does not establish that nobody has ever built the project.
 
-### Data types and containers (1)
-
-| Package | Additional categories | Recorded status |
-| --- | --- | --- |
-| [FyCollections](https://bitbucket.org/aradi/fycollections/src/develop) | -- | No recorded attempt |
-
 ### Examples and templates (4)
 
 | Package | Additional categories | Recorded status |
@@ -52,7 +46,7 @@ Each project appears once, under its first upstream category; additional categor
 | [Fortran patterns](https://github.com/farhanjk/FortranPatterns) | -- | No recorded attempt |
 | [Numerical methods in fortran](https://github.com/planelles20/numerical-methods-fortran) | Numerical projects | Compiled locally; numerical check failed; see investigation above. GNU 16 sandbox not tested. |
 
-### Graphics, plotting and user interfaces (9)
+### Graphics, plotting and user interfaces (6)
 
 | Package | Additional categories | Recorded status |
 | --- | --- | --- |
@@ -60,13 +54,10 @@ Each project appears once, under its first upstream category; additional categor
 | [fortran-grace](https://github.com/interkosmos/fortran-grace) | Interface libraries | No recorded attempt |
 | [fortran-motif](https://github.com/interkosmos/fortran-motif) | Interface libraries | No recorded attempt |
 | [fortran-raylib](https://github.com/interkosmos/fortran-raylib) | Interface libraries | No recorded attempt |
-| [fortran-sdl2](https://github.com/interkosmos/fortran-sdl2) | Interface libraries | No recorded attempt |
 | [fortran-xlib](https://github.com/interkosmos/fortran-xlib) | Interface libraries | No recorded attempt |
-| [gtk-fortran](https://github.com/vmagnin/gtk-fortran) | Interface libraries | No recorded attempt |
 | [Illustrate](https://github.com/ccsb-scripps/illustrate) | -- | No recorded attempt |
-| [PLplot](http://plplot.sourceforge.net) | Interface libraries | No recorded attempt |
 
-### Interface libraries (18)
+### Interface libraries (16)
 
 | Package | Additional categories | Recorded status |
 | --- | --- | --- |
@@ -75,8 +66,6 @@ Each project appears once, under its first upstream category; additional categor
 | [ELSI](https://gitlab.com/elsi_project/elsi_interface) | -- | No recorded attempt |
 | [eophis](https://github.com/IGE-OPERA/eophis) | Numerical projects, Scientific | No recorded attempt |
 | [Focal](https://github.com/LKedward/focal) | -- | No recorded attempt |
-| [fortran-curl](https://github.com/interkosmos/fortran-curl) | -- | No recorded attempt |
-| [fortran-modbus](https://github.com/interkosmos/fortran-modbus) | -- | No recorded attempt |
 | [fortran-ncurses](https://github.com/interkosmos/fortran-ncurses) | -- | No recorded attempt |
 | [fortran-xmpp](https://github.com/interkosmos/fortran-xmpp) | -- | No recorded attempt |
 | [fortyxima](https://bitbucket.org/aradi/fortyxima/src/develop) | Programming utilities | No recorded attempt |
@@ -103,7 +92,7 @@ Each project appears once, under its first upstream category; additional categor
 | [Serialbox](https://github.com/GridTools/serialbox) | -- | No recorded attempt |
 | [VTKFortran](https://github.com/szaghi/VTKFortran) | -- | Preparation blocked; see investigation above. Compiler not reached. |
 
-### Libraries (8)
+### Libraries (6)
 
 | Package | Additional categories | Recorded status |
 | --- | --- | --- |
@@ -111,8 +100,6 @@ Each project appears once, under its first upstream category; additional categor
 | [FLAP](https://github.com/szaghi/FLAP) | -- | Preparation blocked; see investigation above. Compiler not reached. |
 | [Futility](https://code.ornl.gov/futility/Futility) | Interface libraries, Programming utilities, Characters and strings, Input, output and parsing, Numerical projects, Scientific | No recorded attempt |
 | [General-Purpose Fortran](https://github.com/urbanjost/general-purpose-fortran) | -- | Preparation blocked; see investigation above. Compiler not reached. |
-| [M_CLI](https://github.com/urbanjost/M_CLI) | -- | No recorded attempt |
-| [M_history](https://github.com/urbanjost/M_history) | -- | No recorded attempt |
 | [OpenCoarrays](https://github.com/sourceryinstitute/OpenCoarrays) | -- | No recorded attempt |
 | [The NJOY Nuclear Data Processing System](https://github.com/njoy/NJOY2016) | -- | No recorded attempt |
 
@@ -261,10 +248,12 @@ These entries are excluded from the unverified list. The other verified matches 
 | --- | --- | --- |
 | [sqliteff](https://gitlab.com/everythingfunctional/sqliteff) | [sqliteff](https://github.com/everythingfunctional/sqliteff) | Recorded GitLab upstream / GitHub mirror |
 | [erloff](https://gitlab.com/everythingfunctional/erloff) | [erloff](https://github.com/everythingfunctional/erloff) | Recorded GitLab upstream / GitHub mirror |
+| [FyCollections](https://bitbucket.org/aradi/fycollections/src/develop) | [fycollections](https://github.com/aradi/fycollections) | Recorded Bitbucket upstream / GitHub source |
 | [strff](https://gitlab.com/everythingfunctional/strff) | [strff](https://github.com/everythingfunctional/strff) | Recorded GitLab upstream / GitHub mirror |
 | [iso_varying_string](https://gitlab.com/everythingfunctional/iso_varying_string) | [iso_varying_string](https://github.com/everythingfunctional/iso_varying_string) | Recorded GitLab upstream / GitHub mirror |
 | [fortran-csv-module](https://github.com/jacobwilliams/fortran-csv-module) | [csv-fortran](https://github.com/jacobwilliams/csv-fortran) | Confirmed GitHub repository rename |
 | [parff](https://gitlab.com/everythingfunctional/parff) | [parff](https://github.com/everythingfunctional/parff) | Recorded GitLab upstream / GitHub mirror |
+| [PLplot](http://plplot.sourceforge.net) | [plplot](https://github.com/PLplot/PLplot) | Upstream project website / GitHub source |
 | [SciFortran](https://github.com/aamaricci/SciFortran) | [scifortran](https://github.com/SciFortran/SciFortran) | Confirmed GitHub repository rename |
 | [quaff](https://gitlab.com/everythingfunctional/quaff) | [quaff](https://github.com/everythingfunctional/quaff) | Recorded GitLab upstream / GitHub mirror |
 | [RPNcalc](https://github.com/scivision/rpn-calc-fortran) | [rpn-calculator-fortran](https://github.com/scivision/rpn-calculator-fortran) | Confirmed GitHub repository rename |

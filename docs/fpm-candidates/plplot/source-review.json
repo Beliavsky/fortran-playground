@@ -1,0 +1,53 @@
+{
+  "id": "plplot",
+  "repository": "PLplot/PLplot",
+  "revision": "a28c702862ea466a4ee22faba1b676aade77dc4c",
+  "archive_sha256": "d67ef17ff532583a67fc98a51006d337e1a80283568ccdcc2b15be573b89ae6e",
+  "catalog_build": {
+    "adapter_sha256": "5f6c9c34de44723216fbd9c86483f4b3319660cf0f37b830aac27098b1dbe580",
+    "apt_packages": [
+      "libplplot-dev=5.15.0+dfsg2-15+b1",
+      "plplot-driver-cairo=5.15.0+dfsg2-15+b1",
+      "libplplot-data=5.15.0+dfsg2-15"
+    ],
+    "environment": {
+      "FPM_FFLAGS": "-ffree-line-length-none"
+    },
+    "source_packages": {
+      "plplot/plplot": {
+        "manifest": "name=\"plplot\"\nversion=\"5.15.0\"\nlicense=\"LGPL-2.0-or-later\"\n[library]\nsource-dir=\"playground-library\"\ninclude-dir=[\"bindings/fortran\"]\n[build]\nauto-executables=false\nauto-examples=false\nauto-tests=false\nlink=[\"plplot\"]\n[install]\nlibrary=true\n",
+        "sources": [
+          "bindings/fortran/plplot.f90",
+          "bindings/fortran/plplot_single.f90",
+          "bindings/fortran/plplot_double.f90",
+          "bindings/fortran/plplot_small_modules.f90"
+        ],
+        "generated": {
+          "asset": "plplot-a28c702862ea466a4ee22faba1b676aade77dc4c.json",
+          "sha256": "3968b18db0adbd8361304217d72023b53a39225841c7a80fd32565c19bca517e"
+        }
+      }
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-30T17:14:08.367055+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/plplot.f90",
+  "verification": {
+    "seconds": 2.58,
+    "build_seconds": 0.545,
+    "library_reused": true,
+    "demo_sha256": "cdd45260d4096781031061feed4e28d7f23ff65e3a9416041c16c74d5c73828f",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "LGPL-2.0-or-later (Fortran bindings); LGPL-2.0 (core)",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "The unmodified PLplot 5.15.0 modern Fortran binding modules are compiled with GNU Fortran 16 against Debian libplplot 5.15.0+dfsg2-15+b1. The author CMake precision template is configured with c_double to match the native double-precision C core; the generated include is checksum-locked. Original included parameter/interface sources and LGPL notices are retained. The checked main follows the author plinit/plenv/pllab/plline/plend API, checks finite sine samples and known extrema, requests the headless pngcairo driver at 800x500, and verifies the generated PNG signature and nontrivial size. The sandbox must return a browser-viewable PNG, which is visually reviewed. Q covers graphics. Native C/Cairo libraries and fonts are installed only in this package image; no precompiled Debian Fortran module files are used by the consumer. Interactive windows, other output drivers and the full upstream example/test suite are not verified.",
+  "release": "plplot-5.15.0",
+  "main_revision": "df0c00e11f2c289bb186e20b44651aa0184beb8b",
+  "configuration": "Original Fortran bindings compiled with GNU 16 against Debian PLplot 5.15.0 C core; configured PLFLT uses c_double. No upstream Fortran .mod files are reused."
+}

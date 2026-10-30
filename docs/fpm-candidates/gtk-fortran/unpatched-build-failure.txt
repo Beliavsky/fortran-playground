@@ -1,0 +1,60 @@
+Original gtk-fortran v4.8.0, GNU Fortran 16.2.0, FPM 0.12.0. The final verified catalog recipe carries the checksum-guarded call-name compatibility patch recorded in source-review.json.
+
+gtk-fortran: FAILED:  + mkdir -p build/dependencies
+[  0%]              pyplot_module.f90
+[  3%]              pyplot_module.f90  done.
+[  3%]                 cairo-auto.f90
+[  6%]                 cairo-auto.f90  done.
+[  6%]                   gdk-auto.f90
+[  9%]                   gdk-auto.f90  done.
+[  9%]            gdk-pixbuf-auto.f90
+[ 12%]            gdk-pixbuf-auto.f90  done.
+[ 12%]             gdkevents-auto.f90
+[ 15%]             gdkevents-auto.f90  done.
+[ 15%]                  glib-auto.f90
+[ 18%]                  glib-auto.f90  done.
+[ 18%]              graphene-auto.f90
+[ 21%]              graphene-auto.f90  done.
+[ 21%]                   gsk-auto.f90
+[ 25%]                   gsk-auto.f90  done.
+[ 25%]                 pango-auto.f90
+[ 28%]                 pango-auto.f90  done.
+[ 28%]               plplot_extra.f90
+[ 31%]               plplot_extra.f90  done.
+[ 31%]            unix-print-auto.f90
+[ 34%]            unix-print-auto.f90  done.
+[ 34%]          api_compatibility.f90
+[ 37%]          api_compatibility.f90  done.
+[ 37%]                        gtk.f90
+[ 40%]                        gtk.f90  done.
+[ 40%]                       main.f90
+[ 43%]                       main.f90  done.
+[ 43%]           gtk-hl-assistant.f90
+[ 46%]           gtk-hl-assistant.f90  done.
+[ 46%]                    gtk-sup.f90
+[ 50%]                    gtk-sup.f90  done.
+[ 50%]              gdk-pixbuf-hl.f90
+[ 53%]              gdk-pixbuf-hl.f90  done.
+[ 53%]                gtk-draw-hl.f90
+[ 56%]                gtk-draw-hl.f90  done.
+[ 56%]            gtk-hl-combobox.f90
+[ 59%]            gtk-hl-combobox.f90  done.
+[ 59%]           gtk-hl-container.f90
+[ 62%]           gtk-hl-container.f90  done.
+[ 62%]              gtk-hl-dialog.f90
+<ERROR> Compilation failed for object " .._sources_bundle_packages_0_gtk-fortran-6f731807228c55bcc0551d15f6d1f7f50bf1fe49_src_gtk-hl-dialog.f90.o "
+[ 65%]              gtk-hl-dialog.f90  done.
+
+./././/../sources/bundle/packages/0/gtk-fortran-6f731807228c55bcc0551d15f6d1f7f50bf1fe49/src/gtk-hl-dialog.f90:41:6:
+
+   41 |   use gtk_sup
+      |      1
+......
+  289 |        call f_c_string(name, string)
+      |                                    2
+Error: ‘f_c_string’ at (1) has a type, which is not consistent with the CALL at (2)
+compilation terminated due to -fmax-errors=1.
+<ERROR> stopping due to failed compilation
+STOP 1
+
+RuntimeError: Catalog verification failed for: gtk-fortran. See .fpm-audit-cache\batch-508\gtk-native.json

@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-30T13:33:04.457481+00:00",
+  "checked_at": "2026-10-30T18:34:32.649899+00:00",
   "compiler": "GNU Fortran 16.2.0",
   "fpm": "0.12.0",
   "validation": "fpm-precompiled-validation.json",
@@ -210,7 +210,15 @@
     "ftorch",
     "tsunami",
     "pfunit",
-    "raffle"
+    "raffle",
+    "plplot",
+    "fortran-curl",
+    "m_history",
+    "m_cli",
+    "fortran-modbus",
+    "gtk-fortran",
+    "fycollections",
+    "fortran-sdl2"
   ],
   "deferred": [
     {
@@ -19649,6 +19657,322 @@
         "build_seconds": 0.411,
         "library_reused": true,
         "demo_sha256": "5d0ad5ed4a11ae8e412fb8b6b166af902857d0b5b7b37f690877625bb947e2e4",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "plplot",
+      "repository": "PLplot/PLplot",
+      "revision": "a28c702862ea466a4ee22faba1b676aade77dc4c",
+      "archive_sha256": "d67ef17ff532583a67fc98a51006d337e1a80283568ccdcc2b15be573b89ae6e",
+      "catalog_build": {
+        "adapter_sha256": "5f6c9c34de44723216fbd9c86483f4b3319660cf0f37b830aac27098b1dbe580",
+        "apt_packages": [
+          "libplplot-dev=5.15.0+dfsg2-15+b1",
+          "plplot-driver-cairo=5.15.0+dfsg2-15+b1",
+          "libplplot-data=5.15.0+dfsg2-15"
+        ],
+        "environment": {
+          "FPM_FFLAGS": "-ffree-line-length-none"
+        },
+        "source_packages": {
+          "plplot/plplot": {
+            "manifest": "name=\"plplot\"\nversion=\"5.15.0\"\nlicense=\"LGPL-2.0-or-later\"\n[library]\nsource-dir=\"playground-library\"\ninclude-dir=[\"bindings/fortran\"]\n[build]\nauto-executables=false\nauto-examples=false\nauto-tests=false\nlink=[\"plplot\"]\n[install]\nlibrary=true\n",
+            "sources": [
+              "bindings/fortran/plplot.f90",
+              "bindings/fortran/plplot_single.f90",
+              "bindings/fortran/plplot_double.f90",
+              "bindings/fortran/plplot_small_modules.f90"
+            ],
+            "generated": {
+              "asset": "plplot-a28c702862ea466a4ee22faba1b676aade77dc4c.json",
+              "sha256": "3968b18db0adbd8361304217d72023b53a39225841c7a80fd32565c19bca517e"
+            }
+          }
+        }
+      },
+      "dependencies": [],
+      "checked_at": "2026-10-30T17:14:08.367055+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/plplot.f90",
+      "verification": {
+        "seconds": 2.58,
+        "build_seconds": 0.545,
+        "library_reused": true,
+        "demo_sha256": "cdd45260d4096781031061feed4e28d7f23ff65e3a9416041c16c74d5c73828f",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "fortran-curl",
+      "repository": "interkosmos/fortran-curl",
+      "revision": "f29cc78fdc7701bc221a82af9bbd9ed04ef52158",
+      "archive_sha256": "e6e98039db3ea2899b057f175661b5d222cbe14e25e2f11172338fbb790669d3",
+      "catalog_build": {
+        "adapter_sha256": "5f6c9c34de44723216fbd9c86483f4b3319660cf0f37b830aac27098b1dbe580",
+        "apt_packages": [
+          "libcurl4-openssl-dev=8.14.1-2+deb13u7"
+        ]
+      },
+      "dependencies": [],
+      "checked_at": "2026-10-30T17:14:08.367055+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/fortran-curl.f90",
+      "verification": {
+        "seconds": 2.01,
+        "build_seconds": 0.515,
+        "library_reused": true,
+        "demo_sha256": "df023220e34b9dc5619cbfaa0f4f34b4155b8a07d4b6d6d7ec37915c1ed76230",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "m_history",
+      "repository": "urbanjost/M_history",
+      "revision": "fe7dd940a5d15792653233962d8df9cb3b5443f6",
+      "archive_sha256": "8447121b84d05e0d456eaf05bd9d548eb22d28947ddaa2259ba935dbfd0fdd88",
+      "catalog_build": {
+        "adapter_sha256": "5f6c9c34de44723216fbd9c86483f4b3319660cf0f37b830aac27098b1dbe580"
+      },
+      "dependencies": [],
+      "checked_at": "2026-10-30T17:14:08.367055+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/m_history.f90",
+      "verification": {
+        "seconds": 2.132,
+        "build_seconds": 0.45,
+        "library_reused": true,
+        "demo_sha256": "7e822e70809767485bb4375dba7606103c0290659ea9ff8076c3d35a266718ac",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "m_cli",
+      "repository": "urbanjost/M_CLI",
+      "revision": "45a7cbcdc12b71b828c482fb4c33498db7fb5618",
+      "archive_sha256": "7ee997ffd201908460a7a7e47ab77944f1ffca8b127ae71e31f43ab2e321fbe7",
+      "catalog_build": {
+        "adapter_sha256": "5f6c9c34de44723216fbd9c86483f4b3319660cf0f37b830aac27098b1dbe580"
+      },
+      "dependencies": [],
+      "checked_at": "2026-10-30T18:16:48.566372+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/m_cli.f90",
+      "verification": {
+        "seconds": 1.807,
+        "build_seconds": 0.468,
+        "library_reused": true,
+        "demo_sha256": "ed92f727647b8441916944a369f30d8bc983b2ac5ab94ac0bf9c24ac78bac3c7",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "fortran-modbus",
+      "repository": "interkosmos/fortran-modbus",
+      "revision": "1e99906209fbbcdd1f1bf2064a92325cf4bb05fa",
+      "archive_sha256": "5661026f889d951c141d0acb5b959649166d049a3a926b674016a88599530ece",
+      "catalog_build": {
+        "adapter_sha256": "5f6c9c34de44723216fbd9c86483f4b3319660cf0f37b830aac27098b1dbe580",
+        "apt_packages": [
+          "libmodbus-dev=3.1.11-2"
+        ]
+      },
+      "dependencies": [],
+      "checked_at": "2026-10-30T18:16:48.566372+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/fortran-modbus.f90",
+      "verification": {
+        "seconds": 1.876,
+        "build_seconds": 0.387,
+        "library_reused": true,
+        "demo_sha256": "a2a46efd866f1c189edff0c2f9d120b98cf318a9caa8ce05d76ea89d367a1992",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "gtk-fortran",
+      "repository": "vmagnin/gtk-fortran",
+      "revision": "6f731807228c55bcc0551d15f6d1f7f50bf1fe49",
+      "archive_sha256": "d5ff1d520b0ff329ea1a795cdb816152286489f9476ff72e7fa327b37fb4ab96",
+      "catalog_build": {
+        "adapter_sha256": "5f6c9c34de44723216fbd9c86483f4b3319660cf0f37b830aac27098b1dbe580",
+        "apt_packages": [
+          "libgtk-4-dev=4.18.6+ds-2",
+          "libcairo2-dev=1.18.4-1+b1"
+        ]
+      },
+      "dependencies": [],
+      "catalog_patches": {
+        "adapter_sha256": "d3a45038b76237a26e1784c6fdf8395f87716fc26cecf791f2a83247d874c181",
+        "edits": [
+          {
+            "path": "src/gtk-hl-dialog.f90",
+            "sha256": "7eaed8dfa69029176032414d6216dd371bcf1d84242c3b0592f03c169749dea2",
+            "before": "call f_c_string(name, string)",
+            "after": "call convert_f_string(name, string)"
+          },
+          {
+            "path": "src/gtk-hl-dialog.f90",
+            "sha256": "2fee168c69a29e92379b3dc9494c192839e22b23795842f01ad4d77b127bc062",
+            "before": "call f_c_string(license, string)",
+            "after": "call convert_f_string(license, string)"
+          },
+          {
+            "path": "src/gtk-hl-dialog.f90",
+            "sha256": "fafbaf75c99f88a68773ec1a8bc4628db10153c296c3e0b93e9f9cdb8f57b7b3",
+            "before": "call f_c_string(comments, string)",
+            "after": "call convert_f_string(comments, string)"
+          },
+          {
+            "path": "src/gtk-hl-dialog.f90",
+            "sha256": "72f80a30d1b54d4e9cd59c28a4fed36b8a4792ad8c22c30782f794189ed1ae15",
+            "before": "call f_c_string(website, string)",
+            "after": "call convert_f_string(website, string)"
+          },
+          {
+            "path": "src/gtk-hl-dialog.f90",
+            "sha256": "6630df7dad5b80fdeb097f50f5d07d85020583a504ba9d017721ea79bde1c702",
+            "before": "call f_c_string(website_label, string)",
+            "after": "call convert_f_string(website_label, string)"
+          },
+          {
+            "path": "src/gtk-hl-dialog.f90",
+            "sha256": "a53c78e70ac11286bf4bd145461012896de081a57b1ace60743c4da6726840b9",
+            "before": "call f_c_string(translators, string)",
+            "after": "call convert_f_string(translators, string)"
+          },
+          {
+            "path": "src/gtk-hl-dialog.f90",
+            "sha256": "b12434007de732dafa3d6e3b4689333c36710114a365d5399768ee4286c79de4",
+            "before": "call f_c_string(copyright, string)",
+            "after": "call convert_f_string(copyright, string)"
+          },
+          {
+            "path": "src/gtk-hl-dialog.f90",
+            "sha256": "4be354b559b87ebba4805c87140360f0c83cc4da88fec9e74036c40c40a6d5d8",
+            "before": "call f_c_string(version, string)",
+            "after": "call convert_f_string(version, string)"
+          },
+          {
+            "path": "src/gtk-hl-dialog.f90",
+            "sha256": "baaa59fe247339873bdf427ece98ee855782ebad614cd2e0b4d4453583275503",
+            "before": "call f_c_string(authors(i), string)",
+            "after": "call convert_f_string(authors(i), string)"
+          },
+          {
+            "path": "src/gtk-hl-dialog.f90",
+            "sha256": "0ab101a35ecec9d5f697ece8d69cde9edea723e2965abf9f1df80d4b967eb8cf",
+            "before": "call f_c_string(documenters(i), string)",
+            "after": "call convert_f_string(documenters(i), string)"
+          },
+          {
+            "path": "src/gtk-hl-dialog.f90",
+            "sha256": "6fde51f7fb65cf5e19daf96217872288911ee66823fe08da3a1223a64d941b48",
+            "before": "call f_c_string(artists(i), string)",
+            "after": "call convert_f_string(artists(i), string)"
+          }
+        ]
+      },
+      "checked_at": "2026-10-30T18:16:48.566372+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/gtk-fortran.f90",
+      "verification": {
+        "seconds": 2.556,
+        "build_seconds": 0.682,
+        "library_reused": true,
+        "demo_sha256": "afc6575739b8b1a2d194a790129a6328b9f2c250d6971996b8560a5e0e1a276c",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "fycollections",
+      "repository": "aradi/fycollections",
+      "revision": "f67b874669e63834f30cd83f2b96889072b4eec7",
+      "archive_sha256": "6b9d2f3a32890b02225e07693d078377bb258fbb62229df56f1ecf04a8224f0c",
+      "catalog_build": {
+        "adapter_sha256": "5f6c9c34de44723216fbd9c86483f4b3319660cf0f37b830aac27098b1dbe580",
+        "source_packages": {
+          "aradi/fycollections": {
+            "manifest": "name=\"fycollections\"\nversion=\"0.0.0\"\nlicense=\"BSD-2-Clause\"\n[library]\nsource-dir=\"playground-library\"\n[build]\nauto-executables=false\nauto-examples=false\nauto-tests=false\n[install]\nlibrary=true\n",
+            "sources": [
+              "playground-generated/common.f90",
+              "playground-generated/interfaces.f90",
+              "playground-generated/ptrlist.f90",
+              "playground-generated/module.f90",
+              "playground-generated/type_intlist.f90",
+              "playground-generated/type_stringlist.f90"
+            ],
+            "generated": {
+              "asset": "fycollections-f67b874669e63834f30cd83f2b96889072b4eec7.json",
+              "sha256": "a0a606b4c27037a01fe1f19940f95471e3697ac8ee4e095bc395347397ddf44a"
+            }
+          }
+        }
+      },
+      "dependencies": [],
+      "checked_at": "2026-10-30T18:34:32.649899+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/fycollections.f90",
+      "verification": {
+        "seconds": 2.207,
+        "build_seconds": 0.416,
+        "library_reused": true,
+        "demo_sha256": "343f9331750636f784db6b713d6bf0c11d855c9f4f0855c9cf0ae02249169fdf",
+        "compiled_targets": [
+          "main.f90",
+          "playground-main"
+        ]
+      }
+    },
+    {
+      "id": "fortran-sdl2",
+      "repository": "interkosmos/fortran-sdl2",
+      "revision": "cac974790420ba757c17f88678e66b01500319e7",
+      "archive_sha256": "eea6a05fc2807fb7d5199cb0cfebb0ba09986e971111bb549820f890cbe161b0",
+      "catalog_build": {
+        "adapter_sha256": "5f6c9c34de44723216fbd9c86483f4b3319660cf0f37b830aac27098b1dbe580",
+        "apt_packages": [
+          "libsdl2-dev=2.32.4+dfsg-1",
+          "libsdl2-image-dev=2.8.8+dfsg-1+deb13u1",
+          "libsdl2-mixer-dev=2.8.1+dfsg-2",
+          "libsdl2-ttf-dev=2.24.0+dfsg-2",
+          "libgl-dev=1.7.0-1+b2",
+          "libglu1-mesa-dev=9.0.2-1.1+b3"
+        ],
+        "environment": {
+          "FPM_LDFLAGS": "-lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -lGL -lGLU"
+        }
+      },
+      "dependencies": [],
+      "checked_at": "2026-10-30T18:34:32.649899+00:00",
+      "status": "verified",
+      "example": "../fpm_catalog/demos/fortran-sdl2.f90",
+      "verification": {
+        "seconds": 2.976,
+        "build_seconds": 0.618,
+        "library_reused": true,
+        "demo_sha256": "59344bd9f5c0f6372ba31a0beaae76aa32b2e50ca701002582c6c5d64e0152d2",
         "compiled_targets": [
           "main.f90",
           "playground-main"

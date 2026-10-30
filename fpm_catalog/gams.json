@@ -1284,6 +1284,24 @@
     "tsunami": [
       "I2",
       "H1"
+    ],
+    "fortran-curl": [
+      "N3"
+    ],
+    "m_history": [
+      "N1",
+      "N3"
+    ],
+    "m_cli": [
+      "N1",
+      "N3"
+    ],
+    "fortran-modbus": [
+      "N2"
+    ],
+    "fycollections": [
+      "N4",
+      "N5"
     ]
   },
   "detailed_classes": {
@@ -8939,6 +8957,260 @@
           "line": 1
         }
       ]
+    },
+    {
+      "id": "plplot-demo-api",
+      "package_id": "plplot",
+      "revision": "a28c702862ea466a4ee22faba1b676aade77dc4c",
+      "module": "plplot",
+      "procedure": "plinit / plenv / pllab / plline / plend",
+      "gams_codes": [
+        "Q"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "The unmodified PLplot 5.15.0 modern Fortran binding modules are compiled with GNU Fortran 16 against Debian libplplot 5.15.0+dfsg2-15+b1. The author CMake precision template is configured with c_double to match the native double-precision C core; the generated include is checksum-locked. Original included parameter/interface sources and LGPL notices are retained. The checked main follows the author plinit/plenv/pllab/plline/plend API, checks finite sine samples and known extrema, requests the headless pngcairo driver at 800x500, and verifies the generated PNG signature and nontrivial size. The sandbox must return a browser-viewable PNG, which is visually reviewed. Q covers graphics. Native C/Cairo libraries and fonts are installed only in this package image; no precompiled Debian Fortran module files are used by the consumer. Interactive windows, other output drivers and the full upstream example/test suite are not verified.",
+      "evidence": [
+        {
+          "path": "bindings/fortran/plplot.f90",
+          "sha256": "a6d9638c10f45bccb1831d2d97a109668e22a9fece4fb5cb2667dfcca403ac63",
+          "line": 1
+        },
+        {
+          "path": "bindings/fortran/plplot_double.f90",
+          "sha256": "b9134d1f3342ee08581248e7def1d539a426676026d1297e2c900e03488fa0ce",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "examples/fortran/x01f.f90",
+          "sha256": "ad2d00c59543140fdb871ef80f9c1b66965b9b0b7bfde891ae63387c44298bd6",
+          "line": 1
+        }
+      ]
+    },
+    {
+      "id": "fortran-curl-demo-api",
+      "package_id": "fortran-curl",
+      "revision": "f29cc78fdc7701bc221a82af9bbd9ed04ef52158",
+      "module": "curl_urlapi",
+      "procedure": "curl_url / curl_url_set / curl_url_get / curl_url_cleanup",
+      "gams_codes": [
+        "N3"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Release 0.8.0 is pinned because its documented libcurl minimum is 8.10.0, compatible with the pinned Debian libcurl 8.14.1-2+deb13u7; current main requires 8.20.0. The original FPM library and C helpers are unchanged. The example adapts examples/url/url.f90 and checks successful URL parsing plus exact host, path, port and query strings, changes the path and checks the reconstructed URL. The C URL handle is released and cleared by the caller, following the 0.8 cleanup semantics. N3 describes parsing/constructing character data. No network request is made; sandbox internet access remains disabled. HTTP transfers, authentication, mail protocols and other libcurl facilities are not runtime-verified. ISC notices are retained.",
+      "evidence": [
+        {
+          "path": "src/curl_urlapi.f90",
+          "sha256": "fd3649de2aefaf557e30673e8925d17a5fa26fb8fe2a43e82d72661ef9366d9d",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "examples/url/url.f90",
+          "sha256": "710dc4cb40466cccb807e60d56516be4228b362796150f8ea9913ed9addfb36b",
+          "line": 1
+        }
+      ]
+    },
+    {
+      "id": "m-history-demo-api",
+      "package_id": "m_history",
+      "revision": "fe7dd940a5d15792653233962d8df9cb3b5443f6",
+      "module": "M_history",
+      "procedure": "redo",
+      "gams_codes": [
+        "N1",
+        "N3"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "The unmodified M_history redo editor records two commands in its scratch history file. The self-contained main supplies editing directives through the optional lun argument, recalls line 1, changes 290 to 300 and checks the result, then recalls line 2 and verifies that its original text remains unchanged. No shell command is executed and no interactive terminal is required. The main follows the author application in using a 1024-character buffer. An initial 120-character buffer triggered an upstream bounds error at cin(1:255); that diagnostic is retained separately, and shorter buffers are not verified/supported by this catalog example. N1/N3 cover command input and character editing; no numerical-method classification is inferred. MIT library notices and the public-domain author application notice are retained.",
+      "evidence": [
+        {
+          "path": "src/M_history.f90",
+          "sha256": "59dcb8f8c0ffea5641d8890fb5909dab2c4d1cb8da94dc6b15091d52c4c70f8e",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "app/redo.f90",
+          "sha256": "b12efc0e63635c4af61a0b4d4a494e63d7a5b3817dee3cedd10941065aa062b3",
+          "line": 1
+        }
+      ]
+    },
+    {
+      "id": "m-cli-demo-api",
+      "package_id": "m_cli",
+      "revision": "45a7cbcdc12b71b828c482fb4c33498db7fb5618",
+      "module": "M_CLI",
+      "procedure": "commandline / check_commandline",
+      "gams_codes": [
+        "N1",
+        "N3"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "The original M_CLI FPM library is unchanged. The checked consumer adapts the author example/demo3.f90, translating a prototype command into NAMELIST text and checking integer, real, logical, character and three-element real array defaults before using the scaled sum. No stdin or program arguments are required; the editable prototype supplies the defaults. Actual command-line overrides, help/error paths and interactive examples are not runtime-verified here. N1/N3 cover command input and character parsing; no numerical-method classification is inferred. Public-domain/Unlicense notices are retained.",
+      "evidence": [
+        {
+          "path": "src/M_CLI.f90",
+          "sha256": "33469b27731b15117ffe050d478ce00e4c05417cbb292ee11a6534c187c4e7a8",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "example/demo3.f90",
+          "sha256": "03954d1c75dc0fa49cb89cfc83ef36b12371e6320df03f5a95b3a51c783c62c8",
+          "line": 1
+        }
+      ]
+    },
+    {
+      "id": "fortran-modbus-demo-api",
+      "package_id": "fortran-modbus",
+      "revision": "1e99906209fbbcdd1f1bf2064a92325cf4bb05fa",
+      "module": "modbus",
+      "procedure": "modbus_set_float_abcd / modbus_get_float_abcd / BADC / CDAB / DCBA variants",
+      "gams_codes": [
+        "N2"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "The original Fortran 2018 FPM bindings are compiled against pinned Debian libmodbus 3.1.11-2. The consumer checks positive, negative and zero single-precision values through the ABCD, BADC, CDAB and DCBA register conversion APIs and prints register words in hexadecimal. These are offline operations, with no socket, serial port or Modbus device. N2 covers bit/byte representation; the catalog does not claim verified device communication. The author test/test_modbus.f90 documents context use but is not used as a device test. ISC notices are retained.",
+      "evidence": [
+        {
+          "path": "src/modbus.F90",
+          "sha256": "a32330d7ac66c86bc3fcc09cd600125aea52c7a029d7ba95eb616f7f64375338",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_modbus.f90",
+          "sha256": "6b47e7c40965f2a8c3ee734eefb29e930150c87c5d68fcc2a1ff6b3ed2f2ec2a",
+          "line": 1
+        }
+      ]
+    },
+    {
+      "id": "gtk-fortran-demo-api",
+      "package_id": "gtk-fortran",
+      "revision": "6f731807228c55bcc0551d15f6d1f7f50bf1fe49",
+      "module": "cairo / gtk",
+      "procedure": "cairo_image_surface_create / cairo_curve_to / cairo_arc / cairo_surface_write_to_png",
+      "gams_codes": [
+        "Q"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "The original gtk-fortran 4.8.0 FPM manifest is unchanged and builds the core bindings and high-level helper modules. GNU 16 compilation initially stopped in gtk-hl-dialog.f90 because f_c_string was resolved as a function rather than the legacy subroutine alias. Eleven checksum-guarded call-name replacements use the equivalent convert_f_string generic already provided by gtk_sup, matching current upstream spelling; arguments and implementations are unchanged. The unpatched diagnostic is retained. This release targets GTK 4.18.4/GLib 2.84.1 and is linked against pinned Debian GTK 4.18.6, with Cairo 1.18.4. The example adapts the author Cairo drawing API to an image surface, checks Cairo statuses and PNG signature/size, and draws curves, circles and text without gtk_init, a window or a display server. The returned browser preview is visually reviewed. Q covers graphics. Desktop widgets, events, interactive GUI sessions and the full upstream tests are not runtime-verified. GPL-3.0-or-later with GCC Runtime Library Exception 3.1 notices are retained.",
+      "evidence": [
+        {
+          "path": "src/cairo-auto.f90",
+          "sha256": "baa4875fd7a70488f39b687ba01a75500aa6babb531a362ab35ea16eb18bfe81",
+          "line": 1
+        },
+        {
+          "path": "src/gtk.f90",
+          "sha256": "ce4eda58abfd94229da86174c84d44412e428a6f3dc61773b8d043825ea710d7",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "examples/cairo-basics.f90",
+          "sha256": "ae78b90994cca1b3444e98b006a1936b7cbbad004305c27a5b744710d3f58f59",
+          "line": 1
+        }
+      ]
+    },
+    {
+      "id": "fycollections-demo-api",
+      "package_id": "fycollections",
+      "revision": "f67b874669e63834f30cd83f2b96889072b4eec7",
+      "module": "type_intlist / type_stringlist",
+      "procedure": "IntList_init / StringList_init / append / insert / get / find / delete",
+      "gams_codes": [
+        "N4",
+        "N5"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "The original FyCollections backend and author examples/list/type_intlist.fpp and type_stringlist.fpp are generated with Fypp 3.2 without changing their algorithms. Six generated Fortran files, checksums of all template/license inputs, and xgenerate_fycollections.py retain a reproducible recipe. The package supplies the author IntList and StringList specializations, not automatic runtime generation for arbitrary user types. Its operator FPM wrapper uses version 0.0.0 to identify no inferred upstream release; the source is pinned by commit. The checked main adapts the author integer/string list examples and checks append, insertion, retrieval, successful/missing searches, integer deletion and allocatable-list finalization. N4/N5 cover storage containers and searching. Pointer/array list specializations and the complete upstream tests are not verified. BSD-2-Clause notices are retained.",
+      "evidence": [
+        {
+          "path": "include/fycollections.fypp",
+          "sha256": "0252f0b29d8fda911c9aefd4363e84d2134ff58e2dc9792a41b8f74b6d4a63f1",
+          "line": 1
+        },
+        {
+          "path": "lib/ptrlist.fpp",
+          "sha256": "aee8957500e62e5bf0275a1ef1733f3411e331326afb1cebc1c4d5a834a120cb",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "examples/list/intlist_example.fpp",
+          "sha256": "454e61f7cdccbdf39b941a49c5da87032464873bfcc85073d4d520d7044b3eca",
+          "line": 1
+        },
+        {
+          "path": "examples/list/stringlist_example.fpp",
+          "sha256": "20648ca382bbaaff9efa5783c7cb0f1b07893136fb527c8fff9ecfae99c5811b",
+          "line": 1
+        }
+      ]
+    },
+    {
+      "id": "fortran-sdl2-demo-api",
+      "package_id": "fortran-sdl2",
+      "revision": "cac974790420ba757c17f88678e66b01500319e7",
+      "module": "sdl2 / sdl2_image",
+      "procedure": "sdl_create_rgb_surface / sdl_fill_rect / sdl_map_rgb / img_load",
+      "gams_codes": [
+        "Q"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "The original FPM library and Fortran bindings are unchanged. The image pins SDL 2.32.4, SDL2_image 2.8.8, SDL2_mixer 2.8.1, SDL2_ttf 2.24.0 and GL/GLU development libraries; native link flags are recorded in the catalog build environment. The checked main creates a 640x360 32-bit software surface, fills a background and three bars, checks source pixels, saves a PNG, reloads it through the package IMG_Load API, and checks dimensions plus the file signature/size. The pinned bindings omit IMG_SavePNG, so the main includes only that standard C function declaration. No image encoder or drawing algorithm is substituted for SDL. No video subsystem, window, display server, hardware renderer, audio device or event loop is needed. The returned browser preview is visually reviewed. Q covers graphics. Interactive rendering, audio, fonts and OpenGL/GLU routines are compiled/linked facilities but not runtime-verified by this consumer. ISC notices are retained.",
+      "evidence": [
+        {
+          "path": "src/sdl2.f90",
+          "sha256": "c212c12495387ffe3f10f70ab58770bbb381cc0bf34cc02894478db9df1128ef",
+          "line": 1
+        },
+        {
+          "path": "src/sdl2/sdl2_surface.f90",
+          "sha256": "fe868a5b9bca473bb1dc1f1c908cad583c14c79246a515e1b91c0697952525f3",
+          "line": 1
+        },
+        {
+          "path": "src/sdl2_image.f90",
+          "sha256": "ba3f73acde2757df3717aabfd2584775acda55ef2b49e4909ef0d46ea11ecea5",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "examples/alpha.f90",
+          "sha256": "df31a49648a7e3ae92e79144b7faa9ed63886c486b7b6ed54c15020e541897b9",
+          "line": 1
+        },
+        {
+          "path": "examples/pixel.f90",
+          "sha256": "568ba0c01a39918d9d95b6ea74ef08854876616410b1c76f78b3efd78ce12561",
+          "line": 1
+        }
+      ]
     }
   ],
   "review_notes": {
@@ -9074,7 +9346,15 @@
     "ftorch": "The original FTorch Fortran and C++ sources are wrapped for FPM, using pinned Debian CPU LibTorch 2.6.0+dfsg-7, the C++20 mode, C++11 ABI and include/definition settings from the upstream CMake target. The operator C++ flag setting is restricted to a current, unshared source-package recipe; public requests cannot set it and previous cache keys are preserved. The self-contained consumer embeds a reproducibly generated 1,766-byte TorchScript model as hexadecimal text, writes tiny.pt in the sandbox and calls the author tensor/model API in REAL64. Two different five-element inputs exercise y=2*x+1, with each output checked independently for finiteness and absolute error below 1e-12. The second call also verifies that the input tensor observes updated Fortran storage. No Python or model download runs in visitor jobs. This is an illustrative affine inference model, not a trained scientific predictor. K covers inference as function approximation; no training or optimization classification is inferred. GPU use, training, autograd, parallel execution and arbitrary external models are not verified. FTorch MIT notices and native Debian dependency notices are retained. APT estimates about 924 MB of additional native dependencies in the isolated FTorch image; these are separate from the catalog logical library-artifact total.",
     "tsunami": "Only the author serial Chapter 4 mod_diff and mod_initial modules are wrapped; their contents are unchanged. The main follows the chapter shallow-water time-stepping equations on a 100-cell periodic grid for 200 steps. It checks the centered difference against a discrete sine derivative, the upwind difference against an independently indexed periodic reference, Gaussian peak/symmetry, finite water height/velocity, positive total depth, nontrivial evolution, and conservation of integrated elevation. The example uses REAL32, with REAL64 accumulation of mass. I2 classifies the demonstrated PDE calculation; H1 classifies diff_centered/diff_upwind as numerical differentiation. This is an educational finite-difference demonstration, not validation of a production tsunami model. Other chapters, coarrays and parallel scaling are not verified. MIT notices are retained.",
     "pfunit": "The pinned serial pFUnit configuration disables MPI, OpenMP, robust/forked runners and Hamcrest, and uses the author-supported MAX_ASSERT_RANK=2 option (scalars, vectors and matrices) to retain the existing 2 MiB generated-source asset limit. The author CMake configuration supplies source selections and compiler-kind definitions; overload_template.py generates the assertions. fArgParse and its gFTL-shared/gFTL submodules are pinned at the exact upstream gitlinks, with only the required shared container instantiations generated. The FPM scanner sees a NAG-only f90_unix_proc USE even on GNU, so that inactive branch is declared external; inactive robust/Hamcrest interfaces are likewise excluded without altering original library code. A plain Fortran main constructs three TestMethod cases in a TestSuite and checks scalar, vector and matrix assertions through TestRunner/SerialContext, requiring exactly three runs and zero errors/failures. No visitor-side Python, CMake or annotation generation is needed. Higher assertion ranks, matcher DSLs, MPI, OpenMP and process-forking runners are not offered by this configuration. S denotes software testing; no numerical solver classification is inferred. Apache-2.0 and dependency notices are retained.",
-    "raffle": "RAFFLE is pinned to release v1.0.0 because current main and v1.1.1 exceed the unchanged 16 MiB archive limit. The native FPM library is unchanged. The checked main adapts test/test_dist_calcs.f90: a two-atom silicon primitive cell and three equivalent fractional points exercise get_min_dist_between_point_and_atom and get_min_dist. Both distances must be finite and agree with sqrt(3)*0.428 within 3e-6 in REAL32. P denotes the demonstrated periodic geometry; no optimization, structure-prediction accuracy, trained model, or full upstream test-suite validation is claimed. GPL-3.0 notices are retained."
+    "raffle": "RAFFLE is pinned to release v1.0.0 because current main and v1.1.1 exceed the unchanged 16 MiB archive limit. The native FPM library is unchanged. The checked main adapts test/test_dist_calcs.f90: a two-atom silicon primitive cell and three equivalent fractional points exercise get_min_dist_between_point_and_atom and get_min_dist. Both distances must be finite and agree with sqrt(3)*0.428 within 3e-6 in REAL32. P denotes the demonstrated periodic geometry; no optimization, structure-prediction accuracy, trained model, or full upstream test-suite validation is claimed. GPL-3.0 notices are retained.",
+    "plplot": "The unmodified PLplot 5.15.0 modern Fortran binding modules are compiled with GNU Fortran 16 against Debian libplplot 5.15.0+dfsg2-15+b1. The author CMake precision template is configured with c_double to match the native double-precision C core; the generated include is checksum-locked. Original included parameter/interface sources and LGPL notices are retained. The checked main follows the author plinit/plenv/pllab/plline/plend API, checks finite sine samples and known extrema, requests the headless pngcairo driver at 800x500, and verifies the generated PNG signature and nontrivial size. The sandbox must return a browser-viewable PNG, which is visually reviewed. Q covers graphics. Native C/Cairo libraries and fonts are installed only in this package image; no precompiled Debian Fortran module files are used by the consumer. Interactive windows, other output drivers and the full upstream example/test suite are not verified.",
+    "fortran-curl": "Release 0.8.0 is pinned because its documented libcurl minimum is 8.10.0, compatible with the pinned Debian libcurl 8.14.1-2+deb13u7; current main requires 8.20.0. The original FPM library and C helpers are unchanged. The example adapts examples/url/url.f90 and checks successful URL parsing plus exact host, path, port and query strings, changes the path and checks the reconstructed URL. The C URL handle is released and cleared by the caller, following the 0.8 cleanup semantics. N3 describes parsing/constructing character data. No network request is made; sandbox internet access remains disabled. HTTP transfers, authentication, mail protocols and other libcurl facilities are not runtime-verified. ISC notices are retained.",
+    "m_history": "The unmodified M_history redo editor records two commands in its scratch history file. The self-contained main supplies editing directives through the optional lun argument, recalls line 1, changes 290 to 300 and checks the result, then recalls line 2 and verifies that its original text remains unchanged. No shell command is executed and no interactive terminal is required. The main follows the author application in using a 1024-character buffer. An initial 120-character buffer triggered an upstream bounds error at cin(1:255); that diagnostic is retained separately, and shorter buffers are not verified/supported by this catalog example. N1/N3 cover command input and character editing; no numerical-method classification is inferred. MIT library notices and the public-domain author application notice are retained.",
+    "m_cli": "The original M_CLI FPM library is unchanged. The checked consumer adapts the author example/demo3.f90, translating a prototype command into NAMELIST text and checking integer, real, logical, character and three-element real array defaults before using the scaled sum. No stdin or program arguments are required; the editable prototype supplies the defaults. Actual command-line overrides, help/error paths and interactive examples are not runtime-verified here. N1/N3 cover command input and character parsing; no numerical-method classification is inferred. Public-domain/Unlicense notices are retained.",
+    "fortran-modbus": "The original Fortran 2018 FPM bindings are compiled against pinned Debian libmodbus 3.1.11-2. The consumer checks positive, negative and zero single-precision values through the ABCD, BADC, CDAB and DCBA register conversion APIs and prints register words in hexadecimal. These are offline operations, with no socket, serial port or Modbus device. N2 covers bit/byte representation; the catalog does not claim verified device communication. The author test/test_modbus.f90 documents context use but is not used as a device test. ISC notices are retained.",
+    "gtk-fortran": "The original gtk-fortran 4.8.0 FPM manifest is unchanged and builds the core bindings and high-level helper modules. GNU 16 compilation initially stopped in gtk-hl-dialog.f90 because f_c_string was resolved as a function rather than the legacy subroutine alias. Eleven checksum-guarded call-name replacements use the equivalent convert_f_string generic already provided by gtk_sup, matching current upstream spelling; arguments and implementations are unchanged. The unpatched diagnostic is retained. This release targets GTK 4.18.4/GLib 2.84.1 and is linked against pinned Debian GTK 4.18.6, with Cairo 1.18.4. The example adapts the author Cairo drawing API to an image surface, checks Cairo statuses and PNG signature/size, and draws curves, circles and text without gtk_init, a window or a display server. The returned browser preview is visually reviewed. Q covers graphics. Desktop widgets, events, interactive GUI sessions and the full upstream tests are not runtime-verified. GPL-3.0-or-later with GCC Runtime Library Exception 3.1 notices are retained.",
+    "fycollections": "The original FyCollections backend and author examples/list/type_intlist.fpp and type_stringlist.fpp are generated with Fypp 3.2 without changing their algorithms. Six generated Fortran files, checksums of all template/license inputs, and xgenerate_fycollections.py retain a reproducible recipe. The package supplies the author IntList and StringList specializations, not automatic runtime generation for arbitrary user types. Its operator FPM wrapper uses version 0.0.0 to identify no inferred upstream release; the source is pinned by commit. The checked main adapts the author integer/string list examples and checks append, insertion, retrieval, successful/missing searches, integer deletion and allocatable-list finalization. N4/N5 cover storage containers and searching. Pointer/array list specializations and the complete upstream tests are not verified. BSD-2-Clause notices are retained.",
+    "fortran-sdl2": "The original FPM library and Fortran bindings are unchanged. The image pins SDL 2.32.4, SDL2_image 2.8.8, SDL2_mixer 2.8.1, SDL2_ttf 2.24.0 and GL/GLU development libraries; native link flags are recorded in the catalog build environment. The checked main creates a 640x360 32-bit software surface, fills a background and three bars, checks source pixels, saves a PNG, reloads it through the package IMG_Load API, and checks dimensions plus the file signature/size. The pinned bindings omit IMG_SavePNG, so the main includes only that standard C function declaration. No image encoder or drawing algorithm is substituted for SDL. No video subsystem, window, display server, hardware renderer, audio device or event loop is needed. The returned browser preview is visually reviewed. Q covers graphics. Interactive rendering, audio, fonts and OpenGL/GLU routines are compiled/linked facilities but not runtime-verified by this consumer. ISC notices are retained."
   },
   "packages": {
     "fortran-lapack": [
@@ -10029,6 +10309,30 @@
     ],
     "raffle": [
       "P"
+    ],
+    "plplot": [
+      "Q"
+    ],
+    "fortran-curl": [
+      "N"
+    ],
+    "m_history": [
+      "N"
+    ],
+    "m_cli": [
+      "N"
+    ],
+    "fortran-modbus": [
+      "N"
+    ],
+    "gtk-fortran": [
+      "Q"
+    ],
+    "fycollections": [
+      "N"
+    ],
+    "fortran-sdl2": [
+      "Q"
     ]
   },
   "detailed_taxonomy_source": {

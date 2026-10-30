@@ -1,0 +1,6 @@
+Host: example.org
+Path: /data/input.csv
+Port: 8443
+Query: sample=1
+Updated URL: https://example.org:8443/results/output.csv?sample=1
+PASS fortran-curl CHANGED MAIN

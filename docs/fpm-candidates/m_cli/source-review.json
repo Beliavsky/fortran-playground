@@ -1,0 +1,27 @@
+{
+  "id": "m_cli",
+  "repository": "urbanjost/M_CLI",
+  "revision": "45a7cbcdc12b71b828c482fb4c33498db7fb5618",
+  "archive_sha256": "7ee997ffd201908460a7a7e47ab77944f1ffca8b127ae71e31f43ab2e321fbe7",
+  "catalog_build": {
+    "adapter_sha256": "5f6c9c34de44723216fbd9c86483f4b3319660cf0f37b830aac27098b1dbe580"
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-30T18:16:48.566372+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/m_cli.f90",
+  "verification": {
+    "seconds": 1.807,
+    "build_seconds": 0.468,
+    "library_reused": true,
+    "demo_sha256": "ed92f727647b8441916944a369f30d8bc983b2ac5ab94ac0bf9c24ac78bac3c7",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "Unlicense",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "The original M_CLI FPM library is unchanged. The checked consumer adapts the author example/demo3.f90, translating a prototype command into NAMELIST text and checking integer, real, logical, character and three-element real array defaults before using the scaled sum. No stdin or program arguments are required; the editable prototype supplies the defaults. Actual command-line overrides, help/error paths and interactive examples are not runtime-verified here. N1/N3 cover command input and character parsing; no numerical-method classification is inferred. Public-domain/Unlicense notices are retained."
+}

@@ -1,0 +1,59 @@
+{
+  "id": "fycollections",
+  "repository": "aradi/fycollections",
+  "revision": "f67b874669e63834f30cd83f2b96889072b4eec7",
+  "archive_sha256": "6b9d2f3a32890b02225e07693d078377bb258fbb62229df56f1ecf04a8224f0c",
+  "catalog_build": {
+    "adapter_sha256": "5f6c9c34de44723216fbd9c86483f4b3319660cf0f37b830aac27098b1dbe580",
+    "source_packages": {
+      "aradi/fycollections": {
+        "manifest": "name=\"fycollections\"\nversion=\"0.0.0\"\nlicense=\"BSD-2-Clause\"\n[library]\nsource-dir=\"playground-library\"\n[build]\nauto-executables=false\nauto-examples=false\nauto-tests=false\n[install]\nlibrary=true\n",
+        "sources": [
+          "playground-generated/common.f90",
+          "playground-generated/interfaces.f90",
+          "playground-generated/ptrlist.f90",
+          "playground-generated/module.f90",
+          "playground-generated/type_intlist.f90",
+          "playground-generated/type_stringlist.f90"
+        ],
+        "generated": {
+          "asset": "fycollections-f67b874669e63834f30cd83f2b96889072b4eec7.json",
+          "sha256": "a0a606b4c27037a01fe1f19940f95471e3697ac8ee4e095bc395347397ddf44a"
+        }
+      }
+    }
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-30T18:34:32.649899+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/fycollections.f90",
+  "verification": {
+    "seconds": 2.207,
+    "build_seconds": 0.416,
+    "library_reused": true,
+    "demo_sha256": "343f9331750636f784db6b713d6bf0c11d855c9f4f0855c9cf0ae02249169fdf",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "BSD-2-Clause",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "The original FyCollections backend and author examples/list/type_intlist.fpp and type_stringlist.fpp are generated with Fypp 3.2 without changing their algorithms. Six generated Fortran files, checksums of all template/license inputs, and xgenerate_fycollections.py retain a reproducible recipe. The package supplies the author IntList and StringList specializations, not automatic runtime generation for arbitrary user types. Its operator FPM wrapper uses version 0.0.0 to identify no inferred upstream release; the source is pinned by commit. The checked main adapts the author integer/string list examples and checks append, insertion, retrieval, successful/missing searches, integer deletion and allocatable-list finalization. N4/N5 cover storage containers and searching. Pointer/array list specializations and the complete upstream tests are not verified. BSD-2-Clause notices are retained.",
+  "generation": {
+    "helper": "xgenerate_fycollections.py",
+    "helper_sha256": "ab3a8cb475ecf3e5cd86f5e0969ff461e5cab1ef892a2194f390375f56c25c3e",
+    "fypp": "3.2",
+    "specializations": [
+      "IntList",
+      "StringList"
+    ],
+    "check": "Fresh generation matches the locked asset byte for byte."
+  },
+  "upstream_identity": {
+    "listed_url": "https://bitbucket.org/aradi/fycollections/src/develop",
+    "github_url": "https://github.com/aradi/fycollections",
+    "evidence": "The GitHub repository homepage points to bitbucket.org/aradi/fycollections, and its pinned README.rst identifies that upstream project. Verification covers the GitHub source revision recorded here."
+  }
+}

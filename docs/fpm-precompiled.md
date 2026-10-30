@@ -1,6 +1,6 @@
 # Precompiled FPM packages
 
-The Selected catalog contains **290 precompiled packages in 58 categories**, with search and category filters above the **Available packages (GNU Fortran 16)** selector. Each entry has a one-line description and an editable example main program. **Load package** selects GNU Fortran 16.2.0, the exact source revision, and **My main program**. Loading never submits a job. Only builds verified and advertised by the deployed service can be selected.
+The Selected catalog contains **298 precompiled packages in 59 categories**, with search and category filters above the **Available packages (GNU Fortran 16)** selector. Each entry has a one-line description and an editable example main program. **Load package** selects GNU Fortran 16.2.0, the exact source revision, and **My main program**. Loading never submits a job. Only builds verified and advertised by the deployed service can be selected.
 
 | Category | Package | Description |
 | --- | --- | --- |
@@ -10,6 +10,8 @@ The Selected catalog contains **290 precompiled packages in 58 categories**, wit
 | Automatic differentiation | [differentia](https://github.com/Nicholaswogan/Differentia) | Forward-mode derivatives, gradients and square Jacobians using dual numbers. |
 | Colors | [forcolormap](https://github.com/vmagnin/forcolormap) | Scientific colormaps mapping scalar values to RGB colors. |
 | Colors | [m_color](https://github.com/urbanjost/M_color) | Convert color names and RGB, HLS, HSV, and other color models. |
+| Command-line interfaces | [m_cli](https://github.com/urbanjost/M_CLI) | Command-line parsing through a prototype command and NAMELIST, including typed scalar and array options. |
+| Command-line interfaces | [m_history](https://github.com/urbanjost/M_history) | Command-line history, recall and text editing; the example scripts edits through a scratch input unit. |
 | Command-line tools | [argparse-f](https://github.com/0382/argparse-f) | Object-oriented parsing of typed command-line options, defaults and named arguments. |
 | Command-line tools | [argv-fortran](https://github.com/jacobwilliams/argv-fortran) | Read command-line arguments as allocatable strings. |
 | Command-line tools | [m_attr](https://github.com/urbanjost/M_attr) | Terminal styling markup with a plain-text output mode. |
@@ -51,6 +53,7 @@ The Selected catalog contains **290 precompiled packages in 58 categories**, wit
 | Data structures | [any](https://github.com/degawa/any) | Wrap intrinsic scalar and array values behind a common return type. |
 | Data structures | [for_fifo_queue](https://github.com/jordan4ibanez/for_fifo_queue) | FIFO queue using C storage for fixed-size values. |
 | Data structures | [ftl](https://github.com/SCM-NV/ftl) | Template-based containers and strings with selected precompiled instantiations. |
+| Data structures | [fycollections](https://github.com/aradi/fycollections) | Fypp collection templates with precompiled author IntList and StringList specializations; append, insert, delete, retrieve and search typed lists. |
 | Data structures | [integer_set](https://github.com/jordan4ibanez/integer_set) | Simple 32-bit and 64-bit integer sets with insertion, removal and sorting. |
 | Data structures | [slinked-list](https://github.com/zoziha/slinked-list) | Generic singly linked list with reusable storage for small datasets. |
 | Databases | [fortran-lmdb](https://github.com/interkosmos/fortran-lmdb) | ISO C bindings to the LMDB embedded key-value database. |
@@ -125,6 +128,8 @@ The Selected catalog contains **290 precompiled packages in 58 categories**, wit
 | Geodesy | [maptran3d](https://github.com/geospace-code/maptran3d) | Geographic and Earth-centered Cartesian coordinate transformations. |
 | Geometry | [fortran-simplify](https://github.com/jaiken17/fortran-simplify) | Reduce the number of polyline points using geometric simplification algorithms. |
 | Geometry | [geompack](https://github.com/jchristopherson/geompack) | Delaunay triangulation of planar point sets. |
+| Graphics | [fortran-sdl2](https://github.com/interkosmos/fortran-sdl2) | SDL2 bindings; the checked example draws colored bars on a software surface and saves/reloads a browser-viewable PNG without a window. |
+| Graphics | [gtk-fortran](https://github.com/vmagnin/gtk-fortran) | GTK-fortran 4.8 bindings to GTK 4.18 and Cairo; the checked example draws a PNG without a window or display server. |
 | Graphics | [m_draw](https://github.com/urbanjost/M_draw) | Portable vector drawing with file-output drivers and a Fortran interface. |
 | High precision | [bstrith](https://github.com/degawa/bstrith) | Fixed-width binary-string arithmetic, shifts and logical operations. |
 | High precision | [mpfun2020-var1](https://github.com/jacobwilliams/MPFUN2020-var1) | Thread-safe arbitrary-precision real and complex arithmetic. |
@@ -143,7 +148,9 @@ The Selected catalog contains **290 precompiled packages in 58 categories**, wit
 | Integration | [scifortran](https://github.com/SciFortran/SciFortran) | SciFortran integration subset: sampled-data rules and adaptive quadrature. |
 | Interoperability | [flibcpp](https://github.com/swig-fortran/flibcpp) | C++ standard-library wrappers with checked sorting and binary-search examples. |
 | Interoperability | [forpy](https://github.com/ylikx/forpy) | Embed Python in Fortran and exchange arrays with NumPy. |
+| Interoperability | [fortran-curl](https://github.com/interkosmos/fortran-curl) | Fortran-curl 0.8.0 bindings to libcurl; checked offline URL parsing and construction. Sandbox internet access remains disabled. |
 | Interoperability | [fortran-lua53](https://github.com/interkosmos/fortran-lua53) | Fortran bindings for embedding and calling Lua 5.3 scripts. |
+| Interoperability | [fortran-modbus](https://github.com/interkosmos/fortran-modbus) | Fortran bindings to libmodbus; offline floating-point/register conversions in four byte orders. No device connection is required by the example. |
 | Interoperability | [fortran-tcl86](https://github.com/interkosmos/fortran-tcl86) | Fortran bindings for embedding Tcl 8.6 scripting and accessing Tcl/Tk APIs. |
 | Interoperability | [m-process](https://github.com/urbanjost/M_process) | POSIX pipes for reading and writing subprocess streams. |
 | Interpolation | [bspline-fortran](https://github.com/jacobwilliams/bspline-fortran) | One- to six-dimensional B-spline interpolation. |
@@ -209,6 +216,7 @@ The Selected catalog contains **290 precompiled packages in 58 categories**, wit
 | Physical properties | [iapws](https://github.com/MilanSkocic/iapws) | IAPWS thermodynamic properties of water, including saturation pressure and temperature. |
 | Plotting | [easy-plplot](https://github.com/zoziha/easy_plplot) | Matplotlib-inspired PLplot interface; PNG plotting example. |
 | Plotting | [ogpf](https://github.com/kookma/ogpf) | Object-based Gnuplot interface with browser-viewable contour plots. |
+| Plotting | [plplot](https://github.com/PLplot/PLplot) | PLplot 5.15.0 Fortran bindings, compiled with GNU 16 against the pinned native C library; headless Cairo PNG plots. |
 | Plotting | [pyplot-fortran](https://github.com/jacobwilliams/pyplot-fortran) | Create PNG plots from Fortran through Python and Matplotlib. |
 | Quadrature | [kronrod](https://github.com/jacobwilliams/kronrod) | Generate Gauss-Kronrod quadrature nodes and weights using arbitrary precision. |
 | Quantum mechanics | [ddpcm](https://github.com/filippolipparini/ddPCM) | Continuum solvation by domain decomposition; formaldehyde energy and forces checked against author references. |
@@ -441,7 +449,7 @@ Compatible stdlib dependencies are shared across 14 catalog entries. 46 addition
 
 Debug symbols are removed from precompiled dependency objects and archives to keep linked executables within the existing 16 MiB file limit. Runtime checks remain enabled; your main program retains its debug information. Backtraces inside a cached dependency may therefore have less detail than a local debug build.
 
-All 290 packages passed the changed-main sandbox check, including PNG previews for pyplot-fortran, ForImage, cairo-fortran, stb_image, Fortran-simplify and easy_plplot. The recorded compile/link checks took about 0.14 to 7.88 seconds. Their logical library artifacts total about 1,704 MiB; this excludes compiler layers, native system libraries, sources, and main executables and is not a compressed storage or billing measurement. See [the recorded validation](fpm-precompiled-validation.json), which preserves each package's verification date. Unchanged library checks and builds are retained when the catalog expands.
+All 298 packages passed the changed-main sandbox check, including PNG previews for pyplot-fortran, ForImage, cairo-fortran, stb_image, Fortran-simplify and easy_plplot. The recorded compile/link checks took about 0.14 to 7.88 seconds. Their logical library artifacts total about 1,718 MiB; this excludes compiler layers, native system libraries, sources, and main executables and is not a compressed storage or billing measurement. See [the recorded validation](fpm-precompiled-validation.json), which preserves each package's verification date. Unchanged library checks and builds are retained when the catalog expands.
 
 Every job receives its own disposable filesystem copy. User code cannot update the published cache or another user's files. There is no shared writable build directory or package download during a cache hit. The normal job admission, CPU/memory bounds, network restriction, build/run timeouts, and output limits still apply. A changed main still needs compilation/linking; precompilation does not remove compiler/package limitations.
 

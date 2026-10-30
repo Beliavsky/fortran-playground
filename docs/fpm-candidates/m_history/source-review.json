@@ -1,0 +1,28 @@
+{
+  "id": "m_history",
+  "repository": "urbanjost/M_history",
+  "revision": "fe7dd940a5d15792653233962d8df9cb3b5443f6",
+  "archive_sha256": "8447121b84d05e0d456eaf05bd9d548eb22d28947ddaa2259ba935dbfd0fdd88",
+  "catalog_build": {
+    "adapter_sha256": "5f6c9c34de44723216fbd9c86483f4b3319660cf0f37b830aac27098b1dbe580"
+  },
+  "dependencies": [],
+  "checked_at": "2026-10-30T17:14:08.367055+00:00",
+  "status": "verified",
+  "example": "../fpm_catalog/demos/m_history.f90",
+  "verification": {
+    "seconds": 2.132,
+    "build_seconds": 0.45,
+    "library_reused": true,
+    "demo_sha256": "7e822e70809767485bb4375dba7606103c0290659ea9ff8076c3d35a266718ac",
+    "compiled_targets": [
+      "main.f90",
+      "playground-main"
+    ]
+  },
+  "license": "MIT",
+  "compiler": "GNU Fortran 16.2.0",
+  "fpm": "0.12.0",
+  "scope": "The unmodified M_history redo editor records two commands in its scratch history file. The self-contained main supplies editing directives through the optional lun argument, recalls line 1, changes 290 to 300 and checks the result, then recalls line 2 and verifies that its original text remains unchanged. No shell command is executed and no interactive terminal is required. The main follows the author application in using a 1024-character buffer. An initial 120-character buffer triggered an upstream bounds error at cin(1:255); that diagnostic is retained separately, and shorter buffers are not verified/supported by this catalog example. N1/N3 cover command input and character editing; no numerical-method classification is inferred. MIT library notices and the public-domain author application notice are retained.",
+  "input_buffer_note": "The checked consumer follows the author example with a 1024-character input buffer. A 120-character input buffer failed the upstream substring bounds check; see short-buffer-failure.txt."
+}

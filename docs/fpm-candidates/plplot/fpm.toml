@@ -1,0 +1,13 @@
+name="plplot"
+version="5.15.0"
+license="LGPL-2.0-or-later"
+[library]
+source-dir="playground-library"
+include-dir=["bindings/fortran"]
+[build]
+auto-executables=false
+auto-examples=false
+auto-tests=false
+link=["plplot"]
+[install]
+library=true
