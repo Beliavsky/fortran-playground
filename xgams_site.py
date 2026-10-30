@@ -134,6 +134,10 @@ def generate_gams_site(destination, feed, *, asset_version=None):
         playground = project.get('playground')
         if playground:
             actions.append(link(playground['url'], 'Try in playground'))
+        matching_demos = [d for d in demos if d['package_id'] == playground.get('package_id')
+                          and (code is None or code in ancestors(tree, d['gams_code']))] if playground else []
+        checked_drivers = ('<p class="actions"><span class="label">Checked drivers:</span> '+
+                           ' · '.join(link(d['url'], d['id']) for d in matching_demos)+'</p>') if matching_demos else ''
         authors = credit_names([project])
         credit = '<p class="owner">Credited source author: '+link(prefix+package_path(project)+'#name-attribution', ', '.join(authors))+'</p>' if authors else ''
         return f'''<article class="package" data-search="{e(search)}">
@@ -142,7 +146,7 @@ def generate_gams_site(destination, feed, *, asset_version=None):
 {credit}
 <p>{e(project['description'])}</p>{procedures}
 <p class="codes">{class_links(curation['gams_codes'], prefix)}</p>
-<p class="actions">{' · '.join(actions)}</p></article>'''
+<p class="actions">{' · '.join(actions)}</p>{checked_drivers}</article>'''
 
     def listing(items, prefix, code=None):
         return f'''<section class="package-section" aria-labelledby="packages-heading">
@@ -285,7 +289,7 @@ def generate_gams_site(destination, feed, *, asset_version=None):
             if examples:
                 procedures += '<p><span class="label">Author examples/tests:</span> '+' · '.join(examples)+'</p>'
             for demo in procedure_demos:
-                procedures += '<p>'+link(demo['url'], 'Run checked GAMS driver: '+demo['name'])+'</p>'
+                procedures += '<p>'+link(demo['url'], 'Load checked GAMS driver: '+demo['name'])+'</p>'
             procedures += '</article>'
         if not curation.get('procedures'):
             procedures += '<p>No procedure-level mapping is recorded yet. The classifications describe package capabilities.</p>'

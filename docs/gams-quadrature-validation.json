@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "quadpack-smooth",
+      "source_revision": "ab42d50794280a8e7996f2ee4cda1f8753dfde5b",
+      "source_sha256": "15371135b8aa9fb2f5f3cca0f241045362934072a13c904135f96c218e85707a",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T19:37:41.101963+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.416,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Case: exp(x) on [0,1]\nComputed integral:   1.71828182845905E+00\nActual absolute error:   0.0000E+00\nReported error estimate:   1.9077E-14\nIntegrand callback calls: 15\nSolver status: 0\nCase: cos(20*x) on [0,1]\nComputed integral:   4.56472625363813E-02\nActual absolute error:   4.1633E-17\nReported error estimate:   1.2936E-11\nIntegrand callback calls: 105\nSolver status: 0\nPASS quadpack-smooth\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.04,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "quadrature-fortran-smooth",
+      "source_revision": "1d208fc59569a97b1c2abf9c45f7c352dcc7b318",
+      "source_sha256": "26222f7e0a0919d5eedff719e1fb2eefd72fddb126cd6017ec950ab20475acc2",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T19:37:42.497295+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.355,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Case: exp(x) on [0,1]\nComputed integral:   1.71828182845905E+00\nActual absolute error:   0.0000E+00\nReported error estimate:   0.0000E+00\nIntegrand callback calls: 24\nSolver status: 1\nCase: cos(20*x) on [0,1]\nComputed integral:   4.56472625363814E-02\nActual absolute error:   6.9389E-18\nReported error estimate:  -4.5280E-13\nIntegrand callback calls: 120\nSolver status: 1\nPASS quadrature-fortran-smooth\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.021,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "quadpack-endpoint-singular",
+      "source_revision": "ab42d50794280a8e7996f2ee4cda1f8753dfde5b",
+      "source_sha256": "77ee0f1fe1c5677801a5eddf9a339f977b23f368da4069f29febeead8a091418",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T19:37:44.299913+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.489,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Case: 1/sqrt(x) on [0,1]; exact integral 2\nComputed integral:   2.00000000000000E+00\nActual absolute error:   1.5543E-15\nReported error estimate:   5.7732E-15\nIntegrand callback calls: 231\nSolver status: 0\nCase: log(x)/sqrt(x) on [0,1]; exact integral -4\nComputed integral:  -4.00000000000000E+00\nActual absolute error:   1.3323E-15\nReported error estimate:   2.5269E-13\nIntegrand callback calls: 315\nSolver status: 0\nPASS quadpack-endpoint-singular\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.043,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-30T19:37:44.355792+00:00"
+}

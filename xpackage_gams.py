@@ -10,6 +10,14 @@ ROOT = Path(__file__).resolve().parent
 REPORT = Path('docs/fpm-gams.md')
 PILOT_REPORT = Path('docs/gams-g1.md')
 NUMERICAL_REPORT = Path('docs/gams-numerical.md')
+QUADRATURE_REPORT = Path('docs/gams-quadrature.md')
+ROOTS_REPORT = Path('docs/gams-roots.md')
+LINEAR_ALGEBRA_REPORT = Path('docs/gams-linear-algebra.md')
+ODE_REPORT = Path('docs/gams-ode.md')
+INTERPOLATION_REPORT = Path('docs/gams-interpolation.md')
+TRANSFORMS_REPORT = Path('docs/gams-transforms.md')
+CONSTRAINED_REPORT = Path('docs/gams-constrained.md')
+COVERAGE_REPORT = Path('docs/gams-coverage.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
 
 
@@ -164,6 +172,7 @@ def numerical_review(root=ROOT, data=None):
 def numerical_review_text(root=ROOT):
     root = Path(root)
     data = gams_data(root)
+    drivers = {d['id']: d for d in driver_data(root, data)}
     review = numerical_review(root, data)
     packages = {p['id']: p for p in json.loads((root / 'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
     reviewed = review['packages']
@@ -216,7 +225,8 @@ def numerical_review_text(root=ROOT):
                 links.append('No matching author example recorded')
             links.append(f'[Catalog main](../fpm_catalog/demos/{p["package_id"]}.f90)')
             if p.get('driver_id'):
-                links.append(f'[Verified driver](gams-g1.md)')
+                review_path = drivers[p['driver_id']].get('review_path', 'docs/gams-g1.md')
+                links.append(f'[Verified driver]({Path(review_path).name})')
             codes = ', '.join(f'[{code}](https://gams.nist.gov/cgi-bin/serve.cgi/Class/{code})' for code in p['gams_codes'])
             values = [f'{p["package_id"]}: `{p["module"]}` / `{p["procedure"]}`', codes,
                       p['derivatives'], ' · '.join(links), p['notes']]
@@ -226,7 +236,11 @@ def numerical_review_text(root=ROOT):
               'Procedure and example records include paths, source SHA-256 hashes, and source line anchors.',
               '- Author examples and tests are usage candidates, not a promise that they run unchanged within sandbox limits. '
               'The catalog main may exercise only one of the package’s mapped APIs. '
-              'Only the separately recorded [G1 drivers](gams-g1.md) have the new driver-verification designation.',
+              'The separately recorded [optimization drivers](gams-g1.md), [quadrature drivers](gams-quadrature.md), '
+              '[scalar-root drivers](gams-roots.md), [linear-algebra drivers](gams-linear-algebra.md) '
+              '[ODE drivers](gams-ode.md), [interpolation drivers](gams-interpolation.md) '
+              '[transform drivers](gams-transforms.md) and [constrained-optimization drivers](gams-constrained.md) '
+              'carry the driver-verification designation.',
               '- Generic APIs retain broader classes where real/complex arithmetic, matrix structure, derivatives, '
               'or constraints depend on configuration. Detailed optimization mappings state the derivative mode; '
               'derivative-free modes need separate records.',
@@ -250,12 +264,18 @@ def driver_data(root=ROOT, data=None):
     manifest = json.loads((root / 'fpm_catalog/gams-drivers.json').read_text(encoding='utf-8'))
     if manifest.get('schema') != 1 or not isinstance(manifest.get('drivers'), list):
         raise ValueError('Invalid GAMS driver manifest.')
-    checks = json.loads((root / 'docs/gams-g1-validation.json').read_text(encoding='utf-8'))
-    verified = {row['driver_id']: row for row in checks['drivers']}
+    reports = {}
     mappings = {record['id']: record for record in data.get('procedure_mappings', [])}
     seen = set()
     for driver in manifest['drivers']:
         identity = driver.get('id')
+        report_path = driver_validation_path(driver)
+        if report_path not in reports:
+            checks = json.loads((root / report_path).read_text(encoding='utf-8'))
+            verified = {row['driver_id']: row for row in checks['drivers']}
+            if checks.get('schema') != 1 or len(verified) != len(checks['drivers']):
+                raise ValueError('Invalid or duplicate GAMS driver verification records.')
+            reports[report_path] = verified
         record = mappings.get(driver.get('procedure_id'))
         if (not identity or identity in seen or record is None or record.get('driver_id') != identity
                 or driver.get('package_id') != record['package_id'] or driver.get('revision') != record['revision']
@@ -266,11 +286,22 @@ def driver_data(root=ROOT, data=None):
             if not safe_path(path) or not (root / path).is_file():
                 raise ValueError(f'{identity}: missing source or license file.')
         checksum = hashlib.sha256((root / driver['path']).read_text(encoding='utf-8').encode('utf-8')).hexdigest()
-        report = verified.get(identity, {})
+        report = reports[report_path].get(identity, {})
+        runs = [s for s in report.get('stages', []) if s.get('name') == 'Run']
         if (not report.get('ok') or report.get('source_revision') != record['revision']
-                or report.get('source_sha256') != checksum or not re.search(r'GNU Fortran.*16\.', report.get('compiler', ''))):
+                or report.get('source_sha256') != checksum or not re.search(r'GNU Fortran.*16\.', report.get('compiler', ''))
+                or not report.get('library_reused') or len(runs) != 1
+                or not runs[0].get('ok') or runs[0].get('exit_code') != 0
+                or 'PASS '+identity not in runs[0].get('stdout', '').splitlines()):
             raise ValueError(f'{identity}: current source requires a passing GNU 16 verification.')
     return manifest['drivers']
+
+
+def driver_validation_path(driver):
+    path = driver.get('validation_path', 'docs/gams-g1-validation.json')
+    if not safe_path(path) or not path.startswith('docs/') or not path.endswith('.json'):
+        raise ValueError('Driver verification report must be a relative docs JSON path.')
+    return path
 
 
 def class_order(code):
@@ -303,6 +334,8 @@ def review_text(root=ROOT):
              'The [numerical package review](gams-numerical.md) extends source-reviewed procedure mappings '
              'across the selected numerical, statistical, geometry, and supporting packages, '
              'and records capabilities that still need procedure-level review.', '',
+             'The [coverage report](gams-coverage.md) separates source-reviewed mappings from class-specific '
+             'checked drivers and lists remaining gaps. Reaching a taxonomy leaf does not exhaust its procedures or use cases.', '',
              'These discovery assignments are based on saved descriptions, topics, bundled examples, and '
              'upstream documentation where reviewed. '
              'A class indicates relevant package functionality, not coverage of every problem in that class. '
@@ -378,17 +411,28 @@ def review_text(root=ROOT):
 def g1_review_text(root=ROOT):
     data = gams_data(root)
     packages = {p['id']: p for p in json.loads((Path(root) / 'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
-    drivers = driver_data(root, data)
+    tree = class_tree(data)
+    drivers = [d for d in driver_data(root, data) if 'G1' in ancestors(tree, d['gams_code'])]
+    mappings = g1_procedures(data)
     lines = ['# GAMS G1 procedure review', '',
-             'This pilot refines unconstrained optimization into '
-             '[G1a: Univariate](https://gams.nist.gov/cgi-bin/serve.cgi/Class/G1a) and '
-             '[G1b: Multivariate](https://gams.nist.gov/cgi-bin/serve.cgi/Class/G1b). '
-             'It covers 11 procedure mappings in seven selected packages. '
+             'Unconstrained optimization is refined by dimension, smoothness and user-supplied derivatives, using the '
+             '[Netlib GAMS taxonomy](https://netlib.org/misc/gams.html). '
+             f'This review covers {len(mappings)} procedure mappings in '
+             f'{len({p["package_id"] for p in mappings})} selected packages. '
              'Assignments describe specific functionality at pinned revisions, not complete coverage of a class.', '',
+             '## Detailed problem classes', '',
+             '| Class | Problem | User-supplied derivatives |', '| --- | --- | --- |',
+             '| [G1a1a](https://gams.nist.gov/cgi-bin/serve.cgi/Class/G1a1a) | Smooth univariate minimization | None |',
+             '| [G1b1a](https://gams.nist.gov/cgi-bin/serve.cgi/Class/G1b1a) | Smooth multivariate minimization | None |',
+             '| [G1b1b](https://gams.nist.gov/cgi-bin/serve.cgi/Class/G1b1b) | Smooth multivariate minimization | First derivatives |', '',
+             'Finite-difference mode and analytic-gradient mode are classified separately. For smooth nonlinear '
+             'least squares, an analytic residual Jacobian supplies first-derivative information for the '
+             'squared-residual objective. Those solvers retain their specialized residual/Jacobian interfaces. '
+             'Broader mappings remain where a more specific review has not been made.', '',
              '## Reviewed procedures', '',
              '| Package | Module / procedure | Class | Derivatives | Source and author examples | Notes |',
              '| --- | --- | --- | --- | --- | --- |']
-    for p in g1_procedures(data):
+    for p in mappings:
         package = packages[p['package_id']]
         base = f'https://github.com/{package["repository"]}/blob/{p["revision"]}/'
         links = [f'[Source]({base}{e["path"]}#L{e["line"]})' for e in p['evidence']]
@@ -397,20 +441,22 @@ def g1_review_text(root=ROOT):
                  ', '.join(p['gams_codes']), p['derivatives'], ' · '.join(links), p['notes']]
         lines.append('| ' + ' | '.join(c.replace('|', '\\|').replace('\n', ' ') for c in cells) + ' |')
     lines += ['', 'Nonlin’s Brent example finds a root; it is not evidence of univariate minimization. '
-              'The NLopt author example reviewed uses constrained MMA, so it is not offered as a G1 driver. '
+              'The NLopt author example reviewed uses constrained MMA; the unconstrained Rosenbrock driver is independently written. '
               'Neural-fortran training is network-specific, rather than a general objective callback API. '
               'ForTimize has no clear source license at the reviewed revision; its author example is linked, not copied.', '',
               '## Working demonstrations', '',
-              'These drivers adapt author examples, retain their license notices, move callbacks into modules, '
-              'and add independent accuracy checks and readable output. Loading a link does not submit a job.', '',
-              '| Driver | Problem / class | Original example | License |', '| --- | --- | --- | --- |']
+              'Author examples are adapted where suitable, with license notices retained. Independently written '
+              'API drivers are identified below. Drivers use module callbacks, independent accuracy checks and '
+              'readable output. Loading a link does not submit a job.', '',
+              '| Driver | Problem / class | Driver origin | License |', '| --- | --- | --- | --- |']
     for d in drivers:
         package = packages[d['package_id']]
         url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
-        original = f'https://github.com/{package["repository"]}/blob/{d["revision"]}/{d["author_example"]}'
+        original = (f'[Author example](https://github.com/{package["repository"]}/blob/{d["revision"]}/{d["author_example"]})'
+                    if d.get('author_example') else 'Independent API driver')
         licenses = ', '.join(f'[License](../{path})' for path in d['license_files'])
-        lines.append(f'| [Load {d["id"]}]({url}) · [Source](../{d["path"]}) | {d["problem_id"]} / {d["gams_code"]} | [Original]({original}) | {d["license"]} · {licenses} |')
-    lines += ['', 'All three drivers passed the hosted GNU Fortran 16.2.0 sandbox with FPM 0.12.0. '
+        lines.append(f'| [Load {d["id"]}]({url}) · [Source](../{d["path"]}) | {d["problem_id"]} / {d["gams_code"]} | {original} | {d["license"]} · {licenses} |')
+    lines += ['', f'All {len(drivers)} drivers passed the hosted GNU Fortran 16.2.0 sandbox with FPM 0.12.0. '
               'The [saved verification results](gams-g1-validation.json) include source hashes and program output. '
               'Publishing checks that these hashes and package revisions still match.', '',
               'The sine driver minimizes sin(x) on [-4,0] and checks the solution against −π/2. '
@@ -419,6 +465,27 @@ def g1_review_text(root=ROOT):
               'Both require the residual norm to differ from 0.09063596 by less than 0.0000001. '
               'MINPACK estimates the Jacobian by finite differences; libdogleg uses an analytic Jacobian. '
               'Callback counts and individual sandbox timings are not a fair performance ranking.', '',
+              '## Common Rosenbrock problem', '',
+              'The three Rosenbrock drivers minimize `(1-x)^2 + 100*(y-x^2)^2`, starting from `(-1.2,1)`. '
+              'They independently check the known minimizer `(1,1)` with maximum parameter error at most `1e-4`, '
+              'objective at most `1e-10`, finite results and agreement with the solver-reported objective. '
+              'The gradient-based drivers first check their analytic gradient against central differences. '
+              'Solver termination settings differ across APIs; the independent acceptance checks are shared.', '',
+              '| Driver | Maximum parameter error | Independent objective | Objective calls | Gradient calls |',
+              '| --- | --- | --- | --- | --- |']
+    validation = json.loads((Path(root)/'docs/gams-g1-validation.json').read_text(encoding='utf-8'))
+    checks = {r['driver_id']: r for r in validation['drivers']}
+    for d in drivers:
+        if d['problem_id'] != 'rosenbrock-2':
+            continue
+        output = next(s['stdout'] for s in checks[d['id']]['stages'] if s['name'] == 'Run')
+        def value(label):
+            return next(line.split(':', 1)[1].strip() for line in output.splitlines() if line.startswith(label+':'))
+        lines.append('| '+d['id']+' | '+' | '.join(value(label) for label in
+                     ('Maximum parameter error', 'Independent objective', 'Objective callback calls', 'Gradient callback calls'))+' |')
+    lines += ['', 'Counts describe the recorded runs, exclude the preliminary gradient checks and do not establish '
+              'a general performance ranking. Derivative-free and analytic-gradient methods perform different work. '
+              'All libraries were reused; only the supplied main programs and executables were compiled.', '',
               'The examples are also available in the hosted and main local FPM playground example menu. '
               'For local use, load a driver and download the complete FPM project, or use its source as '
               'an application in an FPM project depending on the linked pinned package.', '',
@@ -430,7 +497,554 @@ def g1_review_text(root=ROOT):
               'The portable catalog export includes both the procedure mappings and demonstrations.', '',
               'Run `python xpackage_gams.py` and `python xfpm_examples.py` after changing reviewed metadata. '
               'Changed drivers must be verified again on GNU Fortran 16 before publication. '
+              'With Modal installed and authenticated, verify selected drivers against the existing compiled images:', '',
+              '```text',
+              'python xverify_gams_drivers.py --drivers nonlin-rosenbrock-nm nonlin-rosenbrock-bfgs nlopt-rosenbrock-lbfgs',
+              '```', '',
+              'The verifier uses the local `.fpm-audit-cache/precompiled.json` build report and records results '
+              'in `docs/gams-g1-validation.json`. It does not rebuild package libraries or deploy the service. '
               'These metadata and example changes require no backend deployment or package recompilation.', '']
+    return '\n'.join(lines)
+
+
+def quadrature_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    tree = class_tree(data)
+    drivers = [d for d in driver_data(root, data) if 'H2' in ancestors(tree, d['gams_code'])]
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    records = {p['id']: p for p in data['procedure_mappings']}
+    lines = ['# Checked GAMS quadrature drivers', '',
+             'These examples connect specific integration procedures to finite-interval GAMS problem classes. '
+             'They are checked consumer programs at the catalog source revisions, rather than tests of every '
+             'quadrature rule or a performance benchmark.', '',
+             '| Class | Problem | Procedures |', '| --- | --- | --- |',
+             '| [H2a1a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/H2a1a1) | Automatic one-dimensional integration on a finite interval, integrand supplied as a procedure | QUADPACK `dqag`; quadrature-fortran `integration_class_1d%integrate` |',
+             '| [H2a2a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/H2a2a1) | Automatic finite-interval integration for special integrands supplied as procedures | QUADPACK `dqags`, demonstrated with integrable endpoint singularities |', '',
+             '## Shared smooth-integral checks', '',
+             'Both smooth drivers integrate `exp(x)` and `cos(20*x)` over `[0,1]`. Analytic reference values '
+             'are `exp(1)-1` and `sin(20)/20`. They request accuracy `1e-10` and independently require absolute '
+             'error at most `1e-9`. QUADPACK uses `dqag` key 1 (15-point Gauss-Kronrod); quadrature-fortran uses '
+             'its adaptive 8-point Gaussian method. These algorithm settings differ even though the functions, '
+             'intervals and independent acceptance checks are shared.', '',
+             '## Endpoint singularities', '',
+             'The `dqags` driver adapts the author\'s inverse-square-root test and adds a logarithmic variant: '
+             '`integral(1/sqrt(x),0,1)=2` and `integral(log(x)/sqrt(x),0,1)=-4`. '
+             'It requests absolute/relative accuracy `1e-10` and independently requires absolute error at most '
+             '`1e-8`. The module callback rejects evaluation at the singular endpoint. The driver does not '
+             'claim support for every special integrand in H2a2a1.', '',
+             '## Sources and playground links', '',
+             '| Driver | Class | Pinned procedure and author test |', '| --- | --- | --- |']
+    for d in drivers:
+        package = packages[d['package_id']]
+        base = f'https://github.com/{package["repository"]}/blob/{d["revision"]}/'
+        evidence = records[d['procedure_id']]['evidence'][0]
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        lines.append(f'| [Load {d["id"]}]({url}) · [Driver source](../{d["path"]}) | {d["gams_code"]} | '
+                     f'[Procedure]({base}{evidence["path"]}#L{evidence["line"]}) · '
+                     f'[Author test]({base}{d["author_example"]}) |')
+    lines += ['', 'Loading a link selects code without submitting a job. The same drivers are available in the '
+              'hosted and main local FPM playgrounds and in downloaded FPM projects. Author license notices '
+              'are retained with the drivers.', '',
+              '## Recorded results', '',
+              'All three passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0. '
+              'Existing package libraries were reused; only each main and executable were compiled. '
+              'The [verification report](gams-quadrature-validation.json) locks the driver hashes and source revisions.', '',
+              'Success is status `0` for QUADPACK and `1` for quadrature-fortran. The latter reports a signed '
+              'error estimate. Estimates are printed separately from actual errors against the analytic references; '
+              'they are not certified error bounds. Zero printed actual error means agreement at the working '
+              'floating-point precision. Evaluation counts describe these runs and do not establish a general speed ranking.']
+    for d in drivers:
+        checks = json.loads((root/driver_validation_path(d)).read_text(encoding='utf-8'))
+        result = next(r for r in checks['drivers'] if r['driver_id'] == d['id'])
+        output = next(s['stdout'] for s in result['stages'] if s['name'] == 'Run')
+        lines += ['', '### '+d['id'], '', '```text', output.rstrip(), '```']
+    lines += ['', '## Maintenance', '',
+              'After changing a driver, verify it again using existing compiled package images:', '',
+              '```text',
+              'python xverify_gams_drivers.py --drivers quadpack-smooth quadrature-fortran-smooth quadpack-endpoint-singular',
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'The verifier requires Modal authentication and the local `.fpm-audit-cache/precompiled.json` '
+              'build report. Each driver manifest entry identifies its verification report, allowing optimization '
+              'and quadrature evidence to be maintained separately. Publication checks the correct report for '
+              'every driver. These examples and classifications require no backend redeployment or library rebuild.', '']
+    return '\n'.join(lines)
+
+
+def roots_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data) if d['gams_code'] == 'F1b']
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    records = {p['id']: p for p in data['procedure_mappings']}
+    lines = ['# Checked GAMS scalar-root drivers', '',
+             'These consumer programs solve two nonpolynomial scalar equations using roots-fortran Brent, '
+             'nonlin Brent and nonlin safeguarded Newton. They map to '
+             '[F1b: nonpolynomial single equations](https://gams.nist.gov/cgi-bin/serve.cgi/Class/F1b). '
+             'F1b has no deeper derivative-specific classes; the procedure records distinguish derivative requirements.', '',
+             '## Shared checks', '',
+             '| Equation | Bracket | Reference root |', '| --- | --- | --- |',
+             '| `sin(x)/x = 0` | `[1.5,5]` | `pi` |',
+             '| `exp(x)-2 = 0` | `[0,2]` | `log(2)` |', '',
+             'Each driver requests function/variable tolerances `1e-12` and independently requires both root error '
+             'and absolute residual at most `1e-9`. It checks convergence, finite results, bracket membership and '
+             'agreement between the returned residual and a fresh function evaluation. Counters include solver '
+             'callbacks only. The Newton driver supplies an analytic derivative, checks it against a central '
+             'difference at the bracket midpoint, resets the counters and verifies that the solver uses it. '
+             'nonlin chooses its initial point from the bracket; these drivers do not assume that its input '
+             'root variable controls the initial iterate.', '',
+             '## Sources and playground links', '',
+             '| Driver | Pinned procedure | Author example |', '| --- | --- | --- |']
+    for d in drivers:
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        evidence = records[d['procedure_id']]['evidence'][0]
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        author = f'[Example]({base}{d["author_example"]})' if d['author_example'] else 'Original driver using the public object API'
+        lines.append(f'| [Load {d["id"]}]({url}) · [Source](../{d["path"]}) | '
+                     f'[Procedure]({base}{evidence["path"]}#L{evidence["line"]}) | {author} |')
+    lines += ['', 'The nonlin drivers adapt the author examples, including the `sin(x)/x` equation; MIT '
+              'notices are retained. Loading a link selects code without submitting a job. These examples '
+              'also appear in the main local FPM playground and downloaded FPM projects.', '',
+              '## Recorded results', '',
+              'All three passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0. Existing '
+              'package libraries were reused; only the mains and executables were rebuilt. The '
+              '[verification report](gams-roots-validation.json) records source hashes, revisions and run output. '
+              'Evaluation counts describe these two cases, rather than a general performance ranking. '
+              'Zero printed error means agreement at working precision.', '']
+    for d in drivers:
+        checks = json.loads((root/driver_validation_path(d)).read_text(encoding='utf-8'))
+        result = next(r for r in checks['drivers'] if r['driver_id'] == d['id'])
+        output = next(s['stdout'] for s in result['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '', '```text', output.rstrip(), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers roots-fortran-brent nonlin-roots-brent nonlin-roots-newton',
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required.', '']
+    return '\n'.join(lines)
+
+
+def linear_algebra_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    tree = class_tree(data)
+    drivers = [d for d in driver_data(root, data) if 'D' in ancestors(tree, d['gams_code'])]
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    records = {p['id']: p for p in data['procedure_mappings']}
+    lines = ['# Checked GAMS linear-algebra drivers', '',
+             'These real64 consumer programs compare fortran-lapack and stdlib on the same small '
+             'dense systems and unconstrained least-squares problems. Procedure mappings describe the '
+             'reviewed real configurations; other overloads require their own evidence.', '',
+             '| Class | Configuration | Procedures |', '| --- | --- | --- |',
+             '| [D2a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D2a1) | Real nonsymmetric general linear systems | `linear_algebra:solve`; `stdlib_linalg:solve` |',
+             '| [D9a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D9a1) | Unconstrained linear least squares, L2 solution | `linear_algebra:lstsq`; `stdlib_linalg:lstsq` |', '',
+             '## Shared dense-system checks', '',
+             'Both solve drivers use the 3-by-3 systems from stdlib `example_solve1` and fortran-lapack '
+             '`test_dsolve`, with reference solutions `[5,3,-2]` and `[-2,-2,3]`. They preserve the original '
+             'matrix and right-hand side, check solver status and finite solutions, and require maximum '
+             'solution error at most `1e-10`. The independently computed scaled residual is '
+             '`||A*x-b||_inf / (||A||_inf*||x||_inf + ||b||_inf)` and must be at most `1e-12`. '
+             'Matrix infinity norm means the maximum absolute row sum.', '',
+             '## Shared least-squares checks', '',
+             'Use `t=[-2,-1,0,1,2]`, noise `e=[1,-2,2,-2,1]`, and observations `b=1+2*t+e`. '
+             'The noise is orthogonal to the constant and linear columns. The full-rank design `[1,t]` '
+             'therefore has reference coefficients `[1,2]`. A second design `[1,t,t]` has duplicate columns; '
+             'the SVD-based solvers should return the minimum-norm coefficients `[1,1,1]`. Both have rank 2 '
+             'and residual sum of squares 14.', '',
+             'The drivers check solver status, finite coefficients, numerical rank and coefficient error '
+             'at most `1e-10`. They independently require `max(abs(transpose(A)*(A*x-b))) <= 1e-10` and '
+             'residual sum of squares within `1e-10` of 14. A nonzero residual is expected for these '
+             'inconsistent systems; a small normal-equation residual alone would not identify the '
+             'minimum-norm solution in the rank-deficient case. The known coefficient check does.', '',
+             '## Sources and playground links', '',
+             '| Driver | Class | Pinned procedure and author example |', '| --- | --- | --- |']
+    for d in drivers:
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        evidence = records[d['procedure_id']]['evidence'][0]
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        lines.append(f'| [Load {d["id"]}]({url}) · [Source](../{d["path"]}) | {d["gams_code"]} | '
+                     f'[Procedure]({base}{evidence["path"]}#L{evidence["line"]}) · '
+                     f'[Author example]({base}{d["author_example"]}) |')
+    lines += ['', 'The dense examples reuse both authors\' problem data and retain both license notices. '
+              'The least-squares examples adapt author API usage to shared deterministic data. These drivers '
+              'appear in hosted and main local FPM example menus and downloaded projects. Loading a link '
+              'selects source without submitting a job.', '',
+              '## Recorded results', '',
+              'All four passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing '
+              'the existing package libraries. Only each main and executable were rebuilt. The '
+              '[verification report](gams-linear-algebra-validation.json) records source hashes, pins and '
+              'saved output. These small examples establish checked usage, rather than comprehensive '
+              'accuracy or performance comparisons. The packages may share underlying algorithms; this '
+              'is not evidence of independent implementations. Zero printed error means agreement at working precision.', '']
+    for d in drivers:
+        checks = json.loads((root/driver_validation_path(d)).read_text(encoding='utf-8'))
+        result = next(r for r in checks['drivers'] if r['driver_id'] == d['id'])
+        output = next(s['stdout'] for s in result['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '', '```text', output.rstrip(), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers fortran-lapack-dense-solve stdlib-dense-solve fortran-lapack-least-squares stdlib-least-squares',
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'These examples require no backend redeployment or package library rebuild.', '']
+    return '\n'.join(lines)
+
+
+def ode_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    tree = class_tree(data)
+    drivers = [d for d in driver_data(root, data) if 'I1' in ancestors(tree, d['gams_code'])]
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    records = {p['id']: p for p in data['procedure_mappings']}
+    lines = ['# Checked GAMS ODE initial-value drivers', '',
+             'These consumer programs connect specific nonstiff initial-value solvers to the same analytic '
+             'three-state problem. They test the named configuration, rather than every method offered by '
+             'each package or performance on stiff equations.', '',
+             '| Class | Configuration | Procedure |', '| --- | --- | --- |',
+             '| [I1a1a](https://gams.nist.gov/cgi-bin/serve.cgi/Class/I1a1a) | One-step methods for general nonstiff or mildly stiff IVPs | DOP853 `dop853_class%integrate`; rklib `rk4_class%integrate` |',
+             '| [I1a1b](https://gams.nist.gov/cgi-bin/serve.cgi/Class/I1a1b) | Multistep methods for general nonstiff or mildly stiff IVPs | DDEABM `ddeabm_class%integrate` |', '',
+             '## Shared analytic problem', '',
+             '```text', "u' = -u,   q' = v,   v' = -q", '(u,q,v)(0) = (1,1,0)',
+             '(u,q,v)(t) = (exp(-t),cos(t),-sin(t))', '```', '',
+             'Each driver advances from 0 to `2*pi`, checking all three states at ten equally spaced output '
+             'times. It requires finite values, nonnegative decay state, maximum absolute state error at most '
+             '`1e-8` and oscillator energy error `abs(q*q+v*v-1)` at most `2e-8`. Checking the analytic '
+             'state also detects phase errors that an energy check could miss. These bounds apply at the '
+             'reported checkpoints, rather than every internal step.', '',
+             'DOP853 and DDEABM request absolute and relative tolerances `1e-10`. DOP853 must return '
+             'status 1; DDEABM must return 2 or 3, both of which mean the requested time was reached. '
+             'Both drivers also check the returned output time. A positive intermediate-step status is '
+             'insufficient. DDEABM keeps its history across output requests; DOP853 is called for each '
+             'successive interval.', '',
+             'rklib uses classical fixed-step RK4 with step `0.01`, shortened at each requested endpoint, '
+             'and requires status 0. Its API returns the state for the supplied final time, rather than '
+             'a separate actual-time output. Fixed-step and adaptive tolerance settings are different '
+             'accuracy controls; matching the problem and acceptance checks does not make their settings equivalent.', '',
+             '## RK4 step refinement', '',
+             'A separate RK4 experiment integrates the same problem directly to `2*pi` with nominal '
+             'steps `2*pi/100` and `2*pi/200`. Both runs must complete with finite states, and their '
+             'coarse/fine endpoint-error ratio must lie between 12 and 20. Fourth-order convergence '
+             'suggests a ratio approaching 16 in this range. These coarser runs are separate from the '
+             '`1e-8` checkpoint acceptance test. Floating-point endpoint rounding can produce a tiny '
+             'additional final step, so callback counts need not equal four times the nominal step count.', '',
+             '## Sources and playground links', '',
+             '| Driver | Class | Pinned procedure and author example |', '| --- | --- | --- |']
+    for d in drivers:
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        evidence = records[d['procedure_id']]['evidence'][0]
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        lines.append(f'| [Load {d["id"]}]({url}) · [Source](../{d["path"]}) | {d["gams_code"]} | '
+                     f'[Procedure]({base}{evidence["path"]}#L{evidence["line"]}) · '
+                     f'[Author example]({base}{d["author_example"]}) |')
+    lines += ['', 'The drivers adapt author callback and integration API patterns to the shared analytic '
+              'problem, without plotting dependencies; license notices are retained. They appear in '
+              'hosted and main local FPM example menus and downloaded FPM projects. Loading a link '
+              'selects source without submitting a job.', '',
+              '## Recorded results', '',
+              'All three passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing '
+              'the existing package libraries. Only the mains and executables were rebuilt. The '
+              '[verification report](gams-ode-validation.json) records source hashes, revisions and saved '
+              'output. RHS callback counts cover solver evaluations, including startup and rejected '
+              'steps where applicable; analytic reference checks are excluded. RK4 refinement counts '
+              'are reported separately. Counts for this simple problem are not a general efficiency ranking.', '']
+    for d in drivers:
+        checks = json.loads((root/driver_validation_path(d)).read_text(encoding='utf-8'))
+        result = next(r for r in checks['drivers'] if r['driver_id'] == d['id'])
+        output = next(s['stdout'] for s in result['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '', '```text', output.rstrip(), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers dop853-decay-oscillator ddeabm-decay-oscillator rklib-decay-oscillator',
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required.', '']
+    return '\n'.join(lines)
+
+
+def interpolation_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    tree = class_tree(data)
+    drivers = [d for d in driver_data(root, data) if 'E1' in ancestors(tree, d['gams_code'])]
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    records = {p['id']: p for p in data['procedure_mappings']}
+    lines = ['# Checked GAMS one-dimensional interpolation drivers', '',
+             'These consumer programs connect specific interpolation procedures to '
+             '[E1a: polynomial splines (piecewise polynomials)](https://gams.nist.gov/cgi-bin/serve.cgi/Class/E1a). '
+             'This GAMS class covers both piecewise linear and piecewise cubic methods; the procedure '
+             'records and driver settings distinguish them. The examples do not exercise higher-dimensional APIs.', '',
+             '| Package | Shared-data method | Additional check |', '| --- | --- | --- |',
+             '| finterp | `linear_interp_1d%evaluate`, piecewise linear | Agreement with an independent piecewise-linear reference |',
+             '| PCHIP | `dpchim` slopes and `dpchfe` values, shape-preserving cubic Hermite | Sampled monotonicity and local bounds; agreement with the linear method is not required |',
+             '| bspline-fortran | `bspline_1d`, order 2 (degree 1) | Piecewise-linear reference, then a separate order-4 cubic/derivative reproduction check |', '',
+             '## Shared data and checks', '',
+             'All drivers use the nonuniform grid `x=[0,0.25,0.5,1,2,3]`. Case 1 tabulates the affine '
+             'function `f(x)=2*x-1`; case 2 uses steep monotone values `[0,0.01,0.02,0.9,0.95,1]`.', '',
+             'The programs check successful initialization/evaluation and finite outputs. They require '
+             'interpolation at all six original nodes within `1e-12`. At 21 sample positions in each '
+             'interval, including its endpoints, they check that the output stays between that interval\'s '
+             'two data values and does not decrease, allowing `1e-12` rounding tolerance. This is a '
+             'finite sampling check, rather than a proof of shape preservation for arbitrary data.', '',
+             'For affine data, every sampled value must agree with `2*x-1` within `1e-12`. The finterp '
+             'and order-2 B-spline drivers also require agreement with the independently constructed '
+             'piecewise-linear values within `1e-12`. PCHIP prints its difference from that reference '
+             'without treating the difference as an error: the cubic interpolant generally takes different '
+             'interior values. The drivers make no extrapolation requests. Each shared case performs '
+             '111 value evaluations: six original nodes plus five intervals with 21 samples each.', '',
+             '## Cubic B-spline reproduction', '',
+             'The B-spline driver separately interpolates `p(x)=1-2*x+0.5*x**2+x**3` with order 4, '
+             'meaning cubic polynomial pieces. At 101 positions on `[0,3]`, it compares values with '
+             '`p(x)` and first derivatives with `-2+x+3*x**2`, each within `1e-10`. '
+             'This checks polynomial reproduction and the derivative evaluation API. It does not '
+             'claim that general cubic B-spline interpolation preserves monotone shape.', '',
+             '## Sources and playground links', '',
+             '| Driver | Pinned procedure and author example |', '| --- | --- |']
+    for d in drivers:
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        evidence = records[d['procedure_id']]['evidence'][0]
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        lines.append(f'| [Load {d["id"]}]({url}) · [Source](../{d["path"]}) | '
+                     f'[Procedure]({base}{evidence["path"]}#L{evidence["line"]}) · '
+                     f'[Author example/test]({base}{d["author_example"]}) |')
+    lines += ['', 'The programs adapt author API patterns and retain the package license notices. '
+              'They use shared deterministic data instead of the larger author test harnesses. The '
+              'drivers appear in hosted and main local FPM example menus and downloaded projects. '
+              'Loading a link selects source without submitting a job.', '',
+              '## Recorded results', '',
+              'All three passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing '
+              'the existing package libraries. Only each main and executable were rebuilt. The '
+              '[verification report](gams-interpolation-validation.json) records source hashes, pins '
+              'and saved output. Zero printed error means agreement at working precision. These '
+              'small examples establish checked usage, rather than general accuracy or speed rankings.', '']
+    for d in drivers:
+        checks = json.loads((root/driver_validation_path(d)).read_text(encoding='utf-8'))
+        result = next(r for r in checks['drivers'] if r['driver_id'] == d['id'])
+        output = next(s['stdout'] for s in result['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '', '```text', output.rstrip(), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers finterp-shape-interpolation pchip-shape-interpolation bspline-fortran-shape-interpolation',
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required.', '']
+    return '\n'.join(lines)
+
+
+def transforms_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    tree = class_tree(data)
+    drivers = [d for d in driver_data(root, data) if 'J1' in ancestors(tree, d['gams_code'])]
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    records = {p['id']: p for p in data['procedure_mappings']}
+    lines = ['# Checked GAMS transform drivers', '',
+             '| Class | Configuration | Procedures |', '| --- | --- | --- |',
+             '| [J1a2](https://gams.nist.gov/cgi-bin/serve.cgi/Class/J1a2) | One-dimensional complex Fourier transforms | FFTPACK `fft, ifft`; KISS FFT `fft%perform` |',
+             '| [J1a3](https://gams.nist.gov/cgi-bin/serve.cgi/Class/J1a3) | One-dimensional sine and cosine transforms | FFTPACK `dct(type=2), idct(type=2)` |', '',
+             'These are the deepest categories in the recorded GAMS taxonomy for the demonstrated '
+             'complex and cosine transforms. They do not exhaust integral transforms: multidimensional '
+             'transforms, convolution, Laplace and Hilbert transforms are separate opportunities.', '',
+             '## Complex FFT checks', '',
+             'The shared input is `x(j)=(j+1)/8 + i*(-1)**j/4`, for zero-based `j`, at lengths 7 and 8. '
+             'Its components are exactly representable in both single and double precision. Each driver '
+             'independently sums the negative-exponent DFT in real64 and compares every complex frequency '
+             'bin. It also checks finite values, inverse recovery after dividing by `N`, and Parseval\'s '
+             'identity `sum(abs(X)**2)/N = sum(abs(x)**2)`.', '',
+             'FFTPACK uses its double-precision `rk` kind and limits forward, inverse and relative energy '
+             'errors to `1e-11`. The pinned KISS FFT binding uses C `float`: forward error must be at '
+             'most `1e-5`, inverse error at most `1e-6` and relative energy error at most `1e-6`. '
+             'The precision difference is explicit, rather than interpreting it as an algorithm ranking. '
+             'KISS forward and inverse plans are each initialized once per length and finalized on block exit.', '',
+             '## Cosine transform checks', '',
+             'The DCT-II driver uses the real input `(j+1)/8` at lengths 7 and 8. In this FFTPACK API, '
+             'the forward convention is `X(k)=4*sum_j x(j)*cos(pi*(j+1/2)*k/N)`. The inverse is '
+             'unnormalized: divide `idct(dct(x,type=2),type=2)` by `4*N`. The driver independently '
+             'evaluates the cosine sum and requires both forward and recovered-input errors at most '
+             '`1e-11`, with finite outputs. Other libraries may use different normalization conventions.', '',
+             'A round trip alone could hide matching sign or scaling mistakes; independent forward '
+             'references check the documented convention. These short deterministic cases do not '
+             'establish accuracy or performance for all transform sizes.', '',
+             '## Sources and playground links', '',
+             '| Driver | Class | Pinned procedure and author example |', '| --- | --- | --- |']
+    for d in drivers:
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        evidence = records[d['procedure_id']]['evidence'][0]
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        lines.append(f'| [Load {d["id"]}]({url}) · [Source](../{d["path"]}) | {d["gams_code"]} | '
+                     f'[Procedure]({base}{evidence["path"]}#L{evidence["line"]}) · '
+                     f'[Author example/test]({base}{d["author_example"]}) |')
+    lines += ['', 'The programs adapt author API patterns and retain license notices. They appear '
+              'in hosted and main local FPM example menus and downloaded projects. Loading a link '
+              'selects source without submitting a job.', '', '## Recorded results', '',
+              'All three passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing '
+              'existing package libraries. Only each main and executable were rebuilt. The '
+              '[verification report](gams-transforms-validation.json) records hashes, source pins and saved output.', '']
+    for d in drivers:
+        checks = json.loads((root/driver_validation_path(d)).read_text(encoding='utf-8'))
+        result = next(r for r in checks['drivers'] if r['driver_id'] == d['id'])
+        output = next(s['stdout'] for s in result['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '', '```text', output.rstrip(), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers fftpack-complex-transform kissfft-f-complex-transform fftpack-cosine-transform',
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required.', '']
+    return '\n'.join(lines)
+
+
+def constrained_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    tree = class_tree(data)
+    drivers = [d for d in driver_data(root, data) if 'G2' in ancestors(tree, d['gams_code'])]
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    records = {p['id']: p for p in data['procedure_mappings']}
+    lines = ['# Checked GAMS constrained-optimization drivers', '',
+             '| Class | Configuration | Procedures |', '| --- | --- | --- |',
+             '| [G2h1a2](https://gams.nist.gov/cgi-bin/serve.cgi/Class/G2h1a2) | Smooth simple-bound optimization with user first derivatives | L-BFGS-B `setulb`; NLopt `LD_LBFGS` with explicit bounds |',
+             '| [G2h3b1b](https://gams.nist.gov/cgi-bin/serve.cgi/Class/G2h3b1b) | Smooth nonlinear equality/inequality optimization with user objective and constraint first derivatives | SLSQP `slsqp_solver%optimize`, analytic mode |', '',
+             'Both are deepest recorded GAMS classes for the demonstrated configurations. Other constrained '
+             'optimization classes and other procedures in these classes still need checked drivers; '
+             'see the [coverage report](gams-coverage.md).', '',
+             '## Shared bound-constrained quadratic', '',
+             'Minimize `f(x)=(x1-2)**2+(x2+1)**2` subject to `0<=x1<=1` and `0<=x2<=2`, starting '
+             'at `[0.25,1]`. Projection of the unconstrained minimizer `[2,-1]` onto the box gives the '
+             'unique solution `[1,0]`, with objective 2. One variable is on its upper bound and the other '
+             'on its lower bound.', '',
+             'The two drivers check their analytic gradient against central differences before solving. '
+             'They require actual convergence, finite results, parameter/objective error at most `1e-8`, '
+             'maximum bound violation at most `1e-10`, agreement of reported and independent objectives '
+             'within `1e-10`, and projected-gradient residual at most `1e-8`. The latter is '
+             '`max(abs(x-clip(x-gradient(f),lower,upper)))`. At a boundary solution, the ordinary gradient '
+             'need not be zero.', '',
+             'L-BFGS-B uses reverse communication and must return a convergence task. NLopt must return '
+             'one of its convergence codes 1 through 4; an evaluation/time limit does not count as success. '
+             'The NLopt bound configuration has a separate procedure record from its unconstrained '
+             'Rosenbrock example. These packages are not asserted to use identical algorithms.', '',
+             '## Equality plus nonlinear inequality', '',
+             'The SLSQP driver minimizes the same objective over a different feasible set: '
+             '`c1=x1+x2-1=0`, `c2=1-x1**2-x2**2>=0`, with inactive safety bounds `[-2,2]` '
+             'and feasible start `[0.5,0.5]`. Equalities come first in the callback; SLSQP inequalities '
+             'use the nonnegative convention. Analytic mode (`gradient_mode=0`) supplies both the '
+             'objective gradient and constraint Jacobian, which are sanity-checked by central differences.', '',
+             'On the line `x1+x2=1`, the circle restricts `x1` to `[0,1]`, and the objective becomes '
+             '`2*(x1-2)**2`. The unique constrained solution is therefore `[1,0]`, with objective 2. '
+             'The driver requires solver status 0, finite values and parameter/objective errors at most '
+             '`1e-7`. It independently checks primal feasibility, stationarity and complementarity '
+             'within `1e-7`, using the exact multipliers `lambda=2` and `mu=2>=0`:', '',
+             '```text', 'gradient(f) - lambda*gradient(c1) - mu*gradient(c2) = 0',
+             'mu*c2 = 0', '```', '',
+             'The multipliers are known from this test problem, not reported by SLSQP. The convex '
+             'problem gives an independently known global solution; a successful run of a general '
+             'nonlinear optimizer is not by itself a global-optimality guarantee.', '',
+             '## Sources and playground links', '',
+             '| Driver | Class | Pinned procedure and author example |', '| --- | --- | --- |']
+    for d in drivers:
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        evidence = records[d['procedure_id']]['evidence'][0]
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        author = f'[Author example]({base}{d["author_example"]})' if d['author_example'] else 'Original public-API driver'
+        lines.append(f'| [Load {d["id"]}]({url}) · [Source](../{d["path"]}) | {d["gams_code"]} | '
+                     f'[Procedure]({base}{evidence["path"]}#L{evidence["line"]}) · {author} |')
+    lines += ['', 'The L-BFGS-B and SLSQP drivers adapt author API patterns and retain license notices. '
+              'All three appear in hosted and main local FPM example menus and downloaded projects. '
+              'Loading a link selects source without submitting a job.', '', '## Recorded results', '',
+              'All three passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing '
+              'existing package libraries. Only each main and executable were rebuilt. The '
+              '[verification report](gams-constrained-validation.json) records hashes, pins and saved output. '
+              'Evaluation counts exclude derivative sanity checks and describe these simple cases, rather '
+              'than establishing a general speed ranking.', '']
+    for d in drivers:
+        checks = json.loads((root/driver_validation_path(d)).read_text(encoding='utf-8'))
+        result = next(r for r in checks['drivers'] if r['driver_id'] == d['id'])
+        output = next(s['stdout'] for s in result['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '', '```text', output.rstrip(), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers lbfgsb-box-quadratic nlopt-box-quadratic slsqp-circle-equality',
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required.', '']
+    return '\n'.join(lines)
+
+
+def coverage_data(root=ROOT, data=None):
+    """Count maintained assignments separately from class-specific checked demonstrations."""
+    data = data or gams_data(root)
+    drivers = driver_data(root, data)
+    records = data['procedure_mappings']
+    tree = class_tree(data)
+    top = []
+    for code, label in data['classes'].items():
+        top.append({'code': code, 'label': label,
+                    'package_ids': sorted(name for name, codes in data['packages'].items() if code in codes),
+                    'procedure_ids': [r['id'] for r in records
+                                      if any(code in ancestors(tree, c) for c in r['gams_codes'])],
+                    'checked_procedure_ids': sorted({d['procedure_id'] for d in drivers
+                                                     if code in ancestors(tree, d['gams_code'])}),
+                    'driver_ids': [d['id'] for d in drivers if code in ancestors(tree, d['gams_code'])]})
+    specific = []
+    for code in sorted({c for r in records for c in r['gams_codes']}, key=class_order):
+        specific.append({'code': code, 'label': tree[code]['label'],
+                         'procedure_ids': [r['id'] for r in records if code in r['gams_codes']],
+                         'checked_procedure_ids': sorted({d['procedure_id'] for d in drivers if d['gams_code'] == code}),
+                         'driver_ids': [d['id'] for d in drivers if d['gams_code'] == code]})
+    return {'top_level': top, 'procedure_classes': specific,
+            'procedure_count': len(records), 'driver_count': len(drivers),
+            'checked_procedure_count': len({d['procedure_id'] for d in drivers})}
+
+
+def coverage_review_text(root=ROOT):
+    coverage = coverage_data(root)
+    top = coverage['top_level']
+    specific = coverage['procedure_classes']
+    covered = sum(bool(row['driver_ids']) for row in top)
+    unchecked = sum(not row['driver_ids'] for row in specific)
+    lines = ['# GAMS classification and checked-driver coverage', '',
+             '**The GAMS categories are not exhausted.** Some procedures already map to the deepest '
+             'available GAMS class, but that does not mean all procedures or problem configurations '
+             'in that class have been demonstrated.', '',
+             f'The selected catalog has {coverage["procedure_count"]} source-reviewed procedure records. '
+             f'{coverage["driver_count"]} independently checked drivers cover '
+             f'{coverage["checked_procedure_count"]} of those records and {covered} of the 20 top-level '
+             f'GAMS classes. Among the {len(specific)} maintained classes used directly by procedure '
+             f'records, {unchecked} still have no class-specific checked driver.', '',
+             'These counts concern the dedicated GAMS drivers. The ordinary precompiled-package '
+             'demonstrations have their own build/run verification and are not counted as class-specific drivers here.', '',
+             '## What these counts mean', '',
+             '- Package assignments are discovery classifications and may describe capabilities beyond the reviewed procedures.',
+             '- A source-reviewed procedure has pinned API/source evidence. This alone does not mean a matching driver has been run.',
+             '- A checked driver demonstrates its recorded procedure and problem class with saved successful sandbox evidence. '
+             'It does not cover every overload or input.',
+             '- Reaching a taxonomy leaf, such as F1b or E1a, means there is no finer GAMS category in the recorded taxonomy. '
+             'Additional procedures, drivers and non-GAMS descriptors can still distinguish useful capabilities.', '',
+             'This is coverage of our maintained selected-package records, **not a complete inventory of the GAMS taxonomy '
+             'or all Fortran software**. A class with a checked driver is not marked exhausted. Empty categories may lack '
+             'a suitable selected package; other categories have many source-reviewed procedures awaiting drivers.', '',
+             '## Top-level coverage', '',
+             'Procedure and driver counts include descendants. A procedure assigned to multiple categories may appear '
+             'in multiple rows, so the rows should not be summed.', '',
+             '| Class | Description | Assigned packages | Reviewed procedures | Procedures with checked drivers | Drivers |',
+             '| --- | --- | ---: | ---: | ---: | ---: |']
+    for row in top:
+        code = row['code']
+        lines.append(f'| [{code}](https://beliavsky.github.io/fortran-playground/gams/{code}/) | {row["label"]} | '
+                     f'{len(row["package_ids"])} | {len(row["procedure_ids"])} | '
+                     f'{len(row["checked_procedure_ids"])} | {len(row["driver_ids"])} |')
+    lines += ['', '## Direct procedure-class coverage', '',
+              'These are the most specific classes currently recorded for procedures, not necessarily leaves of the '
+              'full GAMS taxonomy. Counts are exact class matches. For example, an analytic-gradient driver does '
+              'not check a derivative-free configuration of the same generic procedure.', '',
+              '| Class | Label (read with ancestors) | Reviewed procedures | Procedures with checked drivers | Drivers |',
+              '| --- | --- | ---: | ---: | ---: |']
+    for row in specific:
+        code = row['code']
+        lines.append(f'| [{code}](https://beliavsky.github.io/fortran-playground/gams/{code}/) | {row["label"]} | '
+                     f'{len(row["procedure_ids"])} | {len(row["checked_procedure_ids"])} | {len(row["driver_ids"])} |')
+    lines += ['', 'See the [numerical review](gams-numerical.md) for named procedures and pinned source evidence, '
+              'and [classification review](fpm-gams.md) for package assignments. Classes with reviewed procedures '
+              'and zero checked drivers are a useful next-driver queue. The numerical review also lists discovery '
+              'assignments without matching procedure records.', '', '## Maintenance', '',
+              'This page is regenerated from the same classifications, driver manifest and successful verification '
+              'reports used by the playground and portable catalog. It is checked by:', '',
+              '```text', 'python xpackage_gams.py', 'python xpackage_gams.py --check', '```', '']
     return '\n'.join(lines)
 
 
@@ -439,7 +1053,11 @@ def main():
     parser.add_argument('--check', action='store_true', help='Fail if the generated review page is out of date')
     args = parser.parse_args()
     for report, text in ((REPORT, review_text()), (PILOT_REPORT, g1_review_text()),
-                         (NUMERICAL_REPORT, numerical_review_text())):
+                         (NUMERICAL_REPORT, numerical_review_text()), (QUADRATURE_REPORT, quadrature_review_text()),
+                         (ROOTS_REPORT, roots_review_text()), (LINEAR_ALGEBRA_REPORT, linear_algebra_review_text()),
+                         (ODE_REPORT, ode_review_text()), (INTERPOLATION_REPORT, interpolation_review_text()),
+                         (TRANSFORMS_REPORT, transforms_review_text()), (CONSTRAINED_REPORT, constrained_review_text()),
+                         (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report
         if args.check:
             if not path.exists() or path.read_text(encoding='utf-8') != text:

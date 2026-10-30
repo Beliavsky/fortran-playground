@@ -128,7 +128,7 @@ def input_provenance(root, paths):
 def build_export(root=ROOT):
     # Import tools need only this module and the standard library; the source
     # catalog and its authoring helpers are needed solely when exporting.
-    from xpackage_gams import gams_data, package_classes, class_tree, procedure_records, driver_data, numerical_review
+    from xpackage_gams import gams_data, package_classes, class_tree, procedure_records, driver_data, numerical_review, driver_validation_path
     from xpackage_topics import playground_topics
     from xgithub_owners import load_owners
     from xpackage_attributions import load_attributions
@@ -151,8 +151,9 @@ def build_export(root=ROOT):
         inputs.append('fpm_catalog/owners.json')
     if (root / 'fpm_catalog/name-attributions.json').exists():
         inputs.append('fpm_catalog/name-attributions.json')
-    inputs.extend(['fpm_catalog/gams-drivers.json', 'docs/gams-g1-validation.json',
+    inputs.extend(['fpm_catalog/gams-drivers.json',
                    'fpm_catalog/gams-numerical-review.json', 'docs/fpm-precompiled-validation.json'])
+    inputs.extend(sorted({driver_validation_path(d) for d in drivers}))
     inputs.extend(sorted({p for d in drivers for p in [d['path'], *d['license_files']]}))
     projects = []
     for package in sorted(packages, key=lambda p: p['repository'].lower()):
@@ -206,7 +207,7 @@ def build_export(root=ROOT):
                   'detailed_taxonomy_source': gams.get('detailed_taxonomy_source')}},
               'demonstrations': [{**d, 'source_sha256': text_hash(root / d['path']),
                   'url': f'{BASE_URL}/fpm/?package={d["package_id"]}&example={d["name"]}',
-                  'validation_path': 'docs/gams-g1-validation.json'} for d in drivers],
+                  'validation_path': driver_validation_path(d)} for d in drivers],
               'projects': projects}
     selected_owners = {p['repository']['owner'].lower() for p in projects}
     export['owners'] = {key: value for key, value in owner_records.items() if key in selected_owners}

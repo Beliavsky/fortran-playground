@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "finterp-shape-interpolation",
+      "source_revision": "95aaceaf86f5d4d49328b783c5dff9b006b0bfc9",
+      "source_sha256": "26ea6d0c95211f09b89285daf1fd90a146264480a20854912b1cdff3124ff0e4",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T20:19:04.337205+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.27,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Case: affine data f(x)=2*x-1\n  Interval midpoint       Interpolated value\n        0.12500000000000       -0.75000000000000\n        0.37500000000000       -0.25000000000000\n        0.75000000000000        0.50000000000000\n        1.50000000000000        2.00000000000000\n        2.50000000000000        4.00000000000000\nMaximum node error:   0.0000E+00\nMaximum affine reproduction error:   8.8818E-16\nMaximum difference from piecewise linear:   8.8818E-16\nMaximum sampled local bound violation:   0.0000E+00\nMaximum sampled decrease:   0.0000E+00\nEvaluator calls: 111\nCase: steep monotone data\n  Interval midpoint       Interpolated value\n        0.12500000000000        0.00500000000000\n        0.37500000000000        0.01500000000000\n        0.75000000000000        0.46000000000000\n        1.50000000000000        0.92500000000000\n        2.50000000000000        0.97500000000000\nMaximum node error:   0.0000E+00\nMaximum difference from piecewise linear:   2.2204E-16\nMaximum sampled local bound violation:   0.0000E+00\nMaximum sampled decrease:   0.0000E+00\nEvaluator calls: 111\nPASS finterp-shape-interpolation\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.036,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "pchip-shape-interpolation",
+      "source_revision": "8f5350565072622a2344dd0ec75193832b31eb10",
+      "source_sha256": "f8ad30c3f8f16ad5f03a88a5987c625433d9cecb61ee141228ae401e5989265c",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T20:19:05.900066+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.226,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Case: affine data f(x)=2*x-1\n  Interval midpoint       Interpolated value\n        0.12500000000000       -0.75000000000000\n        0.37500000000000       -0.25000000000000\n        0.75000000000000        0.50000000000000\n        1.50000000000000        2.00000000000000\n        2.50000000000000        4.00000000000000\nMaximum node error:   0.0000E+00\nMaximum affine reproduction error:   0.0000E+00\nMaximum difference from piecewise linear:   4.4409E-16\nMaximum sampled local bound violation:   0.0000E+00\nMaximum sampled decrease:   0.0000E+00\nEvaluator calls: 111\nCase: steep monotone data\n  Interval midpoint       Interpolated value\n        0.12500000000000        0.00500000000000\n        0.37500000000000        0.01404017857143\n        0.75000000000000        0.45762951940035\n        1.50000000000000        0.93233024691358\n        2.50000000000000        0.97500000000000\nMaximum node error:   0.0000E+00\nMaximum difference from piecewise linear:   8.1693E-02\nMaximum sampled local bound violation:   0.0000E+00\nMaximum sampled decrease:   0.0000E+00\nEvaluator calls: 111\nPASS pchip-shape-interpolation\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.03,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "bspline-fortran-shape-interpolation",
+      "source_revision": "047c724451aeee7f883c0d5acba3f7bd22a5de01",
+      "source_sha256": "7ef51d8d302161ef4f0004fbef041b0f0a158198f695f756203dd4144bc39165",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T20:19:07.734469+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.554,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Case: affine data f(x)=2*x-1\n  Interval midpoint       Interpolated value\n        0.12500000000000       -0.75000000000000\n        0.37500000000000       -0.25000000000000\n        0.75000000000000        0.50000000000000\n        1.50000000000000        2.00000000000000\n        2.50000000000000        4.00000000000000\nMaximum node error:   0.0000E+00\nMaximum affine reproduction error:   8.8818E-16\nMaximum difference from piecewise linear:   8.8818E-16\nMaximum sampled local bound violation:   0.0000E+00\nMaximum sampled decrease:   0.0000E+00\nEvaluator calls: 111\nCase: steep monotone data\n  Interval midpoint       Interpolated value\n        0.12500000000000        0.00500000000000\n        0.37500000000000        0.01500000000000\n        0.75000000000000        0.46000000000000\n        1.50000000000000        0.92500000000000\n        2.50000000000000        0.97500000000000\nMaximum node error:   1.1102E-16\nMaximum difference from piecewise linear:   2.2204E-16\nMaximum sampled local bound violation:   1.1102E-16\nMaximum sampled decrease:   0.0000E+00\nEvaluator calls: 111\nCubic reproduction maximum error:   7.1054E-15\nCubic first derivative maximum error:   7.1054E-15\nPASS bspline-fortran-shape-interpolation\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.046,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-30T20:19:07.787606+00:00"
+}

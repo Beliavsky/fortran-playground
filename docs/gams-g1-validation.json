@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "validated_at": "2026-10-28T12:55:54.330393+00:00",
+  "validated_at": "2026-10-30T19:24:51.189708+00:00",
   "environment": "Hosted FPM playground sandbox",
   "hash_normalization": "utf-8-lf",
   "drivers": [
@@ -29,7 +29,8 @@
           "seconds": 0.024,
           "exit_code": 0
         }
-      ]
+      ],
+      "validated_at": "2026-10-28T12:55:54.330393+00:00"
     },
     {
       "driver_id": "minpack-bard",
@@ -56,7 +57,8 @@
           "seconds": 0.03,
           "exit_code": 0
         }
-      ]
+      ],
+      "validated_at": "2026-10-28T12:55:54.330393+00:00"
     },
     {
       "driver_id": "libdogleg-bard",
@@ -81,6 +83,103 @@
           "stdout": "GAMS G1b: Bard-15 nonlinear least squares, libdogleg-f.\nParameters:     0.08241058    1.13303665    2.34369464\nMaximum parameter error:    3.611E-07\nIndependent residual norm:   9.06359603E-02\nResidual and analytic Jacobian callback calls: 6\nPASS libdogleg-bard\n",
           "stderr": "Project is up to date\n",
           "seconds": 0.054,
+          "exit_code": 0
+        }
+      ],
+      "validated_at": "2026-10-28T12:55:54.330393+00:00"
+    },
+    {
+      "driver_id": "nonlin-rosenbrock-nm",
+      "source_revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+      "source_sha256": "c4154aff915fe20ca3c9714a0b52b7bf2197ec656fe80657089a5a06a38e27f9",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T19:24:45.264268+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.499,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "GAMS G1b1a: Rosenbrock, nonlin nelder_mead; start (-1.2,1).\nComputed minimizer:     1.0000005877    1.0000011213\nMaximum parameter error:   1.1213E-06\nIndependent objective:   6.3877E-13\nObjective callback calls: 202\nGradient callback calls: 0\nSolver iterations: 107\nPASS nonlin-rosenbrock-nm\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.036,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "nonlin-rosenbrock-bfgs",
+      "source_revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+      "source_sha256": "966fd1bef529c83d609bb38a83e0e607b64f13486f346c3cf690e9eb05155f73",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T19:24:47.676388+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.412,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "GAMS G1b1b: Rosenbrock, nonlin bfgs; start (-1.2,1).\nComputed minimizer:     1.0000000000    1.0000000000\nMaximum parameter error:   3.3307E-15\nIndependent objective:   1.2819E-28\nObjective callback calls: 72\nGradient callback calls: 50\nSolver iterations: 49\nPASS nonlin-rosenbrock-bfgs\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.028,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "nlopt-rosenbrock-lbfgs",
+      "source_revision": "83d21e7ebda9279a6dd4cc11fe6c735f48eb8689",
+      "source_sha256": "efd6db5b8f48483834b39d525d56c20013fe912771b591279ec672322a1687c6",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T19:24:51.120848+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.354,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "GAMS G1b1b: Rosenbrock, NLopt LD_LBFGS; start (-1.2,1).\nComputed minimizer:     1.0000000000    1.0000000000\nMaximum parameter error:   1.4780E-11\nIndependent objective:   7.3573E-23\nObjective callback calls: 56\nGradient callback calls: 56\nSolver termination code: 1\nPASS nlopt-rosenbrock-lbfgs\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.028,
           "exit_code": 0
         }
       ]

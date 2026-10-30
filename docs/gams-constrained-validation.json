@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "lbfgsb-box-quadratic",
+      "source_revision": "ce1a9322016d6f31b652393e000a914b63af6fef",
+      "source_sha256": "b820f536f166a3dca3bbd5cfed40e5dfb51b0372dbdf64c22627e976119ba261",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T20:50:17.807853+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.452,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Computed minimizer:     1.000000000000    0.000000000000\nIndependent objective (expected 2):     2.000000000000\nMaximum bound violation:   0.0000E+00\nProjected gradient residual:   0.0000E+00\nObjective evaluations: 2\nGradient evaluations: 2\nSolver termination: CONVERGENCE: NORM_OF_PROJECTED_GRADIENT_<=_PGTOL\nPASS lbfgsb-box-quadratic\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.03,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "nlopt-box-quadratic",
+      "source_revision": "83d21e7ebda9279a6dd4cc11fe6c735f48eb8689",
+      "source_sha256": "a7aaf2849615e2aca2407a921b0d4cdf8e9f37943a1e039caa903571c81ac13d",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T20:50:20.934576+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.363,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Computed minimizer:     1.000000000000    0.000000000000\nIndependent objective (expected 2):     2.000000000000\nMaximum bound violation:   0.0000E+00\nProjected gradient residual:   0.0000E+00\nObjective evaluations: 3\nGradient evaluations: 3\nSolver termination code: 1\nPASS nlopt-box-quadratic\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.043,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "slsqp-circle-equality",
+      "source_revision": "e28b14fc48189fd4fce5f359327164fca55b52be",
+      "source_sha256": "069d9025eaa2652a75aa0a8b40ab8ae81d24ccb2140f32f1901da9afa6808b2e",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T20:50:24.002477+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.421,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Required accuracy for solution obtained\nComputed minimizer:     1.000000000000   -0.000000000000\nIndependent objective (expected 2):     2.000000000000\nMaximum primal constraint violation:   1.1102E-16\nStationarity with known multipliers (2,2):   4.4409E-16\nComplementarity residual:   4.4409E-16\nObjective/constraint callback calls: 8\nGradient/Jacobian callback calls: 8\nIterations: 8\nSolver termination code: 0\nPASS slsqp-circle-equality\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.032,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-30T20:50:24.049014+00:00"
+}

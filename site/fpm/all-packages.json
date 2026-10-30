@@ -1869,9 +1869,39 @@
         "parent": "G1"
       },
       {
+        "code": "G1b1",
+        "label": "Smooth function",
+        "parent": "G1b"
+      },
+      {
+        "code": "G1b1b",
+        "label": "User provides first derivatives",
+        "parent": "G1b1"
+      },
+      {
         "code": "G2",
         "label": "Constrained",
         "parent": "G"
+      },
+      {
+        "code": "G2h",
+        "label": "General nonlinear programming",
+        "parent": "G2"
+      },
+      {
+        "code": "G2h1",
+        "label": "Simple bounds",
+        "parent": "G2h"
+      },
+      {
+        "code": "G2h1a",
+        "label": "Smooth function",
+        "parent": "G2h1"
+      },
+      {
+        "code": "G2h1a2",
+        "label": "User provides first derivatives",
+        "parent": "G2h1a"
       }
     ],
     "gams_procedures": [
@@ -1882,7 +1912,7 @@
         "module": "nlopt_wrap",
         "procedure": "nlopt_opt%optimize with LD_LBFGS",
         "gams_codes": [
-          "G1b"
+          "G1b1b"
         ],
         "review_level": "source-reviewed",
         "derivatives": "user gradient",
@@ -1899,7 +1929,45 @@
             "sha256": "b92bb5362913e941d676b2e485889f4860adea00ff92cfc6c5e6cc3e21ac0b03"
           }
         ],
-        "author_examples": []
+        "author_examples": [],
+        "driver_id": "nlopt-rosenbrock-lbfgs"
+      },
+      {
+        "id": "nlopt-lbfgs-bounds",
+        "package_id": "nlopt-f",
+        "revision": "83d21e7ebda9279a6dd4cc11fe6c735f48eb8689",
+        "module": "nlopt_wrap",
+        "procedure": "nlopt_opt%optimize with LD_LBFGS and explicit bounds",
+        "gams_codes": [
+          "G2h1a2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "user gradient",
+        "notes": "Smooth bound-constrained optimization with a user gradient. Explicit lower/upper bounds are part of this configuration, distinct from the unconstrained driver.",
+        "evidence": [
+          {
+            "path": "src/nlopt_wrap.f90",
+            "line": 268,
+            "sha256": "d38f553f64581e984fd90150ec519177893db60880cb99a00b60fb347d893ba8"
+          },
+          {
+            "path": "src/nlopt_enum.F90",
+            "line": 301,
+            "sha256": "b92bb5362913e941d676b2e485889f4860adea00ff92cfc6c5e6cc3e21ac0b03"
+          },
+          {
+            "path": "src/nlopt_wrap.f90",
+            "line": 399,
+            "sha256": "d38f553f64581e984fd90150ec519177893db60880cb99a00b60fb347d893ba8"
+          },
+          {
+            "path": "src/nlopt_wrap.f90",
+            "line": 444,
+            "sha256": "d38f553f64581e984fd90150ec519177893db60880cb99a00b60fb347d893ba8"
+          }
+        ],
+        "author_examples": [],
+        "driver_id": "nlopt-box-quadratic"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00",
@@ -7838,6 +7906,11 @@
         "code": "J1a2",
         "label": "Complex",
         "parent": "J1a"
+      },
+      {
+        "code": "J1a3",
+        "label": "Sine and cosine transforms",
+        "parent": "J1a"
       }
     ],
     "gams_procedures": [
@@ -7865,7 +7938,35 @@
             "path": "test/test_fftpack_fft.f90",
             "sha256": "eaa5145047364f2f62c6c563a3f126f75a56f297742c12b29f6a8b340c192ca0"
           }
-        ]
+        ],
+        "driver_id": "fftpack-complex-transform"
+      },
+      {
+        "id": "fftpack-dct2",
+        "package_id": "fftpack",
+        "revision": "0fffe7c05a918363a7cc12ae138a695afd115f36",
+        "module": "fftpack",
+        "procedure": "dct(type=2), idct(type=2)",
+        "gams_codes": [
+          "J1a3"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "One-dimensional DCT-II and its inverse. This FFTPACK API uses a forward factor of 4 and an unnormalized inverse; divide the composition by 4*N.",
+        "evidence": [
+          {
+            "path": "src/fftpack_dct.f90",
+            "sha256": "9d17f44e068b88b6989b466084ea2ef134ba28c0a620ff9164c655ce2e905aa7",
+            "line": 6
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_fftpack_dct.f90",
+            "sha256": "1e520dd7bdc81e4d8878ea1d8da2f7962d21bfffe1d83f14faaa1956c7af11e3"
+          }
+        ],
+        "driver_id": "fftpack-cosine-transform"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -7972,6 +8073,31 @@
         "parent": "D"
       },
       {
+        "code": "D2a",
+        "label": "Real nonsymmetric matrices",
+        "parent": "D2"
+      },
+      {
+        "code": "D2a1",
+        "label": "General",
+        "parent": "D2a"
+      },
+      {
+        "code": "D9",
+        "label": "Singular, overdetermined or underdetermined systems of linear equations, generalized inverses",
+        "parent": "D"
+      },
+      {
+        "code": "D9a",
+        "label": "Unconstrained",
+        "parent": "D9"
+      },
+      {
+        "code": "D9a1",
+        "label": "Least squares (L_2) solution",
+        "parent": "D9a"
+      },
+      {
         "code": "L",
         "label": "Statistics, probability",
         "parent": null
@@ -8076,11 +8202,11 @@
         "module": "stdlib_linalg",
         "procedure": "solve",
         "gams_codes": [
-          "D2"
+          "D2a1"
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Generic dense linear solve; retained broad because arithmetic type and matrix structure vary.",
+        "notes": "Real dense nonsymmetric linear solve, demonstrated in real64. Other generic overloads are outside this record.",
         "evidence": [
           {
             "path": "src/stdlib_linalg.f90",
@@ -8093,7 +8219,8 @@
             "path": "example/example_solve1.f90",
             "sha256": "b05f205e18917ba05cea70323ed9316b12ad773fbbed716d3cc149afb12d50bb"
           }
-        ]
+        ],
+        "driver_id": "stdlib-dense-solve"
       },
       {
         "id": "stdlib-sort",
@@ -8146,6 +8273,33 @@
             "sha256": "b1025f58e68f0cffc10a43bfdb8fa5c93f6c0d1d7f1e47540e62c8de0eace5fa"
           }
         ]
+      },
+      {
+        "id": "stdlib-lstsq",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "lstsq (real dense overload)",
+        "gams_codes": [
+          "D9a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Real unconstrained linear least squares using the SVD-based GELSD implementation, including rank-deficient minimum-norm solutions.",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811",
+            "line": 1393
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_lstsq1.f90",
+            "sha256": "aeb94a3308199023078fd6f77042eb590daedc71cc098b1ffc37a4988a8c0644"
+          }
+        ],
+        "driver_id": "stdlib-least-squares"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -13291,6 +13445,16 @@
         "parent": "G1"
       },
       {
+        "code": "G1b1",
+        "label": "Smooth function",
+        "parent": "G1b"
+      },
+      {
+        "code": "G1b1b",
+        "label": "User provides first derivatives",
+        "parent": "G1b1"
+      },
+      {
         "code": "K",
         "label": "Approximation",
         "parent": null
@@ -13309,11 +13473,11 @@
         "module": "dogleg",
         "procedure": "dl_optimize (dl_optimize_dense2)",
         "gams_codes": [
-          "G1b"
+          "G1b1b"
         ],
         "review_level": "source-reviewed",
         "derivatives": "user residual Jacobian",
-        "notes": "Dense nonlinear least squares; Jacobian layout is parameters by residuals, transposed relative to MINPACK.",
+        "notes": "Dense nonlinear least squares; Jacobian layout is parameters by residuals, transposed relative to MINPACK. For smooth nonlinear least squares, the user residual Jacobian supplies first-derivative information for the squared-residual objective; this is not a general scalar-objective gradient interface.",
         "evidence": [
           {
             "path": "src/dogleg.f90",
@@ -13691,7 +13855,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "One-dimensional B-spline interpolation; higher-dimensional classes retain their broader package assignments.",
+        "notes": "One-dimensional B-spline interpolation; order is polynomial degree plus one. The checked driver uses order 2 for shared shape checks and order 4 for cubic/first-derivative reproduction. Higher-dimensional classes retain their separate assignments.",
         "evidence": [
           {
             "path": "src/bspline_oo_module.f90",
@@ -13704,7 +13868,8 @@
             "path": "test/test_oo.f90",
             "sha256": "da44e4cc9de187984e10fade22525403a42847f79056e13dd154572af486afda"
           }
-        ]
+        ],
+        "driver_id": "bspline-fortran-shape-interpolation"
       },
       {
         "id": "bspline-fortran-bspline-2d",
@@ -14203,7 +14368,8 @@
             "path": "test/ddeabm_test.f90",
             "sha256": "dff53627d9fd4827c9a204203d3083578e52678adb1cb1fee11601e30fddc16d"
           }
-        ]
+        ],
+        "driver_id": "ddeabm-decay-oscillator"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -14292,7 +14458,8 @@
             "path": "test/dop853_test.f90",
             "sha256": "535b26a36faabfa3427838114966be27fab19a0ccce739bd28ef20f522c7ca69"
           }
-        ]
+        ],
+        "driver_id": "dop853-decay-oscillator"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -14482,7 +14649,8 @@
             "path": "test/test.f90",
             "sha256": "2ba3595858555dd5239c1e0b2364d8d135cb400468c232457fd80f5fe04e64d8"
           }
-        ]
+        ],
+        "driver_id": "finterp-shape-interpolation"
       },
       {
         "id": "finterp-linear-interp-2d",
@@ -14608,6 +14776,16 @@
         "code": "G1a",
         "label": "Univariate",
         "parent": "G1"
+      },
+      {
+        "code": "G1a1",
+        "label": "Smooth function",
+        "parent": "G1a"
+      },
+      {
+        "code": "G1a1a",
+        "label": "User provides no derivatives",
+        "parent": "G1a1"
       }
     ],
     "gams_procedures": [
@@ -14618,7 +14796,7 @@
         "module": "fmin_module",
         "procedure": "fmin",
         "gams_codes": [
-          "G1a"
+          "G1a1a"
         ],
         "review_level": "source-reviewed",
         "derivatives": "none",
@@ -15225,7 +15403,8 @@
             "path": "test/driver1.f90",
             "sha256": "edd8557304689516d90ca2e4f6befcaa4144586436d7e8027f0b194b09dc5e41"
           }
-        ]
+        ],
+        "driver_id": "lbfgsb-box-quadratic"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -15664,6 +15843,21 @@
         "parent": "G1"
       },
       {
+        "code": "G1b1",
+        "label": "Smooth function",
+        "parent": "G1b"
+      },
+      {
+        "code": "G1b1a",
+        "label": "User provides no derivatives",
+        "parent": "G1b1"
+      },
+      {
+        "code": "G1b1b",
+        "label": "User provides first derivatives",
+        "parent": "G1b1"
+      },
+      {
         "code": "K",
         "label": "Approximation",
         "parent": null
@@ -15682,7 +15876,7 @@
         "module": "minpack_module",
         "procedure": "lmdif1",
         "gams_codes": [
-          "G1b"
+          "G1b1a"
         ],
         "review_level": "source-reviewed",
         "derivatives": "finite-difference residual Jacobian",
@@ -15709,11 +15903,11 @@
         "module": "minpack_module",
         "procedure": "lmder1",
         "gams_codes": [
-          "G1b"
+          "G1b1b"
         ],
         "review_level": "source-reviewed",
         "derivatives": "user residual Jacobian",
-        "notes": "Nonlinear least squares; requires both residual values and their Jacobian.",
+        "notes": "Nonlinear least squares; requires both residual values and their Jacobian. For smooth nonlinear least squares, the user residual Jacobian supplies first-derivative information for the squared-residual objective; this is not a general scalar-objective gradient interface.",
         "evidence": [
           {
             "path": "src/minpack.f90",
@@ -16269,7 +16463,8 @@
             "path": "test/pchip_test.f90",
             "sha256": "63f9e869e896f9792b2d3b6ccc23fde01e4911a436eb73a158edeaf150742664"
           }
-        ]
+        ],
+        "driver_id": "pchip-shape-interpolation"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -16885,6 +17080,21 @@
         "code": "H2a1a1",
         "label": "Automatic (user need only specify required accuracy)",
         "parent": "H2a1a"
+      },
+      {
+        "code": "H2a2",
+        "label": "Finite interval (specific or special type integrand including weight functions, oscillating and singular integrands, principal value integrals, splines, etc.)",
+        "parent": "H2a"
+      },
+      {
+        "code": "H2a2a",
+        "label": "Integrand available via user-defined procedure",
+        "parent": "H2a2"
+      },
+      {
+        "code": "H2a2a1",
+        "label": "Automatic (user need only specify required accuracy)",
+        "parent": "H2a2a"
       }
     ],
     "gams_procedures": [
@@ -16912,7 +17122,36 @@
             "path": "test/quadpack_test_module.F90",
             "sha256": "6583d801d13851ac7626444aff65e6714e3e561f7d8442d5424655bcb50c56b4"
           }
-        ]
+        ],
+        "driver_id": "quadpack-smooth"
+      },
+      {
+        "id": "quadpack-dqags",
+        "package_id": "quadpack",
+        "revision": "ab42d50794280a8e7996f2ee4cda1f8753dfde5b",
+        "module": "quadpack",
+        "procedure": "dqags",
+        "gams_codes": [
+          "H2a2a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "function values only",
+        "notes": "Adaptive one-dimensional integration on a finite interval using subdivision and extrapolation for integrable singularities. The checked driver adapts author test_qags (1/sqrt(x)) and adds log(x)/sqrt(x). These endpoint singularities have exact integrals 2 and -4. It checks status zero, finite values, independent accuracy and callback counts; it does not evaluate the singular endpoint or claim coverage of all special integrands.",
+        "evidence": [
+          {
+            "path": "src/quadpack_generic.F90",
+            "sha256": "c99ab78b9639e4c66c82ae3acd56efcd53a50026d3b8993ce4737fbaa91e88e8",
+            "line": 1711
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/quadpack_test_module.F90",
+            "sha256": "6583d801d13851ac7626444aff65e6714e3e561f7d8442d5424655bcb50c56b4",
+            "line": 160
+          }
+        ],
+        "driver_id": "quadpack-endpoint-singular"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -17007,7 +17246,8 @@
             "path": "test/test.f90",
             "sha256": "c654bec4a4141cfc48a1fca81f670f946d27532d68e0ac4c734dc4fbcad051e3"
           }
-        ]
+        ],
+        "driver_id": "quadrature-fortran-smooth"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -17204,7 +17444,13 @@
             "line": 203
           }
         ],
-        "author_examples": []
+        "author_examples": [
+          {
+            "path": "test/rk_decay.F90",
+            "sha256": "e4b663473d74c8c93b8fb632783274c59a78ea615451f399d0619b8cc593cae5"
+          }
+        ],
+        "driver_id": "rklib-decay-oscillator"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -17280,7 +17526,8 @@
             "line": 123
           }
         ],
-        "author_examples": []
+        "author_examples": [],
+        "driver_id": "roots-fortran-brent"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -17471,7 +17718,8 @@
             "path": "test/slsqp_test.f90",
             "sha256": "a195f2addfeb7b206b83a327095cc41dc32f95afdda9890e93b7a036d0aa8b4d"
           }
-        ]
+        ],
+        "driver_id": "slsqp-circle-equality"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -19573,6 +19821,21 @@
         "parent": "G1"
       },
       {
+        "code": "G1b1",
+        "label": "Smooth function",
+        "parent": "G1b"
+      },
+      {
+        "code": "G1b1a",
+        "label": "User provides no derivatives",
+        "parent": "G1b1"
+      },
+      {
+        "code": "G1b1b",
+        "label": "User provides first derivatives",
+        "parent": "G1b1"
+      },
+      {
         "code": "K",
         "label": "Approximation",
         "parent": null
@@ -19591,7 +19854,7 @@
         "module": "nonlin",
         "procedure": "nelder_mead%solve",
         "gams_codes": [
-          "G1b"
+          "G1b1a"
         ],
         "review_level": "source-reviewed",
         "derivatives": "none",
@@ -19607,8 +19870,14 @@
           {
             "path": "examples/nonlin_nm_opt_example.f90",
             "sha256": "c0e8ebe4758c59d6701e48aaff0abf2b3f3cff8ba90a48f01f93ea1b97a3560f"
+          },
+          {
+            "path": "examples/example_problems.f90",
+            "sha256": "22fdb9fbed34daccff775cea9211e0b398fa8aec792460c9a3e808d7dd4eaedb",
+            "line": 126
           }
-        ]
+        ],
+        "driver_id": "nonlin-rosenbrock-nm"
       },
       {
         "id": "nonlin-bfgs",
@@ -19617,11 +19886,12 @@
         "module": "nonlin",
         "procedure": "bfgs%solve",
         "gams_codes": [
-          "G1b"
+          "G1b1a",
+          "G1b1b"
         ],
         "review_level": "source-reviewed",
         "derivatives": "optional user gradient; finite-difference fallback",
-        "notes": "User gradients are registered with fcnnvar_helper%set_gradient_fcn.",
+        "notes": "User gradients are registered with fcnnvar_helper%set_gradient_fcn. G1b1a applies to finite-difference mode; G1b1b applies when the user supplies the gradient/Jacobian. The driver, where present, identifies its selected configuration.",
         "evidence": [
           {
             "path": "src/nonlin_optimize.f90",
@@ -19638,8 +19908,14 @@
           {
             "path": "examples/nonlin_bfgs_example.f90",
             "sha256": "d1f6750301ffc98d17659eee49729ac77e78df168036eeb76789229f00e71880"
+          },
+          {
+            "path": "examples/example_problems.f90",
+            "sha256": "22fdb9fbed34daccff775cea9211e0b398fa8aec792460c9a3e808d7dd4eaedb",
+            "line": 126
           }
-        ]
+        ],
+        "driver_id": "nonlin-rosenbrock-bfgs"
       },
       {
         "id": "nonlin-least-squares",
@@ -19648,11 +19924,12 @@
         "module": "nonlin",
         "procedure": "least_squares_solver%solve",
         "gams_codes": [
-          "G1b"
+          "G1b1a",
+          "G1b1b"
         ],
         "review_level": "source-reviewed",
         "derivatives": "optional user residual Jacobian",
-        "notes": "The unconstrained least_squares_solver is mapped; constrained_least_squares_solver is a distinct type.",
+        "notes": "The unconstrained least_squares_solver is mapped; constrained_least_squares_solver is a distinct type. For smooth nonlinear least squares, the user residual Jacobian supplies first-derivative information for the squared-residual objective; this is not a general scalar-objective gradient interface. G1b1a applies to finite-difference mode; G1b1b applies when the user supplies the gradient/Jacobian. The driver, where present, identifies its selected configuration.",
         "evidence": [
           {
             "path": "src/nonlin_least_squares.f90",
@@ -19717,7 +19994,40 @@
             "path": "examples/nonlin_brent_example.f90",
             "sha256": "5bba1305f0ef0d684080bf85e20e2db41f8baff042b525afa001e944aa6a82dc"
           }
-        ]
+        ],
+        "driver_id": "nonlin-roots-brent"
+      },
+      {
+        "id": "nonlin-newton-1var",
+        "package_id": "nonlin",
+        "revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+        "module": "nonlin",
+        "procedure": "newton_1var_solver%solve",
+        "gams_codes": [
+          "F1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "optional first derivative; finite differences otherwise",
+        "notes": "Safeguarded scalar Newton iteration retaining a bracket. The checked driver supplies an analytic derivative. GAMS F1b has no derivative-specific descendants.",
+        "evidence": [
+          {
+            "path": "src/nonlin_solve.f90",
+            "sha256": "62139eb882d355d4b3f34ee7fe9a261676623c793814b730ca8e7925976d4130",
+            "line": 101
+          },
+          {
+            "path": "src/nonlin_single_var.f90",
+            "sha256": "2fdf9c0ed8429aa6a1875ecbb3a3dbd36ef609971cf9c9d10c4277d36a31ee08",
+            "line": 67
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "examples/nonlin_newton1d_example.f90",
+            "sha256": "749b9305ff5ebe3c5aa7d3f26548355f53747b91c7612f0458a16ecb8b1fb7bd"
+          }
+        ],
+        "driver_id": "nonlin-roots-newton"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -23874,6 +24184,16 @@
         "code": "G1b",
         "label": "Multivariate",
         "parent": "G1"
+      },
+      {
+        "code": "G1b1",
+        "label": "Smooth function",
+        "parent": "G1b"
+      },
+      {
+        "code": "G1b1b",
+        "label": "User provides first derivatives",
+        "parent": "G1b1"
       }
     ],
     "gams_procedures": [
@@ -23884,7 +24204,7 @@
         "module": "opt_LBFGS",
         "procedure": "LBFGS",
         "gams_codes": [
-          "G1b"
+          "G1b1b"
         ],
         "review_level": "source-reviewed",
         "derivatives": "user first derivatives",
@@ -24755,7 +25075,8 @@
             "path": "test/test_la_solve.f90",
             "sha256": "bad47b312ddb22e98bda7dc44ea06c9ba02fe30cce4b143c8da27d8e1bae5232"
           }
-        ]
+        ],
+        "driver_id": "fortran-lapack-dense-solve"
       },
       {
         "id": "fortran-lapack-eigh",
@@ -24859,7 +25180,8 @@
             "path": "test/test_linalg_lstsq.f90",
             "sha256": "7c96b67b140d664a8ce61e1d443a27a5e8b3a217dc85e66435e42c9127af4810"
           }
-        ]
+        ],
+        "driver_id": "fortran-lapack-least-squares"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -32597,7 +32919,8 @@
             "path": "example/fft.f90",
             "sha256": "d1caeddf7e4250ae67224e0ffe79c5cd3b091cff2023654467378eae8a18f117"
           }
-        ]
+        ],
+        "driver_id": "kissfft-f-complex-transform"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"

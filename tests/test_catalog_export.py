@@ -51,7 +51,20 @@ class CatalogExportTests(unittest.TestCase):
         self.assertEqual(sum('numerical_review' in p['curation'] for p in feed['projects']),
                          len(review['packages']))
         self.assertIn('fpm_catalog/gams-numerical-review.json', {r['path'] for r in feed['provenance']['inputs']})
-        self.assertEqual(len(feed['demonstrations']), 3)
+        self.assertEqual(len(feed['demonstrations']), 28)
+        self.assertEqual({d['validation_path'] for d in feed['demonstrations']},
+                         {'docs/gams-g1-validation.json', 'docs/gams-quadrature-validation.json',
+                          'docs/gams-roots-validation.json', 'docs/gams-linear-algebra-validation.json',
+                          'docs/gams-ode-validation.json', 'docs/gams-interpolation-validation.json',
+                          'docs/gams-transforms-validation.json', 'docs/gams-constrained-validation.json'})
+        self.assertIn('docs/gams-constrained-validation.json', {r['path'] for r in feed['provenance']['inputs']})
+        self.assertIn('docs/gams-transforms-validation.json', {r['path'] for r in feed['provenance']['inputs']})
+        self.assertIn('docs/gams-interpolation-validation.json', {r['path'] for r in feed['provenance']['inputs']})
+        self.assertIn('docs/gams-ode-validation.json', {r['path'] for r in feed['provenance']['inputs']})
+        self.assertIn('docs/gams-linear-algebra-validation.json', {r['path'] for r in feed['provenance']['inputs']})
+        self.assertIn('docs/gams-roots-validation.json', {r['path'] for r in feed['provenance']['inputs']})
+        self.assertIn('docs/gams-quadrature-validation.json', {r['path'] for r in feed['provenance']['inputs']})
+        self.assertEqual(feed['taxonomies']['gams']['classes']['G1b1b']['parent'], 'G1b1')
         for driver in feed['demonstrations']:
             self.assertIn('&example=gams-', driver['url'])
             self.assertIn(driver['path'], {r['path'] for r in feed['provenance']['inputs']})

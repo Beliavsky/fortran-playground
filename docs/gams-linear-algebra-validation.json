@@ -1,0 +1,136 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "fortran-lapack-dense-solve",
+      "source_revision": "e5e45fdd5a38bfab06d1f703f12b787937aa33bb",
+      "source_sha256": "1144040245497c975761d3eaa66f27d7666db19269c0674c37c09c74afd0a728",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T19:55:45.500022+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 2.197,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Dense nonsymmetric case: 1\nSolution:     5.000000000000    3.000000000000   -2.000000000000\nMaximum solution error:   0.0000E+00\nScaled infinity-norm residual:   0.0000E+00\nDense nonsymmetric case: 2\nSolution:    -2.000000000000   -2.000000000000    3.000000000000\nMaximum solution error:   0.0000E+00\nScaled infinity-norm residual:   0.0000E+00\nPASS fortran-lapack-dense-solve\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.78,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-dense-solve",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "1d5e971d1f0f5784027197d105c88a71b1ad6fd647f7c78ee588b86878d52dc2",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T19:55:48.087127+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.626,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Dense nonsymmetric case: 1\nSolution:     5.000000000000    3.000000000000   -2.000000000000\nMaximum solution error:   0.0000E+00\nScaled infinity-norm residual:   0.0000E+00\nDense nonsymmetric case: 2\nSolution:    -2.000000000000   -2.000000000000    3.000000000000\nMaximum solution error:   0.0000E+00\nScaled infinity-norm residual:   0.0000E+00\nPASS stdlib-dense-solve\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.035,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fortran-lapack-least-squares",
+      "source_revision": "e5e45fdd5a38bfab06d1f703f12b787937aa33bb",
+      "source_sha256": "17cd25d04e8664e6dde51ec8de5a2967bccce304e65e54ef7f92cb311b4df228",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T19:55:52.341782+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 1.744,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Least-squares case (2 has duplicate columns): 1\nCoefficients:     1.000000000000    2.000000000000\nNumerical rank: 2\nMaximum coefficient error:   2.2204E-16\nMaximum absolute A-transpose residual:   0.0000E+00\nResidual sum of squares (expected 14):    14.000000000000\nLeast-squares case (2 has duplicate columns): 2\nCoefficients:     1.000000000000    1.000000000000    1.000000000000\nNumerical rank: 2\nMaximum coefficient error:   4.4409E-16\nMaximum absolute A-transpose residual:   4.4409E-16\nResidual sum of squares (expected 14):    14.000000000000\nPASS fortran-lapack-least-squares\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.982,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-least-squares",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "f7e5ba57da0f2b3c60efbe99f9aaca89cadff46e933a24be07ed7381d8ec3337",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T19:55:54.310154+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.515,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Least-squares case (2 has duplicate columns): 1\nCoefficients:     1.000000000000    2.000000000000\nNumerical rank: 2\nMaximum coefficient error:   2.2204E-16\nMaximum absolute A-transpose residual:   0.0000E+00\nResidual sum of squares (expected 14):    14.000000000000\nLeast-squares case (2 has duplicate columns): 2\nCoefficients:     1.000000000000    1.000000000000    1.000000000000\nNumerical rank: 2\nMaximum coefficient error:   4.4409E-16\nMaximum absolute A-transpose residual:   4.4409E-16\nResidual sum of squares (expected 14):    14.000000000000\nPASS stdlib-least-squares\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.025,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-30T19:55:54.367474+00:00"
+}

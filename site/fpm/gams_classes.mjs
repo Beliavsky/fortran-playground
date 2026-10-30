@@ -675,5 +675,57 @@ export const gamsSubclasses = {
   "C10b1": {
     "label": "Real argument, integer order",
     "parent": "C10b"
+  },
+  "G1a1": {
+    "label": "Smooth function",
+    "parent": "G1a"
+  },
+  "G1a1a": {
+    "label": "User provides no derivatives",
+    "parent": "G1a1"
+  },
+  "G1a1b": {
+    "label": "User provides first derivatives",
+    "parent": "G1a1"
+  },
+  "G1a1c": {
+    "label": "User provides first and second derivatives",
+    "parent": "G1a1"
+  },
+  "G1a2": {
+    "label": "General function (no smoothness assumed)",
+    "parent": "G1a"
+  },
+  "G1b1": {
+    "label": "Smooth function",
+    "parent": "G1b"
+  },
+  "G1b1a": {
+    "label": "User provides no derivatives",
+    "parent": "G1b1"
+  },
+  "G1b1b": {
+    "label": "User provides first derivatives",
+    "parent": "G1b1"
+  },
+  "G1b1c": {
+    "label": "User provides first and second derivatives",
+    "parent": "G1b1"
+  },
+  "G1b2": {
+    "label": "General function (no smoothness assumed)",
+    "parent": "G1b"
+  },
+  "H2a2a": {
+    "label": "Integrand available via user-defined procedure",
+    "parent": "H2a2"
+  },
+  "H2a2a1": {
+    "label": "Automatic (user need only specify required accuracy)",
+    "parent": "H2a2a"
+  },
+  "J1a3": {
+    "label": "Sine and cosine transforms",
+    "parent": "J1a"
   }
 };

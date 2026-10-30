@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "roots-fortran-brent",
+      "source_revision": "85dc6b98404a61d49944939414f7f56c3f32edd1",
+      "source_sha256": "b91fe6deab1214fd12ff35669bccd2a31ae10d68d4fc3492bf4f5c67780e3c70",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T19:48:53.930584+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.389,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Case: sin(x)/x = 0 on [1.5,5], root pi\nComputed root:   3.14159265358979E+00\nActual root error:   0.0000E+00\nIndependent absolute residual:   3.8982E-17\nFunction callback calls: 10\nDerivative callback calls: 0\nSolver status: 0\nCase: exp(x)-2 = 0 on [0,2], root log(2)\nComputed root:   6.93147180559945E-01\nActual root error:   1.1102E-16\nIndependent absolute residual:   2.2204E-16\nFunction callback calls: 9\nDerivative callback calls: 0\nSolver status: 0\nPASS roots-fortran-brent\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.028,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "nonlin-roots-brent",
+      "source_revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+      "source_sha256": "367d3685eecf03625815d1151a53f86eabde4b57387ce4b41787193222660293",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T19:48:56.332094+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.351,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Case: sin(x)/x = 0 on [1.5,5], root pi\nComputed root:   3.14159265358979E+00\nActual root error:   0.0000E+00\nIndependent absolute residual:   3.8982E-17\nFunction callback calls: 10\nDerivative callback calls: 0\nCase: exp(x)-2 = 0 on [0,2], root log(2)\nComputed root:   6.93147180559945E-01\nActual root error:   1.1102E-16\nIndependent absolute residual:   2.2204E-16\nFunction callback calls: 9\nDerivative callback calls: 0\nPASS nonlin-roots-brent\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.029,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "nonlin-roots-newton",
+      "source_revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+      "source_sha256": "4d0382bd47bb8632566d3b0ec5d295713aeffed65a225750d605a89afb4c56de",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T19:48:59.194719+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.532,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Case: sin(x)/x = 0 on [1.5,5], root pi\nComputed root:   3.14159265358979E+00\nActual root error:   0.0000E+00\nIndependent absolute residual:   3.8982E-17\nFunction callback calls: 8\nDerivative callback calls: 5\nCase: exp(x)-2 = 0 on [0,2], root log(2)\nComputed root:   6.93147180560025E-01\nActual root error:   8.0158E-14\nIndependent absolute residual:   1.6032E-13\nFunction callback calls: 8\nDerivative callback calls: 5\nPASS nonlin-roots-newton\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.041,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-30T19:48:59.253380+00:00"
+}

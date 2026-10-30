@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "fftpack-complex-transform",
+      "source_revision": "0fffe7c05a918363a7cc12ae138a695afd115f36",
+      "source_sha256": "18713ee85f074960ccc40ff4e4bb6a9b290f5cf4ba80fb384a369f955263fdfe",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T20:41:48.073219+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.514,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Transform length: 7\nMaximum forward error against direct sum:   5.0241E-15\nMaximum normalized inverse error:   1.2413E-16\nRelative Parseval energy error:   1.6918E-16\nTransform length: 8\nMaximum forward error against direct sum:   3.8858E-15\nMaximum normalized inverse error:   5.5511E-17\nRelative Parseval energy error:   0.0000E+00\nPASS fftpack-complex-transform\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.036,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "kissfft-f-complex-transform",
+      "source_revision": "b89c5e1d0aff9993db79200fc94a467948ff3923",
+      "source_sha256": "6998711916bd6fabbee95967e0f6706d294491a166c1f4ad7b07808f7a245e8f",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T20:41:49.813764+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.473,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Transform length: 7\nMaximum forward error against direct sum:   1.6075E-07\nMaximum normalized inverse error:   7.6160E-08\nRelative Parseval energy error:   1.7055E-08\nTransform length: 8\nMaximum forward error against direct sum:   4.7503E-08\nMaximum normalized inverse error:   0.0000E+00\nRelative Parseval energy error:   7.4352E-09\nPASS kissfft-f-complex-transform\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.033,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fftpack-cosine-transform",
+      "source_revision": "0fffe7c05a918363a7cc12ae138a695afd115f36",
+      "source_sha256": "aa17dafe278533d0ebe00a6208341e54eecf08d5688e32c779813a050b2acb02",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T20:41:51.675192+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.614,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Transform length: 7\nMaximum forward error against direct sum:   4.3854E-15\nMaximum normalized inverse error:   2.2204E-16\nTransform length: 8\nMaximum forward error against direct sum:   2.3537E-14\nMaximum normalized inverse error:   2.7756E-17\nPASS fftpack-cosine-transform\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.044,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-30T20:41:51.727823+00:00"
+}

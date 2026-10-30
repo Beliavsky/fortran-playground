@@ -146,7 +146,8 @@
       "archive_sha256": "c59bc81695ca599ae41a9a83593517bc6aca65478111c3a08c0fc36179133629",
       "status": "procedure-reviewed",
       "procedure_ids": [
-        "fftpack-fft"
+        "fftpack-fft",
+        "fftpack-dct2"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
     },
@@ -636,7 +637,8 @@
       "archive_sha256": "985586611c8b51836a77c8c3aa2e07b859ff7f6dc56fcb1d6a030580c8f10c2d",
       "status": "procedure-reviewed",
       "procedure_ids": [
-        "nlopt-lbfgs"
+        "nlopt-lbfgs",
+        "nlopt-lbfgs-bounds"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
     },
@@ -649,7 +651,8 @@
         "nonlin-bfgs",
         "nonlin-least-squares",
         "nonlin-newton-solver",
-        "nonlin-brent-solver"
+        "nonlin-brent-solver",
+        "nonlin-newton-1var"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
     },
@@ -767,7 +770,8 @@
       "archive_sha256": "973158fce8508717b04496a0546c3ad1c7a2408ac1d7d5822b0331e116fab7f0",
       "status": "procedure-reviewed",
       "procedure_ids": [
-        "quadpack-dqag"
+        "quadpack-dqag",
+        "quadpack-dqags"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
     },
@@ -943,7 +947,8 @@
         "stdlib-mean",
         "stdlib-solve",
         "stdlib-sort",
-        "stdlib-random-seed"
+        "stdlib-random-seed",
+        "stdlib-lstsq"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
     },

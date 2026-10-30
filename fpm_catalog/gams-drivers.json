@@ -6,7 +6,7 @@
       "name": "gams-fmin-sine",
       "package_id": "fmin",
       "procedure_id": "fmin-scalar",
-      "gams_code": "G1a",
+      "gams_code": "G1a1a",
       "problem_id": "sine-minimum",
       "path": "fpm_catalog/gams-drivers/fmin-sine.f90",
       "author_example": "test/test.f90",
@@ -23,7 +23,7 @@
       "name": "gams-minpack-bard",
       "package_id": "minpack",
       "procedure_id": "minpack-lmdif1",
-      "gams_code": "G1b",
+      "gams_code": "G1b1a",
       "problem_id": "bard-15",
       "path": "fpm_catalog/gams-drivers/minpack-bard.f90",
       "author_example": "examples/example_lmdif1.f90",
@@ -40,7 +40,7 @@
       "name": "gams-libdogleg-bard",
       "package_id": "libdogleg-f",
       "procedure_id": "libdogleg-dense",
-      "gams_code": "G1b",
+      "gams_code": "G1b1b",
       "problem_id": "bard-15",
       "path": "fpm_catalog/gams-drivers/libdogleg-bard.f90",
       "author_example": "example/lmder_example.f90",
@@ -52,6 +52,775 @@
         "fpm_catalog/gams-drivers/licenses/libdogleg-COPYING.LESSER"
       ],
       "modifications": "Moved callbacks to modules; added finite-value and independent known-solution checks, readable output, and callback counts."
+    },
+    {
+      "id": "nonlin-rosenbrock-nm",
+      "name": "gams-nonlin-rosenbrock-nm",
+      "package_id": "nonlin",
+      "procedure_id": "nonlin-nelder-mead",
+      "gams_code": "G1b1a",
+      "problem_id": "rosenbrock-2",
+      "path": "fpm_catalog/gams-drivers/nonlin-rosenbrock-nm.f90",
+      "author_example": "examples/nonlin_nm_opt_example.f90",
+      "revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+      "reuse": "adapted",
+      "license": "MIT",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/nonlin-MIT.txt"
+      ],
+      "modifications": "Adapted author solver registration and Rosenbrock model; fixed start (-1.2,1), module callbacks, independent accuracy checks, and callback counts.",
+      "checks": {
+        "start": [
+          -1.2,
+          1.0
+        ],
+        "solution": [
+          1.0,
+          1.0
+        ],
+        "max_parameter_error": 0.0001,
+        "max_objective": 1e-10,
+        "analytic_gradient_checked": false
+      }
+    },
+    {
+      "id": "nonlin-rosenbrock-bfgs",
+      "name": "gams-nonlin-rosenbrock-bfgs",
+      "package_id": "nonlin",
+      "procedure_id": "nonlin-bfgs",
+      "gams_code": "G1b1b",
+      "problem_id": "rosenbrock-2",
+      "path": "fpm_catalog/gams-drivers/nonlin-rosenbrock-bfgs.f90",
+      "author_example": "examples/nonlin_bfgs_example.f90",
+      "revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+      "reuse": "adapted",
+      "license": "MIT",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/nonlin-MIT.txt"
+      ],
+      "modifications": "Adapted author solver registration and Rosenbrock model; fixed start (-1.2,1), module callbacks, independent accuracy checks, and callback counts.",
+      "checks": {
+        "start": [
+          -1.2,
+          1.0
+        ],
+        "solution": [
+          1.0,
+          1.0
+        ],
+        "max_parameter_error": 0.0001,
+        "max_objective": 1e-10,
+        "analytic_gradient_checked": true
+      }
+    },
+    {
+      "id": "nlopt-rosenbrock-lbfgs",
+      "name": "gams-nlopt-rosenbrock-lbfgs",
+      "package_id": "nlopt-f",
+      "procedure_id": "nlopt-lbfgs",
+      "gams_code": "G1b1b",
+      "problem_id": "rosenbrock-2",
+      "path": "fpm_catalog/gams-drivers/nlopt-rosenbrock-lbfgs.f90",
+      "author_example": null,
+      "revision": "83d21e7ebda9279a6dd4cc11fe6c735f48eb8689",
+      "reuse": "original",
+      "license": "MIT",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/nonlin-MIT.txt"
+      ],
+      "modifications": "Independent NLopt registration with the common MIT-licensed Rosenbrock model; no constrained upstream NLopt example copied.",
+      "checks": {
+        "start": [
+          -1.2,
+          1.0
+        ],
+        "solution": [
+          1.0,
+          1.0
+        ],
+        "max_parameter_error": 0.0001,
+        "max_objective": 1e-10,
+        "analytic_gradient_checked": true
+      }
+    },
+    {
+      "id": "quadpack-smooth",
+      "name": "gams-quadpack-smooth",
+      "package_id": "quadpack",
+      "procedure_id": "quadpack-dqag",
+      "gams_code": "H2a1a1",
+      "problem_id": "smooth-finite-1d",
+      "path": "fpm_catalog/gams-drivers/quadpack-smooth.f90",
+      "revision": "ab42d50794280a8e7996f2ee4cda1f8753dfde5b",
+      "author_example": "test/quadpack_test_module.F90",
+      "reuse": "adapted",
+      "license": "BSD-3",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/quadpack-BSD.txt"
+      ],
+      "modifications": "Adapted author call pattern to shared exp(x) and cos(20*x) integrals on [0,1]; module callback, deterministic inputs, explicit success-status checks, finite values, analytic references and callback counts.",
+      "validation_path": "docs/gams-quadrature-validation.json",
+      "review_path": "docs/gams-quadrature.md",
+      "checks": {
+        "interval": [
+          0,
+          1
+        ],
+        "integrands": [
+          "exp(x)",
+          "cos(20*x)"
+        ],
+        "max_absolute_error": 1e-09,
+        "requested_tolerance": 1e-10
+      }
+    },
+    {
+      "id": "quadrature-fortran-smooth",
+      "name": "gams-quadrature-fortran-smooth",
+      "package_id": "quadrature-fortran",
+      "procedure_id": "quadrature-fortran-integration-class-1d",
+      "gams_code": "H2a1a1",
+      "problem_id": "smooth-finite-1d",
+      "path": "fpm_catalog/gams-drivers/quadrature-fortran-smooth.f90",
+      "revision": "1d208fc59569a97b1c2abf9c45f7c352dcc7b318",
+      "author_example": "test/test.f90",
+      "reuse": "adapted",
+      "license": "BSD-3",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/quadrature-fortran-BSD.txt"
+      ],
+      "modifications": "Adapted author call pattern to shared exp(x) and cos(20*x) integrals on [0,1]; module callback, deterministic inputs, explicit success-status checks, finite values, analytic references and callback counts.",
+      "validation_path": "docs/gams-quadrature-validation.json",
+      "review_path": "docs/gams-quadrature.md",
+      "checks": {
+        "interval": [
+          0,
+          1
+        ],
+        "integrands": [
+          "exp(x)",
+          "cos(20*x)"
+        ],
+        "max_absolute_error": 1e-09,
+        "requested_tolerance": 1e-10
+      }
+    },
+    {
+      "id": "quadpack-endpoint-singular",
+      "name": "gams-quadpack-endpoint-singular",
+      "package_id": "quadpack",
+      "procedure_id": "quadpack-dqags",
+      "gams_code": "H2a2a1",
+      "problem_id": "endpoint-singular-1d",
+      "path": "fpm_catalog/gams-drivers/quadpack-endpoint-singular.f90",
+      "revision": "ab42d50794280a8e7996f2ee4cda1f8753dfde5b",
+      "author_example": "test/quadpack_test_module.F90",
+      "reuse": "adapted",
+      "license": "BSD-3",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/quadpack-BSD.txt"
+      ],
+      "modifications": "Module callback; author inverse-square-root example plus logarithmic variant; exact integrals, explicit status/finite-value/evaluation-count checks, and readable actual errors and estimated errors.",
+      "validation_path": "docs/gams-quadrature-validation.json",
+      "review_path": "docs/gams-quadrature.md",
+      "checks": {
+        "interval": [
+          0,
+          1
+        ],
+        "integrands": [
+          "1/sqrt(x)",
+          "log(x)/sqrt(x)"
+        ],
+        "exact_integrals": [
+          2,
+          -4
+        ],
+        "max_absolute_error": 1e-08,
+        "requested_tolerance": 1e-10
+      }
+    },
+    {
+      "id": "roots-fortran-brent",
+      "name": "gams-roots-fortran-brent",
+      "package_id": "roots-fortran",
+      "procedure_id": "roots-fortran-brent",
+      "gams_code": "F1b",
+      "problem_id": "nonpolynomial-scalar-roots",
+      "path": "fpm_catalog/gams-drivers/roots-fortran-brent.f90",
+      "revision": "85dc6b98404a61d49944939414f7f56c3f32edd1",
+      "author_example": null,
+      "reuse": "original",
+      "license": "original",
+      "license_files": [],
+      "modifications": "Shared nonpolynomial equations, brackets and independent root/residual checks; module callbacks and evaluation counts. Newton driver supplies and sanity-checks an analytic derivative.",
+      "validation_path": "docs/gams-roots-validation.json",
+      "review_path": "docs/gams-roots.md",
+      "checks": {
+        "equations": [
+          "sin(x)/x",
+          "exp(x)-2"
+        ],
+        "roots": [
+          "pi",
+          "log(2)"
+        ],
+        "brackets": [
+          [
+            1.5,
+            5
+          ],
+          [
+            0,
+            2
+          ]
+        ],
+        "max_root_error": 1e-09,
+        "max_absolute_residual": 1e-09,
+        "requested_tolerance": 1e-12,
+        "analytic_derivative_checked": false
+      }
+    },
+    {
+      "id": "nonlin-roots-brent",
+      "name": "gams-nonlin-roots-brent",
+      "package_id": "nonlin",
+      "procedure_id": "nonlin-brent-solver",
+      "gams_code": "F1b",
+      "problem_id": "nonpolynomial-scalar-roots",
+      "path": "fpm_catalog/gams-drivers/nonlin-roots-brent.f90",
+      "revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+      "author_example": "examples/nonlin_brent_example.f90",
+      "reuse": "adapted",
+      "license": "MIT",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/nonlin-MIT.txt"
+      ],
+      "modifications": "Shared nonpolynomial equations, brackets and independent root/residual checks; module callbacks and evaluation counts. Newton driver supplies and sanity-checks an analytic derivative.",
+      "validation_path": "docs/gams-roots-validation.json",
+      "review_path": "docs/gams-roots.md",
+      "checks": {
+        "equations": [
+          "sin(x)/x",
+          "exp(x)-2"
+        ],
+        "roots": [
+          "pi",
+          "log(2)"
+        ],
+        "brackets": [
+          [
+            1.5,
+            5
+          ],
+          [
+            0,
+            2
+          ]
+        ],
+        "max_root_error": 1e-09,
+        "max_absolute_residual": 1e-09,
+        "requested_tolerance": 1e-12,
+        "analytic_derivative_checked": false
+      }
+    },
+    {
+      "id": "nonlin-roots-newton",
+      "name": "gams-nonlin-roots-newton",
+      "package_id": "nonlin",
+      "procedure_id": "nonlin-newton-1var",
+      "gams_code": "F1b",
+      "problem_id": "nonpolynomial-scalar-roots",
+      "path": "fpm_catalog/gams-drivers/nonlin-roots-newton.f90",
+      "revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+      "author_example": "examples/nonlin_newton1d_example.f90",
+      "reuse": "adapted",
+      "license": "MIT",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/nonlin-MIT.txt"
+      ],
+      "modifications": "Shared nonpolynomial equations, brackets and independent root/residual checks; module callbacks and evaluation counts. Newton driver supplies and sanity-checks an analytic derivative.",
+      "validation_path": "docs/gams-roots-validation.json",
+      "review_path": "docs/gams-roots.md",
+      "checks": {
+        "equations": [
+          "sin(x)/x",
+          "exp(x)-2"
+        ],
+        "roots": [
+          "pi",
+          "log(2)"
+        ],
+        "brackets": [
+          [
+            1.5,
+            5
+          ],
+          [
+            0,
+            2
+          ]
+        ],
+        "max_root_error": 1e-09,
+        "max_absolute_residual": 1e-09,
+        "requested_tolerance": 1e-12,
+        "analytic_derivative_checked": true
+      }
+    },
+    {
+      "id": "fortran-lapack-dense-solve",
+      "name": "gams-fortran-lapack-dense-solve",
+      "package_id": "fortran-lapack",
+      "procedure_id": "fortran-lapack-solve",
+      "gams_code": "D2a1",
+      "problem_id": "real-dense-systems",
+      "path": "fpm_catalog/gams-drivers/fortran-lapack-dense-solve.f90",
+      "revision": "e5e45fdd5a38bfab06d1f703f12b787937aa33bb",
+      "author_example": "test/test_la_solve.f90",
+      "reuse": "adapted",
+      "license": "BSD-3 AND MIT",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fortran-lapack-BSD.txt",
+        "fpm_catalog/gams-drivers/licenses/stdlib-MIT.txt"
+      ],
+      "modifications": "Shared real64 cases; retained original inputs; explicit solver status, finite-value and independent solution/residual checks. Least squares checks full-rank and rank-deficient minimum-norm solutions.",
+      "validation_path": "docs/gams-linear-algebra-validation.json",
+      "review_path": "docs/gams-linear-algebra.md",
+      "checks": {
+        "max_solution_error": 1e-10,
+        "max_scaled_residual": 1e-12
+      }
+    },
+    {
+      "id": "fortran-lapack-least-squares",
+      "name": "gams-fortran-lapack-least-squares",
+      "package_id": "fortran-lapack",
+      "procedure_id": "fortran-lapack-lstsq",
+      "gams_code": "D9a1",
+      "problem_id": "real-linear-least-squares",
+      "path": "fpm_catalog/gams-drivers/fortran-lapack-least-squares.f90",
+      "revision": "e5e45fdd5a38bfab06d1f703f12b787937aa33bb",
+      "author_example": "test/test_linalg_lstsq.f90",
+      "reuse": "adapted",
+      "license": "BSD-3",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fortran-lapack-BSD.txt"
+      ],
+      "modifications": "Shared real64 cases; retained original inputs; explicit solver status, finite-value and independent solution/residual checks. Least squares checks full-rank and rank-deficient minimum-norm solutions.",
+      "validation_path": "docs/gams-linear-algebra-validation.json",
+      "review_path": "docs/gams-linear-algebra.md",
+      "checks": {
+        "max_coefficient_error": 1e-10,
+        "max_optimality_residual": 1e-10,
+        "expected_rank": 2,
+        "expected_residual_sum_of_squares": 14,
+        "rank_deficient_case": true
+      }
+    },
+    {
+      "id": "stdlib-dense-solve",
+      "name": "gams-stdlib-dense-solve",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-solve",
+      "gams_code": "D2a1",
+      "problem_id": "real-dense-systems",
+      "path": "fpm_catalog/gams-drivers/stdlib-dense-solve.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_solve1.f90",
+      "reuse": "adapted",
+      "license": "BSD-3 AND MIT",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/stdlib-MIT.txt",
+        "fpm_catalog/gams-drivers/licenses/fortran-lapack-BSD.txt"
+      ],
+      "modifications": "Shared real64 cases; retained original inputs; explicit solver status, finite-value and independent solution/residual checks. Least squares checks full-rank and rank-deficient minimum-norm solutions.",
+      "validation_path": "docs/gams-linear-algebra-validation.json",
+      "review_path": "docs/gams-linear-algebra.md",
+      "checks": {
+        "max_solution_error": 1e-10,
+        "max_scaled_residual": 1e-12
+      }
+    },
+    {
+      "id": "stdlib-least-squares",
+      "name": "gams-stdlib-least-squares",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-lstsq",
+      "gams_code": "D9a1",
+      "problem_id": "real-linear-least-squares",
+      "path": "fpm_catalog/gams-drivers/stdlib-least-squares.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_lstsq1.f90",
+      "reuse": "adapted",
+      "license": "MIT",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/stdlib-MIT.txt"
+      ],
+      "modifications": "Shared real64 cases; retained original inputs; explicit solver status, finite-value and independent solution/residual checks. Least squares checks full-rank and rank-deficient minimum-norm solutions.",
+      "validation_path": "docs/gams-linear-algebra-validation.json",
+      "review_path": "docs/gams-linear-algebra.md",
+      "checks": {
+        "max_coefficient_error": 1e-10,
+        "max_optimality_residual": 1e-10,
+        "expected_rank": 2,
+        "expected_residual_sum_of_squares": 14,
+        "rank_deficient_case": true
+      }
+    },
+    {
+      "id": "dop853-decay-oscillator",
+      "name": "gams-dop853-decay-oscillator",
+      "package_id": "dop853",
+      "procedure_id": "dop853-dop853-class",
+      "gams_code": "I1a1a",
+      "problem_id": "nonstiff-decay-oscillator",
+      "path": "fpm_catalog/gams-drivers/dop853-decay-oscillator.f90",
+      "revision": "1e9d0dbf4dcbc692ca557c0467629112dd1f0ce6",
+      "author_example": "test/dop853_test.f90",
+      "reuse": "adapted",
+      "license": "BSD-3",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/dop853-BSD.txt"
+      ],
+      "modifications": "Author callback and integration API adapted to a shared three-state decay/oscillator IVP; no plotting dependency; exact-state, oscillator-energy, finite-value, completion-status and RHS-count checks. RK4 includes a separate step-halving experiment.",
+      "validation_path": "docs/gams-ode-validation.json",
+      "review_path": "docs/gams-ode.md",
+      "checks": {
+        "interval": [
+          "0",
+          "2*pi"
+        ],
+        "checkpoints": 10,
+        "max_state_error": 1e-08,
+        "max_energy_error": 2e-08,
+        "relative_tolerance": 1e-10,
+        "absolute_tolerance": 1e-10,
+        "fixed_step": null,
+        "step_refinement": false
+      }
+    },
+    {
+      "id": "ddeabm-decay-oscillator",
+      "name": "gams-ddeabm-decay-oscillator",
+      "package_id": "ddeabm",
+      "procedure_id": "ddeabm-ddeabm-class",
+      "gams_code": "I1a1b",
+      "problem_id": "nonstiff-decay-oscillator",
+      "path": "fpm_catalog/gams-drivers/ddeabm-decay-oscillator.f90",
+      "revision": "dba70c8c65388638662df2694339c5ba7feaf12a",
+      "author_example": "test/ddeabm_test.f90",
+      "reuse": "adapted",
+      "license": "BSD-3",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/ddeabm-BSD.txt"
+      ],
+      "modifications": "Author callback and integration API adapted to a shared three-state decay/oscillator IVP; no plotting dependency; exact-state, oscillator-energy, finite-value, completion-status and RHS-count checks. RK4 includes a separate step-halving experiment.",
+      "validation_path": "docs/gams-ode-validation.json",
+      "review_path": "docs/gams-ode.md",
+      "checks": {
+        "interval": [
+          "0",
+          "2*pi"
+        ],
+        "checkpoints": 10,
+        "max_state_error": 1e-08,
+        "max_energy_error": 2e-08,
+        "relative_tolerance": 1e-10,
+        "absolute_tolerance": 1e-10,
+        "fixed_step": null,
+        "step_refinement": false
+      }
+    },
+    {
+      "id": "rklib-decay-oscillator",
+      "name": "gams-rklib-decay-oscillator",
+      "package_id": "rklib",
+      "procedure_id": "rklib-rk4",
+      "gams_code": "I1a1a",
+      "problem_id": "nonstiff-decay-oscillator",
+      "path": "fpm_catalog/gams-drivers/rklib-decay-oscillator.f90",
+      "revision": "e3d51f9e8a2e6756612e8e53687ab2d4b67dfb76",
+      "author_example": "test/rk_decay.F90",
+      "reuse": "adapted",
+      "license": "BSD-3",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/rklib-BSD.txt"
+      ],
+      "modifications": "Author callback and integration API adapted to a shared three-state decay/oscillator IVP; no plotting dependency; exact-state, oscillator-energy, finite-value, completion-status and RHS-count checks. RK4 includes a separate step-halving experiment.",
+      "validation_path": "docs/gams-ode-validation.json",
+      "review_path": "docs/gams-ode.md",
+      "checks": {
+        "interval": [
+          "0",
+          "2*pi"
+        ],
+        "checkpoints": 10,
+        "max_state_error": 1e-08,
+        "max_energy_error": 2e-08,
+        "relative_tolerance": null,
+        "absolute_tolerance": null,
+        "fixed_step": 0.01,
+        "step_refinement": true
+      }
+    },
+    {
+      "id": "finterp-shape-interpolation",
+      "name": "gams-finterp-shape-interpolation",
+      "package_id": "finterp",
+      "procedure_id": "finterp-linear-interp-1d",
+      "gams_code": "E1a",
+      "problem_id": "one-dimensional-shape-interpolation",
+      "path": "fpm_catalog/gams-drivers/finterp-shape-interpolation.f90",
+      "revision": "95aaceaf86f5d4d49328b783c5dff9b006b0bfc9",
+      "author_example": "test/test.f90",
+      "reuse": "adapted",
+      "license": "BSD-3",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/finterp-BSD.txt"
+      ],
+      "modifications": "Author API usage adapted to common affine/steep monotone data and finite-value, status, nodal, sampled local-bound and monotonicity checks. Linear methods check an independent piecewise-linear reference; B-spline also checks cubic values and analytic first derivatives.",
+      "validation_path": "docs/gams-interpolation-validation.json",
+      "review_path": "docs/gams-interpolation.md",
+      "checks": {
+        "max_node_error": 1e-12,
+        "max_affine_error": 1e-12,
+        "max_sampled_shape_violation": 1e-12,
+        "samples_per_interval": 21,
+        "piecewise_linear_reference_checked": true,
+        "bspline_cubic_and_derivative_checked": false
+      }
+    },
+    {
+      "id": "pchip-shape-interpolation",
+      "name": "gams-pchip-shape-interpolation",
+      "package_id": "pchip",
+      "procedure_id": "pchip-dpchim",
+      "gams_code": "E1a",
+      "problem_id": "one-dimensional-shape-interpolation",
+      "path": "fpm_catalog/gams-drivers/pchip-shape-interpolation.f90",
+      "revision": "8f5350565072622a2344dd0ec75193832b31eb10",
+      "author_example": "test/pchip_test.f90",
+      "reuse": "adapted",
+      "license": "BSD-3",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/pchip-BSD.txt"
+      ],
+      "modifications": "Author API usage adapted to common affine/steep monotone data and finite-value, status, nodal, sampled local-bound and monotonicity checks. Linear methods check an independent piecewise-linear reference; B-spline also checks cubic values and analytic first derivatives.",
+      "validation_path": "docs/gams-interpolation-validation.json",
+      "review_path": "docs/gams-interpolation.md",
+      "checks": {
+        "max_node_error": 1e-12,
+        "max_affine_error": 1e-12,
+        "max_sampled_shape_violation": 1e-12,
+        "samples_per_interval": 21,
+        "piecewise_linear_reference_checked": false,
+        "bspline_cubic_and_derivative_checked": false
+      }
+    },
+    {
+      "id": "bspline-fortran-shape-interpolation",
+      "name": "gams-bspline-fortran-shape-interpolation",
+      "package_id": "bspline-fortran",
+      "procedure_id": "bspline-fortran-bspline-1d",
+      "gams_code": "E1a",
+      "problem_id": "one-dimensional-shape-interpolation",
+      "path": "fpm_catalog/gams-drivers/bspline-fortran-shape-interpolation.f90",
+      "revision": "047c724451aeee7f883c0d5acba3f7bd22a5de01",
+      "author_example": "test/test_oo.f90",
+      "reuse": "adapted",
+      "license": "BSD-3",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/bspline-fortran-BSD.txt"
+      ],
+      "modifications": "Author API usage adapted to common affine/steep monotone data and finite-value, status, nodal, sampled local-bound and monotonicity checks. Linear methods check an independent piecewise-linear reference; B-spline also checks cubic values and analytic first derivatives.",
+      "validation_path": "docs/gams-interpolation-validation.json",
+      "review_path": "docs/gams-interpolation.md",
+      "checks": {
+        "max_node_error": 1e-12,
+        "max_affine_error": 1e-12,
+        "max_sampled_shape_violation": 1e-12,
+        "samples_per_interval": 21,
+        "piecewise_linear_reference_checked": true,
+        "bspline_cubic_and_derivative_checked": true
+      }
+    },
+    {
+      "id": "fftpack-complex-transform",
+      "name": "gams-fftpack-complex-transform",
+      "package_id": "fftpack",
+      "procedure_id": "fftpack-fft",
+      "gams_code": "J1a2",
+      "problem_id": "complex-discrete-fourier-transform",
+      "path": "fpm_catalog/gams-drivers/fftpack-complex-transform.f90",
+      "revision": "0fffe7c05a918363a7cc12ae138a695afd115f36",
+      "author_example": "test/test_fftpack_fft.f90",
+      "reuse": "adapted",
+      "license": "MIT",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fftpack-MIT.txt"
+      ],
+      "modifications": "Author API usage adapted to lengths 7 and 8 and exactly representable deterministic inputs; independent direct-sum reference, finite-value and normalized inverse checks. Complex transforms also check Parseval; KISS plans are finalized once per length.",
+      "validation_path": "docs/gams-transforms-validation.json",
+      "review_path": "docs/gams-transforms.md",
+      "checks": {
+        "lengths": [
+          7,
+          8
+        ],
+        "max_forward_error": 1e-11,
+        "max_roundtrip_error": 1e-11,
+        "parseval_checked": true,
+        "inverse_composition_divisor": "N",
+        "precision": "fftpack rk"
+      }
+    },
+    {
+      "id": "kissfft-f-complex-transform",
+      "name": "gams-kissfft-f-complex-transform",
+      "package_id": "kissfft-f",
+      "procedure_id": "kissfft-f-perform",
+      "gams_code": "J1a2",
+      "problem_id": "complex-discrete-fourier-transform",
+      "path": "fpm_catalog/gams-drivers/kissfft-f-complex-transform.f90",
+      "revision": "b89c5e1d0aff9993db79200fc94a467948ff3923",
+      "author_example": "example/fft.f90",
+      "reuse": "adapted",
+      "license": "BSD-3",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/kissfft-f-BSD.txt"
+      ],
+      "modifications": "Author API usage adapted to lengths 7 and 8 and exactly representable deterministic inputs; independent direct-sum reference, finite-value and normalized inverse checks. Complex transforms also check Parseval; KISS plans are finalized once per length.",
+      "validation_path": "docs/gams-transforms-validation.json",
+      "review_path": "docs/gams-transforms.md",
+      "checks": {
+        "lengths": [
+          7,
+          8
+        ],
+        "max_forward_error": 1e-05,
+        "max_roundtrip_error": 1e-06,
+        "parseval_checked": true,
+        "inverse_composition_divisor": "N",
+        "precision": "C float"
+      }
+    },
+    {
+      "id": "fftpack-cosine-transform",
+      "name": "gams-fftpack-cosine-transform",
+      "package_id": "fftpack",
+      "procedure_id": "fftpack-dct2",
+      "gams_code": "J1a3",
+      "problem_id": "cosine-transform-type-2",
+      "path": "fpm_catalog/gams-drivers/fftpack-cosine-transform.f90",
+      "revision": "0fffe7c05a918363a7cc12ae138a695afd115f36",
+      "author_example": "test/test_fftpack_dct.f90",
+      "reuse": "adapted",
+      "license": "MIT",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fftpack-MIT.txt"
+      ],
+      "modifications": "Author API usage adapted to lengths 7 and 8 and exactly representable deterministic inputs; independent direct-sum reference, finite-value and normalized inverse checks. Complex transforms also check Parseval; KISS plans are finalized once per length.",
+      "validation_path": "docs/gams-transforms-validation.json",
+      "review_path": "docs/gams-transforms.md",
+      "checks": {
+        "lengths": [
+          7,
+          8
+        ],
+        "max_forward_error": 1e-11,
+        "max_roundtrip_error": 1e-11,
+        "parseval_checked": false,
+        "inverse_composition_divisor": "4*N",
+        "precision": "fftpack rk"
+      }
+    },
+    {
+      "id": "lbfgsb-box-quadratic",
+      "name": "gams-lbfgsb-box-quadratic",
+      "package_id": "lbfgsb",
+      "procedure_id": "lbfgsb-setulb",
+      "gams_code": "G2h1a2",
+      "problem_id": "box-quadratic-projection",
+      "path": "fpm_catalog/gams-drivers/lbfgsb-box-quadratic.f90",
+      "revision": "ce1a9322016d6f31b652393e000a914b63af6fef",
+      "author_example": "test/driver1.f90",
+      "reuse": "adapted",
+      "license": "BSD-3",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/lbfgsb-BSD.txt"
+      ],
+      "modifications": "Shared convex quadratic, bounds and start; analytic gradient sanity check, convergence, known optimum, independent objective, bound feasibility and projected-gradient stationarity checks.",
+      "validation_path": "docs/gams-constrained-validation.json",
+      "review_path": "docs/gams-constrained.md",
+      "checks": {
+        "expected_solution": [
+          1,
+          0
+        ],
+        "expected_objective": 2,
+        "max_parameter_error": 1e-08,
+        "max_feasibility_error": 1e-10,
+        "max_projected_gradient": 1e-08,
+        "analytic_derivatives_checked": true
+      }
+    },
+    {
+      "id": "nlopt-box-quadratic",
+      "name": "gams-nlopt-box-quadratic",
+      "package_id": "nlopt-f",
+      "procedure_id": "nlopt-lbfgs-bounds",
+      "gams_code": "G2h1a2",
+      "problem_id": "box-quadratic-projection",
+      "path": "fpm_catalog/gams-drivers/nlopt-box-quadratic.f90",
+      "revision": "83d21e7ebda9279a6dd4cc11fe6c735f48eb8689",
+      "author_example": null,
+      "reuse": "original",
+      "license": "original",
+      "license_files": [],
+      "modifications": "Shared convex quadratic, bounds and start; analytic gradient sanity check, convergence, known optimum, independent objective, bound feasibility and projected-gradient stationarity checks.",
+      "validation_path": "docs/gams-constrained-validation.json",
+      "review_path": "docs/gams-constrained.md",
+      "checks": {
+        "expected_solution": [
+          1,
+          0
+        ],
+        "expected_objective": 2,
+        "max_parameter_error": 1e-08,
+        "max_feasibility_error": 1e-10,
+        "max_projected_gradient": 1e-08,
+        "analytic_derivatives_checked": true
+      }
+    },
+    {
+      "id": "slsqp-circle-equality",
+      "name": "gams-slsqp-circle-equality",
+      "package_id": "slsqp",
+      "procedure_id": "slsqp-slsqp-solver",
+      "gams_code": "G2h3b1b",
+      "problem_id": "circle-and-affine-constrained-quadratic",
+      "path": "fpm_catalog/gams-drivers/slsqp-circle-equality.f90",
+      "revision": "e28b14fc48189fd4fce5f359327164fca55b52be",
+      "author_example": "test/slsqp_test.f90",
+      "reuse": "adapted",
+      "license": "BSD-3",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/slsqp-BSD.txt"
+      ],
+      "modifications": "Author API pattern adapted to a known convex quadratic optimum with equality and nonlinear inequality constraints; analytic gradient/Jacobian sanity checks and independent feasibility, stationarity, complementarity and solution checks.",
+      "validation_path": "docs/gams-constrained-validation.json",
+      "review_path": "docs/gams-constrained.md",
+      "checks": {
+        "expected_solution": [
+          1,
+          0
+        ],
+        "expected_objective": 2,
+        "max_parameter_error": 1e-07,
+        "max_feasibility_error": 1e-07,
+        "max_kkt_residual": 1e-07,
+        "analytic_derivatives_checked": true
+      }
     }
   ]
 }

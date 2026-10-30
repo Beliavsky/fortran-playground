@@ -29,6 +29,35 @@ The [curated attribution review](name-attributions.md) records explicit public s
 
 Class pages use explicit parent links, rather than code-prefix matching: C1 and C10 are siblings. Empty classes remain linkable and explain that there is no currently classified selected package.
 
+Class and package cards link directly to checked drivers where available. A
+class page shows only drivers whose recorded problem class belongs to that
+class or a descendant. For example, [G1b1a](https://beliavsky.github.io/fortran-playground/gams/G1b1a/)
+offers the derivative-free Rosenbrock driver, while
+[G1b1b](https://beliavsky.github.io/fortran-playground/gams/G1b1b/) offers the
+analytic-gradient versions. A procedure supporting both configurations does
+not make its analytic-gradient driver a derivative-free example. Loading a
+driver selects the package and source without submitting a job. The
+[G1 review](gams-g1.md) records exact procedures, provenance, shared accuracy
+checks and saved results.
+
+The [quadrature review](gams-quadrature.md) similarly connects the smooth
+finite-interval class H2a1a1 and special-integrand class H2a2a1 to checked
+programs. Driver records identify their verification report explicitly;
+publication and portable catalog provenance include every report used, while
+older optimization records retain their existing report addresses.
+
+The [scalar-root review](gams-roots.md) connects F1b to checked Brent and safeguarded Newton drivers using shared nonpolynomial equations, independent accuracy checks and callback counts.
+
+The [linear-algebra review](gams-linear-algebra.md) connects real dense solves (D2a1) and unconstrained linear least squares (D9a1) to shared fortran-lapack and stdlib examples, including a rank-deficient minimum-norm case.
+
+The [ODE review](gams-ode.md) connects nonstiff one-step methods (I1a1a) and multistep methods (I1a1b) to DOP853, rklib RK4 and DDEABM drivers with a shared analytic decay/oscillator problem and a separate RK4 convergence check.
+
+The [interpolation review](gams-interpolation.md) connects E1a to finterp, PCHIP and bspline-fortran drivers with common affine/monotone data, sampled shape checks, and a separate cubic B-spline value/derivative check.
+
+The [transform review](gams-transforms.md) connects J1a2/J1a3 to complex FFT and cosine-transform drivers with independent direct-sum references and explicit normalization/precision settings. The generated [coverage report](gams-coverage.md) tracks source-reviewed procedures and dedicated checked drivers separately, including classes still awaiting drivers. A taxonomy leaf is not treated as an exhausted domain.
+
+The [constrained-optimization review](gams-constrained.md) links G2h1a2 to comparable box-constrained quadratic drivers and G2h3b1b to a checked SLSQP equality/nonlinear-inequality example, including independent feasibility and constrained-stationarity checks.
+
 ## Updating packages and classifications
 
 Continue the existing catalog workflow. Edit `fpm_catalog.json`, the classifications and procedure records in `fpm_catalog/gams.json`, the numerical review ledger, topics and checked example references as appropriate. Then regenerate the playground and review files:

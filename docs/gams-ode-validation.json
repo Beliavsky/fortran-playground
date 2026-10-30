@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "dop853-decay-oscillator",
+      "source_revision": "1e9d0dbf4dcbc692ca557c0467629112dd1f0ce6",
+      "source_sha256": "4b0f2761bcd5bda2b76e274efbfe07d6f73f52d0c5ac7a0a2b20dd426f1921ac",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T20:05:18.840170+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.329,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "       t      max state error      oscillator energy error\n  0.628319      4.7220005683E-12      1.3413714584E-12\n  1.256637      1.0212719559E-11      2.8211877279E-12\n  1.884956      1.7763845950E-11      4.5562442708E-12\n  2.513274      1.8615886610E-11      6.4901417574E-12\n  3.141593      3.2305712626E-11      8.2807094515E-12\n  3.769911      3.5819125443E-11      1.0435208253E-11\n  4.398230      4.3393177940E-11      1.2283951634E-11\n  5.026548      5.4541149375E-11      1.4214296407E-11\n  5.654867      4.5995873776E-11      1.6230350397E-11\n  6.283185      6.9760896379E-11      1.8041790284E-11\nMaximum checkpoint state error:   6.9761E-11\nMaximum checkpoint energy error:   1.8042E-11\nRHS callback calls (checkpoint run): 500\nFinal solver status: 1\nPASS dop853-decay-oscillator\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.02,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "ddeabm-decay-oscillator",
+      "source_revision": "dba70c8c65388638662df2694339c5ba7feaf12a",
+      "source_sha256": "4949e249013e61ad9be5f18242703f9cb1c5b96e05680f5d9dc90032a0bfec29",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T20:05:21.203045+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.412,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "       t      max state error      oscillator energy error\n  0.628319      9.9187325020E-12      2.9487523534E-13\n  1.256637      7.9399820052E-12      3.2843727737E-12\n  1.884956      3.7807035280E-11      3.0371927195E-11\n  2.513274      6.8081207338E-11      6.7992278474E-11\n  3.141593      6.9838206565E-11      6.6069372195E-11\n  3.769911      7.5627393237E-11      4.8849368994E-11\n  4.398230      6.9915073730E-11      3.6267655545E-11\n  5.026548      8.5696505447E-11      2.4099167106E-11\n  5.654867      7.3835493275E-11      2.9862778916E-12\n  6.283185      9.2504358673E-11      1.7406964758E-11\nMaximum checkpoint state error:   9.2504E-11\nMaximum checkpoint energy error:   6.7992E-11\nRHS callback calls (checkpoint run): 147\nFinal solver status: 3\nPASS ddeabm-decay-oscillator\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.035,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "rklib-decay-oscillator",
+      "source_revision": "e3d51f9e8a2e6756612e8e53687ab2d4b67dfb76",
+      "source_sha256": "4aeea5b5f37cb66ed15bec19ef495dc28dff21981f36dfe68ec56610c4267ee2",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T20:05:24.605212+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 1.567,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "       t      max state error      oscillator energy error\n  0.628319      4.2321035565E-11      8.6464169158E-13\n  1.256637      9.8637653601E-11      1.7299495170E-12\n  1.884956      1.4875839449E-10      2.5960344985E-12\n  2.513274      1.6724022167E-10      3.4624525469E-12\n  3.141593      2.5996158248E-10      4.3276493500E-12\n  3.769911      2.5389534919E-10      5.1938453538E-12\n  4.398230      3.4518038428E-10      6.0593752238E-12\n  5.026548      3.9662578777E-10      6.9247940715E-12\n  5.654867      3.7624592331E-10      7.7906570084E-12\n  6.283185      5.1987922788E-10      8.6557427892E-12\nMaximum checkpoint state error:   5.1988E-10\nMaximum checkpoint energy error:   8.6557E-12\nRHS callback calls (checkpoint run): 2520\nFinal solver status: 0\nRK4 nominal steps: 100; endpoint state error:   8.1490E-07; RHS calls: 404\nRK4 nominal steps: 200; endpoint state error:   5.0985E-08; RHS calls: 804\nCoarse/fine error ratio (fourth order suggests 16):    15.983086\nPASS rklib-decay-oscillator\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.105,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-30T20:05:24.655659+00:00"
+}
