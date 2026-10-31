@@ -98,7 +98,103 @@
           "exit_code": 0
         }
       ]
+    },
+    {
+      "driver_id": "conmax-linear-program-certificate",
+      "source_revision": "ab7f237d30f94f7d13b86997e0c49f3d67bd7c54",
+      "source_sha256": "e2718480e9e0b23e09a66fa203f4805265801e4b6a87a632e8d3d22163df71a0",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T01:41:25.233301+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.212,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Case 1: x,y=    3.000000   -1.000000; maximum -y=    1.000000; certificate gap=   0.000E+00\nCase 2: x,y=    3.000000    2.000000; maximum -y=   -2.000000; certificate gap=   0.000E+00\nCase 3: x,y=    2.000000   -5.000000; maximum -y=    5.000000; certificate gap=   0.000E+00\nFree variables, mixed-sign optima and rescaled inequalities checked.\nPASS conmax-linear-program-certificate\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.032,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "bobyqa-box-reference",
+      "source_revision": "0987cd09d695cec968a3d02c8230d4ce5af33533",
+      "source_sha256": "de387d69c60791ca2b39e4aba25eaea2626caa6f5670c86e929de666a0073726",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T01:41:26.844791+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.315,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Start 1: solution=   1.000000000   0.000000000; f=   2.000000000; evaluations=30\nStart 2: solution=   1.000000000   0.000000000; f=   2.000000000; evaluations=26\nStart 3: solution=   1.000000000   0.000000000; f=   2.000000000; evaluations=32\nNo objective derivatives supplied; reference gradient is used only after solving.\nThis API has no returned status flag; checked answers and budget use determine acceptance.\nPASS bobyqa-box-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.029,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "pikaia-rastrigin-reference",
+      "source_revision": "c080c4004896243bf9b8bbb4577e402c9e31c5e3",
+      "source_sha256": "0381b217d0509f39c7be2d2de29eaa14976ccf226a2b9ef7518addff192abd5d",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T01:41:28.664465+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.408,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Seed 12345: x=  -0.000000400  -0.000000400; objective=   6.349E-11; evaluations=60691\nSeed 6789: x=  -0.000000400  -0.000000400; objective=   6.349E-11; evaluations=60691\nSeed 24680: x=  -0.000000400   0.000000000; objective=   3.174E-11; evaluations=60691\nThese fixed-seed finite searches do not guarantee global convergence on other problems.\nPASS pikaia-rastrigin-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.195,
+          "exit_code": 0
+        }
+      ]
     }
   ],
-  "validated_at": "2026-10-30T20:50:24.049014+00:00"
+  "validated_at": "2026-10-31T01:41:28.734507+00:00"
 }

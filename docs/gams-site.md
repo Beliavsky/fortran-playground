@@ -170,3 +170,11 @@ The same review connects A3c/A4c to MPFUN real/complex addition with exact 120-d
 The [special-function review](gams-special-functions.md) also covers C14 Carlson elliptic integrals against independent quadrature, C19 Bernoulli values and exact integer power sums, and C10 complex AMOS Bessel sequences against separate series/closed forms. It retains an AMOS lower-half-plane discrepancy and documents unassigned odd Bernoulli outputs at the pinned revision.
 
 The [linear-algebra review](gams-linear-algebra.md) also connects D1b6 to BLAS transpose/scaling checks against scalar loops, D1b4 to accumulated COO/CSR matrix-vector products, and D9c to five known pseudoinverses and a minimum-norm solution. The sparse multiplication driver does not verify the separate storage-conversion class.
+
+The [applied-methods review](gams-applied-methods.md) connects K1 to least-squares spline fits with known noisy-data residuals and derivatives, L10a2a to direct/FFT autocovariance and correlation against scalar lag sums, and H2b1a2 to 67 exact polynomial integrals over rectangles, a variable-bound region and a 3D box. Panel counts and zero-variance correlation restrictions are explicit.
+
+The [constrained-optimization review](gams-constrained.md) also connects G2a to linear programs with analytical dual certificates, G2h1a1 to BOBYQA on the shared box quadratic, and G2i to three seeded PIKAIA Rastrigin searches. Solver return codes, evaluation limits and finite-run global-search limitations are distinguished from independent answer checks.
+
+The [boundary-value review](gams-boundary.md) connects I1b to featom Coulomb energy checks and retains a rejected TWOPNT Poisson probe that reports success but returns the preceding iterate. The failed probe is absent from the checked-driver menus. The [linear-algebra review](gams-linear-algebra.md) adds shared ARPACK/linalg_fortran Dirichlet eigenpair checks, refining their reviewed APIs to the real symmetric D4a1 class.
+
+The [resampling and Markov-model review](gams-resampling-markov.md) connects L4 to FJsample leave-one-out uncertainty checks and M to econ-toolchain analytic stationary distributions and Gaussian AR(1) transition probabilities. It documents the jackknife bias convention and the differing row/column probability conventions. Both class pages open matching checked drivers.

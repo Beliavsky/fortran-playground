@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "econ-markov-reference",
+      "source_revision": "301d1659ba3d34973195985c552ca6fcfe2d9f29",
+      "source_sha256": "183fbd053cd12ff1021a8208363ab2b0893ab255c9385df82a6f9da9169f00cc",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T02:01:35.682438+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.96,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "a,b=  0.100  0.200 equilibrium=  0.666667  0.333333\na,b=  0.700  0.600 equilibrium=  0.461538  0.538462\na,b=  0.020  0.030 equilibrium=  0.600000  0.400000\nThree-state reset equilibrium:  0.100000  0.300000  0.600000\nAR rho= 0.00 mean= -0.00 maximum probability error=  1.11E-16\nAR rho= 0.80 mean=  1.50 maximum probability error=  1.33E-15\nAR rho=-0.50 mean= -0.70 maximum probability error=  2.22E-16\nPASS econ-markov-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.056,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fjsample-jackknife-reference",
+      "source_revision": "8563d2653d1a9d80a355b2064f4b153559698915",
+      "source_sha256": "8630ac966b9f37fee223100e77d705b86d597a57ab5e3d1b7f3676563aed3a42",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T02:01:37.861126+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.357,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "n= 2 mean=   2.0000 standard error=  1.000000\n  squared mean standard error=   4.000000 package bias=  -1.000000\nn= 6 mean=   5.0000 standard error=  1.414214\n  squared mean standard error=  13.877752 package bias=  -0.400000\nn= 4 mean=   7.0000 standard error=  0.000000\n  squared mean standard error=   0.000000 package bias=   0.000000\nn= 6 mean=  -9.0000 standard error=  2.828427\n  squared mean standard error=  49.862531 package bias=  -1.600000\nn= 8 mean=   0.0000 standard error=  1.035098\n  squared mean standard error=   0.306632 package bias=  -0.153061\nPASS fjsample-jackknife-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.035,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T02:01:37.915876+00:00"
+}

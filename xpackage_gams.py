@@ -33,6 +33,9 @@ MATRIX_EQUATIONS_REPORT = Path('docs/gams-matrix-equations.md')
 SORTING_REPORT = Path('docs/gams-sorting.md')
 NUMBER_THEORY_REPORT = Path('docs/gams-number-theory.md')
 ARITHMETIC_REPORT = Path('docs/gams-arithmetic.md')
+APPLIED_METHODS_REPORT = Path('docs/gams-applied-methods.md')
+BOUNDARY_REPORT = Path('docs/gams-boundary.md')
+RESAMPLING_MARKOV_REPORT = Path('docs/gams-resampling-markov.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
 EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
@@ -723,7 +726,7 @@ def linear_algebra_review_text(root=ROOT):
              '| Class | Configuration | Procedures |', '| --- | --- | --- |',
              '| [D2a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D2a1) | Real nonsymmetric general linear systems | `linear_algebra:solve`; `stdlib_linalg:solve` |',
              '| [D9a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D9a1) | Unconstrained linear least squares, L2 solution | `linear_algebra:lstsq`; `stdlib_linalg:lstsq` |',
-             '| [D4a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D4a1) | Ordinary real symmetric eigenproblems | fortran-lapack `la_lapack:syev`, real64 overload |',
+             '| [D4a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D4a1) | Ordinary real symmetric eigenproblems | fortran-lapack `la_lapack:syev`; ARPACK `DSAUPD/DSEUPD`; linalg_fortran `linalg%eigh` |',
              '| [D5](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D5) | Orthogonalization, demonstrated by reduced QR | fortran-lapack `linear_algebra:qr` |',
              '| [D6](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D6) | Singular value decomposition | fortran-lapack `la_lapack:gesvd`, real64 overload |',
              '| [D1b6](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D1b6) | Rectangular real matrix products | blas-interface `blas_gemm` |',
@@ -821,6 +824,30 @@ def linear_algebra_review_text(root=ROOT):
              'the SVD input despite its declared input intent. The cutoff is absolute in this API. '
              'This does not test default cutoff behavior, alternative methods, ill-conditioning, '
              'near-threshold numerical ranks or general rank selection.', '',
+             '## Shared Dirichlet spectral problem', '',
+             'ARPACK and linalg_fortran use the same 20-by-20 real symmetric tridiagonal '
+             'matrix with diagonal 2 and off-diagonals -1. Its exact eigenvalues are '
+             '`lambda_j=4*sin(j*pi/(2*(n+1)))^2` and normalized eigenvectors '
+             '`v_i=sqrt(2/(n+1))*sin(i*j*pi/(n+1))`. '
+             'The reviewed procedure mappings are refined from broad D4 to D4a1 '
+             'for these real symmetric ordinary-problem APIs; no generalized or nonsymmetric '
+             'eigenproblem claim is made.', '',
+             'The ARPACK driver requests the three smallest and three largest eigenpairs '
+             'in separate standard-mode runs (`SM`/`LM`, `BMAT=I`, `IPARAM(7)=1`). '
+             'It supplies a reproducible nonzero initial residual, caps Arnoldi iterations '
+             'at 1000 and operator calls at 10000, and requires successful convergence and '
+             'extraction with all three requested pairs converged. Eigenvalue errors and '
+             'Euclidean eigen-equation residuals must be at most `1e-9`; orthonormality '
+             'error at most `1e-10`. Every vector must match its analytic sine direction '
+             'up to sign, with `abs(abs(dot_product(computed,exact))-1)<=1e-8`.', '',
+             'The dense linalg_fortran driver checks all 20 eigenpairs, with eigenvalue, '
+             'equation-residual, orthonormality and maximum-entry reconstruction errors '
+             'at most `1e-11`. It uses the same sign-independent sine-vector check and '
+             'prints the six pairs corresponding to the ARPACK selections. Both drivers '
+             'require finite eigenvalues/vectors. The dense API has no returned status '
+             'in this invocation; answer checks determine acceptance. The shared mathematical '
+             'problem supports comparisons of selected results, not a general speed ranking. '
+             'Shift-invert, generalized, nonsymmetric and arbitrary-spectrum problems are not verified.', '',
              '## Observed high-level link limit', '',
              'On 2026-10-30, the high-level `linear_algebra:eigh` and `linear_algebra:svd` '
              'versions compiled their mains but failed to link under the hosted 16 MiB per-file '
@@ -1077,8 +1104,11 @@ def constrained_review_text(root=ROOT):
     lines = ['# Checked GAMS constrained-optimization drivers', '',
              '| Class | Configuration | Procedures |', '| --- | --- | --- |',
              '| [G2h1a2](https://gams.nist.gov/cgi-bin/serve.cgi/Class/G2h1a2) | Smooth simple-bound optimization with user first derivatives | L-BFGS-B `setulb`; NLopt `LD_LBFGS` with explicit bounds |',
-             '| [G2h3b1b](https://gams.nist.gov/cgi-bin/serve.cgi/Class/G2h3b1b) | Smooth nonlinear equality/inequality optimization with user objective and constraint first derivatives | SLSQP `slsqp_solver%optimize`, analytic mode |', '',
-             'Both are deepest recorded GAMS classes for the demonstrated configurations. Other constrained '
+             '| [G2h3b1b](https://gams.nist.gov/cgi-bin/serve.cgi/Class/G2h3b1b) | Smooth nonlinear equality/inequality optimization with user objective and constraint first derivatives | SLSQP `slsqp_solver%optimize`, analytic mode |',
+             '| [G2a](https://gams.nist.gov/cgi-bin/serve.cgi/Class/G2a) | Free-variable inequality-constrained linear programming | CONMAX `slnpro` |',
+             '| [G2h1a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/G2h1a1) | Simple bounds, no derivatives supplied | PowellOpt `bobyqa` |',
+             '| [G2i](https://gams.nist.gov/cgi-bin/serve.cgi/Class/G2i) | Bounded global search for a nonconvex problem | PIKAIA `pikaia_class%solve` |', '',
+             'Each driver demonstrates its recorded configuration. Other constrained '
              'optimization classes and other procedures in these classes still need checked drivers; '
              'see the [coverage report](gams-coverage.md).', '',
              '## Shared bound-constrained quadratic', '',
@@ -1112,6 +1142,46 @@ def constrained_review_text(root=ROOT):
              'The multipliers are known from this test problem, not reported by SLSQP. The convex '
              'problem gives an independently known global solution; a successful run of a general '
              'nonlinear optimizer is not by itself a global-optimality guarantee.', '',
+             '## Linear programming with an optimality certificate', '',
+             'Three CONMAX problems maximize `-y` subject to `x+y>=a`, `x-y<=b`, with '
+             '`(a,b)=[(2,4),(5,1),(-3,7)]`. Variables are free, so negative solution '
+             'components are permitted. The exact solutions are `[(3,-1),(3,2),(2,-5)]`. '
+             'The inequality rows are multiplied by positive scale pairs '
+             '`[(1,1),(0.5,3),(4,0.25)]` without changing their feasible sets.', '',
+             'For inequality matrix A, right side d and scales s1,s2, the nonnegative dual '
+             'weights `lambda=[1/(2*s1),1/(2*s2)]` satisfy `transpose(A)*lambda=[0,-1]`. '
+             'Their bound `dot_product(lambda,d)=(b-a)/2` is an independent upper bound on '
+             'the maximized objective. The driver requires status 0, finite parameters/reported '
+             'objective, solution error and feasibility violation at most `1e-9`, reported '
+             'objective agreement and primal-dual gap at most `1e-9`. Original '
+             'constraints are preserved because the solver overwrites its tableau. '
+             'Infeasible/unbounded problems and general LP robustness are not tested.', '',
+             '## Derivative-free box quadratic', '',
+             'BOBYQA solves the same quadratic and box used by the derivative-based drivers, '
+             'from `[0.25,1]`, `[0.9,0.1]` and `[0.1,1.8]`. No gradient is supplied to the '
+             'optimizer. Five interpolation points, initial/final radii `0.1`/`1e-9`, '
+             'and a maximum of 1000 objective calls are used. Every callback checks finite '
+             'parameters and bound feasibility. After solving, the driver independently '
+             'checks solution `[1,0]`, objective 2 and the projected-gradient residual, '
+             'all within `1e-8`.', '',
+             'The pinned BOBYQA API has no returned status flag. A normal return is '
+             'insufficient: explicit answer checks must pass and the evaluation budget '
+             'must not be exhausted. The reference gradient is used only after the solve. '
+             'These convex cases do not verify arbitrary nonconvex objectives.', '',
+             '## Seeded multimodal global search', '',
+             'PIKAIA minimizes the two-dimensional Rastrigin objective '
+             '`R(x)=sum(x_i^2+10*(1-cos(2*pi*x_i)))` on `[-2,2]^2` by maximizing '
+             '`fitness=1/(1+R)`. Every term in R is nonnegative; the exact global '
+             'minimum is zero at `[0,0]`, giving fitness 1. Three runs use '
+             'seeds `[12345,6789,24680]`, population 100, 600 generations and seven '
+             'decimal encoding digits. The convergence window is 601, longer than '
+             'the generation budget, so a short plateau does not stop the test early.', '',
+             'Initialization/solve status must be zero, callback/final points finite and '
+             'within bounds, maximum parameter error at most `0.01`, objective at most '
+             '`0.01` and reported fitness within `1e-10` of an independently recomputed '
+             'value. Callback counts are printed. Fixed-seed finite-budget success '
+             'does not guarantee global convergence or certify arbitrary nonconvex '
+             'problems. No general global-optimality claim follows from solver status.', '',
              '## Sources and playground links', '',
              '| Driver | Class | Pinned procedure and author example |', '| --- | --- | --- |']
     for d in drivers:
@@ -1122,9 +1192,9 @@ def constrained_review_text(root=ROOT):
         lines.append(f'| [Load {d["id"]}]({url}) · [Source](../{d["path"]}) | {d["gams_code"]} | '
                      f'[Procedure]({base}{evidence["path"]}#L{evidence["line"]}) · {author} |')
     lines += ['', 'The L-BFGS-B and SLSQP drivers adapt author API patterns and retain license notices. '
-              'All three appear in hosted and main local FPM example menus and downloaded projects. '
+              f'All {len(drivers)} appear in hosted and main local FPM example menus and downloaded projects. '
               'Loading a link selects source without submitting a job.', '', '## Recorded results', '',
-              'All three passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing '
+              f'All {len(drivers)} passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing '
               'existing package libraries. Only each main and executable were rebuilt. The '
               '[verification report](gams-constrained-validation.json) records hashes, pins and saved output. '
               'Evaluation counts exclude derivative sanity checks and describe these simple cases, rather '
@@ -1136,6 +1206,7 @@ def constrained_review_text(root=ROOT):
         lines += ['### '+d['id'], '', '```text', output.rstrip(), '```', '']
     lines += ['## Maintenance', '', '```text',
               'python xverify_gams_drivers.py --drivers lbfgsb-box-quadratic nlopt-box-quadratic slsqp-circle-equality',
+              'python xverify_gams_drivers.py --drivers conmax-linear-program-certificate bobyqa-box-reference pikaia-rastrigin-reference',
               'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
               'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
               'No backend redeployment or package library rebuild is required.', '']
@@ -2560,6 +2631,270 @@ def arithmetic_review_text(root=ROOT):
     return '\n'.join(lines)
 
 
+def applied_methods_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-applied-methods-validation.json']
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    records = {p['id']: p for p in data['procedure_mappings']}
+    lines = ['# Checked GAMS fitting, time-series and iterated-integration drivers', '',
+             '| Class | Problem | Package |', '| --- | --- | --- |',
+             '| K1 | Least-squares approximation with a cubic-spline basis | splpak |',
+             '| L10a2a | Time-series summary autocovariance and autocorrelation | fortsa |',
+             '| H2b1a2 | Nonautomatic multidimensional/iterated integration | integrate_fortran |', '',
+             'These class-specific links select checked drivers. They verify the configurations '
+             'below, not every package capability. The GAMS categories are not exhausted.', '',
+             '## Known least-squares spline fits', '',
+             'The splpak driver fits 24 observations at 12 coordinates in [0,1], each coordinate '
+             'occurring twice. Three datasets have known fitted functions: `2*x`, '
+             '`1-3*x` with paired noise `+1/4,-1/4`, and the constant `-2.25` with '
+             'nonuniform positive weights (equal within each pair). Ten spline nodes/coefficients '
+             'and the author API\'s `xtrap=1` setting are used.', '',
+             'For the noisy data, each equal-weight pair contributes '
+             '`2*(fitted-true_line)^2 + 2*(1/4)^2` to the objective. Thus the known line is '
+             'the least-squares fit and its training sum of squared errors is exactly '
+             '`24*(1/4)^2=1.5`. This is a nonzero-residual check, not just interpolation of '
+             'noiseless data. The other datasets have zero reference residual.', '',
+             'Each fitted function and its first derivative are checked at 21 points, including '
+             'both endpoints: 126 independent value/derivative comparisons. Maximum absolute '
+             'value error must be at most `1e-8`; derivative error at most `1e-7`. '
+             'Initialization/evaluation statuses must be zero, values finite, noisy SSE within '
+             '`1e-8` of 1.5 and the noiseless training SSE at most `1e-14`. '
+             'The driver destroys state between fits. General curved-function fitting, '
+             'multidimensional fitting, extrapolation and ill-conditioned data are outside the example.', '',
+             '## Autocovariance and autocorrelation references', '',
+             'The fortsa driver uses the eight observations `[1,-1,2,-2,3,-3,4,-4]`, '
+             'a shift by 10, a transformation `-2*base+3`, and a constant series 7. '
+             'For every lag 0..7, scalar loops independently form '
+             '`sum((x_i-mean)*(x_(i+lag)-mean))/N`. This is the biased normalization by N, '
+             'not the lag-dependent denominator N-lag. Three base-series anchors are '
+             '`gamma(0)=7.5`, `gamma(1)=-6.25`, `gamma(7)=-0.5`.', '',
+             'The public `acvf`, `acvf_opt` direct method 0, and FFT method 1 each must agree '
+             'with these independent sums: 12 covariance calls, each with eight outputs. '
+             'For the three nonconstant datasets, `acvf2acf` is checked against '
+             '`gamma(lag)/gamma(0)`: nine calls with eight outputs. All outputs must be finite '
+             'and maximum absolute errors at most `1e-10`. Constant-series covariance is checked '
+             'as zero; its undefined zero-variance correlation is deliberately not requested. '
+             'Missing data, partial correlations, other estimators and ARIMA fitting are not verified.', '',
+             '## Fixed-rule multidimensional polynomial moments', '',
+             'The integrate_fortran driver supplies module callbacks to `gauss_leg_nd`. '
+             'Its `js` entries are panel counts per dimension, not quadrature orders. '
+             'Every panel uses the implementation\'s fixed six-point Gauss-Legendre rule; '
+             'the caller chooses the panels and no adaptive error estimate is promised.', '',
+             'Fifty checks integrate `x^p*y^q`, p,q=0..4, over `[-1,2]` times `[0,3]` '
+             'using one and two panels per dimension. References are products of exact '
+             'monomial antiderivatives. Sixteen more checks use p,q=0..3 over '
+             '`0<=x<=1`, `0<=y<=1+x^2`, with the independent reference '
+             '`sum(binomial(q+1,r)/((q+1)*(p+2*r+1)),r=0..q+1)`. '
+             'This polynomial has x degree at most 11 after integrating y. '
+             'A final 3D box check integrates `x^2*y^3*z` over '
+             '`[-1,1]` times `[0,2]` times `[1,3]`, with exact value `32/3`.', '',
+             'All 67 results must be finite with scaled error '
+             '`abs(actual-reference)/max(1,abs(reference))<=1e-11`. '
+             'The bounds callback reads x only for the second variable in the iterated case, '
+             'after the first variable is defined. Singular, infinite-domain and highly '
+             'oscillatory integrands, invalid panel counts and automatic accuracy selection '
+             'are outside this verification.', '',
+             '## Sources, playground links and saved output', '',
+             'All three passed the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, '
+             'reusing the existing package libraries. Only the mains and executables were compiled. '
+             'The [verification report](gams-applied-methods-validation.json) records source hashes '
+             'and actual output. The independently written drivers have their own MIT notice; '
+             'upstream package licenses remain separate. Loading a link selects source without '
+             'submitting a job; the examples appear in hosted and main local FPM menus.', '']
+    for d in drivers:
+        evidence = records[d['procedure_id']]['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]})', '']
+        if d.get('author_example'):
+            lines += [f'[Pinned author test]({base}{d["author_example"]})', '']
+        checks = json.loads((root/driver_validation_path(d)).read_text(encoding='utf-8'))
+        result = next(r for r in checks['drivers'] if r['driver_id'] == d['id'])
+        output = next(s['stdout'] for s in result['stages'] if s['name'] == 'Run')
+        lines += ['```text', output.rstrip(), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers splpak-paired-noise-fit fortsa-autocorrelation-reference integrate-nd-polynomial-reference',
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining classes without checked drivers.', '']
+    return '\n'.join(lines)
+
+
+def boundary_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-boundary-validation.json']
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    records = {p['id']: p for p in data['procedure_mappings']}
+    twopnt = records['twopnt-solve']
+    twopnt_source = f'https://github.com/{packages["twopnt"]["repository"]}/blob/{twopnt["revision"]}/src/twopnt_core.f90'
+    lines = ['# Checked GAMS boundary-value spectral problem and retained failed probe', '',
+             'The checked featom driver demonstrates a radial nonrelativistic boundary-value '
+             'eigenproblem in I1b. A separate TWOPNT manufactured-problem probe failed its '
+             'independent checks and is retained without a verified-driver designation. '
+             'Boundary-value methods and GAMS categories are not exhausted.', '',
+             '## Coulomb bound-state energies: featom', '',
+             'The driver calls `total_energy` in its nonrelativistic point-Coulomb branch '
+             'for nuclear charges Z=1 and Z=2. For principal quantum numbers n=1..3 '
+             'and angular indices l=0..n-1, the exact energies are '
+             '`E_n=-Z^2/(2*n^2)` Hartree. Twelve returned energies are compared with '
+             'this independent formula, including the angular degeneracy within each n. '
+             'Maximum absolute error must be at most `1e-7` Hartree.', '',
+             'Both solves use eight radial elements, polynomial degree 20, 43 quadrature '
+             'points per element, radial endpoint 100 and mesh grading parameter 100. '
+             'Returned dimensions must support the first six levels, degrees of freedom '
+             'must be positive, and the checked energies and first six wavefunctions '
+             'must be finite. Finiteness alone does not verify wavefunction shape or '
+             'normalization. Dirac/relativistic and self-consistent DFT branches, higher '
+             'levels, mesh convergence and full-spectrum accuracy are not verified.', '',
+             'The driver passed the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, '
+             'reusing the existing package library. Only its main and executable were '
+             'compiled. The [verification report](gams-boundary-validation.json) records '
+             'source hashes and actual output. Its independent API-consumer source has '
+             'its own MIT notice; upstream package terms remain separate.', '']
+    for d in drivers:
+        evidence = records[d['procedure_id']]['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]})', '']
+        checks = json.loads((root/driver_validation_path(d)).read_text(encoding='utf-8'))
+        result = next(r for r in checks['drivers'] if r['driver_id'] == d['id'])
+        output = next(s['stdout'] for s in result['stages'] if s['name'] == 'Run')
+        lines += ['```text', output.rstrip(), '```', '']
+    lines += ['## TWOPNT probe that was not accepted', '',
+              'The manufactured problem is `u_second_derivative=-2` on [0,1], '
+              '`u(0)=u(1)=0`, with exact profile `u=x*(1-x)`. The probe implements '
+              'a derived `TwoPntBVProblem`, conservative three-point spatial residuals, '
+              'the solver\'s finite-difference Jacobian and a zero initial guess. '
+              'It intended to check fixed uniform grids of 9, 17 and 33 points, '
+              'full-profile errors, endpoint conditions and a separately evaluated '
+              'discrete equation residual.', '',
+              'On the first nine-point grid, the pinned solver prints `SUCCESS` and '
+              'returns a false error flag but leaves the zero initial guess unchanged. '
+              'The profile error is 0.25 and residual error is 2, so the independent '
+              'driver rejects the result. The later grids are not reached. '
+              'This is an observed failure, not a successful boundary-value demonstration.', '',
+              f'Inspection of the [pinned search routine]({twopnt_source}) shows a convergence '
+              'exit for the trial iterate `v1` before the subsequent `v0=v1` assignment. '
+              'The return therefore exposes the preceding iterate; for this linear '
+              'problem the first Newton trial solves the equations, but the returned '
+              'initial iterate does not. This source-based explanation is an inference '
+              'supported by the retained run, not an upstream-confirmed diagnosis.', '',
+              '[Failing source](gams-candidates/twopnt/poisson-returned-iterate.f90) / '
+              '[Saved sandbox result](gams-candidates/twopnt/poisson-returned-iterate-result.json)', '',
+              'The failed probe is absent from the checked-driver manifest and example menus. '
+              'Its source-supported I1b mapping remains, with the limitation in its procedure '
+              'notes. No library patch, cached-package rebuild or tolerance relaxation was applied. '
+              'A corrected upstream implementation or a separately reviewed patch is needed '
+              'before promoting this probe to a verified driver.', '',
+              '## Related spectral checks', '',
+              'The [linear-algebra review](gams-linear-algebra.md) gives matching ARPACK '
+              'and linalg_fortran D4a1 drivers for the same 20-by-20 Dirichlet matrix, '
+              'with analytic eigenvalues and eigenvectors. Those ordinary matrix '
+              'eigenproblems are separate from featom\'s radial boundary-value formulation.', '',
+              '## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers featom-coulomb-spectrum',
+              'python xverify_gams_drivers.py --drivers arpack-poisson-eigenpairs linalg-poisson-eigenpairs',
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'Publishing these checked examples requires no backend redeployment or package library rebuild.', '']
+    return '\n'.join(lines)
+
+
+def resampling_markov_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-resampling-markov-validation.json']
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    records = {p['id']: p for p in data['procedure_mappings']}
+    lines = ['# Checked GAMS resampling and Markov-model drivers', '',
+             'These L4 and M drivers passed the restricted GNU Fortran 16.2.0 sandbox '
+             'with FPM 0.12.0, reusing the existing package libraries. Only their main '
+             'programs and executables were compiled. GAMS categories are not exhausted.', '',
+             '## Jackknife uncertainty: FJsample (L4)', '',
+             'The driver checks five real datasets of sizes 2, 6, 4, 6 and 8, including '
+             'constant values, negative values and a symmetric zero-mean sample. '
+             'Each full-sample mean and leave-one-out mean returned by `Complement` '
+             'is compared with separately enumerated scalar sums. For the sample mean, '
+             '`jackError` must return `sqrt(s^2/n)`, where `s^2` is the unbiased '
+             'sample variance, and zero bias.', '',
+             'A second estimator squares the full and resampled means. Its uncertainty '
+             'is checked against the direct leave-one-out jackknife sum, and its '
+             'returned bias against the analytic identity `-s^2/(n*(n-1))`. '
+             'All values must be finite; maximum absolute errors must be at most `1e-11`. '
+             'This nonlinear check makes the bias convention observable: the package '
+             'returns **full estimate minus mean resampled estimate**, without an '
+             '`n-1` multiplier. Conventional estimated jackknife bias would be '
+             '`-(n-1)*package_bias`; a conventionally bias-corrected estimate would be '
+             '`full_estimate+(n-1)*package_bias`. The driver checks the documented '
+             'package result rather than relabeling it as that conventional bias.', '',
+             'The pinned author main was reviewed for the public calling sequence. '
+             'Bootstrap, complex data, higher-order complements, general estimator '
+             'accuracy and statistical coverage are not verified. L4 remains broad '
+             'pending a suitable finer taxonomy match.', '',
+             '## Stationary Markov models: econ-toolchain (M)', '',
+             'Three two-state chains use transition pairs `(a,b)=(0.1,0.2)`, '
+             '`(0.7,0.6)` and `(0.02,0.03)`. Their exact stationary probabilities '
+             'are `[b,a]/(a+b)`. A three-state rank-one chain must recover '
+             '`[0.1,0.3,0.6]`. The iteration must report convergence and return '
+             'finite nonnegative probabilities, unit total probability and a '
+             'stationary equation residual at most `1e-11`.', '',
+             '`tauchen` discretizes three Gaussian AR(1) processes on 31 nodes '
+             'spanning three stationary standard deviations. The tested '
+             '`(mean,rho,innovation_sigma)` triples are `(0,0,0.2)`, '
+             '`(1.5,0.8,0.1)` and `(-0.7,-0.5,0.3)`. Grid locations are checked '
+             'against the specified mean and stationary variance. Each of 2883 '
+             'transition probabilities is compared with an independent conditional '
+             'normal CDF integral over midpoint cells, with infinite endpoint tails. '
+             'The reference uses intrinsic `erf`; the package uses `erfc`. '
+             'This checks the discretization formula, indexing and tails, rather '
+             'than independently certifying the compiler\'s special functions.', '',
+             'Rows must be nonnegative and sum to one. The driver explicitly '
+             'transposes the row-stochastic Tauchen matrix for the column-stochastic '
+             '`markov_steady_state` API, checks stationary residuals and the symmetric '
+             'stationary mean, and compares the zero-correlation equilibrium with '
+             'the independently computed identical row distribution. Every check '
+             'uses an absolute tolerance of `1e-11`; the iteration tolerance is '
+             '`1e-14` with a 10000-iteration limit. These deterministic tests do '
+             'not verify random sampling, nonergodic chains, arbitrary-parameter '
+             'convergence or the continuous process\'s full stationary distribution.', '',
+             '## Pinned evidence and actual output', '',
+             'The [verification report](gams-resampling-markov-validation.json) '
+             'records source hashes and actual sandbox output. These independent '
+             'API consumers have their own MIT notice; upstream package terms '
+             'remain separate. Loading a link selects the checked driver without '
+             'submitting a job.', '']
+    for d in drivers:
+        evidence = records[d['procedure_id']]['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]})', '']
+        for example in records[d['procedure_id']]['author_examples']:
+            lines += [f'[Pinned author example/test]({base}{example["path"]})', '']
+        report = json.loads((root/driver_validation_path(d)).read_text(encoding='utf-8'))
+        result = next(r for r in report['drivers'] if r['driver_id'] == d['id'])
+        output = next(s['stdout'] for s in result['stages'] if s['name'] == 'Run')
+        lines += ['```text', output.rstrip(), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers econ-markov-reference fjsample-jackknife-reference',
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining classes without checked drivers.', '']
+    return '\n'.join(lines)
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -2668,6 +3003,9 @@ def main():
                          (SORTING_REPORT, sorting_review_text()),
                          (NUMBER_THEORY_REPORT, number_theory_review_text()),
                          (ARITHMETIC_REPORT, arithmetic_review_text()),
+                         (APPLIED_METHODS_REPORT, applied_methods_review_text()),
+                         (BOUNDARY_REPORT, boundary_review_text()),
+                         (RESAMPLING_MARKOV_REPORT, resampling_markov_review_text()),
                          (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report

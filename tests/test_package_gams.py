@@ -31,8 +31,11 @@ from xpackage_gams import (gams_data, package_classes, review_text, subclass_mod
                           sorting_review_text, SORTING_REPORT,
                           number_theory_review_text, NUMBER_THEORY_REPORT,
                           arithmetic_review_text, ARITHMETIC_REPORT,
+                          applied_methods_review_text, APPLIED_METHODS_REPORT,
+                          boundary_review_text, BOUNDARY_REPORT,
+                          resampling_markov_review_text, RESAMPLING_MARKOV_REPORT,
                           coverage_data, coverage_review_text, COVERAGE_REPORT,
-                          class_evidence, mapping_evidence_text, EVIDENCE_REPORT)
+                          class_evidence, class_tree, mapping_evidence_text, EVIDENCE_REPORT)
 
 
 class GamsFilterParser(HTMLParser):
@@ -293,7 +296,8 @@ class PackageGamsTests(unittest.TestCase):
                           'fortran-lapack-least-squares', 'stdlib-least-squares',
                           'fortran-lapack-symmetric-eigen', 'fortran-lapack-qr-decomposition',
                           'fortran-lapack-svd-decomposition', 'blas-gemm-reference',
-                          'fsparse-matvec-reference', 'forinv-pseudoinverse-reference'})
+                          'fsparse-matvec-reference', 'forinv-pseudoinverse-reference',
+                          'arpack-poisson-eigenpairs', 'linalg-poisson-eigenpairs'})
         self.assertEqual({d['gams_code'] for d in drivers if d['problem_id'] == 'real-dense-systems'}, {'D2a1'})
         self.assertEqual({d['gams_code'] for d in drivers if d['problem_id'] == 'real-linear-least-squares'}, {'D9a1'})
         records = {r['id']: r for r in data['procedure_mappings']}
@@ -318,6 +322,75 @@ class PackageGamsTests(unittest.TestCase):
         from xpackage_gams import class_tree, procedure_records
         assessment = class_evidence(class_tree(data),'D1b9',procedure_records(data,'fsparse'),list(drivers.values()))
         self.assertEqual(assessment['status'], 'source-supported')
+
+    def test_fit_series_and_integral_drivers_record_independent_references(self):
+        drivers = {d['id']: d for d in driver_data()}
+        fit = drivers['splpak-paired-noise-fit']
+        series = drivers['fortsa-autocorrelation-reference']
+        integral = drivers['integrate-nd-polynomial-reference']
+        self.assertEqual((fit['gams_code'],series['gams_code'],integral['gams_code']), ('K1','L10a2a','H2b1a2'))
+        self.assertEqual(fit['checks']['value_derivative_checks'], 126)
+        self.assertEqual(fit['checks']['noisy_fit_sse'], 1.5)
+        self.assertEqual(series['checks']['covariance_calls'], 12)
+        self.assertEqual(series['checks']['correlation_calls'], 9)
+        self.assertFalse(series['checks']['constant_series_correlation_requested'])
+        self.assertEqual(integral['checks']['polynomial_integrals'], 67)
+        self.assertEqual(integral['checks']['gauss_nodes_per_panel_per_dimension'], 6)
+        text = applied_methods_review_text()
+        self.assertEqual((ROOT / APPLIED_METHODS_REPORT).read_text(encoding='utf-8'), text)
+        self.assertIn('panel counts per dimension, not quadrature orders', text)
+        self.assertIn('nonzero-residual check', text)
+
+    def test_boundary_and_spectral_drivers_reject_unverified_twopnt_probe(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        self.assertNotIn('twopnt-poisson-reference', drivers)
+        featom = drivers['featom-coulomb-spectrum']
+        arpack = drivers['arpack-poisson-eigenpairs']
+        dense = drivers['linalg-poisson-eigenpairs']
+        self.assertEqual(featom['gams_code'], 'I1b')
+        self.assertEqual(featom['checks']['energy_checks'], 12)
+        self.assertFalse(featom['checks']['wavefunction_accuracy_verified'])
+        self.assertEqual(arpack['gams_code'], 'D4a1')
+        self.assertEqual(dense['gams_code'], 'D4a1')
+        self.assertEqual(arpack['problem_id'], dense['problem_id'])
+        self.assertTrue(arpack['checks']['analytic_eigenvectors_checked'])
+        self.assertEqual(dense['checks']['eigenpairs_checked'], 20)
+        records = {r['id']:r for r in data['procedure_mappings']}
+        self.assertNotIn('driver_id', records['twopnt-solve'])
+        import hashlib
+        failure = json.loads((ROOT/'docs/gams-candidates/twopnt/poisson-returned-iterate-result.json').read_text())
+        self.assertEqual(hashlib.sha256((ROOT/failure['source_path']).read_text().encode()).hexdigest(),
+                         failure['source_sha256'])
+        self.assertFalse(failure['result']['ok'])
+        run = next(s for s in failure['result']['stages'] if s['name']=='Run')
+        self.assertIn('PROBLEM SOLVED', run['stdout'])
+        self.assertIn('known Poisson profile/residual', run['stderr'])
+        text = boundary_review_text()
+        self.assertEqual((ROOT/BOUNDARY_REPORT).read_text(encoding='utf-8'), text)
+        self.assertIn('upstream-confirmed diagnosis', text)
+
+    def test_resampling_and_markov_drivers_have_independent_references(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        markov = drivers['econ-markov-reference']
+        jackknife = drivers['fjsample-jackknife-reference']
+        self.assertEqual(markov['gams_code'], 'M')
+        self.assertEqual(markov['checks']['normal_cell_probability_checks'], 2883)
+        self.assertFalse(markov['checks']['random_sampling_verified'])
+        self.assertEqual(jackknife['gams_code'], 'L4')
+        self.assertEqual(jackknife['checks']['sample_sizes'], [2, 6, 4, 6, 8])
+        self.assertIn('no factor n-1', jackknife['checks']['bias_convention'])
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for driver in [markov, jackknife]:
+            self.assertEqual(records[driver['procedure_id']]['driver_id'], driver['id'])
+            evidence = class_evidence(class_tree(data), driver['gams_code'],
+                                      [records[driver['procedure_id']]], [driver])
+            self.assertEqual(evidence['status'], 'verified')
+        text = resampling_markov_review_text()
+        self.assertEqual((ROOT/RESAMPLING_MARKOV_REPORT).read_text(encoding='utf-8'), text)
+        self.assertIn('full_estimate+(n-1)*package_bias', text)
+        self.assertIn('independently certifying', text)
 
     def test_decomposition_drivers_identify_the_verified_lower_level_apis(self):
         data = gams_data()
@@ -370,12 +443,30 @@ class PackageGamsTests(unittest.TestCase):
                    if driver_validation_path(d) == 'docs/gams-constrained-validation.json']
         self.assertEqual({d['id']: d['gams_code'] for d in drivers},
                          {'lbfgsb-box-quadratic': 'G2h1a2', 'nlopt-box-quadratic': 'G2h1a2',
-                          'slsqp-circle-equality': 'G2h3b1b'})
-        self.assertEqual(len({d['problem_id'] for d in drivers}), 2)
+                          'slsqp-circle-equality': 'G2h3b1b', 'conmax-linear-program-certificate': 'G2a',
+                          'bobyqa-box-reference': 'G2h1a1', 'pikaia-rastrigin-reference': 'G2i'})
+        self.assertEqual(len({d['problem_id'] for d in drivers}), 4)
         records = {r['id']: r for r in data['procedure_mappings']}
         self.assertEqual(records['nlopt-lbfgs']['gams_codes'], ['G1b1b'])
         self.assertEqual(records['nlopt-lbfgs-bounds']['gams_codes'], ['G2h1a2'])
         self.assertEqual((ROOT / CONSTRAINED_REPORT).read_text(encoding='utf-8'), constrained_review_text())
+
+    def test_linear_derivative_free_and_global_optimization_checks_are_distinct(self):
+        drivers = {d['id']: d for d in driver_data()}
+        lp = drivers['conmax-linear-program-certificate']
+        box = drivers['bobyqa-box-reference']
+        global_search = drivers['pikaia-rastrigin-reference']
+        self.assertTrue(lp['checks']['dual_certificate_checked'])
+        self.assertEqual(lp['checks']['linear_programs'], 3)
+        self.assertFalse(box['checks']['objective_derivatives_supplied'])
+        self.assertFalse(box['checks']['has_returned_status_flag'])
+        self.assertEqual(box['problem_id'], drivers['lbfgsb-box-quadratic']['problem_id'])
+        self.assertEqual(global_search['checks']['seeds'], [12345,6789,24680])
+        self.assertFalse(global_search['checks']['global_convergence_guaranteed'])
+        text = constrained_review_text()
+        self.assertIn('primal-dual gap', text)
+        self.assertIn('no returned status flag', text)
+        self.assertIn('does not guarantee global convergence', text)
 
     def test_special_function_drivers_keep_gamma_psi_and_bessel_evidence_separate(self):
         data = gams_data()
@@ -655,7 +746,7 @@ class PackageGamsTests(unittest.TestCase):
         self.assertEqual(len(by_class['J1a2']['driver_ids']), 2)
         self.assertEqual(len(by_class['J1a3']['driver_ids']), 1)
         self.assertTrue(any(not r['driver_ids'] for r in coverage['procedure_classes']))
-        self.assertEqual({r['code'] for r in coverage['top_level'] if r['driver_ids']}, set('ABCDEFGHIJLN'))
+        self.assertEqual({r['code'] for r in coverage['top_level'] if r['driver_ids']}, set('ABCDEFGHIJKLMN'))
         self.assertEqual((ROOT / COVERAGE_REPORT).read_text(encoding='utf-8'), coverage_review_text())
 
     def test_numerical_review_covers_catalog_scope_and_preserves_evidence(self):

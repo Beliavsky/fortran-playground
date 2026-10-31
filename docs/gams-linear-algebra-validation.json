@@ -322,7 +322,71 @@
           "exit_code": 0
         }
       ]
+    },
+    {
+      "driver_id": "arpack-poisson-eigenpairs",
+      "source_revision": "66faef9e09bb35f5acafe02960885050acc46fa0",
+      "source_sha256": "888805c74e75c2ad89b03cdf57caf00009b28f789ffad052608cdfe52a6a94d5",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T01:52:40.097698+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.508,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Spectrum selection: SM\n  1      0.02233834754974      0.02233834754974    1.0970E-15\n  2      0.08885438842772      0.08885438842772    1.1443E-15\n  3      0.19806226419516      0.19806226419516    5.0502E-15\nMatrix-vector callback count: 91\nSpectrum selection: LM\n 18      3.80193773580484      3.80193773580484    3.8823E-12\n 19      3.91114561157228      3.91114561157228    1.1876E-14\n 20      3.97766165245026      3.97766165245026    3.8082E-15\nMatrix-vector callback count: 71\nPASS arpack-poisson-eigenpairs\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.101,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "linalg-poisson-eigenpairs",
+      "source_revision": "30e7237ab54ca176e1c8dae4be2d9d44800e1f83",
+      "source_sha256": "ab2054367507fcec301b82e24c89802c56937e4a8da06c9cfbab7f6b3acfcd70",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T01:52:42.109013+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.504,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Index       Computed eigenvalue        Exact eigenvalue          Residual\n  1       0.022338347549742       0.022338347549743    1.6894E-15\n  2       0.088854388427718       0.088854388427719    1.7069E-15\n  3       0.198062264195162       0.198062264195162    1.2668E-15\n 18       3.801937735804838       3.801937735804839    1.6422E-15\n 19       3.911145611572282       3.911145611572281    1.7166E-15\n 20       3.977661652450256       3.977661652450257    1.2187E-15\nAll 20 checked; maximum eigenvalue/reconstruction errors:    8.88178E-16   3.55271E-15\nSix listed eigenpairs use the same n=20 Dirichlet matrix as the ARPACK driver.\nPASS linalg-poisson-eigenpairs\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.055,
+          "exit_code": 0
+        }
+      ]
     }
   ],
-  "validated_at": "2026-10-31T01:25:18.158598+00:00"
+  "validated_at": "2026-10-31T01:52:42.155560+00:00"
 }

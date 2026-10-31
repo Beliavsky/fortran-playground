@@ -25,6 +25,7 @@ The `dqags` driver adapts the author's inverse-square-root test and adds a logar
 | [Load dcuhre-box-integrals](https://beliavsky.github.io/fortran-playground/fpm/?package=dcuhre&example=gams-dcuhre-box-integrals) · [Driver source](../fpm_catalog/gams-drivers/dcuhre-box-integrals.f90) | H2b1a1 | [Procedure](https://github.com/Zaneham/dcuhre/blob/da8becb7f5313c1d7387066ef2106be9e156e20c/src/dcuhre.f#L1) · [Author test](https://github.com/Zaneham/dcuhre/blob/da8becb7f5313c1d7387066ef2106be9e156e20c/test/dtest1.f) |
 | [Load gauss-jacobi-polynomial-moments](https://beliavsky.github.io/fortran-playground/fpm/?package=gaussjacobiquad&example=gams-gauss-jacobi-polynomial-moments) · [Driver source](../fpm_catalog/gams-drivers/gauss-jacobi-polynomial-moments.f90) | H2c | [Procedure](https://github.com/HaoZeke/GaussJacobiQuad/blob/ffb970c68eea0b39b140f80f788c8994547d8bfb/src/GaussJacobiQuad.f90#L45) · [Author test](https://github.com/HaoZeke/GaussJacobiQuad/blob/ffb970c68eea0b39b140f80f788c8994547d8bfb/app/gjp_quad.f90) |
 | [Load cubatures-simplex-moments](https://beliavsky.github.io/fortran-playground/fpm/?package=fortran_cubatures&example=gams-cubatures-simplex-moments) · [Driver source](../fpm_catalog/gams-drivers/cubatures-simplex-moments.f90) | H2c | [Procedure](https://github.com/willklausler/fortran_cubatures/blob/aca04975d09aed329fd4210defd7052926dc01c1/src/cubatures.f90#L100) · [Author test](https://github.com/willklausler/fortran_cubatures/blob/aca04975d09aed329fd4210defd7052926dc01c1/test/test_cubatures.f90) |
+| [Load integrate-nd-polynomial-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=integrate_fortran&example=gams-integrate-nd-polynomial-reference) · [Driver source](../fpm_catalog/gams-drivers/integrate-nd-polynomial-reference.f90) | H2b1a2 | [Procedure](https://github.com/Euler-37/integrate_fortran/blob/5281426a7407aa8cef7f684ff8cf1f7e4a4df906/src/gauss_leg.f90#L34) · [Author test](https://github.com/Euler-37/integrate_fortran/blob/5281426a7407aa8cef7f684ff8cf1f7e4a4df906/test/check.f90) |
 
 Loading a link selects code without submitting a job. The same drivers are available in the hosted and main local FPM playgrounds and in downloaded FPM projects. Author license notices are retained with the drivers.
 
@@ -130,6 +131,16 @@ Maximum scaled moment error:  2.7756E-17
 quadrilateral degree=5 points=9 moments=36
 Maximum scaled moment error:  6.6613E-16
 PASS cubatures-simplex-moments
+```
+
+### integrate-nd-polynomial-reference
+
+```text
+3D integral of x^2*y^3*z:      10.66666666666667
+Exact polynomial integral checks: 67
+Maximum scaled error:    5.31644E-16
+Panel counts are explicit; each panel uses six Gauss-Legendre nodes per dimension.
+PASS integrate-nd-polynomial-reference
 ```
 
 ## Maintenance

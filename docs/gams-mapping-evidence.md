@@ -8,7 +8,7 @@ This report assesses each package/class pair, including inherited parent classes
 
 When a driver cannot be created, inspect the pinned implementation and author examples. Narrow or remove a classification that is unsupported; do not substitute an unrelated default example as evidence. Record missing dependencies, sandbox limits and upstream defects separately in the procedure or package review notes. A sandbox failure alone does not disprove an algorithm.
 
-Counts refer to package/class pairs and include parents: 246 verified, 501 source-supported, 246 uncertain.
+Counts refer to package/class pairs and include parents: 285 verified, 466 source-supported, 246 uncertain.
 
 ## Mappings requiring source review
 
@@ -275,7 +275,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [any / any-values](https://beliavsky.github.io/fortran-playground/gams/packages/any/#any-values) | N4 | source-supported |
 | [aotus / aotus-config](https://beliavsky.github.io/fortran-playground/gams/packages/aotus/#aotus-config) | N1 | source-supported |
 | [argparse-f / argparse-f-options](https://beliavsky.github.io/fortran-playground/gams/packages/argparse-f/#argparse-f-options) | N3 | source-supported |
-| [arpack-ng / arpack-eigenpairs](https://beliavsky.github.io/fortran-playground/gams/packages/arpack-ng/#arpack-eigenpairs) | D4 | source-supported |
+| [arpack-ng / arpack-eigenpairs](https://beliavsky.github.io/fortran-playground/gams/packages/arpack-ng/#arpack-eigenpairs) | D4a1 | verified |
 | [array_range / array-range-bounds](https://beliavsky.github.io/fortran-playground/gams/packages/array_range/#array-range-bounds) | R | source-supported |
 | [astro-fortran / astro-fortran-g2icrs](https://beliavsky.github.io/fortran-playground/gams/packages/astro-fortran/#astro-fortran-g2icrs) | P | source-supported |
 | [athena / athena-dense](https://beliavsky.github.io/fortran-playground/gams/packages/athena/#athena-dense) | K | source-supported |
@@ -289,7 +289,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [carlson-elliptic-integrals / carlson-elliptic-integrals-api](https://beliavsky.github.io/fortran-playground/gams/packages/carlson-elliptic-integrals/#carlson-elliptic-integrals-api) | C14 | verified |
 | [config-fortran / configuration-values](https://beliavsky.github.io/fortran-playground/gams/packages/config-fortran/#configuration-values) | N1 | source-supported |
 | [config-fortran / configuration-values](https://beliavsky.github.io/fortran-playground/gams/packages/config-fortran/#configuration-values) | N3 | source-supported |
-| [conmax / conmax-slnpro](https://beliavsky.github.io/fortran-playground/gams/packages/conmax/#conmax-slnpro) | G2a | source-supported |
+| [conmax / conmax-slnpro](https://beliavsky.github.io/fortran-playground/gams/packages/conmax/#conmax-slnpro) | G2a | verified |
 | [conmin / conmin-conmin-class](https://beliavsky.github.io/fortran-playground/gams/packages/conmin/#conmin-conmin-class) | G2h3b1b | source-supported |
 | [coretran / coretran-neighbor](https://beliavsky.github.io/fortran-playground/gams/packages/coretran/#coretran-neighbor) | P | source-supported |
 | [coretran / coretran-neighbor](https://beliavsky.github.io/fortran-playground/gams/packages/coretran/#coretran-neighbor) | N5 | source-supported |
@@ -313,7 +313,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [dvode / dvode-dvode-t](https://beliavsky.github.io/fortran-playground/gams/packages/dvode/#dvode-dvode-t) | I1a2 | verified |
 | [dynamics / dynamics-api](https://beliavsky.github.io/fortran-playground/gams/packages/dynamics/#dynamics-api) | I1 | source-supported |
 | [easy-plplot / easy-plplot-png](https://beliavsky.github.io/fortran-playground/gams/packages/easy-plplot/#easy-plplot-png) | Q | source-supported |
-| [econ-toolchain / econ-toolchain-api](https://beliavsky.github.io/fortran-playground/gams/packages/econ-toolchain/#econ-toolchain-api) | M | source-supported |
+| [econ-toolchain / econ-toolchain-api](https://beliavsky.github.io/fortran-playground/gams/packages/econ-toolchain/#econ-toolchain-api) | M | verified |
 | [ecx / ecx-impedance](https://beliavsky.github.io/fortran-playground/gams/packages/ecx/#ecx-impedance) | A4 | source-supported |
 | [enclose / enclose-strings](https://beliavsky.github.io/fortran-playground/gams/packages/enclose/#enclose-strings) | N3 | source-supported |
 | [ennuf / ennuf-inference](https://beliavsky.github.io/fortran-playground/gams/packages/ennuf/#ennuf-inference) | K | source-supported |
@@ -327,7 +327,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [fatode / fatode-tangent](https://beliavsky.github.io/fortran-playground/gams/packages/fatode/#fatode-tangent) | I1 | source-supported |
 | [fdict / fdict-dictionary](https://beliavsky.github.io/fortran-playground/gams/packages/fdict/#fdict-dictionary) | N4 | source-supported |
 | [fdict / fdict-dictionary](https://beliavsky.github.io/fortran-playground/gams/packages/fdict/#fdict-dictionary) | N5 | source-supported |
-| [featom / featom-api](https://beliavsky.github.io/fortran-playground/gams/packages/featom/#featom-api) | I1b | source-supported |
+| [featom / featom-api](https://beliavsky.github.io/fortran-playground/gams/packages/featom/#featom-api) | I1b | verified |
 | [fed / fed-format](https://beliavsky.github.io/fortran-playground/gams/packages/fed/#fed-format) | N1 | source-supported |
 | [fed / fed-format](https://beliavsky.github.io/fortran-playground/gams/packages/fed/#fed-format) | N3 | source-supported |
 | [feq-parse / feq-parse-evaluate](https://beliavsky.github.io/fortran-playground/gams/packages/feq-parse/#feq-parse-evaluate) | N3 | source-supported |
@@ -342,7 +342,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [fitpack / fitpack-curve-derivative](https://beliavsky.github.io/fortran-playground/gams/packages/fitpack/#fitpack-curve-derivative) | H1 | source-supported |
 | [fitpack / fitpack-fitpack-curve](https://beliavsky.github.io/fortran-playground/gams/packages/fitpack/#fitpack-fitpack-curve) | E1a | source-supported |
 | [fitpack / fitpack-integral](https://beliavsky.github.io/fortran-playground/gams/packages/fitpack/#fitpack-integral) | H2a2b2 | source-supported |
-| [fjsample / fjsample-jackerror](https://beliavsky.github.io/fortran-playground/gams/packages/fjsample/#fjsample-jackerror) | L4 | source-supported |
+| [fjsample / fjsample-jackerror](https://beliavsky.github.io/fortran-playground/gams/packages/fjsample/#fjsample-jackerror) | L4 | verified |
 | [fkb / fkb-inference](https://beliavsky.github.io/fortran-playground/gams/packages/fkb/#fkb-inference) | K | source-supported |
 | [flibcpp / flibcpp-sort-search](https://beliavsky.github.io/fortran-playground/gams/packages/flibcpp/#flibcpp-sort-search) | N5 | source-supported |
 | [flibcpp / flibcpp-sort-search](https://beliavsky.github.io/fortran-playground/gams/packages/flibcpp/#flibcpp-sort-search) | N6 | source-supported |
@@ -405,7 +405,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [fortranlib / fortranlib-numerics](https://beliavsky.github.io/fortran-playground/gams/packages/fortranlib/#fortranlib-numerics) | E1 | source-supported |
 | [fortranlib / fortranlib-numerics](https://beliavsky.github.io/fortran-playground/gams/packages/fortranlib/#fortranlib-numerics) | F1 | source-supported |
 | [fortranlib / fortranlib-numerics](https://beliavsky.github.io/fortran-playground/gams/packages/fortranlib/#fortranlib-numerics) | H2 | source-supported |
-| [fortsa / fortsa-acvf](https://beliavsky.github.io/fortran-playground/gams/packages/fortsa/#fortsa-acvf) | L10a2a | source-supported |
+| [fortsa / fortsa-acvf](https://beliavsky.github.io/fortran-playground/gams/packages/fortsa/#fortsa-acvf) | L10a2a | verified |
 | [forwarddiff / forwarddiff-derivative](https://beliavsky.github.io/fortran-playground/gams/packages/forwarddiff/#forwarddiff-derivative) | H1 | source-supported |
 | [friction / friction-fit](https://beliavsky.github.io/fortran-playground/gams/packages/friction/#friction-fit) | L8 | source-supported |
 | [friction / friction-internal-state](https://beliavsky.github.io/fortran-playground/gams/packages/friction/#friction-internal-state) | I1 | source-supported |
@@ -434,7 +434,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [hrweno / hrweno-reconstruction](https://beliavsky.github.io/fortran-playground/gams/packages/hrweno/#hrweno-reconstruction) | I2 | source-supported |
 | [hrweno / hrweno-tvd](https://beliavsky.github.io/fortran-playground/gams/packages/hrweno/#hrweno-tvd) | I1 | source-supported |
 | [integer_set / integer-set-storage](https://beliavsky.github.io/fortran-playground/gams/packages/integer_set/#integer-set-storage) | N4 | source-supported |
-| [integrate_fortran / integrate-fortran-gauss-leg-nd](https://beliavsky.github.io/fortran-playground/gams/packages/integrate_fortran/#integrate-fortran-gauss-leg-nd) | H2b1a2 | source-supported |
+| [integrate_fortran / integrate-fortran-gauss-leg-nd](https://beliavsky.github.io/fortran-playground/gams/packages/integrate_fortran/#integrate-fortran-gauss-leg-nd) | H2b1a2 | verified |
 | [interpolation / interpolation-interp1](https://beliavsky.github.io/fortran-playground/gams/packages/interpolation/#interpolation-interp1) | E1a | source-supported |
 | [io-fortran-library / io-fortran-library-to-file](https://beliavsky.github.io/fortran-playground/gams/packages/io-fortran-library/#io-fortran-library-to-file) | N1 | source-supported |
 | [io_utilities / io-utilities-keyvars](https://beliavsky.github.io/fortran-playground/gams/packages/io_utilities/#io-utilities-keyvars) | N1 | source-supported |
@@ -457,7 +457,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [linalg / linalg-qr-factor](https://beliavsky.github.io/fortran-playground/gams/packages/linalg/#linalg-qr-factor) | D5 | source-supported |
 | [linalg / linalg-solve-least-squares](https://beliavsky.github.io/fortran-playground/gams/packages/linalg/#linalg-solve-least-squares) | D9a1 | source-supported |
 | [linalg / linalg-svd](https://beliavsky.github.io/fortran-playground/gams/packages/linalg/#linalg-svd) | D6 | source-supported |
-| [linalg_fortran / linalg-fortran-eigen](https://beliavsky.github.io/fortran-playground/gams/packages/linalg_fortran/#linalg-fortran-eigen) | D4 | source-supported |
+| [linalg_fortran / linalg-fortran-eigen](https://beliavsky.github.io/fortran-playground/gams/packages/linalg_fortran/#linalg-fortran-eigen) | D4a1 | verified |
 | [linalg_fortran / linalg-fortran-inverse](https://beliavsky.github.io/fortran-playground/gams/packages/linalg_fortran/#linalg-fortran-inverse) | D2 | source-supported |
 | [lookup-table-fortran / lookup-interpolation](https://beliavsky.github.io/fortran-playground/gams/packages/lookup-table-fortran/#lookup-interpolation) | E1a | source-supported |
 | [lookup-table-fortran / lookup-interpolation](https://beliavsky.github.io/fortran-playground/gams/packages/lookup-table-fortran/#lookup-interpolation) | E3 | source-supported |
@@ -516,7 +516,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [penf / numerical-portability](https://beliavsky.github.io/fortran-playground/gams/packages/penf/#numerical-portability) | R1 | source-supported |
 | [penf / numerical-portability](https://beliavsky.github.io/fortran-playground/gams/packages/penf/#numerical-portability) | N3 | source-supported |
 | [pflogger / pflogger-logging](https://beliavsky.github.io/fortran-playground/gams/packages/pflogger/#pflogger-logging) | R | source-supported |
-| [pikaia / pikaia-pikaia-class](https://beliavsky.github.io/fortran-playground/gams/packages/pikaia/#pikaia-pikaia-class) | G2i | source-supported |
+| [pikaia / pikaia-pikaia-class](https://beliavsky.github.io/fortran-playground/gams/packages/pikaia/#pikaia-pikaia-class) | G2i | verified |
 | [plplot / plplot-demo-api](https://beliavsky.github.io/fortran-playground/gams/packages/plplot/#plplot-demo-api) | Q | source-supported |
 | [pointsets / pointsets-arithmetic-spacing](https://beliavsky.github.io/fortran-playground/gams/packages/pointsets/#pointsets-arithmetic-spacing) | R | source-supported |
 | [pointsets / pointsets-random-spacing](https://beliavsky.github.io/fortran-playground/gams/packages/pointsets/#pointsets-random-spacing) | L6a21 | source-supported |
@@ -524,7 +524,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [polyroots-fortran / polyroots-fortran-cpolyroots](https://beliavsky.github.io/fortran-playground/gams/packages/polyroots-fortran/#polyroots-fortran-cpolyroots) | F1a | verified |
 | [polyroots-fortran / polyroots-fortran-polyroots](https://beliavsky.github.io/fortran-playground/gams/packages/polyroots-fortran/#polyroots-fortran-polyroots) | F1a | verified |
 | [polyroots-fortran / polyroots-fortran-rpoly](https://beliavsky.github.io/fortran-playground/gams/packages/polyroots-fortran/#polyroots-fortran-rpoly) | F1a | verified |
-| [powellopt / powellopt-bobyqa](https://beliavsky.github.io/fortran-playground/gams/packages/powellopt/#powellopt-bobyqa) | G2h1a1 | source-supported |
+| [powellopt / powellopt-bobyqa](https://beliavsky.github.io/fortran-playground/gams/packages/powellopt/#powellopt-bobyqa) | G2h1a1 | verified |
 | [propack / propack-partial-svd](https://beliavsky.github.io/fortran-playground/gams/packages/propack/#propack-partial-svd) | D6 | source-supported |
 | [psqp / psqp-psqpn](https://beliavsky.github.io/fortran-playground/gams/packages/psqp/#psqp-psqpn) | G2h3b1b | source-supported |
 | [qcontainers / qcontainers-storage](https://beliavsky.github.io/fortran-playground/gams/packages/qcontainers/#qcontainers-storage) | N4 | source-supported |
@@ -577,7 +577,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [spectrum / spectrum-rfft](https://beliavsky.github.io/fortran-playground/gams/packages/spectrum/#spectrum-rfft) | J1a1 | source-supported |
 | [spherepack / spherepack-api](https://beliavsky.github.io/fortran-playground/gams/packages/spherepack/#spherepack-api) | I2 | source-supported |
 | [spherepack / spherepack-scalar-transform](https://beliavsky.github.io/fortran-playground/gams/packages/spherepack/#spherepack-scalar-transform) | J | source-supported |
-| [splpak / splpak-splpak-type](https://beliavsky.github.io/fortran-playground/gams/packages/splpak/#splpak-splpak-type) | K1 | source-supported |
+| [splpak / splpak-splpak-type](https://beliavsky.github.io/fortran-playground/gams/packages/splpak/#splpak-splpak-type) | K1 | verified |
 | [sqliteff / sqliteff-database](https://beliavsky.github.io/fortran-playground/gams/packages/sqliteff/#sqliteff-database) | N1 | source-supported |
 | [sqliteff / sqliteff-database](https://beliavsky.github.io/fortran-playground/gams/packages/sqliteff/#sqliteff-database) | N5 | source-supported |
 | [stdlib / stdlib-lstsq](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-lstsq) | D9a1 | verified |

@@ -2866,6 +2866,368 @@
         "preserves_original_matrix": true,
         "max_scaled_error": 1e-11
       }
+    },
+    {
+      "id": "splpak-paired-noise-fit",
+      "name": "gams-splpak-paired-noise-fit",
+      "package_id": "splpak",
+      "procedure_id": "splpak-splpak-type",
+      "gams_code": "K1",
+      "problem_id": "splpak-paired-noise-fit",
+      "path": "fpm_catalog/gams-drivers/splpak-paired-noise-fit.f90",
+      "revision": "35340cb2d193c7aa44f03978db21660df8297cc0",
+      "author_example": "test/splpak_test.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/applied-methods-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer with closed-form or direct scalar references; no upstream implementation or test code copied.",
+      "validation_path": "docs/gams-applied-methods-validation.json",
+      "review_path": "docs/gams-applied-methods.md",
+      "checks": {
+        "fitted_datasets": 3,
+        "observations_per_dataset": 24,
+        "value_derivative_checks": 126,
+        "noisy_fit_sse": 1.5,
+        "maximum_value_error": 1e-08,
+        "maximum_derivative_error": 1e-07,
+        "reference": "known affine fits with paired opposite noise and analytic derivatives"
+      }
+    },
+    {
+      "id": "fortsa-autocorrelation-reference",
+      "name": "gams-fortsa-autocorrelation-reference",
+      "package_id": "fortsa",
+      "procedure_id": "fortsa-acvf",
+      "gams_code": "L10a2a",
+      "problem_id": "fortsa-autocorrelation-reference",
+      "path": "fpm_catalog/gams-drivers/fortsa-autocorrelation-reference.f90",
+      "revision": "d31da12286617ab82e06e9fa0a6f20d11778581c",
+      "author_example": "test/stats/test_stats.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/applied-methods-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer with closed-form or direct scalar references; no upstream implementation or test code copied.",
+      "validation_path": "docs/gams-applied-methods-validation.json",
+      "review_path": "docs/gams-applied-methods.md",
+      "checks": {
+        "datasets": 4,
+        "observations": 8,
+        "lags": 8,
+        "covariance_calls": 12,
+        "correlation_calls": 9,
+        "methods": [
+          "acvf",
+          "acvf_opt direct",
+          "acvf_opt FFT"
+        ],
+        "constant_series_correlation_requested": false,
+        "reference": "explicit centered lag-product sums divided by N",
+        "max_absolute_error": 1e-10
+      }
+    },
+    {
+      "id": "integrate-nd-polynomial-reference",
+      "name": "gams-integrate-nd-polynomial-reference",
+      "package_id": "integrate_fortran",
+      "procedure_id": "integrate-fortran-gauss-leg-nd",
+      "gams_code": "H2b1a2",
+      "problem_id": "integrate-nd-polynomial-reference",
+      "path": "fpm_catalog/gams-drivers/integrate-nd-polynomial-reference.f90",
+      "revision": "5281426a7407aa8cef7f684ff8cf1f7e4a4df906",
+      "author_example": "test/check.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/applied-methods-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer with closed-form or direct scalar references; no upstream implementation or test code copied.",
+      "validation_path": "docs/gams-applied-methods-validation.json",
+      "review_path": "docs/gams-applied-methods.md",
+      "checks": {
+        "polynomial_integrals": 67,
+        "rectangle_cases": 50,
+        "iterated_variable_bound_cases": 16,
+        "box_3d_cases": 1,
+        "gauss_nodes_per_panel_per_dimension": 6,
+        "rectangle_panel_counts": [
+          1,
+          2
+        ],
+        "reference": "analytic monomial antiderivatives and binomial expansion",
+        "max_scaled_error": 1e-11
+      }
+    },
+    {
+      "id": "conmax-linear-program-certificate",
+      "name": "gams-conmax-linear-program-certificate",
+      "package_id": "conmax",
+      "procedure_id": "conmax-slnpro",
+      "gams_code": "G2a",
+      "problem_id": "conmax-linear-program-certificate",
+      "path": "fpm_catalog/gams-drivers/conmax-linear-program-certificate.f90",
+      "revision": "ab7f237d30f94f7d13b86997e0c49f3d67bd7c54",
+      "author_example": "test/lp.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/optimization-api-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer with analytical optimum/certificate and explicit feasibility/accuracy checks; no upstream implementation or test code copied.",
+      "validation_path": "docs/gams-constrained-validation.json",
+      "review_path": "docs/gams-constrained.md",
+      "checks": {
+        "linear_programs": 3,
+        "free_variables": true,
+        "rescaled_inequalities": true,
+        "dual_certificate_checked": true,
+        "required_status": 0,
+        "max_solution_error": 1e-09,
+        "max_primal_dual_gap": 1e-09
+      }
+    },
+    {
+      "id": "bobyqa-box-reference",
+      "name": "gams-bobyqa-box-reference",
+      "package_id": "powellopt",
+      "procedure_id": "powellopt-bobyqa",
+      "gams_code": "G2h1a1",
+      "problem_id": "box-quadratic-projection",
+      "path": "fpm_catalog/gams-drivers/bobyqa-box-reference.f90",
+      "revision": "0987cd09d695cec968a3d02c8230d4ce5af33533",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/optimization-api-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer with analytical optimum/certificate and explicit feasibility/accuracy checks; no upstream implementation or test code copied.",
+      "validation_path": "docs/gams-constrained-validation.json",
+      "review_path": "docs/gams-constrained.md",
+      "checks": {
+        "starting_points": 3,
+        "exact_solution": [
+          1,
+          0
+        ],
+        "exact_objective": 2,
+        "objective_derivatives_supplied": false,
+        "callback_bounds_checked": true,
+        "max_evaluations_per_start": 1000,
+        "has_returned_status_flag": false,
+        "max_solution_error": 1e-08,
+        "max_projected_gradient_residual": 1e-08
+      }
+    },
+    {
+      "id": "pikaia-rastrigin-reference",
+      "name": "gams-pikaia-rastrigin-reference",
+      "package_id": "pikaia",
+      "procedure_id": "pikaia-pikaia-class",
+      "gams_code": "G2i",
+      "problem_id": "pikaia-rastrigin-reference",
+      "path": "fpm_catalog/gams-drivers/pikaia-rastrigin-reference.f90",
+      "revision": "c080c4004896243bf9b8bbb4577e402c9e31c5e3",
+      "author_example": "test/xpk2.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/optimization-api-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer with analytical optimum/certificate and explicit feasibility/accuracy checks; no upstream implementation or test code copied.",
+      "validation_path": "docs/gams-constrained-validation.json",
+      "review_path": "docs/gams-constrained.md",
+      "checks": {
+        "seeds": [
+          12345,
+          6789,
+          24680
+        ],
+        "generations": 600,
+        "population": 100,
+        "decimal_encoding_digits": 7,
+        "bounds": [
+          -2,
+          2
+        ],
+        "known_global_solution": [
+          0,
+          0
+        ],
+        "known_global_objective": 0,
+        "max_parameter_error": 0.01,
+        "max_objective": 0.01,
+        "global_convergence_guaranteed": false
+      }
+    },
+    {
+      "id": "featom-coulomb-spectrum",
+      "name": "gams-featom-coulomb-spectrum",
+      "package_id": "featom",
+      "procedure_id": "featom-api",
+      "gams_code": "I1b",
+      "problem_id": "featom-coulomb-spectrum",
+      "path": "fpm_catalog/gams-drivers/featom-coulomb-spectrum.f90",
+      "revision": "87872a3266ceeee61a7244e6ecd134dc3bda790f",
+      "author_example": "test/test_coulomb_schroed.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/boundary-spectral-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer using manufactured or analytic mathematical references; no upstream implementation or test code copied.",
+      "validation_path": "docs/gams-boundary-validation.json",
+      "review_path": "docs/gams-boundary.md",
+      "checks": {
+        "charges": [
+          1,
+          2
+        ],
+        "principal_quantum_numbers": [
+          1,
+          2,
+          3
+        ],
+        "energy_checks": 12,
+        "element_count": 8,
+        "polynomial_degree": 20,
+        "quadrature_points_per_element": 43,
+        "reference": "-Z^2/(2*n^2) Hartree",
+        "max_absolute_energy_error": 1e-07,
+        "wavefunction_accuracy_verified": false
+      }
+    },
+    {
+      "id": "arpack-poisson-eigenpairs",
+      "name": "gams-arpack-poisson-eigenpairs",
+      "package_id": "arpack-ng",
+      "procedure_id": "arpack-eigenpairs",
+      "gams_code": "D4a1",
+      "problem_id": "dirichlet-poisson-n20-spectrum",
+      "path": "fpm_catalog/gams-drivers/arpack-poisson-eigenpairs.f90",
+      "revision": "66faef9e09bb35f5acafe02960885050acc46fa0",
+      "author_example": "EXAMPLES/SYM/dsdrv1.f",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/boundary-spectral-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer using manufactured or analytic mathematical references; no upstream implementation or test code copied.",
+      "validation_path": "docs/gams-linear-algebra-validation.json",
+      "review_path": "docs/gams-linear-algebra.md",
+      "checks": {
+        "matrix_size": 20,
+        "eigenpairs_per_run": 3,
+        "spectrum_selections": [
+          "SM",
+          "LM"
+        ],
+        "explicit_initial_residual": true,
+        "analytic_eigenvectors_checked": true,
+        "max_eigenvalue_error": 1e-09,
+        "max_residual_norm": 1e-09,
+        "max_orthogonality_error": 1e-10
+      }
+    },
+    {
+      "id": "linalg-poisson-eigenpairs",
+      "name": "gams-linalg-poisson-eigenpairs",
+      "package_id": "linalg_fortran",
+      "procedure_id": "linalg-fortran-eigen",
+      "gams_code": "D4a1",
+      "problem_id": "dirichlet-poisson-n20-spectrum",
+      "path": "fpm_catalog/gams-drivers/linalg-poisson-eigenpairs.f90",
+      "revision": "30e7237ab54ca176e1c8dae4be2d9d44800e1f83",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/boundary-spectral-drivers-MIT.txt"
+      ],
+      "modifications": "Independent real symmetric API consumer with explicit analytic spectral references, shared matrix with ARPACK and sign-independent eigenvector checks.",
+      "validation_path": "docs/gams-linear-algebra-validation.json",
+      "review_path": "docs/gams-linear-algebra.md",
+      "checks": {
+        "matrix_size": 20,
+        "eigenpairs_checked": 20,
+        "analytic_eigenvectors_checked": true,
+        "spectral_reconstruction_checked": true,
+        "max_eigenvalue_error": 1e-11,
+        "max_residual_norm": 1e-11,
+        "max_orthogonality_error": 1e-11
+      }
+    },
+    {
+      "id": "econ-markov-reference",
+      "name": "gams-econ-markov-reference",
+      "package_id": "econ-toolchain",
+      "procedure_id": "econ-toolchain-api",
+      "gams_code": "M",
+      "problem_id": "stationary-markov-normal-cells",
+      "path": "fpm_catalog/gams-drivers/econ-markov-reference.f90",
+      "revision": "301d1659ba3d34973195985c552ca6fcfe2d9f29",
+      "author_example": "test/tauchen_test.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/resampling-markov-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer with analytic and independently enumerated references. Author examples reviewed for usage; no upstream implementation or test code copied.",
+      "validation_path": "docs/gams-resampling-markov-validation.json",
+      "review_path": "docs/gams-resampling-markov.md",
+      "checks": {
+        "analytic_two_state_chains": 3,
+        "rank_one_chain_states": 3,
+        "ar1_node_count": 31,
+        "ar1_correlations": [
+          0,
+          0.8,
+          -0.5
+        ],
+        "normal_cell_probability_checks": 2883,
+        "max_absolute_error": 1e-11,
+        "stationary_residual_checked": true,
+        "random_sampling_verified": false
+      }
+    },
+    {
+      "id": "fjsample-jackknife-reference",
+      "name": "gams-fjsample-jackknife-reference",
+      "package_id": "fjsample",
+      "procedure_id": "fjsample-jackerror",
+      "gams_code": "L4",
+      "problem_id": "leave-one-out-mean-and-squared-mean",
+      "path": "fpm_catalog/gams-drivers/fjsample-jackknife-reference.f90",
+      "revision": "8563d2653d1a9d80a355b2064f4b153559698915",
+      "author_example": "app/main.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/resampling-markov-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer with analytic and independently enumerated references. Author examples reviewed for usage; no upstream implementation or test code copied.",
+      "validation_path": "docs/gams-resampling-markov-validation.json",
+      "review_path": "docs/gams-resampling-markov.md",
+      "checks": {
+        "sample_sizes": [
+          2,
+          6,
+          4,
+          6,
+          8
+        ],
+        "estimators": [
+          "sample mean",
+          "squared sample mean"
+        ],
+        "independent_leave_one_out_checked": true,
+        "constant_sample_checked": true,
+        "max_absolute_error": 1e-11,
+        "bias_convention": "full estimate minus mean resampled estimate; no factor n-1"
+      }
     }
   ]
 }

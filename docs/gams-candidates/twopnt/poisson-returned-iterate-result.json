@@ -1,0 +1,85 @@
+{
+  "source_path": "docs/gams-candidates/twopnt/poisson-returned-iterate.f90",
+  "source_sha256": "204939d2f0c7d2854a687979ef74412d0014dee2689c5ad72ff8c3e800040451",
+  "source_revision": "4ce477215f84a88d879f0ca3937cab9bedfb7762",
+  "result": {
+    "ok": false,
+    "compiler": "GNU Fortran (GCC) 16.2.0",
+    "compiler_id": "gfortran",
+    "fpm": "0.12.0",
+    "stages": [
+      {
+        "name": "Build",
+        "command": [
+          "fpm",
+          "build",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 0.44,
+        "ok": true,
+        "exit_code": 0,
+        "error": "",
+        "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+        "stderr": ""
+      },
+      {
+        "name": "Run",
+        "command": [
+          "fpm",
+          "run",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 0.038,
+        "ok": false,
+        "exit_code": 1,
+        "error": "",
+        "stdout": "\n TWOPNT:  DOUBLE PRECISION (TWO POINT BOUNDARY VALUE PROBLEM) SOLVER,\n          VERSION 4.0.0 OF APRIL 2023.\n\n TWOPNT:  INITIAL GUESS:\n\n               GRID POINT          u\n            1>   0.000000  0.000E+00\n            2>   0.125000  0.000E+00\n            3>   0.250000  0.000E+00\n            4>   0.375000  0.000E+00\n            5>   0.500000  0.000E+00\n            6>   0.625000  0.000E+00\n            7>   0.750000  0.000E+00\n            8>   0.875000  0.000E+00\n            9>   1.000000  0.000E+00\n             START     0.30           \n\n TWOPNT:  CALLING SEARCH TO SOLVE THE STEADY STATE PROBLEM.\n\n SEARCH:  SOLVE NONLINEAR, NONDIFFERENTIAL EQUATIONS.\n\n                   LOG10                                SLTN   --------------\n          NUMBER   NORM F   COND J   NORM S      ABS A                       \n          -----------------------                     ND REL    DELTA B AND D\n\n               0     0.30     1.49    -0.60    -0.60    ZERO                 \n\n SEARCH:  SUCCESS.\n\n TWOPNT:  SEARCH FOUND THE STEADY STATE.\n            SEARCH     0.30    1.49            0 SEARCH STEPS\n\n TWOPNT:  FINAL SOLUTION:\n\n               GRID POINT          u\n            1>   0.000000  0.000E+00\n            2>   0.125000  0.000E+00\n            3>   0.250000  0.000E+00\n            4>   0.375000  0.000E+00\n            5>   0.500000  0.000E+00\n            6>   0.625000  0.000E+00\n            7>   0.750000  0.000E+00\n            8>   0.875000  0.000E+00\n            9>   1.000000  0.000E+00\n\n TWOPNT:  SUCCESS.  PROBLEM SOLVED.\nFailed grid 9; reason=                            2.500000E-01    2.000000E+00\nReturned profile:    0.0000000    0.0000000    0.0000000    0.0000000    0.0000000    0.0000000    0.0000000    0.0000000    0.0000000\nExpected profile:    0.0000000    0.1093750    0.1875000    0.2343750    0.2500000    0.2343750    0.1875000    0.1093750    0.0000000\n",
+        "stderr": "Project is up to date\nERROR STOP known Poisson profile/residual\n\nError termination. Backtrace:\n#0  0x2b7048022f83 in ???\n#1  0x2b7048023c39 in ???\n#2  0x2b7048025045 in ???\n#3  0x405f00 in run\n\tat app/main.f90:86\n#4  0x406681 in MAIN__\n\tat app/main.f90:55\n#5  0x406753 in main\n\tat app/main.f90:49\n<ERROR> Execution for object \" playground-main \" returned exit code  1\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 1\n"
+      }
+    ],
+    "cache": {
+      "package": "twopnt",
+      "compiler": "GNU Fortran 16.2.0",
+      "key": "869e1f7fe6297585b3f49814",
+      "library_reused": true,
+      "changed_artifacts": []
+    },
+    "packages": [
+      {
+        "repository": "perazz/twopnt",
+        "revision": "4ce477215f84a88d879f0ca3937cab9bedfb7762",
+        "sha256": "33884a9ec5fd2cea1d66c64c786dbb42beb9b58100e10ada14a725cbce66a02e"
+      }
+    ],
+    "build_ok": true,
+    "target_groups": {
+      "app": [
+        "playground-main"
+      ],
+      "example": [],
+      "test": []
+    },
+    "targets": [
+      "playground-main"
+    ],
+    "plots": [],
+    "plot_notes": []
+  },
+  "source_review": "search checks convergence at v1 and exits newton_iterations before v0=v1; it returns the preceding v0. This manufactured linear problem returns the unchanged zero initial guess despite SUCCESS."
+}

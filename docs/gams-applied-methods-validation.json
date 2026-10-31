@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "splpak-paired-noise-fit",
+      "source_revision": "35340cb2d193c7aa44f03978db21660df8297cc0",
+      "source_sha256": "ac443f89c72d2047c68670c8e91e68f21aeb3746a134c8911e0ee03ad59baf74",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T01:31:49.973482+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.34,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Fit 1 training SSE:     0.000000000000\nFit 2 training SSE:     1.500000000000\nFit 3 training SSE:     0.000000000000\nMaximum value/derivative errors:    3.10862E-15   3.29736E-14\nPASS splpak-paired-noise-fit\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.026,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fortsa-autocorrelation-reference",
+      "source_revision": "d31da12286617ab82e06e9fa0a6f20d11778581c",
+      "source_sha256": "cfa9af624220d0c5d02fe659071ca4c547f55d632facf900ed73529dc6395b63",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T01:31:51.435720+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.406,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Lag       Direct autocorrelation\n  0        1.00000000000000\n  1       -0.83333333333333\n  2        0.66666666666667\n  3       -0.51666666666667\n  4        0.36666666666667\n  5       -0.25000000000000\n  6        0.13333333333333\n  7       -0.06666666666667\nCovariance/correlation calls checked:    12    9\nMaximum absolute error:    3.55271E-15\nConstant-series covariance checked; zero-variance correlation is undefined and is not requested.\nPASS fortsa-autocorrelation-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.041,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "integrate-nd-polynomial-reference",
+      "source_revision": "5281426a7407aa8cef7f684ff8cf1f7e4a4df906",
+      "source_sha256": "fdefe5f965b003bf5f7d1688aea2f72e95165f004ace276d8d49cef33db44c67",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T01:31:52.932245+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.255,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "3D integral of x^2*y^3*z:      10.66666666666667\nExact polynomial integral checks: 67\nMaximum scaled error:    5.31644E-16\nPanel counts are explicit; each panel uses six Gauss-Legendre nodes per dimension.\nPASS integrate-nd-polynomial-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.022,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T01:31:52.986507+00:00"
+}

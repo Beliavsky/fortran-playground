@@ -2583,7 +2583,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "Least-squares spline fitting; retain K1 pending a closer match among its finer subclasses.",
+      "notes": "Least-squares spline fitting; retain K1 pending a closer match among its finer subclasses. Dedicated K1 driver checks three known affine least-squares fits, including duplicate-coordinate opposite noise and a known nonzero SSE of 1.5, plus nonuniform-weight constant data. Values and analytic derivatives are checked at 21 points per fit. Cubic/nonlinear fitting accuracy, multidimensional fits, extrapolation and ill-conditioning are outside this driver.",
       "evidence": [
         {
           "path": "src/splpak.F90",
@@ -2596,7 +2596,8 @@
           "path": "test/splpak_test.f90",
           "sha256": "6a26ae73fe6893ab654750cf5e848f4e12f5d415dc9dfebba2b7581ef4bd5b16"
         }
-      ]
+      ],
+      "driver_id": "splpak-paired-noise-fit"
     },
     {
       "id": "fortran-astrodynamics-toolkit-orbital-elements-to-rv",
@@ -2795,7 +2796,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "none",
-      "notes": "Genetic global optimization on bounded search variables; no guarantee of finding the global optimum.",
+      "notes": "Genetic global optimization on bounded search variables; no guarantee of finding the global optimum. Dedicated G2i driver checks the 2D nonconvex Rastrigin problem on [-2,2]^2 for three explicit seeds, population 100 and 600 generations. Known global solution/objective, bounds and independently recomputed fitness are checked. Finite fixed-seed success is not a guarantee of global convergence or accuracy on other problems.",
       "evidence": [
         {
           "path": "src/pikaia_module.f90",
@@ -2808,7 +2809,8 @@
           "path": "test/xpk2.f90",
           "sha256": "e5e70fb83117298e45639f1839c94511d8624777ce119ea5641da2fee2afad0b"
         }
-      ]
+      ],
+      "driver_id": "pikaia-rastrigin-reference"
     },
     {
       "id": "io-fortran-library-to-file",
@@ -2847,7 +2849,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "none",
-      "notes": "Bound-constrained smooth derivative-free optimization by quadratic models; COBYLA and other algorithms are separate.",
+      "notes": "Bound-constrained smooth derivative-free optimization by quadratic models; COBYLA and other algorithms are separate. Dedicated G2h1a1 driver solves the shared box quadratic from three starts without providing derivatives. Known solution (1,0), objective 2, callback bounds and projected-gradient residual are checked. The API returns no status flag, so answer checks and nonexhausted 1000-call budget determine acceptance. General convergence is not inferred from normal return.",
       "evidence": [
         {
           "path": "src/bobyqa.f90",
@@ -2855,7 +2857,8 @@
           "line": 77
         }
       ],
-      "author_examples": []
+      "author_examples": [],
+      "driver_id": "bobyqa-box-reference"
     },
     {
       "id": "fstats-variance",
@@ -3286,7 +3289,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "none",
-      "notes": "Fixed-rule iterated Gauss-Legendre quadrature over rectangular domains.",
+      "notes": "Fixed-rule iterated Gauss-Legendre quadrature over rectangular domains. Dedicated H2b1a2 driver checks 67 exact polynomial integrals: 50 rectangle moments at one/two panels per axis, 16 iterated integrals with y upper bound 1+x^2, and one 3D box moment. JS entries are subinterval counts, not quadrature orders; the implementation uses six nodes per panel/dimension. No adaptive error control or singular integrands are claimed.",
       "evidence": [
         {
           "path": "src/gauss_leg.f90",
@@ -3299,7 +3302,8 @@
           "path": "test/check.f90",
           "sha256": "16b5c33a4770e09b7bbca88282f22ded873a4613613b1f1bd91c4f6b2c543068"
         }
-      ]
+      ],
+      "driver_id": "integrate-nd-polynomial-reference"
     },
     {
       "id": "rndgen-fortran-rnd",
@@ -3467,7 +3471,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "problem residual and configured Jacobian handling",
-      "notes": "Adaptive boundary-value solution; retain I1b rather than infer linearity for all supported problems.",
+      "notes": "Adaptive boundary-value solution; retain I1b rather than infer linearity for all supported problems. A manufactured Poisson probe u_second_derivative=-2 with zero endpoints failed the full-profile/residual checks: the pinned solver reports success but returns the preceding iterate (the zero initial guess on the linear problem). The convergence exit occurs before v0=v1 in search. Failed source/output are retained under docs/gams-candidates/twopnt; this probe is not a verified driver and no library patch has been applied.",
       "evidence": [
         {
           "path": "src/twopnt_core.f90",
@@ -3901,7 +3905,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "Jackknife resampling uncertainty estimates; keep broad data-analysis class pending a suitable finer match.",
+      "notes": "Jackknife resampling uncertainty estimates; keep broad data-analysis class pending a suitable finer match. Checked driver verifies leave-one-out means, sample-mean and squared-mean uncertainty; the returned bias is full estimate minus average resampled estimate, without the conventional n-1 multiplier.",
       "evidence": [
         {
           "path": "src/jack.f90",
@@ -3914,7 +3918,8 @@
           "path": "app/main.f90",
           "sha256": "fdf0bee20cc5fc242153abdb5a881ab163b76004061dc1416ff55f87a34623b8"
         }
-      ]
+      ],
+      "driver_id": "fjsample-jackknife-reference"
     },
     {
       "id": "conmin-conmin-class",
@@ -4031,7 +4036,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "Sample autocovariances and autocorrelations of a single time series; ARIMA fitting is a different API.",
+      "notes": "Sample autocovariances and autocorrelations of a single time series; ARIMA fitting is a different API. Dedicated L10a2a driver checks 12 direct/FFT autocovariance calls and 9 normalization calls on base, shifted, scaled and constant 8-point series, at all lags 0..7, against independent centered scalar lag sums divided by N. Zero-variance correlation is not requested; missing data, ARIMA and other estimators are outside the driver.",
       "evidence": [
         {
           "path": "src/fortsa_stats.f90",
@@ -4044,7 +4049,8 @@
           "path": "test/stats/test_stats.f90",
           "sha256": "22f40ddc4af069a795cdb0dec9148e35028d3949f3d25ffd949cc10657e4bc1d"
         }
-      ]
+      ],
+      "driver_id": "fortsa-autocorrelation-reference"
     },
     {
       "id": "fortran-flann-knn-search",
@@ -4137,7 +4143,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "Linear-programming entry point; constrained minimax routines are separate.",
+      "notes": "Linear-programming entry point; constrained minimax routines are separate. Dedicated G2a driver checks three scaled free-variable LPs maximizing -y under x+y>=a, x-y<=b. Known intersections, primal feasibility, solver-reported objective and a nonnegative analytical dual certificate are checked. Infeasibility, unboundedness and general LP robustness are not tested.",
       "evidence": [
         {
           "path": "src/conmax.f90",
@@ -4150,7 +4156,8 @@
           "path": "test/lp.f90",
           "sha256": "ab5685c0f1334e4ba68ac41918b7bd64f61661fc338e32c7f3e729a58caf4893"
         }
-      ]
+      ],
+      "driver_id": "conmax-linear-program-certificate"
     },
     {
       "id": "graphstruc-add-vertex",
@@ -5554,7 +5561,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "Radial one-dimensional boundary-value eigenproblem solved by finite elements. The demo checks the six n<=3 hydrogen Coulomb energies; no claim of validating the relativistic or self-consistent DFT paths.",
+      "notes": "Radial one-dimensional boundary-value eigenproblem solved by finite elements. The demo checks the six n<=3 hydrogen Coulomb energies; no claim of validating the relativistic or self-consistent DFT paths. Dedicated I1b driver checks 12 nonrelativistic Coulomb energies for Z=1,2 and n<=3, including angular degeneracies, against -Z^2/(2*n^2) Hartree. First-six returned wavefunctions are checked only for finiteness. Dirac/DFT branches, wavefunction normalization and full-spectrum accuracy are not verified.",
       "evidence": [
         {
           "path": "src/schroed_dirac_solver.f90",
@@ -5567,7 +5574,8 @@
           "path": "test/test_coulomb_schroed.f90",
           "sha256": "1ef8206d00e88d898465104b248b1f120f802e96a7d9175acccb3b1ffcf4ec65"
         }
-      ]
+      ],
+      "driver_id": "featom-coulomb-spectrum"
     },
     {
       "id": "econ-toolchain-api",
@@ -5580,7 +5588,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "Stochastic-process modeling: deterministic stationary probabilities and AR(1) Markov discretization, not a claim of random sampling. The stationary routine uses column-stochastic matrices, while tauchen returns row-stochastic matrices; the consumer transposes explicitly.",
+      "notes": "Stochastic-process modeling: deterministic stationary probabilities and AR(1) Markov discretization, not a claim of random sampling. The stationary routine uses column-stochastic matrices, while tauchen returns row-stochastic matrices; the consumer transposes explicitly. Checked driver verifies analytic two-state and rank-one equilibria, normal midpoint-cell probabilities, normalization and stationary residuals; no random sampling claim.",
       "evidence": [
         {
           "path": "src/dist.f90",
@@ -5597,7 +5605,8 @@
           "path": "test/tauchen_test.f90",
           "sha256": "f0875648571516ed6ab67343edade07c4ae301e95d5519552acf635b5061241e"
         }
-      ]
+      ],
+      "driver_id": "econ-markov-reference"
     },
     {
       "id": "m-la-api",
@@ -6113,11 +6122,11 @@
       "module": "linalg_fortran",
       "procedure": "linalg%eigh",
       "gams_codes": [
-        "D4"
+        "D4a1"
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "Typed LAPACK interfaces. The checked real64 main verifies a matrix inverse residual, determinant, known eigenvalues, eigenpair residuals and orthonormality for a symmetric 3-by-3 tridiagonal matrix. Complex, single-precision and other BLAS/LAPACK wrappers are not covered. Legacy implicit external interfaces are explicitly enabled in the pinned package manifest.",
+      "notes": "Typed LAPACK interfaces. The checked real64 main verifies a matrix inverse residual, determinant, known eigenvalues, eigenpair residuals and orthonormality for a symmetric 3-by-3 tridiagonal matrix. Complex, single-precision and other BLAS/LAPACK wrappers are not covered. Legacy implicit external interfaces are explicitly enabled in the pinned package manifest. Dedicated D4 driver checks all 20 eigenpairs of the same Dirichlet tridiagonal matrix used by the ARPACK driver against analytic eigenvalues and sign-invariant sine eigenvectors, with residuals, orthonormality and reconstruction. This covers a real symmetric ordinary problem only; no generic solver success status is inferred from the API return. Refined from broad D4 to D4a1 for the reviewed real symmetric ordinary-eigenproblem interfaces.",
       "evidence": [
         {
           "path": "src/linalg_fortran.f90",
@@ -6125,7 +6134,8 @@
           "line": 672
         }
       ],
-      "author_examples": []
+      "author_examples": [],
+      "driver_id": "linalg-poisson-eigenpairs"
     },
     {
       "id": "fortran-vector-storage",
@@ -7524,11 +7534,11 @@
       "module": "classic Fortran interface",
       "procedure": "DSAUPD / DSEUPD",
       "gams_codes": [
-        "D4"
+        "D4a1"
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "Serial classic Fortran ARPACK-NG interfaces, built from unchanged SRC .f files, the documented UTIL support set, and upstream debug/statistics initializers. The wrapper uses native LP64 BLAS/LAPACK and excludes PARPACK/MPI and generated C bindings. The upstream second_NONE timing stub disables ARPACK internal elapsed-time statistics; playground build/run timings still work. Adapted from the author symmetric reverse-communication example, the main computes three smallest eigenpairs of a 20-by-20 symmetric tridiagonal operator, checks convergence status/count, analytical eigenvalues and eigenvector residual norms. A deterministic nonzero initial residual avoids dependence on random initialization. Nonsymmetric/complex modes, shift-invert, generalized problems and parallel execution are not validated.",
+      "notes": "Serial classic Fortran ARPACK-NG interfaces, built from unchanged SRC .f files, the documented UTIL support set, and upstream debug/statistics initializers. The wrapper uses native LP64 BLAS/LAPACK and excludes PARPACK/MPI and generated C bindings. The upstream second_NONE timing stub disables ARPACK internal elapsed-time statistics; playground build/run timings still work. Adapted from the author symmetric reverse-communication example, the main computes three smallest eigenpairs of a 20-by-20 symmetric tridiagonal operator, checks convergence status/count, analytical eigenvalues and eigenvector residual norms. A deterministic nonzero initial residual avoids dependence on random initialization. Nonsymmetric/complex modes, shift-invert, generalized problems and parallel execution are not validated. Dedicated D4 driver checks the three smallest and three largest eigenpairs of the 20-by-20 Dirichlet tridiagonal (2 diagonal,-1 off-diagonal), with explicit starting residual, convergence/extraction status, analytical eigenvalues and sign-invariant sine eigenvector comparisons, equation residuals and orthonormality. Generalized, nonsymmetric, shift-invert and arbitrary spectra are not verified. Refined from broad D4 to D4a1 for the reviewed real symmetric ordinary-eigenproblem interfaces.",
       "evidence": [
         {
           "path": "SRC/dsaupd.f",
@@ -7546,7 +7556,8 @@
           "path": "EXAMPLES/SYM/dsdrv1.f",
           "sha256": "e873620043a19a17508626f352371edd48b23638b2d40b574924f6043467bfc9"
         }
-      ]
+      ],
+      "driver_id": "arpack-poisson-eigenpairs"
     },
     {
       "id": "error-validation",

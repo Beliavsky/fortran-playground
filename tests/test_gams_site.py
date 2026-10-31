@@ -151,6 +151,72 @@ class GamsSiteTests(unittest.TestCase):
             self.assertIn('Open default example', conversion)
             self.assertNotIn('example=gams-fsparse-matvec-reference', conversion)
 
+    def test_fit_series_and_integral_classes_open_matching_drivers(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects'] if p['playground']['package_id'] in
+                            {'splpak','fortsa','integrate_fortran'}]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination, feed)
+            for code, package, driver in [('K1','splpak','splpak-paired-noise-fit'),
+                                          ('L10a2a','fortsa','fortsa-autocorrelation-reference'),
+                                          ('H2b1a2','integrate_fortran','integrate-nd-polynomial-reference')]:
+                html = (destination/code/'index.html').read_text()
+                primary = [url for url, label in Page(html).anchors if label=='Try in playground']
+                self.assertEqual(primary, [f'https://beliavsky.github.io/fortran-playground/fpm/?package={package}&example=gams-{driver}'])
+                self.assertIn('Verified: a checked driver', html)
+
+    def test_linear_derivative_free_and_global_classes_open_matching_drivers(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects'] if p['playground']['package_id'] in
+                            {'conmax','powellopt','pikaia'}]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination, feed)
+            for code, package, driver in [('G2a','conmax','conmax-linear-program-certificate'),
+                                          ('G2h1a1','powellopt','bobyqa-box-reference'),
+                                          ('G2i','pikaia','pikaia-rastrigin-reference')]:
+                html = (destination/code/'index.html').read_text()
+                primary = [url for url, label in Page(html).anchors if label=='Try in playground']
+                self.assertEqual(primary, [f'https://beliavsky.github.io/fortran-playground/fpm/?package={package}&example=gams-{driver}'])
+                self.assertIn('Verified: a checked driver', html)
+
+    def test_boundary_and_spectral_pages_distinguish_checked_and_failed_probes(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects'] if p['playground']['package_id'] in
+                            {'featom','twopnt','arpack-ng','linalg_fortran'}]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination, feed)
+            html = (destination/'I1b/index.html').read_text()
+            primary = [url for url, label in Page(html).anchors if label=='Try in playground']
+            self.assertEqual(primary, ['https://beliavsky.github.io/fortran-playground/fpm/?package=featom&example=gams-featom-coulomb-spectrum'])
+            self.assertIn(('https://beliavsky.github.io/fortran-playground/fpm/?package=twopnt','Open default example'), Page(html).anchors)
+            html = (destination/'D4a1/index.html').read_text()
+            primary = [url for url, label in Page(html).anchors if label=='Try in playground']
+            self.assertEqual(set(primary), {
+                'https://beliavsky.github.io/fortran-playground/fpm/?package=arpack-ng&example=gams-arpack-poisson-eigenpairs',
+                'https://beliavsky.github.io/fortran-playground/fpm/?package=linalg_fortran&example=gams-linalg-poisson-eigenpairs'})
+            self.assertNotIn('twopnt-poisson-reference', str(feed['demonstrations']))
+
+    def test_resampling_and_markov_pages_open_matching_checked_drivers(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects'] if p['playground']['package_id'] in
+                            {'econ-toolchain', 'fjsample'}]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination, feed)
+            for code, package, driver in [('M', 'econ-toolchain', 'econ-markov-reference'),
+                                          ('L4', 'fjsample', 'fjsample-jackknife-reference')]:
+                html = (destination/code/'index.html').read_text()
+                primary = [url for url, label in Page(html).anchors if label == 'Try in playground']
+                self.assertEqual(primary, [f'https://beliavsky.github.io/fortran-playground/fpm/?package={package}&example=gams-{driver}'])
+                self.assertIn('Verified: a checked driver', html)
+
     def test_real_catalog_is_browsable_without_javascript_and_links_resolve(self):
         with tempfile.TemporaryDirectory() as temporary:
             destination = Path(temporary)/'gams'

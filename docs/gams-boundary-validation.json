@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "featom-coulomb-spectrum",
+      "source_revision": "87872a3266ceeee61a7244e6ecd134dc3bda790f",
+      "source_sha256": "88ffd09ff9b3cfb8f1904c16a33054e010b6e0734794864e7abb5d6f1c46bc41",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T01:54:09.200787+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.468,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Nuclear charge: 1; finite-element degrees of freedom: 159\nn,l=  1  0; energy=     -0.499999999999; error=   1.170E-12\nn,l=  2  0; energy=     -0.125000000000; error=   1.481E-13\nn,l=  2  1; energy=     -0.125000000000; error=   5.784E-14\nn,l=  3  0; energy=     -0.055555555556; error=   3.703E-14\nn,l=  3  1; energy=     -0.055555555556; error=   1.198E-14\nn,l=  3  2; energy=     -0.055555555556; error=   3.404E-14\nNuclear charge: 2; finite-element degrees of freedom: 159\nn,l=  1  0; energy=     -2.000000000002; error=   1.704E-12\nn,l=  2  0; energy=     -0.500000000000; error=   4.960E-13\nn,l=  2  1; energy=     -0.500000000000; error=   1.903E-13\nn,l=  3  0; energy=     -0.222222222222; error=   1.632E-13\nn,l=  3  1; energy=     -0.222222222222; error=   5.218E-15\nn,l=  3  2; energy=     -0.222222222222; error=   8.696E-14\nMaximum absolute energy error:    1.70441E-12\nOnly the first six levels per charge are checked; full wavefunction accuracy is not claimed.\nPASS featom-coulomb-spectrum\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.158,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T01:54:09.254485+00:00"
+}

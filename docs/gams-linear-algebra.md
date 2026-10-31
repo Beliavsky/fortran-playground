@@ -6,7 +6,7 @@ These real64 consumer programs compare fortran-lapack and stdlib on the same sma
 | --- | --- | --- |
 | [D2a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D2a1) | Real nonsymmetric general linear systems | `linear_algebra:solve`; `stdlib_linalg:solve` |
 | [D9a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D9a1) | Unconstrained linear least squares, L2 solution | `linear_algebra:lstsq`; `stdlib_linalg:lstsq` |
-| [D4a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D4a1) | Ordinary real symmetric eigenproblems | fortran-lapack `la_lapack:syev`, real64 overload |
+| [D4a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D4a1) | Ordinary real symmetric eigenproblems | fortran-lapack `la_lapack:syev`; ARPACK `DSAUPD/DSEUPD`; linalg_fortran `linalg%eigh` |
 | [D5](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D5) | Orthogonalization, demonstrated by reduced QR | fortran-lapack `linear_algebra:qr` |
 | [D6](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D6) | Singular value decomposition | fortran-lapack `la_lapack:gesvd`, real64 overload |
 | [D1b6](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D1b6) | Rectangular real matrix products | blas-interface `blas_gemm` |
@@ -55,6 +55,14 @@ The D9c driver uses `forinv:inv(method="gesvd",tol=1e-10)` for five cases. For t
 
 Each case checks the explicit reference and all four Moore-Penrose conditions: `A*Aplus*A=A`, `Aplus*A*Aplus=Aplus`, symmetry of `A*Aplus`, and symmetry of `Aplus*A`. Maximum-entry errors are divided by `max(1,max(abs(reference)))` for the corresponding matrix and bounded by `1e-11`; all results/errors must be finite. The minimum-norm coefficient error is bounded by `1e-11`. Original matrices are preserved because the pinned ForSVD dependency can overwrite the SVD input despite its declared input intent. The cutoff is absolute in this API. This does not test default cutoff behavior, alternative methods, ill-conditioning, near-threshold numerical ranks or general rank selection.
 
+## Shared Dirichlet spectral problem
+
+ARPACK and linalg_fortran use the same 20-by-20 real symmetric tridiagonal matrix with diagonal 2 and off-diagonals -1. Its exact eigenvalues are `lambda_j=4*sin(j*pi/(2*(n+1)))^2` and normalized eigenvectors `v_i=sqrt(2/(n+1))*sin(i*j*pi/(n+1))`. The reviewed procedure mappings are refined from broad D4 to D4a1 for these real symmetric ordinary-problem APIs; no generalized or nonsymmetric eigenproblem claim is made.
+
+The ARPACK driver requests the three smallest and three largest eigenpairs in separate standard-mode runs (`SM`/`LM`, `BMAT=I`, `IPARAM(7)=1`). It supplies a reproducible nonzero initial residual, caps Arnoldi iterations at 1000 and operator calls at 10000, and requires successful convergence and extraction with all three requested pairs converged. Eigenvalue errors and Euclidean eigen-equation residuals must be at most `1e-9`; orthonormality error at most `1e-10`. Every vector must match its analytic sine direction up to sign, with `abs(abs(dot_product(computed,exact))-1)<=1e-8`.
+
+The dense linalg_fortran driver checks all 20 eigenpairs, with eigenvalue, equation-residual, orthonormality and maximum-entry reconstruction errors at most `1e-11`. It uses the same sign-independent sine-vector check and prints the six pairs corresponding to the ARPACK selections. Both drivers require finite eigenvalues/vectors. The dense API has no returned status in this invocation; answer checks determine acceptance. The shared mathematical problem supports comparisons of selected results, not a general speed ranking. Shift-invert, generalized, nonsymmetric and arbitrary-spectrum problems are not verified.
+
 ## Observed high-level link limit
 
 On 2026-10-30, the high-level `linear_algebra:eigh` and `linear_algebra:svd` versions compiled their mains but failed to link under the hosted 16 MiB per-file limit with GNU Fortran 16.2.0/FPM 0.12.0 and the existing precompiled fortran-lapack image at revision `e5e45fdd5a38bfab06d1f703f12b787937aa33bb`. The linker reported:
@@ -85,12 +93,14 @@ Saved reproducers: [high-level eigh](gams-candidates/fortran-lapack-eigh.f90) an
 | [Load blas-gemm-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=blas-interface&example=gams-blas-gemm-reference) · [Source](../fpm_catalog/gams-drivers/blas-gemm-reference.f90) | D1b6 | [Procedure](https://github.com/awvwgk/blas-interface/blob/552a2e6a41443843003216fedad6419af55f8e35/src/blas/level3.f90#L35) · Original lower-level API driver |
 | [Load fsparse-matvec-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=fsparse&example=gams-fsparse-matvec-reference) · [Source](../fpm_catalog/gams-drivers/fsparse-matvec-reference.f90) | D1b4 | [Procedure](https://github.com/jalvesz/FSPARSE/blob/fa8233420ab0110bb688d565879164386521a8fc/src/matvec/fsparse_matvec.f90#L14) · [Author example](https://github.com/jalvesz/FSPARSE/blob/fa8233420ab0110bb688d565879164386521a8fc/test/test_matrices.f90) |
 | [Load forinv-pseudoinverse-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=forinv&example=gams-forinv-pseudoinverse-reference) · [Source](../fpm_catalog/gams-drivers/forinv-pseudoinverse-reference.f90) | D9c | [Procedure](https://github.com/gha3mi/forinv/blob/80b5dbed9709c001e4309382424276a2ceb984f3/src/forinv.f90#L15) · [Author example](https://github.com/gha3mi/forinv/blob/80b5dbed9709c001e4309382424276a2ceb984f3/test/test1.f90) |
+| [Load arpack-poisson-eigenpairs](https://beliavsky.github.io/fortran-playground/fpm/?package=arpack-ng&example=gams-arpack-poisson-eigenpairs) · [Source](../fpm_catalog/gams-drivers/arpack-poisson-eigenpairs.f90) | D4a1 | [Procedure](https://github.com/opencollab/arpack-ng/blob/66faef9e09bb35f5acafe02960885050acc46fa0/SRC/dsaupd.f#L1) · [Author example](https://github.com/opencollab/arpack-ng/blob/66faef9e09bb35f5acafe02960885050acc46fa0/EXAMPLES/SYM/dsdrv1.f) |
+| [Load linalg-poisson-eigenpairs](https://beliavsky.github.io/fortran-playground/fpm/?package=linalg_fortran&example=gams-linalg-poisson-eigenpairs) · [Source](../fpm_catalog/gams-drivers/linalg-poisson-eigenpairs.f90) | D4a1 | [Procedure](https://github.com/Euler-37/linalg_fortran/blob/30e7237ab54ca176e1c8dae4be2d9d44800e1f83/src/linalg_fortran.f90#L672) · Original lower-level API driver |
 
 The dense examples reuse both authors' problem data and retain both license notices. The least-squares examples adapt author API usage to shared deterministic data. These drivers appear in hosted and main local FPM example menus and downloaded projects. Loading a link selects source without submitting a job.
 
 ## Recorded results
 
-All 16 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing the existing package libraries. Only each main and executable were rebuilt. The [verification report](gams-linear-algebra-validation.json) records source hashes, pins and saved output. These small examples establish checked usage, rather than comprehensive accuracy or performance comparisons. The packages may share underlying algorithms; this is not evidence of independent implementations. Zero printed error means agreement at working precision.
+All 18 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing the existing package libraries. Only each main and executable were rebuilt. The [verification report](gams-linear-algebra-validation.json) records source hashes, pins and saved output. These small examples establish checked usage, rather than comprehensive accuracy or performance comparisons. The packages may share underlying algorithms; this is not evidence of independent implementations. Zero printed error means agreement at working precision.
 
 ### fortran-lapack-dense-solve
 
@@ -347,10 +357,41 @@ Tall, wide, rank-one, singular diagonal and zero matrices; explicit cutoff 1e-10
 PASS forinv-pseudoinverse-reference
 ```
 
+### arpack-poisson-eigenpairs
+
+```text
+Spectrum selection: SM
+  1      0.02233834754974      0.02233834754974    1.0970E-15
+  2      0.08885438842772      0.08885438842772    1.1443E-15
+  3      0.19806226419516      0.19806226419516    5.0502E-15
+Matrix-vector callback count: 91
+Spectrum selection: LM
+ 18      3.80193773580484      3.80193773580484    3.8823E-12
+ 19      3.91114561157228      3.91114561157228    1.1876E-14
+ 20      3.97766165245026      3.97766165245026    3.8082E-15
+Matrix-vector callback count: 71
+PASS arpack-poisson-eigenpairs
+```
+
+### linalg-poisson-eigenpairs
+
+```text
+Index       Computed eigenvalue        Exact eigenvalue          Residual
+  1       0.022338347549742       0.022338347549743    1.6894E-15
+  2       0.088854388427718       0.088854388427719    1.7069E-15
+  3       0.198062264195162       0.198062264195162    1.2668E-15
+ 18       3.801937735804838       3.801937735804839    1.6422E-15
+ 19       3.911145611572282       3.911145611572281    1.7166E-15
+ 20       3.977661652450256       3.977661652450257    1.2187E-15
+All 20 checked; maximum eigenvalue/reconstruction errors:    8.88178E-16   3.55271E-15
+Six listed eigenpairs use the same n=20 Dirichlet matrix as the ARPACK driver.
+PASS linalg-poisson-eigenpairs
+```
+
 ## Maintenance
 
 ```text
-python xverify_gams_drivers.py --drivers fortran-lapack-dense-solve fortran-lapack-least-squares stdlib-dense-solve stdlib-least-squares fortran-lapack-symmetric-eigen fortran-lapack-qr-decomposition fortran-lapack-svd-decomposition minres-indefinite-solve qdldl-quasidefinite-solve kiss-positive-definite-solve slicot-lyapunov-known-matrix slicot-continuous-sylvester slicot-discrete-sylvester blas-gemm-reference fsparse-matvec-reference forinv-pseudoinverse-reference
+python xverify_gams_drivers.py --drivers fortran-lapack-dense-solve fortran-lapack-least-squares stdlib-dense-solve stdlib-least-squares fortran-lapack-symmetric-eigen fortran-lapack-qr-decomposition fortran-lapack-svd-decomposition minres-indefinite-solve qdldl-quasidefinite-solve kiss-positive-definite-solve slicot-lyapunov-known-matrix slicot-continuous-sylvester slicot-discrete-sylvester blas-gemm-reference fsparse-matvec-reference forinv-pseudoinverse-reference arpack-poisson-eigenpairs linalg-poisson-eigenpairs
 python xpackage_gams.py
 python xfpm_examples.py
 python xsite.py

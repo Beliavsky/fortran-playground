@@ -35,6 +35,7 @@ A separate RK4 experiment integrates the same problem directly to `2*pi` with no
 | [Load dvode-stiff-two-scale](https://beliavsky.github.io/fortran-playground/fpm/?package=dvode&example=gams-dvode-stiff-two-scale) · [Source](../fpm_catalog/gams-drivers/dvode-stiff-two-scale.f90) | I1a2 | [Procedure](https://github.com/jacobwilliams/dvode/blob/59d2eedd1410a4bd6c196c24d08f95a7c20565c0/src/dvode_module.F90#L251) · [Author example](https://github.com/jacobwilliams/dvode/blob/59d2eedd1410a4bd6c196c24d08f95a7c20565c0/test/dvdemo.f90) |
 | [Load lsoda-stiff-two-scale](https://beliavsky.github.io/fortran-playground/fpm/?package=odepack&example=gams-lsoda-stiff-two-scale) · [Source](../fpm_catalog/gams-drivers/lsoda-stiff-two-scale.f90) | I1a2 | [Procedure](https://github.com/Nicholaswogan/odepack/blob/d5db96093dc14fff54e10575cc586fa85392b078/src/odepack_mod.f90#L13) · [Author example](https://github.com/Nicholaswogan/odepack/blob/d5db96093dc14fff54e10575cc586fa85392b078/test/benchmark.f90) |
 | [Load stiff3-stiff-two-scale](https://beliavsky.github.io/fortran-playground/fpm/?package=stiff3&example=gams-stiff3-stiff-two-scale) · [Source](../fpm_catalog/gams-drivers/stiff3-stiff-two-scale.f90) | I1a2 | [Procedure](https://github.com/ivan-pi/stiff3/blob/70ab5c86c2ac922ed148bbb1182345cca248e077/src/stiff3_solver.f90#L71) · [Author example](https://github.com/ivan-pi/stiff3/blob/70ab5c86c2ac922ed148bbb1182345cca248e077/example/hires.f90) |
+| [Load featom-coulomb-spectrum](https://beliavsky.github.io/fortran-playground/fpm/?package=featom&example=gams-featom-coulomb-spectrum) · [Source](../fpm_catalog/gams-drivers/featom-coulomb-spectrum.f90) | I1b | [Procedure](https://github.com/atomic-solvers/featom/blob/87872a3266ceeee61a7244e6ecd134dc3bda790f/src/schroed_dirac_solver.f90#L18) · [Author example](https://github.com/atomic-solvers/featom/blob/87872a3266ceeee61a7244e6ecd134dc3bda790f/test/test_coulomb_schroed.f90) |
 
 The drivers adapt author callback and integration API patterns to the shared analytic problem, without plotting dependencies; license notices are retained. They appear in hosted and main local FPM example menus and downloaded FPM projects. Loading a link selects source without submitting a job.
 
@@ -160,6 +161,28 @@ t=  1.0000 state=   0.3678794411   0.3678794411
 Scaled state error / fast-mode error:   1.0953E-10   0.0000E+00
 Interval accepted/rejected, RHS/Jacobian, LU/solves:      39       0     196      78     117     351
 PASS stiff3-stiff-two-scale
+```
+
+### featom-coulomb-spectrum
+
+```text
+Nuclear charge: 1; finite-element degrees of freedom: 159
+n,l=  1  0; energy=     -0.499999999999; error=   1.170E-12
+n,l=  2  0; energy=     -0.125000000000; error=   1.481E-13
+n,l=  2  1; energy=     -0.125000000000; error=   5.784E-14
+n,l=  3  0; energy=     -0.055555555556; error=   3.703E-14
+n,l=  3  1; energy=     -0.055555555556; error=   1.198E-14
+n,l=  3  2; energy=     -0.055555555556; error=   3.404E-14
+Nuclear charge: 2; finite-element degrees of freedom: 159
+n,l=  1  0; energy=     -2.000000000002; error=   1.704E-12
+n,l=  2  0; energy=     -0.500000000000; error=   4.960E-13
+n,l=  2  1; energy=     -0.500000000000; error=   1.903E-13
+n,l=  3  0; energy=     -0.222222222222; error=   1.632E-13
+n,l=  3  1; energy=     -0.222222222222; error=   5.218E-15
+n,l=  3  2; energy=     -0.222222222222; error=   8.696E-14
+Maximum absolute energy error:    1.70441E-12
+Only the first six levels per charge are checked; full wavefunction accuracy is not claimed.
+PASS featom-coulomb-spectrum
 ```
 
 ## Maintenance
