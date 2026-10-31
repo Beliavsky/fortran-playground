@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "finterp-bilinear-surface",
+      "source_revision": "95aaceaf86f5d4d49328b783c5dff9b006b0bfc9",
+      "source_sha256": "ab4bdf2140a5e3fb216b3acc69f67ad4a35622b92cbbe1acdc4e6789b8c312eb",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T22:21:35.963798+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.234,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Surface case 1 evaluations=530\nNode / bilinear formula / corner bound errors:   0.0000E+00   8.8818E-16   0.0000E+00\nAnalytic bilinear surface error:   1.7764E-15\nSurface case 2 evaluations=530\nNode / bilinear formula / corner bound errors:   0.0000E+00   1.7764E-15   0.0000E+00\nPASS finterp-bilinear-surface\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.027,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "bspline-tensor-surface",
+      "source_revision": "047c724451aeee7f883c0d5acba3f7bd22a5de01",
+      "source_sha256": "9f83bdd1960631ae64ad92b97e4391b785bdfd94849fdf85a2b2b9428d0377e7",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T22:21:37.983032+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.636,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Surface case 1 evaluations=530\nNode / bilinear formula / corner bound errors:   1.7764E-15   1.7764E-15   1.7764E-15\nAnalytic bilinear surface error:   1.7764E-15\nSurface case 2 evaluations=530\nNode / bilinear formula / corner bound errors:   1.7764E-15   3.5527E-15   1.1102E-16\nBicubic value/partial evaluations=484\nScaled polynomial errors (value, dx, dy, dxdy):   6.0655E-16   5.3291E-15   2.5962E-15   3.7748E-15\nPASS bspline-tensor-surface\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.049,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-30T22:21:38.030114+00:00"
+}

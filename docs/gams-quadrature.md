@@ -22,6 +22,9 @@ The `dqags` driver adapts the author's inverse-square-root test and adds a logar
 | [Load quadpack-smooth](https://beliavsky.github.io/fortran-playground/fpm/?package=quadpack&example=gams-quadpack-smooth) · [Driver source](../fpm_catalog/gams-drivers/quadpack-smooth.f90) | H2a1a1 | [Procedure](https://github.com/jacobwilliams/quadpack/blob/ab42d50794280a8e7996f2ee4cda1f8753dfde5b/src/quadpack_generic.F90#L96) · [Author test](https://github.com/jacobwilliams/quadpack/blob/ab42d50794280a8e7996f2ee4cda1f8753dfde5b/test/quadpack_test_module.F90) |
 | [Load quadrature-fortran-smooth](https://beliavsky.github.io/fortran-playground/fpm/?package=quadrature-fortran&example=gams-quadrature-fortran-smooth) · [Driver source](../fpm_catalog/gams-drivers/quadrature-fortran-smooth.f90) | H2a1a1 | [Procedure](https://github.com/jacobwilliams/quadrature-fortran/blob/1d208fc59569a97b1c2abf9c45f7c352dcc7b318/src/quadrature_module.F90#L72) · [Author test](https://github.com/jacobwilliams/quadrature-fortran/blob/1d208fc59569a97b1c2abf9c45f7c352dcc7b318/test/test.f90) |
 | [Load quadpack-endpoint-singular](https://beliavsky.github.io/fortran-playground/fpm/?package=quadpack&example=gams-quadpack-endpoint-singular) · [Driver source](../fpm_catalog/gams-drivers/quadpack-endpoint-singular.f90) | H2a2a1 | [Procedure](https://github.com/jacobwilliams/quadpack/blob/ab42d50794280a8e7996f2ee4cda1f8753dfde5b/src/quadpack_generic.F90#L1711) · [Author test](https://github.com/jacobwilliams/quadpack/blob/ab42d50794280a8e7996f2ee4cda1f8753dfde5b/test/quadpack_test_module.F90) |
+| [Load dcuhre-box-integrals](https://beliavsky.github.io/fortran-playground/fpm/?package=dcuhre&example=gams-dcuhre-box-integrals) · [Driver source](../fpm_catalog/gams-drivers/dcuhre-box-integrals.f90) | H2b1a1 | [Procedure](https://github.com/Zaneham/dcuhre/blob/da8becb7f5313c1d7387066ef2106be9e156e20c/src/dcuhre.f#L1) · [Author test](https://github.com/Zaneham/dcuhre/blob/da8becb7f5313c1d7387066ef2106be9e156e20c/test/dtest1.f) |
+| [Load gauss-jacobi-polynomial-moments](https://beliavsky.github.io/fortran-playground/fpm/?package=gaussjacobiquad&example=gams-gauss-jacobi-polynomial-moments) · [Driver source](../fpm_catalog/gams-drivers/gauss-jacobi-polynomial-moments.f90) | H2c | [Procedure](https://github.com/HaoZeke/GaussJacobiQuad/blob/ffb970c68eea0b39b140f80f788c8994547d8bfb/src/GaussJacobiQuad.f90#L45) · [Author test](https://github.com/HaoZeke/GaussJacobiQuad/blob/ffb970c68eea0b39b140f80f788c8994547d8bfb/app/gjp_quad.f90) |
+| [Load cubatures-simplex-moments](https://beliavsky.github.io/fortran-playground/fpm/?package=fortran_cubatures&example=gams-cubatures-simplex-moments) · [Driver source](../fpm_catalog/gams-drivers/cubatures-simplex-moments.f90) | H2c | [Procedure](https://github.com/willklausler/fortran_cubatures/blob/aca04975d09aed329fd4210defd7052926dc01c1/src/cubatures.f90#L100) · [Author test](https://github.com/willklausler/fortran_cubatures/blob/aca04975d09aed329fd4210defd7052926dc01c1/test/test_cubatures.f90) |
 
 Loading a link selects code without submitting a job. The same drivers are available in the hosted and main local FPM playgrounds and in downloaded FPM projects. Author license notices are retained with the drivers.
 
@@ -83,6 +86,50 @@ Reported error estimate:   2.5269E-13
 Integrand callback calls: 315
 Solver status: 0
 PASS quadpack-endpoint-singular
+```
+
+### dcuhre-box-integrals
+
+```text
+Dimensions=2 evaluations=195
+Integral / analytic value / estimated error / scaled analytic error
+   6.6666666667E-01   6.6666666667E-01   5.3808589798E-15   1.1102230246E-16
+   2.9524924420E+00   2.9524924420E+00   3.4203775530E-15   3.0082326615E-16
+Dimensions=3 evaluations=635
+Integral / analytic value / estimated error / scaled analytic error
+   8.0000000000E+00   8.0000000000E+00   1.1139457705E-14   0.0000000000E+00
+   1.8863639844E+01   1.8863639844E+01   7.5642426791E-09   1.8419318894E-13
+PASS dcuhre-box-integrals
+```
+
+### gauss-jacobi-polynomial-moments
+
+```text
+recurrence alpha= 0.0 maximum scaled moment error=  2.2204E-16
+Nodes:    -0.8611363116  -0.3399810436   0.3399810436   0.8611363116
+Weights:   0.3478548451   0.6521451549   0.6521451549   0.3478548451
+recurrence alpha= 1.0 maximum scaled moment error=  5.5511E-16
+Nodes:    -0.8857916078  -0.4463139727   0.1671808647   0.7204802713
+Weights:   0.5420276537   0.8138582720   0.5193901904   0.1247238838
+gw alpha= 0.0 maximum scaled moment error=  5.5511E-16
+Nodes:    -0.8611363116  -0.3399810436   0.3399810436   0.8611363116
+Weights:   0.3478548451   0.6521451549   0.6521451549   0.3478548451
+gw alpha= 1.0 maximum scaled moment error=  3.8858E-16
+Nodes:    -0.8857916078  -0.4463139727   0.1671808647   0.7204802713
+Weights:   0.5420276537   0.8138582720   0.5193901904   0.1247238838
+PASS gauss-jacobi-polynomial-moments
+```
+
+### cubatures-simplex-moments
+
+```text
+triangle degree=5 points=7 moments=21
+Maximum scaled moment error:  2.7756E-17
+tetrahedron degree=4 points=27 moments=35
+Maximum scaled moment error:  2.7756E-17
+quadrilateral degree=5 points=9 moments=36
+Maximum scaled moment error:  6.6613E-16
+PASS cubatures-simplex-moments
 ```
 
 ## Maintenance

@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "odrpack-line-total-least-squares",
+      "source_revision": "12597b20812a76a4b702f985f6adc82632a18f60",
+      "source_sha256": "deb8a06f02a726fa5b3336dc8417b806a33dc9531376789fc6525612d33157dd",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T23:16:01.945435+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.516,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Line case 1 status=1\nFitted intercept/slope:     1.0397057871     1.9841176852\nExact TLS coefficients:     1.0397058854     1.9841176459\nOrthogonal sum of squares / exact:   1.111769E-02   1.111769E-02\nMaximum parameter error:  9.8239E-08\nLine case 2 status=1\nFitted intercept/slope:    -2.5784469948    -1.5337242404\nExact TLS coefficients:    -2.5784481518    -1.5337241479\nOrthogonal sum of squares / exact:   2.619284E-02   2.619284E-02\nMaximum parameter error:  1.1570E-06\nPASS odrpack-line-total-least-squares\n",
+          "stderr": "Project is up to date\nAt line 1218 of file ./././/../sources/bundle/packages/0/odrpack95-12597b20812a76a4b702f985f6adc82632a18f60/src/odrpack.f90\nFortran runtime warning: An array temporary was created for argument 'wtt' of procedure 'scale_mat'\n",
+          "seconds": 0.037,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "logistic-grouped-binomial-reference",
+      "source_revision": "056740db259fc3599dca0d8858f04e94845a6769",
+      "source_sha256": "2987c63d39ed82cccf64c86052540a11a97e260fff1e0ab056ee94f4201314fb",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T23:16:04.099014+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.233,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Binomial case 1 residual degrees of freedom=4\nFitted intercept/slope:    0.0000000000    1.0986122887\nExact intercept/slope:     0.0000000000    1.0986122887\nPearson chi-square / deviance:    4.2666666667    4.3611649918\nStandard errors:    0.2177322812    0.2177322812\nCoefficient / covariance maximum errors:   4.1589E-13   6.1149E-08\nBinomial case 2 residual degrees of freedom=4\nFitted intercept/slope:   -1.0986122887    1.0986122887\nExact intercept/slope:    -1.0986122887    1.0986122887\nPearson chi-square / deviance:    4.2666666667    4.3611649918\nStandard errors:    0.3079199450    0.2177322812\nCoefficient / covariance maximum errors:   4.1611E-13   1.2230E-07\nBinomial case 3 residual degrees of freedom=4\nFitted intercept/slope:   -0.4904146264    0.8958797345\nExact intercept/slope:    -0.4904146265    0.8958797346\nPearson chi-square / deviance:    4.1666666664    4.2747769213\nStandard errors:    0.2126273155    0.2126273155\nCoefficient / covariance maximum errors:   1.0265E-10   8.5153E-07\nPASS logistic-grouped-binomial-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.031,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-30T23:16:04.149967+00:00"
+}

@@ -290,7 +290,9 @@
         "fortran-lapack-eigh",
         "fortran-lapack-qr",
         "fortran-lapack-svd",
-        "fortran-lapack-lstsq"
+        "fortran-lapack-lstsq",
+        "fortran-lapack-syev",
+        "fortran-lapack-gesvd"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
     },
@@ -743,7 +745,9 @@
       "archive_sha256": "2a36e248e8c4eeb877b5497428ac0a46897fa076918204a304f9e00292001f9c",
       "status": "procedure-reviewed",
       "procedure_ids": [
-        "polyroots-fortran-polyroots"
+        "polyroots-fortran-polyroots",
+        "polyroots-fortran-rpoly",
+        "polyroots-fortran-cpolyroots"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
     },
@@ -948,7 +952,8 @@
         "stdlib-solve",
         "stdlib-sort",
         "stdlib-random-seed",
-        "stdlib-lstsq"
+        "stdlib-lstsq",
+        "stdlib-var"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
     },
@@ -1398,9 +1403,11 @@
       "archive_sha256": "22bf29340f5d3019d9adcfc862968c9eb10ccc0afdc821dd5b71cb4661884350",
       "status": "procedure-reviewed",
       "procedure_ids": [
-        "slicot-lyapunov"
+        "slicot-lyapunov",
+        "slicot-sb04md",
+        "slicot-sb04qd"
       ],
-      "notes": "Full upstream SLICOT FPM source library, linked to compatible LP64 BLAS/LAPACK with the manifest BLAS metapackage resolved explicitly. Sources are unchanged; legacy compiler compatibility flags retain upstream conventions. The main uses the author slicot module interface for SB03MD, constructs a stable nondiagonal 2-by-2 continuous Lyapunov problem from a known symmetric solution and checks both the independently computed matrix residual and the recovered solution including the solver scale factor. It requests the condition/error estimates but does not validate those estimates independently. Other matrix equations, model reduction, identification, robust control and every library routine are not validated."
+      "notes": "The full upstream SLICOT library is precompiled with compatible LP64 BLAS/LAPACK. Dedicated D8 drivers now verify selected continuous/discrete Lyapunov and rectangular Sylvester equations using known solutions and independent residuals. Scaling, transpose modes and Schur-factor reuse are checked for SB03MD. Condition/error estimates, model reduction, identification, robust control and other routines are not validated."
     },
     "arpack-ng": {
       "revision": "66faef9e09bb35f5acafe02960885050acc46fa0",

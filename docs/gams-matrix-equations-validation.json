@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "slicot-lyapunov-known-matrix",
+      "source_revision": "5eeb845d84f5a60f6069754b7819dad468951933",
+      "source_sha256": "23a224cba224c64d3ca5be7e94fd26dc98f80b5c142798c455ddf514a253ade4",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T00:25:50.592094+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.823,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "DICO=C TRANA=N FACT=N RHS=1\nScale / solution error / residual / symmetry:   1.0000E+00   2.2204E-16   2.0186E-16   0.0000E+00\nDICO=C TRANA=N FACT=F RHS=2\nScale / solution error / residual / symmetry:   1.0000E+00   2.2204E-16   1.7080E-16   0.0000E+00\nDICO=C TRANA=T FACT=N RHS=1\nScale / solution error / residual / symmetry:   1.0000E+00   2.2204E-16   1.4803E-16   0.0000E+00\nDICO=C TRANA=T FACT=F RHS=2\nScale / solution error / residual / symmetry:   1.0000E+00   2.2204E-16   1.2688E-16   0.0000E+00\nDICO=D TRANA=N FACT=N RHS=1\nScale / solution error / residual / symmetry:   1.0000E+00   1.1102E-16   1.1748E-16   0.0000E+00\nDICO=D TRANA=N FACT=F RHS=2\nScale / solution error / residual / symmetry:   1.0000E+00   2.7756E-17   3.0585E-17   0.0000E+00\nDICO=D TRANA=T FACT=N RHS=1\nScale / solution error / residual / symmetry:   1.0000E+00   1.1102E-16   1.2545E-16   0.0000E+00\nDICO=D TRANA=T FACT=F RHS=2\nScale / solution error / residual / symmetry:   1.0000E+00   1.1102E-16   1.2652E-16   0.0000E+00\nPASS slicot-lyapunov-known-matrix\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.442,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "slicot-continuous-sylvester",
+      "source_revision": "5eeb845d84f5a60f6069754b7819dad468951933",
+      "source_sha256": "9b7742cf9940686f2659f7e07a42708cec96b51a3f352b74bba039a7311c3d96",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T00:26:17.064622+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 1.566,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Rectangular Sylvester case 1\nScaled solution error / residual:   0.0000E+00   0.0000E+00\nRecovered 2-by-3 solution:\n    1.00000000   -2.00000000    0.50000000\n    3.00000000    1.00000000   -1.00000000\nRectangular Sylvester case 2\nScaled solution error / residual:   0.0000E+00   0.0000E+00\nRecovered 2-by-3 solution:\n   -1.00000000    0.00000000    2.00000000\n    0.50000000   -2.00000000    1.00000000\nPASS slicot-continuous-sylvester\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.772,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "slicot-discrete-sylvester",
+      "source_revision": "5eeb845d84f5a60f6069754b7819dad468951933",
+      "source_sha256": "0722b38990831937608a5f0d0077c6e2c19af4a6d537a7f7ee80e4e4652273c9",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T00:26:22.324719+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 1.18,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Rectangular Sylvester case 1\nScaled solution error / residual:   1.4803E-16   1.3217E-16\nRecovered 2-by-3 solution:\n    1.00000000   -2.00000000    0.50000000\n    3.00000000    1.00000000   -1.00000000\nRectangular Sylvester case 2\nScaled solution error / residual:   1.1102E-16   9.4891E-17\nRecovered 2-by-3 solution:\n   -1.00000000    0.00000000    2.00000000\n    0.50000000   -2.00000000    1.00000000\nPASS slicot-discrete-sylvester\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.701,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T00:26:22.382815+00:00"
+}

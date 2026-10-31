@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "minres-indefinite-solve",
+      "source_revision": "c7bb4c7a0ddf13729d3556878ccc688a208a052a",
+      "source_sha256": "ae70896cffefc5fbb1b5c3c1fc53b2daedc2d0644868505061424c9acba015a3",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T21:59:31.082272+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.425,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "RHS 1 stop=1 iterations=5\nSolution:   1.0000000  -2.0000000   3.0000000  -1.0000000   2.0000000\nMax solution error / residual / scaled backward error:   1.7764E-15   1.4211E-14   2.8422E-16\nRHS 2 stop=1 iterations=5\nSolution:  -1.0000000   0.5000000   2.0000000   1.0000000  -2.0000000\nMax solution error / residual / scaled backward error:   3.3307E-16   1.9984E-15   7.5411E-17\nPASS minres-indefinite-solve\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.031,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "qdldl-quasidefinite-solve",
+      "source_revision": "8ebdd7fa1075bfb89115d0955806b0996b6b29d5",
+      "source_sha256": "05802aaffa015fe1bfe12207c82ed5e9be092d41c8e7806835e13e0b7c517597",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T21:59:33.422368+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.509,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "natural RHS 1 inertia (+,-,0):  3  2  0\nSolution:   1.0000000  -2.0000000   3.0000000  -1.0000000   2.0000000\nMax solution error / residual / scaled backward error:   4.4409E-16   3.5527E-15   7.1054E-17\nnatural RHS 2 inertia (+,-,0):  3  2  0\nSolution:  -1.0000000   0.5000000   2.0000000   1.0000000  -2.0000000\nMax solution error / residual / scaled backward error:   2.2204E-16   8.8818E-16   3.3516E-17\nRCM     RHS 1 inertia (+,-,0):  3  2  0\nSolution:   1.0000000  -2.0000000   3.0000000  -1.0000000   2.0000000\nMax solution error / residual / scaled backward error:   4.4409E-16   1.7764E-15   3.5527E-17\nRCM     RHS 2 inertia (+,-,0):  3  2  0\nSolution:  -1.0000000   0.5000000   2.0000000   1.0000000  -2.0000000\nMax solution error / residual / scaled backward error:   2.2204E-16   8.8818E-16   3.3516E-17\nAMD     RHS 1 inertia (+,-,0):  3  2  0\nSolution:   1.0000000  -2.0000000   3.0000000  -1.0000000   2.0000000\nMax solution error / residual / scaled backward error:   4.4409E-16   3.5527E-15   7.1054E-17\nAMD     RHS 2 inertia (+,-,0):  3  2  0\nSolution:  -1.0000000   0.5000000   2.0000000   1.0000000  -2.0000000\nMax solution error / residual / scaled backward error:   2.2204E-16   4.4409E-16   1.6758E-17\nPASS qdldl-quasidefinite-solve\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.029,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "kiss-positive-definite-solve",
+      "source_revision": "55f0f7ccb1601a0628a17928b5b6b79f61da2892",
+      "source_sha256": "6180ad709fab9e0a6e4a7954b25225617dce6fa489ef17e1f28510deb7ecf9c1",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T21:59:35.492847+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.438,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "RHS 1 status=0\nFirst five solution entries:   0.0500000   0.1000000   0.1500000   0.2000000   0.2500000\nMax solution error / residual / scaled backward error:   2.2204E-16   1.1102E-15   1.2268E-16\nRHS 2 status=0\nFirst five solution entries:  -1.0000000   1.0000000  -1.0000000   1.0000000  -1.0000000\nMax solution error / residual / scaled backward error:   2.2204E-16   8.8818E-16   7.4015E-17\nPASS kiss-positive-definite-solve\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.03,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-30T21:59:35.551418+00:00"
+}

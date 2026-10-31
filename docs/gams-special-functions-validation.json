@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "fullerton-gamma-values",
+      "source_revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "source_sha256": "b94611a206dd511c5875683ef87b912fa66ff2b17b7d104ca0d0c0bce4890140",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T20:57:25.918416+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.466,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Default-real precision (decimal digits): 6\n       x        Gamma(x)           relative Gamma error   scaled log error   relative reciprocal error\n    0.50    1.7724537849E+00        3.721557E-08        1.658650E-08        5.196426E-08\n    1.00    1.0000000000E+00        0.000000E+00        0.000000E+00        0.000000E+00\n    1.50    8.8622689247E-01        3.721557E-08        3.339232E-08        5.196426E-08\n    2.00    1.0000000000E+00        0.000000E+00        0.000000E+00        0.000000E+00\n    2.50    1.3293403387E+00        3.721557E-08        3.036405E-08        5.196426E-08\n    5.00    2.4000000000E+01        0.000000E+00        8.038898E-09        2.980232E-08\n   10.00    3.6288000000E+05        0.000000E+00        3.855416E-09        1.376611E-08\nMaximum Gamma/log/reciprocal errors:   3.7216E-08  3.3392E-08  5.1964E-08\nPASS fullerton-gamma-values\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.048,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fullerton-digamma-values",
+      "source_revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "source_sha256": "b89dcbec739c89eb2b72cd5db0f23c811dfb83c12205671feafd73e7e91c547c",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T20:57:28.321345+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.437,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Default-real precision (decimal digits): 6\n       x           psi(x)              absolute reference error\n    0.50     -1.963510036469E+00            1.044708E-08\n    1.00     -5.772156715393E-01            6.637774E-09\n    1.50      3.648997470737E-02            7.287886E-10\n    2.00      4.227843284607E-01            6.637774E-09\n    2.50      7.031567096710E-01            6.902578E-08\n    5.00      1.506117701530E+00            3.309866E-08\n   10.00      2.251752614975E+00            2.590825E-08\nMaximum absolute reference error:   6.9026E-08\nMaximum recurrence residual:   1.4901E-07\nMaximum reflection residual:   1.9368E-07\nPASS fullerton-digamma-values\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.04,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "bessels-modified-values",
+      "source_revision": "7bf8d6b144b00d4201a782ca65f6ae14a84d49a1",
+      "source_sha256": "2d4b189e1de1fdc7b5c78cbce3c58c4989a1f1f14b2ce7c386fee5847a3d45f4",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T20:57:30.715393+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.427,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Bessel kind precision (decimal digits): 15\n       x       relative table error     relative I-series error   Wronskian residual\n   0.125          2.01139285E-16          2.21611488E-16          1.11022302E-16\n   0.250          1.18517783E-16          2.18615373E-16          2.22044605E-16\n   0.500          0.00000000E+00          2.15247681E-16          0.00000000E+00\n   1.000          0.00000000E+00          1.75381557E-16          0.00000000E+00\n   2.000          0.00000000E+00          1.94811402E-16          0.00000000E+00\n   4.000          1.57172988E-16          1.57172988E-16          2.22044605E-16\n   8.000          3.70108880E-16          2.84307265E-16          4.44089210E-16\nMaximum relative table error (all four functions):   3.7011E-16\nMaximum relative I0/I1 series error:   2.8431E-16\nMaximum Wronskian residual:   4.4409E-16\nPASS bessels-modified-values\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.038,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-30T20:57:30.779847+00:00"
+}

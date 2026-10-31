@@ -115,6 +115,85 @@ class GamsSiteTests(unittest.TestCase):
                 self.assertNotIn('example=gams-'+driver, with_gradient)
             self.assertIn('example=gams-slsqp-circle-equality', nonlinear)
             self.assertNotIn('example=gams-slsqp-circle-equality', box)
+            gamma = (destination/'C7a/index.html').read_text(encoding='utf-8')
+            psi = (destination/'C7c/index.html').read_text(encoding='utf-8')
+            bessel = (destination/'C10b1/index.html').read_text(encoding='utf-8')
+            self.assertIn('example=gams-fullerton-gamma-values', gamma)
+            self.assertNotIn('example=gams-fullerton-digamma-values', gamma)
+            self.assertIn('example=gams-fullerton-digamma-values', psi)
+            self.assertNotIn('example=gams-fullerton-gamma-values', psi)
+            self.assertIn('example=gams-bessels-modified-values', bessel)
+            for code, driver in [('D4a1', 'fortran-lapack-symmetric-eigen'),
+                                 ('D5', 'fortran-lapack-qr-decomposition'),
+                                 ('D6', 'fortran-lapack-svd-decomposition')]:
+                page = (destination/code/'index.html').read_text(encoding='utf-8')
+                self.assertIn('example=gams-'+driver, page)
+                self.assertNotIn('example=gams-'+driver, dense)
+            location = (destination/'L1a1a/index.html').read_text(encoding='utf-8')
+            dispersion = (destination/'L1a1b/index.html').read_text(encoding='utf-8')
+            for package in ['stdlib', 'fstats']:
+                self.assertIn('example=gams-'+package+'-mean-checks', location)
+                self.assertNotIn('example=gams-'+package+'-sample-variance-checks', location)
+                self.assertIn('example=gams-'+package+'-sample-variance-checks', dispersion)
+                self.assertNotIn('example=gams-'+package+'-mean-checks', dispersion)
+            uniform = (destination/'L6a21/index.html').read_text(encoding='utf-8')
+            seed = (destination/'L6c/index.html').read_text(encoding='utf-8')
+            for driver in ['mt19937-64-reference-sequence', 'rngff-lcg-reference-sequence']:
+                self.assertIn('example=gams-'+driver, uniform)
+                self.assertNotIn('example=gams-'+driver, seed)
+            self.assertIn('example=gams-stdlib-seed-replay', seed)
+            self.assertNotIn('example=gams-stdlib-seed-replay', uniform)
+            differentiation = (destination/'H1/index.html').read_text(encoding='utf-8')
+            for driver in ['numdiff-analytic-derivatives', 'fordiff-analytic-derivatives', 'ad-dnsvm-analytic-derivatives']:
+                self.assertIn('example=gams-'+driver, differentiation)
+                self.assertNotIn('example=gams-'+driver, smooth)
+            systems = (destination/'F2/index.html').read_text(encoding='utf-8')
+            for driver in ['minpack-rosenbrock-system', 'nonlin-rosenbrock-system', 'nlesolver-rosenbrock-system']:
+                self.assertIn('example=gams-'+driver, systems)
+                self.assertNotIn('example=gams-'+driver, roots)
+                self.assertNotIn('example=gams-'+driver, with_gradient)
+            indefinite = (destination/'D2b4/index.html').read_text(encoding='utf-8')
+            positive_definite = (destination/'D2b1b/index.html').read_text(encoding='utf-8')
+            for driver in ['minres-indefinite-solve', 'qdldl-quasidefinite-solve']:
+                self.assertIn('example=gams-'+driver, indefinite)
+                self.assertNotIn('example=gams-'+driver, positive_definite)
+            self.assertIn('example=gams-kiss-positive-definite-solve', positive_definite)
+            self.assertNotIn('example=gams-kiss-positive-definite-solve', indefinite)
+            adaptive_box = (destination/'H2b1a1/index.html').read_text(encoding='utf-8')
+            rules = (destination/'H2c/index.html').read_text(encoding='utf-8')
+            self.assertIn('example=gams-dcuhre-box-integrals', adaptive_box)
+            self.assertNotIn('example=gams-dcuhre-box-integrals', rules)
+            for driver in ['gauss-jacobi-polynomial-moments', 'cubatures-simplex-moments']:
+                self.assertIn('example=gams-'+driver, rules)
+                self.assertNotIn('example=gams-'+driver, adaptive_box)
+            for driver in ['finterp-bilinear-surface', 'bspline-tensor-surface']:
+                self.assertIn('example=gams-'+driver, gridded)
+                self.assertNotIn('example=gams-'+driver, univariate)
+            stiff = (destination/'I1a2/index.html').read_text(encoding='utf-8')
+            for driver in ['dvode-stiff-two-scale', 'lsoda-stiff-two-scale', 'stiff3-stiff-two-scale']:
+                self.assertIn('example=gams-'+driver, stiff)
+                self.assertNotIn('example=gams-'+driver, one_step)
+                self.assertNotIn('example=gams-'+driver, multistep)
+            polynomial = (destination/'F1a/index.html').read_text(encoding='utf-8')
+            for driver in ['polyroots-real-reference', 'rpoly-real-reference', 'cpolyroots-complex-reference']:
+                self.assertIn('example=gams-'+driver, polynomial)
+                self.assertNotIn('example=gams-'+driver, roots)
+                self.assertNotIn('example=gams-'+driver, systems)
+            convolution = (destination/'J2/index.html').read_text(encoding='utf-8')
+            for driver in ['spectrum-convolution-reference', 'fastconv-convolution-reference']:
+                self.assertIn('example=gams-'+driver, convolution)
+                self.assertNotIn('example=gams-'+driver, complex_transform)
+                self.assertNotIn('example=gams-'+driver, cosine_transform)
+            regression = (destination/'L8/index.html').read_text(encoding='utf-8')
+            for driver in ['odrpack-line-total-least-squares', 'logistic-grouped-binomial-reference']:
+                self.assertIn('example=gams-'+driver, regression)
+                self.assertNotIn('example=gams-'+driver, least_squares)
+                self.assertNotIn('example=gams-'+driver, location)
+            matrix_equations = (destination/'D8/index.html').read_text(encoding='utf-8')
+            for driver in ['slicot-lyapunov-known-matrix', 'slicot-continuous-sylvester', 'slicot-discrete-sylvester']:
+                self.assertIn('example=gams-'+driver, matrix_equations)
+                self.assertNotIn('example=gams-'+driver, dense)
+                self.assertNotIn('example=gams-'+driver, indefinite)
             sitemap = ElementTree.fromstring((destination/'sitemap.xml').read_text(encoding='utf-8'))
             self.assertEqual(len(sitemap), count)
 

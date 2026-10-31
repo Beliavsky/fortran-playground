@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "fordiff-analytic-derivatives",
+      "source_revision": "f1a1099a590107645314f1388c432624ff97b9bc",
+      "source_sha256": "e121b7a8edb8867a3d8d67c8db6c6114a39abc88bcb3cb1c9f49655e108115d8",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T21:40:05.690967+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.379,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "x= -0.5 forward  derivative=  2.41500E-01\nx= -0.5 backward derivative=  2.41489E-01\nx= -0.5 central  derivative=  2.41494E-01\nx= -0.5 complex  derivative=  2.41494E-01\nx=  0.0 forward  derivative=  1.00001E+00\nx=  0.0 backward derivative=  9.99990E-01\nx=  0.0 central  derivative=  1.00000E+00\nx=  0.0 complex  derivative=  1.00000E+00\nx=  0.5 forward  derivative=  2.23734E+00\nx=  0.5 backward derivative=  2.23731E+00\nx=  0.5 central  derivative=  2.23733E+00\nx=  0.5 complex  derivative=  2.23733E+00\nx=  1.0 forward  derivative=  3.75606E+00\nx=  1.0 backward derivative=  3.75603E+00\nx=  1.0 central  derivative=  3.75605E+00\nx=  1.0 complex  derivative=  3.75605E+00\nforward  maximum scaled analytic error:   1.0000E-05\nbackward maximum scaled analytic error:   1.0000E-05\ncentral  maximum scaled analytic error:   3.3333E-11\ncomplex  maximum scaled analytic error:   1.9849E-16\nPASS fordiff-analytic-derivatives\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.026,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "ad-dnsvm-analytic-derivatives",
+      "source_revision": "32db0bd122ce1dae290e9cf4c1fda4ab8f3de6f1",
+      "source_sha256": "01800ef46c21cb6213c4d4a96fd7ba77d87de9c8cb2ca5d7dcd781d153f54ca8",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T21:40:09.916159+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 2.422,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "x= -0.5 value and derivatives 1..3:  -2.907863E-01   2.414944E-01   1.064561E+00   1.646134E+00\nx=  0.0 value and derivatives 1..3:   0.000000E+00   1.000000E+00   2.000000E+00   2.000000E+00\nx=  0.5 value and derivatives 1..3:   7.904391E-01   2.237328E+00   2.893778E+00   1.312900E+00\nx=  1.0 value and derivatives 1..3:   2.287355E+00   3.756049E+00   2.937388E+00  -1.637323E+00\nMaximum scaled analytic error:   1.6913E-16\nPASS ad-dnsvm-analytic-derivatives\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.092,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "numdiff-analytic-derivatives",
+      "source_revision": "687157df8d2dec072b5484974bab71f7b14b0e9f",
+      "source_sha256": "034ea5cc8b2e8b717e220ca1ef9e6178aa2205c87dc7927b12b0be7ca619ab2f",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T21:41:12.471393+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.395,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "order=1 status=0 estimated error=  9.13E-09\nx= -0.5 order=1 derivative=  2.41494E-01 estimate=  9.13E-09\norder=2 status=0 estimated error=  4.78E-09\nx= -0.5 order=2 derivative=  1.06456E+00 estimate=  4.78E-09\norder=3 status=0 estimated error=  8.01E-07\nx= -0.5 order=3 derivative=  1.64613E+00 estimate=  8.01E-07\norder=1 status=0 estimated error=  4.44E-15\nx=  0.0 order=1 derivative=  1.00000E+00 estimate=  4.44E-15\norder=2 status=0 estimated error=  9.65E-09\nx=  0.0 order=2 derivative=  2.00000E+00 estimate=  9.65E-09\norder=3 status=0 estimated error=  8.62E-07\nx=  0.0 order=3 derivative=  2.00000E+00 estimate=  8.62E-07\norder=1 status=0 estimated error=  7.83E-09\nx=  0.5 order=1 derivative=  2.23733E+00 estimate=  7.83E-09\norder=2 status=0 estimated error=  6.01E-09\nx=  0.5 order=2 derivative=  2.89378E+00 estimate=  6.01E-09\norder=3 status=0 estimated error=  6.99E-07\nx=  0.5 order=3 derivative=  1.31290E+00 estimate=  6.99E-07\norder=1 status=0 estimated error=  8.75E-09\nx=  1.0 order=1 derivative=  3.75605E+00 estimate=  8.75E-09\norder=2 status=0 estimated error=  7.82E-09\nx=  1.0 order=2 derivative=  2.93739E+00 estimate=  7.82E-09\norder=3 status=0 estimated error=  8.66E-07\nx=  1.0 order=3 derivative= -1.63732E+00 estimate=  8.66E-07\nMaximum scaled analytic error:   6.1684E-08\nPASS numdiff-analytic-derivatives\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.037,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-30T21:41:12.528513+00:00"
+}

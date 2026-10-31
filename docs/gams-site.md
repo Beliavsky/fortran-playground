@@ -58,6 +58,12 @@ The [transform review](gams-transforms.md) connects J1a2/J1a3 to complex FFT and
 
 The [constrained-optimization review](gams-constrained.md) links G2h1a2 to comparable box-constrained quadratic drivers and G2h3b1b to a checked SLSQP equality/nonlinear-inequality example, including independent feasibility and constrained-stationarity checks.
 
+The [special-function review](gams-special-functions.md) connects Gamma, digamma and modified Bessel procedures (C7a, C7c and C10b1) to precision-aware checked examples with independent reference values and supplementary identities.
+
+The linear-algebra review also covers symmetric eigenproblems (D4a1), reduced QR (D5) and reduced SVD (D6), with known spectra and reconstruction/orthogonality checks. It retains reproducers for high-level wrapper calls that exceeded the hosted link-size limit; the menu uses verified lower-level SYEV/GESVD interfaces.
+
+The [statistics review](gams-statistics.md) connects location and dispersion (L1a1a/L1a1b) to comparable stdlib and fstats mean/variance drivers, with known shifted/scaled answers, explicit sample/population normalization and subset checks.
+
 ## Updating packages and classifications
 
 Continue the existing catalog workflow. Edit `fpm_catalog.json`, the classifications and procedure records in `fpm_catalog/gams.json`, the numerical review ledger, topics and checked example references as appropriate. Then regenerate the playground and review files:
@@ -126,3 +132,25 @@ The checks cover hierarchy membership, generated navigation, pinned package link
 ## A broader catalog
 
 The renderer consumes the [portable catalog feed](catalog-export.md), rather than compiling or discovering packages itself. A future catalog can import the maintained records and add non-FPM projects or individual Fortran sources with their own review status. Keep those additions in a separate catalog so playground availability is not implied. The catalog's canonical base address is currently shared with the exporter in `catalog_export.py`.
+
+The [random-generator review](gams-random.md) connects uniform generation (L6a21) and seeding support (L6c) to exact reference-sequence and replay checks for MT19937-64, rngff and stdlib.
+
+The [differentiation review](gams-differentiation.md) connects H1 to shared analytic derivative checks for NumDiff, ForDiff and AD_dnSVM, covering finite differences, complex step and automatic differentiation.
+
+The [nonlinear-system review](gams-systems.md) connects F2 to a shared two-equation problem with known root for MINPACK, nonlin and nlesolver-fortran, including explicit Jacobian configurations and independently checked residuals.
+
+The [sparse and positive-definite system review](gams-sparse.md) connects D2b4 and D2b1b to checked MINRES, qdldl-fortran and KISS examples, including two right-hand sides, factor reuse, matrix requirements and scaled backward errors.
+
+The [cubature and quadrature-rule review](gams-cubature.md) connects H2b1a1 and H2c to checked DCUHRE box integrals, Gauss-Jacobi weighted moments and reference-element cubature moments, preserving the distinction between adaptive integration and rule generation.
+
+The [surface-interpolation review](gams-surfaces.md) connects E2a to shared nonuniform-grid bilinear checks for finterp and bspline-fortran, with additional bicubic value and mixed-partial checks for B-splines.
+
+The [stiff-ODE review](gams-stiff.md) connects I1a2 to a common exact two-scale ODE for DVODE, LSODA and stiff3, including BDF-mode observation, distinct tolerance controls and fast/slow mode checks. It does not claim DAE validation.
+
+The [polynomial-root review](gams-polynomial.md) connects F1a to the polyroots, rpoly and cpolyroots procedures, with distinct-root matching, normalized polynomial residuals and coefficient scaling checks.
+
+The [convolution review](gams-convolution.md) connects J2 to spectrum and fastconv direct-sum checks, documenting full, central and valid output conventions, native precision, and the pinned fastconv shape-preserving boundary limitation.
+
+The [regression review](gams-regression.md) connects L8 to odrpack95 orthogonal line fits and lib_statistics grouped-binomial logistic fits, with separate error models, closed-form parameters and independently checked objectives/statistics/covariance.
+
+The [matrix-equation review](gams-matrix-equations.md) connects D8 to SLICOT Lyapunov and Sylvester drivers, including continuous/discrete forms, rectangular solutions, transpose options and Schur-factor reuse.

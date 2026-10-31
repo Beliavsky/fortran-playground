@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "mt19937-64-reference-sequence",
+      "source_revision": "1e3e364f4c022eab3fcd5d07b10a2c2be77a822b",
+      "source_sha256": "547d4f39a88c8138e8bb4dc05a3a68f86e74c0fecb9b2dc4f58916bbf0c9a422",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T21:27:58.161046+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.338,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Reference output    1: C96D191CF6F6AEA6\nReference output    2: 401F7AC78BC80F1C\nReference output    3: B5EE8CB6ABE457F8\nReference output    4: F258D22D4DB91392\nReference output    5: 04EEF2B4B5D860CC\nReference output    6: 67A7AABE10D172D6\nReference output    7: 40565D50E72B4021\nReference output    8: 05D07B7D1E8DE386\nReference output    9: 8548DEA130821ACC\nReference output   10: 583C502C832E0A3A\nReference output  312: 13038D24C91C1BB8\nReference output  313: 5E0B18C0F57393B1\nReference output  624: D7C295AFC52A1C17\nReference output  625: AB1BF7646B530A67\nReference output 1000: 8D7573457A93F389\nExact uniform conversion/replay checks: 1000\nFirst five uniform draws:   0.786820954868  0.250480340688  0.710671228979  0.946667800961  0.019271058196\nPASS mt19937-64-reference-sequence\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.025,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "rngff-lcg-reference-sequence",
+      "source_revision": "8eccd1479f35159922a85db25a39bcd58a0c3faa",
+      "source_sha256": "96bdcac835919af24f8b53dfe50fb0156c9396e2a74e379483444246b448440f",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T21:28:00.312379+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.213,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Exact modular-state/output/replay checks: 1000\nFinal two-seed state:      540593668    1220816231\nFirst five uniform draws:   0.943597376347  0.908318877220  0.146687835455  0.514701962471  0.405809640884\nThe real64 overload returns widened real32 draws.\nPASS rngff-lcg-reference-sequence\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.026,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-seed-replay",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "6f6a50952ac8c8cb07fac6e7027fbd82e378eb23b3581a4647210855c206074a",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T21:28:02.373579+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.139,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Exact integer replay checks: 1024\nOpaque get output for the selected seed: 3DCE10B4AF53B7F1\nFirst five integer draws (hexadecimal bit patterns):\n  1 2959604F2E0091F3\n  2 8DA1B0157235CF1A\n  3 FCA57AAE79999882\n  4 F12CE7489A216233\n  5 1D3ED398D3C7CA3D\nThe second selected seed changed the sequence.\nThis seeds stdlib distributions; intrinsic RANDOM_NUMBER has its own seed API.\nPASS stdlib-seed-replay\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.021,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-30T21:28:02.439656+00:00"
+}

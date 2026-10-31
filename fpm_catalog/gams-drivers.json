@@ -821,6 +821,1531 @@
         "max_kkt_residual": 1e-07,
         "analytic_derivatives_checked": true
       }
+    },
+    {
+      "id": "fullerton-gamma-values",
+      "name": "gams-fullerton-gamma-values",
+      "package_id": "specfunc-fullerton",
+      "procedure_id": "specfunc-fullerton-fgamma",
+      "gams_code": "C7a",
+      "problem_id": "positive-gamma-family",
+      "path": "fpm_catalog/gams-drivers/fullerton-gamma-values.f90",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "author_example": "test/gamma/test_gamma.f90",
+      "reuse": "adapted",
+      "license": "MIT",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/specfunc-fullerton-MIT.txt"
+      ],
+      "modifications": "Author public-API patterns adapted to deterministic positive-argument checks with independent reference calculations, explicit precision and finite-value checks; identities supplement reference values.",
+      "validation_path": "docs/gams-special-functions-validation.json",
+      "review_path": "docs/gams-special-functions.md",
+      "checks": {
+        "reference": "factorials and half-integer identities, real64 arithmetic",
+        "max_scaled_error": 3e-06,
+        "precision": "default real",
+        "positive_arguments_only": true
+      }
+    },
+    {
+      "id": "fullerton-digamma-values",
+      "name": "gams-fullerton-digamma-values",
+      "package_id": "specfunc-fullerton",
+      "procedure_id": "specfunc-fullerton-digamma",
+      "gams_code": "C7c",
+      "problem_id": "positive-digamma",
+      "path": "fpm_catalog/gams-drivers/fullerton-digamma-values.f90",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "author_example": "test/gamma/test_gamma.f90",
+      "reuse": "adapted",
+      "license": "MIT",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/specfunc-fullerton-MIT.txt"
+      ],
+      "modifications": "Author public-API patterns adapted to deterministic positive-argument checks with independent reference calculations, explicit precision and finite-value checks; identities supplement reference values.",
+      "validation_path": "docs/gams-special-functions-validation.json",
+      "review_path": "docs/gams-special-functions.md",
+      "checks": {
+        "reference": "harmonic sums, Euler constant and half-integer identity, real64 arithmetic",
+        "max_absolute_error": 5e-06,
+        "max_identity_residual": 5e-06,
+        "precision": "default real",
+        "positive_arguments_only": true
+      }
+    },
+    {
+      "id": "bessels-modified-values",
+      "name": "gams-bessels-modified-values",
+      "package_id": "fortran-bessels",
+      "procedure_id": "fortran-bessels-api",
+      "gams_code": "C10b1",
+      "problem_id": "positive-modified-bessel-orders-0-1",
+      "path": "fpm_catalog/gams-drivers/bessels-modified-values.f90",
+      "revision": "7bf8d6b144b00d4201a782ca65f6ae14a84d49a1",
+      "author_example": "test/bessels_test.f90",
+      "reuse": "adapted",
+      "license": "MIT",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fortran-bessels-MIT.txt"
+      ],
+      "modifications": "Author public-API patterns adapted to deterministic positive-argument checks with independent reference calculations, explicit precision and finite-value checks; identities supplement reference values.",
+      "validation_path": "docs/gams-special-functions-validation.json",
+      "review_path": "docs/gams-special-functions.md",
+      "checks": {
+        "reference": "mpmath 1.3.0 at 80 decimal digits, constants rounded into Bessel kind",
+        "max_relative_error": 2e-12,
+        "max_wronskian_residual": 1e-11,
+        "independent_i_series": true,
+        "precision": "package BK",
+        "positive_arguments_only": true,
+        "orders": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "id": "fortran-lapack-symmetric-eigen",
+      "name": "gams-fortran-lapack-symmetric-eigen",
+      "package_id": "fortran-lapack",
+      "procedure_id": "fortran-lapack-syev",
+      "gams_code": "D4a1",
+      "problem_id": "symmetric-known-spectrum",
+      "path": "fpm_catalog/gams-drivers/fortran-lapack-symmetric-eigen.f90",
+      "revision": "e5e45fdd5a38bfab06d1f703f12b787937aa33bb",
+      "author_example": null,
+      "reuse": "original",
+      "license": "BSD-3",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fortran-lapack-BSD.txt"
+      ],
+      "modifications": "Author API patterns adapted to deterministic real64 matrices with status/finite-value, reconstruction and orthogonality checks. Known spectra, repeated eigenvalues, rank deficiency and a QR least-squares application are checked without fixing vector signs or nonunique bases.",
+      "validation_path": "docs/gams-linear-algebra-validation.json",
+      "review_path": "docs/gams-linear-algebra.md",
+      "checks": {
+        "max_residual": 1e-12,
+        "cases": 2,
+        "precision": "real64",
+        "reconstruction_checked": true,
+        "orthogonality_checked": true,
+        "vector_signs_fixed": false
+      }
+    },
+    {
+      "id": "fortran-lapack-qr-decomposition",
+      "name": "gams-fortran-lapack-qr-decomposition",
+      "package_id": "fortran-lapack",
+      "procedure_id": "fortran-lapack-qr",
+      "gams_code": "D5",
+      "problem_id": "rectangular-qr-and-least-squares",
+      "path": "fpm_catalog/gams-drivers/fortran-lapack-qr-decomposition.f90",
+      "revision": "e5e45fdd5a38bfab06d1f703f12b787937aa33bb",
+      "author_example": "test/test_la_qr.f90",
+      "reuse": "adapted",
+      "license": "BSD-3",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fortran-lapack-BSD.txt"
+      ],
+      "modifications": "Author API patterns adapted to deterministic real64 matrices with status/finite-value, reconstruction and orthogonality checks. Known spectra, repeated eigenvalues, rank deficiency and a QR least-squares application are checked without fixing vector signs or nonunique bases.",
+      "validation_path": "docs/gams-linear-algebra-validation.json",
+      "review_path": "docs/gams-linear-algebra.md",
+      "checks": {
+        "max_residual": 1e-12,
+        "cases": 2,
+        "precision": "real64",
+        "reconstruction_checked": true,
+        "orthogonality_checked": true,
+        "vector_signs_fixed": false
+      }
+    },
+    {
+      "id": "fortran-lapack-svd-decomposition",
+      "name": "gams-fortran-lapack-svd-decomposition",
+      "package_id": "fortran-lapack",
+      "procedure_id": "fortran-lapack-gesvd",
+      "gams_code": "D6",
+      "problem_id": "rectangular-known-singular-values",
+      "path": "fpm_catalog/gams-drivers/fortran-lapack-svd-decomposition.f90",
+      "revision": "e5e45fdd5a38bfab06d1f703f12b787937aa33bb",
+      "author_example": null,
+      "reuse": "original",
+      "license": "BSD-3",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fortran-lapack-BSD.txt"
+      ],
+      "modifications": "Author API patterns adapted to deterministic real64 matrices with status/finite-value, reconstruction and orthogonality checks. Known spectra, repeated eigenvalues, rank deficiency and a QR least-squares application are checked without fixing vector signs or nonunique bases.",
+      "validation_path": "docs/gams-linear-algebra-validation.json",
+      "review_path": "docs/gams-linear-algebra.md",
+      "checks": {
+        "max_residual": 1e-12,
+        "cases": 2,
+        "precision": "real64",
+        "reconstruction_checked": true,
+        "orthogonality_checked": true,
+        "vector_signs_fixed": false
+      }
+    },
+    {
+      "id": "stdlib-mean-checks",
+      "name": "gams-stdlib-mean-checks",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-mean",
+      "gams_code": "L1a1a",
+      "problem_id": "real64-known-means",
+      "path": "fpm_catalog/gams-drivers/stdlib-mean-checks.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_mean.f90",
+      "reuse": "adapted",
+      "license": "MIT",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/stdlib-MIT.txt"
+      ],
+      "modifications": "Author API patterns adapted to shared base/shifted/constant/scaled finite datasets, known answers and packed subsets; stdlib additionally checks native masks and column reduction. Sample and population normalization are made explicit.",
+      "validation_path": "docs/gams-statistics-validation.json",
+      "review_path": "docs/gams-statistics.md",
+      "checks": {
+        "precision": "real64",
+        "cases": 4,
+        "packed_subset_checked": true,
+        "native_mask_and_columns_checked": true,
+        "max_scaled_error": "64*epsilon",
+        "population_normalization": null
+      }
+    },
+    {
+      "id": "fstats-mean-checks",
+      "name": "gams-fstats-mean-checks",
+      "package_id": "fstats",
+      "procedure_id": "fstats-mean",
+      "gams_code": "L1a1a",
+      "problem_id": "real64-known-means",
+      "path": "fpm_catalog/gams-drivers/fstats-mean-checks.f90",
+      "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "author_example": "tests/fstats_statistics_tests.f90",
+      "reuse": "adapted",
+      "license": "MIT",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fstats-MIT.txt"
+      ],
+      "modifications": "Author API patterns adapted to shared base/shifted/constant/scaled finite datasets, known answers and packed subsets; stdlib additionally checks native masks and column reduction. Sample and population normalization are made explicit.",
+      "validation_path": "docs/gams-statistics-validation.json",
+      "review_path": "docs/gams-statistics.md",
+      "checks": {
+        "precision": "real64",
+        "cases": 4,
+        "packed_subset_checked": true,
+        "native_mask_and_columns_checked": false,
+        "max_scaled_error": "64*epsilon",
+        "population_normalization": null
+      }
+    },
+    {
+      "id": "stdlib-sample-variance-checks",
+      "name": "gams-stdlib-sample-variance-checks",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-var",
+      "gams_code": "L1a1b",
+      "problem_id": "real64-known-sample-variances",
+      "path": "fpm_catalog/gams-drivers/stdlib-sample-variance-checks.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_var.f90",
+      "reuse": "adapted",
+      "license": "MIT",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/stdlib-MIT.txt"
+      ],
+      "modifications": "Author API patterns adapted to shared base/shifted/constant/scaled finite datasets, known answers and packed subsets; stdlib additionally checks native masks and column reduction. Sample and population normalization are made explicit.",
+      "validation_path": "docs/gams-statistics-validation.json",
+      "review_path": "docs/gams-statistics.md",
+      "checks": {
+        "precision": "real64",
+        "cases": 4,
+        "packed_subset_checked": true,
+        "native_mask_and_columns_checked": true,
+        "max_scaled_error": 1e-12,
+        "population_normalization": "native corrected=.false."
+      }
+    },
+    {
+      "id": "fstats-sample-variance-checks",
+      "name": "gams-fstats-sample-variance-checks",
+      "package_id": "fstats",
+      "procedure_id": "fstats-variance",
+      "gams_code": "L1a1b",
+      "problem_id": "real64-known-sample-variances",
+      "path": "fpm_catalog/gams-drivers/fstats-sample-variance-checks.f90",
+      "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "author_example": "tests/fstats_statistics_tests.f90",
+      "reuse": "adapted",
+      "license": "MIT",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fstats-MIT.txt"
+      ],
+      "modifications": "Author API patterns adapted to shared base/shifted/constant/scaled finite datasets, known answers and packed subsets; stdlib additionally checks native masks and column reduction. Sample and population normalization are made explicit.",
+      "validation_path": "docs/gams-statistics-validation.json",
+      "review_path": "docs/gams-statistics.md",
+      "checks": {
+        "precision": "real64",
+        "cases": 4,
+        "packed_subset_checked": true,
+        "native_mask_and_columns_checked": false,
+        "max_scaled_error": 1e-12,
+        "population_normalization": "sample*(N-1)/N"
+      }
+    },
+    {
+      "id": "mt19937-64-reference-sequence",
+      "name": "gams-mt19937-64-reference-sequence",
+      "package_id": "mersenne-twister-fortran",
+      "procedure_id": "mersenne-twister-fortran-genrand64-real2",
+      "gams_code": "L6a21",
+      "problem_id": "mt19937-64-sequence",
+      "path": "fpm_catalog/gams-drivers/mt19937-64-reference-sequence.f90",
+      "revision": "1e3e364f4c022eab3fcd5d07b10a2c2be77a822b",
+      "author_example": "test/mt19937_64_test.f90",
+      "reuse": "adapted",
+      "license": "BSD-3",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/mersenne-twister-fortran-BSD.txt"
+      ],
+      "modifications": "Author initialization/API patterns adapted to deterministic sequence and seeded replay checks, with exact reference outputs or independent state recurrences where available. No random-moment acceptance thresholds.",
+      "validation_path": "docs/gams-random-validation.json",
+      "review_path": "docs/gams-random.md",
+      "checks": {
+        "draws": 1000,
+        "seed": 5489,
+        "bit_reference_positions": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          312,
+          313,
+          624,
+          625,
+          1000
+        ],
+        "reference": "C++11 std::mt19937_64, g++ GCC 17.0.0 20260510 experimental",
+        "reference_files": [
+          "fpm_catalog/gams-drivers/references/mt19937_64_reference.cpp",
+          "fpm_catalog/gams-drivers/references/mt19937_64_reference.txt"
+        ],
+        "exact_uniform_conversion": true
+      }
+    },
+    {
+      "id": "rngff-lcg-reference-sequence",
+      "name": "gams-rngff-lcg-reference-sequence",
+      "package_id": "rngff",
+      "procedure_id": "rngff-linear-congruential-t",
+      "gams_code": "L6a21",
+      "problem_id": "combined-lcg-sequence",
+      "path": "fpm_catalog/gams-drivers/rngff-lcg-reference-sequence.f90",
+      "revision": "8eccd1479f35159922a85db25a39bcd58a0c3faa",
+      "author_example": "test/lcg_test.f90",
+      "reuse": "adapted",
+      "license": "MIT",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/rngff-MIT.txt"
+      ],
+      "modifications": "Author initialization/API patterns adapted to deterministic sequence and seeded replay checks, with exact reference outputs or independent state recurrences where available. No random-moment acceptance thresholds.",
+      "validation_path": "docs/gams-random-validation.json",
+      "review_path": "docs/gams-random.md",
+      "checks": {
+        "draws": 1000,
+        "seeds": [
+          12345,
+          67890
+        ],
+        "reference": "int64 direct modular multiplication",
+        "real32_rounding_checked": true,
+        "exact_state_and_sequence": true
+      }
+    },
+    {
+      "id": "stdlib-seed-replay",
+      "name": "gams-stdlib-seed-replay",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-random-seed",
+      "gams_code": "L6c",
+      "problem_id": "stdlib-distribution-seed-replay",
+      "path": "fpm_catalog/gams-drivers/stdlib-seed-replay.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_random_seed.f90",
+      "reuse": "adapted",
+      "license": "MIT",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/stdlib-MIT.txt"
+      ],
+      "modifications": "Author initialization/API patterns adapted to deterministic sequence and seeded replay checks, with exact reference outputs or independent state recurrences where available. No random-moment acceptance thresholds.",
+      "validation_path": "docs/gams-random-validation.json",
+      "review_path": "docs/gams-random.md",
+      "checks": {
+        "draws": 1024,
+        "seeds": [
+          1234567,
+          1234568
+        ],
+        "exact_reseeded_replay": true,
+        "second_selected_seed_differs": true,
+        "stream": "stdlib dist_rand, separate from intrinsic RANDOM_NUMBER"
+      }
+    },
+    {
+      "id": "numdiff-analytic-derivatives",
+      "name": "gams-numdiff-analytic-derivatives",
+      "package_id": "numdiff",
+      "procedure_id": "numdiff-compute-derivative",
+      "gams_code": "H1",
+      "problem_id": "exp-sine-derivatives",
+      "path": "fpm_catalog/gams-drivers/numdiff-analytic-derivatives.f90",
+      "revision": "687157df8d2dec072b5484974bab71f7b14b0e9f",
+      "author_example": "test/diff_test.f90",
+      "reuse": "adapted",
+      "license": "BSD-3",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/numdiff-BSD-3.txt"
+      ],
+      "modifications": "Author API patterns adapted to exp(x)*sin(x) on four shared points, analytic references, finite-result checks and explicit method-specific tolerances. Module callbacks avoid executable-stack trampolines.",
+      "validation_path": "docs/gams-differentiation-validation.json",
+      "review_path": "docs/gams-differentiation.md",
+      "checks": {
+        "precision": "real64",
+        "points": [
+          -0.5,
+          0,
+          0.5,
+          1
+        ],
+        "reference": "analytic derivatives of exp(x)*sin(x)",
+        "orders": [
+          1,
+          2,
+          3
+        ],
+        "endpoint_formulas": true,
+        "requested_absolute_errors": [
+          1e-08,
+          1e-08,
+          1e-06
+        ],
+        "max_scaled_errors": [
+          1e-07,
+          1e-07,
+          1e-06
+        ]
+      }
+    },
+    {
+      "id": "fordiff-analytic-derivatives",
+      "name": "gams-fordiff-analytic-derivatives",
+      "package_id": "fordiff",
+      "procedure_id": "fordiff-derivative",
+      "gams_code": "H1",
+      "problem_id": "exp-sine-derivatives",
+      "path": "fpm_catalog/gams-drivers/fordiff-analytic-derivatives.f90",
+      "revision": "f1a1099a590107645314f1388c432624ff97b9bc",
+      "author_example": "example/demo1.f90",
+      "reuse": "adapted",
+      "license": "BSD-3",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fordiff-BSD-3.txt"
+      ],
+      "modifications": "Author API patterns adapted to exp(x)*sin(x) on four shared points, analytic references, finite-result checks and explicit method-specific tolerances. Module callbacks avoid executable-stack trampolines.",
+      "validation_path": "docs/gams-differentiation-validation.json",
+      "review_path": "docs/gams-differentiation.md",
+      "checks": {
+        "precision": "real64",
+        "points": [
+          -0.5,
+          0,
+          0.5,
+          1
+        ],
+        "reference": "analytic derivatives of exp(x)*sin(x)",
+        "orders": [
+          1
+        ],
+        "methods": [
+          "forward",
+          "backward",
+          "central",
+          "complex-step"
+        ],
+        "finite_difference_step": 1e-05,
+        "complex_step": 1e-20,
+        "max_scaled_errors": [
+          5e-05,
+          5e-05,
+          1e-09,
+          5e-14
+        ]
+      }
+    },
+    {
+      "id": "ad-dnsvm-analytic-derivatives",
+      "name": "gams-ad-dnsvm-analytic-derivatives",
+      "package_id": "ad_dnsvm",
+      "procedure_id": "ad-dnsvm-get-dns",
+      "gams_code": "H1",
+      "problem_id": "exp-sine-derivatives",
+      "path": "fpm_catalog/gams-drivers/ad-dnsvm-analytic-derivatives.f90",
+      "revision": "32db0bd122ce1dae290e9cf4c1fda4ab8f3de6f1",
+      "author_example": "APP/Example_dnS.f90",
+      "reuse": "adapted",
+      "license": "MIT",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/ad_dnsvm-MIT.txt"
+      ],
+      "modifications": "Author API patterns adapted to exp(x)*sin(x) on four shared points, analytic references, finite-result checks and explicit method-specific tolerances. Module callbacks avoid executable-stack trampolines.",
+      "validation_path": "docs/gams-differentiation-validation.json",
+      "review_path": "docs/gams-differentiation.md",
+      "checks": {
+        "precision": "real64",
+        "points": [
+          -0.5,
+          0,
+          0.5,
+          1
+        ],
+        "reference": "analytic derivatives of exp(x)*sin(x)",
+        "orders": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "max_scaled_error": 5e-14,
+        "variables": 1
+      }
+    },
+    {
+      "id": "minpack-rosenbrock-system",
+      "name": "gams-minpack-rosenbrock-system",
+      "package_id": "minpack",
+      "procedure_id": "minpack-hybrd1",
+      "gams_code": "F2",
+      "problem_id": "rosenbrock-square-system",
+      "path": "fpm_catalog/gams-drivers/minpack-rosenbrock-system.f90",
+      "revision": "c0b5aea9fcd2b83865af921a7a7e881904f8d3c2",
+      "author_example": "examples/example_hybrd1.f90",
+      "reuse": "adapted",
+      "license": "MIT",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/minpack-MIT.txt"
+      ],
+      "modifications": "Author solver API patterns adapted to a shared two-equation Rosenbrock system, two starting points, known root, independently recomputed residuals and explicit convergence checks. Module callbacks avoid executable-stack trampolines.",
+      "validation_path": "docs/gams-systems-validation.json",
+      "review_path": "docs/gams-systems.md",
+      "checks": {
+        "precision": "real64",
+        "starting_points": [
+          [
+            -1.2,
+            1
+          ],
+          [
+            2,
+            2
+          ]
+        ],
+        "expected_root": [
+          1,
+          1
+        ],
+        "max_root_error": 1e-08,
+        "max_residual_infinity_norm": 1e-08,
+        "configuration": "finite-difference Jacobian",
+        "requested_x_tolerance": 1e-10,
+        "required_status": 1
+      }
+    },
+    {
+      "id": "nonlin-rosenbrock-system",
+      "name": "gams-nonlin-rosenbrock-system",
+      "package_id": "nonlin",
+      "procedure_id": "nonlin-newton-solver",
+      "gams_code": "F2",
+      "problem_id": "rosenbrock-square-system",
+      "path": "fpm_catalog/gams-drivers/nonlin-rosenbrock-system.f90",
+      "revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+      "author_example": "examples/nonlin_newton_example.f90",
+      "reuse": "adapted",
+      "license": "MIT",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/nonlin-MIT.txt"
+      ],
+      "modifications": "Author solver API patterns adapted to a shared two-equation Rosenbrock system, two starting points, known root, independently recomputed residuals and explicit convergence checks. Module callbacks avoid executable-stack trampolines.",
+      "validation_path": "docs/gams-systems-validation.json",
+      "review_path": "docs/gams-systems.md",
+      "checks": {
+        "precision": "real64",
+        "starting_points": [
+          [
+            -1.2,
+            1
+          ],
+          [
+            2,
+            2
+          ]
+        ],
+        "expected_root": [
+          1,
+          1
+        ],
+        "max_root_error": 1e-08,
+        "max_residual_infinity_norm": 1e-08,
+        "configuration": "finite-difference and analytic Jacobians",
+        "function_tolerance": 1e-10,
+        "variable_tolerance": 1e-12,
+        "gradient_tolerance": 1e-12,
+        "max_function_evaluations": 2000,
+        "required_termination": "function or variable change, plus independently checked root and residual"
+      }
+    },
+    {
+      "id": "nlesolver-rosenbrock-system",
+      "name": "gams-nlesolver-rosenbrock-system",
+      "package_id": "nlesolver-fortran",
+      "procedure_id": "nlesolver-fortran-nlesolver-type",
+      "gams_code": "F2",
+      "problem_id": "rosenbrock-square-system",
+      "path": "fpm_catalog/gams-drivers/nlesolver-rosenbrock-system.f90",
+      "revision": "60f38870a25e6b448dd552f184aa2f8616fc8cb0",
+      "author_example": "test/sparse_test.f90",
+      "reuse": "adapted",
+      "license": "BSD-3",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/nlesolver-fortran-BSD.txt"
+      ],
+      "modifications": "Author solver API patterns adapted to a shared two-equation Rosenbrock system, two starting points, known root, independently recomputed residuals and explicit convergence checks. Module callbacks avoid executable-stack trampolines.",
+      "validation_path": "docs/gams-systems-validation.json",
+      "review_path": "docs/gams-systems.md",
+      "checks": {
+        "precision": "real64",
+        "starting_points": [
+          [
+            -1.2,
+            1
+          ],
+          [
+            2,
+            2
+          ]
+        ],
+        "expected_root": [
+          1,
+          1
+        ],
+        "max_root_error": 1e-08,
+        "max_residual_infinity_norm": 1e-08,
+        "configuration": "analytic dense Jacobian; backtracking; no Broyden updates",
+        "function_tolerance": 1e-10,
+        "variable_tolerance": 1e-12,
+        "max_iterations": 200,
+        "required_status": 1
+      }
+    },
+    {
+      "id": "minres-indefinite-solve",
+      "name": "gams-minres-indefinite-solve",
+      "package_id": "minres",
+      "procedure_id": "minres-minres-solver",
+      "gams_code": "D2b4",
+      "problem_id": "symmetric-quasidefinite-system",
+      "path": "fpm_catalog/gams-drivers/minres-indefinite-solve.f90",
+      "revision": "c7bb4c7a0ddf13729d3556878ccc688a208a052a",
+      "author_example": "test/minres_test.f90",
+      "reuse": "adapted",
+      "license": "MIT",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/minres-MIT.txt"
+      ],
+      "modifications": "Author API patterns adapted to two known solutions, independently represented matrix/residual checks and explicit termination checks. Sparse indefinite and dense positive-definite configurations are distinguished.",
+      "validation_path": "docs/gams-sparse-validation.json",
+      "review_path": "docs/gams-sparse.md",
+      "checks": {
+        "precision": "real64",
+        "dimension": 5,
+        "right_hand_sides": 2,
+        "max_absolute_solution_error": 1e-09,
+        "max_scaled_backward_error": 1e-11,
+        "backward_error": "norm_inf(A*x-b)/(norm_inf(A)*norm_inf(x)+norm_inf(b))",
+        "operator_storage": "upper-coordinate symmetric product",
+        "requested_relative_tolerance": 1e-12,
+        "max_iterations": 100,
+        "preconditioned": false,
+        "shift": 0,
+        "accepted_stop_reasons": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "qdldl-quasidefinite-solve",
+      "name": "gams-qdldl-quasidefinite-solve",
+      "package_id": "qdldl-fortran",
+      "procedure_id": "qdldl-fortran-api",
+      "gams_code": "D2b4",
+      "problem_id": "symmetric-quasidefinite-system",
+      "path": "fpm_catalog/gams-drivers/qdldl-quasidefinite-solve.f90",
+      "revision": "8ebdd7fa1075bfb89115d0955806b0996b6b29d5",
+      "author_example": "example/example_kkt.f90",
+      "reuse": "adapted",
+      "license": "Apache-2.0",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/qdldl-fortran-Apache-2.0.txt"
+      ],
+      "modifications": "Author API patterns adapted to two known solutions, independently represented matrix/residual checks and explicit termination checks. Sparse indefinite and dense positive-definite configurations are distinguished.",
+      "validation_path": "docs/gams-sparse-validation.json",
+      "review_path": "docs/gams-sparse.md",
+      "checks": {
+        "precision": "real64",
+        "dimension": 5,
+        "right_hand_sides": 2,
+        "max_absolute_solution_error": 1e-09,
+        "max_scaled_backward_error": 1e-11,
+        "backward_error": "norm_inf(A*x-b)/(norm_inf(A)*norm_inf(x)+norm_inf(b))",
+        "orderings": [
+          "natural",
+          "RCM",
+          "AMD"
+        ],
+        "expected_inertia": [
+          3,
+          2,
+          0
+        ],
+        "regularization": 0,
+        "iterative_refinement_steps": 0,
+        "factors_reused": true
+      }
+    },
+    {
+      "id": "kiss-positive-definite-solve",
+      "name": "gams-kiss-positive-definite-solve",
+      "package_id": "kiss",
+      "procedure_id": "kiss-cg-dense",
+      "gams_code": "D2b1b",
+      "problem_id": "positive-definite-tridiagonal-system",
+      "path": "fpm_catalog/gams-drivers/kiss-positive-definite-solve.f90",
+      "revision": "55f0f7ccb1601a0628a17928b5b6b79f61da2892",
+      "author_example": "test/test_kiss.f90",
+      "reuse": "adapted",
+      "license": "BSD-3",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/kiss-BSD-3.txt"
+      ],
+      "modifications": "Author API patterns adapted to two known solutions, independently represented matrix/residual checks and explicit termination checks. Sparse indefinite and dense positive-definite configurations are distinguished.",
+      "validation_path": "docs/gams-sparse-validation.json",
+      "review_path": "docs/gams-sparse.md",
+      "checks": {
+        "precision": "real64",
+        "dimension": 20,
+        "right_hand_sides": 2,
+        "max_absolute_solution_error": 1e-09,
+        "max_scaled_backward_error": 1e-11,
+        "backward_error": "norm_inf(A*x-b)/(norm_inf(A)*norm_inf(x)+norm_inf(b))",
+        "storage": "dense",
+        "relative_tolerance": 1e-12,
+        "absolute_tolerance": 1e-14,
+        "max_iterations": 200,
+        "required_status": 0
+      }
+    },
+    {
+      "id": "dcuhre-box-integrals",
+      "name": "gams-dcuhre-box-integrals",
+      "package_id": "dcuhre",
+      "procedure_id": "dcuhre-dcuhre",
+      "gams_code": "H2b1a1",
+      "problem_id": "dcuhre-box-integrals",
+      "path": "fpm_catalog/gams-drivers/dcuhre-box-integrals.f90",
+      "revision": "da8becb7f5313c1d7387066ef2106be9e156e20c",
+      "author_example": "test/dtest1.f",
+      "reuse": "adapted",
+      "license": "ACM non-commercial",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/dcuhre-ACM.txt"
+      ],
+      "modifications": "Author API patterns adapted to deterministic analytic integrals and polynomial moments, finite-data checks and explicit accuracy settings. Adaptive integration is distinguished from node/weight generation.",
+      "validation_path": "docs/gams-cubature-validation.json",
+      "review_path": "docs/gams-cubature.md",
+      "checks": {
+        "precision": "real64",
+        "dimensions": [
+          2,
+          3
+        ],
+        "components": [
+          "sum(x**2)",
+          "exp(sum(x))"
+        ],
+        "boxes": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          [
+            [
+              -1,
+              0,
+              1
+            ],
+            [
+              0,
+              2,
+              2
+            ]
+          ]
+        ],
+        "absolute_tolerance": 1e-10,
+        "relative_tolerance": 1e-09,
+        "max_evaluations": 20000,
+        "workspace_length": 10000,
+        "required_status": 0,
+        "max_scaled_analytic_error": 1e-08
+      }
+    },
+    {
+      "id": "gauss-jacobi-polynomial-moments",
+      "name": "gams-gauss-jacobi-polynomial-moments",
+      "package_id": "gaussjacobiquad",
+      "procedure_id": "gaussjacobiquad-gauss-jacobi",
+      "gams_code": "H2c",
+      "problem_id": "gauss-jacobi-polynomial-moments",
+      "path": "fpm_catalog/gams-drivers/gauss-jacobi-polynomial-moments.f90",
+      "revision": "ffb970c68eea0b39b140f80f788c8994547d8bfb",
+      "author_example": "app/gjp_quad.f90",
+      "reuse": "adapted",
+      "license": "MIT",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/gaussjacobiquad-MIT.txt"
+      ],
+      "modifications": "Author API patterns adapted to deterministic analytic integrals and polynomial moments, finite-data checks and explicit accuracy settings. Adaptive integration is distinguished from node/weight generation.",
+      "validation_path": "docs/gams-cubature-validation.json",
+      "review_path": "docs/gams-cubature.md",
+      "checks": {
+        "precision": "real64",
+        "nodes": 4,
+        "methods": [
+          "recurrence",
+          "gw"
+        ],
+        "alpha_beta": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "monomial_degrees": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "max_scaled_moment_error": 1e-11
+      }
+    },
+    {
+      "id": "cubatures-simplex-moments",
+      "name": "gams-cubatures-simplex-moments",
+      "package_id": "fortran_cubatures",
+      "procedure_id": "fortran-cubatures-cubature",
+      "gams_code": "H2c",
+      "problem_id": "cubatures-simplex-moments",
+      "path": "fpm_catalog/gams-drivers/cubatures-simplex-moments.f90",
+      "revision": "aca04975d09aed329fd4210defd7052926dc01c1",
+      "author_example": "test/test_cubatures.f90",
+      "reuse": "adapted",
+      "license": "MIT",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fortran_cubatures-MIT.txt"
+      ],
+      "modifications": "Author API patterns adapted to deterministic analytic integrals and polynomial moments, finite-data checks and explicit accuracy settings. Adaptive integration is distinguished from node/weight generation.",
+      "validation_path": "docs/gams-cubature-validation.json",
+      "review_path": "docs/gams-cubature.md",
+      "checks": {
+        "precision": "real64",
+        "elements": [
+          "triangle",
+          "tetrahedron",
+          "quadrilateral"
+        ],
+        "degrees": [
+          5,
+          4,
+          5
+        ],
+        "moments_per_element": [
+          21,
+          35,
+          36
+        ],
+        "max_scaled_moment_error": 1e-12
+      }
+    },
+    {
+      "id": "finterp-bilinear-surface",
+      "name": "gams-finterp-bilinear-surface",
+      "package_id": "finterp",
+      "procedure_id": "finterp-linear-interp-2d",
+      "gams_code": "E2a",
+      "problem_id": "nonuniform-bilinear-surface",
+      "path": "fpm_catalog/gams-drivers/finterp-bilinear-surface.f90",
+      "revision": "95aaceaf86f5d4d49328b783c5dff9b006b0bfc9",
+      "author_example": "test/test.f90",
+      "reuse": "adapted",
+      "license": "BSD-3",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/finterp-BSD.txt"
+      ],
+      "modifications": "Author API patterns adapted to a shared nonuniform 6-by-5 grid, bilinear analytic and curved data, node checks, independent four-corner interpolation and corner bounds. B-spline adds a bicubic polynomial with analytic dx, dy and mixed partial references.",
+      "validation_path": "docs/gams-surfaces-validation.json",
+      "review_path": "docs/gams-surfaces.md",
+      "checks": {
+        "precision": "real64",
+        "grid_x": [
+          -1,
+          -0.6,
+          0,
+          0.3,
+          1,
+          2
+        ],
+        "grid_y": [
+          -2,
+          -0.75,
+          0,
+          0.5,
+          1.5
+        ],
+        "surface_cases": 2,
+        "node_checks_per_case": 30,
+        "cell_samples_per_case": 500,
+        "max_absolute_bilinear_error": 1e-11,
+        "extrapolation_checked": false
+      }
+    },
+    {
+      "id": "bspline-tensor-surface",
+      "name": "gams-bspline-tensor-surface",
+      "package_id": "bspline-fortran",
+      "procedure_id": "bspline-fortran-bspline-2d",
+      "gams_code": "E2a",
+      "problem_id": "nonuniform-bilinear-surface",
+      "path": "fpm_catalog/gams-drivers/bspline-tensor-surface.f90",
+      "revision": "047c724451aeee7f883c0d5acba3f7bd22a5de01",
+      "author_example": "test/test_oo.f90",
+      "reuse": "adapted",
+      "license": "BSD-3",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/bspline-fortran-BSD.txt"
+      ],
+      "modifications": "Author API patterns adapted to a shared nonuniform 6-by-5 grid, bilinear analytic and curved data, node checks, independent four-corner interpolation and corner bounds. B-spline adds a bicubic polynomial with analytic dx, dy and mixed partial references.",
+      "validation_path": "docs/gams-surfaces-validation.json",
+      "review_path": "docs/gams-surfaces.md",
+      "checks": {
+        "precision": "real64",
+        "grid_x": [
+          -1,
+          -0.6,
+          0,
+          0.3,
+          1,
+          2
+        ],
+        "grid_y": [
+          -2,
+          -0.75,
+          0,
+          0.5,
+          1.5
+        ],
+        "surface_cases": 2,
+        "node_checks_per_case": 30,
+        "cell_samples_per_case": 500,
+        "max_absolute_bilinear_error": 1e-11,
+        "extrapolation_checked": false,
+        "bilinear_orders": [
+          2,
+          2
+        ],
+        "polynomial_orders": [
+          4,
+          4
+        ],
+        "polynomial_query_points": 121,
+        "partial_derivatives": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "max_scaled_polynomial_error": 1e-10
+      }
+    },
+    {
+      "id": "dvode-stiff-two-scale",
+      "name": "gams-dvode-stiff-two-scale",
+      "package_id": "dvode",
+      "procedure_id": "dvode-dvode-t",
+      "gams_code": "I1a2",
+      "problem_id": "autonomous-stiff-two-scale-system",
+      "path": "fpm_catalog/gams-drivers/dvode-stiff-two-scale.f90",
+      "revision": "59d2eedd1410a4bd6c196c24d08f95a7c20565c0",
+      "author_example": "test/dvdemo.f90",
+      "reuse": "adapted",
+      "license": "BSD-3",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/dvode-BSD.txt"
+      ],
+      "modifications": "Author solver API patterns adapted to a common autonomous stiff linear system with exact fast/slow exponential modes, four output times, explicit status checks and independently evaluated solution references. Module callbacks avoid executable-stack trampolines.",
+      "validation_path": "docs/gams-stiff-validation.json",
+      "review_path": "docs/gams-stiff.md",
+      "checks": {
+        "precision": "real64",
+        "initial_state": [
+          2,
+          1
+        ],
+        "output_times": [
+          0.001,
+          0.01,
+          0.1,
+          1
+        ],
+        "eigenvalues": [
+          -1000,
+          -1
+        ],
+        "max_scaled_state_error": 2e-06,
+        "max_absolute_fast_mode_error": 4e-06,
+        "max_time_error": 1e-12,
+        "method_flag": 22,
+        "relative_tolerance": 1e-08,
+        "absolute_tolerance": 1e-10,
+        "required_state": 2
+      }
+    },
+    {
+      "id": "lsoda-stiff-two-scale",
+      "name": "gams-lsoda-stiff-two-scale",
+      "package_id": "odepack",
+      "procedure_id": "odepack-lsoda-class",
+      "gams_code": "I1a2",
+      "problem_id": "autonomous-stiff-two-scale-system",
+      "path": "fpm_catalog/gams-drivers/lsoda-stiff-two-scale.f90",
+      "revision": "d5db96093dc14fff54e10575cc586fa85392b078",
+      "author_example": "test/benchmark.f90",
+      "reuse": "adapted",
+      "license": "Public domain (retained LLNL notice)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/odepack-Public-Domain.txt"
+      ],
+      "modifications": "Author solver API patterns adapted to a common autonomous stiff linear system with exact fast/slow exponential modes, four output times, explicit status checks and independently evaluated solution references. Module callbacks avoid executable-stack trampolines.",
+      "validation_path": "docs/gams-stiff-validation.json",
+      "review_path": "docs/gams-stiff.md",
+      "checks": {
+        "precision": "real64",
+        "initial_state": [
+          2,
+          1
+        ],
+        "output_times": [
+          0.001,
+          0.01,
+          0.1,
+          1
+        ],
+        "eigenvalues": [
+          -1000,
+          -1
+        ],
+        "max_scaled_state_error": 2e-06,
+        "max_absolute_fast_mode_error": 4e-06,
+        "max_time_error": 1e-12,
+        "relative_tolerance": 1e-08,
+        "absolute_tolerance": 1e-10,
+        "required_state": 2,
+        "max_internal_steps_per_call": 5000,
+        "bdf_indicator_required": true
+      }
+    },
+    {
+      "id": "stiff3-stiff-two-scale",
+      "name": "gams-stiff3-stiff-two-scale",
+      "package_id": "stiff3",
+      "procedure_id": "stiff3-stiff3",
+      "gams_code": "I1a2",
+      "problem_id": "autonomous-stiff-two-scale-system",
+      "path": "fpm_catalog/gams-drivers/stiff3-stiff-two-scale.f90",
+      "revision": "70ab5c86c2ac922ed148bbb1182345cca248e077",
+      "author_example": "example/hires.f90",
+      "reuse": "adapted",
+      "license": "Apache-2.0",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/stiff3-Apache-2.0.txt"
+      ],
+      "modifications": "Author solver API patterns adapted to a common autonomous stiff linear system with exact fast/slow exponential modes, four output times, explicit status checks and independently evaluated solution references. Module callbacks avoid executable-stack trampolines.",
+      "validation_path": "docs/gams-stiff-validation.json",
+      "review_path": "docs/gams-stiff.md",
+      "checks": {
+        "precision": "real64",
+        "initial_state": [
+          2,
+          1
+        ],
+        "output_times": [
+          0.001,
+          0.01,
+          0.1,
+          1
+        ],
+        "eigenvalues": [
+          -1000,
+          -1
+        ],
+        "max_scaled_state_error": 2e-06,
+        "max_absolute_fast_mode_error": 4e-06,
+        "max_time_error": 1e-12,
+        "eps": 1e-08,
+        "weights": [
+          1,
+          1
+        ],
+        "initial_half_step": 1e-06,
+        "analytic_jacobian": true,
+        "required_status": 0
+      }
+    },
+    {
+      "id": "polyroots-real-reference",
+      "name": "gams-polyroots-real-reference",
+      "package_id": "polyroots-fortran",
+      "procedure_id": "polyroots-fortran-polyroots",
+      "gams_code": "F1a",
+      "problem_id": "known-distinct-polynomial-roots",
+      "path": "fpm_catalog/gams-drivers/polyroots-real-reference.f90",
+      "revision": "165ed6fbec98cc23d9ed4784fbc4708adb5e0bcf",
+      "author_example": "test/polyroots_test.f90",
+      "reuse": "adapted",
+      "license": "BSD-3 with retained upstream notices",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/polyroots-fortran-notices.txt"
+      ],
+      "modifications": "Author solver API patterns adapted to known real/conjugate/zero roots, unique order-independent matching, normalized polynomial residuals and three coefficient scales. The complex companion driver additionally checks genuinely complex coefficients.",
+      "validation_path": "docs/gams-polynomial-validation.json",
+      "review_path": "docs/gams-polynomial.md",
+      "checks": {
+        "precision": "real64",
+        "algorithm": "polyroots",
+        "coefficient_order": "decreasing powers",
+        "polynomial_cases": 2,
+        "coefficient_scales": [
+          1,
+          1e+80,
+          1e-80
+        ],
+        "max_scaled_root_error": 1e-09,
+        "max_normalized_horner_residual": 2e-12,
+        "distinct_roots_only": true,
+        "required_status": 0,
+        "complex_coefficients_checked": false
+      }
+    },
+    {
+      "id": "rpoly-real-reference",
+      "name": "gams-rpoly-real-reference",
+      "package_id": "polyroots-fortran",
+      "procedure_id": "polyroots-fortran-rpoly",
+      "gams_code": "F1a",
+      "problem_id": "known-distinct-polynomial-roots",
+      "path": "fpm_catalog/gams-drivers/rpoly-real-reference.f90",
+      "revision": "165ed6fbec98cc23d9ed4784fbc4708adb5e0bcf",
+      "author_example": "test/polyroots_test.f90",
+      "reuse": "adapted",
+      "license": "BSD-3 with retained upstream notices",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/polyroots-fortran-notices.txt"
+      ],
+      "modifications": "Author solver API patterns adapted to known real/conjugate/zero roots, unique order-independent matching, normalized polynomial residuals and three coefficient scales. The complex companion driver additionally checks genuinely complex coefficients.",
+      "validation_path": "docs/gams-polynomial-validation.json",
+      "review_path": "docs/gams-polynomial.md",
+      "checks": {
+        "precision": "real64",
+        "algorithm": "rpoly",
+        "coefficient_order": "decreasing powers",
+        "polynomial_cases": 2,
+        "coefficient_scales": [
+          1,
+          1e+80,
+          1e-80
+        ],
+        "max_scaled_root_error": 1e-09,
+        "max_normalized_horner_residual": 2e-12,
+        "distinct_roots_only": true,
+        "required_status": 0,
+        "complex_coefficients_checked": false
+      }
+    },
+    {
+      "id": "cpolyroots-complex-reference",
+      "name": "gams-cpolyroots-complex-reference",
+      "package_id": "polyroots-fortran",
+      "procedure_id": "polyroots-fortran-cpolyroots",
+      "gams_code": "F1a",
+      "problem_id": "known-distinct-polynomial-roots",
+      "path": "fpm_catalog/gams-drivers/cpolyroots-complex-reference.f90",
+      "revision": "165ed6fbec98cc23d9ed4784fbc4708adb5e0bcf",
+      "author_example": "test/polyroots_test.f90",
+      "reuse": "adapted",
+      "license": "BSD-3 with retained upstream notices",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/polyroots-fortran-notices.txt"
+      ],
+      "modifications": "Author solver API patterns adapted to known real/conjugate/zero roots, unique order-independent matching, normalized polynomial residuals and three coefficient scales. The complex companion driver additionally checks genuinely complex coefficients.",
+      "validation_path": "docs/gams-polynomial-validation.json",
+      "review_path": "docs/gams-polynomial.md",
+      "checks": {
+        "precision": "real64",
+        "algorithm": "cpolyroots",
+        "coefficient_order": "decreasing powers",
+        "polynomial_cases": 3,
+        "coefficient_scales": [
+          1,
+          1e+80,
+          1e-80
+        ],
+        "max_scaled_root_error": 1e-09,
+        "max_normalized_horner_residual": 2e-12,
+        "distinct_roots_only": true,
+        "required_status": 0,
+        "complex_coefficients_checked": true
+      }
+    },
+    {
+      "id": "spectrum-convolution-reference",
+      "name": "gams-spectrum-convolution-reference",
+      "package_id": "spectrum",
+      "procedure_id": "spectrum-convolve",
+      "gams_code": "J2",
+      "problem_id": "direct-reference-discrete-convolution",
+      "path": "fpm_catalog/gams-drivers/spectrum-convolution-reference.f90",
+      "revision": "5af0d5a85eccf971aa6e0fc72b1c7439c3cef536",
+      "author_example": "examples/gaussian_filter_example.f90",
+      "reuse": "adapted",
+      "license": "MIT",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/spectrum-MIT.txt"
+      ],
+      "modifications": "Author API patterns adapted to impulse and oscillating signals, eight kernel lengths including asymmetric odd/even kernels, independent direct summation and explicit output conventions. Plotting and large benchmark loops are omitted.",
+      "validation_path": "docs/gams-convolution-validation.json",
+      "review_path": "docs/gams-convolution.md",
+      "checks": {
+        "signal_length": 37,
+        "signals": [
+          "impulse at sample 10",
+          "sin(0.2*i)+(-1)**i*0.1*i"
+        ],
+        "kernel_lengths": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          8,
+          16,
+          17
+        ],
+        "reference_precision": "real64",
+        "max_scaled_output_error": 1e-11,
+        "native_precision": "real64",
+        "output_modes": [
+          "full",
+          "central"
+        ],
+        "swapped_inputs_checked": true,
+        "sum_identity_checked": true,
+        "central_start": "floor(shorter_length/2)+1"
+      }
+    },
+    {
+      "id": "fastconv-convolution-reference",
+      "name": "gams-fastconv-convolution-reference",
+      "package_id": "fastconv",
+      "procedure_id": "fastconv-conv1d-t",
+      "gams_code": "J2",
+      "problem_id": "direct-reference-discrete-convolution",
+      "path": "fpm_catalog/gams-drivers/fastconv-convolution-reference.f90",
+      "revision": "3aaa2432a291df07a10fc5dade0dcd66d7a06dd0",
+      "author_example": "README.md",
+      "reuse": "adapted",
+      "license": "BSD-3",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fastconv-BSD-3.txt"
+      ],
+      "modifications": "Author API patterns adapted to impulse and oscillating signals, eight kernel lengths including asymmetric odd/even kernels, independent direct summation and explicit output conventions. Plotting and large benchmark loops are omitted.",
+      "validation_path": "docs/gams-convolution-validation.json",
+      "review_path": "docs/gams-convolution.md",
+      "checks": {
+        "signal_length": 37,
+        "signals": [
+          "impulse at sample 10",
+          "sin(0.2*i)+(-1)**i*0.1*i"
+        ],
+        "kernel_lengths": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          8,
+          16,
+          17
+        ],
+        "reference_precision": "real64",
+        "max_scaled_output_error": 2e-06,
+        "native_precision": "real32",
+        "output_modes": [
+          "valid"
+        ],
+        "preserve_shape": false,
+        "reference_inputs": "actual rounded real32 arguments converted to real64"
+      }
+    },
+    {
+      "id": "odrpack-line-total-least-squares",
+      "name": "gams-odrpack-line-total-least-squares",
+      "package_id": "odrpack95",
+      "procedure_id": "odrpack95-odr",
+      "gams_code": "L8",
+      "problem_id": "orthogonal-line-fit",
+      "path": "fpm_catalog/gams-drivers/odrpack-line-total-least-squares.f90",
+      "revision": "12597b20812a76a4b702f985f6adc82632a18f60",
+      "author_example": "example/example1.f90",
+      "reuse": "adapted",
+      "license": "MIT",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/odrpack95-MIT.txt"
+      ],
+      "modifications": "Author callback pattern adapted to two unweighted orthogonal line fits, positive/negative slopes and independent TLS formulas.",
+      "validation_path": "docs/gams-regression-validation.json",
+      "review_path": "docs/gams-regression.md",
+      "checks": {
+        "precision": "real64",
+        "cases": 2,
+        "observations": 6,
+        "unit_x_y_weights": true,
+        "job": 20,
+        "analytic_derivatives": true,
+        "accepted_statuses": [
+          1,
+          2,
+          3
+        ],
+        "max_absolute_parameter_error": 1e-05,
+        "max_absolute_objective_error": 1e-08
+      }
+    },
+    {
+      "id": "logistic-grouped-binomial-reference",
+      "name": "gams-logistic-grouped-binomial-reference",
+      "package_id": "lib_statistics",
+      "procedure_id": "lib-statistics-logistic",
+      "gams_code": "L8",
+      "problem_id": "two-level-grouped-binomial-fit",
+      "path": "fpm_catalog/gams-drivers/logistic-grouped-binomial-reference.f90",
+      "revision": "056740db259fc3599dca0d8858f04e94845a6769",
+      "author_example": null,
+      "reuse": "original",
+      "license": "original",
+      "license_files": [],
+      "modifications": "Independent public-API driver for three grouped-binomial datasets with two predictor levels; analytic MLE, Pearson/deviance, Fisher covariance and standard error checks. No upstream test copied.",
+      "validation_path": "docs/gams-regression-validation.json",
+      "review_path": "docs/gams-regression.md",
+      "checks": {
+        "precision": "real64",
+        "cases": 3,
+        "groups": 6,
+        "trials_per_group": 20,
+        "predictor_levels": [
+          [
+            -1,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            -1,
+            1
+          ]
+        ],
+        "level_probabilities": [
+          [
+            0.25,
+            0.75
+          ],
+          [
+            0.25,
+            0.75
+          ],
+          [
+            0.2,
+            0.6
+          ]
+        ],
+        "required_status": 0,
+        "residual_degrees_of_freedom": 4,
+        "max_coefficient_error": 1e-06,
+        "max_probability_error": 1e-06,
+        "max_statistic_error": 1e-06,
+        "max_covariance_error": 1e-05,
+        "max_standard_error_error": 1e-05,
+        "dispersion": "max(1,Pearson chi-square/ndf)"
+      }
+    },
+    {
+      "id": "slicot-lyapunov-known-matrix",
+      "name": "gams-slicot-lyapunov-known-matrix",
+      "package_id": "slicot",
+      "procedure_id": "slicot-lyapunov",
+      "gams_code": "D8",
+      "problem_id": "known-sb03md-matrix-equations",
+      "path": "fpm_catalog/gams-drivers/slicot-lyapunov-known-matrix.f90",
+      "revision": "5eeb845d84f5a60f6069754b7819dad468951933",
+      "author_example": "examples/TSB03MD.f",
+      "reuse": "adapted",
+      "license": "BSD-3",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/slicot-BSD.txt"
+      ],
+      "modifications": "Author invocation patterns adapted to known nondiagonal matrix solutions, preserved original coefficients and independent residuals. Lyapunov driver covers continuous/discrete and transpose modes plus reused Schur factors; Sylvester drivers use rectangular solutions.",
+      "validation_path": "docs/gams-matrix-equations-validation.json",
+      "review_path": "docs/gams-matrix-equations.md",
+      "checks": {
+        "precision": "real64",
+        "required_status": 0,
+        "max_scaled_solution_error": 1e-10,
+        "max_scaled_residual": 1e-12,
+        "dimension": 3,
+        "equations": [
+          "continuous",
+          "discrete"
+        ],
+        "transpose_modes": [
+          "N",
+          "T"
+        ],
+        "right_hand_sides_per_mode": 2,
+        "factor_modes": [
+          "N",
+          "F"
+        ],
+        "job": "X",
+        "max_absolute_symmetry_error": 1e-12,
+        "returned_scale_honored": true
+      }
+    },
+    {
+      "id": "slicot-continuous-sylvester",
+      "name": "gams-slicot-continuous-sylvester",
+      "package_id": "slicot",
+      "procedure_id": "slicot-sb04md",
+      "gams_code": "D8",
+      "problem_id": "known-sb04md-matrix-equations",
+      "path": "fpm_catalog/gams-drivers/slicot-continuous-sylvester.f90",
+      "revision": "5eeb845d84f5a60f6069754b7819dad468951933",
+      "author_example": "examples/TSB04MD.f",
+      "reuse": "adapted",
+      "license": "BSD-3",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/slicot-BSD.txt"
+      ],
+      "modifications": "Author invocation patterns adapted to known nondiagonal matrix solutions, preserved original coefficients and independent residuals. Lyapunov driver covers continuous/discrete and transpose modes plus reused Schur factors; Sylvester drivers use rectangular solutions.",
+      "validation_path": "docs/gams-matrix-equations-validation.json",
+      "review_path": "docs/gams-matrix-equations.md",
+      "checks": {
+        "precision": "real64",
+        "required_status": 0,
+        "max_scaled_solution_error": 1e-10,
+        "max_scaled_residual": 1e-12,
+        "solution_shape": [
+          2,
+          3
+        ],
+        "cases": 2,
+        "second_case_transposes_coefficients": true,
+        "equation": "A*X+X*B=C"
+      }
+    },
+    {
+      "id": "slicot-discrete-sylvester",
+      "name": "gams-slicot-discrete-sylvester",
+      "package_id": "slicot",
+      "procedure_id": "slicot-sb04qd",
+      "gams_code": "D8",
+      "problem_id": "known-sb04qd-matrix-equations",
+      "path": "fpm_catalog/gams-drivers/slicot-discrete-sylvester.f90",
+      "revision": "5eeb845d84f5a60f6069754b7819dad468951933",
+      "author_example": "examples/TSB04QD.f",
+      "reuse": "adapted",
+      "license": "BSD-3",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/slicot-BSD.txt"
+      ],
+      "modifications": "Author invocation patterns adapted to known nondiagonal matrix solutions, preserved original coefficients and independent residuals. Lyapunov driver covers continuous/discrete and transpose modes plus reused Schur factors; Sylvester drivers use rectangular solutions.",
+      "validation_path": "docs/gams-matrix-equations-validation.json",
+      "review_path": "docs/gams-matrix-equations.md",
+      "checks": {
+        "precision": "real64",
+        "required_status": 0,
+        "max_scaled_solution_error": 1e-10,
+        "max_scaled_residual": 1e-12,
+        "solution_shape": [
+          2,
+          3
+        ],
+        "cases": 2,
+        "second_case_transposes_coefficients": true,
+        "equation": "X+A*X*B=C"
+      }
     }
   ]
 }

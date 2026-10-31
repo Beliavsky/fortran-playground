@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "dvode-stiff-two-scale",
+      "source_revision": "59d2eedd1410a4bd6c196c24d08f95a7c20565c0",
+      "source_sha256": "654817d98b17b61a500d0fc9fcb00b4d9bcff5c8ecdfea8c1fb035dec897d0b5",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T22:33:44.942668+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.876,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "t=  0.0010 state=   1.3668798588   0.9990004998\nScaled state error / fast-mode error:   6.0148E-08   8.2215E-08\nTotal steps=47 RHS evaluations=73\nt=  0.0100 state=   0.9900952416   0.9900498337\nScaled state error / fast-mode error:   7.9264E-09   7.9263E-09\nTotal steps=133 RHS evaluations=170\nt=  0.1000 state=   0.9048374278   0.9048374278\nScaled state error / fast-mode error:   9.7559E-09   2.1970E-12\nTotal steps=176 RHS evaluations=220\nt=  1.0000 state=   0.3678794742   0.3678794742\nScaled state error / fast-mode error:   3.3000E-08   0.0000E+00\nTotal steps=198 RHS evaluations=250\nPASS dvode-stiff-two-scale\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.032,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "lsoda-stiff-two-scale",
+      "source_revision": "d5db96093dc14fff54e10575cc586fa85392b078",
+      "source_sha256": "f657052e3e9a6dac1c4656d611a31a699532393adcdf91091b8d7c46810cfbf0",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T22:33:47.703761+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.489,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "t=  0.0010 state=   1.3668799572   0.9990004998\nScaled state error / fast-mode error:   1.1823E-08   1.6160E-08\nCurrent method (1=Adams, 2=BDF)=1 total steps=24 RHS evaluations=53\nt=  0.0100 state=   0.9900952331   0.9900498337\nScaled state error / fast-mode error:   5.9979E-10   5.9980E-10\nCurrent method (1=Adams, 2=BDF)=1 total steps=72 RHS evaluations=151\nt=  0.1000 state=   0.9048374287   0.9048374287\nScaled state error / fast-mode error:   1.0631E-08   6.0019E-13\nCurrent method (1=Adams, 2=BDF)=2 total steps=115 RHS evaluations=241\nt=  1.0000 state=   0.3678794484   0.3678794484\nScaled state error / fast-mode error:   7.2435E-09   4.5147E-13\nCurrent method (1=Adams, 2=BDF)=2 total steps=142 RHS evaluations=294\nPASS lsoda-stiff-two-scale\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.053,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stiff3-stiff-two-scale",
+      "source_revision": "70ab5c86c2ac922ed148bbb1182345cca248e077",
+      "source_sha256": "fa22fb2979b7d00b2dc1dc6ef1f02b53de5b38c153bd8b90e587b84b20f552a2",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T22:33:49.367680+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.334,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "t=  0.0010 state=   1.3668799408   0.9990004998\nScaled state error / fast-mode error:   1.3871E-10   1.8960E-10\nInterval accepted/rejected, RHS/Jacobian, LU/solves:      40       0     201      80     120     360\nt=  0.0100 state=   0.9900952335   0.9900498337\nScaled state error / fast-mode error:   1.5324E-10   1.5324E-10\nInterval accepted/rejected, RHS/Jacobian, LU/solves:     128       0     641     256     384    1152\nt=  0.1000 state=   0.9048374180   0.9048374180\nScaled state error / fast-mode error:   9.1952E-12   3.3307E-16\nInterval accepted/rejected, RHS/Jacobian, LU/solves:      20       0     101      40      60     180\nt=  1.0000 state=   0.3678794411   0.3678794411\nScaled state error / fast-mode error:   1.0953E-10   0.0000E+00\nInterval accepted/rejected, RHS/Jacobian, LU/solves:      39       0     196      78     117     351\nPASS stiff3-stiff-two-scale\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.023,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-30T22:33:49.420168+00:00"
+}

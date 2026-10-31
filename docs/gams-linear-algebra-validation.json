@@ -130,7 +130,103 @@
           "exit_code": 0
         }
       ]
+    },
+    {
+      "driver_id": "fortran-lapack-qr-decomposition",
+      "source_revision": "e5e45fdd5a38bfab06d1f703f12b787937aa33bb",
+      "source_sha256": "8c7fdb487ee10e22c76a7988bc6545d5b4fa313357b92b63114b9bdbd2af9341",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T21:05:43.595979+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 1.694,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Reduced QR case (2 has dependent columns): 1\nMaximum lower-triangular R entry:   0.0000E+00\nLeast-squares coefficients:     1.000000000000   -2.000000000000    0.500000000000\nMaximum absolute A-transpose residual:   1.9984E-15\nResidual sum of squares (expected 0.2):     0.200000000000\nRelative Frobenius reconstruction error:   9.6719E-17\nColumn orthogonality error:   2.9635E-16\nReduced QR case (2 has dependent columns): 2\nMaximum lower-triangular R entry:   0.0000E+00\nDependent column detected; triangular solve skipped.\nRelative Frobenius reconstruction error:   4.7600E-17\nColumn orthogonality error:   2.6622E-16\nPASS fortran-lapack-qr-decomposition\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.94,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fortran-lapack-symmetric-eigen",
+      "source_revision": "e5e45fdd5a38bfab06d1f703f12b787937aa33bb",
+      "source_sha256": "c4723998d1b2aceceaf2be848c50622ca0bcfe32489d27a0a2cdb0ee095b03b1",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T21:08:51.842335+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 1.496,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Symmetric eigenproblem case (2 has a repeated eigenvalue): 1\nEigenvalues:     1.000000000000    3.000000000000    4.000000000000\nRelative Frobenius eigen-equation residual:   0.0000E+00\nRelative Frobenius reconstruction error:   1.2696E-16\nColumn orthogonality error:   3.1561E-16\nSymmetric eigenproblem case (2 has a repeated eigenvalue): 2\nEigenvalues:     1.000000000000    3.000000000000    3.000000000000\nRelative Frobenius eigen-equation residual:   0.0000E+00\nRelative Frobenius reconstruction error:   1.4852E-16\nColumn orthogonality error:   3.1561E-16\nPASS fortran-lapack-symmetric-eigen\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.903,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fortran-lapack-svd-decomposition",
+      "source_revision": "e5e45fdd5a38bfab06d1f703f12b787937aa33bb",
+      "source_sha256": "6d5f5de9ce40a3da59915fa05c8a3de5a8a65b8d1b2deedcdb0213a5d372bcd9",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T21:08:57.248535+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 2.303,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Reduced SVD case (1 has rank 2; 2 has rank 3): 1\nSingular values:     3.000000000000    2.000000000000    0.000000000000\nNumerical rank: 2\nRight-factor orthogonality error:   3.1561E-16\nRelative Frobenius reconstruction error:   1.2317E-16\nColumn orthogonality error:   5.6051E-16\nReduced SVD case (1 has rank 2; 2 has rank 3): 2\nSingular values:     3.000000000000    2.000000000000    1.414213562373\nNumerical rank: 3\nRight-factor orthogonality error:   3.1976E-16\nRelative Frobenius reconstruction error:   3.8137E-16\nColumn orthogonality error:   6.3292E-16\nPASS fortran-lapack-svd-decomposition\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 1.518,
+          "exit_code": 0
+        }
+      ]
     }
   ],
-  "validated_at": "2026-10-30T19:55:54.367474+00:00"
+  "validated_at": "2026-10-30T21:08:57.307955+00:00"
 }

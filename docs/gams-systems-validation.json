@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "minpack-rosenbrock-system",
+      "source_revision": "c0b5aea9fcd2b83865af921a7a7e881904f8d3c2",
+      "source_sha256": "05ce7786f2485ba903e122da97cdb437bc2100ff6b48779a191e40f176e43d3d",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T21:46:17.524693+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.331,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Start:  -1.200   1.000 root:  1.0000000000  1.0000000000\ninfo=1 function calls=22 residual=  0.00E+00 root error=  0.00E+00\nStart:   2.000   2.000 root:  1.0000000000  1.0000000000\ninfo=1 function calls=7 residual=  0.00E+00 root error=  0.00E+00\nPASS minpack-rosenbrock-system\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.025,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "nonlin-rosenbrock-system",
+      "source_revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+      "source_sha256": "f971f1a1029b637de4ff7d256629cd7bc8c169b35dfc56165961093d409d6b25",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T21:46:19.565566+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.433,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Finite-difference Jacobian\nStart:  -1.200   1.000 root:  1.0000000000  1.0000000000\niterations=15 function calls=28 residual=  0.00E+00 root error=  0.00E+00\nfunction convergence=T change convergence=F\nStart:   2.000   2.000 root:  1.0000000000  1.0000000000\niterations=3 function calls=4 residual=  0.00E+00 root error=  0.00E+00\nfunction convergence=T change convergence=F\nAnalytic Jacobian\nStart:  -1.200   1.000 root:  1.0000000000  1.0000000000\niterations=14 function calls=27 residual=  0.00E+00 root error=  0.00E+00\nfunction convergence=T change convergence=F\nStart:   2.000   2.000 root:  1.0000000000  1.0000000000\niterations=2 function calls=3 residual=  0.00E+00 root error=  0.00E+00\nfunction convergence=T change convergence=F\nPASS nonlin-rosenbrock-system\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.027,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "nlesolver-rosenbrock-system",
+      "source_revision": "60f38870a25e6b448dd552f184aa2f8616fc8cb0",
+      "source_sha256": "6c867e1eee2bbd660cede6ffdadabe78055aff8336e2342aa3033c71e4b6f9d4",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T21:46:21.842651+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.481,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Start:  -1.200   1.000 root:  1.0000000000  1.0000000000\nstatus=1 Required accuracy achieved\nfunction calls=120 Jacobian calls=26 residual=  0.00E+00 root error=  0.00E+00\nStart:   2.000   2.000 root:  1.0000000000  1.0000000000\nstatus=1 Required accuracy achieved\nfunction calls=151 Jacobian calls=32 residual=  0.00E+00 root error=  0.00E+00\nPASS nlesolver-rosenbrock-system\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.061,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-30T21:46:21.900910+00:00"
+}

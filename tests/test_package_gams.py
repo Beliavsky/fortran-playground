@@ -15,6 +15,19 @@ from xpackage_gams import (gams_data, package_classes, review_text, subclass_mod
                           interpolation_review_text, INTERPOLATION_REPORT,
                           transforms_review_text, TRANSFORMS_REPORT,
                           constrained_review_text, CONSTRAINED_REPORT,
+                          special_functions_review_text, SPECIAL_FUNCTIONS_REPORT,
+                          statistics_review_text, STATISTICS_REPORT,
+                          random_review_text, RANDOM_REPORT,
+                          differentiation_review_text, DIFFERENTIATION_REPORT,
+                          systems_review_text, SYSTEMS_REPORT,
+                          sparse_review_text, SPARSE_REPORT,
+                          cubature_review_text, CUBATURE_REPORT,
+                          surfaces_review_text, SURFACES_REPORT,
+                          stiff_review_text, STIFF_REPORT,
+                          polynomial_review_text, POLYNOMIAL_REPORT,
+                          convolution_review_text, CONVOLUTION_REPORT,
+                          regression_review_text, REGRESSION_REPORT,
+                          matrix_equations_review_text, MATRIX_EQUATIONS_REPORT,
                           coverage_data, coverage_review_text, COVERAGE_REPORT)
 
 
@@ -253,13 +266,27 @@ class PackageGamsTests(unittest.TestCase):
                    if driver_validation_path(d) == 'docs/gams-linear-algebra-validation.json']
         self.assertEqual({d['id'] for d in drivers},
                          {'fortran-lapack-dense-solve', 'stdlib-dense-solve',
-                          'fortran-lapack-least-squares', 'stdlib-least-squares'})
+                          'fortran-lapack-least-squares', 'stdlib-least-squares',
+                          'fortran-lapack-symmetric-eigen', 'fortran-lapack-qr-decomposition',
+                          'fortran-lapack-svd-decomposition'})
         self.assertEqual({d['gams_code'] for d in drivers if d['problem_id'] == 'real-dense-systems'}, {'D2a1'})
         self.assertEqual({d['gams_code'] for d in drivers if d['problem_id'] == 'real-linear-least-squares'}, {'D9a1'})
         records = {r['id']: r for r in data['procedure_mappings']}
         self.assertEqual(records['stdlib-solve']['gams_codes'], ['D2a1'])
         self.assertEqual(records['stdlib-lstsq']['gams_codes'], ['D9a1'])
         self.assertEqual((ROOT / LINEAR_ALGEBRA_REPORT).read_text(encoding='utf-8'), linear_algebra_review_text())
+
+    def test_decomposition_drivers_identify_the_verified_lower_level_apis(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        self.assertEqual(drivers['fortran-lapack-symmetric-eigen']['procedure_id'], 'fortran-lapack-syev')
+        self.assertEqual(drivers['fortran-lapack-svd-decomposition']['procedure_id'], 'fortran-lapack-gesvd')
+        self.assertEqual(drivers['fortran-lapack-qr-decomposition']['gams_code'], 'D5')
+        records = {r['id']: r for r in data['procedure_mappings']}
+        self.assertNotIn('driver_id', records['fortran-lapack-eigh'])
+        self.assertNotIn('driver_id', records['fortran-lapack-svd'])
+        for name in ['fortran-lapack-eigh', 'fortran-lapack-svd']:
+            self.assertTrue((ROOT/'docs/gams-candidates'/f'{name}.f90').is_file())
 
     def test_ode_drivers_distinguish_one_step_and_multistep_configurations(self):
         data = gams_data()
@@ -307,6 +334,186 @@ class PackageGamsTests(unittest.TestCase):
         self.assertEqual(records['nlopt-lbfgs-bounds']['gams_codes'], ['G2h1a2'])
         self.assertEqual((ROOT / CONSTRAINED_REPORT).read_text(encoding='utf-8'), constrained_review_text())
 
+    def test_special_function_drivers_keep_gamma_psi_and_bessel_evidence_separate(self):
+        data = gams_data()
+        drivers = [d for d in driver_data(data=data)
+                   if driver_validation_path(d) == 'docs/gams-special-functions-validation.json']
+        self.assertEqual({d['id']: d['gams_code'] for d in drivers},
+                         {'fullerton-gamma-values': 'C7a', 'fullerton-digamma-values': 'C7c',
+                          'bessels-modified-values': 'C10b1'})
+        records = {r['id']: r for r in data['procedure_mappings']}
+        self.assertNotIn('digamma', records['specfunc-fullerton-fgamma']['procedure'])
+        self.assertIn('reciprocal_gamma', records['specfunc-fullerton-fgamma']['procedure'])
+        self.assertEqual((ROOT / SPECIAL_FUNCTIONS_REPORT).read_text(encoding='utf-8'), special_functions_review_text())
+
+    def test_statistics_drivers_separate_location_dispersion_and_normalization(self):
+        data = gams_data()
+        drivers = [d for d in driver_data(data=data)
+                   if driver_validation_path(d) == 'docs/gams-statistics-validation.json']
+        self.assertEqual({d['id']: d['gams_code'] for d in drivers},
+                         {'stdlib-mean-checks': 'L1a1a', 'fstats-mean-checks': 'L1a1a',
+                          'stdlib-sample-variance-checks': 'L1a1b', 'fstats-sample-variance-checks': 'L1a1b'})
+        records = {r['id']: r for r in data['procedure_mappings']}
+        self.assertEqual(records['stdlib-var']['gams_codes'], ['L1a1b'])
+        self.assertEqual(records['fstats-variance']['author_examples'][0]['path'], 'tests/fstats_statistics_tests.f90')
+        self.assertEqual((ROOT / STATISTICS_REPORT).read_text(encoding='utf-8'), statistics_review_text())
+
+    def test_random_drivers_distinguish_uniform_generation_and_seed_support(self):
+        drivers = [d for d in driver_data() if driver_validation_path(d) == 'docs/gams-random-validation.json']
+        self.assertEqual({d['id']: d['gams_code'] for d in drivers}, {
+            'mt19937-64-reference-sequence': 'L6a21', 'rngff-lcg-reference-sequence': 'L6a21',
+            'stdlib-seed-replay': 'L6c'})
+        self.assertEqual((ROOT / RANDOM_REPORT).read_text(encoding='utf-8'), random_review_text())
+        mt = next(d for d in drivers if d['id'] == 'mt19937-64-reference-sequence')
+        self.assertEqual(mt['checks']['bit_reference_positions'][-5:], [312, 313, 624, 625, 1000])
+        for path in mt['checks']['reference_files']:
+            self.assertTrue((ROOT/path).is_file())
+
+    def test_differentiation_drivers_share_problem_with_explicit_method_settings(self):
+        drivers = [d for d in driver_data() if driver_validation_path(d) == 'docs/gams-differentiation-validation.json']
+        self.assertEqual({d['package_id'] for d in drivers}, {'numdiff', 'fordiff', 'ad_dnsvm'})
+        self.assertEqual({d['gams_code'] for d in drivers}, {'H1'})
+        self.assertEqual({d['problem_id'] for d in drivers}, {'exp-sine-derivatives'})
+        by_package = {d['package_id']: d for d in drivers}
+        self.assertEqual(by_package['numdiff']['checks']['requested_absolute_errors'], [1e-8, 1e-8, 1e-6])
+        self.assertEqual(by_package['fordiff']['checks']['methods'], ['forward', 'backward', 'central', 'complex-step'])
+        self.assertEqual(by_package['ad_dnsvm']['checks']['orders'], [0, 1, 2, 3])
+        self.assertEqual((ROOT / DIFFERENTIATION_REPORT).read_text(encoding='utf-8'), differentiation_review_text())
+
+    def test_system_drivers_have_common_root_and_separate_solver_termination(self):
+        drivers = [d for d in driver_data() if driver_validation_path(d) == 'docs/gams-systems-validation.json']
+        self.assertEqual({d['package_id'] for d in drivers}, {'minpack', 'nonlin', 'nlesolver-fortran'})
+        self.assertEqual({d['gams_code'] for d in drivers}, {'F2'})
+        self.assertEqual({d['problem_id'] for d in drivers}, {'rosenbrock-square-system'})
+        for d in drivers:
+            self.assertEqual(d['checks']['starting_points'], [[-1.2, 1], [2, 2]])
+            self.assertEqual(d['checks']['expected_root'], [1, 1])
+            self.assertEqual(d['checks']['max_residual_infinity_norm'], 1e-8)
+        by_package = {d['package_id']: d for d in drivers}
+        self.assertEqual(by_package['minpack']['checks']['required_status'], 1)
+        self.assertIn('analytic', by_package['nonlin']['checks']['configuration'])
+        self.assertIn('no Broyden', by_package['nlesolver-fortran']['checks']['configuration'])
+        self.assertEqual((ROOT / SYSTEMS_REPORT).read_text(encoding='utf-8'), systems_review_text())
+
+    def test_sparse_drivers_distinguish_indefinite_and_positive_definite_configurations(self):
+        drivers = [d for d in driver_data() if driver_validation_path(d) == 'docs/gams-sparse-validation.json']
+        by_package = {d['package_id']: d for d in drivers}
+        self.assertEqual({d['package_id']: d['gams_code'] for d in drivers}, {
+            'minres': 'D2b4', 'qdldl-fortran': 'D2b4', 'kiss': 'D2b1b'})
+        for d in drivers:
+            self.assertEqual(d['checks']['right_hand_sides'], 2)
+            self.assertEqual(d['checks']['max_scaled_backward_error'], 1e-11)
+        self.assertEqual(by_package['minres']['problem_id'], by_package['qdldl-fortran']['problem_id'])
+        self.assertTrue(by_package['qdldl-fortran']['checks']['factors_reused'])
+        self.assertEqual(by_package['qdldl-fortran']['checks']['expected_inertia'], [3, 2, 0])
+        self.assertEqual(by_package['qdldl-fortran']['checks']['orderings'], ['natural', 'RCM', 'AMD'])
+        self.assertEqual(by_package['kiss']['checks']['storage'], 'dense')
+        self.assertEqual((ROOT / SPARSE_REPORT).read_text(encoding='utf-8'), sparse_review_text())
+
+    def test_cubature_drivers_distinguish_adaptive_integration_and_rule_generation(self):
+        drivers = [d for d in driver_data() if driver_validation_path(d) == 'docs/gams-cubature-validation.json']
+        by_package = {d['package_id']: d for d in drivers}
+        self.assertEqual({d['package_id']: d['gams_code'] for d in drivers}, {
+            'dcuhre': 'H2b1a1', 'gaussjacobiquad': 'H2c', 'fortran_cubatures': 'H2c'})
+        self.assertEqual(by_package['dcuhre']['checks']['dimensions'], [2, 3])
+        self.assertEqual(by_package['dcuhre']['checks']['required_status'], 0)
+        self.assertEqual(by_package['gaussjacobiquad']['checks']['alpha_beta'], [[0, 0], [1, 0]])
+        self.assertEqual(by_package['gaussjacobiquad']['checks']['monomial_degrees'], list(range(8)))
+        self.assertEqual(by_package['fortran_cubatures']['checks']['moments_per_element'], [21, 35, 36])
+        self.assertEqual((ROOT / CUBATURE_REPORT).read_text(encoding='utf-8'), cubature_review_text())
+
+    def test_surface_drivers_share_grid_and_distinguish_bilinear_from_bicubic(self):
+        drivers = [d for d in driver_data() if driver_validation_path(d) == 'docs/gams-surfaces-validation.json']
+        self.assertEqual({d['package_id'] for d in drivers}, {'finterp', 'bspline-fortran'})
+        self.assertEqual({d['gams_code'] for d in drivers}, {'E2a'})
+        self.assertEqual({d['problem_id'] for d in drivers}, {'nonuniform-bilinear-surface'})
+        self.assertEqual(drivers[0]['checks']['grid_x'], drivers[1]['checks']['grid_x'])
+        self.assertEqual(drivers[0]['checks']['grid_y'], drivers[1]['checks']['grid_y'])
+        for d in drivers:
+            self.assertEqual(d['checks']['node_checks_per_case'], 30)
+            self.assertEqual(d['checks']['cell_samples_per_case'], 500)
+            self.assertFalse(d['checks']['extrapolation_checked'])
+        spline = next(d for d in drivers if d['package_id']=='bspline-fortran')
+        self.assertEqual(spline['checks']['polynomial_orders'], [4, 4])
+        self.assertEqual(spline['checks']['partial_derivatives'], [[0, 0], [1, 0], [0, 1], [1, 1]])
+        self.assertEqual((ROOT / SURFACES_REPORT).read_text(encoding='utf-8'), surfaces_review_text())
+
+    def test_stiff_drivers_share_exact_problem_and_preserve_solver_configuration(self):
+        drivers = [d for d in driver_data() if driver_validation_path(d) == 'docs/gams-stiff-validation.json']
+        by_package = {d['package_id']: d for d in drivers}
+        self.assertEqual(set(by_package), {'dvode', 'odepack', 'stiff3'})
+        self.assertEqual({d['gams_code'] for d in drivers}, {'I1a2'})
+        self.assertEqual({d['problem_id'] for d in drivers}, {'autonomous-stiff-two-scale-system'})
+        for d in drivers:
+            self.assertEqual(d['checks']['initial_state'], [2, 1])
+            self.assertEqual(d['checks']['output_times'], [0.001, 0.01, 0.1, 1])
+            self.assertEqual(d['checks']['eigenvalues'], [-1000, -1])
+        self.assertEqual(by_package['dvode']['checks']['method_flag'], 22)
+        self.assertTrue(by_package['odepack']['checks']['bdf_indicator_required'])
+        self.assertTrue(by_package['stiff3']['checks']['analytic_jacobian'])
+        self.assertEqual((ROOT / STIFF_REPORT).read_text(encoding='utf-8'), stiff_review_text())
+
+    def test_polynomial_drivers_keep_algorithm_evidence_and_complex_scope_separate(self):
+        data = gams_data()
+        drivers = [d for d in driver_data(data=data) if driver_validation_path(d) == 'docs/gams-polynomial-validation.json']
+        by_algorithm = {d['checks']['algorithm']: d for d in drivers}
+        self.assertEqual(set(by_algorithm), {'polyroots', 'rpoly', 'cpolyroots'})
+        self.assertEqual({d['gams_code'] for d in drivers}, {'F1a'})
+        self.assertEqual(len({d['procedure_id'] for d in drivers}), 3)
+        ledger = numerical_review(data=data)['packages']['polyroots-fortran']
+        self.assertTrue({d['procedure_id'] for d in drivers}.issubset(ledger['procedure_ids']))
+        for d in drivers:
+            self.assertEqual(d['checks']['coefficient_scales'], [1, 1e80, 1e-80])
+            self.assertTrue(d['checks']['distinct_roots_only'])
+        self.assertFalse(by_algorithm['rpoly']['checks']['complex_coefficients_checked'])
+        self.assertTrue(by_algorithm['cpolyroots']['checks']['complex_coefficients_checked'])
+        self.assertEqual((ROOT / POLYNOMIAL_REPORT).read_text(encoding='utf-8'), polynomial_review_text())
+
+    def test_convolution_drivers_keep_output_conventions_and_precision_explicit(self):
+        drivers = [d for d in driver_data() if driver_validation_path(d) == 'docs/gams-convolution-validation.json']
+        by_package = {d['package_id']: d for d in drivers}
+        self.assertEqual(set(by_package), {'spectrum', 'fastconv'})
+        self.assertEqual({d['gams_code'] for d in drivers}, {'J2'})
+        self.assertEqual(by_package['spectrum']['checks']['kernel_lengths'], by_package['fastconv']['checks']['kernel_lengths'])
+        self.assertEqual(by_package['spectrum']['checks']['output_modes'], ['full', 'central'])
+        self.assertEqual(by_package['fastconv']['checks']['output_modes'], ['valid'])
+        self.assertEqual(by_package['spectrum']['checks']['native_precision'], 'real64')
+        self.assertEqual(by_package['fastconv']['checks']['native_precision'], 'real32')
+        self.assertFalse(by_package['fastconv']['checks']['preserve_shape'])
+        self.assertEqual((ROOT / CONVOLUTION_REPORT).read_text(encoding='utf-8'), convolution_review_text())
+
+    def test_regression_drivers_preserve_distinct_error_models_and_covariance_convention(self):
+        drivers = [d for d in driver_data() if driver_validation_path(d) == 'docs/gams-regression-validation.json']
+        by_package = {d['package_id']: d for d in drivers}
+        self.assertEqual(set(by_package), {'odrpack95', 'lib_statistics'})
+        self.assertEqual({d['gams_code'] for d in drivers}, {'L8'})
+        self.assertNotEqual(by_package['odrpack95']['problem_id'], by_package['lib_statistics']['problem_id'])
+        self.assertTrue(by_package['odrpack95']['checks']['unit_x_y_weights'])
+        self.assertEqual(by_package['odrpack95']['checks']['job'], 20)
+        logistic = by_package['lib_statistics']
+        self.assertEqual(logistic['reuse'], 'original')
+        self.assertIsNone(logistic['author_example'])
+        self.assertEqual(logistic['checks']['residual_degrees_of_freedom'], 4)
+        self.assertEqual(logistic['checks']['dispersion'], 'max(1,Pearson chi-square/ndf)')
+        self.assertEqual((ROOT / REGRESSION_REPORT).read_text(encoding='utf-8'), regression_review_text())
+
+    def test_matrix_equation_drivers_preserve_equations_scaling_and_source_evidence(self):
+        data = gams_data()
+        drivers = [d for d in driver_data(data=data) if driver_validation_path(d) == 'docs/gams-matrix-equations-validation.json']
+        self.assertEqual({d['gams_code'] for d in drivers}, {'D8'})
+        self.assertEqual({d['package_id'] for d in drivers}, {'slicot'})
+        self.assertEqual(len({d['procedure_id'] for d in drivers}), 3)
+        ledger = numerical_review(data=data)['packages']['slicot']
+        self.assertTrue({d['procedure_id'] for d in drivers}.issubset(ledger['procedure_ids']))
+        by_id = {d['id']: d for d in drivers}
+        lyapunov = by_id['slicot-lyapunov-known-matrix']['checks']
+        self.assertEqual(lyapunov['equations'], ['continuous', 'discrete'])
+        self.assertEqual(lyapunov['factor_modes'], ['N', 'F'])
+        self.assertTrue(lyapunov['returned_scale_honored'])
+        self.assertEqual(by_id['slicot-continuous-sylvester']['checks']['equation'], 'A*X+X*B=C')
+        self.assertEqual(by_id['slicot-discrete-sylvester']['checks']['equation'], 'X+A*X*B=C')
+        self.assertEqual((ROOT / MATRIX_EQUATIONS_REPORT).read_text(encoding='utf-8'), matrix_equations_review_text())
+
     def test_coverage_separates_source_review_from_class_specific_driver_evidence(self):
         data = gams_data()
         coverage = coverage_data(data=data)
@@ -319,7 +526,7 @@ class PackageGamsTests(unittest.TestCase):
         self.assertEqual(len(by_class['J1a2']['driver_ids']), 2)
         self.assertEqual(len(by_class['J1a3']['driver_ids']), 1)
         self.assertTrue(any(not r['driver_ids'] for r in coverage['procedure_classes']))
-        self.assertEqual({r['code'] for r in coverage['top_level'] if r['driver_ids']}, set('DEFGHIJ'))
+        self.assertEqual({r['code'] for r in coverage['top_level'] if r['driver_ids']}, set('CDEFGHIJL'))
         self.assertEqual((ROOT / COVERAGE_REPORT).read_text(encoding='utf-8'), coverage_review_text())
 
     def test_numerical_review_covers_catalog_scope_and_preserves_evidence(self):

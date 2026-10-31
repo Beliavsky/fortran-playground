@@ -32,6 +32,9 @@ A separate RK4 experiment integrates the same problem directly to `2*pi` with no
 | [Load dop853-decay-oscillator](https://beliavsky.github.io/fortran-playground/fpm/?package=dop853&example=gams-dop853-decay-oscillator) · [Source](../fpm_catalog/gams-drivers/dop853-decay-oscillator.f90) | I1a1a | [Procedure](https://github.com/jacobwilliams/dop853/blob/1e9d0dbf4dcbc692ca557c0467629112dd1f0ce6/src/dop853_module.F90#L204) · [Author example](https://github.com/jacobwilliams/dop853/blob/1e9d0dbf4dcbc692ca557c0467629112dd1f0ce6/test/dop853_test.f90) |
 | [Load ddeabm-decay-oscillator](https://beliavsky.github.io/fortran-playground/fpm/?package=ddeabm&example=gams-ddeabm-decay-oscillator) · [Source](../fpm_catalog/gams-drivers/ddeabm-decay-oscillator.f90) | I1a1b | [Procedure](https://github.com/jacobwilliams/ddeabm/blob/dba70c8c65388638662df2694339c5ba7feaf12a/src/ddeabm_module.F90#L60) · [Author example](https://github.com/jacobwilliams/ddeabm/blob/dba70c8c65388638662df2694339c5ba7feaf12a/test/ddeabm_test.f90) |
 | [Load rklib-decay-oscillator](https://beliavsky.github.io/fortran-playground/fpm/?package=rklib&example=gams-rklib-decay-oscillator) · [Source](../fpm_catalog/gams-drivers/rklib-decay-oscillator.f90) | I1a1a | [Procedure](https://github.com/jacobwilliams/rklib/blob/e3d51f9e8a2e6756612e8e53687ab2d4b67dfb76/src/rklib_fixed_steps.f90#L203) · [Author example](https://github.com/jacobwilliams/rklib/blob/e3d51f9e8a2e6756612e8e53687ab2d4b67dfb76/test/rk_decay.F90) |
+| [Load dvode-stiff-two-scale](https://beliavsky.github.io/fortran-playground/fpm/?package=dvode&example=gams-dvode-stiff-two-scale) · [Source](../fpm_catalog/gams-drivers/dvode-stiff-two-scale.f90) | I1a2 | [Procedure](https://github.com/jacobwilliams/dvode/blob/59d2eedd1410a4bd6c196c24d08f95a7c20565c0/src/dvode_module.F90#L251) · [Author example](https://github.com/jacobwilliams/dvode/blob/59d2eedd1410a4bd6c196c24d08f95a7c20565c0/test/dvdemo.f90) |
+| [Load lsoda-stiff-two-scale](https://beliavsky.github.io/fortran-playground/fpm/?package=odepack&example=gams-lsoda-stiff-two-scale) · [Source](../fpm_catalog/gams-drivers/lsoda-stiff-two-scale.f90) | I1a2 | [Procedure](https://github.com/Nicholaswogan/odepack/blob/d5db96093dc14fff54e10575cc586fa85392b078/src/odepack_mod.f90#L13) · [Author example](https://github.com/Nicholaswogan/odepack/blob/d5db96093dc14fff54e10575cc586fa85392b078/test/benchmark.f90) |
+| [Load stiff3-stiff-two-scale](https://beliavsky.github.io/fortran-playground/fpm/?package=stiff3&example=gams-stiff3-stiff-two-scale) · [Source](../fpm_catalog/gams-drivers/stiff3-stiff-two-scale.f90) | I1a2 | [Procedure](https://github.com/ivan-pi/stiff3/blob/70ab5c86c2ac922ed148bbb1182345cca248e077/src/stiff3_solver.f90#L71) · [Author example](https://github.com/ivan-pi/stiff3/blob/70ab5c86c2ac922ed148bbb1182345cca248e077/example/hires.f90) |
 
 The drivers adapt author callback and integration API patterns to the shared analytic problem, without plotting dependencies; license notices are retained. They appear in hosted and main local FPM example menus and downloaded FPM projects. Loading a link selects source without submitting a job.
 
@@ -103,6 +106,60 @@ RK4 nominal steps: 100; endpoint state error:   8.1490E-07; RHS calls: 404
 RK4 nominal steps: 200; endpoint state error:   5.0985E-08; RHS calls: 804
 Coarse/fine error ratio (fourth order suggests 16):    15.983086
 PASS rklib-decay-oscillator
+```
+
+### dvode-stiff-two-scale
+
+```text
+t=  0.0010 state=   1.3668798588   0.9990004998
+Scaled state error / fast-mode error:   6.0148E-08   8.2215E-08
+Total steps=47 RHS evaluations=73
+t=  0.0100 state=   0.9900952416   0.9900498337
+Scaled state error / fast-mode error:   7.9264E-09   7.9263E-09
+Total steps=133 RHS evaluations=170
+t=  0.1000 state=   0.9048374278   0.9048374278
+Scaled state error / fast-mode error:   9.7559E-09   2.1970E-12
+Total steps=176 RHS evaluations=220
+t=  1.0000 state=   0.3678794742   0.3678794742
+Scaled state error / fast-mode error:   3.3000E-08   0.0000E+00
+Total steps=198 RHS evaluations=250
+PASS dvode-stiff-two-scale
+```
+
+### lsoda-stiff-two-scale
+
+```text
+t=  0.0010 state=   1.3668799572   0.9990004998
+Scaled state error / fast-mode error:   1.1823E-08   1.6160E-08
+Current method (1=Adams, 2=BDF)=1 total steps=24 RHS evaluations=53
+t=  0.0100 state=   0.9900952331   0.9900498337
+Scaled state error / fast-mode error:   5.9979E-10   5.9980E-10
+Current method (1=Adams, 2=BDF)=1 total steps=72 RHS evaluations=151
+t=  0.1000 state=   0.9048374287   0.9048374287
+Scaled state error / fast-mode error:   1.0631E-08   6.0019E-13
+Current method (1=Adams, 2=BDF)=2 total steps=115 RHS evaluations=241
+t=  1.0000 state=   0.3678794484   0.3678794484
+Scaled state error / fast-mode error:   7.2435E-09   4.5147E-13
+Current method (1=Adams, 2=BDF)=2 total steps=142 RHS evaluations=294
+PASS lsoda-stiff-two-scale
+```
+
+### stiff3-stiff-two-scale
+
+```text
+t=  0.0010 state=   1.3668799408   0.9990004998
+Scaled state error / fast-mode error:   1.3871E-10   1.8960E-10
+Interval accepted/rejected, RHS/Jacobian, LU/solves:      40       0     201      80     120     360
+t=  0.0100 state=   0.9900952335   0.9900498337
+Scaled state error / fast-mode error:   1.5324E-10   1.5324E-10
+Interval accepted/rejected, RHS/Jacobian, LU/solves:     128       0     641     256     384    1152
+t=  0.1000 state=   0.9048374180   0.9048374180
+Scaled state error / fast-mode error:   9.1952E-12   3.3307E-16
+Interval accepted/rejected, RHS/Jacobian, LU/solves:      20       0     101      40      60     180
+t=  1.0000 state=   0.3678794411   0.3678794411
+Scaled state error / fast-mode error:   1.0953E-10   0.0000E+00
+Interval accepted/rejected, RHS/Jacobian, LU/solves:      39       0     196      78     117     351
+PASS stiff3-stiff-two-scale
 ```
 
 ## Maintenance

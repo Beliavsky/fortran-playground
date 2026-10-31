@@ -1048,7 +1048,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Uniform values from an explicitly selected linear congruential generator.",
+        "notes": "Combined linear congruential generator with explicit two-seed state. The real64 overload widens a real32 draw. The checked driver independently evaluates both modular recurrences in int64, verifies states and real32-rounded outputs for 1000 steps, and checks exact replay.",
         "evidence": [
           {
             "path": "src/rngff/linear_congruential_m.f90",
@@ -1061,7 +1061,8 @@
             "path": "test/lcg_test.f90",
             "sha256": "06ea12c4e2dc7e51f273043b36c6085965f0fe3e495ebc4bc6144c85fb29f9c7"
           }
-        ]
+        ],
+        "driver_id": "rngff-lcg-reference-sequence"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -1333,18 +1334,28 @@
         "package_id": "specfunc-fullerton",
         "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
         "module": "fullerton_gamma",
-        "procedure": "fgamma, digamma",
+        "procedure": "fgamma, log_gamma, reciprocal_gamma",
         "gams_codes": [
           "C7a"
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Gamma evaluation; digamma has a separate C7c classification.",
+        "notes": "Default-real positive-argument Gamma, log-Gamma and reciprocal-Gamma; digamma is mapped separately to C7c.",
         "evidence": [
           {
             "path": "src/fullerton_gamma.f90",
             "sha256": "7609fcd9f17f20a9b66a562a64e2244c48d92e6ef3474261b732c13e24397a05",
             "line": 14
+          },
+          {
+            "path": "src/fullerton_gamma.f90",
+            "sha256": "7609fcd9f17f20a9b66a562a64e2244c48d92e6ef3474261b732c13e24397a05",
+            "line": 18
+          },
+          {
+            "path": "src/fullerton_gamma.f90",
+            "sha256": "7609fcd9f17f20a9b66a562a64e2244c48d92e6ef3474261b732c13e24397a05",
+            "line": 38
           }
         ],
         "author_examples": [
@@ -1352,7 +1363,8 @@
             "path": "test/gamma/test_gamma.f90",
             "sha256": "49a48e63b10b05c318c6696e7b050a808ba5f530117ad518a6b398348d66e1e1"
           }
-        ]
+        ],
+        "driver_id": "fullerton-gamma-values"
       },
       {
         "id": "specfunc-fullerton-digamma",
@@ -1378,7 +1390,8 @@
             "path": "test/gamma/test_gamma.f90",
             "sha256": "49a48e63b10b05c318c6696e7b050a808ba5f530117ad518a6b398348d66e1e1"
           }
-        ]
+        ],
+        "driver_id": "fullerton-digamma-values"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -8123,6 +8136,11 @@
         "parent": "L1a1"
       },
       {
+        "code": "L1a1b",
+        "label": "Dispersion",
+        "parent": "L1a1"
+      },
+      {
         "code": "L6",
         "label": "Random number generation",
         "parent": "L"
@@ -8193,7 +8211,8 @@
             "path": "test/test_mean.f90",
             "sha256": "afa45a7cd7d843450f04f818358cc8829d91d3dbafd7409c0e5959ccc36ae958"
           }
-        ]
+        ],
+        "driver_id": "stdlib-mean-checks"
       },
       {
         "id": "stdlib-solve",
@@ -8259,12 +8278,17 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Random-generator seeding support; distribution generation uses distinct routines.",
+        "notes": "Seeds the stdlib distribution stream, demonstrated through dist_rand integer draws. This is separate from intrinsic RANDOM_NUMBER. The driver checks exact reseeded replay, consistent opaque get output, and changed output for a second selected seed; get is not treated as an original-seed echo or complete generator checkpoint.",
         "evidence": [
           {
             "path": "src/stdlib_random.f90",
             "sha256": "a69b10ab83b48a140fc0909888ea541d10ae67f727c0c9973c1a01211141268e",
             "line": 28
+          },
+          {
+            "path": "src/stdlib_random.f90",
+            "sha256": "a69b10ab83b48a140fc0909888ea541d10ae67f727c0c9973c1a01211141268e",
+            "line": 225
           }
         ],
         "author_examples": [
@@ -8272,7 +8296,8 @@
             "path": "example/example_random_seed.f90",
             "sha256": "b1025f58e68f0cffc10a43bfdb8fa5c93f6c0d1d7f1e47540e62c8de0eace5fa"
           }
-        ]
+        ],
+        "driver_id": "stdlib-seed-replay"
       },
       {
         "id": "stdlib-lstsq",
@@ -8300,6 +8325,33 @@
           }
         ],
         "driver_id": "stdlib-least-squares"
+      },
+      {
+        "id": "stdlib-var",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_stats",
+        "procedure": "var (real64 sample/population configurations)",
+        "gams_codes": [
+          "L1a1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Real64 variance with explicit corrected=.true. (sample) or .false. (population); masked subsets and dimension reduction are demonstrated.",
+        "evidence": [
+          {
+            "path": "src/stdlib_stats.f90",
+            "line": 1782,
+            "sha256": "e15ce21ef7f4ae8f3c0df5d99675ad33a5a820167c7565c3b14d3fa2f0acba88"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_var.f90",
+            "sha256": "3b8ce3023132790a9b29cdb25525b322ea3d9b09fd148da8869cdafbfef2da38"
+          }
+        ],
+        "driver_id": "stdlib-sample-variance-checks"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -9142,7 +9194,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "function values; finite differences or complex step",
-        "notes": "Numerical differentiation; the selected method controls callback requirements.",
+        "notes": "Numerical differentiation; the selected method controls callback requirements. The checked H1 driver uses exp(x)*sin(x) at four shared points with analytic references and explicit tolerances; only the recorded scalar configuration is verified.",
         "evidence": [
           {
             "path": "src/fordiff.F90",
@@ -9155,7 +9207,8 @@
             "path": "example/demo1.f90",
             "sha256": "cdaf38f6bdc6794d4bc282ea3e913bc027b5da194f0f422f8dd0e4f207154dd7"
           }
-        ]
+        ],
+        "driver_id": "fordiff-analytic-derivatives"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -11459,15 +11512,31 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "One-dimensional discrete convolution with a supplied kernel.",
+        "notes": "One-dimensional discrete convolution with a supplied kernel. The checked J2 driver uses native REAL32 and preserve_shape=.false. (valid convolution), with a REAL64 direct-sum reference of the rounded inputs. The shape-preserving mode is excluded: at this pin apply allocates output without initialization and the pad/ref paths assign only its interior, leaving boundary entries undefined.",
         "evidence": [
           {
             "path": "src/conv1d/conv1d.f90",
             "sha256": "e3a02572cd64c091e84449265336082eb56a5ccff0f51049fc178c8e2249308d",
             "line": 139
+          },
+          {
+            "path": "src/conv1d/pad.F90",
+            "sha256": "e2ab9d168e1b2a6b3593a8d945c7bf9ac8ee7a0eae19d0d46c584ad38d3e941e",
+            "line": 36
+          },
+          {
+            "path": "src/conv1d/ref.F90",
+            "sha256": "2e22c3ce1ce83117adf422e55316b4749d1906fea0f3a1d721c272ab7ac45869",
+            "line": 41
           }
         ],
-        "author_examples": []
+        "author_examples": [
+          {
+            "path": "README.md",
+            "sha256": "27dd00bc602f1db0715102b65c860d6a2cc3096cf930a9cb3112319c9031f6be"
+          }
+        ],
+        "driver_id": "fastconv-convolution-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -11673,7 +11742,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Computes Gauss-Jacobi nodes and weights; this procedure does not itself integrate a callback.",
+        "notes": "Computes Gauss-Jacobi nodes and weights; this procedure does not itself integrate a callback. The dedicated checked driver uses analytic references, finite-data checks and explicit tolerances. See docs/gams-cubature.md for the exact configurations and limitations.",
         "evidence": [
           {
             "path": "src/GaussJacobiQuad.f90",
@@ -11686,7 +11755,8 @@
             "path": "app/gjp_quad.f90",
             "sha256": "1df551be132ec6989873bb8a8e2662be4f2eb83e58d7b1083ef6058c24da87f0"
           }
-        ]
+        ],
+        "driver_id": "gauss-jacobi-polynomial-moments"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -11916,7 +11986,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "user or finite-difference model derivatives",
-        "notes": "Orthogonal distance regression with errors in variables; no ordinary-least-squares claim.",
+        "notes": "Orthogonal distance regression with errors in variables; no ordinary-least-squares claim. The dedicated L8 driver checks selected fits against independent closed-form references. See docs/gams-regression.md for the error model, covariance convention and limitations.",
         "evidence": [
           {
             "path": "src/odrpack.f90",
@@ -11929,7 +11999,8 @@
             "path": "example/example1.f90",
             "sha256": "0039c28aa20db2f7b9550d325af9951e53829ac767312b5683ed486e0e6195cc"
           }
-        ]
+        ],
+        "driver_id": "odrpack-line-total-least-squares"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00",
@@ -13368,7 +13439,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Conjugate gradient for real symmetric positive-definite dense systems.",
+        "notes": "Conjugate gradient for real symmetric positive-definite dense systems. The checked driver solves two known right-hand sides, checks finite results and successful termination, and independently recomputes the residual and scaled normwise backward error.",
         "evidence": [
           {
             "path": "src/kiss.F90",
@@ -13381,7 +13452,8 @@
             "path": "test/test_kiss.f90",
             "sha256": "e368e8d682091dcd641d47e5308c089f4ec6ab7ac5083a99b38aecc94f97d074"
           }
-        ]
+        ],
+        "driver_id": "kiss-positive-definite-solve"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -13570,7 +13642,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "user Jacobian in reviewed example",
-        "notes": "Third-order Rosenbrock integration for stiff autonomous initial-value systems.",
+        "notes": "Third-order Rosenbrock integration for stiff autonomous initial-value systems. The checked I1a2 driver solves the shared autonomous system y1'= -1000*y1+999*y2, y2'= -y2 from [2,1], checking exact exponential modes at four output times. Only this stiff ODE configuration is verified; no DAE capability or general stiff-problem accuracy is established.",
         "evidence": [
           {
             "path": "src/stiff3_solver.f90",
@@ -13583,7 +13655,8 @@
             "path": "example/hires.f90",
             "sha256": "c9851c848a9ff3fa7e709fa66fe9a6360af29e8d897708a803fc848573f75966"
           }
-        ]
+        ],
+        "driver_id": "stiff3-stiff-two-scale"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -13882,12 +13955,17 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Tensor-product two-dimensional interpolation on a rectangular grid.",
+        "notes": "Tensor-product two-dimensional interpolation on a rectangular grid. The dedicated E2a driver uses a nonuniform 6-by-5 grid, checks all nodes and 500 cell samples for two surfaces against independent bilinear references. Extrapolation is not checked. Order-4 tensor splines additionally reproduce a bicubic polynomial and its analytic first and mixed partials at 121 query points; higher-order shape preservation is not claimed.",
         "evidence": [
           {
             "path": "src/bspline_oo_module.f90",
             "sha256": "2b1bd0fb16092ccb4bb2bc4cf499249eb19252c888f582123f4c31c8de29772a",
             "line": 87
+          },
+          {
+            "path": "src/bspline_oo_module.f90",
+            "sha256": "2b1bd0fb16092ccb4bb2bc4cf499249eb19252c888f582123f4c31c8de29772a",
+            "line": 1322
           }
         ],
         "author_examples": [
@@ -13895,7 +13973,8 @@
             "path": "test/test_oo.f90",
             "sha256": "da44e4cc9de187984e10fade22525403a42847f79056e13dd154572af486afda"
           }
-        ]
+        ],
+        "driver_id": "bspline-tensor-surface"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -14530,7 +14609,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "optional user Jacobian; finite-difference fallback",
-        "notes": "Stiff BDF configuration; the package also offers a nonstiff Adams configuration.",
+        "notes": "Stiff BDF configuration; the package also offers a nonstiff Adams configuration. The checked I1a2 driver solves the shared autonomous system y1'= -1000*y1+999*y2, y2'= -y2 from [2,1], checking exact exponential modes at four output times. Only this stiff ODE configuration is verified; no DAE capability or general stiff-problem accuracy is established.",
         "evidence": [
           {
             "path": "src/dvode_module.F90",
@@ -14543,7 +14622,8 @@
             "path": "test/dvdemo.f90",
             "sha256": "f50f4d66c914ec6722b7d7c8dcbe28afea887ffd0abd5e43a12c9303bbc4794b"
           }
-        ]
+        ],
+        "driver_id": "dvode-stiff-two-scale"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -14663,12 +14743,17 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Two-dimensional multilinear interpolation on a rectilinear grid.",
+        "notes": "Two-dimensional multilinear interpolation on a rectilinear grid. The dedicated E2a driver uses a nonuniform 6-by-5 grid, checks all nodes and 500 cell samples for two surfaces against independent bilinear references. Extrapolation is not checked.",
         "evidence": [
           {
             "path": "src/linear_interpolation_module.F90",
             "sha256": "ce7c98c39bacbf0b72e5c5c0c9a6e4e55b0bec297b105974263e3554eb038238",
             "line": 81
+          },
+          {
+            "path": "src/linear_interpolation_module.F90",
+            "sha256": "ce7c98c39bacbf0b72e5c5c0c9a6e4e55b0bec297b105974263e3554eb038238",
+            "line": 764
           }
         ],
         "author_examples": [
@@ -14676,7 +14761,8 @@
             "path": "test/test.f90",
             "sha256": "2ba3595858555dd5239c1e0b2364d8d135cb400468c232457fd80f5fe04e64d8"
           }
-        ]
+        ],
+        "driver_id": "finterp-bilinear-surface"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -15772,7 +15858,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Continuous uniform pseudorandom values in [0,1), with explicit seeded state.",
+        "notes": "Uniform MT19937-64 values in [0,1). The checked driver verifies selected integer outputs against a C++ std::mt19937_64 reference, real conversion, and 1000-value seeded replay.",
         "evidence": [
           {
             "path": "src/mt19937-64.f90",
@@ -15785,7 +15871,8 @@
             "path": "test/mt19937_64_test.f90",
             "sha256": "808c5c533d3844c4328f923ba962f92cd704f3a16b55bd7044a2caf7eb601e81"
           }
-        ]
+        ],
+        "driver_id": "mt19937-64-reference-sequence"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -15933,7 +16020,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "finite-difference Jacobian",
-        "notes": "Powell hybrid solver for a square system of nonlinear equations.",
+        "notes": "Powell hybrid solver for a square system of nonlinear equations. The checked F2 driver solves [1-x,10*(y-x**2)]=0 from [-1.2,1] and [2,2], requiring the known root [1,1], small recomputed residuals and documented successful termination. Configuration: finite-difference Jacobian. Other problem dimensions, singular systems and global convergence are not verified.",
         "evidence": [
           {
             "path": "src/minpack.f90",
@@ -15946,7 +16033,8 @@
             "path": "examples/example_hybrd1.f90",
             "sha256": "208ec876826340d2481918a2fd648440457c977352826378e5275223acd81cd2"
           }
-        ]
+        ],
+        "driver_id": "minpack-rosenbrock-system"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -16153,7 +16241,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "analytic or approximated Jacobian, configured at initialization",
-        "notes": "Newton/quasi-Newton nonlinear system solver; callback and matrix configuration matter.",
+        "notes": "Newton/quasi-Newton nonlinear system solver; callback and matrix configuration matter. The checked F2 driver solves [1-x,10*(y-x**2)]=0 from [-1.2,1] and [2,2], requiring the known root [1,1], small recomputed residuals and documented successful termination. Configuration: analytic dense Jacobian; backtracking; no Broyden updates. Other problem dimensions, singular systems and global convergence are not verified.",
         "evidence": [
           {
             "path": "src/nlesolver_module.F90",
@@ -16166,7 +16254,8 @@
             "path": "test/sparse_test.f90",
             "sha256": "656e876308293a4594bf5d3fbe0e6cfc3051e5a078aad16bfd6984fffa081bae"
           }
-        ]
+        ],
+        "driver_id": "nlesolver-rosenbrock-system"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -16250,7 +16339,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "function values; estimates derivatives",
-        "notes": "Finite-difference numerical differentiation; sparse Jacobian facilities are not all reviewed here.",
+        "notes": "Finite-difference numerical differentiation; sparse Jacobian facilities are not all reviewed here. The checked H1 driver uses exp(x)*sin(x) at four shared points with analytic references and explicit tolerances; only the recorded scalar configuration is verified.",
         "evidence": [
           {
             "path": "src/diff_module.f90",
@@ -16263,7 +16352,8 @@
             "path": "test/diff_test.f90",
             "sha256": "1b75497ce9706b8feef11150389161401103d1ef1e8b19dba9d35402845c773a"
           }
-        ]
+        ],
+        "driver_id": "numdiff-analytic-derivatives"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -16628,7 +16718,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "All roots of a polynomial; different coefficient types/algorithms require overload-specific review.",
+        "notes": "Real companion-matrix eigenvalue solver using LAPACK. The checked F1a driver checks distinct known roots without relying on output order, normalized Horner residuals, and coefficient scales 1, 1e80 and 1e-80. Repeated or tightly clustered roots, extreme degree and all invalid inputs are outside this validation.",
         "evidence": [
           {
             "path": "src/polyroots_module.F90",
@@ -16641,7 +16731,62 @@
             "path": "test/polyroots_test.f90",
             "sha256": "9d91d3e972d61e932a93666bd93447a1667bc33e200ca50bf77d3b75bddb6fed"
           }
-        ]
+        ],
+        "driver_id": "polyroots-real-reference"
+      },
+      {
+        "id": "polyroots-fortran-rpoly",
+        "package_id": "polyroots-fortran",
+        "revision": "165ed6fbec98cc23d9ed4784fbc4708adb5e0bcf",
+        "module": "polyroots_module",
+        "procedure": "rpoly",
+        "gams_codes": [
+          "F1a"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Jenkins-Traub all-roots solver for real polynomial coefficients. The checked F1a driver checks distinct known roots without relying on output order, normalized Horner residuals, and coefficient scales 1, 1e80 and 1e-80. Repeated or tightly clustered roots, extreme degree and all invalid inputs are outside this validation.",
+        "evidence": [
+          {
+            "path": "src/polyroots_module.F90",
+            "sha256": "3a43efae1e310cf185b1d79e04fe72be29794128b4058ea33d2f60a579b872fb",
+            "line": 93
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/polyroots_test.f90",
+            "sha256": "9d91d3e972d61e932a93666bd93447a1667bc33e200ca50bf77d3b75bddb6fed"
+          }
+        ],
+        "driver_id": "rpoly-real-reference"
+      },
+      {
+        "id": "polyroots-fortran-cpolyroots",
+        "package_id": "polyroots-fortran",
+        "revision": "165ed6fbec98cc23d9ed4784fbc4708adb5e0bcf",
+        "module": "polyroots_module",
+        "procedure": "cpolyroots",
+        "gams_codes": [
+          "F1a"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Complex companion-matrix eigenvalue solver using LAPACK. The checked F1a driver checks distinct known roots without relying on output order, normalized Horner residuals, and coefficient scales 1, 1e80 and 1e-80. Repeated or tightly clustered roots, extreme degree and all invalid inputs are outside this validation.",
+        "evidence": [
+          {
+            "path": "src/polyroots_module.F90",
+            "sha256": "3a43efae1e310cf185b1d79e04fe72be29794128b4058ea33d2f60a579b872fb",
+            "line": 2764
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/polyroots_test.f90",
+            "sha256": "9d91d3e972d61e932a93666bd93447a1667bc33e200ca50bf77d3b75bddb6fed"
+          }
+        ],
+        "driver_id": "cpolyroots-complex-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -16992,7 +17137,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Sparse symmetric quasi-definite systems; no general-indefinite or pivoting guarantee is inferred. Natural, RCM and AMD orderings are checked.",
+        "notes": "Sparse symmetric quasi-definite systems; no general-indefinite or pivoting guarantee is inferred. Natural, RCM and AMD orderings are checked. The checked driver solves two known right-hand sides, checks finite results and successful termination, and independently recomputes the residual and scaled normwise backward error.",
         "evidence": [
           {
             "path": "src/qdldl_module.f90",
@@ -17005,7 +17150,8 @@
             "path": "example/example_kkt.f90",
             "sha256": "d1a429384355e642203654c5534ee7dc888e1382c201acb9d952dd0947da597a"
           }
-        ]
+        ],
+        "driver_id": "qdldl-quasidefinite-solve"
       }
     ],
     "stars_updated_at": "2026-10-28T17:30:42.130830+00:00",
@@ -19362,10 +19508,11 @@
         ],
         "author_examples": [
           {
-            "path": "examples/allan_example.f90",
-            "sha256": "fd17e90a59a479962df65a2424a99efa4e33ee22577a595904ab4c7794e6d694"
+            "path": "tests/fstats_statistics_tests.f90",
+            "sha256": "b9984871b167b2b69c73705698a11d93461397e6fc406047ad3448ab86c1c9ea"
           }
-        ]
+        ],
+        "driver_id": "fstats-sample-variance-checks"
       },
       {
         "id": "fstats-mean",
@@ -19388,10 +19535,11 @@
         ],
         "author_examples": [
           {
-            "path": "examples/anova_example_1.f90",
-            "sha256": "59f76cc4eaf96b1d6569a789023917a9cd158313ac1ca9e30163876f0f509c1b"
+            "path": "tests/fstats_statistics_tests.f90",
+            "sha256": "b9984871b167b2b69c73705698a11d93461397e6fc406047ad3448ab86c1c9ea"
           }
-        ]
+        ],
+        "driver_id": "fstats-mean-checks"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -19955,7 +20103,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "optional user Jacobian; finite-difference fallback",
-        "notes": "Newton solution of nonlinear systems through vecfcn_helper.",
+        "notes": "Newton solution of nonlinear systems through vecfcn_helper. The checked F2 driver solves [1-x,10*(y-x**2)]=0 from [-1.2,1] and [2,2], requiring the known root [1,1], small recomputed residuals and documented successful termination. Configuration: finite-difference and analytic Jacobians. Other problem dimensions, singular systems and global convergence are not verified.",
         "evidence": [
           {
             "path": "src/nonlin_solve.f90",
@@ -19968,7 +20116,8 @@
             "path": "examples/nonlin_newton_example.f90",
             "sha256": "5bea43535929c2ef5364b3e02df8504c0c60d30899f4815a57f23f016ffbcaa1"
           }
-        ]
+        ],
+        "driver_id": "nonlin-rosenbrock-system"
       },
       {
         "id": "nonlin-brent-solver",
@@ -20200,7 +20349,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Discrete convolution; filtering and spectral estimation APIs remain broader package-level assignments.",
+        "notes": "Discrete convolution; filtering and spectral estimation APIs remain broader package-level assignments. The checked J2 driver compares full and central results, including swapped inputs, with independent direct convolution for two length-37 signals and eight kernel lengths. It checks the actual central crop and longer-input output length at this pin.",
         "evidence": [
           {
             "path": "src/spectrum_convolve.f90",
@@ -20213,7 +20362,8 @@
             "path": "examples/gaussian_filter_example.f90",
             "sha256": "df0fefca41dc195264ec43df19bd37dee291add4954e89bbfdba324ad543961a"
           }
-        ]
+        ],
+        "driver_id": "spectrum-convolution-reference"
       },
       {
         "id": "spectrum-rfft",
@@ -21553,7 +21703,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "operator-overloaded forward automatic differentiation",
-        "notes": "Derivatives carried by automatic-differentiation types; not a finite-difference solver.",
+        "notes": "Derivatives carried by automatic-differentiation types; not a finite-difference solver. The checked H1 driver uses exp(x)*sin(x) at four shared points with analytic references and explicit tolerances; only the recorded scalar configuration is verified.",
         "evidence": [
           {
             "path": "SRC/ADdnSVM/dnS_m.f90",
@@ -21566,7 +21716,8 @@
             "path": "APP/Example_dnS.f90",
             "sha256": "dd3fb84216fec3e11aeaef600b92aa6a994141a90fe4148eeb27497a198a4315"
           }
-        ]
+        ],
+        "driver_id": "ad-dnsvm-analytic-derivatives"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00",
@@ -24033,7 +24184,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "optional user Jacobian; internal approximation supported",
-        "notes": "Automatic switching between Adams and BDF; classify stiff capability here without claiming all ODEPACK methods.",
+        "notes": "Automatic switching between Adams and BDF; classify stiff capability here without claiming all ODEPACK methods. The checked I1a2 driver solves the shared autonomous system y1'= -1000*y1+999*y2, y2'= -y2 from [2,1], checking exact exponential modes at four output times. Only this stiff ODE configuration is verified; no DAE capability or general stiff-problem accuracy is established.",
         "evidence": [
           {
             "path": "src/odepack_mod.f90",
@@ -24046,7 +24197,8 @@
             "path": "test/benchmark.f90",
             "sha256": "6323b762eb8cb063e9fa1e6fd0a35a71e96b53d76777388602044c9616409fe4"
           }
-        ]
+        ],
+        "driver_id": "lsoda-stiff-two-scale"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -24845,7 +24997,8 @@
             "path": "test/bessels_test.f90",
             "sha256": "6f2229cd6ab71296530e5923819095a75d3c17ed235e9e3b33df7a7c66df39db"
           }
-        ]
+        ],
+        "driver_id": "bessels-modified-values"
       }
     ],
     "stars_updated_at": "2026-10-28T17:30:42.130830+00:00"
@@ -25128,7 +25281,8 @@
             "path": "test/test_la_qr.f90",
             "sha256": "331d45304232c7b57f12d3c928d943e96af659d96e41daa4f5c46a2b4ec5201b"
           }
-        ]
+        ],
+        "driver_id": "fortran-lapack-qr-decomposition"
       },
       {
         "id": "fortran-lapack-svd",
@@ -25182,6 +25336,50 @@
           }
         ],
         "driver_id": "fortran-lapack-least-squares"
+      },
+      {
+        "id": "fortran-lapack-syev",
+        "package_id": "fortran-lapack",
+        "revision": "e5e45fdd5a38bfab06d1f703f12b787937aa33bb",
+        "module": "la_lapack",
+        "procedure": "syev (real64 overload)",
+        "gams_codes": [
+          "D4a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Lower-level real64 LAPACK syev interface with explicit workspace; high-level wrapper is a separate configuration.",
+        "evidence": [
+          {
+            "path": "src/la_lapack_eigv_sym.f90",
+            "line": 6095,
+            "sha256": "a11c54e93d03ebe7595f0f5c7ed4c502237d357710c8c899dcae2e6ef857c448"
+          }
+        ],
+        "author_examples": [],
+        "driver_id": "fortran-lapack-symmetric-eigen"
+      },
+      {
+        "id": "fortran-lapack-gesvd",
+        "package_id": "fortran-lapack",
+        "revision": "e5e45fdd5a38bfab06d1f703f12b787937aa33bb",
+        "module": "la_lapack",
+        "procedure": "gesvd (real64 overload)",
+        "gams_codes": [
+          "D6"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Lower-level real64 LAPACK gesvd interface with explicit workspace; high-level wrapper is a separate configuration.",
+        "evidence": [
+          {
+            "path": "src/la_lapack_eigv_svd_drivers.f90",
+            "line": 2310,
+            "sha256": "506054fe119297bfbf4f8b9037582e5af83e3e7e948f364ea71da2d6f7b2774b"
+          }
+        ],
+        "author_examples": [],
+        "driver_id": "fortran-lapack-svd-decomposition"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -27164,7 +27362,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Logistic regression of binomial data, not ordinary linear least squares.",
+        "notes": "Logistic regression of binomial data, not ordinary linear least squares. The dedicated L8 driver checks selected fits against independent closed-form references. See docs/gams-regression.md for the error model, covariance convention and limitations.",
         "evidence": [
           {
             "path": "src/mod_logistic.f90",
@@ -27177,7 +27375,8 @@
             "path": "tests/t_lgmc.f90",
             "sha256": "4b4e4f6e3354149f8aaa2dc791b4c8cb1fcfa5e9accf7a96bdcc3e779f4023d4"
           }
-        ]
+        ],
+        "driver_id": "logistic-grouped-binomial-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00",
@@ -27623,7 +27822,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Full upstream SLICOT FPM source library, linked to compatible LP64 BLAS/LAPACK with the manifest BLAS metapackage resolved explicitly. Sources are unchanged; legacy compiler compatibility flags retain upstream conventions. The main uses the author slicot module interface for SB03MD, constructs a stable nondiagonal 2-by-2 continuous Lyapunov problem from a known symmetric solution and checks both the independently computed matrix residual and the recovered solution including the solver scale factor. It requests the condition/error estimates but does not validate those estimates independently. Other matrix equations, model reduction, identification, robust control and every library routine are not validated.",
+        "notes": "Dedicated D8 driver checks continuous/discrete Lyapunov with transpose options and Schur reuse using constructed known solutions, finite outputs, explicit success status and independently recomputed residuals. See docs/gams-matrix-equations.md for equations, storage, scaling and limitations.",
         "evidence": [
           {
             "path": "src/SB03MD.f",
@@ -27636,7 +27835,62 @@
             "path": "examples/TSB03MD.f",
             "sha256": "1af2213d711f4abf976d2cab23493524d26d29677e695dc8fa05ad78bf285adb"
           }
-        ]
+        ],
+        "driver_id": "slicot-lyapunov-known-matrix"
+      },
+      {
+        "id": "slicot-sb04md",
+        "package_id": "slicot",
+        "revision": "5eeb845d84f5a60f6069754b7819dad468951933",
+        "module": "slicot",
+        "procedure": "SB04MD",
+        "gams_codes": [
+          "D8"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Dedicated D8 driver checks continuous rectangular Sylvester AX+XB=C using constructed known solutions, finite outputs, explicit success status and independently recomputed residuals. See docs/gams-matrix-equations.md for equations, storage, scaling and limitations.",
+        "evidence": [
+          {
+            "path": "src/SB04MD.f",
+            "sha256": "c0de18733b8b0953fd8eab41d11efdde9fcbf3078362ff47481050e26af51179",
+            "line": 4
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "examples/TSB04MD.f",
+            "sha256": "ec8d827aa98382e27a2b019ff7033acc96a795b26ecdd6f85da687600353770f"
+          }
+        ],
+        "driver_id": "slicot-continuous-sylvester"
+      },
+      {
+        "id": "slicot-sb04qd",
+        "package_id": "slicot",
+        "revision": "5eeb845d84f5a60f6069754b7819dad468951933",
+        "module": "slicot",
+        "procedure": "SB04QD",
+        "gams_codes": [
+          "D8"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Dedicated D8 driver checks discrete rectangular Sylvester X+AXB=C using constructed known solutions, finite outputs, explicit success status and independently recomputed residuals. See docs/gams-matrix-equations.md for equations, storage, scaling and limitations.",
+        "evidence": [
+          {
+            "path": "src/SB04QD.f",
+            "sha256": "a3835483ab8b168b3b80edb03ebb36f4e72a00ac73f85e158797520e1c66d5b6",
+            "line": 4
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "examples/TSB04QD.f",
+            "sha256": "f601fad0903033dab9c5f79b35cc5dae95254becbbf4e273f7db8e468b0325c6"
+          }
+        ],
+        "driver_id": "slicot-discrete-sylvester"
       }
     ],
     "stars_updated_at": "2026-10-29T13:59:01.916745+00:00",
@@ -31122,7 +31376,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "MINRES for real symmetric sparse/operator systems, including indefinite systems.",
+        "notes": "MINRES for real symmetric sparse/operator systems, including indefinite systems. The checked driver solves two known right-hand sides, checks finite results and successful termination, and independently recomputes the residual and scaled normwise backward error.",
         "evidence": [
           {
             "path": "src/minres/minres_mod.f90",
@@ -31135,7 +31389,8 @@
             "path": "test/minres_test.f90",
             "sha256": "bcf9d77d6bb70eef605e41a61e52f1ee6dd63c6d141c0ec5c2b7ceed200cdb32"
           }
-        ]
+        ],
+        "driver_id": "minres-indefinite-solve"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -31379,7 +31634,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Returns cubature nodes and weights for reference elements; not an adaptive integrator.",
+        "notes": "Returns cubature nodes and weights for reference elements; not an adaptive integrator. The dedicated checked driver uses analytic references, finite-data checks and explicit tolerances. See docs/gams-cubature.md for the exact configurations and limitations.",
         "evidence": [
           {
             "path": "src/cubatures.f90",
@@ -31392,7 +31647,8 @@
             "path": "test/test_cubatures.f90",
             "sha256": "049cbb33a825108fb242ee7c3278a15ce7f814d1cde503c3b8725195dff2e86f"
           }
-        ]
+        ],
+        "driver_id": "cubatures-simplex-moments"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00",
@@ -31585,7 +31841,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "none",
-        "notes": "Adaptive vector-valued integration over hyperrectangles with error estimates.",
+        "notes": "Adaptive vector-valued integration over hyperrectangles with error estimates. The dedicated checked driver uses analytic references, finite-data checks and explicit tolerances. See docs/gams-cubature.md for the exact configurations and limitations.",
         "evidence": [
           {
             "path": "src/dcuhre.f",
@@ -31598,7 +31854,8 @@
             "path": "test/dtest1.f",
             "sha256": "1f75afe36fdb7663ef29fbfe9b8d1c95f7dfac2659a0d41c41e90acc46e603c4"
           }
-        ]
+        ],
+        "driver_id": "dcuhre-box-integrals"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00",

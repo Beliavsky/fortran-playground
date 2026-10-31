@@ -51,12 +51,26 @@ class CatalogExportTests(unittest.TestCase):
         self.assertEqual(sum('numerical_review' in p['curation'] for p in feed['projects']),
                          len(review['packages']))
         self.assertIn('fpm_catalog/gams-numerical-review.json', {r['path'] for r in feed['provenance']['inputs']})
-        self.assertEqual(len(feed['demonstrations']), 28)
+        self.assertEqual(len(feed['demonstrations']), 68)
         self.assertEqual({d['validation_path'] for d in feed['demonstrations']},
                          {'docs/gams-g1-validation.json', 'docs/gams-quadrature-validation.json',
                           'docs/gams-roots-validation.json', 'docs/gams-linear-algebra-validation.json',
                           'docs/gams-ode-validation.json', 'docs/gams-interpolation-validation.json',
-                          'docs/gams-transforms-validation.json', 'docs/gams-constrained-validation.json'})
+                          'docs/gams-transforms-validation.json', 'docs/gams-constrained-validation.json',
+                          'docs/gams-special-functions-validation.json', 'docs/gams-statistics-validation.json', 'docs/gams-random-validation.json', 'docs/gams-differentiation-validation.json', 'docs/gams-systems-validation.json', 'docs/gams-sparse-validation.json', 'docs/gams-cubature-validation.json', 'docs/gams-surfaces-validation.json', 'docs/gams-stiff-validation.json', 'docs/gams-polynomial-validation.json', 'docs/gams-convolution-validation.json', 'docs/gams-regression-validation.json', 'docs/gams-matrix-equations-validation.json'})
+        self.assertIn('docs/gams-matrix-equations-validation.json', {r['path'] for r in feed['provenance']['inputs']})
+        self.assertIn('docs/gams-regression-validation.json', {r['path'] for r in feed['provenance']['inputs']})
+        self.assertIn('docs/gams-convolution-validation.json', {r['path'] for r in feed['provenance']['inputs']})
+        self.assertIn('docs/gams-polynomial-validation.json', {r['path'] for r in feed['provenance']['inputs']})
+        self.assertIn('docs/gams-stiff-validation.json', {r['path'] for r in feed['provenance']['inputs']})
+        self.assertIn('docs/gams-surfaces-validation.json', {r['path'] for r in feed['provenance']['inputs']})
+        self.assertIn('docs/gams-cubature-validation.json', {r['path'] for r in feed['provenance']['inputs']})
+        self.assertIn('docs/gams-sparse-validation.json', {r['path'] for r in feed['provenance']['inputs']})
+        self.assertIn('docs/gams-systems-validation.json', {r['path'] for r in feed['provenance']['inputs']})
+        self.assertIn('docs/gams-differentiation-validation.json', {r['path'] for r in feed['provenance']['inputs']})
+        self.assertIn('docs/gams-random-validation.json', {r['path'] for r in feed['provenance']['inputs']})
+        self.assertIn('docs/gams-statistics-validation.json', {r['path'] for r in feed['provenance']['inputs']})
+        self.assertIn('docs/gams-special-functions-validation.json', {r['path'] for r in feed['provenance']['inputs']})
         self.assertIn('docs/gams-constrained-validation.json', {r['path'] for r in feed['provenance']['inputs']})
         self.assertIn('docs/gams-transforms-validation.json', {r['path'] for r in feed['provenance']['inputs']})
         self.assertIn('docs/gams-interpolation-validation.json', {r['path'] for r in feed['provenance']['inputs']})

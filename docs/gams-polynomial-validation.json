@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "polyroots-real-reference",
+      "source_revision": "165ed6fbec98cc23d9ed4784fbc4708adb5e0bcf",
+      "source_sha256": "20a78d4939a1cd687adf35294adc33608b3643508ca6cb23540159046f24ac5c",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T22:41:13.492521+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.327,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Polynomial case 1 coefficient scale=  1.00E+00\nRoot (real,imag):    1.0000000000    0.0000000000 normalized residual=  1.4803E-16\nRoot (real,imag):    2.0000000000    0.0000000000 normalized residual=  5.9212E-17\nRoot (real,imag):    3.0000000000    0.0000000000 normalized residual=  2.2204E-17\nMax scaled root error / normalized residual:   1.9984E-15   1.4803E-16\nPolynomial case 1 coefficient scale=  1.00E+80\nRoot (real,imag):    1.0000000000    0.0000000000 normalized residual=  1.7552E-16\nRoot (real,imag):    2.0000000000    0.0000000000 normalized residual=  5.2656E-17\nRoot (real,imag):    3.0000000000    0.0000000000 normalized residual=  3.5104E-17\nMax scaled root error / normalized residual:   1.9984E-15   1.7552E-16\nPolynomial case 1 coefficient scale=  1.00E-80\nRoot (real,imag):    1.0000000000    0.0000000000 normalized residual=  2.1848E-16\nRoot (real,imag):    2.0000000000    0.0000000000 normalized residual=  3.7453E-17\nRoot (real,imag):    3.0000000000    0.0000000000 normalized residual=  3.7453E-17\nMax scaled root error / normalized residual:   1.9984E-15   2.1848E-16\nPolynomial case 2 coefficient scale=  1.00E+00\nRoot (real,imag):    0.0000000000    0.0000000000 normalized residual=  0.0000E+00\nRoot (real,imag):   -2.0000000000    0.0000000000 normalized residual=  2.6645E-16\nRoot (real,imag):    1.0000000000    2.0000000000 normalized residual=  2.7352E-16\nRoot (real,imag):    1.0000000000   -2.0000000000 normalized residual=  2.7352E-16\nMax scaled root error / normalized residual:   2.2204E-16   2.7352E-16\nPolynomial case 2 coefficient scale=  1.00E+80\nRoot (real,imag):    0.0000000000    0.0000000000 normalized residual=  0.0000E+00\nRoot (real,imag):   -2.0000000000    0.0000000000 normalized residual=  3.1594E-16\nRoot (real,imag):    1.0000000000    2.0000000000 normalized residual=  3.1240E-16\nRoot (real,imag):    1.0000000000   -2.0000000000 normalized residual=  3.1240E-16\nMax scaled root error / normalized residual:   2.2204E-16   3.1594E-16\nPolynomial case 2 coefficient scale=  1.00E-80\nRoot (real,imag):    0.0000000000    0.0000000000 normalized residual=  0.0000E+00\nRoot (real,imag):   -2.0000000000    0.0000000000 normalized residual=  2.2472E-16\nRoot (real,imag):    1.0000000000    2.0000000000 normalized residual=  1.5995E-16\nRoot (real,imag):    1.0000000000   -2.0000000000 normalized residual=  1.5995E-16\nMax scaled root error / normalized residual:   2.2204E-16   2.2472E-16\nPASS polyroots-real-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.029,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "rpoly-real-reference",
+      "source_revision": "165ed6fbec98cc23d9ed4784fbc4708adb5e0bcf",
+      "source_sha256": "620ec33c70b56820836a62e8f79a8f57d02a0def8a3cea50214820be24a13598",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T22:41:16.281535+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.63,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Polynomial case 1 coefficient scale=  1.00E+00\nRoot (real,imag):    1.0000000000    0.0000000000 normalized residual=  0.0000E+00\nRoot (real,imag):    2.0000000000    0.0000000000 normalized residual=  1.4803E-17\nRoot (real,imag):    3.0000000000    0.0000000000 normalized residual=  7.4015E-18\nMax scaled root error / normalized residual:   1.4803E-16   1.4803E-17\nPolynomial case 1 coefficient scale=  1.00E+80\nRoot (real,imag):    1.0000000000    0.0000000000 normalized residual=  4.3880E-17\nRoot (real,imag):    2.0000000000    0.0000000000 normalized residual=  0.0000E+00\nRoot (real,imag):    3.0000000000    0.0000000000 normalized residual=  2.6328E-17\nMax scaled root error / normalized residual:   3.3307E-16   4.3880E-17\nPolynomial case 1 coefficient scale=  1.00E-80\nRoot (real,imag):    1.0000000000    0.0000000000 normalized residual=  3.1211E-17\nRoot (real,imag):    2.0000000000    0.0000000000 normalized residual=  4.9938E-17\nRoot (real,imag):    3.0000000000    0.0000000000 normalized residual=  5.6180E-17\nMax scaled root error / normalized residual:   3.3307E-16   5.6180E-17\nPolynomial case 2 coefficient scale=  1.00E+00\nRoot (real,imag):    0.0000000000    0.0000000000 normalized residual=  0.0000E+00\nRoot (real,imag):    1.0000000000    2.0000000000 normalized residual=  0.0000E+00\nRoot (real,imag):    1.0000000000   -2.0000000000 normalized residual=  0.0000E+00\nRoot (real,imag):   -2.0000000000    0.0000000000 normalized residual=  0.0000E+00\nMax scaled root error / normalized residual:   0.0000E+00   0.0000E+00\nPolynomial case 2 coefficient scale=  1.00E+80\nRoot (real,imag):    0.0000000000    0.0000000000 normalized residual=  0.0000E+00\nRoot (real,imag):    1.0000000000    2.0000000000 normalized residual=  3.3730E-16\nRoot (real,imag):    1.0000000000   -2.0000000000 normalized residual=  3.3730E-16\nRoot (real,imag):   -2.0000000000    0.0000000000 normalized residual=  0.0000E+00\nMax scaled root error / normalized residual:   1.9860E-16   3.3730E-16\nPolynomial case 2 coefficient scale=  1.00E-80\nRoot (real,imag):    0.0000000000    0.0000000000 normalized residual=  0.0000E+00\nRoot (real,imag):    1.0000000000    2.0000000000 normalized residual=  3.1989E-17\nRoot (real,imag):    1.0000000000   -2.0000000000 normalized residual=  3.1989E-17\nRoot (real,imag):   -2.0000000000    0.0000000000 normalized residual=  0.0000E+00\nMax scaled root error / normalized residual:   0.0000E+00   3.1989E-17\nPASS rpoly-real-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.053,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "cpolyroots-complex-reference",
+      "source_revision": "165ed6fbec98cc23d9ed4784fbc4708adb5e0bcf",
+      "source_sha256": "3dba1af1cabdee90c3ecba03467cf0221d2109dfe9547df6b1fb91efc26888c2",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T22:40:26.314605+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.55,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Polynomial case 1 coefficient scale=  1.00E+00\nRoot (real,imag):    1.0000000000   -0.0000000000 normalized residual=  2.2613E-16\nRoot (real,imag):    2.0000000000    0.0000000000 normalized residual=  9.7788E-17\nRoot (real,imag):    3.0000000000   -0.0000000000 normalized residual=  7.5018E-17\nMax scaled root error / normalized residual:   2.9336E-15   2.2613E-16\nPolynomial case 1 coefficient scale=  1.00E+80\nRoot (real,imag):    1.0000000000   -0.0000000000 normalized residual=  2.2353E-16\nRoot (real,imag):    2.0000000000    0.0000000000 normalized residual=  8.1259E-17\nRoot (real,imag):    3.0000000000   -0.0000000000 normalized residual=  5.3055E-17\nMax scaled root error / normalized residual:   2.9336E-15   2.2353E-16\nPolynomial case 1 coefficient scale=  1.00E-80\nRoot (real,imag):    1.0000000000   -0.0000000000 normalized residual=  1.9209E-16\nRoot (real,imag):    2.0000000000    0.0000000000 normalized residual=  9.6494E-17\nRoot (real,imag):    3.0000000000   -0.0000000000 normalized residual=  6.3490E-17\nMax scaled root error / normalized residual:   2.9336E-15   1.9209E-16\nPolynomial case 2 coefficient scale=  1.00E+00\nRoot (real,imag):    0.0000000000    0.0000000000 normalized residual=  0.0000E+00\nRoot (real,imag):    1.0000000000    2.0000000000 normalized residual=  2.7352E-16\nRoot (real,imag):   -2.0000000000   -0.0000000000 normalized residual=  3.3129E-16\nRoot (real,imag):    1.0000000000   -2.0000000000 normalized residual=  4.6917E-16\nMax scaled root error / normalized residual:   3.1402E-16   4.6917E-16\nPolynomial case 2 coefficient scale=  1.00E+80\nRoot (real,imag):    0.0000000000    0.0000000000 normalized residual=  0.0000E+00\nRoot (real,imag):    1.0000000000    2.0000000000 normalized residual=  2.7078E-16\nRoot (real,imag):   -2.0000000000   -0.0000000000 normalized residual=  3.5009E-16\nRoot (real,imag):    1.0000000000   -2.0000000000 normalized residual=  4.7649E-16\nMax scaled root error / normalized residual:   3.1402E-16   4.7649E-16\nPolynomial case 2 coefficient scale=  1.00E-80\nRoot (real,imag):    0.0000000000    0.0000000000 normalized residual=  0.0000E+00\nRoot (real,imag):    1.0000000000    2.0000000000 normalized residual=  2.5790E-16\nRoot (real,imag):   -2.0000000000   -0.0000000000 normalized residual=  3.5874E-16\nRoot (real,imag):    1.0000000000   -2.0000000000 normalized residual=  4.7555E-16\nMax scaled root error / normalized residual:   3.1402E-16   4.7555E-16\nPolynomial case 3 coefficient scale=  1.00E+00\nRoot (real,imag):   -2.0000000000    0.5000000000 normalized residual=  2.4417E-16\nRoot (real,imag):    0.2500000000   -1.0000000000 normalized residual=  1.5009E-15\nRoot (real,imag):    1.0000000000    1.0000000000 normalized residual=  2.0016E-16\nMax scaled root error / normalized residual:   1.5165E-15   1.5009E-15\nPolynomial case 3 coefficient scale=  1.00E+80\nRoot (real,imag):   -2.0000000000    0.5000000000 normalized residual=  2.8734E-16\nRoot (real,imag):    0.2500000000   -1.0000000000 normalized residual=  1.3931E-15\nRoot (real,imag):    1.0000000000    1.0000000000 normalized residual=  1.7909E-16\nMax scaled root error / normalized residual:   1.5165E-15   1.3931E-15\nPolynomial case 3 coefficient scale=  1.00E-80\nRoot (real,imag):   -2.0000000000    0.5000000000 normalized residual=  2.0593E-16\nRoot (real,imag):    0.2500000000   -1.0000000000 normalized residual=  1.3456E-15\nRoot (real,imag):    1.0000000000    1.0000000000 normalized residual=  1.7794E-16\nMax scaled root error / normalized residual:   1.5165E-15   1.3456E-15\nPASS cpolyroots-complex-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.047,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-30T22:41:16.342282+00:00"
+}

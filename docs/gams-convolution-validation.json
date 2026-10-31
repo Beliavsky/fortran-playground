@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "spectrum-convolution-reference",
+      "source_revision": "5af0d5a85eccf971aa6e0fc72b1c7439c3cef536",
+      "source_sha256": "885005e2f72f4c1c92a9fe8d22e5e6ef4c1881ffc025bb7c8bed5139c7d7c5d8",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T22:50:24.788508+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.229,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Signal 1 kernel 1 full/central lengths:  37  37\nScaled full / swapped / central / swapped central / sum errors:   1.920E-16   1.920E-16   1.920E-16   1.920E-16   3.331E-16\nSignal 1 kernel 2 full/central lengths:  38  37\nScaled full / swapped / central / swapped central / sum errors:   1.636E-16   1.636E-16   1.636E-16   1.636E-16   1.388E-16\nSignal 1 kernel 3 full/central lengths:  39  37\nScaled full / swapped / central / swapped central / sum errors:   1.110E-16   1.110E-16   1.110E-16   1.110E-16   1.110E-16\nSignal 1 kernel 4 full/central lengths:  40  37\nScaled full / swapped / central / swapped central / sum errors:   5.551E-17   5.551E-17   5.551E-17   5.551E-17   1.388E-16\nSignal 1 kernel 5 full/central lengths:  41  37\nScaled full / swapped / central / swapped central / sum errors:   1.164E-16   1.164E-16   1.164E-16   1.164E-16   0.000E+00\nSignal 1 kernel 8 full/central lengths:  44  37\nScaled full / swapped / central / swapped central / sum errors:   1.388E-16   1.388E-16   1.388E-16   1.388E-16   5.551E-17\nSignal 1 kernel 16 full/central lengths:  52  37\nScaled full / swapped / central / swapped central / sum errors:   1.110E-16   1.110E-16   1.110E-16   1.110E-16   5.551E-17\nSignal 1 kernel 17 full/central lengths:  53  37\nScaled full / swapped / central / swapped central / sum errors:   1.665E-16   1.665E-16   1.665E-16   1.665E-16   1.110E-16\nSignal 2 kernel 1 full/central lengths:  37  37\nScaled full / swapped / central / swapped central / sum errors:   6.064E-16   6.064E-16   6.064E-16   6.064E-16   0.000E+00\nSignal 2 kernel 2 full/central lengths:  38  37\nScaled full / swapped / central / swapped central / sum errors:   2.825E-16   2.825E-16   2.825E-16   2.825E-16   6.911E-15\nSignal 2 kernel 3 full/central lengths:  39  37\nScaled full / swapped / central / swapped central / sum errors:   7.549E-16   7.549E-16   7.549E-16   7.549E-16   4.441E-15\nSignal 2 kernel 4 full/central lengths:  40  37\nScaled full / swapped / central / swapped central / sum errors:   1.883E-16   1.883E-16   1.883E-16   1.883E-16   6.273E-15\nSignal 2 kernel 5 full/central lengths:  41  37\nScaled full / swapped / central / swapped central / sum errors:   3.793E-16   3.793E-16   3.793E-16   3.793E-16   1.110E-15\nSignal 2 kernel 8 full/central lengths:  44  37\nScaled full / swapped / central / swapped central / sum errors:   3.449E-16   3.449E-16   3.449E-16   3.449E-16   1.021E-14\nSignal 2 kernel 16 full/central lengths:  52  37\nScaled full / swapped / central / swapped central / sum errors:   4.468E-16   4.468E-16   4.468E-16   4.468E-16   1.310E-14\nSignal 2 kernel 17 full/central lengths:  53  37\nScaled full / swapped / central / swapped central / sum errors:   4.430E-16   4.430E-16   4.430E-16   4.430E-16   1.832E-15\nPASS spectrum-convolution-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.025,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fastconv-convolution-reference",
+      "source_revision": "3aaa2432a291df07a10fc5dade0dcd66d7a06dd0",
+      "source_sha256": "bcf5bd80bf88f7c82d9eefec38a85896a333580d5b7d766f1a3c7f7d09135c6a",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-30T22:50:26.419032+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.442,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Signal 1 kernel 1 valid length=37 scaled direct-reference error=   0.000E+00\nSignal 1 kernel 2 valid length=36 scaled direct-reference error=   0.000E+00\nSignal 1 kernel 3 valid length=35 scaled direct-reference error=   0.000E+00\nSignal 1 kernel 4 valid length=34 scaled direct-reference error=   0.000E+00\nSignal 1 kernel 5 valid length=33 scaled direct-reference error=   0.000E+00\nSignal 1 kernel 8 valid length=30 scaled direct-reference error=   0.000E+00\nSignal 1 kernel 16 valid length=22 scaled direct-reference error=   0.000E+00\nSignal 1 kernel 17 valid length=21 scaled direct-reference error=   0.000E+00\nSignal 2 kernel 1 valid length=37 scaled direct-reference error=   0.000E+00\nSignal 2 kernel 2 valid length=36 scaled direct-reference error=   5.226E-08\nSignal 2 kernel 3 valid length=35 scaled direct-reference error=   4.057E-08\nSignal 2 kernel 4 valid length=34 scaled direct-reference error=   8.097E-08\nSignal 2 kernel 5 valid length=33 scaled direct-reference error=   6.966E-08\nSignal 2 kernel 8 valid length=30 scaled direct-reference error=   1.014E-07\nSignal 2 kernel 16 valid length=22 scaled direct-reference error=   7.548E-08\nSignal 2 kernel 17 valid length=21 scaled direct-reference error=   9.450E-08\nPASS fastconv-convolution-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.029,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-30T22:50:26.472877+00:00"
+}
