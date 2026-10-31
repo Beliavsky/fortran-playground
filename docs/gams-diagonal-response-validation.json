@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "specialmatrices-diagonal-reference",
+      "source_revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "source_sha256": "06aa28d1c6234a27f70fa4542a5d7a88919bf15646627ac002150fa9adea4f7e",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T18:58:38.177934+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.898,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Nonsingular diagonal fixtures: 36; solve calls: 180\nKnown solution coordinate checks: 3024\nOne four-column RHS and four vector RHS calls; signed diagonals and zero RHS.\nMaximum normalized solution error:   0.0000E+00\nMaximum normalized scalar residual:   0.0000E+00\nPASS specialmatrices-diagonal-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.07,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "dynamics-response-reference",
+      "source_revision": "580d04859a25126d3261e44b3fbec5111835e3a4",
+      "source_sha256": "7a6a2e21eeaafd0332bd2be54fff2ce44358c197c7a41a2f29e760a1fc2c6ca7",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T19:00:11.170757+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.713,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Harmonic response fixtures: 24; complex coordinate checks: 384\nUnit mass, diagonal stiffness only; broader failed probes retained separately.\nMaximum normalized response error:   0.0000E+00\nPASS dynamics-response-reference\n",
+          "stderr": "Project is up to date\nAt line 421 of file ../sources/bundle/packages/1/linalg-cb8fb7b1c67986591083cac516eb700f47d69b68/src/linalg_basic.f90\nFortran runtime warning: An array temporary was created for argument 'y' of procedure 'zgemv'\n",
+          "seconds": 0.198,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T19:00:11.222120+00:00"
+}

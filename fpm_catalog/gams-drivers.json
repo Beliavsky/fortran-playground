@@ -5603,6 +5603,574 @@
         "max_error_multiple_of_requested_tolerance": 50,
         "type2_type3_verified": false
       }
+    },
+    {
+      "id": "lsqr-least-squares-reference",
+      "name": "gams-lsqr-least-squares-reference",
+      "package_id": "lsqr",
+      "procedure_id": "lsqr-lsqr-solver-ez",
+      "gams_code": "D9a1",
+      "problem_id": "full-rank-iterative-least-squares",
+      "path": "fpm_catalog/gams-drivers/lsqr-least-squares-reference.f90",
+      "revision": "4df2ce600ca26a9f7e80dc01bfd0859d538547b3",
+      "author_example": "test/lsqrtest_ez.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/iterative-ls-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer using exact full-rank singular-factor fixtures; no upstream code copied. Square, tall and wide matrices, signed scales, identity/Householder factors and prescribed orthogonal residuals. Three vector right-hand sides per fixture; verifies minimum-norm answers, residuals, normal equations, finite answers, input preservation and normal stopping codes. Zero damping only; rank deficiency, ill conditioning, large sparse performance and regularization remain unverified.",
+      "validation_path": "docs/gams-iterative-ls-validation.json",
+      "review_path": "docs/gams-iterative-ls.md",
+      "checks": {
+        "matrix_fixtures": 72,
+        "solver_calls": 216,
+        "nonzero_residual_fixtures": 18,
+        "shapes": [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            5
+          ]
+        ],
+        "signed_scales": [
+          -4,
+          0.5,
+          2
+        ],
+        "minimum_norm_checked": true,
+        "normal_equation_checked": true,
+        "input_preservation_checked": true,
+        "max_normalized_solution_error": 3e-12,
+        "max_normalized_residual_error": 5e-12,
+        "max_normalized_stationarity": 1e-11,
+        "damping_verified": false,
+        "rank_deficiency_verified": false
+      }
+    },
+    {
+      "id": "lsmr-least-squares-reference",
+      "name": "gams-lsmr-least-squares-reference",
+      "package_id": "lsmr",
+      "procedure_id": "lsmr-lsmr",
+      "gams_code": "D9a1",
+      "problem_id": "full-rank-iterative-least-squares",
+      "path": "fpm_catalog/gams-drivers/lsmr-least-squares-reference.f90",
+      "revision": "12611e2299c5188441b097437695a66c85369e76",
+      "author_example": "test/lsmrTestModule.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/iterative-ls-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer using exact full-rank singular-factor fixtures; no upstream code copied. Square, tall and wide matrices, signed scales, identity/Householder factors and prescribed orthogonal residuals. Three vector right-hand sides per fixture; verifies minimum-norm answers, residuals, normal equations, finite answers, input preservation and normal stopping codes. Zero damping only; rank deficiency, ill conditioning, large sparse performance and regularization remain unverified.",
+      "validation_path": "docs/gams-iterative-ls-validation.json",
+      "review_path": "docs/gams-iterative-ls.md",
+      "checks": {
+        "matrix_fixtures": 72,
+        "solver_calls": 216,
+        "nonzero_residual_fixtures": 18,
+        "shapes": [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            5,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            5
+          ]
+        ],
+        "signed_scales": [
+          -4,
+          0.5,
+          2
+        ],
+        "minimum_norm_checked": true,
+        "normal_equation_checked": true,
+        "input_preservation_checked": true,
+        "max_normalized_solution_error": 3e-12,
+        "max_normalized_residual_error": 5e-12,
+        "max_normalized_stationarity": 1e-11,
+        "damping_verified": false,
+        "rank_deficiency_verified": false
+      }
+    },
+    {
+      "id": "forsvd-spectrum-reference",
+      "name": "gams-forsvd-spectrum-reference",
+      "package_id": "forsvd",
+      "procedure_id": "forsvd-api",
+      "gams_code": "D6",
+      "problem_id": "prescribed-real-singular-spectrum",
+      "path": "fpm_catalog/gams-drivers/forsvd-spectrum-reference.f90",
+      "revision": "f39bba7afcb048a21947a7a640bdf9a18337f8ac",
+      "author_example": "test/test1.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/spectral-wrappers-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer with analytically prescribed spectra and scalar factor/vector residual checks; pinned API and author test reviewed, no upstream code copied. Signed scales, identity/Householder factors and repeated/zero spectra. Checks default/GESVD/GESDD reduced factors on square, tall and wide matrices, using a fresh input copy because LAPACK may overwrite the wrapper input despite its INTENT(IN) declaration. No status is exposed by the wrapper; independent answer checks determine acceptance. Complex overloads, malformed inputs and performance remain unverified.",
+      "validation_path": "docs/gams-spectral-wrappers-validation.json",
+      "review_path": "docs/gams-spectral-wrappers.md",
+      "checks": {
+        "matrix_fixtures": 144,
+        "solver_calls": 432,
+        "known_spectrum_checked": true,
+        "orthogonality_checked": true,
+        "max_normalized_value_error": 2e-12,
+        "max_normalized_vector_residual": 1e-11,
+        "max_orthogonality_error": 5e-12,
+        "complex_overloads_verified": false,
+        "methods": [
+          "default",
+          "gesvd",
+          "gesdd"
+        ],
+        "reconstruction_checked": true,
+        "reduced_factors_only": true,
+        "input_copy_used": true
+      }
+    },
+    {
+      "id": "foreig-symmetric-reference",
+      "name": "gams-foreig-symmetric-reference",
+      "package_id": "foreig",
+      "procedure_id": "foreig-eig",
+      "gams_code": "D4a1",
+      "problem_id": "prescribed-real-symmetric-spectrum",
+      "path": "fpm_catalog/gams-drivers/foreig-symmetric-reference.f90",
+      "revision": "8fcfcab03e5d7cf5eda8c51c7a1e97fe52954c39",
+      "author_example": "test/test1.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/spectral-wrappers-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer with analytically prescribed spectra and scalar factor/vector residual checks; pinned API and author test reviewed, no upstream code copied. Signed scales, identity/Householder factors and repeated/zero spectra. Checks SYEV symmetric eigenvalues/vectors and upper-triangle selection using finite poison in the unused lower triangle; input preservation checked. No status is exposed by the wrapper; independent answer checks determine acceptance. Complex overloads, malformed inputs and performance remain unverified.",
+      "validation_path": "docs/gams-spectral-wrappers-validation.json",
+      "review_path": "docs/gams-spectral-wrappers.md",
+      "checks": {
+        "matrix_fixtures": 96,
+        "solver_calls": 96,
+        "known_spectrum_checked": true,
+        "orthogonality_checked": true,
+        "max_normalized_value_error": 2e-12,
+        "max_normalized_vector_residual": 5e-12,
+        "max_orthogonality_error": 5e-12,
+        "complex_overloads_verified": false,
+        "methods": [
+          "syev"
+        ],
+        "upper_triangle_checked": true,
+        "input_preservation_checked": true,
+        "nonsymmetric_verified": false
+      }
+    },
+    {
+      "id": "regridpack-polynomial-reference",
+      "name": "gams-regridpack-polynomial-reference",
+      "package_id": "regridpack",
+      "procedure_id": "regridpack-regrid",
+      "gams_code": "E1a",
+      "problem_id": "linear-cubic-polynomial-exactness",
+      "path": "fpm_catalog/gams-drivers/regridpack-polynomial-reference.f90",
+      "revision": "e47346d9244ab93f70367f16364d73217fbc0451",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/regrid-rk45-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned source reviewed, no upstream code copied. Uniform/nonuniform grids with exact linear/cubic monomial references, independent piecewise-linear values, repeated endpoint targets, input preservation, eight expected diagnostics and successful post-error recovery. Multidimensional overloads and extrapolation are not verified.",
+      "validation_path": "docs/gams-regrid-rk45-validation.json",
+      "review_path": "docs/gams-regrid-rk45.md",
+      "checks": {
+        "grid_sizes": [
+          4,
+          7,
+          12
+        ],
+        "successful_calls": 127,
+        "analytical_value_checks": 3614,
+        "expected_rejections": 8,
+        "uniform_nonuniform_checked": true,
+        "linear_cubic_checked": true,
+        "input_preservation_checked": true,
+        "post_error_recovery_checked": true,
+        "max_normalized_value_error": 2e-12,
+        "multidimensional_verified": false,
+        "extrapolation_verified": false
+      }
+    },
+    {
+      "id": "diffeq-rk45-reference",
+      "name": "gams-diffeq-rk45-reference",
+      "package_id": "diffeq",
+      "procedure_id": "diffeq-runge-kutta-45",
+      "gams_code": "I1a1a",
+      "problem_id": "nonstiff-analytical-dense-output",
+      "path": "fpm_catalog/gams-drivers/diffeq-rk45-reference.f90",
+      "revision": "989b320179c23aaff4bfe72994c90e9034f50c74",
+      "author_example": "examples/rk45_example.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/regrid-rk45-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned source reviewed, no upstream code copied. Exponential, polynomial and oscillator analytical solutions at 17 requested times, two rates, both directions and two tolerances. Checks callback state, unchanged inputs, complete dense output, reused solver with explicit buffer clearing and oscillator energy. No plotting dependency. Stiff integration, events, continuation without reset and performance remain unverified.",
+      "validation_path": "docs/gams-regrid-rk45-validation.json",
+      "review_path": "docs/gams-regrid-rk45.md",
+      "checks": {
+        "ivp_runs": 24,
+        "requested_solution_points": 408,
+        "model_families": [
+          "exponential",
+          "polynomial",
+          "oscillator"
+        ],
+        "rates": [
+          0.5,
+          2
+        ],
+        "requested_tolerances": [
+          1e-08,
+          1e-10
+        ],
+        "both_directions_checked": true,
+        "callback_state_checked": true,
+        "reused_solver_checked": true,
+        "oscillator_invariant_checked": true,
+        "max_error_multiple_of_tolerance": 50,
+        "stiff_problems_verified": false,
+        "events_verified": false
+      }
+    },
+    {
+      "id": "fitpack-polynomial-values",
+      "name": "gams-fitpack-polynomial-values",
+      "package_id": "fitpack",
+      "procedure_id": "fitpack-fitpack-curve",
+      "gams_code": "E1a",
+      "problem_id": "polynomial-spline-values",
+      "path": "fpm_catalog/gams-drivers/fitpack-polynomial-values.f90",
+      "revision": "1907c7bad9f5c4557970e906bdd4909eb52b2d4c",
+      "author_example": "test/fitpack_curve_tests.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fitpack-polynomials-drivers-MIT.txt"
+      ],
+      "modifications": "Independent FITPACK consumer with exact scaled monomial references, linear/cubic/quintic interpolating splines, uniform and reversed nonuniform source data, scalar/vector calls, input preservation, repeated new_fit state reset and final destruction. Pinned API and author example reviewed, no upstream code copied. Checks values at 33 targets including boundaries and at original nodes. Positive smoothing, periodic curves, extrapolation, malformed inputs and performance remain unverified.",
+      "validation_path": "docs/gams-fitpack-polynomials-validation.json",
+      "review_path": "docs/gams-fitpack-polynomials.md",
+      "checks": {
+        "polynomial_fits": 144,
+        "reference_checks": 11016,
+        "spline_degrees": [
+          1,
+          3,
+          5
+        ],
+        "source_sizes": [
+          8,
+          13
+        ],
+        "scalar_vector_checked": true,
+        "reversed_nonuniform_sources_checked": true,
+        "input_preservation_checked": true,
+        "destruction_checked": true,
+        "positive_smoothing_verified": false,
+        "max_normalized_error": 5e-12,
+        "source_node_checks": 1512,
+        "off_grid_and_endpoint_checks": 9504,
+        "extrapolation_verified": false
+      }
+    },
+    {
+      "id": "fitpack-polynomial-derivatives",
+      "name": "gams-fitpack-polynomial-derivatives",
+      "package_id": "fitpack",
+      "procedure_id": "fitpack-curve-derivative",
+      "gams_code": "H1",
+      "problem_id": "analytical-spline-derivatives",
+      "path": "fpm_catalog/gams-drivers/fitpack-polynomial-derivatives.f90",
+      "revision": "1907c7bad9f5c4557970e906bdd4909eb52b2d4c",
+      "author_example": "examples/example_curve.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fitpack-polynomials-drivers-MIT.txt"
+      ],
+      "modifications": "Independent FITPACK consumer with exact scaled monomial references, linear/cubic/quintic interpolating splines, uniform and reversed nonuniform source data, scalar/vector calls, input preservation, repeated new_fit state reset and final destruction. Pinned API and author example reviewed, no upstream code copied. Checks derivative orders 0 through spline degree against analytical falling-factorial formulas, including zero high derivatives of lower-degree polynomials. Positive smoothing, periodic curves, extrapolation, malformed inputs and performance remain unverified.",
+      "validation_path": "docs/gams-fitpack-polynomials-validation.json",
+      "review_path": "docs/gams-fitpack-polynomials.md",
+      "checks": {
+        "polynomial_fits": 144,
+        "reference_checks": 44352,
+        "spline_degrees": [
+          1,
+          3,
+          5
+        ],
+        "source_sizes": [
+          8,
+          13
+        ],
+        "scalar_vector_checked": true,
+        "reversed_nonuniform_sources_checked": true,
+        "input_preservation_checked": true,
+        "destruction_checked": true,
+        "positive_smoothing_verified": false,
+        "max_normalized_error": 1e-08,
+        "positive_derivative_checks": 34848,
+        "zeroth_derivative_checks": 9504,
+        "max_derivative_order": 5,
+        "arbitrary_callback_differentiation_verified": false
+      }
+    },
+    {
+      "id": "specialmatrices-diagonal-reference",
+      "name": "gams-specialmatrices-diagonal-reference",
+      "package_id": "specialmatrices",
+      "procedure_id": "specialmatrices-solve",
+      "gams_code": "D2",
+      "problem_id": "manufactured-diagonal-solutions",
+      "path": "fpm_catalog/gams-drivers/specialmatrices-diagonal-reference.f90",
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/diagonal-response-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned API reviewed, no upstream code copied. Nonsingular signed diagonal matrices at three scales, one four-column and four vector RHS solves per fixture, known coordinate answers, scalar residuals, zero RHS, shape/finite checks and input preservation. Other structures and singular solves remain unverified.",
+      "validation_path": "docs/gams-diagonal-response-validation.json",
+      "review_path": "docs/gams-diagonal-response.md",
+      "checks": {
+        "matrix_fixtures": 36,
+        "solve_calls": 180,
+        "solution_coordinate_checks": 3024,
+        "sizes": [
+          1,
+          2,
+          7,
+          32
+        ],
+        "vector_matrix_rhs_checked": true,
+        "zero_rhs_checked": true,
+        "input_preservation_checked": true,
+        "max_normalized_error": 2e-13,
+        "singular_diagonals_verified": false,
+        "other_structures_verified": false
+      }
+    },
+    {
+      "id": "dynamics-response-reference",
+      "name": "gams-dynamics-response-reference",
+      "package_id": "dynamics",
+      "procedure_id": "dynamics-api",
+      "gams_code": "I1",
+      "problem_id": "closed-form-harmonic-response",
+      "path": "fpm_catalog/gams-drivers/dynamics-response-reference.f90",
+      "revision": "580d04859a25126d3261e44b3fbec5111835e3a4",
+      "author_example": "examples/frf_example_1.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/diagonal-response-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned source/author example reviewed, no upstream code copied. Only unit mass and diagonal stiffness are verified, using closed-form complex responses for 1/2/3 uncoupled coordinates, proportional damping and frequency-dependent complex forces. Natural frequencies and callback state checked. Broader nonunit-mass and coupled-unit-mass probes fail at static frequency and are preserved with source hashes/results under docs/gams-candidates/dynamics. No initial-value integration, coupling, arbitrary mass normalization or performance claim.",
+      "validation_path": "docs/gams-diagonal-response-validation.json",
+      "review_path": "docs/gams-diagonal-response.md",
+      "checks": {
+        "response_fixtures": 24,
+        "complex_coordinate_checks": 384,
+        "sizes": [
+          1,
+          2,
+          3
+        ],
+        "masses": [
+          1
+        ],
+        "coupled_systems_checked": false,
+        "callback_state_checked": true,
+        "known_frequencies_checked": true,
+        "max_normalized_response_error": 1e-10,
+        "initial_value_integration_verified": false,
+        "nonunit_mass_verified": false,
+        "diagonal_stiffness_only": true
+      }
+    },
+    {
+      "id": "orderpack-ranking-reference",
+      "name": "gams-orderpack-ranking-reference",
+      "package_id": "orderpack",
+      "procedure_id": "orderpack-rank",
+      "gams_code": "N6",
+      "problem_id": "permutation-and-duplicate-key-ranking",
+      "path": "fpm_catalog/gams-drivers/orderpack-ranking-reference.f90",
+      "revision": "9696eee2670beae1601ae59e125ff9f10e6c88a7",
+      "author_example": "example/demo_rank.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/ranking-magic-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned source reviewed, no upstream code copied. All permutations through length seven plus six deterministic patterns at fourteen sizes including empty input. Four typed overloads checked against independent insertion-sorted values, valid permutation indices and unchanged inputs. Tie index order, NaN ordering and performance remain unverified.",
+      "validation_path": "docs/gams-ranking-magic-validation.json",
+      "review_path": "docs/gams-ranking-magic.md",
+      "checks": {
+        "exhaustive_permutations": 5913,
+        "ranking_fixtures": 5997,
+        "overload_calls": 23988,
+        "overloads": [
+          "integer32",
+          "real32",
+          "real64",
+          "character"
+        ],
+        "empty_input_checked": true,
+        "duplicate_keys_checked": true,
+        "permutation_integrity_checked": true,
+        "input_preservation_checked": true,
+        "stable_tie_order_verified": false,
+        "nan_ordering_verified": false
+      }
+    },
+    {
+      "id": "m-la-magic-reference",
+      "name": "gams-m-la-magic-reference",
+      "package_id": "m_la",
+      "procedure_id": "m-la-api",
+      "gams_code": "D1",
+      "problem_id": "normal-magic-square-invariants",
+      "path": "fpm_catalog/gams-drivers/m-la-magic-reference.f90",
+      "revision": "db59eeab0deab7e84eadf2542ad49c1c719dfb94",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/ranking-magic-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned source reviewed, no upstream code copied. Orders 1 and 3 through 32 cover odd, doubly-even and singly-even constructions. Repeated compact/padded calls verify finite exact integer entries, permutation 1..n*n, exact row/column/diagonal sums and untouched padding. Order two is excluded because no normal magic square exists. Other utilities and performance remain unverified.",
+      "validation_path": "docs/gams-ranking-magic-validation.json",
+      "review_path": "docs/gams-ranking-magic.md",
+      "checks": {
+        "matrix_orders": 31,
+        "generator_calls": 124,
+        "entry_checks": 45744,
+        "line_sum_checks": 4456,
+        "odd_orders": 16,
+        "doubly_even_orders": 8,
+        "singly_even_orders": 7,
+        "padded_leading_dimension_checked": true,
+        "repeated_calls_checked": true,
+        "exact_integer_checks": true,
+        "other_matrix_utilities_verified": false
+      }
+    },
+    {
+      "id": "maptran-wgs84-reference",
+      "name": "gams-maptran-wgs84-reference",
+      "package_id": "maptran3d",
+      "procedure_id": "maptran3d-geodetic2ecef",
+      "gams_code": "P",
+      "problem_id": "wgs84-forward-inverse-coordinate-references",
+      "path": "fpm_catalog/gams-drivers/maptran-wgs84-reference.f90",
+      "revision": "4ccc2479ae79a58b34d8e491013cfa2f60f65867",
+      "author_example": "test/test_mod.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/geodesy-forlab-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned source reviewed, no upstream code copied. WGS84 forward references from ellipsoid geometry; inverse receives independent Cartesian inputs, not library forward results. Both angle units, negative/zero/positive heights, dateline wrapping and exact forward polar-axis references. Inverse poles, origin and custom ellipsoids remain unverified.",
+      "validation_path": "docs/gams-geodesy-forlab-validation.json",
+      "review_path": "docs/gams-geodesy-forlab.md",
+      "checks": {
+        "geodetic_cases": 336,
+        "conversion_calls": 680,
+        "forward_polar_axis_calls": 8,
+        "degree_radian_checked": true,
+        "inverse_independent_cartesian_inputs": true,
+        "below_surface_height_checked": true,
+        "max_forward_error_meters": 5e-06,
+        "max_inverse_angular_error_degrees": 2e-07,
+        "max_inverse_height_error_meters": 0.005,
+        "inverse_poles_verified": false,
+        "custom_ellipsoids_verified": false
+      }
+    },
+    {
+      "id": "forlab-least-squares-reference",
+      "name": "gams-forlab-least-squares-reference",
+      "package_id": "forlab",
+      "procedure_id": "forlab-solve",
+      "gams_code": "D9a1",
+      "problem_id": "rectangular-single-precision-least-squares",
+      "path": "fpm_catalog/gams-drivers/forlab-least-squares-reference.f90",
+      "revision": "416e5612167b6133100bef4cec116322890f66f7",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/geodesy-forlab-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned source reviewed, no upstream code copied. Shared full-column-rank tall singular-factor fixtures with prescribed unique least-squares solutions and orthogonal residuals. Three vector RHS calls per fixture using native catalog RPRE single precision. Existing unrelated checksum-guarded norm fix reused unchanged. The wide 2-by-3 probe returns nonfinite values; its source/hash/result are retained under docs/gams-candidates/forlab. Underdetermined, square and rank-deficient solves are not verified; no tolerance was relaxed.",
+      "validation_path": "docs/gams-geodesy-forlab-validation.json",
+      "review_path": "docs/gams-geodesy-forlab.md",
+      "checks": {
+        "matrix_fixtures": 36,
+        "solver_calls": 108,
+        "nonzero_residual_fixtures": 18,
+        "real_storage_bits": 32,
+        "normal_equation_checked": true,
+        "input_preservation_checked": true,
+        "max_normalized_solution_error": 3e-05,
+        "max_normalized_residual_error": 5e-05,
+        "max_normalized_stationarity": 0.0001,
+        "square_branch_verified": false,
+        "rank_deficiency_verified": false,
+        "underdetermined_verified": false,
+        "known_least_squares_solution_checked": true
+      }
     }
   ]
 }

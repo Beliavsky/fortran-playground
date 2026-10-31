@@ -67,6 +67,126 @@ class GamsSiteTests(unittest.TestCase):
             self.assertIn('Open default example', sorting)
             self.assertNotIn('Try in playground', sorting)
 
+    def test_geodesy_and_forlab_links_open_matching_checked_drivers(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects'] if p['playground']['package_id'] in {'maptran3d','forlab'}]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination,feed)
+            for code,package,driver in [('P','maptran3d','maptran-wgs84-reference'),
+                                        ('D9a1','forlab','forlab-least-squares-reference')]:
+                html = (destination/code/'index.html').read_text(encoding='utf-8')
+                primary = {url for url,label in Page(html).anchors if label=='Try in playground'}
+                self.assertEqual(primary,{
+                    f'https://beliavsky.github.io/fortran-playground/fpm/?package={package}&example=gams-{driver}'})
+                self.assertIn('Verified: a checked driver',html)
+            lu = (destination/'D2a1/index.html').read_text(encoding='utf-8')
+            self.assertNotIn('example=gams-forlab-least-squares-reference',lu)
+
+    def test_ranking_and_magic_links_open_matching_checked_drivers(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects'] if p['playground']['package_id'] in {'orderpack','m_la'}]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination,feed)
+            for code,package,driver in [('N6','orderpack','orderpack-ranking-reference'),
+                                        ('D1','m_la','m-la-magic-reference')]:
+                html = (destination/code/'index.html').read_text(encoding='utf-8')
+                primary = {url for url,label in Page(html).anchors if label=='Try in playground'}
+                self.assertEqual(primary,{
+                    f'https://beliavsky.github.io/fortran-playground/fpm/?package={package}&example=gams-{driver}'})
+                self.assertIn('Verified: a checked driver',html)
+            stats = (destination/'L1a1a/index.html').read_text(encoding='utf-8')
+            self.assertNotIn('example=gams-orderpack-ranking-reference',stats)
+
+    def test_diagonal_and_response_links_use_scoped_checked_drivers(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects'] if p['playground']['package_id'] in {'specialmatrices','dynamics'}]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination,feed)
+            for code,package,driver in [('D2','specialmatrices','specialmatrices-diagonal-reference'),
+                                        ('I1','dynamics','dynamics-response-reference')]:
+                html = (destination/code/'index.html').read_text(encoding='utf-8')
+                primary = {url for url,label in Page(html).anchors if label=='Try in playground'}
+                self.assertEqual(primary,{
+                    f'https://beliavsky.github.io/fortran-playground/fpm/?package={package}&example=gams-{driver}'})
+                self.assertIn('Verified: a checked driver',html)
+            ivp = (destination/'I1a1a/index.html').read_text(encoding='utf-8')
+            self.assertNotIn('example=gams-dynamics-response-reference',ivp)
+
+    def test_fitpack_value_and_derivative_links_open_the_matching_driver(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects'] if p['playground']['package_id']=='fitpack']
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination,feed)
+            for code,driver in [('E1a','fitpack-polynomial-values'),('H1','fitpack-polynomial-derivatives')]:
+                html = (destination/code/'index.html').read_text(encoding='utf-8')
+                primary = {url for url,label in Page(html).anchors if label=='Try in playground'}
+                self.assertEqual(primary,{
+                    f'https://beliavsky.github.io/fortran-playground/fpm/?package=fitpack&example=gams-{driver}'})
+                self.assertIn('Verified: a checked driver',html)
+            integration = (destination/'H2a2b2/index.html').read_text(encoding='utf-8')
+            self.assertNotIn('example=gams-fitpack-polynomial-',integration)
+            self.assertIn('example=gams-fitpack-spline-integral',integration)
+
+    def test_regrid_and_rk45_class_links_open_checked_drivers(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects'] if p['playground']['package_id'] in {'regridpack','diffeq'}]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination,feed)
+            for code,package,driver in [('E1a','regridpack','regridpack-polynomial-reference'),
+                                        ('I1a1a','diffeq','diffeq-rk45-reference')]:
+                html = (destination/code/'index.html').read_text(encoding='utf-8')
+                primary = {url for url,label in Page(html).anchors if label=='Try in playground'}
+                self.assertEqual(primary,{
+                    f'https://beliavsky.github.io/fortran-playground/fpm/?package={package}&example=gams-{driver}'})
+                self.assertIn('Verified: a checked driver',html)
+            stiff = (destination/'I1a2/index.html').read_text(encoding='utf-8')
+            self.assertNotIn('example=gams-diffeq-rk45-reference',stiff)
+
+    def test_spectral_wrapper_links_open_matching_checked_drivers(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects'] if p['playground']['package_id'] in {'forsvd','foreig'}]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination,feed)
+            for code,package,driver in [('D6','forsvd','forsvd-spectrum-reference'),
+                                        ('D4a1','foreig','foreig-symmetric-reference')]:
+                html = (destination/code/'index.html').read_text(encoding='utf-8')
+                primary = {url for url,label in Page(html).anchors if label=='Try in playground'}
+                self.assertEqual(primary,{
+                    f'https://beliavsky.github.io/fortran-playground/fpm/?package={package}&example=gams-{driver}'})
+                self.assertIn('Verified: a checked driver',html)
+            lu = (destination/'D2a1/index.html').read_text(encoding='utf-8')
+            self.assertNotIn('example=gams-forsvd',lu)
+            self.assertNotIn('example=gams-foreig',lu)
+
+    def test_iterative_least_squares_links_open_matching_checked_drivers(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects'] if p['playground']['package_id'] in {'lsqr','lsmr'}]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination,feed)
+            html = (destination/'D9a1/index.html').read_text(encoding='utf-8')
+            primary = {url for url,label in Page(html).anchors if label=='Try in playground'}
+            self.assertEqual(primary,{
+                f'https://beliavsky.github.io/fortran-playground/fpm/?package={p}&example=gams-{p}-least-squares-reference'
+                for p in ['lsqr','lsmr']})
+            self.assertEqual(html.count('Verified: a checked driver'),2)
+            lu = (destination/'D2a1/index.html').read_text(encoding='utf-8')
+            self.assertNotIn('example=gams-lsqr-least-squares-reference',lu)
+            self.assertNotIn('example=gams-lsmr-least-squares-reference',lu)
+
     def test_number_theory_primary_links_use_checked_problem_drivers(self):
         import copy
         feed = copy.deepcopy(self.feed)

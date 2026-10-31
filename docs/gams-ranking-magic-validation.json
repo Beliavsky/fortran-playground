@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "orderpack-ranking-reference",
+      "source_revision": "9696eee2670beae1601ae59e125ff9f10e6c88a7",
+      "source_sha256": "0251fd897cb3498b8d5e3f211540ab94ba7a3f92960c25a6530607628659a467",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T19:09:30.690473+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.496,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Exhaustive permutations through length seven: 5913\nTotal ranking fixtures: 5997; overload calls: 23988\nInteger32, real32, real64 and character keys; empty input, ties and boundary sizes.\nIndependent insertion-order reference; permutation integrity and input preservation.\nPASS orderpack-ranking-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.088,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "m-la-magic-reference",
+      "source_revision": "db59eeab0deab7e84eadf2542ad49c1c719dfb94",
+      "source_sha256": "529eb94e23771046f62dcdaa3ad1650fb083735bd0a6616cffee5fbb63eab8c9",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T19:09:33.170274+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.426,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Magic-square calls: 124\nEntry checks: 45744; exact line-sum checks: 4456\nOrders 1 and 3..32; odd/doubly-even/singly-even; compact/padded storage; repeated calls.\nPASS m-la-magic-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.053,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T19:09:33.223316+00:00"
+}

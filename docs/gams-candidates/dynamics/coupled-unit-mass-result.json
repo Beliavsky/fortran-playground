@@ -1,0 +1,129 @@
+{
+  "ok": false,
+  "compiler": "GNU Fortran (GCC) 16.2.0",
+  "compiler_id": "gfortran",
+  "fpm": "0.12.0",
+  "stages": [
+    {
+      "name": "Build",
+      "command": [
+        "fpm",
+        "build",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 1.161,
+      "ok": true,
+      "exit_code": 0,
+      "error": "",
+      "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+      "stderr": ""
+    },
+    {
+      "name": "Run",
+      "command": [
+        "fpm",
+        "run",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.324,
+      "ok": false,
+      "exit_code": 1,
+      "error": "",
+      "stdout": " Mismatch n,mass,rotation,alpha,beta,force,w,error:           2   1.0000000000000000                2  0.10000000000000001        0.0000000000000000                1   0.0000000000000000       0.56249999999999989     \n",
+      "stderr": "Project is up to date\nAt line 421 of file ../sources/bundle/packages/1/linalg-cb8fb7b1c67986591083cac516eb700f47d69b68/src/linalg_basic.f90\nFortran runtime warning: An array temporary was created for argument 'y' of procedure 'zgemv'\nERROR STOP closed-form harmonic response\n\nError termination. Backtrace:\n#0  0x2b854a5a0f83 in ???\n#1  0x2b854a5a1c39 in ???\n#2  0x2b854a5a3045 in ???\n#3  0x407190 in MAIN__\n\tat app/main.f90:104\n#4  0x407689 in main\n\tat app/main.f90:34\n<ERROR> Execution for object \" playground-main \" returned exit code  1\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 1\n"
+    }
+  ],
+  "cache": {
+    "package": "dynamics",
+    "compiler": "GNU Fortran 16.2.0",
+    "key": "8ffffe675b9753a1eb7f495e",
+    "library_reused": true,
+    "changed_artifacts": []
+  },
+  "packages": [
+    {
+      "repository": "jchristopherson/dynamics",
+      "revision": "580d04859a25126d3261e44b3fbec5111835e3a4",
+      "sha256": "9aae4e1bff56b7a4bcf738be61dced3038d778b5b94bbc91ecb9edf58eaa3d87"
+    },
+    {
+      "repository": "jchristopherson/linalg",
+      "revision": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+      "sha256": "6210b8b167b50694941f48b20ad5d94bdacab026f1eb4720e2d55e8ddde0b59a"
+    },
+    {
+      "repository": "jchristopherson/nonlin",
+      "revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+      "sha256": "3a6f6cf6daa9b352213407f7c90555c22a492ad455cab0e2eb708efc7d34eaba"
+    },
+    {
+      "repository": "jchristopherson/ferror",
+      "revision": "9d6c9750f5c14ef2c806104ea8dfdfc9ce91efed",
+      "sha256": "b2c2c059d263b38484acf6956fa6416f899d739d3669906931aa1c08441510bd"
+    },
+    {
+      "repository": "jchristopherson/diffeq",
+      "revision": "989b320179c23aaff4bfe72994c90e9034f50c74",
+      "sha256": "09f6e92aea1dc8c9eb9233d4052b012e3b53a739e1ce078453d0421ddb1d4e87"
+    },
+    {
+      "repository": "jchristopherson/spectrum",
+      "revision": "5af0d5a85eccf971aa6e0fc72b1c7439c3cef536",
+      "sha256": "20079f9ad017369097d5463fec26732775fb33a868eb2d3c3a308a044cb92e79"
+    },
+    {
+      "repository": "jchristopherson/fstats",
+      "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "sha256": "cf6b7367fc2a0d74f46000dc80a4cbedd07fd554e29117144b695b3a9ffa6fef"
+    },
+    {
+      "repository": "jchristopherson/collections",
+      "revision": "ce37c94e72b3ae5db2e2208489999260a7875f81",
+      "sha256": "5d53caf3c0b35e9e2a8bed49f8e96dca1b282434859c8c6f53fae3123528f265"
+    },
+    {
+      "repository": "jchristopherson/fstring",
+      "revision": "1bb1043a1ed34b8bd57f2687166463dd573bce3d",
+      "sha256": "0272f644a9217485fa2a3a18e41010c88f81ccc7398fc855c37518be2ac8eb3f"
+    },
+    {
+      "repository": "jchristopherson/peaks",
+      "revision": "5bd81dc18ddd629ecf3daa08769ff2440def3682",
+      "sha256": "9e960c21152146921544c46a482bb7c3999fd32b1c97a9a4759ed56f9dff6b44"
+    },
+    {
+      "repository": "jchristopherson/fortran_test_helper",
+      "revision": "1557b1485d8a5b042862042552f1e1a34552ca5e",
+      "sha256": "846d7506d044b41eb307619d84369d97afdd8b4838ea19eae6803735dffc10e2"
+    }
+  ],
+  "build_ok": true,
+  "target_groups": {
+    "app": [
+      "playground-main"
+    ],
+    "example": [],
+    "test": []
+  },
+  "targets": [
+    "playground-main"
+  ],
+  "plots": [],
+  "plot_notes": []
+}

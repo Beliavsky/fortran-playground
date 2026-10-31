@@ -1,0 +1,7 @@
+{
+  "revision": "580d04859a25126d3261e44b3fbec5111835e3a4",
+  "source_sha256": "0e53ac23dabe46c04ec39e101bb244d31ac87739da9b2b332dee6a3cc1f913e0",
+  "source": "coupled-unit-mass.f90",
+  "result": "coupled-unit-mass-result.json",
+  "finding": "Build passed; first coupled-unit-mass fixture fails at n=2, mass=1, Householder modal factor, alpha=0.1, beta=0, force pattern 1, frequency 0. Normalized response error 0.5625 against the known static solution. This configuration is not verified."
+}

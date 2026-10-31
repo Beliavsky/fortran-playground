@@ -8949,7 +8949,8 @@
             "path": "test/test_mod.f90",
             "sha256": "c9048b7ccd6ba0886177b7f8691783985f096e265e10dfde9c9468b985928dab"
           }
-        ]
+        ],
+        "driver_id": "maptran-wgs84-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -9485,7 +9486,8 @@
             "path": "test/test1.f90",
             "sha256": "2642dc6777286e1fc213d300505a601d58c2a1ab45c9fe7f0e13f6eaa0d74ef4"
           }
-        ]
+        ],
+        "driver_id": "foreig-symmetric-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00",
@@ -10252,7 +10254,8 @@
             "path": "test/test1.f90",
             "sha256": "f61ab7a986a2c5ca53452a3d9185ead021c06ae4dc2dbc16a74303bcd425fc9e"
           }
-        ]
+        ],
+        "driver_id": "forsvd-spectrum-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T16:54:18.541524+00:00"
@@ -15669,7 +15672,8 @@
             "path": "test/lsmrTestModule.f90",
             "sha256": "c0900f8ef4b781b0d27ac7b2e5896a0a6043d629638e541f2b8dfed336d63a09"
           }
-        ]
+        ],
+        "driver_id": "lsmr-least-squares-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -15771,7 +15775,8 @@
             "path": "test/lsqrtest_ez.f90",
             "sha256": "ec4dcf395f84de683bc96090cc657d04787634f830f8d13a2871de23c78e8245"
           }
-        ]
+        ],
+        "driver_id": "lsqr-least-squares-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -17569,7 +17574,8 @@
             "line": 22
           }
         ],
-        "author_examples": []
+        "author_examples": [],
+        "driver_id": "regridpack-polynomial-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -18947,7 +18953,8 @@
             "path": "examples/rk45_example.f90",
             "sha256": "a8c701257c1f3bbf4a05a7379e0e8e2461ea04e8e7680ffafb489358ded97359"
           }
-        ]
+        ],
+        "driver_id": "diffeq-rk45-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -19100,7 +19107,8 @@
             "path": "examples/frf_example_1.f90",
             "sha256": "d28f69355f302d461fccc865f77d649e6bb64599f600a0036660d159d520c09b"
           }
-        ]
+        ],
+        "driver_id": "dynamics-response-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T17:30:42.130830+00:00",
@@ -22426,7 +22434,8 @@
             "line": 191
           }
         ],
-        "author_examples": []
+        "author_examples": [],
+        "driver_id": "specialmatrices-diagonal-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -24980,7 +24989,8 @@
             "path": "test/fitpack_curve_tests.f90",
             "sha256": "0bb92548cb070e70e245b1f837fb931014e69b6f1c335f8cfdca49c514908847"
           }
-        ]
+        ],
+        "driver_id": "fitpack-polynomial-values"
       },
       {
         "id": "fitpack-curve-derivative",
@@ -25006,7 +25016,8 @@
             "path": "examples/example_curve.f90",
             "sha256": "fa2fa26f553e1fcbb57dd8eef73337e1a43d4d7c5267f06a7874250c9d3d7064"
           }
-        ]
+        ],
+        "driver_id": "fitpack-polynomial-derivatives"
       },
       {
         "id": "fitpack-integral",
@@ -29794,7 +29805,8 @@
             "sha256": "5c15fc609dd2c8222df65e6a005f0704b379f51fa44d73d476be299432c7555a"
           }
         ],
-        "author_examples": []
+        "author_examples": [],
+        "driver_id": "m-la-magic-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T21:31:23.622331+00:00"
@@ -30421,7 +30433,8 @@
             "path": "example/demo_rank.f90",
             "sha256": "dad238a2309021a2bd27169ded67a24cc984322de64270a7a96c8a7997363fb2"
           }
-        ]
+        ],
+        "driver_id": "orderpack-ranking-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -33112,7 +33125,8 @@
             "line": 7796
           }
         ],
-        "author_examples": []
+        "author_examples": [],
+        "driver_id": "forlab-least-squares-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"

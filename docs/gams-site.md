@@ -230,3 +230,17 @@ The [user-Jacobian and Newton-method review](gams-jacobian-roots.md) connects G1
 The [higher-order AD review](gams-higher-ad.md) connects H1 to 1,575 DNAOAD-FPM complex derivative references through order five and 95 diffstruc polynomial value/derivative references, including 45 Hessian entries. Direction masks and reset behavior are explicit; graph disposal and long-lived memory behavior are outside the verified scope.
 
 The [quadrature-moment and 2D-transform review](gams-moments-nufft2d.md) connects H2c to 191 QDUtilLib exact moments and J1 to 144 NUFFT2D transforms with 22,416 direct coefficient comparisons. Hermite full-function weights, cancellation scaling, both signs, odd/even grids and DC normalization are explicit; other rule families and transform types retain separate scope.
+
+The [iterative least-squares review](gams-iterative-ls.md) connects D9a1 to LSQR and LSMR, each checked on 216 solves across 72 square/tall/wide fixtures with exact minimum-norm answers and prescribed orthogonal residuals. Damping, rank deficiency and large sparse performance remain outside this checked scope.
+
+The [forsvd and foreig spectral review](gams-spectral-wrappers.md) connects D6 to 432 reduced SVD calls and D4a1 to 96 symmetric eigenproblems with prescribed spectra, scalar residuals and orthogonality checks. The SVD consumer copies its input; foreig checks upper-triangle selection and input preservation. Neither wrapper exposes LAPACK status, and other methods retain separate scope.
+
+The [regridding and RK45 review](gams-regrid-rk45.md) connects E1a to REGRIDPACK linear/cubic polynomial exactness, piecewise-linear values, eight diagnostics and recovery, and I1a1a to diffeq analytical solutions at 408 requested times in both directions. Multidimensional interpolation, stiff integration and event detection retain separate scope.
+
+The [FITPACK polynomial review](gams-fitpack-polynomials.md) connects E1a to 11,016 value references and H1 to 44,352 derivative/value references from linear, cubic and quintic interpolating splines. Scalar/vector overloads, reversed source data, object reset and destruction are checked; differentiation of arbitrary callbacks and positive smoothing are outside this scope.
+
+The [diagonal-solve and harmonic-response review](gams-diagonal-response.md) connects D2 to 180 SpecialMatrices diagonal solves and I1 to 24 dynamics response fixtures for uncoupled unit-mass systems. Failed non-unit-mass and coupled response probes are preserved; the successful driver does not verify those configurations.
+
+The [ranking and magic-square review](gams-ranking-magic.md) connects N6 to 23,988 ORDERPACK typed ranking calls with independent sorted-value references, and D1 to 124 M_LA magic-square constructions with exact permutation and line-sum checks. Tie stability, NaN ordering and unrelated matrix utilities are outside this scope.
+
+The [WGS84 and forlab review](gams-geodesy-forlab.md) connects P to 680 maptran3d conversions checked against ellipsoid geometry, and D9a1 to 108 single-precision forlab overdetermined solves with prescribed solutions and residuals. A failed wide-system probe is preserved; inverse poles and underdetermined solves are not verified.

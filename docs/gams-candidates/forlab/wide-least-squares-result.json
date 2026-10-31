@@ -1,0 +1,79 @@
+{
+  "ok": false,
+  "compiler": "GNU Fortran (GCC) 16.2.0",
+  "compiler_id": "gfortran",
+  "fpm": "0.12.0",
+  "stages": [
+    {
+      "name": "Build",
+      "command": [
+        "fpm",
+        "build",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.445,
+      "ok": true,
+      "exit_code": 0,
+      "error": "",
+      "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+      "stderr": ""
+    },
+    {
+      "name": "Run",
+      "command": [
+        "fpm",
+        "run",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.042,
+      "ok": false,
+      "exit_code": 1,
+      "error": "",
+      "stdout": " Failure m,n,scale,rotation,residual-level,RHS:           2           3  -4.00000000               1           1           1\n Matrix:  -4.00000000       0.00000000       0.00000000      -8.00000000       0.00000000       0.00000000    \n RHS:  -1.00000000      -6.00000000    \n",
+      "stderr": "Project is up to date\nNote: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG IEEE_DIVIDE_BY_ZERO\nERROR STOP vector solution\n\nError termination. Backtrace:\n#0  0x2b764a80af83 in ???\n#1  0x2b764a80bc39 in ???\n#2  0x2b764a80d045 in ???\n#3  0x407bb4 in MAIN__\n\tat app/main.f90:59\n#4  0x40bac6 in main\n\tat app/main.f90:3\n<ERROR> Execution for object \" playground-main \" returned exit code  1\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 1\n"
+    }
+  ],
+  "cache": {
+    "package": "forlab",
+    "compiler": "GNU Fortran 16.2.0",
+    "key": "b578caaad7752f6e7489b431",
+    "library_reused": true,
+    "changed_artifacts": []
+  },
+  "packages": [
+    {
+      "repository": "zoziha/forlab",
+      "revision": "416e5612167b6133100bef4cec116322890f66f7",
+      "sha256": "784431a7c880c6a6dcfdd7687e3b0f2f8340dc13bd187a3546acd09d883628f3"
+    }
+  ],
+  "build_ok": true,
+  "target_groups": {
+    "app": [
+      "playground-main"
+    ],
+    "example": [],
+    "test": []
+  },
+  "targets": [
+    "playground-main"
+  ],
+  "plots": [],
+  "plot_notes": []
+}

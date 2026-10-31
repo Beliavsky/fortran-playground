@@ -38,6 +38,8 @@ A separate RK4 experiment integrates the same problem directly to `2*pi` with no
 | [Load featom-coulomb-spectrum](https://beliavsky.github.io/fortran-playground/fpm/?package=featom&example=gams-featom-coulomb-spectrum) · [Source](../fpm_catalog/gams-drivers/featom-coulomb-spectrum.f90) | I1b | [Procedure](https://github.com/atomic-solvers/featom/blob/87872a3266ceeee61a7244e6ecd134dc3bda790f/src/schroed_dirac_solver.f90#L18) · [Author example](https://github.com/atomic-solvers/featom/blob/87872a3266ceeee61a7244e6ecd134dc3bda790f/test/test_coulomb_schroed.f90) |
 | [Load hrweno-tvd-ode-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=hrweno&example=gams-hrweno-tvd-ode-reference) · [Source](../fpm_catalog/gams-drivers/hrweno-tvd-ode-reference.f90) | I1 | [Procedure](https://github.com/HugoMVale/HR-WENO/blob/2885105a7ba98351fed299b22e9bc0c67a809d2f/src/hrweno_tvdode.f90#L97) · [Author example](https://github.com/HugoMVale/HR-WENO/blob/2885105a7ba98351fed299b22e9bc0c67a809d2f/None) |
 | [Load rkf45-analytic-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=rkf45&example=gams-rkf45-analytic-reference) · [Source](../fpm_catalog/gams-drivers/rkf45-analytic-reference.f90) | I1a1a | [Procedure](https://github.com/zoziha/rkf45/blob/93cd129369357ee08e34be7868256b21a500cc98/src/rkf45.F90#L57) · [Author example](https://github.com/zoziha/rkf45/blob/93cd129369357ee08e34be7868256b21a500cc98/test/test_rkf45.f90) |
+| [Load diffeq-rk45-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=diffeq&example=gams-diffeq-rk45-reference) · [Source](../fpm_catalog/gams-drivers/diffeq-rk45-reference.f90) | I1a1a | [Procedure](https://github.com/jchristopherson/diffeq/blob/989b320179c23aaff4bfe72994c90e9034f50c74/src/singlestep/explicit/diffeq_rk45.f90#L32) · [Author example](https://github.com/jchristopherson/diffeq/blob/989b320179c23aaff4bfe72994c90e9034f50c74/examples/rk45_example.f90) |
+| [Load dynamics-response-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=dynamics&example=gams-dynamics-response-reference) · [Source](../fpm_catalog/gams-drivers/dynamics-response-reference.f90) | I1 | [Procedure](https://github.com/jchristopherson/dynamics/blob/580d04859a25126d3261e44b3fbec5111835e3a4/src/frequency/dynamics_frequency_response.f90#L119) · [Author example](https://github.com/jchristopherson/dynamics/blob/580d04859a25126d3261e44b3fbec5111835e3a4/examples/frf_example_1.f90) |
 
 The drivers adapt author callback and integration API patterns to the shared analytic problem, without plotting dependencies; license notices are retained. They appear in hosted and main local FPM example menus and downloaded FPM projects. Loading a link selects source without submitting a job.
 
@@ -217,6 +219,25 @@ Integration runs: 24; requested target calls: 384
 RHS evaluations: 11669
 Maximum normalized analytical state error:   4.6749E-10
 PASS rkf45-analytic-reference
+```
+
+### diffeq-rk45-reference
+
+```text
+Analytical IVP runs: 24; requested solution points: 408
+RHS callback evaluations: 5616
+Exponential/polynomial/oscillator; two rates, both directions and two tolerances.
+Maximum normalized solution error:   1.6661E-08
+PASS diffeq-rk45-reference
+```
+
+### dynamics-response-reference
+
+```text
+Harmonic response fixtures: 24; complex coordinate checks: 384
+Unit mass, diagonal stiffness only; broader failed probes retained separately.
+Maximum normalized response error:   0.0000E+00
+PASS dynamics-response-reference
 ```
 
 ## Maintenance

@@ -8,9 +8,11 @@ These consumer programs connect specific interpolation procedures to [E1a: polyn
 | PCHIP | `dpchim` slopes and `dpchfe` values, shape-preserving cubic Hermite | Sampled monotonicity and local bounds; agreement with the linear method is not required |
 | bspline-fortran | `bspline_1d`, order 2 (degree 1) | Piecewise-linear reference, then a separate order-4 cubic/derivative reproduction check |
 
+The separate [interp1 exactness review](gams-least-interpolation.md), [REGRIDPACK review](gams-regrid-rk45.md) and [FITPACK polynomial review](gams-fitpack-polynomials.md) document their own fixtures. Their entries below do not inherit the shape-preservation checks.
+
 ## Shared data and checks
 
-All drivers use the nonuniform grid `x=[0,0.25,0.5,1,2,3]`. Case 1 tabulates the affine function `f(x)=2*x-1`; case 2 uses steep monotone values `[0,0.01,0.02,0.9,0.95,1]`.
+The three shape-comparison drivers use the nonuniform grid `x=[0,0.25,0.5,1,2,3]`. Case 1 tabulates the affine function `f(x)=2*x-1`; case 2 uses steep monotone values `[0,0.01,0.02,0.9,0.95,1]`.
 
 The programs check successful initialization/evaluation and finite outputs. They require interpolation at all six original nodes within `1e-12`. At 21 sample positions in each interval, including its endpoints, they check that the output stays between that interval's two data values and does not decrease, allowing `1e-12` rounding tolerance. This is a finite sampling check, rather than a proof of shape preservation for arbitrary data.
 
@@ -29,8 +31,10 @@ The B-spline driver separately interpolates `p(x)=1-2*x+0.5*x**2+x**3` with orde
 | [Load bspline-fortran-shape-interpolation](https://beliavsky.github.io/fortran-playground/fpm/?package=bspline-fortran&example=gams-bspline-fortran-shape-interpolation) · [Source](../fpm_catalog/gams-drivers/bspline-fortran-shape-interpolation.f90) | [Procedure](https://github.com/jacobwilliams/bspline-fortran/blob/047c724451aeee7f883c0d5acba3f7bd22a5de01/src/bspline_oo_module.f90#L63) · [Author example/test](https://github.com/jacobwilliams/bspline-fortran/blob/047c724451aeee7f883c0d5acba3f7bd22a5de01/test/test_oo.f90) |
 | [Load fortran-utils-spline-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=fortran-utils&example=gams-fortran-utils-spline-reference) · [Source](../fpm_catalog/gams-drivers/fortran-utils-spline-reference.f90) | [Procedure](https://github.com/certik/fortran-utils/blob/b43bd24cd421509a5bc6d3b9c3eeae8ce856ed88/src/splines.f90#L1) · [Author example/test](https://github.com/certik/fortran-utils/blob/b43bd24cd421509a5bc6d3b9c3eeae8ce856ed88/tests/splines/test_splines.f90) |
 | [Load interp1-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=interpolation&example=gams-interp1-reference) · [Source](../fpm_catalog/gams-drivers/interp1-reference.f90) | [Procedure](https://github.com/furstj/interpolation/blob/bf6d22ad931855d510dcfb5bdd6870cce8924b22/src/interpolation.f90#L14) · [Author example/test](https://github.com/furstj/interpolation/blob/bf6d22ad931855d510dcfb5bdd6870cce8924b22/test/interp1_test.f90) |
+| [Load regridpack-polynomial-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=regridpack&example=gams-regridpack-polynomial-reference) · [Source](../fpm_catalog/gams-drivers/regridpack-polynomial-reference.f90) | [Procedure](https://github.com/jacobwilliams/regridpack/blob/e47346d9244ab93f70367f16364d73217fbc0451/src/regridpack_module.f90#L22) · Independent API consumer |
+| [Load fitpack-polynomial-values](https://beliavsky.github.io/fortran-playground/fpm/?package=fitpack&example=gams-fitpack-polynomial-values) · [Source](../fpm_catalog/gams-drivers/fitpack-polynomial-values.f90) | [Procedure](https://github.com/perazz/fitpack/blob/1907c7bad9f5c4557970e906bdd4909eb52b2d4c/src/fitpack_curves.f90#L54) · [Author example/test](https://github.com/perazz/fitpack/blob/1907c7bad9f5c4557970e906bdd4909eb52b2d4c/test/fitpack_curve_tests.f90) |
 
-The programs adapt author API patterns and retain the package license notices. They use shared deterministic data instead of the larger author test harnesses. The drivers appear in hosted and main local FPM example menus and downloaded projects. Loading a link selects source without submitting a job.
+The three shape-comparison programs adapt author API patterns and retain the package license notices. They use shared deterministic data instead of the larger author test harnesses. The drivers appear in hosted and main local FPM example menus and downloaded projects. Loading a link selects source without submitting a job.
 
 ## Recorded results
 
@@ -148,6 +152,25 @@ Exact mirrored cubic references (pchip/cubic aliases): 258
 Total exact / NaN / interval-bound / monotonicity checks:   3286    36  1032   512
 Maximum normalized exact-reference error:   1.5543E-15
 PASS interp1-reference
+```
+
+### regridpack-polynomial-reference
+
+```text
+Successful regrids: 127; analytical value checks: 3614
+Expected rejected requests: 8
+Uniform/nonuniform grids; linear/cubic monomials and piecewise-linear references.
+Maximum normalized interpolation error:   4.4409E-16
+PASS regridpack-polynomial-reference
+```
+
+### fitpack-polynomial-values
+
+```text
+Polynomial fits: 144; value references: 11016
+Degrees 1/3/5; uniform and reversed nonuniform data; scalar/vector overloads.
+Maximum normalized value error:   6.6613E-16
+PASS fitpack-polynomial-values
 ```
 
 ## Maintenance

@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "lsqr-least-squares-reference",
+      "source_revision": "4df2ce600ca26a9f7e80dc01bfd0859d538547b3",
+      "source_sha256": "b063effd84c846e34e7bc5cd4e9286cada4d3c8146aaba120c7725c849075ee7",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T17:47:31.365737+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.503,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Full-rank least-squares fixtures: 72; solver calls: 216\nOverdetermined fixtures with prescribed nonzero residuals: 18\nSquare/tall/wide; three vector RHS calls per fixture; zero damping.\nMaximum normalized solution error:   3.3751E-15\nMaximum normalized prescribed-residual error:   3.3159E-15\nMaximum normalized normal-equation residual:   6.6218E-15\nPASS lsqr-least-squares-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.027,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "lsmr-least-squares-reference",
+      "source_revision": "12611e2299c5188441b097437695a66c85369e76",
+      "source_sha256": "0317b3d73d61b48bb71a507a993e6b2e7a3a9aff05e87e25104363ff56e3f9a9",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T17:47:33.716259+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.388,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Full-rank least-squares fixtures: 72; solver calls: 216\nOverdetermined fixtures with prescribed nonzero residuals: 18\nSquare/tall/wide; three vector RHS calls per fixture; zero damping.\nMaximum normalized solution error:   3.0198E-15\nMaximum normalized prescribed-residual error:   3.0790E-15\nMaximum normalized normal-equation residual:   4.3964E-15\nPASS lsmr-least-squares-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.027,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T17:47:33.773457+00:00"
+}

@@ -62,6 +62,13 @@ RKF_QAGS_REPORT = Path('docs/gams-rkf-qags.md')
 JACOBIAN_ROOTS_REPORT = Path('docs/gams-jacobian-roots.md')
 HIGHER_AD_REPORT = Path('docs/gams-higher-ad.md')
 MOMENTS_NUFFT2D_REPORT = Path('docs/gams-moments-nufft2d.md')
+ITERATIVE_LS_REPORT = Path('docs/gams-iterative-ls.md')
+SPECTRAL_WRAPPERS_REPORT = Path('docs/gams-spectral-wrappers.md')
+REGRID_RK45_REPORT = Path('docs/gams-regrid-rk45.md')
+FITPACK_POLYNOMIALS_REPORT = Path('docs/gams-fitpack-polynomials.md')
+DIAGONAL_RESPONSE_REPORT = Path('docs/gams-diagonal-response.md')
+RANKING_MAGIC_REPORT = Path('docs/gams-ranking-magic.md')
+GEODESY_FORLAB_REPORT = Path('docs/gams-geodesy-forlab.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
 EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
@@ -1065,8 +1072,12 @@ def interpolation_review_text(root=ROOT):
              '| finterp | `linear_interp_1d%evaluate`, piecewise linear | Agreement with an independent piecewise-linear reference |',
              '| PCHIP | `dpchim` slopes and `dpchfe` values, shape-preserving cubic Hermite | Sampled monotonicity and local bounds; agreement with the linear method is not required |',
              '| bspline-fortran | `bspline_1d`, order 2 (degree 1) | Piecewise-linear reference, then a separate order-4 cubic/derivative reproduction check |', '',
+             'The separate [interp1 exactness review](gams-least-interpolation.md), '
+             '[REGRIDPACK review](gams-regrid-rk45.md) and '
+             '[FITPACK polynomial review](gams-fitpack-polynomials.md) document their own fixtures. '
+             'Their entries below do not inherit the shape-preservation checks.', '',
              '## Shared data and checks', '',
-             'All drivers use the nonuniform grid `x=[0,0.25,0.5,1,2,3]`. Case 1 tabulates the affine '
+             'The three shape-comparison drivers use the nonuniform grid `x=[0,0.25,0.5,1,2,3]`. Case 1 tabulates the affine '
              'function `f(x)=2*x-1`; case 2 uses steep monotone values `[0,0.01,0.02,0.9,0.95,1]`.', '',
              'The programs check successful initialization/evaluation and finite outputs. They require '
              'interpolation at all six original nodes within `1e-12`. At 21 sample positions in each '
@@ -1091,10 +1102,11 @@ def interpolation_review_text(root=ROOT):
         base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
         evidence = records[d['procedure_id']]['evidence'][0]
         url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        author = f'[Author example/test]({base}{d["author_example"]})' if d['author_example'] else 'Independent API consumer'
         lines.append(f'| [Load {d["id"]}]({url}) · [Source](../{d["path"]}) | '
                      f'[Procedure]({base}{evidence["path"]}#L{evidence["line"]}) · '
-                     f'[Author example/test]({base}{d["author_example"]}) |')
-    lines += ['', 'The programs adapt author API patterns and retain the package license notices. '
+                     f'{author} |')
+    lines += ['', 'The three shape-comparison programs adapt author API patterns and retain the package license notices. '
               'They use shared deterministic data instead of the larger author test harnesses. The '
               'drivers appear in hosted and main local FPM example menus and downloaded projects. '
               'Loading a link selects source without submitting a job.', '',
@@ -5343,6 +5355,558 @@ def moments_nufft2d_review_text(root=ROOT):
     return '\n'.join(lines)
 
 
+def iterative_ls_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-iterative-ls-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-iterative-ls-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Checked iterative least squares: LSQR and LSMR', '',
+             'Both D9a1 drivers passed the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0. '
+             'Existing package libraries were reused; only mains and executables were compiled. '
+             'The [verification report](gams-iterative-ls-validation.json) retains source hashes, '
+             'immutable revisions and actual output. GAMS categories are not exhausted.', '',
+             '## Shared mathematical fixtures', '',
+             'Each driver makes 216 vector solves across 72 fixtures. Matrix shapes are '
+             '[1,1], [2,1], [3,2], [5,3], [2,3], [3,5]. Signed scales are -4, 0.5, 2; '
+             'left/right orthogonal factors are identity or Householder reflections '
+             'Q=I-2*v*vT/(vT*v), with v=[1,...,dimension]. Two residual settings and three '
+             'right-hand sides are used. Some settings coincide for square/wide matrices; '
+             '72 counts fixtures, not distinct matrices.', '',
+             'With k=min(m,n), construct A=L(:,1:k)*diag(scale*[1,...,k])*R(:,1:k)T. '
+             'For right-hand side c=1,2,3, set z_i=(2*i-c)/4 and '
+             'x_reference=R(:,1:k)*z. Then b=A*x_reference+noise. Noise is zero except for '
+             '18 tall fixtures, where noise_c=0.25*c*L(:,n+1). Orthogonality makes the '
+             'reference the unique tall least-squares solution and the wide minimum-norm solution. '
+             'It also gives residual A*x-b=-noise and squared residual norm (0.25*c)**2 '
+             'in those tall fixtures. References are constructed before invoking either solver, '
+             'rather than obtained from another numerical solver. These are also the fixtures used '
+             'in the [linalg least-squares review](gams-least-interpolation.md).', '',
+             '## Checks and interfaces', '',
+             'Every solution must be finite. Maximum coordinate error divided by '
+             'max(1,maxabs(x_reference)) must be <=3e-12. Prescribed residual error is scaled '
+             'by max(1,maxabs(b)) and must be <=5e-12. The normal-equation residual A^T*(A*x-b), '
+             'scaled by max(1,maxabs(b))*max(1,maxabs(A)), must be <=1e-11. The known squared '
+             'residual norm has normalized tolerance 1e-11. Matrices and right-hand sides must '
+             'remain unchanged. Accepted stop codes are 0,1,2, alongside all accuracy checks; '
+             'zero solutions occur explicitly. Iterations must be between 0 and 100.', '',
+             'LSQR uses lsqr_solver_ez with column-major coordinate triples, reinitializing '
+             'the object for each solve. LSMR uses separate forward/transpose additive '
+             'matrix-product callbacks and no local reorthogonalization. Both use zero damping, '
+             'atol=btol=1e-12, conlim=1e8 and iteration limit 100. No library edits are made.', '',
+             'These small, full-rank fixtures check answers, not speed or large sparse scalability. '
+             'Rank deficiency, severe ill conditioning, damping/regularization, error estimates, '
+             'invalid inputs and performance remain unverified. Sibling procedures require their '
+             'own class-specific evidence.', '',
+             '## Checked links and actual output', '',
+             'The independently written API consumers have their own MIT notice. Upstream '
+             'terms remain separate. Pinned procedures and author tests were reviewed for the '
+             'interfaces; no upstream code was copied. Loading a link does not submit a job.', '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / '
+                  f'[Author test]({base}{d["author_example"]})', '', '```text', output.rstrip(), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
+def spectral_wrappers_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-spectral-wrappers-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-spectral-wrappers-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Checked real spectra: forsvd and foreig', '',
+             'These D6 and D4a1 drivers passed the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0. '
+             'Existing package libraries were reused; only mains and executables were compiled. '
+             'The [verification report](gams-spectral-wrappers-validation.json) retains pins, source '
+             'hashes and actual output. GAMS categories are not exhausted.', '',
+             '## forsvd: reduced real SVD (D6)', '',
+             'The shapes [1,1], [2,3], [3,2], [3,3], [4,2], [2,5], four spectra, signed scales '
+             '-4, 0.5, 2 and identity/Householder factors give 144 matrix fixtures. Each is solved '
+             'using the default method, explicit gesvd and explicit gesdd: 432 decompositions. '
+             'Some degenerate settings coincide; the count is fixtures, not distinct matrices.', '',
+             'Let k=min(m,n). Before calling the library, construct '
+             'A=L(:,1:k)*diag(d)*R(:,1:k)T. L and R are identity or '
+             'Q=I-2*v*vT/(vT*v), v=[1,...,dimension]. Before signed scaling, spectra are '
+             '[k,...,1], all twos, rank one [3,0,...,0], and all zeros. Exact singular values '
+             'are abs(scale) times these descending nonnegative values. These are the same '
+             'matrix fixtures as the [linalg SVD review](gams-dense-spectra.md).', '',
+             'Caller storage is U(m,m), VT(n,n), S(k), matching the pinned author test and wrapper '
+             'leading dimensions. Only the returned reduced factors U(:,1:k), VT(1:k,:) are '
+             'checked. Extra rows/columns are not claimed to be full null-space bases. Finite '
+             'singular values must be nonnegative, descending and within normalized error 2e-12 '
+             'of the prescribed spectrum. Independent scalar loops check A=U*diag(S)*VT '
+             '(normalized tolerance 5e-12), reduced column/row orthogonality (absolute 5e-12), '
+             'and A*A^T*u=s**2*u / A^T*A*v=s**2*v (normalized 1e-11). Value and reconstruction '
+             'errors use max(1,maxabs(d)); squared-operator residuals use its square.', '',
+             'The driver passes a fresh input copy for every call: the pinned wrapper declares '
+             'INTENT(IN) but passes the array directly to destructive LAPACK routines. Input '
+             'preservation is therefore not claimed. This consumer workaround does not correct '
+             'the upstream declaration. Default and explicit GESVD calls intentionally exercise '
+             'both dispatch paths; agreement between methods is not used as the reference.', '',
+             '## foreig: real symmetric eigenproblem (D4a1)', '',
+             'Sizes 1,2,3,5, four spectra, signed scales -4, 0.5, 2 and identity/Householder '
+             'factors give 96 fixtures and 96 explicit method=syev calls. Before scaling, '
+             'diagonal spectra are d_i=2*i-n-1, all twos, d_i=i-1, and all zeros. Construct '
+             'A=Q*diag(d)*Q^T and independently sort d for exact ascending eigenvalues. '
+             'The eigenvalue normalization is max(1,maxabs(d)). Repeated spectra, negative '
+             'eigenvalues and zero matrices allow arbitrary valid eigenspace bases.', '',
+             'Finite poison 1000+17*i+31*j replaces every lower-triangle entry of the input. '
+             'The symmetric reference remains separate; this checks that SYEV uses the upper '
+             'triangle. The input including poison must remain unchanged. Returned values and '
+             'vectors must have the expected shape and be finite. Maximum normalized eigenvalue '
+             'error must be <=2e-12; independent scalar A*v-lambda*v residuals must be <=5e-12 '
+             'after normalization. Orthonormality uses absolute tolerance 5e-12. These use the '
+             'same spectral fixtures as linalg, with the opposite unused triangle poisoned.', '',
+             '## Scope', '',
+             'Neither wrapper exposes LAPACK INFO; no status-code check is possible. Independent '
+             'answer/factor identities determine success. Workspace-query internals, malformed '
+             'inputs, complex overloads, severe ill conditioning, full SVD null spaces, low-rank '
+             'image compression, nonsymmetric/generalized eigenproblems and performance are '
+             'not verified. No backend changes or library patches were made.', '',
+             '## Checked links and actual output', '',
+             'These independently written API consumers have their own MIT notice; upstream '
+             'terms remain separate. Pinned sources and author tests were reviewed for interfaces, '
+             'without copying upstream code. Loading a link does not submit a job.', '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / '
+                  f'[Author test]({base}{d["author_example"]})', '', '```text', output.rstrip(), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
+def regrid_rk45_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-regrid-rk45-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-regrid-rk45-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Checked regridding and adaptive RK45', '',
+             'These E1a and I1a1a drivers passed the restricted GNU Fortran 16.2.0 sandbox with '
+             'FPM 0.12.0. Existing package libraries were reused; only mains and executables '
+             'were compiled. The [verification report](gams-regrid-rk45-validation.json) retains '
+             'pins, source hashes and actual output. GAMS categories are not exhausted.', '',
+             '## REGRIDPACK: one-dimensional linear/cubic interpolation (E1a)', '',
+             'Grid sizes 4,7,12 use x_i=-2+5*t_i or -2+5*t_i**2, '
+             't_i=(i-1)/(n-1). Each target grid includes original nodes, quarter/half/three-quarter '
+             'points of every interval and a repeated final endpoint: 4*n-2 targets. '
+             'Signed function scales are -2, 0.5, 3.', '',
+             'Linear interpolation checks monomials of degrees 0..1; cubic interpolation checks '
+             'degrees 0..3, directly against scale*target**degree. These give 108 calls. Another '
+             '18 linear calls use quadratic source values and independent interval-location loops '
+             'with (1-f)*y_i+f*y_(i+1) as the reference. This separately checks piecewise-linear '
+             'behavior on nonaffine data. Every successful result must be finite, return status zero '
+             'and preserve source coordinates, source values and target coordinates. Maximum value '
+             'error divided by max(1,maxabs(reference)) must be <=2e-12.', '',
+             'Eight deliberately rejected requests check size mismatch (10), unsupported interpolation '
+             'mode (6), insufficient source nodes for linear/cubic methods (2), targets below/above '
+             'the source interval (3), repeated source coordinates (4) and descending targets (4). '
+             'Failed output arrays are not inspected. A final cubic affine recovery call checks '
+             'two known values within absolute error 1e-12. In total there are 127 successful calls '
+             'and 3,614 analytical value checks, plus eight rejected requests. Multidimensional '
+             'overloads, low-level caller workspaces, arbitrary-function accuracy, unsorted-target '
+             'support and extrapolation are not verified; extrapolation is deliberately rejected.', '',
+             '## diffeq: Dormand-Prince RK45 (I1a1a)', '',
+             'Three two-component analytical IVPs, rates r=0.5,2, forward/backward integration '
+             'over [0,2], and absolute/relative tolerance pairs 1e-8 and 1e-10 give 24 runs. '
+             'Each requests 17 equally spaced times, giving 408 checked solution points. '
+             'With s=r*t, exact solutions are:', '',
+             '- Exponentials: y=[exp(s),2*exp(-s)], with RHS r*[y1,-y2].',
+             '- Polynomial: y=[1+s+s**2,2-s+0.5*s**3], with RHS r*[1+2*s,-1+1.5*s**2].',
+             '- Oscillator: y=[cos(s)+0.25*sin(s),-sin(s)+0.25*cos(s)], with RHS r*[y2,-y1].', '',
+             'Every run starts from the analytical value at its first time. The same solver object '
+             'is reused with explicit clear_buffer calls. Maximum step size is 0.3. Callback '
+             'parameters carry family/rate and an evaluation counter through the polymorphic '
+             'args interface; callbacks must occur without changing family/rate. Input times '
+             'and initial conditions must remain unchanged. Output shape must be [17,3], all '
+             'entries finite, and returned times must match every requested time within 1e-13.', '',
+             'At each requested time, maximum component error divided by '
+             'max(1,maxabs(exact_solution)) must be <=50*requested_tolerance. For the oscillator, '
+             'absolute error in y1**2+y2**2=1.0625 must be <=100*requested_tolerance. These '
+             'checks use analytical answers, not agreement between time directions or tolerance '
+             'settings. The tolerances are acceptance limits, not rigorous global error bounds.', '',
+             'Stiff problems, event detection, continuation without resetting the buffer, all '
+             'interpolant queries, malformed inputs and performance remain unverified. '
+             'The upstream plotted Duffing example was reviewed for interface usage; this '
+             'independent driver uses analytical models and has no plotting dependency.', '',
+             '## Checked links and actual output', '',
+             'The independently written API consumers have their own MIT notice. Upstream terms '
+             'remain separate; no upstream code was copied. Loading a link does not submit a job.', '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', output.rstrip(), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
+def fitpack_polynomials_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-fitpack-polynomials-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-fitpack-polynomials-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Checked FITPACK polynomial values and derivatives', '',
+             'These E1a and H1 drivers passed the restricted GNU Fortran 16.2.0 sandbox with '
+             'FPM 0.12.0. Existing package libraries were reused; only mains and executables '
+             'were compiled. The [verification report](gams-fitpack-polynomials-validation.json) '
+             'retains pins, source hashes and actual output. GAMS categories are not exhausted.', '',
+             '## Common fixtures', '',
+             'Each independent driver constructs 144 interpolating fits. Source sizes 8 and 13 '
+             'use uniform ascending coordinates x=-0.5+2*t, t=(i-1)/(n-1), or nonuniform '
+             'coordinates x=-0.5+2*(t+0.2*t*(1-t)) supplied in reverse order. '
+             'Spline degrees k=1,3,5 use every monomial x**p for p=0..k with scales -2,0.5,3. '
+             'All fits explicitly request smoothing=0. Some constant fixtures coincide; 144 '
+             'counts fits, not distinct data sets.', '',
+             'The same curve object is reused through new_fit, including changes in data size '
+             'and spline degree. Original coordinates and values must remain unchanged. Fitting '
+             'and every evaluation must return a successful FITPACK status. All outputs must '
+             'be finite. Final destroy must reset m and release public x, y and knot arrays. '
+             'This checks the observed public state, not all internal memory management.', '',
+             '## Values and interpolation (E1a)', '',
+             'At 33 uniformly spaced targets on [-0.5,1.5], including both endpoints, '
+             'the scalar and vector eval overloads are each compared directly to scale*x**p. '
+             'These give 9,504 checks. Vector evaluation at the original source nodes adds '
+             '1,512 checks, for 11,016 total value references. Reversed source data are sorted '
+             'before use as vector evaluation targets, independently of FITPACK source sorting.', '',
+             'Maximum value error divided by max(1,maxabs(reference)) must be <=5e-12. '
+             'Node errors use the analogous normalization from source values. Scalar and vector '
+             'agreement is not the reference: both must independently reproduce the polynomial.', '',
+             '## Derivatives of the stored spline (H1)', '',
+             'Every fit is checked at the same 33 targets using both scalar and vector dfdx '
+             'overloads for orders r=0..k. Independent analytical references are zero for r>p '
+             'and scale*p!/(p-r)!*x**(p-r) otherwise. Falling factorials are formed with small '
+             'integer-factor products. There are 34,848 positive-order derivative checks and '
+             '9,504 zeroth-order value checks, totaling 44,352 references. Quintic fits exercise '
+             'derivative orders through five, including derivatives of lower-degree polynomials '
+             'that should vanish.', '',
+             'Maximum error for each derivative-order/fixture pair is divided by '
+             'max(1,maxabs(analytical_derivative)) and must be <=1e-8. This looser threshold '
+             'than the value threshold accounts for amplification of coefficient roundoff in '
+             'higher spline derivatives. It is an explicit acceptance criterion, not an error '
+             'bound promised by the package. No finite-difference approximation or second '
+             'numerical library supplies reference derivatives.', '',
+             '## Scope', '',
+             'The H1 link differentiates a fitted spline representation, not an arbitrary '
+             'callback. These drivers check polynomial reproduction and supported interfaces. '
+             'Positive smoothing, noisy-data approximation, periodic curves, roots/integrals, '
+             'extrapolation, malformed inputs, arbitrary nonlinear accuracy and performance '
+             'remain outside these drivers. The separate stored-spline integration driver retains '
+             'its own [H2a2b2 evidence](gams-sparse-integral.md).', '',
+             '## Checked links and actual output', '',
+             'These independently written API consumers have their own MIT notice; upstream '
+             'terms remain separate. Pinned sources and author tests/examples were reviewed for '
+             'interfaces, without copying upstream code. Loading a link does not submit a job.', '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', output.rstrip(), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
+def diagonal_response_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-diagonal-response-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-diagonal-response-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Checked diagonal solves and uncoupled harmonic responses', '',
+             'These D2 and I1 drivers passed the restricted GNU Fortran 16.2.0 sandbox with '
+             'FPM 0.12.0. Existing package libraries were reused; only mains and executables '
+             'were compiled. The [verification report](gams-diagonal-response-validation.json) '
+             'retains pins, source hashes and actual output. GAMS categories are not exhausted.', '',
+             '## SpecialMatrices: nonsingular real diagonal systems (D2)', '',
+             'Sizes 1,2,7,32, three diagonal patterns and scales -4,0.125,8 give 36 fixtures. '
+             'Before scaling the diagonals are d_i=i, d_i=(-1)**i*(1+mod(i,3)), or '
+             'd_i=2**(mod(i,7)-3). All entries are nonzero. Four known solution columns use '
+             'x_i,c=(2*i-3*c)/8 for c=1,2,3, and zero for c=4. Construct b_i,c=d_i*x_i,c '
+             'before calling the library.', '',
+             'Each fixture calls solve once with the four-column matrix and four times with '
+             'individual vectors: 180 solves and 3,024 solution-coordinate comparisons. '
+             'Returned shapes and finite values are required. Maximum coordinate error divided '
+             'by max(1,maxabs(reference_column)) must be <=2e-13. Scalar residuals '
+             'abs(d_i*x_i-b_i)/max(1,abs(b_i),abs(d_i*reference_i)) must also be <=2e-13 '
+             'for both overloads. The right-hand sides, constructor diagonal and dense views '
+             'of the structured matrix must remain unchanged.', '',
+             'The D2 assignment is deliberately broad; this driver verifies only real diagonal '
+             'solve overloads. Other matrix structures, singular diagonals, invalid sizes, '
+             'complex arithmetic and performance are not verified.', '',
+             '## dynamics: unit-mass, diagonal-stiffness response (I1)', '',
+             'This is a steady-state harmonic response of second-order ODEs, not an initial-value '
+             'integration. Sizes n=1,2,3 use M=I and K=diag(1**2,...,n**2). Damping is '
+             'C=alpha*M+beta*K, alpha=0.1,0.4 and beta=0,0.05. Two complex force patterns '
+             'give 24 fixtures, each at angular frequencies [0,0.5,1,1.5,2,2.5,3,4] rad/s. '
+             'There are 384 complex-coordinate comparisons, including damped resonances and '
+             'static frequency zero.', '',
+             'For physical coordinate i and force pattern p=1,2, '
+             'F_i(w)=i*(1+0.1*w)+imaginary_unit*p*(0.25*i-0.2*w). The closed-form reference is '
+             'X_i=F_i/(i**2-w**2+imaginary_unit*w*(alpha+beta*i**2)). Both real and imaginary '
+             'parts contribute to the complex absolute error. At each frequency, maximum '
+             'coordinate error divided by max(1,maxabs(reference_response)) must be <=1e-10. '
+             'Responses must have shape [8,n], be finite and return unchanged frequency values. '
+             'Optional natural frequencies must match [1,...,n] within 1e-12. The polymorphic '
+             'force callback must be invoked exactly eight times without changing its pattern.', '',
+             '## Failed broader response probes', '',
+             '**Non-unit mass and coupled systems are not verified.** Both probes built '
+             'successfully but disagreed with independent static solutions at the pinned revision. '
+             'The failed sources, hashes, package revision and complete build/run results are '
+             'retained in [the candidate directory](gams-candidates/dynamics/README.md). '
+             'The successful driver keeps the original 1e-10 threshold; it narrows the matrices '
+             'rather than relaxing accuracy.', '',
+             '- With n=1, M=2, K=2, alpha=0.1, beta=0 and force pattern 1, frequency zero '
+             'gave normalized response error 0.5153882032 against X=F/K.',
+             '- With n=2, M=I, Q=I-2*v*vT/(vT*v), v=[1,2], and '
+             'K=Q*diag(1,4)*Q^T, the corresponding static error was 0.5625.', '',
+             'These are response failures, not compiler failures. No library fix is included. '
+             'The published I1 driver demonstrates only the explicitly uncoupled unit-mass '
+             'configuration; sparse/modal-truncated methods, arbitrary mass normalization, '
+             'coupling, transient integration, invalid inputs and performance remain unverified.', '',
+             '## Checked links and actual output', '',
+             'Independent API consumers have their own MIT notice; upstream terms remain '
+             'separate. Pinned sources and the dynamics author example were reviewed without '
+             'copying upstream code. Loading a link does not submit a job.', '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', output.rstrip(), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
+def ranking_magic_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-ranking-magic-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-ranking-magic-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Checked sorting indices and magic-square construction', '',
+             'These N6 and D1 drivers passed the restricted GNU Fortran 16.2.0 sandbox with '
+             'FPM 0.12.0. Existing package libraries were reused; only mains and executables '
+             'were compiled. The [verification report](gams-ranking-magic-validation.json) '
+             'retains pins, source hashes and actual output. GAMS categories are not exhausted.', '',
+             '## ORDERPACK rank: indices that sort data (N6)', '',
+             'Every permutation of lengths 1..7 gives 5,913 exhaustive fixtures. Another '
+             '84 fixtures use six patterns at sizes [0,1,2,3,4,7,8,15,16,31,32,63,64,127]: '
+             'ascending signed values, descending values, a constant, three repeated keys, '
+             'alternating signed magnitudes and mod(37*i+11,17)-8. Each fixture exercises '
+             'integer32, real32, real64 and character overloads, giving 5,997 fixtures and '
+             '23,988 rank calls. Some degenerate patterns coincide; fixture counts are not '
+             'counts of distinct data arrays.', '',
+             'Real keys are integer values divided by eight, exactly representable in both '
+             'floating-point kinds. Character keys are four-digit, zero-padded decimal strings '
+             'of integer_value+512, so their lexical ordering agrees with integer ordering. '
+             'This is a controlled character fixture, not a test of language-specific collation.', '',
+             'Independent insertion-sort loops compute expected sorted integer values before '
+             'calling ORDERPACK. Each returned index must be in range and each original index '
+             'must occur exactly once. Original values indexed by the result must match the '
+             'reference sequence exactly. This checks all four overloads against the independent '
+             'reference, not against each other. All four source arrays must remain unchanged. '
+             'Empty arrays are exercised without reading undefined output elements.', '',
+             'Tied keys may have any valid index order; stable tie ordering is not required or '
+             'claimed. NaNs, infinities, signed-zero conventions, arbitrary character encodings, '
+             'mismatched output lengths, other ORDERPACK procedures and performance remain '
+             'unverified. This N6 mapping concerns sorting indices, not statistical rank inference.', '',
+             '## M_LA mat_magic: normal magic squares (D1)', '',
+             'Orders 1 and 3..32 include 16 odd, eight doubly-even and seven singly-even orders. '
+             'Order two is excluded because no normal magic square of that order exists. '
+             'Each order is constructed twice with compact leading dimension n and twice '
+             'with padded leading dimension n+3: 124 calls. Storage is reset to a finite '
+             'sentinel before each call; padded rows must remain untouched.', '',
+             'All outputs must be finite. Active entries must be exactly integer-valued '
+             'and form a permutation of 1..n**2. Exact int64 scalar sums verify every row, '
+             'column and both principal diagonals against n*(n**2+1)/2. These checks do not '
+             'depend on the constructor algorithm or a preferred square arrangement. '
+             'Across all calls there are 45,744 entry checks and 4,456 exact line-sum checks. '
+             'Repeated construction checks valid results after storage reuse without imposing '
+             'a particular arrangement on valid squares.', '',
+             'The D1 mapping covers this matrix constructor only. Other M_LA utilities, '
+             'unsupported orders, invalid leading dimensions and performance remain unverified.', '',
+             '## Checked links and actual output', '',
+             'These independently written API consumers have their own MIT notice; upstream '
+             'terms remain separate. Pinned sources and the ORDERPACK author example were '
+             'reviewed without copying upstream code. Loading a link does not submit a job.', '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', output.rstrip(), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
+def geodesy_forlab_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-geodesy-forlab-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-geodesy-forlab-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Checked WGS84 coordinates and overdetermined least squares', '',
+             'These P and D9a1 drivers passed the restricted GNU Fortran 16.2.0 sandbox with '
+             'FPM 0.12.0. Existing package libraries were reused; only mains and executables '
+             'were compiled. The [verification report](gams-geodesy-forlab-validation.json) '
+             'retains pins, source hashes and actual output. GAMS categories are not exhausted.', '',
+             '## maptran3d: WGS84 forward/inverse coordinates (P)', '',
+             'The reference ellipsoid uses a=6378137 meters and flattening f=1/298.257223563. '
+             'Let e2=f*(2-f), b=a*(1-f) and N=a/sqrt(1-e2*sin(latitude)**2). '
+             'Independent Cartesian references are X=(N+h)*cos(latitude)*cos(longitude), '
+             'Y=(N+h)*cos(latitude)*sin(longitude), Z=(N*(1-e2)+h)*sin(latitude). '
+             'These are ellipsoid geometry formulas, not another call to the conversion library.', '',
+             'Seven latitudes [-89,-60,-30,0,30,60,89] degrees, six longitudes '
+             '[-180,-90,-23,0,74,180] degrees and heights [-100,0,1000,100000] meters '
+             'give 168 points. Both explicit degree and radian interfaces give 336 cases. '
+             'Each forward result must be finite, preserve its geodetic inputs and agree '
+             'with the reference within 5e-6 meters in every Cartesian component.', '',
+             'The inverse receives the independently constructed Cartesian reference, rather '
+             'than the library forward result. Returned coordinates must be finite. Angular '
+             'error must be <=2e-7 degrees and height error <=5e-3 meters. Longitude differences '
+             'are wrapped with atan2(sin(delta),cos(delta)), so -180 and +180 are equivalent. '
+             'Another eight forward calls check both exact poles at heights 0 and 1000 meters '
+             'in both angle units against [0,0,+/-(b+h)]. There are 680 conversion calls in total.', '',
+             'Inverse conversion at the poles, where longitude is not unique, is not verified. '
+             'The origin, custom ellipsoids, extreme heights, invalid coordinates and performance '
+             'are also outside this scope. The broad P classification is retained; no detailed '
+             'astronomy or geodesy class is invented.', '',
+             '## forlab: tall real single-precision least squares (D9a1)', '',
+             'The catalog uses forlab RPRE with 32-bit real storage. Shapes [2,1], [3,2], '
+             '[5,3], signed scales -4,0.5,2, identity/Householder factors and two residual '
+             'settings give 36 full-column-rank fixtures. Three vector right-hand sides each '
+             'give 108 solver calls. Eighteen fixtures have prescribed nonzero residuals. '
+             'These are the tall subset of the [shared least-squares fixtures](gams-least-interpolation.md).', '',
+             'Construct A=L(:,1:n)*diag(scale*[1,...,n])*R^T, where orthogonal factors are '
+             'identity or Q=I-2*v*vT/(vT*v), v=[1,...,dimension]. For right-hand side c=1,2,3, '
+             'set z_i=(2*i-c)/4 and x_reference=R*z. Construct b=A*x_reference+noise with '
+             'noise zero or 0.25*c*L(:,n+1). Orthogonality gives the unique least-squares '
+             'solution, residual -noise and its exact squared norm independently of forlab.', '',
+             'Solutions must have the expected shape and be finite. Maximum coordinate error '
+             'scaled by max(1,maxabs(reference_solution)) must be <=3e-5. Prescribed residual '
+             'error scaled by max(1,maxabs(b)) must be <=5e-5. The normal-equation residual '
+             'A^T*(A*x-b), scaled by max(1,maxabs(b))*max(1,maxabs(A)), must be <=1e-4. '
+             'The prescribed squared residual norm has normalized tolerance 2e-4. Source '
+             'matrices and right-hand sides must remain unchanged. These explicit tolerances '
+             'match the native single-precision configuration; no double-precision library '
+             'build is substituted. The existing unrelated checksum-guarded optional-norm '
+             'argument fix is reused unchanged.', '',
+             '## Failed underdetermined probe', '',
+             '**Wide systems are not verified.** The full-row-rank matrix '
+             'A=[[-4,0,0],[0,-8,0]] and b=[-1,-6] have exact minimum-norm solution '
+             '[0.25,0.75,0], but the pinned solver returned nonfinite values. The build '
+             'passed. The [candidate source, hash and full result](gams-candidates/forlab/README.md) '
+             'are retained. The published driver keeps its original accuracy thresholds and '
+             'narrows the shapes; it does not fix the library or promote this failed configuration. '
+             'Square-system LU, rank deficiency, matrix right-hand sides, invalid inputs and '
+             'performance remain unverified.', '',
+             '## Checked links and actual output', '',
+             'Independent API consumers have their own MIT notice; upstream terms remain '
+             'separate. Pinned sources and maptran3d author tests were reviewed without copying '
+             'upstream code. Loading a link does not submit a job.', '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', output.rstrip(), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -5480,6 +6044,13 @@ def main():
                          (JACOBIAN_ROOTS_REPORT, jacobian_roots_review_text()),
                          (HIGHER_AD_REPORT, higher_ad_review_text()),
                          (MOMENTS_NUFFT2D_REPORT, moments_nufft2d_review_text()),
+                         (ITERATIVE_LS_REPORT, iterative_ls_review_text()),
+                         (SPECTRAL_WRAPPERS_REPORT, spectral_wrappers_review_text()),
+                         (REGRID_RK45_REPORT, regrid_rk45_review_text()),
+                         (FITPACK_POLYNOMIALS_REPORT, fitpack_polynomials_review_text()),
+                         (DIAGONAL_RESPONSE_REPORT, diagonal_response_review_text()),
+                         (RANKING_MAGIC_REPORT, ranking_magic_review_text()),
+                         (GEODESY_FORLAB_REPORT, geodesy_forlab_review_text()),
                          (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report

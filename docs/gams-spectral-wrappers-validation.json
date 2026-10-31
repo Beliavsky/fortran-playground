@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "forsvd-spectrum-reference",
+      "source_revision": "f39bba7afcb048a21947a7a640bdf9a18337f8ac",
+      "source_sha256": "b634c459938780386d739f0dcc23ce5476b4febdc8121a54cdee7b968751942d",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T17:54:11.891925+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.423,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Known-spectrum rectangular matrices: 144; SVD calls: 432\nDefault/GESVD/GESDD; reduced factors, distinct/repeated/rank-one/zero spectra.\nMaximum normalized singular-value error:   4.4409E-16\nMaximum normalized scalar reconstruction error:   3.3307E-16\nMaximum scalar orthogonality error:   9.9920E-16\nMaximum normalized scalar singular-vector residual:   6.9081E-16\nPASS forsvd-spectrum-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.056,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "foreig-symmetric-reference",
+      "source_revision": "8fcfcab03e5d7cf5eda8c51c7a1e97fe52954c39",
+      "source_sha256": "073f8e955ad21487f04218f771ef05f91f4194a366d9ac468d4ad9b6e7a92229",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T17:54:13.791438+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.457,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Known-spectrum symmetric matrices: 96; eigen calls: 96\nUpper triangle with unused-lower-half poison; SYEV eigenvalues and eigenvectors.\nMaximum normalized eigenvalue error:   1.1102E-15\nMaximum normalized scalar eigenvector residual:   9.9920E-16\nMaximum scalar orthogonality error:   1.1102E-15\nPASS foreig-symmetric-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.029,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T17:54:13.842231+00:00"
+}

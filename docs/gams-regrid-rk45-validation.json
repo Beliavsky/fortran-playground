@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "regridpack-polynomial-reference",
+      "source_revision": "e47346d9244ab93f70367f16364d73217fbc0451",
+      "source_sha256": "ea1c58fa61f61d3a10b1c40e36266cb14e94daa23f275a1c62e03decdd4e102d",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T18:00:27.051892+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.299,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Successful regrids: 127; analytical value checks: 3614\nExpected rejected requests: 8\nUniform/nonuniform grids; linear/cubic monomials and piecewise-linear references.\nMaximum normalized interpolation error:   4.4409E-16\nPASS regridpack-polynomial-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.023,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "diffeq-rk45-reference",
+      "source_revision": "989b320179c23aaff4bfe72994c90e9034f50c74",
+      "source_sha256": "f252cc57898045fcd362bc6612c5e537ca83fb3a7785df63ce5802eaf2aaa186",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T18:00:28.708009+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.196,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Analytical IVP runs: 24; requested solution points: 408\nRHS callback evaluations: 5616\nExponential/polynomial/oscillator; two rates, both directions and two tolerances.\nMaximum normalized solution error:   1.6661E-08\nPASS diffeq-rk45-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.023,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T18:00:28.760605+00:00"
+}

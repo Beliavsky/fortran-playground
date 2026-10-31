@@ -1,0 +1,7 @@
+{
+  "revision": "416e5612167b6133100bef4cec116322890f66f7",
+  "source": "wide-least-squares.f90",
+  "source_sha256": "750a53c58619d1a5064c1c3e77d92d9e8c90a36cef5d6efa46f613dad7093c86",
+  "result": "wide-least-squares-result.json",
+  "finding": "Build passed; 2-by-3 full-row-rank A=[[-4,0,0],[0,-8,0]], b=[-1,-6] returns a nonfinite solution. Known minimum-norm solution is [0.25,0.75,0]. Wide systems are not verified; probe stopped at this first mismatch."
+}

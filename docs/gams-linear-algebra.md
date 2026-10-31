@@ -121,12 +121,19 @@ Saved reproducers: [high-level eigh](gams-candidates/fortran-lapack-eigh.f90) an
 | [Load linalg-eigen-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=linalg&example=gams-linalg-eigen-reference) · [Source](../fpm_catalog/gams-drivers/linalg-eigen-reference.f90) | D4a1 | [Procedure](https://github.com/jchristopherson/linalg/blob/cb8fb7b1c67986591083cac516eb700f47d69b68/src/linalg_eigen.f90#L17) · [Author example](https://github.com/jchristopherson/linalg/blob/cb8fb7b1c67986591083cac516eb700f47d69b68/tests/test_eigen.f90) |
 | [Load linalg-svd-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=linalg&example=gams-linalg-svd-reference) · [Source](../fpm_catalog/gams-drivers/linalg-svd-reference.f90) | D6 | [Procedure](https://github.com/jchristopherson/linalg/blob/cb8fb7b1c67986591083cac516eb700f47d69b68/src/linalg_svd.f90#L12) · [Author example](https://github.com/jchristopherson/linalg/blob/cb8fb7b1c67986591083cac516eb700f47d69b68/tests/test_svd.f90) |
 | [Load linalg-least-squares-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=linalg&example=gams-linalg-least-squares-reference) · [Source](../fpm_catalog/gams-drivers/linalg-least-squares-reference.f90) | D9a1 | [Procedure](https://github.com/jchristopherson/linalg/blob/cb8fb7b1c67986591083cac516eb700f47d69b68/src/linalg_least_squares.f90#L14) · Original lower-level API driver |
+| [Load lsqr-least-squares-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=lsqr&example=gams-lsqr-least-squares-reference) · [Source](../fpm_catalog/gams-drivers/lsqr-least-squares-reference.f90) | D9a1 | [Procedure](https://github.com/jacobwilliams/LSQR/blob/4df2ce600ca26a9f7e80dc01bfd0859d538547b3/src/lsqr.f90#L32) · [Author example](https://github.com/jacobwilliams/LSQR/blob/4df2ce600ca26a9f7e80dc01bfd0859d538547b3/test/lsqrtest_ez.f90) |
+| [Load lsmr-least-squares-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=lsmr&example=gams-lsmr-least-squares-reference) · [Source](../fpm_catalog/gams-drivers/lsmr-least-squares-reference.f90) | D9a1 | [Procedure](https://github.com/jacobwilliams/LSMR/blob/12611e2299c5188441b097437695a66c85369e76/src/lsmrModule.f90#L175) · [Author example](https://github.com/jacobwilliams/LSMR/blob/12611e2299c5188441b097437695a66c85369e76/test/lsmrTestModule.f90) |
+| [Load forsvd-spectrum-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=forsvd&example=gams-forsvd-spectrum-reference) · [Source](../fpm_catalog/gams-drivers/forsvd-spectrum-reference.f90) | D6 | [Procedure](https://github.com/gha3mi/forsvd/blob/f39bba7afcb048a21947a7a640bdf9a18337f8ac/src/forsvd.f90#L57) · [Author example](https://github.com/gha3mi/forsvd/blob/f39bba7afcb048a21947a7a640bdf9a18337f8ac/test/test1.f90) |
+| [Load foreig-symmetric-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=foreig&example=gams-foreig-symmetric-reference) · [Source](../fpm_catalog/gams-drivers/foreig-symmetric-reference.f90) | D4a1 | [Procedure](https://github.com/gha3mi/foreig/blob/8fcfcab03e5d7cf5eda8c51c7a1e97fe52954c39/src/foreig.f90#L11) · [Author example](https://github.com/gha3mi/foreig/blob/8fcfcab03e5d7cf5eda8c51c7a1e97fe52954c39/test/test1.f90) |
+| [Load specialmatrices-diagonal-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=specialmatrices&example=gams-specialmatrices-diagonal-reference) · [Source](../fpm_catalog/gams-drivers/specialmatrices-diagonal-reference.f90) | D2 | [Procedure](https://github.com/loiseaujc/SpecialMatrices/blob/2f53a4b51afbeb2efd2b60eb379283f978359d2f/src/Diagonal/specialmatrices_diagonal.f90#L191) · Original lower-level API driver |
+| [Load m-la-magic-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=m_la&example=gams-m-la-magic-reference) · [Source](../fpm_catalog/gams-drivers/m-la-magic-reference.f90) | D1 | [Procedure](https://github.com/urbanjost/M_LA/blob/db59eeab0deab7e84eadf2542ad49c1c719dfb94/src/M_LA.f90#L1561) · Original lower-level API driver |
+| [Load forlab-least-squares-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=forlab&example=gams-forlab-least-squares-reference) · [Source](../fpm_catalog/gams-drivers/forlab-least-squares-reference.f90) | D9a1 | [Procedure](https://github.com/zoziha/forlab/blob/416e5612167b6133100bef4cec116322890f66f7/src/forlab.F90#L7796) · Original lower-level API driver |
 
 The dense examples reuse both authors' problem data and retain both license notices. The least-squares examples adapt author API usage to shared deterministic data. These drivers appear in hosted and main local FPM example menus and downloaded projects. Loading a link selects source without submitting a job.
 
 ## Recorded results
 
-All 28 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing the existing package libraries. Only each main and executable were rebuilt. The verification reports record source hashes, pins and saved output: [gams-dense-spectra-validation.json](gams-dense-spectra-validation.json), [gams-dispersion-validation.json](gams-dispersion-validation.json), [gams-inverse-tvd-validation.json](gams-inverse-tvd-validation.json), [gams-least-interpolation-validation.json](gams-least-interpolation-validation.json), [gams-linear-algebra-validation.json](gams-linear-algebra-validation.json), [gams-matrix-equations-validation.json](gams-matrix-equations-validation.json), [gams-matrix-roots-box-validation.json](gams-matrix-roots-box-validation.json), [gams-products-status-validation.json](gams-products-status-validation.json), [gams-qr-autodiff-validation.json](gams-qr-autodiff-validation.json), [gams-sparse-integral-validation.json](gams-sparse-integral-validation.json), [gams-sparse-validation.json](gams-sparse-validation.json). These small examples establish checked usage, rather than comprehensive accuracy or performance comparisons. The packages may share underlying algorithms; this is not evidence of independent implementations. Zero printed error means agreement at working precision.
+All 35 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing the existing package libraries. Only each main and executable were rebuilt. The verification reports record source hashes, pins and saved output: [gams-dense-spectra-validation.json](gams-dense-spectra-validation.json), [gams-diagonal-response-validation.json](gams-diagonal-response-validation.json), [gams-dispersion-validation.json](gams-dispersion-validation.json), [gams-geodesy-forlab-validation.json](gams-geodesy-forlab-validation.json), [gams-inverse-tvd-validation.json](gams-inverse-tvd-validation.json), [gams-iterative-ls-validation.json](gams-iterative-ls-validation.json), [gams-least-interpolation-validation.json](gams-least-interpolation-validation.json), [gams-linear-algebra-validation.json](gams-linear-algebra-validation.json), [gams-matrix-equations-validation.json](gams-matrix-equations-validation.json), [gams-matrix-roots-box-validation.json](gams-matrix-roots-box-validation.json), [gams-products-status-validation.json](gams-products-status-validation.json), [gams-qr-autodiff-validation.json](gams-qr-autodiff-validation.json), [gams-ranking-magic-validation.json](gams-ranking-magic-validation.json), [gams-sparse-integral-validation.json](gams-sparse-integral-validation.json), [gams-sparse-validation.json](gams-sparse-validation.json), [gams-spectral-wrappers-validation.json](gams-spectral-wrappers-validation.json). These small examples establish checked usage, rather than comprehensive accuracy or performance comparisons. The packages may share underlying algorithms; this is not evidence of independent implementations. Zero printed error means agreement at working precision.
 
 ### fortran-lapack-dense-solve
 
@@ -562,10 +569,90 @@ Maximum normalized normal-equation residual:   2.9143E-16
 PASS linalg-least-squares-reference
 ```
 
+### lsqr-least-squares-reference
+
+```text
+Full-rank least-squares fixtures: 72; solver calls: 216
+Overdetermined fixtures with prescribed nonzero residuals: 18
+Square/tall/wide; three vector RHS calls per fixture; zero damping.
+Maximum normalized solution error:   3.3751E-15
+Maximum normalized prescribed-residual error:   3.3159E-15
+Maximum normalized normal-equation residual:   6.6218E-15
+PASS lsqr-least-squares-reference
+```
+
+### lsmr-least-squares-reference
+
+```text
+Full-rank least-squares fixtures: 72; solver calls: 216
+Overdetermined fixtures with prescribed nonzero residuals: 18
+Square/tall/wide; three vector RHS calls per fixture; zero damping.
+Maximum normalized solution error:   3.0198E-15
+Maximum normalized prescribed-residual error:   3.0790E-15
+Maximum normalized normal-equation residual:   4.3964E-15
+PASS lsmr-least-squares-reference
+```
+
+### forsvd-spectrum-reference
+
+```text
+Known-spectrum rectangular matrices: 144; SVD calls: 432
+Default/GESVD/GESDD; reduced factors, distinct/repeated/rank-one/zero spectra.
+Maximum normalized singular-value error:   4.4409E-16
+Maximum normalized scalar reconstruction error:   3.3307E-16
+Maximum scalar orthogonality error:   9.9920E-16
+Maximum normalized scalar singular-vector residual:   6.9081E-16
+PASS forsvd-spectrum-reference
+```
+
+### foreig-symmetric-reference
+
+```text
+Known-spectrum symmetric matrices: 96; eigen calls: 96
+Upper triangle with unused-lower-half poison; SYEV eigenvalues and eigenvectors.
+Maximum normalized eigenvalue error:   1.1102E-15
+Maximum normalized scalar eigenvector residual:   9.9920E-16
+Maximum scalar orthogonality error:   1.1102E-15
+PASS foreig-symmetric-reference
+```
+
+### specialmatrices-diagonal-reference
+
+```text
+Nonsingular diagonal fixtures: 36; solve calls: 180
+Known solution coordinate checks: 3024
+One four-column RHS and four vector RHS calls; signed diagonals and zero RHS.
+Maximum normalized solution error:   0.0000E+00
+Maximum normalized scalar residual:   0.0000E+00
+PASS specialmatrices-diagonal-reference
+```
+
+### m-la-magic-reference
+
+```text
+Magic-square calls: 124
+Entry checks: 45744; exact line-sum checks: 4456
+Orders 1 and 3..32; odd/doubly-even/singly-even; compact/padded storage; repeated calls.
+PASS m-la-magic-reference
+```
+
+### forlab-least-squares-reference
+
+```text
+Full-rank least-squares fixtures: 36; solver calls: 108
+Overdetermined fixtures with prescribed nonzero residuals: 18
+Overdetermined only; three vector RHS calls per fixture; native catalog RPRE.
+Maximum normalized solution error:   4.1723E-07
+Maximum normalized prescribed-residual error:   2.1397E-07
+Maximum normalized normal-equation residual:   3.3833E-07
+Forlab real storage bits: 32
+PASS forlab-least-squares-reference
+```
+
 ## Maintenance
 
 ```text
-python xverify_gams_drivers.py --drivers fortran-lapack-dense-solve fortran-lapack-least-squares stdlib-dense-solve stdlib-least-squares fortran-lapack-symmetric-eigen fortran-lapack-qr-decomposition fortran-lapack-svd-decomposition minres-indefinite-solve qdldl-quasidefinite-solve kiss-positive-definite-solve slicot-lyapunov-known-matrix slicot-continuous-sylvester slicot-discrete-sylvester blas-gemm-reference fsparse-matvec-reference forinv-pseudoinverse-reference arpack-poisson-eigenpairs linalg-poisson-eigenpairs fsparse-storage-reference y12m-sparse-reference fordot-exact-reference linalg-inverse-factor-reference ntpoly-matrix-root-reference libmbd-dimer-spectrum linalg-qr-reference linalg-eigen-reference linalg-svd-reference linalg-least-squares-reference
+python xverify_gams_drivers.py --drivers fortran-lapack-dense-solve fortran-lapack-least-squares stdlib-dense-solve stdlib-least-squares fortran-lapack-symmetric-eigen fortran-lapack-qr-decomposition fortran-lapack-svd-decomposition minres-indefinite-solve qdldl-quasidefinite-solve kiss-positive-definite-solve slicot-lyapunov-known-matrix slicot-continuous-sylvester slicot-discrete-sylvester blas-gemm-reference fsparse-matvec-reference forinv-pseudoinverse-reference arpack-poisson-eigenpairs linalg-poisson-eigenpairs fsparse-storage-reference y12m-sparse-reference fordot-exact-reference linalg-inverse-factor-reference ntpoly-matrix-root-reference libmbd-dimer-spectrum linalg-qr-reference linalg-eigen-reference linalg-svd-reference linalg-least-squares-reference lsqr-least-squares-reference lsmr-least-squares-reference forsvd-spectrum-reference foreig-symmetric-reference specialmatrices-diagonal-reference m-la-magic-reference forlab-least-squares-reference
 python xpackage_gams.py
 python xfpm_examples.py
 python xsite.py

@@ -60,6 +60,13 @@ from xpackage_gams import (gams_data, package_classes, review_text, subclass_mod
                           jacobian_roots_review_text, JACOBIAN_ROOTS_REPORT,
                           higher_ad_review_text, HIGHER_AD_REPORT,
                           moments_nufft2d_review_text, MOMENTS_NUFFT2D_REPORT,
+                            iterative_ls_review_text, ITERATIVE_LS_REPORT,
+                            spectral_wrappers_review_text, SPECTRAL_WRAPPERS_REPORT,
+                            regrid_rk45_review_text, REGRID_RK45_REPORT,
+                            fitpack_polynomials_review_text, FITPACK_POLYNOMIALS_REPORT,
+                            diagonal_response_review_text, DIAGONAL_RESPONSE_REPORT,
+                            ranking_magic_review_text, RANKING_MAGIC_REPORT,
+                            geodesy_forlab_review_text, GEODESY_FORLAB_REPORT,
                           coverage_data, coverage_review_text, COVERAGE_REPORT,
                           class_evidence, class_tree, mapping_evidence_text, EVIDENCE_REPORT)
 
@@ -844,6 +851,227 @@ class PackageGamsTests(unittest.TestCase):
         self.assertIn('22,416',text)
         self.assertIn('Type-2/type-3 transforms',text)
         self.assertIn('two-dimensional NUFFT2D driver',transforms_review_text())
+
+    def test_geodesy_and_forlab_drivers_keep_units_precision_and_failed_wide_scope(self):
+        import hashlib
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for ident,code in [('maptran-wgs84-reference','P'),('forlab-least-squares-reference','D9a1')]:
+            d = drivers[ident]
+            self.assertEqual(d['gams_code'],code)
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'],ident)
+            self.assertEqual(class_evidence(class_tree(data),code,[record],[d])['status'],'verified')
+        geo = drivers['maptran-wgs84-reference']['checks']
+        self.assertEqual(geo['geodetic_cases'],336)
+        self.assertEqual(geo['conversion_calls'],680)
+        self.assertEqual(geo['forward_polar_axis_calls'],8)
+        self.assertTrue(geo['inverse_independent_cartesian_inputs'])
+        self.assertFalse(geo['inverse_poles_verified'])
+        ls = drivers['forlab-least-squares-reference']['checks']
+        self.assertEqual(ls['matrix_fixtures'],36)
+        self.assertEqual(ls['solver_calls'],108)
+        self.assertEqual(ls['real_storage_bits'],32)
+        self.assertFalse(ls['underdetermined_verified'])
+        self.assertFalse(ls['square_branch_verified'])
+        folder = ROOT/'docs/gams-candidates/forlab'
+        metadata = json.loads((folder/'wide-least-squares.json').read_text())
+        source = (folder/metadata['source']).read_text().replace('\r\n','\n').encode()
+        self.assertEqual(hashlib.sha256(source).hexdigest(),metadata['source_sha256'])
+        result = json.loads((folder/metadata['result']).read_text())
+        stages = {s['name']: s for s in result['stages']}
+        self.assertTrue(stages['Build']['ok'])
+        self.assertFalse(stages['Run']['ok'])
+        self.assertIn('Failure m,n,scale',stages['Run']['stdout'])
+        self.assertIn('ERROR STOP vector solution',stages['Run']['stderr'])
+        text = geodesy_forlab_review_text()
+        self.assertEqual((ROOT/GEODESY_FORLAB_REPORT).read_text(encoding='utf-8'),text)
+        for phrase in ['680 conversion calls','108 solver calls','32-bit real storage','Wide systems are not verified']:
+            self.assertIn(phrase,text)
+
+    def test_ranking_and_magic_drivers_check_independent_discrete_references(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for ident,code in [('orderpack-ranking-reference','N6'),('m-la-magic-reference','D1')]:
+            d = drivers[ident]
+            self.assertEqual(d['gams_code'],code)
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'],ident)
+            self.assertEqual(class_evidence(class_tree(data),code,[record],[d])['status'],'verified')
+        ranking = drivers['orderpack-ranking-reference']['checks']
+        self.assertEqual(ranking['exhaustive_permutations'],5913)
+        self.assertEqual(ranking['ranking_fixtures'],5997)
+        self.assertEqual(ranking['overload_calls'],23988)
+        self.assertEqual(len(ranking['overloads']),4)
+        self.assertTrue(ranking['empty_input_checked'])
+        self.assertTrue(ranking['permutation_integrity_checked'])
+        self.assertFalse(ranking['stable_tie_order_verified'])
+        self.assertFalse(ranking['nan_ordering_verified'])
+        magic = drivers['m-la-magic-reference']['checks']
+        self.assertEqual(magic['generator_calls'],124)
+        self.assertEqual(magic['entry_checks'],45744)
+        self.assertEqual(magic['line_sum_checks'],4456)
+        self.assertEqual(sum(magic[k] for k in ['odd_orders','doubly_even_orders','singly_even_orders']),31)
+        self.assertTrue(magic['padded_leading_dimension_checked'])
+        self.assertTrue(magic['exact_integer_checks'])
+        self.assertFalse(magic['other_matrix_utilities_verified'])
+        text = ranking_magic_review_text()
+        self.assertEqual((ROOT/RANKING_MAGIC_REPORT).read_text(encoding='utf-8'),text)
+        for phrase in ['23,988 rank calls','45,744 entry checks','4,456 exact line-sum checks','stable tie ordering']:
+            self.assertIn(phrase,text)
+
+    def test_diagonal_and_harmonic_drivers_keep_failed_response_scope_explicit(self):
+        import hashlib
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for ident,code in [('specialmatrices-diagonal-reference','D2'),('dynamics-response-reference','I1')]:
+            d = drivers[ident]
+            self.assertEqual(d['gams_code'],code)
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'],ident)
+            self.assertEqual(class_evidence(class_tree(data),code,[record],[d])['status'],'verified')
+        diagonal = drivers['specialmatrices-diagonal-reference']['checks']
+        self.assertEqual(diagonal['matrix_fixtures'],36)
+        self.assertEqual(diagonal['solve_calls'],180)
+        self.assertEqual(diagonal['solution_coordinate_checks'],3024)
+        self.assertFalse(diagonal['singular_diagonals_verified'])
+        self.assertFalse(diagonal['other_structures_verified'])
+        response = drivers['dynamics-response-reference']['checks']
+        self.assertEqual(response['response_fixtures'],24)
+        self.assertEqual(response['complex_coordinate_checks'],384)
+        self.assertTrue(response['diagonal_stiffness_only'])
+        self.assertFalse(response['coupled_systems_checked'])
+        self.assertFalse(response['nonunit_mass_verified'])
+        self.assertFalse(response['initial_value_integration_verified'])
+        folder = ROOT/'docs/gams-candidates/dynamics'
+        for name in ['nonunit-mass','coupled-unit-mass']:
+            metadata = json.loads((folder/(name+'.json')).read_text())
+            source = (folder/metadata['source']).read_text().replace('\r\n','\n').encode()
+            self.assertEqual(hashlib.sha256(source).hexdigest(),metadata['source_sha256'])
+            result = json.loads((folder/metadata['result']).read_text())
+            stages = {s['name']: s for s in result['stages']}
+            self.assertTrue(stages['Build']['ok'])
+            self.assertFalse(stages['Run']['ok'])
+            self.assertIn('Mismatch',stages['Run']['stdout'])
+        text = diagonal_response_review_text()
+        self.assertEqual((ROOT/DIAGONAL_RESPONSE_REPORT).read_text(encoding='utf-8'),text)
+        for phrase in ['3,024 solution-coordinate','384 complex-coordinate','0.5153882032','0.5625']:
+            self.assertIn(phrase,text)
+
+    def test_fitpack_values_and_derivatives_have_separate_polynomial_evidence(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for ident,code,count in [('fitpack-polynomial-values','E1a',11016),
+                                 ('fitpack-polynomial-derivatives','H1',44352)]:
+            d = drivers[ident]
+            self.assertEqual(d['gams_code'],code)
+            self.assertEqual(d['checks']['polynomial_fits'],144)
+            self.assertEqual(d['checks']['reference_checks'],count)
+            self.assertEqual(d['checks']['spline_degrees'],[1,3,5])
+            self.assertTrue(d['checks']['scalar_vector_checked'])
+            self.assertTrue(d['checks']['reversed_nonuniform_sources_checked'])
+            self.assertTrue(d['checks']['destruction_checked'])
+            self.assertFalse(d['checks']['positive_smoothing_verified'])
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'],ident)
+            self.assertEqual(class_evidence(class_tree(data),code,[record],[d])['status'],'verified')
+        differentiation = drivers['fitpack-polynomial-derivatives']['checks']
+        self.assertEqual(differentiation['positive_derivative_checks'],34848)
+        self.assertEqual(differentiation['zeroth_derivative_checks'],9504)
+        self.assertEqual(differentiation['max_derivative_order'],5)
+        self.assertFalse(differentiation['arbitrary_callback_differentiation_verified'])
+        text = fitpack_polynomials_review_text()
+        self.assertEqual((ROOT/FITPACK_POLYNOMIALS_REPORT).read_text(encoding='utf-8'),text)
+        for phrase in ['11,016 total value references','44,352 references','orders through five','not an arbitrary']:
+            self.assertIn(phrase,text)
+        interpolation = interpolation_review_text()
+        self.assertIn('FITPACK polynomial review',interpolation)
+        self.assertNotIn('/None)',interpolation)
+
+    def test_regrid_and_rk45_drivers_check_exact_values_and_requested_times(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for ident,code in [('regridpack-polynomial-reference','E1a'),('diffeq-rk45-reference','I1a1a')]:
+            d = drivers[ident]
+            self.assertEqual(d['gams_code'],code)
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'],ident)
+            self.assertEqual(class_evidence(class_tree(data),code,[record],[d])['status'],'verified')
+        interpolation = drivers['regridpack-polynomial-reference']['checks']
+        self.assertEqual(interpolation['successful_calls'],127)
+        self.assertEqual(interpolation['analytical_value_checks'],3614)
+        self.assertEqual(interpolation['expected_rejections'],8)
+        self.assertTrue(interpolation['post_error_recovery_checked'])
+        self.assertFalse(interpolation['multidimensional_verified'])
+        ode = drivers['diffeq-rk45-reference']['checks']
+        self.assertEqual(ode['ivp_runs'],24)
+        self.assertEqual(ode['requested_solution_points'],408)
+        self.assertTrue(ode['both_directions_checked'])
+        self.assertTrue(ode['callback_state_checked'])
+        self.assertTrue(ode['reused_solver_checked'])
+        self.assertFalse(ode['stiff_problems_verified'])
+        self.assertFalse(ode['events_verified'])
+        text = regrid_rk45_review_text()
+        self.assertEqual((ROOT/REGRID_RK45_REPORT).read_text(encoding='utf-8'),text)
+        for phrase in ['3,614 analytical value checks','408 checked solution points','clear_buffer','extrapolation']:
+            self.assertIn(phrase,text)
+        self.assertNotIn('/None)',text)
+
+    def test_spectral_wrappers_check_prescribed_spectra_and_reduced_factor_scope(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for ident,code,fixtures,calls in [('forsvd-spectrum-reference','D6',144,432),
+                                          ('foreig-symmetric-reference','D4a1',96,96)]:
+            d = drivers[ident]
+            self.assertEqual(d['gams_code'],code)
+            self.assertEqual(d['checks']['matrix_fixtures'],fixtures)
+            self.assertEqual(d['checks']['solver_calls'],calls)
+            self.assertTrue(d['checks']['known_spectrum_checked'])
+            self.assertTrue(d['checks']['orthogonality_checked'])
+            self.assertFalse(d['checks']['complex_overloads_verified'])
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'],ident)
+            self.assertEqual(class_evidence(class_tree(data),code,[record],[d])['status'],'verified')
+        svd = drivers['forsvd-spectrum-reference']['checks']
+        self.assertEqual(svd['methods'],['default','gesvd','gesdd'])
+        self.assertTrue(svd['input_copy_used'])
+        self.assertTrue(svd['reduced_factors_only'])
+        eig = drivers['foreig-symmetric-reference']['checks']
+        self.assertTrue(eig['upper_triangle_checked'])
+        self.assertTrue(eig['input_preservation_checked'])
+        self.assertFalse(eig['nonsymmetric_verified'])
+        text = spectral_wrappers_review_text()
+        self.assertEqual((ROOT/SPECTRAL_WRAPPERS_REPORT).read_text(encoding='utf-8'),text)
+        for phrase in ['432 decompositions','96 fixtures','fresh input copy','Neither wrapper exposes LAPACK INFO']:
+            self.assertIn(phrase,text)
+
+    def test_iterative_least_squares_drivers_check_exact_minimum_norm_answers(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for package in ['lsqr','lsmr']:
+            d = drivers[package+'-least-squares-reference']
+            self.assertEqual(d['gams_code'],'D9a1')
+            self.assertEqual(d['checks']['matrix_fixtures'],72)
+            self.assertEqual(d['checks']['solver_calls'],216)
+            self.assertEqual(d['checks']['nonzero_residual_fixtures'],18)
+            self.assertTrue(d['checks']['minimum_norm_checked'])
+            self.assertTrue(d['checks']['normal_equation_checked'])
+            self.assertFalse(d['checks']['damping_verified'])
+            self.assertFalse(d['checks']['rank_deficiency_verified'])
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'],d['id'])
+            self.assertEqual(class_evidence(class_tree(data),'D9a1',[record],[d])['status'],'verified')
+        text = iterative_ls_review_text()
+        self.assertEqual((ROOT/ITERATIVE_LS_REPORT).read_text(encoding='utf-8'),text)
+        for phrase in ['216 vector solves','72 fixtures','minimum-norm','zero damping','Rank deficiency']:
+            self.assertIn(phrase,text)
 
     def test_higher_ad_drivers_check_complex_orders_and_polynomial_hessians(self):
         data = gams_data()

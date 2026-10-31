@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "maptran-wgs84-reference",
+      "source_revision": "4ccc2479ae79a58b34d8e491013cfa2f60f65867",
+      "source_sha256": "2ca4a7d3f648ce98ad737a0ab461f156f99a15e2b0ce5478ceb439ffb95e9fd3",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T19:15:35.236834+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.374,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Degree/radian geodetic cases: 336; conversion calls: 680\nAdditional exact forward polar-axis calls: 8\nMaximum ECEF error (meters):   1.4261E-09\nMaximum inverse angular error (degrees):   1.1916E-11\nMaximum inverse height error (meters):   1.0523E-09\nPASS maptran-wgs84-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.035,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "forlab-least-squares-reference",
+      "source_revision": "416e5612167b6133100bef4cec116322890f66f7",
+      "source_sha256": "d89843a91625e986a957a328495171403d48d896b9f0ed95438717ffcd5f727c",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T19:16:33.026625+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.607,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Full-rank least-squares fixtures: 36; solver calls: 108\nOverdetermined fixtures with prescribed nonzero residuals: 18\nOverdetermined only; three vector RHS calls per fixture; native catalog RPRE.\nMaximum normalized solution error:   4.1723E-07\nMaximum normalized prescribed-residual error:   2.1397E-07\nMaximum normalized normal-equation residual:   3.3833E-07\nForlab real storage bits: 32\nPASS forlab-least-squares-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.034,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T19:16:33.078313+00:00"
+}
