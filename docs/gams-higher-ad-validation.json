@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "dnaoad-higher-reference",
+      "source_revision": "f7f328e89b208a99797d64f4a41e97ba91b85962",
+      "source_sha256": "f814d97754839cd8f4757b0cdf9a965f5889f3f775159c8be23d163af9e1456e",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T17:28:41.981940+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.479,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Dual expressions at 15 real/complex points and requested orders 0..5: 450; derivative references: 1575\nScaled exp/sin / composed exp / polynomial derivatives:    945   315   315\nMaximum normalized complex derivative error:   3.9205E-15\nPASS dnaoad-higher-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.033,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "diffstruc-hessian-reference",
+      "source_revision": "88565f8e01792706edc0bd7e70dde957c26122a4",
+      "source_sha256": "b323c54938f1ae28b10b91f24a9b90e2dd5e61fcf4482a309ece23d5e8ae05b5",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T17:28:43.907909+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.453,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Three-variable polynomial points: 5; forward calls: 30; reverse calls: 20\nExact values, directional derivatives, gradient and Hessian entries: 95\nMaximum normalized REAL32 reference error:   0.0000E+00\nPASS diffstruc-hessian-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.052,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T17:28:43.951642+00:00"
+}

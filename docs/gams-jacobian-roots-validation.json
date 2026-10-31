@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "minpack-lmder-reference",
+      "source_revision": "c0b5aea9fcd2b83865af921a7a7e881904f8d3c2",
+      "source_sha256": "f95459b21899c4dcd7da667b693552d63e2cf44336723611460a2bbbd7db4678",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T17:19:36.452870+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.388,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Total / exact-fit / nonzero-residual fits:    40   24   16\nAnalytical Jacobian entries checked by central differences at starting points: 400\nMaximum normalized parameter error:   5.9266E-11\nMaximum normalized Jacobian finite-difference error:   1.3978E-10\nMaximum absolute J-transpose-residual component:   1.1853E-09\nPASS minpack-lmder-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.032,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "forsolver-newton-reference",
+      "source_revision": "6c0644b287cb49a7310d883415b9b9ba581d51c5",
+      "source_sha256": "5a173f930d638c2a2bbf4eba9c37686718c08b4132ca5658f4f6ba6e2179e841",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T17:19:38.898184+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.37,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Unique-root fixtures: 96; three-method solves: 288\nAnalytic Newton, central finite differences and complex step; all roots independently prescribed.\nMaximum normalized root error:   2.0894E-13\nMaximum normalized residual:   2.1405E-13\nMaximum normalized inter-method spread:   3.3307E-15\nPASS forsolver-newton-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.044,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T17:19:38.943122+00:00"
+}

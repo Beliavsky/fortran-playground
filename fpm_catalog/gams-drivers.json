@@ -5357,6 +5357,252 @@
         "error_estimate_rigorous_bound_verified": false,
         "invalid_inputs_verified": false
       }
+    },
+    {
+      "id": "minpack-lmder-reference",
+      "name": "gams-minpack-lmder-reference",
+      "package_id": "minpack",
+      "procedure_id": "minpack-lmder1",
+      "gams_code": "G1b1b",
+      "problem_id": "known-jacobian-nonlinear-least-squares",
+      "path": "fpm_catalog/gams-drivers/minpack-lmder-reference.f90",
+      "revision": "c0b5aea9fcd2b83865af921a7a7e881904f8d3c2",
+      "author_example": "examples/example_lmder1.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/jacobian-roots-drivers-MIT.txt"
+      ],
+      "modifications": "Independent lmder1 consumer; pinned source/author example reviewed, no upstream code copied. Twenty-four two-parameter exponential exact-data fits have known amplitudes/exponents. Sixteen transformed-linear nonlinear fits have a known unique global minimizer and nonzero residual norm 14*rho^2. Analytical Jacobians are checked at starts by central differences (400 entries). Requires normal status 1..4, both residual/Jacobian callback modes, finite parameters/residuals, exact parameter/objective references, returned-residual consistency and stationarity. G1b1b denotes derivative-based nonlinear least squares, not a general scalar-gradient optimizer. No global convergence guarantee, rank-deficient, invalid-input or performance verification.",
+      "validation_path": "docs/gams-jacobian-roots-validation.json",
+      "review_path": "docs/gams-jacobian-roots.md",
+      "checks": {
+        "nonlinear_fits": 40,
+        "exact_fit_runs": 24,
+        "nonzero_residual_runs": 16,
+        "parameters": 2,
+        "residuals": 5,
+        "jacobian_entries_checked": 400,
+        "max_normalized_jacobian_fd_error": 2e-07,
+        "max_normalized_parameter_error": 2e-07,
+        "max_normalized_objective_error": 1e-10,
+        "max_stationarity_component": 1e-06,
+        "stopping_status_checked": true,
+        "both_callback_modes_checked": true,
+        "general_scalar_optimization_verified": false
+      }
+    },
+    {
+      "id": "forsolver-newton-reference",
+      "name": "gams-forsolver-newton-reference",
+      "package_id": "forsolver",
+      "procedure_id": "forsolver-nlsolver",
+      "gams_code": "F1b",
+      "problem_id": "monotone-known-scalar-roots",
+      "path": "fpm_catalog/gams-drivers/forsolver-newton-reference.f90",
+      "revision": "6c0644b287cb49a7310d883415b9b9ba581d51c5",
+      "author_example": "test/test_solver3.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/jacobian-roots-drivers-MIT.txt"
+      ],
+      "modifications": "Independent scalar Newton consumer; pinned source/author example reviewed, no upstream code copied. Ninety-six unique-root fixtures combine three strictly increasing analytic functions, four prescribed root shifts, two positive scales and four starts. Analytic-derivative, central-difference and complex-step methods give 288 solves. Checks actual callbacks, finite roots, imaginary component, known root, residual and inter-method agreement. The invoked API has no returned convergence status; verification relies on answer checks. No vector systems, arbitrary complex roots, derivative singularities, failure recovery or global convergence/performance claims.",
+      "validation_path": "docs/gams-jacobian-roots-validation.json",
+      "review_path": "docs/gams-jacobian-roots.md",
+      "checks": {
+        "root_fixtures": 96,
+        "solver_calls": 288,
+        "function_families": 3,
+        "centers": [
+          -2,
+          0,
+          0.5,
+          3
+        ],
+        "positive_scales": [
+          0.5,
+          2
+        ],
+        "starting_offsets": [
+          -2,
+          -0.5,
+          0.5,
+          2
+        ],
+        "methods": [
+          "analytic Newton",
+          "central finite differences",
+          "complex step"
+        ],
+        "max_normalized_root_error": 1e-09,
+        "max_normalized_residual": 1e-10,
+        "max_imaginary_root": 1e-12,
+        "returned_status_available": false,
+        "vector_systems_verified": false
+      }
+    },
+    {
+      "id": "dnaoad-higher-reference",
+      "name": "gams-dnaoad-higher-reference",
+      "package_id": "dnaoad-fpm",
+      "procedure_id": "dnaoad-fpm-api",
+      "gams_code": "H1",
+      "problem_id": "complex-univariate-higher-derivatives",
+      "path": "fpm_catalog/gams-drivers/dnaoad-higher-reference.f90",
+      "revision": "f7f328e89b208a99797d64f4a41e97ba91b85962",
+      "author_example": "app/ex1.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/higher-ad-drivers-MIT.txt"
+      ],
+      "modifications": "Independent complex univariate higher-order AD consumer; pinned source and author example reviewed, no upstream code copied. Fifteen real/complex points and every requested order 0..5 yield 450 dual expressions and 1575 analytical derivative references. Scaled exp/sin, exp(z^2+z) with closed-form polynomial derivative factors, and a degree-five polynomial exercise chain/product rules. Requires result order, finite real/imaginary parts and normalized complex error <=2e-11. Uses the pinned configured maximum of five; no higher-order, multivariate, nonanalytic, invalid-input or performance verification.",
+      "validation_path": "docs/gams-higher-ad-validation.json",
+      "review_path": "docs/gams-higher-ad.md",
+      "checks": {
+        "complex_sample_points": 15,
+        "requested_orders": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "dual_expressions": 450,
+        "derivative_reference_checks": 1575,
+        "scaled_exp_sin_checks": 945,
+        "composed_exp_checks": 315,
+        "polynomial_checks": 315,
+        "max_normalized_complex_derivative_error": 2e-11,
+        "multivariate_verified": false,
+        "nonanalytic_functions_verified": false
+      }
+    },
+    {
+      "id": "diffstruc-hessian-reference",
+      "name": "gams-diffstruc-hessian-reference",
+      "package_id": "diffstruc",
+      "procedure_id": "diffstruc-api",
+      "gams_code": "H1",
+      "problem_id": "three-variable-polynomial-gradient-hessian",
+      "path": "fpm_catalog/gams-drivers/diffstruc-hessian-reference.f90",
+      "revision": "88565f8e01792706edc0bd7e70dde957c26122a4",
+      "author_example": "test/test_functions.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/higher-ad-drivers-MIT.txt"
+      ],
+      "modifications": "Independent three-variable polynomial AD consumer; pinned APIs and author example reviewed, no upstream code copied. Five dyadic points include the origin. Six forward directions include three coordinate bases, two mixed directions and zero. Reverse gradients and reverse-over-forward Hessian entries match hand-derived formulas and symmetry. Restores the full direction mask before reverse accumulation. Ninety-five exact REAL32 references; graphs retained for this short process lifetime. Does not verify graph disposal, arbitrary expression graphs, all intrinsics, nonsmooth inputs or performance.",
+      "validation_path": "docs/gams-higher-ad-validation.json",
+      "review_path": "docs/gams-higher-ad.md",
+      "checks": {
+        "polynomial_sample_points": 5,
+        "variables": 3,
+        "forward_calls": 30,
+        "reverse_calls": 20,
+        "exact_reference_checks": 95,
+        "hessian_entry_checks": 45,
+        "directional_derivatives_checked": true,
+        "zero_direction_checked": true,
+        "max_normalized_real32_error": 1e-05,
+        "graph_disposal_verified": false,
+        "general_intrinsics_verified": false
+      }
+    },
+    {
+      "id": "qdutillib-moments-reference",
+      "name": "gams-qdutillib-moments-reference",
+      "package_id": "qdutillib",
+      "procedure_id": "qdutillib-api",
+      "gams_code": "H2c",
+      "problem_id": "legendre-hermite-exact-moments",
+      "path": "fpm_catalog/gams-drivers/qdutillib-moments-reference.f90",
+      "revision": "8a1fa9ca7cf52683c98cc4bcb40f21dc41df6ed5",
+      "author_example": "APP/App_QDLib.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/moments-nufft2d-drivers-MIT.txt"
+      ],
+      "modifications": "Independent QDUtilLib rule-generator consumer; pinned source/author example reviewed, no upstream code copied. Seven orders for LegendreP and HO give 14 rules and 191 exact moments. HO full-function weights are multiplied by the Gaussian for standard Hermite moments. Checks status, storage, finite nodes/weights, positivity, symmetry, polynomial exactness through degree 2n-1, shifted Legendre moments and deallocation. Odd-moment cancellation normalized by absolute contributions. Other rule families, invalid inputs and adaptive integration remain unverified.",
+      "validation_path": "docs/gams-moments-nufft2d-validation.json",
+      "review_path": "docs/gams-moments-nufft2d.md",
+      "checks": {
+        "orders": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          8,
+          12
+        ],
+        "quadrature_rules": 14,
+        "legendre_gaussian_moments": 144,
+        "shifted_legendre_moments": 47,
+        "total_moment_checks": 191,
+        "positive_weights_checked": true,
+        "node_weight_symmetry_checked": true,
+        "deallocation_checked": true,
+        "max_normalized_moment_error": 5e-11,
+        "other_rule_families_verified": false
+      }
+    },
+    {
+      "id": "nufft2d-direct-reference",
+      "name": "gams-nufft2d-direct-reference",
+      "package_id": "nufft2d",
+      "procedure_id": "nufft2d-transform",
+      "gams_code": "J1",
+      "problem_id": "two-dimensional-type1-direct-sums",
+      "path": "fpm_catalog/gams-drivers/nufft2d-direct-reference.f90",
+      "revision": "8353c5fb20cd0a8fe6821fae18355e303ed23ed3",
+      "author_example": "nufft2d_demof90.f",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/moments-nufft2d-drivers-MIT.txt"
+      ],
+      "modifications": "Independent classic type-1 2D NUFFT consumer; pinned F90 interface and author demo reviewed, no upstream code copied. Three source counts, three even/odd mode grids, four point/strength patterns, both signs and two tolerances give 144 calls. Every coefficient is compared to direct scalar Fourier sums with documented 1/nj normalization. Checks status, finite values, DC component, unchanged input and exact zero-strength output. Reuses existing checksum-guarded legacy extent-one dummy-array adapter; no new library edits. Types 2/3, exact periodic endpoints, every FFT path and performance remain unverified.",
+      "validation_path": "docs/gams-moments-nufft2d-validation.json",
+      "review_path": "docs/gams-moments-nufft2d.md",
+      "checks": {
+        "source_counts": [
+          8,
+          31,
+          64
+        ],
+        "mode_grids": [
+          [
+            8,
+            10
+          ],
+          [
+            9,
+            11
+          ],
+          [
+            16,
+            18
+          ]
+        ],
+        "point_patterns": 4,
+        "transform_calls": 144,
+        "coefficient_checks": 22416,
+        "requested_tolerances": [
+          1e-07,
+          1e-10
+        ],
+        "both_signs_checked": true,
+        "zero_strengths_checked": true,
+        "dc_normalization_checked": true,
+        "input_preservation_checked": true,
+        "max_error_multiple_of_requested_tolerance": 50,
+        "type2_type3_verified": false
+      }
     }
   ]
 }

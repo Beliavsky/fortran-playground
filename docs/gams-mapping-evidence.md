@@ -8,7 +8,7 @@ This report assesses each package/class pair, including inherited parent classes
 
 When a driver cannot be created, inspect the pinned implementation and author examples. Narrow or remove a classification that is unsupported; do not substitute an unrelated default example as evidence. Record missing dependencies, sandbox limits and upstream defects separately in the procedure or package review notes. A sandbox failure alone does not disprove an algorithm.
 
-Counts refer to package/class pairs and include parents: 396 verified, 355 source-supported, 246 uncertain.
+Counts refer to package/class pairs and include parents: 409 verified, 342 source-supported, 246 uncertain.
 
 ## Mappings requiring source review
 
@@ -306,8 +306,8 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [dftd4 / dftd4-dispersion](https://beliavsky.github.io/fortran-playground/gams/packages/dftd4/#dftd4-dispersion) | Z | verified |
 | [diffeq / diffeq-runge-kutta-45](https://beliavsky.github.io/fortran-playground/gams/packages/diffeq/#diffeq-runge-kutta-45) | I1a1a | source-supported |
 | [differentia / differentia-ad](https://beliavsky.github.io/fortran-playground/gams/packages/differentia/#differentia-ad) | H1 | verified |
-| [diffstruc / diffstruc-api](https://beliavsky.github.io/fortran-playground/gams/packages/diffstruc/#diffstruc-api) | H1 | source-supported |
-| [dnaoad-fpm / dnaoad-fpm-api](https://beliavsky.github.io/fortran-playground/gams/packages/dnaoad-fpm/#dnaoad-fpm-api) | H1 | source-supported |
+| [diffstruc / diffstruc-api](https://beliavsky.github.io/fortran-playground/gams/packages/diffstruc/#diffstruc-api) | H1 | verified |
+| [dnaoad-fpm / dnaoad-fpm-api](https://beliavsky.github.io/fortran-playground/gams/packages/dnaoad-fpm/#dnaoad-fpm-api) | H1 | verified |
 | [dop853 / dop853-dop853-class](https://beliavsky.github.io/fortran-playground/gams/packages/dop853/#dop853-dop853-class) | I1a1a | verified |
 | [dtfft / dtfft-cpu-c2c](https://beliavsky.github.io/fortran-playground/gams/packages/dtfft/#dtfft-cpu-c2c) | J1 | source-supported |
 | [dvode / dvode-dvode-t](https://beliavsky.github.io/fortran-playground/gams/packages/dvode/#dvode-dvode-t) | I1a2 | verified |
@@ -364,7 +364,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [forpca / forpca-pca](https://beliavsky.github.io/fortran-playground/gams/packages/forpca/#forpca-pca) | D6 | source-supported |
 | [forpca / forpca-pca](https://beliavsky.github.io/fortran-playground/gams/packages/forpca/#forpca-pca) | L13b | source-supported |
 | [forpy / forpy-embedding](https://beliavsky.github.io/fortran-playground/gams/packages/forpy/#forpy-embedding) | S | source-supported |
-| [forsolver / forsolver-nlsolver](https://beliavsky.github.io/fortran-playground/gams/packages/forsolver/#forsolver-nlsolver) | F1b | source-supported |
+| [forsolver / forsolver-nlsolver](https://beliavsky.github.io/fortran-playground/gams/packages/forsolver/#forsolver-nlsolver) | F1b | verified |
 | [forsvd / forsvd-api](https://beliavsky.github.io/fortran-playground/gams/packages/forsvd/#forsvd-api) | D6 | source-supported |
 | [fortime / serial-timers](https://beliavsky.github.io/fortran-playground/gams/packages/fortime/#serial-timers) | R | source-supported |
 | [fortimize / fortimize-gradient-descent](https://beliavsky.github.io/fortran-playground/gams/packages/fortimize/#fortimize-gradient-descent) | G1b | source-supported |
@@ -477,7 +477,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [mersenne-twister-fortran / mersenne-twister-fortran-genrand64-real2](https://beliavsky.github.io/fortran-playground/gams/packages/mersenne-twister-fortran/#mersenne-twister-fortran-genrand64-real2) | L6a21 | verified |
 | [metis-fpm / metis-fpm-metis-partgraphkway](https://beliavsky.github.io/fortran-playground/gams/packages/metis-fpm/#metis-fpm-metis-partgraphkway) | P | source-supported |
 | [minpack / minpack-hybrd1](https://beliavsky.github.io/fortran-playground/gams/packages/minpack/#minpack-hybrd1) | F2 | verified |
-| [minpack / minpack-lmder1](https://beliavsky.github.io/fortran-playground/gams/packages/minpack/#minpack-lmder1) | G1b1b | source-supported |
+| [minpack / minpack-lmder1](https://beliavsky.github.io/fortran-playground/gams/packages/minpack/#minpack-lmder1) | G1b1b | verified |
 | [minpack / minpack-lmdif1](https://beliavsky.github.io/fortran-playground/gams/packages/minpack/#minpack-lmdif1) | G1b1a | verified |
 | [minres / minres-minres-solver](https://beliavsky.github.io/fortran-playground/gams/packages/minres/#minres-minres-solver) | D2b4 | verified |
 | [mpfun2020-var1 / mpfun2020-var1-mpcmplx](https://beliavsky.github.io/fortran-playground/gams/packages/mpfun2020-var1/#mpfun2020-var1-mpcmplx) | A4c | verified |
@@ -502,7 +502,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [ntpoly / ntpoly-inversion](https://beliavsky.github.io/fortran-playground/gams/packages/ntpoly/#ntpoly-inversion) | D2 | source-supported |
 | [ntpoly / ntpoly-matrix-square-roots](https://beliavsky.github.io/fortran-playground/gams/packages/ntpoly/#ntpoly-matrix-square-roots) | D | verified |
 | [nufft1d / nufft1d-transform](https://beliavsky.github.io/fortran-playground/gams/packages/nufft1d/#nufft1d-transform) | J1 | verified |
-| [nufft2d / nufft2d-transform](https://beliavsky.github.io/fortran-playground/gams/packages/nufft2d/#nufft2d-transform) | J1 | source-supported |
+| [nufft2d / nufft2d-transform](https://beliavsky.github.io/fortran-playground/gams/packages/nufft2d/#nufft2d-transform) | J1 | verified |
 | [numdiff / numdiff-compute-derivative](https://beliavsky.github.io/fortran-playground/gams/packages/numdiff/#numdiff-compute-derivative) | H1 | verified |
 | [odepack / odepack-lsoda-class](https://beliavsky.github.io/fortran-playground/gams/packages/odepack/#odepack-lsoda-class) | I1a2 | verified |
 | [odrpack95 / odrpack95-odr](https://beliavsky.github.io/fortran-playground/gams/packages/odrpack95/#odrpack95-odr) | L8 | verified |
@@ -530,7 +530,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [qcontainers / qcontainers-storage](https://beliavsky.github.io/fortran-playground/gams/packages/qcontainers/#qcontainers-storage) | N4 | source-supported |
 | [qcontainers / qcontainers-storage](https://beliavsky.github.io/fortran-playground/gams/packages/qcontainers/#qcontainers-storage) | N5 | source-supported |
 | [qdldl-fortran / qdldl-fortran-api](https://beliavsky.github.io/fortran-playground/gams/packages/qdldl-fortran/#qdldl-fortran-api) | D2b4 | verified |
-| [qdutillib / qdutillib-api](https://beliavsky.github.io/fortran-playground/gams/packages/qdutillib/#qdutillib-api) | H2c | source-supported |
+| [qdutillib / qdutillib-api](https://beliavsky.github.io/fortran-playground/gams/packages/qdutillib/#qdutillib-api) | H2c | verified |
 | [qnstop / qnstop-bounded](https://beliavsky.github.io/fortran-playground/gams/packages/qnstop/#qnstop-bounded) | G2 | verified |
 | [quadpack / quadpack-dqag](https://beliavsky.github.io/fortran-playground/gams/packages/quadpack/#quadpack-dqag) | H2a1a1 | verified |
 | [quadpack / quadpack-dqags](https://beliavsky.github.io/fortran-playground/gams/packages/quadpack/#quadpack-dqags) | H2a2a1 | verified |

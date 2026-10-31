@@ -1,14 +1,16 @@
 # Checked GAMS quadrature drivers
 
-These examples connect specific integration procedures to finite-interval GAMS problem classes. They are checked consumer programs at the catalog source revisions, rather than tests of every quadrature rule or a performance benchmark.
+These examples connect specific integration and quadrature-rule procedures to GAMS problem classes. They are checked consumer programs at the catalog source revisions, rather than tests of every quadrature rule or a performance benchmark.
 
 | Class | Problem | Procedures |
 | --- | --- | --- |
-| [H2a1a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/H2a1a1) | Automatic one-dimensional integration on a finite interval, integrand supplied as a procedure | QUADPACK `dqag`; quadrature-fortran `integration_class_1d%integrate` |
+| [H2a1a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/H2a1a1) | Automatic one-dimensional integration on a finite interval, integrand supplied as a procedure | QUADPACK `dqag`; quadrature-fortran `integration_class_1d%integrate`; FGSL `fgsl_integration_qags` |
 | [H2a2a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/H2a2a1) | Automatic finite-interval integration for special integrands supplied as procedures | QUADPACK `dqags`, demonstrated with integrable endpoint singularities |
 | [H2a2b2](https://gams.nist.gov/cgi-bin/serve.cgi/Class/H2a2b2) | Nonautomatic integration of a stored spline | fitpack `fitpack_curve%integral` |
 
 The [stored-spline integration review](gams-sparse-integral.md) describes the fitpack polynomial antiderivative checks, reversed and zero-width intervals, and partition additivity.
+
+Rule generators in H2c have their own exact-moment checks. The [quadrature-moment and 2D-transform review](gams-moments-nufft2d.md) describes QDUtilLib Legendre and full-function-weight Hermite rules; other generator checks retain their recorded scope below.
 
 ## Shared smooth-integral checks
 
@@ -33,12 +35,13 @@ The `dqags` driver adapts the author's inverse-square-root test and adds a logar
 | [Load scifortran-quadrature-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=scifortran&example=gams-scifortran-quadrature-reference) · [Driver source](../fpm_catalog/gams-drivers/scifortran-quadrature-reference.f90) | H2 | [Procedure](https://github.com/SciFortran/SciFortran/blob/ca4a55f49cfdf7a94e388bc3475a5db574d5de99/src/SF_INTEGRATE/SF_INTEGRATE.f90#L1) · [Author test](https://github.com/SciFortran/SciFortran/blob/ca4a55f49cfdf7a94e388bc3475a5db574d5de99/test/src/SF_INTEGRATE/01_test_sf_integrate_quad.f90) |
 | [Load kronrod-moments-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=kronrod&example=gams-kronrod-moments-reference) · [Driver source](../fpm_catalog/gams-drivers/kronrod-moments-reference.f90) | H2c | [Procedure](https://github.com/jacobwilliams/kronrod/blob/312278846b6e403fdea410a823d88ef4fb92a3cc/app/main.f90#L1) · [Author test](https://github.com/jacobwilliams/kronrod/blob/312278846b6e403fdea410a823d88ef4fb92a3cc/app/main.f90) |
 | [Load fgsl-qags-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=fgsl&example=gams-fgsl-qags-reference) · [Driver source](../fpm_catalog/gams-drivers/fgsl-qags-reference.f90) | H2a1a1 | [Procedure](https://github.com/reinh-bader/fgsl/blob/27a3e7cc0809623bcfde680c39a6fdcf0f590c4c/api/integration.finc#L1) · [Author test](https://github.com/reinh-bader/fgsl/blob/27a3e7cc0809623bcfde680c39a6fdcf0f590c4c/doc/examples/integration.f90) |
+| [Load qdutillib-moments-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=qdutillib&example=gams-qdutillib-moments-reference) · [Driver source](../fpm_catalog/gams-drivers/qdutillib-moments-reference.f90) | H2c | [Procedure](https://github.com/lauvergn/QDUtilLib/blob/8a1fa9ca7cf52683c98cc4bcb40f21dc41df6ed5/SRC/Quadrature/Quadrature_m.f90#L81) · [Author test](https://github.com/lauvergn/QDUtilLib/blob/8a1fa9ca7cf52683c98cc4bcb40f21dc41df6ed5/APP/App_QDLib.f90) |
 
 Loading a link selects code without submitting a job. The same drivers are available in the hosted and main local FPM playgrounds and in downloaded FPM projects. Author license notices are retained with the drivers.
 
 ## Recorded results
 
-All 11 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0. Existing package libraries were reused; only each main and executable were compiled. The verification reports lock driver hashes and source revisions: [gams-applied-methods-validation.json](gams-applied-methods-validation.json), [gams-cubature-validation.json](gams-cubature-validation.json), [gams-quadrature-validation.json](gams-quadrature-validation.json), [gams-rkf-qags-validation.json](gams-rkf-qags-validation.json), [gams-roots-splines-quadrature-validation.json](gams-roots-splines-quadrature-validation.json), [gams-rules-differences-validation.json](gams-rules-differences-validation.json), [gams-sparse-integral-validation.json](gams-sparse-integral-validation.json).
+All 12 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0. Existing package libraries were reused; only each main and executable were compiled. The verification reports lock driver hashes and source revisions: [gams-applied-methods-validation.json](gams-applied-methods-validation.json), [gams-cubature-validation.json](gams-cubature-validation.json), [gams-moments-nufft2d-validation.json](gams-moments-nufft2d-validation.json), [gams-quadrature-validation.json](gams-quadrature-validation.json), [gams-rkf-qags-validation.json](gams-rkf-qags-validation.json), [gams-roots-splines-quadrature-validation.json](gams-roots-splines-quadrature-validation.json), [gams-rules-differences-validation.json](gams-rules-differences-validation.json), [gams-sparse-integral-validation.json](gams-sparse-integral-validation.json).
 
 Success is status `0` for QUADPACK and `1` for quadrature-fortran. The latter reports a signed error estimate. Estimates are printed separately from actual errors against the analytic references; they are not certified error bounds. Zero printed actual error means agreement at the working floating-point precision. Evaluation counts describe these runs and do not establish a general speed ranking.
 
@@ -198,12 +201,21 @@ Maximum normalized reported error estimate:   3.1979E-08
 PASS fgsl-qags-reference
 ```
 
+### qdutillib-moments-reference
+
+```text
+Rules: 14; Legendre/Gaussian moments: 144; shifted moments: 47
+Orders 1,2,3,4,6,8,12: positive weights, symmetry, exact polynomial moments and deallocation.
+Maximum moment error normalized by reference/absolute contributions:   2.5962E-15
+PASS qdutillib-moments-reference
+```
+
 ## Maintenance
 
 After changing a driver, verify it again using existing compiled package images:
 
 ```text
-python xverify_gams_drivers.py --drivers quadpack-smooth quadrature-fortran-smooth quadpack-endpoint-singular dcuhre-box-integrals gauss-jacobi-polynomial-moments cubatures-simplex-moments integrate-nd-polynomial-reference fitpack-spline-integral scifortran-quadrature-reference kronrod-moments-reference fgsl-qags-reference
+python xverify_gams_drivers.py --drivers quadpack-smooth quadrature-fortran-smooth quadpack-endpoint-singular dcuhre-box-integrals gauss-jacobi-polynomial-moments cubatures-simplex-moments integrate-nd-polynomial-reference fitpack-spline-integral scifortran-quadrature-reference kronrod-moments-reference fgsl-qags-reference qdutillib-moments-reference
 python xpackage_gams.py
 python xfpm_examples.py
 python xsite.py

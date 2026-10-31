@@ -531,6 +531,62 @@ class GamsSiteTests(unittest.TestCase):
             self.assertIn(('https://beliavsky.github.io/fortran-playground/fpm/?package=fortran-lua53',
                            'Open default example'), scripting.anchors)
 
+    def test_qdutillib_and_nufft2d_pages_open_class_specific_drivers(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects'] if p['playground']['package_id'] in {'qdutillib','nufft2d'}]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination,feed)
+            for code,package,driver in [('H2c','qdutillib','qdutillib-moments-reference'),
+                                        ('J1','nufft2d','nufft2d-direct-reference')]:
+                html = (destination/code/'index.html').read_text()
+                primary = [url for url,label in Page(html).anchors if label=='Try in playground']
+                self.assertEqual(primary,
+                    [f'https://beliavsky.github.io/fortran-playground/fpm/?package={package}&example=gams-{driver}'])
+                self.assertIn('Verified: a checked driver',html)
+            other_quad = Page((destination/'H2a1a1/index.html').read_text())
+            self.assertFalse(any('example=gams-qdutillib' in url for url,label in other_quad.anchors))
+            cosine = Page((destination/'J1a3/index.html').read_text())
+            self.assertFalse(any('example=gams-nufft2d' in url for url,label in cosine.anchors))
+
+    def test_higher_ad_class_page_opens_each_checked_derivative_problem(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects'] if p['playground']['package_id'] in {'dnaoad-fpm','diffstruc'}]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination,feed)
+            html = (destination/'H1/index.html').read_text()
+            primary = {url for url,label in Page(html).anchors if label=='Try in playground'}
+            expected = {
+                'https://beliavsky.github.io/fortran-playground/fpm/?package=dnaoad-fpm&example=gams-dnaoad-higher-reference',
+                'https://beliavsky.github.io/fortran-playground/fpm/?package=diffstruc&example=gams-diffstruc-hessian-reference'}
+            self.assertEqual(primary,expected)
+            self.assertEqual(html.count('Verified: a checked driver'),2)
+            quad = Page((destination/'H2/index.html').read_text())
+            self.assertFalse(any('example=gams-dnaoad' in url or 'example=gams-diffstruc' in url
+                                 for url,label in quad.anchors))
+
+    def test_user_jacobian_and_newton_class_pages_open_matching_fixtures(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects'] if p['playground']['package_id'] in {'minpack','forsolver'}]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination,feed)
+            for code,package,driver in [('G1b1b','minpack','minpack-lmder-reference'),
+                                        ('F1b','forsolver','forsolver-newton-reference')]:
+                html = (destination/code/'index.html').read_text()
+                primary = [url for url,label in Page(html).anchors if label=='Try in playground']
+                self.assertEqual(primary,
+                    [f'https://beliavsky.github.io/fortran-playground/fpm/?package={package}&example=gams-{driver}'])
+                self.assertIn('Verified: a checked driver',html)
+            systems = Page((destination/'F2/index.html').read_text())
+            self.assertFalse(any('example=gams-forsolver-newton' in url for url,label in systems.anchors))
+            derivative_free = Page((destination/'G1b1a/index.html').read_text())
+            self.assertFalse(any('example=gams-minpack-lmder' in url for url,label in derivative_free.anchors))
+
     def test_rkf45_and_qags_class_pages_open_exact_problems(self):
         import copy
         feed = copy.deepcopy(self.feed)

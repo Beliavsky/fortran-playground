@@ -11,6 +11,8 @@ These consumer programs solve two nonpolynomial scalar equations using roots-for
 
 Each driver requests function/variable tolerances `1e-12` and independently requires both root error and absolute residual at most `1e-9`. It checks convergence, finite results, bracket membership and agreement between the returned residual and a fresh function evaluation. Counters include solver callbacks only. The Newton driver supplies an analytic derivative, checks it against a central difference at the bracket midpoint, resets the counters and verifies that the solver uses it. nonlin chooses its initial point from the bracket; these drivers do not assume that its input root variable controls the initial iterate.
 
+Additional forsolver Newton fixtures use their own equations and acceptance checks; see the [Jacobian and scalar-Newton review](gams-jacobian-roots.md). They are maintained separately from this shared bracketed-root comparison.
+
 ## Sources and playground links
 
 | Driver | Pinned procedure | Author example |

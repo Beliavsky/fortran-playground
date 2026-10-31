@@ -57,6 +57,9 @@ from xpackage_gams import (gams_data, package_classes, review_text, subclass_mod
                           dense_spectra_review_text, DENSE_SPECTRA_REPORT,
                           least_interpolation_review_text, LEAST_INTERPOLATION_REPORT,
                           rkf_qags_review_text, RKF_QAGS_REPORT,
+                          jacobian_roots_review_text, JACOBIAN_ROOTS_REPORT,
+                          higher_ad_review_text, HIGHER_AD_REPORT,
+                          moments_nufft2d_review_text, MOMENTS_NUFFT2D_REPORT,
                           coverage_data, coverage_review_text, COVERAGE_REPORT,
                           class_evidence, class_tree, mapping_evidence_text, EVIDENCE_REPORT)
 
@@ -214,7 +217,8 @@ class PackageGamsTests(unittest.TestCase):
         self.assertNotIn('G1a', {c['code'] for c in package_classes(data, 'nonlin')})
         self.assertEqual({d['id'] for d in driver_data() if d['procedure_id'] in {m['id'] for m in mappings}},
                          {'fmin-sine', 'minpack-bard', 'libdogleg-bard', 'nonlin-rosenbrock-nm',
-                          'nonlin-rosenbrock-bfgs', 'nlopt-rosenbrock-lbfgs', 'fortimize-nelder-reference'})
+                          'nonlin-rosenbrock-bfgs', 'nlopt-rosenbrock-lbfgs', 'fortimize-nelder-reference',
+                          'minpack-lmder-reference'})
         tree = data['detailed_classes']
         self.assertEqual(tree['G1b1b']['parent'], 'G1b1')
         self.assertEqual(tree['G1b1']['parent'], 'G1b')
@@ -299,7 +303,8 @@ class PackageGamsTests(unittest.TestCase):
 
     def test_scalar_root_drivers_share_problem_class_and_separate_evidence(self):
         data = gams_data()
-        drivers = [d for d in driver_data(data=data) if d['gams_code'] == 'F1b']
+        drivers = [d for d in driver_data(data=data) if d['gams_code'] == 'F1b'
+                   and driver_validation_path(d) == 'docs/gams-roots-validation.json']
         self.assertEqual({d['id'] for d in drivers},
                          {'roots-fortran-brent', 'nonlin-roots-brent', 'nonlin-roots-newton'})
         self.assertEqual({driver_validation_path(d) for d in drivers}, {'docs/gams-roots-validation.json'})
@@ -807,6 +812,103 @@ class PackageGamsTests(unittest.TestCase):
         self.assertIn('method-of-steps reference', text)
         self.assertIn('a subsequent factorial(6) must return 720', text)
         self.assertIn('ordinary ODE subclasses', text)
+
+    def test_qdutillib_and_nufft2d_drivers_check_moments_and_direct_sums(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        rule = drivers['qdutillib-moments-reference']
+        transform = drivers['nufft2d-direct-reference']
+        self.assertEqual((rule['gams_code'],transform['gams_code']),('H2c','J1'))
+        self.assertEqual(rule['checks']['orders'],[1,2,3,4,6,8,12])
+        self.assertEqual(rule['checks']['quadrature_rules'],14)
+        self.assertEqual(rule['checks']['total_moment_checks'],191)
+        self.assertEqual(rule['checks']['legendre_gaussian_moments']+rule['checks']['shifted_legendre_moments'],191)
+        self.assertTrue(rule['checks']['deallocation_checked'])
+        self.assertFalse(rule['checks']['other_rule_families_verified'])
+        self.assertEqual(transform['checks']['transform_calls'],144)
+        self.assertEqual(transform['checks']['coefficient_checks'],22416)
+        self.assertIn([9,11],transform['checks']['mode_grids'])
+        self.assertTrue(transform['checks']['both_signs_checked'])
+        self.assertTrue(transform['checks']['zero_strengths_checked'])
+        self.assertTrue(transform['checks']['input_preservation_checked'])
+        self.assertFalse(transform['checks']['type2_type3_verified'])
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for d in [rule,transform]:
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'],d['id'])
+            self.assertEqual(class_evidence(class_tree(data),d['gams_code'],[record],[d])['status'],'verified')
+        text = moments_nufft2d_review_text()
+        self.assertEqual((ROOT/MOMENTS_NUFFT2D_REPORT).read_text(encoding='utf-8'),text)
+        self.assertIn('full-function weights',text)
+        self.assertIn('absolute contributions',text)
+        self.assertIn('22,416',text)
+        self.assertIn('Type-2/type-3 transforms',text)
+        self.assertIn('two-dimensional NUFFT2D driver',transforms_review_text())
+
+    def test_higher_ad_drivers_check_complex_orders_and_polynomial_hessians(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        complex_ad = drivers['dnaoad-higher-reference']
+        hessian = drivers['diffstruc-hessian-reference']
+        self.assertEqual((complex_ad['gams_code'],hessian['gams_code']),('H1','H1'))
+        self.assertEqual(complex_ad['checks']['requested_orders'],[0,1,2,3,4,5])
+        self.assertEqual(complex_ad['checks']['dual_expressions'],450)
+        self.assertEqual(complex_ad['checks']['derivative_reference_checks'],1575)
+        self.assertEqual(sum(complex_ad['checks'][key] for key in
+                             ['scaled_exp_sin_checks','composed_exp_checks','polynomial_checks']),1575)
+        self.assertFalse(complex_ad['checks']['multivariate_verified'])
+        self.assertFalse(complex_ad['checks']['nonanalytic_functions_verified'])
+        self.assertEqual(hessian['checks']['polynomial_sample_points'],5)
+        self.assertEqual(hessian['checks']['exact_reference_checks'],95)
+        self.assertEqual(hessian['checks']['hessian_entry_checks'],45)
+        self.assertEqual(hessian['checks']['forward_calls'],30)
+        self.assertEqual(hessian['checks']['reverse_calls'],20)
+        self.assertTrue(hessian['checks']['zero_direction_checked'])
+        self.assertFalse(hessian['checks']['graph_disposal_verified'])
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for d in [complex_ad,hessian]:
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'],d['id'])
+            self.assertEqual(class_evidence(class_tree(data),'H1',[record],[d])['status'],'verified')
+        text = higher_ad_review_text()
+        self.assertEqual((ROOT/HIGHER_AD_REPORT).read_text(encoding='utf-8'),text)
+        self.assertIn('1,575 exact complex references',text)
+        self.assertIn('45 Hessian entries',text)
+        self.assertIn('full [1,1,1] direction mask is restored',text)
+        self.assertIn('All graphs are retained',text)
+
+    def test_user_jacobian_and_newton_drivers_check_independent_minima_and_roots(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        fit = drivers['minpack-lmder-reference']
+        root = drivers['forsolver-newton-reference']
+        self.assertEqual((fit['gams_code'],root['gams_code']),('G1b1b','F1b'))
+        self.assertEqual(fit['checks']['nonlinear_fits'],40)
+        self.assertEqual(fit['checks']['exact_fit_runs'],24)
+        self.assertEqual(fit['checks']['nonzero_residual_runs'],16)
+        self.assertEqual(fit['checks']['jacobian_entries_checked'],400)
+        self.assertTrue(fit['checks']['stopping_status_checked'])
+        self.assertTrue(fit['checks']['both_callback_modes_checked'])
+        self.assertFalse(fit['checks']['general_scalar_optimization_verified'])
+        self.assertEqual(root['checks']['root_fixtures'],96)
+        self.assertEqual(root['checks']['solver_calls'],288)
+        self.assertEqual(len(root['checks']['methods']),3)
+        self.assertFalse(root['checks']['returned_status_available'])
+        self.assertFalse(root['checks']['vector_systems_verified'])
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for d in [fit,root]:
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'],d['id'])
+            self.assertEqual(class_evidence(class_tree(data),d['gams_code'],[record],[d])['status'],'verified')
+        self.assertNotEqual(class_evidence(class_tree(data),'F2',[records[root['procedure_id']]],
+                                          [root])['status'],'verified')
+        text = jacobian_roots_review_text()
+        self.assertEqual((ROOT/JACOBIAN_ROOTS_REPORT).read_text(encoding='utf-8'),text)
+        self.assertIn('400 entries',text)
+        self.assertIn('14*rho**2',text)
+        self.assertIn('normal stopping info in 1..4',text)
+        self.assertIn('288 solves',text)
+        self.assertIn('Agreement alone is insufficient',text)
 
     def test_rkf45_and_qags_drivers_check_known_solutions_and_requested_status(self):
         data = gams_data()

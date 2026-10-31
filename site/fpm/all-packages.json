@@ -8509,7 +8509,8 @@
             "path": "app/ex1.f90",
             "sha256": "45cfee1e4f05e4a9f49e640c11051f7102dc0bfd8e544612b096ecd3b8f31ed7"
           }
-        ]
+        ],
+        "driver_id": "dnaoad-higher-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T17:54:16.128500+00:00",
@@ -10135,7 +10136,8 @@
             "path": "test/test_solver3.f90",
             "sha256": "3824ae3ca0c76200ea2faccd34e99df2b6fb1653241f907f9a14af377f4a4d92"
           }
-        ]
+        ],
+        "driver_id": "forsolver-newton-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -16073,7 +16075,8 @@
             "path": "examples/example_lmder1.f90",
             "sha256": "140de0641ffd3e088ad99036c3e6077a8558802fa10858ce5d027a8d0a8a4577"
           }
-        ]
+        ],
+        "driver_id": "minpack-lmder-reference"
       },
       {
         "id": "minpack-hybrd1",
@@ -21906,7 +21909,8 @@
             "path": "APP/App_QDLib.f90",
             "sha256": "f9228fb8929ad1eff119c632ed2ab936a1cffe85b349d67ae84c287bbcab0ab9"
           }
-        ]
+        ],
+        "driver_id": "qdutillib-moments-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T16:54:18.541524+00:00"
@@ -23842,7 +23846,8 @@
             "path": "test/test_functions.f90",
             "sha256": "ddf07c01c9cb4e4eb971046b5f2d70ff8cbf1ee17fca7a374748c3e772e83182"
           }
-        ]
+        ],
+        "driver_id": "diffstruc-hessian-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T17:54:16.128500+00:00",
@@ -32871,7 +32876,8 @@
             "path": "nufft2d_demof90.f",
             "sha256": "991c1737849d3fa9bf081c774a01018b438bfa77f065c71af3fb6abb15319dab"
           }
-        ]
+        ],
+        "driver_id": "nufft2d-direct-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T19:26:39.127603+00:00",

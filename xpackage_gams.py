@@ -59,6 +59,9 @@ QR_AUTODIFF_REPORT = Path('docs/gams-qr-autodiff.md')
 DENSE_SPECTRA_REPORT = Path('docs/gams-dense-spectra.md')
 LEAST_INTERPOLATION_REPORT = Path('docs/gams-least-interpolation.md')
 RKF_QAGS_REPORT = Path('docs/gams-rkf-qags.md')
+JACOBIAN_ROOTS_REPORT = Path('docs/gams-jacobian-roots.md')
+HIGHER_AD_REPORT = Path('docs/gams-higher-ad.md')
+MOMENTS_NUFFT2D_REPORT = Path('docs/gams-moments-nufft2d.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
 EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
@@ -567,13 +570,18 @@ def g1_review_text(root=ROOT):
         licenses = ', '.join(f'[License](../{path})' for path in d['license_files'])
         lines.append(f'| [Load {d["id"]}]({url}) · [Source](../{d["path"]}) | {d["problem_id"]} / {d["gams_code"]} | {original} | {d["license"]} · {licenses} |')
     lines += ['', f'All {len(drivers)} drivers passed the hosted GNU Fortran 16.2.0 sandbox with FPM 0.12.0. '
-              'The [saved verification results](gams-g1-validation.json) include source hashes and program output. '
+              'The saved verification reports include source hashes and program output: '+', '.join(
+                  f'[{Path(path).name}]({Path(path).name})'
+                  for path in sorted({driver_validation_path(d) for d in drivers}))+'. '
               'Publishing checks that these hashes and package revisions still match.', '',
               'The sine driver minimizes sin(x) on [-4,0] and checks the solution against −π/2. '
               'Both Bard drivers fit the same 15 observations, start from (1,1,1), and check against '
               '(0.08241058, 1.133037, 2.343695), with maximum parameter error below 0.0002. '
               'Both require the residual norm to differ from 0.09063596 by less than 0.0000001. '
-              'MINPACK estimates the Jacobian by finite differences; libdogleg uses an analytic Jacobian. '
+              'For the Bard problem, MINPACK lmdif1 estimates the Jacobian by finite differences; '
+              'libdogleg uses an analytic Jacobian. The separate '
+              '[lmder1 reference fits](gams-jacobian-roots.md) supply user Jacobians and have their own exact '
+              'parameter and objective references. '
               'Callback counts and individual sandbox timings are not a fair performance ranking.', '',
               '## Common Rosenbrock problem', '',
               'The three Rosenbrock drivers minimize `(1-x)^2 + 100*(y-x^2)^2`, starting from `(-1.2,1)`. '
@@ -612,7 +620,7 @@ def g1_review_text(root=ROOT):
               'python xverify_gams_drivers.py --drivers nonlin-rosenbrock-nm nonlin-rosenbrock-bfgs nlopt-rosenbrock-lbfgs',
               '```', '',
               'The verifier uses the local `.fpm-audit-cache/precompiled.json` build report and records results '
-              'in `docs/gams-g1-validation.json`. It does not rebuild package libraries or deploy the service. '
+              "in each selected driver's manifest-specified validation file. It does not rebuild package libraries or deploy the service. "
               'These metadata and example changes require no backend deployment or package recompilation.', '']
     return '\n'.join(lines)
 
@@ -625,16 +633,20 @@ def quadrature_review_text(root=ROOT):
     packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
     records = {p['id']: p for p in data['procedure_mappings']}
     lines = ['# Checked GAMS quadrature drivers', '',
-             'These examples connect specific integration procedures to finite-interval GAMS problem classes. '
+             'These examples connect specific integration and quadrature-rule procedures to GAMS problem classes. '
              'They are checked consumer programs at the catalog source revisions, rather than tests of every '
              'quadrature rule or a performance benchmark.', '',
              '| Class | Problem | Procedures |', '| --- | --- | --- |',
-             '| [H2a1a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/H2a1a1) | Automatic one-dimensional integration on a finite interval, integrand supplied as a procedure | QUADPACK `dqag`; quadrature-fortran `integration_class_1d%integrate` |',
+             '| [H2a1a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/H2a1a1) | Automatic one-dimensional integration on a finite interval, integrand supplied as a procedure | QUADPACK `dqag`; quadrature-fortran `integration_class_1d%integrate`; FGSL `fgsl_integration_qags` |',
              '| [H2a2a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/H2a2a1) | Automatic finite-interval integration for special integrands supplied as procedures | QUADPACK `dqags`, demonstrated with integrable endpoint singularities |',
              '| [H2a2b2](https://gams.nist.gov/cgi-bin/serve.cgi/Class/H2a2b2) | Nonautomatic integration of a stored spline | fitpack `fitpack_curve%integral` |', '',
              'The [stored-spline integration review](gams-sparse-integral.md) '
              'describes the fitpack polynomial antiderivative checks, reversed '
              'and zero-width intervals, and partition additivity.', '',
+             'Rule generators in H2c have their own exact-moment checks. The '
+             '[quadrature-moment and 2D-transform review](gams-moments-nufft2d.md) '
+             'describes QDUtilLib Legendre and full-function-weight Hermite rules; '
+             'other generator checks retain their recorded scope below.', '',
              '## Shared smooth-integral checks', '',
              'Both smooth drivers integrate `exp(x)` and `cos(20*x)` over `[0,1]`. Analytic reference values '
              'are `exp(1)-1` and `sin(20)/20`. They request accuracy `1e-10` and independently require absolute '
@@ -690,7 +702,8 @@ def quadrature_review_text(root=ROOT):
 def roots_review_text(root=ROOT):
     root = Path(root)
     data = gams_data(root)
-    drivers = [d for d in driver_data(root, data) if d['gams_code'] == 'F1b']
+    drivers = [d for d in driver_data(root, data) if d['gams_code'] == 'F1b'
+               and driver_validation_path(d) == 'docs/gams-roots-validation.json']
     packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
     records = {p['id']: p for p in data['procedure_mappings']}
     lines = ['# Checked GAMS scalar-root drivers', '',
@@ -709,6 +722,9 @@ def roots_review_text(root=ROOT):
              'difference at the bracket midpoint, resets the counters and verifies that the solver uses it. '
              'nonlin chooses its initial point from the bracket; these drivers do not assume that its input '
              'root variable controls the initial iterate.', '',
+             'Additional forsolver Newton fixtures use their own equations and acceptance checks; see the '
+             '[Jacobian and scalar-Newton review](gams-jacobian-roots.md). They are maintained separately '
+             'from this shared bracketed-root comparison.', '',
              '## Sources and playground links', '',
              '| Driver | Pinned procedure | Author example |', '| --- | --- | --- |']
     for d in drivers:
@@ -1110,14 +1126,14 @@ def transforms_review_text(root=ROOT):
     records = {p['id']: p for p in data['procedure_mappings']}
     lines = ['# Checked GAMS transform drivers', '',
              '| Class | Configuration | Procedures |', '| --- | --- | --- |',
-             '| [J1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/J1) | Nonuniform one-dimensional type-1 Fourier transforms | NUFFT `nufft1d1f90` |',
+             '| [J1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/J1) | One-/two-dimensional nonuniform type-1 Fourier transforms | NUFFT `nufft1d1f90`; NUFFT2D `nufft2d1f90` |',
              '| [J1a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/J1a1) | One-dimensional real-input forward Fourier transforms | spectrum `rfft` |',
              '| [J1a2](https://gams.nist.gov/cgi-bin/serve.cgi/Class/J1a2) | One-dimensional complex Fourier transforms | FFTPACK `fft, ifft`; KISS FFT `fft%perform` |',
              '| [J1a3](https://gams.nist.gov/cgi-bin/serve.cgi/Class/J1a3) | One-dimensional sine and cosine transforms | FFTPACK `dct(type=2), idct(type=2)` |', '',
              'The real, complex and cosine transforms use the deepest recorded categories '
-             'for those configurations. The nonuniform example retains broader J1. '
-             'They do not exhaust integral transforms: multidimensional '
-             'transforms, convolution, Laplace and Hilbert transforms are separate opportunities.', '',
+             'for those configurations. The nonuniform examples retain broader J1. '
+             'They do not exhaust integral transforms: additional multidimensional configurations, '
+             'transform types, convolution, Laplace and Hilbert transforms are separate opportunities.', '',
              '## Nonuniform Fourier sums', '',
              'The NUFFT driver checks 24 type-1 transforms of 80 nonuniform sources '
              'into 15, 16, 31 and 32 modes, with three deterministic strength patterns '
@@ -1125,6 +1141,10 @@ def transforms_review_text(root=ROOT):
              'trigonometric sums with the documented `1/nj` normalization. '
              'See the [spatial and nonuniform-transform review](gams-spatial-nufft.md) '
              'for tolerances, the zero-mode check and the retained package build patches.', '',
+             'The two-dimensional NUFFT2D driver checks 144 transforms and all 22,416 coefficients against '
+             'direct sums, with both signs, two tolerances and even/odd grids. See the '
+             '[quadrature-moment and 2D-transform review](gams-moments-nufft2d.md) for its input patterns, '
+             'normalization, acceptance checks and limits.', '',
              '## Real-input FFT checks', '',
              'The spectrum driver checks 42 forward transforms against scalar trigonometric '
              'sums and Parseval energy, including ten odd/even lengths, four deterministic '
@@ -5058,6 +5078,271 @@ def rkf_qags_review_text(root=ROOT):
     return '\n'.join(lines)
 
 
+
+def jacobian_roots_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-jacobian-roots-validation.json']
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    records = {p['id']: p for p in data['procedure_mappings']}
+    lines = ['# Checked Jacobian-based nonlinear least squares and scalar Newton methods',
+            '',
+            'These G1b1b and F1b drivers passed the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing '
+            'existing package libraries. Only their mains and executables were compiled. The [verification '
+            'report](gams-jacobian-roots-validation.json) records pins, source hashes and actual output. GAMS '
+            'categories are not exhausted.',
+            '',
+            '## User-Jacobian nonlinear fits: MINPACK lmder1 (G1b1b)',
+            '',
+            'Twenty-four exact-data fits use five residuals f_i(a,b)=a*exp(b*t_i)-a0*exp(b0*t_i), with '
+            't=[-1,-0.5,0,0.5,1]. Known amplitudes a0=0.5 or 2, exponents b0=-1,0.25,1 and four starting combinations '
+            'a/a0=0.5 or 1.5, b-b0=-0.5 or 0.5 give the 24 cases. The supplied residual-Jacobian columns are '
+            'exp(b*t_i) and a*t_i*exp(b*t_i). The unique exact solution is [a0,b0]; it yields zero residual and hence '
+            'a global least-squares minimum.',
+            '',
+            'Sixteen nonzero-residual fits use f_i(a,b)=exp(a)-2+t_i*(b**3-1)+rho*q_i, with t=[-2,-1,0,1,2] and '
+            'q=[1,-2,2,-2,1]. The q vector is orthogonal to both the constant and t vectors, whose squared norms are '
+            '5 and 10; norm(q)**2=14. Consequently the exact squared objective is '
+            '5*(exp(a)-2)**2+10*(b**3-1)**2+14*rho**2. Its unique global minimizer is [log(2),1], with minimum '
+            '14*rho**2. Four rho values [-0.5,-0.125,0.125,0.5] and starts a=log(2)+/-0.7, b=0.5 or 1.5 give 16 fits. '
+            'Starting at the flat b=0 stationary point is outside this checked scope.',
+            '',
+            'Before each fit, both analytical Jacobian columns are checked by central differences with step '
+            '1e-5*max(1,abs(start_parameter)). Maximum entry discrepancy in a column divided by '
+            'max(1,maxabs(analytical_column)) must be at most 2e-7: 400 entries across 40 starting points. This '
+            'independently checks the user-supplied derivatives before testing lmder1. The solver receives tolerance '
+            '1e-12 and correctly sized real/integer work arrays; both residual iflag=1 and Jacobian iflag=2 callbacks '
+            'must actually be used.',
+            '',
+            'Acceptance requires normal stopping info in 1..4, finite parameters and residuals, and maximum parameter '
+            'error divided by max(1,maxabs(expected_parameters)) at most 2e-7. Recomputed and returned residuals must '
+            'agree within 1e-11. Squared residual norm must equal the known minimum with error divided by '
+            'max(1,minimum) at most 1e-10. Maximum absolute component of transpose(J)*f must be at most 1e-6. '
+            'Exact-data fits must additionally have maximum absolute residual at most 1e-8. G1b1b here describes '
+            'nonlinear least squares with user residual Jacobians; the interface does not accept a general '
+            'scalar-objective gradient. These fixtures establish successful solutions at the recorded starts, not a '
+            'global convergence guarantee. Rank deficiency, arbitrary data noise, malformed inputs, every stopping '
+            'mode and performance remain unverified.',
+            '',
+            '## Three Newton configurations with prescribed roots: forsolver (F1b)',
+            '',
+            'Ninety-six fixtures combine three functions of u=x-center, four prescribed roots center=[-2,0,0.5,3], '
+            'scales [0.5,2] and starting offsets [-2,-0.5,0.5,2]. The functions are scale*(u+u**3), scale*(exp(u)-1), '
+            'and scale*(u+0.25*sin(u)). Each has exactly one real root, u=0: its derivative is strictly positive '
+            'everywhere. Analytic derivatives are scale*(1+3*u*u), scale*exp(u), and scale*(1+0.25*cos(u)). Real and '
+            'complex callbacks implement the same analytic expressions.',
+            '',
+            'Each fixture is solved using analytic-derivative Newton, central-finite-difference Newton with step '
+            'setting 1e-6, and complex-step Newton with setting 1e-20: 288 solves. All use maxit=100, TolFun=1e-12 '
+            'and verbosity=0. Callback counters must show the required real/derivative or complex evaluation '
+            'occurred. The complex root must have finite real and imaginary parts and imaginary magnitude at most '
+            '1e-12.',
+            '',
+            'Every real root must be finite and agree with the prescribed center within error divided by '
+            'max(1,abs(center)) of 1e-9. Its residual divided by max(1,abs(scale)) must be at most 1e-10. The three '
+            'methods must agree within normalized spread 1e-9. Agreement alone is insufficient: all methods '
+            'independently face the known-root and residual tests. The invoked API has no returned convergence-status '
+            'value, so these are answer-based checks. Vector systems, arbitrary complex roots, derivative '
+            'singularities, failure recovery, global convergence and performance remain outside the verified scope.',
+            '',
+            '## Checked links and actual output',
+            '',
+            'These independent API consumers have their own MIT notice; upstream terms remain separate. Author '
+            'sources were reviewed for interfaces, and no upstream implementation or example code is copied. Loading '
+            'a link does not submit a job.',
+            '']
+    for d in drivers:
+        evidence = records[d['procedure_id']]['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        links = (f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                 f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]})')
+        if d['author_example']:
+            links += f' / [Author example/test]({base}{d["author_example"]})'
+        lines += ['### '+d['id'], '', links, '']
+        report = json.loads((root/driver_validation_path(d)).read_text(encoding='utf-8'))
+        result = next(r for r in report['drivers'] if r['driver_id'] == d['id'])
+        output = next(s['stdout'] for s in result['stages'] if s['name'] == 'Run')
+        lines += ['```text', output.rstrip(), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
+
+def higher_ad_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-higher-ad-validation.json']
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    records = {p['id']: p for p in data['procedure_mappings']}
+    lines = ['# Checked higher-order complex derivatives and polynomial Hessians',
+            '',
+            'These H1 drivers passed the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing existing '
+            'package libraries. Only their mains and executables were compiled. The [verification '
+            'report](gams-higher-ad-validation.json) records pins, source hashes and actual output. GAMS categories '
+            'are not exhausted.',
+            '',
+            '## Complex univariate derivatives through order five: DNAOAD-FPM',
+            '',
+            'Fifteen sample points combine real parts [-1,-0.25,0,0.5,1] and imaginary parts [-0.5,0,0.25]. At every '
+            'point, requested derivative order ranges from zero through five. Each dual variable is initialized with '
+            'the sample as its value, unit first derivative when present, and zero higher seed derivatives. The '
+            'pinned configuration supports at least order five and at least 15 decimal digits of real precision. All '
+            'resulting expressions must retain the requested order.',
+            '',
+            'Three scaled transcendental cases use exp(a*z)+sin(b*z), with (a,b)=[(0.5,-2),(1,0.5),(2,1)]. The k-th '
+            'exact derivative is a**k*exp(a*z) plus b**k times the sine/cosine cycle sin(b*z), cos(b*z), -sin(b*z), '
+            '-cos(b*z). This yields 945 derivative references across all sample points and requested orders, '
+            "including each expression's value.",
+            '',
+            'The composed expression exp(z*z+z) tests nonlinear chain rules. Let u=2*z+1. Its k-th derivative is '
+            'exp(z*z+z) times the finite polynomial sum over j=0..floor(k/2) of k!/(j!*(k-2*j)!)*u**(k-2*j). These '
+            'independently computed factors give another 315 references. The degree-five polynomial z**5-2*z**3+3*z+1 '
+            'is evaluated through repeated dual multiplications; exact derivatives use scalar coefficients and '
+            'falling factorials, adding 315 references. Zero input values and derivatives above the degree of '
+            'individual terms are included.',
+            '',
+            'There are 450 dual expressions and 1,575 exact complex references. Every actual real and imaginary '
+            'component must be finite. Complex absolute error divided by max(1,abs(reference)) must be at most 2e-11. '
+            'This verifies complex analytic univariate derivatives at the recorded points and requested orders, '
+            'including product/chain rules. It does not verify orders beyond five, multivariate derivatives, '
+            'nonanalytic operations, singular branches, malformed input or performance.',
+            '',
+            '## Forward/reverse gradients and Hessians: diffstruc',
+            '',
+            'The independent three-variable polynomial is f(x)=x1**3+x1*x2+x2*x3**2+x3**2. Its gradient is '
+            '[3*x1**2+x2,x1+x3**2,2*(x2+1)*x3]. The symmetric Hessian has rows [6*x1,1,0], [1,0,2*x3], '
+            '[0,2*x3,2*(x2+1)]. Five exactly representable dyadic points are [0.5,-1,2], [-0.75,0.5,1.25], [0,0,0], '
+            '[2,-0.5,-1], [1,2,-2]. The fixtures exercise repeated appearances of inputs, mixed terms, vanishing '
+            'derivatives and nonzero off-diagonal Hessian entries.',
+            '',
+            'At each point six forward passes use the three coordinate basis directions, [1,-2,0.5], [-0.5,0,2], and '
+            '[0,0,0]. Every directional derivative must equal the independent gradient dot direction. The full '
+            '[1,1,1] direction mask is restored before reverse accumulation. One reverse pass checks the gradient of '
+            'f, and three reverse passes through the coordinate forward-derivative graphs check every Hessian entry. '
+            'Gradient buffers are reset for every reverse pass, and Hessian symmetry is checked separately.',
+            '',
+            'There are 30 forward calls, 20 reverse calls and 95 exact scalar references: five values, 30 directional '
+            'derivatives, 15 reverse-gradient components and 45 Hessian entries. Expression, derivative and gradient '
+            'pointers must be associated before access, and actual values must be finite. Scalar errors divided by '
+            "max(1,abs(reference)) must be at most 1e-5 at the package's REAL32 precision; absolute Hessian symmetry "
+            'error must also be at most 1e-5. The references are hand-derived formulas, so agreement between AD modes '
+            'alone cannot pass the driver.',
+            '',
+            'All graphs are retained for the lifetime of this short standalone process. Graph disposal, long-lived '
+            'graph reuse, memory scaling, arbitrary expressions/intrinsics, nonsmooth functions and performance are '
+            'not verified. The example demonstrates the recorded forward/reverse calls and Hessian calculation, not a '
+            'general graph-lifecycle prescription.',
+            '',
+            '## Checked links and actual output',
+            '',
+            'These independent API consumers have their own MIT notice; upstream terms remain separate. Author '
+            'sources were reviewed for interfaces, and no upstream implementation or example code is copied. Loading '
+            'a link does not submit a job.',
+            '']
+    for d in drivers:
+        evidence = records[d['procedure_id']]['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        links = (f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                 f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]})')
+        if d['author_example']:
+            links += f' / [Author example/test]({base}{d["author_example"]})'
+        lines += ['### '+d['id'], '', links, '']
+        report = json.loads((root/driver_validation_path(d)).read_text(encoding='utf-8'))
+        result = next(r for r in report['drivers'] if r['driver_id'] == d['id'])
+        output = next(s['stdout'] for s in result['stages'] if s['name'] == 'Run')
+        lines += ['```text', output.rstrip(), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
+def moments_nufft2d_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-moments-nufft2d-validation.json']
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    records = {p['id']: p for p in data['procedure_mappings']}
+    lines = ['# Checked quadrature moments and two-dimensional Fourier sums', '',
+             'These H2c and J1 drivers passed the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, '
+             'reusing existing package libraries. Only their mains and executables were compiled. The '
+             '[verification report](gams-moments-nufft2d-validation.json) records pins, source hashes and '
+             'actual output. GAMS categories are not exhausted.', '',
+             '## Exact moments: QDUtilLib (H2c)', '',
+             'Orders 1,2,3,4,6,8,12 for LegendreP and HO give 14 rules. Initialization must succeed and '
+             'return finite nodes/weights of shape [1,n] and [n], with positive weights. Legendre nodes '
+             'must be strictly inside [-1,1]. Copied node/weight pairs are sorted before checking symmetry; '
+             'native ordering is not prescribed. Paired node sums must be at most '
+             '1e-11*max(1,maxabs(nodes)); paired effective-weight differences must be at most '
+             '1e-11*max(1,maxabs(weights)).', '',
+             'Legendre moments through degree 2*n-1 have exact references zero for odd powers and 2/(p+1) '
+             'for even powers. HO stores full-function weights: the consumer explicitly includes '
+             'exp(-x*x) to obtain Gaussian polynomial moments on the real line. Odd Gaussian moments '
+             'vanish; even references start at M0=sqrt(pi), with Mp=(p-1)*M(p-2)/2. These analytical '
+             'recurrences are independent of the generated rule.', '',
+             'There are 144 Legendre/Gaussian moments. Another 47 shifted Legendre moments use '
+             '(x+2)**p for p=0..min(2*n-1,8), with exact integral (3**(p+1)-1)/(p+1). All 191 sums '
+             'must be finite and satisfy abs(actual-reference)/max(1,abs(reference),sum(abs(weighted_terms))) '
+             '<=5e-11. Scaling by absolute contributions accounts for cancellation of large odd Gaussian '
+             'terms. After every rule, deallocation must release the public node/weight arrays. Other '
+             'rule families, arbitrary weighted integrals, adaptive integration, invalid inputs and '
+             'performance are not verified.', '',
+             '## Direct nonuniform Fourier sums: NUFFT2D (J1)', '',
+             'Source counts [8,31,64], mode grids [8,10], [9,11], [16,18], four point/strength patterns, '
+             'both exponent signs and tolerance requests 1e-7/1e-10 give 144 transforms. Integer mode '
+             'ranges are -ms/2..(ms-1)/2 and -mt/2..(mt-1)/2. All 22,416 coefficients are checked.', '',
+             'Scattered points use x_j=pi*sin(0.71*j), y_j=pi*cos(0.43*j), with strengths '
+             'cos(0.13*j)+i*sin(0.17*j). Coincident points are all at the origin. A repeated near-boundary '
+             'pattern uses x=+/-(pi-1e-6) and y cycling through -pi/2,0,pi/2. A fourth pattern uses '
+             'scattered points with zero strengths. Exact +/-pi endpoints are not included.', '',
+             'Independent scalar loops form F(k,l)=sum_j c_j*(cos(phase)+i*sin(phase))/nj before calling '
+             'the library, with phase=sign*(k*x_j+l*y_j). The 1/nj normalization is checked separately '
+             'at the DC mode. Each call requires success, finite complex coefficients and unchanged '
+             'coordinates/strengths. Maximum complex error divided by max(1,maxabs(direct_reference)) '
+             'must be at most 50 times the requested tolerance. Zero strengths must give exactly zero '
+             'coefficients.', '',
+             'The existing checksum-guarded legacy extent-one FFT dummy-array adapter is reused unchanged. '
+             'No formulas, local arrays or library build settings change. Type-2/type-3 transforms, '
+             'the static Fortran 77 interface, every FFT path, exact periodic endpoints, large grids '
+             'and performance remain unverified. Direct-sum agreement does not establish a speed ranking.', '',
+             '## Checked links and actual output', '',
+             'These independent API consumers have their own MIT notice; upstream terms remain separate. '
+             'Author sources were reviewed for interfaces; no upstream code is copied. Loading a link '
+             'does not submit a job.', '']
+    for d in drivers:
+        evidence = records[d['procedure_id']]['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / '
+                  f'[Author example/test]({base}{d["author_example"]})', '']
+        report = json.loads((root/driver_validation_path(d)).read_text(encoding='utf-8'))
+        result = next(r for r in report['drivers'] if r['driver_id'] == d['id'])
+        output = next(s['stdout'] for s in result['stages'] if s['name'] == 'Run')
+        lines += ['```text', output.rstrip(), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -5192,6 +5477,9 @@ def main():
                          (DENSE_SPECTRA_REPORT, dense_spectra_review_text()),
                          (LEAST_INTERPOLATION_REPORT, least_interpolation_review_text()),
                          (RKF_QAGS_REPORT, rkf_qags_review_text()),
+                         (JACOBIAN_ROOTS_REPORT, jacobian_roots_review_text()),
+                         (HIGHER_AD_REPORT, higher_ad_review_text()),
+                         (MOMENTS_NUFFT2D_REPORT, moments_nufft2d_review_text()),
                          (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report

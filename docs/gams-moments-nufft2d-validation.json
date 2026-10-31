@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "qdutillib-moments-reference",
+      "source_revision": "8a1fa9ca7cf52683c98cc4bcb40f21dc41df6ed5",
+      "source_sha256": "d508a6c68f41247f9db8448ad83adb18d3e8cb5cdb95814046c3f8275a2f701d",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T17:36:42.369991+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.451,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Rules: 14; Legendre/Gaussian moments: 144; shifted moments: 47\nOrders 1,2,3,4,6,8,12: positive weights, symmetry, exact polynomial moments and deallocation.\nMaximum moment error normalized by reference/absolute contributions:   2.5962E-15\nPASS qdutillib-moments-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.097,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "nufft2d-direct-reference",
+      "source_revision": "8353c5fb20cd0a8fe6821fae18355e303ed23ed3",
+      "source_sha256": "e85a60584808b1be659e91f53e4908c21fc7480c6f447446321dd1875fa9e31f",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T17:36:44.868702+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.404,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Two-dimensional type-1 NUFFT calls: 144; direct coefficient comparisons: 22416\nEven/odd grids, both signs, two tolerances; scattered, coincident, near-boundary and zero-strength data.\nMaximum normalized direct-sum error:   1.3607E-08\nPASS nufft2d-direct-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.065,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T17:36:44.926370+00:00"
+}
