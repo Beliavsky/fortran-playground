@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "scalapackfx-eigen-reference",
+      "source_revision": "570cbf45836ed05cf791bc3f404f4f10929e5017",
+      "source_sha256": "a9d35e189a74b05e88a1e7846b606da1527220fd142cc1fbd70754d5b5fa4067",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T23:30:39.281183+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.582,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "[1793489440.169304] [modal:39   :0]       tcp_iface.c:912  UCX  ERROR scandir(/sys/class/net) failed: No such file or directory\nSymmetric eigensystems: 384\nPrescribed eigenvalue references: 1728\nMaximum normalized eigenvalue error:   1.0151E-15\nMaximum normalized eigenpair residual:   6.4223E-16\nMaximum orthogonality residual:   2.2204E-15\nPASS scalapackfx-eigen-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.268,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "lusol-update-reference",
+      "source_revision": "2d95174d44ec9bf9dabbbd07652c84c11fe56d71",
+      "source_sha256": "5dcce6806beec0f190d5d3c30ef045ccf5d068abf3e9a5b2b17320fccfb6ba6e",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T23:34:02.277900+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.375,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Sparse LU factorizations: 32\nSingle column replacements: 32\nNormal/transpose solves: 384\nKnown solution entries: 1728\nMaximum normalized solution error:   2.2204E-16\nMaximum normalized true residual:   5.1194E-16\nPASS lusol-update-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.023,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T23:34:02.327197+00:00"
+}

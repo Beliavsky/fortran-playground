@@ -1,0 +1,79 @@
+{
+  "ok": false,
+  "compiler": "GNU Fortran (GCC) 16.2.0",
+  "compiler_id": "gfortran",
+  "fpm": "0.12.0",
+  "stages": [
+    {
+      "name": "Build",
+      "command": [
+        "fpm",
+        "build",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.358,
+      "ok": true,
+      "exit_code": 0,
+      "error": "",
+      "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+      "stderr": ""
+    },
+    {
+      "name": "Run",
+      "command": [
+        "fpm",
+        "run",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.037,
+      "ok": false,
+      "exit_code": 1,
+      "error": "",
+      "stdout": " Solve fixture:                     8           1           1           1           2           1           1\n Errors:    1.0743406164692715E-011   8.7795268635037098E-012\n Actual:   0.99999999999999190        1.0000000000000011       0.99999999997851319       0.99999999999758415       0.99999999999984190       0.99999999999997025       0.99999999999999289       0.99999999999999956     \n Expected:    1.0000000000000000        1.0000000000000000        1.0000000000000000        1.0000000000000000        1.0000000000000000        1.0000000000000000        1.0000000000000000        1.0000000000000000     \n",
+      "stderr": "Project is up to date\nERROR STOP known sparse solution\n\nError termination. Backtrace:\n#0  0x2b77420e6f83 in ???\n#1  0x2b77420e7c39 in ???\n#2  0x2b77420e9045 in ???\n#3  0x4081d1 in checked_sparse_updates\n\tat app/main.f90:109\n#4  0x408c9f in main\n\tat app/main.f90:3\n<ERROR> Execution for object \" playground-main \" returned exit code  1\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 1\n"
+    }
+  ],
+  "cache": {
+    "package": "lusol",
+    "compiler": "GNU Fortran 16.2.0",
+    "key": "7f6315441341babf62a1f73c",
+    "library_reused": true,
+    "changed_artifacts": []
+  },
+  "packages": [
+    {
+      "repository": "jacobwilliams/lusol",
+      "revision": "2d95174d44ec9bf9dabbbd07652c84c11fe56d71",
+      "sha256": "cb6050bc25617e48c09595face9651f2c83ebd88cb72169f90e0e2217e54ea9e"
+    }
+  ],
+  "build_ok": true,
+  "target_groups": {
+    "app": [
+      "playground-main"
+    ],
+    "example": [],
+    "test": []
+  },
+  "targets": [
+    "playground-main"
+  ],
+  "plots": [],
+  "plot_notes": []
+}

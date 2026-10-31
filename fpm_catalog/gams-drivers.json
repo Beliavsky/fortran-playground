@@ -7283,6 +7283,283 @@
         "amplitude_scaled_error_bound_coefficient": 0.002,
         "absolute_error_bound_floor": 5e-12
       }
+    },
+    {
+      "id": "formatmul-products-reference",
+      "name": "gams-formatmul-products-reference",
+      "package_id": "formatmul",
+      "procedure_id": "formatmul-products",
+      "gams_code": "D1",
+      "problem_id": "scalar-loop-matrix-products",
+      "path": "fpm_catalog/gams-drivers/formatmul-products-reference.f90",
+      "revision": "4b5747d49c27f0df92288e7a61d0e479e34ac78e",
+      "author_example": "test/test1.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/products-partitions-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned implementation and author tests reviewed without copying bodies. Methods m1..m4, six rectangular/unit-dimension shapes and zero/dyadic/transcendental fixtures checked against scalar sums with sum-absolute-product error scaling. Default and all paired transpose flags, three matrix-vector variants, output shapes, finite values and input preservation. Exact dyadic outputs additionally required. Both matrix transpose flags supplied whenever either is present; preexisting single-false-flag failures remain retained. Other methods, complex types, distributed/coarray execution and performance remain unverified.",
+      "validation_path": "docs/gams-products-partitions-validation.json",
+      "review_path": "docs/gams-products-partitions.md",
+      "checks": {
+        "matrix_matrix_calls": 360,
+        "matrix_vector_calls": 216,
+        "scalar_product_entries": 6588,
+        "methods": [
+          "m1",
+          "m2",
+          "m3",
+          "m4"
+        ],
+        "paired_transpose_combinations": 4,
+        "single_transpose_flag_matrix_calls_verified": false,
+        "exact_dyadic_checks": true,
+        "input_preservation_checked": true,
+        "error_bound_eps_factor": 128,
+        "images": 1,
+        "distributed_execution_verified": false
+      }
+    },
+    {
+      "id": "metis-kway-reference",
+      "name": "gams-metis-kway-reference",
+      "package_id": "metis-fpm",
+      "procedure_id": "metis-fpm-metis-partgraphkway",
+      "gams_code": "P",
+      "problem_id": "kway-partition-objective-certificates",
+      "path": "fpm_catalog/gams-drivers/metis-kway-reference.f90",
+      "revision": "5db1dc1e46fd819a53a86fe2170eaf5464bf17c7",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/products-partitions-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned C interface reviewed. Cycle, rectangular-grid and linked-clique graph families at three sizes, unit/unequal positive edge weights, two/three partitions and three seeds. Returned labels, nonempty/coarsely balanced parts, independent upper-triangle weighted edge cut and unchanged CSR input checked. No fixed expected partition labels, global optimality or heuristic reproducibility claim. Mesh APIs, vertex weights, communication-volume objective, nested dissection and invalid input remain unverified. Pinned Fortran UFACTOR/NUMBERING option indices disagree with the bundled C enum. The successful consumer retains default zero numbering, sets the matching SEED option and uses typed ubvec=[1.1_real_t]; no library patch or hard-coded replacement indices. The failed named-option probe is preserved under docs/gams-candidates/metis-option-indices.",
+      "validation_path": "docs/gams-products-partitions-validation.json",
+      "review_path": "docs/gams-products-partitions.md",
+      "checks": {
+        "partition_calls": 108,
+        "assigned_vertices": 3024,
+        "weighted_cut_references": 108,
+        "sizes": [
+          12,
+          24,
+          48
+        ],
+        "part_counts": [
+          2,
+          3
+        ],
+        "seeds": [
+          1,
+          42,
+          93
+        ],
+        "positive_edge_weights_checked": true,
+        "csr_preservation_checked": true,
+        "global_optimality_verified": false,
+        "vertex_weights_verified": false,
+        "mesh_partitioning_verified": false,
+        "default_numbering_used": true,
+        "typed_imbalance_argument_used": true,
+        "option_index_failure_preserved": true,
+        "max_part_population_factor": 1.5
+      }
+    },
+    {
+      "id": "dtfft-2d-reference",
+      "name": "gams-dtfft-2d-reference",
+      "package_id": "dtfft",
+      "procedure_id": "dtfft-cpu-c2c",
+      "gams_code": "J1",
+      "problem_id": "2d-complex-direct-fourier-reference",
+      "path": "fpm_catalog/gams-drivers/dtfft-2d-reference.f90",
+      "revision": "bbfd6746be7482bd8366ccb09a73b72882573984",
+      "author_example": "tests/fortran/test_c2c_2d_f.F90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/multidimensional-fft-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned implementation and author example reviewed without copying bodies. Three multidimensional shapes and eight complex fixtures each: zero, constant, origin/off-origin impulses, two axis-dependent Fourier modes, dyadic mixed data and nonperiodic transcendental data. Direct negative-sign Fourier sums check all forward coefficients; independently generated coefficients drive inverse tests, plus separate package-forward round trips. Finite results, normalization, layouts, Parseval and repeated use/plan teardown checked. Exactly one MPI process; distributed performance, real transforms, GPU execution and alternative executors remain unverified. Fourier output uses reversed Fortran axes in the Y-aligned pencil; both references and inverse input use that layout. A fresh block-scoped plan object is used for each shape because recreating a destroyed plan object fails at this pin; the exact probe is retained under docs/gams-candidates/dtfft-plan-recreate. No library patch or disabled runtime checking. Native UCX diagnostics remain in the saved successful result.",
+      "validation_path": "docs/gams-multidimensional-fft-validation.json",
+      "review_path": "docs/gams-multidimensional-fft.md",
+      "checks": {
+        "dimensions": 2,
+        "shapes": [
+          [
+            4,
+            6
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            8,
+            8
+          ]
+        ],
+        "fixtures": 24,
+        "transform_calls": 72,
+        "forward_coefficient_references": 984,
+        "independent_inverse_references": 984,
+        "roundtrip_references": 984,
+        "total_complex_references": 2952,
+        "mpi_processes": 1,
+        "off_origin_impulse_checked": true,
+        "axis_dependent_modes_checked": true,
+        "parseval_checked": true,
+        "repeated_plan_use_checked": true,
+        "independent_inverse_input": true,
+        "max_normalized_error": 2e-12,
+        "distributed_execution_verified": false,
+        "real_transforms_verified": false,
+        "gpu_execution_verified": false,
+        "fourier_output_axes_reversed": true,
+        "fresh_plan_per_shape": true,
+        "destroyed_plan_recreation_verified": false,
+        "plan_recreation_failure_preserved": true
+      }
+    },
+    {
+      "id": "decomp-3d-reference",
+      "name": "gams-decomp-3d-reference",
+      "package_id": "2decomp-fft",
+      "procedure_id": "2decomp-fft-c2c",
+      "gams_code": "J1",
+      "problem_id": "3d-complex-direct-fourier-reference",
+      "path": "fpm_catalog/gams-drivers/decomp-3d-reference.f90",
+      "revision": "4cb38be477b9457cfa5f5624c8fe09387968b190",
+      "author_example": "examples/fft_physical_x/fft_c2c_x.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/multidimensional-fft-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned implementation and author example reviewed without copying bodies. Three multidimensional shapes and eight complex fixtures each: zero, constant, origin/off-origin impulses, two axis-dependent Fourier modes, dyadic mixed data and nonperiodic transcendental data. Direct negative-sign Fourier sums check all forward coefficients; independently generated coefficients drive inverse tests, plus separate package-forward round trips. Finite results, normalization, layouts, Parseval and repeated use/plan teardown checked. Exactly one MPI process; distributed performance, real transforms, GPU execution and alternative executors remain unverified. The one-process physical-X and spectral-Z arrays keep logical x/y/z indexing; plans and decompositions are finalized between shapes. Native UCX diagnostics remain in the saved successful result.",
+      "validation_path": "docs/gams-multidimensional-fft-validation.json",
+      "review_path": "docs/gams-multidimensional-fft.md",
+      "checks": {
+        "dimensions": 3,
+        "shapes": [
+          [
+            4,
+            3,
+            2
+          ],
+          [
+            5,
+            4,
+            3
+          ],
+          [
+            6,
+            5,
+            4
+          ]
+        ],
+        "fixtures": 24,
+        "transform_calls": 72,
+        "forward_coefficient_references": 1632,
+        "independent_inverse_references": 1632,
+        "roundtrip_references": 1632,
+        "total_complex_references": 4896,
+        "mpi_processes": 1,
+        "off_origin_impulse_checked": true,
+        "axis_dependent_modes_checked": true,
+        "parseval_checked": true,
+        "repeated_plan_use_checked": true,
+        "independent_inverse_input": true,
+        "max_normalized_error": 2e-12,
+        "distributed_execution_verified": false,
+        "real_transforms_verified": false,
+        "gpu_execution_verified": false
+      }
+    },
+    {
+      "id": "lusol-update-reference",
+      "name": "gams-lusol-update-reference",
+      "package_id": "lusol",
+      "procedure_id": "lusol-api",
+      "gams_code": "D2a4",
+      "problem_id": "sparse-column-update-manufactured-solutions",
+      "path": "fpm_catalog/gams-drivers/lusol-update-reference.f90",
+      "revision": "2d95174d44ec9bf9dabbbd07652c84c11fe56d71",
+      "author_example": "test/lusol_test.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/sparse-spectra-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned implementation and author example reviewed. Four dimensions, two banded families, two scales and original/row-swapped matrices. One replacement of column one per fresh factorization. Three manufactured solutions tested before and after the update, normal/transpose solves with independent scalar RHS/residual sums. Includes pivot permutations and public 64-bit index kind; singular/rectangular cases, rank-changing updates and other pivot policies remain unverified. A two-update probe exceeded the proposed accuracy threshold and is preserved under docs/gams-candidates/lusol-drop-tolerance; no algorithm defect or drop-tolerance cause is established. The successful driver keeps original solver settings and comparison bounds.",
+      "validation_path": "docs/gams-sparse-spectra-validation.json",
+      "review_path": "docs/gams-sparse-spectra.md",
+      "checks": {
+        "factorizations": 32,
+        "column_replacements": 32,
+        "solves": 384,
+        "known_solution_entries": 1728,
+        "sizes": [
+          2,
+          3,
+          5,
+          8
+        ],
+        "normal_transpose_checked": true,
+        "row_permutations_checked": true,
+        "sequential_updates_checked": false,
+        "max_normalized_solution_error": 5e-12,
+        "max_normalized_residual": 5e-12,
+        "singular_systems_verified": false,
+        "rectangular_systems_verified": false,
+        "rank_changing_updates_verified": false,
+        "single_column_update_checked": true,
+        "multi_update_accuracy_probe_preserved": true
+      }
+    },
+    {
+      "id": "scalapackfx-eigen-reference",
+      "name": "gams-scalapackfx-eigen-reference",
+      "package_id": "scalapackfx",
+      "procedure_id": "scalapackfx-symmetric-eigenproblem",
+      "gams_code": "D4a1",
+      "problem_id": "prescribed-symmetric-spectra-and-poisoned-triangle",
+      "path": "fpm_catalog/gams-drivers/scalapackfx-eigen-reference.f90",
+      "revision": "570cbf45836ed05cf791bc3f404f4f10929e5017",
+      "author_example": "test/test_diag.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/sparse-spectra-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned wrapper and author test reviewed. Prescribed simple/positive/repeated spectra, diagonal and Givens-rotated bases, two scales/shifts, four sizes, upper/lower storage and block sizes one/two. Unused triangle poisoned with quiet NaNs. Analytic sorted eigenvalues, scalar eigenpair residuals and full orthogonality checked without requiring eigenvector signs or a unique repeated-eigenvalue basis. Exactly one MPI process; generalized/complex eigensystems, multiple processes and performance remain unverified.",
+      "validation_path": "docs/gams-sparse-spectra-validation.json",
+      "review_path": "docs/gams-sparse-spectra.md",
+      "checks": {
+        "eigensystems": 384,
+        "eigenvalue_references": 1728,
+        "sizes": [
+          2,
+          3,
+          5,
+          8
+        ],
+        "block_sizes": [
+          1,
+          2
+        ],
+        "mpi_processes": 1,
+        "upper_lower_storage_checked": true,
+        "unused_triangle_nan_checked": true,
+        "repeated_eigenvalues_checked": true,
+        "scalar_eigenpair_residuals_checked": true,
+        "max_normalized_error": 5e-12,
+        "distributed_execution_verified": false,
+        "generalized_eigenproblems_verified": false
+      }
     }
   ]
 }

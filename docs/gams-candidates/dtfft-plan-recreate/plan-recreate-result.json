@@ -1,0 +1,79 @@
+{
+  "ok": false,
+  "compiler": "GNU Fortran (GCC) 16.2.0",
+  "compiler_id": "gfortran",
+  "fpm": "0.12.0",
+  "stages": [
+    {
+      "name": "Build",
+      "command": [
+        "fpm",
+        "build",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.683,
+      "ok": true,
+      "exit_code": 0,
+      "error": "",
+      "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+      "stderr": ""
+    },
+    {
+      "name": "Run",
+      "command": [
+        "fpm",
+        "run",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.245,
+      "ok": false,
+      "exit_code": 2,
+      "error": "",
+      "stdout": "[1793488402.846157] [modal:45   :0]       tcp_iface.c:912  UCX  ERROR scandir(/sys/class/net) failed: No such file or directory\n",
+      "stderr": "Project is up to date\nAt line 2236 of file ../sources/bundle/packages/0/dtFFT-bbfd6746be7482bd8366ccb09a73b72882573984/playground-library/dtfft_plan.F90\nFortran runtime error: Attempting to allocate already allocated variable 'self'\n\nError termination. Backtrace:\n#0  0x2b8b41bd8f83 in ???\n#1  0x2b8b41bd9c39 in ???\n#2  0x2b8b41bda21b in ???\n#3  0x4246de in ???\n#4  0x42b60f in ???\n#5  0x422141 in ???\n#6  0x422728 in ???\n#7  0x422a01 in ???\n#8  0x407283 in checked_dtfft\n\tat app/main.f90:96\n#9  0x40dd45 in main\n\tat app/main.f90:77\n<ERROR> Execution for object \" playground-main \" returned exit code  2\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 2\n"
+    }
+  ],
+  "cache": {
+    "package": "dtfft",
+    "compiler": "GNU Fortran 16.2.0",
+    "key": "01e73dad0a3f49c6bb735b5f",
+    "library_reused": true,
+    "changed_artifacts": []
+  },
+  "packages": [
+    {
+      "repository": "ShatrovOA/dtFFT",
+      "revision": "bbfd6746be7482bd8366ccb09a73b72882573984",
+      "sha256": "9ca97e043f23997f490f73eeba01abe0e3a787005d1a7a37d25b4d196810de48"
+    }
+  ],
+  "build_ok": true,
+  "target_groups": {
+    "app": [
+      "playground-main"
+    ],
+    "example": [],
+    "test": []
+  },
+  "targets": [
+    "playground-main"
+  ],
+  "plots": [],
+  "plot_notes": []
+}

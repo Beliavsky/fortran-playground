@@ -67,6 +67,57 @@ class GamsSiteTests(unittest.TestCase):
             self.assertIn('Open default example', sorting)
             self.assertNotIn('Try in playground', sorting)
 
+    def test_sparse_update_and_symmetric_spectra_links_load_checked_drivers(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects']
+                            if p['playground']['package_id'] in {'lusol','scalapackfx'}]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination,feed)
+            for code,package,driver in [('D2a4','lusol','lusol-update-reference'),
+                                        ('D4a1','scalapackfx','scalapackfx-eigen-reference')]:
+                html = (destination/code/'index.html').read_text(encoding='utf-8')
+                primary = {url for url,label in Page(html).anchors if label=='Try in playground'}
+                self.assertEqual(primary,{
+                    f'https://beliavsky.github.io/fortran-playground/fpm/?package={package}&example=gams-{driver}'})
+                self.assertIn('Verified: a checked driver',html)
+
+    def test_multidimensional_fft_links_load_direct_sum_drivers(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects']
+                            if p['playground']['package_id'] in {'dtfft','2decomp-fft'}]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination,feed)
+            html = (destination/'J1/index.html').read_text(encoding='utf-8')
+            primary = {url for url,label in Page(html).anchors if label=='Try in playground'}
+            self.assertEqual(primary,{
+                f'https://beliavsky.github.io/fortran-playground/fpm/?package={package}&example=gams-{driver}'
+                for package,driver in [('dtfft','dtfft-2d-reference'),('2decomp-fft','decomp-3d-reference')]})
+            self.assertEqual(html.count('Verified: a checked driver'),2)
+            for code in ['J1a1','J1a2','J1a3']:
+                narrower = (destination/code/'index.html').read_text(encoding='utf-8')
+                self.assertNotIn('example=gams-dtfft-2d-reference',narrower)
+                self.assertNotIn('example=gams-decomp-3d-reference',narrower)
+
+    def test_product_and_partition_class_links_load_matching_checked_drivers(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects']
+                            if p['playground']['package_id'] in {'formatmul','metis-fpm'}]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination,feed)
+            for code,package,driver in [('D1','formatmul','formatmul-products-reference'),
+                                        ('P','metis-fpm','metis-kway-reference')]:
+                html = (destination/code/'index.html').read_text(encoding='utf-8')
+                primary = {url for url,label in Page(html).anchors if label=='Try in playground'}
+                self.assertEqual(primary,{
+                    f'https://beliavsky.github.io/fortran-playground/fpm/?package={package}&example=gams-{driver}'})
+                self.assertIn('Verified: a checked driver',html)
+
     def test_sparse_and_advection_class_links_keep_heatflow_evolution_unverified(self):
         import copy
         feed = copy.deepcopy(self.feed)

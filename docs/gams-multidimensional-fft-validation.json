@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "decomp-3d-reference",
+      "source_revision": "4cb38be477b9457cfa5f5624c8fe09387968b190",
+      "source_sha256": "93a2a6c05b504688adffc64057ad82981e82c97c0a436b7be4f6dd94ea6c8bec",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T23:12:55.788827+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.451,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "[1793488376.758771] [modal:39   :0]       tcp_iface.c:912  UCX  ERROR scandir(/sys/class/net) failed: No such file or directory\nComplex data fixtures: 24\nForward/inverse/roundtrip entries: 4896\nMaximum normalized forward error:   1.6165E-14\nMaximum normalized independent inverse error:   2.0123E-14\nMaximum normalized roundtrip error:   9.0006E-15\nMaximum normalized Parseval error:   3.6096E-15\nPASS decomp-3d-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.168,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "dtfft-2d-reference",
+      "source_revision": "bbfd6746be7482bd8366ccb09a73b72882573984",
+      "source_sha256": "e00e0ce97841d10418d4e4c5b7444b6dc2aa6103d1d045d8bb13934ed7994600",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T23:13:59.642402+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.758,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "[1793488440.551314] [modal:45   :0]       tcp_iface.c:912  UCX  ERROR scandir(/sys/class/net) failed: No such file or directory\nComplex data fixtures: 24\nForward/inverse/roundtrip entries: 2952\nMaximum normalized forward error:   1.7516E-15\nMaximum normalized independent inverse error:   5.0619E-15\nMaximum normalized roundtrip error:   2.0015E-16\nMaximum normalized Parseval error:   3.8611E-16\nPASS dtfft-2d-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.259,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T23:13:59.698308+00:00"
+}

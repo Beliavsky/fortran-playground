@@ -1,0 +1,84 @@
+{
+  "ok": false,
+  "compiler": "GNU Fortran (GCC) 16.2.0",
+  "compiler_id": "gfortran",
+  "fpm": "0.12.0",
+  "stages": [
+    {
+      "name": "Build",
+      "command": [
+        "fpm",
+        "build",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.424,
+      "ok": true,
+      "exit_code": 0,
+      "error": "",
+      "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+      "stderr": ""
+    },
+    {
+      "name": "Run",
+      "command": [
+        "fpm",
+        "run",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.066,
+      "ok": false,
+      "exit_code": 1,
+      "error": "",
+      "stdout": "Input Error: Incorrect numflag.\n",
+      "stderr": "Project is up to date\nERROR STOP METIS kway status\n\nError termination. Backtrace:\n#0  0x2ac5a5ebaf83 in ???\n#1  0x2ac5a5ebbc39 in ???\n#2  0x2ac5a5ebd045 in ???\n#3  0x404bea in checked_graph_partitions\n\tat app/main.f90:56\n#4  0x406434 in main\n\tat app/main.f90:3\n<ERROR> Execution for object \" playground-main \" returned exit code  1\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 1\n"
+    }
+  ],
+  "cache": {
+    "package": "metis-fpm",
+    "compiler": "GNU Fortran 16.2.0",
+    "key": "09a083b4327c91ec717776e3",
+    "library_reused": true,
+    "changed_artifacts": []
+  },
+  "packages": [
+    {
+      "repository": "gnikit/metis-fpm",
+      "revision": "5db1dc1e46fd819a53a86fe2170eaf5464bf17c7",
+      "sha256": "5bb19525e8fcc7b32da5cc4d4ced8c7d3901dcc2805e38c80d08e0a543a64fbe"
+    },
+    {
+      "repository": "gnikit/GKlib",
+      "revision": "3840061283ceab2ac62542c1141e1e3efea3f392",
+      "sha256": "a28812c33bf881881047ba784176a3434684bb0fa9642457b9a4e1063085c0dc"
+    }
+  ],
+  "build_ok": true,
+  "target_groups": {
+    "app": [
+      "playground-main"
+    ],
+    "example": [],
+    "test": []
+  },
+  "targets": [
+    "playground-main"
+  ],
+  "plots": [],
+  "plot_notes": []
+}

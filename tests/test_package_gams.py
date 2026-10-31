@@ -81,6 +81,9 @@ from xpackage_gams import (gams_data, package_classes, review_text, subclass_mod
                             expressions_sky_review_text, EXPRESSIONS_SKY_REPORT,
                             unsigned_bitsets_review_text, UNSIGNED_BITSETS_REPORT,
                             sparse_advection_review_text, SPARSE_ADVECTION_REPORT,
+                            products_partitions_review_text, PRODUCTS_PARTITIONS_REPORT,
+                            multidimensional_fft_review_text, MULTIDIMENSIONAL_FFT_REPORT,
+                            sparse_spectra_review_text, SPARSE_SPECTRA_REPORT,
                           coverage_data, coverage_review_text, COVERAGE_REPORT,
                           class_evidence, class_tree, mapping_evidence_text, EVIDENCE_REPORT)
 
@@ -865,6 +868,121 @@ class PackageGamsTests(unittest.TestCase):
         self.assertIn('22,416',text)
         self.assertIn('Type-2/type-3 transforms',text)
         self.assertIn('two-dimensional NUFFT2D driver',transforms_review_text())
+
+    def test_sparse_updates_and_symmetric_spectra_keep_limited_scope(self):
+        import hashlib
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for ident,code in [('lusol-update-reference','D2a4'),('scalapackfx-eigen-reference','D4a1')]:
+            d = drivers[ident]
+            self.assertEqual(records[d['procedure_id']]['driver_id'],ident)
+            self.assertEqual(class_evidence(class_tree(data),code,[records[d['procedure_id']]],[d])['status'],'verified')
+        sparse = drivers['lusol-update-reference']['checks']
+        self.assertEqual(sparse['factorizations'],32)
+        self.assertEqual(sparse['column_replacements'],32)
+        self.assertEqual(sparse['solves'],384)
+        self.assertEqual(sparse['known_solution_entries'],1728)
+        self.assertTrue(sparse['normal_transpose_checked'])
+        self.assertFalse(sparse['sequential_updates_checked'])
+        spectral = drivers['scalapackfx-eigen-reference']['checks']
+        self.assertEqual(spectral['eigensystems'],384)
+        self.assertEqual(spectral['eigenvalue_references'],1728)
+        self.assertTrue(spectral['unused_triangle_nan_checked'])
+        self.assertTrue(spectral['repeated_eigenvalues_checked'])
+        self.assertEqual(spectral['mpi_processes'],1)
+        self.assertFalse(spectral['distributed_execution_verified'])
+        candidate = ROOT/'docs/gams-candidates/lusol-drop-tolerance'
+        meta = json.loads((candidate/'drop-reference.json').read_text())
+        self.assertEqual(hashlib.sha256((candidate/meta['source']).read_text().encode()).hexdigest(),meta['source_sha256'])
+        result = json.loads((candidate/'drop-reference-result.json').read_text())
+        self.assertFalse(result['ok'])
+        self.assertTrue(next(s for s in result['stages'] if s['name']=='Build')['ok'])
+        self.assertIn('known sparse solution',next(s for s in result['stages'] if s['name']=='Run')['stderr'])
+        text = sparse_spectra_review_text()
+        self.assertEqual((ROOT/SPARSE_SPECTRA_REPORT).read_text(encoding='utf-8'),text)
+        for phrase in ['384 solves','1,728','quiet NaNs','not an established algorithm defect',
+                       'relaxed comparison','categories are not exhausted']:
+            self.assertIn(phrase,text)
+
+    def test_multidimensional_fft_references_include_independent_inverse_and_layouts(self):
+        import hashlib
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for ident,total in [('dtfft-2d-reference',2952),('decomp-3d-reference',4896)]:
+            d = drivers[ident]
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'],ident)
+            self.assertEqual(class_evidence(class_tree(data),'J1',[record],[d])['status'],'verified')
+            c = d['checks']
+            self.assertEqual(c['fixtures'],24)
+            self.assertEqual(c['transform_calls'],72)
+            self.assertEqual(c['total_complex_references'],total)
+            self.assertEqual(c['mpi_processes'],1)
+            self.assertTrue(c['independent_inverse_input'])
+            self.assertTrue(c['off_origin_impulse_checked'])
+            self.assertTrue(c['axis_dependent_modes_checked'])
+            self.assertFalse(c['distributed_execution_verified'])
+            self.assertFalse(c['real_transforms_verified'])
+            self.assertNotEqual(class_evidence(class_tree(data),'J1a2',[record],[d])['status'],'verified')
+        dtfft = drivers['dtfft-2d-reference']['checks']
+        self.assertTrue(dtfft['fourier_output_axes_reversed'])
+        self.assertTrue(dtfft['fresh_plan_per_shape'])
+        self.assertFalse(dtfft['destroyed_plan_recreation_verified'])
+        candidate = ROOT/'docs/gams-candidates/dtfft-plan-recreate'
+        meta = json.loads((candidate/'plan-recreate.json').read_text())
+        self.assertEqual(hashlib.sha256((candidate/meta['source']).read_text().encode()).hexdigest(),
+                         meta['source_sha256'])
+        result = json.loads((candidate/'plan-recreate-result.json').read_text())
+        self.assertFalse(result['ok'])
+        self.assertTrue(next(s for s in result['stages'] if s['name']=='Build')['ok'])
+        self.assertIn('already allocated',next(s for s in result['stages'] if s['name']=='Run')['stderr'])
+        text = multidimensional_fft_review_text()
+        self.assertEqual((ROOT/MULTIDIMENSIONAL_FFT_REPORT).read_text(encoding='utf-8'),text)
+        for phrase in ['2,952','4,896','Y-aligned pencil','self%fft_mapping','scandir(/sys/class/net)',
+                       'No comparison was relaxed','categories are not exhausted']:
+            self.assertIn(phrase,text)
+
+    def test_products_and_partitions_keep_exact_objectives_and_option_failures(self):
+        import hashlib
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for ident,code in [('formatmul-products-reference','D1'),('metis-kway-reference','P')]:
+            d = drivers[ident]
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'],ident)
+            self.assertEqual(class_evidence(class_tree(data),code,[record],[d])['status'],'verified')
+        products = drivers['formatmul-products-reference']['checks']
+        self.assertEqual(products['matrix_matrix_calls'],360)
+        self.assertEqual(products['matrix_vector_calls'],216)
+        self.assertEqual(products['scalar_product_entries'],6588)
+        self.assertTrue(products['exact_dyadic_checks'])
+        self.assertFalse(products['single_transpose_flag_matrix_calls_verified'])
+        self.assertFalse(products['distributed_execution_verified'])
+        partitions = drivers['metis-kway-reference']['checks']
+        self.assertEqual(partitions['partition_calls'],108)
+        self.assertEqual(partitions['assigned_vertices'],3024)
+        self.assertEqual(partitions['weighted_cut_references'],108)
+        self.assertTrue(partitions['typed_imbalance_argument_used'])
+        self.assertTrue(partitions['csr_preservation_checked'])
+        self.assertFalse(partitions['global_optimality_verified'])
+        self.assertFalse(partitions['mesh_partitioning_verified'])
+        candidate = ROOT/'docs/gams-candidates/metis-option-indices'
+        meta = json.loads((candidate/'option-indices.json').read_text())
+        self.assertEqual(hashlib.sha256((candidate/meta['source']).read_text().encode()).hexdigest(),
+                         meta['source_sha256'])
+        self.assertNotEqual(meta['fortran_ufactor_index'],meta['c_ufactor_index'])
+        result = json.loads((candidate/'option-indices-result.json').read_text())
+        self.assertFalse(result['ok'])
+        self.assertTrue(next(s for s in result['stages'] if s['name']=='Build')['ok'])
+        self.assertIn('Incorrect numflag',next(s for s in result['stages'] if s['name']=='Run')['stdout'])
+        text = products_partitions_review_text()
+        self.assertEqual((ROOT/PRODUCTS_PARTITIONS_REPORT).read_text(encoding='utf-8'),text)
+        for phrase in ['6,588','3,024','coarse population check','not prove global optimality',
+                       'ubvec=[1.1_real_t]','single-false-transpose-flag','categories are not exhausted']:
+            self.assertIn(phrase,text)
 
     def test_sparse_bicg_and_advection_keep_independent_answers_and_k2_scope(self):
         import hashlib

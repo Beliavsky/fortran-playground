@@ -44,12 +44,14 @@ A round trip alone could hide matching sign or scaling mistakes; independent for
 | [Load nufft1d-sum-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=nufft1d&example=gams-nufft1d-sum-reference) · [Source](../fpm_catalog/gams-drivers/nufft1d-sum-reference.f90) | J1 | [Procedure](https://github.com/zgimbutas/nufft1d/blob/42a04333f882f474b0674936cae049899784f56e/nufft1df90.f#L1) · [Author example/test](https://github.com/zgimbutas/nufft1d/blob/42a04333f882f474b0674936cae049899784f56e/nufft1d_demof90.f) |
 | [Load nufft2d-direct-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=nufft2d&example=gams-nufft2d-direct-reference) · [Source](../fpm_catalog/gams-drivers/nufft2d-direct-reference.f90) | J1 | [Procedure](https://github.com/zgimbutas/nufft2d/blob/8353c5fb20cd0a8fe6821fae18355e303ed23ed3/nufft2df90.f#L1) · [Author example/test](https://github.com/zgimbutas/nufft2d/blob/8353c5fb20cd0a8fe6821fae18355e303ed23ed3/nufft2d_demof90.f) |
 | [Load nafpack-fft-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=nafpack&example=gams-nafpack-fft-reference) · [Source](../fpm_catalog/gams-drivers/nafpack-fft-reference.f90) | J1a2 | [Procedure](https://github.com/Minard-Jules/NAFPack/blob/9b1e9a98f8c28853a48e152605f84c994c271f45/src/Fourier_Transform/NAFPack_Fourier_Transform.f90#L37) · [Author example/test](https://github.com/Minard-Jules/NAFPack/blob/9b1e9a98f8c28853a48e152605f84c994c271f45/test/Fourier_Transform/test_Fourier_Transform_fft_complex.f90) |
+| [Load dtfft-2d-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=dtfft&example=gams-dtfft-2d-reference) · [Source](../fpm_catalog/gams-drivers/dtfft-2d-reference.f90) | J1 | [Procedure](https://github.com/ShatrovOA/dtFFT/blob/bbfd6746be7482bd8366ccb09a73b72882573984/src/dtfft_plan.F90#L1) · [Author example/test](https://github.com/ShatrovOA/dtFFT/blob/bbfd6746be7482bd8366ccb09a73b72882573984/tests/fortran/test_c2c_2d_f.F90) |
+| [Load decomp-3d-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=2decomp-fft&example=gams-decomp-3d-reference) · [Source](../fpm_catalog/gams-drivers/decomp-3d-reference.f90) | J1 | [Procedure](https://github.com/2decomp-fft/2decomp-fft/blob/4cb38be477b9457cfa5f5624c8fe09387968b190/src/fft_generic.f90#L1) · [Author example/test](https://github.com/2decomp-fft/2decomp-fft/blob/4cb38be477b9457cfa5f5624c8fe09387968b190/examples/fft_physical_x/fft_c2c_x.f90) |
 
 The programs record API provenance and license notices; the independently written spectrum and NUFFT drivers have their own MIT notices. They appear in hosted and main local FPM example menus and downloaded projects. Loading a link selects source without submitting a job.
 
 ## Recorded results
 
-All 7 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing existing package libraries. Only each main and executable were rebuilt. The verification reports record hashes, source pins and saved output: [gams-dae-fft-validation.json](gams-dae-fft-validation.json), [gams-fourier-geometry-validation.json](gams-fourier-geometry-validation.json), [gams-moments-nufft2d-validation.json](gams-moments-nufft2d-validation.json), [gams-spatial-nufft-validation.json](gams-spatial-nufft-validation.json), [gams-transforms-validation.json](gams-transforms-validation.json).
+All 9 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing existing package libraries. Only each main and executable were rebuilt. The verification reports record hashes, source pins and saved output: [gams-dae-fft-validation.json](gams-dae-fft-validation.json), [gams-fourier-geometry-validation.json](gams-fourier-geometry-validation.json), [gams-moments-nufft2d-validation.json](gams-moments-nufft2d-validation.json), [gams-multidimensional-fft-validation.json](gams-multidimensional-fft-validation.json), [gams-spatial-nufft-validation.json](gams-spatial-nufft-validation.json), [gams-transforms-validation.json](gams-transforms-validation.json).
 
 ### fftpack-complex-transform
 
@@ -159,10 +161,36 @@ Maximum relative Parseval error:   1.0004E-07
 PASS nafpack-fft-reference
 ```
 
+### dtfft-2d-reference
+
+```text
+[1793488440.551314] [modal:45   :0]       tcp_iface.c:912  UCX  ERROR scandir(/sys/class/net) failed: No such file or directory
+Complex data fixtures: 24
+Forward/inverse/roundtrip entries: 2952
+Maximum normalized forward error:   1.7516E-15
+Maximum normalized independent inverse error:   5.0619E-15
+Maximum normalized roundtrip error:   2.0015E-16
+Maximum normalized Parseval error:   3.8611E-16
+PASS dtfft-2d-reference
+```
+
+### decomp-3d-reference
+
+```text
+[1793488376.758771] [modal:39   :0]       tcp_iface.c:912  UCX  ERROR scandir(/sys/class/net) failed: No such file or directory
+Complex data fixtures: 24
+Forward/inverse/roundtrip entries: 4896
+Maximum normalized forward error:   1.6165E-14
+Maximum normalized independent inverse error:   2.0123E-14
+Maximum normalized roundtrip error:   9.0006E-15
+Maximum normalized Parseval error:   3.6096E-15
+PASS decomp-3d-reference
+```
+
 ## Maintenance
 
 ```text
-python xverify_gams_drivers.py --drivers fftpack-complex-transform kissfft-f-complex-transform fftpack-cosine-transform spectrum-real-dft-reference nufft1d-sum-reference nufft2d-direct-reference nafpack-fft-reference
+python xverify_gams_drivers.py --drivers fftpack-complex-transform kissfft-f-complex-transform fftpack-cosine-transform spectrum-real-dft-reference nufft1d-sum-reference nufft2d-direct-reference nafpack-fft-reference dtfft-2d-reference decomp-3d-reference
 python xpackage_gams.py
 python xfpm_examples.py
 python xsite.py

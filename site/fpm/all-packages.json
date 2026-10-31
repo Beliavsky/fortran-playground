@@ -457,7 +457,8 @@
             "path": "examples/fft_physical_x/fft_c2c_x.f90",
             "sha256": "4b81ecc502e2e7902ea7dd27de9aeb72eab03b05250622bab7b33d7734b39326"
           }
-        ]
+        ],
+        "driver_id": "decomp-3d-reference"
       }
     ],
     "stars_updated_at": "2026-10-30T00:56:25.416261+00:00",
@@ -5432,7 +5433,8 @@
             "path": "test/test_diag.f90",
             "sha256": "e2b3be9794b86b1579d95b899c99141c1c86194a82ab95e3f9877ce59833f720"
           }
-        ]
+        ],
+        "driver_id": "scalapackfx-eigen-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T21:52:47.845574+00:00",
@@ -9832,7 +9834,8 @@
             "path": "test/test1.f90",
             "sha256": "d913f9409008e15ee3ed69cc42de5be1c63e28b2095bdb9cc449f403cdf1df68"
           }
-        ]
+        ],
+        "driver_id": "formatmul-products-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T22:02:20.239918+00:00"
@@ -10515,7 +10518,8 @@
             "line": 218
           }
         ],
-        "author_examples": []
+        "author_examples": [],
+        "driver_id": "metis-kway-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -15876,7 +15880,8 @@
             "path": "test/lusol_test.f90",
             "sha256": "b96078a020eaf15cecc4e871b85cf63b3ac6aa17fc64666d653f16afc044ce94"
           }
-        ]
+        ],
+        "driver_id": "lusol-update-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T17:30:42.130830+00:00",
@@ -27687,7 +27692,8 @@
             "path": "tests/fortran/test_c2c_2d_f.F90",
             "sha256": "4269311c14a3ccb335b45e65637d4f67e27e9ea1a43a659102bc8e807c3df6ef"
           }
-        ]
+        ],
+        "driver_id": "dtfft-2d-reference"
       }
     ],
     "stars_updated_at": "2026-10-30T00:25:47.873438+00:00",
