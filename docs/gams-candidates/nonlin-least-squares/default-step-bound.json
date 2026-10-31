@@ -1,0 +1,7 @@
+{
+  "revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+  "source": "default-step-bound.f90",
+  "source_sha256": "165defd927fd5a2565f2a3bd5e8df7385c224eb25125d744cc3c452d17d25e00",
+  "result": "default-step-bound-result.json",
+  "finding": "With default initial step bound factor 100, exact exponential fit amplitude=0.5, exponent=1, initial x=[0.25,0.5] returns unchanged parameters with converge_on_chng=true. Normalized parameter error 0.5. Probe stopped at first mismatch; accuracy requirements were not relaxed."
+}

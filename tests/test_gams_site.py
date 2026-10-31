@@ -67,6 +67,61 @@ class GamsSiteTests(unittest.TestCase):
             self.assertIn('Open default example', sorting)
             self.assertNotIn('Try in playground', sorting)
 
+    def test_conversion_and_triangulation_links_open_checked_problem_drivers(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects']
+                            if p['playground']['package_id'] in {'fortran-string-to-real','geompack'}]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination,feed)
+            for code,package,driver in [('A6','fortran-string-to-real','str2real-decimal-reference'),
+                                        ('P','geompack','geompack-delaunay-reference')]:
+                html = (destination/code/'index.html').read_text(encoding='utf-8')
+                primary = {url for url,label in Page(html).anchors if label=='Try in playground'}
+                self.assertEqual(primary,{
+                    f'https://beliavsky.github.io/fortran-playground/fpm/?package={package}&example=gams-{driver}'})
+                self.assertIn('Verified: a checked driver',html)
+            data = (destination/'N3/index.html').read_text(encoding='utf-8')
+            self.assertNotIn('example=gams-str2real-decimal-reference',data)
+
+    def test_expression_class_links_open_numeric_evaluation_drivers(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects']
+                            if p['playground']['package_id'] in {'fortran_function_parser','m_calculator'}]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination,feed)
+            html = (destination/'N3/index.html').read_text(encoding='utf-8')
+            primary = {url for url,label in Page(html).anchors if label=='Try in playground'}
+            self.assertEqual(primary,{
+                f'https://beliavsky.github.io/fortran-playground/fpm/?package={p}&example=gams-{d}'
+                for p,d in [('fortran_function_parser','function-parser-identities'),
+                            ('m_calculator','m-calculator-identities')]})
+            self.assertEqual(html.count('Verified: a checked driver'),2)
+            symbolic = (destination/'O/index.html').read_text(encoding='utf-8')
+            self.assertNotIn('example=gams-function-parser-identities',symbolic)
+            self.assertNotIn('example=gams-m-calculator-identities',symbolic)
+
+    def test_user_jacobian_and_transform_class_links_keep_sibling_scope(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects'] if p['playground']['package_id'] in {'nonlin','fglm'}]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination,feed)
+            for code,package,driver in [('G1b1b','nonlin','nonlin-lsq-jacobian-reference'),
+                                        ('D1','fglm','fglm-transform-reference')]:
+                html = (destination/code/'index.html').read_text(encoding='utf-8')
+                # A package can have multiple checked procedures in the same class.
+                self.assertIn((
+                    f'https://beliavsky.github.io/fortran-playground/fpm/?package={package}&example=gams-{driver}',
+                    driver),Page(html).anchors)
+                self.assertIn('Verified: a checked driver',html)
+            no_jac = (destination/'G1b1a/index.html').read_text(encoding='utf-8')
+            self.assertNotIn('example=gams-nonlin-lsq-jacobian-reference',no_jac)
+
     def test_geodesy_and_forlab_links_open_matching_checked_drivers(self):
         import copy
         feed = copy.deepcopy(self.feed)

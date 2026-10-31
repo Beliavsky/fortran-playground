@@ -2639,7 +2639,8 @@
             "path": "test/test.f90",
             "sha256": "36a8b7201d8d013420c33d99492a0a2b87e6a550e76cb82bc2675a9a4ff2ce89"
           }
-        ]
+        ],
+        "driver_id": "str2real-decimal-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00",
@@ -15175,7 +15176,8 @@
             "path": "test/tests.f90",
             "sha256": "f0b2679fadaf5c3cb4911bf8819bbd3404bed0947299cee686820dca7b9c74ef"
           }
-        ]
+        ],
+        "driver_id": "function-parser-identities"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -19695,7 +19697,8 @@
             "path": "test/geompack_test_routines.f90",
             "sha256": "10c07fdf84fdb03477904aa7e29852b0e009f0ef2293fac657e0e3645b02a4a8"
           }
-        ]
+        ],
+        "driver_id": "geompack-delaunay-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -20181,7 +20184,8 @@
             "path": "examples/nonlin_least_squares_example.f90",
             "sha256": "5b3c6e6e1a98864ddc12d1faca3132372f9a2958ba88cf340dc2af5dfcfc7d35"
           }
-        ]
+        ],
+        "driver_id": "nonlin-lsq-jacobian-reference"
       },
       {
         "id": "nonlin-newton-solver",
@@ -21090,7 +21094,8 @@
             "sha256": "2ea8f8025ab25baa75146fbec0dbbad78af5b83628996ca1ea260d7d66caeca7"
           }
         ],
-        "author_examples": []
+        "author_examples": [],
+        "driver_id": "fglm-transform-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T21:31:23.622523+00:00"
@@ -29203,7 +29208,8 @@
             "path": "example/demo_dnum0.f90",
             "sha256": "9d9022a7e745e248f0ed7700f679bf87a2e8ac7e0547c0f56bfa4a9ceae65d61"
           }
-        ]
+        ],
+        "driver_id": "m-calculator-identities"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"

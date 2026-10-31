@@ -69,6 +69,9 @@ FITPACK_POLYNOMIALS_REPORT = Path('docs/gams-fitpack-polynomials.md')
 DIAGONAL_RESPONSE_REPORT = Path('docs/gams-diagonal-response.md')
 RANKING_MAGIC_REPORT = Path('docs/gams-ranking-magic.md')
 GEODESY_FORLAB_REPORT = Path('docs/gams-geodesy-forlab.md')
+JACOBIAN_TRANSFORMS_REPORT = Path('docs/gams-jacobian-transforms.md')
+EXPRESSION_EVALUATION_REPORT = Path('docs/gams-expression-evaluation.md')
+CONVERSION_TRIANGULATION_REPORT = Path('docs/gams-conversion-triangulation.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
 EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
@@ -588,7 +591,10 @@ def g1_review_text(root=ROOT):
               'For the Bard problem, MINPACK lmdif1 estimates the Jacobian by finite differences; '
               'libdogleg uses an analytic Jacobian. The separate '
               '[lmder1 reference fits](gams-jacobian-roots.md) supply user Jacobians and have their own exact '
-              'parameter and objective references. '
+              'parameter and objective references. The '
+              '[nonlin exact-fit driver](gams-jacobian-transforms.md) verifies the exact exponential '
+              'subset with a specified initial step bound; its default-setting and nonzero-residual '
+              'failures are preserved separately. '
               'Callback counts and individual sandbox timings are not a fair performance ranking.', '',
               '## Common Rosenbrock problem', '',
               'The three Rosenbrock drivers minimize `(1-x)^2 + 100*(y-x^2)^2`, starting from `(-1.2,1)`. '
@@ -5907,6 +5913,281 @@ def geodesy_forlab_review_text(root=ROOT):
     return '\n'.join(lines)
 
 
+def jacobian_transforms_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-jacobian-transforms-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-jacobian-transforms-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Checked user-Jacobian exact fits and rigid transforms', '',
+             'These G1b1b and D1 drivers passed the restricted GNU Fortran 16.2.0 sandbox with '
+             'FPM 0.12.0. Existing package libraries were reused; only mains and executables '
+             'were compiled. The [verification report](gams-jacobian-transforms-validation.json) '
+             'retains pins, source hashes and actual output. GAMS categories are not exhausted.', '',
+             '## nonlin: exact nonlinear least squares with user Jacobian (G1b1b)', '',
+             'Five observations at t=[-1,-0.5,0,0.5,1] follow y=A*exp(B*t). '
+             'Amplitudes A=0.5,2 and exponents B=-1,0.25,1 use four starts each: '
+             'amplitude 0.5*A or 1.5*A, exponent B-0.5 or B+0.5. There are 24 fits. '
+             'Residuals are x1*exp(x2*t)-A*exp(B*t), with user Jacobian columns '
+             'exp(x2*t) and x1*t*exp(x2*t). These are the exact-fit subset of the '
+             '[MINPACK lmder1 fixtures](gams-jacobian-roots.md), with known parameters '
+             '[A,B] and minimum sum of squared residuals zero.', '',
+             'The helper is explicitly configured with both residual and Jacobian callbacks. '
+             'All 240 starting Jacobian entries are checked against central differences using '
+             'h=1e-5*max(1,abs(x_j)); maximum entry error divided by '
+             'max(1,maxabs(analytical_column)) must be <=2e-7. Both callbacks must actually be '
+             'used during every solve. The solver uses initial step bound factor 1, maximum '
+             '2,000 function evaluations, and function/variable/gradient tolerances 1e-12.', '',
+             'At least one normal convergence flag is required, but is not sufficient. '
+             'Returned parameters/residuals must be finite; residuals must agree with an '
+             'independent final evaluation within 1e-11. Maximum parameter error divided by '
+             'max(1,maxabs(exact_parameters)) must be <=2e-7. Sum of squared residuals must '
+             'be <=1e-10, each residual <=1e-8, and maxabs(J^T*r) <=1e-6. '
+             'This verifies user-Jacobian mode only: the sibling G1b1a finite-difference '
+             'configuration and bound-constrained solver type are not promoted.', '',
+             '## Failed broader least-squares probes', '',
+             'The [candidate directory](gams-candidates/nonlin-least-squares/README.md) '
+             'retains two failed probe sources, normalized hashes and complete results:', '',
+             '- Default step bound factor 100: the exact fit A=0.5, B=1 from [0.25,0.5] '
+             'returns unchanged parameters with converge_on_chng true; normalized parameter '
+             'error is 0.5.',
+             '- Step bound factor 1: all 24 exact fits complete, but the first nonzero-residual '
+             'fixture returns unchanged starting parameters with the same convergence flag. '
+             'Its known minimizer is [log(2),1]; normalized parameter error is 0.7.', '',
+             'No library fix or relaxed answer tolerance is included. The public driver '
+             'specifies step factor 1 and verifies only the exact exponential family. '
+             'Nonzero-residual minima, the default step setting, arbitrary starts, finite-difference '
+             'mode and global convergence remain unverified.', '',
+             '## fglm: components and homogeneous transforms (D1)', '',
+             'Twenty-four deterministic pairs of vec3d objects give 48 double-precision '
+             'vector additions/component products and 144 coordinate references. '
+             'With i=1..24, a=[i/8,(i-12)/4,(-1)**i/2] and '
+             'b=[(25-i)/4,-i/8,mod(i,5)-2]. Outputs must be finite, agree with scalar '
+             'component formulas within absolute 1e-13, and preserve both inputs. '
+             'Multiplication here is componentwise, not a dot product.', '',
+             'Single-precision mat4f transformations use nine angles '
+             '[-2*pi,-pi,-pi/2,-pi/3,0,pi/6,pi/2,pi,2*pi], four translations '
+             '[0,0,0], [1,-2,0.5], [-4,0,2], [0.25,0.5,-0.75], and both call orders. '
+             'Every matrix starts from explicit identity. Translate then rotate produces T*R; '
+             'rotate then translate produces R*T. There are 72 matrices and 216 transformed '
+             'homogeneous vectors: points [1,2,3,1], [-2,0.5,0,1], and direction [1,-1,2,0]. '
+             'The zero homogeneous coordinate independently checks translation invariance '
+             'of directions. All 864 output coordinates are compared to direct formulas.', '',
+             'Reference sine/cosine values are computed in double precision from the actual '
+             'single-precision input angle. Coordinates use Rz(x,y)=[cos*x-sin*y,sin*x+cos*y] '
+             'and the appropriate translation order. Maximum coordinate error divided by '
+             'max(1,maxabs(reference_vector)) must be <=2e-6. Every matrix/output must be '
+             'finite. Scalar checks of R^T*R=I give 648 orthogonality entries, and 72 '
+             'determinants must equal one; both use absolute tolerance 2e-6. '
+             'Arbitrary 3D rotation axes, other vector overloads, projection matrices and '
+             'performance remain unverified.', '',
+             '## Checked links and actual output', '',
+             'Independent API consumers have their own MIT notice; upstream terms remain '
+             'separate. Pinned sources and the nonlin author example were reviewed without '
+             'copying upstream code. Loading a link does not submit a job.', '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', output.rstrip(), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
+def expression_evaluation_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-expression-evaluation-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-expression-evaluation-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Checked numeric expression evaluation and recovery', '',
+             'These N3 drivers passed the restricted GNU Fortran 16.2.0 sandbox with '
+             'FPM 0.12.0. Existing package libraries were reused; only mains and executables '
+             'were compiled. The [verification report](gams-expression-evaluation-validation.json) '
+             'retains pins, source hashes and actual output. GAMS categories are not exhausted.', '',
+             '## Common mathematical references', '',
+             'Each engine checks 14 formulas at all 20 pairs from '
+             'x=[-2,-0.5,0,0.75,2], y=[-1.5,0,0.5,1.25]: 280 ordinary references. '
+             'The engines use the same expression strings with variables pgx and pgy. '
+             'Both use double precision in the checked catalog configuration. '
+             'All results must be finite and satisfy '
+             'abs(result-reference)/max(1,abs(reference)) <=2e-12. '
+             'References use Fortran arithmetic and elementary identities, not agreement '
+             'between the two libraries.', '',
+             '| Expression (x/y denote pgx/pgy) | Independent reference |',
+             '| --- | --- |',
+             '| x+2*y | x+2*y |',
+             '| (x+2)*(y-3) | (x+2)*(y-3) |',
+             '| x**2+3*x*y+y**2 | x*x+3*x*y+y*y |',
+             '| sin(x)**2+cos(x)**2 | 1 |',
+             '| exp(log(x+4)) | x+4 |',
+             '| sqrt((x+4)**2) | x+4, positive on this input grid |',
+             '| abs(x-y) | absolute difference |',
+             '| sin(x+y)-sin(x)*cos(y)-cos(x)*sin(y) | 0 |',
+             '| (x-y)/(x+4) | direct quotient, nonzero denominator |',
+             '| x**3-3*x**2*y+3*x*y**2-y**3 | (x-y)**3 |',
+             '| log(exp(y/4)) | y/4 |',
+             '| 2+3*4 | 14 |',
+             '| (2+3)*4 | 20 |',
+             '| -(x+y) | -x-y |', '',
+             'The fixtures cover precedence, parentheses, unary negation, powers, changing '
+             'variables, cancellation and common elementary functions. They do not establish '
+             'correctness for every accepted expression or extreme numerical range.', '',
+             '## Fortran Function Parser', '',
+             'Each ordinary expression is parsed once and evaluated at all input pairs. '
+             'Parsing and evaluation must report no error, and supplied variable arrays '
+             'must remain unchanged. The same parser object is reused with explicit error '
+             'clearing and destruction between expressions.', '',
+             'Three malformed expressions `pgx+`, `(pgx` and `unknown(pgx)` must set a parse error. '
+             'Three separately parsed expressions, sqrt(pgx), log(pgx), 1/(pgx-pgx), '
+             'must set an evaluation error when pgx=-1. Outputs from rejected requests are '
+             'not used as numeric answers. After each of these six errors, clear/destroy, '
+             'parse pgx+pgy and evaluate [0.25,-0.5] against -0.25. This gives 286 successful '
+             'value references, six expected rejected requests and six successful recoveries.', '',
+             '## M_calculator dnum0', '',
+             'Every ordinary evaluation first assigns pgx and pgy through decimal strings '
+             'formatted with 17 fractional digits in scientific notation. All 560 assignments '
+             'must return status zero, finite values and absolute assignment error <=1e-14. '
+             'Every expression evaluation must return status zero. Reassignment on each input '
+             'pair checks that prior variable values are replaced.', '',
+             'Malformed expressions `(1+2`, `1+@` and `1+*2` must return nonzero status. '
+             'After each error, pgx+pgy must still evaluate successfully to the last assigned '
+             'sum, 3.25. This checks recovery and retained variable state without assuming a '
+             'particular diagnostic message. There are 283 successful value references, '
+             'three expected rejected requests and three recoveries, plus the 560 assignment '
+             'checks. Domain-error handling in this engine is not verified by these probes.', '',
+             '## Scope', '',
+             'N3 records numeric expression parsing/evaluation, not symbolic algebra or '
+             'nonlinear solving. Missing-variable conventions, general grammar completeness, '
+             'case folding, user-defined functions, all domain errors, NaN/infinity behavior, '
+             'state isolation between clients and performance remain unverified. '
+             'Recovery calls intentionally follow the documented explicit reset steps for '
+             'the parser; no cross-engine error-code equivalence is assumed.', '',
+             '## Checked links and actual output', '',
+             'Independent API consumers have their own MIT notice; upstream terms remain '
+             'separate. Pinned sources and author examples/tests were reviewed without copying '
+             'upstream code. Loading a link does not submit a job.', '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
+def conversion_triangulation_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-conversion-triangulation-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-conversion-triangulation-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Checked decimal conversion and planar Delaunay meshes', '',
+             'These A6 and P drivers passed the restricted GNU Fortran 16.2.0 sandbox with '
+             'FPM 0.12.0. Existing package libraries were reused; only mains and executables '
+             'were compiled. The [verification report](gams-conversion-triangulation-validation.json) '
+             'retains pins, source hashes and actual output. GAMS categories are not exhausted.', '',
+             '## fortran-string-to-real str2real (A6)', '',
+             'Eight mantissas (0, 1, 25, 12345, 9876543, .125, 12.5, 0.000125) use both signs. '
+             'Each is tested without an exponent and with E/e and explicit signed exponents '
+             '[-100,-12,-1,0,1,12,100]. These give 240 strings. Four additional long-mantissa '
+             'cases include a positive 16-digit integer, a negative 15-digit integer and '
+             'positive/negative 24-fractional-digit decimals: 244 conversions in total. '
+             'Every tested string is at most 28 characters.', '',
+             'Each conversion has two independent references: the numeric mantissa multiplied '
+             'by 10**integer_exponent, and compiler formatted READ of the same string. '
+             'Long decimal reference literals are rounded by the compiler independently of '
+             'str2real. Results and READ references must be finite. Nonzero values must satisfy '
+             'relative error <=5e-14 against both references, including small normal values '
+             'near 1e-104. Zero inputs must return exactly zero; a signed-zero convention is '
+             'not required. Unlike normalization by max(1,abs(reference)), this relative '
+             'criterion does not make the small-number checks trivial.', '',
+             'The library does not validate malformed strings. These valid-input checks do '
+             'not establish malformed-input handling, every length/digit boundary, D exponents, '
+             'whitespace conventions, overflow, underflow/subnormals, correctly rounded conversion '
+             'or performance. Numerical agreement within tolerance is not a bitwise-rounding claim.', '',
+             '## GEOMPACK r8tris2: rectangle with interior points (P)', '',
+             'Three layouts have 5,9,13 points: square corners (-1,-1), (1,-1), (1,1), (-1,1) '
+             'and the first 1,5,9 points from the fixed interior list:', '',
+             '```text',
+             '(0,0), (-0.7,-0.2), (0.2,-0.6), (0.65,0.1), (-0.1,0.7),',
+             '(-0.45,0.45), (0.45,0.55), (-0.55,-0.65), (0.55,-0.45)',
+             '```', '',
+             'Positive scales 0.5,2,8, translations (0,0) and (-3,5), and original/reversed '
+             'input order give 36 triangulations. The known hull always has four vertices, '
+             'so Euler references are T=2*n-6 triangles and E=3*n-7 distinct edges. '
+             'Every input vertex must be used. Triangle vertices must be in range and distinct '
+             'triangles must not repeat the same vertex set. Input coordinates must be finite '
+             'and restored exactly after the routine returns.', '',
+             'All 432 triangles must be counterclockwise with twice-area >1e-14*scale**2. '
+             'Their summed area must match 4*scale**2 with normalized error <=5e-12, '
+             'using max(1,4*scale**2) as denominator. Undirected edges must have incidence '
+             'one or two, exactly four edges must be boundary edges, and distinct edge count '
+             'must equal the Euler reference. Every positive neighbor must refer to a different '
+             'in-range triangle sharing the reversed edge, with a reciprocal neighbor link. '
+             'Negative boundary links must form one closed four-edge cycle without repetition.', '',
+             'For every triangle and nonincident point p, independently form a=v1-p, b=v2-p, '
+             'c=v3-p and the incircle determinant '
+             'D=dot(a,a)*cross(b,c)-dot(b,b)*cross(a,c)+dot(c,c)*cross(a,b). '
+             'Counterclockwise orientation makes D positive for an interior circumcircle point. '
+             'All 3,360 tests require D/max(1,scale**4) <=1e-10. This checks the Delaunay '
+             'empty-circumcircle condition without using another triangulation library.', '',
+             'No particular triangle sequence or diagonal choice is required. Cocircular '
+             'ambiguities can have multiple valid solutions. Duplicate points, entirely '
+             'collinear or nearly coincident sets, arbitrary hulls, extreme coordinate scales, '
+             'three-dimensional meshes and performance remain unverified.', '',
+             '## Checked links and actual output', '',
+             'Independent API consumers have their own MIT notice; upstream terms remain '
+             'separate. Pinned sources and author tests were reviewed without copying upstream '
+             'code. Loading a link does not submit a job.', '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -6051,6 +6332,9 @@ def main():
                          (DIAGONAL_RESPONSE_REPORT, diagonal_response_review_text()),
                          (RANKING_MAGIC_REPORT, ranking_magic_review_text()),
                          (GEODESY_FORLAB_REPORT, geodesy_forlab_review_text()),
+                         (JACOBIAN_TRANSFORMS_REPORT, jacobian_transforms_review_text()),
+                         (EXPRESSION_EVALUATION_REPORT, expression_evaluation_review_text()),
+                         (CONVERSION_TRIANGULATION_REPORT, conversion_triangulation_review_text()),
                          (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report

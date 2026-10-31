@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "str2real-decimal-reference",
+      "source_revision": "76fb9e4203c6ce73c31bed85b69af920893b033e",
+      "source_sha256": "61d79589b563ac302322a3fc11257a6a8e18b9faf3c2b37a3aef4d3dd8cacde7",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T19:54:41.822888+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.309,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Valid decimal conversions: 244\nTwo independent references per conversion: arithmetic and formatted READ.\nBoth signs; plain decimals; E/e with signed exponents -100..100; long mantissas.\nMaximum relative arithmetic-reference error:   3.3683E-16\nMaximum relative formatted-READ error:   1.6243E-16\nPASS str2real-decimal-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.022,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "geompack-delaunay-reference",
+      "source_revision": "b7a327ca3a13507859c42dd6fba50af0bb5d5c6a",
+      "source_sha256": "94346355ba44428cf97a2a0897a4e5b2e8fafc0e715a6847d939683b6a0d1fd4",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T19:54:43.997627+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.439,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Planar triangulations: 36; checked triangles: 432\nIndependent empty-circumcircle tests: 3360\nKnown hull/area; all vertices; edge incidence; reciprocal neighbors; boundary cycle; restored coordinates.\nMaximum normalized area error:   2.2204E-16\nMaximum positive normalized incircle determinant:   0.0000E+00\nPASS geompack-delaunay-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.036,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T19:54:44.053184+00:00"
+}

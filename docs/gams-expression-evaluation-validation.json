@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "function-parser-identities",
+      "source_revision": "4c977c925506bea3fb1ee44aac08114c5fa68a71",
+      "source_sha256": "b4e8b41d169bbc6b490f82473e809752fa2995e833ad5ee6c67a515acc3e1e14",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T19:40:15.117376+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 9.134,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Independent expression value references: 286\nExpected rejected requests: 6; successful recoveries: 6\nMaximum normalized expression error:   1.1102E-16\nPASS function-parser-identities\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.028,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "m-calculator-identities",
+      "source_revision": "b6bbc08f81eb158a6908a42016059815fe72217d",
+      "source_sha256": "391341b6f1d74186494cc6cc0471b25b0546801af28f479abc2507a52e3061ee",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T19:40:17.242966+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.293,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "*expression* error===> *parens_* right parenthesis missing                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             \n*expression* error===> *a_2_d_* undeclared variable [@ ]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               \n*expression* error===> first factor or quotient for \"*\" or \"/\" missing or null                                                                                                                                                                                                                                                                                                                                                                                                                                                                         \nChecked variable assignments: 560\nIndependent expression value references: 283\nExpected rejected requests: 3; successful recoveries: 3\nMaximum normalized expression error:   4.4409E-16\nPASS m-calculator-identities\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.039,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T19:40:17.294475+00:00"
+}

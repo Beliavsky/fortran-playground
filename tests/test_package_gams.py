@@ -67,6 +67,9 @@ from xpackage_gams import (gams_data, package_classes, review_text, subclass_mod
                             diagonal_response_review_text, DIAGONAL_RESPONSE_REPORT,
                             ranking_magic_review_text, RANKING_MAGIC_REPORT,
                             geodesy_forlab_review_text, GEODESY_FORLAB_REPORT,
+                            jacobian_transforms_review_text, JACOBIAN_TRANSFORMS_REPORT,
+                            expression_evaluation_review_text, EXPRESSION_EVALUATION_REPORT,
+                            conversion_triangulation_review_text, CONVERSION_TRIANGULATION_REPORT,
                           coverage_data, coverage_review_text, COVERAGE_REPORT,
                           class_evidence, class_tree, mapping_evidence_text, EVIDENCE_REPORT)
 
@@ -225,7 +228,7 @@ class PackageGamsTests(unittest.TestCase):
         self.assertEqual({d['id'] for d in driver_data() if d['procedure_id'] in {m['id'] for m in mappings}},
                          {'fmin-sine', 'minpack-bard', 'libdogleg-bard', 'nonlin-rosenbrock-nm',
                           'nonlin-rosenbrock-bfgs', 'nlopt-rosenbrock-lbfgs', 'fortimize-nelder-reference',
-                          'minpack-lmder-reference'})
+                          'minpack-lmder-reference', 'nonlin-lsq-jacobian-reference'})
         tree = data['detailed_classes']
         self.assertEqual(tree['G1b1b']['parent'], 'G1b1')
         self.assertEqual(tree['G1b1']['parent'], 'G1b')
@@ -851,6 +854,100 @@ class PackageGamsTests(unittest.TestCase):
         self.assertIn('22,416',text)
         self.assertIn('Type-2/type-3 transforms',text)
         self.assertIn('two-dimensional NUFFT2D driver',transforms_review_text())
+
+    def test_conversion_and_triangulation_drivers_check_numeric_and_mesh_invariants(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for ident,code in [('str2real-decimal-reference','A6'),('geompack-delaunay-reference','P')]:
+            d = drivers[ident]
+            self.assertEqual(d['gams_code'],code)
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'],ident)
+            self.assertEqual(class_evidence(class_tree(data),code,[record],[d])['status'],'verified')
+        conversion = drivers['str2real-decimal-reference']['checks']
+        self.assertEqual(conversion['valid_conversions'],244)
+        self.assertEqual(conversion['independent_references_per_conversion'],2)
+        self.assertEqual(conversion['generated_strings']+conversion['long_mantissa_strings'],244)
+        self.assertFalse(conversion['malformed_input_verified'])
+        self.assertFalse(conversion['correct_rounding_verified'])
+        mesh = drivers['geompack-delaunay-reference']['checks']
+        self.assertEqual(mesh['triangulations'],36)
+        self.assertEqual(mesh['checked_triangles'],432)
+        self.assertEqual(mesh['empty_circumcircle_checks'],3360)
+        self.assertTrue(mesh['neighbor_reciprocity_checked'])
+        self.assertTrue(mesh['boundary_cycle_checked'])
+        self.assertTrue(mesh['coordinate_restoration_checked'])
+        self.assertFalse(mesh['specific_triangle_order_required'])
+        self.assertFalse(mesh['degenerate_input_verified'])
+        text = conversion_triangulation_review_text()
+        self.assertEqual((ROOT/CONVERSION_TRIANGULATION_REPORT).read_text(encoding='utf-8'),text)
+        for phrase in ['244 conversions','3,360 tests','four-edge cycle','not a bitwise-rounding claim']:
+            self.assertIn(phrase,text)
+
+    def test_expression_drivers_use_shared_numeric_references_and_checked_recovery(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for ident,count,rejections in [('function-parser-identities',286,6),('m-calculator-identities',283,3)]:
+            d = drivers[ident]
+            self.assertEqual(d['gams_code'],'N3')
+            self.assertEqual(d['checks']['expression_formulas'],14)
+            self.assertEqual(d['checks']['input_pairs'],20)
+            self.assertEqual(d['checks']['normal_value_references'],280)
+            self.assertEqual(d['checks']['total_value_references'],count)
+            self.assertEqual(d['checks']['expected_rejections'],rejections)
+            self.assertEqual(d['checks']['post_error_recoveries'],rejections)
+            self.assertFalse(d['checks']['symbolic_algebra_verified'])
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'],ident)
+            self.assertEqual(class_evidence(class_tree(data),'N3',[record],[d])['status'],'verified')
+        self.assertEqual(drivers['function-parser-identities']['checks']['evaluation_error_checks'],3)
+        self.assertTrue(drivers['function-parser-identities']['checks']['input_preservation_checked'])
+        self.assertEqual(drivers['m-calculator-identities']['checks']['variable_assignment_checks'],560)
+        self.assertFalse(drivers['m-calculator-identities']['checks']['domain_error_handling_verified'])
+        text = expression_evaluation_review_text()
+        self.assertEqual((ROOT/EXPRESSION_EVALUATION_REPORT).read_text(encoding='utf-8'),text)
+        for phrase in ['280 ordinary references','286 successful','283 successful','560 assignment','not symbolic algebra']:
+            self.assertIn(phrase,text)
+
+    def test_user_jacobian_and_transform_drivers_keep_verified_configuration_scope(self):
+        import hashlib
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for ident,code in [('nonlin-lsq-jacobian-reference','G1b1b'),('fglm-transform-reference','D1')]:
+            d = drivers[ident]
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'],ident)
+            self.assertEqual(class_evidence(class_tree(data),code,[record],[d])['status'],'verified')
+        d = drivers['nonlin-lsq-jacobian-reference']
+        record = records[d['procedure_id']]
+        self.assertEqual(class_evidence(class_tree(data),'G1b1a',[record],[d])['status'],'source-supported')
+        self.assertEqual(d['checks']['nonlinear_fits'],24)
+        self.assertEqual(d['checks']['starting_jacobian_entries'],240)
+        self.assertEqual(d['checks']['initial_step_bound_factor'],1)
+        self.assertFalse(d['checks']['nonzero_residual_minima_verified'])
+        self.assertFalse(d['checks']['default_step_bound_verified'])
+        transform = drivers['fglm-transform-reference']['checks']
+        self.assertEqual(transform['rigid_transforms'],72)
+        self.assertEqual(transform['point_and_direction_coordinate_checks'],864)
+        self.assertEqual(transform['rotation_orthogonality_checks'],648)
+        self.assertEqual(transform['rotation_determinant_checks'],72)
+        self.assertFalse(transform['arbitrary_3d_rotations_verified'])
+        folder = ROOT/'docs/gams-candidates/nonlin-least-squares'
+        for name in ['default-step-bound','nonzero-residual-step-one']:
+            meta = json.loads((folder/(name+'.json')).read_text())
+            source = (folder/meta['source']).read_text().replace('\r\n','\n').encode()
+            self.assertEqual(hashlib.sha256(source).hexdigest(),meta['source_sha256'])
+            stages = {s['name']: s for s in json.loads((folder/meta['result']).read_text())['stages']}
+            self.assertTrue(stages['Build']['ok'])
+            self.assertFalse(stages['Run']['ok'])
+            self.assertIn('convergence flags:',stages['Run']['stdout'])
+        text = jacobian_transforms_review_text()
+        self.assertEqual((ROOT/JACOBIAN_TRANSFORMS_REPORT).read_text(encoding='utf-8'),text)
+        for phrase in ['24 fits','864 output coordinates','default step setting','240 starting Jacobian entries']:
+            self.assertIn(phrase,text)
 
     def test_geodesy_and_forlab_drivers_keep_units_precision_and_failed_wide_scope(self):
         import hashlib

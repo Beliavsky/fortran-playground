@@ -244,3 +244,9 @@ The [diagonal-solve and harmonic-response review](gams-diagonal-response.md) con
 The [ranking and magic-square review](gams-ranking-magic.md) connects N6 to 23,988 ORDERPACK typed ranking calls with independent sorted-value references, and D1 to 124 M_LA magic-square constructions with exact permutation and line-sum checks. Tie stability, NaN ordering and unrelated matrix utilities are outside this scope.
 
 The [WGS84 and forlab review](gams-geodesy-forlab.md) connects P to 680 maptran3d conversions checked against ellipsoid geometry, and D9a1 to 108 single-precision forlab overdetermined solves with prescribed solutions and residuals. A failed wide-system probe is preserved; inverse poles and underdetermined solves are not verified.
+
+The [user-Jacobian and rigid-transform review](gams-jacobian-transforms.md) connects G1b1b to 24 nonlin exact exponential fits with explicit step bound 1, and D1 to fglm vector components and 72 transformation compositions. Default-bound and nonzero-residual false-convergence probes are preserved; finite-difference least-squares mode is not verified.
+
+The [expression-evaluation review](gams-expression-evaluation.md) connects N3 to Fortran Function Parser and M_calculator on 280 shared arithmetic references each, explicit error reporting and successful recovery. Variable input/state behavior is checked; neither driver establishes symbolic-algebra capability or complete grammar coverage.
+
+The [decimal-conversion and Delaunay review](gams-conversion-triangulation.md) connects A6 to 244 str2real conversions with arithmetic and formatted-READ references, and P to 36 GEOMPACK triangulations with independent empty-circle, area, edge and neighbor checks. Malformed numeric input and degenerate point sets are outside this scope.

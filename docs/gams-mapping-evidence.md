@@ -8,7 +8,7 @@ This report assesses each package/class pair, including inherited parent classes
 
 When a driver cannot be created, inspect the pinned implementation and author examples. Narrow or remove a classification that is unsupported; do not substitute an unrelated default example as evidence. Record missing dependencies, sandbox limits and upstream defects separately in the procedure or package review notes. A sandbox failure alone does not disprove an algorithm.
 
-Counts refer to package/class pairs and include parents: 448 verified, 303 source-supported, 246 uncertain.
+Counts refer to package/class pairs and include parents: 457 verified, 294 source-supported, 246 uncertain.
 
 ## Mappings requiring source review
 
@@ -333,7 +333,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [feq-parse / feq-parse-evaluate](https://beliavsky.github.io/fortran-playground/gams/packages/feq-parse/#feq-parse-evaluate) | N3 | source-supported |
 | [fftpack / fftpack-dct2](https://beliavsky.github.io/fortran-playground/gams/packages/fftpack/#fftpack-dct2) | J1a3 | verified |
 | [fftpack / fftpack-fft](https://beliavsky.github.io/fortran-playground/gams/packages/fftpack/#fftpack-fft) | J1a2 | verified |
-| [fglm / fglm-api](https://beliavsky.github.io/fortran-playground/gams/packages/fglm/#fglm-api) | D1 | source-supported |
+| [fglm / fglm-api](https://beliavsky.github.io/fortran-playground/gams/packages/fglm/#fglm-api) | D1 | verified |
 | [fgsl / fgsl-qags](https://beliavsky.github.io/fortran-playground/gams/packages/fgsl/#fgsl-qags) | H2a1a1 | verified |
 | [fiats / fiats-inference](https://beliavsky.github.io/fortran-playground/gams/packages/fiats/#fiats-inference) | K | source-supported |
 | [finterp / finterp-linear-interp-1d](https://beliavsky.github.io/fortran-playground/gams/packages/finterp/#finterp-linear-interp-1d) | E1a | verified |
@@ -392,14 +392,14 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [fortran-sdl2 / fortran-sdl2-demo-api](https://beliavsky.github.io/fortran-playground/gams/packages/fortran-sdl2/#fortran-sdl2-demo-api) | Q | verified |
 | [fortran-simplify / fortran-simplify-perpendicular](https://beliavsky.github.io/fortran-playground/gams/packages/fortran-simplify/#fortran-simplify-perpendicular) | P | source-supported |
 | [fortran-simplify / fortran-simplify-perpendicular](https://beliavsky.github.io/fortran-playground/gams/packages/fortran-simplify/#fortran-simplify-perpendicular) | K | source-supported |
-| [fortran-string-to-real / fortran-string-to-real-str2real](https://beliavsky.github.io/fortran-playground/gams/packages/fortran-string-to-real/#fortran-string-to-real-str2real) | A6 | source-supported |
+| [fortran-string-to-real / fortran-string-to-real-str2real](https://beliavsky.github.io/fortran-playground/gams/packages/fortran-string-to-real/#fortran-string-to-real-str2real) | A6 | verified |
 | [fortran-tcl86 / tcl-evaluate](https://beliavsky.github.io/fortran-playground/gams/packages/fortran-tcl86/#tcl-evaluate) | S | source-supported |
 | [fortran-tokenizer / tokenizer-fields](https://beliavsky.github.io/fortran-playground/gams/packages/fortran-tokenizer/#tokenizer-fields) | N3 | source-supported |
 | [fortran-unix / unix-files](https://beliavsky.github.io/fortran-playground/gams/packages/fortran-unix/#unix-files) | N1 | source-supported |
 | [fortran-utils / fortran-utils-splines](https://beliavsky.github.io/fortran-playground/gams/packages/fortran-utils/#fortran-utils-splines) | E1 | verified |
 | [fortran-utils / fortran-utils-splines](https://beliavsky.github.io/fortran-playground/gams/packages/fortran-utils/#fortran-utils-splines) | N6 | source-supported |
 | [fortran_cubatures / fortran-cubatures-cubature](https://beliavsky.github.io/fortran-playground/gams/packages/fortran_cubatures/#fortran-cubatures-cubature) | H2c | verified |
-| [fortran_function_parser / fortran-function-parser-evaluate](https://beliavsky.github.io/fortran-playground/gams/packages/fortran_function_parser/#fortran-function-parser-evaluate) | N3 | source-supported |
+| [fortran_function_parser / fortran-function-parser-evaluate](https://beliavsky.github.io/fortran-playground/gams/packages/fortran_function_parser/#fortran-function-parser-evaluate) | N3 | verified |
 | [fortran_test_helper / fortran-test-helper-create-r64-array](https://beliavsky.github.io/fortran-playground/gams/packages/fortran_test_helper/#fortran-test-helper-create-r64-array) | L6a21 | source-supported |
 | [fortran_vector / fortran-vector-storage](https://beliavsky.github.io/fortran-playground/gams/packages/fortran_vector/#fortran-vector-storage) | N4 | source-supported |
 | [fortranlib / fortranlib-numerics](https://beliavsky.github.io/fortran-playground/gams/packages/fortranlib/#fortranlib-numerics) | E1 | source-supported |
@@ -421,7 +421,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [fycollections / fycollections-demo-api](https://beliavsky.github.io/fortran-playground/gams/packages/fycollections/#fycollections-demo-api) | N5 | source-supported |
 | [gaussjacobiquad / gaussjacobiquad-gauss-jacobi](https://beliavsky.github.io/fortran-playground/gams/packages/gaussjacobiquad/#gaussjacobiquad-gauss-jacobi) | H2c | verified |
 | [geodesic-fortran / geodesic-fortran-inverse](https://beliavsky.github.io/fortran-playground/gams/packages/geodesic-fortran/#geodesic-fortran-inverse) | P | verified |
-| [geompack / geompack-r8tris2](https://beliavsky.github.io/fortran-playground/gams/packages/geompack/#geompack-r8tris2) | P | source-supported |
+| [geompack / geompack-r8tris2](https://beliavsky.github.io/fortran-playground/gams/packages/geompack/#geompack-r8tris2) | P | verified |
 | [gftl / gftl-vector](https://beliavsky.github.io/fortran-playground/gams/packages/gftl/#gftl-vector) | N4 | source-supported |
 | [gftl-shared / gftl-shared-containers](https://beliavsky.github.io/fortran-playground/gams/packages/gftl-shared/#gftl-shared-containers) | N4 | source-supported |
 | [gftl-shared / gftl-shared-containers](https://beliavsky.github.io/fortran-playground/gams/packages/gftl-shared/#gftl-shared-containers) | N5 | source-supported |
@@ -466,7 +466,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [lusol / lusol-api](https://beliavsky.github.io/fortran-playground/gams/packages/lusol/#lusol-api) | D2a4 | source-supported |
 | [m-process / m-process-pipe](https://beliavsky.github.io/fortran-playground/gams/packages/m-process/#m-process-pipe) | S | source-supported |
 | [m-system / m-system-files](https://beliavsky.github.io/fortran-playground/gams/packages/m-system/#m-system-files) | N1 | source-supported |
-| [m_calculator / m-calculator-dnum0](https://beliavsky.github.io/fortran-playground/gams/packages/m_calculator/#m-calculator-dnum0) | N3 | source-supported |
+| [m_calculator / m-calculator-dnum0](https://beliavsky.github.io/fortran-playground/gams/packages/m_calculator/#m-calculator-dnum0) | N3 | verified |
 | [m_cli / m-cli-demo-api](https://beliavsky.github.io/fortran-playground/gams/packages/m_cli/#m-cli-demo-api) | N1 | source-supported |
 | [m_cli / m-cli-demo-api](https://beliavsky.github.io/fortran-playground/gams/packages/m_cli/#m-cli-demo-api) | N3 | source-supported |
 | [m_draw / m-draw-raster](https://beliavsky.github.io/fortran-playground/gams/packages/m_draw/#m-draw-raster) | Q | source-supported |
@@ -494,7 +494,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [nonlin / nonlin-bfgs](https://beliavsky.github.io/fortran-playground/gams/packages/nonlin/#nonlin-bfgs) | G1b1b | verified |
 | [nonlin / nonlin-brent-solver](https://beliavsky.github.io/fortran-playground/gams/packages/nonlin/#nonlin-brent-solver) | F1b | verified |
 | [nonlin / nonlin-least-squares](https://beliavsky.github.io/fortran-playground/gams/packages/nonlin/#nonlin-least-squares) | G1b1a | source-supported |
-| [nonlin / nonlin-least-squares](https://beliavsky.github.io/fortran-playground/gams/packages/nonlin/#nonlin-least-squares) | G1b1b | source-supported |
+| [nonlin / nonlin-least-squares](https://beliavsky.github.io/fortran-playground/gams/packages/nonlin/#nonlin-least-squares) | G1b1b | verified |
 | [nonlin / nonlin-nelder-mead](https://beliavsky.github.io/fortran-playground/gams/packages/nonlin/#nonlin-nelder-mead) | G1b1a | verified |
 | [nonlin / nonlin-newton-1var](https://beliavsky.github.io/fortran-playground/gams/packages/nonlin/#nonlin-newton-1var) | F1b | verified |
 | [nonlin / nonlin-newton-solver](https://beliavsky.github.io/fortran-playground/gams/packages/nonlin/#nonlin-newton-solver) | F2 | verified |

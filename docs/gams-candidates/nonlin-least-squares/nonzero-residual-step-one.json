@@ -1,0 +1,7 @@
+{
+  "revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+  "source": "nonzero-residual-step-one.f90",
+  "source_sha256": "f5e305dbe52f1da636ddb8996e8eb6b9d3ce4d71d47d04d1671613bd4b65003c",
+  "result": "nonzero-residual-step-one-result.json",
+  "finding": "With initial step bound factor 1, all 24 exact exponential fits complete, but the first orthogonal-noise fixture at rho=-0.5 returns unchanged initial parameters [-0.00685281944,0.5] with converge_on_chng=true instead of [log(2),1]. Normalized parameter error 0.7. Full planned 40-fit suite did not complete."
+}

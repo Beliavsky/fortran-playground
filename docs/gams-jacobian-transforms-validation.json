@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "fglm-transform-reference",
+      "source_revision": "e1b6a5404b3e7a266da33173a07166970c16dd86",
+      "source_sha256": "7297c6c67674b5bfb31582d223ea1b28101c7ce6e2ef3e1db2a15a57a5d54fe3",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T19:26:33.950611+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.584,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Double-precision vector operations: 48\nSingle-precision rigid transforms: 72; coordinate references: 864\nBoth composition orders; points and directions; orthogonality and determinant.\nMaximum vector component error:   0.0000E+00\nMaximum normalized transform error:   1.0066E-07\nPASS fglm-transform-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.027,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "nonlin-lsq-jacobian-reference",
+      "source_revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+      "source_sha256": "a67f3fc4d0dad5137b3647e6956bda722db6f201cb38a0aee0c0ecf7d0af5653",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T19:28:03.964309+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.445,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Total / exact-fit solves:    24   24\nAnalytical Jacobian entries checked by central differences at starting points: 240\nMaximum normalized parameter error:   2.2204E-16\nMaximum normalized Jacobian finite-difference error:   4.1373E-11\nMaximum absolute J-transpose-residual component:   5.7772E-15\nPASS nonlin-lsq-jacobian-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.028,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T19:28:04.016980+00:00"
+}

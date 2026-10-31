@@ -6171,6 +6171,216 @@
         "underdetermined_verified": false,
         "known_least_squares_solution_checked": true
       }
+    },
+    {
+      "id": "nonlin-lsq-jacobian-reference",
+      "name": "gams-nonlin-lsq-jacobian-reference",
+      "package_id": "nonlin",
+      "procedure_id": "nonlin-least-squares",
+      "gams_code": "G1b1b",
+      "problem_id": "analytical-jacobian-exact-and-noisy-fits",
+      "path": "fpm_catalog/gams-drivers/nonlin-lsq-jacobian-reference.f90",
+      "revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+      "author_example": "examples/nonlin_least_squares_example.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/jacobian-transforms-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer with 24 exact exponential fits and user Jacobians; same exact-fit subset as the checked MINPACK driver. Explicit initial step bound factor 1. Checks Jacobian finite differences, callback use, stopping flags, known parameters, zero objective, returned residuals and stationarity. Default step bound and nonzero-residual probes fail with false convergence; their sources, hashes and results are retained under docs/gams-candidates/nonlin-least-squares. Neither their accuracy criteria nor library code is changed. G1b1a and constrained sibling types remain unverified.",
+      "validation_path": "docs/gams-jacobian-transforms-validation.json",
+      "review_path": "docs/gams-jacobian-transforms.md",
+      "checks": {
+        "nonlinear_fits": 24,
+        "exact_fits": 24,
+        "nonzero_residual_fits": 0,
+        "starting_jacobian_entries": 240,
+        "user_jacobian_checked": true,
+        "known_parameters_checked": true,
+        "known_objective_checked": true,
+        "stationarity_checked": true,
+        "max_normalized_parameter_error": 2e-07,
+        "finite_difference_solver_mode_verified": false,
+        "bound_constrained_solver_verified": false,
+        "initial_step_bound_factor": 1,
+        "default_step_bound_verified": false,
+        "nonzero_residual_minima_verified": false
+      }
+    },
+    {
+      "id": "fglm-transform-reference",
+      "name": "gams-fglm-transform-reference",
+      "package_id": "fglm",
+      "procedure_id": "fglm-api",
+      "gams_code": "D1",
+      "problem_id": "rigid-transform-composition-and-components",
+      "path": "fpm_catalog/gams-drivers/fglm-transform-reference.f90",
+      "revision": "e1b6a5404b3e7a266da33173a07166970c16dd86",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/jacobian-transforms-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned API reviewed, no upstream code copied. Double-precision vector addition/component products plus single-precision z-axis rotation and translation composition. Independent double-precision coordinate references, homogeneous points/directions, orthogonality, determinant and input preservation. Other vector overloads, arbitrary 3D axes and performance remain unverified.",
+      "validation_path": "docs/gams-jacobian-transforms-validation.json",
+      "review_path": "docs/gams-jacobian-transforms.md",
+      "checks": {
+        "vector_operations": 48,
+        "vector_coordinate_checks": 144,
+        "rigid_transforms": 72,
+        "point_and_direction_coordinate_checks": 864,
+        "rotation_orthogonality_checks": 648,
+        "rotation_determinant_checks": 72,
+        "composition_orders": [
+          "translate_then_rotate",
+          "rotate_then_translate"
+        ],
+        "vector_storage_bits": 64,
+        "matrix_storage_bits": 32,
+        "max_normalized_transform_error": 2e-06,
+        "arbitrary_3d_rotations_verified": false
+      }
+    },
+    {
+      "id": "function-parser-identities",
+      "name": "gams-function-parser-identities",
+      "package_id": "fortran_function_parser",
+      "procedure_id": "fortran-function-parser-evaluate",
+      "gams_code": "N3",
+      "problem_id": "arithmetic-identities-and-parser-recovery",
+      "path": "fpm_catalog/gams-drivers/function-parser-identities.f90",
+      "revision": "4c977c925506bea3fb1ee44aac08114c5fa68a71",
+      "author_example": "test/tests.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/expression-evaluation-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned source/author example reviewed, no upstream code copied. Fourteen common arithmetic identities at twenty input pairs give 280 ordinary references. Explicit error reporting and recovery checked. Parser reuses compiled expressions, preserves variable arrays and checks three parse plus three evaluation errors. No symbolic computation, exhaustive grammar, arbitrary domain behavior or performance claim.",
+      "validation_path": "docs/gams-expression-evaluation-validation.json",
+      "review_path": "docs/gams-expression-evaluation.md",
+      "checks": {
+        "expression_formulas": 14,
+        "input_pairs": 20,
+        "normal_value_references": 280,
+        "total_value_references": 286,
+        "expected_rejections": 6,
+        "post_error_recoveries": 6,
+        "max_normalized_error": 2e-12,
+        "symbolic_algebra_verified": false,
+        "parse_error_checks": 3,
+        "evaluation_error_checks": 3,
+        "input_preservation_checked": true
+      }
+    },
+    {
+      "id": "m-calculator-identities",
+      "name": "gams-m-calculator-identities",
+      "package_id": "m_calculator",
+      "procedure_id": "m-calculator-dnum0",
+      "gams_code": "N3",
+      "problem_id": "arithmetic-identities-and-parser-recovery",
+      "path": "fpm_catalog/gams-drivers/m-calculator-identities.f90",
+      "revision": "b6bbc08f81eb158a6908a42016059815fe72217d",
+      "author_example": "example/demo_dnum0.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/expression-evaluation-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned source/author example reviewed, no upstream code copied. Fourteen common arithmetic identities at twenty input pairs give 280 ordinary references. Explicit error reporting and recovery checked. Calculator checks 560 assignments to prefixed variables, three malformed expressions and preserved variable state after errors. No symbolic computation, exhaustive grammar, arbitrary domain behavior or performance claim.",
+      "validation_path": "docs/gams-expression-evaluation-validation.json",
+      "review_path": "docs/gams-expression-evaluation.md",
+      "checks": {
+        "expression_formulas": 14,
+        "input_pairs": 20,
+        "normal_value_references": 280,
+        "total_value_references": 283,
+        "expected_rejections": 3,
+        "post_error_recoveries": 3,
+        "max_normalized_error": 2e-12,
+        "symbolic_algebra_verified": false,
+        "variable_assignment_checks": 560,
+        "domain_error_handling_verified": false
+      }
+    },
+    {
+      "id": "str2real-decimal-reference",
+      "name": "gams-str2real-decimal-reference",
+      "package_id": "fortran-string-to-real",
+      "procedure_id": "fortran-string-to-real-str2real",
+      "gams_code": "A6",
+      "problem_id": "valid-decimal-scientific-conversion",
+      "path": "fpm_catalog/gams-drivers/str2real-decimal-reference.f90",
+      "revision": "76fb9e4203c6ce73c31bed85b69af920893b033e",
+      "author_example": "test/test.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/conversion-triangulation-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned source/author test reviewed, no upstream code copied. Valid decimal/scientific strings checked against arithmetic references and formatted READ, including both signs, E/e, exponent scales and long mantissas. Relative errors tested even for tiny normal values; zero checked separately. This parser does not validate malformed input; malformed, overflowing/underflowing strings and correct rounding remain unverified.",
+      "validation_path": "docs/gams-conversion-triangulation-validation.json",
+      "review_path": "docs/gams-conversion-triangulation.md",
+      "checks": {
+        "valid_conversions": 244,
+        "independent_references_per_conversion": 2,
+        "mantissas": 8,
+        "generated_strings": 240,
+        "long_mantissa_strings": 4,
+        "exponents": [
+          -100,
+          -12,
+          -1,
+          0,
+          1,
+          12,
+          100
+        ],
+        "max_string_length": 28,
+        "max_relative_error": 5e-14,
+        "malformed_input_verified": false,
+        "correct_rounding_verified": false,
+        "overflow_underflow_verified": false
+      }
+    },
+    {
+      "id": "geompack-delaunay-reference",
+      "name": "gams-geompack-delaunay-reference",
+      "package_id": "geompack",
+      "procedure_id": "geompack-r8tris2",
+      "gams_code": "P",
+      "problem_id": "rectangle-interior-delaunay-invariants",
+      "path": "fpm_catalog/gams-drivers/geompack-delaunay-reference.f90",
+      "revision": "b7a327ca3a13507859c42dd6fba50af0bb5d5c6a",
+      "author_example": "test/geompack_test_routines.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/conversion-triangulation-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned source/author test reviewed, no upstream code copied. Rectangle hull with deterministic interior points, scales, translations and reversed input order. Checks Euler counts, finite/restored coordinates, all vertices, CCW triangles, duplicate triangles, area, independent incircle determinants, edge incidence, reciprocal neighbors and complete boundary cycle. No particular triangulation chosen for cocircular ambiguity; invalid/degenerate sets and performance remain unverified.",
+      "validation_path": "docs/gams-conversion-triangulation-validation.json",
+      "review_path": "docs/gams-conversion-triangulation.md",
+      "checks": {
+        "triangulations": 36,
+        "checked_triangles": 432,
+        "empty_circumcircle_checks": 3360,
+        "point_counts": [
+          5,
+          9,
+          13
+        ],
+        "neighbor_reciprocity_checked": true,
+        "boundary_cycle_checked": true,
+        "coordinate_restoration_checked": true,
+        "known_hull_area_checked": true,
+        "max_normalized_area_error": 5e-12,
+        "max_normalized_incircle_determinant": 1e-10,
+        "degenerate_input_verified": false,
+        "specific_triangle_order_required": false
+      }
     }
   ]
 }
