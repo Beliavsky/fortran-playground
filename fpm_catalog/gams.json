@@ -4651,7 +4651,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "Ordering array values; not statistical inference.",
+      "notes": "Ordering array values; not statistical inference. Dedicated N6 driver checks ascending/descending integer and finite-real arrays, repeated/negative values, idempotence, an independently histogram-sorted 64-element reference, and empty/singleton inputs. NaN ordering and stability are not validated.",
       "evidence": [
         {
           "path": "src/stdlib_sorting.F90",
@@ -4664,7 +4664,8 @@
           "path": "test/test_sorting.F90",
           "sha256": "c6424675bafc1bf89d74d84acacde5de0f51aa9ab28919ff9621eff022652f4a"
         }
-      ]
+      ],
+      "driver_id": "stdlib-sorting-reference"
     },
     {
       "id": "stdlib-random-seed",

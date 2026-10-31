@@ -17,20 +17,55 @@ class Page(HTMLParser):
         super().__init__()
         self.links = []
         self.ids = []
+        self.anchors = []
+        self.current_anchor = None
         self.feed(text)
 
     def handle_starttag(self, tag, attributes):
         attrs = dict(attributes)
         if tag == 'a':
             self.links.append(attrs.get('href', ''))
+            self.current_anchor = [attrs.get('href', ''), '']
         if 'id' in attrs:
             self.ids.append(attrs['id'])
+
+    def handle_data(self, data):
+        if self.current_anchor is not None:
+            self.current_anchor[1] += data
+
+    def handle_endtag(self, tag):
+        if tag == 'a' and self.current_anchor is not None:
+            self.anchors.append(tuple(self.current_anchor))
+            self.current_anchor = None
 
 
 class GamsSiteTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.feed = build_export()
+
+    def test_evidence_labels_change_with_class_specific_records_and_drivers(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects'] if p['playground']['package_id'] == 'stdlib']
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination, feed)
+            sorting = (destination/'N6/index.html').read_text(encoding='utf-8')
+            parent = (destination/'N/index.html').read_text(encoding='utf-8')
+            self.assertIn('Verified: a checked driver', sorting)
+            self.assertIn('Driver demonstrates the narrower class', parent)
+            feed['demonstrations'] = []
+            generate_gams_site(destination, feed)
+            sorting = (destination/'N6/index.html').read_text(encoding='utf-8')
+            self.assertIn('Source-supported: pinned procedure evidence', sorting)
+            self.assertNotIn('Verified: a checked driver', sorting)
+            feed['projects'][0]['curation']['procedures'] = []
+            generate_gams_site(destination, feed)
+            sorting = (destination/'N6/index.html').read_text(encoding='utf-8')
+            self.assertIn('Uncertain: discovery classification', sorting)
+            self.assertIn('Open default example', sorting)
+            self.assertNotIn('Try in playground', sorting)
 
     def test_real_catalog_is_browsable_without_javascript_and_links_resolve(self):
         with tempfile.TemporaryDirectory() as temporary:
@@ -197,6 +232,36 @@ class GamsSiteTests(unittest.TestCase):
             sitemap = ElementTree.fromstring((destination/'sitemap.xml').read_text(encoding='utf-8'))
             self.assertEqual(len(sitemap), count)
 
+    def test_class_primary_playground_link_selects_matching_driver_and_labels_fallback(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects'] if p.get('playground', {}).get('package_id')=='stdlib']
+        default = feed['projects'][0]['playground']['url']
+        sorting = next(d['url'] for d in feed['demonstrations'] if d['id']=='stdlib-sorting-reference')
+        mean = next(d['url'] for d in feed['demonstrations'] if d['id']=='stdlib-mean-checks')
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination, feed)
+            for code, expected in [('N6', sorting), ('N', sorting), ('L1a1a', mean)]:
+                page = Page((destination/code/'index.html').read_text(encoding='utf-8'))
+                self.assertIn((expected, 'Try in playground'), page.anchors)
+                self.assertNotIn(default, page.links)
+            fallback = Page((destination/'N5/index.html').read_text(encoding='utf-8'))
+            self.assertIn((default, 'Open default example'), fallback.anchors)
+            self.assertNotIn((default, 'Try in playground'), fallback.anchors)
+            package = Page((destination/'packages/stdlib/index.html').read_text(encoding='utf-8'))
+            self.assertIn((default, 'Try in playground'), package.anchors)
+            # Prefer a direct-class demonstration over an earlier descendant demonstration.
+            direct = copy.deepcopy(next(d for d in feed['demonstrations'] if d['id']=='stdlib-sorting-reference'))
+            direct.update(id='test-direct-N', gams_code='N', url=sorting+'&test_direct=1')
+            feed['demonstrations'].append(direct)
+            generate_gams_site(destination, feed)
+            parent = Page((destination/'N/index.html').read_text(encoding='utf-8'))
+            self.assertIn((direct['url'], 'Try in playground'), parent.anchors)
+            child = Page((destination/'N6/index.html').read_text(encoding='utf-8'))
+            self.assertIn((sorting, 'Try in playground'), child.anchors)
+            self.assertNotIn(direct['url'], child.links)
+
     def test_parent_membership_uses_explicit_hierarchy_and_preserves_review_scope(self):
         # C1 and C10 are siblings, not prefix-related parent/child classes.
         project = self.feed['projects'][0]
@@ -219,7 +284,7 @@ class GamsSiteTests(unittest.TestCase):
             self.assertIn('&lt;script&gt;', index)
             self.assertNotIn('<script>alert(', index)
             package = next((destination/'packages').glob('*/index.html'))
-            self.assertIn('No procedure-level mapping', package.read_text(encoding='utf-8'))
+            self.assertIn('Uncertain: no procedure-level mapping', package.read_text(encoding='utf-8'))
             feed['projects'] = []
             generate_gams_site(destination, feed)
             self.assertFalse(package.exists())

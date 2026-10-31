@@ -30,7 +30,9 @@ POLYNOMIAL_REPORT = Path('docs/gams-polynomial.md')
 CONVOLUTION_REPORT = Path('docs/gams-convolution.md')
 REGRESSION_REPORT = Path('docs/gams-regression.md')
 MATRIX_EQUATIONS_REPORT = Path('docs/gams-matrix-equations.md')
+SORTING_REPORT = Path('docs/gams-sorting.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
+EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
 
 
@@ -151,6 +153,68 @@ def safe_path(value):
 
 def procedure_records(data, name):
     return [record for record in data.get('procedure_mappings', []) if record['package_id'] == name]
+
+
+def class_evidence(tree, code, records, drivers):
+    """Assess this class only; a driver for a sibling capability is not evidence."""
+    matched = [p for p in records if any(code in ancestors(tree, c) for c in p['gams_codes'])]
+    procedure_ids = {p['id'] for p in matched}
+    checked = [d for d in drivers if d['procedure_id'] in procedure_ids
+               and code in ancestors(tree, d['gams_code'])]
+    status = 'verified' if checked else 'source-supported' if matched else 'uncertain'
+    return {'status': status, 'procedures': matched, 'drivers': checked}
+
+
+def mapping_evidence_text(root=ROOT):
+    data = gams_data(root)
+    tree = class_tree(data)
+    drivers = driver_data(root, data)
+    rows = []
+    for name in sorted(data['packages']):
+        records = procedure_records(data, name)
+        package_drivers = [d for d in drivers if d['package_id'] == name]
+        for cls in package_classes(data, name):
+            result = class_evidence(tree, cls['code'], records, package_drivers)
+            rows.append((name, cls['code'], result))
+    counts = Counter(result['status'] for _, _, result in rows)
+    lines = ['# Evidence for GAMS package mappings', '',
+             'This report assesses each package/class pair, including inherited parent classes. '
+             'A checked package default does not verify every classification.', '',
+             '- **Verified:** a checked driver demonstrates a recorded procedure in this class or a descendant. '
+             'Only the driver\'s tested configuration is verified.',
+             '- **Source-supported:** a named procedure has pinned source evidence for this class, '
+             'but no matching checked GAMS driver has been recorded.',
+             '- **Uncertain:** the discovery classification has no matching procedure-level evidence '
+             'in our records. This is a review queue, not a finding that the package lacks the capability.', '',
+             'When a driver cannot be created, inspect the pinned implementation and author examples. '
+             'Narrow or remove a classification that is unsupported; do not substitute an unrelated default '
+             'example as evidence. Record missing dependencies, sandbox limits and upstream defects separately '
+             'in the procedure or package review notes. A sandbox failure alone does not disprove an algorithm.', '',
+             'Counts refer to package/class pairs and include parents: '+', '.join(
+                 f'{counts[s]} {s}' for s in ('verified', 'source-supported', 'uncertain'))+'.', '',
+             '## Mappings requiring source review', '',
+             'Inspect these discovery assignments before making a specific algorithm claim. '
+             'Their existing classifications remain visible, explicitly marked uncertain, until reviewed.', '',
+             '| Package | Class | Description |', '| --- | --- | --- |']
+    for name, code, result in rows:
+        if result['status'] == 'uncertain':
+            lines.append(f'| [{name}](https://beliavsky.github.io/fortran-playground/gams/packages/{name}/) | '
+                         f'[{code}](https://beliavsky.github.io/fortran-playground/gams/{code}/) | {tree[code]["label"]} |')
+    lines += ['', '## Procedure evidence and remaining driver work', '',
+              'Statuses below apply to each recorded procedure/class pair. A driver for a different class '
+              'of the same procedure does not verify this pair. Follow the procedure link for pinned source, '
+              'author examples and limitations.', '',
+              '| Package / procedure | Class | Evidence |', '| --- | --- | --- |']
+    for record in sorted(data['procedure_mappings'], key=lambda p: (p['package_id'], p['id'])):
+        for code in record['gams_codes']:
+            result = class_evidence(tree, code, [record], drivers)
+            url = f'https://beliavsky.github.io/fortran-playground/gams/packages/{record["package_id"]}/#{record["id"]}'
+            lines.append(f'| [{record["package_id"]} / {record["id"]}]({url}) | {code} | {result["status"]} |')
+    lines += ['', '## Maintenance', '',
+              'Regenerate with `python xpackage_gams.py`; check with `python xpackage_gams.py --check`. '
+              'The report and catalog labels use the same class-specific evidence rule. '
+              'Saved successful driver verification is required before a driver enters the manifest.', '']
+    return '\n'.join(lines)
 
 
 def g1_procedures(data):
@@ -350,6 +414,10 @@ def review_text(root=ROOT):
              'and records capabilities that still need procedure-level review.', '',
              'The [coverage report](gams-coverage.md) separates source-reviewed mappings from class-specific '
              'checked drivers and lists remaining gaps. Reaching a taxonomy leaf does not exhaust its procedures or use cases.', '',
+             'The [mapping evidence report](gams-mapping-evidence.md) labels each class-specific mapping '
+             'as verified, source-supported or uncertain and lists discovery assignments needing source review. '
+             'If a claimed algorithm cannot be demonstrated, revisit the source evidence and narrow or remove '
+             'unsupported mappings; document execution limits separately.', '',
              'These discovery assignments are based on saved descriptions, topics, bundled examples, and '
              'upstream documentation where reviewed. '
              'A class indicates relevant package functionality, not coverage of every problem in that class. '
@@ -2163,6 +2231,47 @@ def matrix_equations_review_text(root=ROOT):
     return '\n'.join(lines)
 
 
+def sorting_review_text(root=ROOT):
+    root = Path(root)
+    driver = next(d for d in driver_data(root) if d['id']=='stdlib-sorting-reference')
+    report = json.loads((root/driver_validation_path(driver)).read_text(encoding='utf-8'))
+    result = next(r for r in report['drivers'] if r['driver_id']==driver['id'])
+    output = next(s['stdout'] for s in result['stages'] if s['name']=='Run')
+    return '\n'.join(['# Class-specific playground links and checked stdlib sorting', '',
+        'On a GAMS class page, **Try in playground** opens a checked driver matching '
+        'that class when one is available. An exact-class driver is preferred; a '
+        'driver in a descendant class is used otherwise. Class membership follows '
+        'the explicit GAMS hierarchy. Package/owner pages retain their general '
+        'package links. If no matching driver exists, a class card labels the '
+        'fallback **Open default example**, rather than implying that the default '
+        'program demonstrates the current class.', '',
+        'The stdlib link on [N6: Sorting](https://beliavsky.github.io/fortran-playground/gams/N6/) '
+        'now opens the [checked sorting example](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-sorting-reference). '
+        'Loading the link selects code without submitting a job.', '',
+        '## Checked sorting operations', '',
+        'The driver uses `stdlib_sorting:sort` on int32 and real64 arrays. It '
+        'checks exact ascending and descending answers for small arrays with '
+        'negative and repeated values, integer-sort idempotence, and empty/singleton '
+        'arrays. A separate 64-element integer case uses values '
+        '`modulo(37*i,17)-8`; its sorted reference is constructed from counts '
+        'in the known range -8 through 8, independently of another sorting routine.', '',
+        'The real values are finite, exactly representable binary fractions. '
+        'NaN ordering, signed-zero distinctions, stability and all other sorting '
+        'interfaces are outside this driver. Author API patterns are adapted with '
+        'the stdlib MIT notice retained.', '',
+        f'[Driver source](../{driver["path"]}) / '
+        f'[Pinned author test](https://github.com/fortran-lang/stdlib/blob/{driver["revision"]}/{driver["author_example"]}) / '
+        '[Verification report](gams-sorting-validation.json)', '',
+        'The driver passed in the restricted GNU Fortran 16.2.0 sandbox with '
+        'FPM 0.12.0, reusing the existing stdlib library. Only the main and executable '
+        'were compiled. The example appears in both hosted and main local FPM menus.', '',
+        '```text', output.rstrip(), '```', '', '## Maintenance', '', '```text',
+        'python xverify_gams_drivers.py --drivers stdlib-sorting-reference',
+        'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+        'Publishing the updated Pages build is sufficient; no backend redeployment '
+        'or package library rebuild is required.', ''])
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -2268,6 +2377,8 @@ def main():
                          (CONVOLUTION_REPORT, convolution_review_text()),
                          (REGRESSION_REPORT, regression_review_text()),
                          (MATRIX_EQUATIONS_REPORT, matrix_equations_review_text()),
+                         (SORTING_REPORT, sorting_review_text()),
+                         (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report
         if args.check:

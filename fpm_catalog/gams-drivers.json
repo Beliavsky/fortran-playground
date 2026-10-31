@@ -2346,6 +2346,34 @@
         "second_case_transposes_coefficients": true,
         "equation": "X+A*X*B=C"
       }
+    },
+    {
+      "id": "stdlib-sorting-reference",
+      "name": "gams-stdlib-sorting-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-sort",
+      "gams_code": "N6",
+      "problem_id": "deterministic-sorting-reference",
+      "path": "fpm_catalog/gams-drivers/stdlib-sorting-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_sorting.F90",
+      "reuse": "adapted",
+      "license": "MIT",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/stdlib-MIT.txt"
+      ],
+      "modifications": "Author API patterns adapted to small exact ascending/descending integer and finite-real examples, idempotence, independent histogram reference and empty/singleton checks.",
+      "validation_path": "docs/gams-sorting-validation.json",
+      "review_path": "docs/gams-sorting.md",
+      "checks": {
+        "integer_kind": "int32",
+        "real_kind": "real64",
+        "ascending_and_descending": true,
+        "histogram_reference_size": 64,
+        "empty_and_singleton": true,
+        "nan_ordering_checked": false,
+        "stability_checked": false
+      }
     }
   ]
 }

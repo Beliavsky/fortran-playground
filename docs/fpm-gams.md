@@ -12,6 +12,8 @@ The [numerical package review](gams-numerical.md) extends source-reviewed proced
 
 The [coverage report](gams-coverage.md) separates source-reviewed mappings from class-specific checked drivers and lists remaining gaps. Reaching a taxonomy leaf does not exhaust its procedures or use cases.
 
+The [mapping evidence report](gams-mapping-evidence.md) labels each class-specific mapping as verified, source-supported or uncertain and lists discovery assignments needing source review. If a claimed algorithm cannot be demonstrated, revisit the source evidence and narrow or remove unsupported mappings; document execution limits separately.
+
 These discovery assignments are based on saved descriptions, topics, bundled examples, and upstream documentation where reviewed. A class indicates relevant package functionality, not coverage of every problem in that class. Procedure mappings provide source-level evidence for specific APIs; other capabilities retain discovery classifications. Comparative benchmarks remain future work.
 
 ## Searching

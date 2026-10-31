@@ -28,7 +28,9 @@ from xpackage_gams import (gams_data, package_classes, review_text, subclass_mod
                           convolution_review_text, CONVOLUTION_REPORT,
                           regression_review_text, REGRESSION_REPORT,
                           matrix_equations_review_text, MATRIX_EQUATIONS_REPORT,
-                          coverage_data, coverage_review_text, COVERAGE_REPORT)
+                          sorting_review_text, SORTING_REPORT,
+                          coverage_data, coverage_review_text, COVERAGE_REPORT,
+                          class_evidence, mapping_evidence_text, EVIDENCE_REPORT)
 
 
 class GamsFilterParser(HTMLParser):
@@ -58,6 +60,26 @@ class GamsFilterParser(HTMLParser):
 
 
 class PackageGamsTests(unittest.TestCase):
+    def test_mapping_evidence_is_specific_to_procedure_and_class(self):
+        tree = {'G': {'parent': None}, 'G1': {'parent': 'G'},
+                'G1a': {'parent': 'G1'}, 'G1b': {'parent': 'G1'}}
+        records = [{'id': 'solver', 'gams_codes': ['G1a', 'G1b']}]
+        drivers = [{'procedure_id': 'solver', 'gams_code': 'G1a'}]
+        self.assertEqual(class_evidence(tree, 'G1a', records, drivers)['status'], 'verified')
+        self.assertEqual(class_evidence(tree, 'G1', records, drivers)['status'], 'verified')
+        self.assertEqual(class_evidence(tree, 'G1b', records, drivers)['status'], 'source-supported')
+        self.assertEqual(class_evidence(tree, 'G1a', [], drivers)['status'], 'uncertain')
+        other_driver = [{'procedure_id': 'another-solver', 'gams_code': 'G1a'}]
+        self.assertEqual(class_evidence(tree, 'G1a', records, other_driver)['status'], 'source-supported')
+
+    def test_mapping_evidence_report_is_current_and_keeps_review_queue(self):
+        text = mapping_evidence_text()
+        self.assertEqual((ROOT / EVIDENCE_REPORT).read_text(encoding='utf-8'), text)
+        self.assertIn('Mappings requiring source review', text)
+        self.assertIn('stdlib-sort', text)
+        self.assertIn('| N6 | verified |', text)
+        self.assertIn('sandbox failure alone does not disprove an algorithm', text)
+
     def test_public_assignments_cover_catalog_and_preserve_pins(self):
         data = gams_data()
         original = json.loads((ROOT / 'fpm_catalog.json').read_text(encoding='utf-8'))['packages']
@@ -514,6 +536,13 @@ class PackageGamsTests(unittest.TestCase):
         self.assertEqual(by_id['slicot-discrete-sylvester']['checks']['equation'], 'X+A*X*B=C')
         self.assertEqual((ROOT / MATRIX_EQUATIONS_REPORT).read_text(encoding='utf-8'), matrix_equations_review_text())
 
+    def test_stdlib_sorting_driver_has_checked_n6_source(self):
+        driver = next(d for d in driver_data() if d['id']=='stdlib-sorting-reference')
+        self.assertEqual(driver['gams_code'], 'N6')
+        self.assertEqual(driver['procedure_id'], 'stdlib-sort')
+        self.assertTrue(driver['checks']['ascending_and_descending'])
+        self.assertEqual((ROOT / SORTING_REPORT).read_text(encoding='utf-8'), sorting_review_text())
+
     def test_coverage_separates_source_review_from_class_specific_driver_evidence(self):
         data = gams_data()
         coverage = coverage_data(data=data)
@@ -526,7 +555,7 @@ class PackageGamsTests(unittest.TestCase):
         self.assertEqual(len(by_class['J1a2']['driver_ids']), 2)
         self.assertEqual(len(by_class['J1a3']['driver_ids']), 1)
         self.assertTrue(any(not r['driver_ids'] for r in coverage['procedure_classes']))
-        self.assertEqual({r['code'] for r in coverage['top_level'] if r['driver_ids']}, set('CDEFGHIJL'))
+        self.assertEqual({r['code'] for r in coverage['top_level'] if r['driver_ids']}, set('CDEFGHIJLN'))
         self.assertEqual((ROOT / COVERAGE_REPORT).read_text(encoding='utf-8'), coverage_review_text())
 
     def test_numerical_review_covers_catalog_scope_and_preserves_evidence(self):

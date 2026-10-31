@@ -5,7 +5,7 @@ from urllib.parse import quote
 from xml.sax.saxutils import escape as xml_escape
 
 from catalog_export import BASE_URL, ROOT, owner_display_name
-from xpackage_gams import ancestors, class_order
+from xpackage_gams import ancestors, class_order, class_evidence
 
 
 def e(value):
@@ -132,10 +132,26 @@ def generate_gams_site(destination, feed, *, asset_version=None):
             procedures = '<p class="procedures"><span class="label">Matching APIs:</span> ' + e('; '.join(p['procedure'] for p in matched)) + '</p>'
         actions = [link(prefix+package_path(project), 'Package details'), link(project['repository']['url'], 'Repository')]
         playground = project.get('playground')
-        if playground:
-            actions.append(link(playground['url'], 'Try in playground'))
         matching_demos = [d for d in demos if d['package_id'] == playground.get('package_id')
                           and (code is None or code in ancestors(tree, d['gams_code']))] if playground else []
+        assessment = ''
+        if code:
+            result = class_evidence(tree, code, records, matching_demos)
+            descriptions = {
+                'verified': 'Verified: a checked driver demonstrates a capability in this class.',
+                'source-supported': 'Source-supported: pinned procedure evidence; a matching checked driver is still needed.',
+                'uncertain': 'Uncertain: discovery classification awaiting procedure-level source review.',
+            }
+            assessment = '<p class="mapping-evidence">'+e(descriptions[result['status']])+'</p>'
+        if playground:
+            # A class page should open code for that class, rather than the package default.
+            primary = (next((d for d in matching_demos if d['gams_code'] == code), matching_demos[0])
+                       if code and matching_demos else None)
+            url = primary['url'] if primary else playground['url']
+            label = 'Open default example' if code and primary is None else 'Try in playground'
+            actions.append(link(url, label))
+            if primary and primary['gams_code'] != code:
+                assessment += '<p>Driver demonstrates the narrower class '+link(prefix+primary['gams_code']+'/', primary['gams_code'])+'.</p>'
         checked_drivers = ('<p class="actions"><span class="label">Checked drivers:</span> '+
                            ' · '.join(link(d['url'], d['id']) for d in matching_demos)+'</p>') if matching_demos else ''
         authors = credit_names([project])
@@ -144,7 +160,7 @@ def generate_gams_site(destination, feed, *, asset_version=None):
 <h3>{link(prefix+package_path(project), project['name'])}</h3>
 <p class="owner">{link(prefix+owner_path(owner), owner_label(owner), title='Repository owner')} / {e(project['repository']['name'])}</p>
 {credit}
-<p>{e(project['description'])}</p>{procedures}
+<p>{e(project['description'])}</p>{procedures}{assessment}
 <p class="codes">{class_links(curation['gams_codes'], prefix)}</p>
 <p class="actions">{' · '.join(actions)}</p>{checked_drivers}</article>'''
 
@@ -281,9 +297,12 @@ def generate_gams_site(destination, feed, *, asset_version=None):
             sources = [link(base+quote(item['path'], safe='/')+'#L'+str(item['line']), item['path']) for item in record['evidence']]
             examples = [link(base+quote(item['path'], safe='/'), item['path']) for item in record.get('author_examples', [])]
             procedure_demos = [d for d in demos if d['procedure_id'] == record['id']]
+            evidence_labels = '; '.join(c+': '+class_evidence(tree, c, [record], procedure_demos)['status']
+                                        for c in record['gams_codes'])
             procedures += (f'<article class="procedure" id="{e(record["id"])}"><h3>{e(record["procedure"])}</h3>'
                            f'<p><span class="label">Module:</span> <code>{e(record["module"])}</code></p>'
                            f'<p class="codes">{class_links(record["gams_codes"], "../../")}</p>'
+                           f'<p class="mapping-evidence">{e(evidence_labels)}</p>'
                            f'<p><span class="label">Derivatives / callbacks:</span> {e(record["derivatives"])}</p>'
                            f'<p>{e(record["notes"])}</p><p><span class="label">Pinned source:</span> {" · ".join(sources)}</p>')
             if examples:
@@ -292,7 +311,7 @@ def generate_gams_site(destination, feed, *, asset_version=None):
                 procedures += '<p>'+link(demo['url'], 'Load checked GAMS driver: '+demo['name'])+'</p>'
             procedures += '</article>'
         if not curation.get('procedures'):
-            procedures += '<p>No procedure-level mapping is recorded yet. The classifications describe package capabilities.</p>'
+            procedures += '<p>Uncertain: no procedure-level mapping is recorded yet. These discovery classifications need source review.</p>'
         procedures += '</section>'
         page(package_path(project), project['name'], project['description'],
              intro+name_attribution(project['repository']['owner'].lower(), [project])+codes+details+dependency_section(project)+procedures, depth=2)

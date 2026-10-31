@@ -154,3 +154,9 @@ The [convolution review](gams-convolution.md) connects J2 to spectrum and fastco
 The [regression review](gams-regression.md) connects L8 to odrpack95 orthogonal line fits and lib_statistics grouped-binomial logistic fits, with separate error models, closed-form parameters and independently checked objectives/statistics/covariance.
 
 The [matrix-equation review](gams-matrix-equations.md) connects D8 to SLICOT Lyapunov and Sylvester drivers, including continuous/discrete forms, rectangular solutions, transpose options and Schur-factor reuse.
+
+Class-page **Try in playground** links select an available checked driver for that class, preferring an exact class over a descendant. If no matching driver exists, the fallback is labeled **Open default example**. Package/owner pages keep their general links. See the [stdlib sorting example and link behavior](gams-sorting.md).
+
+Class cards distinguish **Verified**, **Source-supported**, and **Uncertain** mappings. Verification applies to the matching driver's tested configuration; a sibling-class driver or a successful package default does not verify this classification. Descendant drivers identify their narrower class. Package details label evidence separately for each procedure/class pair.
+
+The generated [mapping evidence and review queue](gams-mapping-evidence.md) lists discovery assignments needing source review and procedures still needing matching drivers. If inspection shows that a claimed algorithm is absent, narrow or remove its classification. Record sandbox limits, missing dependencies and upstream defects in the existing review notes rather than treating those failures as proof of absence.
