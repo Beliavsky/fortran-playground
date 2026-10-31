@@ -7560,6 +7560,93 @@
         "distributed_execution_verified": false,
         "generalized_eigenproblems_verified": false
       }
+    },
+    {
+      "id": "psqp-projection-reference",
+      "name": "gams-psqp-projection-reference",
+      "package_id": "psqp",
+      "procedure_id": "psqp-psqpn",
+      "gams_code": "G2h3b1b",
+      "problem_id": "ball-plane-projection-with-analytic-kkt",
+      "path": "fpm_catalog/gams-drivers/psqp-projection-reference.f90",
+      "revision": "57a853e14e3806d69adad6d6d44396d9665d842e",
+      "author_example": "test/tsqp.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/projection-lbfgs-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned API and author test reviewed without copying bodies. Convex squared-distance projection onto a translated ball intersected with an affine plane. Analytic minimizers, objectives and multipliers certify solutions across dimensions/radii/translations/target directions and feasible/infeasible starts. User objective gradient and full constraint Jacobian callbacks counted. Only convergence statuses one through four accepted; limits/failure codes rejected. Box-active optima, nonconvex constraints and general global optimization remain unverified.",
+      "validation_path": "docs/gams-projection-lbfgs-validation.json",
+      "review_path": "docs/gams-projection-lbfgs.md",
+      "checks": {
+        "problems": 48,
+        "optimizer_entries": 160,
+        "dimensions": [
+          2,
+          3,
+          5
+        ],
+        "radii": [
+          0.5,
+          2
+        ],
+        "analytic_multipliers_checked": true,
+        "user_gradient_calls_checked": true,
+        "feasible_infeasible_starts_checked": true,
+        "max_normalized_optimizer_error": 2e-05,
+        "max_normalized_objective_error": 5e-08,
+        "max_normalized_violation": 2e-07,
+        "max_normalized_stationarity": 5e-05,
+        "box_active_optima_verified": false,
+        "nonconvex_constraints_verified": false
+      }
+    },
+    {
+      "id": "seiscope-lbfgs-reference",
+      "name": "gams-seiscope-lbfgs-reference",
+      "package_id": "seiscope-optimization",
+      "procedure_id": "seiscope-optimization-api",
+      "gams_code": "G1b1b",
+      "problem_id": "spd-quadratics-with-independent-real64-audits",
+      "path": "fpm_catalog/gams-drivers/seiscope-lbfgs-reference.f90",
+      "revision": "74a25c29d13c506e16f8025eb13a2cf396dc23c0",
+      "author_example": "app/LBFGS/test_LBFGS.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/projection-lbfgs-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned L-BFGS source and author example reviewed without copying bodies. Default-real callbacks minimize diagonal/rotated SPD quadratics with known centers, three dimensions/condition ratios/starts and two scales. Independent real64 endpoint cost/gradient audits use actual rounded coefficients. Existing guarded catalog workspace-length fix is reused; no new library patch. Failure/limit requests rejected and residuals checked independently of termination. Nonquadratic/nonconvex objectives, constrained operation, other precision and optimizer methods remain unverified.",
+      "validation_path": "docs/gams-projection-lbfgs-validation.json",
+      "review_path": "docs/gams-projection-lbfgs.md",
+      "checks": {
+        "problems": 108,
+        "minimizer_entries": 360,
+        "dimensions": [
+          2,
+          3,
+          5
+        ],
+        "condition_ratios": [
+          1,
+          5,
+          25
+        ],
+        "hessian_scales": [
+          0.25,
+          2
+        ],
+        "callback_precision": "default real (real32 in GNU 16 image)",
+        "independent_real64_callback_audit": true,
+        "known_minimizers_checked": true,
+        "existing_catalog_fix_reused": true,
+        "max_normalized_minimizer_error": 0.002,
+        "max_initial_cost_scaled_objective": 2e-07,
+        "max_hessian_scaled_gradient": 0.0002,
+        "nonquadratic_objectives_verified": false,
+        "constrained_operation_verified": false
+      }
     }
   ]
 }

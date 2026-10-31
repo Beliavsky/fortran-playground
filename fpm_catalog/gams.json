@@ -4351,7 +4351,8 @@
           "path": "test/tsqp.f90",
           "sha256": "552c084f09e4f1ac2ee26a3fe5892758affe75ba7d132c7844d878e1d558ae2f"
         }
-      ]
+      ],
+      "driver_id": "psqp-projection-reference"
     },
     {
       "id": "optgra-optgra",
@@ -5612,7 +5613,8 @@
           "path": "app/LBFGS/test_LBFGS.f90",
           "sha256": "f802ce7e82063cba7b0367531f8dcf99bf5ab9b6128435ed049816dd0389944d"
         }
-      ]
+      ],
+      "driver_id": "seiscope-lbfgs-reference"
     },
     {
       "id": "gslib-api",

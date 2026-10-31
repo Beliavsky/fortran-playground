@@ -8,7 +8,7 @@ This report assesses each package/class pair, including inherited parent classes
 
 When a driver cannot be created, inspect the pinned implementation and author examples. Narrow or remove a classification that is unsupported; do not substitute an unrelated default example as evidence. Record missing dependencies, sandbox limits and upstream defects separately in the procedure or package review notes. A sandbox failure alone does not disprove an algorithm.
 
-Counts refer to package/class pairs and include parents: 520 verified, 231 source-supported, 246 uncertain.
+Counts refer to package/class pairs and include parents: 532 verified, 219 source-supported, 246 uncertain.
 
 ## Mappings requiring source review
 
@@ -526,7 +526,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [polyroots-fortran / polyroots-fortran-rpoly](https://beliavsky.github.io/fortran-playground/gams/packages/polyroots-fortran/#polyroots-fortran-rpoly) | F1a | verified |
 | [powellopt / powellopt-bobyqa](https://beliavsky.github.io/fortran-playground/gams/packages/powellopt/#powellopt-bobyqa) | G2h1a1 | verified |
 | [propack / propack-partial-svd](https://beliavsky.github.io/fortran-playground/gams/packages/propack/#propack-partial-svd) | D6 | verified |
-| [psqp / psqp-psqpn](https://beliavsky.github.io/fortran-playground/gams/packages/psqp/#psqp-psqpn) | G2h3b1b | source-supported |
+| [psqp / psqp-psqpn](https://beliavsky.github.io/fortran-playground/gams/packages/psqp/#psqp-psqpn) | G2h3b1b | verified |
 | [qcontainers / qcontainers-storage](https://beliavsky.github.io/fortran-playground/gams/packages/qcontainers/#qcontainers-storage) | N4 | source-supported |
 | [qcontainers / qcontainers-storage](https://beliavsky.github.io/fortran-playground/gams/packages/qcontainers/#qcontainers-storage) | N5 | source-supported |
 | [qdldl-fortran / qdldl-fortran-api](https://beliavsky.github.io/fortran-playground/gams/packages/qdldl-fortran/#qdldl-fortran-api) | D2b4 | verified |
@@ -559,7 +559,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [scalapackfx / scalapackfx-symmetric-eigenproblem](https://beliavsky.github.io/fortran-playground/gams/packages/scalapackfx/#scalapackfx-symmetric-eigenproblem) | D4a1 | verified |
 | [scanner / scanner-text](https://beliavsky.github.io/fortran-playground/gams/packages/scanner/#scanner-text) | N3 | source-supported |
 | [scifortran / scifortran-integration](https://beliavsky.github.io/fortran-playground/gams/packages/scifortran/#scifortran-integration) | H2 | verified |
-| [seiscope-optimization / seiscope-optimization-api](https://beliavsky.github.io/fortran-playground/gams/packages/seiscope-optimization/#seiscope-optimization-api) | G1b1b | source-supported |
+| [seiscope-optimization / seiscope-optimization-api](https://beliavsky.github.io/fortran-playground/gams/packages/seiscope-optimization/#seiscope-optimization-api) | G1b1b | verified |
 | [shunting-yard-fortran / shunting-yard-parser](https://beliavsky.github.io/fortran-playground/gams/packages/shunting-yard-fortran/#shunting-yard-parser) | N3 | source-supported |
 | [simulated-annealing / simulated-annealing-simulated-annealing-type](https://beliavsky.github.io/fortran-playground/gams/packages/simulated-annealing/#simulated-annealing-simulated-annealing-type) | G2i | source-supported |
 | [slicot / slicot-lyapunov](https://beliavsky.github.io/fortran-playground/gams/packages/slicot/#slicot-lyapunov) | D8 | verified |

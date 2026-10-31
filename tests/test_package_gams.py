@@ -84,6 +84,7 @@ from xpackage_gams import (gams_data, package_classes, review_text, subclass_mod
                             products_partitions_review_text, PRODUCTS_PARTITIONS_REPORT,
                             multidimensional_fft_review_text, MULTIDIMENSIONAL_FFT_REPORT,
                             sparse_spectra_review_text, SPARSE_SPECTRA_REPORT,
+                            projection_lbfgs_review_text, PROJECTION_LBFGS_REPORT,
                           coverage_data, coverage_review_text, COVERAGE_REPORT,
                           class_evidence, class_tree, mapping_evidence_text, EVIDENCE_REPORT)
 
@@ -242,7 +243,7 @@ class PackageGamsTests(unittest.TestCase):
         self.assertEqual({d['id'] for d in driver_data() if d['procedure_id'] in {m['id'] for m in mappings}},
                          {'fmin-sine', 'minpack-bard', 'libdogleg-bard', 'nonlin-rosenbrock-nm',
                           'nonlin-rosenbrock-bfgs', 'nlopt-rosenbrock-lbfgs', 'fortimize-nelder-reference',
-                          'minpack-lmder-reference', 'nonlin-lsq-jacobian-reference'})
+                          'minpack-lmder-reference', 'nonlin-lsq-jacobian-reference', 'seiscope-lbfgs-reference'})
         tree = data['detailed_classes']
         self.assertEqual(tree['G1b1b']['parent'], 'G1b1')
         self.assertEqual(tree['G1b1']['parent'], 'G1b')
@@ -868,6 +869,35 @@ class PackageGamsTests(unittest.TestCase):
         self.assertIn('22,416',text)
         self.assertIn('Type-2/type-3 transforms',text)
         self.assertIn('two-dimensional NUFFT2D driver',transforms_review_text())
+
+    def test_projection_and_lbfgs_drivers_have_analytic_answers_and_precision_limits(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for ident,code in [('psqp-projection-reference','G2h3b1b'),('seiscope-lbfgs-reference','G1b1b')]:
+            d = drivers[ident]
+            self.assertEqual(records[d['procedure_id']]['driver_id'],ident)
+            self.assertEqual(class_evidence(class_tree(data),code,[records[d['procedure_id']]],[d])['status'],'verified')
+        projection = drivers['psqp-projection-reference']['checks']
+        self.assertEqual(projection['problems'],48)
+        self.assertEqual(projection['optimizer_entries'],160)
+        self.assertTrue(projection['analytic_multipliers_checked'])
+        self.assertTrue(projection['user_gradient_calls_checked'])
+        self.assertTrue(projection['feasible_infeasible_starts_checked'])
+        self.assertFalse(projection['box_active_optima_verified'])
+        self.assertFalse(projection['nonconvex_constraints_verified'])
+        lbfgs = drivers['seiscope-lbfgs-reference']['checks']
+        self.assertEqual(lbfgs['problems'],108)
+        self.assertEqual(lbfgs['minimizer_entries'],360)
+        self.assertTrue(lbfgs['independent_real64_callback_audit'])
+        self.assertTrue(lbfgs['existing_catalog_fix_reused'])
+        self.assertFalse(lbfgs['nonquadratic_objectives_verified'])
+        self.assertFalse(lbfgs['constrained_operation_verified'])
+        text = projection_lbfgs_review_text()
+        self.assertEqual((ROOT/PROJECTION_LBFGS_REPORT).read_text(encoding='utf-8'),text)
+        for phrase in ['48 problems','108 minimizations','independent analytic multipliers','real32',
+                       'uninitialized workspace-length','statuses 1 through 4','categories are not exhausted']:
+            self.assertIn(phrase,text)
 
     def test_sparse_updates_and_symmetric_spectra_keep_limited_scope(self):
         import hashlib

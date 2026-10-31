@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "psqp-projection-reference",
+      "source_revision": "57a853e14e3806d69adad6d6d44396d9665d842e",
+      "source_sha256": "24521608d637d34ec0e50f927a19a3883d44596743c51d316bfd512dda3fe90b",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T23:45:50.919661+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.298,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Ball-and-plane projection problems: 48\nAnalytic optimizer entries: 160\nMaximum normalized optimizer error:   5.7909E-12\nMaximum normalized objective error:   9.9295E-12\nMaximum normalized constraint violation:   1.3172E-11\nMaximum analytic-multiplier stationarity residual:   6.7059E-12\nPASS psqp-projection-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.031,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "seiscope-lbfgs-reference",
+      "source_revision": "74a25c29d13c506e16f8025eb13a2cf396dc23c0",
+      "source_sha256": "f2f70985d796ac488ba862c572ecb771fde0ef989b3202072240c613b456b17d",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T23:46:42.159331+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.339,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "SPD quadratic minimizations: 108\nKnown minimizer entries: 360\nMaximum normalized minimizer error:   1.0656E-05\nMaximum initial-cost-scaled objective:   9.1633E-13\nMaximum Hessian-scaled gradient:   1.7733E-06\nMaximum independent real64 callback discrepancy:   3.2135E-12\nPASS seiscope-lbfgs-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.025,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T23:46:42.214877+00:00"
+}

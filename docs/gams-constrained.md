@@ -60,12 +60,13 @@ Initialization/solve status must be zero, callback/final points finite and withi
 | [Load bobyqa-box-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=powellopt&example=gams-bobyqa-box-reference) · [Source](../fpm_catalog/gams-drivers/bobyqa-box-reference.f90) | G2h1a1 | [Procedure](https://github.com/jacobwilliams/PowellOpt/blob/0987cd09d695cec968a3d02c8230d4ce5af33533/src/bobyqa.f90#L77) · Original public-API driver |
 | [Load pikaia-rastrigin-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=pikaia&example=gams-pikaia-rastrigin-reference) · [Source](../fpm_catalog/gams-drivers/pikaia-rastrigin-reference.f90) | G2i | [Procedure](https://github.com/jacobwilliams/pikaia/blob/c080c4004896243bf9b8bbb4577e402c9e31c5e3/src/pikaia_module.f90#L65) · [Author example](https://github.com/jacobwilliams/pikaia/blob/c080c4004896243bf9b8bbb4577e402c9e31c5e3/test/xpk2.f90) |
 | [Load qnstop-box-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=qnstop&example=gams-qnstop-box-reference) · [Source](../fpm_catalog/gams-drivers/qnstop-box-reference.f90) | G2 | [Procedure](https://github.com/vtopt/qnstop/blob/39e8273247f586fca8305ef3d8e879b27b6512d0/src/qnstops.f95#L1) · [Author example](https://github.com/vtopt/qnstop/blob/39e8273247f586fca8305ef3d8e879b27b6512d0/src/sample_main_s.f95) |
+| [Load psqp-projection-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=psqp&example=gams-psqp-projection-reference) · [Source](../fpm_catalog/gams-drivers/psqp-projection-reference.f90) | G2h3b1b | [Procedure](https://github.com/jacobwilliams/psqp/blob/57a853e14e3806d69adad6d6d44396d9665d842e/src/psqp_module.f90#L62) · [Author example](https://github.com/jacobwilliams/psqp/blob/57a853e14e3806d69adad6d6d44396d9665d842e/test/tsqp.f90) |
 
-The L-BFGS-B and SLSQP drivers adapt author API patterns and retain license notices. All 7 appear in hosted and main local FPM example menus and downloaded projects. Loading a link selects source without submitting a job.
+The L-BFGS-B and SLSQP drivers adapt author API patterns and retain license notices. All 8 appear in hosted and main local FPM example menus and downloaded projects. Loading a link selects source without submitting a job.
 
 ## Recorded results
 
-All 7 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing existing package libraries. Only each main and executable were rebuilt. The [verification report](gams-constrained-validation.json) records hashes, pins and saved output. Evaluation counts exclude derivative sanity checks and describe these simple cases, rather than establishing a general speed ranking.
+All 8 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing existing package libraries. Only each main and executable were rebuilt. The [verification report](gams-constrained-validation.json) records hashes, pins and saved output. Evaluation counts exclude derivative sanity checks and describe these simple cases, rather than establishing a general speed ranking.
 
 ### lbfgsb-box-quadratic
 
@@ -151,6 +152,18 @@ Four seeded box-constrained quadratics with interior minima; active bounds are n
 Maximum coordinate error versus projected minimizer:   7.3446E-04
 Maximum normalized objective gap:   1.0132E-06
 PASS qnstop-box-reference
+```
+
+### psqp-projection-reference
+
+```text
+Ball-and-plane projection problems: 48
+Analytic optimizer entries: 160
+Maximum normalized optimizer error:   5.7909E-12
+Maximum normalized objective error:   9.9295E-12
+Maximum normalized constraint violation:   1.3172E-11
+Maximum analytic-multiplier stationarity residual:   6.7059E-12
+PASS psqp-projection-reference
 ```
 
 ## Maintenance

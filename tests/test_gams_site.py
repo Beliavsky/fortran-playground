@@ -67,6 +67,26 @@ class GamsSiteTests(unittest.TestCase):
             self.assertIn('Open default example', sorting)
             self.assertNotIn('Try in playground', sorting)
 
+    def test_projection_and_lbfgs_class_links_do_not_promote_other_configurations(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects']
+                            if p['playground']['package_id'] in {'psqp','seiscope-optimization'}]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination,feed)
+            for code,package,driver in [('G2h3b1b','psqp','psqp-projection-reference'),
+                                        ('G1b1b','seiscope-optimization','seiscope-lbfgs-reference')]:
+                html = (destination/code/'index.html').read_text(encoding='utf-8')
+                primary = {url for url,label in Page(html).anchors if label=='Try in playground'}
+                self.assertEqual(primary,{
+                    f'https://beliavsky.github.io/fortran-playground/fpm/?package={package}&example=gams-{driver}'})
+                self.assertIn('Verified: a checked driver',html)
+            derivative_free = (destination/'G1b1a/index.html').read_text(encoding='utf-8')
+            self.assertNotIn('example=gams-seiscope-lbfgs-reference',derivative_free)
+            box = (destination/'G2h1a2/index.html').read_text(encoding='utf-8')
+            self.assertNotIn('example=gams-psqp-projection-reference',box)
+
     def test_sparse_update_and_symmetric_spectra_links_load_checked_drivers(self):
         import copy
         feed = copy.deepcopy(self.feed)
