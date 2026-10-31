@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "lightkrylov-gmres-reference",
+      "source_revision": "849fa1d2f29c14d0181315e76e731bff7f0b2d08",
+      "source_sha256": "a8c400e4580ebe98605cadd6a6f205036313ffc887bb5702e07c51f68ec04e8f",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T21:39:54.638483+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.626,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "2026-10-31 21:39:55.363: LightKrylov_Logger % comm_setup: Setup serial run\n2026-10-31 21:39:55.363: LightKrylov_Logger % logger_setup: IO rank = 0\nGMRES solves: 288\nKnown solution entries: 2016\nSolves requiring multiple outer cycles: 100\nMaximum normalized solution error:   5.3793E-09\nMaximum scaled true residual:   9.2868E-11\nPASS lightkrylov-gmres-reference\n",
+          "stderr": "Project is up to date\nAt line 432 of file ../sources/bundle/packages/0/LightKrylov-849fa1d2f29c14d0181315e76e731bff7f0b2d08/src/IterativeSolvers/GMRES/gmres.f90\nFortran runtime warning: An array temporary was created for argument 'a' of procedure 'dtrtrs'\n",
+          "seconds": 0.197,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "ntpoly-inverse-reference",
+      "source_revision": "7b3d22f76226af1402e9b0a5be18a496e4addc28",
+      "source_sha256": "4019824af6d929b32d2337cc893bc23d6079a5417d481d9f934f808d5a0b7261",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T21:39:56.953388+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.727,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "[1793482797.721677] [modal:39   :0]       tcp_iface.c:912  UCX  ERROR scandir(/sys/class/net) failed: No such file or directory\nSPD matrix inversions: 48\nAnalytic inverse entries: 1224\nMaximum normalized inverse error:   3.4957E-14\nMaximum left identity residual:   1.7244E-14\nMaximum right identity residual:   9.7700E-15\nMaximum normalized symmetry error:   3.3869E-15\nPASS ntpoly-inverse-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.279,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T21:39:57.006074+00:00"
+}

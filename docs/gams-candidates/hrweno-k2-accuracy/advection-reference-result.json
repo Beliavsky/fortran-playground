@@ -1,0 +1,84 @@
+{
+  "ok": false,
+  "compiler": "GNU Fortran (GCC) 16.2.0",
+  "compiler_id": "gfortran",
+  "fpm": "0.12.0",
+  "stages": [
+    {
+      "name": "Build",
+      "command": [
+        "fpm",
+        "build",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.596,
+      "ok": true,
+      "exit_code": 0,
+      "error": "",
+      "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+      "stderr": ""
+    },
+    {
+      "name": "Run",
+      "command": [
+        "fpm",
+        "run",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.043,
+      "ok": false,
+      "exit_code": 1,
+      "error": "",
+      "stdout": " Advection diagnostic:           64           2           1  -1.5000000000000000        0.0000000000000000       0.20000000000000001        1.4202932710161154E-003   4.0000000500000000E-004\n",
+      "stderr": "Project is up to date\nERROR STOP analytic cell-average solution\n\nError termination. Backtrace:\n#0  0x2b81cc8d9f83 in ???\n#1  0x2b81cc8dac39 in ???\n#2  0x2b81cc8dc045 in ???\n#3  0x4046af in checked_periodic_advection\n\tat app/main.f90:77\n#4  0x404ee3 in main\n\tat app/main.f90:32\n<ERROR> Execution for object \" playground-main \" returned exit code  1\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 1\n"
+    }
+  ],
+  "cache": {
+    "package": "hrweno",
+    "compiler": "GNU Fortran 16.2.0",
+    "key": "ae02cfac8c27379519d924a8",
+    "library_reused": true,
+    "changed_artifacts": []
+  },
+  "packages": [
+    {
+      "repository": "HugoMVale/HR-WENO",
+      "revision": "2885105a7ba98351fed299b22e9bc0c67a809d2f",
+      "sha256": "1dc2fffbdd9396735d01df566f3a945e65b934525a16e15162abcb47d1b373a9"
+    },
+    {
+      "repository": "fortran-lang/stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+    }
+  ],
+  "build_ok": true,
+  "target_groups": {
+    "app": [
+      "playground-main"
+    ],
+    "example": [],
+    "test": []
+  },
+  "targets": [
+    "playground-main"
+  ],
+  "plots": [],
+  "plot_notes": []
+}

@@ -1,0 +1,79 @@
+{
+  "ok": false,
+  "compiler": "GNU Fortran (GCC) 16.2.0",
+  "compiler_id": "gfortran",
+  "fpm": "0.12.0",
+  "stages": [
+    {
+      "name": "Build",
+      "command": [
+        "fpm",
+        "build",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.881,
+      "ok": true,
+      "exit_code": 0,
+      "error": "",
+      "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+      "stderr": ""
+    },
+    {
+      "name": "Run",
+      "command": [
+        "fpm",
+        "run",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.087,
+      "ok": false,
+      "exit_code": 1,
+      "error": "",
+      "stdout": " dimension,size,pattern,ordering,query:           2          31           1           1          15\n returned/best squared distances:   7.3907157053523451E-002   4.8195228517966246E-002\n",
+      "stderr": "Project is up to date\nERROR STOP direct nearest reference\n\nError termination. Backtrace:\n#0  0x2b4223466f83 in ???\n#1  0x2b4223467c39 in ???\n#2  0x2b4223469045 in ???\n#3  0x405d20 in MAIN__\n\tat app/main.f90:68\n#4  0x4069a1 in main\n\tat app/main.f90:4\n<ERROR> Execution for object \" playground-main \" returned exit code  1\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 1\n"
+    }
+  ],
+  "cache": {
+    "package": "coretran",
+    "compiler": "GNU Fortran 16.2.0",
+    "key": "6ce1daaf581ab9aba7f0025d",
+    "library_reused": true,
+    "changed_artifacts": []
+  },
+  "packages": [
+    {
+      "repository": "leonfoks/coretran",
+      "revision": "204c4707f6680b6d7d1e4da39077d0fd3acfe37e",
+      "sha256": "29b2e281a6d1bdefd6abe141da563fe015737eb7c2604083c666cfcbe9df19e0"
+    }
+  ],
+  "build_ok": true,
+  "target_groups": {
+    "app": [
+      "playground-main"
+    ],
+    "example": [],
+    "test": []
+  },
+  "targets": [
+    "playground-main"
+  ],
+  "plots": [],
+  "plot_notes": []
+}

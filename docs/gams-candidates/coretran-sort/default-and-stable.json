@@ -1,0 +1,7 @@
+{
+  "revision": "204c4707f6680b6d7d1e4da39077d0fd3acfe37e",
+  "source": "default-and-stable.f90",
+  "source_sha256": "826b6bb595e75141fac5a17f5ded120a0f497d95d0ea0a5c66dd514f4c5e0af1",
+  "result": "default-and-stable-result.json",
+  "finding": "Build passed; explicit stable=false fails on 16 equal integer32 values (all 7), accessing this(17) above bound 16 in sm_partition.f90. Default and stable=true settings reached this fixture successfully before explicit stable=false failed. The full mixed-mode suite did not complete; this does not establish a default-mode failure."
+}

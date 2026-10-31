@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "formal-polynomial-reference",
+      "source_revision": "d28eee9b37b4b74abe7f21bb2ccbdfb5c17f3e8a",
+      "source_sha256": "ca5834c5d31b70b1d482ab743cd6395a9868042ad6f036f489453e0e0feb920a",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T21:56:55.540935+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.439,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Polynomial field pairs: 162\nPointwise derivative references: 24354\nAnalytic integral references: 486\nMaximum normalized derivative error:   6.1035E-05\nMaximum analytic integral error:   4.6539E-04\nMaximum conservation residual:   1.0316E-05\nPASS formal-polynomial-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.089,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "raffle-orthogonal-reference",
+      "source_revision": "c152a30a1eaf94965c047bcd1a7edca07873b56f",
+      "source_sha256": "95bba07004b112802c9d8f53ad7b080a1a34037c842b6f83eca90b6edafa7808",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T21:56:57.402988+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.329,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Orthogonal cell queries: 360\nPeriodic distance references: 2520\nMaximum cell-scaled distance error:   1.3591E-07\nPASS raffle-orthogonal-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.069,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T21:56:57.453184+00:00"
+}

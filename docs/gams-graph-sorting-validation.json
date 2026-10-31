@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "daglib-order-reference",
+      "source_revision": "68fa83ebfd33fd6521327918b1d8e5084250a8ff",
+      "source_sha256": "f9ffcb6fa7c3034abaf666c4cad9c1fd2a0a0dfedf42a16b29d0a71a81d9aada",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T20:10:01.547533+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.336,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Acyclic graph fixtures: 2051; valid topological sorts: 4102\nIndependent dependency precedence checks: 20492\nExpected cyclic rejections: 6\nPermutation integrity, repeated sorting, explicit cycle status and object recovery.\nPASS daglib-order-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.027,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "coretran-sort-reference",
+      "source_revision": "204c4707f6680b6d7d1e4da39077d0fd3acfe37e",
+      "source_sha256": "81119f8c85069827af19cd249572e2d7659d14b9dd4d330527f928cb1f1e986a",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T20:13:37.292999+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.289,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Exhaustive permutations through length seven: 5913\nTotal sorting fixtures: 5997; typed sorting calls: 23988\nInteger32/64 and real32/64; explicit stable=true only.\nIndependent insertion-sort values; empty input, repeated keys and boundary sizes.\nPASS coretran-sort-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.081,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T20:13:37.350586+00:00"
+}

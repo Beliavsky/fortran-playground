@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "feq-expression-reference",
+      "source_revision": "2e80c5940b128a52c5070a3f56909674fb85a379",
+      "source_sha256": "cb7c2033d144e8fb98cc2f6287a7331010d789722019214ae1c4ba45fa965f15",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T22:10:11.829605+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.298,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Parsed expressions: 12\nScalar/batch formula references: 16464\nMaximum normalized evaluation error:   9.1974E-17\nPASS feq-expression-reference\n",
+          "stderr": "Project is up to date\nAt line 31 of file app/main.f90\nFortran runtime warning: An array temporary was created for argument 'x' of procedure 'evaluate_sfp64'\nAt line 39 of file app/main.f90\nFortran runtime warning: An array temporary was created for argument 'x' of procedure 'evaluate_sfp64'\n",
+          "seconds": 0.028,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "astro-sky-reference",
+      "source_revision": "9d61091d225a1b314ff8170153b06a8691aba283",
+      "source_sha256": "6b4af785124f05710f5c9d0a58078f515c2799230824968ba8e21c98d847fa46",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T22:12:41.151094+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.567,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Sky direction fixtures: 1296\nForward/inverse conversion calls: 2592\nIndependent rotation vector references: 1296\nMaximum direct vector discrepancy:   8.9509E-16\nMaximum roundtrip vector discrepancy:   9.4857E-16\nMaximum unit-norm error:   2.2204E-16\nPASS astro-sky-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.063,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T22:12:41.207122+00:00"
+}

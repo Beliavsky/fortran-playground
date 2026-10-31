@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "heatflow-bicg-reference",
+      "source_revision": "b0d930caad9160a15f0aeafa238c448f48f28d55",
+      "source_sha256": "c7b4e8d5cbc0565e8e76212d1b16e15c30de4b0d8040aeb3fe6616ad8af2dd86",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T22:37:57.536760+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.36,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Sparse matrices: 36\nBiCG solves: 216\nKnown solution entries: 3456\nMaximum normalized solution error:   2.5522E-11\nMaximum normalized true residual:   2.3739E-11\nPASS heatflow-bicg-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.034,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "hrweno-advection-reference",
+      "source_revision": "2885105a7ba98351fed299b22e9bc0c67a809d2f",
+      "source_sha256": "f903d1c80fc9959e17d631c7431dca8312a179281b1ea4afcd24c2e00c3b9cbc",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T22:38:54.855509+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.427,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Periodic advection problems: 72\nAnalytic cell-average references: 21504\nMaximum amplitude-scaled cell error:   8.0028E-05\nMaximum error / fixture bound:   1.0004E-02\nMaximum normalized mass error:   6.9081E-16\nPASS hrweno-advection-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.767,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T22:38:54.921281+00:00"
+}

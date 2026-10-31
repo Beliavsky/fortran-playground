@@ -72,6 +72,17 @@ GEODESY_FORLAB_REPORT = Path('docs/gams-geodesy-forlab.md')
 JACOBIAN_TRANSFORMS_REPORT = Path('docs/gams-jacobian-transforms.md')
 EXPRESSION_EVALUATION_REPORT = Path('docs/gams-expression-evaluation.md')
 CONVERSION_TRIANGULATION_REPORT = Path('docs/gams-conversion-triangulation.md')
+GRAPH_SORTING_REPORT = Path('docs/gams-graph-sorting.md')
+NEIGHBORS_SPARSE_REPORT = Path('docs/gams-neighbors-sparse.md')
+ADAPTIVE_AD_REPORT = Path('docs/gams-adaptive-ad.md')
+LU_ORBITS_REPORT = Path('docs/gams-lu-orbits.md')
+DAE_FFT_REPORT = Path('docs/gams-dae-fft.md')
+PROPACK_FMM_REPORT = Path('docs/gams-propack-fmm.md')
+GMRES_INVERSE_REPORT = Path('docs/gams-gmres-inverse.md')
+PERIODIC_CALCULUS_REPORT = Path('docs/gams-periodic-calculus.md')
+EXPRESSIONS_SKY_REPORT = Path('docs/gams-expressions-sky.md')
+UNSIGNED_BITSETS_REPORT = Path('docs/gams-unsigned-bitsets.md')
+SPARSE_ADVECTION_REPORT = Path('docs/gams-sparse-advection.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
 EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
@@ -956,6 +967,12 @@ def linear_algebra_review_text(root=ROOT):
              'for local reproduction or discussing executable size with the package author. '
              'The menu examples use the lower-level `syev`/`gesvd` APIs, which passed under the '
              'same limits and with the same precompiled library. Sandbox limits were unchanged.', '',
+             'The separate [PROPACK and FMM2D review](gams-propack-fmm.md) covers leading singular '
+             'triplets with prescribed spectra and real Laplace kernel-matrix applications. '
+             'The latter is not a checked complete PDE solver.', '',
+             'The [GMRES and inverse review](gams-gmres-inverse.md) covers normal/transpose '
+             'LightKrylov solves with known solutions and one-process NTPoly SPD inverses with '
+             'analytic references and two-sided identity residuals.', '',
              '## Sources and playground links', '',
              '| Driver | Class | Pinned procedure and author example |', '| --- | --- | --- |']
     for d in drivers:
@@ -999,12 +1016,18 @@ def ode_review_text(root=ROOT):
     packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
     records = {p['id']: p for p in data['procedure_mappings']}
     lines = ['# Checked GAMS ODE initial-value drivers', '',
-             'These consumer programs connect specific nonstiff initial-value solvers to the same analytic '
-             'three-state problem. They test the named configuration, rather than every method offered by '
-             'each package or performance on stiff equations.', '',
+             'The DOP853, rklib and DDEABM consumers share the analytic three-state problem below. '
+             'Other consumers in the recorded results use separately documented fixtures. '
+             'Each proof concerns the named configuration, rather than every method offered by '
+             'each package or performance on stiff equations. The '
+             '[FLINT review](gams-adaptive-ad.md) covers four adaptive methods, three analytic systems, '
+             'forward/backward intervals and repeated dense output. The '
+             '[DASKR review](gams-dae-fft.md) covers index-one DAEs, supplied consistent initial data, '
+             'dense direct solves and numerical/user Jacobians.', '',
              '| Class | Configuration | Procedure |', '| --- | --- | --- |',
              '| [I1a1a](https://gams.nist.gov/cgi-bin/serve.cgi/Class/I1a1a) | One-step methods for general nonstiff or mildly stiff IVPs | DOP853 `dop853_class%integrate`; rklib `rk4_class%integrate` |',
-             '| [I1a1b](https://gams.nist.gov/cgi-bin/serve.cgi/Class/I1a1b) | Multistep methods for general nonstiff or mildly stiff IVPs | DDEABM `ddeabm_class%integrate` |', '',
+             '| [I1a1b](https://gams.nist.gov/cgi-bin/serve.cgi/Class/I1a1b) | Multistep methods for general nonstiff or mildly stiff IVPs | DDEABM `ddeabm_class%integrate` |',
+             '| [I1a2](https://gams.nist.gov/cgi-bin/serve.cgi/Class/I1a2) | Stiff/DAE IVPs; checked dense-direct index-one configuration | DASKR `ddaskr` |', '',
              '## Shared analytic problem', '',
              '```text', "u' = -u,   q' = v,   v' = -q", '(u,q,v)(0) = (1,1,0)',
              '(u,q,v)(t) = (exp(-t),cos(t),-sin(t))', '```', '',
@@ -1146,12 +1169,14 @@ def transforms_review_text(root=ROOT):
              '| Class | Configuration | Procedures |', '| --- | --- | --- |',
              '| [J1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/J1) | One-/two-dimensional nonuniform type-1 Fourier transforms | NUFFT `nufft1d1f90`; NUFFT2D `nufft2d1f90` |',
              '| [J1a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/J1a1) | One-dimensional real-input forward Fourier transforms | spectrum `rfft` |',
-             '| [J1a2](https://gams.nist.gov/cgi-bin/serve.cgi/Class/J1a2) | One-dimensional complex Fourier transforms | FFTPACK `fft, ifft`; KISS FFT `fft%perform` |',
+             '| [J1a2](https://gams.nist.gov/cgi-bin/serve.cgi/Class/J1a2) | One-dimensional complex Fourier transforms | FFTPACK `fft, ifft`; KISS FFT `fft%perform`; NAFPack `execute_fft_plan_sp` |',
              '| [J1a3](https://gams.nist.gov/cgi-bin/serve.cgi/Class/J1a3) | One-dimensional sine and cosine transforms | FFTPACK `dct(type=2), idct(type=2)` |', '',
              'The real, complex and cosine transforms use the deepest recorded categories '
              'for those configurations. The nonuniform examples retain broader J1. '
              'They do not exhaust integral transforms: additional multidimensional configurations, '
              'transform types, convolution, Laplace and Hilbert transforms are separate opportunities.', '',
+             'The [NAFPack plan review](gams-dae-fft.md) checks single-precision radix-two DIT/DIF '
+             'plans with iterative/recursive implementations against direct complex sums.', '',
              '## Nonuniform Fourier sums', '',
              'The NUFFT driver checks 24 type-1 transforms of 80 nonuniform sources '
              'into 15, 16, 31 and 32 modes, with three deterministic strength patterns '
@@ -1636,6 +1661,8 @@ def differentiation_review_text(root=ROOT):
              'They use the same scalar function and evaluation points, making differences in API and '
              'method visible. This does not validate every derivative interface in these packages. '
              'GAMS categories are not exhausted; see the [coverage report](gams-coverage.md).', '',
+             'The separate [forwarddiff review](gams-adaptive-ad.md) checks 1,749 scalar calls '
+             'against analytic values and slopes on monomials and twelve smooth composite functions.', '',
              '## Shared problem and independent references', '',
              'For `f(x)=exp(x)*sin(x)`, elementary differentiation gives:', '',
              '```text', 'df/dx   = exp(x)*(sin(x)+cos(x))',
@@ -6188,6 +6215,1156 @@ def conversion_triangulation_review_text(root=ROOT):
     return '\n'.join(lines)
 
 
+def graph_sorting_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-graph-sorting-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-graph-sorting-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Checked dependency ordering and numeric sorting', '',
+             'These P and N6 drivers passed the restricted GNU Fortran 16.2.0 sandbox with '
+             'FPM 0.12.0. Existing package libraries were reused; only mains and executables '
+             'were compiled. The [verification report](gams-graph-sorting-validation.json) '
+             'retains pins, source hashes and actual output. GAMS categories are not exhausted.', '',
+             '## DAGLIB topological ordering (P)', '',
+             'Five vertices have ten possible dependency edges under a fixed topological '
+             'order. All 1,024 edge subsets are tested under labels [1,2,3,4,5] and '
+             '[5,4,3,2,1], giving 2,048 acyclic graph fixtures. This is exhaustive for '
+             'these two fixed orders, not every labeled five-vertex DAG. Some fixtures '
+             'coincide. Edgeless graphs, disconnected components and isolated vertices are '
+             'included. Each graph is sorted twice without rebuilding between sorts.', '',
+             'Every successful sort must return status zero and an allocated permutation '
+             'of the complete vertex set. A separately built dependency matrix supplies '
+             'the reference: every prerequisite must precede its dependent vertex. '
+             'No particular order of unrelated vertices is required. Graph destruction '
+             'must reset its reported vertex count.', '',
+             'Self-loops, two-vertex cycles and three-vertex cycles are each sorted twice. '
+             'All six calls must return status -1 and leave the output unallocated. '
+             'After each cyclic graph, the same object is explicitly rebuilt as the '
+             'chain 1 -> 2 -> 3 and sorted twice. Totals are 2,051 acyclic fixtures, '
+             '4,102 successful sorts, 20,492 independent dependency-precedence checks '
+             'and six expected cyclic rejections. Recovery uses explicit set_vertices '
+             'rebuilding; arbitrary edge mutation is not verified.', '',
+             'Zero-vertex graphs, invalid vertex indices, every labeled DAG, large recursion '
+             'depths, metadata/Graphviz export, other traversal methods and performance '
+             'remain unverified. The existing broad P graph-algorithm assignment is retained.', '',
+             '## coretran in-place numeric sorting (N6)', '',
+             'The public driver explicitly requests stable=.true. for every sort. '
+             'All permutations through length seven give 5,913 fixtures. Another 84 use '
+             'six patterns at lengths [0,1,2,3,4,7,8,15,16,31,32,63,64,127]: ascending, '
+             'descending, constant, three repeated keys, alternating signed magnitudes '
+             'and a repeated modular pattern. Total: 5,997 fixtures and 23,988 typed calls.', '',
+             'Each fixture is independently insertion-sorted before invoking the library. '
+             'Integer32 values are used directly; integer64 keys are integer_value*10**10+3 '
+             'to include magnitudes beyond integer32. Real32/real64 keys divide the integer '
+             'values by eight, giving exactly representable inputs. All four returned '
+             'arrays must exactly equal the corresponding independently sorted values. '
+             'The fixtures match the [ORDERPACK ranking reference](gams-ranking-magic.md), '
+             'but this driver exercises in-place sorting rather than sorting indices.', '',
+             'Equal numeric keys carry no auxiliary record labels, so the checks do not '
+             'establish stability of equal-key records despite the requested stable mode. '
+             'Default/unstable sorting, NaNs, indirect sorting, every coretran utility '
+             'and performance remain unverified. The existing OpenMP build is reused '
+             'unchanged; the execution sandbox uses one thread.', '',
+             '## Failed coretran probes', '',
+             'Both failures built successfully and retain their exact sources, normalized '
+             'hashes, pinned revision and full results:', '',
+             '- [Nearest-neighbor probe](gams-candidates/coretran-nearest/README.md): '
+             'a valid two-dimensional 31-point query returned squared distance '
+             '0.07390715705352345 instead of the direct minimum 0.048195228517966246. '
+             'No nearest-neighbor GAMS driver is published.',
+             '- [Mixed sorting settings](gams-candidates/coretran-sort/README.md): '
+             'explicit stable=.false. on 16 equal integer32 values (all 7) accesses '
+             'element 17 beyond bound 16 in sm_partition.f90. Default and stable=true '
+             'settings had reached this fixture successfully before the unstable call '
+             'failed. The full mixed-mode suite did not complete; this does not establish '
+             'a default-mode failure.', '',
+             'The checked sorting driver narrows the algorithm setting, keeping the full '
+             'input suite and exact value checks. No source patch, relaxed comparison '
+             'or disabled bounds checking is used. The sorting proof does not verify '
+             'the separately mapped nearest-neighbor capability.', '',
+             '## Checked links and actual output', '',
+             'Independent API consumers have their own MIT notice; upstream terms remain '
+             'separate. Pinned sources and author tests were reviewed without copying '
+             'upstream code. Loading a link does not submit a job.', '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
+def neighbors_sparse_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-neighbors-sparse-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-neighbors-sparse-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Checked nearest-neighbor searches and sparse products',
+     '',
+     'These N5 and D1b4 drivers passed the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0. Existing '
+     'libraries were reused; only mains and executables were compiled. The [verification '
+     'report](gams-neighbors-sparse-validation.json) retains pins, source hashes and complete actual '
+     'output. GAMS categories are not exhausted.',
+     '',
+     '## fortran-flann exact k-nearest neighbors (N5)',
+     '',
+     'The driver constructs 60 single KD-tree indexes: point counts [1,2,8,31,64], dimensions two and '
+     'three, three data patterns, and original/reversed point order. Patterns are deterministic modular '
+     'coordinates, collinear points, and duplicate coordinate pairs. For each tree there are 20 off-data '
+     'queries followed by every source point as a self-query, giving 2,472 query points. The modular '
+     'two-dimensional family includes the 31-point query that failed the separate coretran probe; this '
+     'verifies FLANN, not coretran.',
+     '',
+     'Each query batch is searched three times, with k=1, min(3,n), and n, including repeated k settings '
+     'for the smallest sets. There are 180 batched calls and 96,072 returned neighbors. Euclidean search '
+     'explicitly requests checks=-1 (unlimited/exact search). Source and query arrays are single precision. '
+     'The independent oracle converts those already-rounded input values to real64, directly calculates '
+     'every squared Euclidean distance, and insertion-sorts those distances.',
+     '',
+     'For every returned neighbor, the zero-based index must be in range, distinct within the returned '
+     'list, and consistent with its reported squared distance. The indexed direct distance must equal the '
+     'corresponding kth sorted reference within 32*epsilon(float32)*max(1,reference_distance). This '
+     'accounts for native single-precision distance accumulation; it is not an approximate-search accuracy '
+     'claim. Tied points may have any index order. Status must be zero; distances must be finite and both '
+     'source and query arrays unchanged. The native index is finalized while its target array still exists.',
+     '',
+     'Other metrics, approximate searches, radius queries, empty data, malformed requests, high dimensions '
+     'and performance remain unverified. The pinned wrapper prints diagnostic lines on each search; the '
+     'short transcript below shows only the final five summary lines. Complete diagnostics remain in the '
+     'verification report.',
+     '',
+     '## sparse_fortran COO/CSR products (D1b4)',
+     '',
+     'Five row counts crossed with five column counts, each from [1,2,3,8,17], provide square, tall and '
+     'wide matrices. Five patterns are used: all zero, diagonal, tridiagonal, modular sparse with an '
+     'explicitly empty row/column, and dense. Both API orders are initialized from the same dense matrix. '
+     'That gives 250 matrix/order fixtures and 500 independently initialized sparse objects. The pinned '
+     '[CSR product '
+     'source](https://github.com/Euler-37/sparse_fortran/blob/600f586a1ed099a22054ed283225787de36a31c1/src/sparse_csr_fortran.f90#L173) '
+     'supplements the COO procedure evidence.',
+     '',
+     'This API gives order a computational meaning: C computes A*x, while non-C order (F here) computes '
+     'transpose(A)*x. The author example also demonstrates the latter convention. Three right-hand sides '
+     'are used: ones, alternating signed i/8, and i*(n_input+1-i)/4. Each format is checked separately '
+     'against scalar loops over the original dense matrix, rather than merely agreeing with the other '
+     'format. Totals are 1,500 products and 9,300 checked result entries.',
+     '',
+     'All nonzero fixture entries are small binary fractions, at least 1/8 in magnitude. Products and sums '
+     'are exactly representable at these sizes, so returned values must equal the scalar references '
+     'exactly. Output sizes and finiteness and dense-input preservation are checked. Zero matrices and '
+     'empty rows/columns exercise empty storage segments. A fresh object is used for each initialization.',
+     '',
+     'Zero dimensions, near-zero entry dropping (the initializer uses a 1e-15 threshold), coordinate-list '
+     'initialization, repeated initialization of an existing object, incremental insertion/deletion, '
+     'invalid shapes and performance remain unverified. Storage conversion is outside this multiplication '
+     'proof.',
+     '',
+     '## Checked links and actual output',
+     '',
+     'Independent API consumers have their own MIT notice; upstream terms remain separate. Pinned sources '
+     'and author examples were reviewed without copying upstream code. Loading a link does not submit a '
+     'job.',
+     '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        if d['id'] == 'flann-knn-reference':
+            output = '\n'.join(output.splitlines()[-5:])
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
+def adaptive_ad_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-adaptive-ad-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-adaptive-ad-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Checked automatic differentiation and adaptive IVPs',
+     '',
+     'These H1 and I1a1a drivers passed the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0. '
+     'Existing libraries were reused; only mains and executables were compiled. The [verification '
+     'report](gams-adaptive-ad-validation.json) retains pins, source hashes and actual output. GAMS '
+     'categories are not exhausted.',
+     '',
+     '## forwarddiff analytic scalar derivatives (H1)',
+     '',
+     'The differentia derivative entry point seeds one dual-number direction and returns both the '
+     'function value and its first derivative. The driver compares those outputs with elementary '
+     'analytic formulas, without finite differences or another differentiation package. A lifted '
+     'constant 0*x+3 and monomials x**p for p=1..8 are checked at 65 points x=i/16, i=-32..32. This '
+     'gives 585 calls and includes zero and negative inputs. The constant is explicitly lifted into '
+     'the seeded dual space rather than assigning a real to an uninitialized dual.',
+     '',
+     'Twelve smooth functions are each checked at 97 points x=i/32, i=-48..48: 1/(1+x*x), exp(sin(x)), '
+     'log(2+x), sqrt(2+x), sin(2*x)*cos(x), atan(x), tan(x/2), (2+x)**1.5, 2**x, (2+x)**(1+x/4), '
+     'asin(x/2), and acos(x/2). These exercise chain, product and quotient rules, integer/real/dual '
+     'exponents, and several elementary intrinsic overloads. Logarithms, roots and variable powers '
+     'stay strictly inside their real domains; inverse trigonometric endpoints and tangent poles are '
+     'avoided.',
+     '',
+     'Total: 1,749 derivative calls and 3,498 analytic value/slope comparisons. Both results must be '
+     'finite and abs(result-reference)/(1+abs(reference)) must not exceed 2e-12. The saved maximum '
+     'normalized error is 1.6666e-16. This is a first scalar derivative check, not a gradient, '
+     'Jacobian, higher-order AD, nonsmooth-function, exceptional-input or performance verification.',
+     '',
+     '## FLINT explicit adaptive integration and dense output (I1a1a)',
+     '',
+     'All four exposed methods are exercised: DOP853, DOP54, VERNER98R and VERNER65E. Three analytic '
+     'three-state systems provide independent endpoint and dense-output references:',
+     '',
+     '```text\n'
+     'Diagonal exponentials:\n'
+     '  y = [1,-2,1/2] * exp(a*[-1/2,1/4,-3/2]*t)\n'
+     "  y' = a*[-1/2,1/4,-3/2]*y\n"
+     'Oscillator plus nonautonomous polynomial:\n'
+     '  y = [cos(a*t)+sin(a*t)/4, -sin(a*t)+cos(a*t)/4, t**3-2*t+1]\n'
+     "  y' = [a*y2,-a*y1,3*t*t-2]\n"
+     'Coupled triangular system:\n'
+     '  y = [1,t,t*t]*exp(-a*t)\n'
+     "  y' = [-a*y1,y1-a*y2,2*y2-a*y3]\n"
+     '```',
+     '',
+     'The cross product is four methods, three systems, parameters a=1/2 or 3/2, starting times -1/2 '
+     'or 3/4, and forward/backward intervals of length 5/4: 96 integrations. Each fixture starts with '
+     'its exact state at the specified nonzero initial time and creates a fresh equation/solver '
+     'object. The initial step is selected automatically (StepSz=0); no constant-step mode is used.',
+     '',
+     'For a=1/2 the requested scalar tolerances are ATol=1e-12 and RTol=1e-11. For a=3/2 they are '
+     'componentwise [1,2,4]*1e-12 and [1,2,4]*1e-11. Initialization and integration must report '
+     'FLINT_SUCCESS, the reached time must be finite and agree with the requested endpoint within '
+     '32*epsilon*max(1,abs(endpoint)), and the initial state must remain unchanged. The returned '
+     'endpoint state is compared with the closed form, giving 288 endpoint reference entries.',
+     '',
+     'Each stored dense solution is sampled at 17 equally spaced times including both endpoints, '
+     'ordered in the integration direction. It is sampled twice: the first call retains coefficients '
+     'with SaveInterpCoeffs=true, and the second releases them with SaveInterpCoeffs=false. Both calls '
+     'must report success; every state entry is checked against the closed form, and the repeated '
+     'output must be identical. There are 9,792 dense-output reference entries, including the repeated '
+     'calls.',
+     '',
+     'All returned states must be finite. Endpoint and dense errors use '
+     'abs(result-reference)/(1+abs(reference)) <= 5e-9. The saved maximum across these checks is '
+     '1.6699e-9. Requested local error tolerances and independently checked solution errors have '
+     'different meanings. These examples do not rank methods by speed or accuracy. Stiff equations, '
+     'event detection, step-advance/constant-step modes, invalid requests and failure diagnostics '
+     'remain unverified.',
+     '',
+     '## Checked links and actual output',
+     '',
+     'Independent API consumers have their own MIT notice; upstream terms remain separate. Pinned '
+     'sources, implementations and author examples were reviewed without copying upstream code. '
+     'Loading a link does not submit a job.',
+     '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
+def lu_orbits_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-lu-orbits-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-lu-orbits-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Checked LU solves and orbital state conversions',
+     '',
+     'These D2a1 and P drivers passed the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0. '
+     'Existing libraries were reused; only mains and executables were compiled. The [verification '
+     'report](gams-lu-orbits-validation.json) retains pins, source hashes and actual output. GAMS '
+     'categories are not exhausted.',
+     '',
+     '## linalg dense real LU (D2a1)',
+     '',
+     'The driver makes 96 nonsingular square factorizations: sizes [1,2,3,5,8,13], four matrix '
+     'families, scales 1e-6 and 1e6, and original/reversed row order. The families are nonsymmetric '
+     'strictly row-diagonally-dominant, upper triangular, lower triangular, and a cyclic permutation '
+     'with nonzero weights. Reversing rows and the permutation fixtures exercise row pivoting; 48 '
+     'factorizations actually perform swaps. These are modest manufactured systems, not an '
+     'ill-conditioned accuracy benchmark.',
+     '',
+     'Three exact solution vectors are supplied independently: ones, alternating signed i/8, and '
+     'i*(n+1-i)/4. Right-hand sides are built with scalar loops over the original dense matrix. Each '
+     'is solved with the vector overload; all three are also solved together with the matrix overload. '
+     'There are 384 solve calls and 3,072 known solution entries. Agreement between overloads alone is '
+     'insufficient: both must match the manufactured solutions and satisfy independently recomputed '
+     'scalar residuals.',
+     '',
+     'Packed factors, extracted L/U, and P are requested simultaneously. Pivots must have the '
+     'sequential LAPACK range i..n. The driver independently applies those row swaps to an index '
+     'vector and requires the returned P to encode exactly that permutation. It checks unit '
+     'lower-triangular L, upper-triangular U, and each scalar entry of P*A=L*U. The dense input, '
+     'right-hand sides and packed factors must remain unchanged by the applicable factor/solve calls. '
+     'The packed factor, pivot and solution arrays must have expected shapes; all successful '
+     'numerical outputs must be finite.',
+     '',
+     'Acceptance bounds are 2e-12 for all three measures: max abs(x-x_exact)/(1+abs(x_exact)); max '
+     'absolute factorization discrepancy divided by max abs(A); and max '
+     'abs(A*x-b)/(norm_inf(A)*norm_inf(x)+norm_inf(b)). The printed maxima are 4.0219e-16, 2.8115e-16 '
+     'and 2.3570e-16 respectively. No solver-to-solver reference is used.',
+     '',
+     'Eight additional singular factorizations use sizes [1,2,5,8] with all-zero matrices and identity '
+     'matrices whose last row duplicates the first. At size one, both patterns necessarily use zero. '
+     'The documented diagnostic is NaN in every returned factor/permutation entry and zero in every '
+     'pivot entry, rather than a status argument. All eight diagnostics are checked; no solve is '
+     'attempted with these invalid factors. Complex/sparse/transpose solves, malformed dimensions, '
+     'ill-conditioned error bounds and performance remain unverified.',
+     '',
+     '## Fortran Astrodynamics Toolkit orbital elements to state (P)',
+     '',
+     'The driver makes 864 conversions. Eccentricities [0,0.2,0.7,1,1.5] cover circular, elliptic, '
+     'parabolic and hyperbolic conics. Inclinations are [0,0.3,pi/2,pi-0.4,pi], including equatorial, '
+     'polar and retrograde configurations. Node angles are [0,1.2] and periapsis angles [0,0.7], '
+     'except that undefined nodes at inclination 0/pi and undefined periapses for circles use only '
+     'canonical zero. The routine singularity convention is therefore respected without claiming a '
+     'test of its near-singular thresholds.',
+     '',
+     'True anomalies [-1.2,0,0.8,2] are used at three (mu,p) scale pairs: (1,2), (398600.4418,7000), '
+     'and (1e6,2e5), in consistent units. Every fixture requires 1+e*cos(nu)>0; hyperbolic points stay '
+     'inside the physical branch. Inertial position and velocity are checked against independently '
+     'implemented geometric rotations: start with the planar conic state, then apply z(periapsis), '
+     'x(inclination), and z(node) separately to each vector. The library uses a combined rotation '
+     'matrix; this driver does not call its rotation or inverse-conversion utilities. There are 5,184 '
+     'Cartesian component references.',
+     '',
+     'The following physical relations supply another 6,912 scalar invariant/direction checks (eight '
+     'per state):',
+     '',
+     '```text\n'
+     'radius = p/(1+e*cos(nu))\n'
+     'h = cross(r,v),       |h|**2 = mu*p\n'
+     'e_vector = cross(v,h)/mu - r/|r|,       |e_vector| = e\n'
+     'energy = |v|**2/2 - mu/|r| = mu*(e**2-1)/(2*p)\n'
+     'radial_speed = dot(r,v)/|r| = sqrt(mu/p)*e*sin(nu)\n'
+     'h/sqrt(mu*p) = [sin(node)*sin(inc), -cos(node)*sin(inc), cos(inc)]\n'
+     '```',
+     '',
+     'All returned components must be finite. Component differences are scaled by p for position and '
+     'sqrt(mu/p) for velocity. Radius error is scaled by p, eccentricity error by 1+e, energy error by '
+     'mu/p, and radial speed error by sqrt(mu/p); the angular-momentum relations are dimensionless as '
+     'written. Each maximum must be at most 5e-12. Saved maxima are 1.1102e-15 for components and '
+     '1.9984e-15 for invariants. The checks include parabolic zero energy and both prograde and '
+     'retrograde angular-momentum direction.',
+     '',
+     'This is not merely a forward/inverse round trip. It verifies the named elements-to-state '
+     'procedure, rather than orbit propagation, inverse elements, near-singular angle conventions, '
+     'invalid conics, asymptotic hyperbolic anomalies or every toolkit method. The broad P '
+     'classification is retained; no astronomy-specific GAMS subclass is invented.',
+     '',
+     '## Checked links and actual output',
+     '',
+     'Independent API consumers have their own MIT notice; upstream terms remain separate. Pinned '
+     'sources and author examples were reviewed without copying upstream code. Loading a link does not '
+     'submit a job.',
+     '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
+def dae_fft_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-dae-fft-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-dae-fft-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Checked differential-algebraic IVPs and complex FFT plans',
+     '',
+     'These I1a2 and J1a2 drivers passed the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0. '
+     'Existing libraries were reused; only mains and executables were compiled. The [verification '
+     'report](gams-dae-fft-validation.json) retains pins, source hashes and actual output. GAMS '
+     'categories are not exhausted.',
+     '',
+     '## DASKR index-one DAEs (I1a2)',
+     '',
+     'Two three-state differential-algebraic systems have independent closed-form states and '
+     'derivatives. With tau=t-t0, the first combines triangular exponential dynamics and a nonlinear '
+     'algebraic constraint:',
+     '',
+     '```text\n'
+     'u = A*exp(-a*tau)\n'
+     'v = B*exp(-b*tau) + c*A*(exp(-a*tau)-exp(-b*tau))/(b-a)\n'
+     'w = u+v*v\n'
+     'G = [u_prime+a*u, v_prime+b*v-c*u, w-u-v*v] = 0\n'
+     '```',
+     '',
+     'The rate pairs (a,b) are (0.5,20) and (1,100), with c=0.75. Initial differential states (A,B) '
+     'are (1,0.25) and (-0.5,2). Both rates are positive and unequal. This family is integrated '
+     'forward only; reverse stiff exponential growth is outside the checked scope. The second, '
+     'nonautonomous family is:',
+     '',
+     '```text\n'
+     'u = tau*tau+C\n'
+     'v = tau**3/3+C*tau+D\n'
+     'w = sin(tau)+u*v\n'
+     'G = [u_prime-2*tau, v_prime-u, w-sin(tau)-u*v] = 0\n'
+     '```',
+     '',
+     'For parameter p=1 or 2, C=A*p and D=B/p use the same two initial-state pairs above. This '
+     'polynomial family is integrated in both time directions. Both families use t0=-0.5 or 0.75, so '
+     'residuals must honor a nonzero time origin. Consistent initial states and derivatives are '
+     'supplied from the closed forms; automatic correction of inconsistent initial data is not tested.',
+     '',
+     'Each configuration is run with a numerical Jacobian and with a supplied dense Jacobian, '
+     'independently checked against the closed form. The user callback supplies dG/dy+cj*dG/dy_prime, '
+     'including algebraic rows. Its actual invocation is counted and required in user-Jacobian mode; '
+     'it must not run in numerical-Jacobian mode. Only the dense direct linear-solver path is used. '
+     'INFO(5) selects the Jacobian mode, while INFO(2) selects scalar or vector tolerances. Scalar '
+     'RTol=1e-10 and ATol=1e-12 become componentwise [1,2,4] times those values in vector mode.',
+     '',
+     'There are 32 exponential and 64 polynomial trajectories, 96 total. The BDF history is retained '
+     'between eight requested relative times: [0.01,0.02,0.04,0.08,0.16,0.32,0.64,1], negated for '
+     'backward polynomial runs. This gives 768 checkpoints and 4,608 analytic state/derivative '
+     'entries. Forty-eight trajectories actually use the supplied Jacobian. Every output must have '
+     'IDID 2 or 3, finite time/state/derivative values, and a reached time agreeing with the requested '
+     'checkpoint within 32*epsilon*max(1,abs(tout)); an arbitrary positive return is insufficient.',
+     '',
+     'State and derivative errors use abs(result-reference)/(1+abs(reference)), bounded by 5e-7 and '
+     '5e-6 respectively. The algebraic constraint uses the absolute residual divided by one plus the '
+     'magnitudes of its state/product terms, bounded by 5e-9. The complete DAE residual is recomputed '
+     'at every checkpoint, with each row scaled by one plus the magnitudes of its contributing terms, '
+     'bounded by 2e-6. Saved maxima are 4.6001e-10 for state, 1.6290e-7 for derivative, 6.9436e-11 for '
+     'constraint and 1.0779e-8 for residual. These global solution checks have a different meaning '
+     'from requested local tolerances.',
+     '',
+     'Krylov solves and preconditioners, banded storage, roots/events, inconsistent-data '
+     'initialization, higher-index DAEs, invalid requests and performance remain unverified. Neither '
+     'another solver nor mere agreement between Jacobian modes serves as the oracle.',
+     '',
+     '## NAFPack single-precision radix-two FFT plans (J1a2)',
+     '',
+     'Lengths [2,4,8,16,32,64,128], explicit RADIX2_DIT and RADIX2_DIF algorithms, four input patterns '
+     'and scales [1/16,1,16] give 168 plan fixtures. Patterns are a shifted complex impulse, complex '
+     'DC, a two-tone complex signal, and deterministic modular real/imaginary components. At the '
+     'smallest lengths the tones alias naturally; the direct reference uses the actual discrete '
+     'samples.',
+     '',
+     'Each plan is executed with both ITERATIVE and recursive implementations, using explicit classic '
+     'loops. Each implementation is called twice on the same unchanged input and must reproduce '
+     'exactly its previous output. The plan is destroyed before the shared transform object creates '
+     'its next plan. Totals are 672 calls and 24,384 coefficient comparisons, including repetitions.',
+     '',
+     'The independent oracle converts the already-rounded single-precision input samples to real64 and '
+     'computes all bins with scalar complex sums:',
+     '',
+     '```text\nF(k) = sum(j=0..n-1) x(j)*exp(-2*pi*i*k*j/n), k=0..n-1\n```',
+     '',
+     'Every returned real and imaginary component must be finite, and both input arrays must remain '
+     'unchanged. The maximum coefficient discrepancy divided by sum(abs(input)) must be no greater '
+     'than 64*epsilon(float32). Parseval independently requires abs(sum(abs(F)**2)/n - '
+     'sum(abs(x)**2))/sum(abs(x)**2) <= 128*epsilon(float32). These L1/energy scales remain meaningful '
+     'at bins whose exact Fourier amplitude is zero. Saved maxima are 5.1072e-7 for the L1-scaled '
+     'coefficient discrepancy and 1.0004e-7 for relative Parseval error.',
+     '',
+     'This checks the forward sign, frequency ordering, amplitude normalization, direct coefficient '
+     'values and repeated plan usage without depending on an inverse transform to undo matching '
+     'errors. Other radices, mixed/split transforms, automatic algorithm choice, inverse transforms, '
+     'other precisions, multidimensional APIs, parallel loop methods and performance remain '
+     'unverified.',
+     '',
+     '## Checked links and actual output',
+     '',
+     'Independent API consumers have their own MIT notice; upstream terms remain separate. Pinned '
+     'sources and author examples were reviewed without copying upstream code. Loading a link does not '
+     'submit a job.',
+     '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
+def propack_fmm_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-propack-fmm-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-propack-fmm-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Checked partial SVD and Laplace kernel applications',
+     '',
+     'These D6 and D1 drivers passed the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0. '
+     'Existing libraries were reused; only mains and executables were compiled. The [verification '
+     'report](gams-propack-fmm-validation.json) retains pins, source hashes and actual output. GAMS '
+     'categories are not exhausted.',
+     '',
+     '## Historical PROPACK leading singular triplets (D6)',
+     '',
+     "This uses the catalog's explicitly labeled historical SciPy PROPACK 2.1 snapshot, not a claim to "
+     'test the current maintained PROPACK release. Its native serial double-precision DLANSVD and '
+     'existing LP64 BLAS/LAPACK recipe are reused unchanged. Pinned DLANSVD/DLANBPRO sources and API '
+     'documentation were reviewed directly; the procedure record has no pinned author example.',
+     '',
+     'The driver constructs matrices with known distinct nonzero singular values s*[r,r-1,...,1], '
+     'r=min(m,n). Column counts are [8,12,20], row counts are n-3, n, and n+3, and scales s are '
+     '[1/8,1,8]. Each rectangular diagonal core is used directly or transformed by chained '
+     'adjacent-plane rotations of its rows and columns. Orthogonal rotations preserve the prescribed '
+     'spectrum and make the rotated operator dense. All matrices have full rank min(m,n); wide/tall '
+     'null spaces do not establish rank-deficient-SVD behavior.',
+     '',
+     'For each matrix the leading one and three singular triplets are requested separately. This gives '
+     '108 calls and 216 checked leading triplets. KMAX=r, TOLIN=1e-12, and the exact operator norm s*r '
+     'is supplied as the norm estimate. A writable K is checked after return, along with INFO=0. The '
+     'initial left vector is A times a vector of ones, giving a deterministic nonzero start inside the '
+     'column space; the default random-start path is not tested.',
+     '',
+     'The callback implements both A*x and transpose(A)*x with scalar loops, counts both directions, '
+     'and must leave the stored matrix unchanged. Both directions must actually be invoked by the '
+     'solver. Residuals are subsequently recomputed with separate loops over a saved copy rather than '
+     'calling the operator callback as the oracle. Every returned leading singular value must match '
+     'its known descending reference. Both A*v-sigma*u and transpose(A)*u-sigma*v residual norms must '
+     'be small, and all returned left/right vector pairs must have identity Gram matrices. Signs of '
+     'singular vectors are unrestricted.',
+     '',
+     'Singular values and vectors must be finite, and returned bound estimates must be finite and '
+     'nonnegative. Singular-value discrepancies and two-sided Euclidean residual norms are divided by '
+     'the known operator norm; their maxima must not exceed 2e-9. Every Gram entry error must also be '
+     'at most 2e-9. Saved maxima are 1.8808e-15 for singular values, 3.4320e-14 for triplet residuals '
+     'and 1.2801e-13 for orthogonality.',
+     '',
+     'The checks do not establish sharpness of the reported error bounds, restarted DLANSVD variants, '
+     'repeated/zero singular values, arbitrary sparse-matrix adapters, other precisions, malformed '
+     'requests or performance. No comparison with another SVD solver is used as the reference.',
+     '',
+     '## FMM2D real Laplace target potentials (D1)',
+     '',
+     'The named procedure applies the structured kernel matrix K(i,j)=log(norm(target_i-source_j)) to '
+     'a real charge vector. This driver verifies that matrix application under D1. Although the '
+     'procedure also has a source-supported I2 relationship to Green functions/PDEs, it does not solve '
+     'a boundary-value problem; the D1 driver must not promote I2 to a checked PDE-solver claim.',
+     '',
+     'Source counts [1,7,64,257,1024], two geometries, three charge patterns, requested precisions '
+     '[1e-6,1e-10], and original/reversed source order give 120 calls. Each call has 24 separate '
+     'targets, giving 2,880 direct target references. Source/target coincidence is explicitly rejected '
+     'in fixture construction.',
+     '',
+     'One geometry uses deterministic modular points in the unit square. The second concentrates the '
+     'same points into two small clusters near (0,0) and (0.75,0.75). Targets include points within '
+     'the broad source region, near the small cluster, and farther away. Charge patterns are positive, '
+     'alternating signed weights, and a centered neutral distribution. The singleton neutral case has '
+     'exactly zero charge. Reversing sources also reverses charges so the physical field is preserved; '
+     'both orders are independently checked against direct sums.',
+     '',
+     'For each target, independent scalar loops compute sum_j q(j)*log(distance), and a '
+     'cancellation-aware scale sum_j abs(q(j)*log(distance)). The maximum absolute discrepancy divided '
+     'by max(1e-12,that scale) must be at most 2e-5 for eps=1e-6 and 2e-8 for eps=1e-10. The floor '
+     'handles the zero-charge fixture. Scaling by unsigned contributions avoids a meaningless relative '
+     'error when the total potential nearly cancels. Every potential must be finite, IER must be zero, '
+     'and source coordinates, charges and targets must remain unchanged.',
+     '',
+     'Saved maximum cancellation-scaled errors are 5.6386e-12 and 2.8739e-13 respectively. This does '
+     'not promise those errors on arbitrary inputs or prove that a particular multipole interaction '
+     'path was selected: small fixtures may use direct interactions internally. These are correctness '
+     'examples, not a large-scale speedup benchmark.',
+     '',
+     'The precompiled native Fortran recipe retains its existing checksum-guarded '
+     'array/empty-interaction compatibility edits, OpenMP build and one-thread sandbox execution. No '
+     'kernel formulas, bounds checking, sandbox limits or library artifacts were changed for this '
+     'batch. Source self-potentials, dipoles, gradients/Hessians, other kernels, vector interfaces, '
+     'complete PDE solves and parallel performance remain unverified by this driver.',
+     '',
+     '## Checked links and actual output',
+     '',
+     'Independent API consumers have their own MIT notice; upstream terms remain separate. Loading a '
+     'link does not submit a job.',
+     '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
+def gmres_inverse_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-gmres-inverse-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-gmres-inverse-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Checked GMRES systems and SPD matrix inverses',
+     '',
+     'These D2 drivers passed the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0. Existing '
+     'libraries were reused; only mains and executables were compiled. The [verification '
+     'report](gams-gmres-inverse-validation.json) retains pins, source hashes, actual output and '
+     'native diagnostics. GAMS categories are not exhausted.',
+     '',
+     '## LightKrylov real GMRES (D2)',
+     '',
+     'The driver uses the real double-precision dense operator/vector implementation. Sizes [2,5,8,13] '
+     'are combined with three matrix families: nonsymmetric strictly row-diagonally-dominant matrices, '
+     'a nonsymmetric tridiagonal with upper entry 0.5 and lower entry -0.125, and the symmetric '
+     'tridiagonal Poisson matrix with diagonal 2 and adjacent entries -1. These modest full-rank '
+     'systems do not establish behavior on arbitrary matrix-free or sparse adapters.',
+     '',
+     'Three exact solution vectors are ones, alternating signed i/8, and i*(n+1-i)/4. Scalar loops '
+     'generate the right-hand side for either A*x or transpose(A)*x. Each system is solved from zero '
+     'and from a deliberately incorrect constant -0.25 initial guess. Both a full n-vector Krylov '
+     'dimension and a min(3,n)-vector dimension are selected with gmres_dp_opts; maxiter is set to '
+     '500. Requested RTol=1e-10 and ATol=1e-12 are identical across these configurations.',
+     '',
+     'The cross product gives 288 solves and 2,016 known solution entries. Convergence metadata must '
+     'be true and the information flag nonnegative; returned states must be allocated, correctly sized '
+     'and finite. A negative iteration-count flag is rejected. There must actually be at least one '
+     'solve with more than one outer cycle; the saved run contains 100 such solves. Exact initial '
+     'guesses and zero right-hand sides are outside the verified scope.',
+     '',
+     'The maximum abs(x-x_exact)/(1+abs(x_exact)) must not exceed 5e-8. Independently recomputed '
+     'scalar true residuals must satisfy '
+     'norm_inf(A_effective*x-b)/(norm_inf(A_effective)*norm_inf(x)+norm_inf(b)) <= 2e-10, where '
+     'A_effective is A or its transpose. This uses the true matrix product rather than only the '
+     'internal residual estimate or solver-to-solver agreement. Original operator data and right-hand '
+     'sides must remain unchanged. Saved maxima are 5.3793e-9 for normalized solution error and '
+     '9.2868e-11 for scaled true residual.',
+     '',
+     'Logging is reduced through the public logger_setup API, preserving solver error checks. The '
+     'saved run still has two initialization messages and a Fortran runtime warning that an array '
+     'temporary was created for DTRTRS. That warning did not prevent the run from returning zero and '
+     'passing every answer check; bounds checks and native library code were unchanged. '
+     'Preconditioners, custom matrix-free operators, complex/single precision, exact-start/zero-RHS '
+     'behavior, singular systems, parallel operation and performance remain unverified.',
+     '',
+     '## NTPoly Hotelling inversion with one MPI process (D2)',
+     '',
+     'The driver uses InverseSolversModule:Invert, separate from the previously checked '
+     'SquareRoot/InverseSquareRoot APIs. It initializes MPI with serialized thread support, requires '
+     'MPI_SUCCESS and exactly one process, and uses the existing one-process process-grid and '
+     'shared-memory/self-transport recipe. It does not test distributed scaling or multi-process '
+     'correctness.',
+     '',
+     'Sizes [2,3,5,8], prescribed spectral condition numbers [2,10,50], scales [1/4,4], and '
+     'diagonal/rotated eigenbases give 48 real SPD inversions and 1,224 analytic inverse entries. The '
+     'eigenvalues are scale*(1+(condition-1)*(i-1)/(n-1)). An identity eigenbasis is used directly or '
+     'transformed by chained adjacent-plane rotations. Scalar sums form A=Q*diag(lambda)*transpose(Q), '
+     'with independently known inverse Q*diag(1/lambda)*transpose(Q). No other inversion solver is '
+     'used as the oracle.',
+     '',
+     'Input matrices are filled through triplet lists; inverse and original matrices are gathered '
+     'through separate lists, checking every returned index and rejecting nonfinite entries. Solver '
+     'parameters are converge_diff=1e-12, threshold=1e-14, max_iterations=200 and be_verbose=false. '
+     'Invert has no returned convergence-status argument here: the independent mathematical checks '
+     'determine acceptance.',
+     '',
+     'Each inverse entry must agree with its analytic value within '
+     'abs(result-reference)/(1+abs(reference)) <= 5e-9. Separate scalar loops check every entry of '
+     'A*inverse and inverse*A against identity, each with maximum absolute residual <= 5e-9. '
+     'Normalized symmetry error must also be <= 5e-9. Gathering the original matrix after inversion '
+     'must preserve it within 2e-12 relative maximum-entry error. Saved maxima are 3.4957e-14 for '
+     'inverse entries, 1.7244e-14 for A*inverse, 9.7700e-15 for inverse*A and 3.3869e-15 for '
+     'normalized symmetry.',
+     '',
+     'The saved output includes a UCX discovery diagnostic: scandir(/sys/class/net) failed because the '
+     'path is absent in the sandbox. MPI initialization/finalization nevertheless returned MPI_SUCCESS '
+     'and the one-process run returned zero with all mathematical checks passing. This proof concerns '
+     'that one-process configuration; the diagnostic is retained rather than hidden. '
+     'Nonsymmetric/indefinite/singular matrices, complex inverses, load balancing, multi-process '
+     'execution and performance remain unverified.',
+     '',
+     '## Checked links and actual output',
+     '',
+     'Independent API consumers have their own MIT notice; upstream terms remain separate. Pinned '
+     'sources and author examples were reviewed without copying upstream code. Loading a link does not '
+     'submit a job.',
+     '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
+def periodic_calculus_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-periodic-calculus-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-periodic-calculus-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Checked polynomial calculus and orthogonal periodic distances',
+     '',
+     'These H1 and P drivers passed the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0. '
+     'Existing libraries were reused; only mains and executables were compiled. The [verification '
+     'report](gams-periodic-calculus-validation.json) retains pins, source hashes and actual output. '
+     'GAMS categories are not exhausted.',
+     '',
+     '## Formal polynomial gradient, divergence and conservation (H1)',
+     '',
+     "This independent API consumer uses the library's default real precision (real32 in this build) "
+     'and a single coarray image. It constructs scalar f=xi**p and vector v=xi**q, '
+     'xi=(x-origin)/length, for p,q=0,1,2. Orders 2 and 4, cell counts [32,64,128], and '
+     '(origin,length) pairs [(-1.5,1),(0,0.5),(0.75,2)] give 162 field pairs. These translated/scaled '
+     'intervals exercise the physical derivative factor 1/length rather than just unit-interval '
+     'formulas.',
+     '',
+     'Every gradient value on the face grid is compared with p*xi**(p-1)/length, and every divergence '
+     'value on the cell-center grid with q*xi**(q-1)/length. Degree-zero reference derivatives are '
+     'explicitly zero. Values must be finite and have the expected grid shape; each '
+     'abs(result-reference)/(1+abs(reference)) must be <= 5e-4. There are 24,354 pointwise derivative '
+     'references. The saved maximum normalized error is 6.1035e-5.',
+     '',
+     'The same fields check weighted volume integrals of v*grad(f) and f*div(v), and the signed '
+     'boundary flux f*v. For p+q>0, their analytic values are p/(p+q), q/(p+q), and 1; when both '
+     'degrees are zero, all three are zero. There are 486 analytic integral references. The maximum '
+     'absolute discrepancy must be <= 2e-4 for order 4, or <= 2e-4+2/n**2 for order 2. The additional '
+     'second-order term allows discretization error in the polynomial product quadrature instead of '
+     'pretending that every cubic integrand is integrated exactly.',
+     '',
+     'The extended Gauss identity requires abs(volume_gradient+volume_divergence-boundary_flux) <= '
+     '5e-4 for every pair. The saved maximum integral error is 4.6539e-4 across the mixed order/grid '
+     'suite, and the maximum conservation residual is 1.0316e-5. Requested order settings are '
+     'exercised, but convergence order for nonpolynomial fields is not established by these checks. '
+     'Laplacians, higher dimensions, PDE time integration, and multi-image execution remain '
+     'unverified.',
+     '',
+     '## RAFFLE periodic distances in orthogonal cells (P)',
+     '',
+     'This uses the pinned RAFFLE v1.0.0 snapshot. Three orthogonal edge-length sets [1,1,1], [1,2,3], '
+     'and [0.5,1.5,2] are each used directly and after two rigid Cartesian rotations, giving six cell '
+     'geometries (orthogonal to real32 working precision). Two species contain five fixed fractional '
+     'atom positions. Each cell has 15 modular query points plus the five exact atom positions; each '
+     'query is also shifted by fractional integer vectors [0,0,0], [2,-3,1] and [-2,1,3]. Total: 360 '
+     'queries.',
+     '',
+     'For every query, all five specified-atom distances and the nearest-atom vector lengths from real '
+     'and fractional outputs are checked: 2,520 distance references. Near-atom exclusion is explicitly '
+     'disabled so an exact atom query has zero nearest distance. Fractional outputs are independently '
+     'converted to Cartesian coordinates with scalar sums before their norms are checked. No '
+     'particular nearest-atom identity is required in a tie; this verifies lengths, rather than all '
+     'returned-vector direction semantics.',
+     '',
+     'The independent oracle converts the actual rounded real32 inputs to real64, wraps the query into '
+     'a reference cell with floor, and enumerates all 729 integer image offsets in [-4,4]**3 for each '
+     "atom. It does not use the library's componentwise nearest-integer wrapping formula. For these "
+     'orthogonal length ratios, a nearest image lies in this box; omitted images have a larger lower '
+     'distance bound than a componentwise-near image, with ample margin for the small '
+     'rotation-rounding errors.',
+     '',
+     'Each distance must be finite and abs(result-reference)/max_cell_edge <= 128*epsilon(float32). '
+     'This scale accounts for input translation/rounding and real32 Cartesian arithmetic without '
+     'dividing by a zero self-distance. The saved maximum is 1.3591e-7. Directional options, ignore '
+     'lists, near-atom exclusion, highly skew lattices, structure generation and performance remain '
+     'unverified.',
+     '',
+     '## Preserved skew-cell failure',
+     '',
+     'A separate valid skew-cell probe built successfully but returned distance 0.92970967292785645 '
+     'where an independent image search found 0.31679647220910667. Its lattice rows are [1,0,0], '
+     '[0.8,0.6,0], [0,0,1], with one atom at the origin and query [0.49,0.49,0]. A periodic image '
+     'displaced by [-1,0,0] is closer than the componentwise-wrapped image.',
+     '',
+     'The [reproducer](gams-candidates/raffle-skew/README.md) retains the exact source, pin, '
+     'normalized hash and complete failed result. It tests the specified-atom API; general skew-cell '
+     'behavior is not promoted by the successful orthogonal driver. The failed probe is not registered '
+     'as a checked driver. No source patch, relaxed comparison or disabled bounds check was '
+     'introduced.',
+     '',
+     '## Sources, licenses and actual output',
+     '',
+     "Independent drivers have their own MIT notice; upstream terms remain separate. Formal's original "
+     'Berkeley Lab terms, including its enhancements clause, remain in the [retained '
+     'license](fpm-candidates/formal/licenses/LICENSE.txt); the library is not relabeled plain '
+     'BSD-3-Clause. RAFFLE retains its GPL-3.0 terms. These are independent API consumers, not copies '
+     'of upstream example bodies. Loading a link does not submit a job.',
+     '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
+def expressions_sky_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-expressions-sky-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-expressions-sky-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Checked expressions and sky-coordinate rotations',
+     '',
+     'These N3 and P drivers passed GNU Fortran 16.2.0 with FPM 0.12.0 in the restricted hosted sandbox. '
+     'Existing package libraries were reused; only mains and executables were compiled. The [verification '
+     'report](gams-expressions-sky-validation.json) retains pins, source hashes, stdout and stderr. GAMS '
+     'categories are not exhausted.',
+     '',
+     '## FEQParse multivariable expression evaluation (N3)',
+     '',
+     'Twelve valid real64 expressions cover arithmetic, parentheses, powers, pi, trigonometric functions, '
+     'exp, log, sqrt, abs and compositions. Each is evaluated on a 7 by 7 by 7 grid: x,y,z range from -1.5 '
+     'to 1.5 in steps of 0.5. These 343 tuples stay inside the real domains of every expression.',
+     '',
+     'There are 24 parser objects: one with declarations [x,y,z] and one with [z,y,x] for each expression. '
+     'Scalar and batch evaluations use correspondingly reordered inputs; reversed declarations are also '
+     'evaluated in reverse scalar traversal. All 16,464 outputs are checked against direct native Fortran '
+     'formulas, rather than merely against another parser call. Quartics use explicit products; the real '
+     'power 2**(x/2) uses exp(log(2)*x/2) as its reference. Inputs must remain unchanged.',
+     '',
+     'Every output must be finite and abs(result-reference)/(1+abs(reference)) <= 2e-12. The maximum saved '
+     'error is 9.1974e-17. The run retains array-temporary warnings for noncontiguous row sections passed '
+     'to scalar evaluation; bounds checking was not disabled. This verifies selected valid real64 '
+     'expressions and variable binding, not complete grammar coverage, malformed-input recovery, custom '
+     'functions, other precisions/ranks or symbolic algebra.',
+     '',
+     '## astro-fortran Galactic/ICRS directions (P)',
+     '',
+     'The independent reference applies three elementary passive rotations sequentially, using the defining '
+     'pole right ascension 192.85948 degrees, pole declination 27.12825 degrees and node longitude 32.93192 '
+     'degrees. It does not copy the library matrix or author test body. For ICRS to Galactic it applies '
+     'z(pi/2+pole_ra), x(pi/2-pole_dec), z(-node); the opposite direction uses the inverse sequence. A '
+     'passive z rotation maps (x,y) to (cos(a)*x+sin(a)*y,-sin(a)*x+cos(a)*y), with the analogous y,z rule '
+     'for x rotations.',
+     '',
+     'There are 24 longitude samples, nine latitudes [-90,-75,-45,-10,0,10,45,75,90] degrees, and three '
+     'longitude shifts [-4*pi,0,6*pi] in each starting frame. The 1,296 direction fixtures exercise 2,592 '
+     'forward/inverse calls. Every forward output is compared with an independently rotated Cartesian unit '
+     'vector, and every round trip with its original input vector. Longitude equality at a pole is '
+     'deliberately not required.',
+     '',
+     'Direct and roundtrip vector discrepancies and unit-norm errors must each be <= 2e-12. Saved maxima '
+     'are 8.9509e-16, 9.4857e-16 and 2.2204e-16 respectively. Output angles must be finite and within the '
+     'canonical intervals with an absolute endpoint allowance of 64 real64 machine epsilons. An initial '
+     'strict [0,2*pi) assertion encountered exactly 2*pi from wrapping a tiny negative angle; the roundoff '
+     'allowance addresses that equivalent direction without changing vector accuracy checks. No assertion '
+     'about precession, proper motion, astrometric corrections, unrelated coordinate APIs or physical '
+     'accuracy of the frame definition follows.',
+     '',
+     '## Sources, licenses and actual output',
+     '',
+     'Pinned implementations and author tests were reviewed before writing these independent API consumers. '
+     "The drivers have their own MIT notice. Upstream package terms, including astro-fortran's retained "
+     'SOFA-derived notices, remain separate; the package sources and author test bodies are not relabeled '
+     'or copied. Loading a driver link does not submit a job.',
+     '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
+def unsigned_bitsets_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-unsigned-bitsets-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-unsigned-bitsets-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Checked unsigned arithmetic and operable bitsets',
+     '',
+     'These A1 and N2 drivers passed GNU Fortran 16.2.0 with FPM 0.12.0 in the restricted hosted sandbox. '
+     'Existing libraries were reused; only mains and executables were compiled. The [verification '
+     'report](gams-unsigned-bitsets-validation.json) retains exact source hashes, pins, build logs and '
+     'program output. GAMS categories are not exhausted.',
+     '',
+     '## uint-fortran fixed-width integers (A1)',
+     '',
+     'The independent driver checks uint8, uint16 and uint32 against ordinary integer(int64) formulas. Each '
+     'width uses 24 operand fixtures, including zero, one, powers-of-two boundaries, the signed midpoint '
+     'and neighbors, the unsigned maximum and neighbors, and fractions of the modulus. Some small-width '
+     'fixtures coincide; these are 1,728 operand pairs across the three widths, not a claim of distinct '
+     'values in every fixture.',
+     '',
+     'Each pair checks addition and subtraction modulo 2**width, division when the divisor is nonzero, all '
+     'six relational operators, and preservation of both operands. Conversions are checked for every '
+     'outer-loop fixture. Nine negative int64 assignments per width include -1, -128, -256, -257, -65536 '
+     'and -4294967295; their references use the nonnegative Fortran MODULO result. In total, 17,307 exact '
+     'checks passed. The int64 oracle safely contains all tested sums, differences and quotients.',
+     '',
+     'The checks exercise carry, borrow, unsigned ordering above the signed boundary, truncating '
+     'nonnegative integer division and assignment conversion. Multiplication, powers, mixed-kind operators, '
+     'uint64 and C interoperability remain unverified. This is fixed-width arithmetic, not '
+     'arbitrary-precision integer validation. The driver does not change library source or compiler '
+     'overflow settings.',
+     '',
+     '## ORBS bitset operators (N2)',
+     '',
+     'Eleven widths [1,4,8,31,32,63,64,65,127,128,129] cross storage-word boundaries. Each width uses 16 '
+     'deterministic patterns: zero, all ones, low/high endpoint bits and modularly generated binary '
+     'strings. Patterns can coincide at small widths. Every ordered pair is tested, giving 2,816 operand '
+     'pairs.',
+     '',
+     'AND, OR, XOR and ANDNOT references are built one character at a time from logical truth tables. '
+     'Addition and subtraction use independent base-two schoolbook carry/borrow arithmetic, discarding the '
+     'final carry/borrow to model fixed width. These references call neither ORBS nor its stdlib/bstrith '
+     'dependencies. Every input pattern also checks NOT and every shift from 1-width through width-1, '
+     'including zero. Shift references relocate individual characters and fill vacated positions with '
+     'zeros; undefined shifts outside the documented range are not attempted.',
+     '',
+     'All 37,760 binary-string references must match exactly and retain their expected width. Pair '
+     'operations must preserve both operands. Multiword carry/borrow and shifts are exercised, including '
+     '65-, 127-, 128- and 129-bit values. Mixed widths, zero-length sets, mutation methods, sorting, '
+     'formatted I/O and malformed-input handling remain unverified. This driver supports the N2 mapping; it '
+     'does not automatically promote the sibling A1 mapping for the same procedure record.',
+     '',
+     '## Sources, licenses and actual output',
+     '',
+     'Pinned operator/conversion implementations and available author tests were reviewed. The '
+     'independently written API consumers have their own MIT notice; upstream terms remain separate. No '
+     'upstream test bodies are copied. The ORBS record has no pinned author example recorded, so its API '
+     'source was reviewed directly. Loading a driver does not submit a job.',
+     '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
+def sparse_advection_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-sparse-advection-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-sparse-advection-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Checked sparse systems and periodic advection',
+     '',
+     'These D2 and I2 drivers passed GNU Fortran 16.2.0 with FPM 0.12.0 in the restricted hosted sandbox. '
+     'Existing libraries were reused; only mains and executables were compiled. The [verification '
+     'report](gams-sparse-advection-validation.json) retains pins, source hashes and actual output. GAMS '
+     'categories are not exhausted.',
+     '',
+     '## HeatFlow sparse BiCG systems (D2)',
+     '',
+     'Four matrix sizes [5,9,17,33], three banded families and three scales [0.125,1,8] give 36 matrices. '
+     'All are strictly row-diagonally dominant with positive diagonals: the first family is symmetric '
+     'tridiagonal, the second changes the upper band to make it nonsymmetric, and the third adds unequal '
+     'second bands. Sparse storage must retain exactly the nonzero count of the original dense matrix.',
+     '',
+     'Each matrix is solved for three manufactured solutions (constant, alternating with varying magnitude, '
+     'and a shifted sine), using zero and nonzero initial guesses. All 216 solves check 3,456 known '
+     'solution entries. Right-hand sides and true residuals are formed with independent scalar dense sums, '
+     'not the library multiply routine. Right-hand sides must remain unchanged. The sparse allocation is '
+     'released between matrices.',
+     '',
+     'The requested relative L2 tolerance is 1e-11 with stopping mode 1 and a 500-iteration cap. Returned '
+     'values and solver error must be finite, iterations must lie in [1,500], and the reported error must '
+     'be <= 1.01e-11. Independently, max(abs(x-x_exact))/(1+max(abs(x_exact))) must be <= 2e-9 and '
+     'max(abs(A*x-b))/(1+max(abs(b))) <= 2e-10. Saved maxima are 2.5522e-11 and 2.3739e-11 respectively. '
+     'These modest, well-conditioned systems do not verify singular/indefinite behavior, other stopping '
+     'modes, parallel execution or the full HeatFlow evolution/Cattaneo application.',
+     '',
+     '## HR-WENO periodic finite-volume advection (I2)',
+     '',
+     'The independent consumer solves u_t+c*u_x=0 on a unit periodic interval using WENO k=3 reconstruction '
+     'and third-order TVD Runge-Kutta. It supplies three ghost cells on each side and selects right states '
+     'for positive velocity or left states for negative velocity. The two endpoint fluxes are identical, '
+     'making the semidiscrete flux sum telescope. This exercises spatial reconstruction in a PDE, rather '
+     'than only the package time integrator.',
+     '',
+     'Three grids [64,128,256], modes [0,1,2], velocities [-1.5,0.75], phase origins [0,0.37], and '
+     '(mean,amplitude) pairs [(1.25,0.2),(-0.5,-0.3)] give 72 problems. Mode zero supplies constant-state '
+     'tests. Initial data are exact cell averages: '
+     'mean+amplitude*sin(pi*m*dx)/(pi*m*dx)*sin(2*pi*m*(x-origin)), with the zero-mode factor defined as '
+     'one. The step is 0.2*dx/abs(c). Two continued calls request travel distances 0.0625 and 0.125, '
+     'producing 144 checkpoints and 21,504 analytic cell-average references.',
+     '',
+     'This fixed-step API returns the first time beyond the requested time rather than interpolating to it. '
+     'The harness initially assumed exact output times; source review corrected that assumption. Returned '
+     'time must be finite and between the requested time and one step beyond it, with a 1e-12 roundoff '
+     'allowance. The analytic reference shifts the wave by c times the actual returned time.',
+     '',
+     'Every cell must be finite. Constant-state maximum error must be <= 5e-12. For nonzero mode m, the '
+     'maximum absolute error bound is 5e-12+0.002*abs(amplitude)*(m*64/n)**2. This is an explicit '
+     'resolution/frequency-dependent acceptance bound, not a claim of a measured convergence order. Every '
+     'normalized mass error abs(sum(u)*dx-mean)/(1+abs(mean)) must be <= 5e-12. The saved maximum '
+     'amplitude-scaled cell error is 8.0028e-5, the largest error divided by its fixture bound is '
+     '1.0004e-2, and the maximum normalized mass error is 6.9081e-16. Nonuniform grids, shocks, nonlinear '
+     'fluxes, multidimensional equations and formal convergence rates remain unverified.',
+     '',
+     '## Preserved k=2 accuracy-threshold result',
+     '',
+     'A k=2 probe built but exceeded the proposed accuracy bound: the first failing 64-cell mode-one '
+     'negative-velocity fixture had maximum cell error 1.4202932710161154e-3 versus bound '
+     '4.0000000500000000e-4. This is not an established algorithm defect. Spatial/time discretization error '
+     'requires a convergence study before judging that configuration; the k=3 suite alone does not verify '
+     'k=2.',
+     '',
+     'The [preserved probe](gams-candidates/hrweno-k2-accuracy/README.md) retains its exact source, pin, '
+     'normalized hash and complete result. It is not registered as a checked driver. The successful suite '
+     'keeps the same reference and bounds, restricted to k=3; no comparison was relaxed and no library '
+     'source or bounds checking was changed.',
+     '',
+     '## Sources, licenses and actual output',
+     '',
+     'Pinned implementations and the HR-WENO author conservation-law example were reviewed before writing '
+     'these independent API consumers. The drivers and preserved probe have their own MIT notice. HeatFlow '
+     'retains its GPL-3.0 terms, and HR-WENO its MIT terms; upstream test and implementation bodies are not '
+     'copied or relabeled. The HeatFlow record has no pinned author example, so its source was reviewed '
+     'directly. Loading a link does not submit a job.',
+     '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -6335,6 +7512,17 @@ def main():
                          (JACOBIAN_TRANSFORMS_REPORT, jacobian_transforms_review_text()),
                          (EXPRESSION_EVALUATION_REPORT, expression_evaluation_review_text()),
                          (CONVERSION_TRIANGULATION_REPORT, conversion_triangulation_review_text()),
+                         (GRAPH_SORTING_REPORT, graph_sorting_review_text()),
+                         (NEIGHBORS_SPARSE_REPORT, neighbors_sparse_review_text()),
+                         (ADAPTIVE_AD_REPORT, adaptive_ad_review_text()),
+                         (LU_ORBITS_REPORT, lu_orbits_review_text()),
+                         (DAE_FFT_REPORT, dae_fft_review_text()),
+                         (PROPACK_FMM_REPORT, propack_fmm_review_text()),
+                         (GMRES_INVERSE_REPORT, gmres_inverse_review_text()),
+                         (PERIODIC_CALCULUS_REPORT, periodic_calculus_review_text()),
+                         (EXPRESSIONS_SKY_REPORT, expressions_sky_review_text()),
+                         (UNSIGNED_BITSETS_REPORT, unsigned_bitsets_review_text()),
+                         (SPARSE_ADVECTION_REPORT, sparse_advection_review_text()),
                          (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report

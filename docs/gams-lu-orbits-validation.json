@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "linalg-lu-reference",
+      "source_revision": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+      "source_sha256": "32970067e47734c5d5c5351d17df165024fc8fa0091b162cf417a79879ca43d5",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T20:48:27.874458+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.397,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Nonsingular factorizations: 96\nVector/matrix solve calls: 384\nKnown solution entries: 3072\nSingular NaN diagnostics: 8\nFactorizations with row swaps: 48\nMaximum normalized solution error:   4.0219E-16\nMaximum scaled residual:   2.3570E-16\nMaximum scaled factorization error:   2.8115E-16\nPASS linalg-lu-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.025,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fat-orbit-reference",
+      "source_revision": "3cf0a0a8ba2abf8bc4995c6da5b6abae07b45a0a",
+      "source_sha256": "2a6093544f53a7bdaddcd02fc4ce2fb3f2672be30efb447590b79629995837e8",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T20:48:30.540749+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.46,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Orbital state conversions: 864\nCartesian component references: 5184\nScalar invariant/direction checks: 6912\nMaximum scaled component error:   1.1102E-15\nMaximum scaled invariant error:   1.9984E-15\nPASS fat-orbit-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.074,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T20:48:30.601906+00:00"
+}

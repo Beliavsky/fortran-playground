@@ -4,10 +4,12 @@
 | --- | --- | --- |
 | [J1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/J1) | One-/two-dimensional nonuniform type-1 Fourier transforms | NUFFT `nufft1d1f90`; NUFFT2D `nufft2d1f90` |
 | [J1a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/J1a1) | One-dimensional real-input forward Fourier transforms | spectrum `rfft` |
-| [J1a2](https://gams.nist.gov/cgi-bin/serve.cgi/Class/J1a2) | One-dimensional complex Fourier transforms | FFTPACK `fft, ifft`; KISS FFT `fft%perform` |
+| [J1a2](https://gams.nist.gov/cgi-bin/serve.cgi/Class/J1a2) | One-dimensional complex Fourier transforms | FFTPACK `fft, ifft`; KISS FFT `fft%perform`; NAFPack `execute_fft_plan_sp` |
 | [J1a3](https://gams.nist.gov/cgi-bin/serve.cgi/Class/J1a3) | One-dimensional sine and cosine transforms | FFTPACK `dct(type=2), idct(type=2)` |
 
 The real, complex and cosine transforms use the deepest recorded categories for those configurations. The nonuniform examples retain broader J1. They do not exhaust integral transforms: additional multidimensional configurations, transform types, convolution, Laplace and Hilbert transforms are separate opportunities.
+
+The [NAFPack plan review](gams-dae-fft.md) checks single-precision radix-two DIT/DIF plans with iterative/recursive implementations against direct complex sums.
 
 ## Nonuniform Fourier sums
 
@@ -41,12 +43,13 @@ A round trip alone could hide matching sign or scaling mistakes; independent for
 | [Load spectrum-real-dft-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=spectrum&example=gams-spectrum-real-dft-reference) · [Source](../fpm_catalog/gams-drivers/spectrum-real-dft-reference.f90) | J1a1 | [Procedure](https://github.com/jchristopherson/spectrum/blob/5af0d5a85eccf971aa6e0fc72b1c7439c3cef536/src/spectrum_fft.f90#L48) · [Author example/test](https://github.com/jchristopherson/spectrum/blob/5af0d5a85eccf971aa6e0fc72b1c7439c3cef536/test/spectrum_fft_tests.f90) |
 | [Load nufft1d-sum-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=nufft1d&example=gams-nufft1d-sum-reference) · [Source](../fpm_catalog/gams-drivers/nufft1d-sum-reference.f90) | J1 | [Procedure](https://github.com/zgimbutas/nufft1d/blob/42a04333f882f474b0674936cae049899784f56e/nufft1df90.f#L1) · [Author example/test](https://github.com/zgimbutas/nufft1d/blob/42a04333f882f474b0674936cae049899784f56e/nufft1d_demof90.f) |
 | [Load nufft2d-direct-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=nufft2d&example=gams-nufft2d-direct-reference) · [Source](../fpm_catalog/gams-drivers/nufft2d-direct-reference.f90) | J1 | [Procedure](https://github.com/zgimbutas/nufft2d/blob/8353c5fb20cd0a8fe6821fae18355e303ed23ed3/nufft2df90.f#L1) · [Author example/test](https://github.com/zgimbutas/nufft2d/blob/8353c5fb20cd0a8fe6821fae18355e303ed23ed3/nufft2d_demof90.f) |
+| [Load nafpack-fft-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=nafpack&example=gams-nafpack-fft-reference) · [Source](../fpm_catalog/gams-drivers/nafpack-fft-reference.f90) | J1a2 | [Procedure](https://github.com/Minard-Jules/NAFPack/blob/9b1e9a98f8c28853a48e152605f84c994c271f45/src/Fourier_Transform/NAFPack_Fourier_Transform.f90#L37) · [Author example/test](https://github.com/Minard-Jules/NAFPack/blob/9b1e9a98f8c28853a48e152605f84c994c271f45/test/Fourier_Transform/test_Fourier_Transform_fft_complex.f90) |
 
 The programs record API provenance and license notices; the independently written spectrum and NUFFT drivers have their own MIT notices. They appear in hosted and main local FPM example menus and downloaded projects. Loading a link selects source without submitting a job.
 
 ## Recorded results
 
-All 6 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing existing package libraries. Only each main and executable were rebuilt. The verification reports record hashes, source pins and saved output: [gams-fourier-geometry-validation.json](gams-fourier-geometry-validation.json), [gams-moments-nufft2d-validation.json](gams-moments-nufft2d-validation.json), [gams-spatial-nufft-validation.json](gams-spatial-nufft-validation.json), [gams-transforms-validation.json](gams-transforms-validation.json).
+All 7 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing existing package libraries. Only each main and executable were rebuilt. The verification reports record hashes, source pins and saved output: [gams-dae-fft-validation.json](gams-dae-fft-validation.json), [gams-fourier-geometry-validation.json](gams-fourier-geometry-validation.json), [gams-moments-nufft2d-validation.json](gams-moments-nufft2d-validation.json), [gams-spatial-nufft-validation.json](gams-spatial-nufft-validation.json), [gams-transforms-validation.json](gams-transforms-validation.json).
 
 ### fftpack-complex-transform
 
@@ -145,10 +148,21 @@ Maximum normalized direct-sum error:   1.3607E-08
 PASS nufft2d-direct-reference
 ```
 
+### nafpack-fft-reference
+
+```text
+Plan fixtures: 168
+FFT calls including repetitions: 672
+Direct coefficient references: 24384
+Maximum L1-scaled coefficient error:   5.1072E-07
+Maximum relative Parseval error:   1.0004E-07
+PASS nafpack-fft-reference
+```
+
 ## Maintenance
 
 ```text
-python xverify_gams_drivers.py --drivers fftpack-complex-transform kissfft-f-complex-transform fftpack-cosine-transform spectrum-real-dft-reference nufft1d-sum-reference nufft2d-direct-reference
+python xverify_gams_drivers.py --drivers fftpack-complex-transform kissfft-f-complex-transform fftpack-cosine-transform spectrum-real-dft-reference nufft1d-sum-reference nufft2d-direct-reference nafpack-fft-reference
 python xpackage_gams.py
 python xfpm_examples.py
 python xsite.py

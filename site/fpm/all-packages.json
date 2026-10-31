@@ -2307,7 +2307,8 @@
             "path": "example/extended-gauss-divergence.F90",
             "sha256": "a48b8b57615c8b57e825dcd24acb940cf8bd456815b6ae8385ddc260632d20a7"
           }
-        ]
+        ],
+        "driver_id": "formal-polynomial-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T18:43:21.308518+00:00",
@@ -4126,7 +4127,8 @@
             "path": "examples/web/dweb.f",
             "sha256": "81a272ce1fe88eb4dd697d755086b9232243163087e73dcef425cc6e809e4817"
           }
-        ]
+        ],
+        "driver_id": "daskr-dae-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -4998,7 +5000,8 @@
             "line": 1
           }
         ],
-        "author_examples": []
+        "author_examples": [],
+        "driver_id": "orbs-bitwise-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T22:42:25.593426+00:00"
@@ -6237,6 +6240,11 @@
             "path": "src/sparse_coo_fortran.f90",
             "sha256": "296feccbb3143e78270bbd8003844e8826cae900b01bc48bb4fe1a765fb59c1a",
             "line": 193
+          },
+          {
+            "path": "src/sparse_csr_fortran.f90",
+            "sha256": "f4ec0f92debf08c0d16c3beb4061cd7a81f8953428cac3f717ef25fab690e6f6",
+            "line": 173
           }
         ],
         "author_examples": [
@@ -6244,7 +6252,8 @@
             "path": "app/main.f90",
             "sha256": "3193d39f04cfce9c08d0140fd42c45f8a62789425d51911d334b6faffd5f4d23"
           }
-        ]
+        ],
+        "driver_id": "sparse-matvec-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -7154,7 +7163,8 @@
             "line": 273
           }
         ],
-        "author_examples": []
+        "author_examples": [],
+        "driver_id": "heatflow-bicg-reference"
       },
       {
         "id": "heatflow-evolution",
@@ -7235,7 +7245,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "RAFFLE is pinned to release v1.0.0 because current main and v1.1.1 exceed the unchanged 16 MiB archive limit. The native FPM library is unchanged. The checked main adapts test/test_dist_calcs.f90: a two-atom silicon primitive cell and three equivalent fractional points exercise get_min_dist_between_point_and_atom and get_min_dist. Both distances must be finite and agree with sqrt(3)*0.428 within 3e-6 in REAL32. P denotes the demonstrated periodic geometry; no optimization, structure-prediction accuracy, trained model, or full upstream test-suite validation is claimed. GPL-3.0 notices are retained.",
+        "notes": "RAFFLE is pinned to release v1.0.0 because current main and v1.1.1 exceed the unchanged 16 MiB archive limit. The native FPM library is unchanged. The checked main adapts test/test_dist_calcs.f90: a two-atom silicon primitive cell and three equivalent fractional points exercise get_min_dist_between_point_and_atom and get_min_dist. Both distances must be finite and agree with sqrt(3)*0.428 within 3e-6 in REAL32. P denotes the demonstrated periodic geometry; no optimization, structure-prediction accuracy, trained model, or full upstream test-suite validation is claimed. GPL-3.0 notices are retained. The checked GAMS driver covers orthogonal cells only. A separate skew-cell probe returns 0.92970967292785645 where an independent periodic-image search gives 0.31679647220910667; source, hash and complete result are retained in docs/gams-candidates/raffle-skew. No library patch is made.",
         "evidence": [
           {
             "path": "src/fortran/lib/mod_dist_calcs.f90",
@@ -7249,7 +7259,8 @@
             "sha256": "ecfef43c27dae5b7750f21d51c35e4ef04efd77efba01e694601381cdb3115d9",
             "line": 1
           }
-        ]
+        ],
+        "driver_id": "raffle-orthogonal-reference"
       }
     ],
     "stars_updated_at": "2026-10-30T13:32:41.790005+00:00"
@@ -7747,7 +7758,8 @@
             "path": "test/laplace/test_rfmm2d.f",
             "sha256": "338b1d924aa9bad5bd4d68ac6bcf8ee3bb0207c6c61cd129ccce5adf87a651fb"
           }
-        ]
+        ],
+        "driver_id": "fmm2d-laplace-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T15:02:11.035729+00:00",
@@ -7856,7 +7868,8 @@
             "path": "example/gaussian_scalar_multivar.f90",
             "sha256": "102cadb05d1d27720db6a548f3364f39c7cbd748bd92cc9595ce22463e421c89"
           }
-        ]
+        ],
+        "driver_id": "feq-expression-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T22:02:20.239918+00:00"
@@ -11937,7 +11950,8 @@
             "path": "example/example1_burgers_1d_fv.f90",
             "sha256": "37151bd2edea15c4fe262457b417f9fa654f5f0f843e8b223dbd9d06d96706a9"
           }
-        ]
+        ],
+        "driver_id": "hrweno-advection-reference"
       },
       {
         "id": "hrweno-tvd",
@@ -13426,7 +13440,8 @@
             "path": "example/flann_demo.f90",
             "sha256": "fc9370e98332f5fdad8a22ab8b54b12a014667e1c7af35e57bb82cae791b9e63"
           }
-        ]
+        ],
+        "driver_id": "flann-knn-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -13918,7 +13933,8 @@
             "path": "test/t_sofa_f.f90",
             "sha256": "152e548f5885a19c10f0c6f612d758df86b754e3b328238a72aa83a57cc69d13"
           }
-        ]
+        ],
+        "driver_id": "astro-sky-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -14420,7 +14436,8 @@
             "path": "test/dag_example.f90",
             "sha256": "01aecbe9c9b33ab2ae2b86fc3c69afaa4fc837ae09653b988abe610b406bdf02"
           }
-        ]
+        ],
+        "driver_id": "daglib-order-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -15048,7 +15065,8 @@
             "path": "test/elements_test.f90",
             "sha256": "6e07d19804e2b92f6264f2acd909867877b2bfa5fb70ece9a21b91a0ce977b4a"
           }
-        ]
+        ],
+        "driver_id": "fat-orbit-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -19854,7 +19872,8 @@
             "path": "examples/linalg_lu_example.f90",
             "sha256": "6c0079778214da05570172d9e8b835f2f65cbe587840cc4b529220422de7210a"
           }
-        ]
+        ],
+        "driver_id": "linalg-lu-reference"
       },
       {
         "id": "linalg-eigen",
@@ -21998,7 +22017,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Scientific utilities. The main sorts repeated and negative integers, builds a k-d tree for 20 deterministic 2D points and compares the nearest point with an independent direct search. The OpenMP metapackage is resolved explicitly and -fopenmp is enabled; the execution sandbox still uses one thread. No source edits. The broad library is compiled, but this driver does not validate all containers, random generators, mathematical utilities or parallel performance.",
+        "notes": "Scientific utilities. The main sorts repeated and negative integers, builds a k-d tree for 20 deterministic 2D points and compares the nearest point with an independent direct search. The OpenMP metapackage is resolved explicitly and -fopenmp is enabled; the execution sandbox still uses one thread. No source edits. The broad library is compiled, but this driver does not validate all containers, random generators, mathematical utilities or parallel performance. The checked GAMS driver uses explicit stable=true only. A mixed-setting probe fails with stable=false on 16 equal integer32 values; source/hash/result are retained in docs/gams-candidates/coretran-sort.",
         "evidence": [
           {
             "path": "src/sorting/m_sort.f90",
@@ -22011,7 +22030,8 @@
             "path": "test/m_tests.f90",
             "sha256": "bf13819d217fb1f35a35b20b5694b769cc97a4d865637d3ad526398c65705eb3"
           }
-        ]
+        ],
+        "driver_id": "coretran-sort-reference"
       },
       {
         "id": "coretran-neighbor",
@@ -22025,7 +22045,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Scientific utilities. The main sorts repeated and negative integers, builds a k-d tree for 20 deterministic 2D points and compares the nearest point with an independent direct search. The OpenMP metapackage is resolved explicitly and -fopenmp is enabled; the execution sandbox still uses one thread. No source edits. The broad library is compiled, but this driver does not validate all containers, random generators, mathematical utilities or parallel performance.",
+        "notes": "Scientific utilities. The main sorts repeated and negative integers, builds a k-d tree for 20 deterministic 2D points and compares the nearest point with an independent direct search. The OpenMP metapackage is resolved explicitly and -fopenmp is enabled; the execution sandbox still uses one thread. No source edits. The broad library is compiled, but this driver does not validate all containers, random generators, mathematical utilities or parallel performance. A broader nearest-neighbor probe fails on a valid 31-point query; its source, hash and result are retained in docs/gams-candidates/coretran-nearest. This procedure has no checked GAMS driver.",
         "evidence": [
           {
             "path": "src/spatial/m_KdTree.f90",
@@ -23291,7 +23311,8 @@
             "path": "test/Fourier_Transform/test_Fourier_Transform_fft_complex.f90",
             "sha256": "8c8786e96bcca6d050c96d12e5b0e068f5997b177c2ec7947cfb23aac2b632c6"
           }
-        ]
+        ],
+        "driver_id": "nafpack-fft-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -24067,7 +24088,8 @@
             "path": "test/Tests.f90",
             "sha256": "06c1b1acb449ffd83684741776535e049a850596f6e2967daa53f217bd9d69bf"
           }
-        ]
+        ],
+        "driver_id": "lightkrylov-gmres-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -24217,7 +24239,8 @@
             "path": "test/test_differentia.f90",
             "sha256": "203531b65c6cc64b08c3052859d185c7cd318a66ff5fd1509710b61c44e12035"
           }
-        ]
+        ],
+        "driver_id": "forwarddiff-analytic-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -26032,7 +26055,8 @@
             "path": "tests/test_WP.f90",
             "sha256": "35fa4f2caab02d289115d3ca33629c28e7872b733da781df352849c0645f09d4"
           }
-        ]
+        ],
+        "driver_id": "flint-ivp-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00",
@@ -26984,7 +27008,8 @@
             "line": 1
           }
         ],
-        "author_examples": []
+        "author_examples": [],
+        "driver_id": "propack-spectrum-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T19:26:39.127603+00:00",
@@ -27860,7 +27885,8 @@
             "path": "test/check-assign-negative_uint32.f90",
             "sha256": "5835847506ba4a190bb452d61d72efd7ea441a2282181bb2b63ceff00e359d5b"
           }
-        ]
+        ],
+        "driver_id": "uint-arithmetic-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T23:25:51.211120+00:00"
@@ -31713,7 +31739,8 @@
             "path": "Examples/PremadeMatrix/main.f90",
             "sha256": "fa981337fe9303ec4ffa6faebbb197ccb66ecab37563b059c5c2e55bfb95d667"
           }
-        ]
+        ],
+        "driver_id": "ntpoly-inverse-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T21:15:52.018636+00:00",

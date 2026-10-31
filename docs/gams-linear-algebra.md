@@ -89,6 +89,10 @@ collect2: fatal error: ld terminated with signal 25 [File size limit exceeded]
 
 Saved reproducers: [high-level eigh](gams-candidates/fortran-lapack-eigh.f90) and [high-level svd](gams-candidates/fortran-lapack-svd.f90). These are failed hosted probes for that image, with no successful hosted-run designation. They may be useful for local reproduction or discussing executable size with the package author. The menu examples use the lower-level `syev`/`gesvd` APIs, which passed under the same limits and with the same precompiled library. Sandbox limits were unchanged.
 
+The separate [PROPACK and FMM2D review](gams-propack-fmm.md) covers leading singular triplets with prescribed spectra and real Laplace kernel-matrix applications. The latter is not a checked complete PDE solver.
+
+The [GMRES and inverse review](gams-gmres-inverse.md) covers normal/transpose LightKrylov solves with known solutions and one-process NTPoly SPD inverses with analytic references and two-sided identity residuals.
+
 ## Sources and playground links
 
 | Driver | Class | Pinned procedure and author example |
@@ -129,12 +133,19 @@ Saved reproducers: [high-level eigh](gams-candidates/fortran-lapack-eigh.f90) an
 | [Load m-la-magic-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=m_la&example=gams-m-la-magic-reference) · [Source](../fpm_catalog/gams-drivers/m-la-magic-reference.f90) | D1 | [Procedure](https://github.com/urbanjost/M_LA/blob/db59eeab0deab7e84eadf2542ad49c1c719dfb94/src/M_LA.f90#L1561) · Original lower-level API driver |
 | [Load forlab-least-squares-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=forlab&example=gams-forlab-least-squares-reference) · [Source](../fpm_catalog/gams-drivers/forlab-least-squares-reference.f90) | D9a1 | [Procedure](https://github.com/zoziha/forlab/blob/416e5612167b6133100bef4cec116322890f66f7/src/forlab.F90#L7796) · Original lower-level API driver |
 | [Load fglm-transform-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=fglm&example=gams-fglm-transform-reference) · [Source](../fpm_catalog/gams-drivers/fglm-transform-reference.f90) | D1 | [Procedure](https://github.com/jordan4ibanez/fglm/blob/e1b6a5404b3e7a266da33173a07166970c16dd86/src/matrix_4f.f90#L267) · Original lower-level API driver |
+| [Load sparse-matvec-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=sparse_fortran&example=gams-sparse-matvec-reference) · [Source](../fpm_catalog/gams-drivers/sparse-matvec-reference.f90) | D1b4 | [Procedure](https://github.com/Euler-37/sparse_fortran/blob/600f586a1ed099a22054ed283225787de36a31c1/src/sparse_coo_fortran.f90#L193) · [Author example](https://github.com/Euler-37/sparse_fortran/blob/600f586a1ed099a22054ed283225787de36a31c1/app/main.f90) |
+| [Load linalg-lu-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=linalg&example=gams-linalg-lu-reference) · [Source](../fpm_catalog/gams-drivers/linalg-lu-reference.f90) | D2a1 | [Procedure](https://github.com/jchristopherson/linalg/blob/cb8fb7b1c67986591083cac516eb700f47d69b68/src/linalg_lu.f90#L18) · [Author example](https://github.com/jchristopherson/linalg/blob/cb8fb7b1c67986591083cac516eb700f47d69b68/examples/linalg_lu_example.f90) |
+| [Load propack-spectrum-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=propack&example=gams-propack-spectrum-reference) · [Source](../fpm_catalog/gams-drivers/propack-spectrum-reference.f90) | D6 | [Procedure](https://github.com/scipy/PROPACK/blob/36f95269ecee6ae42af0c00707b3c3cf3f869a35/double/dlansvd.F#L1) · Original lower-level API driver |
+| [Load fmm2d-laplace-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=fmm2d&example=gams-fmm2d-laplace-reference) · [Source](../fpm_catalog/gams-drivers/fmm2d-laplace-reference.f90) | D1 | [Procedure](https://github.com/flatironinstitute/fmm2d/blob/7e7509ecd6ebe31b9292cb00825410b478f44808/src/laplace/rfmm2dwrap.f#L1) · [Author example](https://github.com/flatironinstitute/fmm2d/blob/7e7509ecd6ebe31b9292cb00825410b478f44808/test/laplace/test_rfmm2d.f) |
+| [Load lightkrylov-gmres-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=lightkrylov&example=gams-lightkrylov-gmres-reference) · [Source](../fpm_catalog/gams-drivers/lightkrylov-gmres-reference.f90) | D2 | [Procedure](https://github.com/nekStab/LightKrylov/blob/849fa1d2f29c14d0181315e76e731bff7f0b2d08/src/IterativeSolvers/IterativeSolvers.f90#L379) · [Author example](https://github.com/nekStab/LightKrylov/blob/849fa1d2f29c14d0181315e76e731bff7f0b2d08/test/Tests.f90) |
+| [Load ntpoly-inverse-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=ntpoly&example=gams-ntpoly-inverse-reference) · [Source](../fpm_catalog/gams-drivers/ntpoly-inverse-reference.f90) | D2 | [Procedure](https://github.com/william-dawson/NTPoly/blob/7b3d22f76226af1402e9b0a5be18a496e4addc28/Source/Fortran/InverseSolversModule.F90#L29) · [Author example](https://github.com/william-dawson/NTPoly/blob/7b3d22f76226af1402e9b0a5be18a496e4addc28/Examples/PremadeMatrix/main.f90) |
+| [Load heatflow-bicg-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=heatflow&example=gams-heatflow-bicg-reference) · [Source](../fpm_catalog/gams-drivers/heatflow-bicg-reference.f90) | D2 | [Procedure](https://github.com/ExeQuantCode/HeatFlow/blob/b0d930caad9160a15f0aeafa238c448f48f28d55/src/heatflow/mod_Sparse.f90#L273) · Original lower-level API driver |
 
 The dense examples reuse both authors' problem data and retain both license notices. The least-squares examples adapt author API usage to shared deterministic data. These drivers appear in hosted and main local FPM example menus and downloaded projects. Loading a link selects source without submitting a job.
 
 ## Recorded results
 
-All 36 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing the existing package libraries. Only each main and executable were rebuilt. The verification reports record source hashes, pins and saved output: [gams-dense-spectra-validation.json](gams-dense-spectra-validation.json), [gams-diagonal-response-validation.json](gams-diagonal-response-validation.json), [gams-dispersion-validation.json](gams-dispersion-validation.json), [gams-geodesy-forlab-validation.json](gams-geodesy-forlab-validation.json), [gams-inverse-tvd-validation.json](gams-inverse-tvd-validation.json), [gams-iterative-ls-validation.json](gams-iterative-ls-validation.json), [gams-jacobian-transforms-validation.json](gams-jacobian-transforms-validation.json), [gams-least-interpolation-validation.json](gams-least-interpolation-validation.json), [gams-linear-algebra-validation.json](gams-linear-algebra-validation.json), [gams-matrix-equations-validation.json](gams-matrix-equations-validation.json), [gams-matrix-roots-box-validation.json](gams-matrix-roots-box-validation.json), [gams-products-status-validation.json](gams-products-status-validation.json), [gams-qr-autodiff-validation.json](gams-qr-autodiff-validation.json), [gams-ranking-magic-validation.json](gams-ranking-magic-validation.json), [gams-sparse-integral-validation.json](gams-sparse-integral-validation.json), [gams-sparse-validation.json](gams-sparse-validation.json), [gams-spectral-wrappers-validation.json](gams-spectral-wrappers-validation.json). These small examples establish checked usage, rather than comprehensive accuracy or performance comparisons. The packages may share underlying algorithms; this is not evidence of independent implementations. Zero printed error means agreement at working precision.
+All 43 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing the existing package libraries. Only each main and executable were rebuilt. The verification reports record source hashes, pins and saved output: [gams-dense-spectra-validation.json](gams-dense-spectra-validation.json), [gams-diagonal-response-validation.json](gams-diagonal-response-validation.json), [gams-dispersion-validation.json](gams-dispersion-validation.json), [gams-geodesy-forlab-validation.json](gams-geodesy-forlab-validation.json), [gams-gmres-inverse-validation.json](gams-gmres-inverse-validation.json), [gams-inverse-tvd-validation.json](gams-inverse-tvd-validation.json), [gams-iterative-ls-validation.json](gams-iterative-ls-validation.json), [gams-jacobian-transforms-validation.json](gams-jacobian-transforms-validation.json), [gams-least-interpolation-validation.json](gams-least-interpolation-validation.json), [gams-linear-algebra-validation.json](gams-linear-algebra-validation.json), [gams-lu-orbits-validation.json](gams-lu-orbits-validation.json), [gams-matrix-equations-validation.json](gams-matrix-equations-validation.json), [gams-matrix-roots-box-validation.json](gams-matrix-roots-box-validation.json), [gams-neighbors-sparse-validation.json](gams-neighbors-sparse-validation.json), [gams-products-status-validation.json](gams-products-status-validation.json), [gams-propack-fmm-validation.json](gams-propack-fmm-validation.json), [gams-qr-autodiff-validation.json](gams-qr-autodiff-validation.json), [gams-ranking-magic-validation.json](gams-ranking-magic-validation.json), [gams-sparse-advection-validation.json](gams-sparse-advection-validation.json), [gams-sparse-integral-validation.json](gams-sparse-integral-validation.json), [gams-sparse-validation.json](gams-sparse-validation.json), [gams-spectral-wrappers-validation.json](gams-spectral-wrappers-validation.json). These small examples establish checked usage, rather than comprehensive accuracy or performance comparisons. The packages may share underlying algorithms; this is not evidence of independent implementations. Zero printed error means agreement at working precision.
 
 ### fortran-lapack-dense-solve
 
@@ -661,10 +672,91 @@ Maximum normalized transform error:   1.0066E-07
 PASS fglm-transform-reference
 ```
 
+### sparse-matvec-reference
+
+```text
+Matrix/order fixtures: 250
+COO/CSR products: 1500
+Checked result entries: 9300
+PASS sparse-matvec-reference
+```
+
+### linalg-lu-reference
+
+```text
+Nonsingular factorizations: 96
+Vector/matrix solve calls: 384
+Known solution entries: 3072
+Singular NaN diagnostics: 8
+Factorizations with row swaps: 48
+Maximum normalized solution error:   4.0219E-16
+Maximum scaled residual:   2.3570E-16
+Maximum scaled factorization error:   2.8115E-16
+PASS linalg-lu-reference
+```
+
+### propack-spectrum-reference
+
+```text
+Partial SVD calls: 108
+Checked leading triplets: 216
+Maximum operator-scaled singular-value error:   1.8808E-15
+Maximum operator-scaled triplet residual:   3.4320E-14
+Maximum orthogonality error:   1.2801E-13
+PASS propack-spectrum-reference
+```
+
+### fmm2d-laplace-reference
+
+```text
+FMM potential calls: 120
+Direct target references: 2880
+Maximum cancellation-scaled error at eps=1e-6:   5.6386E-12
+Maximum cancellation-scaled error at eps=1e-10:   2.8739E-13
+PASS fmm2d-laplace-reference
+```
+
+### lightkrylov-gmres-reference
+
+```text
+2026-10-31 21:39:55.363: LightKrylov_Logger % comm_setup: Setup serial run
+2026-10-31 21:39:55.363: LightKrylov_Logger % logger_setup: IO rank = 0
+GMRES solves: 288
+Known solution entries: 2016
+Solves requiring multiple outer cycles: 100
+Maximum normalized solution error:   5.3793E-09
+Maximum scaled true residual:   9.2868E-11
+PASS lightkrylov-gmres-reference
+```
+
+### ntpoly-inverse-reference
+
+```text
+[1793482797.721677] [modal:39   :0]       tcp_iface.c:912  UCX  ERROR scandir(/sys/class/net) failed: No such file or directory
+SPD matrix inversions: 48
+Analytic inverse entries: 1224
+Maximum normalized inverse error:   3.4957E-14
+Maximum left identity residual:   1.7244E-14
+Maximum right identity residual:   9.7700E-15
+Maximum normalized symmetry error:   3.3869E-15
+PASS ntpoly-inverse-reference
+```
+
+### heatflow-bicg-reference
+
+```text
+Sparse matrices: 36
+BiCG solves: 216
+Known solution entries: 3456
+Maximum normalized solution error:   2.5522E-11
+Maximum normalized true residual:   2.3739E-11
+PASS heatflow-bicg-reference
+```
+
 ## Maintenance
 
 ```text
-python xverify_gams_drivers.py --drivers fortran-lapack-dense-solve fortran-lapack-least-squares stdlib-dense-solve stdlib-least-squares fortran-lapack-symmetric-eigen fortran-lapack-qr-decomposition fortran-lapack-svd-decomposition minres-indefinite-solve qdldl-quasidefinite-solve kiss-positive-definite-solve slicot-lyapunov-known-matrix slicot-continuous-sylvester slicot-discrete-sylvester blas-gemm-reference fsparse-matvec-reference forinv-pseudoinverse-reference arpack-poisson-eigenpairs linalg-poisson-eigenpairs fsparse-storage-reference y12m-sparse-reference fordot-exact-reference linalg-inverse-factor-reference ntpoly-matrix-root-reference libmbd-dimer-spectrum linalg-qr-reference linalg-eigen-reference linalg-svd-reference linalg-least-squares-reference lsqr-least-squares-reference lsmr-least-squares-reference forsvd-spectrum-reference foreig-symmetric-reference specialmatrices-diagonal-reference m-la-magic-reference forlab-least-squares-reference fglm-transform-reference
+python xverify_gams_drivers.py --drivers fortran-lapack-dense-solve fortran-lapack-least-squares stdlib-dense-solve stdlib-least-squares fortran-lapack-symmetric-eigen fortran-lapack-qr-decomposition fortran-lapack-svd-decomposition minres-indefinite-solve qdldl-quasidefinite-solve kiss-positive-definite-solve slicot-lyapunov-known-matrix slicot-continuous-sylvester slicot-discrete-sylvester blas-gemm-reference fsparse-matvec-reference forinv-pseudoinverse-reference arpack-poisson-eigenpairs linalg-poisson-eigenpairs fsparse-storage-reference y12m-sparse-reference fordot-exact-reference linalg-inverse-factor-reference ntpoly-matrix-root-reference libmbd-dimer-spectrum linalg-qr-reference linalg-eigen-reference linalg-svd-reference linalg-least-squares-reference lsqr-least-squares-reference lsmr-least-squares-reference forsvd-spectrum-reference foreig-symmetric-reference specialmatrices-diagonal-reference m-la-magic-reference forlab-least-squares-reference fglm-transform-reference sparse-matvec-reference linalg-lu-reference propack-spectrum-reference fmm2d-laplace-reference lightkrylov-gmres-reference ntpoly-inverse-reference heatflow-bicg-reference
 python xpackage_gams.py
 python xfpm_examples.py
 python xsite.py

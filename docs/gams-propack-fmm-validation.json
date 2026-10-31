@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "propack-spectrum-reference",
+      "source_revision": "36f95269ecee6ae42af0c00707b3c3cf3f869a35",
+      "source_sha256": "20e53beb094799f7911d5f981c796da75d1cb6fd7a5ae31c3c75b0a997448f1e",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T21:20:42.928108+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.446,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Partial SVD calls: 108\nChecked leading triplets: 216\nMaximum operator-scaled singular-value error:   1.8808E-15\nMaximum operator-scaled triplet residual:   3.4320E-14\nMaximum orthogonality error:   1.2801E-13\nPASS propack-spectrum-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.038,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fmm2d-laplace-reference",
+      "source_revision": "7e7509ecd6ebe31b9292cb00825410b478f44808",
+      "source_sha256": "13e5f61b69008231099ce85200e5a505c871215192ffad9265ef1a2e0dd603ad",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T21:20:44.831619+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.585,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "FMM potential calls: 120\nDirect target references: 2880\nMaximum cancellation-scaled error at eps=1e-6:   5.6386E-12\nMaximum cancellation-scaled error at eps=1e-10:   2.8739E-13\nPASS fmm2d-laplace-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.27,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T21:20:44.892322+00:00"
+}

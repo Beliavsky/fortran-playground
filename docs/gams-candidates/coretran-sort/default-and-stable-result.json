@@ -1,0 +1,79 @@
+{
+  "ok": false,
+  "compiler": "GNU Fortran (GCC) 16.2.0",
+  "compiler_id": "gfortran",
+  "fpm": "0.12.0",
+  "stages": [
+    {
+      "name": "Build",
+      "command": [
+        "fpm",
+        "build",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.288,
+      "ok": true,
+      "exit_code": 0,
+      "error": "",
+      "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+      "stderr": ""
+    },
+    {
+      "name": "Run",
+      "command": [
+        "fpm",
+        "run",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.097,
+      "ok": false,
+      "exit_code": 2,
+      "error": "",
+      "stdout": " Size-16 data and setting:          -7          -6          -5          -4          -3          -2          -1           0           1           2           3           4           5           6           7           8           1\n Size-16 data and setting:          -7          -6          -5          -4          -3          -2          -1           0           1           2           3           4           5           6           7           8           2\n Size-16 data and setting:          -7          -6          -5          -4          -3          -2          -1           0           1           2           3           4           5           6           7           8           3\n Size-16 data and setting:          15          14          13          12          11          10           9           8           7           6           5           4           3           2           1           0           1\n Size-16 data and setting:          15          14          13          12          11          10           9           8           7           6           5           4           3           2           1           0           2\n Size-16 data and setting:          15          14          13          12          11          10           9           8           7           6           5           4           3           2           1           0           3\n Size-16 data and setting:           7           7           7           7           7           7           7           7           7           7           7           7           7           7           7           7           1\n Size-16 data and setting:           7           7           7           7           7           7           7           7           7           7           7           7           7           7           7           7           2\n",
+      "stderr": "Project is up to date\nAt line 85 of file ./././/../sources/bundle/packages/0/coretran-204c4707f6680b6d7d1e4da39077d0fd3acfe37e/src/core/sm_partition.f90\nFortran runtime error: Index '17' of dimension 1 of array 'this' above upper bound of 16\n\nError termination. Backtrace:\n#0  0x2b286fb3ff83 in ???\n#1  0x2b286fb40c39 in ???\n#2  0x2b286fb4121b in ???\n#3  0x42001c in ???\n#4  0x40db0c in ???\n#5  0x40e082 in ???\n#6  0x40702f in ???\n#7  0x402a75 in check_rank\n\tat app/main.f90:81\n#8  0x404742 in MAIN__\n\tat app/main.f90:35\n#9  0x404efb in main\n\tat app/main.f90:4\n<ERROR> Execution for object \" playground-main \" returned exit code  2\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 2\n"
+    }
+  ],
+  "cache": {
+    "package": "coretran",
+    "compiler": "GNU Fortran 16.2.0",
+    "key": "6ce1daaf581ab9aba7f0025d",
+    "library_reused": true,
+    "changed_artifacts": []
+  },
+  "packages": [
+    {
+      "repository": "leonfoks/coretran",
+      "revision": "204c4707f6680b6d7d1e4da39077d0fd3acfe37e",
+      "sha256": "29b2e281a6d1bdefd6abe141da563fe015737eb7c2604083c666cfcbe9df19e0"
+    }
+  ],
+  "build_ok": true,
+  "target_groups": {
+    "app": [
+      "playground-main"
+    ],
+    "example": [],
+    "test": []
+  },
+  "targets": [
+    "playground-main"
+  ],
+  "plots": [],
+  "plot_notes": []
+}

@@ -1,0 +1,79 @@
+{
+  "ok": false,
+  "compiler": "GNU Fortran (GCC) 16.2.0",
+  "compiler_id": "gfortran",
+  "fpm": "0.12.0",
+  "stages": [
+    {
+      "name": "Build",
+      "command": [
+        "fpm",
+        "build",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.232,
+      "ok": true,
+      "exit_code": 0,
+      "error": "",
+      "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+      "stderr": ""
+    },
+    {
+      "name": "Run",
+      "command": [
+        "fpm",
+        "run",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.049,
+      "ok": false,
+      "exit_code": 1,
+      "error": "",
+      "stdout": "Returned distance:   9.2970967292785645E-01\nIndependent periodic minimum:   3.1679647220910667E-01\n",
+      "stderr": "Project is up to date\nERROR STOP skew-cell nearest-image mismatch\n\nError termination. Backtrace:\n#0  0x2b514f556f83 in ???\n#1  0x2b514f557c39 in ???\n#2  0x2b514f559045 in ???\n#3  0x403d65 in skew_image_reference\n\tat app/main.f90:32\n#4  0x403e32 in main\n\tat app/main.f90:3\n<ERROR> Execution for object \" playground-main \" returned exit code  1\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 1\n"
+    }
+  ],
+  "cache": {
+    "package": "raffle",
+    "compiler": "GNU Fortran 16.2.0",
+    "key": "0527c9bc17d878cba80562d6",
+    "library_reused": true,
+    "changed_artifacts": []
+  },
+  "packages": [
+    {
+      "repository": "ExeQuantCode/RAFFLE",
+      "revision": "c152a30a1eaf94965c047bcd1a7edca07873b56f",
+      "sha256": "d13c72eeb2c7c761d65e233f7abe5c856098abe854e34f9cd9c3866a70523cde"
+    }
+  ],
+  "build_ok": true,
+  "target_groups": {
+    "app": [
+      "playground-main"
+    ],
+    "example": [],
+    "test": []
+  },
+  "targets": [
+    "playground-main"
+  ],
+  "plots": [],
+  "plot_notes": []
+}

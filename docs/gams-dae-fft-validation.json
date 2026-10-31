@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "daskr-dae-reference",
+      "source_revision": "b43533edc5d6900088a846d802e3a86d0f9a06ad",
+      "source_sha256": "5005e2300b4cb008aa9be3142e84977ed5ee4a7bbb8b92615f49a45dea36bec6",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T21:00:56.310005+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.498,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "DAE trajectories: 96\nRequested checkpoints: 768\nAnalytic state/derivative entries: 4608\nTrajectories using user Jacobians: 48\nMaximum normalized state error:   4.6001E-10\nMaximum normalized derivative error:   1.6290E-07\nMaximum normalized constraint error:   6.9436E-11\nMaximum scaled residual:   1.0779E-08\nPASS daskr-dae-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.064,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "nafpack-fft-reference",
+      "source_revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+      "source_sha256": "b9efffb25faff3a169c6e6827fb7d5d718827c926a0bcfeb6be91a3f8ce92129",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T21:00:58.980856+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.638,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Plan fixtures: 168\nFFT calls including repetitions: 672\nDirect coefficient references: 24384\nMaximum L1-scaled coefficient error:   5.1072E-07\nMaximum relative Parseval error:   1.0004E-07\nPASS nafpack-fft-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.092,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T21:00:59.031252+00:00"
+}

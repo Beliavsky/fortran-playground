@@ -2,6 +2,8 @@
 
 All three drivers belong to [H1: Numerical differentiation](https://gams.nist.gov/cgi-bin/serve.cgi/Class/H1). They use the same scalar function and evaluation points, making differences in API and method visible. This does not validate every derivative interface in these packages. GAMS categories are not exhausted; see the [coverage report](gams-coverage.md).
 
+The separate [forwarddiff review](gams-adaptive-ad.md) checks 1,749 scalar calls against analytic values and slopes on monomials and twelve smooth composite functions.
+
 ## Shared problem and independent references
 
 For `f(x)=exp(x)*sin(x)`, elementary differentiation gives:

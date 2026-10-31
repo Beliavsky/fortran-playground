@@ -6381,6 +6381,908 @@
         "degenerate_input_verified": false,
         "specific_triangle_order_required": false
       }
+    },
+    {
+      "id": "daglib-order-reference",
+      "name": "gams-daglib-order-reference",
+      "package_id": "daglib",
+      "procedure_id": "daglib-toposort",
+      "gams_code": "P",
+      "problem_id": "exhaustive-ordered-edge-subsets",
+      "path": "fpm_catalog/gams-drivers/daglib-order-reference.f90",
+      "revision": "68fa83ebfd33fd6521327918b1d8e5084250a8ff",
+      "author_example": "test/dag_example.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/graph-neighbors-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned source/author example reviewed, no upstream code copied. All 1024 acyclic edge subsets under two fixed five-vertex label orders, repeated topological sorts, permutation/precedence checks, self/two/three-node cyclic diagnostics and post-cycle object rebuilding. Empty graphs and arbitrary mutation/traversal remain unverified.",
+      "validation_path": "docs/gams-graph-sorting-validation.json",
+      "review_path": "docs/gams-graph-sorting.md",
+      "checks": {
+        "acyclic_graph_fixtures": 2051,
+        "successful_sorts": 4102,
+        "edge_precedence_checks": 20492,
+        "expected_cycle_rejections": 6,
+        "repeated_sort_checked": true,
+        "post_cycle_recovery_checked": true,
+        "permutation_integrity_checked": true,
+        "empty_graph_verified": false,
+        "all_labeled_dags_verified": false
+      }
+    },
+    {
+      "id": "coretran-sort-reference",
+      "name": "gams-coretran-sort-reference",
+      "package_id": "coretran",
+      "procedure_id": "coretran-sort",
+      "gams_code": "N6",
+      "problem_id": "exhaustive-numeric-inplace-sorting",
+      "path": "fpm_catalog/gams-drivers/coretran-sort-reference.f90",
+      "revision": "204c4707f6680b6d7d1e4da39077d0fd3acfe37e",
+      "author_example": "test/m_tests.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/graph-neighbors-drivers-MIT.txt"
+      ],
+      "modifications": "Independent in-place sorting consumer with explicit stable=true only. Pinned API/author tests reviewed, no upstream code copied. All permutations through length seven plus six patterns at fourteen sizes including empty input. Integer32/64 and real32/64 sorted values checked against independent insertion-sort references. Equal-key record stability is not established by numeric-only output. Explicit stable=false sorting fails on 16 equal integer32 values with a bounds error; the failed mixed-mode source/hash/result is preserved under docs/gams-candidates/coretran-sort. Separate nearest-neighbor probe also fails and is not promoted. No library edits or disabled bounds checks. NaNs, indirect sorting and parallel performance remain unverified.",
+      "validation_path": "docs/gams-graph-sorting-validation.json",
+      "review_path": "docs/gams-graph-sorting.md",
+      "checks": {
+        "exhaustive_permutations": 5913,
+        "sorting_fixtures": 5997,
+        "typed_sort_calls": 23988,
+        "numeric_overloads": [
+          "integer32",
+          "integer64",
+          "real32",
+          "real64"
+        ],
+        "flag_settings": [
+          "stable_true"
+        ],
+        "empty_arrays_checked": true,
+        "duplicate_values_checked": true,
+        "stable_tie_order_verified": false,
+        "nearest_neighbor_verified": false,
+        "nan_ordering_verified": false,
+        "parallel_performance_verified": false,
+        "default_sort_verified": false
+      }
+    },
+    {
+      "id": "flann-knn-reference",
+      "name": "gams-flann-knn-reference",
+      "package_id": "fortran-flann",
+      "procedure_id": "fortran-flann-knn-search",
+      "gams_code": "N5",
+      "problem_id": "direct-scan-k-nearest-neighbors",
+      "path": "fpm_catalog/gams-drivers/flann-knn-reference.f90",
+      "revision": "35370c851602d954d1d01d10c9c14ff82dd96496",
+      "author_example": "example/flann_demo.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/neighbors-sparse-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned source/author example reviewed, no upstream code copied. Exact single KD-tree Euclidean searches against independently sorted direct distances from rounded float inputs. Modular, collinear and duplicate-pair data in 2D/3D, reversed input, off-data and self queries, k=1/min(3,n)/n. Allows tied indices only at correct distance, checks uniqueness and input preservation. Other metrics, approximate search, radius queries and performance remain unverified.",
+      "validation_path": "docs/gams-neighbors-sparse-validation.json",
+      "review_path": "docs/gams-neighbors-sparse.md",
+      "checks": {
+        "trees": 60,
+        "query_points": 2472,
+        "batched_searches": 180,
+        "returned_neighbors": 96072,
+        "dimensions": [
+          2,
+          3
+        ],
+        "point_counts": [
+          1,
+          2,
+          8,
+          31,
+          64
+        ],
+        "single_precision_inputs": true,
+        "exact_search_checks": -1,
+        "tie_index_order_required": false,
+        "approximate_search_verified": false,
+        "radius_search_verified": false,
+        "distance_tolerance_float_eps_factor": 32
+      }
+    },
+    {
+      "id": "sparse-matvec-reference",
+      "name": "gams-sparse-matvec-reference",
+      "package_id": "sparse_fortran",
+      "procedure_id": "sparse-fortran-matmul",
+      "gams_code": "D1b4",
+      "problem_id": "rectangular-sparse-products-scalar-reference",
+      "path": "fpm_catalog/gams-drivers/sparse-matvec-reference.f90",
+      "revision": "600f586a1ed099a22054ed283225787de36a31c1",
+      "author_example": "app/main.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/neighbors-sparse-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned COO/CSR sources and author example reviewed, no upstream code copied. Dense-array initialization, square/tall/wide matrices, zero/diagonal/tridiagonal/modular/dense patterns, both API storage orders and three right-hand sides. Non-C order explicitly computes transpose products. Each format checked against scalar dense reference using exactly representable binary fractions. Empty rows/columns included; zero dimensions, near-zero dropping, incremental edits, malformed input and performance remain unverified.",
+      "validation_path": "docs/gams-neighbors-sparse-validation.json",
+      "review_path": "docs/gams-neighbors-sparse.md",
+      "checks": {
+        "matrix_order_fixtures": 250,
+        "products": 1500,
+        "checked_result_entries": 9300,
+        "dimensions": [
+          1,
+          2,
+          3,
+          8,
+          17
+        ],
+        "storage_orders": [
+          "C",
+          "F"
+        ],
+        "transpose_products_checked": true,
+        "zero_matrix_checked": true,
+        "comparison": "exact binary fractions",
+        "zero_dimensions_verified": false,
+        "incremental_edits_verified": false
+      }
+    },
+    {
+      "id": "forwarddiff-analytic-reference",
+      "name": "gams-forwarddiff-analytic-reference",
+      "package_id": "forwarddiff",
+      "procedure_id": "forwarddiff-derivative",
+      "gams_code": "H1",
+      "problem_id": "analytic-scalar-chain-product-quotient-rules",
+      "path": "fpm_catalog/gams-drivers/forwarddiff-analytic-reference.f90",
+      "revision": "2388e8ecf300a7bbc0904feab47023413464edf9",
+      "author_example": "test/test_differentia.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/adaptive-ad-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned source/author test reviewed without copying upstream code. Constant lifted into seeded dual space and monomials of degree 1..8, plus twelve smooth elementary/composite functions, checked against analytic values and slopes. Real and dual exponents and chain/product/quotient rules included. Singular/domain-boundary, nonsmooth, vector gradient/Jacobian, higher derivative and performance behavior remain unverified.",
+      "validation_path": "docs/gams-adaptive-ad-validation.json",
+      "review_path": "docs/gams-adaptive-ad.md",
+      "checks": {
+        "scalar_derivative_calls": 1749,
+        "analytic_value_slope_checks": 3498,
+        "monomial_and_constant_calls": 585,
+        "composite_calls": 1164,
+        "composite_functions": 12,
+        "max_normalized_error": 2e-12,
+        "finite_differences_used": false,
+        "higher_derivatives_verified": false,
+        "gradient_jacobian_verified": false,
+        "nonsmooth_points_verified": false
+      }
+    },
+    {
+      "id": "flint-ivp-reference",
+      "name": "gams-flint-ivp-reference",
+      "package_id": "flint",
+      "procedure_id": "flint-erk-class",
+      "gams_code": "I1a1a",
+      "problem_id": "analytic-three-state-ivps-and-dense-output",
+      "path": "fpm_catalog/gams-drivers/flint-ivp-reference.f90",
+      "revision": "b6322037cb751b11fa64ea66cf23173ae572fff6",
+      "author_example": "tests/test_WP.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/adaptive-ad-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned API/implementation and author example reviewed without copying upstream code. Four explicit adaptive RK methods, diagonal exponentials, coupled oscillator with polynomial state, and coupled triangular exponential system, two parameters/offsets and forward/backward intervals. Checks requested endpoint, finite states, unchanged initial data, scalar/vector tolerances, repeated dense interpolation with retained then freed coefficients, against closed forms. No solver-to-solver reference. Stiff systems, events, constant steps, failure diagnostics and performance remain unverified.",
+      "validation_path": "docs/gams-adaptive-ad-validation.json",
+      "review_path": "docs/gams-adaptive-ad.md",
+      "checks": {
+        "adaptive_integrations": 96,
+        "methods": [
+          "DOP853",
+          "DOP54",
+          "VERNER98R",
+          "VERNER65E"
+        ],
+        "ode_families": 3,
+        "endpoint_reference_entries": 288,
+        "dense_output_reference_entries": 9792,
+        "dense_times_per_integration": 17,
+        "interpolations_per_integration": 2,
+        "forward_and_backward_checked": true,
+        "scalar_vector_tolerances_checked": true,
+        "repeated_dense_output_checked": true,
+        "max_normalized_error": 5e-09,
+        "events_verified": false,
+        "stiff_systems_verified": false
+      }
+    },
+    {
+      "id": "linalg-lu-reference",
+      "name": "gams-linalg-lu-reference",
+      "package_id": "linalg",
+      "procedure_id": "linalg-lu-factor",
+      "gams_code": "D2a1",
+      "problem_id": "manufactured-real-lu-solves-and-singularity-diagnostics",
+      "path": "fpm_catalog/gams-drivers/linalg-lu-reference.f90",
+      "revision": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+      "author_example": "examples/linalg_lu_example.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/lu-orbits-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned implementation and author example reviewed without copying upstream code. Real square LU, packed and extracted factors, sequential pivot/P*A=L*U checks, three known right-hand sides solved by vector and matrix overloads, scalar residuals and input preservation. Four matrix families, six sizes, two scales, reversed rows, plus eight singular NaN/pivot-sentinel diagnostics. No solve with singular factors. Complex/sparse/transpose solves, ill-conditioned accuracy and performance remain unverified.",
+      "validation_path": "docs/gams-lu-orbits-validation.json",
+      "review_path": "docs/gams-lu-orbits.md",
+      "checks": {
+        "nonsingular_factorizations": 96,
+        "solve_calls": 384,
+        "known_solution_entries": 3072,
+        "singular_diagnostics": 8,
+        "sizes": [
+          1,
+          2,
+          3,
+          5,
+          8,
+          13
+        ],
+        "matrix_scales": [
+          1e-06,
+          1000000.0
+        ],
+        "vector_matrix_rhs_checked": true,
+        "pivot_permutation_checked": true,
+        "factorization_identity_checked": true,
+        "max_scaled_factor_error": 2e-12,
+        "max_normalized_solution_error": 2e-12,
+        "max_scaled_residual": 2e-12,
+        "complex_sparse_verified": false,
+        "ill_conditioned_accuracy_verified": false,
+        "factorizations_with_row_swaps": 48
+      }
+    },
+    {
+      "id": "fat-orbit-reference",
+      "name": "gams-fat-orbit-reference",
+      "package_id": "fortran-astrodynamics-toolkit",
+      "procedure_id": "fortran-astrodynamics-toolkit-orbital-elements-to-rv",
+      "gams_code": "P",
+      "problem_id": "conic-orbits-components-and-physical-invariants",
+      "path": "fpm_catalog/gams-drivers/fat-orbit-reference.f90",
+      "revision": "3cf0a0a8ba2abf8bc4995c6da5b6abae07b45a0a",
+      "author_example": "test/elements_test.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/lu-orbits-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned implementation and author example reviewed without copying upstream code. Orbital elements to Cartesian states checked by three separately applied axis rotations and orbital radius, angular momentum magnitude/direction, eccentricity, energy and radial speed identities. Circular, elliptic, parabolic and hyperbolic conics, prograde/polar/retrograde inclinations, three physical scales. Undefined node/periapsis angles set to canonical zero. Not a round-trip-only test. Inverse conversion, singularity thresholds, asymptotic anomalies, propagators and performance remain unverified.",
+      "validation_path": "docs/gams-lu-orbits-validation.json",
+      "review_path": "docs/gams-lu-orbits.md",
+      "checks": {
+        "state_conversions": 864,
+        "cartesian_component_references": 5184,
+        "scalar_invariant_direction_checks": 6912,
+        "eccentricities": [
+          0,
+          0.2,
+          0.7,
+          1,
+          1.5
+        ],
+        "inclinations_include_polar_retrograde": true,
+        "physical_scale_pairs": 3,
+        "undefined_angles": "canonical zero",
+        "max_scaled_component_error": 5e-12,
+        "max_scaled_invariant_error": 5e-12,
+        "inverse_conversion_verified": false,
+        "singularity_thresholds_verified": false,
+        "propagation_verified": false
+      }
+    },
+    {
+      "id": "daskr-dae-reference",
+      "name": "gams-daskr-dae-reference",
+      "package_id": "daskr",
+      "procedure_id": "daskr-ddaskr",
+      "gams_code": "I1a2",
+      "problem_id": "index-one-dae-closed-forms-and-continuation",
+      "path": "fpm_catalog/gams-drivers/daskr-dae-reference.f90",
+      "revision": "b43533edc5d6900088a846d802e3a86d0f9a06ad",
+      "author_example": "examples/web/dweb.f",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/dae-fft-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned implementation/manual and author example reviewed without copying upstream code. Index-one triangular exponential and nonautonomous polynomial DAEs with nonlinear algebraic constraints and supplied consistent initial data. Dense direct linear solves, numerical/user Jacobians and scalar/vector tolerances checked independently against exact states/derivatives, constraints, residuals and reached times. BDF history continued at eight checkpoints; polynomial family also integrated backward. Krylov/preconditioning, banded storage, roots, inconsistent-data initialization, higher-index problems and performance remain unverified.",
+      "validation_path": "docs/gams-dae-fft-validation.json",
+      "review_path": "docs/gams-dae-fft.md",
+      "checks": {
+        "trajectories": 96,
+        "checkpoints": 768,
+        "analytic_state_derivative_entries": 4608,
+        "user_jacobian_trajectories": 48,
+        "dae_families": 2,
+        "max_normalized_state_error": 5e-07,
+        "max_normalized_derivative_error": 5e-06,
+        "max_normalized_constraint_error": 5e-09,
+        "max_scaled_residual": 2e-06,
+        "bdf_history_continued": true,
+        "scalar_vector_tolerances_checked": true,
+        "polynomial_backward_checked": true,
+        "krylov_verified": false,
+        "root_finding_verified": false,
+        "inconsistent_initialization_verified": false
+      }
+    },
+    {
+      "id": "nafpack-fft-reference",
+      "name": "gams-nafpack-fft-reference",
+      "package_id": "nafpack",
+      "procedure_id": "nafpack-execute-fft-plan-sp",
+      "gams_code": "J1a2",
+      "problem_id": "single-precision-radix2-direct-dft-reference",
+      "path": "fpm_catalog/gams-drivers/nafpack-fft-reference.f90",
+      "revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+      "author_example": "test/Fourier_Transform/test_Fourier_Transform_fft_complex.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/dae-fft-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned API and author tests reviewed without copying upstream code. Single-precision complex radix-two DIT/DIF, explicit classic loops and iterative/recursive implementations, lengths 2..128, four input patterns and three scales. Every coefficient checked against double-precision direct DFT of rounded inputs; Parseval, input preservation, repeated execution and plan destruction/recreation checked. No round-trip-only proof. Other radices, auto selection, inverse transforms, other precisions/dimensions, parallel methods and performance remain unverified.",
+      "validation_path": "docs/gams-dae-fft-validation.json",
+      "review_path": "docs/gams-dae-fft.md",
+      "checks": {
+        "plan_fixtures": 168,
+        "fft_calls": 672,
+        "direct_coefficient_references": 24384,
+        "lengths": [
+          2,
+          4,
+          8,
+          16,
+          32,
+          64,
+          128
+        ],
+        "algorithms": [
+          "RADIX2_DIT",
+          "RADIX2_DIF"
+        ],
+        "implementations": [
+          "ITERATIVE",
+          "recursive"
+        ],
+        "repetitions_per_implementation": 2,
+        "max_l1_scaled_error_float_eps_factor": 64,
+        "max_relative_parseval_error_float_eps_factor": 128,
+        "input_preservation_checked": true,
+        "inverse_transforms_verified": false,
+        "other_radices_verified": false,
+        "parallel_methods_verified": false
+      }
+    },
+    {
+      "id": "propack-spectrum-reference",
+      "name": "gams-propack-spectrum-reference",
+      "package_id": "propack",
+      "procedure_id": "propack-partial-svd",
+      "gams_code": "D6",
+      "problem_id": "prescribed-leading-triplets-square-tall-wide",
+      "path": "fpm_catalog/gams-drivers/propack-spectrum-reference.f90",
+      "revision": "36f95269ecee6ae42af0c00707b3c3cf3f869a35",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/propack-fmm-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned DLANSVD/DLANBPRO manual/source reviewed without copying upstream code. Historical SciPy PROPACK 2.1 serial double precision, reusing the existing catalog recipe. Square/tall/wide full-rank matrices with prescribed distinct nonzero spectra, identity or chained left/right Givens rotations, three scales and one/three leading triplets. Deterministic nonzero column-space start, writable convergence count, both callback directions, independently recomputed two-sided residuals and complete returned-vector orthogonality checked. Restarted routines, repeated/zero singular values, error-bound sharpness, arbitrary sparse inputs and performance remain unverified.",
+      "validation_path": "docs/gams-propack-fmm-validation.json",
+      "review_path": "docs/gams-propack-fmm.md",
+      "checks": {
+        "partial_svd_calls": 108,
+        "leading_triplets": 216,
+        "base_column_counts": [
+          8,
+          12,
+          20
+        ],
+        "row_offsets": [
+          -3,
+          0,
+          3
+        ],
+        "scales": [
+          0.125,
+          1,
+          8
+        ],
+        "requested_triplets": [
+          1,
+          3
+        ],
+        "two_sided_residuals_checked": true,
+        "complete_returned_orthogonality_checked": true,
+        "both_operator_directions_checked": true,
+        "max_operator_scaled_sigma_error": 2e-09,
+        "max_operator_scaled_residual": 2e-09,
+        "max_orthogonality_error": 2e-09,
+        "restarted_algorithm_verified": false,
+        "repeated_zero_singular_values_verified": false,
+        "error_bound_sharpness_verified": false
+      }
+    },
+    {
+      "id": "fmm2d-laplace-reference",
+      "name": "gams-fmm2d-laplace-reference",
+      "package_id": "fmm2d",
+      "procedure_id": "fmm2d-potentials",
+      "gams_code": "D1",
+      "problem_id": "laplace-kernel-matrix-direct-sums",
+      "path": "fpm_catalog/gams-drivers/fmm2d-laplace-reference.f90",
+      "revision": "7e7509ecd6ebe31b9292cb00825410b478f44808",
+      "author_example": "test/laplace/test_rfmm2d.f",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/propack-fmm-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned wrapper/kernel source and author test reviewed without copying upstream code. Real scalar target-charge Laplace potentials as a structured kernel-matrix application; not a complete PDE solver. Two geometries, three charge patterns including cancelling/neutral and singleton zero charge, two source orders and requested precisions. Every separate target checked by scalar log-distance sums with cancellation-aware unsigned-contribution scaling and input preservation. Reuses unchanged previously guarded native Fortran recipe and one execution thread. Source self-potentials, derivatives, dipoles, other kernels and parallel performance remain unverified.",
+      "validation_path": "docs/gams-propack-fmm-validation.json",
+      "review_path": "docs/gams-propack-fmm.md",
+      "checks": {
+        "potential_calls": 120,
+        "direct_target_references": 2880,
+        "source_counts": [
+          1,
+          7,
+          64,
+          257,
+          1024
+        ],
+        "targets_per_call": 24,
+        "requested_precisions": [
+          1e-06,
+          1e-10
+        ],
+        "max_cancellation_scaled_errors": [
+          2e-05,
+          2e-08
+        ],
+        "zero_charge_checked": true,
+        "clustered_sources_checked": true,
+        "reversed_sources_checked": true,
+        "input_preservation_checked": true,
+        "complete_pde_solver_verified": false,
+        "source_potentials_verified": false,
+        "derivatives_dipoles_verified": false,
+        "parallel_performance_verified": false
+      }
+    },
+    {
+      "id": "lightkrylov-gmres-reference",
+      "name": "gams-lightkrylov-gmres-reference",
+      "package_id": "lightkrylov",
+      "procedure_id": "lightkrylov-gmres",
+      "gams_code": "D2",
+      "problem_id": "manufactured-normal-transpose-gmres",
+      "path": "fpm_catalog/gams-drivers/lightkrylov-gmres-reference.f90",
+      "revision": "849fa1d2f29c14d0181315e76e731bff7f0b2d08",
+      "author_example": "test/Tests.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/gmres-inverse-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned interface/implementation and author tests reviewed without copying upstream code. Real dense operator GMRES on three matrix families, four sizes, three manufactured RHS vectors, normal/transpose solves, two non-exact initial guesses and full/three-vector Krylov dimensions. Requires convergence status and metadata, known solutions, scalar true residuals, and operator/RHS preservation; actual multiple restart cycles must occur. Logging reduced via public logger setup. Exact-initial/zero-RHS cases, preconditioners, custom matrix-free adapters, other precisions, complex solves and performance remain unverified.",
+      "validation_path": "docs/gams-gmres-inverse-validation.json",
+      "review_path": "docs/gams-gmres-inverse.md",
+      "checks": {
+        "gmres_solves": 288,
+        "known_solution_entries": 2016,
+        "sizes": [
+          2,
+          5,
+          8,
+          13
+        ],
+        "normal_transpose_checked": true,
+        "nonzero_initial_guess_checked": true,
+        "actual_restart_cycles_required": true,
+        "max_restarts": 500,
+        "max_normalized_solution_error": 5e-08,
+        "max_scaled_true_residual": 2e-10,
+        "zero_rhs_exact_initial_verified": false,
+        "preconditioners_verified": false,
+        "complex_precision_variants_verified": false,
+        "multiple_outer_cycle_solves": 100
+      }
+    },
+    {
+      "id": "ntpoly-inverse-reference",
+      "name": "gams-ntpoly-inverse-reference",
+      "package_id": "ntpoly",
+      "procedure_id": "ntpoly-inversion",
+      "gams_code": "D2",
+      "problem_id": "spectral-spd-inverses-two-sided-identities",
+      "path": "fpm_catalog/gams-drivers/ntpoly-inverse-reference.f90",
+      "revision": "7b3d22f76226af1402e9b0a5be18a496e4addc28",
+      "author_example": "Examples/PremadeMatrix/main.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/gmres-inverse-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned inverse implementation and author MPI setup example reviewed without copying upstream code. One-process serialized MPI Hotelling inversion of diagonal and rotated real SPD matrices with prescribed eigenvalues, three condition numbers and two scales. Checks every inverse entry against Q*diag(1/lambda)*transpose(Q), independent scalar left/right identity residuals, symmetry, finite gathers and input preservation. No returned convergence status in this API; mathematical checks determine acceptance. Reuses existing shared-memory/self transport recipe. Nonsymmetric/indefinite/singular matrices, complex or multi-process execution, load balancing and performance remain unverified.",
+      "validation_path": "docs/gams-gmres-inverse-validation.json",
+      "review_path": "docs/gams-gmres-inverse.md",
+      "checks": {
+        "spd_inversions": 48,
+        "analytic_inverse_entries": 1224,
+        "sizes": [
+          2,
+          3,
+          5,
+          8
+        ],
+        "prescribed_condition_numbers": [
+          2,
+          10,
+          50
+        ],
+        "scales": [
+          0.25,
+          4
+        ],
+        "mpi_processes": 1,
+        "left_right_identity_checked": true,
+        "input_preservation_checked": true,
+        "max_normalized_inverse_error": 5e-09,
+        "max_identity_residual": 5e-09,
+        "max_normalized_symmetry_error": 5e-09,
+        "nonsymmetric_indefinite_verified": false,
+        "singular_inputs_verified": false,
+        "multi_process_verified": false
+      }
+    },
+    {
+      "id": "formal-polynomial-reference",
+      "name": "gams-formal-polynomial-reference",
+      "package_id": "formal",
+      "procedure_id": "formal-divergence",
+      "gams_code": "H1",
+      "problem_id": "polynomial-mimetic-derivatives-and-conservation",
+      "path": "fpm_catalog/gams-drivers/formal-polynomial-reference.f90",
+      "revision": "d28eee9b37b4b74abe7f21bb2ccbdfb5c17f3e8a",
+      "author_example": "example/extended-gauss-divergence.F90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/periodic-calculus-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned operator sources and author example reviewed without copying upstream code. Single-image default-real polynomial gradient/divergence samples, analytic weighted volume/boundary integrals and extended Gauss conservation. Orders two/four, three grid sizes/domains and degrees zero..two for each field. Quadrature bounds distinguish second-order discretization from real32 roundoff. No disabled library assertions or changed license. Nonpolynomial convergence orders, Laplacians, higher dimensions, PDE time integration and multi-image operation remain unverified.",
+      "validation_path": "docs/gams-periodic-calculus-validation.json",
+      "review_path": "docs/gams-periodic-calculus.md",
+      "checks": {
+        "field_pairs": 162,
+        "pointwise_derivative_references": 24354,
+        "analytic_integral_references": 486,
+        "orders": [
+          2,
+          4
+        ],
+        "cell_counts": [
+          32,
+          64,
+          128
+        ],
+        "polynomial_degrees": [
+          0,
+          1,
+          2
+        ],
+        "images": 1,
+        "max_normalized_derivative_error": 0.0005,
+        "max_conservation_residual": 0.0005,
+        "nonpolynomial_convergence_verified": false,
+        "laplacians_verified": false,
+        "pde_solver_verified": false,
+        "multi_image_verified": false
+      }
+    },
+    {
+      "id": "raffle-orthogonal-reference",
+      "name": "gams-raffle-orthogonal-reference",
+      "package_id": "raffle",
+      "procedure_id": "raffle-periodic-distance",
+      "gams_code": "P",
+      "problem_id": "orthogonal-periodic-image-enumeration",
+      "path": "fpm_catalog/gams-drivers/raffle-orthogonal-reference.f90",
+      "revision": "c152a30a1eaf94965c047bcd1a7edca07873b56f",
+      "author_example": "test/test_dist_calcs.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/periodic-calculus-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned distance source and author tests reviewed without copying upstream code. Orthogonal cells and rigidly rotated orthogonal cells, two species/five atoms, modular and exact-atom queries with integer translations. Each atom distance and nearest real/fractional vector length compared with real64 enumeration of periodic images from rounded inputs. Near-atom exclusion, directional/ignore-list options, arbitrary skew cells, structure generation and performance remain unverified. A separate skew-cell probe fails and is retained with its hash and full result under docs/gams-candidates/raffle-skew; no general skew-cell claim is made.",
+      "validation_path": "docs/gams-periodic-calculus-validation.json",
+      "review_path": "docs/gams-periodic-calculus.md",
+      "checks": {
+        "cell_queries": 360,
+        "distance_references": 2520,
+        "cell_geometries": 6,
+        "species": 2,
+        "atoms": 5,
+        "image_offsets_per_axis": [
+          -4,
+          4
+        ],
+        "max_cell_scaled_error_float_eps_factor": 128,
+        "integer_translations_checked": true,
+        "exact_atom_queries_checked": true,
+        "rotated_orthogonal_cells_checked": true,
+        "general_skew_cells_verified": false,
+        "near_atom_exclusion_verified": false,
+        "structure_generation_verified": false,
+        "failed_skew_probe_preserved": true
+      }
+    },
+    {
+      "id": "feq-expression-reference",
+      "name": "gams-feq-expression-reference",
+      "package_id": "feq-parse",
+      "procedure_id": "feq-parse-evaluate",
+      "gams_code": "N3",
+      "problem_id": "multivariable-scalar-batch-formula-reference",
+      "path": "fpm_catalog/gams-drivers/feq-expression-reference.f90",
+      "revision": "2e80c5940b128a52c5070a3f56909674fb85a379",
+      "author_example": "example/gaussian_scalar_multivar.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/expressions-sky-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned parser/functions and author example reviewed without copying upstream code. Twelve valid real64 expressions at a 7x7x7 grid, scalar/batch evaluation and reversed variable declarations with correspondingly permuted inputs, checked against direct arithmetic/intrinsic formulas. Includes precedence, parentheses, pi, real powers and elementary compositions. Inputs preserved; no scalar/batch agreement-only oracle. Invalid input, error recovery, custom functions, other precisions/ranks, full grammar and symbolic algebra remain unverified.",
+      "validation_path": "docs/gams-expressions-sky-validation.json",
+      "review_path": "docs/gams-expressions-sky.md",
+      "checks": {
+        "expressions": 12,
+        "input_tuples": 343,
+        "formula_references": 16464,
+        "parser_objects": 24,
+        "scalar_batch_checked": true,
+        "reordered_variables_checked": true,
+        "input_preservation_checked": true,
+        "max_normalized_error": 2e-12,
+        "invalid_input_verified": false,
+        "custom_functions_verified": false,
+        "symbolic_algebra_verified": false
+      }
+    },
+    {
+      "id": "astro-sky-reference",
+      "name": "gams-astro-sky-reference",
+      "package_id": "astro-fortran",
+      "procedure_id": "astro-fortran-g2icrs",
+      "gams_code": "P",
+      "problem_id": "galactic-icrs-independent-angle-rotations",
+      "path": "fpm_catalog/gams-drivers/astro-sky-reference.f90",
+      "revision": "9d61091d225a1b314ff8170153b06a8691aba283",
+      "author_example": "test/t_sofa_f.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/expressions-sky-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned routines/frame definition and author tests reviewed without copying upstream code, embedded matrix or test bodies. ICRS/Galactic sky grids, poles and longitude wraps checked against separately applied elementary rotations built from the defining pole/node angles. Independent forward Cartesian references supplemented by inverse round trips, output angle ranges and unit norms. No longitude equality requirement at poles. Time evolution, astrometric corrections, arbitrary coordinate APIs and physical frame-definition accuracy remain unverified. Angle ranges allow 64 real64 epsilons of endpoint roundoff, including a wrapped longitude rounded to exactly 2*pi; vector tolerances remain unchanged.",
+      "validation_path": "docs/gams-expressions-sky-validation.json",
+      "review_path": "docs/gams-expressions-sky.md",
+      "checks": {
+        "direction_fixtures": 1296,
+        "conversion_calls": 2592,
+        "independent_rotation_vector_references": 1296,
+        "roundtrip_vector_references": 1296,
+        "longitude_samples": 24,
+        "latitude_samples": 9,
+        "longitude_wraps": [
+          -2,
+          0,
+          3
+        ],
+        "poles_checked": true,
+        "canonical_output_ranges_checked": true,
+        "max_vector_discrepancy": 2e-12,
+        "max_unit_norm_error": 2e-12,
+        "pole_longitude_identity_required": false,
+        "astrometric_time_evolution_verified": false,
+        "physical_frame_accuracy_verified": false,
+        "angle_range_roundoff_absolute_eps_factor": 64
+      }
+    },
+    {
+      "id": "uint-arithmetic-reference",
+      "name": "gams-uint-arithmetic-reference",
+      "package_id": "uint-fortran",
+      "procedure_id": "uint-fortran-arithmetic",
+      "gams_code": "A1",
+      "problem_id": "unsigned-modular-arithmetic-and-comparisons",
+      "path": "fpm_catalog/gams-drivers/uint-arithmetic-reference.f90",
+      "revision": "487f806c76a5d107c5a8982198bafb295065eba7",
+      "author_example": "test/check-assign-negative_uint32.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/unsigned-bitsets-drivers-MIT.txt"
+      ],
+      "modifications": "Independent integer(int64) arithmetic and modulo references for uint8/uint16/uint32 assignments, addition, subtraction, nonzero division and six comparisons. Includes signed-boundary values, modular carry/borrow, negative assignments and operand preservation. Multiplication, powers, mixed-kind operations, uint64 and C interoperability remain unverified.",
+      "validation_path": "docs/gams-unsigned-bitsets-validation.json",
+      "review_path": "docs/gams-unsigned-bitsets.md",
+      "checks": {
+        "widths": [
+          8,
+          16,
+          32
+        ],
+        "operand_pairs": 1728,
+        "values_per_width": 24,
+        "negative_assignments": 27,
+        "exact_checks": 17307,
+        "six_comparisons_checked": true,
+        "input_preservation_checked": true,
+        "multiplication_verified": false,
+        "uint64_verified": false
+      }
+    },
+    {
+      "id": "orbs-bitwise-reference",
+      "name": "gams-orbs-bitwise-reference",
+      "package_id": "orbs",
+      "procedure_id": "orbs-bitsets",
+      "gams_code": "N2",
+      "problem_id": "binary-logical-arithmetic-and-shift-reference",
+      "path": "fpm_catalog/gams-drivers/orbs-bitwise-reference.f90",
+      "revision": "3cf7fcec19798367f6f5bd26bad861c510449265",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/unsigned-bitsets-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; binary strings and schoolbook digit arithmetic provide references without calling stdlib/bstrith for the oracle. Eleven widths span one bit through multiple storage words; sixteen patterns exercise zero, ones, endpoints and modular patterns. AND/OR/XOR/ANDNOT/NOT, addition/subtraction, every shift strictly inside the documented domain, width and operand preservation checked. Mixed widths, empty sets, sorting, mutation APIs, formatted I/O and invalid-input handling remain unverified.",
+      "validation_path": "docs/gams-unsigned-bitsets-validation.json",
+      "review_path": "docs/gams-unsigned-bitsets.md",
+      "checks": {
+        "widths": [
+          1,
+          4,
+          8,
+          31,
+          32,
+          63,
+          64,
+          65,
+          127,
+          128,
+          129
+        ],
+        "patterns_per_width": 16,
+        "operand_pairs": 2816,
+        "binary_string_references": 37760,
+        "all_documented_interior_shifts_checked": true,
+        "multiple_storage_words_checked": true,
+        "input_preservation_checked": true,
+        "mixed_widths_verified": false,
+        "invalid_input_verified": false
+      }
+    },
+    {
+      "id": "heatflow-bicg-reference",
+      "name": "gams-heatflow-bicg-reference",
+      "package_id": "heatflow",
+      "procedure_id": "heatflow-sparse",
+      "gams_code": "D2",
+      "problem_id": "manufactured-sparse-bicg-systems",
+      "path": "fpm_catalog/gams-drivers/heatflow-bicg-reference.f90",
+      "revision": "b0d930caad9160a15f0aeafa238c448f48f28d55",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/sparse-advection-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sparse matrix and BiCG source reviewed. Three strictly row-diagonally-dominant banded families, four sizes, three scales, three known solution patterns and zero/nonzero initial guesses. Exact manufactured RHS and true residual use scalar dense sums, not library multiply. Singular/indefinite systems, other stopping modes, parallel execution and the complete heat evolution application remain unverified.",
+      "validation_path": "docs/gams-sparse-advection-validation.json",
+      "review_path": "docs/gams-sparse-advection.md",
+      "checks": {
+        "matrices": 36,
+        "solves": 216,
+        "known_solution_entries": 3456,
+        "sizes": [
+          5,
+          9,
+          17,
+          33
+        ],
+        "matrix_scales": [
+          0.125,
+          1,
+          8
+        ],
+        "nonsymmetric_systems_checked": true,
+        "nonzero_initial_guess_checked": true,
+        "rhs_preservation_checked": true,
+        "max_normalized_solution_error": 2e-09,
+        "max_normalized_true_residual": 2e-10,
+        "pde_evolution_verified": false
+      }
+    },
+    {
+      "id": "hrweno-advection-reference",
+      "name": "gams-hrweno-advection-reference",
+      "package_id": "hrweno",
+      "procedure_id": "hrweno-reconstruction",
+      "gams_code": "I2",
+      "problem_id": "periodic-linear-advection-cell-averages",
+      "path": "fpm_catalog/gams-drivers/hrweno-advection-reference.f90",
+      "revision": "2885105a7ba98351fed299b22e9bc0c67a809d2f",
+      "author_example": "example/example1_burgers_1d_fv.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/sparse-advection-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned WENO source and author conservation-law example reviewed without copying their bodies. Finite-volume periodic scalar advection with positive/negative velocity, constant and Fourier-mode cell averages, phase shifts and positive/negative amplitudes, three grids, WENO k=3, third-order TVD RK and two continued output times. Analytic shifted cell averages and conserved mean checked. Nonuniform meshes, shocks, nonlinear fluxes, multidimensional systems and formal convergence orders remain unverified. The reference uses the actual returned fixed-step time. A k=2 probe exceeded the proposed accuracy threshold and is retained under docs/gams-candidates/hrweno-k2-accuracy; this alone is not an established algorithm defect. No thresholds were relaxed for the successful k=3 suite.",
+      "validation_path": "docs/gams-sparse-advection-validation.json",
+      "review_path": "docs/gams-sparse-advection.md",
+      "checks": {
+        "problems": 72,
+        "checkpoints": 144,
+        "analytic_cell_average_references": 21504,
+        "sizes": [
+          64,
+          128,
+          256
+        ],
+        "weno_k": [
+          3
+        ],
+        "rk_order": 3,
+        "fourier_modes": [
+          0,
+          1,
+          2
+        ],
+        "speeds": [
+          -1.5,
+          0.75
+        ],
+        "both_advection_directions_checked": true,
+        "constant_state_checked": true,
+        "continued_integration_checked": true,
+        "max_normalized_mass_error": 5e-12,
+        "nonlinear_fluxes_verified": false,
+        "shocks_verified": false,
+        "nonuniform_mesh_verified": false,
+        "formal_convergence_order_verified": false,
+        "exact_reference_at_returned_time": true,
+        "k2_verified": false,
+        "proposed_k2_accuracy_failure_preserved": true,
+        "amplitude_scaled_error_bound_coefficient": 0.002,
+        "absolute_error_bound_floor": 5e-12
+      }
     }
   ]
 }

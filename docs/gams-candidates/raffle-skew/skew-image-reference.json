@@ -1,0 +1,8 @@
+{
+  "source": "skew-image-reference.f90",
+  "source_sha256": "99b4194a9ee8f7c6ecae6235071c14241d7f778ec8973aaffd8ae336592d0242",
+  "hash_normalization": "utf-8-lf",
+  "package_id": "raffle",
+  "revision": "c152a30a1eaf94965c047bcd1a7edca07873b56f",
+  "finding": "Componentwise fractional wrapping does not find the closest image in this skew cell. Not a published checked driver."
+}
