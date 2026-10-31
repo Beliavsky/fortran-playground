@@ -98,7 +98,103 @@
           "exit_code": 0
         }
       ]
+    },
+    {
+      "driver_id": "carlson-rf-reference",
+      "source_revision": "5f25a59a555b7029505aac71a8341d5851f8abed",
+      "source_sha256": "ee57be8f8cf2a716d3c3a3852430323f4c9aa43651f7127273b51d77d59fb44b",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T01:15:05.708661+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.326,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "k             Complete elliptic K(k)\n  0.00        1.5707963267948968\n  0.25        1.5962422221317838\n  0.75        1.9109897807518292\n  0.95        2.5900112308745018\nMaximum scaled reference/identity error:   1.2257E-13\nPASS carlson-rf-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.021,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "bernoulli-power-sums",
+      "source_revision": "e74d9c810d5c9248b5d8ffab4b766e7bb22ffd23",
+      "source_sha256": "c66d87140b0d7c91578b21f36bb7b37bf094ca6d4a0028333ee3c2738d599657",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T01:15:07.380275+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.227,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "B(0) =       1.000000000000000\nB(1) =      -0.500000000000000\nB(2) =       0.166666666666667\nB(4) =      -0.033333333333276\nB(6) =       0.023809523809522\nB(8) =      -0.033333333333333\nB(10) =       0.075757575757576\nB(12) =      -0.253113553113553\nIndependent integer power sums checked: 24\nMaximum scaled error:   7.5865E-13\nOdd outputs above B1 are unassigned at this pin and are not read.\nPASS bernoulli-power-sums\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.042,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "amos-complex-series",
+      "source_revision": "b54a4d4a1d8f7c97acd180ed5bbaae8d089a9fa7",
+      "source_sha256": "2eb598956e51271bf2e6279d5df58502fe96d7b359284f43b802fc9aa7c35f54",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T01:16:01.881706+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.541,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "z =     0.5000    0.2500; K_0.5(z) =       0.900965265411     -0.471142820764\nz =     1.0000    0.5000; K_0.5(z) =       0.324403658502     -0.291381750651\nz =     2.0000    0.7500; K_0.5(z) =       0.069439816411     -0.092990708451\nIndependent complex Bessel values checked: 39\nMaximum scaled error:   3.5643E-16\nPASS amos-complex-series\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.024,
+          "exit_code": 0
+        }
+      ]
     }
   ],
-  "validated_at": "2026-10-30T20:57:30.779847+00:00"
+  "validated_at": "2026-10-31T01:16:01.935151+00:00"
 }

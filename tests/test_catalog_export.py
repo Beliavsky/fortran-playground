@@ -51,9 +51,9 @@ class CatalogExportTests(unittest.TestCase):
         self.assertEqual(sum('numerical_review' in p['curation'] for p in feed['projects']),
                          len(review['packages']))
         self.assertIn('fpm_catalog/gams-numerical-review.json', {r['path'] for r in feed['provenance']['inputs']})
-        self.assertEqual(len(feed['demonstrations']), 69)
+        self.assertEqual(len(feed['demonstrations']), 83)
         self.assertEqual({d['validation_path'] for d in feed['demonstrations']},
-                         {'docs/gams-g1-validation.json', 'docs/gams-quadrature-validation.json',
+                         {'docs/gams-arithmetic-validation.json', 'docs/gams-number-theory-validation.json', 'docs/gams-g1-validation.json', 'docs/gams-quadrature-validation.json',
                           'docs/gams-roots-validation.json', 'docs/gams-linear-algebra-validation.json',
                           'docs/gams-ode-validation.json', 'docs/gams-interpolation-validation.json',
                           'docs/gams-transforms-validation.json', 'docs/gams-constrained-validation.json',

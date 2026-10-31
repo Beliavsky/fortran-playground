@@ -2411,7 +2411,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "Prime enumeration and primality testing; B has no finer published GAMS children.",
+      "notes": "Prime enumeration and primality testing; B has no finer published GAMS children. Dedicated GAMS B driver: prime enumeration and primality compared with independent trial division, including selected int64 values; not full-domain validation. Pinned limitation: the int64 input 3215031751 times out in the signed-int32 branch; retained failing source/result and minimal reproducer are in docs/gams-candidates/fortran-primes. The checked driver excludes that input.",
       "evidence": [
         {
           "path": "src/prime_numbers.f90",
@@ -2424,7 +2424,8 @@
           "path": "test/test_primes.f90",
           "sha256": "adfd87143ec3021c2241c8caa160152068b6d56a218a81d0e5cda02d8ca68a76"
         }
-      ]
+      ],
+      "driver_id": "primes-trial-division"
     },
     {
       "id": "forwarddiff-derivative",
@@ -2463,7 +2464,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "Arithmetic on integer numerator/denominator pairs.",
+      "notes": "Arithmetic on integer numerator/denominator pairs. Dedicated A2 driver checks exact addition with simplify off/on across 5832 small cases and verifies positive-result reduction against enumerated divisors. The pinned math dependency returns zero GCD for nonpositive numerator inputs, so negative and zero results can remain unreduced; only value equivalence is claimed for those results.",
       "evidence": [
         {
           "path": "src/rational_number.f90",
@@ -2471,7 +2472,8 @@
           "line": 144
         }
       ],
-      "author_examples": []
+      "author_examples": [],
+      "driver_id": "rational-addition-reference"
     },
     {
       "id": "slsqp-slsqp-solver",
@@ -2538,7 +2540,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "Bernoulli numbers; do not classify this procedure as gamma or Bessel just because the package also contains those functions.",
+      "notes": "Bernoulli numbers; do not classify this procedure as gamma or Bessel just because the package also contains those functions. Dedicated C19 driver checks B0, B1 and even B2..B12 against explicit rational values and 24 integer power sums against direct int64 summation. Pinned bernob leaves odd output positions above B1 unassigned; these positions are never read and their mathematical zeros are supplied locally only for the power-sum application. Small n<2 is also outside the driver because the implementation writes B0..B2 unconditionally.",
       "evidence": [
         {
           "path": "src/specfun.F90",
@@ -2546,7 +2548,8 @@
           "line": 776
         }
       ],
-      "author_examples": []
+      "author_examples": [],
+      "driver_id": "bernoulli-power-sums"
     },
     {
       "id": "regridpack-regrid",
@@ -2684,7 +2687,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "Addition of arbitrary-precision real operands through the public overloaded operator; other arithmetic operations need their own records.",
+      "notes": "Addition of arbitrary-precision real operands through the public overloaded operator; other arithmetic operations need their own records. Dedicated A3c driver: six exact real additions at 120 requested decimal digits, including 10^80+1, negative addition, cancellation and a literal long-integer reference. Constructors, comparisons and addition are used; no full-domain accuracy claim.",
       "evidence": [
         {
           "path": "src/mpfung1.f90",
@@ -2697,7 +2700,8 @@
           "path": "test/tquad.f90",
           "sha256": "a81e5c19bc429460ef2b00bc54ce72d5469102bfadbc7af19fec68500d69239d"
         }
-      ]
+      ],
+      "driver_id": "mpfun-real-addition"
     },
     {
       "id": "rklib-rk4",
@@ -3334,7 +3338,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "Matrix-matrix multiplication interface to external BLAS, not a standalone BLAS implementation.",
+      "notes": "Matrix-matrix multiplication interface to external BLAS, not a standalone BLAS implementation. Dedicated D1b6 driver checks 12 rectangular real64 GEMM calls against independent scalar triple loops, covering all N/T input combinations and alpha/beta pairs (1,0), (-2,0.5), (0,-1). Padded leading dimensions, complex overloads and other BLAS routines are not checked.",
       "evidence": [
         {
           "path": "src/blas/level3.f90",
@@ -3342,7 +3346,8 @@
           "line": 35
         }
       ],
-      "author_examples": []
+      "author_examples": [],
+      "driver_id": "blas-gemm-reference"
     },
     {
       "id": "fsparse-matvec",
@@ -3355,7 +3360,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "Sparse matrix-vector product; storage conversion is a distinct API.",
+      "notes": "Sparse matrix-vector product; storage conversion is a distinct API. Dedicated D1b4 driver checks 24 real64 COO/CSR calls against independent scalar loops on a rectangular 4-by-3 matrix with an empty row. Zero/nonzero output initialization, signed/zero input vectors and repeated accumulation y:=y+A*x are verified. Symmetric-storage shortcuts, complex overloads and other sparse formats are outside this driver.",
       "evidence": [
         {
           "path": "src/matvec/fsparse_matvec.f90",
@@ -3368,7 +3373,8 @@
           "path": "test/test_matrices.f90",
           "sha256": "df71f7ee49f0246207b77243bdf32c1e10642908379a9e303a6a926c3d4a4c1b"
         }
-      ]
+      ],
+      "driver_id": "fsparse-matvec-reference"
     },
     {
       "id": "geompack-r8tris2",
@@ -3598,7 +3604,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "Shortest round-tripping decimal representation of binary floating-point data.",
+      "notes": "Shortest round-tripping decimal representation of binary floating-point data. Dedicated A6 driver checks 132 finite IEEE binary64 bit patterns spanning signed zeros, subnormals, exponent boundaries and maximum finite values, using intrinsic decimal reads and bitwise equality. This does not prove shortest-length optimality, all-input correctness or special-value spelling.",
       "evidence": [
         {
           "path": "src/real64_to_shortest.f90",
@@ -3611,7 +3617,8 @@
           "path": "test/test_d2shortest/test_d2shortest.f90",
           "sha256": "1b0748c34b29fa18deffe925ee73b410d8af2a2f8eadfa2676479ddbce9333c1"
         }
-      ]
+      ],
+      "driver_id": "ryu-binary64-roundtrip"
     },
     {
       "id": "fastconv-conv1d-t",
@@ -4314,7 +4321,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "Moore-Penrose inverse with an explicit singular-value cutoff for rank-deficient input.",
+      "notes": "Moore-Penrose inverse with an explicit singular-value cutoff for rank-deficient input. Dedicated D9c driver checks five explicit known pseudoinverses (rank-one tall, full-rank tall/wide, singular diagonal, zero), all four Moore-Penrose identities and the rank-one minimum-norm solution (0.2,0.4). Uses method=gesvd and absolute cutoff 1e-10. Original matrices are preserved because the pinned ForSVD dependency can overwrite input. Other methods, cutoff selection, ill-conditioning and near-threshold ranks are not verified.",
       "evidence": [
         {
           "path": "src/forinv.f90",
@@ -4327,7 +4334,8 @@
           "path": "test/test1.f90",
           "sha256": "8224a804d74a9f2c6eb748195d9f13e2f38056084d75fa07826d8b2661395327"
         }
-      ]
+      ],
+      "driver_id": "forinv-pseudoinverse-reference"
     },
     {
       "id": "forsolver-nlsolver",
@@ -5105,7 +5113,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "Addition of arbitrary-precision complex operands through the public overloaded operator; precision is not limited to hardware complex kinds.",
+      "notes": "Addition of arbitrary-precision complex operands through the public overloaded operator; precision is not limited to hardware complex kinds. Dedicated A4c driver: five exact complex sums at 120 requested decimal digits, checking each component independently with explicit decimal references, including large-component cancellation to (1,2). Other complex arithmetic is outside this driver.",
       "evidence": [
         {
           "path": "src/mpfung1.f90",
@@ -5118,7 +5126,8 @@
           "path": "test/tpphix3.f90",
           "sha256": "eb6f9cba24cc2eadba647a3fba3c3277e01fa9b4f1d841a2a4bd28ad608d7971"
         }
-      ]
+      ],
+      "driver_id": "mpfun-complex-addition"
     },
     {
       "id": "fsparse-dense2coo",
@@ -5370,7 +5379,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "Carlson symmetric RF evaluated for pendulum periods and checked against independent composite Simpson integration.",
+      "notes": "Carlson symmetric RF evaluated for pendulum periods and checked against independent composite Simpson integration. Dedicated C14 driver checks ten RF values against diagonal identities and two independent Simpson integral forms, plus permutation and homogeneity identities. Positive triples use 2048/4096 panels; four complete elliptic-integral moduli use 4096 panels. Singular/extreme arguments and other Carlson functions are outside the driver.",
       "evidence": [
         {
           "path": "src/carlson_elliptic_module.F90",
@@ -5378,7 +5387,8 @@
           "line": 580
         }
       ],
-      "author_examples": []
+      "author_examples": [],
+      "driver_id": "carlson-rf-reference"
     },
     {
       "id": "fortran-bessels-api",
@@ -5648,7 +5658,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "Signed decimal-string integer addition and subtraction beyond 64-bit range, plus unsigned interpretation of an int64 bit pattern. This is fixed-capacity decimal representation, not unlimited arbitrary precision.",
+      "notes": "Signed decimal-string integer addition and subtraction beyond 64-bit range, plus unsigned interpretation of an int64 bit pattern. This is fixed-capacity decimal representation, not unlimited arbitrary precision. Dedicated A1 driver checks 3362 signed small additions/subtractions against native integer results and five exact large-decimal identities beyond int64, including carry, borrow, ordering and cancellation. Fixed capacity and overflow are not validated.",
       "evidence": [
         {
           "path": "src/type/strint.f90",
@@ -5661,7 +5671,8 @@
           "sha256": "8a7b90876386428a9303583e202bfcc49b5ec9acb8ce8eed9fb95b52945199b2"
         }
       ],
-      "author_examples": []
+      "author_examples": [],
+      "driver_id": "strith-integer-reference"
     },
     {
       "id": "friction-fit",
@@ -5800,7 +5811,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "Fixed-width binary-string addition, subtraction, shifts and logical operations. The driver checks every eight-bit value, including carry and wraparound. This is not unlimited arbitrary-precision arithmetic.",
+      "notes": "Fixed-width binary-string addition, subtraction, shifts and logical operations. The driver checks every eight-bit value, including carry and wraparound. This is not unlimited arbitrary-precision arithmetic. Dedicated N2 driver: 5120 exact comparisons against independent native integer references: shifts/complement/XOR over all 8-bit values, 8-bit increment/decrement, and all ordered pairs of 4-bit addition/subtraction operands. This N2 driver does not mark the separate A1 mapping verified.",
       "evidence": [
         {
           "path": "src/arithmetic/basic/add/add.f90",
@@ -5818,7 +5829,8 @@
           "path": "README.md",
           "sha256": "91f77aaee474e8a73b0b6ef1bb118974b484b473ba9dce335748c4eefc204f71"
         }
-      ]
+      ],
+      "driver_id": "bstrith-bit-reference"
     },
     {
       "id": "heatflow-sparse",
@@ -6052,7 +6064,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "AMOS module interfaces for complex-argument Bessel functions with noninteger nonnegative order, including modified Bessel functions. The checked main compares J_0.3 and I_0.3 at 1+0.5i with independent convergent power series and K_0.5 with its closed form. Other argument regions, orders, scaling modes and Airy/Hankel routines are not validated. The upstream README warns of possible bugs.",
+      "notes": "AMOS module interfaces for complex-argument Bessel functions with noninteger nonnegative order, including modified Bessel functions. The checked main compares J_0.3 and I_0.3 at 1+0.5i with independent convergent power series and K_0.5 with its closed form. Other argument regions, orders, scaling modes and Airy/Hankel routines are not validated. The upstream README warns of possible bugs. Dedicated C10 driver checks 39 complex values: J/I sequences of length two for three noninteger starting orders at three moderate right-half-plane arguments, using independent convergent power series with intrinsic Gamma, and K(1/2) using its closed form. All status/underflow flags must be zero. Scaled mode, branch-cut behavior, extreme arguments and the full library are not verified. Pinned failure: J_0.3(2-0.75i) has scaled error about 0.556 against both the independent series and an 80-digit mpmath reference. Failing source and output are retained under docs/gams-candidates/amosf90. The checked driver uses upper-right-quadrant arguments and excludes this case; no source patch or tolerance relaxation is applied.",
       "evidence": [
         {
           "path": "src/amos.f90",
@@ -6065,7 +6077,8 @@
           "path": "test/check.f90",
           "sha256": "64fccdc69f84154351ee18ba767dad018f98ce3c820f12be4be02f04c91e6dcd"
         }
-      ]
+      ],
+      "driver_id": "amos-complex-series"
     },
     {
       "id": "linalg-fortran-inverse",
@@ -6514,7 +6527,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "Numerical routines from the RPN calculator, called directly without its interactive interface. The checked main verifies a negative cube root, sinc and sech at zero, beta(2,3), modified Bessel I0 at zero, and integer gcd/lcm against known results. A checksum-guarded manifest correction sets source-form=default so .f and .f90 files use their respective forms. No numerical sources are changed. The tests do not establish accuracy over full argument ranges or validate the complete calculator.",
+      "notes": "Numerical routines from the RPN calculator, called directly without its interactive interface. The checked main verifies a negative cube root, sinc and sech at zero, beta(2,3), modified Bessel I0 at zero, and integer gcd/lcm against known results. A checksum-guarded manifest correction sets source-form=default so .f and .f90 files use their respective forms. No numerical sources are changed. The tests do not establish accuracy over full argument ranges or validate the complete calculator. Dedicated GAMS B driver: GCD and LCM checked over nonnegative operands 0..64 against independent divisor/multiple searches. LCM(0,0) divides by zero at this pin and is excluded; signed conventions and overflow are not verified.",
       "evidence": [
         {
           "path": "src/rat.f90",
@@ -6522,7 +6535,8 @@
           "line": 1
         }
       ],
-      "author_examples": []
+      "author_examples": [],
+      "driver_id": "rpn-gcd-lcm-reference"
     },
     {
       "id": "nc4fortran-io",

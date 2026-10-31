@@ -160,3 +160,13 @@ Class-page **Try in playground** links select an available checked driver for th
 Class cards distinguish **Verified**, **Source-supported**, and **Uncertain** mappings. Verification applies to the matching driver's tested configuration; a sibling-class driver or a successful package default does not verify this classification. Descendant drivers identify their narrower class. Package details label evidence separately for each procedure/class pair.
 
 The generated [mapping evidence and review queue](gams-mapping-evidence.md) lists discovery assignments needing source review and procedures still needing matching drivers. If inspection shows that a claimed algorithm is absent, narrow or remove its classification. Record sandbox limits, missing dependencies and upstream defects in the existing review notes rather than treating those failures as proof of absence.
+
+The [number-theory review](gams-number-theory.md) covers both selected B packages: prime enumeration/primality against trial division and GCD/LCM against enumerated integer references. Their class-page links open these checked drivers. The review retains a pinned large-int64 primality timeout reproducer and documents the LCM(0,0) restriction.
+
+The [arithmetic review](gams-arithmetic.md) connects A1 to signed decimal-integer checks, A2 to exact rational addition, and A6 to bit-preserving binary64 decimal round trips. It documents fraction-reduction and representation limits. The A1 strith driver does not verify strith's separate A6 mapping.
+
+The same review connects A3c/A4c to MPFUN real/complex addition with exact 120-digit reference identities, and N2 to 5120 binary-string checks against native integer operations. The real and complex examples are selected separately on their class pages; arithmetic coverage does not imply verification of other package routines.
+
+The [special-function review](gams-special-functions.md) also covers C14 Carlson elliptic integrals against independent quadrature, C19 Bernoulli values and exact integer power sums, and C10 complex AMOS Bessel sequences against separate series/closed forms. It retains an AMOS lower-half-plane discrepancy and documents unassigned odd Bernoulli outputs at the pinned revision.
+
+The [linear-algebra review](gams-linear-algebra.md) also connects D1b6 to BLAS transpose/scaling checks against scalar loops, D1b4 to accumulated COO/CSR matrix-vector products, and D9c to five known pseudoinverses and a minimum-norm solution. The sparse multiplication driver does not verify the separate storage-conversion class.

@@ -1,0 +1,200 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "rational-addition-reference",
+      "source_revision": "b6ff702a0f51b950798f2a31c5bd81ae0c15385a",
+      "source_sha256": "449b1522c6f7de7d1558e6766420875a7db82da7046a3bd0544240bfc15b1e61",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T01:06:42.828028+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.283,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "1/3 + 1/6 = 1/2\n-1/3 - 1/6 = -9/18 (same value as -1/2)\nExact additions checked with simplify off/on: 5832\nPinned simplifier does not reduce negative/zero numerators; value checks allow this.\nPASS rational-addition-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.023,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "strith-integer-reference",
+      "source_revision": "da2b1f489a178cb443f636e3f9c89aed6c8702b1",
+      "source_sha256": "3d1e49ce5a84cf11ff13402c6ae3e085625ed6eda244e131d62bef6d767c01ad",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T01:06:49.797283+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.147,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Thirty nines plus one: 1000000000000000000000000000000\nChecked 3362 small signed additions/subtractions and 5 large decimal identities.\nFixed-capacity decimal integers; capacity overflow is outside this example.\nPASS strith-integer-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 5.901,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "ryu-binary64-roundtrip",
+      "source_revision": "6c508144398d58143618c5598d816f20c40ac053",
+      "source_sha256": "b870dab2fb47fde8b0fbda8707341639725097a016de6f38606673b6d6b0bfe4",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T01:06:51.211395+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.361,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Smallest subnormal: 4.9E-324\nSmallest normal: 2.2250738585072014E-308\nLargest finite: 1.7976931348623157E308\nNegative zero: -0.0\nFinite binary64 values recovered with identical bits: 132\nNaN/infinity spelling, all bit patterns and shortest-length optimality are outside this example.\nPASS ryu-binary64-roundtrip\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.036,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "mpfun-real-addition",
+      "source_revision": "f2191ad80d811cd5e309d83ffad9b2607d27aabc",
+      "source_sha256": "62e3b826654ae438526bf12f7bd824ef3ad0974e12ecd6870434bcdb803b445d",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T01:11:13.356493+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 1.005,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Exact decimal identity: 10^80 + 1 = 1 followed by 79 zeroes and 1.\nAlso checked operand order, negative addition, cancellation and an explicit 31-digit sum.\nComputed dyadic sum 0.125 + 0.375:\n5.0000000e-1                  \nChecked additions: 6; requested decimal precision: 120\nPASS mpfun-real-addition\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.038,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "mpfun-complex-addition",
+      "source_revision": "f2191ad80d811cd5e309d83ffad9b2607d27aabc",
+      "source_sha256": "36bb89bf458c0bdb5060b4cea836ac92c9e3bb12f0837460eb0b04101222e654",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T01:11:14.905723+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.435,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "(10^80,-10^80) + (-(10^80-1),10^80+2), recovered components:\n1.0000000e0                   \n2.0000000e0                   \nExact complex sums checked: 5; requested decimal precision: 120\nChecked both components; multiplication and transcendental functions are outside this driver.\nPASS mpfun-complex-addition\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.058,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "bstrith-bit-reference",
+      "source_revision": "7ed7730e34c7e1f78f2be9426ccc170f9dcaf57e",
+      "source_sha256": "cbd04c49b8be26f7f15cd86698318a384135c23621adf579a17ffb9a4d879ede",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T01:11:16.746165+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.389,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "10100101 shifted left by 2: 10010100\n10100101 XOR 11110000: 01010101\nIndependent bit/arithmetic checks passed: 5120\nShift distances 1..7 for every 8-bit value; all pairs of 4-bit arithmetic operands.\nOut-of-range shifts, malformed strings and wider strings are outside this example.\nPASS bstrith-bit-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.04,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T01:11:16.800153+00:00"
+}

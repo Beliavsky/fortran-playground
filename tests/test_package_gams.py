@@ -29,6 +29,8 @@ from xpackage_gams import (gams_data, package_classes, review_text, subclass_mod
                           regression_review_text, REGRESSION_REPORT,
                           matrix_equations_review_text, MATRIX_EQUATIONS_REPORT,
                           sorting_review_text, SORTING_REPORT,
+                          number_theory_review_text, NUMBER_THEORY_REPORT,
+                          arithmetic_review_text, ARITHMETIC_REPORT,
                           coverage_data, coverage_review_text, COVERAGE_REPORT,
                           class_evidence, mapping_evidence_text, EVIDENCE_REPORT)
 
@@ -290,13 +292,32 @@ class PackageGamsTests(unittest.TestCase):
                          {'fortran-lapack-dense-solve', 'stdlib-dense-solve',
                           'fortran-lapack-least-squares', 'stdlib-least-squares',
                           'fortran-lapack-symmetric-eigen', 'fortran-lapack-qr-decomposition',
-                          'fortran-lapack-svd-decomposition'})
+                          'fortran-lapack-svd-decomposition', 'blas-gemm-reference',
+                          'fsparse-matvec-reference', 'forinv-pseudoinverse-reference'})
         self.assertEqual({d['gams_code'] for d in drivers if d['problem_id'] == 'real-dense-systems'}, {'D2a1'})
         self.assertEqual({d['gams_code'] for d in drivers if d['problem_id'] == 'real-linear-least-squares'}, {'D9a1'})
         records = {r['id']: r for r in data['procedure_mappings']}
         self.assertEqual(records['stdlib-solve']['gams_codes'], ['D2a1'])
         self.assertEqual(records['stdlib-lstsq']['gams_codes'], ['D9a1'])
         self.assertEqual((ROOT / LINEAR_ALGEBRA_REPORT).read_text(encoding='utf-8'), linear_algebra_review_text())
+
+    def test_product_and_pseudoinverse_drivers_have_independent_references(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        gemm = drivers['blas-gemm-reference']
+        sparse = drivers['fsparse-matvec-reference']
+        pinv = drivers['forinv-pseudoinverse-reference']
+        self.assertEqual((gemm['gams_code'],sparse['gams_code'],pinv['gams_code']), ('D1b6','D1b4','D9c'))
+        self.assertEqual(gemm['checks']['gemm_calls'], 12)
+        self.assertEqual(gemm['checks']['transpose_combinations'], ['NN','NT','TN','TT'])
+        self.assertEqual(sparse['checks']['matvec_calls'], 24)
+        self.assertTrue(sparse['checks']['repeated_accumulation'])
+        self.assertEqual(pinv['checks']['matrix_cases'], 5)
+        self.assertEqual(pinv['checks']['moore_penrose_identities'], 4)
+        self.assertTrue(pinv['checks']['preserves_original_matrix'])
+        from xpackage_gams import class_tree, procedure_records
+        assessment = class_evidence(class_tree(data),'D1b9',procedure_records(data,'fsparse'),list(drivers.values()))
+        self.assertEqual(assessment['status'], 'source-supported')
 
     def test_decomposition_drivers_identify_the_verified_lower_level_apis(self):
         data = gams_data()
@@ -362,11 +383,29 @@ class PackageGamsTests(unittest.TestCase):
                    if driver_validation_path(d) == 'docs/gams-special-functions-validation.json']
         self.assertEqual({d['id']: d['gams_code'] for d in drivers},
                          {'fullerton-gamma-values': 'C7a', 'fullerton-digamma-values': 'C7c',
-                          'bessels-modified-values': 'C10b1'})
+                          'bessels-modified-values': 'C10b1', 'amos-complex-series': 'C10',
+                          'carlson-rf-reference': 'C14', 'bernoulli-power-sums': 'C19'})
         records = {r['id']: r for r in data['procedure_mappings']}
         self.assertNotIn('digamma', records['specfunc-fullerton-fgamma']['procedure'])
         self.assertIn('reciprocal_gamma', records['specfunc-fullerton-fgamma']['procedure'])
         self.assertEqual((ROOT / SPECIAL_FUNCTIONS_REPORT).read_text(encoding='utf-8'), special_functions_review_text())
+
+    def test_complex_elliptic_and_bernoulli_references_document_pinned_limits(self):
+        drivers = {d['id']: d for d in driver_data()}
+        self.assertEqual(drivers['carlson-rf-reference']['checks']['simpson_intervals'], [2048,4096])
+        self.assertFalse(drivers['bernoulli-power-sums']['checks']['unassigned_odd_outputs_read'])
+        self.assertEqual(drivers['bernoulli-power-sums']['checks']['integer_power_sum_cases'], 24)
+        self.assertEqual(drivers['amos-complex-series']['checks']['complex_value_checks'], 39)
+        self.assertTrue(drivers['amos-complex-series']['checks']['series_convergence_required'])
+        import hashlib
+        candidate = json.loads((ROOT/'docs/gams-candidates/amosf90/lower-half-plane-result.json').read_text())
+        self.assertEqual(hashlib.sha256((ROOT/candidate['source_path']).read_text().encode()).hexdigest(),
+                         candidate['source_sha256'])
+        self.assertFalse(candidate['result']['ok'])
+        self.assertEqual(candidate['independent_reference']['decimal_digits'], 80)
+        report = special_functions_review_text()
+        self.assertIn('leaves odd output positions above B1 unassigned', report)
+        self.assertIn('no package patch or tolerance relaxation', report)
 
     def test_statistics_drivers_separate_location_dispersion_and_normalization(self):
         data = gams_data()
@@ -543,6 +582,67 @@ class PackageGamsTests(unittest.TestCase):
         self.assertTrue(driver['checks']['ascending_and_descending'])
         self.assertEqual((ROOT / SORTING_REPORT).read_text(encoding='utf-8'), sorting_review_text())
 
+    def test_arithmetic_drivers_have_exact_references_and_class_specific_scope(self):
+        data = gams_data()
+        drivers = driver_data(data=data)
+        selected = {d['id']: d for d in drivers if driver_validation_path(d)=='docs/gams-arithmetic-validation.json'}
+        self.assertEqual({d['gams_code'] for d in selected.values()}, {'A1','A2','A6','A3c','A4c','N2'})
+        self.assertEqual(selected['rational-addition-reference']['checks']['addition_cases'], 5832)
+        self.assertFalse(selected['rational-addition-reference']['checks']['negative_reduction_claimed'])
+        self.assertEqual(selected['strith-integer-reference']['checks']['small_arithmetic_cases'], 3362)
+        self.assertTrue(selected['ryu-binary64-roundtrip']['checks']['bitwise_roundtrip'])
+        self.assertFalse(selected['ryu-binary64-roundtrip']['checks']['shortest_length_proved'])
+        from xpackage_gams import class_tree, procedure_records
+        strith_records = procedure_records(data, 'strith')
+        self.assertEqual(class_evidence(class_tree(data), 'A6', strith_records, drivers)['status'], 'source-supported')
+        self.assertEqual(class_evidence(class_tree(data), 'A1', strith_records, drivers)['status'], 'verified')
+        text = arithmetic_review_text()
+        self.assertEqual((ROOT / ARITHMETIC_REPORT).read_text(encoding='utf-8'), text)
+        self.assertIn('negative or zero numerators can remain', text)
+        self.assertIn('not all binary64 patterns', text)
+
+    def test_multiprecision_and_bit_drivers_keep_distinct_problem_classes(self):
+        data = gams_data()
+        drivers = driver_data(data=data)
+        selected = {d['id']: d for d in drivers}
+        real = selected['mpfun-real-addition']
+        complex_sum = selected['mpfun-complex-addition']
+        bits = selected['bstrith-bit-reference']
+        self.assertEqual((real['gams_code'],complex_sum['gams_code'],bits['gams_code']), ('A3c','A4c','N2'))
+        self.assertEqual(real['checks']['exact_additions'], 6)
+        self.assertEqual(complex_sum['checks']['exact_complex_sums'], 5)
+        self.assertEqual(real['checks']['requested_decimal_digits'], 120)
+        self.assertTrue(complex_sum['checks']['each_component_checked'])
+        self.assertEqual(bits['checks']['exact_checks'], 5120)
+        from xpackage_gams import class_tree, procedure_records
+        tree = class_tree(data)
+        records = procedure_records(data,'mpfun2020-var1')
+        self.assertEqual(class_evidence(tree,'A3c',records,[complex_sum])['status'], 'source-supported')
+        self.assertEqual(class_evidence(tree,'A4c',records,[real])['status'], 'source-supported')
+        self.assertEqual(class_evidence(tree,'A1',procedure_records(data,'bstrith'),[bits])['status'], 'source-supported')
+
+    def test_number_theory_packages_have_matching_checked_drivers_and_documented_limits(self):
+        data = gams_data()
+        packages = {name for name, codes in data['packages'].items() if 'B' in codes}
+        drivers = [d for d in driver_data(data=data) if d['gams_code'] == 'B']
+        self.assertEqual({d['package_id'] for d in drivers}, packages)
+        by_id = {d['id']: d for d in drivers}
+        self.assertEqual(by_id['primes-trial-division']['checks']['int32_cases'], 1021)
+        self.assertEqual(by_id['rpn-gcd-lcm-reference']['checks']['gcd_cases'], 4225)
+        self.assertFalse(by_id['rpn-gcd-lcm-reference']['checks']['lcm_zero_zero_checked'])
+        text = number_theory_review_text()
+        self.assertEqual((ROOT / NUMBER_THEORY_REPORT).read_text(encoding='utf-8'), text)
+        self.assertIn('lcm(0,0)', text)
+        self.assertIn('3215031751', text)
+        import hashlib
+        for name in ['large-int64-primality', 'signed-int32-boundary']:
+            record = json.loads((ROOT / f'docs/gams-candidates/fortran-primes/{name}-result.json').read_text())
+            self.assertEqual(hashlib.sha256((ROOT / record['source_path']).read_text().encode()).hexdigest(),
+                             record['source_sha256'])
+            self.assertFalse(record['result']['ok'])
+            run = next(s for s in record['result']['stages'] if s['name']=='Run')
+            self.assertIn('Timed out', run['error'])
+
     def test_coverage_separates_source_review_from_class_specific_driver_evidence(self):
         data = gams_data()
         coverage = coverage_data(data=data)
@@ -555,7 +655,7 @@ class PackageGamsTests(unittest.TestCase):
         self.assertEqual(len(by_class['J1a2']['driver_ids']), 2)
         self.assertEqual(len(by_class['J1a3']['driver_ids']), 1)
         self.assertTrue(any(not r['driver_ids'] for r in coverage['procedure_classes']))
-        self.assertEqual({r['code'] for r in coverage['top_level'] if r['driver_ids']}, set('CDEFGHIJLN'))
+        self.assertEqual({r['code'] for r in coverage['top_level'] if r['driver_ids']}, set('ABCDEFGHIJLN'))
         self.assertEqual((ROOT / COVERAGE_REPORT).read_text(encoding='utf-8'), coverage_review_text())
 
     def test_numerical_review_covers_catalog_scope_and_preserves_evidence(self):

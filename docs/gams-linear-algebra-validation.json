@@ -226,7 +226,103 @@
           "exit_code": 0
         }
       ]
+    },
+    {
+      "driver_id": "blas-gemm-reference",
+      "source_revision": "552a2e6a41443843003216fedad6419af55f8e35",
+      "source_sha256": "ecd6ee60d3258a987d9f7d33122066a6448700bd4335d70445b8f7b6494713d2",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T01:25:14.480548+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.485,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "3-by-2 times 2-by-4 matrix product:\n    -22.0000    -17.0000    -12.0000     -7.0000\n     -8.0000     -7.0000     -6.0000     -5.0000\n      6.0000      3.0000      0.0000     -3.0000\nTranspose/scaling combinations checked: 12\nMaximum scaled error:   0.0000E+00\nPASS blas-gemm-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.026,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fsparse-matvec-reference",
+      "source_revision": "fa8233420ab0110bb688d565879164386521a8fc",
+      "source_sha256": "2be06e1fa785ade5d0d6496bf56952de88ccc66d41301cec859b67c77847b156",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T01:25:16.109497+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.322,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "A*x for vector 1:     14.000    -6.000     0.000    14.000\nA*x for vector 2:     -4.000     3.000     0.000    -5.000\nA*x for vector 3:      0.000     0.000     0.000     0.000\nCOO/CSR accumulated products checked: 24\nRectangular 4-by-3 matrix includes an empty row; zero/nonzero output and zero input checked.\nPASS fsparse-matvec-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.028,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "forinv-pseudoinverse-reference",
+      "source_revision": "80b5dbed9709c001e4309382424276a2ceb984f3",
+      "source_sha256": "88d7fa4d20e5274c9573c1593e6787ad382450d64519f916c32afda8ee3beab5",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T01:25:18.097252+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.526,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Case 1 reference and identity errors:    2.082E-17   1.480E-16   1.388E-17   1.110E-16   1.110E-16\nRank-one minimum-norm solution:     0.2000000000    0.4000000000\nCase 2 reference and identity errors:    1.110E-16   2.220E-16   1.110E-16   2.776E-17   2.190E-17\nCase 3 reference and identity errors:    1.110E-16   2.220E-16   5.551E-17   2.190E-17   2.776E-17\nCase 4 reference and identity errors:    0.000E+00   0.000E+00   0.000E+00   0.000E+00   0.000E+00\nCase 5 reference and identity errors:    0.000E+00   0.000E+00   0.000E+00   0.000E+00   0.000E+00\nKnown pseudoinverses and all four Moore-Penrose identities checked: 5\nTall, wide, rank-one, singular diagonal and zero matrices; explicit cutoff 1e-10.\nPASS forinv-pseudoinverse-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.056,
+          "exit_code": 0
+        }
+      ]
     }
   ],
-  "validated_at": "2026-10-30T21:08:57.307955+00:00"
+  "validated_at": "2026-10-31T01:25:18.158598+00:00"
 }

@@ -1,6 +1,6 @@
 # Checked GAMS linear-algebra drivers
 
-These real64 consumer programs compare fortran-lapack and stdlib on the same small dense systems and unconstrained least-squares problems, with additional fortran-lapack matrix-decomposition examples. Procedure mappings describe the reviewed real configurations; other overloads require their own evidence.
+These real64 consumer programs compare fortran-lapack and stdlib on the same small dense systems and unconstrained least-squares problems, with additional fortran-lapack matrix-decomposition examples, BLAS products, sparse products and known pseudoinverses. Procedure mappings describe the reviewed real configurations; other overloads require their own evidence.
 
 | Class | Configuration | Procedures |
 | --- | --- | --- |
@@ -9,6 +9,9 @@ These real64 consumer programs compare fortran-lapack and stdlib on the same sma
 | [D4a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D4a1) | Ordinary real symmetric eigenproblems | fortran-lapack `la_lapack:syev`, real64 overload |
 | [D5](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D5) | Orthogonalization, demonstrated by reduced QR | fortran-lapack `linear_algebra:qr` |
 | [D6](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D6) | Singular value decomposition | fortran-lapack `la_lapack:gesvd`, real64 overload |
+| [D1b6](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D1b6) | Rectangular real matrix products | blas-interface `blas_gemm` |
+| [D1b4](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D1b4) | Rectangular sparse matrix-vector products | fsparse `matvec`, COO/CSR real64 overloads |
+| [D9c](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D9c) | Generalized inverse | forinv `inv`, SVD method with explicit cutoff |
 
 ## Shared dense-system checks
 
@@ -35,6 +38,22 @@ A second QR case replaces the third column with twice the second. Factorization 
 The 4-by-3 matrix has an upper 2-by-2 block filled with 1.5, entry `(3,3)=2` and other entries zero. Its singular values are `[3,2,0]`. A second case sets row 4 to `[1,-1,0]`, giving `[3,2,sqrt(2)]`. The driver queries workspace and calls lower-level `gesvd` for reduced factors. It checks successful status, finite factors, nonnegative descending singular values and agreement with the known spectrum within `1e-12`. Reconstruction and left/right orthogonality must each be within `1e-12`, using the same residual scaling as the eigenvalue driver. The numerical rank threshold is `4*epsilon*max(singular_values)`, giving ranks 2 and 3 in these two cases.
 
 These decomposition checks allow valid factor sign choices and arbitrary bases in repeated or null subspaces. They compare reconstruction and invariant properties, rather than requiring a particular vector listing.
+
+## BLAS matrix multiplication
+
+The D1b6 driver computes a 3-by-2 times 2-by-4 product with `A(i,k)=2*i-3*k`, `B(k,j)=3*k-j` and `C0(i,j)=(i-j)/2`. Twelve calls cover all NN/NT/TN/TT storage/transpose combinations and `(alpha,beta)=[(1,0),(-2,0.5),(0,-1)]`. Independent scalar triple loops form `alpha*A*B+beta*C0`; no MATMUL or separate BLAS call supplies the reference. The zero-alpha case checks scaling of an existing output independently of the product. Every result must be finite with scaled maximum-entry error at most `1e-12`. The package is an interface to the installed BLAS implementation. Complex overloads, padded leading dimensions and other BLAS routines are outside the driver.
+
+## Sparse accumulated matrix-vector products
+
+The D1b4 driver uses the nonsymmetric 4-by-3 matrix with rows `[2,0,4]`, `[0,3,0]`, `[0,0,0]`, `[-1,0,5]`. Inputs `[1,-2,3]`, `[0,1,-1]` and zero give products `[14,-6,0,14]`, `[-4,3,0,-5]` and zero. Scalar row/column loops independently compute each reference. COO and CSR forms are checked with both zero and nonzero initial output `[0.5,-1,7,2]`, and every call is repeated to check `y := y+A*x` accumulation rather than replacement. All 24 calls must return finite vectors with absolute maximum-entry error at most `1e-12`.
+
+The empty third row must retain its initial output value. The test exercises the conversion helpers to prepare storage, but its verified problem class is D1b4; the separate D1b9 storage-conversion mapping is not marked verified by this driver. Symmetric-storage shortcuts, complex overloads and other sparse formats are outside the example.
+
+## Known pseudoinverses and minimum-norm solutions
+
+The D9c driver uses `forinv:inv(method="gesvd",tol=1e-10)` for five cases. For the rank-one matrix `u*v^T`, `u=[1,2,3]`, `v=[1,2]`, the explicit pseudoinverse is `v*u^T/70`. Its application to `b=u` must produce the minimum-norm solution `[1/5,2/5]`. A full-rank tall matrix with orthogonal columns `[1,2,2]` and `[2,-1,0]` has pseudoinverse rows equal to those columns divided by 9 and 5 respectively. The wide transpose must have the transposed pseudoinverse. The remaining cases are `diag(2,0,4)`, with inverse `diag(1/2,0,1/4)`, and a zero 3-by-2 matrix, with a zero 2-by-3 pseudoinverse.
+
+Each case checks the explicit reference and all four Moore-Penrose conditions: `A*Aplus*A=A`, `Aplus*A*Aplus=Aplus`, symmetry of `A*Aplus`, and symmetry of `Aplus*A`. Maximum-entry errors are divided by `max(1,max(abs(reference)))` for the corresponding matrix and bounded by `1e-11`; all results/errors must be finite. The minimum-norm coefficient error is bounded by `1e-11`. Original matrices are preserved because the pinned ForSVD dependency can overwrite the SVD input despite its declared input intent. The cutoff is absolute in this API. This does not test default cutoff behavior, alternative methods, ill-conditioning, near-threshold numerical ranks or general rank selection.
 
 ## Observed high-level link limit
 
@@ -63,12 +82,15 @@ Saved reproducers: [high-level eigh](gams-candidates/fortran-lapack-eigh.f90) an
 | [Load slicot-lyapunov-known-matrix](https://beliavsky.github.io/fortran-playground/fpm/?package=slicot&example=gams-slicot-lyapunov-known-matrix) · [Source](../fpm_catalog/gams-drivers/slicot-lyapunov-known-matrix.f90) | D8 | [Procedure](https://github.com/SLICOT/SLICOT-Reference/blob/5eeb845d84f5a60f6069754b7819dad468951933/src/SB03MD.f#L1) · [Author example](https://github.com/SLICOT/SLICOT-Reference/blob/5eeb845d84f5a60f6069754b7819dad468951933/examples/TSB03MD.f) |
 | [Load slicot-continuous-sylvester](https://beliavsky.github.io/fortran-playground/fpm/?package=slicot&example=gams-slicot-continuous-sylvester) · [Source](../fpm_catalog/gams-drivers/slicot-continuous-sylvester.f90) | D8 | [Procedure](https://github.com/SLICOT/SLICOT-Reference/blob/5eeb845d84f5a60f6069754b7819dad468951933/src/SB04MD.f#L4) · [Author example](https://github.com/SLICOT/SLICOT-Reference/blob/5eeb845d84f5a60f6069754b7819dad468951933/examples/TSB04MD.f) |
 | [Load slicot-discrete-sylvester](https://beliavsky.github.io/fortran-playground/fpm/?package=slicot&example=gams-slicot-discrete-sylvester) · [Source](../fpm_catalog/gams-drivers/slicot-discrete-sylvester.f90) | D8 | [Procedure](https://github.com/SLICOT/SLICOT-Reference/blob/5eeb845d84f5a60f6069754b7819dad468951933/src/SB04QD.f#L4) · [Author example](https://github.com/SLICOT/SLICOT-Reference/blob/5eeb845d84f5a60f6069754b7819dad468951933/examples/TSB04QD.f) |
+| [Load blas-gemm-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=blas-interface&example=gams-blas-gemm-reference) · [Source](../fpm_catalog/gams-drivers/blas-gemm-reference.f90) | D1b6 | [Procedure](https://github.com/awvwgk/blas-interface/blob/552a2e6a41443843003216fedad6419af55f8e35/src/blas/level3.f90#L35) · Original lower-level API driver |
+| [Load fsparse-matvec-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=fsparse&example=gams-fsparse-matvec-reference) · [Source](../fpm_catalog/gams-drivers/fsparse-matvec-reference.f90) | D1b4 | [Procedure](https://github.com/jalvesz/FSPARSE/blob/fa8233420ab0110bb688d565879164386521a8fc/src/matvec/fsparse_matvec.f90#L14) · [Author example](https://github.com/jalvesz/FSPARSE/blob/fa8233420ab0110bb688d565879164386521a8fc/test/test_matrices.f90) |
+| [Load forinv-pseudoinverse-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=forinv&example=gams-forinv-pseudoinverse-reference) · [Source](../fpm_catalog/gams-drivers/forinv-pseudoinverse-reference.f90) | D9c | [Procedure](https://github.com/gha3mi/forinv/blob/80b5dbed9709c001e4309382424276a2ceb984f3/src/forinv.f90#L15) · [Author example](https://github.com/gha3mi/forinv/blob/80b5dbed9709c001e4309382424276a2ceb984f3/test/test1.f90) |
 
 The dense examples reuse both authors' problem data and retain both license notices. The least-squares examples adapt author API usage to shared deterministic data. These drivers appear in hosted and main local FPM example menus and downloaded projects. Loading a link selects source without submitting a job.
 
 ## Recorded results
 
-All 13 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing the existing package libraries. Only each main and executable were rebuilt. The [verification report](gams-linear-algebra-validation.json) records source hashes, pins and saved output. These small examples establish checked usage, rather than comprehensive accuracy or performance comparisons. The packages may share underlying algorithms; this is not evidence of independent implementations. Zero printed error means agreement at working precision.
+All 16 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing the existing package libraries. Only each main and executable were rebuilt. The [verification report](gams-linear-algebra-validation.json) records source hashes, pins and saved output. These small examples establish checked usage, rather than comprehensive accuracy or performance comparisons. The packages may share underlying algorithms; this is not evidence of independent implementations. Zero printed error means agreement at working precision.
 
 ### fortran-lapack-dense-solve
 
@@ -288,10 +310,47 @@ Recovered 2-by-3 solution:
 PASS slicot-discrete-sylvester
 ```
 
+### blas-gemm-reference
+
+```text
+3-by-2 times 2-by-4 matrix product:
+    -22.0000    -17.0000    -12.0000     -7.0000
+     -8.0000     -7.0000     -6.0000     -5.0000
+      6.0000      3.0000      0.0000     -3.0000
+Transpose/scaling combinations checked: 12
+Maximum scaled error:   0.0000E+00
+PASS blas-gemm-reference
+```
+
+### fsparse-matvec-reference
+
+```text
+A*x for vector 1:     14.000    -6.000     0.000    14.000
+A*x for vector 2:     -4.000     3.000     0.000    -5.000
+A*x for vector 3:      0.000     0.000     0.000     0.000
+COO/CSR accumulated products checked: 24
+Rectangular 4-by-3 matrix includes an empty row; zero/nonzero output and zero input checked.
+PASS fsparse-matvec-reference
+```
+
+### forinv-pseudoinverse-reference
+
+```text
+Case 1 reference and identity errors:    2.082E-17   1.480E-16   1.388E-17   1.110E-16   1.110E-16
+Rank-one minimum-norm solution:     0.2000000000    0.4000000000
+Case 2 reference and identity errors:    1.110E-16   2.220E-16   1.110E-16   2.776E-17   2.190E-17
+Case 3 reference and identity errors:    1.110E-16   2.220E-16   5.551E-17   2.190E-17   2.776E-17
+Case 4 reference and identity errors:    0.000E+00   0.000E+00   0.000E+00   0.000E+00   0.000E+00
+Case 5 reference and identity errors:    0.000E+00   0.000E+00   0.000E+00   0.000E+00   0.000E+00
+Known pseudoinverses and all four Moore-Penrose identities checked: 5
+Tall, wide, rank-one, singular diagonal and zero matrices; explicit cutoff 1e-10.
+PASS forinv-pseudoinverse-reference
+```
+
 ## Maintenance
 
 ```text
-python xverify_gams_drivers.py --drivers fortran-lapack-dense-solve fortran-lapack-least-squares stdlib-dense-solve stdlib-least-squares fortran-lapack-symmetric-eigen fortran-lapack-qr-decomposition fortran-lapack-svd-decomposition minres-indefinite-solve qdldl-quasidefinite-solve kiss-positive-definite-solve slicot-lyapunov-known-matrix slicot-continuous-sylvester slicot-discrete-sylvester
+python xverify_gams_drivers.py --drivers fortran-lapack-dense-solve fortran-lapack-least-squares stdlib-dense-solve stdlib-least-squares fortran-lapack-symmetric-eigen fortran-lapack-qr-decomposition fortran-lapack-svd-decomposition minres-indefinite-solve qdldl-quasidefinite-solve kiss-positive-definite-solve slicot-lyapunov-known-matrix slicot-continuous-sylvester slicot-discrete-sylvester blas-gemm-reference fsparse-matvec-reference forinv-pseudoinverse-reference
 python xpackage_gams.py
 python xfpm_examples.py
 python xsite.py

@@ -1,0 +1,84 @@
+{
+  "source_path": "docs/gams-candidates/fortran-primes/large-int64-primality.f90",
+  "source_sha256": "58dfdd82a593688689a9f381ae73c9bfe7e11f40f9a4b4f8ea4b2d9dfec9e1c8",
+  "source_revision": "817abbf15c2565d2b92c35546d9e18152eb02e2c",
+  "result": {
+    "ok": false,
+    "compiler": "GNU Fortran (GCC) 16.2.0",
+    "compiler_id": "gfortran",
+    "fpm": "0.12.0",
+    "stages": [
+      {
+        "name": "Build",
+        "command": [
+          "fpm",
+          "build",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 0.393,
+        "ok": true,
+        "exit_code": 0,
+        "error": "",
+        "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+        "stderr": ""
+      },
+      {
+        "name": "Run",
+        "command": [
+          "fpm",
+          "run",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 30.037,
+        "ok": false,
+        "exit_code": -9,
+        "error": "Timed out after 30 seconds.",
+        "stdout": "Primes through 1000: count = 168; sum = 76127\nPrimes in [100,200]: 101 103 107 109 113 127 131 137 139 149 151 157 163 167 173 179 181 191 193 197 199\nis_prime(-2) = F\nis_prime(0) = F\nis_prime(1) = F\nis_prime(2) = T\nis_prime(2147483647) = T\n",
+        "stderr": "Project is up to date\n"
+      }
+    ],
+    "cache": {
+      "package": "fortran-primes",
+      "compiler": "GNU Fortran 16.2.0",
+      "key": "39ded66798505fab1c6df21f",
+      "library_reused": true,
+      "changed_artifacts": []
+    },
+    "packages": [
+      {
+        "repository": "perazz/fortran-primes",
+        "revision": "817abbf15c2565d2b92c35546d9e18152eb02e2c",
+        "sha256": "1ae02b151c246b976ac7ad34d117ef9990d82cee2a68b4d2946dd100024763c1"
+      }
+    ],
+    "build_ok": true,
+    "target_groups": {
+      "app": [
+        "playground-main"
+      ],
+      "example": [],
+      "test": []
+    },
+    "targets": [
+      "playground-main"
+    ],
+    "plots": [],
+    "plot_notes": []
+  }
+}

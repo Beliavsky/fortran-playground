@@ -67,6 +67,90 @@ class GamsSiteTests(unittest.TestCase):
             self.assertIn('Open default example', sorting)
             self.assertNotIn('Try in playground', sorting)
 
+    def test_number_theory_primary_links_use_checked_problem_drivers(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects'] if 'B' in p['curation']['gams_codes']]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination, feed)
+            page = Page((destination/'B/index.html').read_text(encoding='utf-8'))
+            primary = [url for url, label in page.anchors if label == 'Try in playground']
+            self.assertEqual(set(primary), {
+                'https://beliavsky.github.io/fortran-playground/fpm/?package=fortran-primes&example=gams-primes-trial-division',
+                'https://beliavsky.github.io/fortran-playground/fpm/?package=rpn-calculator-fortran&example=gams-rpn-gcd-lcm-reference'})
+            self.assertNotIn('Open default example', [label for _, label in page.anchors])
+
+    def test_arithmetic_class_links_do_not_verify_sibling_capabilities(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        names = {'rational_number','strith','ryu_fortran'}
+        feed['projects'] = [p for p in feed['projects'] if p['playground']['package_id'] in names]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination, feed)
+            for code, package, driver in [('A1','strith','strith-integer-reference'),
+                                          ('A2','rational_number','rational-addition-reference'),
+                                          ('A6','ryu_fortran','ryu-binary64-roundtrip')]:
+                page = Page((destination/code/'index.html').read_text(encoding='utf-8'))
+                url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={package}&example=gams-{driver}'
+                self.assertIn((url,'Try in playground'), page.anchors)
+            a6 = Page((destination/'A6/index.html').read_text(encoding='utf-8'))
+            self.assertIn(('https://beliavsky.github.io/fortran-playground/fpm/?package=strith','Open default example'), a6.anchors)
+            self.assertNotIn(('https://beliavsky.github.io/fortran-playground/fpm/?package=strith&example=gams-strith-integer-reference','Try in playground'), a6.anchors)
+
+    def test_multiprecision_and_bit_class_pages_open_matching_drivers(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects'] if p['playground']['package_id'] in {'mpfun2020-var1','bstrith'}]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination, feed)
+            for code, package, driver in [('A3c','mpfun2020-var1','mpfun-real-addition'),
+                                          ('A4c','mpfun2020-var1','mpfun-complex-addition'),
+                                          ('N2','bstrith','bstrith-bit-reference')]:
+                html = (destination/code/'index.html').read_text(encoding='utf-8')
+                primary = [url for url, label in Page(html).anchors if label=='Try in playground']
+                self.assertEqual(primary, [f'https://beliavsky.github.io/fortran-playground/fpm/?package={package}&example=gams-{driver}'])
+                self.assertIn('Verified: a checked driver', html)
+
+    def test_special_function_class_links_select_the_matching_problem(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects'] if p['playground']['package_id'] in
+                            {'carlson-elliptic-integrals','specfun','amosf90'}]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination, feed)
+            for code, package, driver in [('C14','carlson-elliptic-integrals','carlson-rf-reference'),
+                                          ('C19','specfun','bernoulli-power-sums'),
+                                          ('C10','amosf90','amos-complex-series')]:
+                primary = [url for url, label in Page((destination/code/'index.html').read_text()).anchors
+                           if label=='Try in playground']
+                self.assertEqual(primary, [f'https://beliavsky.github.io/fortran-playground/fpm/?package={package}&example=gams-{driver}'])
+            amos = (destination/'packages/amosf90/index.html').read_text()
+            self.assertIn('Pinned failure', amos)
+            self.assertIn('0.556', amos)
+
+    def test_product_and_pseudoinverse_classes_open_matching_drivers(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects'] if p['playground']['package_id'] in
+                            {'blas-interface','fsparse','forinv'}]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination, feed)
+            for code, package, driver in [('D1b6','blas-interface','blas-gemm-reference'),
+                                          ('D1b4','fsparse','fsparse-matvec-reference'),
+                                          ('D9c','forinv','forinv-pseudoinverse-reference')]:
+                primary = [url for url, label in Page((destination/code/'index.html').read_text()).anchors
+                           if label=='Try in playground']
+                self.assertEqual(primary, [f'https://beliavsky.github.io/fortran-playground/fpm/?package={package}&example=gams-{driver}'])
+            conversion = (destination/'D1b9/index.html').read_text()
+            self.assertIn('Source-supported:', conversion)
+            self.assertIn('Open default example', conversion)
+            self.assertNotIn('example=gams-fsparse-matvec-reference', conversion)
+
     def test_real_catalog_is_browsable_without_javascript_and_links_resolve(self):
         with tempfile.TemporaryDirectory() as temporary:
             destination = Path(temporary)/'gams'

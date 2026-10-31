@@ -2374,6 +2374,498 @@
         "nan_ordering_checked": false,
         "stability_checked": false
       }
+    },
+    {
+      "id": "primes-trial-division",
+      "name": "gams-primes-trial-division",
+      "package_id": "fortran-primes",
+      "procedure_id": "fortran-primes-is-prime",
+      "gams_code": "B",
+      "problem_id": "prime-enumeration-and-primality",
+      "path": "fpm_catalog/gams-drivers/primes-trial-division.f90",
+      "revision": "817abbf15c2565d2b92c35546d9e18152eb02e2c",
+      "author_example": "test/test_primes.f90",
+      "reuse": "adapted",
+      "license": "MIT; upstream source includes additional notices",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fortran-primes-MIT.txt"
+      ],
+      "modifications": "Small deterministic main with independent integer references, readable output and hard failures on mismatches. No changes to package source.",
+      "validation_path": "docs/gams-number-theory-validation.json",
+      "review_path": "docs/gams-number-theory.md",
+      "checks": {
+        "int32_cases": 1021,
+        "int64_cases": 8,
+        "reference": "independent trial division",
+        "upper_bound": 1000,
+        "prime_count": 168,
+        "prime_sum": 76127,
+        "bounded_and_empty_ranges": true,
+        "known_failing_int64_excluded": 3215031751,
+        "full_int64_domain_verified": false
+      }
+    },
+    {
+      "id": "rpn-gcd-lcm-reference",
+      "name": "gams-rpn-gcd-lcm-reference",
+      "package_id": "rpn-calculator-fortran",
+      "procedure_id": "rpn-integer",
+      "gams_code": "B",
+      "problem_id": "integer-common-divisors-and-multiples",
+      "path": "fpm_catalog/gams-drivers/rpn-gcd-lcm-reference.f90",
+      "revision": "7708e4949f17511d81f4e7dd0271a500f0bc3631",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/rpn-calculator-MIT.txt"
+      ],
+      "modifications": "Small deterministic main with independent integer references, readable output and hard failures on mismatches. No changes to package source.",
+      "validation_path": "docs/gams-number-theory-validation.json",
+      "review_path": "docs/gams-number-theory.md",
+      "checks": {
+        "gcd_cases": 4225,
+        "lcm_cases": 4224,
+        "operand_range": [
+          0,
+          64
+        ],
+        "reference": "enumerated divisors and multiples",
+        "lcm_zero_zero_checked": false,
+        "negative_operands_checked": false,
+        "overflow_checked": false
+      }
+    },
+    {
+      "id": "rational-addition-reference",
+      "name": "gams-rational-addition-reference",
+      "package_id": "rational_number",
+      "procedure_id": "rational-number-ratnumadd",
+      "gams_code": "A2",
+      "problem_id": "rational-addition-reference",
+      "path": "fpm_catalog/gams-drivers/rational-addition-reference.f90",
+      "revision": "b6ff702a0f51b950798f2a31c5bd81ae0c15385a",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/arithmetic-drivers-MIT.txt"
+      ],
+      "modifications": "Independently written API driver with exact reference checks; no upstream source or tests copied.",
+      "validation_path": "docs/gams-arithmetic-validation.json",
+      "review_path": "docs/gams-arithmetic.md",
+      "checks": {
+        "addition_cases": 5832,
+        "numerator_range": [
+          -4,
+          4
+        ],
+        "denominator_range": [
+          1,
+          6
+        ],
+        "exact_cross_product_reference": true,
+        "positive_reduction_checked": true,
+        "negative_reduction_claimed": false
+      }
+    },
+    {
+      "id": "strith-integer-reference",
+      "name": "gams-strith-integer-reference",
+      "package_id": "strith",
+      "procedure_id": "strith-api",
+      "gams_code": "A1",
+      "problem_id": "strith-integer-reference",
+      "path": "fpm_catalog/gams-drivers/strith-integer-reference.f90",
+      "revision": "da2b1f489a178cb443f636e3f9c89aed6c8702b1",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/arithmetic-drivers-MIT.txt"
+      ],
+      "modifications": "Independently written API driver with exact reference checks; no upstream source or tests copied.",
+      "validation_path": "docs/gams-arithmetic-validation.json",
+      "review_path": "docs/gams-arithmetic.md",
+      "checks": {
+        "small_arithmetic_cases": 3362,
+        "large_decimal_identities": 5,
+        "largest_decimal_digits": 31,
+        "native_reference_range": [
+          -40,
+          40
+        ],
+        "capacity_overflow_checked": false
+      }
+    },
+    {
+      "id": "ryu-binary64-roundtrip",
+      "name": "gams-ryu-binary64-roundtrip",
+      "package_id": "ryu_fortran",
+      "procedure_id": "ryu-fortran-d2shortest",
+      "gams_code": "A6",
+      "problem_id": "ryu-binary64-roundtrip",
+      "path": "fpm_catalog/gams-drivers/ryu-binary64-roundtrip.f90",
+      "revision": "6c508144398d58143618c5598d816f20c40ac053",
+      "author_example": "test/test_d2shortest/test_d2shortest.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/arithmetic-drivers-MIT.txt"
+      ],
+      "modifications": "Independently written API driver with exact reference checks; no upstream source or tests copied.",
+      "validation_path": "docs/gams-arithmetic-validation.json",
+      "review_path": "docs/gams-arithmetic.md",
+      "checks": {
+        "finite_bit_patterns": 132,
+        "exponent_fields": [
+          0,
+          1,
+          2,
+          10,
+          511,
+          1022,
+          1023,
+          1024,
+          1535,
+          2045,
+          2046
+        ],
+        "signs": 2,
+        "mantissas_per_exponent": 6,
+        "bitwise_roundtrip": true,
+        "shortest_length_proved": false
+      }
+    },
+    {
+      "id": "mpfun-real-addition",
+      "name": "gams-mpfun-real-addition",
+      "package_id": "mpfun2020-var1",
+      "procedure_id": "mpfun2020-var1-mpreal",
+      "gams_code": "A3c",
+      "problem_id": "mpfun-real-addition",
+      "path": "fpm_catalog/gams-drivers/mpfun-real-addition.f90",
+      "revision": "f2191ad80d811cd5e309d83ffad9b2607d27aabc",
+      "author_example": "test/tquad.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/arithmetic-drivers-MIT.txt"
+      ],
+      "modifications": "Independently written API consumer with explicit exact mathematical references; no upstream implementation or test code copied.",
+      "validation_path": "docs/gams-arithmetic-validation.json",
+      "review_path": "docs/gams-arithmetic.md",
+      "checks": {
+        "exact_additions": 6,
+        "requested_decimal_digits": 120,
+        "large_integer_power": 80,
+        "reference": "explicit exact integer and dyadic decimal strings",
+        "other_operations_verified": false
+      }
+    },
+    {
+      "id": "mpfun-complex-addition",
+      "name": "gams-mpfun-complex-addition",
+      "package_id": "mpfun2020-var1",
+      "procedure_id": "mpfun2020-var1-mpcmplx",
+      "gams_code": "A4c",
+      "problem_id": "mpfun-complex-addition",
+      "path": "fpm_catalog/gams-drivers/mpfun-complex-addition.f90",
+      "revision": "f2191ad80d811cd5e309d83ffad9b2607d27aabc",
+      "author_example": "test/tpphix3.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/arithmetic-drivers-MIT.txt"
+      ],
+      "modifications": "Independently written API consumer with explicit exact mathematical references; no upstream implementation or test code copied.",
+      "validation_path": "docs/gams-arithmetic-validation.json",
+      "review_path": "docs/gams-arithmetic.md",
+      "checks": {
+        "exact_complex_sums": 5,
+        "requested_decimal_digits": 120,
+        "large_integer_power": 80,
+        "each_component_checked": true,
+        "reference": "explicit component-wise integer and dyadic decimal strings",
+        "other_operations_verified": false
+      }
+    },
+    {
+      "id": "bstrith-bit-reference",
+      "name": "gams-bstrith-bit-reference",
+      "package_id": "bstrith",
+      "procedure_id": "bstrith-operations",
+      "gams_code": "N2",
+      "problem_id": "bstrith-bit-reference",
+      "path": "fpm_catalog/gams-drivers/bstrith-bit-reference.f90",
+      "revision": "7ed7730e34c7e1f78f2be9426ccc170f9dcaf57e",
+      "author_example": "README.md",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/arithmetic-drivers-MIT.txt"
+      ],
+      "modifications": "Independently written API consumer with explicit exact mathematical references; no upstream implementation or test code copied.",
+      "validation_path": "docs/gams-arithmetic-validation.json",
+      "review_path": "docs/gams-arithmetic.md",
+      "checks": {
+        "exact_checks": 5120,
+        "eight_bit_values": 256,
+        "shift_distances": [
+          1,
+          7
+        ],
+        "four_bit_operand_pairs": 256,
+        "reference": "intrinsic shifts, XOR and bounded modular integer arithmetic",
+        "invalid_inputs_checked": false
+      }
+    },
+    {
+      "id": "carlson-rf-reference",
+      "name": "gams-carlson-rf-reference",
+      "package_id": "carlson-elliptic-integrals",
+      "procedure_id": "carlson-elliptic-integrals-api",
+      "gams_code": "C14",
+      "problem_id": "carlson-rf-reference",
+      "path": "fpm_catalog/gams-drivers/carlson-rf-reference.f90",
+      "revision": "5f25a59a555b7029505aac71a8341d5851f8abed",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/special-function-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer with separate mathematical references; no upstream implementation or test code copied.",
+      "validation_path": "docs/gams-special-functions-validation.json",
+      "review_path": "docs/gams-special-functions.md",
+      "checks": {
+        "positive_triples": 3,
+        "diagonal_references": 3,
+        "elliptic_moduli": [
+          0,
+          0.25,
+          0.75,
+          0.95
+        ],
+        "simpson_intervals": [
+          2048,
+          4096
+        ],
+        "permutation_checks": 3,
+        "homogeneity_checks": 3,
+        "max_scaled_error": 2e-11
+      }
+    },
+    {
+      "id": "bernoulli-power-sums",
+      "name": "gams-bernoulli-power-sums",
+      "package_id": "specfun",
+      "procedure_id": "specfun-bernob",
+      "gams_code": "C19",
+      "problem_id": "bernoulli-power-sums",
+      "path": "fpm_catalog/gams-drivers/bernoulli-power-sums.f90",
+      "revision": "e74d9c810d5c9248b5d8ffab4b766e7bb22ffd23",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/special-function-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer with separate mathematical references; no upstream implementation or test code copied.",
+      "validation_path": "docs/gams-special-functions-validation.json",
+      "review_path": "docs/gams-special-functions.md",
+      "checks": {
+        "rational_reference_indices": [
+          0,
+          1,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12
+        ],
+        "integer_power_sum_cases": 24,
+        "max_power": 8,
+        "sum_limits": [
+          3,
+          10,
+          20
+        ],
+        "unassigned_odd_outputs_read": false,
+        "max_scaled_error": 3e-12
+      }
+    },
+    {
+      "id": "amos-complex-series",
+      "name": "gams-amos-complex-series",
+      "package_id": "amosf90",
+      "procedure_id": "amosf90-bessel",
+      "gams_code": "C10",
+      "problem_id": "amos-complex-series",
+      "path": "fpm_catalog/gams-drivers/amos-complex-series.f90",
+      "revision": "b54a4d4a1d8f7c97acd180ed5bbaae8d089a9fa7",
+      "author_example": "test/check.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/special-function-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer with separate mathematical references; no upstream implementation or test code copied.",
+      "validation_path": "docs/gams-special-functions-validation.json",
+      "review_path": "docs/gams-special-functions.md",
+      "checks": {
+        "complex_value_checks": 39,
+        "orders": [
+          0.3,
+          0.5,
+          1.25
+        ],
+        "sequence_length": 2,
+        "arguments": [
+          [
+            0.5,
+            0.25
+          ],
+          [
+            1,
+            0.5
+          ],
+          [
+            2,
+            0.75
+          ]
+        ],
+        "kode": 1,
+        "required_ierr": 0,
+        "required_nz": 0,
+        "series_convergence_required": true,
+        "max_scaled_error": 2e-12,
+        "known_failing_argument_excluded": [
+          2,
+          -0.75
+        ]
+      }
+    },
+    {
+      "id": "blas-gemm-reference",
+      "name": "gams-blas-gemm-reference",
+      "package_id": "blas-interface",
+      "procedure_id": "blas-interface-blas-gemm",
+      "gams_code": "D1b6",
+      "problem_id": "blas-gemm-reference",
+      "path": "fpm_catalog/gams-drivers/blas-gemm-reference.f90",
+      "revision": "552a2e6a41443843003216fedad6419af55f8e35",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/linear-algebra-api-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer with exact small-matrix references and explicit numerical checks; no upstream implementation or test code copied.",
+      "validation_path": "docs/gams-linear-algebra-validation.json",
+      "review_path": "docs/gams-linear-algebra.md",
+      "checks": {
+        "gemm_calls": 12,
+        "result_shape": [
+          3,
+          4
+        ],
+        "inner_dimension": 2,
+        "transpose_combinations": [
+          "NN",
+          "NT",
+          "TN",
+          "TT"
+        ],
+        "alpha_beta_pairs": [
+          [
+            1,
+            0
+          ],
+          [
+            -2,
+            0.5
+          ],
+          [
+            0,
+            -1
+          ]
+        ],
+        "reference": "independent scalar triple loops",
+        "max_scaled_error": 1e-12
+      }
+    },
+    {
+      "id": "fsparse-matvec-reference",
+      "name": "gams-fsparse-matvec-reference",
+      "package_id": "fsparse",
+      "procedure_id": "fsparse-matvec",
+      "gams_code": "D1b4",
+      "problem_id": "fsparse-matvec-reference",
+      "path": "fpm_catalog/gams-drivers/fsparse-matvec-reference.f90",
+      "revision": "fa8233420ab0110bb688d565879164386521a8fc",
+      "author_example": "test/test_matrices.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/linear-algebra-api-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer with exact small-matrix references and explicit numerical checks; no upstream implementation or test code copied.",
+      "validation_path": "docs/gams-linear-algebra-validation.json",
+      "review_path": "docs/gams-linear-algebra.md",
+      "checks": {
+        "matvec_calls": 24,
+        "matrix_shape": [
+          4,
+          3
+        ],
+        "storage_formats": [
+          "COO",
+          "CSR"
+        ],
+        "empty_row": true,
+        "input_vectors": 3,
+        "output_initializations": [
+          "zero",
+          "nonzero"
+        ],
+        "repeated_accumulation": true,
+        "reference": "independent scalar loops",
+        "max_absolute_error": 1e-12
+      }
+    },
+    {
+      "id": "forinv-pseudoinverse-reference",
+      "name": "gams-forinv-pseudoinverse-reference",
+      "package_id": "forinv",
+      "procedure_id": "forinv-inv",
+      "gams_code": "D9c",
+      "problem_id": "forinv-pseudoinverse-reference",
+      "path": "fpm_catalog/gams-drivers/forinv-pseudoinverse-reference.f90",
+      "revision": "80b5dbed9709c001e4309382424276a2ceb984f3",
+      "author_example": "test/test1.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/linear-algebra-api-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer with exact small-matrix references and explicit numerical checks; no upstream implementation or test code copied.",
+      "validation_path": "docs/gams-linear-algebra-validation.json",
+      "review_path": "docs/gams-linear-algebra.md",
+      "checks": {
+        "matrix_cases": 5,
+        "moore_penrose_identities": 4,
+        "explicit_known_pseudoinverses": true,
+        "rank_one_minimum_norm_solution": [
+          0.2,
+          0.4
+        ],
+        "method": "gesvd",
+        "absolute_singular_value_cutoff": 1e-10,
+        "preserves_original_matrix": true,
+        "max_scaled_error": 1e-11
+      }
     }
   ]
 }

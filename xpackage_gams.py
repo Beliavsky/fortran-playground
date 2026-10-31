@@ -31,6 +31,8 @@ CONVOLUTION_REPORT = Path('docs/gams-convolution.md')
 REGRESSION_REPORT = Path('docs/gams-regression.md')
 MATRIX_EQUATIONS_REPORT = Path('docs/gams-matrix-equations.md')
 SORTING_REPORT = Path('docs/gams-sorting.md')
+NUMBER_THEORY_REPORT = Path('docs/gams-number-theory.md')
+ARITHMETIC_REPORT = Path('docs/gams-arithmetic.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
 EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
@@ -716,14 +718,17 @@ def linear_algebra_review_text(root=ROOT):
     lines = ['# Checked GAMS linear-algebra drivers', '',
              'These real64 consumer programs compare fortran-lapack and stdlib on the same small '
              'dense systems and unconstrained least-squares problems, with additional fortran-lapack '
-             'matrix-decomposition examples. Procedure mappings describe the '
+             'matrix-decomposition examples, BLAS products, sparse products and known pseudoinverses. Procedure mappings describe the '
              'reviewed real configurations; other overloads require their own evidence.', '',
              '| Class | Configuration | Procedures |', '| --- | --- | --- |',
              '| [D2a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D2a1) | Real nonsymmetric general linear systems | `linear_algebra:solve`; `stdlib_linalg:solve` |',
              '| [D9a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D9a1) | Unconstrained linear least squares, L2 solution | `linear_algebra:lstsq`; `stdlib_linalg:lstsq` |',
              '| [D4a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D4a1) | Ordinary real symmetric eigenproblems | fortran-lapack `la_lapack:syev`, real64 overload |',
              '| [D5](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D5) | Orthogonalization, demonstrated by reduced QR | fortran-lapack `linear_algebra:qr` |',
-             '| [D6](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D6) | Singular value decomposition | fortran-lapack `la_lapack:gesvd`, real64 overload |', '',
+             '| [D6](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D6) | Singular value decomposition | fortran-lapack `la_lapack:gesvd`, real64 overload |',
+             '| [D1b6](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D1b6) | Rectangular real matrix products | blas-interface `blas_gemm` |',
+             '| [D1b4](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D1b4) | Rectangular sparse matrix-vector products | fsparse `matvec`, COO/CSR real64 overloads |',
+             '| [D9c](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D9c) | Generalized inverse | forinv `inv`, SVD method with explicit cutoff |', '',
              '## Shared dense-system checks', '',
              'Both solve drivers use the 3-by-3 systems from stdlib `example_solve1` and fortran-lapack '
              '`test_dsolve`, with reference solutions `[5,3,-2]` and `[-2,-2,3]`. They preserve the original '
@@ -774,6 +779,48 @@ def linear_algebra_review_text(root=ROOT):
              'These decomposition checks allow valid factor sign choices and arbitrary bases in '
              'repeated or null subspaces. They compare reconstruction and invariant properties, '
              'rather than requiring a particular vector listing.', '',
+             '## BLAS matrix multiplication', '',
+             'The D1b6 driver computes a 3-by-2 times 2-by-4 product with '
+             '`A(i,k)=2*i-3*k`, `B(k,j)=3*k-j` and `C0(i,j)=(i-j)/2`. '
+             'Twelve calls cover all NN/NT/TN/TT storage/transpose combinations and '
+             '`(alpha,beta)=[(1,0),(-2,0.5),(0,-1)]`. Independent scalar triple loops form '
+             '`alpha*A*B+beta*C0`; no MATMUL or separate BLAS call supplies the reference. '
+             'The zero-alpha case checks scaling of an existing output independently of the product. '
+             'Every result must be finite with scaled maximum-entry error at most `1e-12`. '
+             'The package is an interface to the installed BLAS implementation. Complex overloads, '
+             'padded leading dimensions and other BLAS routines are outside the driver.', '',
+             '## Sparse accumulated matrix-vector products', '',
+             'The D1b4 driver uses the nonsymmetric 4-by-3 matrix with rows '
+             '`[2,0,4]`, `[0,3,0]`, `[0,0,0]`, `[-1,0,5]`. '
+             'Inputs `[1,-2,3]`, `[0,1,-1]` and zero give products '
+             '`[14,-6,0,14]`, `[-4,3,0,-5]` and zero. Scalar row/column loops '
+             'independently compute each reference. COO and CSR forms are checked with both zero '
+             'and nonzero initial output `[0.5,-1,7,2]`, and every call is repeated to check '
+             '`y := y+A*x` accumulation rather than replacement. All 24 calls must return finite '
+             'vectors with absolute maximum-entry error at most `1e-12`.', '',
+             'The empty third row must retain its initial output value. The test exercises the '
+             'conversion helpers to prepare storage, but its verified problem class is D1b4; '
+             'the separate D1b9 storage-conversion mapping is not marked verified by this driver. '
+             'Symmetric-storage shortcuts, complex overloads and other sparse formats are outside the example.', '',
+             '## Known pseudoinverses and minimum-norm solutions', '',
+             'The D9c driver uses `forinv:inv(method="gesvd",tol=1e-10)` for five cases. '
+             'For the rank-one matrix `u*v^T`, `u=[1,2,3]`, `v=[1,2]`, '
+             'the explicit pseudoinverse is `v*u^T/70`. Its application to `b=u` '
+             'must produce the minimum-norm solution `[1/5,2/5]`. '
+             'A full-rank tall matrix with orthogonal columns `[1,2,2]` and `[2,-1,0]` '
+             'has pseudoinverse rows equal to those columns divided by 9 and 5 respectively. '
+             'The wide transpose must have the transposed pseudoinverse. '
+             'The remaining cases are `diag(2,0,4)`, with inverse `diag(1/2,0,1/4)`, '
+             'and a zero 3-by-2 matrix, with a zero 2-by-3 pseudoinverse.', '',
+             'Each case checks the explicit reference and all four Moore-Penrose conditions: '
+             '`A*Aplus*A=A`, `Aplus*A*Aplus=Aplus`, symmetry of `A*Aplus`, and symmetry of '
+             '`Aplus*A`. Maximum-entry errors are divided by `max(1,max(abs(reference)))` '
+             'for the corresponding matrix and bounded by `1e-11`; all results/errors must be finite. '
+             'The minimum-norm coefficient error is bounded by `1e-11`. '
+             'Original matrices are preserved because the pinned ForSVD dependency can overwrite '
+             'the SVD input despite its declared input intent. The cutoff is absolute in this API. '
+             'This does not test default cutoff behavior, alternative methods, ill-conditioning, '
+             'near-threshold numerical ranks or general rank selection.', '',
              '## Observed high-level link limit', '',
              'On 2026-10-30, the high-level `linear_algebra:eigh` and `linear_algebra:svd` '
              'versions compiled their mains but failed to link under the hosted 16 MiB per-file '
@@ -1106,9 +1153,12 @@ def special_functions_review_text(root=ROOT):
              '| Class | Configuration | Procedures |', '| --- | --- | --- |',
              '| [C7a](https://gams.nist.gov/cgi-bin/serve.cgi/Class/C7a) | Gamma, log-Gamma and reciprocal-Gamma at positive real arguments | Fullerton `fgamma`, `log_gamma`, `reciprocal_gamma` |',
              '| [C7c](https://gams.nist.gov/cgi-bin/serve.cgi/Class/C7c) | Psi/digamma at positive real arguments | Fullerton `digamma` |',
-             '| [C10b1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/C10b1) | Modified Bessel I/K, real arguments and integer orders; tested orders 0 and 1 | fortran-bessels `besseli0`, `besseli1`, `besselk0`, `besselk1` |', '',
-             'These demonstrate selected positive arguments and named procedures. They do not exhaust '
-             'their GAMS classes or cover arbitrary orders, complex arguments, poles or extreme-argument regimes. '
+             '| [C10b1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/C10b1) | Modified Bessel I/K, real arguments and integer orders; tested orders 0 and 1 | fortran-bessels `besseli0`, `besseli1`, `besselk0`, `besselk1` |',
+             '| [C10](https://gams.nist.gov/cgi-bin/serve.cgi/Class/C10) | Complex J/I sequences and half-order K | AMOS `f90_zbesj`, `f90_zbesi`, `f90_zbesk` |',
+             '| [C14](https://gams.nist.gov/cgi-bin/serve.cgi/Class/C14) | Carlson RF and complete elliptic K | `carlson_elliptic_module:drf` |',
+             '| [C19](https://gams.nist.gov/cgi-bin/serve.cgi/Class/C19) | Bernoulli numbers and integer power sums | `specfun_module:bernob` |', '',
+             'These demonstrate selected arguments and named procedures. They do not exhaust '
+             'their GAMS classes or cover all orders, branch cuts, poles or extreme-argument regimes. '
              'See the [coverage report](gams-coverage.md) for remaining procedure-class gaps.', '',
              '## Gamma-family references and precision', '',
              'The pinned Fullerton APIs use default real, which has 6 decimal digits of precision in the '
@@ -1149,20 +1199,67 @@ def special_functions_review_text(root=ROOT):
              '    values = (mp.besseli(0,x), mp.besseli(1,x), mp.besselk(0,x), mp.besselk(1,x))',
              '    print(text, *(mp.nstr(v,23) for v in values))', '```', '',
              'mpmath is needed only to regenerate references. The self-contained Fortran driver and '
-             'the backend do not depend on it.', '', '## Sources and playground links', '',
+             'the backend do not depend on it.', '',
+             '## Carlson elliptic-integral references', '',
+             'The C14 driver checks three diagonal identities `RF(x,x,x)=1/sqrt(x)` at '
+             '`x=[0.25,1,4]`, three positive triples `(0.25,1,4)`, `(1,2,4)`, `(2,3,5)`, '
+             'and complete elliptic integrals `K(k)=RF(0,1-k^2,1)` at '
+             '`k=[0,0.25,0.75,0.95]`. For positive triples, substitution `u=t^(-2)-1` '
+             'in the [defining RF integral](https://dlmf.nist.gov/19.16.E1) gives a smooth integral '
+             'from 0 to 1 with integrand `product(1+(x_i-1)*t^2)^(-1/2)`. '
+             'Independent composite Simpson sums at 2048 and 4096 panels must agree; '
+             'the fine sum is the reference. K references use 4096 panels in '
+             '`integral_0^(pi/2) (1-k^2*sin(theta)^2)^(-1/2) dtheta`.', '',
+             'Three cyclic-permutation and three scale checks supply secondary identities: '
+             '`RF(y,z,x)=RF(x,y,z)` and `RF(4*x,4*y,4*z)=RF(x,y,z)/2`. '
+             'All checked results/references must be finite, all RF statuses zero, and scaled error '
+             '`abs(actual-reference)/max(1,abs(reference))` at most `2e-11`. '
+             'This does not validate singular moduli, extreme scaling or other Carlson functions.', '',
+             '## Bernoulli references and power sums', '',
+             'The C19 driver checks `B0=1`, `B1=-1/2` and even `B2..B12` against '
+             '`[1/6,-1/30,1/42,-1/30,5/66,-691/2730]`. '
+             'It then evaluates the Bernoulli formula for `sum(m^p,m=0..n-1)` '
+             'at powers 1..8 and `n=[3,10,20]`, comparing 24 results against direct int64 summation. '
+             'The small integer powers, binomial coefficients and sums fit in int64. '
+             'Finite scaled errors must be at most `3e-12`.', '',
+             '**Pinned API limitation:** `bernob` leaves odd output positions above B1 unassigned. '
+             'The driver never reads them: it supplies their known mathematical zeros locally '
+             'for the power-sum application. This verifies returned even values and B0/B1, '
+             'not a fully initialized Bernoulli output array. The implementation also writes '
+             'B0..B2 unconditionally, so calls with `n<2` are outside the driver. '
+             'These source-level restrictions are recorded in the procedure notes.', '',
+             '## Complex AMOS Bessel references and pinned failure', '',
+             'The C10 driver checks 39 complex values at `z=[0.5+0.25i,1+0.5i,2+0.75i]`. '
+             'For starting orders `[0.3,0.5,1.25]`, it requests two successive J and I values '
+             'and compares with independent [J](https://dlmf.nist.gov/10.2.E2) and '
+             '[I](https://dlmf.nist.gov/10.25.E2) power series using intrinsic Gamma. '
+             'A 100-term cap and explicit convergence requirement protect the references. '
+             'K at order 1/2 is checked against '
+             '[sqrt(pi/(2*z))*exp(-z)](https://dlmf.nist.gov/10.39.E2). '
+             'Every status and underflow count must be zero; both components must be finite '
+             'and complex scaled error at most `2e-12`. Only unscaled mode `KODE=1` is tested.', '',
+             '**Pinned failure:** `J_0.3(2-0.75i)` returns approximately '
+             '`-0.0312577+0.6118974i` instead of `0.4766625+0.3849523i`, a scaled discrepancy '
+             'about 0.556. The independent series agrees with mpmath 1.3.0 at 80 decimal digits. '
+             'The [failing source](gams-candidates/amosf90/lower-half-plane-series.f90) and '
+             '[saved sandbox result with the high-precision reference](gams-candidates/amosf90/lower-half-plane-result.json) '
+             'are retained for reporting upstream. The checked driver uses upper-right-quadrant arguments '
+             'and explicitly excludes this known failing case; no package patch or tolerance relaxation '
+             'is applied. This establishes selected checked usage, not full-domain AMOS correctness.', '',
+             '## Sources and playground links', '',
              '| Driver | Class | Pinned procedure and author example |', '| --- | --- | --- |']
     for d in drivers:
         base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
         evidence = records[d['procedure_id']]['evidence'][0]
         url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        author = f' · [Author example/test]({base}{d["author_example"]})' if d.get('author_example') else ''
         lines.append(f'| [Load {d["id"]}]({url}) · [Source](../{d["path"]}) | {d["gams_code"]} | '
-                     f'[Procedure]({base}{evidence["path"]}#L{evidence["line"]}) · '
-                     f'[Author example/test]({base}{d["author_example"]}) |')
-    lines += ['', 'The programs adapt author API patterns, retain license notices and use deterministic '
+                     f'[Procedure]({base}{evidence["path"]}#L{evidence["line"]}){author} |')
+    lines += ['', 'The programs use author APIs, retain applicable license notices and use deterministic '
               'reference checks instead of the larger author harnesses. They appear in hosted and main '
               'local FPM example menus and downloaded projects. Loading a link selects source without '
               'submitting a job.', '', '## Recorded results', '',
-              'All three passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing '
+              f'All {len(drivers)} passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing '
               'existing package libraries. Only each main and executable were rebuilt. The '
               '[verification report](gams-special-functions-validation.json) records hashes, pins and '
               'saved output. These cases establish checked usage and selected-point agreement, rather '
@@ -1174,6 +1271,7 @@ def special_functions_review_text(root=ROOT):
         lines += ['### '+d['id'], '', '```text', output.rstrip(), '```', '']
     lines += ['## Maintenance', '', '```text',
               'python xverify_gams_drivers.py --drivers fullerton-gamma-values fullerton-digamma-values bessels-modified-values',
+              'python xverify_gams_drivers.py --drivers carlson-rf-reference bernoulli-power-sums amos-complex-series',
               'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
               'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
               'No backend redeployment or package library rebuild is required.', '']
@@ -2272,6 +2370,196 @@ def sorting_review_text(root=ROOT):
         'or package library rebuild is required.', ''])
 
 
+def number_theory_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-number-theory-validation.json']
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    records = {p['id']: p for p in data['procedure_mappings']}
+    lines = ['# Checked GAMS number-theory drivers', '',
+             'Both currently selected packages in [B: Number theory](https://beliavsky.github.io/fortran-playground/gams/B/) '
+             'now have class-specific checked drivers. Their primary class-page links load these drivers, '
+             'rather than the package defaults. B has no finer classes in the recorded GAMS taxonomy; '
+             'this does not exhaust the packages, their input domains or number theory.', '',
+             '## Prime enumeration and primality', '',
+             '`fortran-primes` uses `prime_numbers:primes` and `is_prime`. '
+             'The driver checks 1021 int32 operands from -20 through 1000 against an independent trial-division function. '
+             'It compares the complete ordered list through 1000 against independently generated primes and '
+             'also checks the known count 168 and sum 76127. It checks the bounded range [100,200], '
+             'an upper bound below two, and a reversed range.', '',
+             'Eight int64 cases include negative/zero/unit operands, 2, 2147483647, '
+             '10000000019, 10000000020 and 10000000021. Each is independently checked by trial division. '
+             'The reference tests every divisor through the square root, using `d <= n/d` to avoid squaring overflow. '
+             'The example adapts the author test API patterns; it does not compare with the package\'s own tables '
+             'or another API from the same implementation.', '',
+             'These checks do not establish correctness over the full int32/int64 domains. '
+             'Factorization, next-prime queries and large enumeration workloads are outside this driver. '
+             'The upstream MIT license and the pinned source\'s additional Primes.jl/CC BY-NC notices are retained.', '',
+             '**Pinned API limitation:** an initial driver timed out after reaching the int64 case '
+             '`3215031751` (the composite `151*751*28351`). '
+             'The [failing source](gams-candidates/fortran-primes/large-int64-primality.f90), '
+             '[sandbox result](gams-candidates/fortran-primes/large-int64-primality-result.json), '
+             '[minimal reproducer](gams-candidates/fortran-primes/signed-int32-boundary.f90) and '
+             '[isolated result](gams-candidates/fortran-primes/signed-int32-boundary-result.json) are retained. '
+             'Source inspection shows that the `n<2**32` branch narrows `n` to signed int32; '
+             'the modular-exponentiation loop then arithmetically shifts a negative exponent. '
+             'The checked driver excludes this known failing case and explicitly notes the limitation. '
+             'The B mapping remains justified by the demonstrated number-theory operations, '
+             'without a claim of full-domain primality correctness.', '',
+             '## Greatest common divisors and least common multiples', '',
+             '`rpn-calculator-fortran` exposes `rat:gcd` and `lcm` independently of its interactive calculator. '
+             'The driver checks every ordered pair of nonnegative operands from 0 through 64: '
+             '4225 GCD calls and 4224 LCM calls. Its GCD reference enumerates common divisors; '
+             'its LCM reference searches successive multiples of the larger operand. '
+             'Neither reference calls a package routine or uses the package\'s Euclidean-GCD/LCM formula. '
+             'Results are exact integer comparisons.', '',
+             '**Pinned API limitation:** `lcm(0,0)` evaluates `0/gcd(0,0)` and therefore divides by zero. '
+             'The driver excludes that call and states the restriction in its output. '
+             'The implementation returns `gcd(0,0)=0`, which is checked as an API convention. '
+             'LCM with exactly one zero operand is checked in both orders. Negative-operand sign conventions, '
+             'overflow and the calculator\'s other numerical functions are outside this driver. '
+             'The upstream MIT notice is retained.', '',
+             '## Sources, links and recorded results', '',
+             'Both passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing '
+             'the existing package libraries. Only the mains and executables were compiled. '
+             'The [verification report](gams-number-theory-validation.json) records source hashes and output. '
+             'Loading the links selects code without submitting a job; the examples appear in hosted '
+             'and main local FPM menus.', '']
+    for d in drivers:
+        evidence = records[d['procedure_id']]['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]})', '']
+        if d.get('author_example'):
+            lines += [f'[Pinned author test]({base}{d["author_example"]})', '']
+        checks = json.loads((root/driver_validation_path(d)).read_text(encoding='utf-8'))
+        result = next(r for r in checks['drivers'] if r['driver_id'] == d['id'])
+        output = next(s['stdout'] for s in result['stages'] if s['name'] == 'Run')
+        lines += ['```text', output.rstrip(), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers primes-trial-division rpn-gcd-lcm-reference',
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'Other GAMS sections still have source-supported and uncertain mappings; '
+              'see the [coverage report](gams-coverage.md) and [mapping evidence queue](gams-mapping-evidence.md).', '']
+    return '\n'.join(lines)
+
+
+def arithmetic_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-arithmetic-validation.json']
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    records = {p['id']: p for p in data['procedure_mappings']}
+    lines = ['# Checked GAMS arithmetic, representation and bit-operation drivers', '',
+             'These drivers cover specific configurations in A1 (Integer), A2 (Rational) and '
+             'A6 (Change of representation), plus A3c/A4c arbitrary-precision real/complex arithmetic '
+             'and N2 bit manipulation. The class-page links load the matching programs; '
+             'the broader A page identifies the narrower demonstration. '
+             'Arithmetic and the other GAMS sections are not exhausted.', '',
+             '## Exact rational addition: A2', '',
+             '`rational_number:ratNumAdd` is called for all operand pairs with numerators -4..4 '
+             'and denominators 1..6, with simplification both disabled and enabled: 5832 calls. '
+             'Each result has a positive denominator and is compared by exact int64 cross-products '
+             'against `(p*s+r*q)/(q*s)`. All selected values and intermediate products fit comfortably '
+             'within their integer kinds. Positive sums with simplification enabled must also equal '
+             'the canonical numerator/denominator obtained by independently enumerating divisors.', '',
+             '**Pinned representation limitation:** the `math:gcDenom` dependency returns zero '
+             'when either operand is nonpositive. Thus negative or zero numerators can remain '
+             'unreduced even when `simplify=.true.`. For example, `-1/3 + -1/6` is returned '
+             'as `-9/18`, an exact representation of `-1/2`. The driver checks the value and '
+             'does not claim canonical negative/zero representations. Zero denominators, '
+             'integer overflow, real-to-rational conversion and other rational operations are outside this example.', '',
+             '## Decimal-string integer arithmetic: A1', '',
+             '`strith` signed addition and subtraction are compared with native integer arithmetic '
+             'for every ordered operand pair in -20..20: 3362 operations. Five additional identities '
+             'exercise decimal values beyond int64: adding one to thirty nines, borrowing across '
+             'thirty zeroes, both subtraction orders for adjacent 20-digit integers, and cancellation '
+             'of opposite 30-digit values. The expected decimal strings are explicit; no native integer '
+             'is overflowed to construct a reference.', '',
+             'The driver uses the pinned string constructor\'s explicit sign and fixed-width zero padding. '
+             'This is fixed-capacity decimal arithmetic, not unlimited arbitrary precision. '
+             'Capacity overflow, all comparison operators and the separate unsigned-formatting interface '
+             'are not verified. This A1 driver does not mark the same procedure\'s A6 mapping verified.', '',
+             '## Binary64 decimal round trips: A6', '',
+             '`ryu:d2shortest` converts 132 finite IEEE binary64 bit patterns. Eleven exponent fields '
+             '(0, 1, 2, 10, 511, 1022, 1023, 1024, 1535, 2045, 2046), six mantissas '
+             '(0, 1, 2, 2^51-1, 2^51, 2^52-1), and both signs include signed zeros, '
+             'subnormal/normal boundaries and the largest finite value. Intrinsic formatted input '
+             'must recover the identical 64 bits; numerical equality alone would miss negative zero. '
+             'The driver separately requires the author API\'s `0.0` and `-0.0` spellings.', '',
+             'This verifies selected finite round trips with gfortran\'s reader, not all binary64 patterns, '
+             'correctness of every reader, NaN/infinity spellings or mathematical shortest-length optimality. '
+             'The new driver is independently written. Its MIT license covers the driver; '
+             'the upstream package\'s unspecified licensing metadata remains unchanged.', '',
+             '## Arbitrary-precision real addition: A3c', '',
+             '`MPFUN2020-var1` is used with 120 requested decimal digits and explicit word precision '
+             'on all constructors. Six additions are compared by exact multiprecision equality '
+             'with explicit decimal integer or dyadic-fraction references. They include `10^80+1` '
+             'in both operand orders, its negative counterpart, exact cancellation, '
+             '`123456789012345678901234567890 + 987654321098765432109876543210 '
+             '= 1111111110111111111011111111100`, and `0.125+0.375=0.5`. '
+             'The long integer reference is supplied explicitly rather than computed through another package operation.', '',
+             'The integer cases fit exactly within the requested precision. Ordinary binary64 arithmetic '
+             'cannot retain the unit added to `10^80`. The example checks addition at one precision, '
+             'not general accuracy, all exponent ranges, rounding behavior, other operations or performance. '
+             'A small input helper appends `.0` to integer strings because the author\'s parser '
+             'requires a decimal point. No binary64 conversion of the long decimal operands is used.', '',
+             '## Arbitrary-precision complex addition: A4c', '',
+             'Five MPFUN complex additions are checked by comparing both real and imaginary components '
+             'exactly against explicit decimal references. The main cancellation problem is '
+             '`(10^80,-10^80) + (-(10^80-1),10^80+2) = (1,2)`. '
+             'Further cases reverse the signs, retain unit increments in both large components, '
+             'add dyadic fractions and cancel to complex zero. The same 120-digit precision '
+             'and decimal-point helper are used. These are independent mathematical identities '
+             'and API consumers, not copied author quadrature programs. Multiplication, division, '
+             'transcendental functions and all-input accuracy are outside the verification.', '',
+             '## Binary-string bit manipulation: N2', '',
+             '`bstrith` is checked against native integer references with 5120 exact string comparisons. '
+             'For every 8-bit value 0..255, the driver checks left/right shifts by 1..7, complement, '
+             'XOR with `10100101`, and modular increment/decrement. It also checks addition and '
+             'subtraction for all 256 ordered pairs of 4-bit operands. References use intrinsic '
+             '`ISHFT`, `IAND`, `IEOR` and bounded integer arithmetic modulo 16 or 256; '
+             'subtraction is checked directly rather than just as the inverse of the package\'s addition.', '',
+             'This demonstrates N2 with valid fixed-width strings. Out-of-range shifts, malformed inputs '
+             'and wider strings are outside the driver. The same procedure\'s A1 mapping remains '
+             'source-supported until it has a separately recorded matching driver.', '',
+             '## Sources, links and recorded results', '',
+             f'All {len(drivers)} passed the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, '
+             'reusing the existing package libraries. Only the mains and executables were compiled. '
+             'The [verification report](gams-arithmetic-validation.json) records source hashes and output. '
+             'The drivers are independently written API consumers; author tests were inspected where available, '
+             'and no upstream implementation or test code was copied. Their shared MIT notice applies '
+             'to these new drivers, with upstream package terms recorded separately in the catalog. '
+             'Loading the links selects code without submitting a job. The programs are available '
+             'in hosted and main local FPM menus.', '']
+    for d in drivers:
+        evidence = records[d['procedure_id']]['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]})', '']
+        checks = json.loads((root/driver_validation_path(d)).read_text(encoding='utf-8'))
+        result = next(r for r in checks['drivers'] if r['driver_id'] == d['id'])
+        output = next(s['stdout'] for s in result['stages'] if s['name'] == 'Run')
+        lines += ['```text', output.rstrip(), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers rational-addition-reference strith-integer-reference ryu-binary64-roundtrip',
+              'python xverify_gams_drivers.py --drivers mpfun-real-addition mpfun-complex-addition bstrith-bit-reference',
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'See the [coverage report](gams-coverage.md) and [mapping evidence queue](gams-mapping-evidence.md) '
+              'for remaining work.', '']
+    return '\n'.join(lines)
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -2378,6 +2666,8 @@ def main():
                          (REGRESSION_REPORT, regression_review_text()),
                          (MATRIX_EQUATIONS_REPORT, matrix_equations_review_text()),
                          (SORTING_REPORT, sorting_review_text()),
+                         (NUMBER_THEORY_REPORT, number_theory_review_text()),
+                         (ARITHMETIC_REPORT, arithmetic_review_text()),
                          (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report

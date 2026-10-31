@@ -5,8 +5,11 @@
 | [C7a](https://gams.nist.gov/cgi-bin/serve.cgi/Class/C7a) | Gamma, log-Gamma and reciprocal-Gamma at positive real arguments | Fullerton `fgamma`, `log_gamma`, `reciprocal_gamma` |
 | [C7c](https://gams.nist.gov/cgi-bin/serve.cgi/Class/C7c) | Psi/digamma at positive real arguments | Fullerton `digamma` |
 | [C10b1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/C10b1) | Modified Bessel I/K, real arguments and integer orders; tested orders 0 and 1 | fortran-bessels `besseli0`, `besseli1`, `besselk0`, `besselk1` |
+| [C10](https://gams.nist.gov/cgi-bin/serve.cgi/Class/C10) | Complex J/I sequences and half-order K | AMOS `f90_zbesj`, `f90_zbesi`, `f90_zbesk` |
+| [C14](https://gams.nist.gov/cgi-bin/serve.cgi/Class/C14) | Carlson RF and complete elliptic K | `carlson_elliptic_module:drf` |
+| [C19](https://gams.nist.gov/cgi-bin/serve.cgi/Class/C19) | Bernoulli numbers and integer power sums | `specfun_module:bernob` |
 
-These demonstrate selected positive arguments and named procedures. They do not exhaust their GAMS classes or cover arbitrary orders, complex arguments, poles or extreme-argument regimes. See the [coverage report](gams-coverage.md) for remaining procedure-class gaps.
+These demonstrate selected arguments and named procedures. They do not exhaust their GAMS classes or cover all orders, branch cuts, poles or extreme-argument regimes. See the [coverage report](gams-coverage.md) for remaining procedure-class gaps.
 
 ## Gamma-family references and precision
 
@@ -39,6 +42,24 @@ for text in ("0.125", "0.25", "0.5", "1", "2", "4", "8"):
 
 mpmath is needed only to regenerate references. The self-contained Fortran driver and the backend do not depend on it.
 
+## Carlson elliptic-integral references
+
+The C14 driver checks three diagonal identities `RF(x,x,x)=1/sqrt(x)` at `x=[0.25,1,4]`, three positive triples `(0.25,1,4)`, `(1,2,4)`, `(2,3,5)`, and complete elliptic integrals `K(k)=RF(0,1-k^2,1)` at `k=[0,0.25,0.75,0.95]`. For positive triples, substitution `u=t^(-2)-1` in the [defining RF integral](https://dlmf.nist.gov/19.16.E1) gives a smooth integral from 0 to 1 with integrand `product(1+(x_i-1)*t^2)^(-1/2)`. Independent composite Simpson sums at 2048 and 4096 panels must agree; the fine sum is the reference. K references use 4096 panels in `integral_0^(pi/2) (1-k^2*sin(theta)^2)^(-1/2) dtheta`.
+
+Three cyclic-permutation and three scale checks supply secondary identities: `RF(y,z,x)=RF(x,y,z)` and `RF(4*x,4*y,4*z)=RF(x,y,z)/2`. All checked results/references must be finite, all RF statuses zero, and scaled error `abs(actual-reference)/max(1,abs(reference))` at most `2e-11`. This does not validate singular moduli, extreme scaling or other Carlson functions.
+
+## Bernoulli references and power sums
+
+The C19 driver checks `B0=1`, `B1=-1/2` and even `B2..B12` against `[1/6,-1/30,1/42,-1/30,5/66,-691/2730]`. It then evaluates the Bernoulli formula for `sum(m^p,m=0..n-1)` at powers 1..8 and `n=[3,10,20]`, comparing 24 results against direct int64 summation. The small integer powers, binomial coefficients and sums fit in int64. Finite scaled errors must be at most `3e-12`.
+
+**Pinned API limitation:** `bernob` leaves odd output positions above B1 unassigned. The driver never reads them: it supplies their known mathematical zeros locally for the power-sum application. This verifies returned even values and B0/B1, not a fully initialized Bernoulli output array. The implementation also writes B0..B2 unconditionally, so calls with `n<2` are outside the driver. These source-level restrictions are recorded in the procedure notes.
+
+## Complex AMOS Bessel references and pinned failure
+
+The C10 driver checks 39 complex values at `z=[0.5+0.25i,1+0.5i,2+0.75i]`. For starting orders `[0.3,0.5,1.25]`, it requests two successive J and I values and compares with independent [J](https://dlmf.nist.gov/10.2.E2) and [I](https://dlmf.nist.gov/10.25.E2) power series using intrinsic Gamma. A 100-term cap and explicit convergence requirement protect the references. K at order 1/2 is checked against [sqrt(pi/(2*z))*exp(-z)](https://dlmf.nist.gov/10.39.E2). Every status and underflow count must be zero; both components must be finite and complex scaled error at most `2e-12`. Only unscaled mode `KODE=1` is tested.
+
+**Pinned failure:** `J_0.3(2-0.75i)` returns approximately `-0.0312577+0.6118974i` instead of `0.4766625+0.3849523i`, a scaled discrepancy about 0.556. The independent series agrees with mpmath 1.3.0 at 80 decimal digits. The [failing source](gams-candidates/amosf90/lower-half-plane-series.f90) and [saved sandbox result with the high-precision reference](gams-candidates/amosf90/lower-half-plane-result.json) are retained for reporting upstream. The checked driver uses upper-right-quadrant arguments and explicitly excludes this known failing case; no package patch or tolerance relaxation is applied. This establishes selected checked usage, not full-domain AMOS correctness.
+
 ## Sources and playground links
 
 | Driver | Class | Pinned procedure and author example |
@@ -46,12 +67,15 @@ mpmath is needed only to regenerate references. The self-contained Fortran drive
 | [Load fullerton-gamma-values](https://beliavsky.github.io/fortran-playground/fpm/?package=specfunc-fullerton&example=gams-fullerton-gamma-values) · [Source](../fpm_catalog/gams-drivers/fullerton-gamma-values.f90) | C7a | [Procedure](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_gamma.f90#L14) · [Author example/test](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/test/gamma/test_gamma.f90) |
 | [Load fullerton-digamma-values](https://beliavsky.github.io/fortran-playground/fpm/?package=specfunc-fullerton&example=gams-fullerton-digamma-values) · [Source](../fpm_catalog/gams-drivers/fullerton-digamma-values.f90) | C7c | [Procedure](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_gamma.f90#L42) · [Author example/test](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/test/gamma/test_gamma.f90) |
 | [Load bessels-modified-values](https://beliavsky.github.io/fortran-playground/fpm/?package=fortran-bessels&example=gams-bessels-modified-values) · [Source](../fpm_catalog/gams-drivers/bessels-modified-values.f90) | C10b1 | [Procedure](https://github.com/perazz/fortran-bessels/blob/7bf8d6b144b00d4201a782ca65f6ae14a84d49a1/src/bessels.f90#L752) · [Author example/test](https://github.com/perazz/fortran-bessels/blob/7bf8d6b144b00d4201a782ca65f6ae14a84d49a1/test/bessels_test.f90) |
+| [Load carlson-rf-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=carlson-elliptic-integrals&example=gams-carlson-rf-reference) · [Source](../fpm_catalog/gams-drivers/carlson-rf-reference.f90) | C14 | [Procedure](https://github.com/jacobwilliams/carlson-elliptic-integrals/blob/5f25a59a555b7029505aac71a8341d5851f8abed/src/carlson_elliptic_module.F90#L580) |
+| [Load bernoulli-power-sums](https://beliavsky.github.io/fortran-playground/fpm/?package=specfun&example=gams-bernoulli-power-sums) · [Source](../fpm_catalog/gams-drivers/bernoulli-power-sums.f90) | C19 | [Procedure](https://github.com/jacobwilliams/specfun/blob/e74d9c810d5c9248b5d8ffab4b766e7bb22ffd23/src/specfun.F90#L776) |
+| [Load amos-complex-series](https://beliavsky.github.io/fortran-playground/fpm/?package=amosf90&example=gams-amos-complex-series) · [Source](../fpm_catalog/gams-drivers/amos-complex-series.f90) | C10 | [Procedure](https://github.com/Euler-37/amosf90/blob/b54a4d4a1d8f7c97acd180ed5bbaae8d089a9fa7/src/amos.f90#L4548) · [Author example/test](https://github.com/Euler-37/amosf90/blob/b54a4d4a1d8f7c97acd180ed5bbaae8d089a9fa7/test/check.f90) |
 
-The programs adapt author API patterns, retain license notices and use deterministic reference checks instead of the larger author harnesses. They appear in hosted and main local FPM example menus and downloaded projects. Loading a link selects source without submitting a job.
+The programs use author APIs, retain applicable license notices and use deterministic reference checks instead of the larger author harnesses. They appear in hosted and main local FPM example menus and downloaded projects. Loading a link selects source without submitting a job.
 
 ## Recorded results
 
-All three passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing existing package libraries. Only each main and executable were rebuilt. The [verification report](gams-special-functions-validation.json) records hashes, pins and saved output. These cases establish checked usage and selected-point agreement, rather than accuracy over each function's complete domain.
+All 6 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing existing package libraries. Only each main and executable were rebuilt. The [verification report](gams-special-functions-validation.json) records hashes, pins and saved output. These cases establish checked usage and selected-point agreement, rather than accuracy over each function's complete domain.
 
 ### fullerton-gamma-values
 
@@ -105,10 +129,51 @@ Maximum Wronskian residual:   4.4409E-16
 PASS bessels-modified-values
 ```
 
+### carlson-rf-reference
+
+```text
+k             Complete elliptic K(k)
+  0.00        1.5707963267948968
+  0.25        1.5962422221317838
+  0.75        1.9109897807518292
+  0.95        2.5900112308745018
+Maximum scaled reference/identity error:   1.2257E-13
+PASS carlson-rf-reference
+```
+
+### bernoulli-power-sums
+
+```text
+B(0) =       1.000000000000000
+B(1) =      -0.500000000000000
+B(2) =       0.166666666666667
+B(4) =      -0.033333333333276
+B(6) =       0.023809523809522
+B(8) =      -0.033333333333333
+B(10) =       0.075757575757576
+B(12) =      -0.253113553113553
+Independent integer power sums checked: 24
+Maximum scaled error:   7.5865E-13
+Odd outputs above B1 are unassigned at this pin and are not read.
+PASS bernoulli-power-sums
+```
+
+### amos-complex-series
+
+```text
+z =     0.5000    0.2500; K_0.5(z) =       0.900965265411     -0.471142820764
+z =     1.0000    0.5000; K_0.5(z) =       0.324403658502     -0.291381750651
+z =     2.0000    0.7500; K_0.5(z) =       0.069439816411     -0.092990708451
+Independent complex Bessel values checked: 39
+Maximum scaled error:   3.5643E-16
+PASS amos-complex-series
+```
+
 ## Maintenance
 
 ```text
 python xverify_gams_drivers.py --drivers fullerton-gamma-values fullerton-digamma-values bessels-modified-values
+python xverify_gams_drivers.py --drivers carlson-rf-reference bernoulli-power-sums amos-complex-series
 python xpackage_gams.py
 python xfpm_examples.py
 python xsite.py

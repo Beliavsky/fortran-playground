@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "rpn-gcd-lcm-reference",
+      "source_revision": "7708e4949f17511d81f4e7dd0271a500f0bc3631",
+      "source_sha256": "e43f7a1ae954c05c663287e3d23b2130b5ecca864ff1ca56b09b8723dce471b1",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T01:00:33.845412+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.606,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "gcd(48,18) = 6\nlcm(48,18) = 144\nChecked 4225 GCD and 4224 LCM cases for operands 0 through 64.\nZero operands checked; lcm(0,0), negative signs and overflow are outside this example.\nPASS rpn-gcd-lcm-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.045,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "primes-trial-division",
+      "source_revision": "817abbf15c2565d2b92c35546d9e18152eb02e2c",
+      "source_sha256": "6fe92ad700f925464bf27635a13bed119df9f465128ea391fd4a928d86026402",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T01:01:30.678070+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.416,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Primes through 1000: count = 168; sum = 76127\nPrimes in [100,200]: 101 103 107 109 113 127 131 137 139 149 151 157 163 167 173 179 181 191 193 197 199\nis_prime(-2) = F\nis_prime(0) = F\nis_prime(1) = F\nis_prime(2) = T\nis_prime(2147483647) = T\nis_prime(10000000019) = T\nis_prime(10000000020) = F\nis_prime(10000000021) = F\nChecked 1021 int32 cases, 8 int64 cases, and enumerated prime lists.\nPASS primes-trial-division\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.046,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T01:01:30.732579+00:00"
+}
