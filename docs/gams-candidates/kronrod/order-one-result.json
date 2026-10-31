@@ -1,0 +1,60 @@
+{
+  "ok": false,
+  "compiler": "GNU Fortran (GCC) 16.2.0",
+  "fpm": "0.12.0",
+  "stages": [
+    {
+      "name": "Build",
+      "command": [
+        "fpm",
+        "build",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.39,
+      "ok": true,
+      "exit_code": 0,
+      "error": "",
+      "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+      "stderr": ""
+    },
+    {
+      "name": "Run",
+      "command": [
+        "fpm",
+        "run",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.049,
+      "ok": false,
+      "exit_code": 1,
+      "error": "",
+      "stdout": "Failed n=1 power=0 normalized error=  4.2152E-01\nActual/reference:     1.156959262120E+00    2.000000000000E+00\n",
+      "stderr": "Project is up to date\nERROR STOP exact polynomial moment\n\nError termination. Backtrace:\n#0  0x2b6d8c6a6f83 in ???\n#1  0x2b6d8c6a7c39 in ???\n#2  0x2b6d8c6a9045 in ???\n#3  0x4028d4 in check\n\tat app/main.f90:85\n#4  0x403b2c in MAIN__\n\tat app/main.f90:43\n#5  0x404b8a in main\n\tat app/main.f90:4\n<ERROR> Execution for object \" playground-main \" returned exit code  1\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 1\n"
+    }
+  ],
+  "cache": {
+    "package": "kronrod",
+    "compiler": "GNU Fortran 16.2.0",
+    "key": "6f826b4e47c8f5e4aa812cbf",
+    "library_reused": true,
+    "changed_artifacts": []
+  },
+  "source_sha256": "b18849aac52c3ef509722ff35ac8f74b0217ca11a38f717da8f8549366a25897",
+  "revision": "312278846b6e403fdea410a823d88ef4fb92a3cc"
+}

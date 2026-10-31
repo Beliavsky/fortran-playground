@@ -1,10 +1,12 @@
 # Checked GAMS linear-algebra drivers
 
-These real64 consumer programs compare fortran-lapack and stdlib on the same small dense systems and unconstrained least-squares problems, with additional fortran-lapack matrix-decomposition examples, BLAS products, sparse products and known pseudoinverses. Procedure mappings describe the reviewed real configurations; other overloads require their own evidence.
+These real64 consumer programs compare fortran-lapack and stdlib on the same small dense systems and unconstrained least-squares problems, with additional fortran-lapack matrix-decomposition examples, exact scalar products, BLAS products, sparse products, storage conversion and known pseudoinverses. Procedure mappings describe the reviewed real configurations; other overloads require their own evidence.
 
 | Class | Configuration | Procedures |
 | --- | --- | --- |
+| [D1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D1) | Real scalar products, direct and blocked methods | fordot `dot_product` |
 | [D2a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D2a1) | Real nonsymmetric general linear systems | `linear_algebra:solve`; `stdlib_linalg:solve` |
+| [D2a4](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D2a4) | Real nonsymmetric sparse linear systems | Y12M `y12mb, y12mc, y12md` |
 | [D9a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D9a1) | Unconstrained linear least squares, L2 solution | `linear_algebra:lstsq`; `stdlib_linalg:lstsq` |
 | [D4a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D4a1) | Ordinary real symmetric eigenproblems | fortran-lapack `la_lapack:syev`; ARPACK `DSAUPD/DSEUPD`; linalg_fortran `linalg%eigh` |
 | [D5](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D5) | Orthogonalization, demonstrated by reduced QR | fortran-lapack `linear_algebra:qr` |
@@ -13,9 +15,17 @@ These real64 consumer programs compare fortran-lapack and stdlib on the same sma
 | [D1b4](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D1b4) | Rectangular sparse matrix-vector products | fsparse `matvec`, COO/CSR real64 overloads |
 | [D9c](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D9c) | Generalized inverse | forinv `inv`, SVD method with explicit cutoff |
 
+## Exact scalar products
+
+The fordot driver checks 231 default and m1..m4 products over five lengths and three deterministic input patterns. Exact int64 numerators divided by 32 supply independent dyadic references. Valid distinct block counts 1, 3 and n cover unequal blocks and single-element blocks. See the [reference details and output](gams-products-status.md).
+
 ## Shared dense-system checks
 
 Both solve drivers use the 3-by-3 systems from stdlib `example_solve1` and fortran-lapack `test_dsolve`, with reference solutions `[5,3,-2]` and `[-2,-2,3]`. They preserve the original matrix and right-hand side, check solver status and finite solutions, and require maximum solution error at most `1e-10`. The independently computed scaled residual is `||A*x-b||_inf / (||A||_inf*||x||_inf + ||b||_inf)` and must be at most `1e-12`. Matrix infinity norm means the maximum absolute row sum.
+
+## Nonsymmetric sparse solves
+
+The Y12M driver uses two nonsymmetric 10-by-10 matrices, including a cyclic row permutation, and reuses one LU factorization for four right-hand sides per matrix. Independent manufactured solutions and scalar residuals determine acceptance. See the [fixtures, tolerances and output](gams-sparse-integral.md).
 
 ## Shared least-squares checks
 
@@ -48,6 +58,12 @@ The D1b6 driver computes a 3-by-2 times 2-by-4 product with `A(i,k)=2*i-3*k`, `B
 The D1b4 driver uses the nonsymmetric 4-by-3 matrix with rows `[2,0,4]`, `[0,3,0]`, `[0,0,0]`, `[-1,0,5]`. Inputs `[1,-2,3]`, `[0,1,-1]` and zero give products `[14,-6,0,14]`, `[-4,3,0,-5]` and zero. Scalar row/column loops independently compute each reference. COO and CSR forms are checked with both zero and nonzero initial output `[0.5,-1,7,2]`, and every call is repeated to check `y := y+A*x` accumulation rather than replacement. All 24 calls must return finite vectors with absolute maximum-entry error at most `1e-12`.
 
 The empty third row must retain its initial output value. The test exercises the conversion helpers to prepare storage, but its verified problem class is D1b4; the separate D1b9 storage-conversion mapping is not marked verified by this driver. Symmetric-storage shortcuts, complex overloads and other sparse formats are outside the example.
+
+## Sparse storage conversion
+
+A separate D1b9 driver checks `dense2coo`, `coo2dense`, `coo2csr` and `csr2coo` with five matrices: a 5-by-4 matrix with entries `(2,1)=-2`, `(2,4)=0.5`, `(4,2)=3`, `(4,4)=-4`; its transpose; an all-zero 3-by-2 matrix; a fully populated 2-by-3 matrix `A(i,j)=(2*i+3*j)/2`; and the 1-by-1 matrix `[-7]`. The sparse fixtures include leading, interior and trailing empty rows and empty columns. All entries are moderate exact dyadic values.
+
+Independent scalar row/column loops check every COO coordinate/value against the original matrix, not just a round trip. Independently counted row entries determine every expected CSR row pointer. Dimensions, array sizes, nonzero counts, one-based indexing, CSR columns and values, and finite stored data must agree exactly. A separate scalar CSR reconstruction, CSR-to-COO conversion and both COO-to-dense restorations must recover the original matrix exactly. The caller zero-initializes dense outputs because `coo2dense` writes stored entries only. Fresh storage is used for each fixture. Duplicate coordinates, preallocated-storage reuse, complex/symmetric formats and threshold/subnormal behavior are outside this checked configuration. In particular, the pinned `dense2coo` source counts `abs(value)>tiny` but skips `abs(value)<tiny` while copying; equality at the threshold needs a separate bounds-checked investigation. No such values are included or certified here.
 
 ## Known pseudoinverses and minimum-norm solutions
 
@@ -95,12 +111,22 @@ Saved reproducers: [high-level eigh](gams-candidates/fortran-lapack-eigh.f90) an
 | [Load forinv-pseudoinverse-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=forinv&example=gams-forinv-pseudoinverse-reference) · [Source](../fpm_catalog/gams-drivers/forinv-pseudoinverse-reference.f90) | D9c | [Procedure](https://github.com/gha3mi/forinv/blob/80b5dbed9709c001e4309382424276a2ceb984f3/src/forinv.f90#L15) · [Author example](https://github.com/gha3mi/forinv/blob/80b5dbed9709c001e4309382424276a2ceb984f3/test/test1.f90) |
 | [Load arpack-poisson-eigenpairs](https://beliavsky.github.io/fortran-playground/fpm/?package=arpack-ng&example=gams-arpack-poisson-eigenpairs) · [Source](../fpm_catalog/gams-drivers/arpack-poisson-eigenpairs.f90) | D4a1 | [Procedure](https://github.com/opencollab/arpack-ng/blob/66faef9e09bb35f5acafe02960885050acc46fa0/SRC/dsaupd.f#L1) · [Author example](https://github.com/opencollab/arpack-ng/blob/66faef9e09bb35f5acafe02960885050acc46fa0/EXAMPLES/SYM/dsdrv1.f) |
 | [Load linalg-poisson-eigenpairs](https://beliavsky.github.io/fortran-playground/fpm/?package=linalg_fortran&example=gams-linalg-poisson-eigenpairs) · [Source](../fpm_catalog/gams-drivers/linalg-poisson-eigenpairs.f90) | D4a1 | [Procedure](https://github.com/Euler-37/linalg_fortran/blob/30e7237ab54ca176e1c8dae4be2d9d44800e1f83/src/linalg_fortran.f90#L672) · Original lower-level API driver |
+| [Load fsparse-storage-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=fsparse&example=gams-fsparse-storage-reference) · [Source](../fpm_catalog/gams-drivers/fsparse-storage-reference.f90) | D1b9 | [Procedure](https://github.com/jalvesz/FSPARSE/blob/fa8233420ab0110bb688d565879164386521a8fc/src/conversion/fsparse_conversions.f90#L17) · [Author example](https://github.com/jalvesz/FSPARSE/blob/fa8233420ab0110bb688d565879164386521a8fc/test/test_matrices.f90) |
+| [Load y12m-sparse-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=y12m&example=gams-y12m-sparse-reference) · [Source](../fpm_catalog/gams-drivers/y12m-sparse-reference.f90) | D2a4 | [Procedure](https://github.com/ivan-pi/y12m/blob/5245418ed3f87c72bff4660432212328640a6322/src/y12m.f90#L91) · [Author example](https://github.com/ivan-pi/y12m/blob/5245418ed3f87c72bff4660432212328640a6322/test/test_y12mc_errors.F90) |
+| [Load fordot-exact-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=fordot&example=gams-fordot-exact-reference) · [Source](../fpm_catalog/gams-drivers/fordot-exact-reference.f90) | D1 | [Procedure](https://github.com/gha3mi/fordot/blob/3966625781a9c1dffe037e3032fa4a0b6f958760/src/fordot.f90#L21) · [Author example](https://github.com/gha3mi/fordot/blob/3966625781a9c1dffe037e3032fa4a0b6f958760/test/test1.f90) |
+| [Load linalg-inverse-factor-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=linalg_fortran&example=gams-linalg-inverse-factor-reference) · [Source](../fpm_catalog/gams-drivers/linalg-inverse-factor-reference.f90) | D2 | [Procedure](https://github.com/Euler-37/linalg_fortran/blob/30e7237ab54ca176e1c8dae4be2d9d44800e1f83/src/linalg_fortran.f90#L489) · [Author example](https://github.com/Euler-37/linalg_fortran/blob/30e7237ab54ca176e1c8dae4be2d9d44800e1f83/test/check.f90) |
+| [Load ntpoly-matrix-root-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=ntpoly&example=gams-ntpoly-matrix-root-reference) · [Source](../fpm_catalog/gams-drivers/ntpoly-matrix-root-reference.f90) | D | [Procedure](https://github.com/william-dawson/NTPoly/blob/7b3d22f76226af1402e9b0a5be18a496e4addc28/Source/Fortran/SquareRootSolversModule.F90#L30) · [Author example](https://github.com/william-dawson/NTPoly/blob/7b3d22f76226af1402e9b0a5be18a496e4addc28/Examples/PremadeMatrix/main.f90) |
+| [Load libmbd-dimer-spectrum](https://beliavsky.github.io/fortran-playground/fpm/?package=libmbd&example=gams-libmbd-dimer-spectrum) · [Source](../fpm_catalog/gams-drivers/libmbd-dimer-spectrum.f90) | D4 | [Procedure](https://github.com/libmbd/libmbd/blob/77d7ab424d21f43dea9f57734b355ce4ea4d1a42/src/mbd.F90#L1) · [Author example](https://github.com/libmbd/libmbd/blob/77d7ab424d21f43dea9f57734b355ce4ea4d1a42/tests/mbd_api_tests.F90) |
+| [Load linalg-qr-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=linalg&example=gams-linalg-qr-reference) · [Source](../fpm_catalog/gams-drivers/linalg-qr-reference.f90) | D5 | [Procedure](https://github.com/jchristopherson/linalg/blob/cb8fb7b1c67986591083cac516eb700f47d69b68/src/linalg_qr.f90#L20) · [Author example](https://github.com/jchristopherson/linalg/blob/cb8fb7b1c67986591083cac516eb700f47d69b68/examples/linalg_qr_example.f90) |
+| [Load linalg-eigen-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=linalg&example=gams-linalg-eigen-reference) · [Source](../fpm_catalog/gams-drivers/linalg-eigen-reference.f90) | D4a1 | [Procedure](https://github.com/jchristopherson/linalg/blob/cb8fb7b1c67986591083cac516eb700f47d69b68/src/linalg_eigen.f90#L17) · [Author example](https://github.com/jchristopherson/linalg/blob/cb8fb7b1c67986591083cac516eb700f47d69b68/tests/test_eigen.f90) |
+| [Load linalg-svd-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=linalg&example=gams-linalg-svd-reference) · [Source](../fpm_catalog/gams-drivers/linalg-svd-reference.f90) | D6 | [Procedure](https://github.com/jchristopherson/linalg/blob/cb8fb7b1c67986591083cac516eb700f47d69b68/src/linalg_svd.f90#L12) · [Author example](https://github.com/jchristopherson/linalg/blob/cb8fb7b1c67986591083cac516eb700f47d69b68/tests/test_svd.f90) |
+| [Load linalg-least-squares-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=linalg&example=gams-linalg-least-squares-reference) · [Source](../fpm_catalog/gams-drivers/linalg-least-squares-reference.f90) | D9a1 | [Procedure](https://github.com/jchristopherson/linalg/blob/cb8fb7b1c67986591083cac516eb700f47d69b68/src/linalg_least_squares.f90#L14) · Original lower-level API driver |
 
 The dense examples reuse both authors' problem data and retain both license notices. The least-squares examples adapt author API usage to shared deterministic data. These drivers appear in hosted and main local FPM example menus and downloaded projects. Loading a link selects source without submitting a job.
 
 ## Recorded results
 
-All 18 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing the existing package libraries. Only each main and executable were rebuilt. The [verification report](gams-linear-algebra-validation.json) records source hashes, pins and saved output. These small examples establish checked usage, rather than comprehensive accuracy or performance comparisons. The packages may share underlying algorithms; this is not evidence of independent implementations. Zero printed error means agreement at working precision.
+All 28 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing the existing package libraries. Only each main and executable were rebuilt. The verification reports record source hashes, pins and saved output: [gams-dense-spectra-validation.json](gams-dense-spectra-validation.json), [gams-dispersion-validation.json](gams-dispersion-validation.json), [gams-inverse-tvd-validation.json](gams-inverse-tvd-validation.json), [gams-least-interpolation-validation.json](gams-least-interpolation-validation.json), [gams-linear-algebra-validation.json](gams-linear-algebra-validation.json), [gams-matrix-equations-validation.json](gams-matrix-equations-validation.json), [gams-matrix-roots-box-validation.json](gams-matrix-roots-box-validation.json), [gams-products-status-validation.json](gams-products-status-validation.json), [gams-qr-autodiff-validation.json](gams-qr-autodiff-validation.json), [gams-sparse-integral-validation.json](gams-sparse-integral-validation.json), [gams-sparse-validation.json](gams-sparse-validation.json). These small examples establish checked usage, rather than comprehensive accuracy or performance comparisons. The packages may share underlying algorithms; this is not evidence of independent implementations. Zero printed error means agreement at working precision.
 
 ### fortran-lapack-dense-solve
 
@@ -388,10 +414,158 @@ Six listed eigenpairs use the same n=20 Dirichlet matrix as the ARPACK driver.
 PASS linalg-poisson-eigenpairs
 ```
 
+### fsparse-storage-reference
+
+```text
+Dense/COO/CSR checked: 5 x 4 nnz=4
+Dense/COO/CSR checked: 4 x 5 nnz=4
+Dense/COO/CSR checked: 3 x 2 nnz=0
+Dense/COO/CSR checked: 2 x 3 nnz=6
+Dense/COO/CSR checked: 1 x 1 nnz=1
+PASS fsparse-storage-reference
+```
+
+### y12m-sparse-reference
+
+```text
+Matrix 1, RHS 1 solution error=  2.22E-16 backward error=  6.58E-17
+Matrix 1, RHS 2 solution error=  8.88E-17 backward error=  4.55E-17
+Matrix 1, RHS 3 solution error=  0.00E+00 backward error=  0.00E+00
+Matrix 1, RHS 4 solution error=  4.43E-17 backward error=  1.75E-17
+One sparse LU factorization reused for four right-hand sides.
+Matrix 2, RHS 1 solution error=  2.22E-16 backward error=  1.32E-16
+Matrix 2, RHS 2 solution error=  1.78E-16 backward error=  9.11E-17
+Matrix 2, RHS 3 solution error=  0.00E+00 backward error=  0.00E+00
+Matrix 2, RHS 4 solution error=  0.00E+00 backward error=  0.00E+00
+One sparse LU factorization reused for four right-hand sides.
+PASS y12m-sparse-reference
+```
+
+### fordot-exact-reference
+
+```text
+Length=1 pattern=1 exact dot product=    -0.25000
+Length=1 pattern=2 exact dot product=    -0.18750
+Length=1 pattern=3 exact dot product=     0.00000
+Length=7 pattern=1 exact dot product=     3.56250
+Length=7 pattern=2 exact dot product=     0.00000
+Length=7 pattern=3 exact dot product=     0.00000
+Length=8 pattern=1 exact dot product=     3.46875
+Length=8 pattern=2 exact dot product=     0.37500
+Length=8 pattern=3 exact dot product=     0.00000
+Length=17 pattern=1 exact dot product=     1.00000
+Length=17 pattern=2 exact dot product=     0.00000
+Length=17 pattern=3 exact dot product=     0.00000
+Length=64 pattern=1 exact dot product=    -3.43750
+Length=64 pattern=2 exact dot product=     0.18750
+Length=64 pattern=3 exact dot product=     0.00000
+231 exact results checked: default and m1..m4, including unequal blocks and zero products.
+PASS fordot-exact-reference
+```
+
+### linalg-inverse-factor-reference
+
+```text
+132 scaled/permuted known-factor matrices, dimensions 1,2,3,4,5,8; two singular rejections.
+Maximum inverse error / max(1,maxabs(reference)):   2.1274E-16
+Maximum independently accumulated left/right inverse residual:   3.6082E-16
+Maximum determinant relative error:   0.0000E+00
+PASS linalg-inverse-factor-reference
+```
+
+### ntpoly-matrix-root-reference
+
+```text
+[1793457956.153449] [modal:39   :0]       tcp_iface.c:912  UCX  ERROR scandir(/sys/class/net) failed: No such file or directory
+Dimension=2 pair=1 rotation=1 error=  2.2204E-16
+Dimension=2 pair=1 rotation=2 error=  3.3307E-16
+Dimension=2 pair=1 rotation=3 error=  5.5511E-16
+Dimension=2 pair=2 rotation=1 error=  2.2204E-16
+Dimension=2 pair=2 rotation=2 error=  3.8955E-16
+Dimension=2 pair=2 rotation=3 error=  4.4409E-16
+Dimension=2 pair=3 rotation=1 error=  1.1102E-16
+Dimension=2 pair=3 rotation=2 error=  6.0834E-16
+Dimension=2 pair=3 rotation=3 error=  5.3291E-16
+Dimension=2 pair=4 rotation=1 error=  1.1102E-16
+Dimension=2 pair=4 rotation=2 error=  1.6653E-16
+Dimension=2 pair=4 rotation=3 error=  4.4409E-16
+Dimension=3 pair=1 rotation=1 error=  2.2204E-16
+Dimension=3 pair=1 rotation=2 error=  3.3307E-16
+Dimension=3 pair=1 rotation=3 error=  5.5511E-16
+Dimension=3 pair=2 rotation=1 error=  2.2204E-16
+Dimension=3 pair=2 rotation=2 error=  3.8955E-16
+Dimension=3 pair=2 rotation=3 error=  4.4409E-16
+Dimension=3 pair=3 rotation=1 error=  1.1102E-16
+Dimension=3 pair=3 rotation=2 error=  6.0834E-16
+Dimension=3 pair=3 rotation=3 error=  5.3291E-16
+Dimension=3 pair=4 rotation=1 error=  1.1102E-16
+Dimension=3 pair=4 rotation=2 error=  2.7079E-16
+Dimension=3 pair=4 rotation=3 error=  4.4409E-16
+24 SPD fixtures, 48 matrix functions: known orthogonal factors and positive square-root eigenvalues.
+Maximum normalized closed-form error:   6.0834E-16
+Maximum independent product residual:   8.8818E-16
+PASS ntpoly-matrix-root-reference
+```
+
+### libmbd-dimer-spectrum
+
+```text
+Bare two-oscillator Hamiltonian calls: 72
+Maximum normalized closed-form eigenvalue error:   7.8944E-16
+Maximum scalar eigenvector residual:   2.2204E-15
+Maximum orthogonality error:   1.5543E-15
+PASS libmbd-dimer-spectrum
+```
+
+### linalg-qr-reference
+
+```text
+Real matrix fixtures: 192; QR factorizations: 576
+Square/tall/wide, repeated/zero columns, zero matrices; free and locked pivots.
+Maximum normalized scalar reconstruction error:   4.4409E-16
+Maximum scalar orthogonality error:   6.6613E-16
+PASS linalg-qr-reference
+```
+
+### linalg-eigen-reference
+
+```text
+Known-spectrum symmetric matrices: 96; eigen calls: 192
+Lower triangle with unused-upper-half poison; eigenvalues only and eigenvectors.
+Maximum normalized eigenvalue error:   4.4409E-16
+Maximum normalized scalar eigenvector residual:   6.1062E-16
+Maximum scalar orthogonality error:   1.1102E-15
+PASS linalg-eigen-reference
+```
+
+### linalg-svd-reference
+
+```text
+Known-spectrum rectangular matrices: 144; SVD calls: 576
+Full/values-only/U-only/VT-only; distinct/repeated/rank-one/zero spectra at signed scales.
+Maximum normalized singular-value error:   4.4409E-16
+Maximum normalized scalar reconstruction error:   3.3307E-16
+Maximum scalar orthogonality error:   8.8818E-16
+Maximum normalized scalar singular-vector residual:   6.9081E-16
+PASS linalg-svd-reference
+```
+
+### linalg-least-squares-reference
+
+```text
+Full-rank least-squares fixtures: 72; solver calls: 288
+Overdetermined fixtures with prescribed nonzero residuals: 18
+Square/tall/wide; one matrix RHS and three vector RHS calls per fixture.
+Maximum normalized solution error:   7.7716E-16
+Maximum normalized prescribed-residual error:   3.2058E-16
+Maximum normalized normal-equation residual:   2.9143E-16
+PASS linalg-least-squares-reference
+```
+
 ## Maintenance
 
 ```text
-python xverify_gams_drivers.py --drivers fortran-lapack-dense-solve fortran-lapack-least-squares stdlib-dense-solve stdlib-least-squares fortran-lapack-symmetric-eigen fortran-lapack-qr-decomposition fortran-lapack-svd-decomposition minres-indefinite-solve qdldl-quasidefinite-solve kiss-positive-definite-solve slicot-lyapunov-known-matrix slicot-continuous-sylvester slicot-discrete-sylvester blas-gemm-reference fsparse-matvec-reference forinv-pseudoinverse-reference arpack-poisson-eigenpairs linalg-poisson-eigenpairs
+python xverify_gams_drivers.py --drivers fortran-lapack-dense-solve fortran-lapack-least-squares stdlib-dense-solve stdlib-least-squares fortran-lapack-symmetric-eigen fortran-lapack-qr-decomposition fortran-lapack-svd-decomposition minres-indefinite-solve qdldl-quasidefinite-solve kiss-positive-definite-solve slicot-lyapunov-known-matrix slicot-continuous-sylvester slicot-discrete-sylvester blas-gemm-reference fsparse-matvec-reference forinv-pseudoinverse-reference arpack-poisson-eigenpairs linalg-poisson-eigenpairs fsparse-storage-reference y12m-sparse-reference fordot-exact-reference linalg-inverse-factor-reference ntpoly-matrix-root-reference libmbd-dimer-spectrum linalg-qr-reference linalg-eigen-reference linalg-svd-reference linalg-least-squares-reference
 python xpackage_gams.py
 python xfpm_examples.py
 python xsite.py

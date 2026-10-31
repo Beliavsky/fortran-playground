@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "dde-method-steps-reference",
+      "source_revision": "90d3389ce5d5733ab2b6e7ed7d2dad273b4d0c6b",
+      "source_sha256": "708925ef930df443d65ca61e330b744f5d05edbbd9f6d2b6dd0df2194a3722b8",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T14:39:26.431254+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.382,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Oscillator=F delay=  0.25000 rate=  0.50 error=  2.8831E-16\nOscillator=F delay=  0.25000 rate=  0.50 error=  2.8831E-16\nOscillator=F delay=  0.25000 rate=  1.00 error=  6.0123E-16\nOscillator=F delay=  0.25000 rate=  1.00 error=  2.1911E-16\nOscillator=F delay=  1.00000 rate=  0.50 error=  8.2731E-16\nOscillator=F delay=  1.00000 rate=  0.50 error=  4.4186E-16\nOscillator=F delay=  1.00000 rate=  1.00 error=  6.9849E-16\nOscillator=F delay=  1.00000 rate=  1.00 error=  4.9003E-16\nOscillator=F delay=  2.00000 rate=  0.50 error=  6.9849E-16\nOscillator=F delay=  2.00000 rate=  0.50 error=  4.9003E-16\nOscillator=F delay=  2.00000 rate=  1.00 error=  1.0487E-15\nOscillator=F delay=  2.00000 rate=  1.00 error=  6.3159E-16\nOscillator=T delay=  3.14159 rate=  0.50 error=  1.8426E-12\nOscillator=T delay=  1.57080 rate=  1.00 error=  1.8426E-12\nOscillator=T delay=  0.78540 rate=  2.00 error=  1.8426E-12\n15 delayed solves, 975 dense-output references: method-of-steps polynomials and sinusoidal oscillators.\nMaximum error / max(1,abs(reference)):   1.8426E-12\nConstant positive delays, signed history scaling, delay knots and interior samples checked.\nPASS dde-method-steps-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.039,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "lua-numeric-embedding-reference",
+      "source_revision": "b3582591bc82d003ef3933d0772c131509667f49",
+      "source_sha256": "b278af0ed0cd3d0dccbe8c4de9dcd95b3c26326ce0f0e880525e9071f4e968b8",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T14:39:27.722706+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.287,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "128 exact integer calls: factorials through 20!, sums of squares, signed polynomials and error recovery.\nFive real Pythagorean norm calls, maximum absolute error:   0.0000E+00\nReturn types, stack balance, expected runtime/syntax diagnostics and subsequent state reuse checked.\nPASS lua-numeric-embedding-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.021,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T14:39:27.772987+00:00"
+}

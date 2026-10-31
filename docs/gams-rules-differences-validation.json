@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "tsunami-differences-reference",
+      "source_revision": "70b5702aed42bbea0733335d50e0eb70cb159e08",
+      "source_sha256": "c975344458cad31c65114123ffc016d8896d493e12cd81c913b21037470641c9",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T15:13:06.293253+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.385,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "N=16; centered/upwind RMS errors:   1.80345E-02  1.38246E-01\nN=32; centered/upwind RMS errors:   4.53479E-03  6.93457E-02\nN=64; centered/upwind RMS errors:   1.13534E-03  3.47007E-02\nN=128; centered/upwind RMS errors:   2.83939E-04  1.73538E-02\nN=256; centered/upwind RMS errors:   7.09932E-05  8.67736E-03\nFourier fixtures: 90; nonsmooth/constant fixtures: 10\nMaximum exact-discrete derivative error:   2.3591E-06\nMinimum refinement ratios, centered/upwind:    3.97692   1.99358\nPASS tsunami-differences-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.025,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "kronrod-moments-reference",
+      "source_revision": "312278846b6e403fdea410a823d88ef4fb92a3cc",
+      "source_sha256": "cbef46d86d0950c904f2f286d5c37a3c988324a8f0a5eac030fae0cd878056d5",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T15:14:09.087581+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.467,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Gauss order 2; Kronrod nodes 5\nGauss order 3; Kronrod nodes 7\nGauss order 4; Kronrod nodes 9\nGauss order 5; Kronrod nodes 11\nGauss order 6; Kronrod nodes 13\nGauss order 7; Kronrod nodes 15\nGauss order 10; Kronrod nodes 21\nKronrod / Gauss / translated polynomial moments:    64   37   54\nMaximum normalized moment error:    6.6667E-103\nPASS kronrod-moments-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.513,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T15:14:09.139142+00:00"
+}

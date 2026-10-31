@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "io-numeric-file-reference",
+      "source_revision": "15bc3557c36adc174abbd9a077e0686dc11cc4af",
+      "source_sha256": "8f8e54da98a1554cf62345a902b8e22738c27b199086e6a2e1304ce0f8eb0a5c",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T13:26:25.429117+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.413,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "8 real64 matrix files: four shapes, comma/semicolon delimiters, independent native parsing.\nHand-written CSV, row/column layout, library round trips and missing-file diagnostics checked.\nMaximum normalized numeric file error:   0.0000E+00\nPASS io-numeric-file-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.039,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "error-bounds-reference",
+      "source_revision": "ab840882bb5036de00de8b2580e745fa5314d6fd",
+      "source_sha256": "8874366239c15470759127da9f668a2b4dce874a63976906b701c02988d84a5c",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T13:26:27.723532+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.378,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "102 integer/real32/real64 bounds checks; 30 expected rejections.\nInclusive endpoints, nearest inside/outside floats, one-sided and equal bounds checked.\nExpected failures retain code 105, the custom message and one application trace.\nPASS error-bounds-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.06,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T13:26:27.770726+00:00"
+}

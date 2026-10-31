@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "y12m-sparse-reference",
+      "source_revision": "5245418ed3f87c72bff4660432212328640a6322",
+      "source_sha256": "e31121a2c783aacb0b17ae2227ec20c54fa194b496f14189446f70d4817f9e0b",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T02:14:52.175487+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.676,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Matrix 1, RHS 1 solution error=  2.22E-16 backward error=  6.58E-17\nMatrix 1, RHS 2 solution error=  8.88E-17 backward error=  4.55E-17\nMatrix 1, RHS 3 solution error=  0.00E+00 backward error=  0.00E+00\nMatrix 1, RHS 4 solution error=  4.43E-17 backward error=  1.75E-17\nOne sparse LU factorization reused for four right-hand sides.\nMatrix 2, RHS 1 solution error=  2.22E-16 backward error=  1.32E-16\nMatrix 2, RHS 2 solution error=  1.78E-16 backward error=  9.11E-17\nMatrix 2, RHS 3 solution error=  0.00E+00 backward error=  0.00E+00\nMatrix 2, RHS 4 solution error=  0.00E+00 backward error=  0.00E+00\nOne sparse LU factorization reused for four right-hand sides.\nPASS y12m-sparse-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.028,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fitpack-spline-integral",
+      "source_revision": "1907c7bad9f5c4557970e906bdd4909eb52b2d4c",
+      "source_sha256": "cbd1a1ca862b8b26ba1fd0064621c7a0e6092948ad78518b892aee7129553d51",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T02:14:54.708402+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.372,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Polynomial degree 0 maximum integral error=  2.22E-16\nPolynomial degree 1 maximum integral error=  4.44E-16\nPolynomial degree 2 maximum integral error=  8.88E-16\nPolynomial degree 3 maximum integral error=  8.88E-16\n36 integrals checked, including reversed/zero intervals and off-knot partition additivity.\nPASS fitpack-spline-integral\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.064,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T02:14:54.763763+00:00"
+}

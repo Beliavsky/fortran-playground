@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "fast-float-parsing-reference",
+      "source_revision": "195e47d90874cb1ff38598d80a7e4919c49b89d8",
+      "source_sha256": "bd0453e104ddc9c0295d71c1780c556eb3c06c02fe6c21f8da535584f4cf62ed",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T02:45:29.027668+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.409,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "129 exact binary-fraction decimals and 15 signed decimal integers checked.\nBinary/hex integers, D exponent and a binary64 halfway case checked.\nSix invalid/overflow outcomes checked; 154 parser calls in total.\nPASS fast-float-parsing-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.032,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fifo-storage-reference",
+      "source_revision": "b04b536589af8cf041b8e5e53484e57147fc746f",
+      "source_sha256": "3841804b3c9b689f0142dade6654cfe784a659345837e520b7869190139774ec",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T02:45:31.671681+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.317,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Cycle 1: 53 cumulative copied records checked; queue drained.\nCycle 2: 106 cumulative copied records checked; queue drained.\nCycle 3: 159 cumulative copied records checked; queue drained.\n160 records checked: interleaved FIFO order, copied values, empty/refill behavior, independent queues.\nPASS fifo-storage-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.022,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "penf-machine-reference",
+      "source_revision": "65061235982495b158412b70c05b228af4320d94",
+      "source_sha256": "a768033c8cd5780fca7d0b38313b8b456a554d8bfb702ff9a2c389146ef2276e",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T02:45:34.312349+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.384,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Integer storage bits:   8  16  32  64\nR4P significand bits=24 measured epsilon=  1.1921E-07\nR8P significand bits=53 measured epsilon=  2.2204E-16\nEndian code=1 (verified from the bytes of 0x01020304).\nPASS penf-machine-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.046,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T02:45:34.374206+00:00"
+}

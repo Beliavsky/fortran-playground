@@ -1,0 +1,57 @@
+{
+  "package_id": "qnstop",
+  "revision": "39e8273247f586fca8305ef3d8e879b27b6512d0",
+  "source_sha256": "418380127a9b4e5e646dd219528766736a1c647a19345d052eb07b5183dc4d77",
+  "hash_normalization": "utf-8-lf",
+  "compiler": "GNU Fortran (GCC) 16.2.0",
+  "fpm": "0.12.0",
+  "ok": false,
+  "library_reused": true,
+  "stages": [
+    {
+      "name": "Build",
+      "command": [
+        "fpm",
+        "build",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.404,
+      "ok": true,
+      "exit_code": 0,
+      "error": "",
+      "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+      "stderr": ""
+    },
+    {
+      "name": "Run",
+      "command": [
+        "fpm",
+        "run",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 15.296,
+      "ok": false,
+      "exit_code": 1,
+      "error": "",
+      "stdout": "Fixture=1 status=1 position error=  3.1203E-05 gap=  1.0836E-09\nFixture=2 status=1 position error=  7.1094E-05 gap=  5.2937E-09\nFixture=3 status=1 position error=  2.9296E-06 gap=  9.1157E-12\nFixture=4 status=1 position error=  1.7212E-01 gap=  5.9249E-02\n",
+      "stderr": "Project is up to date\nAt line 708 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created\nAt line 867 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created\nAt line 872 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created\nAt line 873 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created for argument '_formal_216' of procedure 'dsymm'\nAt line 874 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created for argument '_formal_219' of procedure 'dsymm'\nAt line 904 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created for argument '_formal_204' of procedure 'dgemm'\nAt line 904 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created for argument '_formal_207' of procedure 'dgemm'\nAt line 907 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created\nAt line 912 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created for argument '_formal_223' of procedure 'dgesv'\nAt line 928 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created for argument '_formal_223' of procedure 'dgesv'\nAt line 938 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created\nAt line 949 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created for argument '_formal_223' of procedure 'dgesv'\nAt line 954 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created for argument '_formal_223' of procedure 'dgesv'\nAt line 1043 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created for argument '_formal_142' of procedure 'dsyev'\nAt line 1051 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created for argument '_formal_202' of procedure 'dgemm'\nAt line 1052 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created for argument '_formal_204' of procedure 'dgemm'\nAt line 1053 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created for argument '_formal_207' of procedure 'dgemm'\nAt line 1066 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created for argument '_formal_214' of procedure 'dsymm'\nAt line 1067 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created for argument '_formal_216' of procedure 'dsymm'\nAt line 1068 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created for argument '_formal_214' of procedure 'dsymm'\nAt line 1088 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created for argument '_formal_202' of procedure 'dgemm'\nNote: The following floating-point exceptions are signalling: IEEE_DENORMAL\nERROR STOP projected box minimum\n\nError termination. Backtrace:\n#0  0x2abb51b14f83 in ???\n#1  0x2abb51b15c39 in ???\n#2  0x2abb51b17045 in ???\n#3  0x404ac3 in box_reference\n\tat app/main.f90:74\n#4  0x404f6b in main\n\tat app/main.f90:17\n<ERROR> Execution for object \" playground-main \" returned exit code  1\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 1\n"
+    }
+  ],
+  "interpretation": "Increasing the iteration budget to 2000 did not fix the face fixture coordinate error (observed 0.17212 versus required 0.03). The corner fixture was never reached. The checked public driver is restricted to separate interior fixtures; neither active-bound probe is counted as passed."
+}

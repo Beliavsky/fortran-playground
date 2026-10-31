@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "linalg-inverse-factor-reference",
+      "source_revision": "30e7237ab54ca176e1c8dae4be2d9d44800e1f83",
+      "source_sha256": "1898243323e9784a558721db571b1295d04a088e11a0805142465fd6ddbf7c4b",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T13:02:25.724284+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.488,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "132 scaled/permuted known-factor matrices, dimensions 1,2,3,4,5,8; two singular rejections.\nMaximum inverse error / max(1,maxabs(reference)):   2.1274E-16\nMaximum independently accumulated left/right inverse residual:   3.6082E-16\nMaximum determinant relative error:   0.0000E+00\nPASS linalg-inverse-factor-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.039,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "hrweno-tvd-ode-reference",
+      "source_revision": "2885105a7ba98351fed299b22e9bc0c67a809d2f",
+      "source_sha256": "9f111436e18f69b78450d256e876520de1c915e758cce43c6d29b380337ec471",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T13:02:27.919814+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.438,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Order=1 steps=8 continuous error=  7.0445E-02\nOrder=1 steps=16 continuous error=  3.4536E-02\nOrder=1 steps=32 continuous error=  1.7093E-02\nOrder=1 steps=64 continuous error=  8.5025E-03\nOrder=2 steps=8 continuous error=  6.8852E-03\nOrder=2 steps=16 continuous error=  1.5529E-03\nOrder=2 steps=32 continuous error=  3.6962E-04\nOrder=2 steps=64 continuous error=  9.0215E-05\nOrder=3 steps=8 continuous error=  4.3052E-04\nOrder=3 steps=16 continuous error=  4.8694E-05\nOrder=3 steps=32 continuous error=  5.7894E-06\nOrder=3 steps=64 continuous error=  7.0578E-07\nMaximum error against independent discrete references:   4.4409E-16\n12 ODE runs: orders 1..3, exponential decay, nonautonomous forcing and grid convergence.\nPASS hrweno-tvd-ode-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.032,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T13:02:27.968807+00:00"
+}

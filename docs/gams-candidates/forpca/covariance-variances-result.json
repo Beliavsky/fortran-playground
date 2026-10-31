@@ -1,0 +1,127 @@
+{
+  "schema": 1,
+  "validated_at": "2026-10-31T02:15:06.640490+00:00",
+  "source_path": "docs/gams-candidates/forpca/covariance-variances.f90",
+  "source_sha256": "e6dbd3d5fde28fe82fd194f64570c740e2db93df08a6c7076494e4e6c0dc094c",
+  "package_id": "forpca",
+  "revision": "d5d87badc4c25c647b3618f22560e712728d8165",
+  "expected_covariance_eigenvalues": [
+    10,
+    3.5
+  ],
+  "result": {
+    "ok": false,
+    "compiler": "GNU Fortran (GCC) 16.2.0",
+    "compiler_id": "gfortran",
+    "fpm": "0.12.0",
+    "stages": [
+      {
+        "name": "Build",
+        "command": [
+          "fpm",
+          "build",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 0.339,
+        "ok": true,
+        "exit_code": 0,
+        "error": "",
+        "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+        "stderr": ""
+      },
+      {
+        "name": "Run",
+        "command": [
+          "fpm",
+          "run",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 0.089,
+        "ok": false,
+        "exit_code": 1,
+        "error": "",
+        "stdout": "Expected covariance eigenvalues:      10.000000      3.500000\nReturned latent variances:           100.000000     12.250000\nExpected explained percentages:       74.074074     25.925926\nReturned explained percentages:       89.086860     10.913140\n",
+        "stderr": "Project is up to date\nERROR STOP known covariance eigenvalues\n\nError termination. Backtrace:\n#0  0x2b4c09248f83 in ???\n#1  0x2b4c09249c39 in ???\n#2  0x2b4c0924b045 in ???\n#3  0x402e6c in covariance_variances\n\tat app/main.f90:20\n#4  0x403206 in main\n\tat app/main.f90:3\n<ERROR> Execution for object \" playground-main \" returned exit code  1\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 1\n"
+      }
+    ],
+    "cache": {
+      "package": "forpca",
+      "compiler": "GNU Fortran 16.2.0",
+      "key": "8f2b68468e801905dbd393ff",
+      "library_reused": true,
+      "changed_artifacts": []
+    },
+    "packages": [
+      {
+        "repository": "gha3mi/forpca",
+        "revision": "d5d87badc4c25c647b3618f22560e712728d8165",
+        "sha256": "e01059bbc49107d7e29ddb275503ea7b789e6a9478c63a33f3f1d864b1a068a4"
+      },
+      {
+        "repository": "gha3mi/kinds",
+        "revision": "811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f",
+        "sha256": "495d1133b1630dea4f38d69e5e3189e3279e4ce5836da1a7aec8a822bbe16518"
+      },
+      {
+        "repository": "gha3mi/foreig",
+        "revision": "8fcfcab03e5d7cf5eda8c51c7a1e97fe52954c39",
+        "sha256": "842695c219adfd981a06d7451b87b27d57d3db86c8878612b371b782eb0e02d1"
+      },
+      {
+        "repository": "gha3mi/forsvd",
+        "revision": "f39bba7afcb048a21947a7a640bdf9a18337f8ac",
+        "sha256": "b9a97d840dca7ad2d11ef00c5986719d180d455b2fa188a4d0b374219414088e"
+      },
+      {
+        "repository": "gha3mi/fortime",
+        "revision": "de733e2c775457d4979403fe77ab69cf28e2b159",
+        "sha256": "bccc83cf947693ad4defcfb4684af7cd660db8a6e57084b7f07e7edfd584161d"
+      },
+      {
+        "repository": "szaghi/FACE",
+        "revision": "b20893e48518a81c25982ef20cc5a7cf8d31c8d8",
+        "sha256": "d4cc3c3a2c70e7369607624ae3361a6f7b2ba3f1e9a63ffd94ecb5cd4b019469"
+      },
+      {
+        "repository": "gha3mi/formatmul",
+        "revision": "6a77af418bbd77ffb5323a338db5cdf9368a73f7",
+        "sha256": "40d47f1616970d37c22ba264b4970abe96597423602090785ed3731ac76fc525"
+      }
+    ],
+    "build_ok": true,
+    "target_groups": {
+      "app": [
+        "playground-main"
+      ],
+      "example": [],
+      "test": []
+    },
+    "targets": [
+      "playground-main"
+    ],
+    "plots": [],
+    "plot_notes": []
+  },
+  "source_review": {
+    "path": "src/forpca.f90",
+    "line": 136,
+    "observed_assignment": "this%latent = S**2/(this%ncol-1)",
+    "explanation": "SVD is applied to the covariance matrix; its singular values already equal the nonnegative covariance eigenvalues. The extra square explains the observed values. Source-based diagnosis, not upstream-confirmed."
+  }
+}

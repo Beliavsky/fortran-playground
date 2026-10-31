@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "ecx-rlc-reference",
+      "source_revision": "d30725e3cb9186bc79f81481f3d6fae8d177a7b7",
+      "source_sha256": "fa76ce6a2bb2133fc314a54d366f91032b999c90cd41a48eeba9ab7ddafa8d33",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T12:42:38.914182+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.538,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "12 RLC parameter sets, 216 frequency cases, 648 element impedances checked.\nSeries RLC resonance and parallel RC real/imaginary formulas checked.\nMaximum complex error / max(1,abs(reference)):   4.2172E-16\nPASS ecx-rlc-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.064,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "rpn-sinc-sech-reference",
+      "source_revision": "7708e4949f17511d81f4e7dd0271a500f0bc3631",
+      "source_sha256": "154fe627deaf053b15cf70bf11edd50a65b1b45264c4d38e4b546233016ae26e",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T12:42:41.109490+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.374,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "133 real arguments: -8..8 step 0.125, plus signed near-zero values.\nMaximum sinc absolute error versus 64-term power series:   8.2434E-15\nMaximum sech absolute error versus exponential formula:   1.1102E-16\nZero values, even symmetry, sech range and scalar/array consistency checked.\nPASS rpn-sinc-sech-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.042,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "rpn-beta-reference",
+      "source_revision": "7708e4949f17511d81f4e7dd0271a500f0bc3631",
+      "source_sha256": "e2dd09257e477c5ccdc6dcb0ed39b629a84edada48021fe5c83cd17bc8aa6e71",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T12:42:43.651015+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.744,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "128 positive integer/half-integer pairs; 512 beta evaluations checked.\nIndependent factorial identities, symmetry and both one-step recurrences checked.\nMaximum relative error against closed-form references:   4.4409E-16\nPASS rpn-beta-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.045,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T12:42:43.708620+00:00"
+}

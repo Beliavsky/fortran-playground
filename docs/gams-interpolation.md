@@ -27,6 +27,8 @@ The B-spline driver separately interpolates `p(x)=1-2*x+0.5*x**2+x**3` with orde
 | [Load finterp-shape-interpolation](https://beliavsky.github.io/fortran-playground/fpm/?package=finterp&example=gams-finterp-shape-interpolation) · [Source](../fpm_catalog/gams-drivers/finterp-shape-interpolation.f90) | [Procedure](https://github.com/jacobwilliams/finterp/blob/95aaceaf86f5d4d49328b783c5dff9b006b0bfc9/src/linear_interpolation_module.F90#L67) · [Author example/test](https://github.com/jacobwilliams/finterp/blob/95aaceaf86f5d4d49328b783c5dff9b006b0bfc9/test/test.f90) |
 | [Load pchip-shape-interpolation](https://beliavsky.github.io/fortran-playground/fpm/?package=pchip&example=gams-pchip-shape-interpolation) · [Source](../fpm_catalog/gams-drivers/pchip-shape-interpolation.f90) | [Procedure](https://github.com/jacobwilliams/PCHIP/blob/8f5350565072622a2344dd0ec75193832b31eb10/src/pchip_module.f90#L2216) · [Author example/test](https://github.com/jacobwilliams/PCHIP/blob/8f5350565072622a2344dd0ec75193832b31eb10/test/pchip_test.f90) |
 | [Load bspline-fortran-shape-interpolation](https://beliavsky.github.io/fortran-playground/fpm/?package=bspline-fortran&example=gams-bspline-fortran-shape-interpolation) · [Source](../fpm_catalog/gams-drivers/bspline-fortran-shape-interpolation.f90) | [Procedure](https://github.com/jacobwilliams/bspline-fortran/blob/047c724451aeee7f883c0d5acba3f7bd22a5de01/src/bspline_oo_module.f90#L63) · [Author example/test](https://github.com/jacobwilliams/bspline-fortran/blob/047c724451aeee7f883c0d5acba3f7bd22a5de01/test/test_oo.f90) |
+| [Load fortran-utils-spline-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=fortran-utils&example=gams-fortran-utils-spline-reference) · [Source](../fpm_catalog/gams-drivers/fortran-utils-spline-reference.f90) | [Procedure](https://github.com/certik/fortran-utils/blob/b43bd24cd421509a5bc6d3b9c3eeae8ce856ed88/src/splines.f90#L1) · [Author example/test](https://github.com/certik/fortran-utils/blob/b43bd24cd421509a5bc6d3b9c3eeae8ce856ed88/tests/splines/test_splines.f90) |
+| [Load interp1-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=interpolation&example=gams-interp1-reference) · [Source](../fpm_catalog/gams-drivers/interp1-reference.f90) | [Procedure](https://github.com/furstj/interpolation/blob/bf6d22ad931855d510dcfb5bdd6870cce8924b22/src/interpolation.f90#L14) · [Author example/test](https://github.com/furstj/interpolation/blob/bf6d22ad931855d510dcfb5bdd6870cce8924b22/test/interp1_test.f90) |
 
 The programs adapt author API patterns and retain the package license notices. They use shared deterministic data instead of the larger author test harnesses. The drivers appear in hosted and main local FPM example menus and downloaded projects. Loading a link selects source without submitting a job.
 
@@ -127,6 +129,25 @@ Evaluator calls: 111
 Cubic reproduction maximum error:   7.1054E-15
 Cubic first derivative maximum error:   7.1054E-15
 PASS bspline-fortran-shape-interpolation
+```
+
+### fortran-utils-spline-reference
+
+```text
+16 polynomial/grid fixtures, 65 queries each, 3120 value/derivative references.
+Maximum errors: value, first derivative, second derivative:   2.2204E-16  8.8818E-16  1.7764E-15
+Uniform/nonuniform knots, endpoints, optional outputs and reversed query order checked.
+PASS fortran-utils-spline-reference
+```
+
+### interp1-reference
+
+```text
+Exact affine references across all four overloads, including extrapolation: 2988
+Exact mirrored cubic references (pchip/cubic aliases): 258
+Total exact / NaN / interval-bound / monotonicity checks:   3286    36  1032   512
+Maximum normalized exact-reference error:   1.5543E-15
+PASS interp1-reference
 ```
 
 ## Maintenance

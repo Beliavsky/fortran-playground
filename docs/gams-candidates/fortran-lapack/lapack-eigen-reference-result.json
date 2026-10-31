@@ -1,0 +1,38 @@
+{
+  "ok": false,
+  "compiler": "GNU Fortran (GCC) 16.2.0",
+  "fpm": "0.12.0",
+  "stages": [
+    {
+      "name": "Build",
+      "command": [
+        "fpm",
+        "build",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 1.39,
+      "ok": false,
+      "exit_code": 1,
+      "error": "",
+      "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n\ncollect2: fatal error: ld terminated with signal 25 [File size limit exceeded]\ncompilation terminated.\n",
+      "stderr": "<ERROR> Compilation failed for object \" playground-main \"\n<ERROR> stopping due to failed compilation\nSTOP 1\n"
+    }
+  ],
+  "cache": {
+    "package": "fortran-lapack",
+    "compiler": "GNU Fortran 16.2.0",
+    "key": "2bf03f0b0171fb2b1a506211",
+    "library_reused": true,
+    "changed_artifacts": []
+  },
+  "source_sha256": "283430f635abbf27b3dc0c60b88784a7e1c3dc76b33c351cd7f9f8a4dcc1cb37",
+  "revision": "e5e45fdd5a38bfab06d1f703f12b787937aa33bb"
+}

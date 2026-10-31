@@ -36,6 +36,8 @@ A separate RK4 experiment integrates the same problem directly to `2*pi` with no
 | [Load lsoda-stiff-two-scale](https://beliavsky.github.io/fortran-playground/fpm/?package=odepack&example=gams-lsoda-stiff-two-scale) · [Source](../fpm_catalog/gams-drivers/lsoda-stiff-two-scale.f90) | I1a2 | [Procedure](https://github.com/Nicholaswogan/odepack/blob/d5db96093dc14fff54e10575cc586fa85392b078/src/odepack_mod.f90#L13) · [Author example](https://github.com/Nicholaswogan/odepack/blob/d5db96093dc14fff54e10575cc586fa85392b078/test/benchmark.f90) |
 | [Load stiff3-stiff-two-scale](https://beliavsky.github.io/fortran-playground/fpm/?package=stiff3&example=gams-stiff3-stiff-two-scale) · [Source](../fpm_catalog/gams-drivers/stiff3-stiff-two-scale.f90) | I1a2 | [Procedure](https://github.com/ivan-pi/stiff3/blob/70ab5c86c2ac922ed148bbb1182345cca248e077/src/stiff3_solver.f90#L71) · [Author example](https://github.com/ivan-pi/stiff3/blob/70ab5c86c2ac922ed148bbb1182345cca248e077/example/hires.f90) |
 | [Load featom-coulomb-spectrum](https://beliavsky.github.io/fortran-playground/fpm/?package=featom&example=gams-featom-coulomb-spectrum) · [Source](../fpm_catalog/gams-drivers/featom-coulomb-spectrum.f90) | I1b | [Procedure](https://github.com/atomic-solvers/featom/blob/87872a3266ceeee61a7244e6ecd134dc3bda790f/src/schroed_dirac_solver.f90#L18) · [Author example](https://github.com/atomic-solvers/featom/blob/87872a3266ceeee61a7244e6ecd134dc3bda790f/test/test_coulomb_schroed.f90) |
+| [Load hrweno-tvd-ode-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=hrweno&example=gams-hrweno-tvd-ode-reference) · [Source](../fpm_catalog/gams-drivers/hrweno-tvd-ode-reference.f90) | I1 | [Procedure](https://github.com/HugoMVale/HR-WENO/blob/2885105a7ba98351fed299b22e9bc0c67a809d2f/src/hrweno_tvdode.f90#L97) · [Author example](https://github.com/HugoMVale/HR-WENO/blob/2885105a7ba98351fed299b22e9bc0c67a809d2f/None) |
+| [Load rkf45-analytic-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=rkf45&example=gams-rkf45-analytic-reference) · [Source](../fpm_catalog/gams-drivers/rkf45-analytic-reference.f90) | I1a1a | [Procedure](https://github.com/zoziha/rkf45/blob/93cd129369357ee08e34be7868256b21a500cc98/src/rkf45.F90#L57) · [Author example](https://github.com/zoziha/rkf45/blob/93cd129369357ee08e34be7868256b21a500cc98/test/test_rkf45.f90) |
 
 The drivers adapt author callback and integration API patterns to the shared analytic problem, without plotting dependencies; license notices are retained. They appear in hosted and main local FPM example menus and downloaded FPM projects. Loading a link selects source without submitting a job.
 
@@ -183,6 +185,38 @@ n,l=  3  2; energy=     -0.222222222222; error=   8.696E-14
 Maximum absolute energy error:    1.70441E-12
 Only the first six levels per charge are checked; full wavefunction accuracy is not claimed.
 PASS featom-coulomb-spectrum
+```
+
+### hrweno-tvd-ode-reference
+
+```text
+Order=1 steps=8 continuous error=  7.0445E-02
+Order=1 steps=16 continuous error=  3.4536E-02
+Order=1 steps=32 continuous error=  1.7093E-02
+Order=1 steps=64 continuous error=  8.5025E-03
+Order=2 steps=8 continuous error=  6.8852E-03
+Order=2 steps=16 continuous error=  1.5529E-03
+Order=2 steps=32 continuous error=  3.6962E-04
+Order=2 steps=64 continuous error=  9.0215E-05
+Order=3 steps=8 continuous error=  4.3052E-04
+Order=3 steps=16 continuous error=  4.8694E-05
+Order=3 steps=32 continuous error=  5.7894E-06
+Order=3 steps=64 continuous error=  7.0578E-07
+Maximum error against independent discrete references:   4.4409E-16
+12 ODE runs: orders 1..3, exponential decay, nonautonomous forcing and grid convergence.
+PASS hrweno-tvd-ode-reference
+```
+
+### rkf45-analytic-reference
+
+```text
+Family 1: forward/backward runs at two rates and two initial states passed.
+Family 2: forward/backward runs at two rates and two initial states passed.
+Family 3: forward/backward runs at two rates and two initial states passed.
+Integration runs: 24; requested target calls: 384
+RHS evaluations: 11669
+Maximum normalized analytical state error:   4.6749E-10
+PASS rkf45-analytic-reference
 ```
 
 ## Maintenance

@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "rkf45-analytic-reference",
+      "source_revision": "93cd129369357ee08e34be7868256b21a500cc98",
+      "source_sha256": "cec25165d09b7b2a0dd644cb97f3bf6e40946c5302ca5a6323c3684043d677e3",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T16:49:53.068400+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.376,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Family 1: forward/backward runs at two rates and two initial states passed.\nFamily 2: forward/backward runs at two rates and two initial states passed.\nFamily 3: forward/backward runs at two rates and two initial states passed.\nIntegration runs: 24; requested target calls: 384\nRHS evaluations: 11669\nMaximum normalized analytical state error:   4.6749E-10\nPASS rkf45-analytic-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.028,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fgsl-qags-reference",
+      "source_revision": "27a3e7cc0809623bcfde680c39a6fdcf0f590c4c",
+      "source_sha256": "e25f76d74bf14df4454f74c7ec1a2890f7f9bd26a95705ffff890207595bdb4b",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T16:50:11.715911+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.527,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Requested absolute/relative tolerance   1.0000E-07: all five integral families passed.\nRequested absolute/relative tolerance   1.0000E-10: all five integral families passed.\nAdaptive finite-interval integrals with one reused workspace: 40\nIntegrand evaluations: 4704\nMaximum normalized analytical integral error:   3.5069E-13\nMaximum normalized reported error estimate:   3.1979E-08\nPASS fgsl-qags-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.04,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T16:50:11.766416+00:00"
+}

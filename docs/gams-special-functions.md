@@ -70,12 +70,16 @@ The C10 driver checks 39 complex values at `z=[0.5+0.25i,1+0.5i,2+0.75i]`. For s
 | [Load carlson-rf-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=carlson-elliptic-integrals&example=gams-carlson-rf-reference) · [Source](../fpm_catalog/gams-drivers/carlson-rf-reference.f90) | C14 | [Procedure](https://github.com/jacobwilliams/carlson-elliptic-integrals/blob/5f25a59a555b7029505aac71a8341d5851f8abed/src/carlson_elliptic_module.F90#L580) |
 | [Load bernoulli-power-sums](https://beliavsky.github.io/fortran-playground/fpm/?package=specfun&example=gams-bernoulli-power-sums) · [Source](../fpm_catalog/gams-drivers/bernoulli-power-sums.f90) | C19 | [Procedure](https://github.com/jacobwilliams/specfun/blob/e74d9c810d5c9248b5d8ffab4b766e7bb22ffd23/src/specfun.F90#L776) |
 | [Load amos-complex-series](https://beliavsky.github.io/fortran-playground/fpm/?package=amosf90&example=gams-amos-complex-series) · [Source](../fpm_catalog/gams-drivers/amos-complex-series.f90) | C10 | [Procedure](https://github.com/Euler-37/amosf90/blob/b54a4d4a1d8f7c97acd180ed5bbaae8d089a9fa7/src/amos.f90#L4548) · [Author example/test](https://github.com/Euler-37/amosf90/blob/b54a4d4a1d8f7c97acd180ed5bbaae8d089a9fa7/test/check.f90) |
+| [Load fastmath-exp-log-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=fastmath&example=gams-fastmath-exp-log-reference) · [Source](../fpm_catalog/gams-drivers/fastmath-exp-log-reference.f90) | C4b | [Procedure](https://github.com/perazz/fastmath/blob/ad0f14c455205c0e6c1b9300cd7f333fafb750e2/src/fast_exp.f90#L76) · [Author example/test](https://github.com/perazz/fastmath/blob/ad0f14c455205c0e6c1b9300cd7f333fafb750e2/test/test.f90) |
+| [Load fastmath-rsqrt-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=fastmath&example=gams-fastmath-rsqrt-reference) · [Source](../fpm_catalog/gams-drivers/fastmath-rsqrt-reference.f90) | C2 | [Procedure](https://github.com/perazz/fastmath/blob/ad0f14c455205c0e6c1b9300cd7f333fafb750e2/src/fast_rsqrt.f90#L55) · [Author example/test](https://github.com/perazz/fastmath/blob/ad0f14c455205c0e6c1b9300cd7f333fafb750e2/test/test.f90) |
+| [Load rpn-sinc-sech-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=rpn-calculator-fortran&example=gams-rpn-sinc-sech-reference) · [Source](../fpm_catalog/gams-drivers/rpn-sinc-sech-reference.f90) | C4 | [Procedure](https://github.com/scivision/rpn-calculator-fortran/blob/7708e4949f17511d81f4e7dd0271a500f0bc3631/src/funcs.f90#L1) · [Author example/test](https://github.com/scivision/rpn-calculator-fortran/blob/7708e4949f17511d81f4e7dd0271a500f0bc3631/test/test.f90) |
+| [Load rpn-beta-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=rpn-calculator-fortran&example=gams-rpn-beta-reference) · [Source](../fpm_catalog/gams-drivers/rpn-beta-reference.f90) | C7 | [Procedure](https://github.com/scivision/rpn-calculator-fortran/blob/7708e4949f17511d81f4e7dd0271a500f0bc3631/src/specfun/gamma.f90#L1) |
 
 The programs use author APIs, retain applicable license notices and use deterministic reference checks instead of the larger author harnesses. They appear in hosted and main local FPM example menus and downloaded projects. Loading a link selects source without submitting a job.
 
 ## Recorded results
 
-All 6 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing existing package libraries. Only each main and executable were rebuilt. The [verification report](gams-special-functions-validation.json) records hashes, pins and saved output. These cases establish checked usage and selected-point agreement, rather than accuracy over each function's complete domain.
+All 10 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing existing package libraries. Only each main and executable were rebuilt. The [verification report](gams-special-functions-validation.json) records hashes, pins and saved output. These cases establish checked usage and selected-point agreement, rather than accuracy over each function's complete domain.
 
 ### fullerton-gamma-values
 
@@ -167,6 +171,46 @@ z =     2.0000    0.7500; K_0.5(z) =       0.069439816411     -0.092990708451
 Independent complex Bessel values checked: 39
 Maximum scaled error:   3.5643E-16
 PASS amos-complex-series
+```
+
+### fastmath-exp-log-reference
+
+```text
+641 points x=-80..80 in steps of 0.25; log arguments exp(x).
+Maximum exponential relative error versus intrinsic exp:   3.1976E-06
+Maximum logarithm absolute error versus x:   2.9987E-04
+Maximum approximate exp/log round-trip relative error:   2.9982E-04
+Positive exponentials, grid monotonicity and scalar/array consistency checked.
+PASS fastmath-exp-log-reference
+```
+
+### fastmath-rsqrt-reference
+
+```text
+168 exact dyadic squares: roots (m/8)*2**k, m=8..15, k=-250..250 step 25.
+Maximum relative error versus reciprocal of known root:   1.7267E-03
+Maximum normalized residual abs(x*y*y-1):   3.4503E-03
+Finite positive results and scalar/array consistency checked.
+PASS fastmath-rsqrt-reference
+```
+
+### rpn-sinc-sech-reference
+
+```text
+133 real arguments: -8..8 step 0.125, plus signed near-zero values.
+Maximum sinc absolute error versus 64-term power series:   8.2434E-15
+Maximum sech absolute error versus exponential formula:   1.1102E-16
+Zero values, even symmetry, sech range and scalar/array consistency checked.
+PASS rpn-sinc-sech-reference
+```
+
+### rpn-beta-reference
+
+```text
+128 positive integer/half-integer pairs; 512 beta evaluations checked.
+Independent factorial identities, symmetry and both one-step recurrences checked.
+Maximum relative error against closed-form references:   4.4409E-16
+PASS rpn-beta-reference
 ```
 
 ## Maintenance

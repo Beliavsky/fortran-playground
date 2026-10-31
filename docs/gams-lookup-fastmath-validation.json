@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "lookup-services-reference",
+      "source_revision": "b7dc72359e7c2cc105abfbf79b570c655a7f1d04",
+      "source_sha256": "3efb8efdae135e1124d815932a67194ad6b18dd918ed8beda0ee7adf65f9b7bc",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T10:55:23.755006+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.337,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "98 queries: updated and independent copied tables, 3 columns, 4 lookup routes.\nMaximum error versus independent two-stage interpolation:   2.2204E-16\nLocation coordinates, endpoints, clamping, resampling, column addition and updates checked.\nPASS lookup-services-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.031,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fastmath-exp-log-reference",
+      "source_revision": "ad0f14c455205c0e6c1b9300cd7f333fafb750e2",
+      "source_sha256": "a819984310bc078fbd37ea29349b60ad30bbd1906b83715981b86d20123b1e22",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T10:55:25.601432+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.47,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "641 points x=-80..80 in steps of 0.25; log arguments exp(x).\nMaximum exponential relative error versus intrinsic exp:   3.1976E-06\nMaximum logarithm absolute error versus x:   2.9987E-04\nMaximum approximate exp/log round-trip relative error:   2.9982E-04\nPositive exponentials, grid monotonicity and scalar/array consistency checked.\nPASS fastmath-exp-log-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.026,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fastmath-rsqrt-reference",
+      "source_revision": "ad0f14c455205c0e6c1b9300cd7f333fafb750e2",
+      "source_sha256": "e62e28f132bd3cfae2b24f105278d76a7bf1d5f14d44530b08f528ff54d1d6f6",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T10:55:27.867681+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.34,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "168 exact dyadic squares: roots (m/8)*2**k, m=8..15, k=-250..250 step 25.\nMaximum relative error versus reciprocal of known root:   1.7267E-03\nMaximum normalized residual abs(x*y*y-1):   3.4503E-03\nFinite positive results and scalar/array consistency checked.\nPASS fastmath-rsqrt-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.026,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T10:55:27.929822+00:00"
+}

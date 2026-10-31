@@ -4149,7 +4149,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Integrates a stored spline representation on a finite interval; not adaptive callback quadrature.",
+        "notes": "Integrates a stored spline representation on a finite interval; not adaptive callback quadrature. Checked cubic interpolants of degree-zero through degree-three polynomials on irregular nodes, 36 integral calls, reversed/zero intervals and off-knot partition additivity against analytic antiderivatives. Outside-domain and smoothing-error behavior are not verified.",
         "evidence": [
           {
             "path": "src/fitpack_curves.f90",
@@ -4162,7 +4162,8 @@
             "path": "examples/example_curve.f90",
             "sha256": "fa2fa26f553e1fcbb57dd8eef73337e1a43d4d7c5267f06a7874250c9d3d7064"
           }
-        ]
+        ],
+        "driver_id": "fitpack-spline-integral"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -4777,7 +4778,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Numeric array file I/O; conversion and formatting capabilities are not mathematical solvers.",
+        "notes": "Numeric array file I/O; conversion and formatting capabilities are not mathematical solvers. Dedicated N1 consumer checks eight real64 matrix files across four shapes and two delimiters. Independent native Fortran parsing checks rows, delimiter counts and values, then library round trips and a hand-written CSV test the reader independently. Missing-file status/message and cleanup are checked. Headers, locale options, complex/integer arrays, other ranks, nonfinite values and formatting modes beyond exponential output are not verified.",
         "evidence": [
           {
             "path": "src/modules/io_fortran_lib_mod.f90",
@@ -4790,7 +4791,8 @@
             "path": "test/units/file-test-c.f90",
             "sha256": "7392fd429958efa0dea88db1a372b0d533ce770fdc3eb4c517818fb93ddf3c73"
           }
-        ]
+        ],
+        "driver_id": "io-numeric-file-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -5302,7 +5304,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "One-dimensional real-input Fourier transform and its inverse.",
+        "notes": "One-dimensional real-input Fourier transform and inverse API. Checked driver covers rfft only: 42 forward transforms against direct trigonometric sums and Parseval energy, including odd/even lengths, zero padding and truncation. irfft is not verified; its source infers original length from half-spectrum length parity, which cannot encode both original parities.",
         "evidence": [
           {
             "path": "src/spectrum_fft.f90",
@@ -5315,7 +5317,8 @@
             "path": "test/spectrum_fft_tests.f90",
             "sha256": "e150aac7d74d111733e5d4f21ce921c2bf0cce1ff12f67d534e3e8dfea1e8eca"
           }
-        ]
+        ],
+        "driver_id": "spectrum-real-dft-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -5800,12 +5803,27 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Dimension-aware physical quantities and unit conversions; no narrower numerical algorithm is asserted.",
+        "notes": "Dimension-aware physical quantities and unit conversions; no narrower numerical algorithm is asserted. Dedicated A consumer checks 180 scalar references for signed/zero lengths, five length units, seconds/minutes/hours, arithmetic, absolute values and quantity-array sums. Typed length/time speed and speed*time length agree with independent scalar SI formulas. Other quantity dimensions, parsing, overflow and compile-time rejection of invalid dimensional expressions are not verified.",
         "evidence": [
           {
             "path": "src/quaff/length_m.f90",
             "sha256": "bc26d880ca907c06a0e73f3e4efcc049bc55e26c7417bf8905a47501b5d91443",
             "line": 60
+          },
+          {
+            "path": "src/quaff/time_m.f90",
+            "line": 1,
+            "sha256": "8162f0ffc323af33821d287d355ac9807795dfc7f1c282ad9e39488135697d7d"
+          },
+          {
+            "path": "src/quaff/speed_m.f90",
+            "line": 1,
+            "sha256": "772e834de340bf2d8decf6d8e4a317bc6947bb270ec33a695032c889961c87c3"
+          },
+          {
+            "path": "src/quaff/interquantity_operators_m.f90",
+            "line": 1,
+            "sha256": "26f618111e3e54d61394c8ec3d4206a46ecb54f8f3b73142c26e245f1128c9a0"
           }
         ],
         "author_examples": [
@@ -5813,7 +5831,8 @@
             "path": "test/length_test.f90",
             "sha256": "4331d15a0e6546a356d1600fb9e73f73108ee52ff41fb3219e9698a9c6ba2567"
           }
-        ]
+        ],
+        "driver_id": "quaff-quantity-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -5945,7 +5964,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "SVD-based principal components; the numerical decomposition and the statistical analysis are distinct classifications. Principal component analysis; the chosen SVD/eigen algorithm has its own linear-algebra classification.",
+        "notes": "SVD-based principal directions and covariance analysis; D6 and L13b remain source-supported. A checked variance probe fails: covariance diag(10,3.5) produces latent [100,12.25] and incorrect explained percentages. The SVD branch squares covariance singular values again. See docs/gams-candidates/forpca/covariance-variances-result.json and docs/gams-sparse-integral.md. The ordinary catalog demo checks direction and an independently formed rank-one reconstruction only; no checked PCA variance driver is published.",
         "evidence": [
           {
             "path": "src/forpca.f90",
@@ -6402,7 +6421,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Direct and inverse geodesic calculations on an ellipsoid; P has no finer published children.",
+        "notes": "Checked direct and inverse geodesics on a sphere and WGS84 equatorial/meridional paths, using independent haversine distances/bearings, exact equatorial arcs and refined meridional curvature quadrature. Direct inputs are independent references, not inverse outputs. General ellipsoidal paths and antipodal degeneracies remain unverified; P has no finer published children.",
         "evidence": [
           {
             "path": "src/geodesic_module.F90",
@@ -6415,7 +6434,8 @@
             "path": "test/direct_inverse_test.f90",
             "sha256": "cdd346b924df45011e0f78aa866c466538d80fbd2045c37d3dbe84f698e2cc2e"
           }
-        ]
+        ],
+        "driver_id": "geodesic-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -6662,7 +6682,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Deterministic grid generation; these procedures are not random-number generators.",
+        "notes": "Deterministic grid generation; these procedures are not random-number generators. Dedicated R consumer checks 20 arithmetic and 80 geometric grids against real64 closed-form references using 32 working-kind epsilons as tolerance. Increasing/decreasing/equal endpoints and strict ordering for nondegenerate grids are checked. At this pin wp is real32; ratios of one or less than/equal zero and arrays shorter than two are documented/tested as unchanged-array guards, not filled grids. Random point routines, large grids, extreme ratios and near-unit-ratio stability are not verified.",
         "evidence": [
           {
             "path": "src/pointsets.f90",
@@ -6675,7 +6695,8 @@
             "path": "test/pointsets/test_pointsets.f90",
             "sha256": "0234c57e0c3b578938c909e67d3ea1a24fc45e2873e85db7fed3522a51d7e837"
           }
-        ]
+        ],
+        "driver_id": "pointsets-spacing-reference"
       },
       {
         "id": "pointsets-random-spacing",
@@ -7269,13 +7290,13 @@
         "package_id": "fsparse",
         "revision": "fa8233420ab0110bb688d565879164386521a8fc",
         "module": "fsparse",
-        "procedure": "dense2coo",
+        "procedure": "dense2coo, coo2dense, coo2csr, csr2coo",
         "gams_codes": [
           "D1b9"
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Converts dense storage to coordinate sparse storage; this does not solve a system.",
+        "notes": "Checked real64 full-storage conversions: independent COO coordinates/values, CSR row pointers/columns/values and reconstructions for five exact dyadic fixtures, including empty rows/columns and an all-zero matrix. coo2dense requires caller initialization of unstored entries. Threshold/subnormal behavior, duplicate entries and storage reuse are not verified; no linear-system solve is claimed.",
         "evidence": [
           {
             "path": "src/conversion/fsparse_conversions.f90",
@@ -7288,7 +7309,8 @@
             "path": "test/test_matrices.f90",
             "sha256": "df71f7ee49f0246207b77243bdf32c1e10642908379a9e303a6a926c3d4a4c1b"
           }
-        ]
+        ],
+        "driver_id": "fsparse-storage-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -8386,7 +8408,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "none",
-        "notes": "The existing catalog quadratic program is an independently written API example. Upstream licensing is unspecified; no upstream example code is copied here.",
+        "notes": "The existing catalog quadratic program is an independently written API example. Upstream licensing is unspecified; no upstream example code is copied here. Dedicated G1b consumer checks twelve derivative-free solves: coupled positive-definite quadratics in 2/3/5 variables and the two-variable Rosenbrock problem, each from three starts. Known unique minimizers and zero objective supply independent acceptance criteria, and the returned objective is recomputed. Uses the actual kcount evaluation limit; optimizer termination status is not exposed by this wrapper. No upstream example code is copied. Other methods, nonsmooth/global optimization, scaling extremes and concurrent calls are not verified.",
         "evidence": [
           {
             "path": "src/minimize.f90",
@@ -8404,7 +8426,8 @@
             "path": "example/gradient.f90",
             "sha256": "dfdc5b2c20ab4852e8fe4d4230fced87f8bd76b27bcbc84225928da56da73df9"
           }
-        ]
+        ],
+        "driver_id": "fortimize-nelder-reference"
       },
       {
         "id": "fortimize-gradient-descent",
@@ -9302,7 +9325,8 @@
             "path": "tests/test_eigen.f90",
             "sha256": "6c169ba8530b93f636f1e15c38645f985b41927f688e5231c7b858337383dcb7"
           }
-        ]
+        ],
+        "driver_id": "linalg-eigen-reference"
       },
       {
         "id": "linalg-qr-factor",
@@ -9328,7 +9352,8 @@
             "path": "examples/linalg_qr_example.f90",
             "sha256": "358223450ea4c81c235a6060c4810725b9f09625ec1d17a0893a96a58c1940f0"
           }
-        ]
+        ],
+        "driver_id": "linalg-qr-reference"
       },
       {
         "id": "linalg-svd",
@@ -9354,7 +9379,8 @@
             "path": "tests/test_svd.f90",
             "sha256": "4abb9d9243a127c17cef29ad305096df6c82d57cf3f84d2c63f4af060b4e46ba"
           }
-        ]
+        ],
+        "driver_id": "linalg-svd-reference"
       },
       {
         "id": "linalg-solve-least-squares",
@@ -9375,7 +9401,8 @@
             "line": 14
           }
         ],
-        "author_examples": []
+        "author_examples": [],
+        "driver_id": "linalg-least-squares-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -10593,7 +10620,8 @@
             "path": "test/interp1_test.f90",
             "sha256": "872afc945dadf8933902cd3c90c61439202735df3f6e614b0f0c343731c430c9"
           }
-        ]
+        ],
+        "driver_id": "interp1-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -10685,22 +10713,33 @@
         "id": "fastmath-fexp",
         "package_id": "fastmath",
         "revision": "ad0f14c455205c0e6c1b9300cd7f333fafb750e2",
-        "module": "fast_exp",
+        "module": "fast_exp / fast_log",
         "procedure": "fexp; fast_log / flog_quintic",
         "gams_codes": [
           "C4b"
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Approximate exponential/logarithm evaluation; accuracy differs from standard intrinsics.",
+        "notes": "Approximate exponential/logarithm evaluation; accuracy differs from standard intrinsics. Independent consumer checks fexp and flog_quintic at 641 grid points from -80 to 80, using intrinsic exp and the known inverse arguments as references. Explicit approximation tolerances, positivity, finite results, scalar/array agreement and grid monotonicity are enforced. This is not a speed benchmark or an accuracy guarantee outside the tested normal finite range.",
         "evidence": [
           {
             "path": "src/fast_exp.f90",
             "sha256": "0f54b553646fc0885190e544826a71556499f48be669e75985a074ef7fef07f0",
             "line": 76
+          },
+          {
+            "path": "src/fast_log.f90",
+            "sha256": "9b1c57920eabce5105d5c01d17e16a2fcbe334aab7de629c42385a205c0a7570",
+            "line": 144
           }
         ],
-        "author_examples": []
+        "author_examples": [
+          {
+            "path": "test/test.f90",
+            "sha256": "6d8276ab02a8f82f9795c7a9abe4e5e89e51f33b26cf081dcb68480eefc3141a"
+          }
+        ],
+        "driver_id": "fastmath-exp-log-reference"
       },
       {
         "id": "fastmath-frsqrt",
@@ -10713,7 +10752,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Approximate reciprocal square root, with documented accuracy tradeoffs.",
+        "notes": "Approximate reciprocal square root, with documented accuracy tradeoffs. Independent consumer checks 168 exactly representable dyadic squares using reciprocals of their known roots, over root binary exponents -250..250 and eight mantissas. Finite positive results, scalar/array agreement and normalized equation residuals are required. Zero, negative, subnormal, infinity/NaN arguments and speed are not verified.",
         "evidence": [
           {
             "path": "src/fast_rsqrt.f90",
@@ -10726,7 +10765,8 @@
             "path": "test/test.f90",
             "sha256": "6d8276ab02a8f82f9795c7a9abe4e5e89e51f33b26cf081dcb68480eefc3141a"
           }
-        ]
+        ],
+        "driver_id": "fastmath-rsqrt-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -12341,7 +12381,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Direct real sparse factorization and repeated solves using stored factors.",
+        "notes": "Direct real sparse factorization and repeated solves using stored factors. Checked driver uses two nonsymmetric 10-by-10 matrices (including a cyclic row permutation), four manufactured right-hand sides per factorization and independent scalar residuals. No singular/ill-conditioned behavior is certified.",
         "evidence": [
           {
             "path": "src/y12m.f90",
@@ -12354,7 +12394,8 @@
             "path": "test/test_y12mc_errors.F90",
             "sha256": "0519c3118c4c43c4d6616e63210659dc5248d7e7b360ac0f90739ce05e9324f5"
           }
-        ]
+        ],
+        "driver_id": "y12m-sparse-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -12545,7 +12586,8 @@
             "path": "test/test_rkf45.f90",
             "sha256": "127d966b1717ace0d1bffc78ef1d540363b694873cfb8c889b23cbb0c7b32182"
           }
-        ]
+        ],
+        "driver_id": "rkf45-analytic-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -12960,8 +13002,8 @@
           "I2"
         ],
         "review_level": "source-reviewed",
-        "derivatives": "problem-specific source or delayed derivative callback",
-        "notes": "Centered-grid finite-difference solver for separable two-dimensional Poisson/Helmholtz equations.",
+        "derivatives": "not applicable; sampled forcing and boundary values supplied",
+        "notes": "Centered-grid finite-difference solver for separable two-dimensional Poisson/Helmholtz equations. Checked six rectangular-grid Poisson/Helmholtz solves with nonzero Dirichlet values, exact discrete eigenmode solutions, preserved boundaries, independently evaluated five-point residuals and second-order mesh refinement. Other boundary modes and positive shifts remain unverified.",
         "evidence": [
           {
             "path": "src/centered_cartesian_solver.f90",
@@ -12974,7 +13016,8 @@
             "path": "examples/thwscrt.f90",
             "sha256": "6960893da7a3bfae50314d5b0f3bf95a66fd7868b89088b0781d954cb39c2da6"
           }
-        ]
+        ],
+        "driver_id": "fishpack-helmholtz-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T16:54:18.541524+00:00"
@@ -13031,7 +13074,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "problem-specific source or delayed derivative callback",
-        "notes": "Delay differential equations: retain the broad differential-equation class rather than assume the ODE subclasses describe delayed problems.",
+        "notes": "Delay differential equations: retain the broad differential-equation class rather than assume the ODE subclasses describe delayed problems. Dedicated I consumer checks twelve scalar constant-delay equations against independently specified method-of-steps polynomials through four delay intervals, and three oscillators against exact sine solutions. Verifies solver status and 975 finite dense-output samples including delay knots, with signed history scaling. Module callbacks use no copied upstream code. State-dependent/neutral/multiple delays, events, derivative interpolation, stiffness and all error paths are not verified.",
         "evidence": [
           {
             "path": "dde_solver_m.f90",
@@ -13048,7 +13091,8 @@
             "path": "tests/delay_oscillator/delay_oscillator_test.f90",
             "sha256": "b0ceac14d917d2fbe09a33b472e0ba37f36fe6ddab8cc9e91405f48220c4dd56"
           }
-        ]
+        ],
+        "driver_id": "dde-method-steps-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T16:54:18.541524+00:00"
@@ -13270,7 +13314,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "problem-specific source or delayed derivative callback",
-        "notes": "Spherical harmonic analysis and synthesis on Gaussian grids; no narrower trigonometric-transform subclass is inferred.",
+        "notes": "Spherical harmonic analysis and synthesis on Gaussian grids; no narrower trigonometric-transform subclass is inferred. Dedicated J consumer verifies P0..P4 zonal fields and a mixed zonal field on three Gaussian grids. Analyzed coefficients must match independently normalized Legendre amplitudes, valid nonzonal coefficients must vanish, and synthesis is checked both after analysis and after erasing/injecting exact coefficients. Nonzero nonzonal modes, vector transforms, Nyquist/invalid coefficient storage and Helmholtz/PDE routines are not verified.",
         "evidence": [
           {
             "path": "src/type_GaussianSphere.f90",
@@ -13283,7 +13327,8 @@
             "path": "examples/helmsph.f90",
             "sha256": "d0c30718e842c77a52dd4c3b4aee4560f04f8f9e4f9935685618539bd15c1e81"
           }
-        ]
+        ],
+        "driver_id": "spherepack-zonal-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T16:54:18.541524+00:00"
@@ -14233,15 +14278,21 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "The driver assembles an ordinary-kriging system from GSLIB covariance and linear-solver routines. It checks exponential covariances, closed-form weights, endpoint interpolation and independent system residuals. Broad interpolation/covariance classes only; no exhaustive spatial-statistics review.",
+        "notes": "The driver assembles an ordinary-kriging system from GSLIB covariance and linear-solver routines. It checks exponential covariances, closed-form weights, endpoint interpolation and independent system residuals. Broad interpolation/covariance classes only; no exhaustive spatial-statistics review. The L13 driver verifies spherical/exponential/Gaussian covariances, 21 two-observation ordinary kriging systems, closed-form weights and variances, constant-field reproduction and reflection symmetry. It separates real32 covariance error from real64 solver residuals, and does not verify the separate E2 mapping. GSLIB source-evidence hashes use UTF-8/LF normalization.",
         "evidence": [
           {
             "path": "src/legacy/gslib/cova3.f90",
             "sha256": "51394c56d3e67747f10ef8bffe8d499b7e7f1e6392f51552721371a8a745439c",
             "line": 1
+          },
+          {
+            "path": "src/legacy/gslib/ksol.f90",
+            "sha256": "e86a01d5faf662110b3fc917bf7fd5bc044f34ce2b00b3f3d36bf1ee1fc86d16",
+            "line": 1
           }
         ],
-        "author_examples": []
+        "author_examples": [],
+        "driver_id": "gslib-kriging-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T17:54:16.128500+00:00"
@@ -15084,7 +15135,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Scalar products using methods m1 through m4, each also checked with three unequal blocks against an exact answer. Single-process correctness only; no coarray or performance claim.",
+        "notes": "Scalar products using methods m1 through m4, each also checked with three unequal blocks against an exact answer. Single-process correctness only; no coarray or performance claim. The D1 driver checks 231 default/m1..m4 scalar products at lengths 1/7/8/17/64 against exact int64-based dyadic references, including zero products and block counts 1/3/n where valid and distinct. Contiguous inputs and single-process calls only.",
         "evidence": [
           {
             "path": "src/fordot.f90",
@@ -15097,7 +15148,8 @@
             "path": "test/test1.f90",
             "sha256": "9df1ee66801a4bb1a080346512aa8b38e71e77cc94f1a6207a945630ed1aa0b0"
           }
-        ]
+        ],
+        "driver_id": "fordot-exact-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T22:02:20.239918+00:00"
@@ -15522,7 +15574,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "WENO spatial reconstruction and explicit TVD Runge-Kutta integration for conservation equations. The main checks a smooth periodic advection problem against exact cell averages and verifies conservation of mass; discontinuous solutions and nonuniform grids are not covered.",
+        "notes": "WENO spatial reconstruction and explicit TVD Runge-Kutta integration for conservation equations. The main checks a smooth periodic advection problem against exact cell averages and verifies conservation of mass; discontinuous solutions and nonuniform grids are not covered. Dedicated I1 consumer checks 12 prescribed single-step-mode integrations at orders 1..3, with 8/16/32/64 dyadic steps to t=1. Independent stability-polynomial powers, exact nonautonomous forcing, exponential solutions, order-dependent grid convergence and function-evaluation counts are required. Uses documented itask=2; ordinary interval mode has a source TODO concerning final-step overshoot and is outside this verification. Spatial WENO, multistep mode, backward integration and stiffness are not verified.",
         "evidence": [
           {
             "path": "src/hrweno_tvdode.f90",
@@ -15530,7 +15582,8 @@
             "line": 97
           }
         ],
-        "author_examples": []
+        "author_examples": [],
+        "driver_id": "hrweno-tvd-ode-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T22:42:25.593426+00:00"
@@ -15734,13 +15787,13 @@
         "package_id": "ecx",
         "revision": "d30725e3cb9186bc79f81481f3d6fae8d177a7b7",
         "module": "ecx__api / ecx__eis",
-        "procedure": "z / zr / zc",
+        "procedure": "z / zr / zc / zl",
         "gams_codes": [
           "A4"
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Electrochemical models with complex-valued equivalent-circuit impedance. The main verifies resistor and capacitor impedances and their series combination against direct complex formulas at four angular frequencies. Kinetics and parameter estimation are not covered. A4 classifies the complex arithmetic interface, not an electrochemistry-specific GAMS class.",
+        "notes": "Electrochemical models with complex-valued equivalent-circuit impedance. The main verifies resistor and capacitor impedances and their series combination against direct complex formulas at four angular frequencies. Kinetics and parameter estimation are not covered. A4 classifies the complex arithmetic interface, not an electrochemistry-specific GAMS class. Dedicated A4 consumer checks R, C and L at 216 frequency cases over 12 parameter sets, with finite complex results, status/message checks and normalized closed-form errors. Series RLC resonance and parallel RC combinations are formed by the driver, not a package circuit solver. Nonideal elements, fitting, kinetics and exceptional inputs are not verified.",
         "evidence": [
           {
             "path": "src/ecx_api.f90",
@@ -15758,7 +15811,8 @@
             "path": "example/example.f90",
             "sha256": "41014b75e7eb9d070f9c2ced74977331605e1b0344eee20a2f79f9d96c1e23f7"
           }
-        ]
+        ],
+        "driver_id": "ecx-rlc-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T22:42:25.593426+00:00"
@@ -16193,7 +16247,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Typed LAPACK interfaces. The checked real64 main verifies a matrix inverse residual, determinant, known eigenvalues, eigenpair residuals and orthonormality for a symmetric 3-by-3 tridiagonal matrix. Complex, single-precision and other BLAS/LAPACK wrappers are not covered. Legacy implicit external interfaces are explicitly enabled in the pinned package manifest.",
+        "notes": "Typed LAPACK interfaces. The checked real64 main verifies a matrix inverse residual, determinant, known eigenvalues, eigenpair residuals and orthonormality for a symmetric 3-by-3 tridiagonal matrix. Complex, single-precision and other BLAS/LAPACK wrappers are not covered. Legacy implicit external interfaces are explicitly enabled in the pinned package manifest. Dedicated D2 real64 consumer checks 132 scaled known LDU matrices and first/last-row permutations, using closed-form bidiagonal inverse factors and determinant products. Both left/right inverse residuals are accumulated with independent scalar loops. Two exact rank-deficient examples must return a false inverse status and zero determinant. Ill-conditioned/near-singular, nonsquare, complex and real32 cases are not verified.",
         "evidence": [
           {
             "path": "src/linalg_fortran.f90",
@@ -16206,7 +16260,8 @@
             "path": "test/check.f90",
             "sha256": "09519034680543664024a34463c4d7613cc66055867b2b50b5493a296ec1c4f7"
           }
-        ]
+        ],
+        "driver_id": "linalg-inverse-factor-reference"
       },
       {
         "id": "linalg-fortran-eigen",
@@ -17367,7 +17422,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Numerical routines from the RPN calculator, called directly without its interactive interface. The checked main verifies a negative cube root, sinc and sech at zero, beta(2,3), modified Bessel I0 at zero, and integer gcd/lcm against known results. A checksum-guarded manifest correction sets source-form=default so .f and .f90 files use their respective forms. No numerical sources are changed. The tests do not establish accuracy over full argument ranges or validate the complete calculator.",
+        "notes": "Numerical routines from the RPN calculator, called directly without its interactive interface. The checked main verifies a negative cube root, sinc and sech at zero, beta(2,3), modified Bessel I0 at zero, and integer gcd/lcm against known results. A checksum-guarded manifest correction sets source-form=default so .f and .f90 files use their respective forms. No numerical sources are changed. The tests do not establish accuracy over full argument ranges or validate the complete calculator. Dedicated C4 consumer verifies real sinc against a 64-term independent series and sech against a stable exponential formula for 133 real arguments, including zero and signed near-zero values. Finite values, symmetry, range and scalar/array agreement are checked. This driver does not verify the separate C2 cube-root mapping or complex overloads.",
         "evidence": [
           {
             "path": "src/funcs.f90",
@@ -17385,7 +17440,8 @@
             "path": "test/test.f90",
             "sha256": "e9475b7ba78c098109893540c4e515d2261d972ecf291745563ee64d67b4f2bc"
           }
-        ]
+        ],
+        "driver_id": "rpn-sinc-sech-reference"
       },
       {
         "id": "rpn-special",
@@ -17399,7 +17455,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Numerical routines from the RPN calculator, called directly without its interactive interface. The checked main verifies a negative cube root, sinc and sech at zero, beta(2,3), modified Bessel I0 at zero, and integer gcd/lcm against known results. A checksum-guarded manifest correction sets source-form=default so .f and .f90 files use their respective forms. No numerical sources are changed. The tests do not establish accuracy over full argument ranges or validate the complete calculator.",
+        "notes": "Numerical routines from the RPN calculator, called directly without its interactive interface. The checked main verifies a negative cube root, sinc and sech at zero, beta(2,3), modified Bessel I0 at zero, and integer gcd/lcm against known results. A checksum-guarded manifest correction sets source-form=default so .f and .f90 files use their respective forms. No numerical sources are changed. The tests do not establish accuracy over full argument ranges or validate the complete calculator. Dedicated C7 consumer verifies 128 positive integer/half-integer beta pairs with independent factorial identities, plus symmetry and both one-step recurrences (512 evaluations). Finite positive values and relative error within 2e-13 are required. C10 Bessel functions, complex beta, poles, large arguments and overflow handling are outside this driver.",
         "evidence": [
           {
             "path": "src/specfun/gamma.f90",
@@ -17412,7 +17468,8 @@
             "line": 1
           }
         ],
-        "author_examples": []
+        "author_examples": [],
+        "driver_id": "rpn-beta-reference"
       },
       {
         "id": "rpn-integer",
@@ -17763,7 +17820,8 @@
             "path": "app/main.f90",
             "sha256": "979e08f29ea88ca0b2d8399e9975279698790d938a0caedcf35fd3214864cce7"
           }
-        ]
+        ],
+        "driver_id": "kronrod-moments-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T01:11:46.981596+00:00"
@@ -18060,7 +18118,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "FIFO container using C allocations and byte copies. The main enqueues four 64-bit C-interoperable integers, verifies count and exact retrieval order, frees every popped allocation with C free, checks empty-pop behavior and destroys the queue. No source edits. The implementation uses GNU LOC and raw byte storage; the example makes no portability claim for arbitrary derived types, pointer-owning values, threading or every compiler.",
+        "notes": "FIFO container using C allocations and byte copies. The main enqueues four 64-bit C-interoperable integers, verifies count and exact retrieval order, frees every popped allocation with C free, checks empty-pop behavior and destroys the queue. No source edits. The implementation uses GNU LOC and raw byte storage; the example makes no portability claim for arbitrary derived types, pointer-owning values, threading or every compiler. The class-specific N4 driver checks 160 copied two-int64 records against an independent FIFO model, interleaved pushes/pops, three drain/refill cycles, empty-pop null pointers, independent queues and freeing all popped allocations. No pointer-owning or misaligned payload is certified.",
         "evidence": [
           {
             "path": "src/fifo_queue.f90",
@@ -18078,7 +18136,8 @@
             "path": "test/tutorial.f90",
             "sha256": "c9a7f8bf73a4f99a96c885a3c7ab83dba477039bea68e7e7bb064d1419276aee"
           }
-        ]
+        ],
+        "driver_id": "fifo-storage-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T01:11:46.981596+00:00"
@@ -18393,14 +18452,14 @@
         "package_id": "fassert",
         "revision": "678fa217df79af318cc537d3c69eab3b7cf68cb7",
         "module": "fassert",
-        "procedure": "assert_equal / assert_approx_equal / expect_equal",
+        "procedure": "assert_equal / assert_approx_equal / expect_equal / expect_approx_equal",
         "gams_codes": [
           "S3",
           "R2"
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Assertions for integer scalars and arrays plus approximate real comparison with an explicit tolerance. The main captures an intentional failed comparison as a logical status and message, checks both, and continues successfully. No source edits; matches the existing Any dependency revision. Not a validation of every type, rank, tolerance convention, custom comparator or test-framework integration.",
+        "notes": "Assertions for integer scalars and arrays plus approximate real comparison with an explicit tolerance. The main captures an intentional failed comparison as a logical status and message, checks both, and continues successfully. No source edits; matches the existing Any dependency revision. Not a validation of every type, rank, tolerance convention, custom comparator or test-framework integration. The S3 driver checks three positive assertions and 13 captured scalar/vector comparisons, including failures, both exact tolerance boundaries and independently checked logical outcomes and diagnostic labels/status prefixes. The separate R2 mapping remains source-supported.",
         "evidence": [
           {
             "path": "src/fassert.f90",
@@ -18411,6 +18470,11 @@
             "path": "src/approxEqual/assertApproxEqual.f90",
             "sha256": "b857c0d82d8cfff4602fc1a6a17f49aa474d0634962f5039a8a2eecf032637e2",
             "line": 1
+          },
+          {
+            "path": "src/approxEqual/expectApproxEqual.f90",
+            "sha256": "17b3aab7725a1d14e98dca6423a27ec237dccd12082f82c907fd8d3df6512f18",
+            "line": 10
           }
         ],
         "author_examples": [
@@ -18418,7 +18482,8 @@
             "path": "example/collab/testdrive.f90",
             "sha256": "b7307cf28fc71daf607d8477ac8026da89e7a3a4d2433ca816eda2d70eb58b48"
           }
-        ]
+        ],
+        "driver_id": "fassert-captured-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T01:58:05.528366+00:00"
@@ -18471,13 +18536,13 @@
         "package_id": "errstat",
         "revision": "336ee374c82a4525d87444c767a1f23f059d5723",
         "module": "errstat",
-        "procedure": "catch_error / set_success / error_stat_type",
+        "procedure": "catch_error / set_success / error_stat_type / append_message / initialize",
         "gams_codes": [
           "R3"
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Error status and message handling. A custom reciprocal routine uses catch_error and set_success. The main checks a successful result, zero rejection with an exact code and message, and a subsequent successful call clearing the error. No source edits. The reciprocal is only a driver, not a mathematical procedure supplied by errstat. Optional omitted-status termination and user-defined task/message repositories are not exercised.",
+        "notes": "Error status and message handling. A custom reciprocal routine uses catch_error and set_success. The main checks a successful result, zero rejection with an exact code and message, and a subsequent successful call clearing the error. No source edits. The reciprocal is only a driver, not a mathematical procedure supplied by errstat. Optional omitted-status termination and user-defined task/message repositories are not exercised. The R3 driver checks nine success/failure/recovery calls with exact codes/messages, signed-zero and NaN input rejection, independent copied statuses, appended context and explicit reset. The illustrative safe square-root ratio is supplied by the driver, not errstat.",
         "evidence": [
           {
             "path": "src/errstat.f90",
@@ -18495,7 +18560,8 @@
             "path": "example/error/err_code.f90",
             "sha256": "db58edcd0187969b13bfb70b39ec12f807375dbb3e2d6a2c5d5c5225e5863fdc"
           }
-        ]
+        ],
+        "driver_id": "errstat-recovery-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T01:58:05.528366+00:00"
@@ -18712,14 +18778,14 @@
         "package_id": "lookup-table-fortran",
         "revision": "b7dc72359e7c2cc105abfbf79b570c655a7f1d04",
         "module": "m_lookup_table",
-        "procedure": "LT_create / LT_set_col_data / LT_get_col / LT_get_mcol",
+        "procedure": "LT_create / LT_set_col / LT_set_col_data / LT_add_col / LT_get_loc / LT_get_col / LT_get_mcol / LT_get_col_at_loc / LT_get_mcol_at_loc",
         "gams_codes": [
           "E1a",
           "E3"
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Linear lookup tables. An operator-owned FPM manifest wraps the unchanged m_lookup_table.f90 file. The main checks exact interpolation of a linear function, the expected interpolation error for a quadratic, an exact grid value, and clamping below/above the endpoints. No mathematical source edits. The 2D interface, nonuniform spacing options, persistence and all boundary cases are not validated by this example.",
+        "notes": "Linear lookup tables. An operator-owned FPM manifest wraps the unchanged m_lookup_table.f90 file. The main checks exact interpolation of a linear function, the expected interpolation error for a quadratic, an exact grid value, and clamping below/above the endpoints. No mathematical source edits. The 2D interface, nonuniform spacing options, persistence and all boundary cases are not validated by this example. Linear grids only: independent two-stage interpolation references check 98 queries on original/copied and updated tables, three columns, four lookup routes, location coordinates, endpoint clamping and column resampling/addition. This E3 service driver does not verify the separate E1a mapping.",
         "evidence": [
           {
             "path": "m_lookup_table.f90",
@@ -18732,7 +18798,8 @@
             "path": "usage_example.f90",
             "sha256": "27793b4c62a9c1de91b941b5fe4246fe2226e0d30cbae14e120c703babb4b2d3"
           }
-        ]
+        ],
+        "driver_id": "lookup-services-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T12:15:32.322175+00:00"
@@ -18841,7 +18908,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Xoroshiro128+ pseudo-random generator. An FPM wrapper selects unchanged m_random.f90 and uses -fwrapv for its intentional signed-integer wraparound. Two fresh generators replay 10000 seeded uniform draws exactly; the main checks the implementation range [0,1), broad uniform/normal/Poisson(4) moment tolerances, nonnegative counts and unit circle/sphere norms. These are deterministic smoke checks, not statistical quality or cryptographic validation. OpenMP, jump independence, large Poisson rates and all distributions are not covered. A separate hosted reproducer confirms that set_seed does not clear the cached second normal after an odd normal() call; use a fresh generator to restart normal sequences. The selected replay uses fresh objects.",
+        "notes": "Xoroshiro128+ pseudo-random generator. An FPM wrapper selects unchanged m_random.f90 and uses -fwrapv for its intentional signed-integer wraparound. Two fresh generators replay 10000 seeded uniform draws exactly; the main checks the implementation range [0,1), broad uniform/normal/Poisson(4) moment tolerances, nonnegative counts and unit circle/sphere norms. These are deterministic smoke checks, not statistical quality or cryptographic validation. OpenMP, jump independence, large Poisson rates and all distributions are not covered. A separate hosted reproducer confirms that set_seed does not clear the cached second normal after an odd normal() call; use a fresh generator to restart normal sequences. The selected replay uses fresh objects. Dedicated L6 consumer checks exact replay with fresh seeded objects, 60000 normal and 60000 small-rate Poisson samples against broad analytic moment/zero-probability tolerances, and 3000 circle plus 3000 sphere samples against exact norm references and broad coordinate moments. These are fixed-seed deterministic smoke checks, not statistical or cryptographic quality certification. Fresh allocations avoid the known cached-normal reseeding issue; that issue remains unresolved. Poisson rates >=10/rejection sampling, parallel/jump independence and full distribution coverage are not verified.",
         "evidence": [
           {
             "path": "m_random.f90",
@@ -18854,7 +18921,8 @@
             "path": "example.f90",
             "sha256": "aa79abd9d6ee57cac43006c7561efdb4e4a75ddf0a6c065652e449adeec1772e"
           }
-        ]
+        ],
+        "driver_id": "rng-distributions-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T12:15:32.322175+00:00"
@@ -18930,7 +18998,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Numeric text parsing. FPM 0.12 rejects the upstream features/profiles tables; a checksum-guarded manifest adaptation removes them and supplies the intended -fno-range-check compiler setting explicitly. The Fortran sources are unchanged and development-only benchmark dependencies are not built. The main checks decimal/scientific and Fortran D-exponent parsing, the largest positive signed int64, hexadecimal parsing, invalid-input status and exponent-overflow status. Correct rounding for every input, all formats, underflow, platforms and speed claims are not validated.",
+        "notes": "Numeric text parsing. FPM 0.12 rejects the upstream features/profiles tables; a checksum-guarded manifest adaptation removes them and supplies the intended -fno-range-check compiler setting explicitly. The Fortran sources are unchanged and development-only benchmark dependencies are not built. The main checks decimal/scientific and Fortran D-exponent parsing, the largest positive signed int64, hexadecimal parsing, invalid-input status and exponent-overflow status. Correct rounding for every input, all formats, underflow, platforms and speed claims are not validated. The class-specific N3 driver checks 154 calls, including 129 exact dyadic decimals, signed integer boundaries, binary/hex input, Fortran D exponent, one binary64 halfway rounding case and six invalid/overflow outcomes. It does not certify correct rounding for all inputs or complete-token consumption.",
         "evidence": [
           {
             "path": "src/fast_float_module.F90",
@@ -18943,7 +19011,8 @@
             "path": "test/check.f90",
             "sha256": "a8929363a2afc183edeb9c5aa8b31322334b0227c410fe345e2f2ba7e5eca526"
           }
-        ]
+        ],
+        "driver_id": "fast-float-parsing-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T12:15:32.322175+00:00"
@@ -19083,7 +19152,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Nearest-neighbor and radius searches. An FPM wrapper selects unchanged src-f90/kdtree2.f90; the archived upstream single-precision setting is retained. The checked main builds a tree for 30 deterministic 2D points, compares four nearest indices and squared distances against an independent direct search, and checks radius-search count, membership, distances and uniqueness. The original Academic Free License 1.1 is retained. No source edits. The implementation has global search state and is not offered as thread-safe; the old interface, C++ code, every dimension and large-scale performance are not validated.",
+        "notes": "Nearest-neighbor and radius searches. An FPM wrapper selects unchanged src-f90/kdtree2.f90; the archived upstream single-precision setting is retained. The checked main builds a tree for 30 deterministic 2D points, compares four nearest indices and squared distances against an independent direct search, and checks radius-search count, membership, distances and uniqueness. The original Academic Free License 1.1 is retained. No source edits. The implementation has global search state and is not offered as thread-safe; the old interface, C++ code, every dimension and large-scale performance are not validated. The class-specific N5 driver additionally verifies 36 3D searches over 48 points against exhaustive real64 distances: k=1,5,48, radii squared 0/0.125/4 and both storage rearrangement modes. Tie ordering is not prescribed; complete radius sets and uniqueness are checked. This driver does not separately verify the broad P mapping.",
         "evidence": [
           {
             "path": "src-f90/kdtree2.f90",
@@ -19096,7 +19165,8 @@
             "path": "src-f90/kdtree2_test.f90",
             "sha256": "fb97b7e385bd6e6b6faf023922d05c4bc135770012056f03368658be58dc0432"
           }
-        ]
+        ],
+        "driver_id": "kdtree-neighbor-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T12:15:32.322175+00:00"
@@ -19154,14 +19224,14 @@
         "package_id": "penf",
         "revision": "65061235982495b158412b70c05b228af4320d94",
         "module": "penf",
-        "procedure": "penf_init / str / strz / cton / byte_size",
+        "procedure": "penf_init / str / strz / cton / byte_size / numerical kind and size constants",
         "gams_codes": [
           "R1",
           "N3"
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Portable numerical kinds, formats and number/string conversions. The latest archive is blocked by a symlink, so this entry uses exactly the older revision already verified as a BeFoR64 dependency. The checked main calls penf_init, verifies integer and real conversion round trips with status checks, zero-padded integer output, real byte size and formatted real output. Sources are unchanged; this adds an independent editable main for the pinned library. Every kind, character encoding, endian platform and invalid conversion is not validated.",
+        "notes": "Portable numerical kinds, formats and number/string conversions. The latest archive is blocked by a symlink, so this entry uses exactly the older revision already verified as a BeFoR64 dependency. The checked main calls penf_init, verifies integer and real conversion round trips with status checks, zero-padded integer output, real byte size and formatted real output. Sources are unchanged; this adds an independent editable main for the pinned library. Every kind, character encoding, endian platform and invalid conversion is not validated. The R1 driver verifies ISO kind correspondence, six type widths, public size/max/normal-minimum constants, byte inquiries, byte order, repeated initialization and measured real32/real64 roundoff. It does not verify the separate N3 conversion mapping, quadruple precision or arbitrary platforms.",
         "evidence": [
           {
             "path": "src/lib/penf.F90",
@@ -19172,6 +19242,11 @@
             "path": "src/lib/penf_stringify.F90",
             "sha256": "c45429dcaf7e434c739a812f2425c0a15582680219d1ca25fb8211050f87e52b",
             "line": 1
+          },
+          {
+            "path": "src/lib/penf_global_parameters_variables.F90",
+            "sha256": "7c2f4c7117beeabb8ca088b1fb87870589410c06faede466f8e0d8a9a2bc7fc3",
+            "line": 39
           }
         ],
         "author_examples": [
@@ -19179,7 +19254,8 @@
             "path": "src/tests/penf/penf-doctest-3.f90",
             "sha256": "266bf91126ea85f9fa2660b1ddeb2657b0dd915a4191cae4cf5caa9fe4c75d70"
           }
-        ]
+        ],
+        "driver_id": "penf-machine-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T12:15:32.322175+00:00"
@@ -19251,7 +19327,8 @@
             "path": "test/test_differentia.f90",
             "sha256": "203531b65c6cc64b08c3052859d185c7cd318a66ff5fd1509710b61c44e12035"
           }
-        ]
+        ],
+        "driver_id": "differentia-analytic-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T12:53:38.105617+00:00"
@@ -19629,7 +19706,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Version 1 multivariate interpolation using sparse Delaunay simplices. Version 2 bundles BQPD with a research-only redistribution notice, so the selected pin uses the earlier MIT-licensed version 1 with its bundled SLATEC/BLAS/LAPACK sources. An FPM wrapper retains fixed/free source forms, legacy implicit typing/interfaces and -fallow-argument-mismatch for the SLATEC scalar-zero/zero-stride BLAS convention. OpenMP is enabled to link the library; the checked driver uses the serial routine. It verifies exact linear-function reproduction at three interior 2D points, zero status codes, valid simplex indices and barycentric weight sums/signs. No numerical source edits. Convex-hull projection/extrapolation, all degenerate inputs, high-dimensional behavior and parallel variants are not validated.",
+        "notes": "Version 1 multivariate interpolation using sparse Delaunay simplices. Version 2 bundles BQPD with a research-only redistribution notice, so the selected pin uses the earlier MIT-licensed version 1 with its bundled SLATEC/BLAS/LAPACK sources. An FPM wrapper retains fixed/free source forms, legacy implicit typing/interfaces and -fallow-argument-mismatch for the SLATEC scalar-zero/zero-stride BLAS convention. OpenMP is enabled to link the library; the checked driver uses the serial routine. It verifies exact linear-function reproduction at three interior 2D points, zero status codes, valid simplex indices and barycentric weight sums/signs. No numerical source edits. Convex-hull projection/extrapolation, all degenerate inputs, high-dimensional behavior and parallel variants are not validated. The class-specific E2 driver verifies six 3D interior queries with ten irregular points, three output fields, affine/constant reproduction, unique nondegenerate simplex vertices and barycentric reconstruction of preserved original coordinates. The nonlinear field is checked as piecewise-linear interpolation; exact nonlinear-function recovery and the empty-circumsphere property are not certified.",
         "evidence": [
           {
             "path": "src/delsparse.f90",
@@ -19642,7 +19719,8 @@
             "path": "src/test_install.f90",
             "sha256": "e3e50b48007270fe4eb107af8b2efc791188880ff614b1fb865f84d48e13ec7f"
           }
-        ]
+        ],
+        "driver_id": "delaunay-affine-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T12:53:38.105617+00:00"
@@ -19708,7 +19786,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Serial QNSTOP for bound-constrained stochastic and global optimization. An FPM wrapper selects unmodified REAL_PRECISION, ZIGARRAY, QNSTOPS and bundled BLAS/LAPACK sources. Explicit CPP suffix handling lets FPM discover .f95 files. Legacy implicit typing/interfaces and argument-mismatch compatibility retain the upstream calling conventions. The seeded two-variable quadratic example checks normal stopping status, bounds, objective value and distance from its known minimizer. It is an accuracy smoke test, not a general global-optimum guarantee. The parallel QNSTOPP driver, noisy objectives, all stopping rules and performance are not validated.",
+        "notes": "Serial QNSTOP for bound-constrained stochastic and global optimization. An FPM wrapper selects unmodified REAL_PRECISION, ZIGARRAY, QNSTOPS and bundled BLAS/LAPACK sources. Explicit CPP suffix handling lets FPM discover .f95 files. Legacy implicit typing/interfaces and argument-mismatch compatibility retain the upstream calling conventions. The seeded two-variable quadratic example checks normal stopping status, bounds, objective value and distance from its known minimizer. It is an accuracy smoke test, not a general global-optimum guarantee. The parallel QNSTOPP driver, noisy objectives, all stopping rules and performance are not validated. Dedicated G2 consumer checks four seeded diagonal-quadratic box problems with known interior minimizers in two/three variables. Verifies normal stopping status, feasibility, finite output, evaluation count, returned-objective consistency and unchanged coordinate/objective tolerances. Active-bound probes failed the position tolerance at both 500 and 2000 iterations; source and actual results are retained under docs/gams-candidates/qnstop. Those face probes and an unreached corner fixture are not counted as verified. Seeds use the pinned GNU intrinsic RNG; this is a deterministic accuracy smoke check, not a general global guarantee. Noisy objectives, parallel variants and all stopping/input modes are not verified.",
         "evidence": [
           {
             "path": "src/qnstops.f95",
@@ -19721,7 +19799,8 @@
             "path": "src/sample_main_s.f95",
             "sha256": "45d31a6a6960a9d8e7e0f82c9a17e185348dd2d2b23766985ca133db34edc5ea"
           }
-        ]
+        ],
+        "driver_id": "qnstop-box-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T13:26:21.447807+00:00"
@@ -19803,7 +19882,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Serial FFTW Poisson solvers. An FPM wrapper selects the Fortran library modules, retains upstream template includes, adds CPP-disabled USE declarations for the FPM dependency scanner, declares unused MPI/PFFT modules external for scanning, enables CPP and links Debian FFTW 3.3.10 single/double and thread libraries. MPI/PFFT and C/C++ bindings are not offered. The checked double-precision periodic 1D spectral problem compares its solution with sin(2*pi*x) at 32 points. Other boundary conditions, finite-difference modes, nonuniform grids, higher-dimensional solvers, single precision and parallel execution are not validated.",
+        "notes": "Serial FFTW Poisson solvers. An FPM wrapper selects the Fortran library modules, retains upstream template includes, adds CPP-disabled USE declarations for the FPM dependency scanner, declares unused MPI/PFFT modules external for scanning, enables CPP and links Debian FFTW 3.3.10 single/double and thread libraries. MPI/PFFT and C/C++ bindings are not offered. The checked double-precision periodic 1D spectral problem compares its solution with sin(2*pi*x) at 32 points. Other boundary conditions, finite-difference modes, nonuniform grids, higher-dimensional solvers, single precision and parallel execution are not validated. A class-specific I2 driver additionally verifies spectral and second-order finite-difference periodic solvers at 16/32/64 points against exact two-mode discrete solutions, finite-difference residuals, zero-mean gauge and reuse of each plan for zero forcing (12 solves). Finite-difference errors are separated from solver error; other boundary conditions, dimensions and parallel variants remain unverified.",
         "evidence": [
           {
             "path": "src/poisfft-inc.f90",
@@ -19821,7 +19900,8 @@
             "path": "src/testpoisson.f90",
             "sha256": "23e42cc2130f1dc249c801130a9c0fe68e5e94ceb2c16835a41cb4dfbd89c849"
           }
-        ]
+        ],
+        "driver_id": "poisfft-periodic-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T13:26:21.447807+00:00"
@@ -19986,7 +20066,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Fortran bindings to Lua 5.4, linked with Debian Lua 5.4.7. The manifest library name lua-5.4 is adapted to Linux lua5.4; library sources are unchanged. Adapted from the upstream in-memory string example, the consumer defines a Lua function, passes an integer from Fortran, checks Lua load/call status and function type, verifies the returned integer and closes the state. External scripts, callbacks from Lua to Fortran, arbitrary Lua modules and all bindings are not validated.",
+        "notes": "Fortran bindings to Lua 5.4, linked with Debian Lua 5.4.7. The manifest library name lua-5.4 is adapted to Linux lua5.4; library sources are unchanged. Adapted from the upstream in-memory string example, the consumer defines a Lua function, passes an integer from Fortran, checks Lua load/call status and function type, verifies the returned integer and closes the state. External scripts, callbacks from Lua to Fortran, arbitrary Lua modules and all bindings are not validated. Dedicated S consumer checks exact factorial, sums-of-squares and signed-polynomial results plus real Pythagorean norms across the Fortran/Lua boundary. Checks return types, stack balance, expected runtime/syntax diagnostics and reuse of the same state after errors (128 integer and five real successes). Independent Lua scripts and Fortran references; no external script files. Arbitrary modules, callbacks to Fortran, userdata, concurrency and full language/binding coverage are not verified.",
         "evidence": [
           {
             "path": "src/lua.f90",
@@ -19999,7 +20079,8 @@
             "path": "examples/string.f90",
             "sha256": "dc2e08f76dd6d4c77243c5f22ee6860b582211d943152d0eddcafa63279b5030"
           }
-        ]
+        ],
+        "driver_id": "lua-numeric-embedding-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T13:26:21.447807+00:00"
@@ -20667,7 +20748,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Structured error handling and validation. The upstream FPM library sources are unchanged; unlimited free-form line length accommodates existing long source lines. Adapted from the author example, the main checks a valid bounded integer in a Result object, rejects an out-of-range integer with expected code 105, checks two retained application trace entries, and triggers a custom noncritical warning while execution continues. The example uses fixed values rather than interactive input. All Result ranks/types, critical-error termination, all validation criteria and every trace-propagation path are not validated.",
+        "notes": "Structured error handling and validation. The upstream FPM library sources are unchanged; unlimited free-form line length accommodates existing long source lines. Adapted from the author example, the main checks a valid bounded integer in a Result object, rejects an out-of-range integer with expected code 105, checks two retained application trace entries, and triggers a custom noncritical warning while execution continues. The example uses fixed values rather than interactive input. All Result ranks/types, critical-error termination, all validation criteria and every trace-propagation path are not validated. Dedicated R2 consumer checks 102 integer/real32/real64 inclusive bound comparisons against native logical expressions, including one-sided/equal bounds and nearest representable values inside/outside both endpoints. All 30 expected rejections must retain code 105, a supplied custom message and one supplied trace entry. No error is triggered. Other criteria, reversed/missing bounds, NaNs, critical termination and the separate R3 handling mapping are not verified.",
         "evidence": [
           {
             "path": "src/ErrorCriteria.f90",
@@ -20685,7 +20766,8 @@
             "path": "example/example_usage.f90",
             "sha256": "9aeb703ccb8dbb6089225d0db3c7569ad951013a5cda7d48ed16279a78e2fbfc"
           }
-        ]
+        ],
+        "driver_id": "error-bounds-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T13:59:01.916745+00:00"
@@ -21100,7 +21182,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Selected unmodified modules types, utils, lapack, mesh, splines and sorting, wrapped for FPM and linked to compatible LP64 BLAS/LAPACK. HDF5, AMOS/special functions, optimization and other unselected modules are not included. The main reproduces a cubic polynomial with the consistent-boundary cubic spline and checks its value, first derivative and second derivative on a denser grid against exact formulas. It checks exponential-mesh endpoints, monotonicity and the requested last/first spacing ratio, then sorts repeated/negative integers against an exact answer. General nonpolynomial interpolation error, extrapolation, every boundary condition, other sorting interfaces and all utility routines are not validated.",
+        "notes": "Selected unmodified modules types, utils, lapack, mesh, splines and sorting, wrapped for FPM and linked to compatible LP64 BLAS/LAPACK. HDF5, AMOS/special functions, optimization and other unselected modules are not included. The main reproduces a cubic polynomial with the consistent-boundary cubic spline and checks its value, first derivative and second derivative on a denser grid against exact formulas. It checks exponential-mesh endpoints, monotonicity and the requested last/first spacing ratio, then sorts repeated/negative integers against an exact answer. General nonpolynomial interpolation error, extrapolation, every boundary condition, other sorting interfaces and all utility routines are not validated. Dedicated E1 consumer checks exact degree-0..3 polynomial reproduction on three uniform grids and a nonuniform grid, including first/second derivatives at 65 queries. Optional outputs and reversed query order are compared independently. Uses the API default consistent-cubic endpoint conditions; extrapolation, nonpolynomial convergence, other boundary choices and the separate N6 sorting mapping are not verified.",
         "evidence": [
           {
             "path": "src/splines.f90",
@@ -21123,7 +21205,8 @@
             "path": "tests/splines/test_splines.f90",
             "sha256": "5d73abffc21ee712d9148543495eff354b7cbe015379583d48cbfc21cc00b96b"
           }
-        ]
+        ],
+        "driver_id": "fortran-utils-spline-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T15:02:11.035729+00:00"
@@ -21629,7 +21712,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Selected base_types, lib_algebra and lib_array modules, using the pinned revision immediately before the upstream FPM test suite introduced source symlinks. Nine checksum-guarded edits bring lib_array exactly to upstream commit 844611933cba06d71490033e68b355f6f0ff704f, retaining its integration-limit, descending histogram-bin and precision fixes. The other selected modules are unchanged. The ordinary archive policy remains unchanged. A synthetic FPM wrapper uses the already generated Fortran sources, not the Python templates. The checked consumer integrates the affine function 2*x+1 on [0,1], checks linear interpolation at an interior off-grid point, and solves x**2-5*x+6 against the exact roots 2 and 3. Additional checks cover integration limits outside the tabulated range, descending histogram bins and bin-center precision; the expanded example fails with the older unpatched array module and passes with the upstream fixes. GAMS F1 denotes the quadratic solver, not a general iterative root finder. Random sampling, statistics, geometry, HDF5/FITS bindings and other modules are not selected; the example does not validate every routine in the included modules.",
+        "notes": "Selected base_types, lib_algebra and lib_array modules, using the pinned revision immediately before the upstream FPM test suite introduced source symlinks. Nine checksum-guarded edits bring lib_array exactly to upstream commit 844611933cba06d71490033e68b355f6f0ff704f, retaining its integration-limit, descending histogram-bin and precision fixes. The other selected modules are unchanged. The ordinary archive policy remains unchanged. A synthetic FPM wrapper uses the already generated Fortran sources, not the Python templates. The checked consumer integrates the affine function 2*x+1 on [0,1], checks linear interpolation at an interior off-grid point, and solves x**2-5*x+6 against the exact roots 2 and 3. Additional checks cover integration limits outside the tabulated range, descending histogram bins and bin-center precision; the expanded example fails with the older unpatched array module and passes with the upstream fixes. GAMS F1 denotes the quadratic solver, not a general iterative root finder. Random sampling, statistics, geometry, HDF5/FITS bindings and other modules are not selected; the example does not validate every routine in the included modules. Dedicated F1 consumer verifies 84 real64 quadratic calls from 21 distinct dyadic root pairs and four signed coefficient scales, comparing sorted roots, root sums/products and normalized residuals. Uses only the ordinary quadratic API, not Pascal/reduced variants. Repeated/complex roots, zero leading coefficient, severe cancellation and extreme scaling are not verified. The separate E1 interpolation and H2 integration mappings remain source-supported.",
         "evidence": [
           {
             "path": "src/lib_algebra.f90",
@@ -21642,7 +21725,8 @@
             "line": 1
           }
         ],
-        "author_examples": []
+        "author_examples": [],
+        "driver_id": "fortranlib-quadratic-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T19:03:06.361094+00:00"
@@ -22255,7 +22339,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Original one-dimensional nonuniform Fourier code using the dynamically allocated Fortran 90 interface and bundled Netlib FFT implementation. Forty-nine checksum-guarded edits change legacy extent-one FFT dummy-array declarations to assumed size; every changed array is checked against its containing procedure argument list. No local arrays, transform formulas or global bounds-checking settings are changed. Legacy workspace argument type punning is accepted with the package-specific -fallow-argument-mismatch option. The example evaluates a type-1 transform of 96 deterministic nonuniform points into 32 modes for both exponent signs and compares every complex coefficient with an independent direct sum, including the documented 1/nj normalization. Status and finite values are checked. Types 2/3, the static Fortran 77 interface and every bundled FFT routine are not verified.",
+        "notes": "Original one-dimensional nonuniform Fourier code using the dynamically allocated Fortran 90 interface and bundled Netlib FFT implementation. Forty-nine checksum-guarded edits change legacy extent-one FFT dummy-array declarations to assumed size; every changed array is checked against its containing procedure argument list. No local arrays, transform formulas or global bounds-checking settings are changed. Legacy workspace argument type punning is accepted with the package-specific -fallow-argument-mismatch option. The example evaluates a type-1 transform of 96 deterministic nonuniform points into 32 modes for both exponent signs and compares every complex coefficient with an independent direct sum, including the documented 1/nj normalization. Status and finite values are checked. Types 2/3, the static Fortran 77 interface and every bundled FFT routine are not verified. The class-specific J1 driver adds 24 type-1 transforms: 80 nonuniform sources, 15/16/31/32 modes, three deterministic strength patterns and both exponent signs, checked against independently accumulated trigonometric sums and the exact zero mode. Type 2/3 and performance remain unverified.",
         "evidence": [
           {
             "path": "nufft1df90.f",
@@ -22273,7 +22357,8 @@
             "path": "nufft1d_demof90.f",
             "sha256": "74cacab9ee0aa5b8b8908aab3b45bf49d066ef1ee689c195d574fd20b644d1ab"
           }
-        ]
+        ],
+        "driver_id": "nufft1d-sum-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T19:26:39.127603+00:00"
@@ -23508,7 +23593,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Selected integration subset, explicitly labeled in the menu: SF_INTEGRATE, GAUSS_QUADRATURE and standalone bundled QUADPACK procedures. Original include files remain in their source directories and the operator FPM wrapper compiles only the listed library files. Checksum-guarded edits promote 478 long coefficient literals from E to D exponents in DATA statements and REAL(8) PARAMETER array initializers in two bundled QUADPACK files. Each target array is checked to be REAL(8), and all decimal digits are retained. This avoids evaluating the supplied coefficients at default-real precision before assignment to double precision; formulas and the default-real compiler mode are unchanged. The linked quadrature-fortran BSD-3-Clause notice is restored as comments in GAUSS_QUADRATURE so source exports retain it. The consumer checks the Simpson and trapezoidal integrals of a sampled cubic against 1/4, adaptive integration of exp(x) over [0,1] against e-1 and exp(-x) over [0,infinity) against 1, and rejects nonfinite results. All six finite-interval Gauss-Kronrod rule choices are also checked against e-1. The example uses module callbacks: an initial consumer with internal callbacks segfaulted in the sandbox. Other SciFortran modules, MPI, linear algebra, the SCIFOR umbrella module, multidimensional/vector quadrature and all integration options are outside this selected build and verification scope.",
+        "notes": "Selected integration subset, explicitly labeled in the menu: SF_INTEGRATE, GAUSS_QUADRATURE and standalone bundled QUADPACK procedures. Original include files remain in their source directories and the operator FPM wrapper compiles only the listed library files. Checksum-guarded edits promote 478 long coefficient literals from E to D exponents in DATA statements and REAL(8) PARAMETER array initializers in two bundled QUADPACK files. Each target array is checked to be REAL(8), and all decimal digits are retained. This avoids evaluating the supplied coefficients at default-real precision before assignment to double precision; formulas and the default-real compiler mode are unchanged. The linked quadrature-fortran BSD-3-Clause notice is restored as comments in GAUSS_QUADRATURE so source exports retain it. The consumer checks the Simpson and trapezoidal integrals of a sampled cubic against 1/4, adaptive integration of exp(x) over [0,1] against e-1 and exp(-x) over [0,infinity) against 1, and rejects nonfinite results. All six finite-interval Gauss-Kronrod rule choices are also checked against e-1. The example uses module callbacks: an initial consumer with internal callbacks segfaulted in the sandbox. Other SciFortran modules, MPI, linear algebra, the SCIFOR umbrella module, multidimensional/vector quadrature and all integration options are outside this selected build and verification scope. Dedicated H2 consumer verifies 60 sampled polynomial fixtures through four Simpson/trapezoid routes (240 calls), using exact integrals and analytic trapezoidal corrections. Checks 178 adaptive calls: polynomial antiderivatives with default/six Gauss-Kronrod rules, exponential tails, Gaussian/Cauchy whole-line integrals and endpoint-root singularities. Uses module callbacks and existing coefficient-precision repairs. Weighted/pole integrals, complex/nonuniform sampled rules, all error paths and performance are outside this driver.",
         "evidence": [
           {
             "path": "src/SF_INTEGRATE/SF_INTEGRATE.f90",
@@ -23531,7 +23616,8 @@
             "path": "test/src/SF_INTEGRATE/01_test_sf_integrate_quad.f90",
             "sha256": "3d186c6d369e6ce1e38a7a6db39b2e0de520a94ad6244bfc6673e61aef712fbe"
           }
-        ]
+        ],
+        "driver_id": "scifortran-quadrature-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T20:54:40.271634+00:00"
@@ -23681,7 +23767,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "The upstream CMake neural library source set is wrapped for FPM in REAL64/INT32 mode with single-image coarrays and OpenMP. The deterministic consumer writes and loads a tiny two-dense-layer ReLU network, checks four predictions against independently calculated weights and biases, and verifies saving and reloading the model. K (Approximation) describes the tested neural-network inference. Training, Keras conversion tools, dropout and batch normalization are not verified; no optimization classification is inferred from their presence.",
+        "notes": "The upstream CMake neural library source set is wrapped for FPM in REAL64/INT32 mode with single-image coarrays and OpenMP. The deterministic consumer writes and loads a tiny two-dense-layer ReLU network, checks four predictions against independently calculated weights and biases, and verifies saving and reloading the model. K (Approximation) describes the tested neural-network inference. Training, Keras conversion tools, dropout and batch normalization are not verified; no optimization classification is inferred from their presence. The K driver adds a non-diagonal 2-3-2 ReLU/linear network, 25 two-dimensional grid inputs and 50 original/restored predictions against scalar forward sums. Save/reload is checked; training and approximation quality are not certified.",
         "evidence": [
           {
             "path": "src/lib/mod_network.F90",
@@ -23708,7 +23794,8 @@
             "path": "src/tests/test_save_and_load.F90",
             "sha256": "85d5f5071188738e2d83ff549233ebaad1420c031a07d59e9bbca04f4e69dda7"
           }
-        ]
+        ],
+        "driver_id": "fkb-network-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T21:15:52.018636+00:00"
@@ -23832,7 +23919,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "The upstream Fortran library source set is wrapped for FPM with pinned MPICH and OpenBLAS native dependencies. The verified example uses exactly one MPI process, serialized MPI thread support and shared-memory/self UCX transports in the restricted sandbox. For a real symmetric positive-definite 2-by-2 matrix with eigenvalues 1 and 9, it checks SquareRoot, InverseSquareRoot and Invert against analytic matrices and independent product residuals, rejecting nonfinite values. D covers matrix functions and D2 covers inversion. Multiple MPI processes, distributed scaling, complex matrices and other solver families are outside this verification scope. Local exports require MPI/OpenBLAS development libraries and locally appropriate compiler/linker flags.",
+        "notes": "The upstream Fortran library source set is wrapped for FPM with pinned MPICH and OpenBLAS native dependencies. The verified example uses exactly one MPI process, serialized MPI thread support and shared-memory/self UCX transports in the restricted sandbox. For a real symmetric positive-definite 2-by-2 matrix with eigenvalues 1 and 9, it checks SquareRoot, InverseSquareRoot and Invert against analytic matrices and independent product residuals, rejecting nonfinite values. D covers matrix functions and D2 covers inversion. Multiple MPI processes, distributed scaling, complex matrices and other solver families are outside this verification scope. Local exports require MPI/OpenBLAS development libraries and locally appropriate compiler/linker flags. Dedicated D consumer checks 24 known SPD matrices in dimensions 2/3 and their principal square/inverse-square roots against independently constructed orthogonal-factor formulas. Three rotations and four positive-root pairs give 48 matrix-function calls; scalar products check root squared, inverse-root congruence and mutual inverse identity. Exactly one MPI process. Does not verify the separate Invert/D2 API, distributed scaling, complex/indefinite/singular matrices or large sparse behavior.",
         "evidence": [
           {
             "path": "Source/Fortran/SquareRootSolversModule.F90",
@@ -23845,7 +23932,8 @@
             "path": "Examples/PremadeMatrix/main.f90",
             "sha256": "fa981337fe9303ec4ffa6faebbb197ccb66ecab37563b059c5c2e55bfb95d667"
           }
-        ]
+        ],
+        "driver_id": "ntpoly-matrix-root-reference"
       },
       {
         "id": "ntpoly-inversion",
@@ -25260,7 +25348,8 @@
             "path": "doc/examples/integration.f90",
             "sha256": "70e3a685575ed22f8b8fcc1cf37ca0a17d4d67b76917f02f95aaf2594b1dc1cf"
           }
-        ]
+        ],
+        "driver_id": "fgsl-qags-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T23:19:15.654037+00:00"
@@ -25592,7 +25681,8 @@
             "path": "tests/mbd_api_tests.F90",
             "sha256": "3d42b5853df6f510ee4b024e41216db3fa45d9c610974f418453865e42e42b31"
           }
-        ]
+        ],
+        "driver_id": "libmbd-dimer-spectrum"
       }
     ],
     "stars_updated_at": "2026-10-30T00:25:47.816978+00:00"
@@ -26914,7 +27004,8 @@
             "sha256": "3a9d549a03e362e2f31b8677604cff4d85a20c378576e0f22104eb37dcb9b360",
             "line": 1
           }
-        ]
+        ],
+        "driver_id": "dftd4-dispersion-reference"
       }
     ],
     "stars_updated_at": "2026-10-30T10:33:53.375997+00:00"
@@ -27107,7 +27198,8 @@
             "sha256": "63b348e3dd14f5aed68d4cab24a565068c65c867c6aa74f995de7d3c7eb9cae9",
             "line": 1
           }
-        ]
+        ],
+        "driver_id": "tsunami-differences-reference"
       }
     ],
     "stars_updated_at": "2026-10-30T13:13:55.640353+00:00"
@@ -28087,13 +28179,13 @@
         "package_id": "fortran-sdl2",
         "revision": "cac974790420ba757c17f88678e66b01500319e7",
         "module": "sdl2 / sdl2_image",
-        "procedure": "sdl_create_rgb_surface / sdl_fill_rect / sdl_map_rgb / img_load",
+        "procedure": "sdl_create_rgb_surface / sdl_fill_rect / sdl_map_rgb / img_load / sdl_convert_surface",
         "gams_codes": [
           "Q"
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "The original FPM library and Fortran bindings are unchanged. The image pins SDL 2.32.4, SDL2_image 2.8.8, SDL2_mixer 2.8.1, SDL2_ttf 2.24.0 and GL/GLU development libraries; native link flags are recorded in the catalog build environment. The checked main creates a 640x360 32-bit software surface, fills a background and three bars, checks source pixels, saves a PNG, reloads it through the package IMG_Load API, and checks dimensions plus the file signature/size. The pinned bindings omit IMG_SavePNG, so the main includes only that standard C function declaration. No image encoder or drawing algorithm is substituted for SDL. No video subsystem, window, display server, hardware renderer, audio device or event loop is needed. The returned browser preview is visually reviewed. Q covers graphics. Interactive rendering, audio, fonts and OpenGL/GLU routines are compiled/linked facilities but not runtime-verified by this consumer. ISC notices are retained.",
+        "notes": "The original FPM library and Fortran bindings are unchanged. The image pins SDL 2.32.4, SDL2_image 2.8.8, SDL2_mixer 2.8.1, SDL2_ttf 2.24.0 and GL/GLU development libraries; native link flags are recorded in the catalog build environment. The checked main creates a 640x360 32-bit software surface, fills a background and three bars, checks source pixels, saves a PNG, reloads it through the package IMG_Load API, and checks dimensions plus the file signature/size. The pinned bindings omit IMG_SavePNG, so the main includes only that standard C function declaration. No image encoder or drawing algorithm is substituted for SDL. No video subsystem, window, display server, hardware renderer, audio device or event loop is needed. The returned browser preview is visually reviewed. Q covers graphics. Interactive rendering, audio, fonts and OpenGL/GLU routines are compiled/linked facilities but not runtime-verified by this consumer. ISC notices are retained. Dedicated Q consumer checks every pixel of an 85x65 software surface containing four overlapping/clipped rectangles, using native RGB mask arithmetic and independent half-open coordinate tests. Repeats the exact pixel check after PNG export/import and conversion to the original pixel format, and independently checks the PNG signature/IHDR dimensions. Uses only the missing standard IMG_SavePNG C declaration. Interactive rendering, hardware, alpha blending, codecs beyond PNG and other SDL subsystems are not verified.",
         "evidence": [
           {
             "path": "src/sdl2.f90",
@@ -28122,7 +28214,8 @@
             "sha256": "568ba0c01a39918d9d95b6ea74ef08854876616410b1c76f78b3efd78ce12561",
             "line": 1
           }
-        ]
+        ],
+        "driver_id": "sdl-raster-reference"
       }
     ],
     "stars_updated_at": "2026-10-30T18:33:11.712116+00:00"

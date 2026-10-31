@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "fortranlib-quadratic-reference",
+      "source_revision": "60fd094d3e137137ce00ec120b085e9b23ebf68b",
+      "source_sha256": "1a669c73c3219c76d08513c43e9b102a4d12209192b6956c24d0dd47e8ca1984",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T13:16:21.097802+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.388,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "84 quadratics: 21 distinct dyadic root pairs and four positive/negative coefficient scales.\nMaximum absolute root error:   0.0000E+00\nMaximum normalized polynomial residual:   0.0000E+00\nRoot order normalized by caller; sums and products checked independently.\nPASS fortranlib-quadratic-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.031,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fortran-utils-spline-reference",
+      "source_revision": "b43bd24cd421509a5bc6d3b9c3eeae8ce856ed88",
+      "source_sha256": "850b2b4e3a7805516a4668cf2645c5aa9ff4acda5f69efc296285dcde55b7a9a",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T13:16:23.549605+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.367,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "16 polynomial/grid fixtures, 65 queries each, 3120 value/derivative references.\nMaximum errors: value, first derivative, second derivative:   2.2204E-16  8.8818E-16  1.7764E-15\nUniform/nonuniform knots, endpoints, optional outputs and reversed query order checked.\nPASS fortran-utils-spline-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.029,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "scifortran-quadrature-reference",
+      "source_revision": "ca4a55f49cfdf7a94e388bc3475a5db574d5de99",
+      "source_sha256": "f6035fb5c27ab18c48caf0331ae323f9355916e1463744cd3dce908907faec17",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T13:16:26.233019+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.524,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "60 sampled-polynomial cases, 240 Simpson/trapezoid calls, even/odd panel counts.\n178 adaptive calls: polynomial rules, exponential tails, whole-line and endpoint-singular integrals.\nMaximum normalized sampled-rule reference error:   3.8065E-16\nMaximum normalized adaptive closed-form error:   7.7716E-16\nPASS scifortran-quadrature-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.041,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T13:16:26.288614+00:00"
+}

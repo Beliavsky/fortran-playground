@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "spectrum-real-dft-reference",
+      "source_revision": "5af0d5a85eccf971aa6e0fc72b1c7439c3cef536",
+      "source_sha256": "ef143f3c2208c04e3a23a6ef499dc297c47b7cf48bc9d80d6f206fcb2369a250",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T02:07:18.909217+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.474,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Four signals checked at length 3 (direct DFT and Parseval)\nFour signals checked at length 4 (direct DFT and Parseval)\nFour signals checked at length 5 (direct DFT and Parseval)\nFour signals checked at length 6 (direct DFT and Parseval)\nFour signals checked at length 7 (direct DFT and Parseval)\nFour signals checked at length 8 (direct DFT and Parseval)\nFour signals checked at length 11 (direct DFT and Parseval)\nFour signals checked at length 12 (direct DFT and Parseval)\nFour signals checked at length 15 (direct DFT and Parseval)\nFour signals checked at length 16 (direct DFT and Parseval)\n42 forward real transforms checked, including explicit zero padding and truncation.\nPASS spectrum-real-dft-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.029,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "geodesic-reference",
+      "source_revision": "b16eaf6622baabee7dfb75b99b78e42eaa878440",
+      "source_sha256": "b50c4bc9c319b433b5933db241172b26860253c86cbf614f0bc1ca191f212ec5",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T02:10:20.535143+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.392,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Distance (m):     6890979.843127 reference error:   0.0E+00\nDistance (m):     5793495.553489 reference error:   0.0E+00\nDistance (m):     2772664.682562 reference error:   0.0E+00\nDistance (m):    11131949.079327 reference error:   1.9E-09\nDistance (m):    10018754.171395 reference error:   0.0E+00\nDistance (m):     8199555.438446 reference error:   2.8E-09\nDistance (m):    10018754.171395 reference error:   0.0E+00\nDistance (m):     2226389.815865 reference error:   0.0E+00\nDistance (m):     6679169.447596 reference error:   0.0E+00\nDistance (m):     6641895.284522 reference error:   1.9E-09\nDistance (m):     4448867.329830 reference error:   5.6E-09\nDistance (m):      558370.268729 reference error:   3.5E-10\nPASS geodesic-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.03,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T02:10:20.592009+00:00"
+}

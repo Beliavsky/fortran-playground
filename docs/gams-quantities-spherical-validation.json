@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "quaff-quantity-reference",
+      "source_revision": "f26da3d854045b79102d27bdb4e9f9b072444272",
+      "source_sha256": "e824454fd62ff3b4f24e37bb9f49ffb4f777fbd9503769813d7dc7e85d0fe3b1",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T14:14:21.314352+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.358,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "180 numeric references: signed/zero lengths, five units, time conversions and typed arithmetic.\nLength/time speed and speed*time length checked against scalar SI formulas.\nMaximum error / max(1,abs(reference)):   1.8481E-16\nPASS quaff-quantity-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.019,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "spherepack-zonal-reference",
+      "source_revision": "e80da29462c5987162a0884baaab7434d0215467",
+      "source_sha256": "e18abc4c6d5c800e18270a398d0101795bbc2bcc558f888ffcbaf979a12dc099",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T14:14:23.585823+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.844,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "18 zonal harmonic fixtures: degrees 0..4 and a mixed field on three Gaussian grids.\nMaximum normalized-basis coefficient error:   1.7487E-15\nMaximum analysis/synthesis round-trip error:   2.6645E-15\nMaximum independent coefficient-injection synthesis error:   1.1102E-15\nPASS spherepack-zonal-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.082,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T14:14:23.636292+00:00"
+}

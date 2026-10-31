@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "ntpoly-matrix-root-reference",
+      "source_revision": "7b3d22f76226af1402e9b0a5be18a496e4addc28",
+      "source_sha256": "0e325c40d28d027d24ac60447ddc68a58b02b98d90f4d72084bf90cc5d07de1a",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T14:45:55.588574+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.544,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "[1793457956.153449] [modal:39   :0]       tcp_iface.c:912  UCX  ERROR scandir(/sys/class/net) failed: No such file or directory\nDimension=2 pair=1 rotation=1 error=  2.2204E-16\nDimension=2 pair=1 rotation=2 error=  3.3307E-16\nDimension=2 pair=1 rotation=3 error=  5.5511E-16\nDimension=2 pair=2 rotation=1 error=  2.2204E-16\nDimension=2 pair=2 rotation=2 error=  3.8955E-16\nDimension=2 pair=2 rotation=3 error=  4.4409E-16\nDimension=2 pair=3 rotation=1 error=  1.1102E-16\nDimension=2 pair=3 rotation=2 error=  6.0834E-16\nDimension=2 pair=3 rotation=3 error=  5.3291E-16\nDimension=2 pair=4 rotation=1 error=  1.1102E-16\nDimension=2 pair=4 rotation=2 error=  1.6653E-16\nDimension=2 pair=4 rotation=3 error=  4.4409E-16\nDimension=3 pair=1 rotation=1 error=  2.2204E-16\nDimension=3 pair=1 rotation=2 error=  3.3307E-16\nDimension=3 pair=1 rotation=3 error=  5.5511E-16\nDimension=3 pair=2 rotation=1 error=  2.2204E-16\nDimension=3 pair=2 rotation=2 error=  3.8955E-16\nDimension=3 pair=2 rotation=3 error=  4.4409E-16\nDimension=3 pair=3 rotation=1 error=  1.1102E-16\nDimension=3 pair=3 rotation=2 error=  6.0834E-16\nDimension=3 pair=3 rotation=3 error=  5.3291E-16\nDimension=3 pair=4 rotation=1 error=  1.1102E-16\nDimension=3 pair=4 rotation=2 error=  2.7079E-16\nDimension=3 pair=4 rotation=3 error=  4.4409E-16\n24 SPD fixtures, 48 matrix functions: known orthogonal factors and positive square-root eigenvalues.\nMaximum normalized closed-form error:   6.0834E-16\nMaximum independent product residual:   8.8818E-16\nPASS ntpoly-matrix-root-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.264,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "qnstop-box-reference",
+      "source_revision": "39e8273247f586fca8305ef3d8e879b27b6512d0",
+      "source_sha256": "13e32a0d4e2740fcaafda1c8acdebe2cbb0f9fe5791bc62400157e48a2ff5be8",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T14:47:59.385712+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.357,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Fixture=1 status=1 position error=  3.1203E-05 gap=  1.0836E-09\nFixture=2 status=1 position error=  1.1523E-04 gap=  1.5740E-08\nFixture=3 status=1 position error=  1.5896E-04 gap=  2.8910E-08\nFixture=4 status=1 position error=  7.3446E-04 gap=  1.0132E-06\nFour seeded box-constrained quadratics with interior minima; active bounds are not verified.\nMaximum coordinate error versus projected minimizer:   7.3446E-04\nMaximum normalized objective gap:   1.0132E-06\nPASS qnstop-box-reference\n",
+          "stderr": "Project is up to date\nAt line 708 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created\nAt line 867 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created\nAt line 872 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created\nAt line 873 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created for argument '_formal_216' of procedure 'dsymm'\nAt line 874 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created for argument '_formal_219' of procedure 'dsymm'\nAt line 904 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created for argument '_formal_204' of procedure 'dgemm'\nAt line 904 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created for argument '_formal_207' of procedure 'dgemm'\nAt line 907 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created\nAt line 912 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created for argument '_formal_223' of procedure 'dgesv'\nAt line 928 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created for argument '_formal_223' of procedure 'dgesv'\nAt line 938 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created\nAt line 949 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created for argument '_formal_223' of procedure 'dgesv'\nAt line 954 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created for argument '_formal_223' of procedure 'dgesv'\nAt line 1043 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created for argument '_formal_142' of procedure 'dsyev'\nAt line 1051 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created for argument '_formal_202' of procedure 'dgemm'\nAt line 1052 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created for argument '_formal_204' of procedure 'dgemm'\nAt line 1053 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created for argument '_formal_207' of procedure 'dgemm'\nAt line 1066 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created for argument '_formal_214' of procedure 'dsymm'\nAt line 1067 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created for argument '_formal_216' of procedure 'dsymm'\nAt line 1068 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created for argument '_formal_214' of procedure 'dsymm'\nAt line 1088 of file ../sources/bundle/packages/0/qnstop-39e8273247f586fca8305ef3d8e879b27b6512d0/playground-library/qnstops.f95\nFortran runtime warning: An array temporary was created for argument '_formal_202' of procedure 'dgemm'\n",
+          "seconds": 2.83,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T14:47:59.439285+00:00"
+}

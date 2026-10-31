@@ -386,7 +386,39 @@
           "exit_code": 0
         }
       ]
+    },
+    {
+      "driver_id": "fsparse-storage-reference",
+      "source_revision": "fa8233420ab0110bb688d565879164386521a8fc",
+      "source_sha256": "7d28582914f11e95766663c78b648422e155fa164eb9c45468eb20cb0312c5c8",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T02:07:16.745394+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.308,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Dense/COO/CSR checked: 5 x 4 nnz=4\nDense/COO/CSR checked: 4 x 5 nnz=4\nDense/COO/CSR checked: 3 x 2 nnz=0\nDense/COO/CSR checked: 2 x 3 nnz=6\nDense/COO/CSR checked: 1 x 1 nnz=1\nPASS fsparse-storage-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.027,
+          "exit_code": 0
+        }
+      ]
     }
   ],
-  "validated_at": "2026-10-31T01:52:42.155560+00:00"
+  "validated_at": "2026-10-31T02:07:16.800641+00:00"
 }

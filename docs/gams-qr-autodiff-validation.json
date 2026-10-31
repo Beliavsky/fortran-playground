@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "linalg-qr-reference",
+      "source_revision": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+      "source_sha256": "b0944f22ccd34f7989a33228fa152907eb5faeccbb5291013aa235b0776985b9",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T15:25:44.399017+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.327,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Real matrix fixtures: 192; QR factorizations: 576\nSquare/tall/wide, repeated/zero columns, zero matrices; free and locked pivots.\nMaximum normalized scalar reconstruction error:   4.4409E-16\nMaximum scalar orthogonality error:   6.6613E-16\nPASS linalg-qr-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.021,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "differentia-analytic-reference",
+      "source_revision": "2388e8ecf300a7bbc0904feab47023413464edf9",
+      "source_sha256": "ac08fc4d8377466c4b21648c4671f58ca497e1a0369711e61dc7d51876f93a26",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T15:25:46.179975+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.518,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Scalar / gradient / Jacobian calls:    99   33   66\nDense Jacobians checked with temporary and reused workspace; two dimension guards.\nMaximum normalized analytical error:   4.4409E-16\nPASS differentia-analytic-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.027,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T15:25:46.229679+00:00"
+}

@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "gslib-kriging-reference",
+      "source_revision": "5c021000eb3da8703ced3ee9be145d6c0ecb2608",
+      "source_sha256": "dc723c3e68dfbfce82348889e6e87142d5e920c318ba15ca2d5381b9f3ff9de3",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T10:34:09.067458+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.336,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Model=1 x= -1.0 estimate=  1.3913044 variance=  0.8977456\nModel=1 x=  0.0 estimate=  1.0000000 variance=  0.0000000\nModel=1 x=  0.5 estimate=  1.4836957 variance=  0.3957201\nModel=1 x=  1.0 estimate=  2.0000000 variance=  0.5370370\nModel=1 x=  1.5 estimate=  2.5163043 variance=  0.3957201\nModel=1 x=  2.0 estimate=  3.0000000 variance=  0.0000000\nModel=1 x=  3.0 estimate=  2.6086956 variance=  0.8977456\nModel=2 x= -1.0 estimate=  1.6321205 variance=  1.0914913\nModel=2 x=  0.0 estimate=  1.0000000 variance=  0.0000000\nModel=2 x=  0.5 estimate=  1.5565906 variance=  0.6530051\nModel=2 x=  1.0 estimate=  2.0000000 variance=  0.8319087\nModel=2 x=  1.5 estimate=  2.4434094 variance=  0.6530051\nModel=2 x=  2.0 estimate=  3.0000000 variance=  0.0000000\nModel=2 x=  3.0 estimate=  2.3678795 variance=  1.0914913\nModel=3 x= -1.0 estimate=  1.0945931 variance=  0.5636428\nModel=3 x=  0.0 estimate=  1.0000000 variance=  0.0000000\nModel=3 x=  0.5 estimate=  1.3920748 variance=  0.1033103\nModel=3 x=  1.0 estimate=  2.0000000 variance=  0.1987360\nModel=3 x=  1.5 estimate=  2.6079252 variance=  0.1033103\nModel=3 x=  2.0 estimate=  3.0000000 variance=  0.0000000\nModel=3 x=  3.0 estimate=  2.9054069 variance=  0.5636428\nThree covariance kernels and 21 two-observation ordinary kriging systems checked.\nPASS gslib-kriging-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.057,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fkb-network-reference",
+      "source_revision": "a1c97d4d66431df87662b59fe8e8a24feaf28a3a",
+      "source_sha256": "e130270ff4f85aed2f1e04ddeff06a4af63b0b6f4383316bcffb299771db5706",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T10:34:10.366134+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.299,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Input= -2 -2 outputs=    -3.00000     1.50000\nInput= -2 -1 outputs=    -5.50000     2.18750\nInput= -2  0 outputs=    -6.50000     2.50000\nInput= -2  1 outputs=    -6.87500     3.06250\nInput= -2  2 outputs=    -6.62500     5.50000\nInput= -1 -2 outputs=     0.00000     0.50000\nInput= -1 -1 outputs=    -2.50000     1.18750\nInput= -1  0 outputs=    -4.50000     1.75000\nInput= -1  1 outputs=    -4.62500     3.06250\nInput= -1  2 outputs=    -4.37500     5.50000\nInput=  0 -2 outputs=     3.00000    -0.50000\nInput=  0 -1 outputs=     0.50000     0.18750\nInput=  0  0 outputs=    -2.00000     0.87500\nInput=  0  1 outputs=    -2.37500     3.06250\nInput=  0  2 outputs=    -2.12500     5.50000\nInput=  1 -2 outputs=     5.00000    -1.12500\nInput=  1 -1 outputs=     3.00000    -0.62500\nInput=  1  0 outputs=     1.12500     0.25000\nInput=  1  1 outputs=    -0.12500     3.06250\nInput=  1  2 outputs=     0.12500     5.50000\nInput=  2 -2 outputs=     6.00000    -1.37500\nInput=  2 -1 outputs=     4.00000    -0.87500\nInput=  2  0 outputs=     2.37500     0.75000\nInput=  2  1 outputs=     1.12500     3.50000\nInput=  2  2 outputs=     1.37500     5.87500\n25 two-output predictions checked against scalar references for original and saved/reloaded networks.\nPASS fkb-network-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.029,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T10:34:10.416030+00:00"
+}

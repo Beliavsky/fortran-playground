@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "linalg-least-squares-reference",
+      "source_revision": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+      "source_sha256": "efacdea1e5a4a944df0e4849980c3a7c83a14cf0deb7ca745f854d981c523b78",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T16:41:37.619838+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.493,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Full-rank least-squares fixtures: 72; solver calls: 288\nOverdetermined fixtures with prescribed nonzero residuals: 18\nSquare/tall/wide; one matrix RHS and three vector RHS calls per fixture.\nMaximum normalized solution error:   7.7716E-16\nMaximum normalized prescribed-residual error:   3.2058E-16\nMaximum normalized normal-equation residual:   2.9143E-16\nPASS linalg-least-squares-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.029,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "interp1-reference",
+      "source_revision": "bf6d22ad931855d510dcfb5bdd6870cce8924b22",
+      "source_sha256": "5240b4aa2d61a8e25d704594d3ef1e1a86283b3e17bdd561ffe15dce3f0223bc",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T16:41:40.141685+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.48,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Exact affine references across all four overloads, including extrapolation: 2988\nExact mirrored cubic references (pchip/cubic aliases): 258\nTotal exact / NaN / interval-bound / monotonicity checks:   3286    36  1032   512\nMaximum normalized exact-reference error:   1.5543E-15\nPASS interp1-reference\n",
+          "stderr": "Project is up to date\nAt line 23 of file app/main.f90\nFortran runtime warning: An array temporary was created for argument 'y' of procedure 'interp1_rank01'\nAt line 27 of file app/main.f90\nFortran runtime warning: An array temporary was created for argument 'y' of procedure 'interp1_rank00'\n",
+          "seconds": 0.032,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T16:41:40.196939+00:00"
+}

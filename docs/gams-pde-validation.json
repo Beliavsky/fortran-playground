@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "fishpack-helmholtz-reference",
+      "source_revision": "9dc7d2e7a847fa6a610752d4e91eda3ef9c6130d",
+      "source_sha256": "64000da197429f2c456a2abaf6ea491cb08bd4bd6883675f3f920972f6c5307e",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T02:34:33.489297+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.343,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "lambda=  0.00 grid=16x12 solver error=  2.33E-15 PDE error=  1.91E-02 residual=  2.99E-14\nlambda=  0.00 grid=32x24 solver error=  4.88E-15 PDE error=  4.74E-03 residual=  1.70E-13\nlambda=  0.00 grid=64x48 solver error=  1.15E-14 PDE error=  1.18E-03 residual=  9.96E-13\nlambda= -0.75 grid=16x12 solver error=  1.07E-14 PDE error=  1.80E-02 residual=  2.55E-14\nlambda= -0.75 grid=32x24 solver error=  3.86E-14 PDE error=  4.47E-03 residual=  1.46E-13\nlambda= -0.75 grid=64x48 solver error=  1.43E-13 PDE error=  1.12E-03 residual=  1.87E-12\nSix nonzero-Dirichlet Poisson/Helmholtz solves checked against exact discrete solutions.\nPASS fishpack-helmholtz-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.045,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "poisfft-periodic-reference",
+      "source_revision": "7e7ebcd75130553ef2cf58548ec519933a3d3426",
+      "source_sha256": "e1e09b1b25817916e8de2fb4b237aab2d36a8e87ac4171d1f655808ea62615f7",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T02:34:36.627453+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.497,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Approximation=0 n=16 solver error=  8.60E-16 continuous PDE error=  8.60E-16\nApproximation=0 n=32 solver error=  1.11E-15 continuous PDE error=  1.11E-15\nApproximation=0 n=64 solver error=  8.33E-16 continuous PDE error=  8.33E-16\nApproximation=2 n=16 solver error=  7.77E-16 continuous PDE error=  4.06E-02\nApproximation=2 n=32 solver error=  1.33E-15 continuous PDE error=  9.89E-03\nApproximation=2 n=64 solver error=  8.88E-16 continuous PDE error=  2.51E-03\nSpectral and second-order periodic Poisson solvers checked at three grids; plans reused for zero forcing.\nPASS poisfft-periodic-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.051,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T02:34:36.681906+00:00"
+}

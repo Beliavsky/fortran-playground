@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "kdtree-neighbor-reference",
+      "source_revision": "dc757acec3162948cb228c2e0457d10134ec1edc",
+      "source_sha256": "ffb2d3f491a4c53b2799bce1cc4c782703953936499b53499d047e423b17cc9c",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T02:23:49.546168+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.579,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Rearrange=F, query 1: nearest and complete radius sets checked.\nRearrange=F, query 2: nearest and complete radius sets checked.\nRearrange=F, query 3: nearest and complete radius sets checked.\nRearrange=T, query 1: nearest and complete radius sets checked.\nRearrange=T, query 2: nearest and complete radius sets checked.\nRearrange=T, query 3: nearest and complete radius sets checked.\n36 searches checked against exhaustive real64 distances; upstream tree uses single precision.\nPASS kdtree-neighbor-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.027,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "delaunay-affine-reference",
+      "source_revision": "f3ffef04e24281aa42a0e5ec81f5c68f6bb5fb01",
+      "source_sha256": "035a629cb750121f0ce767a624b673a01f077347c7b03bc86bced42845834233",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T02:23:52.042132+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.264,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Query 1: affine=  1.013889 piecewise linear squared radius=  1.036414\nQuery 2: affine=  0.865385 piecewise linear squared radius=  0.917917\nQuery 3: affine=  0.786765 piecewise linear squared radius=  0.932968\nQuery 4: affine=  0.738095 piecewise linear squared radius=  0.942286\nQuery 5: affine=  0.705000 piecewise linear squared radius=  0.948621\nQuery 6: affine=  0.681034 piecewise linear squared radius=  0.953209\nSix 3D queries checked: affine reproduction, simplex geometry, and three-channel weighted interpolation.\nPASS delaunay-affine-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.056,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "nufft1d-sum-reference",
+      "source_revision": "42a04333f882f474b0674936cae049899784f56e",
+      "source_sha256": "d57e181994b730c019f3158c79ad6ea6693c33a9340c7ef53a96c1de8ca2e126",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T02:23:54.462584+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.442,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Modes=15 signal=1 sign=-1 scaled error=  5.15E-13\nModes=15 signal=1 sign= 1 scaled error=  5.15E-13\nModes=15 signal=2 sign=-1 scaled error=  1.26E-12\nModes=15 signal=2 sign= 1 scaled error=  1.26E-12\nModes=15 signal=3 sign=-1 scaled error=  2.23E-12\nModes=15 signal=3 sign= 1 scaled error=  2.23E-12\nModes=16 signal=1 sign=-1 scaled error=  2.62E-12\nModes=16 signal=1 sign= 1 scaled error=  2.62E-12\nModes=16 signal=2 sign=-1 scaled error=  2.92E-11\nModes=16 signal=2 sign= 1 scaled error=  2.92E-11\nModes=16 signal=3 sign=-1 scaled error=  7.13E-12\nModes=16 signal=3 sign= 1 scaled error=  1.07E-11\nModes=31 signal=1 sign=-1 scaled error=  1.23E-12\nModes=31 signal=1 sign= 1 scaled error=  1.23E-12\nModes=31 signal=2 sign=-1 scaled error=  1.11E-11\nModes=31 signal=2 sign= 1 scaled error=  1.11E-11\nModes=31 signal=3 sign=-1 scaled error=  9.18E-12\nModes=31 signal=3 sign= 1 scaled error=  9.18E-12\nModes=32 signal=1 sign=-1 scaled error=  2.62E-12\nModes=32 signal=1 sign= 1 scaled error=  2.62E-12\nModes=32 signal=2 sign=-1 scaled error=  2.33E-11\nModes=32 signal=2 sign= 1 scaled error=  2.33E-11\nModes=32 signal=3 sign=-1 scaled error=  5.30E-12\nModes=32 signal=3 sign= 1 scaled error=  6.34E-12\n24 type-1 transforms checked against scalar Fourier sums, including odd/even mode counts and both signs.\nPASS nufft1d-sum-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.038,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T02:23:54.515748+00:00"
+}

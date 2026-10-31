@@ -6,6 +6,9 @@ These examples connect specific integration procedures to finite-interval GAMS p
 | --- | --- | --- |
 | [H2a1a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/H2a1a1) | Automatic one-dimensional integration on a finite interval, integrand supplied as a procedure | QUADPACK `dqag`; quadrature-fortran `integration_class_1d%integrate` |
 | [H2a2a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/H2a2a1) | Automatic finite-interval integration for special integrands supplied as procedures | QUADPACK `dqags`, demonstrated with integrable endpoint singularities |
+| [H2a2b2](https://gams.nist.gov/cgi-bin/serve.cgi/Class/H2a2b2) | Nonautomatic integration of a stored spline | fitpack `fitpack_curve%integral` |
+
+The [stored-spline integration review](gams-sparse-integral.md) describes the fitpack polynomial antiderivative checks, reversed and zero-width intervals, and partition additivity.
 
 ## Shared smooth-integral checks
 
@@ -26,12 +29,16 @@ The `dqags` driver adapts the author's inverse-square-root test and adds a logar
 | [Load gauss-jacobi-polynomial-moments](https://beliavsky.github.io/fortran-playground/fpm/?package=gaussjacobiquad&example=gams-gauss-jacobi-polynomial-moments) · [Driver source](../fpm_catalog/gams-drivers/gauss-jacobi-polynomial-moments.f90) | H2c | [Procedure](https://github.com/HaoZeke/GaussJacobiQuad/blob/ffb970c68eea0b39b140f80f788c8994547d8bfb/src/GaussJacobiQuad.f90#L45) · [Author test](https://github.com/HaoZeke/GaussJacobiQuad/blob/ffb970c68eea0b39b140f80f788c8994547d8bfb/app/gjp_quad.f90) |
 | [Load cubatures-simplex-moments](https://beliavsky.github.io/fortran-playground/fpm/?package=fortran_cubatures&example=gams-cubatures-simplex-moments) · [Driver source](../fpm_catalog/gams-drivers/cubatures-simplex-moments.f90) | H2c | [Procedure](https://github.com/willklausler/fortran_cubatures/blob/aca04975d09aed329fd4210defd7052926dc01c1/src/cubatures.f90#L100) · [Author test](https://github.com/willklausler/fortran_cubatures/blob/aca04975d09aed329fd4210defd7052926dc01c1/test/test_cubatures.f90) |
 | [Load integrate-nd-polynomial-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=integrate_fortran&example=gams-integrate-nd-polynomial-reference) · [Driver source](../fpm_catalog/gams-drivers/integrate-nd-polynomial-reference.f90) | H2b1a2 | [Procedure](https://github.com/Euler-37/integrate_fortran/blob/5281426a7407aa8cef7f684ff8cf1f7e4a4df906/src/gauss_leg.f90#L34) · [Author test](https://github.com/Euler-37/integrate_fortran/blob/5281426a7407aa8cef7f684ff8cf1f7e4a4df906/test/check.f90) |
+| [Load fitpack-spline-integral](https://beliavsky.github.io/fortran-playground/fpm/?package=fitpack&example=gams-fitpack-spline-integral) · [Driver source](../fpm_catalog/gams-drivers/fitpack-spline-integral.f90) | H2a2b2 | [Procedure](https://github.com/perazz/fitpack/blob/1907c7bad9f5c4557970e906bdd4909eb52b2d4c/src/fitpack_curves.f90#L105) · [Author test](https://github.com/perazz/fitpack/blob/1907c7bad9f5c4557970e906bdd4909eb52b2d4c/examples/example_curve.f90) |
+| [Load scifortran-quadrature-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=scifortran&example=gams-scifortran-quadrature-reference) · [Driver source](../fpm_catalog/gams-drivers/scifortran-quadrature-reference.f90) | H2 | [Procedure](https://github.com/SciFortran/SciFortran/blob/ca4a55f49cfdf7a94e388bc3475a5db574d5de99/src/SF_INTEGRATE/SF_INTEGRATE.f90#L1) · [Author test](https://github.com/SciFortran/SciFortran/blob/ca4a55f49cfdf7a94e388bc3475a5db574d5de99/test/src/SF_INTEGRATE/01_test_sf_integrate_quad.f90) |
+| [Load kronrod-moments-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=kronrod&example=gams-kronrod-moments-reference) · [Driver source](../fpm_catalog/gams-drivers/kronrod-moments-reference.f90) | H2c | [Procedure](https://github.com/jacobwilliams/kronrod/blob/312278846b6e403fdea410a823d88ef4fb92a3cc/app/main.f90#L1) · [Author test](https://github.com/jacobwilliams/kronrod/blob/312278846b6e403fdea410a823d88ef4fb92a3cc/app/main.f90) |
+| [Load fgsl-qags-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=fgsl&example=gams-fgsl-qags-reference) · [Driver source](../fpm_catalog/gams-drivers/fgsl-qags-reference.f90) | H2a1a1 | [Procedure](https://github.com/reinh-bader/fgsl/blob/27a3e7cc0809623bcfde680c39a6fdcf0f590c4c/api/integration.finc#L1) · [Author test](https://github.com/reinh-bader/fgsl/blob/27a3e7cc0809623bcfde680c39a6fdcf0f590c4c/doc/examples/integration.f90) |
 
 Loading a link selects code without submitting a job. The same drivers are available in the hosted and main local FPM playgrounds and in downloaded FPM projects. Author license notices are retained with the drivers.
 
 ## Recorded results
 
-All three passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0. Existing package libraries were reused; only each main and executable were compiled. The [verification report](gams-quadrature-validation.json) locks the driver hashes and source revisions.
+All 11 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0. Existing package libraries were reused; only each main and executable were compiled. The verification reports lock driver hashes and source revisions: [gams-applied-methods-validation.json](gams-applied-methods-validation.json), [gams-cubature-validation.json](gams-cubature-validation.json), [gams-quadrature-validation.json](gams-quadrature-validation.json), [gams-rkf-qags-validation.json](gams-rkf-qags-validation.json), [gams-roots-splines-quadrature-validation.json](gams-roots-splines-quadrature-validation.json), [gams-rules-differences-validation.json](gams-rules-differences-validation.json), [gams-sparse-integral-validation.json](gams-sparse-integral-validation.json).
 
 Success is status `0` for QUADPACK and `1` for quadrature-fortran. The latter reports a signed error estimate. Estimates are printed separately from actual errors against the analytic references; they are not certified error bounds. Zero printed actual error means agreement at the working floating-point precision. Evaluation counts describe these runs and do not establish a general speed ranking.
 
@@ -143,12 +150,60 @@ Panel counts are explicit; each panel uses six Gauss-Legendre nodes per dimensio
 PASS integrate-nd-polynomial-reference
 ```
 
+### fitpack-spline-integral
+
+```text
+Polynomial degree 0 maximum integral error=  2.22E-16
+Polynomial degree 1 maximum integral error=  4.44E-16
+Polynomial degree 2 maximum integral error=  8.88E-16
+Polynomial degree 3 maximum integral error=  8.88E-16
+36 integrals checked, including reversed/zero intervals and off-knot partition additivity.
+PASS fitpack-spline-integral
+```
+
+### scifortran-quadrature-reference
+
+```text
+60 sampled-polynomial cases, 240 Simpson/trapezoid calls, even/odd panel counts.
+178 adaptive calls: polynomial rules, exponential tails, whole-line and endpoint-singular integrals.
+Maximum normalized sampled-rule reference error:   3.8065E-16
+Maximum normalized adaptive closed-form error:   7.7716E-16
+PASS scifortran-quadrature-reference
+```
+
+### kronrod-moments-reference
+
+```text
+Gauss order 2; Kronrod nodes 5
+Gauss order 3; Kronrod nodes 7
+Gauss order 4; Kronrod nodes 9
+Gauss order 5; Kronrod nodes 11
+Gauss order 6; Kronrod nodes 13
+Gauss order 7; Kronrod nodes 15
+Gauss order 10; Kronrod nodes 21
+Kronrod / Gauss / translated polynomial moments:    64   37   54
+Maximum normalized moment error:    6.6667E-103
+PASS kronrod-moments-reference
+```
+
+### fgsl-qags-reference
+
+```text
+Requested absolute/relative tolerance   1.0000E-07: all five integral families passed.
+Requested absolute/relative tolerance   1.0000E-10: all five integral families passed.
+Adaptive finite-interval integrals with one reused workspace: 40
+Integrand evaluations: 4704
+Maximum normalized analytical integral error:   3.5069E-13
+Maximum normalized reported error estimate:   3.1979E-08
+PASS fgsl-qags-reference
+```
+
 ## Maintenance
 
 After changing a driver, verify it again using existing compiled package images:
 
 ```text
-python xverify_gams_drivers.py --drivers quadpack-smooth quadrature-fortran-smooth quadpack-endpoint-singular
+python xverify_gams_drivers.py --drivers quadpack-smooth quadrature-fortran-smooth quadpack-endpoint-singular dcuhre-box-integrals gauss-jacobi-polynomial-moments cubatures-simplex-moments integrate-nd-polynomial-reference fitpack-spline-integral scifortran-quadrature-reference kronrod-moments-reference fgsl-qags-reference
 python xpackage_gams.py
 python xfpm_examples.py
 python xsite.py

@@ -59,12 +59,13 @@ Initialization/solve status must be zero, callback/final points finite and withi
 | [Load conmax-linear-program-certificate](https://beliavsky.github.io/fortran-playground/fpm/?package=conmax&example=gams-conmax-linear-program-certificate) · [Source](../fpm_catalog/gams-drivers/conmax-linear-program-certificate.f90) | G2a | [Procedure](https://github.com/jacobwilliams/conmax/blob/ab7f237d30f94f7d13b86997e0c49f3d67bd7c54/src/conmax.f90#L1912) · [Author example](https://github.com/jacobwilliams/conmax/blob/ab7f237d30f94f7d13b86997e0c49f3d67bd7c54/test/lp.f90) |
 | [Load bobyqa-box-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=powellopt&example=gams-bobyqa-box-reference) · [Source](../fpm_catalog/gams-drivers/bobyqa-box-reference.f90) | G2h1a1 | [Procedure](https://github.com/jacobwilliams/PowellOpt/blob/0987cd09d695cec968a3d02c8230d4ce5af33533/src/bobyqa.f90#L77) · Original public-API driver |
 | [Load pikaia-rastrigin-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=pikaia&example=gams-pikaia-rastrigin-reference) · [Source](../fpm_catalog/gams-drivers/pikaia-rastrigin-reference.f90) | G2i | [Procedure](https://github.com/jacobwilliams/pikaia/blob/c080c4004896243bf9b8bbb4577e402c9e31c5e3/src/pikaia_module.f90#L65) · [Author example](https://github.com/jacobwilliams/pikaia/blob/c080c4004896243bf9b8bbb4577e402c9e31c5e3/test/xpk2.f90) |
+| [Load qnstop-box-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=qnstop&example=gams-qnstop-box-reference) · [Source](../fpm_catalog/gams-drivers/qnstop-box-reference.f90) | G2 | [Procedure](https://github.com/vtopt/qnstop/blob/39e8273247f586fca8305ef3d8e879b27b6512d0/src/qnstops.f95#L1) · [Author example](https://github.com/vtopt/qnstop/blob/39e8273247f586fca8305ef3d8e879b27b6512d0/src/sample_main_s.f95) |
 
-The L-BFGS-B and SLSQP drivers adapt author API patterns and retain license notices. All 6 appear in hosted and main local FPM example menus and downloaded projects. Loading a link selects source without submitting a job.
+The L-BFGS-B and SLSQP drivers adapt author API patterns and retain license notices. All 7 appear in hosted and main local FPM example menus and downloaded projects. Loading a link selects source without submitting a job.
 
 ## Recorded results
 
-All 6 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing existing package libraries. Only each main and executable were rebuilt. The [verification report](gams-constrained-validation.json) records hashes, pins and saved output. Evaluation counts exclude derivative sanity checks and describe these simple cases, rather than establishing a general speed ranking.
+All 7 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing existing package libraries. Only each main and executable were rebuilt. The [verification report](gams-constrained-validation.json) records hashes, pins and saved output. Evaluation counts exclude derivative sanity checks and describe these simple cases, rather than establishing a general speed ranking.
 
 ### lbfgsb-box-quadratic
 
@@ -137,6 +138,19 @@ Seed 6789: x=  -0.000000400  -0.000000400; objective=   6.349E-11; evaluations=6
 Seed 24680: x=  -0.000000400   0.000000000; objective=   3.174E-11; evaluations=60691
 These fixed-seed finite searches do not guarantee global convergence on other problems.
 PASS pikaia-rastrigin-reference
+```
+
+### qnstop-box-reference
+
+```text
+Fixture=1 status=1 position error=  3.1203E-05 gap=  1.0836E-09
+Fixture=2 status=1 position error=  1.1523E-04 gap=  1.5740E-08
+Fixture=3 status=1 position error=  1.5896E-04 gap=  2.8910E-08
+Fixture=4 status=1 position error=  7.3446E-04 gap=  1.0132E-06
+Four seeded box-constrained quadratics with interior minima; active bounds are not verified.
+Maximum coordinate error versus projected minimizer:   7.3446E-04
+Maximum normalized objective gap:   1.0132E-06
+PASS qnstop-box-reference
 ```
 
 ## Maintenance

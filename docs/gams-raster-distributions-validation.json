@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "sdl-raster-reference",
+      "source_revision": "cac974790420ba757c17f88678e66b01500319e7",
+      "source_sha256": "3682cf928fc01cb22c6353fe3fef2ca599af60194a27222a7810bef00d2cf269",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T14:02:56.464143+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.592,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "85x65 software surface: four overlapping/clipped rectangles and five known colors.\n11050 exact pixel references checked before and after PNG save/load.\nNative PNG signature/dimensions checked; generated image is available for browser display.\nPASS sdl-raster-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.089,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "rng-distributions-reference",
+      "source_revision": "5ead95f436323d07fc82acc3613f66550947f256",
+      "source_sha256": "42b046a4213072293126da5492a666bf2431b318b9686e4915c70df78475c8b5",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T14:02:57.963131+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.397,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Rate= 0.50 normal mean/second moment=  -0.00522   1.00266\nPoisson mean/centered moment/zero mass=   0.49980   0.51310   0.61130\nRadius= 0.25 maximum normalized norm error=  4.4409E-16\nRate= 2.00 normal mean/second moment=  -0.00712   0.99522\nPoisson mean/centered moment/zero mass=   1.98885   1.96335   0.13530\nRadius= 1.00 maximum normalized norm error=  4.4409E-16\nRate= 8.00 normal mean/second moment=   0.00521   1.00284\nPoisson mean/centered moment/zero mass=   7.99060   7.91710   0.00040\nRadius= 3.00 maximum normalized norm error=  6.6613E-16\n60000 normal and 60000 Poisson samples, each replayed exactly with fresh seeded objects.\n3000 circle and 3000 sphere samples: exact replay, analytic norms and broad coordinate moments.\nFixed-seed smoke checks do not certify statistical quality or cryptographic safety.\nPASS rng-distributions-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.039,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T14:02:58.012242+00:00"
+}

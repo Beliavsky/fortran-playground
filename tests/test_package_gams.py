@@ -34,6 +34,29 @@ from xpackage_gams import (gams_data, package_classes, review_text, subclass_mod
                           applied_methods_review_text, APPLIED_METHODS_REPORT,
                           boundary_review_text, BOUNDARY_REPORT,
                           resampling_markov_review_text, RESAMPLING_MARKOV_REPORT,
+                          fourier_geometry_review_text, FOURIER_GEOMETRY_REPORT,
+                          sparse_integral_review_text, SPARSE_INTEGRAL_REPORT,
+                          spatial_nufft_review_text, SPATIAL_NUFFT_REPORT,
+                          pde_review_text, PDE_REPORT,
+                          data_kinds_review_text, DATA_KINDS_REPORT,
+                          products_status_review_text, PRODUCTS_STATUS_REPORT,
+                          kriging_network_review_text, KRIGING_NETWORK_REPORT,
+                          lookup_fastmath_review_text, LOOKUP_FASTMATH_REPORT,
+                          circuits_beta_review_text, CIRCUITS_BETA_REPORT,
+                          inverse_tvd_review_text, INVERSE_TVD_REPORT,
+                          roots_splines_quadrature_review_text, ROOTS_SPLINES_QUADRATURE_REPORT,
+                          io_bounds_review_text, IO_BOUNDS_REPORT,
+                          optimization_spacing_review_text, OPTIMIZATION_SPACING_REPORT,
+                          raster_distributions_review_text, RASTER_DISTRIBUTIONS_REPORT,
+                          quantities_spherical_review_text, QUANTITIES_SPHERICAL_REPORT,
+                          delay_embedding_review_text, DELAY_EMBEDDING_REPORT,
+                          matrix_roots_box_review_text, MATRIX_ROOTS_BOX_REPORT,
+                          dispersion_review_text, DISPERSION_REPORT,
+                          rules_differences_review_text, RULES_DIFFERENCES_REPORT,
+                          qr_autodiff_review_text, QR_AUTODIFF_REPORT,
+                          dense_spectra_review_text, DENSE_SPECTRA_REPORT,
+                          least_interpolation_review_text, LEAST_INTERPOLATION_REPORT,
+                          rkf_qags_review_text, RKF_QAGS_REPORT,
                           coverage_data, coverage_review_text, COVERAGE_REPORT,
                           class_evidence, class_tree, mapping_evidence_text, EVIDENCE_REPORT)
 
@@ -191,7 +214,7 @@ class PackageGamsTests(unittest.TestCase):
         self.assertNotIn('G1a', {c['code'] for c in package_classes(data, 'nonlin')})
         self.assertEqual({d['id'] for d in driver_data() if d['procedure_id'] in {m['id'] for m in mappings}},
                          {'fmin-sine', 'minpack-bard', 'libdogleg-bard', 'nonlin-rosenbrock-nm',
-                          'nonlin-rosenbrock-bfgs', 'nlopt-rosenbrock-lbfgs'})
+                          'nonlin-rosenbrock-bfgs', 'nlopt-rosenbrock-lbfgs', 'fortimize-nelder-reference'})
         tree = data['detailed_classes']
         self.assertEqual(tree['G1b1b']['parent'], 'G1b1')
         self.assertEqual(tree['G1b1']['parent'], 'G1b')
@@ -297,7 +320,8 @@ class PackageGamsTests(unittest.TestCase):
                           'fortran-lapack-symmetric-eigen', 'fortran-lapack-qr-decomposition',
                           'fortran-lapack-svd-decomposition', 'blas-gemm-reference',
                           'fsparse-matvec-reference', 'forinv-pseudoinverse-reference',
-                          'arpack-poisson-eigenpairs', 'linalg-poisson-eigenpairs'})
+                          'arpack-poisson-eigenpairs', 'linalg-poisson-eigenpairs',
+                          'fsparse-storage-reference'})
         self.assertEqual({d['gams_code'] for d in drivers if d['problem_id'] == 'real-dense-systems'}, {'D2a1'})
         self.assertEqual({d['gams_code'] for d in drivers if d['problem_id'] == 'real-linear-least-squares'}, {'D9a1'})
         records = {r['id']: r for r in data['procedure_mappings']}
@@ -320,8 +344,718 @@ class PackageGamsTests(unittest.TestCase):
         self.assertEqual(pinv['checks']['moore_penrose_identities'], 4)
         self.assertTrue(pinv['checks']['preserves_original_matrix'])
         from xpackage_gams import class_tree, procedure_records
-        assessment = class_evidence(class_tree(data),'D1b9',procedure_records(data,'fsparse'),list(drivers.values()))
+        assessment = class_evidence(class_tree(data),'D1b9',procedure_records(data,'fsparse'),[sparse])
         self.assertEqual(assessment['status'], 'source-supported')
+        assessment = class_evidence(class_tree(data),'D1b9',procedure_records(data,'fsparse'),list(drivers.values()))
+        self.assertEqual(assessment['status'], 'verified')
+
+    def test_storage_fourier_and_geometry_drivers_record_reference_scope(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        storage = drivers['fsparse-storage-reference']
+        fourier = drivers['spectrum-real-dft-reference']
+        geometry = drivers['geodesic-reference']
+        self.assertEqual((storage['gams_code'],fourier['gams_code'],geometry['gams_code']), ('D1b9','J1a1','P'))
+        self.assertEqual(storage['checks']['matrix_cases'], 5)
+        self.assertTrue(storage['checks']['all_zero_matrix_checked'])
+        self.assertFalse(storage['checks']['subnormal_threshold_behavior_verified'])
+        self.assertEqual(fourier['checks']['forward_transforms'], 42)
+        self.assertFalse(fourier['checks']['inverse_transform_verified'])
+        self.assertTrue(geometry['checks']['direct_uses_independent_inputs'])
+        self.assertEqual(geometry['checks']['simpson_panel_counts'], [2048,4096])
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for driver in [storage,fourier,geometry]:
+            self.assertEqual(records[driver['procedure_id']]['driver_id'], driver['id'])
+            evidence = class_evidence(class_tree(data),driver['gams_code'],
+                                      [records[driver['procedure_id']]],[driver])
+            self.assertEqual(evidence['status'], 'verified')
+        text = fourier_geometry_review_text()
+        self.assertEqual((ROOT/FOURIER_GEOMETRY_REPORT).read_text(encoding='utf-8'), text)
+        self.assertIn('not a formal quadrature error bound', text)
+        self.assertIn('not certified by this driver', text)
+
+    def test_sparse_lu_and_spline_integral_checks_retain_failed_pca_probe(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        sparse = drivers['y12m-sparse-reference']
+        integral = drivers['fitpack-spline-integral']
+        self.assertEqual((sparse['gams_code'],integral['gams_code']), ('D2a4','H2a2b2'))
+        self.assertEqual(sparse['checks']['right_hand_sides_per_factorization'], 4)
+        self.assertTrue(sparse['checks']['row_permutation_checked'])
+        self.assertEqual(integral['checks']['integral_calls'], 36)
+        self.assertTrue(integral['checks']['reversed_and_zero_intervals_checked'])
+        self.assertNotIn('forpca-covariance-variances', drivers)
+        record = next(r for r in data['procedure_mappings'] if r['id'] == 'forpca-pca')
+        self.assertNotIn('driver_id', record)
+        for code in ['D6','L13b']:
+            self.assertEqual(class_evidence(class_tree(data),code,[record],list(drivers.values()))['status'],
+                             'source-supported')
+        import hashlib
+        failure = json.loads((ROOT/'docs/gams-candidates/forpca/covariance-variances-result.json').read_text())
+        self.assertEqual(hashlib.sha256((ROOT/failure['source_path']).read_text().encode()).hexdigest(),
+                         failure['source_sha256'])
+        self.assertEqual(failure['revision'], record['revision'])
+        self.assertFalse(failure['result']['ok'])
+        self.assertTrue(failure['result']['cache']['library_reused'])
+        run = next(s for s in failure['result']['stages'] if s['name'] == 'Run')
+        self.assertIn('100.000000', run['stdout'])
+        self.assertIn('12.250000', run['stdout'])
+        self.assertIn('known covariance eigenvalues', run['stderr'])
+        text = sparse_integral_review_text()
+        self.assertEqual((ROOT/SPARSE_INTEGRAL_REPORT).read_text(encoding='utf-8'), text)
+        self.assertIn('not an upstream-confirmed fix', text)
+
+    def test_spatial_and_nufft_drivers_keep_independent_reference_scope(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        neighbors = drivers['kdtree-neighbor-reference']
+        interpolation = drivers['delaunay-affine-reference']
+        transform = drivers['nufft1d-sum-reference']
+        self.assertEqual((neighbors['gams_code'],interpolation['gams_code'],transform['gams_code']),
+                         ('N5','E2','J1'))
+        self.assertEqual(neighbors['checks']['search_calls'], 36)
+        self.assertTrue(neighbors['checks']['complete_radius_sets_checked'])
+        self.assertEqual(neighbors['checks']['squared_radii'], [0,0.125,4])
+        self.assertEqual(interpolation['checks']['dimensions'], 3)
+        self.assertFalse(interpolation['checks']['empty_circumsphere_property_verified'])
+        self.assertEqual(transform['checks']['transform_calls'], 24)
+        self.assertEqual(transform['checks']['mode_counts'], [15,16,31,32])
+        self.assertEqual(transform['checks']['normalization'], '1/source_count')
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for d in [neighbors,interpolation,transform]:
+            self.assertEqual(records[d['procedure_id']]['driver_id'], d['id'])
+            result = class_evidence(class_tree(data),d['gams_code'],[records[d['procedure_id']]],[d])
+            self.assertEqual(result['status'], 'verified')
+        result = class_evidence(class_tree(data),'P',[records['spatial-neighbors']],[neighbors])
+        self.assertEqual(result['status'], 'source-supported')
+        text = spatial_nufft_review_text()
+        self.assertEqual((ROOT/SPATIAL_NUFFT_REPORT).read_text(encoding='utf-8'), text)
+        self.assertIn('564 checked complex coefficients', text)
+        self.assertIn('not exact nonlinear-function recovery', text)
+
+    def test_pde_drivers_separate_discrete_and_continuous_references(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        helmholtz = drivers['fishpack-helmholtz-reference']
+        periodic = drivers['poisfft-periodic-reference']
+        self.assertEqual((helmholtz['gams_code'],periodic['gams_code']), ('I2','I2'))
+        self.assertEqual(helmholtz['checks']['solve_calls'], 6)
+        self.assertEqual(helmholtz['checks']['helmholtz_shifts'], [0,-0.75])
+        self.assertTrue(helmholtz['checks']['nonzero_dirichlet_boundaries_checked'])
+        self.assertEqual(periodic['checks']['solve_calls'], 12)
+        self.assertTrue(periodic['checks']['plans_reused_for_zero_forcing'])
+        self.assertTrue(periodic['checks']['zero_mean_gauge_checked'])
+        self.assertEqual(periodic['checks']['approximations'], ['spectral','second-order finite difference'])
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for d in [helmholtz,periodic]:
+            self.assertEqual(records[d['procedure_id']]['driver_id'], d['id'])
+            result = class_evidence(class_tree(data),'I2',[records[d['procedure_id']]],[d])
+            self.assertEqual(result['status'], 'verified')
+        result = class_evidence(class_tree(data),'I2',[records['heatflow-evolution']],list(drivers.values()))
+        self.assertEqual(result['status'], 'source-supported')
+        text = pde_review_text()
+        self.assertEqual((ROOT/PDE_REPORT).read_text(encoding='utf-8'), text)
+        self.assertIn('exact discrete solution', text)
+        self.assertIn('includes spatial discretization error', text)
+
+    def test_parsing_storage_and_machine_kind_drivers_have_scoped_evidence(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        parsing = drivers['fast-float-parsing-reference']
+        fifo = drivers['fifo-storage-reference']
+        machine = drivers['penf-machine-reference']
+        self.assertEqual((parsing['gams_code'],fifo['gams_code'],machine['gams_code']), ('N3','N4','R1'))
+        self.assertEqual(parsing['checks']['parser_calls'], 154)
+        self.assertEqual(parsing['checks']['invalid_or_overflow_cases'], 6)
+        self.assertFalse(parsing['checks']['all_inputs_correctly_rounded_claimed'])
+        self.assertEqual(fifo['checks']['primary_records']+fifo['checks']['secondary_records'], 160)
+        self.assertTrue(fifo['checks']['copy_after_source_overwrite_checked'])
+        self.assertTrue(machine['checks']['runtime_roundoff_experiment_checked'])
+        self.assertFalse(machine['checks']['quadruple_precision_verified'])
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for d in [parsing,fifo,machine]:
+            self.assertEqual(records[d['procedure_id']]['driver_id'], d['id'])
+            result = class_evidence(class_tree(data),d['gams_code'],[records[d['procedure_id']]],[d])
+            self.assertEqual(result['status'], 'verified')
+        result = class_evidence(class_tree(data),'N3',[records['numerical-portability']],list(drivers.values()))
+        self.assertEqual(result['status'], 'source-supported')
+        text = data_kinds_review_text()
+        self.assertEqual((ROOT/DATA_KINDS_REPORT).read_text(encoding='utf-8'), text)
+        self.assertIn('least positive **normal** values', text)
+        self.assertIn('not subnormal minima', text)
+
+    def test_products_assertions_and_error_status_drivers_have_exact_references(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        products = drivers['fordot-exact-reference']
+        assertions = drivers['fassert-captured-reference']
+        errors = drivers['errstat-recovery-reference']
+        self.assertEqual((products['gams_code'],assertions['gams_code'],errors['gams_code']), ('D1','S3','R3'))
+        self.assertEqual(products['checks']['dot_product_calls'], 231)
+        self.assertTrue(products['checks']['exact_equality_required'])
+        self.assertFalse(products['checks']['coarray_mode_verified'])
+        self.assertEqual(assertions['checks']['captured_comparisons'], 13)
+        self.assertTrue(assertions['checks']['exact_tolerance_boundaries_checked'])
+        self.assertEqual(errors['checks']['arithmetic_driver_calls'], 9)
+        self.assertTrue(errors['checks']['copied_status_independence_checked'])
+        self.assertFalse(errors['checks']['arithmetic_function_supplied_by_package'])
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for d in [products,assertions,errors]:
+            self.assertEqual(records[d['procedure_id']]['driver_id'], d['id'])
+            result = class_evidence(class_tree(data),d['gams_code'],[records[d['procedure_id']]],[d])
+            self.assertEqual(result['status'], 'verified')
+        result = class_evidence(class_tree(data),'R2',[records['assert-values']],list(drivers.values()))
+        self.assertEqual(result['status'], 'source-supported')
+        text = products_status_review_text()
+        self.assertEqual((ROOT/PRODUCTS_STATUS_REPORT).read_text(encoding='utf-8'), text)
+        self.assertIn('exact equality', text)
+        self.assertIn('error codes belong to the driver', text)
+
+    def test_kriging_and_network_drivers_record_independent_references(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        kriging = drivers['gslib-kriging-reference']
+        network = drivers['fkb-network-reference']
+        self.assertEqual((kriging['gams_code'], network['gams_code']), ('L13', 'K'))
+        self.assertEqual(kriging['checks']['linear_solves'], 21)
+        self.assertEqual(kriging['checks']['covariance_models'], ['spherical', 'exponential', 'Gaussian'])
+        self.assertEqual(kriging['checks']['covariance_precision'], 'real32')
+        self.assertEqual(kriging['checks']['linear_solve_precision'], 'real64')
+        self.assertEqual(network['checks']['layer_widths'], [2,3,2])
+        self.assertEqual(network['checks']['input_cases'], 25)
+        self.assertEqual(network['checks']['prediction_calls'], 50)
+        self.assertTrue(network['checks']['save_reload_checked'])
+        self.assertFalse(network['checks']['training_or_fit_accuracy_verified'])
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for d in [kriging, network]:
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'], d['id'])
+            self.assertEqual(class_evidence(class_tree(data), d['gams_code'], [record], [d])['status'], 'verified')
+        self.assertEqual(class_evidence(class_tree(data), 'E2', [records['gslib-api']],
+                                        list(drivers.values()))['status'], 'source-supported')
+        text = kriging_network_review_text()
+        self.assertEqual((ROOT/KRIGING_NETWORK_REPORT).read_text(encoding='utf-8'), text)
+        self.assertIn('**real32**', text)
+        self.assertIn('**real64**', text)
+        self.assertIn('not training or approximation quality', text)
+
+    def test_lookup_and_fastmath_drivers_record_scoped_accuracy_checks(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        lookup = drivers['lookup-services-reference']
+        exponential = drivers['fastmath-exp-log-reference']
+        rsqrt = drivers['fastmath-rsqrt-reference']
+        self.assertEqual((lookup['gams_code'],exponential['gams_code'],rsqrt['gams_code']), ('E3','C4b','C2'))
+        self.assertEqual(lookup['checks']['lookup_queries'], 98)
+        self.assertEqual(lookup['checks']['lookup_routes'], 4)
+        self.assertTrue(lookup['checks']['copy_independence_checked'])
+        self.assertFalse(lookup['checks']['nonlinear_grid_spacing_verified'])
+        self.assertEqual(exponential['checks']['grid_points'], 641)
+        self.assertEqual(exponential['checks']['argument_range'], [-80,80])
+        self.assertEqual(exponential['checks']['max_log_absolute_error'], 1e-3)
+        self.assertEqual(rsqrt['checks']['exact_dyadic_squares'], 168)
+        self.assertEqual(rsqrt['checks']['max_normalized_residual'], 4e-3)
+        self.assertFalse(rsqrt['checks']['performance_verified'])
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for d in [lookup,exponential,rsqrt]:
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'], d['id'])
+            self.assertEqual(class_evidence(class_tree(data),d['gams_code'],[record],[d])['status'], 'verified')
+        self.assertEqual(class_evidence(class_tree(data),'E1a',[records['lookup-interpolation']],
+                                       list(drivers.values()))['status'], 'source-supported')
+        self.assertIn('src/fast_log.f90', {e['path'] for e in records['fastmath-fexp']['evidence']})
+        text = lookup_fastmath_review_text()
+        self.assertEqual((ROOT/LOOKUP_FASTMATH_REPORT).read_text(encoding='utf-8'), text)
+        self.assertIn('two-stage reference', text)
+        self.assertIn('without evaluating sqrt', text)
+        self.assertIn('not establish a universal error bound', text)
+
+    def test_circuit_elementary_and_beta_drivers_have_independent_references(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        circuit = drivers['ecx-rlc-reference']
+        elementary = drivers['rpn-sinc-sech-reference']
+        beta = drivers['rpn-beta-reference']
+        self.assertEqual((circuit['gams_code'],elementary['gams_code'],beta['gams_code']), ('A4','C4','C7'))
+        self.assertEqual(circuit['checks']['frequency_cases'], 216)
+        self.assertEqual(circuit['checks']['element_impedances'], 648)
+        self.assertTrue(circuit['checks']['circuit_composition_supplied_by_driver'])
+        self.assertEqual(elementary['checks']['real_arguments'], 133)
+        self.assertEqual(elementary['checks']['sinc_series_terms'], 64)
+        self.assertFalse(elementary['checks']['cube_root_verified'])
+        self.assertEqual(beta['checks']['positive_argument_pairs'], 128)
+        self.assertEqual(beta['checks']['beta_evaluations'], 512)
+        self.assertTrue(beta['checks']['factorial_reference_checked'])
+        self.assertFalse(beta['checks']['bessel_verified'])
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for d in [circuit,elementary,beta]:
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'], d['id'])
+            self.assertEqual(class_evidence(class_tree(data),d['gams_code'],[record],[d])['status'], 'verified')
+        for code,rid in [('C2','rpn-elementary'),('C10','rpn-special')]:
+            self.assertEqual(class_evidence(class_tree(data),code,[records[rid]],
+                                           list(drivers.values()))['status'], 'source-supported')
+        text = circuits_beta_review_text()
+        self.assertEqual((ROOT/CIRCUITS_BETA_REPORT).read_text(encoding='utf-8'), text)
+        self.assertIn('composition is supplied by the driver', text)
+        self.assertIn('references do not call gamma or beta', text)
+        self.assertIn('not matching sinc/sech drivers', text)
+
+    def test_inverse_and_tvd_drivers_record_closed_form_and_convergence_references(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        inverse = drivers['linalg-inverse-factor-reference']
+        ode = drivers['hrweno-tvd-ode-reference']
+        self.assertEqual((inverse['gams_code'],ode['gams_code']), ('D2','I1'))
+        self.assertEqual(inverse['checks']['nonsingular_matrices'], 132)
+        self.assertEqual(inverse['checks']['dimensions'], [1,2,3,4,5,8])
+        self.assertTrue(inverse['checks']['row_permutations_checked'])
+        self.assertEqual(inverse['checks']['singular_rejections'], 2)
+        self.assertFalse(inverse['checks']['reference_uses_package_linear_algebra'])
+        self.assertEqual(ode['checks']['integration_runs'], 12)
+        self.assertEqual(ode['checks']['orders'], [1,2,3])
+        self.assertEqual(ode['checks']['steps'], [8,16,32,64])
+        self.assertEqual(ode['checks']['itask'], 2)
+        self.assertTrue(ode['checks']['nonautonomous_stage_times_checked'])
+        self.assertFalse(ode['checks']['ordinary_interval_mode_verified'])
+        self.assertFalse(ode['checks']['spatial_weno_verified'])
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for d in [inverse,ode]:
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'], d['id'])
+            self.assertEqual(class_evidence(class_tree(data),d['gams_code'],[record],[d])['status'], 'verified')
+        self.assertEqual(class_evidence(class_tree(data),'I2',[records['hrweno-reconstruction']],
+                                       list(drivers.values()))['status'], 'source-supported')
+        text = inverse_tvd_review_text()
+        self.assertEqual((ROOT/INVERSE_TVD_REPORT).read_text(encoding='utf-8'), text)
+        self.assertIn('No package linear algebra', text)
+        self.assertIn('ordinary interval mode; that mode is not', text)
+        self.assertIn('stage-time usage', text)
+
+    def test_quadratic_spline_and_sampled_adaptive_drivers_record_exact_references(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        roots = drivers['fortranlib-quadratic-reference']
+        spline = drivers['fortran-utils-spline-reference']
+        quad = drivers['scifortran-quadrature-reference']
+        self.assertEqual((roots['gams_code'],spline['gams_code'],quad['gams_code']), ('F1','E1','H2'))
+        self.assertEqual(roots['checks']['quadratic_calls'], 84)
+        self.assertFalse(roots['checks']['repeated_roots_verified'])
+        self.assertEqual(spline['checks']['independent_component_references'], 3120)
+        self.assertEqual(spline['checks']['spline_calls'], 64)
+        self.assertTrue(spline['checks']['nonuniform_grid_checked'])
+        self.assertTrue(spline['checks']['reversed_queries_checked'])
+        self.assertEqual(quad['checks']['sampled_rule_calls'], 240)
+        self.assertEqual(quad['checks']['adaptive_calls'], 178)
+        self.assertEqual(quad['checks']['gauss_kronrod_keys'], [1,2,3,4,5,6])
+        self.assertEqual(quad['checks']['endpoint_singular_integrals'], 2)
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for d in [roots,spline,quad]:
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'], d['id'])
+            self.assertEqual(class_evidence(class_tree(data),d['gams_code'],[record],[d])['status'], 'verified')
+        for code,rid in [('E1','fortranlib-numerics'),('H2','fortranlib-numerics'),('N6','fortran-utils-splines')]:
+            self.assertEqual(class_evidence(class_tree(data),code,[records[rid]],
+                                           list(drivers.values()))['status'], 'source-supported')
+        text = roots_splines_quadrature_review_text()
+        self.assertEqual((ROOT/ROOTS_SPLINES_QUADRATURE_REPORT).read_text(encoding='utf-8'), text)
+        self.assertIn('trapezoidal discretization error', text)
+        self.assertIn('consistent-cubic endpoint conditions', text)
+        self.assertIn('not claim a general iterative root finder', text)
+
+    def test_numeric_io_and_bounds_drivers_record_independent_data_and_comparisons(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        io = drivers['io-numeric-file-reference']
+        bounds = drivers['error-bounds-reference']
+        self.assertEqual((io['gams_code'],bounds['gams_code']), ('N1','R2'))
+        self.assertEqual(io['checks']['matrix_files'], 8)
+        self.assertEqual(io['checks']['matrix_shapes'], [[1,1],[2,3],[4,2],[3,4]])
+        self.assertTrue(io['checks']['independent_native_reader_checked'])
+        self.assertTrue(io['checks']['independent_native_writer_checked'])
+        self.assertTrue(io['checks']['missing_file_diagnostic_checked'])
+        self.assertEqual(bounds['checks']['criteria_calls'], 102)
+        self.assertEqual(bounds['checks']['expected_rejections'], 30)
+        self.assertTrue(bounds['checks']['nearest_inside_outside_values_checked'])
+        self.assertTrue(bounds['checks']['equal_bounds_checked'])
+        self.assertFalse(bounds['checks']['critical_error_triggering_verified'])
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for d in [io,bounds]:
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'], d['id'])
+            self.assertEqual(class_evidence(class_tree(data),d['gams_code'],[record],[d])['status'], 'verified')
+        self.assertEqual(class_evidence(class_tree(data),'R3',[records['error-validation']],
+                                       list(drivers.values()))['status'], 'source-supported')
+        text = io_bounds_review_text()
+        self.assertEqual((ROOT/IO_BOUNDS_REPORT).read_text(encoding='utf-8'), text)
+        self.assertIn('compensating reader/writer layout errors', text)
+        self.assertIn('immediately adjacent', text)
+        self.assertIn('No errors are triggered', text)
+
+    def test_nelder_and_spacing_drivers_record_known_minima_and_precision(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        optimizer = drivers['fortimize-nelder-reference']
+        spacing = drivers['pointsets-spacing-reference']
+        self.assertEqual((optimizer['gams_code'],spacing['gams_code']), ('G1b','R'))
+        self.assertEqual(optimizer['checks']['optimization_runs'], 12)
+        self.assertEqual(optimizer['checks']['quadratic_dimensions'], [2,3,5])
+        self.assertEqual(optimizer['checks']['function_evaluation_limit'], 50000)
+        self.assertFalse(optimizer['checks']['derivative_requests_allowed'])
+        self.assertFalse(optimizer['checks']['parallel_use_verified'])
+        self.assertEqual(spacing['checks']['arithmetic_grids'], 20)
+        self.assertEqual(spacing['checks']['geometric_grids'], 80)
+        self.assertEqual(spacing['checks']['unchanged_array_guard_calls'], 7)
+        self.assertEqual(spacing['checks']['max_normalized_error_multiple_of_epsilon'], 32)
+        self.assertFalse(spacing['checks']['random_generators_verified'])
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for d in [optimizer,spacing]:
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'], d['id'])
+            self.assertEqual(class_evidence(class_tree(data),d['gams_code'],[record],[d])['status'], 'verified')
+        self.assertEqual(class_evidence(class_tree(data),'G1b',[records['fortimize-gradient-descent']],
+                                       list(drivers.values()))['status'], 'source-supported')
+        text = optimization_spacing_review_text()
+        self.assertEqual((ROOT/OPTIMIZATION_SPACING_REPORT).read_text(encoding='utf-8'), text)
+        self.assertIn('wp=real32', text)
+        self.assertIn('not a success flag', text)
+        self.assertIn('ratio 1 does not fill a uniform grid', text)
+
+    def test_raster_and_distribution_drivers_separate_exact_pixels_from_moment_smoke_checks(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        graphics = drivers['sdl-raster-reference']
+        distributions = drivers['rng-distributions-reference']
+        self.assertEqual((graphics['gams_code'],distributions['gams_code']), ('Q','L6'))
+        self.assertEqual(graphics['checks']['exact_pixel_checks'], 11050)
+        self.assertEqual(graphics['checks']['image_dimensions'], [85,65])
+        self.assertTrue(graphics['checks']['png_round_trip_pixels_checked'])
+        self.assertFalse(graphics['checks']['interactive_rendering_verified'])
+        self.assertEqual(distributions['checks']['normal_samples'], 60000)
+        self.assertEqual(distributions['checks']['poisson_rates'], [.5,2,8])
+        self.assertTrue(distributions['checks']['fresh_object_exact_replay_checked'])
+        self.assertFalse(distributions['checks']['randomness_quality_certified'])
+        self.assertFalse(distributions['checks']['normal_reseeding_cache_verified'])
+        self.assertFalse(distributions['checks']['poisson_rejection_branch_verified'])
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for d in [graphics,distributions]:
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'], d['id'])
+            self.assertEqual(class_evidence(class_tree(data),d['gams_code'],[record],[d])['status'], 'verified')
+        text = raster_distributions_review_text()
+        self.assertEqual((ROOT/RASTER_DISTRIBUTIONS_REPORT).read_text(encoding='utf-8'), text)
+        self.assertIn('That issue remains unresolved', text)
+        self.assertIn('do not certify statistical quality', text)
+        preview = (ROOT/'docs/gams-raster-distributions.png').read_bytes()
+        self.assertEqual(preview[:8], b'\x89PNG\r\n\x1a\n')
+        self.assertEqual((int.from_bytes(preview[16:20],'big'),int.from_bytes(preview[20:24],'big')), (85,65))
+
+    def test_quantity_and_zonal_transform_drivers_record_si_and_independent_coefficients(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        quantities = drivers['quaff-quantity-reference']
+        spherical = drivers['spherepack-zonal-reference']
+        self.assertEqual((quantities['gams_code'],spherical['gams_code']), ('A','J'))
+        self.assertEqual(quantities['checks']['scalar_references'], 180)
+        self.assertTrue(quantities['checks']['typed_speed_round_trip_checked'])
+        self.assertFalse(quantities['checks']['invalid_dimensions_compile_checks_verified'])
+        self.assertEqual(spherical['checks']['harmonic_fixtures'], 18)
+        self.assertEqual(spherical['checks']['analysis_calls'], 18)
+        self.assertEqual(spherical['checks']['synthesis_calls'], 36)
+        self.assertTrue(spherical['checks']['independent_coefficient_injection_checked'])
+        self.assertFalse(spherical['checks']['nonzero_nonzonal_modes_verified'])
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for d in [quantities,spherical]:
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'], d['id'])
+            self.assertEqual(class_evidence(class_tree(data),d['gams_code'],[record],[d])['status'], 'verified')
+        spherepack_records = [r for r in data['procedure_mappings'] if r['package_id'] == 'spherepack']
+        self.assertEqual(class_evidence(class_tree(data),'I2',spherepack_records,
+                                       list(drivers.values()))['status'], 'source-supported')
+        text = quantities_spherical_review_text()
+        self.assertEqual((ROOT/QUANTITIES_SPHERICAL_REPORT).read_text(encoding='utf-8'), text)
+        self.assertIn('0.3048 m/ft', text)
+        self.assertIn('compensating normalization error', text)
+        self.assertIn('18 analyses and 36 syntheses', text)
+
+    def test_delay_and_lua_drivers_record_analytic_solutions_and_error_recovery(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        delay = drivers['dde-method-steps-reference']
+        embedding = drivers['lua-numeric-embedding-reference']
+        self.assertEqual((delay['gams_code'],embedding['gams_code']), ('I','S'))
+        self.assertEqual(delay['checks']['integration_runs'], 15)
+        self.assertEqual(delay['checks']['dense_output_references'], 975)
+        self.assertEqual(delay['checks']['constant_history_values'], [1,-2])
+        self.assertFalse(delay['checks']['state_dependent_delays_verified'])
+        self.assertEqual(embedding['checks']['exact_integer_calls'], 128)
+        self.assertEqual(embedding['checks']['real_norm_calls'], 5)
+        self.assertTrue(embedding['checks']['stack_balance_checked'])
+        self.assertTrue(embedding['checks']['state_recovery_checked'])
+        self.assertFalse(embedding['checks']['external_script_files_used'])
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for d in [delay,embedding]:
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'], d['id'])
+            self.assertEqual(class_evidence(class_tree(data),d['gams_code'],[record],[d])['status'], 'verified')
+        self.assertNotEqual(class_evidence(class_tree(data),'I1',[records['dde-solver-api']],
+                                          list(drivers.values()))['status'], 'verified')
+        self.assertEqual(class_evidence(class_tree(data),'S',[records['lua53-interface']],
+                                       list(drivers.values()))['status'], 'source-supported')
+        text = delay_embedding_review_text()
+        self.assertEqual((ROOT/DELAY_EMBEDDING_REPORT).read_text(encoding='utf-8'), text)
+        self.assertIn('method-of-steps reference', text)
+        self.assertIn('a subsequent factorial(6) must return 720', text)
+        self.assertIn('ordinary ODE subclasses', text)
+
+    def test_rkf45_and_qags_drivers_check_known_solutions_and_requested_status(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        ode = drivers['rkf45-analytic-reference']
+        quad = drivers['fgsl-qags-reference']
+        self.assertEqual((ode['gams_code'],quad['gams_code']),('I1a1a','H2a1a1'))
+        self.assertEqual(ode['checks']['integration_runs'],24)
+        self.assertEqual(ode['checks']['target_calls'],384)
+        self.assertEqual(ode['checks']['targets_per_run'],16)
+        self.assertTrue(ode['checks']['forward_and_backward_checked'])
+        self.assertFalse(ode['checks']['stiff_systems_verified'])
+        self.assertFalse(ode['checks']['one_step_mode_verified'])
+        self.assertEqual(quad['checks']['integral_fixtures'],20)
+        self.assertEqual(quad['checks']['integration_calls'],40)
+        self.assertEqual(quad['checks']['absolute_relative_tolerances'],[1e-7,1e-10])
+        self.assertTrue(quad['checks']['workspace_reuse_checked'])
+        self.assertTrue(quad['checks']['endpoint_singular_integrals_checked'])
+        self.assertTrue(quad['checks']['status_checked'])
+        self.assertTrue(quad['checks']['error_estimate_checked'])
+        self.assertFalse(quad['checks']['error_estimate_rigorous_bound_verified'])
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for d in [ode,quad]:
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'],d['id'])
+            self.assertEqual(class_evidence(class_tree(data),d['gams_code'],[record],[d])['status'],'verified')
+        self.assertNotEqual(class_evidence(class_tree(data),'I1a2',[records[ode['procedure_id']]],
+                                          [ode])['status'],'verified')
+        text = rkf_qags_review_text()
+        self.assertEqual((ROOT/RKF_QAGS_REPORT).read_text(encoding='utf-8'),text)
+        self.assertIn('384 calls',text)
+        self.assertIn('40 calls',text)
+        self.assertIn('normal flag 2',text)
+        self.assertIn('does not establish a rigorous upper bound',text)
+
+    def test_least_squares_and_interp1_drivers_check_residuals_and_exact_polynomials(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        least = drivers['linalg-least-squares-reference']
+        interp = drivers['interp1-reference']
+        self.assertEqual((least['gams_code'],interp['gams_code']),('D9a1','E1a'))
+        self.assertEqual(least['checks']['matrix_fixtures'],72)
+        self.assertEqual(least['checks']['solver_calls'],288)
+        self.assertEqual(least['checks']['nonzero_residual_fixtures'],18)
+        self.assertTrue(least['checks']['underdetermined_minimum_norm_checked'])
+        self.assertFalse(least['checks']['rank_deficient_verified'])
+        self.assertIsNone(least['author_example'])
+        self.assertEqual(interp['checks']['overloads_checked'],4)
+        self.assertEqual(interp['checks']['exact_reference_checks'],3286)
+        self.assertEqual(sum(interp['checks'][key] for key in
+                             ['affine_reference_checks','cubic_reference_checks','knot_reference_checks']),3286)
+        self.assertEqual(interp['checks']['nan_checks'],36)
+        self.assertEqual(interp['checks']['interval_bound_checks'],1032)
+        self.assertEqual(interp['checks']['monotonicity_checks'],512)
+        self.assertFalse(interp['checks']['invalid_inputs_verified'])
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for d in [least,interp]:
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'],d['id'])
+            self.assertEqual(class_evidence(class_tree(data),d['gams_code'],[record],[d])['status'],'verified')
+        self.assertEqual(class_evidence(class_tree(data),'D2a1',[records['linalg-lu-factor']],
+                                       [least])['status'],'source-supported')
+        text = least_interpolation_review_text()
+        self.assertEqual((ROOT/LEAST_INTERPOLATION_REPORT).read_text(encoding='utf-8'),text)
+        self.assertIn('288 solver calls',text)
+        self.assertIn('not 72 distinct matrices',text)
+        self.assertIn('endpoint secant slopes',text)
+        self.assertNotIn('/None)',text)
+
+    def test_dense_spectrum_drivers_check_one_sided_vectors_and_retain_link_failures(self):
+        import hashlib
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        eigen = drivers['linalg-eigen-reference']
+        svd = drivers['linalg-svd-reference']
+        self.assertEqual((eigen['gams_code'],svd['gams_code']),('D4a1','D6'))
+        self.assertEqual(eigen['checks']['matrix_fixtures'],96)
+        self.assertEqual(eigen['checks']['eigen_calls'],192)
+        self.assertTrue(eigen['checks']['unused_upper_triangle_poisoned'])
+        self.assertTrue(eigen['checks']['eigenvalues_only_checked'])
+        self.assertEqual(svd['checks']['matrix_fixtures'],144)
+        self.assertEqual(svd['checks']['svd_calls'],576)
+        self.assertEqual(svd['checks']['output_modes'],['full','values-only','U-only','VT-only'])
+        self.assertEqual(svd['checks']['max_normalized_singular_vector_residual'],1e-11)
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for d in [eigen,svd]:
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'],d['id'])
+            self.assertEqual(class_evidence(class_tree(data),d['gams_code'],[record],[d])['status'],'verified')
+            self.assertFalse(d['checks']['complex_verified'])
+            self.assertFalse(d['checks']['invalid_inputs_verified'])
+        folder = ROOT/'docs/gams-candidates/fortran-lapack'
+        for identity,record_id in [('lapack-eigen-reference','fortran-lapack-eigh'),
+                                   ('lapack-svd-reference','fortran-lapack-svd')]:
+            self.assertNotIn('driver_id',records[record_id])
+            source = (folder/(identity+'.f90')).read_text(encoding='utf-8')
+            result = json.loads((folder/(identity+'-result.json')).read_text())
+            self.assertEqual(hashlib.sha256(source.encode()).hexdigest(),result['source_sha256'])
+            self.assertEqual(result['revision'],records[record_id]['revision'])
+            self.assertFalse(result['ok'])
+            self.assertTrue(result['cache']['library_reused'])
+            build = next(s for s in result['stages'] if s['name']=='Build')
+            self.assertFalse(build['ok'])
+            self.assertIn('File size limit exceeded',build['stdout']+build['stderr'])
+            self.assertFalse(any(s['name']=='Run' for s in result['stages']))
+        text = dense_spectra_review_text()
+        self.assertEqual((ROOT/DENSE_SPECTRA_REPORT).read_text(encoding='utf-8'),text)
+        self.assertIn('192 calls',text)
+        self.assertIn('576 calls',text)
+        self.assertIn('full-storage null vectors',text)
+        self.assertIn('Neither probe ran',text)
+
+    def test_qr_and_autodiff_drivers_check_rectangular_factors_and_analytic_references(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        qr = drivers['linalg-qr-reference']
+        ad = drivers['differentia-analytic-reference']
+        self.assertEqual((qr['gams_code'],ad['gams_code']),('D5','H1'))
+        self.assertEqual(qr['checks']['matrix_fixtures'],192)
+        self.assertEqual(qr['checks']['factorization_calls'],576)
+        self.assertEqual(qr['checks']['pivot_modes'],['none','free','first-column-locked'])
+        self.assertTrue(qr['checks']['rank_deficient_included'])
+        self.assertFalse(qr['checks']['linear_solve_verified'])
+        self.assertFalse(qr['checks']['complex_verified'])
+        self.assertEqual(ad['checks']['scalar_derivative_calls'],99)
+        self.assertEqual(ad['checks']['gradient_calls'],33)
+        self.assertEqual(ad['checks']['dense_jacobian_calls'],66)
+        self.assertEqual(ad['checks']['dimension_guards'],2)
+        self.assertTrue(ad['checks']['workspace_reuse_checked'])
+        self.assertFalse(ad['checks']['sparse_jacobians_verified'])
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for d in [qr,ad]:
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'],d['id'])
+            self.assertEqual(class_evidence(class_tree(data),d['gams_code'],[record],[d])['status'],'verified')
+        self.assertEqual(class_evidence(class_tree(data),'D2a1',[records['linalg-lu-factor']],
+                                       [qr])['status'],'source-supported')
+        self.assertEqual(class_evidence(class_tree(data),'H1',[records['forwarddiff-derivative']],
+                                       [ad])['status'],'source-supported')
+        text = qr_autodiff_review_text()
+        self.assertEqual((ROOT/QR_AUTODIFF_REPORT).read_text(encoding='utf-8'),text)
+        self.assertIn('576 QR calls',text)
+        self.assertIn('99 scalar calls',text)
+        self.assertIn('not finite differences',text)
+        self.assertIn('separate forwarddiff catalog alias',text)
+
+    def test_rules_and_differences_drivers_retain_failed_order_one_probe(self):
+        import hashlib
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        rule = drivers['kronrod-moments-reference']
+        diff = drivers['tsunami-differences-reference']
+        self.assertEqual((rule['gams_code'],diff['gams_code']),('H2c','H1'))
+        self.assertEqual(rule['checks']['gauss_orders'],[2,3,4,5,6,7,10])
+        self.assertEqual(sum(rule['checks'][key] for key in
+                             ['kronrod_even_moments','gauss_even_moments','translated_moments']),155)
+        self.assertFalse(rule['checks']['order_one_verified'])
+        self.assertFalse(rule['checks']['adaptive_integration_verified'])
+        self.assertEqual(diff['checks']['fourier_fixtures'],90)
+        self.assertEqual(diff['checks']['nonsmooth_constant_fixtures'],10)
+        self.assertFalse(diff['checks']['pde_evolution_verified'])
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for d in [rule,diff]:
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'],d['id'])
+            self.assertEqual(class_evidence(class_tree(data),d['gams_code'],[record],[d])['status'],'verified')
+        self.assertNotEqual(class_evidence(class_tree(data),'I2',[records[diff['procedure_id']]],
+                                          [diff])['status'],'verified')
+        folder = ROOT/'docs/gams-candidates/kronrod'
+        source = (folder/'order-one-moments.f90').read_text(encoding='utf-8')
+        result = json.loads((folder/'order-one-result.json').read_text())
+        self.assertEqual(hashlib.sha256(source.encode()).hexdigest(),result['source_sha256'])
+        self.assertEqual(result['revision'],rule['revision'])
+        self.assertFalse(result['ok'])
+        run = next(s for s in result['stages'] if s['name']=='Run')
+        self.assertFalse(run['ok'])
+        self.assertIn('Failed n=1 power=0',run['stdout'])
+        self.assertIn('exact polynomial moment',run['stderr'])
+        text = rules_differences_review_text()
+        self.assertEqual((ROOT/RULES_DIFFERENCES_REPORT).read_text(encoding='utf-8'),text)
+        self.assertIn('155 exact polynomial moments',text)
+        self.assertIn('Gauss order 1 is not verified',text)
+        self.assertIn('does not verify PDE evolution',text)
+
+    def test_dispersion_drivers_check_spectra_and_all_cartesian_gradients(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        mbd = drivers['libmbd-dimer-spectrum']
+        d4 = drivers['dftd4-dispersion-reference']
+        self.assertEqual((mbd['gams_code'],d4['gams_code']), ('D4','Z'))
+        self.assertEqual(mbd['checks']['two_oscillator_fixtures'],36)
+        self.assertEqual(mbd['checks']['hamiltonian_calls'],72)
+        self.assertEqual(mbd['checks']['eigenvector_fixtures'],36)
+        self.assertFalse(mbd['checks']['screened_model_verified'])
+        self.assertEqual(d4['checks']['cartesian_derivatives'],48)
+        self.assertTrue(d4['checks']['rigid_rotation_checked'])
+        self.assertFalse(d4['checks']['three_body_verified'])
+        self.assertEqual(d4['reuse'],'adapted')
+        self.assertTrue(any('NOTICE' in p for p in d4['license_files']))
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for d in [mbd,d4]:
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'],d['id'])
+            self.assertEqual(class_evidence(class_tree(data),d['gams_code'],[record],[d])['status'],'verified')
+        self.assertNotIn('driver_id',records['forpca-pca'])
+        text = dispersion_review_text()
+        self.assertEqual((ROOT/DISPERSION_REPORT).read_text(encoding='utf-8'),text)
+        self.assertIn('not a general-purpose eigensolver API',text)
+        self.assertIn('99 evaluations',text)
+        self.assertIn('physical model against experiment',text)
+
+    def test_matrix_root_and_box_drivers_retain_failed_active_bound_probes(self):
+        import hashlib
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        matrix = drivers['ntpoly-matrix-root-reference']
+        box = drivers['qnstop-box-reference']
+        self.assertEqual((matrix['gams_code'],box['gams_code']), ('D','G2'))
+        self.assertEqual(matrix['checks']['spd_matrix_fixtures'], 24)
+        self.assertEqual(matrix['checks']['matrix_function_calls'], 48)
+        self.assertEqual(matrix['checks']['mpi_processes'], 1)
+        self.assertFalse(matrix['checks']['inversion_api_verified'])
+        self.assertEqual(box['checks']['seeded_optimization_runs'], 4)
+        self.assertEqual(box['checks']['interior_minima'], 4)
+        self.assertEqual(box['checks']['face_minima'], 0)
+        self.assertEqual(box['checks']['corner_minima'], 0)
+        self.assertFalse(box['checks']['active_bounds_verified'])
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for d in [matrix,box]:
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'], d['id'])
+            self.assertEqual(class_evidence(class_tree(data),d['gams_code'],[record],[d])['status'], 'verified')
+        self.assertEqual(class_evidence(class_tree(data),'D2',[records['ntpoly-inversion']],
+                                       list(drivers.values()))['status'], 'source-supported')
+        folder = ROOT/'docs/gams-candidates/qnstop'
+        for iterations in [500,2000]:
+            source = (folder/f'box-{iterations}-iterations.f90').read_text(encoding='utf-8')
+            result = json.loads((folder/f'box-{iterations}-result.json').read_text())
+            self.assertEqual(hashlib.sha256(source.encode()).hexdigest(),result['source_sha256'])
+            self.assertEqual(result['revision'],box['revision'])
+            self.assertFalse(result['ok'])
+            run = next(s for s in result['stages'] if s['name'] == 'Run')
+            self.assertFalse(run['ok'])
+            self.assertIn('Fixture=4',run['stdout'])
+            self.assertIn('projected box minimum',run['stderr'])
+        text = matrix_roots_box_review_text()
+        self.assertEqual((ROOT/MATRIX_ROOTS_BOX_REPORT).read_text(encoding='utf-8'), text)
+        self.assertIn('Active-bound accuracy is not verified', text)
+        self.assertIn('corner fixture in those probes was not reached', text)
 
     def test_fit_series_and_integral_drivers_record_independent_references(self):
         drivers = {d['id']: d for d in driver_data()}
@@ -746,7 +1480,7 @@ class PackageGamsTests(unittest.TestCase):
         self.assertEqual(len(by_class['J1a2']['driver_ids']), 2)
         self.assertEqual(len(by_class['J1a3']['driver_ids']), 1)
         self.assertTrue(any(not r['driver_ids'] for r in coverage['procedure_classes']))
-        self.assertEqual({r['code'] for r in coverage['top_level'] if r['driver_ids']}, set('ABCDEFGHIJKLMN'))
+        self.assertEqual({r['code'] for r in coverage['top_level'] if r['driver_ids']}, set('ABCDEFGHIJKLMNPQRSZ'))
         self.assertEqual((ROOT / COVERAGE_REPORT).read_text(encoding='utf-8'), coverage_review_text())
 
     def test_numerical_review_covers_catalog_scope_and_preserves_evidence(self):

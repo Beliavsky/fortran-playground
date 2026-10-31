@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "fortimize-nelder-reference",
+      "source_revision": "3431b656cd86f89135d0f35bf6afdbd787d9daf3",
+      "source_sha256": "840a3f55c03b95db3e93c1816078dd52ae2c56fc946a537b84f59fb24276c915",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T13:32:37.764231+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.387,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Variables=2 Rosenbrock=F coordinate error=  1.0398E-07\nVariables=2 Rosenbrock=F coordinate error=  7.7813E-09\nVariables=2 Rosenbrock=F coordinate error=  3.5760E-07\nVariables=3 Rosenbrock=F coordinate error=  1.6225E-07\nVariables=3 Rosenbrock=F coordinate error=  1.2630E-06\nVariables=3 Rosenbrock=F coordinate error=  2.6251E-07\nVariables=5 Rosenbrock=F coordinate error=  2.0231E-06\nVariables=5 Rosenbrock=F coordinate error=  6.3183E-06\nVariables=5 Rosenbrock=F coordinate error=  1.4186E-06\nVariables=2 Rosenbrock=T coordinate error=  1.0168E-06\nVariables=2 Rosenbrock=T coordinate error=  3.1978E-08\nVariables=2 Rosenbrock=T coordinate error=  6.4622E-06\n12 derivative-free solves: coupled quadratics in 2/3/5 variables and Rosenbrock, three starts each.\nMaximum coordinate error versus known minimizer:   6.4622E-06\nMaximum returned objective:   3.9378E-11\nPASS fortimize-nelder-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.041,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "pointsets-spacing-reference",
+      "source_revision": "a1c381777f893d656018366cfabfa4cc7531e4dd",
+      "source_sha256": "d13407667d21a9e8d51d0af9c4f015a04710e0810547011a8f39eda225323a1f",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T13:32:43.110429+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 1.472,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Working precision decimal digits: 6\n20 arithmetic and 80 geometric grids; increasing, decreasing and equal endpoints.\nMaximum normalized error versus real64 formulas:   1.4845E-07\nAcceptance tolerance, 32 working-kind epsilons:   3.8147E-06\nSeven empty/singleton/ratio guards checked as unchanged-array behavior.\nPASS pointsets-spacing-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.033,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T13:32:43.163436+00:00"
+}

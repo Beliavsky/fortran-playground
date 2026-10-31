@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "linalg-eigen-reference",
+      "source_revision": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+      "source_sha256": "f8acbb7f5bc6a344fcae37a23f51b53245e0f01a80cd49be13acf4e7e322823b",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T15:36:48.151803+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.331,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Known-spectrum symmetric matrices: 96; eigen calls: 192\nLower triangle with unused-upper-half poison; eigenvalues only and eigenvectors.\nMaximum normalized eigenvalue error:   4.4409E-16\nMaximum normalized scalar eigenvector residual:   6.1062E-16\nMaximum scalar orthogonality error:   1.1102E-15\nPASS linalg-eigen-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.022,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "linalg-svd-reference",
+      "source_revision": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+      "source_sha256": "7ffcaecbdbe00a14f037fedb031383d8d9676e4b742f9780e42e580b558792ec",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-10-31T15:36:49.438759+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.299,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Known-spectrum rectangular matrices: 144; SVD calls: 576\nFull/values-only/U-only/VT-only; distinct/repeated/rank-one/zero spectra at signed scales.\nMaximum normalized singular-value error:   4.4409E-16\nMaximum normalized scalar reconstruction error:   3.3307E-16\nMaximum scalar orthogonality error:   8.8818E-16\nMaximum normalized scalar singular-vector residual:   6.9081E-16\nPASS linalg-svd-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.021,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-10-31T15:36:49.488329+00:00"
+}
