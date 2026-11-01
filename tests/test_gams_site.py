@@ -67,6 +67,38 @@ class GamsSiteTests(unittest.TestCase):
             self.assertIn('Open default example', sorting)
             self.assertNotIn('Try in playground', sorting)
 
+    def test_stdlib_activation_pages_link_checked_scopes_and_keep_failed_gradients_separate(self):
+        import copy
+        from xpackage_gams import driver_data, gams_data
+        drivers = [d for d in driver_data(data=gams_data())
+                   if d.get('validation_path') == 'docs/gams-activations-ten-validation.json']
+        self.assertEqual(len(drivers), 10)
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects'] if p['playground']['package_id'] == 'stdlib']
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination, feed)
+            detail = (destination/'packages/stdlib/index.html').read_text(encoding='utf-8')
+            for driver in drivers:
+                url = ('https://beliavsky.github.io/fortran-playground/fpm/'
+                       f'?package=stdlib&example={driver["name"]}')
+                page = Page((destination/driver['gams_code']/'index.html').read_text(encoding='utf-8'))
+                self.assertIn((url, driver['id']), page.anchors)
+                card = detail.split('id="'+driver['procedure_id']+'"', 1)[1].split('</article>', 1)[0]
+                self.assertIn('Load checked GAMS driver:', card)
+                self.assertIn(driver['name'], card)
+            special = Page((destination/'C19/index.html').read_text(encoding='utf-8'))
+            primary = [url for url, label in special.anchors if label == 'Try in playground']
+            self.assertEqual(len(primary), 1)
+            self.assertIn(primary[0], [
+                'https://beliavsky.github.io/fortran-playground/fpm/'
+                f'?package=stdlib&example={d["name"]}' for d in drivers if d['gams_code'] == 'C19'])
+            self.assertFalse(any('example=gams-stdlib-softmax-normalization' in url for url in special.links))
+            for fun in ['gelu', 'silu']:
+                card = detail.split('id="stdlib-activation-'+fun+'-gradient"', 1)[1].split('</article>', 1)[0]
+                self.assertNotIn('Load checked GAMS driver:', card)
+                self.assertNotIn('example=gams-stdlib-activation-'+fun, card)
+
     def test_stdlib_ordering_array_pages_link_checked_drivers_without_promoting_pca(self):
         import copy
         from xpackage_gams import driver_data, gams_data

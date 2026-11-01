@@ -84,12 +84,21 @@ The C10 driver checks 39 complex values at `z=[0.5+0.25i,1+0.5i,2+0.75i]`. For s
 | [Load stdlib-beta-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-beta-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-beta-reference.f90) | C7b | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_specialfunctions_gamma.f90#L205) · [Author example/test](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_specialfunctions_gamma.f90) |
 | [Load stdlib-log-beta-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-log-beta-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-log-beta-reference.f90) | C7b | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_specialfunctions_gamma.f90#L214) · [Author example/test](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_specialfunctions_gamma.f90) |
 | [Load stdlib-incomplete-beta-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-incomplete-beta-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-incomplete-beta-reference.f90) | C7f | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_specialfunctions_gamma.f90#L223) · [Author example/test](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_specialfunctions_gamma.f90) |
+| [Load stdlib-activation-gaussian-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-activation-gaussian-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-activation-gaussian-reference.f90) | C19 | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_specialfunctions.f90#L32) · [Author example/test](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_specialfunctions_activations.f90) |
+| [Load stdlib-activation-elu-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-activation-elu-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-activation-elu-reference.f90) | C19 | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_specialfunctions.f90#L64) · [Author example/test](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_specialfunctions_activations.f90) |
+| [Load stdlib-activation-relu-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-activation-relu-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-activation-relu-reference.f90) | C19 | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_specialfunctions.f90#L100) · [Author example/test](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_specialfunctions_activations.f90) |
+| [Load stdlib-activation-leaky-relu-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-activation-leaky-relu-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-activation-leaky-relu-reference.f90) | C19 | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_specialfunctions.f90#L132) · [Author example/test](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_specialfunctions_activations.f90) |
+| [Load stdlib-activation-gelu-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-activation-gelu-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-activation-gelu-reference.f90) | C19 | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_specialfunctions.f90#L168) · [Author example/test](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_specialfunctions_activations.f90) |
+| [Load stdlib-activation-selu-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-activation-selu-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-activation-selu-reference.f90) | C19 | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_specialfunctions.f90#L232) · [Author example/test](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_specialfunctions_activations.f90) |
+| [Load stdlib-activation-sigmoid-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-activation-sigmoid-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-activation-sigmoid-reference.f90) | C19 | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_specialfunctions.f90#L264) · [Author example/test](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_specialfunctions_activations.f90) |
+| [Load stdlib-activation-silu-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-activation-silu-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-activation-silu-reference.f90) | C19 | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_specialfunctions.f90#L296) · [Author example/test](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_specialfunctions_activations.f90) |
+| [Load stdlib-activation-softplus-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-activation-softplus-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-activation-softplus-reference.f90) | C19 | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_specialfunctions.f90#L498) |
 
 The programs use author APIs, retain applicable license notices and use deterministic reference checks instead of the larger author harnesses. They appear in hosted and main local FPM example menus and downloaded projects. Loading a link selects source without submitting a job.
 
 ## Recorded results
 
-All 20 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing existing package libraries. Only each main and executable were rebuilt. The [verification report](gams-special-functions-validation.json) records hashes, pins and saved output. These cases establish checked usage and selected-point agreement, rather than accuracy over each function's complete domain.
+All 29 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing existing package libraries. Only each main and executable were rebuilt. The [verification report](gams-special-functions-validation.json) records hashes, pins and saved output. These cases establish checked usage and selected-point agreement, rather than accuracy over each function's complete domain.
 
 ### fullerton-gamma-values
 
@@ -291,6 +300,69 @@ PASS stdlib-log-beta-reference
 ```text
 2112 regularized incomplete-beta references versus independent binomial tail sums
 PASS stdlib-incomplete-beta-reference
+```
+
+### stdlib-activation-gaussian-reference
+
+```text
+Independent 80/120-digit activation references: values=97, derivatives=97
+PASS stdlib-activation-gaussian-reference
+```
+
+### stdlib-activation-elu-reference
+
+```text
+Independent 80/120-digit activation references: values=291, derivatives=288
+PASS stdlib-activation-elu-reference
+```
+
+### stdlib-activation-relu-reference
+
+```text
+Independent 80/120-digit activation references: values=97, derivatives=96
+PASS stdlib-activation-relu-reference
+```
+
+### stdlib-activation-leaky-relu-reference
+
+```text
+Independent 80/120-digit activation references: values=291, derivatives=288
+PASS stdlib-activation-leaky-relu-reference
+```
+
+### stdlib-activation-gelu-reference
+
+```text
+Independent 80/120-digit activation references: values=97, derivatives=0
+PASS stdlib-activation-gelu-reference
+```
+
+### stdlib-activation-selu-reference
+
+```text
+Independent 80/120-digit activation references: values=97, derivatives=96
+PASS stdlib-activation-selu-reference
+```
+
+### stdlib-activation-sigmoid-reference
+
+```text
+Independent 80/120-digit activation references: values=97, derivatives=97
+PASS stdlib-activation-sigmoid-reference
+```
+
+### stdlib-activation-silu-reference
+
+```text
+Independent 80/120-digit activation references: values=97, derivatives=0
+PASS stdlib-activation-silu-reference
+```
+
+### stdlib-activation-softplus-reference
+
+```text
+Independent 80/120-digit activation references: values=97, derivatives=97
+PASS stdlib-activation-softplus-reference
 ```
 
 ## Maintenance

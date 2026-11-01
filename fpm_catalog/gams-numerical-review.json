@@ -1011,7 +1011,19 @@
         "stdlib-cross-product",
         "stdlib-kronecker",
         "stdlib-diagonals",
-        "stdlib-outer-product"
+        "stdlib-outer-product",
+        "stdlib-activation-gaussian",
+        "stdlib-activation-elu",
+        "stdlib-activation-relu",
+        "stdlib-activation-leaky-relu",
+        "stdlib-activation-gelu",
+        "stdlib-activation-selu",
+        "stdlib-activation-sigmoid",
+        "stdlib-activation-silu",
+        "stdlib-activation-softplus",
+        "stdlib-softmax-normalization",
+        "stdlib-activation-gelu-gradient",
+        "stdlib-activation-silu-gradient"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
     },

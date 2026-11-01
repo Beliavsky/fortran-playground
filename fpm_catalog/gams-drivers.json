@@ -11958,6 +11958,361 @@
         "zero_factor": true,
         "exact": true
       }
+    },
+    {
+      "id": "stdlib-activation-gaussian-reference",
+      "name": "gams-stdlib-activation-gaussian-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-activation-gaussian",
+      "gams_code": "C19",
+      "problem_id": "stdlib-activation-gaussian-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-activation-gaussian-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_specialfunctions_activations.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/activations-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. REAL64 elemental arrays on 97 exact dyadic points -6..6 by 0.125. Independent mpmath function values and mp.diff first derivatives at 80 digits, confirmed at 120 digits; scaled tolerance 2e-12. Finite outputs and input preservation checked. Large-magnitude/overflow behavior, relative tiny-tail accuracy, other kinds and performance unverified.",
+      "validation_path": "docs/gams-activations-ten-validation.json",
+      "review_path": "docs/gams-activations-ten.md",
+      "checks": {
+        "value_references": 97,
+        "derivative_references": 97,
+        "abscissas": 97,
+        "range": [
+          -6,
+          6
+        ],
+        "parameters": [
+          null
+        ],
+        "kink_derivative_excluded": false,
+        "reference_digits": 80,
+        "confirmation_digits": 120,
+        "tolerance": 2e-12
+      }
+    },
+    {
+      "id": "stdlib-activation-elu-reference",
+      "name": "gams-stdlib-activation-elu-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-activation-elu",
+      "gams_code": "C19",
+      "problem_id": "stdlib-activation-elu-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-activation-elu-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_specialfunctions_activations.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/activations-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. REAL64 elemental arrays on 97 exact dyadic points -6..6 by 0.125 at parameters [0.125, 1.0, 2.0]. Independent mpmath function values and mp.diff first derivatives at 80 digits, confirmed at 120 digits; scaled tolerance 2e-12. Value at zero checked; derivative assertions omit zero rather than prescribing a derivative at a possible kink. Finite outputs and input preservation checked. Large-magnitude/overflow behavior, relative tiny-tail accuracy, other kinds and performance unverified.",
+      "validation_path": "docs/gams-activations-ten-validation.json",
+      "review_path": "docs/gams-activations-ten.md",
+      "checks": {
+        "value_references": 291,
+        "derivative_references": 288,
+        "abscissas": 97,
+        "range": [
+          -6,
+          6
+        ],
+        "parameters": [
+          0.125,
+          1.0,
+          2.0
+        ],
+        "kink_derivative_excluded": true,
+        "reference_digits": 80,
+        "confirmation_digits": 120,
+        "tolerance": 2e-12
+      }
+    },
+    {
+      "id": "stdlib-activation-relu-reference",
+      "name": "gams-stdlib-activation-relu-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-activation-relu",
+      "gams_code": "C19",
+      "problem_id": "stdlib-activation-relu-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-activation-relu-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_specialfunctions_activations.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/activations-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. REAL64 elemental arrays on 97 exact dyadic points -6..6 by 0.125. Independent mpmath function values and mp.diff first derivatives at 80 digits, confirmed at 120 digits; scaled tolerance 2e-12. Value at zero checked; derivative assertions omit zero rather than prescribing a derivative at a possible kink. Finite outputs and input preservation checked. Large-magnitude/overflow behavior, relative tiny-tail accuracy, other kinds and performance unverified.",
+      "validation_path": "docs/gams-activations-ten-validation.json",
+      "review_path": "docs/gams-activations-ten.md",
+      "checks": {
+        "value_references": 97,
+        "derivative_references": 96,
+        "abscissas": 97,
+        "range": [
+          -6,
+          6
+        ],
+        "parameters": [
+          null
+        ],
+        "kink_derivative_excluded": true,
+        "reference_digits": 80,
+        "confirmation_digits": 120,
+        "tolerance": 2e-12
+      }
+    },
+    {
+      "id": "stdlib-activation-leaky-relu-reference",
+      "name": "gams-stdlib-activation-leaky-relu-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-activation-leaky-relu",
+      "gams_code": "C19",
+      "problem_id": "stdlib-activation-leaky-relu-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-activation-leaky-relu-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_specialfunctions_activations.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/activations-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. REAL64 elemental arrays on 97 exact dyadic points -6..6 by 0.125 at parameters [0.125, 0.5, 1.0]. Independent mpmath function values and mp.diff first derivatives at 80 digits, confirmed at 120 digits; scaled tolerance 2e-12. Value at zero checked; derivative assertions omit zero rather than prescribing a derivative at a possible kink. Finite outputs and input preservation checked. Large-magnitude/overflow behavior, relative tiny-tail accuracy, other kinds and performance unverified.",
+      "validation_path": "docs/gams-activations-ten-validation.json",
+      "review_path": "docs/gams-activations-ten.md",
+      "checks": {
+        "value_references": 291,
+        "derivative_references": 288,
+        "abscissas": 97,
+        "range": [
+          -6,
+          6
+        ],
+        "parameters": [
+          0.125,
+          0.5,
+          1.0
+        ],
+        "kink_derivative_excluded": true,
+        "reference_digits": 80,
+        "confirmation_digits": 120,
+        "tolerance": 2e-12
+      }
+    },
+    {
+      "id": "stdlib-activation-gelu-reference",
+      "name": "gams-stdlib-activation-gelu-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-activation-gelu",
+      "gams_code": "C19",
+      "problem_id": "stdlib-activation-gelu-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-activation-gelu-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_specialfunctions_activations.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/activations-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 97 REAL64 gelu function-value references on exact dyadic points -6..6 by 0.125. Independent mpmath values at 80 digits, confirmed at 120 digits; scaled tolerance 2e-12. Finite outputs and input preservation checked. gelu_grad failed a retained independent derivative probe and is deliberately excluded from the published driver. No gradient accuracy, large-magnitude/overflow behavior, relative tiny-tail accuracy, other kinds or performance is claimed.",
+      "validation_path": "docs/gams-activations-ten-validation.json",
+      "review_path": "docs/gams-activations-ten.md",
+      "checks": {
+        "value_references": 97,
+        "derivative_references": 0,
+        "abscissas": 97,
+        "range": [
+          -6,
+          6
+        ],
+        "parameters": [
+          null
+        ],
+        "kink_derivative_excluded": false,
+        "reference_digits": 80,
+        "confirmation_digits": 120,
+        "tolerance": 2e-12,
+        "gradient_verified": false,
+        "retained_gradient_failure": "docs/gams-candidates/stdlib-activations/gelu-gradient-result.json"
+      }
+    },
+    {
+      "id": "stdlib-activation-selu-reference",
+      "name": "gams-stdlib-activation-selu-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-activation-selu",
+      "gams_code": "C19",
+      "problem_id": "stdlib-activation-selu-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-activation-selu-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_specialfunctions_activations.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/activations-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. REAL64 elemental arrays on 97 exact dyadic points -6..6 by 0.125. Independent mpmath function values and mp.diff first derivatives at 80 digits, confirmed at 120 digits; scaled tolerance 2e-12. Value at zero checked; derivative assertions omit zero rather than prescribing a derivative at a possible kink. Canonical scale=1.0507009873554804934193349852946 and alpha=1.6732632423543772848170429916717. Finite outputs and input preservation checked. Large-magnitude/overflow behavior, relative tiny-tail accuracy, other kinds and performance unverified.",
+      "validation_path": "docs/gams-activations-ten-validation.json",
+      "review_path": "docs/gams-activations-ten.md",
+      "checks": {
+        "value_references": 97,
+        "derivative_references": 96,
+        "abscissas": 97,
+        "range": [
+          -6,
+          6
+        ],
+        "parameters": [
+          null
+        ],
+        "kink_derivative_excluded": true,
+        "reference_digits": 80,
+        "confirmation_digits": 120,
+        "tolerance": 2e-12
+      }
+    },
+    {
+      "id": "stdlib-activation-sigmoid-reference",
+      "name": "gams-stdlib-activation-sigmoid-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-activation-sigmoid",
+      "gams_code": "C19",
+      "problem_id": "stdlib-activation-sigmoid-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-activation-sigmoid-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_specialfunctions_activations.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/activations-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. REAL64 elemental arrays on 97 exact dyadic points -6..6 by 0.125. Independent mpmath function values and mp.diff first derivatives at 80 digits, confirmed at 120 digits; scaled tolerance 2e-12. Finite outputs and input preservation checked. Large-magnitude/overflow behavior, relative tiny-tail accuracy, other kinds and performance unverified.",
+      "validation_path": "docs/gams-activations-ten-validation.json",
+      "review_path": "docs/gams-activations-ten.md",
+      "checks": {
+        "value_references": 97,
+        "derivative_references": 97,
+        "abscissas": 97,
+        "range": [
+          -6,
+          6
+        ],
+        "parameters": [
+          null
+        ],
+        "kink_derivative_excluded": false,
+        "reference_digits": 80,
+        "confirmation_digits": 120,
+        "tolerance": 2e-12
+      }
+    },
+    {
+      "id": "stdlib-activation-silu-reference",
+      "name": "gams-stdlib-activation-silu-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-activation-silu",
+      "gams_code": "C19",
+      "problem_id": "stdlib-activation-silu-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-activation-silu-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_specialfunctions_activations.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/activations-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 97 REAL64 silu function-value references on exact dyadic points -6..6 by 0.125. Independent mpmath values at 80 digits, confirmed at 120 digits; scaled tolerance 2e-12. Finite outputs and input preservation checked. silu_grad failed a retained independent derivative probe and is deliberately excluded from the published driver. No gradient accuracy, large-magnitude/overflow behavior, relative tiny-tail accuracy, other kinds or performance is claimed.",
+      "validation_path": "docs/gams-activations-ten-validation.json",
+      "review_path": "docs/gams-activations-ten.md",
+      "checks": {
+        "value_references": 97,
+        "derivative_references": 0,
+        "abscissas": 97,
+        "range": [
+          -6,
+          6
+        ],
+        "parameters": [
+          null
+        ],
+        "kink_derivative_excluded": false,
+        "reference_digits": 80,
+        "confirmation_digits": 120,
+        "tolerance": 2e-12,
+        "gradient_verified": false,
+        "retained_gradient_failure": "docs/gams-candidates/stdlib-activations/silu-gradient-result.json"
+      }
+    },
+    {
+      "id": "stdlib-activation-softplus-reference",
+      "name": "gams-stdlib-activation-softplus-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-activation-softplus",
+      "gams_code": "C19",
+      "problem_id": "stdlib-activation-softplus-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-activation-softplus-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/activations-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. REAL64 elemental arrays on 97 exact dyadic points -6..6 by 0.125. Independent mpmath function values and mp.diff first derivatives at 80 digits, confirmed at 120 digits; scaled tolerance 2e-12. Finite outputs and input preservation checked. Large-magnitude/overflow behavior, relative tiny-tail accuracy, other kinds and performance unverified.",
+      "validation_path": "docs/gams-activations-ten-validation.json",
+      "review_path": "docs/gams-activations-ten.md",
+      "checks": {
+        "value_references": 97,
+        "derivative_references": 97,
+        "abscissas": 97,
+        "range": [
+          -6,
+          6
+        ],
+        "parameters": [
+          null
+        ],
+        "kink_derivative_excluded": false,
+        "reference_digits": 80,
+        "confirmation_digits": 120,
+        "tolerance": 2e-12
+      }
+    },
+    {
+      "id": "stdlib-softmax-normalization-reference",
+      "name": "gams-stdlib-softmax-normalization-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-softmax-normalization",
+      "gams_code": "D1a11",
+      "problem_id": "stdlib-softmax-normalization-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-softmax-normalization-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_specialfunctions_activations.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/activations-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 144 rank-one REAL64 vectors (lengths 1..12) and 24 rank-two 3x4 arrays normalized on both dimensions, including singletons and tied logits. Positive dyadic weights provide independent rational probabilities, logarithms of those ratios, and diagonal derivatives p*(1-p). Common shifts -1000,0,1000 test stable normalization. 1,224 entry references per function, 3,672 comparisons; finite outputs, normalization sums and input preservation checked at absolute tolerance 3e-12. softmax_grad is checked only as the Jacobian diagonal, not a full Jacobian. Empty/nonfinite inputs, rank-three/four overloads, invalid dimensions, extreme dynamic ranges and performance unverified.",
+      "validation_path": "docs/gams-activations-ten-validation.json",
+      "review_path": "docs/gams-activations-ten.md",
+      "checks": {
+        "rank_one_vectors": 144,
+        "rank_two_arrays": 24,
+        "reference_entries_per_function": 1224,
+        "functions": 3,
+        "common_shifts": [
+          -1000,
+          0,
+          1000
+        ],
+        "tolerance": 3e-12,
+        "gradient_scope": "Jacobian diagonal only"
+      }
     }
   ]
 }

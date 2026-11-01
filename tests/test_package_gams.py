@@ -106,6 +106,7 @@ from xpackage_gams import (gams_data, package_classes, review_text, subclass_mod
                             systems_spectra_ten_review_text, SYSTEMS_SPECTRA_TEN_REPORT,
                             distribution_ten_review_text, DISTRIBUTION_TEN_REPORT,
                             pca_ordering_ten_review_text, PCA_ORDERING_TEN_REPORT,
+                            activations_ten_review_text, ACTIVATIONS_TEN_REPORT,
                           coverage_data, coverage_review_text, COVERAGE_REPORT,
                           class_evidence, class_tree, mapping_evidence_text, EVIDENCE_REPORT)
 
@@ -891,6 +892,75 @@ class PackageGamsTests(unittest.TestCase):
         self.assertIn('22,416',text)
         self.assertIn('Type-2/type-3 transforms',text)
         self.assertIn('two-dimensional NUFFT2D driver',transforms_review_text())
+
+    def test_activation_drivers_keep_independent_references_and_gradient_scope_explicit(self):
+        data = gams_data()
+        records = {r['id']: r for r in data['procedure_mappings']}
+        drivers = {d['id']: d for d in driver_data(data=data)
+                   if d.get('validation_path') == 'docs/gams-activations-ten-validation.json'}
+        self.assertEqual(len(drivers), 10)
+        scalar = [d for d in drivers.values() if d['id'] != 'stdlib-softmax-normalization-reference']
+        self.assertEqual(len(scalar), 9)
+        self.assertEqual(sum(d['checks']['value_references'] for d in scalar), 1261)
+        self.assertEqual(sum(d['checks']['derivative_references'] for d in scalar), 1059)
+        reviewed = set(numerical_review(data=data)['packages']['stdlib']['procedure_ids'])
+        for driver in drivers.values():
+            record = records[driver['procedure_id']]
+            self.assertEqual(record['driver_id'], driver['id'])
+            self.assertIn(record['id'], reviewed)
+            self.assertEqual(class_evidence(class_tree(data), driver['gams_code'], [record], [driver])['status'], 'verified')
+        for fun in ['gelu', 'silu']:
+            driver = drivers['stdlib-activation-'+fun+'-reference']
+            self.assertFalse(driver['checks']['gradient_verified'])
+            self.assertEqual(driver['checks']['derivative_references'], 0)
+            source = (ROOT/driver['path']).read_text()
+            self.assertNotIn(fun+'_grad', source)
+        refs = json.loads((ROOT/'docs/gams-activations-ten-references.json').read_text())
+        self.assertEqual(sum(map(len, refs['tables'].values())), 1261)
+        for name, points in refs['tables'].items():
+            source = (ROOT/drivers['stdlib-'+name+'-reference']['path']).read_text()
+            for point in points:
+                self.assertIn(point['value']+'_real64', source)
+                if point['derivative'] is not None and name not in {'activation-gelu', 'activation-silu'}:
+                    self.assertIn(point['derivative']+'_real64', source)
+        softmax = drivers['stdlib-softmax-normalization-reference']['checks']
+        self.assertEqual(softmax['common_shifts'], [-1000, 0, 1000])
+        self.assertEqual(softmax['rank_one_vectors'], 144)
+        self.assertEqual(softmax['rank_two_arrays'], 24)
+        self.assertEqual(softmax['reference_entries_per_function'], 1224)
+        self.assertEqual(softmax['gradient_scope'], 'Jacobian diagonal only')
+        self.assertIsNone(drivers['stdlib-activation-softplus-reference']['author_example'])
+        text = activations_ten_review_text()
+        self.assertEqual((ROOT/ACTIVATIONS_TEN_REPORT).read_text(encoding='utf-8'), text)
+        for phrase in ['1,261', '1,059', '3,672', 'Jacobian diagonal only', 'value-only',
+                       'No upstream numerical source was patched', 'categories are not exhausted']:
+            self.assertIn(phrase, text)
+
+    def test_activation_gradient_failures_retain_sources_without_promoting_value_success(self):
+        import hashlib
+        data = gams_data()
+        drivers = list(driver_data(data=data))
+        reviewed = set(numerical_review(data=data)['packages']['stdlib']['procedure_ids'])
+        for fun in ['gelu', 'silu']:
+            record = next(r for r in data['procedure_mappings'] if r['id'] == 'stdlib-activation-'+fun+'-gradient')
+            self.assertNotIn('driver_id', record)
+            self.assertIn(record['id'], reviewed)
+            self.assertFalse(any(d['procedure_id'] == record['id'] for d in drivers))
+            self.assertEqual(class_evidence(class_tree(data), 'C19', [record], drivers)['status'], 'source-supported')
+            failure = json.loads((ROOT/f'docs/gams-candidates/stdlib-activations/{fun}-gradient-result.json').read_text())
+            self.assertEqual(failure['revision'], record['revision'])
+            source = (ROOT/failure['source_path']).read_text(encoding='utf-8')
+            self.assertEqual(hashlib.sha256(source.encode()).hexdigest(), failure['source_sha256'])
+            self.assertIn(fun+'_grad(x)', source)
+            result = failure['result']
+            self.assertFalse(result['ok'])
+            self.assertTrue(result['cache']['library_reused'])
+            self.assertTrue(next(s for s in result['stages'] if s['name'] == 'Build')['ok'])
+            run = next(s for s in result['stages'] if s['name'] == 'Run')
+            self.assertFalse(run['ok'])
+            self.assertIn('Independent differentiated activation reference', run['stderr'])
+            actual, expected = map(float, run['stdout'].split()[-2:])
+            self.assertGreater(abs(actual-expected), 1e-10)
 
     def test_ordering_array_drivers_preserve_exact_oracles_and_interface_scope(self):
         data = gams_data()

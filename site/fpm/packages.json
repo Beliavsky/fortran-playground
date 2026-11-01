@@ -759,6 +759,11 @@
         "parent": "C7"
       },
       {
+        "code": "C19",
+        "label": "Other special functions",
+        "parent": "C"
+      },
+      {
         "code": "D",
         "label": "Linear Algebra",
         "parent": null
@@ -3119,6 +3124,383 @@
           {
             "path": "test/test_linalg.f90",
             "sha256": "a6123f572cbf1cea7f46a539bb92cb53e0354aac460ff7c46adc7f1ff0da5981"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-activation-gaussian",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_specialfunctions",
+        "procedure": "gaussian, gaussian_grad (REAL64)",
+        "gams_codes": [
+          "C19"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "REAL64 elemental arrays on 97 exact dyadic points -6..6 by 0.125. Independent mpmath function values and mp.diff first derivatives at 80 digits, confirmed at 120 digits; scaled tolerance 2e-12. Finite outputs and input preservation checked. Large-magnitude/overflow behavior, relative tiny-tail accuracy, other kinds and performance unverified.",
+        "driver_id": "stdlib-activation-gaussian-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_specialfunctions.f90",
+            "line": 32,
+            "sha256": "979978b0583c6413e89d871ac81c468f830e76de989993f7b96b2aeb04a869af"
+          },
+          {
+            "path": "src/stdlib_specialfunctions_activations.f90",
+            "line": 1,
+            "sha256": "36cb99bc0727eb67b368f8b69efebac5aba134317cbaef912fa7f073ff258c94"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_specialfunctions_activations.f90",
+            "sha256": "2ccb657a1c278d394048d312b22e66fe4768461acc0b4b3038c8b614fba01155"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-activation-elu",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_specialfunctions",
+        "procedure": "elu, elu_grad (REAL64)",
+        "gams_codes": [
+          "C19"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "REAL64 elemental arrays on 97 exact dyadic points -6..6 by 0.125 at parameters [0.125, 1.0, 2.0]. Independent mpmath function values and mp.diff first derivatives at 80 digits, confirmed at 120 digits; scaled tolerance 2e-12. Value at zero checked; derivative assertions omit zero rather than prescribing a derivative at a possible kink. Finite outputs and input preservation checked. Large-magnitude/overflow behavior, relative tiny-tail accuracy, other kinds and performance unverified.",
+        "driver_id": "stdlib-activation-elu-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_specialfunctions.f90",
+            "line": 64,
+            "sha256": "979978b0583c6413e89d871ac81c468f830e76de989993f7b96b2aeb04a869af"
+          },
+          {
+            "path": "src/stdlib_specialfunctions_activations.f90",
+            "line": 1,
+            "sha256": "36cb99bc0727eb67b368f8b69efebac5aba134317cbaef912fa7f073ff258c94"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_specialfunctions_activations.f90",
+            "sha256": "2ccb657a1c278d394048d312b22e66fe4768461acc0b4b3038c8b614fba01155"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-activation-relu",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_specialfunctions",
+        "procedure": "relu, relu_grad (REAL64)",
+        "gams_codes": [
+          "C19"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "REAL64 elemental arrays on 97 exact dyadic points -6..6 by 0.125. Independent mpmath function values and mp.diff first derivatives at 80 digits, confirmed at 120 digits; scaled tolerance 2e-12. Value at zero checked; derivative assertions omit zero rather than prescribing a derivative at a possible kink. Finite outputs and input preservation checked. Large-magnitude/overflow behavior, relative tiny-tail accuracy, other kinds and performance unverified.",
+        "driver_id": "stdlib-activation-relu-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_specialfunctions.f90",
+            "line": 100,
+            "sha256": "979978b0583c6413e89d871ac81c468f830e76de989993f7b96b2aeb04a869af"
+          },
+          {
+            "path": "src/stdlib_specialfunctions_activations.f90",
+            "line": 1,
+            "sha256": "36cb99bc0727eb67b368f8b69efebac5aba134317cbaef912fa7f073ff258c94"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_specialfunctions_activations.f90",
+            "sha256": "2ccb657a1c278d394048d312b22e66fe4768461acc0b4b3038c8b614fba01155"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-activation-leaky-relu",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_specialfunctions",
+        "procedure": "leaky_relu, leaky_relu_grad (REAL64)",
+        "gams_codes": [
+          "C19"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "REAL64 elemental arrays on 97 exact dyadic points -6..6 by 0.125 at parameters [0.125, 0.5, 1.0]. Independent mpmath function values and mp.diff first derivatives at 80 digits, confirmed at 120 digits; scaled tolerance 2e-12. Value at zero checked; derivative assertions omit zero rather than prescribing a derivative at a possible kink. Finite outputs and input preservation checked. Large-magnitude/overflow behavior, relative tiny-tail accuracy, other kinds and performance unverified.",
+        "driver_id": "stdlib-activation-leaky-relu-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_specialfunctions.f90",
+            "line": 132,
+            "sha256": "979978b0583c6413e89d871ac81c468f830e76de989993f7b96b2aeb04a869af"
+          },
+          {
+            "path": "src/stdlib_specialfunctions_activations.f90",
+            "line": 1,
+            "sha256": "36cb99bc0727eb67b368f8b69efebac5aba134317cbaef912fa7f073ff258c94"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_specialfunctions_activations.f90",
+            "sha256": "2ccb657a1c278d394048d312b22e66fe4768461acc0b4b3038c8b614fba01155"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-activation-gelu",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_specialfunctions",
+        "procedure": "gelu (REAL64 values only)",
+        "gams_codes": [
+          "C19"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "97 REAL64 gelu function-value references on exact dyadic points -6..6 by 0.125. Independent mpmath values at 80 digits, confirmed at 120 digits; scaled tolerance 2e-12. Finite outputs and input preservation checked. gelu_grad failed a retained independent derivative probe and is deliberately excluded from the published driver. No gradient accuracy, large-magnitude/overflow behavior, relative tiny-tail accuracy, other kinds or performance is claimed.",
+        "driver_id": "stdlib-activation-gelu-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_specialfunctions.f90",
+            "line": 168,
+            "sha256": "979978b0583c6413e89d871ac81c468f830e76de989993f7b96b2aeb04a869af"
+          },
+          {
+            "path": "src/stdlib_specialfunctions_activations.f90",
+            "line": 1,
+            "sha256": "36cb99bc0727eb67b368f8b69efebac5aba134317cbaef912fa7f073ff258c94"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_specialfunctions_activations.f90",
+            "sha256": "2ccb657a1c278d394048d312b22e66fe4768461acc0b4b3038c8b614fba01155"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-activation-selu",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_specialfunctions",
+        "procedure": "selu, selu_grad (REAL64)",
+        "gams_codes": [
+          "C19"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "REAL64 elemental arrays on 97 exact dyadic points -6..6 by 0.125. Independent mpmath function values and mp.diff first derivatives at 80 digits, confirmed at 120 digits; scaled tolerance 2e-12. Value at zero checked; derivative assertions omit zero rather than prescribing a derivative at a possible kink. Canonical scale=1.0507009873554804934193349852946 and alpha=1.6732632423543772848170429916717. Finite outputs and input preservation checked. Large-magnitude/overflow behavior, relative tiny-tail accuracy, other kinds and performance unverified.",
+        "driver_id": "stdlib-activation-selu-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_specialfunctions.f90",
+            "line": 232,
+            "sha256": "979978b0583c6413e89d871ac81c468f830e76de989993f7b96b2aeb04a869af"
+          },
+          {
+            "path": "src/stdlib_specialfunctions_activations.f90",
+            "line": 1,
+            "sha256": "36cb99bc0727eb67b368f8b69efebac5aba134317cbaef912fa7f073ff258c94"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_specialfunctions_activations.f90",
+            "sha256": "2ccb657a1c278d394048d312b22e66fe4768461acc0b4b3038c8b614fba01155"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-activation-sigmoid",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_specialfunctions",
+        "procedure": "sigmoid, sigmoid_grad (REAL64)",
+        "gams_codes": [
+          "C19"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "REAL64 elemental arrays on 97 exact dyadic points -6..6 by 0.125. Independent mpmath function values and mp.diff first derivatives at 80 digits, confirmed at 120 digits; scaled tolerance 2e-12. Finite outputs and input preservation checked. Large-magnitude/overflow behavior, relative tiny-tail accuracy, other kinds and performance unverified.",
+        "driver_id": "stdlib-activation-sigmoid-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_specialfunctions.f90",
+            "line": 264,
+            "sha256": "979978b0583c6413e89d871ac81c468f830e76de989993f7b96b2aeb04a869af"
+          },
+          {
+            "path": "src/stdlib_specialfunctions_activations.f90",
+            "line": 1,
+            "sha256": "36cb99bc0727eb67b368f8b69efebac5aba134317cbaef912fa7f073ff258c94"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_specialfunctions_activations.f90",
+            "sha256": "2ccb657a1c278d394048d312b22e66fe4768461acc0b4b3038c8b614fba01155"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-activation-silu",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_specialfunctions",
+        "procedure": "silu (REAL64 values only)",
+        "gams_codes": [
+          "C19"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "97 REAL64 silu function-value references on exact dyadic points -6..6 by 0.125. Independent mpmath values at 80 digits, confirmed at 120 digits; scaled tolerance 2e-12. Finite outputs and input preservation checked. silu_grad failed a retained independent derivative probe and is deliberately excluded from the published driver. No gradient accuracy, large-magnitude/overflow behavior, relative tiny-tail accuracy, other kinds or performance is claimed.",
+        "driver_id": "stdlib-activation-silu-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_specialfunctions.f90",
+            "line": 296,
+            "sha256": "979978b0583c6413e89d871ac81c468f830e76de989993f7b96b2aeb04a869af"
+          },
+          {
+            "path": "src/stdlib_specialfunctions_activations.f90",
+            "line": 1,
+            "sha256": "36cb99bc0727eb67b368f8b69efebac5aba134317cbaef912fa7f073ff258c94"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_specialfunctions_activations.f90",
+            "sha256": "2ccb657a1c278d394048d312b22e66fe4768461acc0b4b3038c8b614fba01155"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-activation-softplus",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_specialfunctions",
+        "procedure": "softplus, softplus_grad (REAL64)",
+        "gams_codes": [
+          "C19"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "REAL64 elemental arrays on 97 exact dyadic points -6..6 by 0.125. Independent mpmath function values and mp.diff first derivatives at 80 digits, confirmed at 120 digits; scaled tolerance 2e-12. Finite outputs and input preservation checked. Large-magnitude/overflow behavior, relative tiny-tail accuracy, other kinds and performance unverified.",
+        "driver_id": "stdlib-activation-softplus-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_specialfunctions.f90",
+            "line": 498,
+            "sha256": "979978b0583c6413e89d871ac81c468f830e76de989993f7b96b2aeb04a869af"
+          },
+          {
+            "path": "src/stdlib_specialfunctions_activations.f90",
+            "line": 1,
+            "sha256": "36cb99bc0727eb67b368f8b69efebac5aba134317cbaef912fa7f073ff258c94"
+          }
+        ],
+        "author_examples": []
+      },
+      {
+        "id": "stdlib-softmax-normalization",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_specialfunctions",
+        "procedure": "softmax, logsoftmax, softmax_grad (REAL64)",
+        "gams_codes": [
+          "D1a11"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "144 rank-one REAL64 vectors (lengths 1..12) and 24 rank-two 3x4 arrays normalized on both dimensions, including singletons and tied logits. Positive dyadic weights provide independent rational probabilities, logarithms of those ratios, and diagonal derivatives p*(1-p). Common shifts -1000,0,1000 test stable normalization. 1,224 entry references per function, 3,672 comparisons; finite outputs, normalization sums and input preservation checked at absolute tolerance 3e-12. softmax_grad is checked only as the Jacobian diagonal, not a full Jacobian. Empty/nonfinite inputs, rank-three/four overloads, invalid dimensions, extreme dynamic ranges and performance unverified.",
+        "driver_id": "stdlib-softmax-normalization-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_specialfunctions.f90",
+            "line": 360,
+            "sha256": "979978b0583c6413e89d871ac81c468f830e76de989993f7b96b2aeb04a869af"
+          },
+          {
+            "path": "src/stdlib_specialfunctions_activations.f90",
+            "line": 1,
+            "sha256": "36cb99bc0727eb67b368f8b69efebac5aba134317cbaef912fa7f073ff258c94"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_specialfunctions_activations.f90",
+            "sha256": "2ccb657a1c278d394048d312b22e66fe4768461acc0b4b3038c8b614fba01155"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-activation-gelu-gradient",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_specialfunctions",
+        "procedure": "gelu_grad (REAL64; retained failed derivative probe)",
+        "gams_codes": [
+          "C19"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Pinned gelu_grad API and implementation reviewed. The retained REAL64 probe fails at x=-6 against independently differentiated mpmath references, confirmed at 80/120 digits. For GELU=x*Phi(x), the derivative is Phi(x)+x*phi(x); the implementation uses x/sqrt(2) instead of x/sqrt(2*pi) for the exponential term. No checked gradient driver is published and no library source was patched. Exact source and full result: docs/gams-candidates/stdlib-activations/gelu-gradient-result.json.",
+        "evidence": [
+          {
+            "path": "src/stdlib_specialfunctions.f90",
+            "line": 184,
+            "sha256": "979978b0583c6413e89d871ac81c468f830e76de989993f7b96b2aeb04a869af"
+          },
+          {
+            "path": "src/stdlib_specialfunctions_activations.f90",
+            "line": 152,
+            "sha256": "36cb99bc0727eb67b368f8b69efebac5aba134317cbaef912fa7f073ff258c94"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_specialfunctions_activations.f90",
+            "sha256": "2ccb657a1c278d394048d312b22e66fe4768461acc0b4b3038c8b614fba01155"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-activation-silu-gradient",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_specialfunctions",
+        "procedure": "silu_grad (REAL64; retained failed derivative probe)",
+        "gams_codes": [
+          "C19"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Pinned silu_grad API and implementation reviewed. The retained REAL64 probe fails at x=-6 against independently differentiated mpmath references, confirmed at 80/120 digits. For SiLU=x*sigmoid(x), the derivative is sigmoid(x)+x*sigmoid(x)*(1-sigmoid(x)); the pinned leading term is exp(x) instead of sigmoid(x). No checked gradient driver is published and no library source was patched. Exact source and full result: docs/gams-candidates/stdlib-activations/silu-gradient-result.json.",
+        "evidence": [
+          {
+            "path": "src/stdlib_specialfunctions.f90",
+            "line": 312,
+            "sha256": "979978b0583c6413e89d871ac81c468f830e76de989993f7b96b2aeb04a869af"
+          },
+          {
+            "path": "src/stdlib_specialfunctions_activations.f90",
+            "line": 275,
+            "sha256": "36cb99bc0727eb67b368f8b69efebac5aba134317cbaef912fa7f073ff258c94"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_specialfunctions_activations.f90",
+            "sha256": "2ccb657a1c278d394048d312b22e66fe4768461acc0b4b3038c8b614fba01155"
           }
         ]
       }

@@ -322,3 +322,5 @@ The [ten stdlib linear-system and spectral drivers](gams-systems-spectra-ten.md)
 The [ten stdlib probability-distribution drivers](gams-distribution-ten.md) check uniform, normal, exponential, gamma and beta PDFs/CDFs against independent high-precision constants, interval geometry and polynomial sums/products, including support boundaries and parameter transformations.
 
 The [ten checked ordering and array-algebra drivers](gams-pca-ordering-ten.md) cover selection, index/payload sorting, unique sets, differences, vector/tensor/outer products and diagonals. A separate stdlib PCA probe hit the executable-size limit and remains source-supported, with exact failure notes retained.
+
+The [ten activation and normalization drivers](gams-activations-ten.md) check scalar activation values, independently differentiated references, and stable softmax/log-softmax normalization. Failed GELU/SiLU gradients are retained separately and are excluded from the published value-only examples.

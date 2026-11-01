@@ -8,7 +8,7 @@ This report assesses each package/class pair, including inherited parent classes
 
 When a driver cannot be created, inspect the pinned implementation and author examples. Narrow or remove a classification that is unsupported; do not substitute an unrelated default example as evidence. Record missing dependencies, sandbox limits and upstream defects separately in the procedure or package review notes. A sandbox failure alone does not disprove an algorithm.
 
-Counts refer to package/class pairs and include parents: 728 verified, 76 source-supported, 243 uncertain.
+Counts refer to package/class pairs and include parents: 729 verified, 76 source-supported, 243 uncertain.
 
 ## Mappings requiring source review
 
@@ -578,6 +578,17 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [splpak / splpak-splpak-type](https://beliavsky.github.io/fortran-playground/gams/packages/splpak/#splpak-splpak-type) | K1 | verified |
 | [sqliteff / sqliteff-database](https://beliavsky.github.io/fortran-playground/gams/packages/sqliteff/#sqliteff-database) | N1 | verified |
 | [sqliteff / sqliteff-database](https://beliavsky.github.io/fortran-playground/gams/packages/sqliteff/#sqliteff-database) | N5 | source-supported |
+| [stdlib / stdlib-activation-elu](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-activation-elu) | C19 | verified |
+| [stdlib / stdlib-activation-gaussian](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-activation-gaussian) | C19 | verified |
+| [stdlib / stdlib-activation-gelu](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-activation-gelu) | C19 | verified |
+| [stdlib / stdlib-activation-gelu-gradient](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-activation-gelu-gradient) | C19 | source-supported |
+| [stdlib / stdlib-activation-leaky-relu](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-activation-leaky-relu) | C19 | verified |
+| [stdlib / stdlib-activation-relu](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-activation-relu) | C19 | verified |
+| [stdlib / stdlib-activation-selu](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-activation-selu) | C19 | verified |
+| [stdlib / stdlib-activation-sigmoid](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-activation-sigmoid) | C19 | verified |
+| [stdlib / stdlib-activation-silu](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-activation-silu) | C19 | verified |
+| [stdlib / stdlib-activation-silu-gradient](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-activation-silu-gradient) | C19 | source-supported |
+| [stdlib / stdlib-activation-softplus](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-activation-softplus) | C19 | verified |
 | [stdlib / stdlib-arg-select](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-arg-select) | N5 | verified |
 | [stdlib / stdlib-beta](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-beta) | C7b | verified |
 | [stdlib / stdlib-beta-cdf](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-beta-cdf) | L5a1b | verified |
@@ -629,6 +640,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [stdlib / stdlib-regularized-gamma](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-regularized-gamma) | C7e | verified |
 | [stdlib / stdlib-select](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-select) | N5 | verified |
 | [stdlib / stdlib-simpson](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-simpson) | H2a1b2 | verified |
+| [stdlib / stdlib-softmax-normalization](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-softmax-normalization) | D1a11 | verified |
 | [stdlib / stdlib-solve](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-solve) | D2a1 | verified |
 | [stdlib / stdlib-sort](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-sort) | N6 | verified |
 | [stdlib / stdlib-sort-adjoint](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-sort-adjoint) | N6 | verified |
