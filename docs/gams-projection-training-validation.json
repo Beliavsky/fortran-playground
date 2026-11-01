@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "optgra-halfspace-reference",
+      "source_revision": "914bed713e80faa4a190e03beb3a8307077eb028",
+      "source_sha256": "f3e3e57bc53ab507bda197468763db6c73caa1288661b5dfde47faceb4f2747b",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T00:26:46.109991+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.34,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Halfspace projections: 48; analytic coordinates: 160\nAnalytic derivative callbacks: 240\nMax point, objective, feasibility, KKT, returned-value errors:    1.34283E-06   4.12945E-12   1.25825E-15   2.16013E-06   4.11316E-17\nPASS optgra-halfspace-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.054,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "neural-affine-reference",
+      "source_revision": "b2073fa542c8dcdf9466d1a192d2888b628a5df3",
+      "source_sha256": "bce7b3b1cbbbde891c6985bdb7b600e06dd3159c31f5a8f3b653216bb6165d5e",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T00:26:48.315747+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.751,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Affine training runs: 24; test prediction entries: 3168\nMax normalized prediction error, final MSE, final/initial MSE:    8.84756E-07   4.52182E-13   5.87537E-13\nPASS neural-affine-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.075,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-11-01T00:26:48.367894+00:00"
+}

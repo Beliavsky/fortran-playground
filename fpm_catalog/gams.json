@@ -1960,7 +1960,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "internal backpropagation",
-      "notes": "Network-specific training with SGD/other optimizer types, not a general scalar-objective callback solver. No small deterministic training benchmark is claimed.",
+      "notes": "Network-specific SGD with internal backpropagation, not a general scalar-objective callback solver. The checked driver calls network%train on one/two-input, two-output affine maps with full/stochastic batches; nonlinear networks and other optimizers remain unverified.",
       "evidence": [
         {
           "path": "src/nf/nf_network.f90",
@@ -1971,6 +1971,11 @@
           "path": "src/nf/nf_optimizers.f90",
           "line": 123,
           "sha256": "0704ed1773a418b7b6d2f53882abab206350d5efa55fb3c55bdabbfc69236f14"
+        },
+        {
+          "path": "src/nf/nf_network_submodule.f90",
+          "line": 561,
+          "sha256": "dd9a175a466549de3365c05e99c0c84930f3ef87aa617f21911e773fa25012c7"
         }
       ],
       "author_examples": [
@@ -1978,7 +1983,8 @@
           "path": "example/quadratic.f90",
           "sha256": "9d06ad1616a851e327bb5d0a82387dc18500c4465bcb6545c24ffb948340eba4"
         }
-      ]
+      ],
+      "driver_id": "neural-affine-reference"
     },
     {
       "id": "fortran-lapack-solve",
@@ -4380,7 +4386,8 @@
           "path": "test/optgra_test.f90",
           "sha256": "1f8c3efbf92860dfc015f0e62056fc8a340c1de58fe2dfe97bf9d67534a9e6e5"
         }
-      ]
+      ],
+      "driver_id": "optgra-halfspace-reference"
     },
     {
       "id": "forinv-inv",

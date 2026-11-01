@@ -7738,6 +7738,92 @@
         "global_convergence_guaranteed": false,
         "cross_compiler_rng_reproducibility_verified": false
       }
+    },
+    {
+      "id": "optgra-halfspace-reference",
+      "name": "gams-optgra-halfspace-reference",
+      "package_id": "optgra",
+      "procedure_id": "optgra-optgra",
+      "gams_code": "G2h3b1b",
+      "problem_id": "weighted-halfspace-analytic-projections",
+      "path": "fpm_catalog/gams-drivers/optgra-halfspace-reference.f90",
+      "revision": "914bed713e80faa4a190e03beb3a8307077eb028",
+      "author_example": "test/optgra_test.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/projection-training-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer, not copied upstream tests. Weighted SPD quadratic projection onto one affine halfspace; three dimensions, two condition ratios and heights, translated centers and feasible/infeasible starts. User objective gradient and constraint Jacobian, convergence status, exact minimizers, objective and analytic KKT multipliers checked. Does not verify nonlinear constraints or nonconvex objectives.",
+      "validation_path": "docs/gams-projection-training-validation.json",
+      "review_path": "docs/gams-projection-training.md",
+      "checks": {
+        "problems": 48,
+        "optimizer_entries": 160,
+        "dimensions": [
+          2,
+          3,
+          5
+        ],
+        "condition_ratios": [
+          1,
+          5
+        ],
+        "analytic_multipliers_checked": true,
+        "analytic_derivative_callbacks_checked": true,
+        "feasible_infeasible_starts_checked": true,
+        "nonlinear_constraints_verified": false,
+        "nonconvex_objectives_verified": false,
+        "max_normalized_point_error": 0.0002,
+        "max_normalized_objective_error": 1e-07,
+        "max_normalized_feasibility_violation": 2e-07,
+        "max_normalized_kkt_residual": 0.0002
+      }
+    },
+    {
+      "id": "neural-affine-reference",
+      "name": "gams-neural-affine-reference",
+      "package_id": "neural-fortran",
+      "procedure_id": "neural-network-train",
+      "gams_code": "G1b",
+      "problem_id": "affine-training-known-zero-minimum",
+      "path": "fpm_catalog/gams-drivers/neural-affine-reference.f90",
+      "revision": "b2073fa542c8dcdf9466d1a192d2888b628a5df3",
+      "author_example": "example/quadratic.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/projection-training-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned train implementation and quadratic author API example reviewed without copying bodies. Calls network%train with linear dense layers, two affine maps and output channels, one/two inputs, three seeds and stochastic/full batches. Real64 scalar affine oracle checks held-out predictions, near-zero training MSE and loss improvement. Single-image default-real32 SGD, not nonlinear network training, a general scalar callback optimizer or cross-compiler RNG claim.",
+      "validation_path": "docs/gams-projection-training-validation.json",
+      "review_path": "docs/gams-projection-training.md",
+      "checks": {
+        "runs": 24,
+        "prediction_entries": 3168,
+        "input_dimensions": [
+          1,
+          2
+        ],
+        "output_dimension": 2,
+        "affine_maps": 2,
+        "seeds": [
+          42,
+          1729,
+          314159
+        ],
+        "epochs": 400,
+        "learning_rate": 0.1,
+        "full_batch_and_stochastic_checked": true,
+        "network_train_called": true,
+        "real64_prediction_oracle": true,
+        "max_normalized_prediction_error": 0.0002,
+        "max_training_mse": 1e-08,
+        "max_final_initial_mse_ratio": 1e-05,
+        "nonlinear_networks_verified": false,
+        "general_optimizer_verified": false,
+        "cross_compiler_rng_reproducibility_verified": false
+      }
     }
   ]
 }

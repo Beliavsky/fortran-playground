@@ -62,12 +62,13 @@ Initialization/solve status must be zero, callback/final points finite and withi
 | [Load qnstop-box-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=qnstop&example=gams-qnstop-box-reference) · [Source](../fpm_catalog/gams-drivers/qnstop-box-reference.f90) | G2 | [Procedure](https://github.com/vtopt/qnstop/blob/39e8273247f586fca8305ef3d8e879b27b6512d0/src/qnstops.f95#L1) · [Author example](https://github.com/vtopt/qnstop/blob/39e8273247f586fca8305ef3d8e879b27b6512d0/src/sample_main_s.f95) · [Verification](gams-matrix-roots-box-validation.json) |
 | [Load psqp-projection-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=psqp&example=gams-psqp-projection-reference) · [Source](../fpm_catalog/gams-drivers/psqp-projection-reference.f90) | G2h3b1b | [Procedure](https://github.com/jacobwilliams/psqp/blob/57a853e14e3806d69adad6d6d44396d9665d842e/src/psqp_module.f90#L62) · [Author example](https://github.com/jacobwilliams/psqp/blob/57a853e14e3806d69adad6d6d44396d9665d842e/test/tsqp.f90) · [Verification](gams-projection-lbfgs-validation.json) |
 | [Load opti-rastrigin-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=opti&example=gams-opti-rastrigin-reference) · [Source](../fpm_catalog/gams-drivers/opti-rastrigin-reference.f90) | G2i | [Procedure](https://github.com/Konrad1991/opti/blob/6fb22db21bd2338e00690ff3706be61a1f101101/src/particle_swarm.f90#L57) · [Author example](https://github.com/Konrad1991/opti/blob/6fb22db21bd2338e00690ff3706be61a1f101101/test/check.f90) · [Verification](gams-gradient-swarm-validation.json) |
+| [Load optgra-halfspace-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=optgra&example=gams-optgra-halfspace-reference) · [Source](../fpm_catalog/gams-drivers/optgra-halfspace-reference.f90) | G2h3b1b | [Procedure](https://github.com/jacobwilliams/optgra/blob/914bed713e80faa4a190e03beb3a8307077eb028/src/optgra.F90#L36) · [Author example](https://github.com/jacobwilliams/optgra/blob/914bed713e80faa4a190e03beb3a8307077eb028/test/optgra_test.f90) · [Verification](gams-projection-training-validation.json) |
 
-The L-BFGS-B and SLSQP drivers adapt author API patterns and retain license notices. All 9 appear in hosted and main local FPM example menus and downloaded projects. Loading a link selects source without submitting a job.
+The L-BFGS-B and SLSQP drivers adapt author API patterns and retain license notices. All 10 appear in hosted and main local FPM example menus and downloaded projects. Loading a link selects source without submitting a job.
 
 ## Recorded results
 
-All 9 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing existing package libraries. Only each main and executable were rebuilt. The per-driver reports linked above record hashes, pins and saved output; the [original report](gams-constrained-validation.json) covers its six initial drivers. Evaluation counts exclude derivative sanity checks and describe these simple cases, rather than establishing a general speed ranking.
+All 10 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing existing package libraries. Only each main and executable were rebuilt. The per-driver reports linked above record hashes, pins and saved output; the [original report](gams-constrained-validation.json) covers its six initial drivers. Evaluation counts exclude derivative sanity checks and describe these simple cases, rather than establishing a general speed ranking.
 
 ### lbfgsb-box-quadratic
 
@@ -180,6 +181,15 @@ Maximum independently evaluated objective:   9.8261E-11
 Maximum coordinate error from known global optimum:   1.6632E-06
 These seeded successes do not guarantee global convergence or portability of the RNG sequence.
 PASS opti-rastrigin-reference
+```
+
+### optgra-halfspace-reference
+
+```text
+Halfspace projections: 48; analytic coordinates: 160
+Analytic derivative callbacks: 240
+Max point, objective, feasibility, KKT, returned-value errors:    1.34283E-06   4.12945E-12   1.25825E-15   2.16013E-06   4.11316E-17
+PASS optgra-halfspace-reference
 ```
 
 ## Maintenance

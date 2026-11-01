@@ -67,6 +67,32 @@ class GamsSiteTests(unittest.TestCase):
             self.assertIn('Open default example', sorting)
             self.assertNotIn('Try in playground', sorting)
 
+    def test_halfspace_and_affine_training_links_load_checked_examples_without_promotion(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects']
+                            if p['playground']['package_id'] in {'optgra','neural-fortran'}]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination,feed)
+            for code,package,driver in [('G2h3b1b','optgra','optgra-halfspace-reference'),
+                                        ('G1b','neural-fortran','neural-affine-reference')]:
+                html = (destination/code/'index.html').read_text(encoding='utf-8')
+                primary = {url for url,label in Page(html).anchors if label=='Try in playground'}
+                self.assertEqual(primary,{
+                    f'https://beliavsky.github.io/fortran-playground/fpm/?package={package}&example=gams-{driver}'})
+                self.assertIn('Verified: a checked driver',html)
+            detailed = (destination/'G1b1b/index.html').read_text(encoding='utf-8')
+            self.assertNotIn('example=gams-neural-affine-reference',detailed)
+            derivative_free = (destination/'G1b1a/index.html').read_text(encoding='utf-8')
+            self.assertNotIn('example=gams-neural-affine-reference',derivative_free)
+            for package,procedure,driver in [('optgra','optgra-optgra','optgra-halfspace-reference'),
+                                              ('neural-fortran','neural-network-train','neural-affine-reference')]:
+                detail = (destination/'packages'/package/'index.html').read_text(encoding='utf-8')
+                card = detail.split('id="'+procedure+'"',1)[1].split('</article>',1)[0]
+                self.assertIn('Load checked GAMS driver:',card)
+                self.assertIn('example=gams-'+driver,card)
+
     def test_fixed_gradient_and_swarm_links_load_class_specific_checked_examples(self):
         import copy
         feed = copy.deepcopy(self.feed)

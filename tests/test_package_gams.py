@@ -86,6 +86,7 @@ from xpackage_gams import (gams_data, package_classes, review_text, subclass_mod
                             sparse_spectra_review_text, SPARSE_SPECTRA_REPORT,
                             projection_lbfgs_review_text, PROJECTION_LBFGS_REPORT,
                             gradient_swarm_review_text, GRADIENT_SWARM_REPORT,
+                            projection_training_review_text, PROJECTION_TRAINING_REPORT,
                           coverage_data, coverage_review_text, COVERAGE_REPORT,
                           class_evidence, class_tree, mapping_evidence_text, EVIDENCE_REPORT)
 
@@ -244,7 +245,7 @@ class PackageGamsTests(unittest.TestCase):
         self.assertEqual({d['id'] for d in driver_data() if d['procedure_id'] in {m['id'] for m in mappings}},
                          {'fmin-sine', 'minpack-bard', 'libdogleg-bard', 'nonlin-rosenbrock-nm',
                           'nonlin-rosenbrock-bfgs', 'nlopt-rosenbrock-lbfgs', 'fortimize-nelder-reference',
-                          'minpack-lmder-reference', 'nonlin-lsq-jacobian-reference', 'seiscope-lbfgs-reference', 'fortimize-gradient-reference'})
+                          'minpack-lmder-reference', 'nonlin-lsq-jacobian-reference', 'seiscope-lbfgs-reference', 'fortimize-gradient-reference', 'neural-affine-reference'})
         tree = data['detailed_classes']
         self.assertEqual(tree['G1b1b']['parent'], 'G1b1')
         self.assertEqual(tree['G1b1']['parent'], 'G1b')
@@ -870,6 +871,36 @@ class PackageGamsTests(unittest.TestCase):
         self.assertIn('22,416',text)
         self.assertIn('Type-2/type-3 transforms',text)
         self.assertIn('two-dimensional NUFFT2D driver',transforms_review_text())
+
+    def test_halfspace_and_affine_training_drivers_keep_analytic_scope(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for ident,code in [('optgra-halfspace-reference','G2h3b1b'),('neural-affine-reference','G1b')]:
+            d = drivers[ident]
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'],ident)
+            self.assertEqual(class_evidence(class_tree(data),code,[record],[d])['status'],'verified')
+        projection = drivers['optgra-halfspace-reference']['checks']
+        self.assertEqual(projection['problems'],48)
+        self.assertEqual(projection['optimizer_entries'],160)
+        self.assertTrue(projection['analytic_multipliers_checked'])
+        self.assertTrue(projection['analytic_derivative_callbacks_checked'])
+        self.assertFalse(projection['nonlinear_constraints_verified'])
+        training = drivers['neural-affine-reference']['checks']
+        self.assertEqual(training['runs'],24)
+        self.assertEqual(training['prediction_entries'],3168)
+        self.assertTrue(training['network_train_called'])
+        self.assertTrue(training['full_batch_and_stochastic_checked'])
+        self.assertTrue(training['real64_prediction_oracle'])
+        self.assertFalse(training['nonlinear_networks_verified'])
+        self.assertFalse(training['general_optimizer_verified'])
+        text = projection_training_review_text()
+        self.assertEqual((ROOT/PROJECTION_TRAINING_REPORT).read_text(encoding='utf-8'),text)
+        self.assertIn('[Verification](gams-projection-training-validation.json)',constrained_review_text())
+        for phrase in ['48 projections','24 training runs','3,168 output entries','Varder=1',
+                       'random contiguous batches with replacement','categories are not exhausted']:
+            self.assertIn(phrase,text)
 
     def test_gradient_and_swarm_drivers_keep_lagged_objective_and_seed_limits_explicit(self):
         data = gams_data()
