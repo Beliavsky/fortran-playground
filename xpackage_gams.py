@@ -105,6 +105,7 @@ WORKFLOWS_TEN_REPORT = Path('docs/gams-workflows-ten.md')
 STATISTICS_SERVICES_TEN_REPORT = Path('docs/gams-statistics-services-ten.md')
 FACTORIZATION_RULES_TEN_REPORT = Path('docs/gams-factorization-rules-ten.md')
 SPECIAL_FUNCTIONS_TEN_REPORT = Path('docs/gams-special-functions-ten.md')
+SYSTEMS_SPECTRA_TEN_REPORT = Path('docs/gams-systems-spectra-ten.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
 EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
@@ -9689,6 +9690,121 @@ def special_functions_ten_review_text(root=ROOT):
     return '\n'.join(lines)
 
 
+def systems_spectra_ten_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-systems-spectra-ten-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-systems-spectra-ten-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Ten checked stdlib linear-system and spectral drivers', '',
+             'Ten independent drivers passed GNU Fortran 16.2.0 with FPM 0.12.0 in the '
+             'restricted hosted sandbox. Existing stdlib libraries were reused; only mains '
+             'and executables were compiled. The [verification report]'
+             '(gams-systems-spectra-ten-validation.json) saves normalized source hashes, '
+             'package pins, timings and full output. GAMS categories are not exhausted.', '',
+             '## Direct SPD solves (D2b1b)', '',
+             'Two drivers construct 72 SPD matrices each, orders 2..10, from known dyadic '
+             'positive-diagonal lower factors L. The matrices are A=L*transpose(L). Three '
+             'prescribed solution vectors generate right-hand sides by scalar loops. Both '
+             'triangle choices and vector/three-RHS matrix interfaces give 288 solve calls '
+             'per driver. One driver calls solve_chol to factor and solve; the other calls '
+             'solve_lower_chol/solve_upper_chol with independently constructed factors, '
+             'without using a package factorization as its oracle. Both check finite '
+             'solutions, prescribed values, original-matrix residuals, status and input '
+             'preservation, with scaled tolerance 3e-12. Invalid SPD inputs, complex '
+             'values, overwriting and general conditioning are not covered.', '',
+             '## Equality-constrained and weighted least squares', '',
+             'The D9b1 driver has 96 full-rank 6x3 fits with one equality constraint. '
+             'Before a shear change of coordinates, the objective Hessian is diagonal H '
+             'and the unconstrained minimizer is u. For constraint c*x=d, the independent '
+             'answer is u-H**(-1)*c*lambda, with lambda=(c*u-d)/(c*H**(-1)*c). Applying '
+             'the explicit inverse shear gives the reference in mixed coordinates. '
+             'The residual is generally nonzero. The driver checks the solution, equality '
+             'feasibility, Lagrange stationarity, status, finiteness and input preservation '
+             'at scaled tolerance 5e-12. Multiple constraints and deficient ranks are not claimed.', '',
+             'The D9a1 driver has 96 weighted line fits with 4..15 observations and '
+             'nonuniform positive weights with ratio at most 16. Scalar sums sw, sx, sxx, '
+             'sy and sxy give intercept/slope through an explicit two-by-two determinant. '
+             'This independent formula and the weighted normal residuals are checked at '
+             'tolerance 5e-12. Non-exact quadratic/noisy data prevent a merely interpolating '
+             'fit. Zero/negative weights, rank deficiency and extreme weight ratios remain unverified.', '',
+             '## Ordinary eigenproblems, Schur form and generalized eigenvalues', '',
+             'Each spectral driver has 64 real 3x3 problems obtained by explicit shear '
+             'similarities of a planar rotation block and a distinct real eigenvalue. '
+             'The analytic spectrum has one conjugate pair alpha +/- i*beta and one real '
+             'value r. Each driver matches all 192 eigenvalues without assuming output order '
+             'at absolute tolerance 8e-12. Ordinary eig also checks both left/right '
+             'eigenvector equations and Euclidean unit norms. Real schur checks '
+             'orthogonal Z, reconstruction A=Z*T*transpose(Z) and nonoverlapping '
+             'quasi-triangular blocks. Schur vectors are not individual eigenvectors.', '',
+             'The generalized D4b2 driver forms B=S*diag(1,2,4)*inverse(S) and '
+             'A=B*S*T*inverse(S), giving the same analytic eigenvalues for an invertible '
+             'nonsymmetric B. Only the eigenvalue-only interface is verified. Singular '
+             'pencils, defective/repeated spectra, complex input and other sizes remain unverified.', '',
+             'The initial generalized-vector consumer incorrectly required Euclidean unit '
+             'norms; GGEV uses max(abs(real(v))+abs(imag(v)))=1. Correcting that consumer '
+             'exposed a second failure: complex eigenvalues were returned with real-only '
+             'vectors and right residual about 0.322. The nearly conjugate scaled '
+             'eigenvalues fail an exact equality comparison used by the pinned vector '
+             'reconstruction routine. That is a likely cause, not a patched fix. '
+             'The [exact sources and full failures](gams-candidates/stdlib-systems/README.md) '
+             'are retained. The checked eigenvalue-only result does not promote returned '
+             'generalized eigenvectors.', '',
+             '## Iterative public kernels', '',
+             'CG, Jacobi PCG and unpreconditioned BiCGSTAB each solve 102 manufactured '
+             'dense systems, orders 2..18, with six solution families and nonzero initial '
+             'guess 0.125. Matrix-vector products and preconditioners are ordinary module '
+             'procedures; callers own and initialize the workspaces. Right-hand sides and '
+             'final residuals are independently recomputed with scalar loops.', '',
+             'CG uses symmetric strictly diagonally-dominant SPD matrices; PCG applies '
+             'positive diagonal congruence factors spanning 0.1..10 and an explicit inverse '
+             'diagonal preconditioner. Both request rtol=1e-12 and check solution/residual '
+             'errors at 2e-9. BiCGSTAB uses nonsymmetric strictly diagonally-dominant '
+             'matrices, requests rtol=1e-10 and checks errors at 5e-8. These bounded '
+             'results do not certify all requested tolerances, breakdown recovery or '
+             'arbitrary ill-conditioning. Sparse convenience interfaces, boundary masks, '
+             'zero RHS and performance remain unverified.', '',
+             'The dense convenience wrappers for all three methods compiled but segfaulted '
+             'in this hosted configuration. Their exact probes are retained in the same '
+             '[candidate notes](gams-candidates/stdlib-systems/README.md). The wrappers use '
+             'internal procedure callbacks; the crash cause has not been established. '
+             'Only the public kernels with module-level callbacks are demonstrated here; '
+             'their success does not verify those failed wrappers. No upstream numerical '
+             'source was patched.', '',
+             '## Classification and provenance', '',
+             'The [Netlib GAMS taxonomy](https://netlib.org/misc/gams.html) supplies '
+             'D2b1b (real SPD), D2a1 (general real nonsymmetric), D9a1 (unconstrained '
+             'least squares), D9b1 (constrained least squares), D4a2 (ordinary real '
+             'nonsymmetric eigenproblems) and D4b2 (real general pencils). The dense '
+             'iterative examples do not claim sparse interfaces. These are independent '
+             'MIT consumers. Pinned public APIs, implementations and author tests were '
+             'reviewed; implementation/test bodies were not copied. Loading an example '
+             'does not submit a job.', '']
+    for d in drivers:
+        lines += ['### '+d['id']+' ('+d['gams_code']+')', '', d['modifications'], '']
+    lines += ['## Provenance and actual output', '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -9869,6 +9985,7 @@ def main():
                          (STATISTICS_SERVICES_TEN_REPORT, statistics_services_ten_review_text()),
                          (FACTORIZATION_RULES_TEN_REPORT, factorization_rules_ten_review_text()),
                          (SPECIAL_FUNCTIONS_TEN_REPORT, special_functions_ten_review_text()),
+                         (SYSTEMS_SPECTRA_TEN_REPORT, systems_spectra_ten_review_text()),
                          (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report

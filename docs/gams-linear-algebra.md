@@ -154,12 +154,22 @@ The [GMRES and inverse review](gams-gmres-inverse.md) covers normal/transpose Li
 | [Load stdlib-pinv-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-pinv-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-pinv-reference.f90) | D9c | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_linalg.f90#L3013) · [Author example](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_linalg_pseudoinverse.f90) |
 | [Load stdlib-matrix-norms-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-matrix-norms-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-matrix-norms-reference.f90) | D1b2 | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_linalg.f90#L6082) · [Author example](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_linalg_mnorm.f90) |
 | [Load stdlib-expm-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-expm-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-expm-reference.f90) | D | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_linalg.f90#L6437) · [Author example](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_linalg_expm.f90) |
+| [Load stdlib-spd-solve-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-spd-solve-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-spd-solve-reference.f90) | D2b1b | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_linalg.f90#L1052) · [Author example](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_linalg_solve_chol.f90) |
+| [Load stdlib-factored-spd-solve-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-factored-spd-solve-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-factored-spd-solve-reference.f90) | D2b1b | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_linalg.f90#L1189) · [Author example](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_linalg_solve_chol.f90) |
+| [Load stdlib-constrained-ls-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-constrained-ls-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-constrained-ls-reference.f90) | D9b1 | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_linalg.f90#L1903) · [Author example](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_linalg_constrained_lstsq.f90) |
+| [Load stdlib-weighted-ls-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-weighted-ls-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-weighted-ls-reference.f90) | D9a1 | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_linalg.f90#L2122) · [Author example](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_linalg_lstsq.f90) |
+| [Load stdlib-nonsymmetric-eig-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-nonsymmetric-eig-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-nonsymmetric-eig-reference.f90) | D4a2 | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_linalg.f90#L3309) · [Author example](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_linalg_eigenvalues.f90) |
+| [Load stdlib-generalized-eig-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-generalized-eig-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-generalized-eig-reference.f90) | D4b2 | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_linalg.f90#L3345) · [Author example](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_linalg_eigenvalues.f90) |
+| [Load stdlib-real-schur-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-real-schur-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-real-schur-reference.f90) | D4a2 | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_linalg.f90#L2458) · [Author example](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_linalg_schur.f90) |
+| [Load stdlib-cg-kernel-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-cg-kernel-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-cg-kernel-reference.f90) | D2b1b | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_linalg_iterative_solvers.f90#L99) · [Author example](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_linalg_solve_iterative.f90) |
+| [Load stdlib-pcg-kernel-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-pcg-kernel-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-pcg-kernel-reference.f90) | D2b1b | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_linalg_iterative_solvers.f90#L180) · [Author example](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_linalg_solve_iterative.f90) |
+| [Load stdlib-bicgstab-kernel-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-bicgstab-kernel-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-bicgstab-kernel-reference.f90) | D2a1 | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_linalg_iterative_solvers.f90#L208) · [Author example](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_linalg_solve_iterative.f90) |
 
 The dense examples reuse both authors' problem data and retain both license notices. The least-squares examples adapt author API usage to shared deterministic data. These drivers appear in hosted and main local FPM example menus and downloaded projects. Loading a link selects source without submitting a job.
 
 ## Recorded results
 
-All 57 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing the existing package libraries. Only each main and executable were rebuilt. The verification reports record source hashes, pins and saved output: [gams-dense-spectra-validation.json](gams-dense-spectra-validation.json), [gams-diagonal-response-validation.json](gams-diagonal-response-validation.json), [gams-dispersion-validation.json](gams-dispersion-validation.json), [gams-factorization-rules-ten-validation.json](gams-factorization-rules-ten-validation.json), [gams-geodesy-forlab-validation.json](gams-geodesy-forlab-validation.json), [gams-gmres-inverse-validation.json](gams-gmres-inverse-validation.json), [gams-inverse-tvd-validation.json](gams-inverse-tvd-validation.json), [gams-iterative-ls-validation.json](gams-iterative-ls-validation.json), [gams-jacobian-transforms-validation.json](gams-jacobian-transforms-validation.json), [gams-least-interpolation-validation.json](gams-least-interpolation-validation.json), [gams-linear-algebra-validation.json](gams-linear-algebra-validation.json), [gams-lu-orbits-validation.json](gams-lu-orbits-validation.json), [gams-matrix-equations-validation.json](gams-matrix-equations-validation.json), [gams-matrix-roots-box-validation.json](gams-matrix-roots-box-validation.json), [gams-neighbors-sparse-validation.json](gams-neighbors-sparse-validation.json), [gams-pareto-diis-validation.json](gams-pareto-diis-validation.json), [gams-products-partitions-validation.json](gams-products-partitions-validation.json), [gams-products-status-validation.json](gams-products-status-validation.json), [gams-propack-fmm-validation.json](gams-propack-fmm-validation.json), [gams-qr-autodiff-validation.json](gams-qr-autodiff-validation.json), [gams-ranking-magic-validation.json](gams-ranking-magic-validation.json), [gams-sparse-advection-validation.json](gams-sparse-advection-validation.json), [gams-sparse-integral-validation.json](gams-sparse-integral-validation.json), [gams-sparse-spectra-validation.json](gams-sparse-spectra-validation.json), [gams-sparse-validation.json](gams-sparse-validation.json), [gams-spectral-wrappers-validation.json](gams-spectral-wrappers-validation.json), [gams-statistics-services-ten-validation.json](gams-statistics-services-ten-validation.json), [gams-tangents-blocks-validation.json](gams-tangents-blocks-validation.json). These small examples establish checked usage, rather than comprehensive accuracy or performance comparisons. The packages may share underlying algorithms; this is not evidence of independent implementations. Zero printed error means agreement at working precision.
+All 67 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing the existing package libraries. Only each main and executable were rebuilt. The verification reports record source hashes, pins and saved output: [gams-dense-spectra-validation.json](gams-dense-spectra-validation.json), [gams-diagonal-response-validation.json](gams-diagonal-response-validation.json), [gams-dispersion-validation.json](gams-dispersion-validation.json), [gams-factorization-rules-ten-validation.json](gams-factorization-rules-ten-validation.json), [gams-geodesy-forlab-validation.json](gams-geodesy-forlab-validation.json), [gams-gmres-inverse-validation.json](gams-gmres-inverse-validation.json), [gams-inverse-tvd-validation.json](gams-inverse-tvd-validation.json), [gams-iterative-ls-validation.json](gams-iterative-ls-validation.json), [gams-jacobian-transforms-validation.json](gams-jacobian-transforms-validation.json), [gams-least-interpolation-validation.json](gams-least-interpolation-validation.json), [gams-linear-algebra-validation.json](gams-linear-algebra-validation.json), [gams-lu-orbits-validation.json](gams-lu-orbits-validation.json), [gams-matrix-equations-validation.json](gams-matrix-equations-validation.json), [gams-matrix-roots-box-validation.json](gams-matrix-roots-box-validation.json), [gams-neighbors-sparse-validation.json](gams-neighbors-sparse-validation.json), [gams-pareto-diis-validation.json](gams-pareto-diis-validation.json), [gams-products-partitions-validation.json](gams-products-partitions-validation.json), [gams-products-status-validation.json](gams-products-status-validation.json), [gams-propack-fmm-validation.json](gams-propack-fmm-validation.json), [gams-qr-autodiff-validation.json](gams-qr-autodiff-validation.json), [gams-ranking-magic-validation.json](gams-ranking-magic-validation.json), [gams-sparse-advection-validation.json](gams-sparse-advection-validation.json), [gams-sparse-integral-validation.json](gams-sparse-integral-validation.json), [gams-sparse-spectra-validation.json](gams-sparse-spectra-validation.json), [gams-sparse-validation.json](gams-sparse-validation.json), [gams-spectral-wrappers-validation.json](gams-spectral-wrappers-validation.json), [gams-statistics-services-ten-validation.json](gams-statistics-services-ten-validation.json), [gams-systems-spectra-ten-validation.json](gams-systems-spectra-ten-validation.json), [gams-tangents-blocks-validation.json](gams-tangents-blocks-validation.json). These small examples establish checked usage, rather than comprehensive accuracy or performance comparisons. The packages may share underlying algorithms; this is not evidence of independent implementations. Zero printed error means agreement at working precision.
 
 ### fortran-lapack-dense-solve
 
@@ -883,10 +893,80 @@ PASS stdlib-matrix-norms-reference
 PASS stdlib-expm-reference
 ```
 
+### stdlib-spd-solve-reference
+
+```text
+72 SPD systems, vector and three-RHS matrix interfaces, lower/upper factors; solve calls: 288
+PASS stdlib-spd-solve-reference
+```
+
+### stdlib-factored-spd-solve-reference
+
+```text
+72 SPD systems, vector and three-RHS matrix interfaces, lower/upper factors; solve calls: 288
+PASS stdlib-factored-spd-solve-reference
+```
+
+### stdlib-constrained-ls-reference
+
+```text
+96 equality-constrained fits versus independent diagonal-Hessian/shear oracle, feasibility and stationarity
+PASS stdlib-constrained-ls-reference
+```
+
+### stdlib-weighted-ls-reference
+
+```text
+96 weighted line fits versus independent scalar-sum formulas and weighted normal equations
+PASS stdlib-weighted-ls-reference
+```
+
+### stdlib-nonsymmetric-eig-reference
+
+```text
+64 nonsymmetric three-by-three problems with analytic spectra: 192 eigenvalue references
+PASS stdlib-nonsymmetric-eig-reference
+```
+
+### stdlib-generalized-eig-reference
+
+```text
+64 generalized three-by-three eigenvalue-only problems with analytic spectra: 192 eigenvalue references
+PASS stdlib-generalized-eig-reference
+```
+
+### stdlib-real-schur-reference
+
+```text
+64 nonsymmetric three-by-three problems with analytic spectra: 192 eigenvalue references
+PASS stdlib-real-schur-reference
+```
+
+### stdlib-cg-kernel-reference
+
+```text
+Dense known-solution systems, orders 2..18, nonzero initial guess, independently recomputed residuals: 102
+PASS stdlib-cg-kernel-reference
+```
+
+### stdlib-pcg-kernel-reference
+
+```text
+Dense known-solution systems, orders 2..18, nonzero initial guess, independently recomputed residuals: 102
+PASS stdlib-pcg-kernel-reference
+```
+
+### stdlib-bicgstab-kernel-reference
+
+```text
+Dense known-solution systems, orders 2..18, nonzero initial guess, independently recomputed residuals: 102
+PASS stdlib-bicgstab-kernel-reference
+```
+
 ## Maintenance
 
 ```text
-python xverify_gams_drivers.py --drivers fortran-lapack-dense-solve fortran-lapack-least-squares stdlib-dense-solve stdlib-least-squares fortran-lapack-symmetric-eigen fortran-lapack-qr-decomposition fortran-lapack-svd-decomposition minres-indefinite-solve qdldl-quasidefinite-solve kiss-positive-definite-solve slicot-lyapunov-known-matrix slicot-continuous-sylvester slicot-discrete-sylvester blas-gemm-reference fsparse-matvec-reference forinv-pseudoinverse-reference arpack-poisson-eigenpairs linalg-poisson-eigenpairs fsparse-storage-reference y12m-sparse-reference fordot-exact-reference linalg-inverse-factor-reference ntpoly-matrix-root-reference libmbd-dimer-spectrum linalg-qr-reference linalg-eigen-reference linalg-svd-reference linalg-least-squares-reference lsqr-least-squares-reference lsmr-least-squares-reference forsvd-spectrum-reference foreig-symmetric-reference specialmatrices-diagonal-reference m-la-magic-reference forlab-least-squares-reference fglm-transform-reference sparse-matvec-reference linalg-lu-reference propack-spectrum-reference fmm2d-laplace-reference lightkrylov-gmres-reference ntpoly-inverse-reference heatflow-bicg-reference formatmul-products-reference lusol-update-reference scalapackfx-eigen-reference dbcsr-products-reference ddpcm-jacobi-reference stdlib-determinant-reference stdlib-inverse-reference stdlib-qr-reference stdlib-cholesky-reference stdlib-eigh-reference stdlib-svd-reference stdlib-pinv-reference stdlib-matrix-norms-reference stdlib-expm-reference
+python xverify_gams_drivers.py --drivers fortran-lapack-dense-solve fortran-lapack-least-squares stdlib-dense-solve stdlib-least-squares fortran-lapack-symmetric-eigen fortran-lapack-qr-decomposition fortran-lapack-svd-decomposition minres-indefinite-solve qdldl-quasidefinite-solve kiss-positive-definite-solve slicot-lyapunov-known-matrix slicot-continuous-sylvester slicot-discrete-sylvester blas-gemm-reference fsparse-matvec-reference forinv-pseudoinverse-reference arpack-poisson-eigenpairs linalg-poisson-eigenpairs fsparse-storage-reference y12m-sparse-reference fordot-exact-reference linalg-inverse-factor-reference ntpoly-matrix-root-reference libmbd-dimer-spectrum linalg-qr-reference linalg-eigen-reference linalg-svd-reference linalg-least-squares-reference lsqr-least-squares-reference lsmr-least-squares-reference forsvd-spectrum-reference foreig-symmetric-reference specialmatrices-diagonal-reference m-la-magic-reference forlab-least-squares-reference fglm-transform-reference sparse-matvec-reference linalg-lu-reference propack-spectrum-reference fmm2d-laplace-reference lightkrylov-gmres-reference ntpoly-inverse-reference heatflow-bicg-reference formatmul-products-reference lusol-update-reference scalapackfx-eigen-reference dbcsr-products-reference ddpcm-jacobi-reference stdlib-determinant-reference stdlib-inverse-reference stdlib-qr-reference stdlib-cholesky-reference stdlib-eigh-reference stdlib-svd-reference stdlib-pinv-reference stdlib-matrix-norms-reference stdlib-expm-reference stdlib-spd-solve-reference stdlib-factored-spd-solve-reference stdlib-constrained-ls-reference stdlib-weighted-ls-reference stdlib-nonsymmetric-eig-reference stdlib-generalized-eig-reference stdlib-real-schur-reference stdlib-cg-kernel-reference stdlib-pcg-kernel-reference stdlib-bicgstab-kernel-reference
 python xpackage_gams.py
 python xfpm_examples.py
 python xsite.py

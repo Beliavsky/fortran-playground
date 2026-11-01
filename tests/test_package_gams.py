@@ -103,6 +103,7 @@ from xpackage_gams import (gams_data, package_classes, review_text, subclass_mod
                             statistics_services_ten_review_text, STATISTICS_SERVICES_TEN_REPORT,
                             factorization_rules_ten_review_text, FACTORIZATION_RULES_TEN_REPORT,
                             special_functions_ten_review_text, SPECIAL_FUNCTIONS_TEN_REPORT,
+                            systems_spectra_ten_review_text, SYSTEMS_SPECTRA_TEN_REPORT,
                           coverage_data, coverage_review_text, COVERAGE_REPORT,
                           class_evidence, class_tree, mapping_evidence_text, EVIDENCE_REPORT)
 
@@ -888,6 +889,69 @@ class PackageGamsTests(unittest.TestCase):
         self.assertIn('22,416',text)
         self.assertIn('Type-2/type-3 transforms',text)
         self.assertIn('two-dimensional NUFFT2D driver',transforms_review_text())
+
+    def test_system_spectral_drivers_keep_kernel_and_eigenvalue_scope_explicit(self):
+        data = gams_data()
+        records = {r['id']: r for r in data['procedure_mappings']}
+        drivers = {d['id']: d for d in driver_data(data=data)
+                   if d.get('validation_path') == 'docs/gams-systems-spectra-ten-validation.json'}
+        self.assertEqual(len(drivers), 10)
+        self.assertEqual({d['gams_code'] for d in drivers.values()},
+                         {'D2b1b', 'D2a1', 'D9a1', 'D9b1', 'D4a2', 'D4b2'})
+        reviewed = set(numerical_review(data=data)['packages']['stdlib']['procedure_ids'])
+        for driver in drivers.values():
+            record = records[driver['procedure_id']]
+            self.assertEqual(record['driver_id'], driver['id'])
+            self.assertIn(record['id'], reviewed)
+            self.assertEqual(class_evidence(class_tree(data), driver['gams_code'], [record], [driver])['status'],
+                             'verified')
+        self.assertEqual(class_tree(data)['D4b2']['parent'], 'D4b')
+        self.assertEqual(class_tree(data)['D9b1']['parent'], 'D9b')
+        for name in ['spd-solve', 'factored-spd-solve']:
+            self.assertEqual(drivers['stdlib-'+name+'-reference']['checks']['solve_calls'], 288)
+        generalized = drivers['stdlib-generalized-eig-reference']
+        self.assertTrue(generalized['checks']['eigenvalues_only'])
+        self.assertFalse(generalized['checks']['left_right_vectors'])
+        source = (ROOT/generalized['path']).read_text()
+        self.assertIn('call eig(a,b,values,err=err)', source)
+        self.assertNotIn('right=', source)
+        for name in ['cg', 'pcg', 'bicgstab']:
+            driver = drivers['stdlib-'+name+'-kernel-reference']
+            self.assertEqual(records[driver['procedure_id']]['procedure'], 'stdlib_solve_'+name+'_kernel')
+            self.assertEqual(driver['checks']['systems'], 102)
+            self.assertEqual(driver['checks']['interface'], 'public kernel with module-level callbacks')
+            source = (ROOT/driver['path']).read_text()
+            self.assertIn('module driver_operators', source)
+            self.assertIn('operator%matvec=>multiply', source)
+            self.assertIn('workspace=workspace', source)
+            self.assertIn('if(any(matrix/=saved))', source)
+        text = systems_spectra_ten_review_text()
+        self.assertEqual((ROOT/SYSTEMS_SPECTRA_TEN_REPORT).read_text(encoding='utf-8'), text)
+        for phrase in ['eigenvalue-only', 'real-only', 'segfaulted', 'module-level callbacks',
+                       'No upstream numerical source was patched', 'categories are not exhausted']:
+            self.assertIn(phrase, text)
+
+    def test_system_spectral_failed_consumers_retain_exact_sources_and_full_results(self):
+        import hashlib
+        candidate = ROOT/'docs/gams-candidates/stdlib-systems'
+        records = list(candidate.glob('*-result.json'))
+        self.assertEqual(len(records), 6)
+        for path in records:
+            record = json.loads(path.read_text())
+            self.assertEqual(record['revision'], '58eb9133966c2797e0593281169ef57c43eccc1d')
+            source = (ROOT/record['source_path']).read_text(encoding='utf-8')
+            self.assertEqual(hashlib.sha256(source.encode()).hexdigest(), record['source_sha256'])
+            result = record['result']
+            self.assertFalse(result['ok'])
+            self.assertTrue(result['cache']['library_reused'])
+            self.assertTrue(next(s for s in result['stages'] if s['name'] == 'Build')['ok'])
+            run = next(s for s in result['stages'] if s['name'] == 'Run')
+            self.assertFalse(run['ok'])
+            if 'dense-wrapper' in path.name:
+                self.assertIn('SIGSEGV', run['stderr'])
+            if 'complex-vectors' in path.name:
+                self.assertIn('F', run['stdout'].split())
+                self.assertGreater(float(run['stdout'].split()[-1]), 0.3)
 
     def test_special_function_drivers_keep_normalization_precision_and_oracles_explicit(self):
         data = gams_data()

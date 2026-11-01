@@ -316,3 +316,5 @@ The [ten statistical, matrix, quadrature and service drivers](gams-statistics-se
 The [ten stdlib factorization, matrix and quadrature drivers](gams-factorization-rules-ten.md) check QR, Cholesky, symmetric eigensystems, SVD, rank-one pseudoinverses, matrix norms/exponentials, Simpson integration and Gauss/Lobatto rules against defining equations and independent analytic references.
 
 The [ten stdlib special-function drivers](gams-special-functions-ten.md) check Legendre values/derivatives, complex gamma/log-gamma, log-factorial, incomplete/regularized gamma and beta-family functions against independent polynomials, sums, products and high-precision constants.
+
+The [ten stdlib linear-system and spectral drivers](gams-systems-spectra-ten.md) add direct/factored SPD solves, constrained/weighted least squares, nonsymmetric eigenproblems, Schur form, generalized eigenvalues and CG/PCG/BiCGSTAB kernels. Retained failures distinguish unsupported vector/wrapper interfaces from checked ones.

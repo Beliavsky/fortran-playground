@@ -980,7 +980,17 @@
         "stdlib-regularized-gamma",
         "stdlib-beta",
         "stdlib-log-beta",
-        "stdlib-incomplete-beta"
+        "stdlib-incomplete-beta",
+        "stdlib-spd-solve",
+        "stdlib-factored-spd-solve",
+        "stdlib-constrained-ls",
+        "stdlib-weighted-ls",
+        "stdlib-nonsymmetric-eig",
+        "stdlib-generalized-eig",
+        "stdlib-real-schur",
+        "stdlib-cg-kernel",
+        "stdlib-pcg-kernel",
+        "stdlib-bicgstab-kernel"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
     },

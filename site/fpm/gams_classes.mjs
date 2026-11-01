@@ -783,5 +783,25 @@ export const gamsSubclasses = {
   "C7b": {
     "label": "Beta, log beta",
     "parent": "C7"
+  },
+  "D4a2": {
+    "label": "Real nonsymmetric",
+    "parent": "D4a"
+  },
+  "D4b": {
+    "label": "Generalized eigenvalue problems (e.g., Ax = lambda Bx)",
+    "parent": "D4"
+  },
+  "D4b2": {
+    "label": "Real general",
+    "parent": "D4b"
+  },
+  "D9b": {
+    "label": "Constrained",
+    "parent": "D9"
+  },
+  "D9b1": {
+    "label": "Least squares (L_2) solution",
+    "parent": "D9b"
   }
 };

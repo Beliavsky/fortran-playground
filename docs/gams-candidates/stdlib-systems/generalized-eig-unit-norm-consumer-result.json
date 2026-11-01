@@ -1,0 +1,87 @@
+{
+  "package_id": "stdlib",
+  "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+  "source_path": "docs/gams-candidates/stdlib-systems/generalized-eig-unit-norm-consumer.f90",
+  "hash_normalization": "utf-8-lf",
+  "source_sha256": "3a8edc1952a92f8ce2a698970c18a1f0ac761ef810464107546f9f8c41572331",
+  "interpretation": "Consumer incorrectly assumes Euclidean-unit generalized eigenvectors.",
+  "result": {
+    "ok": false,
+    "compiler": "GNU Fortran (GCC) 16.2.0",
+    "compiler_id": "gfortran",
+    "fpm": "0.12.0",
+    "stages": [
+      {
+        "name": "Build",
+        "command": [
+          "fpm",
+          "build",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 0.501,
+        "ok": true,
+        "exit_code": 0,
+        "error": "",
+        "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+        "stderr": ""
+      },
+      {
+        "name": "Run",
+        "command": [
+          "fpm",
+          "run",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 0.037,
+        "ok": false,
+        "exit_code": 1,
+        "error": "",
+        "stdout": "",
+        "stderr": "Project is up to date\nNote: The following floating-point exceptions are signalling: IEEE_DENORMAL\nERROR STOP Right vector normalization\n\nError termination. Backtrace:\n#0  0x2b7d0a3a7f83 in ???\n#1  0x2b7d0a3a8c39 in ???\n#2  0x2b7d0a3aa045 in ???\n#3  0x403d86 in MAIN__\n\tat app/main.f90:41\n#4  0x4053ec in main\n\tat app/main.f90:4\n<ERROR> Execution for object \" playground-main \" returned exit code  1\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 1\n"
+      }
+    ],
+    "cache": {
+      "package": "stdlib",
+      "compiler": "GNU Fortran 16.2.0",
+      "key": "1bae985a1993dd280a6324e4",
+      "library_reused": true,
+      "changed_artifacts": []
+    },
+    "packages": [
+      {
+        "repository": "fortran-lang/stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+      }
+    ],
+    "build_ok": true,
+    "target_groups": {
+      "app": [
+        "playground-main"
+      ],
+      "example": [],
+      "test": []
+    },
+    "targets": [
+      "playground-main"
+    ],
+    "plots": [],
+    "plot_notes": []
+  }
+}

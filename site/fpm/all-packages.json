@@ -8295,6 +8295,21 @@
         "parent": "D4a"
       },
       {
+        "code": "D4a2",
+        "label": "Real nonsymmetric",
+        "parent": "D4a"
+      },
+      {
+        "code": "D4b",
+        "label": "Generalized eigenvalue problems (e.g., Ax = lambda Bx)",
+        "parent": "D4"
+      },
+      {
+        "code": "D4b2",
+        "label": "Real general",
+        "parent": "D4b"
+      },
+      {
         "code": "D5",
         "label": "QR decomposition, Gram-Schmidt orthogonalization",
         "parent": "D"
@@ -8318,6 +8333,16 @@
         "code": "D9a1",
         "label": "Least squares (L_2) solution",
         "parent": "D9a"
+      },
+      {
+        "code": "D9b",
+        "label": "Constrained",
+        "parent": "D9"
+      },
+      {
+        "code": "D9b1",
+        "label": "Least squares (L_2) solution",
+        "parent": "D9b"
       },
       {
         "code": "D9c",
@@ -9479,6 +9504,336 @@
           {
             "path": "test/test_specialfunctions_gamma.f90",
             "sha256": "0b456e4d452ef3fe67f5c98a804445c9114e6b29081934889cd794d6df16ac32"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-spd-solve",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "solve_chol",
+        "gams_codes": [
+          "D2b1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "72 REAL64 SPD matrices of orders 2..10 formed from dyadic positive-diagonal triangular factors. Both triangle choices and vector/three-RHS matrix interfaces: 288 solves per driver. Three prescribed solution families, scalar-loop right-hand sides, original-matrix residuals, finite results and input preservation; scaled tolerance 3e-12. solve_chol factors the full matrix internally. Indefinite errors, complex values, overwriting, arbitrary conditioning and speed unverified.",
+        "driver_id": "stdlib-spd-solve-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 1052,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_solve.f90",
+            "line": 1,
+            "sha256": "1adcdd3a5f9b2663ac1e8211dd3d36b6e740c2b0ce44db687effb3fe770bffcb"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_linalg_solve_chol.f90",
+            "sha256": "900d75de614e400bb18afec758a1263ea925f27ace625ee0323018192a136297"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-factored-spd-solve",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "solve_lower_chol, solve_upper_chol",
+        "gams_codes": [
+          "D2b1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "72 REAL64 SPD matrices of orders 2..10 formed from dyadic positive-diagonal triangular factors. Both triangle choices and vector/three-RHS matrix interfaces: 288 solves per driver. Three prescribed solution families, scalar-loop right-hand sides, original-matrix residuals, finite results and input preservation; scaled tolerance 3e-12. Lower/upper factors are constructed directly; no upstream factorization supplies the oracle. Indefinite errors, complex values, overwriting, arbitrary conditioning and speed unverified.",
+        "driver_id": "stdlib-factored-spd-solve-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 1189,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_solve.f90",
+            "line": 1,
+            "sha256": "1adcdd3a5f9b2663ac1e8211dd3d36b6e740c2b0ce44db687effb3fe770bffcb"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_linalg_solve_chol.f90",
+            "sha256": "900d75de614e400bb18afec758a1263ea925f27ace625ee0323018192a136297"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-constrained-ls",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "solve_constrained_lstsq",
+        "gams_codes": [
+          "D9b1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "96 full-rank REAL64 6x3 least-squares problems with one equality constraint and nonzero residuals. Repeated diagonal observations give an independent diagonal-Hessian Lagrange-multiplier solution; shear transforms mix the columns. Check solution, primal feasibility, stationarity, finite output, status and input preservation at scaled tolerance 5e-12. Multiple constraints, rank deficiency, complex values, workspace/overwrite modes and ill-conditioning unverified.",
+        "driver_id": "stdlib-constrained-ls-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 1903,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_least_squares.f90",
+            "line": 1,
+            "sha256": "4b0813fe092a342f258c8f014fcdfb919e770900e22c8dddecab8f1ae8ca70b6"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_linalg_constrained_lstsq.f90",
+            "sha256": "eaeb55c7628e4096972dad154df4bd009ac3405a83868d03a020b5fc87636cad"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-weighted-ls",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "solve_weighted_lstsq",
+        "gams_codes": [
+          "D9a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "96 non-exact REAL64 weighted line fits, 4..15 observations, positive nonuniform weights with ratio at most 16. Independent scalar weighted sums and a two-by-two determinant give intercept/slope. Full-rank problems; check known coefficients, weighted normal residuals, status, finiteness and matrix preservation; scaled tolerance 5e-12. Zero/negative weights, rank deficiency, complex values, other shapes and extreme weight ratios unverified.",
+        "driver_id": "stdlib-weighted-ls-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 2122,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_least_squares.f90",
+            "line": 1,
+            "sha256": "4b0813fe092a342f258c8f014fcdfb919e770900e22c8dddecab8f1ae8ca70b6"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_linalg_lstsq.f90",
+            "sha256": "ebc6af6391942287d628e67c7f964b2e08ffbad8a8753486bef170ff5c58bc55"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-nonsymmetric-eig",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "eig",
+        "gams_codes": [
+          "D4a2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "64 REAL64 nonsymmetric 3x3 problems constructed by explicit shear similarities of a planar rotation block plus a distinct real eigenvalue. All 192 analytic eigenvalues matched without assuming output order; finite outputs, status and input preservation checked. Both left/right eigenvector equations and Euclidean unit norms checked. Scaled residual tolerance 8e-12, absolute eigenvalue tolerance 8e-12. Singular pencils, defective/repeated spectra, complex input, arbitrary conditioning, other sizes and speed unverified.",
+        "driver_id": "stdlib-nonsymmetric-eig-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 3309,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_eigenvalues.f90",
+            "line": 1,
+            "sha256": "7e2034f8c37639a146f136c16fb775822cc91a186431a335762f89175361a009"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_linalg_eigenvalues.f90",
+            "sha256": "9ddd1df706b790cc58ffd992325ac58a755a1f1e5ba95558ca01b70f27a7f6f6"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-generalized-eig",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "eig (REAL64 generalized eigenvalues only)",
+        "gams_codes": [
+          "D4b2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "64 REAL64 nonsymmetric 3x3 generalized eigenvalue-only problems. A=B*S*T*inverse(S) and B=S*diag(1,2,4)*inverse(S), where T has a planar rotation block and a distinct real eigenvalue. All 192 analytic eigenvalues matched without assuming order, with absolute tolerance 8e-12; finite output, status and input preservation checked. The eigenvector-returning interface failed a retained complex-eigenpair probe and is not promoted. Singular pencils, defective/repeated spectra, complex input, other sizes, arbitrary conditioning and speed unverified.",
+        "driver_id": "stdlib-generalized-eig-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 3345,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_eigenvalues.f90",
+            "line": 1,
+            "sha256": "7e2034f8c37639a146f136c16fb775822cc91a186431a335762f89175361a009"
+          },
+          {
+            "path": "src/stdlib_lapack_eigv_gen.f90",
+            "line": 5740,
+            "sha256": "550ec91013a428798b722f626ff14677373343f76bad7a5d912a08f5949cc9d9"
+          },
+          {
+            "path": "src/stdlib_linalg_eigenvalues.f90",
+            "line": 2585,
+            "sha256": "7e2034f8c37639a146f136c16fb775822cc91a186431a335762f89175361a009"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_linalg_eigenvalues.f90",
+            "sha256": "9ddd1df706b790cc58ffd992325ac58a755a1f1e5ba95558ca01b70f27a7f6f6"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-real-schur",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "schur",
+        "gams_codes": [
+          "D4a2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "64 REAL64 nonsymmetric 3x3 problems constructed by explicit shear similarities of a planar rotation block plus a distinct real eigenvalue. All 192 analytic eigenvalues matched without assuming output order; finite outputs, status and input preservation checked. Real Schur factor reconstruction, orthogonality and nonoverlapping quasi-triangular blocks checked. Schur vectors are not claimed to be individual eigenvectors. Scaled residual tolerance 8e-12, absolute eigenvalue tolerance 8e-12. Singular pencils, defective/repeated spectra, complex input, arbitrary conditioning, other sizes and speed unverified.",
+        "driver_id": "stdlib-real-schur-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 2458,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_schur.f90",
+            "line": 1,
+            "sha256": "7f9c90402ca46b737169884d7030a0401f4a31d74d8c093a2e13485b67a40258"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_linalg_schur.f90",
+            "sha256": "21271fd1c35dba13540992e2865a17b94a006b71bab64774cfbd7e025e213546"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-cg-kernel",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg_iterative_solvers",
+        "procedure": "stdlib_solve_cg_kernel",
+        "gams_codes": [
+          "D2b1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "102 dense REAL64 known-solution systems, orders 2..18, six right-hand-side families and a nonzero initial guess passed directly to the kernel. Dense symmetric strictly diagonally-dominant positive-definite matrices, no preconditioner. Requested rtol=1e-12; independent solution/residual tolerance 2e-9. Right-hand sides and final residuals use scalar loops. Finite results and matrix preservation checked. Public kernel with module-level matrix-vector/preconditioner callbacks and caller-owned workspace. Dense convenience wrappers segfaulted in this hosted configuration and are not promoted; exact probes are retained. Sparse convenience interfaces, zero RHS, boundary masks, arbitrary ill-conditioning, convergence diagnostics and speed unverified.",
+        "driver_id": "stdlib-cg-kernel-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg_iterative_solvers.f90",
+            "line": 99,
+            "sha256": "b067f92aface3f7facb5affdefc7dace5116c56a26dd230a58c453c425630204"
+          },
+          {
+            "path": "src/stdlib_linalg_iterative_solvers_cg.f90",
+            "line": 1,
+            "sha256": "04dc479675d7eb097ff080553c8726904fff05f5437b84694c1ac07397eeb494"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_linalg_solve_iterative.f90",
+            "sha256": "fd05dc7d09afecf9344582d36e40e9b2eae675788a0ac1c8c1d49ff8ab523016"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-pcg-kernel",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg_iterative_solvers",
+        "procedure": "stdlib_solve_pcg_kernel",
+        "gams_codes": [
+          "D2b1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "102 dense REAL64 known-solution systems, orders 2..18, six right-hand-side families and a nonzero initial guess passed directly to the kernel. SPD matrices scaled by positive diagonal congruence factors spanning 0.1..10; explicit Jacobi preconditioning. Requested rtol=1e-12; independent solution/residual tolerance 2e-9. Right-hand sides and final residuals use scalar loops. Finite results and matrix preservation checked. Public kernel with module-level matrix-vector/preconditioner callbacks and caller-owned workspace. Dense convenience wrappers segfaulted in this hosted configuration and are not promoted; exact probes are retained. Sparse convenience interfaces, zero RHS, boundary masks, arbitrary ill-conditioning, convergence diagnostics and speed unverified.",
+        "driver_id": "stdlib-pcg-kernel-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg_iterative_solvers.f90",
+            "line": 180,
+            "sha256": "b067f92aface3f7facb5affdefc7dace5116c56a26dd230a58c453c425630204"
+          },
+          {
+            "path": "src/stdlib_linalg_iterative_solvers_pcg.f90",
+            "line": 1,
+            "sha256": "fa692d69167fe37c6a58fe3fcb293ae14002c86a0017d2b00253487c94ddcfaf"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_linalg_solve_iterative.f90",
+            "sha256": "fd05dc7d09afecf9344582d36e40e9b2eae675788a0ac1c8c1d49ff8ab523016"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-bicgstab-kernel",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg_iterative_solvers",
+        "procedure": "stdlib_solve_bicgstab_kernel",
+        "gams_codes": [
+          "D2a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "102 dense REAL64 known-solution systems, orders 2..18, six right-hand-side families and a nonzero initial guess passed directly to the kernel. Nonsymmetric strictly diagonally-dominant matrices; requested rtol=1e-10 and independently checked solution/residual tolerance 5e-8. This does not certify the requested tolerance for all inputs or breakdown recovery. Right-hand sides and final residuals use scalar loops. Finite results and matrix preservation checked. Public kernel with module-level matrix-vector/preconditioner callbacks and caller-owned workspace. Dense convenience wrappers segfaulted in this hosted configuration and are not promoted; exact probes are retained. Sparse convenience interfaces, zero RHS, boundary masks, arbitrary ill-conditioning, convergence diagnostics and speed unverified.",
+        "driver_id": "stdlib-bicgstab-kernel-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg_iterative_solvers.f90",
+            "line": 208,
+            "sha256": "b067f92aface3f7facb5affdefc7dace5116c56a26dd230a58c453c425630204"
+          },
+          {
+            "path": "src/stdlib_linalg_iterative_solvers_bicgstab.f90",
+            "line": 1,
+            "sha256": "bb90cb190b31aa2e53d38ef5a9ba12d11c54a6ca342d6fffb1642ec9f95c7dca"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_linalg_solve_iterative.f90",
+            "sha256": "fd05dc7d09afecf9344582d36e40e9b2eae675788a0ac1c8c1d49ff8ab523016"
           }
         ]
       }
