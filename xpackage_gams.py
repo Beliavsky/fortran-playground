@@ -98,6 +98,7 @@ HELMHOLTZ_STREAMS_REPORT = Path('docs/gams-helmholtz-streams.md')
 FRICTION_TORCH_REPORT = Path('docs/gams-friction-torch.md')
 PARETO_DIIS_REPORT = Path('docs/gams-pareto-diis.md')
 DATA_TEN_REPORT = Path('docs/gams-data-ten.md')
+STATE_TEN_REPORT = Path('docs/gams-state-ten.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
 EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
@@ -9072,6 +9073,164 @@ def data_ten_review_text(root=ROOT):
     return '\n'.join(lines)
 
 
+def state_ten_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-state-ten-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-state-ten-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Ten checked configuration, state and reference drivers',
+ '',
+ 'Ten independent consumers passed GNU Fortran 16.2.0 with FPM 0.12.0 in the restricted hosted sandbox. '
+ 'All reused existing package libraries and compiled only mains and executables. The [verification '
+ 'report](gams-state-ten-validation.json) preserves pins, source hashes and complete output. The '
+ '[retained probes](gams-candidates/state-ten-first-probes/README.md) distinguish consumer/API '
+ 'corrections from unsupported package behavior. GAMS categories are not exhausted.',
+ '',
+ '## Array bounds (array_range, R)',
+ '',
+ 'The driver checks 784 nonempty rank-2 arrays: both lower origins range from -3 to 3 and both extents '
+ 'from 1 to 4. The descriptor constructor receives actual intrinsic bounds, but exact expected endpoints '
+ 'come independently from the allocation parameters. All 3,136 bound entries and 4,900 visited elements '
+ 'are checked; traversal sums use closed-form arithmetic-progression formulas rather than another '
+ 'traversal. Zero extents, malformed bound arrays and scalar/vector/tensor aggregate constructors remain '
+ 'unverified.',
+ '',
+ '## Typed values and owned arrays (any, N4)',
+ '',
+ 'Thirty-two fresh groups contain an INT32 scalar, dyadic REAL64 scalar, logical, nonempty character '
+ 'string, integer vector and REAL64 matrix. Vectors have lengths 1..32 and matrices shape [2,length]. '
+ 'Original input arrays are overwritten after wrapping; extraction must recover the earlier exact values '
+ 'and shape, establishing owned copies for these cases. All 1,712 scalar/array references pass. '
+ 'Type-bound assignment is used; the initial attempted module-level assignment import was a consumer '
+ 'error.',
+ '',
+ 'Empty values are deliberately outside the successful scope. After fixing the import, the empty-string '
+ 'fixture segfaulted; a second probe with nonempty strings and empty arrays segfaulted at array '
+ 'extraction. Exact mains/results are retained. The published driver uses nonempty inputs and does not '
+ 'fix these GNU 16 compiler/library interactions. Reassigning populated buffers, type mismatches, '
+ 'container copying and all ranks/kinds remain unverified.',
+ '',
+ '## Format descriptors (fed, N1)',
+ '',
+ 'There are 550 exact full-record comparisons against independently constructed native Fortran format '
+ 'strings. Integer widths 1..12 combine minimum digits 0..min(width,6) and five signed/zero/large '
+ 'values. Fixed-point widths 4..18 in steps of two combine decimal places 0..4 and five exact binary '
+ 'values. Five concatenated integer/character/real formats are also checked. Overflow fields and '
+ 'trailing output blanks remain part of the comparison.',
+ '',
+ 'The oracle follows reviewed FED normalization: a zero minimum omits .m (it is not native Iw.0 zero '
+ 'suppression), and real width is raised to at least d+2. The first incorrect native-format assumptions '
+ 'are retained as consumer reference errors, not package defects. Exponential, complex, user-defined, '
+ 'locale and cross-compiler rounding behavior remain unverified.',
+ '',
+ '## INI scalar/default values (io_utilities, N1)',
+ '',
+ 'Thirty-six self-contained INI files check 180 exact references for signed integers, dyadic reals, '
+ 'text, absent-key defaults and all six reviewed true spellings. They contain a section header and '
+ 'inline comments, but descriptors use wildcard sections. Expected values come from the file-generation '
+ 'parameters. Files are deleted inside the sandbox. False spellings, section-specific matching, '
+ 'malformed input and CLI filename overrides remain unverified.',
+ '',
+ '## Nested configuration and dynamic arrays (config-fortran, N1)',
+ '',
+ 'Twenty-four fresh configurations/files check integer, REAL64, logical and text values, solver%dt '
+ 'nested keys, a retained default and dynamic arrays of lengths 1..8. Exact expected eighths are written '
+ 'and independently compared after reading; CFG_get_size must match the requested length. There are 228 '
+ 'scalar/array references. Each object is explicitly cleared. Repeated reads into the same '
+ 'configuration, malformed files, unknown keys and CLI inputs remain unverified.',
+ '',
+ '## Mixed dictionaries and deletion (fdict, N4)',
+ '',
+ 'Eight 49-key dictionaries store integer, dyadic REAL64, text and three-element integer-array values. '
+ 'Reverse-order lookups must match independent formulas; source arrays are overwritten after insertion '
+ 'to check ownership. Every even key is then deleted, and selected odd survivors plus the base key are '
+ 'checked before explicit destruction. There are 488 typed lookups. The character assign overload has no '
+ 'success keyword; correcting that consumer error preserves the numeric/array status checks. '
+ 'Missing/type-mismatched lookups, duplicate-key policy, dictionary copying and every hash collision '
+ 'remain unverified.',
+ '',
+ '## C-backed vector and map state (qcontainers, N4)',
+ '',
+ 'Eight traces perform 96 vector appends each, periodic indexed replacements, FIFO removal to empty, and '
+ 'hash-map insertion/replacement across 17 keys. A plain array and indexed membership/value tables '
+ 'supply 51,080 exact value/presence references. Absent map keys, vector clear, map clear/reuse and '
+ 'scope finalization are checked.',
+ '',
+ 'Appending to the cleared vector is excluded: the retained probe reports success but returns an '
+ 'incorrect payload, and source review shows qvector_clear resets the C element size to zero. The '
+ 'successful driver does not append afterward or patch the library. Map clear/reuse still passes. '
+ 'Payloads are integers; iterators, object copying, all ownership paths, memory leaks and thread safety '
+ 'remain unverified.',
+ '',
+ '## SQLite transactions and queries (sqliteff, N1)',
+ '',
+ 'An in-memory database receives 64 prepared/bound inserts for keys -32..31 and values key/8. Each '
+ 'insertion checks SQLITE_DONE and statement reset. After commit, an update and sentinel-row insertion '
+ 'are rolled back. Five exact aggregate references (count, sum, average, minimum and maximum) verify '
+ 'restoration. Deleting keys divisible by three leaves 43 rows; ordered key/value pairs must match an '
+ 'independent integer loop, followed by SQLITE_DONE. All statements are finalized and the database '
+ 'closed. Disk persistence, concurrent transactions, text/NULL, error recovery and general N5 searching '
+ 'are outside this N1 driver.',
+ '',
+ '## Integer expression parsing (shunting-yard-fortran, N3)',
+ '',
+ 'The driver supplies independently written integer operand/binary callbacks and checks 437 valid '
+ 'bounded expressions against direct arithmetic. Seventy-two combinations of a=1..6, b=1..4, c=1..3 each '
+ 'generate six precedence/parenthesis/subtraction/division templates. Five fixed cases check '
+ 'right-associative powers, grouped powers, mixed precedence, binary negation as 0-x and ignored spaces. '
+ 'All expected division results are exact integers and powers stay safely bounded.',
+ '',
+ 'Unary registration is intentionally absent. The retained registered-unary-minus probe evaluates 1-1-1 '
+ 'as 1 instead of -1: register_unary adds the minus token to a shared right-associative list that is '
+ 'also consulted for binary operators. The binary-only consumer passes without a library change. '
+ 'Unary/real-function behavior, malformed syntax, overflow, registration isolation and arbitrary '
+ 'callback types remain unverified.',
+ '',
+ '## Exact SI constants and photon energies (fundamental_constants, R)',
+ '',
+ 'The selected Planck constant, speed of light and elementary charge match the defining decimal values '
+ 'in the [NIST 2022 CODATA listing](https://physics.nist.gov/cuu/Constants/Table/allascii.txt). The '
+ 'independent [Python Fraction oracle](../fpm_catalog/gams-drivers/references/photon_vectors.py) uses '
+ 'exact rational arithmetic to generate [saved energy '
+ 'vectors](../fpm_catalog/gams-drivers/references/photon-vectors.json); no package imports supply the '
+ 'reference. Source/data hashes are recorded with the driver.',
+ '',
+ 'Twelve integer wavelengths [1,2,10,121,250,400,500,656,800,1064,10000,1000000] nm give 24 '
+ 'joule/electron-volt energy references. The native REAL64 computation must agree within relative '
+ 'tolerance 2e-15; its observed maximum was 2.22045e-16. This checks three exact constant values and '
+ 'their use in unit conversion, not the entire collection or the accuracy of constants with experimental '
+ 'uncertainty.',
+ '',
+ '## Provenance and actual output',
+ '',
+ 'Pinned APIs, implementations and available author examples were reviewed. These are independent MIT '
+ 'consumers; upstream implementation/example bodies are not copied and upstream licenses remain '
+ 'separate. Exact failed sources/results are retained with hashes and pins. No unsupported probe is '
+ 'promoted to successful verification, and loading an example does not submit a job.',
+ '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -9245,6 +9404,7 @@ def main():
                          (FRICTION_TORCH_REPORT, friction_torch_review_text()),
                          (PARETO_DIIS_REPORT, pareto_diis_review_text()),
                          (DATA_TEN_REPORT, data_ten_review_text()),
+                         (STATE_TEN_REPORT, state_ten_review_text()),
                          (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report

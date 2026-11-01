@@ -1,0 +1,84 @@
+{
+  "ok": false,
+  "compiler": "GNU Fortran (GCC) 16.2.0",
+  "compiler_id": "gfortran",
+  "fpm": "0.12.0",
+  "stages": [
+    {
+      "name": "Build",
+      "command": [
+        "fpm",
+        "build",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.31,
+      "ok": true,
+      "exit_code": 0,
+      "error": "",
+      "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+      "stderr": ""
+    },
+    {
+      "name": "Run",
+      "command": [
+        "fpm",
+        "run",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.028,
+      "ok": false,
+      "exit_code": 1,
+      "error": "",
+      "stdout": " expression: 1-1-1 actual/expected:            1          -1\n",
+      "stderr": "Project is up to date\nERROR STOP integer expression reference differs\n\nError termination. Backtrace:\n#0  0x2b21509e4f83 in ???\n#1  0x2b21509e5c39 in ???\n#2  0x2b21509e7045 in ???\n#3  0x40206c in check\n\tat app/main.f90:114\n#4  0x402e2b in expression_reference\n\tat app/main.f90:84\n#5  0x403a8e in main\n\tat app/main.f90:65\n<ERROR> Execution for object \" playground-main \" returned exit code  1\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 1\n"
+    }
+  ],
+  "cache": {
+    "package": "shunting-yard-fortran",
+    "compiler": "GNU Fortran 16.2.0",
+    "key": "ff2413e4f1ced02e79f5bb9a",
+    "library_reused": true,
+    "changed_artifacts": []
+  },
+  "packages": [
+    {
+      "repository": "14NGiestas/shunting-yard-fortran",
+      "revision": "ff62d83502bc5fdf77f2750c3538b8634a543b91",
+      "sha256": "b72b28673e6fc18e9f54c7e5999db2d224b102673bd02ccc41a446a262e38d1c"
+    },
+    {
+      "repository": "14NGiestas/fortran-tokenizer",
+      "revision": "4ed3bac4132a9b344b3c327f579ae4919a61393d",
+      "sha256": "99ae76f58775d954d01885a2d48720a16e143782238f45f5db2424c6277cc912"
+    }
+  ],
+  "build_ok": true,
+  "target_groups": {
+    "app": [
+      "playground-main"
+    ],
+    "example": [],
+    "test": []
+  },
+  "targets": [
+    "playground-main"
+  ],
+  "plots": [],
+  "plot_notes": []
+}

@@ -1,0 +1,94 @@
+{
+  "ok": false,
+  "compiler": "GNU Fortran (GCC) 16.2.0",
+  "compiler_id": "gfortran",
+  "fpm": "0.12.0",
+  "stages": [
+    {
+      "name": "Build",
+      "command": [
+        "fpm",
+        "build",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.435,
+      "ok": true,
+      "exit_code": 0,
+      "error": "",
+      "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+      "stderr": ""
+    },
+    {
+      "name": "Run",
+      "command": [
+        "fpm",
+        "run",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.033,
+      "ok": false,
+      "exit_code": 1,
+      "error": "",
+      "stdout": "",
+      "stderr": "Project is up to date\nERROR STOP FED real descriptor reference\n\nError termination. Backtrace:\n#0  0x2aae2b4fef83 in ???\n#1  0x2aae2b4ffc39 in ???\n#2  0x2aae2b501045 in ???\n#3  0x4020e1 in format_reference\n\tat app/main.f90:33\n#4  0x4035cb in main\n\tat app/main.f90:3\n<ERROR> Execution for object \" playground-main \" returned exit code  1\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 1\n"
+    }
+  ],
+  "cache": {
+    "package": "fed",
+    "compiler": "GNU Fortran 16.2.0",
+    "key": "507c10fe1dd1b40743eb54ad",
+    "library_reused": true,
+    "changed_artifacts": []
+  },
+  "packages": [
+    {
+      "repository": "degawa/fed",
+      "revision": "d735aa2b3bd6b20840bcc16ff569e8cfc0492267",
+      "sha256": "09cd5298480abf152954bc88e8d2792f2d5361a40d8ad77ebd971f3db317cd70"
+    },
+    {
+      "repository": "fortran-lang/stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+    },
+    {
+      "repository": "degawa/enclose",
+      "revision": "d3ea2ea989296bf855f4cb07ea8db601020805f2",
+      "sha256": "ce7e3d3f4e5a4f492cf1c0c5d71086b4b77dc56a003977c4348e077f85223088"
+    },
+    {
+      "repository": "degawa/enumul",
+      "revision": "064bba70797b84100b25dc4466b28f1f38147d0e",
+      "sha256": "0bbb1c13ec5780cbf15bd9380de9e288101edfac3572592f13b8a5d1b81cd364"
+    }
+  ],
+  "build_ok": true,
+  "target_groups": {
+    "app": [
+      "playground-main"
+    ],
+    "example": [],
+    "test": []
+  },
+  "targets": [
+    "playground-main"
+  ],
+  "plots": [],
+  "plot_notes": []
+}

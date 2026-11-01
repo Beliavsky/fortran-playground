@@ -1,0 +1,44 @@
+{
+  "ok": false,
+  "compiler": "GNU Fortran (GCC) 16.2.0",
+  "compiler_id": "gfortran",
+  "fpm": "0.12.0",
+  "stages": [
+    {
+      "name": "Build",
+      "command": [
+        "fpm",
+        "build",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.197,
+      "ok": false,
+      "exit_code": 1,
+      "error": "",
+      "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n\napp/main.f90:36:31:\n\n   36 |             if (.not.found .or. real_value/=real(i-cycle,real64)/8) error stop 'dictionary real reference'\n      |                               1\nWarning: Inequality comparison for REAL(8) at (1) [-Wcompare-reals]\napp/main.f90:38:59:\n\n   38 |             call assign(text,table,trim(key),success=found)\n      |                                                           1\nError: There is no specific subroutine for the generic \u2018assign\u2019 at (1)\ncompilation terminated due to -fmax-errors=1.\n",
+      "stderr": "<ERROR> Compilation failed for object \" app_main.f90.o \"\n<ERROR> stopping due to failed compilation\nSTOP 1\n"
+    }
+  ],
+  "cache": {
+    "package": "fdict",
+    "compiler": "GNU Fortran 16.2.0",
+    "key": "805bec7907c849518c5d84b7",
+    "library_reused": true,
+    "changed_artifacts": []
+  },
+  "packages": [
+    {
+      "repository": "zerothi/fdict",
+      "revision": "6ac903d4c0c524d45b948281a18b9656936c0197",
+      "sha256": "6ef5a80706bae78498408a5e75c6ec45c81f947d8cab719093c960fdd365fd8a"
+    }
+  ]
+}

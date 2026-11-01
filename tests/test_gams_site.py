@@ -67,6 +67,29 @@ class GamsSiteTests(unittest.TestCase):
             self.assertIn('Open default example', sorting)
             self.assertNotIn('Try in playground', sorting)
 
+    def test_ten_state_driver_links_match_records_without_extra_class_promotion(self):
+        import copy
+        from xpackage_gams import driver_data,gams_data
+        drivers = [d for d in driver_data(data=gams_data())
+                   if d.get('validation_path')=='docs/gams-state-ten-validation.json']
+        feed = copy.deepcopy(self.feed)
+        packages = {d['package_id'] for d in drivers}
+        feed['projects'] = [p for p in feed['projects'] if p['playground']['package_id'] in packages]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination,feed)
+            for d in drivers:
+                url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+                page = Page((destination/d['gams_code']/'index.html').read_text(encoding='utf-8'))
+                self.assertIn((url,'Try in playground'),page.anchors)
+                detail = (destination/'packages'/d['package_id']/'index.html').read_text(encoding='utf-8')
+                card = detail.split('id="'+d['procedure_id']+'"',1)[1].split('</article>',1)[0]
+                self.assertIn('Load checked GAMS driver:',card)
+                self.assertIn(d['name'],card)
+            searching = Page((destination/'N5/index.html').read_text(encoding='utf-8'))
+            self.assertNotIn(('https://beliavsky.github.io/fortran-playground/fpm/?package=sqliteff&example=gams-sqlite-transactions-reference',
+                              'Try in playground'),searching.anchors)
+
     def test_ten_data_driver_package_cards_and_primary_class_links(self):
         import copy
         from xpackage_gams import driver_data,gams_data

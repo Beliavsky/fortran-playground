@@ -302,3 +302,5 @@ The [checked LuGre and FTorch drivers](gams-friction-torch.md) verify public con
 The [checked Pareto-segment and Jacobi/DIIS drivers](gams-pareto-diis.md) retain failed small-history and uniform-archive-accuracy probes alongside the successful scoped checks. They verify a near-front subset and default-history linear solves, without claiming either stronger behavior is fixed.
 
 The [ten checked data-handling drivers](gams-data-ten.md) add exact container, text, sorting/searching and register-conversion references, with per-driver limits. All use existing cached libraries.
+
+The [ten configuration, state and reference drivers](gams-state-ten.md) include checked storage/configuration, SQL transactions, expressions and SI photon calculations, with retained failed probes and explicit scope limits.

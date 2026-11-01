@@ -96,6 +96,7 @@ from xpackage_gams import (gams_data, package_classes, review_text, subclass_mod
                             friction_torch_review_text, FRICTION_TORCH_REPORT,
                             pareto_diis_review_text, PARETO_DIIS_REPORT,
                             data_ten_review_text, DATA_TEN_REPORT,
+                            state_ten_review_text, STATE_TEN_REPORT,
                           coverage_data, coverage_review_text, COVERAGE_REPORT,
                           class_evidence, class_tree, mapping_evidence_text, EVIDENCE_REPORT)
 
@@ -881,6 +882,71 @@ class PackageGamsTests(unittest.TestCase):
         self.assertIn('22,416',text)
         self.assertIn('Type-2/type-3 transforms',text)
         self.assertIn('two-dimensional NUFFT2D driver',transforms_review_text())
+
+    def test_ten_state_drivers_keep_nonempty_and_binary_only_scope(self):
+        data = gams_data()
+        records = {r['id']:r for r in data['procedure_mappings']}
+        drivers = {d['id']:d for d in driver_data(data=data)
+                   if d.get('validation_path')=='docs/gams-state-ten-validation.json'}
+        self.assertEqual(set(drivers),{
+            'array-bounds-reference','any-values-reference','fed-format-reference','keyvars-config-reference',
+            'config-file-reference','fdict-values-reference','qcontainers-state-reference',
+            'sqlite-transactions-reference','shunting-yard-reference','codata-photon-reference'})
+        for d in drivers.values():
+            r = records[d['procedure_id']]
+            self.assertEqual(r['driver_id'],d['id'])
+            self.assertEqual(class_evidence(class_tree(data),d['gams_code'],[r],[d])['status'],'verified')
+        self.assertEqual(drivers['array-bounds-reference']['checks']['arrays'],784)
+        wrapped = drivers['any-values-reference']['checks']
+        self.assertEqual(wrapped['value_references'],1712)
+        self.assertFalse(wrapped['empty_arrays_verified'])
+        self.assertFalse(wrapped['empty_strings_verified'])
+        formats = drivers['fed-format-reference']['checks']
+        self.assertEqual(formats['format_comparisons'],550)
+        self.assertEqual(formats['zero_minimum_policy'],'omit .m')
+        self.assertEqual(drivers['config-file-reference']['checks']['value_references'],228)
+        self.assertEqual(drivers['fdict-values-reference']['checks']['typed_lookup_references'],488)
+        containers = drivers['qcontainers-state-reference']['checks']
+        self.assertEqual(containers['value_presence_references'],51080)
+        self.assertTrue(containers['map_clear_reuse_verified'])
+        self.assertFalse(containers['vector_clear_reuse_verified'])
+        self.assertFalse(drivers['shunting-yard-reference']['checks']['unary_registration_verified'])
+        self.assertEqual(drivers['sqlite-transactions-reference']['checks']['remaining_ordered_rows'],43)
+        text = state_ten_review_text()
+        self.assertEqual((ROOT/STATE_TEN_REPORT).read_text(encoding='utf-8'),text)
+        for phrase in ['1,712','51,080','437','2.22045e-16','consumer reference errors',
+                       'segfaulted at array extraction','Unary registration is intentionally absent',
+                       'categories are not exhausted']:
+            self.assertIn(phrase,text)
+
+    def test_photon_vectors_reproduce_exact_rational_references_and_hashes(self):
+        import hashlib
+        import importlib.util
+        path = ROOT/'fpm_catalog/gams-drivers/references/photon_vectors.py'
+        spec = importlib.util.spec_from_file_location('photon_reference',path)
+        oracle = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(oracle)
+        vectors = json.loads(path.with_name('photon-vectors.json').read_text())
+        self.assertEqual(oracle.vectors(),vectors)
+        self.assertEqual(len(vectors['photons']),12)
+        driver = next(d for d in driver_data() if d['id']=='codata-photon-reference')
+        for name,sha in driver['checks']['reference_files'].items():
+            self.assertEqual(hashlib.sha256((ROOT/name).read_text(encoding='utf-8').encode()).hexdigest(),sha)
+
+    def test_state_batch_failed_consumers_retain_exact_sources_and_results(self):
+        import hashlib
+        folder = ROOT/'docs/gams-candidates/state-ten-first-probes'
+        reports = list(folder.rglob('result.json'))
+        self.assertGreaterEqual(len(reports),11)
+        for path in reports:
+            source = path.with_name('driver.f90').read_text(encoding='utf-8')
+            notes = path.with_name('README.md').read_text(encoding='utf-8')
+            report = json.loads(path.read_text())
+            self.assertFalse(report['ok'],str(path))
+            self.assertTrue(report['cache']['library_reused'])
+            self.assertIn(hashlib.sha256(source.encode()).hexdigest(),notes)
+            self.assertIn(report['packages'][0]['revision'],notes)
+            self.assertTrue(any(not s['ok'] for s in report['stages']))
 
     def test_ten_data_drivers_record_exact_oracles_and_scoped_limits(self):
         data = gams_data()

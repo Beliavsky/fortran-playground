@@ -345,7 +345,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Token-based expression parsing with user-supplied callbacks. The main checks precedence, parentheses, right-associative exponentiation, square root and unary minus against five exact results. A checksum-guarded edit moves a host-independent library callback to module scope after the original layout crashed in the sandbox; parsing rules are unchanged. The author documents global registrations, fixed precedences and missing syntax validation; concurrent parsers and malformed expressions are not supported by this example.",
+        "notes": "Token-based expression parsing with user-supplied callbacks. The main checks precedence, parentheses, right-associative exponentiation, square root and unary minus against five exact results. A checksum-guarded edit moves a host-independent library callback to module scope after the original layout crashed in the sandbox; parsing rules are unchanged. The author documents global registrations, fixed precedences and missing syntax validation; concurrent parsers and malformed expressions are not supported by this example. Dedicated N3 driver: Independent integer callback consumer; 437 bounded binary expressions checked against direct arithmetic, including precedence, nested parentheses, exact division, right-associative powers and ignored spaces. Unary registration excluded: retained probe returns 1 instead of -1 for 1-1-1 when unary minus also marks the minus token right-associative. No parser patch; malformed syntax, real functions, overflow and registration isolation unverified.",
         "evidence": [
           {
             "path": "src/parser.f90",
@@ -358,7 +358,8 @@
             "path": "app/main.f90",
             "sha256": "e6a66c253ee988f8c2d76f2dc8362f6bb1f0f6e05c744090216b859439cf760c"
           }
-        ]
+        ],
+        "driver_id": "shunting-yard-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T23:25:51.211120+00:00"
@@ -1144,7 +1145,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Key/value configuration input. The main creates and reads a tiny INI-style file with a section, comment, integer, double, logical and string, verifies known values and deletes it. A checksum-guarded manifest correction changes the invalid one-element library array into a library table; Fortran sources are unchanged. Other I/O modules and malformed-input handling are not covered.",
+        "notes": "Key/value configuration input. The main creates and reads a tiny INI-style file with a section, comment, integer, double, logical and string, verifies known values and deletes it. A checksum-guarded manifest correction changes the invalid one-element library array into a library table; Fortran sources are unchanged. Other I/O modules and malformed-input handling are not covered. Dedicated N1 driver: Independent API consumer; pinned interfaces/implementations and available author examples reviewed without copying bodies. 36 self-contained INI files; exact signed integer, dyadic real, six true spellings, string/comment and absent-default references through wildcard section matching. Malformed inputs, false spellings, section-specific descriptors and CLI overrides unverified.",
         "evidence": [
           {
             "path": "src/keyvars.f90",
@@ -1157,7 +1158,8 @@
             "path": "test/test_keyvars.f90",
             "sha256": "28072c7e87541ff1dddcd30b1a331aab07320128eb1f81de88baaa85b395ae76"
           }
-        ]
+        ],
+        "driver_id": "keyvars-config-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T23:25:51.211120+00:00"
@@ -3906,7 +3908,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Explicitly selected C and Fortran library sources are wrapped for FPM. Checksum-guarded edits rename the library string conversion helper to qlibc_f_c_string and update its callers, avoiding the Fortran 2023 intrinsic name collision; container algorithms are unchanged. The unrelated qencode.c utility is excluded: its query parser refers to qstrtrim and qlisttbl routines absent from the archive. The library retains vector, list, set, hash-table and tree-table modules and their vendored C dependencies. The checked consumer exercises vector growth, indexing, replacement, array conversion, pop and clear, and string-keyed map insertion, replacement, lookup, missing-key lookup and clear. Block scope invokes finalizers. Integer payloads are used; general pointer ownership, all container methods and threading are not validated.",
+        "notes": "Explicitly selected C and Fortran library sources are wrapped for FPM. Checksum-guarded edits rename the library string conversion helper to qlibc_f_c_string and update its callers, avoiding the Fortran 2023 intrinsic name collision; container algorithms are unchanged. The unrelated qencode.c utility is excluded: its query parser refers to qstrtrim and qlisttbl routines absent from the archive. The library retains vector, list, set, hash-table and tree-table modules and their vendored C dependencies. The checked consumer exercises vector growth, indexing, replacement, array conversion, pop and clear, and string-keyed map insertion, replacement, lookup, missing-key lookup and clear. Block scope invokes finalizers. Integer payloads are used; general pointer ownership, all container methods and threading are not validated. Dedicated N4 driver: Independent plain-array/key-map oracle for eight C-backed integer traces: 51080 exact references for growth, index edits, FIFO pops, map updates and presence. Vector clear and map clear/reuse checked; vector append-after-clear resets C element size and has a retained failing probe. No library patch or successful vector-reuse claim. Object copying, iterators and thread safety unverified.",
         "evidence": [
           {
             "path": "qcontainers_f/qvector.F90",
@@ -3928,7 +3930,8 @@
             "path": "docs/tutorial_qhashtbl.f90",
             "sha256": "a8d76feb02340427844a234aea16fe99ac1662e9b97620f736adf9615bccf93a"
           }
-        ]
+        ],
+        "driver_id": "qcontainers-state-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T19:56:39.893532+00:00",
@@ -4239,7 +4242,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Type-erased intrinsic values returned through any_type. The checked main returns an integer, a double-precision real and a character value through one function, retrieves each using its matching type, and checks exact values. No source edits. The author documents undefined results for mismatched type/rank conversions; the example does not validate all ranks, kinds, custom extensions or invalid conversions.",
+        "notes": "Type-erased intrinsic values returned through any_type. The checked main returns an integer, a double-precision real and a character value through one function, retrieves each using its matching type, and checks exact values. No source edits. The author documents undefined results for mismatched type/rank conversions; the example does not validate all ranks, kinds, custom extensions or invalid conversions. Dedicated N4 driver: Independent API consumer of fresh nonempty typed buffers; 32 groups and 1712 exact scalar/array references. Original arrays are mutated after wrapping to check owned copies. Empty-string and empty-array runtime failures are retained, not fixed. Initial assignment-import compile failure was a consumer API error. Reassignment, mismatched types and all ranks/kinds unverified.",
         "evidence": [
           {
             "path": "src/any_t.f90",
@@ -4252,7 +4255,8 @@
             "path": "example/demo.f90",
             "sha256": "50eb2bd6761ddd26606a0ad1577ed7012078cdb8512b1668b8c19ad11ad45631"
           }
-        ]
+        ],
+        "driver_id": "any-values-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T01:11:46.981596+00:00"
@@ -4309,7 +4313,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Derived types and constructors for multidimensional array bounds. The checked main reconstructs and round-trips bounds [-1:1,4:5], traverses exactly six elements using stored bounds and verifies their sum of 270. No source edits. It does not cover all dimensions, vector/tensor wrappers, empty arrays or invalid bounds. This is an indexing utility, not a numerical solver.",
+        "notes": "Derived types and constructors for multidimensional array bounds. The checked main reconstructs and round-trips bounds [-1:1,4:5], traverses exactly six elements using stored bounds and verifies their sum of 270. No source edits. It does not cover all dimensions, vector/tensor wrappers, empty arrays or invalid bounds. This is an indexing utility, not a numerical solver. Dedicated R driver: Independent API consumer; pinned interfaces/implementations and available author examples reviewed without copying bodies. 784 nonempty rank-2 arrays with negative/zero/positive origins and asymmetric extents. Exact bound literals and independent arithmetic-progression traversal sums. Empty extents and aggregate constructors unverified.",
         "evidence": [
           {
             "path": "src/type/array2d_range_type.f90",
@@ -4317,7 +4321,8 @@
             "line": 1
           }
         ],
-        "author_examples": []
+        "author_examples": [],
+        "driver_id": "array-bounds-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T00:50:30.284213+00:00"
@@ -4807,7 +4812,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Programmatic Fortran edit descriptors. The main generates and applies integer, character and fixed-decimal real formats, checks exact aligned output, and verifies a zero-padded integer. The registry stdlib dependency is mapped to a pinned Git source and manifest version; compatible stdlib objects are reused. No Fortran source edits. Arrays, complex values, user-defined I/O and every descriptor/control mode are not covered.",
+        "notes": "Programmatic Fortran edit descriptors. The main generates and applies integer, character and fixed-decimal real formats, checks exact aligned output, and verifies a zero-padded integer. The registry stdlib dependency is mapped to a pinned Git source and manifest version; compatible stdlib objects are reused. No Fortran source edits. Arrays, complex values, user-defined I/O and every descriptor/control mode are not covered. Dedicated N1 driver: Independent API consumer; pinned interfaces/implementations and available author examples reviewed without copying bodies. Generated integer and fixed-point edit descriptors compared with independently constructed native Fortran format strings, including overflow fields, minimum digits and concatenated columns. Other descriptor families, locale and cross-compiler rounding unverified. Reference accounts for reviewed FED normalization: zero minimum digits omit .m, and real widths increase to at least d+2. Retained native-format assumptions were consumer reference errors, not upstream defects.",
         "evidence": [
           {
             "path": "src/fed.f90",
@@ -4824,7 +4829,8 @@
             "path": "example/real.f90",
             "sha256": "44d449346997a358306038f533f4b23aa08774b6b72eed519ae657933a882bc5"
           }
-        ]
+        ],
+        "driver_id": "fed-format-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T01:11:46.981596+00:00"
@@ -6812,7 +6818,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "SQLite wrapper with bundled SQLite 3.30.1 C sources. The checked main opens an in-memory database, creates a table, inserts three values, verifies count and average, reaches SQLITE_DONE and closes resources. It does not cover persistent files, concurrent use, transactions or the complete SQLite API. Explicit GitLab-to-GitHub alias pins ISO varying string; no source edits.",
+        "notes": "SQLite wrapper with bundled SQLite 3.30.1 C sources. The checked main opens an in-memory database, creates a table, inserts three values, verifies count and average, reaches SQLITE_DONE and closes resources. It does not cover persistent files, concurrent use, transactions or the complete SQLite API. Explicit GitLab-to-GitHub alias pins ISO varying string; no source edits. Dedicated N1 driver: Independent API consumer; pinned interfaces/implementations and available author examples reviewed without copying bodies. In-memory SQL consumer: 64 prepared/bound integer/dyadic-real inserts with reset; commit plus rolled-back update/insertion; five exact aggregates and 43 ordered row references after deletion. Disk persistence, concurrency, text/NULL and error recovery unverified.",
         "evidence": [
           {
             "path": "src/sqliteff.f90",
@@ -6820,7 +6826,8 @@
             "line": 1
           }
         ],
-        "author_examples": []
+        "author_examples": [],
+        "driver_id": "sqlite-transactions-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T00:20:04.805639+00:00"
@@ -18582,7 +18589,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Documented configuration values. An FPM wrapper selects unchanged m_config.f90. The main creates its own tiny configuration file, overrides integer, logical, string and grouped real defaults, reads a dynamically sized real array, checks every value and clears the configuration. No uploaded data file or external service is required. Command-line parsing, invalid-file diagnostics and all string/array/grouping behavior are not validated.",
+        "notes": "Documented configuration values. An FPM wrapper selects unchanged m_config.f90. The main creates its own tiny configuration file, overrides integer, logical, string and grouped real defaults, reads a dynamically sized real array, checks every value and clears the configuration. No uploaded data file or external service is required. Command-line parsing, invalid-file diagnostics and all string/array/grouping behavior are not validated. Dedicated N1 driver: Independent API consumer; pinned interfaces/implementations and available author examples reviewed without copying bodies. 24 fresh configuration objects/files with exact typed scalars, nested keys, dynamic arrays and retained defaults. Valid generated inputs only; malformed files, unknown keys, repeated reads and CLI inputs unverified.",
         "evidence": [
           {
             "path": "m_config.f90",
@@ -18595,7 +18602,8 @@
             "path": "example_1.f90",
             "sha256": "538fb21b88402c16ce11dac9c171691b874af33efd88bc6a15be76a2a9072eb0"
           }
-        ]
+        ],
+        "driver_id": "config-file-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T12:15:32.322175+00:00",
@@ -30815,7 +30823,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "CODATA physical constants. The checked main imports the explicit 2022 edition, computes the energy of a 500 nm photon in joules and electron volts, and compares it with independent decimal reference values. The source modules are pre-generated; no network request or Python generation is needed to use them. No source edits. This is a check of three constants and one calculation, not revalidation of the complete CODATA tables or uncertainty propagation.",
+        "notes": "CODATA physical constants. The checked main imports the explicit 2022 edition, computes the energy of a 500 nm photon in joules and electron volts, and compares it with independent decimal reference values. The source modules are pre-generated; no network request or Python generation is needed to use them. No source edits. This is a check of three constants and one calculation, not revalidation of the complete CODATA tables or uncertainty propagation. Dedicated R driver: Independent API consumer; pinned interfaces/implementations and available author examples reviewed without copying bodies. Three SI-defining constants and 24 photon-energy references from independent exact Python Fraction arithmetic, with joule/electron-volt conversions. NIST 2022 CODATA source reviewed. Other constants and uncertain values unverified.",
         "evidence": [
           {
             "path": "src/CODATA_2022_constants.f90",
@@ -30823,7 +30831,8 @@
             "line": 1
           }
         ],
-        "author_examples": []
+        "author_examples": [],
+        "driver_id": "codata-photon-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T00:50:30.284213+00:00"
@@ -32199,7 +32208,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "The current upstream Fypp templates produce fdict_types, variable and dictionary modules. Fypp 3.2 generates a checksum-locked asset with standard integer/real/complex/logical kinds, arrays through rank five, iso_fortran_env, optional extended kinds disabled and the upstream CMake default of non-pure interfaces. No CMake or Fypp runs in visitor preparation. The checked consumer stores and retrieves integer, real64, string and integer-array values, checks each returned value and frees the dictionary. N4 covers container storage and N5 covers key lookup. Earlier v0.7.1 preparation failed on missing generated includes; the current template generation resolves that blocker without downloading release assets or weakening archive checks. MPL-2.0 notices remain intact.",
+        "notes": "The current upstream Fypp templates produce fdict_types, variable and dictionary modules. Fypp 3.2 generates a checksum-locked asset with standard integer/real/complex/logical kinds, arrays through rank five, iso_fortran_env, optional extended kinds disabled and the upstream CMake default of non-pure interfaces. No CMake or Fypp runs in visitor preparation. The checked consumer stores and retrieves integer, real64, string and integer-array values, checks each returned value and frees the dictionary. N4 covers container storage and N5 covers key lookup. Earlier v0.7.1 preparation failed on missing generated includes; the current template generation resolves that blocker without downloading release assets or weakening archive checks. MPL-2.0 notices remain intact. Dedicated N4 driver: Independent API consumer; pinned interfaces/implementations and available author examples reviewed without copying bodies. Eight 49-key mixed integer/REAL64/text/array dictionaries with exact reverse lookups, input-array mutation to check ownership, deletion survivors and explicit destruction. Missing/type-mismatched lookup, duplicate-key policy, container copying and every hash collision unverified.",
         "evidence": [
           {
             "path": "src/dictionary.fypp",
@@ -32230,7 +32239,8 @@
             "path": "test/tst_dict_multiple.f90",
             "sha256": "a9a5afe209cfd485a37f558a7b67f183421184c987e2312c0417a9f30aa7d7a0"
           }
-        ]
+        ],
+        "driver_id": "fdict-values-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T23:19:15.682106+00:00",

@@ -1,0 +1,79 @@
+{
+  "ok": false,
+  "compiler": "GNU Fortran (GCC) 16.2.0",
+  "compiler_id": "gfortran",
+  "fpm": "0.12.0",
+  "stages": [
+    {
+      "name": "Build",
+      "command": [
+        "fpm",
+        "build",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.728,
+      "ok": true,
+      "exit_code": 0,
+      "error": "",
+      "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+      "stderr": ""
+    },
+    {
+      "name": "Run",
+      "command": [
+        "fpm",
+        "run",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.049,
+      "ok": false,
+      "exit_code": 1,
+      "error": "",
+      "stdout": "",
+      "stderr": "Project is up to date\nERROR STOP C vector reused value\n\nError termination. Backtrace:\n#0  0x2b8b3b305f83 in ???\n#1  0x2b8b3b306c39 in ???\n#2  0x2b8b3b308045 in ???\n#3  0x402080 in containers_reference\n\tat app/main.f90:57\n#4  0x402497 in main\n\tat app/main.f90:3\n<ERROR> Execution for object \" playground-main \" returned exit code  1\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 1\n"
+    }
+  ],
+  "cache": {
+    "package": "qcontainers",
+    "compiler": "GNU Fortran 16.2.0",
+    "key": "089dddf3b8ee1d501e3d7ef0",
+    "library_reused": true,
+    "changed_artifacts": []
+  },
+  "packages": [
+    {
+      "repository": "darmar-lt/qcontainers",
+      "revision": "bb1423dded02588898530c3ac7aa709e3f4eb5c3",
+      "sha256": "3ae4a33deb90a276926e93c1db4f81d62f28a2a40eb541f3d0a4d8870a490111"
+    }
+  ],
+  "build_ok": true,
+  "target_groups": {
+    "app": [
+      "playground-main"
+    ],
+    "example": [],
+    "test": []
+  },
+  "targets": [
+    "playground-main"
+  ],
+  "plots": [],
+  "plot_notes": []
+}

@@ -1,0 +1,328 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "array-bounds-reference",
+      "source_revision": "cd21ccb982e23de9c2df44c12edab44dd84562dc",
+      "source_sha256": "d3a66fa0ca47dd834eeaef95a87c7e0aa30e4668182223dd8ef5172696f2f553",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T14:59:25.862334+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 2.119,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "784 nonempty rank-2 arrays; 3136 bound entries and 4900 traversed elements checked.\nNegative/zero/positive origins, asymmetric shapes and independent arithmetic-progression sums.\nZero extents, invalid bound arrays and vector/tensor aggregate constructors unverified.\nPASS array-bounds-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.027,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "keyvars-config-reference",
+      "source_revision": "f0551aad0b46aa7aac1c442a3c576ecc90028f72",
+      "source_sha256": "4bb1bdbe6c2615bf4216d6f2e08ab2f7078374417c5fcdac44a3b2b4ef85efe5",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T14:59:31.454206+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.349,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "36 generated INI files; 180 exact scalar/default references.\nSigned integer/dyadic real values, six true spellings, comments, string values and absent-key defaults.\nWildcard sections only; malformed input, false spellings, section-specific matching and CLI overrides unverified.\nPASS keyvars-config-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.028,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "config-file-reference",
+      "source_revision": "106354774b2e6138161952f434c69e7913fa2000",
+      "source_sha256": "586b556abd89dc846e1f9b354bb362e9bfa13be15129550c28d1b3074cf51879",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T14:59:33.614594+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.343,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "24 fresh configuration/file fixtures; exact scalar and array references: 228\nInteger, dyadic real, logical, text, nested keys, dynamic arrays and retained defaults.\nValid generated inputs only; malformed files, unknown keys, repeated reads and CLI input unverified.\nPASS config-file-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.04,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "sqlite-transactions-reference",
+      "source_revision": "9b377c976698a7da671536e5e2539146ab734ca6",
+      "source_sha256": "27f8f9c7e4e1d566f29f34a442b39db23d538ab576617cdf7da2471f10cc601d",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T14:59:38.351793+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.33,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "64 prepared/bound inserts; rollback restores five exact aggregates; 43 ordered rows after deletion.\nIn-memory database, commit/rollback, statement reset/finalize and independent integer/dyadic references.\nDisk persistence, concurrent transactions, text/NULL values and database error recovery unverified.\nPASS sqlite-transactions-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.026,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "codata-photon-reference",
+      "source_revision": "3e18620ab7813fd9f02e8dcf05c48f0ca13f2ec0",
+      "source_sha256": "9a47a5ec1819a83d9f8986c91ae56177378e802f81967df774edeb890561a179",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T14:59:41.885613+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.399,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Three exact SI constant literals and 24 rational-derived photon-energy references.\nMaximum relative photon-energy discrepancy:    2.22045E-16\nWavelengths 1..1000000 nm; joules and electron volts checked with independent Python Fraction vectors.\nSelected exact constants only; uncertain CODATA values and the complete constants collection unverified.\nPASS codata-photon-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.031,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fdict-values-reference",
+      "source_revision": "6ac903d4c0c524d45b948281a18b9656936c0197",
+      "source_sha256": "e73bb1787268dfd4b35428dddde097c02d3cc4db5eeeeea877b05193f0e8d925",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T14:59:35.259498+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.375,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Eight 49-key dictionaries; exact typed lookup references: 488\nInteger/REAL64/text/array values, owned array copies, reverse lookup order and deletion survivors.\nMissing/type-mismatched lookups, duplicate-key policy, dictionary copying and all hash collisions unverified.\nPASS fdict-values-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.043,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "qcontainers-state-reference",
+      "source_revision": "bb1423dded02588898530c3ac7aa709e3f4eb5c3",
+      "source_sha256": "58698e57fb0e90f850b0c985fdbdd9dc717a086571d58ddc391a0c3e898c10ad",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T15:02:51.798978+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.459,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Eight vector/map traces; exact value/presence references: 51080\nC-backed growth, indexed edits, FIFO removal, map replacement/presence, vector clear and map clear/reuse.\nVector append-after-clear has a retained failure; iterator order, copying and thread safety unverified.\nPASS qcontainers-state-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.054,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "shunting-yard-reference",
+      "source_revision": "ff62d83502bc5fdf77f2750c3538b8634a543b91",
+      "source_sha256": "2737c7aa802bf022563103062a437e37f0ba3d68dfcc816ab6f682c28c32360e",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T15:02:53.014111+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.279,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "437 exact integer expression references; six generated templates and five precedence/associativity fixtures.\nNested parentheses, binary subtraction, exact integer division, right-associative powers and ignored spaces.\nValid bounded integers only; unary registration, syntax errors, real functions and overflow unverified.\nPASS shunting-yard-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.028,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "any-values-reference",
+      "source_revision": "b9eb5e3fdc8f162ae8f2c5d8d026537ed2397830",
+      "source_sha256": "38cdea6c801376bae4a4a8eb1785f35db8ec1c33b480fc9d20af35e39bdfc34f",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T15:02:54.647249+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.583,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "32 fresh typed-value groups; 1712 scalar/array value references on nonempty inputs.\nINT32, dyadic REAL64, logical and character scalars; owned rank-1/rank-2 array copies.\nEmpty values, populated-buffer reassignment, type mismatches and arbitrary ranks/kinds unverified.\nPASS any-values-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.025,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fed-format-reference",
+      "source_revision": "d735aa2b3bd6b20840bcc16ff569e8cfc0492267",
+      "source_sha256": "17c8092d6274bfee7038870c4dece055c776e39db705e1ec990438be7e21b11d",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T15:03:39.983895+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.375,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Exact comparisons against independently constructed native Fortran formats: 550\nInteger widths/minimum digits, fixed-point decimals, overflow fields and concatenated columns.\nExponential/complex/user-defined descriptors, locale and cross-compiler rounding unverified.\nPASS fed-format-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.034,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-11-01T15:03:40.041540+00:00"
+}

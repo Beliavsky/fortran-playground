@@ -9137,6 +9137,309 @@
         "nan_verified": false,
         "network_io_verified": false
       }
+    },
+    {
+      "id": "array-bounds-reference",
+      "name": "gams-array-bounds-reference",
+      "package_id": "array_range",
+      "procedure_id": "array-range-bounds",
+      "gams_code": "R",
+      "problem_id": "nondefault-origin-bounds-and-sums",
+      "path": "fpm_catalog/gams-drivers/array-bounds-reference.f90",
+      "revision": "cd21ccb982e23de9c2df44c12edab44dd84562dc",
+      "author_example": "",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/state-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned interfaces/implementations and available author examples reviewed without copying bodies. 784 nonempty rank-2 arrays with negative/zero/positive origins and asymmetric extents. Exact bound literals and independent arithmetic-progression traversal sums. Empty extents and aggregate constructors unverified.",
+      "validation_path": "docs/gams-state-ten-validation.json",
+      "review_path": "docs/gams-state-ten.md",
+      "checks": {
+        "arrays": 784,
+        "bound_entries": 3136,
+        "traversed_elements": 4900,
+        "zero_extents_verified": false
+      }
+    },
+    {
+      "id": "any-values-reference",
+      "name": "gams-any-values-reference",
+      "package_id": "any",
+      "procedure_id": "any-values",
+      "gams_code": "N4",
+      "problem_id": "typed-value-and-owned-array-references",
+      "path": "fpm_catalog/gams-drivers/any-values-reference.f90",
+      "revision": "b9eb5e3fdc8f162ae8f2c5d8d026537ed2397830",
+      "author_example": "example/demo.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/state-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer of fresh nonempty typed buffers; 32 groups and 1712 exact scalar/array references. Original arrays are mutated after wrapping to check owned copies. Empty-string and empty-array runtime failures are retained, not fixed. Initial assignment-import compile failure was a consumer API error. Reassignment, mismatched types and all ranks/kinds unverified.",
+      "validation_path": "docs/gams-state-ten-validation.json",
+      "review_path": "docs/gams-state-ten.md",
+      "checks": {
+        "groups": 32,
+        "value_references": 1712,
+        "kinds": [
+          "int32",
+          "real64",
+          "logical",
+          "character"
+        ],
+        "empty_arrays_verified": false,
+        "reassignment_verified": false,
+        "empty_strings_verified": false
+      }
+    },
+    {
+      "id": "fed-format-reference",
+      "name": "gams-fed-format-reference",
+      "package_id": "fed",
+      "procedure_id": "fed-format",
+      "gams_code": "N1",
+      "problem_id": "native-format-descriptor-oracle",
+      "path": "fpm_catalog/gams-drivers/fed-format-reference.f90",
+      "revision": "d735aa2b3bd6b20840bcc16ff569e8cfc0492267",
+      "author_example": "example/integer.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/state-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned interfaces/implementations and available author examples reviewed without copying bodies. Generated integer and fixed-point edit descriptors compared with independently constructed native Fortran format strings, including overflow fields, minimum digits and concatenated columns. Other descriptor families, locale and cross-compiler rounding unverified. Reference accounts for reviewed FED normalization: zero minimum digits omit .m, and real widths increase to at least d+2. Retained native-format assumptions were consumer reference errors, not upstream defects.",
+      "validation_path": "docs/gams-state-ten-validation.json",
+      "review_path": "docs/gams-state-ten.md",
+      "checks": {
+        "integer_widths": [
+          1,
+          12
+        ],
+        "fixed_point_widths": [
+          4,
+          18
+        ],
+        "decimal_places": [
+          0,
+          4
+        ],
+        "native_format_oracle": true,
+        "other_descriptor_families_verified": false,
+        "format_comparisons": 550,
+        "zero_minimum_policy": "omit .m",
+        "minimum_real_width": "decimal places + 2"
+      }
+    },
+    {
+      "id": "keyvars-config-reference",
+      "name": "gams-keyvars-config-reference",
+      "package_id": "io_utilities",
+      "procedure_id": "io-utilities-keyvars",
+      "gams_code": "N1",
+      "problem_id": "generated-ini-typed-value-oracle",
+      "path": "fpm_catalog/gams-drivers/keyvars-config-reference.f90",
+      "revision": "f0551aad0b46aa7aac1c442a3c576ecc90028f72",
+      "author_example": "test/test_keyvars.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/state-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned interfaces/implementations and available author examples reviewed without copying bodies. 36 self-contained INI files; exact signed integer, dyadic real, six true spellings, string/comment and absent-default references through wildcard section matching. Malformed inputs, false spellings, section-specific descriptors and CLI overrides unverified.",
+      "validation_path": "docs/gams-state-ten-validation.json",
+      "review_path": "docs/gams-state-ten.md",
+      "checks": {
+        "files": 36,
+        "scalar_references": 180,
+        "true_spellings": 6,
+        "missing_defaults_verified": true,
+        "malformed_input_verified": false
+      }
+    },
+    {
+      "id": "config-file-reference",
+      "name": "gams-config-file-reference",
+      "package_id": "config-fortran",
+      "procedure_id": "configuration-values",
+      "gams_code": "N1",
+      "problem_id": "generated-configuration-array-oracle",
+      "path": "fpm_catalog/gams-drivers/config-file-reference.f90",
+      "revision": "106354774b2e6138161952f434c69e7913fa2000",
+      "author_example": "example_1.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/state-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned interfaces/implementations and available author examples reviewed without copying bodies. 24 fresh configuration objects/files with exact typed scalars, nested keys, dynamic arrays and retained defaults. Valid generated inputs only; malformed files, unknown keys, repeated reads and CLI inputs unverified.",
+      "validation_path": "docs/gams-state-ten-validation.json",
+      "review_path": "docs/gams-state-ten.md",
+      "checks": {
+        "files": 24,
+        "dynamic_lengths": [
+          1,
+          8
+        ],
+        "nested_keys_verified": true,
+        "retained_defaults_verified": true,
+        "repeated_read_verified": false,
+        "value_references": 228
+      }
+    },
+    {
+      "id": "fdict-values-reference",
+      "name": "gams-fdict-values-reference",
+      "package_id": "fdict",
+      "procedure_id": "fdict-dictionary",
+      "gams_code": "N4",
+      "problem_id": "mixed-key-value-and-deletion-oracle",
+      "path": "fpm_catalog/gams-drivers/fdict-values-reference.f90",
+      "revision": "6ac903d4c0c524d45b948281a18b9656936c0197",
+      "author_example": "README.md",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/state-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned interfaces/implementations and available author examples reviewed without copying bodies. Eight 49-key mixed integer/REAL64/text/array dictionaries with exact reverse lookups, input-array mutation to check ownership, deletion survivors and explicit destruction. Missing/type-mismatched lookup, duplicate-key policy, container copying and every hash collision unverified.",
+      "validation_path": "docs/gams-state-ten-validation.json",
+      "review_path": "docs/gams-state-ten.md",
+      "checks": {
+        "dictionaries": 8,
+        "keys_each": 49,
+        "typed_lookup_references": 488,
+        "owned_array_copy_verified": true,
+        "duplicate_policy_verified": false
+      }
+    },
+    {
+      "id": "qcontainers-state-reference",
+      "name": "gams-qcontainers-state-reference",
+      "package_id": "qcontainers",
+      "procedure_id": "qcontainers-storage",
+      "gams_code": "N4",
+      "problem_id": "array-and-key-map-state-oracles",
+      "path": "fpm_catalog/gams-drivers/qcontainers-state-reference.f90",
+      "revision": "bb1423dded02588898530c3ac7aa709e3f4eb5c3",
+      "author_example": "tests/test_vector.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/state-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent plain-array/key-map oracle for eight C-backed integer traces: 51080 exact references for growth, index edits, FIFO pops, map updates and presence. Vector clear and map clear/reuse checked; vector append-after-clear resets C element size and has a retained failing probe. No library patch or successful vector-reuse claim. Object copying, iterators and thread safety unverified.",
+      "validation_path": "docs/gams-state-ten-validation.json",
+      "review_path": "docs/gams-state-ten.md",
+      "checks": {
+        "traces": 8,
+        "appends_per_trace": 96,
+        "map_keys": 17,
+        "map_replacements_verified": true,
+        "clear_reuse_verified": false,
+        "thread_safety_verified": false,
+        "value_presence_references": 51080,
+        "map_clear_reuse_verified": true,
+        "vector_clear_reuse_verified": false
+      }
+    },
+    {
+      "id": "sqlite-transactions-reference",
+      "name": "gams-sqlite-transactions-reference",
+      "package_id": "sqliteff",
+      "procedure_id": "sqliteff-database",
+      "gams_code": "N1",
+      "problem_id": "in-memory-bound-transactions-reference",
+      "path": "fpm_catalog/gams-drivers/sqlite-transactions-reference.f90",
+      "revision": "9b377c976698a7da671536e5e2539146ab734ca6",
+      "author_example": "",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/state-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned interfaces/implementations and available author examples reviewed without copying bodies. In-memory SQL consumer: 64 prepared/bound integer/dyadic-real inserts with reset; commit plus rolled-back update/insertion; five exact aggregates and 43 ordered row references after deletion. Disk persistence, concurrency, text/NULL and error recovery unverified.",
+      "validation_path": "docs/gams-state-ten-validation.json",
+      "review_path": "docs/gams-state-ten.md",
+      "checks": {
+        "bound_inserts": 64,
+        "aggregate_references": 5,
+        "remaining_ordered_rows": 43,
+        "rollback_verified": true,
+        "disk_persistence_verified": false
+      }
+    },
+    {
+      "id": "shunting-yard-reference",
+      "name": "gams-shunting-yard-reference",
+      "package_id": "shunting-yard-fortran",
+      "procedure_id": "shunting-yard-parser",
+      "gams_code": "N3",
+      "problem_id": "integer-expression-template-oracle",
+      "path": "fpm_catalog/gams-drivers/shunting-yard-reference.f90",
+      "revision": "ff62d83502bc5fdf77f2750c3538b8634a543b91",
+      "author_example": "app/main.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/state-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent integer callback consumer; 437 bounded binary expressions checked against direct arithmetic, including precedence, nested parentheses, exact division, right-associative powers and ignored spaces. Unary registration excluded: retained probe returns 1 instead of -1 for 1-1-1 when unary minus also marks the minus token right-associative. No parser patch; malformed syntax, real functions, overflow and registration isolation unverified.",
+      "validation_path": "docs/gams-state-ten-validation.json",
+      "review_path": "docs/gams-state-ten.md",
+      "checks": {
+        "expressions": 437,
+        "generated_templates": 6,
+        "special_fixtures": 5,
+        "integer_objects": true,
+        "malformed_syntax_verified": false,
+        "unary_registration_verified": false
+      }
+    },
+    {
+      "id": "codata-photon-reference",
+      "name": "gams-codata-photon-reference",
+      "package_id": "fundamental_constants",
+      "procedure_id": "fundamental-codata",
+      "gams_code": "R",
+      "problem_id": "rational-si-photon-energy-oracle",
+      "path": "fpm_catalog/gams-drivers/codata-photon-reference.f90",
+      "revision": "3e18620ab7813fd9f02e8dcf05c48f0ca13f2ec0",
+      "author_example": "",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/state-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned interfaces/implementations and available author examples reviewed without copying bodies. Three SI-defining constants and 24 photon-energy references from independent exact Python Fraction arithmetic, with joule/electron-volt conversions. NIST 2022 CODATA source reviewed. Other constants and uncertain values unverified.",
+      "validation_path": "docs/gams-state-ten-validation.json",
+      "review_path": "docs/gams-state-ten.md",
+      "checks": {
+        "exact_constants": 3,
+        "photon_references": 24,
+        "wavelengths_nm": [
+          1,
+          2,
+          10,
+          121,
+          250,
+          400,
+          500,
+          656,
+          800,
+          1064,
+          10000,
+          1000000
+        ],
+        "relative_tolerance": 2e-15,
+        "uncertain_constants_verified": false,
+        "reference_files": {
+          "fpm_catalog/gams-drivers/references/photon_vectors.py": "902e8073ce6ffbfb9cdc10730dd364e41386df8fce792ca7b5980634dd14596a",
+          "fpm_catalog/gams-drivers/references/photon-vectors.json": "af0419be4050d5cc7af66a32d99d4c581f0eb95f24e57737ca2ed847f4f9e410"
+        }
+      }
     }
   ]
 }
