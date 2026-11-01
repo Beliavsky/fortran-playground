@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "fiats-inference-reference",
+      "source_revision": "7d564b86389460555d6f7d9b7a6b5198588af9df",
+      "source_sha256": "e2dce19b09920b9f48e9270a13f850518d1723a797dadd9c5c92f885f4910ca3",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T11:43:09.384416+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.597,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Fiats fixed networks: 48; inference calls: 576\nIndependent output references: 792; exact replay entries: 72\nNative decimal precision: 6\nMaximum normalized multilayer error:    3.46692E-08\nReLU/sigmoid/swish apply to every connection, including output; default ranges are identity.\nFixed inference only; training, derivatives, model I/O and nonidentity ranges unverified.\nPASS fiats-inference-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.071,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "ennuf-inference-reference",
+      "source_revision": "2555a7f1560ef3cb7cf707221fa5bb1b5334ee6f",
+      "source_sha256": "6d790ee3ae273d069b768262683a4e4a42746902f49cb9d54312f9ee31bb2ce0",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T11:43:11.105489+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.495,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Ennuf pipeline batches: 2640; dense and activation calls each: 5940\nAll-stage reference entries: 35200; final-layer entries included: 10560\nGenerated-model evaluations: 81; four ReLU-region counts:     21    29    14    17\nMax normalized pipeline error, softmax sum error and generated-model error:    5.25551E-08   1.19209E-07   0.00000E+00\nFixed REAL32 inference only; conversion, convolution, training and extreme softmax logits unverified.\nPASS ennuf-inference-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.042,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-11-01T11:43:11.157188+00:00"
+}

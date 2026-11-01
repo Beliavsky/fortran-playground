@@ -91,6 +91,8 @@ from xpackage_gams import (gams_data, package_classes, review_text, subclass_mod
                             random_references_review_text, RANDOM_REFERENCES_REPORT,
                             tangents_blocks_review_text, TANGENTS_BLOCKS_REPORT,
                             radial_dense_review_text, RADIAL_DENSE_REPORT,
+                            inference_pairs_review_text, INFERENCE_PAIRS_REPORT,
+                            helmholtz_streams_review_text, HELMHOLTZ_STREAMS_REPORT,
                           coverage_data, coverage_review_text, COVERAGE_REPORT,
                           class_evidence, class_tree, mapping_evidence_text, EVIDENCE_REPORT)
 
@@ -806,8 +808,9 @@ class PackageGamsTests(unittest.TestCase):
             self.assertEqual(record['driver_id'], d['id'])
             self.assertEqual(class_evidence(class_tree(data),d['gams_code'],[record],[d])['status'], 'verified')
         spherepack_records = [r for r in data['procedure_mappings'] if r['package_id'] == 'spherepack']
+        # A transform driver alone cannot establish PDE coverage.
         self.assertEqual(class_evidence(class_tree(data),'I2',spherepack_records,
-                                       list(drivers.values()))['status'], 'source-supported')
+                                       [spherical])['status'], 'source-supported')
         text = quantities_spherical_review_text()
         self.assertEqual((ROOT/QUANTITIES_SPHERICAL_REPORT).read_text(encoding='utf-8'), text)
         self.assertIn('0.3048 m/ft', text)
@@ -875,6 +878,103 @@ class PackageGamsTests(unittest.TestCase):
         self.assertIn('22,416',text)
         self.assertIn('Type-2/type-3 transforms',text)
         self.assertIn('two-dimensional NUFFT2D driver',transforms_review_text())
+
+    def test_helmholtz_and_stream_driver_scope_and_review(self):
+        data = gams_data()
+        drivers = {d['id']:d for d in driver_data(data=data)}
+        records = {r['id']:r for r in data['procedure_mappings']}
+        for ident,code in [('spherepack-helmholtz-reference','I2'),('rng-xoroshiro-reference','L6a21')]:
+            d = drivers[ident]
+            r = records[d['procedure_id']]
+            self.assertEqual(r['driver_id'],ident)
+            self.assertEqual(class_evidence(class_tree(data),code,[r],[d])['status'],'verified')
+        sphere = drivers['spherepack-helmholtz-reference']['checks']
+        self.assertEqual(sphere['solves'],258)
+        self.assertEqual(sphere['grid_point_references'],86000)
+        self.assertTrue(sphere['nonzonal_modes_verified'])
+        self.assertTrue(sphere['zero_mean_poisson_verified'])
+        self.assertFalse(sphere['resonant_shifts_verified'])
+        rng = drivers['rng-xoroshiro-reference']['checks']
+        self.assertEqual(rng['integer_draws'],61440)
+        self.assertEqual(rng['uniform_draws'],61440)
+        self.assertEqual(rng['independent_hashes'],30)
+        self.assertFalse(rng['statistical_quality_verified'])
+        self.assertFalse(rng['normal_reseeding_fixed'])
+        text = helmholtz_streams_review_text()
+        self.assertEqual((ROOT/HELMHOLTZ_STREAMS_REPORT).read_text(encoding='utf-8'),text)
+        for phrase in ['258 solves','86,000 grid-point','zero-constant gauge','T**(2**64)',
+                       'cached-normal reseeding defect remains unresolved','categories are not exhausted']:
+            self.assertIn(phrase,text)
+
+    def test_xoroshiro_oracle_vectors_hashes_and_matrix_powers(self):
+        import hashlib
+        import importlib.util
+        path = ROOT/'fpm_catalog/gams-drivers/references/xoroshiro_vectors.py'
+        spec = importlib.util.spec_from_file_location('xoroshiro_reference',path)
+        oracle = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(oracle)
+        vectors = json.loads(path.with_name('xoroshiro-vectors.json').read_text())
+        self.assertEqual(oracle.vectors(),vectors)
+        columns = [oracle.transition(1<<bit) for bit in range(128)]
+        for power in range(7):
+            for seed in [1,1<<127,0xFEDCBA98765432100123456789ABCDEF]:
+                expected = seed
+                for _ in range(2**power):
+                    expected = oracle.transition(expected)
+                self.assertEqual(oracle.apply(columns,seed),expected)
+            columns = [oracle.apply(columns,c) for c in columns]
+        d = next(d for d in driver_data() if d['id']=='rng-xoroshiro-reference')
+        for name,sha in d['checks']['reference_files'].items():
+            self.assertEqual(hashlib.sha256((ROOT/name).read_text(encoding='utf-8').encode()).hexdigest(),sha)
+
+    def test_fiats_and_ennuf_inference_keep_scalar_channel_and_model_scope(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for ident in ['fiats-inference-reference','ennuf-inference-reference']:
+            d = drivers[ident]
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'],ident)
+            self.assertEqual(class_evidence(class_tree(data),'K',[record],[d])['status'],'verified')
+        fiats = drivers['fiats-inference-reference']['checks']
+        self.assertEqual(fiats['networks'],48)
+        self.assertEqual(fiats['inference_calls'],576)
+        self.assertEqual(fiats['output_reference_entries'],792)
+        self.assertEqual(fiats['exact_replay_entries'],72)
+        self.assertTrue(fiats['real64_scalar_oracle'])
+        self.assertTrue(fiats['output_layer_activated'])
+        self.assertTrue(fiats['identity_range_maps_only'])
+        self.assertFalse(fiats['nonidentity_range_maps_verified'])
+        ennuf = drivers['ennuf-inference-reference']['checks']
+        self.assertEqual(ennuf['pipeline_batches'],2640)
+        self.assertEqual(ennuf['dense_calls'],5940)
+        self.assertEqual(ennuf['all_stage_reference_entries'],35200)
+        self.assertEqual(ennuf['final_layer_reference_entries'],10560)
+        self.assertEqual(ennuf['channels'],[1,2,5])
+        self.assertTrue(ennuf['stable_softmax_reference'])
+        self.assertFalse(ennuf['extreme_softmax_logits_verified'])
+        text = inference_pairs_review_text()
+        self.assertEqual((ROOT/INFERENCE_PAIRS_REPORT).read_text(encoding='utf-8'),text)
+        for phrase in ['48 fixed networks','792 output entries','2,640 pipeline batches','35,200 layer-output',
+                       'stabilization is in the reference','not a trained scientific surrogate',
+                       'categories are not exhausted']:
+            self.assertIn(phrase,text)
+
+    def test_ennuf_generated_reference_uses_the_existing_pinned_asset(self):
+        import hashlib
+        d = next(d for d in driver_data() if d['id']=='ennuf-inference-reference')
+        checks = d['checks']
+        self.assertEqual(checks['generated_model_evaluations'],81)
+        self.assertEqual(checks['generated_model_relu_region_counts'],[21,29,14,17])
+        self.assertFalse(checks['external_model_conversion_verified'])
+        self.assertFalse(checks['training_verified'])
+        path = ROOT/checks['generated_asset_path']
+        self.assertEqual(hashlib.sha256(path.read_text(encoding='utf-8').encode()).hexdigest(),
+                         checks['generated_asset_sha256'])
+        package = next(p for p in json.loads((ROOT/'fpm_catalog.json').read_text())['packages'] if p['id']=='ennuf')
+        recipe = package['catalog_build']['source_packages']['metoffice/ennuf']['generated']
+        self.assertEqual(recipe['sha256'],checks['generated_asset_sha256'])
+        self.assertEqual(recipe['asset'],path.name)
 
     def test_radial_states_and_dense_layers_keep_independent_reference_scope(self):
         data = gams_data()

@@ -8,7 +8,7 @@ This report assesses each package/class pair, including inherited parent classes
 
 When a driver cannot be created, inspect the pinned implementation and author examples. Narrow or remove a classification that is unsupported; do not substitute an unrelated default example as evidence. Record missing dependencies, sandbox limits and upstream defects separately in the procedure or package review notes. A sandbox failure alone does not disprove an algorithm.
 
-Counts refer to package/class pairs and include parents: 568 verified, 181 source-supported, 246 uncertain.
+Counts refer to package/class pairs and include parents: 574 verified, 175 source-supported, 246 uncertain.
 
 ## Mappings requiring source review
 
@@ -316,7 +316,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [econ-toolchain / econ-toolchain-api](https://beliavsky.github.io/fortran-playground/gams/packages/econ-toolchain/#econ-toolchain-api) | M | verified |
 | [ecx / ecx-impedance](https://beliavsky.github.io/fortran-playground/gams/packages/ecx/#ecx-impedance) | A4 | verified |
 | [enclose / enclose-strings](https://beliavsky.github.io/fortran-playground/gams/packages/enclose/#enclose-strings) | N3 | source-supported |
-| [ennuf / ennuf-inference](https://beliavsky.github.io/fortran-playground/gams/packages/ennuf/#ennuf-inference) | K | source-supported |
+| [ennuf / ennuf-inference](https://beliavsky.github.io/fortran-playground/gams/packages/ennuf/#ennuf-inference) | K | verified |
 | [erloff / erloff-errors](https://beliavsky.github.io/fortran-playground/gams/packages/erloff/#erloff-errors) | R | source-supported |
 | [errstat / error-status](https://beliavsky.github.io/fortran-playground/gams/packages/errstat/#error-status) | R3 | verified |
 | [fassert / assert-values](https://beliavsky.github.io/fortran-playground/gams/packages/fassert/#assert-values) | S3 | verified |
@@ -335,7 +335,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [fftpack / fftpack-fft](https://beliavsky.github.io/fortran-playground/gams/packages/fftpack/#fftpack-fft) | J1a2 | verified |
 | [fglm / fglm-api](https://beliavsky.github.io/fortran-playground/gams/packages/fglm/#fglm-api) | D1 | verified |
 | [fgsl / fgsl-qags](https://beliavsky.github.io/fortran-playground/gams/packages/fgsl/#fgsl-qags) | H2a1a1 | verified |
-| [fiats / fiats-inference](https://beliavsky.github.io/fortran-playground/gams/packages/fiats/#fiats-inference) | K | source-supported |
+| [fiats / fiats-inference](https://beliavsky.github.io/fortran-playground/gams/packages/fiats/#fiats-inference) | K | verified |
 | [finterp / finterp-linear-interp-1d](https://beliavsky.github.io/fortran-playground/gams/packages/finterp/#finterp-linear-interp-1d) | E1a | verified |
 | [finterp / finterp-linear-interp-2d](https://beliavsky.github.io/fortran-playground/gams/packages/finterp/#finterp-linear-interp-2d) | E2a | verified |
 | [fishpack / fishpack-api](https://beliavsky.github.io/fortran-playground/gams/packages/fishpack/#fishpack-api) | I2 | verified |
@@ -544,7 +544,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [rklib / rklib-rk4](https://beliavsky.github.io/fortran-playground/gams/packages/rklib/#rklib-rk4) | I1a1a | verified |
 | [rndgen-fortran / rndgen-fortran-rnd](https://beliavsky.github.io/fortran-playground/gams/packages/rndgen-fortran/#rndgen-fortran-rnd) | L6a21 | verified |
 | [rng-fortran / rng-distributions](https://beliavsky.github.io/fortran-playground/gams/packages/rng-fortran/#rng-distributions) | L6 | verified |
-| [rng-fortran / rng-uniform](https://beliavsky.github.io/fortran-playground/gams/packages/rng-fortran/#rng-uniform) | L6a21 | source-supported |
+| [rng-fortran / rng-uniform](https://beliavsky.github.io/fortran-playground/gams/packages/rng-fortran/#rng-uniform) | L6a21 | verified |
 | [rng-fortran / rng-uniform](https://beliavsky.github.io/fortran-playground/gams/packages/rng-fortran/#rng-uniform) | L6c | source-supported |
 | [rngff / rngff-linear-congruential-t](https://beliavsky.github.io/fortran-playground/gams/packages/rngff/#rngff-linear-congruential-t) | L6a21 | verified |
 | [rojff / rojff-json](https://beliavsky.github.io/fortran-playground/gams/packages/rojff/#rojff-json) | N1 | source-supported |
@@ -575,7 +575,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [specialmatrices / specialmatrices-solve](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-solve) | D2 | verified |
 | [spectrum / spectrum-convolve](https://beliavsky.github.io/fortran-playground/gams/packages/spectrum/#spectrum-convolve) | J2 | verified |
 | [spectrum / spectrum-rfft](https://beliavsky.github.io/fortran-playground/gams/packages/spectrum/#spectrum-rfft) | J1a1 | verified |
-| [spherepack / spherepack-api](https://beliavsky.github.io/fortran-playground/gams/packages/spherepack/#spherepack-api) | I2 | source-supported |
+| [spherepack / spherepack-api](https://beliavsky.github.io/fortran-playground/gams/packages/spherepack/#spherepack-api) | I2 | verified |
 | [spherepack / spherepack-scalar-transform](https://beliavsky.github.io/fortran-playground/gams/packages/spherepack/#spherepack-scalar-transform) | J | verified |
 | [splpak / splpak-splpak-type](https://beliavsky.github.io/fortran-playground/gams/packages/splpak/#splpak-splpak-type) | K1 | verified |
 | [sqliteff / sqliteff-database](https://beliavsky.github.io/fortran-playground/gams/packages/sqliteff/#sqliteff-database) | N1 | source-supported |

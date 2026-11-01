@@ -67,6 +67,46 @@ class GamsSiteTests(unittest.TestCase):
             self.assertIn('Open default example', sorting)
             self.assertNotIn('Try in playground', sorting)
 
+    def test_helmholtz_and_stream_pages_load_class_specific_drivers(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects']
+                            if p['playground']['package_id'] in {'spherepack','rng-fortran'}]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination,feed)
+            for code,package,driver in [('I2','spherepack','spherepack-helmholtz-reference'),
+                                        ('L6a21','rng-fortran','rng-xoroshiro-reference')]:
+                html = (destination/code/'index.html').read_text(encoding='utf-8')
+                primary = {url for url,label in Page(html).anchors if label=='Try in playground'}
+                self.assertIn(f'https://beliavsky.github.io/fortran-playground/fpm/?package={package}&example=gams-{driver}',primary)
+                self.assertIn('Verified: a checked driver',html)
+            scalar = (destination/'J/index.html').read_text(encoding='utf-8')
+            self.assertIn('example=gams-spherepack-zonal-reference',scalar)
+            self.assertNotIn('example=gams-spherepack-helmholtz-reference',scalar)
+
+    def test_fiats_and_ennuf_links_load_checked_inference_without_training_claims(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects']
+                            if p['playground']['package_id'] in {'fiats','ennuf'}]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination,feed)
+            html = (destination/'K/index.html').read_text(encoding='utf-8')
+            primary = {url for url,label in Page(html).anchors if label=='Try in playground'}
+            self.assertEqual(primary,{
+                f'https://beliavsky.github.io/fortran-playground/fpm/?package={package}&example=gams-{driver}'
+                for package,driver in [('fiats','fiats-inference-reference'),('ennuf','ennuf-inference-reference')]})
+            self.assertIn('Verified: a checked driver',html)
+            training = (destination/'G1b/index.html').read_text(encoding='utf-8')
+            for package,driver in [('fiats','fiats-inference-reference'),('ennuf','ennuf-inference-reference')]:
+                self.assertNotIn('example=gams-'+driver,training)
+                detail = (destination/'packages'/package/'index.html').read_text(encoding='utf-8')
+                card = detail.split('id="'+package+'-inference"',1)[1].split('</article>',1)[0]
+                self.assertIn('Load checked GAMS driver:',card)
+                self.assertIn('example=gams-'+driver,card)
+
     def test_radial_and_dense_links_load_checked_examples_without_narrower_claims(self):
         import copy
         feed = copy.deepcopy(self.feed)
@@ -1114,8 +1154,8 @@ class GamsSiteTests(unittest.TestCase):
                 self.assertEqual(primary, [f'https://beliavsky.github.io/fortran-playground/fpm/?package={package}&example=gams-{driver}'])
                 self.assertIn('Verified: a checked driver', html)
             pde = Page((destination/'I2/index.html').read_text())
-            self.assertIn(('https://beliavsky.github.io/fortran-playground/fpm/?package=spherepack',
-                           'Open default example'), pde.anchors)
+            self.assertIn(('https://beliavsky.github.io/fortran-playground/fpm/?package=spherepack&example=gams-spherepack-helmholtz-reference',
+                           'Try in playground'), pde.anchors)
             self.assertNotIn(('https://beliavsky.github.io/fortran-playground/fpm/?package=spherepack&example=gams-spherepack-zonal-reference',
                               'Try in playground'), pde.anchors)
 

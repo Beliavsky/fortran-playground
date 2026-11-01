@@ -5326,7 +5326,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "problem-specific source or delayed derivative callback",
-      "notes": "Spherical Helmholtz inversion using harmonic analysis and synthesis; two vector-workspace rank declarations are patched in the catalog recipe.",
+      "notes": "Spherical Helmholtz inversion using harmonic analysis and synthesis; two vector-workspace rank declarations are patched in the catalog recipe. Dedicated I2 driver checks 258 nonresonant Helmholtz and zero-mean Poisson solves against exact real spherical-harmonic solutions on Gaussian and regular grids. Ten zonal/nonzonal modes through degree three and their mixture are used at three resolutions; no vector PDE or resonant-shift claim.",
       "evidence": [
         {
           "path": "src/type_Sphere.f90",
@@ -5339,7 +5339,8 @@
           "path": "examples/helmsph.f90",
           "sha256": "d0c30718e842c77a52dd4c3b4aee4560f04f8f9e4f9935685618539bd15c1e81"
         }
-      ]
+      ],
+      "driver_id": "spherepack-helmholtz-reference"
     },
     {
       "id": "spherepack-scalar-transform",
@@ -7118,7 +7119,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "Xoroshiro128+ pseudo-random generator. An FPM wrapper selects unchanged m_random.f90 and uses -fwrapv for its intentional signed-integer wraparound. Two fresh generators replay 10000 seeded uniform draws exactly; the main checks the implementation range [0,1), broad uniform/normal/Poisson(4) moment tolerances, nonnegative counts and unit circle/sphere norms. These are deterministic smoke checks, not statistical quality or cryptographic validation. OpenMP, jump independence, large Poisson rates and all distributions are not covered. A separate hosted reproducer confirms that set_seed does not clear the cached second normal after an odd normal() call; use a fresh generator to restart normal sequences. The selected replay uses fresh objects.",
+      "notes": "Xoroshiro128+ pseudo-random generator. An FPM wrapper selects unchanged m_random.f90 and uses -fwrapv for its intentional signed-integer wraparound. Two fresh generators replay 10000 seeded uniform draws exactly; the main checks the implementation range [0,1), broad uniform/normal/Poisson(4) moment tolerances, nonnegative counts and unit circle/sphere norms. These are deterministic smoke checks, not statistical quality or cryptographic validation. OpenMP, jump independence, large Poisson rates and all distributions are not covered. A separate hosted reproducer confirms that set_seed does not clear the cached second normal after an odd normal() call; use a fresh generator to restart normal sequences. The selected replay uses fresh objects. Dedicated L6a21 driver checks 15 interleaved streams against unsigned-Python prefixes and rolling hashes, exact 52-bit integer/uniform conversion, seeded restarts and zero/default/two explicit jumps. Jump references use independent GF(2) transition-matrix exponentiation to 2**64. This establishes fixed bitstream and seed/jump API behavior, not statistical quality or thread independence; the cached-normal reseeding defect remains unresolved.",
       "evidence": [
         {
           "path": "m_random.f90",
@@ -7131,7 +7132,8 @@
           "path": "example.f90",
           "sha256": "aa79abd9d6ee57cac43006c7561efdb4e4a75ddf0a6c065652e449adeec1772e"
         }
-      ]
+      ],
+      "driver_id": "rng-xoroshiro-reference"
     },
     {
       "id": "rng-distributions",
@@ -8019,7 +8021,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "Pinned Fiats tag 0.12.0 (upstream manifest version 0.11.1), named inference-engine at that revision, with an explicitly pinned compatible Julienne 1.3.1 dependency and Assert 1.7.0. Tag 0.14.0 was tried first but its consumer build cannot find Julienne modules because they are declared only as a development dependency. Single-image coarrays and long free-form lines are enabled. Based on the author's write-read-infer example, the checked consumer constructs a two-input ReLU network with known diagonal weights and biases, evaluates negative, zero and positive input pairs, and compares every output with direct formulas. K is a broad function-approximation classification; training algorithms, gradients, model-file round trips and parallel speedups are not verified. The historical version is explicit in the menu description. The original Berkeley Lab license terms, including the enhancements clause, are retained.",
+      "notes": "Pinned Fiats tag 0.12.0 (upstream manifest version 0.11.1), named inference-engine at that revision, with an explicitly pinned compatible Julienne 1.3.1 dependency and Assert 1.7.0. Tag 0.14.0 was tried first but its consumer build cannot find Julienne modules because they are declared only as a development dependency. Single-image coarrays and long free-form lines are enabled. Based on the author's write-read-infer example, the checked consumer constructs a two-input ReLU network with known diagonal weights and biases, evaluates negative, zero and positive input pairs, and compares every output with direct formulas. K is a broad function-approximation classification; training algorithms, gradients, model-file round trips and parallel speedups are not verified. The historical version is explicit in the menu description. The original Berkeley Lab license terms, including the enhancements clause, are retained. The dedicated GAMS driver additionally checks 48 fixed multilayer networks with irregular widths, three activations, scalar references, padding sentinels and repeated inference; default identity input/output ranges only.",
       "evidence": [
         {
           "path": "src/inference_engine/inference_engine_m_.f90",
@@ -8037,7 +8039,8 @@
           "path": "example/write-read-infer.F90",
           "sha256": "bb24dec98c2590640fb94b08ec5c5bf09f0ff4cb4cabdcd588ffb4d45011d5d6"
         }
-      ]
+      ],
+      "driver_id": "fiats-inference-reference"
     },
     {
       "id": "julienne-diagnosis",
@@ -9121,7 +9124,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "The pinned upstream neural_net_mod module is compiled with an audited, generated fixed-weight model: two inputs, two ReLU hidden units and one output in REAL32. Operator generation uses the author Model/Dense/Activation API and NumPy 2.2.6; neither TensorFlow, PyTorch nor Python inference runs in visitor jobs. The generator sorts the imported layer routine names for reproducibility; network operations are unchanged. Four inputs exercise positive and clipped hidden units and predictions are checked against independently evaluated weights and biases, including negative and positive outputs and finiteness. K covers inference as approximation; no least-squares fitting or training classification is inferred. The sample network is illustrative, not a trained scientific model. Other network layers, external model conversion and training are not verified. BSD-3-Clause and Crown copyright notices are retained.",
+      "notes": "The pinned upstream neural_net_mod module is compiled with an audited, generated fixed-weight model: two inputs, two ReLU hidden units and one output in REAL32. Operator generation uses the author Model/Dense/Activation API and NumPy 2.2.6; neither TensorFlow, PyTorch nor Python inference runs in visitor jobs. The generator sorts the imported layer routine names for reproducibility; network operations are unchanged. Four inputs exercise positive and clipped hidden units and predictions are checked against independently evaluated weights and biases, including negative and positive outputs and finiteness. K covers inference as approximation; no least-squares fitting or training classification is inferred. The sample network is illustrative, not a trained scientific model. Other network layers, external model conversion and training are not verified. BSD-3-Clause and Crown copyright notices are retained. The dedicated GAMS driver additionally checks generic dense/activation pipelines with 1/2/5 channel rows and five activations against 35,200 scalar references, and the existing generated model on an 81-point grid covering all four ReLU regions. Extreme-logit softmax and external model conversion remain unverified.",
       "evidence": [
         {
           "path": "src/ennuf/_internal/fortran/neural_net_mod.f90",
@@ -9144,7 +9147,8 @@
           "path": "test/testennuf/example_models/pytorch_simple_mlp.py",
           "sha256": "e39ec6d028c5ae3a710718163643e7bee920034aae63881da008cbd28aeac221"
         }
-      ]
+      ],
+      "driver_id": "ennuf-inference-reference"
     },
     {
       "id": "ddpcm-solvation",

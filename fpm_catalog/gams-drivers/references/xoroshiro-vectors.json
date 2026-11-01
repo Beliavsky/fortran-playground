@@ -1,0 +1,293 @@
+{
+  "schema": 1,
+  "algorithm": "xoroshiro128+(24,16,37)",
+  "jump_reference": "GF(2) transition matrix raised to 2**64",
+  "samples_per_stream": 4096,
+  "streams": [
+    {
+      "seed_hex": [
+        "0000000000000001",
+        "0000000000000002"
+      ],
+      "jumps": 0,
+      "prefix_hex": [
+        "0000000000000003",
+        "0000006001030003",
+        "20C102C302000C03",
+        "810180670D23AD61",
+        "26D13A4941333A42",
+        "538A501C02F58B2E",
+        "2AB2076DEE382F7E",
+        "30DFCFB722FECD9C"
+      ],
+      "integer_hash": 1941895846,
+      "uniform_hash": 125224916
+    },
+    {
+      "seed_hex": [
+        "0000000000000001",
+        "0000000000000002"
+      ],
+      "jumps": 1,
+      "prefix_hex": [
+        "EA081299D29AD927",
+        "DDE2899549F899C8",
+        "E9FBDBE2A1BFDA9C",
+        "2D3A2ECAC8B96CC2",
+        "A811D60D632FA176",
+        "157B37AF0380DAB3",
+        "9E4FD349BA2B1D03",
+        "CAC7882CD2F53F71"
+      ],
+      "integer_hash": 1313938562,
+      "uniform_hash": 95949674
+    },
+    {
+      "seed_hex": [
+        "0000000000000001",
+        "0000000000000002"
+      ],
+      "jumps": 2,
+      "prefix_hex": [
+        "54467869EA575CE9",
+        "F13E10AD0CF279CD",
+        "80B67F904F7FBD17",
+        "CE746E26FC29C30F",
+        "C5ED5E1E92CE81FC",
+        "6DEE81DC2372074E",
+        "576FFEBF69A608FF",
+        "37C32F9BF84EEC8B"
+      ],
+      "integer_hash": 1542720481,
+      "uniform_hash": 2053003890
+    },
+    {
+      "seed_hex": [
+        "FFFFFFFFFFFFFFFF",
+        "0000000000000001"
+      ],
+      "jumps": 0,
+      "prefix_hex": [
+        "0000000000000000",
+        "FFFFFFDFFFFE0000",
+        "001FFDE1FE000401",
+        "A0008021F7FF183E",
+        "81B77EFF1FD113FF",
+        "FDBDFFDDFD401895",
+        "ABFD5946AAC10759",
+        "D4C82A6EB9380EAD"
+      ],
+      "integer_hash": 192422793,
+      "uniform_hash": 1622350968
+    },
+    {
+      "seed_hex": [
+        "FFFFFFFFFFFFFFFF",
+        "0000000000000001"
+      ],
+      "jumps": 1,
+      "prefix_hex": [
+        "2EBB42265FF3F3CD",
+        "62D1F7E5D345D214",
+        "852BE2FE5A40E677",
+        "8B0E802242885237",
+        "96F05D29CCB37DAE",
+        "66253F44CA9715CB",
+        "A57952ECAE4B08E7",
+        "301389B3A5A3DBEE"
+      ],
+      "integer_hash": 1378303015,
+      "uniform_hash": 2078434163
+    },
+    {
+      "seed_hex": [
+        "FFFFFFFFFFFFFFFF",
+        "0000000000000001"
+      ],
+      "jumps": 2,
+      "prefix_hex": [
+        "7205078518A5DCF2",
+        "A53811B9E11A1A1D",
+        "3267D010E4258CDC",
+        "B1468FA13314C731",
+        "CF8E28D89AA68D57",
+        "497E8E24D1A63B22",
+        "9C068A357B0AA9C9",
+        "5FB20D3DD7BF50BC"
+      ],
+      "integer_hash": 1174268788,
+      "uniform_hash": 1280079309
+    },
+    {
+      "seed_hex": [
+        "8000000000000000",
+        "7FFFFFFFFFFFFFFF"
+      ],
+      "jumps": 0,
+      "prefix_hex": [
+        "FFFFFFFFFFFFFFFF",
+        "000000000080FFFE",
+        "EFE0809F007EFFFF",
+        "00A000DDFC900B9E",
+        "8D80E8A9841F571F",
+        "6BAF87F0E34224CF",
+        "6F307DAEF1119B7E",
+        "820D652D6361D9D4"
+      ],
+      "integer_hash": 468487869,
+      "uniform_hash": 300889514
+    },
+    {
+      "seed_hex": [
+        "8000000000000000",
+        "7FFFFFFFFFFFFFFF"
+      ],
+      "jumps": 1,
+      "prefix_hex": [
+        "1A4F8E3A82386E7E",
+        "3D59493ABD70AD87",
+        "7C0EB08A37C6CD83",
+        "66FEA811D4298E20",
+        "0536E2FCF4875C68",
+        "9F1C3015AA369660",
+        "329897EF81D31D6D",
+        "331C298564FAB490"
+      ],
+      "integer_hash": 2014768876,
+      "uniform_hash": 754427825
+    },
+    {
+      "seed_hex": [
+        "8000000000000000",
+        "7FFFFFFFFFFFFFFF"
+      ],
+      "jumps": 2,
+      "prefix_hex": [
+        "42168400D0782FE0",
+        "5489B5B19DE7A5E7",
+        "D6285D0884E00C48",
+        "AE32EAD2210E7D61",
+        "04299F2B47871BE9",
+        "E1C75C781013EB6C",
+        "BB7560224986887A",
+        "30E35E64DB2BBFD4"
+      ],
+      "integer_hash": 454642981,
+      "uniform_hash": 1839058556
+    },
+    {
+      "seed_hex": [
+        "00000000075BCD15",
+        "000000003ADE68B1"
+      ],
+      "jumps": 0,
+      "prefix_hex": [
+        "00000000423A35C6",
+        "B0BC1AC88D21A5AB",
+        "CF2B32C2A2FCFBD6",
+        "67944CF27C5F54FD",
+        "2B2831CE8A235C5A",
+        "762652EF1531D004",
+        "5568F141CE3DCB86",
+        "1D05E25A58D1AAB9"
+      ],
+      "integer_hash": 790614674,
+      "uniform_hash": 421909431
+    },
+    {
+      "seed_hex": [
+        "00000000075BCD15",
+        "000000003ADE68B1"
+      ],
+      "jumps": 1,
+      "prefix_hex": [
+        "810C02F9BC046232",
+        "304AB2438B779F93",
+        "269F92F4D901FF75",
+        "0EF7075DAC8F4C2A",
+        "8C844E3739E9D705",
+        "5A5FBB4DE7813B24",
+        "F6F2FA3DBCAC28E6",
+        "3DB6A1EE7743452F"
+      ],
+      "integer_hash": 1503636214,
+      "uniform_hash": 41773830
+    },
+    {
+      "seed_hex": [
+        "00000000075BCD15",
+        "000000003ADE68B1"
+      ],
+      "jumps": 2,
+      "prefix_hex": [
+        "9CC4853D1B5C6AC9",
+        "D08121ED511978A4",
+        "5B7017E8A21A8B87",
+        "296969664A700F05",
+        "7117384717940653",
+        "753C0BB31918064F",
+        "A5CF1AC686AAAD05",
+        "72ACBBEEC53815DF"
+      ],
+      "integer_hash": 416336232,
+      "uniform_hash": 1735978279
+    },
+    {
+      "seed_hex": [
+        "0123456789ABCDEF",
+        "FEDCBA9876543210"
+      ],
+      "jumps": 0,
+      "prefix_hex": [
+        "FFFFFFFFFFFFFFFF",
+        "6789ABCDEF01DCB9",
+        "216FADC398A73130",
+        "060B0BA313A13C59",
+        "4920437D8300EA80",
+        "2FB0D5BA5CAFCC5A",
+        "5FF3CA78BCAEC9D2",
+        "C4F3590CD05817CC"
+      ],
+      "integer_hash": 1683816592,
+      "uniform_hash": 1419921227
+    },
+    {
+      "seed_hex": [
+        "0123456789ABCDEF",
+        "FEDCBA9876543210"
+      ],
+      "jumps": 1,
+      "prefix_hex": [
+        "D678A1932E214621",
+        "8A4C1E47D53313EF",
+        "EE1D57CE8E19B545",
+        "438F10E8AFC03A25",
+        "ED7BA73830C0047E",
+        "ADA68B7A34213E05",
+        "2B60A67655CAAB33",
+        "597382D9B5E10D6A"
+      ],
+      "integer_hash": 2133358670,
+      "uniform_hash": 363383729
+    },
+    {
+      "seed_hex": [
+        "0123456789ABCDEF",
+        "FEDCBA9876543210"
+      ],
+      "jumps": 2,
+      "prefix_hex": [
+        "D3D6AD5F9296CD0C",
+        "914A3BDF76326F6B",
+        "AC955520ABEFB944",
+        "CFB53D80845B264F",
+        "5441999012808CE5",
+        "9E8E1020EA032797",
+        "7E61DD5BF609677E",
+        "13D409D66703B2A9"
+      ],
+      "integer_hash": 529020594,
+      "uniform_hash": 462154641
+    }
+  ]
+}

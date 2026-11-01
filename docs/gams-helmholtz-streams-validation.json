@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "spherepack-helmholtz-reference",
+      "source_revision": "e80da29462c5987162a0884baaab7434d0215467",
+      "source_sha256": "93e7357ed3a4ad1a3b9930fe3b54fb60beff151481c316049dad2add1d4edcee",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T12:02:44.768138+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.502,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Helmholtz/Poisson solves: 258; grid-point references: 86000\nMaximum normalized analytic solution error:    3.11709E-15\nGaussian/regular grids; zonal/nonzonal harmonics through degree 3; four nonnegative shifts.\nZero-shift solutions use a zero-constant gauge; resonant shifts and vector PDEs unverified.\nPASS spherepack-helmholtz-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.149,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "rng-xoroshiro-reference",
+      "source_revision": "5ead95f436323d07fc82acc3613f66550947f256",
+      "source_sha256": "6bd90b4a24845eb016e2e6b7df2e1050deec5302b991566e73b12c3ebe600f78",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T12:02:49.970412+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 3.71,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "15 interleaved streams: five nonzero seeds, no jump/default jump/two explicit jumps.\n61440 integer and 61440 uniform draws; 120 exact prefixes; 30 independent rolling hashes.\nExact seeded restart entries: 120\nJump references use a GF(2) matrix raised to 2**64, not the package jump polynomial.\nBitstream/API agreement only; statistical quality, thread scheduling and normal reseeding unverified.\nPASS rng-xoroshiro-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.026,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-11-01T12:02:50.029716+00:00"
+}

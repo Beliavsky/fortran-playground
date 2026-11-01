@@ -8364,6 +8364,248 @@
         "dataset_approximation_quality_verified": false,
         "general_memory_safety_verified": false
       }
+    },
+    {
+      "id": "fiats-inference-reference",
+      "name": "gams-fiats-inference-reference",
+      "package_id": "fiats",
+      "procedure_id": "fiats-inference",
+      "gams_code": "K",
+      "problem_id": "fixed-multilayer-scalar-reference",
+      "path": "fpm_catalog/gams-drivers/fiats-inference-reference.f90",
+      "revision": "7d564b86389460555d6f7d9b7a6b5198588af9df",
+      "author_example": "example/write-read-infer.F90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/inference-pairs-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned Fiats inference implementation and author constructor/inference example reviewed without copying bodies. Four irregular multilayer architectures, ReLU/sigmoid/swish, dyadic/non-dyadic fixed parameters, zero/nonzero biases, zero/basis/mixed inputs, finite padding sentinels and exact repeat. Scalar real64 oracle propagates every layer, including the activated output, using the actual native-real32 coefficients. Default identity range maps only; no training, derivatives, file conversion, parallel scaling or dataset approximation-quality claim.",
+      "validation_path": "docs/gams-inference-pairs-validation.json",
+      "review_path": "docs/gams-inference-pairs.md",
+      "checks": {
+        "networks": 48,
+        "inference_calls": 576,
+        "output_reference_entries": 792,
+        "exact_replay_entries": 72,
+        "architectures": [
+          [
+            1,
+            2,
+            1
+          ],
+          [
+            2,
+            3,
+            2
+          ],
+          [
+            3,
+            2,
+            1
+          ],
+          [
+            2,
+            4,
+            3,
+            2
+          ]
+        ],
+        "activations": [
+          "relu",
+          "sigmoid",
+          "swish"
+        ],
+        "bias_patterns": [
+          "zero",
+          "nonzero"
+        ],
+        "parameter_patterns": [
+          "dyadic",
+          "non-dyadic"
+        ],
+        "inputs_per_network": 11,
+        "native_decimal_precision": 6,
+        "real64_scalar_oracle": true,
+        "padding_sentinel": 17,
+        "output_layer_activated": true,
+        "identity_range_maps_only": true,
+        "max_normalized_output_error": 5e-06,
+        "training_verified": false,
+        "derivatives_verified": false,
+        "model_file_roundtrip_verified": false,
+        "nonidentity_range_maps_verified": false,
+        "dataset_approximation_quality_verified": false
+      }
+    },
+    {
+      "id": "ennuf-inference-reference",
+      "name": "gams-ennuf-inference-reference",
+      "package_id": "ennuf",
+      "procedure_id": "ennuf-inference",
+      "gams_code": "K",
+      "problem_id": "fixed-multilayer-scalar-reference",
+      "path": "fpm_catalog/gams-drivers/ennuf-inference-reference.f90",
+      "revision": "2555a7f1560ef3cb7cf707221fa5bb1b5334ee6f",
+      "author_example": "test/testennuf/example_models/pytorch_simple_mlp.py",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/inference-pairs-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned Fortran dense/activation implementation, author generation example and existing audited generated model reviewed without copying bodies. Four architectures, one/two/five channel rows, five activations, optional biases and dyadic/non-dyadic fixed weights. Scalar real64 all-stage oracle, stabilized softmax reference and row normalization, plus 81 dyadic-grid evaluations of the cached generated model against its closed-form piecewise-affine function. All four ReLU regions covered. No new generation, Python inference, TensorFlow/PyTorch conversion, convolution, extreme-logit softmax or training verified.",
+      "validation_path": "docs/gams-inference-pairs-validation.json",
+      "review_path": "docs/gams-inference-pairs.md",
+      "checks": {
+        "pipeline_batches": 2640,
+        "dense_calls": 5940,
+        "activation_calls": 5940,
+        "all_stage_reference_entries": 35200,
+        "final_layer_reference_entries": 10560,
+        "architectures": [
+          [
+            1,
+            2,
+            1
+          ],
+          [
+            2,
+            3,
+            2
+          ],
+          [
+            3,
+            2,
+            1
+          ],
+          [
+            2,
+            4,
+            3,
+            2
+          ]
+        ],
+        "channels": [
+          1,
+          2,
+          5
+        ],
+        "activations": [
+          "relu",
+          "leakyrelu",
+          "sigmoid",
+          "tanh",
+          "softmax"
+        ],
+        "leaky_relu_alpha": 0.125,
+        "inputs_per_configuration": 11,
+        "bias_present_and_absent_checked": true,
+        "real64_scalar_oracle": true,
+        "stable_softmax_reference": true,
+        "max_normalized_output_error": 5e-06,
+        "max_softmax_row_sum_error": 2e-06,
+        "generated_model_evaluations": 81,
+        "generated_model_relu_region_counts": [
+          21,
+          29,
+          14,
+          17
+        ],
+        "generated_asset_path": "fpm_catalog/generated/ennuf-2555a7f1560ef3cb7cf707221fa5bb1b5334ee6f.json",
+        "generated_asset_sha256": "6f7fc6b3b9943943fd294017179004dfc37567dfdd637aabed2d0908dbdb9a7b",
+        "external_model_conversion_verified": false,
+        "convolution_verified": false,
+        "extreme_softmax_logits_verified": false,
+        "training_verified": false,
+        "dataset_approximation_quality_verified": false
+      }
+    },
+    {
+      "id": "spherepack-helmholtz-reference",
+      "name": "gams-spherepack-helmholtz-reference",
+      "package_id": "spherepack",
+      "procedure_id": "spherepack-api",
+      "gams_code": "I2",
+      "problem_id": "known-spherical-harmonic-helmholtz",
+      "path": "fpm_catalog/gams-drivers/spherepack-helmholtz-reference.f90",
+      "revision": "e80da29462c5987162a0884baaab7434d0215467",
+      "author_example": "examples/helmsph.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/helmholtz-streams-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; ten real Cartesian spherical harmonics through degree three plus a mixed field. Gaussian and regular grids at three resolutions, three positive Helmholtz shifts and zero-mean Poisson with a zero-constant gauge. Exact Laplace-Beltrami eigenvalues supply independent right-hand sides and pointwise solution references; no finite-difference or solver-produced oracle. Resonant shifts and vector PDEs unverified.",
+      "validation_path": "docs/gams-helmholtz-streams-validation.json",
+      "review_path": "docs/gams-helmholtz-streams.md",
+      "checks": {
+        "solves": 258,
+        "grid_point_references": 86000,
+        "grid_types": [
+          "Gaussian",
+          "regular"
+        ],
+        "grids": [
+          [
+            9,
+            16
+          ],
+          [
+            13,
+            24
+          ],
+          [
+            17,
+            32
+          ]
+        ],
+        "shifts": [
+          0,
+          0.25,
+          1,
+          3.5
+        ],
+        "max_normalized_solution_error": 2e-11,
+        "nonzonal_modes_verified": true,
+        "zero_mean_poisson_verified": true,
+        "resonant_shifts_verified": false
+      }
+    },
+    {
+      "id": "rng-xoroshiro-reference",
+      "name": "gams-rng-xoroshiro-reference",
+      "package_id": "rng-fortran",
+      "procedure_id": "rng-uniform",
+      "gams_code": "L6a21",
+      "problem_id": "unsigned-stream-and-matrix-jump-oracle",
+      "path": "fpm_catalog/gams-drivers/rng-xoroshiro-reference.f90",
+      "revision": "5ead95f436323d07fc82acc3613f66550947f256",
+      "author_example": "example.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/helmholtz-streams-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer with unbounded-Python unsigned arithmetic golden vectors. Five nonzero seeds and no/default/two explicit jumps; independent jump matrix exponentiation to 2**64 avoids upstream polynomial constants. Interleaved integer/uniform APIs, exact 52-bit conversion, prefixes, modular rolling checksums and seeded restart. GNU 16 cached -fwrapv library only; no statistical quality, thread independence or normal-reseeding fix.",
+      "validation_path": "docs/gams-helmholtz-streams-validation.json",
+      "review_path": "docs/gams-helmholtz-streams.md",
+      "checks": {
+        "streams": 15,
+        "samples_per_stream": 4096,
+        "integer_draws": 61440,
+        "uniform_draws": 61440,
+        "exact_prefix_entries": 120,
+        "independent_hashes": 30,
+        "restart_entries": 120,
+        "jump_matrix_power": 64,
+        "uniform_bits": 52,
+        "statistical_quality_verified": false,
+        "normal_reseeding_fixed": false,
+        "reference_files": {
+          "fpm_catalog/gams-drivers/references/xoroshiro_vectors.py": "a4bb87adf0b2e60bd3db7217734796d43b282167c1bf8e6244e09926f8082148",
+          "fpm_catalog/gams-drivers/references/xoroshiro-vectors.json": "6bafaf38d1856cb5316bb7ebe3ab6f93395841f101b80d0e932946961fd6fde2"
+        }
+      }
     }
   ]
 }
