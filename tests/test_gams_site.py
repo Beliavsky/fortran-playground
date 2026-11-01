@@ -67,6 +67,39 @@ class GamsSiteTests(unittest.TestCase):
             self.assertIn('Open default example', sorting)
             self.assertNotIn('Try in playground', sorting)
 
+    def test_stdlib_ordering_array_pages_link_checked_drivers_without_promoting_pca(self):
+        import copy
+        from xpackage_gams import driver_data, gams_data
+        drivers = [d for d in driver_data(data=gams_data())
+                   if d.get('validation_path') == 'docs/gams-pca-ordering-ten-validation.json']
+        self.assertEqual(len(drivers), 10)
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects'] if p['playground']['package_id'] == 'stdlib']
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination, feed)
+            for driver in drivers:
+                url = ('https://beliavsky.github.io/fortran-playground/fpm/'
+                       f'?package=stdlib&example={driver["name"]}')
+                page = Page((destination/driver['gams_code']/'index.html').read_text(encoding='utf-8'))
+                self.assertIn((url, driver['id']), page.anchors)
+                detail = (destination/'packages/stdlib/index.html').read_text(encoding='utf-8')
+                card = detail.split('id="'+driver['procedure_id']+'"', 1)[1].split('</article>', 1)[0]
+                self.assertIn('Load checked GAMS driver:', card)
+                self.assertIn(driver['name'], card)
+            for code in ['N5', 'D1a11', 'D1b1', 'D1b6']:
+                page = Page((destination/code/'index.html').read_text(encoding='utf-8'))
+                primary = [url for url, label in page.anchors if label == 'Try in playground']
+                self.assertEqual(len(primary), 1)
+                self.assertIn(primary[0], [
+                    'https://beliavsky.github.io/fortran-playground/fpm/'
+                    f'?package=stdlib&example={d["name"]}' for d in drivers if d['gams_code'] == code])
+            pca = Page((destination/'L13b/index.html').read_text(encoding='utf-8'))
+            self.assertFalse(any(label == 'Try in playground' for _, label in pca.anchors))
+            self.assertFalse(any('example=gams-stdlib-pca' in url for url in pca.links))
+            self.assertIn(('https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib',
+                           'Open default example'), pca.anchors)
+
     def test_stdlib_distribution_pages_link_both_matching_density_and_cdf_drivers(self):
         import copy
         from xpackage_gams import driver_data, gams_data
@@ -1883,6 +1916,11 @@ class GamsSiteTests(unittest.TestCase):
                 page = Page((destination/code/'index.html').read_text(encoding='utf-8'))
                 self.assertIn((expected, 'Try in playground'), page.anchors)
                 self.assertNotIn(default, page.links)
+            # Exercise missing-driver fallback explicitly, independent of which
+            # classes the growing real catalog currently demonstrates.
+            fallback_feed = copy.deepcopy(feed)
+            fallback_feed['demonstrations'] = []
+            generate_gams_site(destination, fallback_feed)
             fallback = Page((destination/'N5/index.html').read_text(encoding='utf-8'))
             self.assertIn((default, 'Open default example'), fallback.anchors)
             self.assertNotIn((default, 'Try in playground'), fallback.anchors)

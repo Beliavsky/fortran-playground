@@ -1,0 +1,328 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "stdlib-select-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "a6e0d9fa56dba7c9bc6c47f214df43af2ca98d534e75ca45af86761cbc23ad65",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T21:26:13.961965+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.383,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Every rank on 186 finite duplicate-containing arrays versus independent insertion sort: 2976\nPASS stdlib-select-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.033,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-arg-select-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "cba1f92e463cea0b23de54f05ae0e1aff975042f09b1375fc041c9ab441fad75",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T21:26:16.294275+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.377,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Every rank on 186 finite duplicate-containing arrays versus independent insertion sort: 2976\nPASS stdlib-arg-select-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.028,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-sort-index-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "4bc4d91ad9c8e1217fc117b73db18a98bf319c1af552a7629eff56cf252ddcd9",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T21:26:19.184974+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.499,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Stable ascending/descending key and association comparisons, lengths 0..64: 780\nPASS stdlib-sort-index-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.075,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-sort-adjoint-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "3b48dc3efdf279490b8146acc8c15b67d9f81a9206992214dff50c1ac1208a6b",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T21:26:21.733484+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.474,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Stable ascending/descending key and association comparisons, lengths 0..64: 780\nPASS stdlib-sort-adjoint-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.036,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-unique-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "b435e5fcc24cb9d937810ef1e1e69b2391ce8ee086f37ba0d88a2a44266a9a8a",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T21:26:24.527979+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.553,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Sorted unique sets versus independent bin membership, including empty arrays: 390\nPASS stdlib-unique-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.027,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-differences-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "8aed3f19bfbde67ae53e3139317b4fb9bc448c817968b3c7b25a85751a7e19b1",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T21:26:27.673817+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.449,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Array differences versus independent binomial stencils, orders 0..6, with/without padding: 325\nPASS stdlib-differences-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.057,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-cross-product-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "eb452a9c270299d1961979f64c8ba5dd3e432f43d52dcb49d932747c0e1caf8b",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T21:26:30.648590+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.642,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Cross products versus Levi-Civita determinant sums, antisymmetry and orthogonality: 2154\nPASS stdlib-cross-product-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.024,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-kronecker-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "d9cf895dbb553aa428744a3d2fe23ca8a6fad72cccdc48b597097f29a3043477",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T21:26:33.658967+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.424,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Rectangular tensor products versus independent index and column-major vec identities: 432\nPASS stdlib-kronecker-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.032,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-diagonals-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "854067c05794d66a3ede10e39955bccc6af7df6579b199b733f5d41d26fe95a2",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T21:26:36.323090+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.379,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Offset diagonal construction calls=84, independent/embedded extractions=168\nPASS stdlib-diagonals-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.026,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-outer-product-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "de7e3f25386d6f512e600bb5f801ab9cb0f3101cac2556451e8412cfcf1ae83c",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T21:28:06.201740+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.396,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Rectangular rank-one products: entries, independent matrix action, minors and Frobenius identity: 224\nPASS stdlib-outer-product-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.029,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-11-01T21:28:06.252848+00:00"
+}

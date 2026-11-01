@@ -1,0 +1,52 @@
+{
+  "package_id": "stdlib",
+  "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+  "source_path": "docs/gams-candidates/stdlib-pca/analytic-pca.f90",
+  "source_sha256": "078b7d4d67d177093f305e72ea3c56421d299126db9381a41b263f0c714f78c1",
+  "hash_normalization": "utf-8-lf",
+  "interpretation": "The source compiled, but the linker exceeded the sandbox file-size limit. PCA numerical results were not obtained.",
+  "result": {
+    "ok": false,
+    "compiler": "GNU Fortran (GCC) 16.2.0",
+    "compiler_id": "gfortran",
+    "fpm": "0.12.0",
+    "stages": [
+      {
+        "name": "Build",
+        "command": [
+          "fpm",
+          "build",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 0.566,
+        "ok": false,
+        "exit_code": 1,
+        "error": "",
+        "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n\ncollect2: fatal error: ld terminated with signal 25 [File size limit exceeded]\ncompilation terminated.\n",
+        "stderr": "<ERROR> Compilation failed for object \" playground-main \"\n<ERROR> stopping due to failed compilation\nSTOP 1\n"
+      }
+    ],
+    "cache": {
+      "package": "stdlib",
+      "compiler": "GNU Fortran 16.2.0",
+      "key": "1bae985a1993dd280a6324e4",
+      "library_reused": true,
+      "changed_artifacts": []
+    },
+    "packages": [
+      {
+        "repository": "fortran-lang/stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+      }
+    ]
+  }
+}

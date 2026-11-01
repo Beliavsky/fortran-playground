@@ -1000,7 +1000,18 @@
         "stdlib-gamma-pdf",
         "stdlib-gamma-cdf",
         "stdlib-beta-pdf",
-        "stdlib-beta-cdf"
+        "stdlib-beta-cdf",
+        "stdlib-pca",
+        "stdlib-select",
+        "stdlib-arg-select",
+        "stdlib-sort-index",
+        "stdlib-sort-adjoint",
+        "stdlib-unique",
+        "stdlib-differences",
+        "stdlib-cross-product",
+        "stdlib-kronecker",
+        "stdlib-diagonals",
+        "stdlib-outer-product"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
     },

@@ -105,6 +105,7 @@ from xpackage_gams import (gams_data, package_classes, review_text, subclass_mod
                             special_functions_ten_review_text, SPECIAL_FUNCTIONS_TEN_REPORT,
                             systems_spectra_ten_review_text, SYSTEMS_SPECTRA_TEN_REPORT,
                             distribution_ten_review_text, DISTRIBUTION_TEN_REPORT,
+                            pca_ordering_ten_review_text, PCA_ORDERING_TEN_REPORT,
                           coverage_data, coverage_review_text, COVERAGE_REPORT,
                           class_evidence, class_tree, mapping_evidence_text, EVIDENCE_REPORT)
 
@@ -890,6 +891,63 @@ class PackageGamsTests(unittest.TestCase):
         self.assertIn('22,416',text)
         self.assertIn('Type-2/type-3 transforms',text)
         self.assertIn('two-dimensional NUFFT2D driver',transforms_review_text())
+
+    def test_ordering_array_drivers_preserve_exact_oracles_and_interface_scope(self):
+        data = gams_data()
+        records = {r['id']: r for r in data['procedure_mappings']}
+        drivers = {d['id']: d for d in driver_data(data=data)
+                   if d.get('validation_path') == 'docs/gams-pca-ordering-ten-validation.json'}
+        self.assertEqual(len(drivers), 10)
+        self.assertNotIn('stdlib-pca-reference', drivers)
+        reviewed = set(numerical_review(data=data)['packages']['stdlib']['procedure_ids'])
+        expected = {'select': ('N5', 'calls', 2976), 'arg-select': ('N5', 'calls', 2976),
+                    'sort-index': ('N6', 'calls', 780), 'sort-adjoint': ('N6', 'calls', 780),
+                    'unique': ('N6', 'calls', 390), 'differences': ('D1a11', 'calls', 325),
+                    'cross-product': ('D1a11', 'pairs', 2154), 'kronecker': ('D1b', 'products', 432),
+                    'diagonals': ('D1b1', 'constructions', 84), 'outer-product': ('D1b6', 'products', 224)}
+        for name, (code, field, count) in expected.items():
+            driver = drivers['stdlib-'+name+'-reference']
+            record = records[driver['procedure_id']]
+            self.assertEqual(driver['gams_code'], code)
+            self.assertEqual(driver['checks'][field], count)
+            self.assertEqual(record['driver_id'], driver['id'])
+            self.assertIn(record['id'], reviewed)
+            self.assertEqual(class_evidence(class_tree(data), code, [record], [driver])['status'], 'verified')
+        self.assertEqual(class_tree(data)['D1a11']['parent'], 'D1a')
+        self.assertEqual(class_tree(data)['D1b6']['parent'], 'D1b')
+        self.assertTrue(drivers['stdlib-sort-index-reference']['checks']['ties_stable'])
+        self.assertTrue(drivers['stdlib-sort-adjoint-reference']['checks']['ascending_descending'])
+        self.assertTrue(drivers['stdlib-unique-reference']['checks']['sorted_output'])
+        self.assertEqual(drivers['stdlib-unique-reference']['checks']['tolerance'], 0)
+        self.assertTrue(drivers['stdlib-differences-reference']['checks']['padding_checked'])
+        self.assertTrue(drivers['stdlib-kronecker-reference']['checks']['column_major_vec_identity'])
+        self.assertEqual(drivers['stdlib-diagonals-reference']['checks']['extractions'], 168)
+        text = pca_ordering_ten_review_text()
+        self.assertEqual((ROOT/PCA_ORDERING_TEN_REPORT).read_text(encoding='utf-8'), text)
+        for phrase in ['not a passive-only argsort', 'not a step-scaled numerical derivative',
+                       'Levi-Civita', '16 MiB', 'No checked PCA driver', 'categories are not exhausted']:
+            self.assertIn(phrase, text)
+
+    def test_stdlib_pca_limit_probe_is_retained_without_numerical_promotion(self):
+        import hashlib
+        data = gams_data()
+        record = next(r for r in data['procedure_mappings'] if r['id'] == 'stdlib-pca')
+        drivers = list(driver_data(data=data))
+        self.assertNotIn('driver_id', record)
+        self.assertFalse(any(d['procedure_id'] == record['id'] for d in drivers))
+        self.assertEqual(class_evidence(class_tree(data), 'L13b', [record], drivers)['status'], 'source-supported')
+        self.assertIn(record['id'], numerical_review(data=data)['packages']['stdlib']['procedure_ids'])
+        failure = json.loads((ROOT/'docs/gams-candidates/stdlib-pca/analytic-pca-result.json').read_text())
+        self.assertEqual(record['revision'], failure['revision'])
+        source = (ROOT/failure['source_path']).read_text(encoding='utf-8')
+        self.assertEqual(hashlib.sha256(source.encode()).hexdigest(), failure['source_sha256'])
+        self.assertFalse(failure['result']['ok'])
+        self.assertTrue(failure['result']['cache']['library_reused'])
+        stages = failure['result']['stages']
+        self.assertEqual([s['name'] for s in stages], ['Build'])
+        self.assertFalse(stages[0]['ok'])
+        self.assertIn('main.f90  done.', stages[0]['stdout'])
+        self.assertIn('File size limit exceeded', stages[0]['stdout'])
 
     def test_distribution_drivers_pair_densities_and_probabilities_with_independent_references(self):
         data = gams_data()

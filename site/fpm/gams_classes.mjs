@@ -831,5 +831,17 @@ export const gamsSubclasses = {
   "L5a1u": {
     "label": "Uniform",
     "parent": "L5a1"
+  },
+  "D1a": {
+    "label": "Elementary vector operations",
+    "parent": "D1"
+  },
+  "D1a11": {
+    "label": "Other vector operations",
+    "parent": "D1a"
+  },
+  "D1b1": {
+    "label": "Initialize (e.g., to zero or identity)",
+    "parent": "D1b"
   }
 };

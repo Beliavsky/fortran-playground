@@ -8225,13 +8225,33 @@
         "parent": "D"
       },
       {
+        "code": "D1a",
+        "label": "Elementary vector operations",
+        "parent": "D1"
+      },
+      {
+        "code": "D1a11",
+        "label": "Other vector operations",
+        "parent": "D1a"
+      },
+      {
         "code": "D1b",
         "label": "Elementary matrix operations",
         "parent": "D1"
       },
       {
+        "code": "D1b1",
+        "label": "Initialize (e.g., to zero or identity)",
+        "parent": "D1b"
+      },
+      {
         "code": "D1b2",
         "label": "Norm",
+        "parent": "D1b"
+      },
+      {
+        "code": "D1b6",
+        "label": "Multiplication",
         "parent": "D1b"
       },
       {
@@ -8483,6 +8503,16 @@
         "code": "L6c",
         "label": "Service routines (e.g., seed)",
         "parent": "L6"
+      },
+      {
+        "code": "L13",
+        "label": "Covariance structure models",
+        "parent": "L"
+      },
+      {
+        "code": "L13b",
+        "label": "Principal components analysis",
+        "parent": "L13"
       },
       {
         "code": "N",
@@ -10194,6 +10224,357 @@
           {
             "path": "test/test_distribution_beta.f90",
             "sha256": "b19d4c03bebc70caa2873cb26a884d9941cd168a93e9aba20f23ba32ae271f08"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-pca",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_stats",
+        "procedure": "pca, pca_transform, pca_inverse_transform (REAL64)",
+        "gams_codes": [
+          "L13b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Pinned REAL64 pca, pca_transform and pca_inverse_transform APIs and author tests reviewed. An independent analytic PCA consumer compiles its main but fails linking at the hosted 16 MiB file-size limit. No numerical results were obtained, so no checked PCA driver is published. L13b remains source-supported. Exact source, pin, normalized hash and full result: docs/gams-candidates/stdlib-pca/analytic-pca-result.json. This is a sandbox limit, not a numerical failure.",
+        "evidence": [
+          {
+            "path": "src/stdlib_stats.f90",
+            "line": 4074,
+            "sha256": "e15ce21ef7f4ae8f3c0df5d99675ad33a5a820167c7565c3b14d3fa2f0acba88"
+          },
+          {
+            "path": "src/stdlib_stats_pca.f90",
+            "line": 1,
+            "sha256": "6aac67bd80c7d474d6868c351c82ff7fd3f7bc978a1ffe693b4b06a5be6620d6"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_pca.f90",
+            "sha256": "c5a591cc28b1fc9dcf47bfe3f5e0e10e122fe9732ccbfca9b8b8140710a02114"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-select",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_selection",
+        "procedure": "select (REAL64)",
+        "gams_codes": [
+          "N5"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Every rank of 186 REAL64 arrays (lengths 1..31, six deterministic dyadic families): 2,976 calls against independent insertion-sort order statistics. Includes ascending, descending, all-equal, signed, modular and repeated-block values. Check partial partition and complete multiset preservation. Broad N5 classification describes order-statistic searching, without claiming a full sort. Empty/invalid ranks, bounded-search options, NaNs, other types/kinds and performance unverified.",
+        "driver_id": "stdlib-select-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_selection.f90",
+            "line": 2350,
+            "sha256": "c506177437a762dab21107505e9e1a47144d19ddbde9e6bcc394b22c15595aef"
+          },
+          {
+            "path": "src/stdlib_selection.f90",
+            "line": 1,
+            "sha256": "c506177437a762dab21107505e9e1a47144d19ddbde9e6bcc394b22c15595aef"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_selection.f90",
+            "sha256": "f53e39d7aa937e52bf997986df3e1b5fa430a949b177d89dc0fe0359b484742c"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-arg-select",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_selection",
+        "procedure": "arg_select (REAL64)",
+        "gams_codes": [
+          "N5"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Every rank of 186 REAL64 arrays (lengths 1..31, six deterministic dyadic families): 2,976 calls against independent insertion-sort order statistics. Includes ascending, descending, all-equal, signed, modular and repeated-block values. Check returned index, index permutation, partial partition and unchanged values; initial index permutations include reverse order. Tie identity is not prescribed. Broad N5 classification describes order-statistic searching, without claiming a full sort. Empty/invalid ranks, bounded-search options, NaNs, other types/kinds and performance unverified.",
+        "driver_id": "stdlib-arg-select-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_selection.f90",
+            "line": 5022,
+            "sha256": "c506177437a762dab21107505e9e1a47144d19ddbde9e6bcc394b22c15595aef"
+          },
+          {
+            "path": "src/stdlib_selection.f90",
+            "line": 1,
+            "sha256": "c506177437a762dab21107505e9e1a47144d19ddbde9e6bcc394b22c15595aef"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_selection.f90",
+            "sha256": "f53e39d7aa937e52bf997986df3e1b5fa430a949b177d89dc0fe0359b484742c"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-sort-index",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_sorting",
+        "procedure": "sort_index (REAL64)",
+        "gams_codes": [
+          "N6"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "780 REAL64 sorting calls: lengths 0..64, six finite dyadic families, ascending/descending. Independent stable insertion sort supplies all keys and original-position associations, including empty and duplicate-heavy inputs. sort_index actively sorts keys and returns the original permutation; it is not a passive-only argsort. Broad N6 avoids implying a passive-only interface. NaNs/infinities, workspace options, other payload/index kinds and performance unverified.",
+        "driver_id": "stdlib-sort-index-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_sorting.F90",
+            "line": 1830,
+            "sha256": "03ba3e6359c063da7aaf4c0e239ff74fff6c2808bee768d05cc54ab9eedd0cf5"
+          },
+          {
+            "path": "src/stdlib_sorting_sort_adjoint.F90",
+            "line": 1,
+            "sha256": "b4ff0d07552ecd84b387274b0735fd793a9b115737e9a62727f232246fb1ab1f"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_sorting.F90",
+            "sha256": "c6424675bafc1bf89d74d84acacde5de0f51aa9ab28919ff9621eff022652f4a"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-sort-adjoint",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_sorting",
+        "procedure": "sort_adjoint (REAL64)",
+        "gams_codes": [
+          "N6"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "780 REAL64 sorting calls: lengths 0..64, six finite dyadic families, ascending/descending. Independent stable insertion sort supplies all keys and original-position associations, including empty and duplicate-heavy inputs. Unique dyadic payloads verify the corresponding permutation and stability. Broad N6 avoids implying a passive-only interface. NaNs/infinities, workspace options, other payload/index kinds and performance unverified.",
+        "driver_id": "stdlib-sort-adjoint-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_sorting.F90",
+            "line": 1743,
+            "sha256": "03ba3e6359c063da7aaf4c0e239ff74fff6c2808bee768d05cc54ab9eedd0cf5"
+          },
+          {
+            "path": "src/stdlib_sorting_sort_adjoint.F90",
+            "line": 1,
+            "sha256": "b4ff0d07552ecd84b387274b0735fd793a9b115737e9a62727f232246fb1ab1f"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_sorting.F90",
+            "sha256": "c6424675bafc1bf89d74d84acacde5de0f51aa9ab28919ff9621eff022652f4a"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-unique",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_sorting",
+        "procedure": "unique (REAL64)",
+        "gams_codes": [
+          "N6"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "390 exact sorted REAL64 unique-set comparisons, lengths 0..64 and six duplicate-containing dyadic families. Independent bounded-bin membership scan supplies the sorted set without calling a sorting API. Checks count, values, finiteness and input preservation; empty/constant inputs included. sorted_output=true and tolerance=0 only; hash-based unsorted mode, approximate equality, nonfinite values, other types and performance unverified.",
+        "driver_id": "stdlib-unique-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_sorting.F90",
+            "line": 2015,
+            "sha256": "03ba3e6359c063da7aaf4c0e239ff74fff6c2808bee768d05cc54ab9eedd0cf5"
+          },
+          {
+            "path": "src/stdlib_sorting_unique.f90",
+            "line": 1,
+            "sha256": "4742867c6768feff13911747fa4b4b98febb07dcc895f3f231395db28f325793"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_sorting_unique.f90",
+            "sha256": "1b8a311656f6d9bc01a9ec6da6dd0b01f4d25866f3b64c4f8b168f16d103a82d"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-differences",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_math",
+        "procedure": "diff (REAL64)",
+        "gams_codes": [
+          "D1a11"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "325 REAL64 adjacent-difference calls on lengths 0..24, orders 0..6, plain and (for positive orders) with prepend/append arrays. Independent binomial stencil sum supplies each answer rather than repeated differencing. Exact bounded dyadic arithmetic, output size, finite values and input preservation checked; includes empty/short inputs and order zero identity. D1a11 describes an array difference operator, not a step-scaled derivative approximation. Rank-two/dimension options, negative orders, other kinds and performance unverified.",
+        "driver_id": "stdlib-differences-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_math.F90",
+            "line": 653,
+            "sha256": "3e111c602b3a73f3c259f328bd78dc4a7bb06c34ce1012cd92c86bc627b79674"
+          },
+          {
+            "path": "src/stdlib_math_diff.f90",
+            "line": 1,
+            "sha256": "facd6c29f45b1ba34812c706d6a45618e5ece2c2e0f09f8bf6f90bf662afb922"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_stdlib_math.F90",
+            "sha256": "eb09436c198b8d30d5da3a6a3fe86dd0b1a9d967647b835b32cb978b4345259f"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-cross-product",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "cross_product (REAL64)",
+        "gams_codes": [
+          "D1a11"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "2,154 REAL64 vector pairs: nine ordered basis pairs and 2,145 bounded dyadic pairs, including zero/parallel cases. Independent Levi-Civita determinant sum, antisymmetry and both orthogonality identities checked exactly; finite results required. Other kinds, overflow/underflow extremes, arbitrary floating conditioning and performance unverified.",
+        "driver_id": "stdlib-cross-product-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 517,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_cross_product.f90",
+            "line": 1,
+            "sha256": "4bd853e91b1021b3bf4220732dc095c122bb75fd5536a11ace331ceb5f4ac085"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_linalg.f90",
+            "sha256": "a6123f572cbf1cea7f46a539bb92cb53e0354aac460ff7c46adc7f1ff0da5981"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-kronecker",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "kronecker_product (REAL64)",
+        "gams_codes": [
+          "D1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "432 REAL64 Kronecker products over 144 rectangular shape pairs and three sign/zero families. Independent flattened output-index formulas check every entry, and scalar contractions check (A tensor B)*vec(X)=vec(B*X*transpose(A)) in Fortran column-major order. Exact bounded dyadic arithmetic and finite values. Broad D1b avoids confusing tensor products with an ordinary matrix-multiplication API. Empty inputs, other kinds, extreme scales and performance unverified.",
+        "driver_id": "stdlib-kronecker-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 475,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_kronecker.f90",
+            "line": 1,
+            "sha256": "b67b455ebaa28601742cc6d38f5be30ce45514764e26e0e2efea9bcde051ee07"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_linalg.f90",
+            "sha256": "a6123f572cbf1cea7f46a539bb92cb53e0354aac460ff7c46adc7f1ff0da5981"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-diagonals",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "diag (REAL64)",
+        "gams_codes": [
+          "D1b1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "84 REAL64 diagonal constructions for lengths 1..12 and offsets -3..3, each with full zero/off-diagonal entry checks. 168 independent extractions: embedded vectors plus separately filled dense matrices. Exact bounded dyadic references, finite values and shape checks. D1b1 describes matrix initialization; extraction is a checked companion operation. Rectangular extraction, empty vectors, out-of-range offsets, other kinds and performance unverified.",
+        "driver_id": "stdlib-diagonals-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 241,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_diag.f90",
+            "line": 1,
+            "sha256": "8fef5a175b13c8ee62d72786901829d1c7f237db76428b26c246970d1868f6ce"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_linalg.f90",
+            "sha256": "a6123f572cbf1cea7f46a539bb92cb53e0354aac460ff7c46adc7f1ff0da5981"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-outer-product",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "outer_product (REAL64)",
+        "gams_codes": [
+          "D1b6"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "224 REAL64 rectangular outer products: rows 1..8, columns 1..7 and four bounded dyadic families including a zero factor. Check every entry, independent scalar-dot rank-one matrix action, vanishing adjacent two-by-two minors, Frobenius identity, shape and finite results exactly. Complex conjugation, other kinds, empty inputs, extreme scales and performance unverified.",
+        "driver_id": "stdlib-outer-product-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 435,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_outer_product.f90",
+            "line": 1,
+            "sha256": "0a8570d52d9d6d172804649fe4b5122e6d6e3d2ea789e16aedd4f46a4ee4aeca"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_linalg.f90",
+            "sha256": "a6123f572cbf1cea7f46a539bb92cb53e0354aac460ff7c46adc7f1ff0da5981"
           }
         ]
       }

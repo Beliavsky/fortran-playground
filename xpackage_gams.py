@@ -107,6 +107,7 @@ FACTORIZATION_RULES_TEN_REPORT = Path('docs/gams-factorization-rules-ten.md')
 SPECIAL_FUNCTIONS_TEN_REPORT = Path('docs/gams-special-functions-ten.md')
 SYSTEMS_SPECTRA_TEN_REPORT = Path('docs/gams-systems-spectra-ten.md')
 DISTRIBUTION_TEN_REPORT = Path('docs/gams-distribution-ten.md')
+PCA_ORDERING_TEN_REPORT = Path('docs/gams-pca-ordering-ten.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
 EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
@@ -9913,6 +9914,133 @@ def distribution_ten_review_text(root=ROOT):
     return '\n'.join(lines)
 
 
+def pca_ordering_ten_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-pca-ordering-ten-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-pca-ordering-ten-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Ten checked ordering and array-algebra drivers; retained PCA probe', '',
+             'Ten independent stdlib drivers passed GNU Fortran 16.2.0 with FPM 0.12.0 '
+             'in the restricted hosted sandbox. Existing libraries were reused; only '
+             'mains and executables were compiled. The [verification report]'
+             '(gams-pca-ordering-ten-validation.json) saves normalized source hashes, '
+             'package pins, timings and complete output. GAMS categories are not exhausted.', '',
+             '## Order statistics and associated sorting', '',
+             'select and arg_select each make 2,976 calls: every rank in 186 arrays '
+             'of lengths 1..31 across six deterministic dyadic families. Independent '
+             'insertion sorting supplies expected order statistics. Ascending, '
+             'descending, all-equal, signed, modular and repeated-block inputs '
+             'exercise ties and pivots. select must preserve the full multiset and '
+             'produce a valid partial partition. arg_select must preserve values '
+             'and produce a valid index permutation and partition, including when '
+             'initial indices are reversed. An arbitrary identity within ties is '
+             'not prescribed. Empty/invalid ranks and bounded-search options are unverified.', '',
+             'sort_index and sort_adjoint each make 780 calls on lengths 0..64, six '
+             'families and both sort directions. A separate stable insertion sort '
+             'supplies complete key order and original-position associations. '
+             'sort_index actively sorts the keys and returns a permutation; it '
+             'is not a passive-only argsort. sort_adjoint moves unique dyadic '
+             'payloads alongside keys. Both check stable ordering within ties '
+             'in ascending and descending mode, including empty/constant inputs. '
+             'NaNs, infinities, workspace options and other index/payload kinds '
+             'remain unverified.', '',
+             'unique has 390 exact sorted-output comparisons, lengths 0..64. '
+             'An independent bounded-bin membership scan supplies the sorted set '
+             'without calling any sorting routine. Count, values, finiteness and '
+             'input preservation are checked, including empty and all-equal '
+             'inputs. Only sorted_output=true and tolerance=0 are verified; '
+             'hash-based unsorted mode and approximate grouping are not.', '',
+             '## Adjacent differences and vector products', '',
+             'diff makes 325 comparisons on lengths 0..24 and orders 0..6, plain '
+             'or with prepend/append arrays for positive orders. The independent '
+             'reference is the explicit binomial stencil sum '
+             'sum((-1)**(n-j)*choose(n,j)*x(i+j),j=0..n), rather than another '
+             'sequence of adjacent differences. Order zero is the identity and '
+             'inputs too short for a positive order give empty results. Exact '
+             'bounded dyadic arithmetic, output length, finite values and input '
+             'preservation are checked. This is an array difference operator, '
+             'not a step-scaled numerical derivative. Rank-two/dimension options '
+             'and negative-order policies remain unverified.', '',
+             'cross_product checks 2,154 pairs: nine ordered basis pairs and '
+             '2,145 bounded dyadic pairs, including zero and parallel vectors. '
+             'A Levi-Civita determinant sum independently supplies all components. '
+             'Antisymmetry and orthogonality to both inputs are also checked '
+             'exactly. Arbitrary floating conditioning and scale extremes '
+             'are not covered.', '',
+             '## Outer products, tensor products and diagonals', '',
+             'outer_product checks 224 rectangular rank-one matrices, rows 1..8 '
+             'and columns 1..7, with four dyadic families including a zero factor. '
+             'Every entry is checked, together with independent scalar-dot matrix '
+             'action A*x=a*(b*x), zero adjacent two-by-two minors and '
+             'sum(A*A)=sum(a*a)*sum(b*b). Complex conjugation semantics are not claimed.', '',
+             'kronecker_product checks 432 products: 144 rectangular shape pairs '
+             'and three sign/zero families. Independent flattened output indices '
+             'supply every entry. A separate scalar contraction verifies '
+             '(A tensor B)*vec(X)=vec(B*X*transpose(A)) using Fortran column-major '
+             'ordering. This distinguishes block layout from an ordinary matrix '
+             'product. The bounded dyadic cases use exact comparisons; empty '
+             'inputs, other kinds and extreme scales remain unverified.', '',
+             'diag makes 84 offset-diagonal constructions for vector lengths '
+             '1..12 and offsets -3..3, checking the entire matrix including '
+             'off-diagonal zeros. There are 168 extractions: embedded vectors '
+             'and separately filled dense matrices with independent scalar '
+             'index references. Shape, exact values and finiteness are checked. '
+             'Rectangular extraction, empty vectors and out-of-range offsets '
+             'are not covered.', '',
+             '## PCA remains source-supported', '',
+             'A separate analytic PCA consumer was prepared for 24 rotated '
+             'full-rank datasets, both SVD and covariance methods, and known '
+             'means, axes, singular values, variances and truncated projections. '
+             'Its main source compiled, but linking failed with file-size limit '
+             'signal 25 under the existing 16 MiB hosted limit. No program ran '
+             'and no PCA numerical assertions were verified. This is a service '
+             'limit, not evidence of incorrect numerical results.', '',
+             'The [exact source, pin, hash and complete failure]'
+             '(gams-candidates/stdlib-pca/README.md) are retained for local '
+             'investigation. No checked PCA driver is published, and L13b '
+             'remains source-supported. The separate retained forpca numerical '
+             'failure is unchanged. No backend limit was relaxed or numerical '
+             'source patched; outer_product is the tenth successful example.', '',
+             '## Classification and provenance', '',
+             'The [Netlib GAMS taxonomy](https://netlib.org/misc/gams.html) '
+             'supplies broad searching N5 for order-statistic selection and '
+             'sorting N6 for active/associated sorting and sorted unique sets. '
+             'D1a11 covers other vector operations (array differences and cross '
+             'products), D1b1 covers matrix initialization, D1b6 covers rank-one '
+             'multiplication, and broad D1b covers tensor-product matrix operations. '
+             'A finer passive-only sorting or numerical-derivative label would '
+             'misdescribe these demonstrated interfaces.', '',
+             'Pinned public APIs, implementations and author tests were reviewed. '
+             'The checked drivers are independent MIT consumers; upstream '
+             'implementation and test bodies were not copied, and upstream '
+             'license terms remain separate. These are bounded correctness '
+             'checks, not timing benchmarks. Loading a driver does not submit a job.', '']
+    for d in drivers:
+        lines += ['### '+d['id']+' ('+d['gams_code']+')', '', d['modifications'], '']
+    lines += ['## Provenance and actual output', '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -10095,6 +10223,7 @@ def main():
                          (SPECIAL_FUNCTIONS_TEN_REPORT, special_functions_ten_review_text()),
                          (SYSTEMS_SPECTRA_TEN_REPORT, systems_spectra_ten_review_text()),
                          (DISTRIBUTION_TEN_REPORT, distribution_ten_review_text()),
+                         (PCA_ORDERING_TEN_REPORT, pca_ordering_ten_review_text()),
                          (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report

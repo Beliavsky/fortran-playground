@@ -320,3 +320,5 @@ The [ten stdlib special-function drivers](gams-special-functions-ten.md) check L
 The [ten stdlib linear-system and spectral drivers](gams-systems-spectra-ten.md) add direct/factored SPD solves, constrained/weighted least squares, nonsymmetric eigenproblems, Schur form, generalized eigenvalues and CG/PCG/BiCGSTAB kernels. Retained failures distinguish unsupported vector/wrapper interfaces from checked ones.
 
 The [ten stdlib probability-distribution drivers](gams-distribution-ten.md) check uniform, normal, exponential, gamma and beta PDFs/CDFs against independent high-precision constants, interval geometry and polynomial sums/products, including support boundaries and parameter transformations.
+
+The [ten checked ordering and array-algebra drivers](gams-pca-ordering-ten.md) cover selection, index/payload sorting, unique sets, differences, vector/tensor/outer products and diagonals. A separate stdlib PCA probe hit the executable-size limit and remains source-supported, with exact failure notes retained.
