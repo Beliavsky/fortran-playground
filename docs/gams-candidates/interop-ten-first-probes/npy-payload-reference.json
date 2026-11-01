@@ -1,0 +1,79 @@
+{
+  "ok": false,
+  "compiler": "GNU Fortran (GCC) 16.2.0",
+  "compiler_id": "gfortran",
+  "fpm": "0.12.0",
+  "stages": [
+    {
+      "name": "Build",
+      "command": [
+        "fpm",
+        "build",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.458,
+      "ok": true,
+      "exit_code": 0,
+      "error": "",
+      "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+      "stderr": ""
+    },
+    {
+      "name": "Run",
+      "command": [
+        "fpm",
+        "run",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.03,
+      "ok": false,
+      "exit_code": 1,
+      "error": "",
+      "stdout": "",
+      "stderr": "Project is up to date\nERROR STOP Shape header\n\nError termination. Backtrace:\n#0  0x2b1b6dffdf83 in ???\n#1  0x2b1b6dffec39 in ???\n#2  0x2b1b6e000045 in ???\n#3  0x40216a in MAIN__\n\tat app/main.f90:36\n#4  0x4026b9 in main\n\tat app/main.f90:4\n<ERROR> Execution for object \" playground-main \" returned exit code  1\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 1\n"
+    }
+  ],
+  "cache": {
+    "package": "npy-for-fortran",
+    "compiler": "GNU Fortran 16.2.0",
+    "key": "6740044f7d03cca9d67d0f1f",
+    "library_reused": true,
+    "changed_artifacts": []
+  },
+  "packages": [
+    {
+      "repository": "MRedies/NPY-for-Fortran",
+      "revision": "b76d22c6ece4e820d31d71825b2f774d060cd288",
+      "sha256": "bb6a82c69eddd95b4d7c6bbb3b0ec53c0a33d5de70a6194fc94b1e9b4e50c5ea"
+    }
+  ],
+  "build_ok": true,
+  "target_groups": {
+    "app": [
+      "playground-main"
+    ],
+    "example": [],
+    "test": []
+  },
+  "targets": [
+    "playground-main"
+  ],
+  "plots": [],
+  "plot_notes": []
+}

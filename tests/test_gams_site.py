@@ -67,6 +67,36 @@ class GamsSiteTests(unittest.TestCase):
             self.assertIn('Open default example', sorting)
             self.assertNotIn('Try in playground', sorting)
 
+    def test_ten_interop_driver_links_keep_class_specific_scope(self):
+        import copy
+        from xpackage_gams import driver_data, gams_data
+        drivers = [d for d in driver_data(data=gams_data())
+                   if d.get('validation_path') == 'docs/gams-interop-ten-validation.json']
+        self.assertEqual(len(drivers), 10)
+        feed = copy.deepcopy(self.feed)
+        packages = {d['package_id'] for d in drivers}
+        feed['projects'] = [p for p in feed['projects'] if p['playground']['package_id'] in packages]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination, feed)
+            for driver in drivers:
+                url = ('https://beliavsky.github.io/fortran-playground/fpm/'
+                       f'?package={driver["package_id"]}&example={driver["name"]}')
+                page = Page((destination/driver['gams_code']/'index.html').read_text(encoding='utf-8'))
+                self.assertIn((url, 'Try in playground'), page.anchors)
+                detail = (destination/'packages'/driver['package_id']/'index.html').read_text(encoding='utf-8')
+                card = detail.split('id="'+driver['procedure_id']+'"', 1)[1].split('</article>', 1)[0]
+                self.assertIn('Load checked GAMS driver:', card)
+                self.assertIn(driver['name'], card)
+            searching = Page((destination/'N5/index.html').read_text(encoding='utf-8'))
+            self.assertNotIn(('https://beliavsky.github.io/fortran-playground/fpm/'
+                              '?package=ftl&example=gams-ftl-state-reference', 'Try in playground'),
+                             searching.anchors)
+            io = Page((destination/'N1/index.html').read_text(encoding='utf-8'))
+            self.assertNotIn(('https://beliavsky.github.io/fortran-playground/fpm/'
+                              '?package=rojff&example=gams-rojff-json-reference', 'Try in playground'),
+                             io.anchors)
+
     def test_ten_state_driver_links_match_records_without_extra_class_promotion(self):
         import copy
         from xpackage_gams import driver_data,gams_data
@@ -1256,14 +1286,16 @@ class GamsSiteTests(unittest.TestCase):
             destination = Path(temporary)
             generate_gams_site(destination, feed)
             for code, package, driver in [('I','dde_solver','dde-method-steps-reference'),
-                                          ('S','fortran-lua54','lua-numeric-embedding-reference')]:
+                                          ('S','fortran-lua54','lua-numeric-embedding-reference'),
+                                          ('S','fortran-lua53','lua53-stack-reference')]:
                 html = (destination/code/'index.html').read_text()
                 primary = [url for url, label in Page(html).anchors if label == 'Try in playground']
-                self.assertEqual(primary, [f'https://beliavsky.github.io/fortran-playground/fpm/?package={package}&example=gams-{driver}'])
+                self.assertIn(f'https://beliavsky.github.io/fortran-playground/fpm/?package={package}&example=gams-{driver}',
+                              primary)
                 self.assertIn('Verified: a checked driver', html)
             scripting = Page((destination/'S/index.html').read_text())
-            self.assertIn(('https://beliavsky.github.io/fortran-playground/fpm/?package=fortran-lua53',
-                           'Open default example'), scripting.anchors)
+            self.assertNotIn(('https://beliavsky.github.io/fortran-playground/fpm/?package=fortran-lua53',
+                              'Open default example'), scripting.anchors)
 
     def test_qdutillib_and_nufft2d_pages_open_class_specific_drivers(self):
         import copy

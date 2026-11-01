@@ -1,0 +1,54 @@
+{
+  "ok": false,
+  "compiler": "GNU Fortran (GCC) 16.2.0",
+  "compiler_id": "gfortran",
+  "fpm": "0.12.0",
+  "stages": [
+    {
+      "name": "Build",
+      "command": [
+        "fpm",
+        "build",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 4.062,
+      "ok": false,
+      "exit_code": 1,
+      "error": "",
+      "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n\napp/main.f90:12:11:\n\n   12 |       kind=INPUTS\n      |           1\nError: Cannot convert TYPE(message_type_t) to INTEGER(4) at (1)\ncompilation terminated due to -fmax-errors=1.\n",
+      "stderr": "<ERROR> Compilation failed for object \" app_main.f90.o \"\n<ERROR> stopping due to failed compilation\nSTOP 1\n"
+    }
+  ],
+  "cache": {
+    "package": "erloff",
+    "compiler": "GNU Fortran 16.2.0",
+    "key": "dc9a305bffe33bf75d6d0ccf",
+    "library_reused": true,
+    "changed_artifacts": []
+  },
+  "packages": [
+    {
+      "repository": "everythingfunctional/erloff",
+      "revision": "73dfdbf54dafadb42e4705c45824b93917a20965",
+      "sha256": "71d21f36b77fd638d2cf2f555c7bb1ea978af1755856a815aea33e0758581e75"
+    },
+    {
+      "repository": "everythingfunctional/iso_varying_string",
+      "revision": "48ce6b119e855284a87d5a6eb9c53da8b6785716",
+      "sha256": "b1d563dc52c7cb3df41abf3f360ef0c05285b71bec9bd61d090227f88628ba49"
+    },
+    {
+      "repository": "everythingfunctional/strff",
+      "revision": "37dccc0e615a2fc85de18be80427e0f1a678d87c",
+      "sha256": "1aac7b388bcd6f4a181c5d9aea27046f9a7c3f90273184359afa63e11cafc74d"
+    }
+  ]
+}

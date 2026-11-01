@@ -304,3 +304,5 @@ The [checked Pareto-segment and Jacobi/DIIS drivers](gams-pareto-diis.md) retain
 The [ten checked data-handling drivers](gams-data-ten.md) add exact container, text, sorting/searching and register-conversion references, with per-driver limits. All use existing cached libraries.
 
 The [ten configuration, state and reference drivers](gams-state-ten.md) include checked storage/configuration, SQL transactions, expressions and SI photon calculations, with retained failed probes and explicit scope limits.
+
+The [ten structured-data and interoperability drivers](gams-interop-ten.md) check JSON/YAML values, NPY headers and payloads, container states, diagnostic filtering, Linux file operations and Lua/Python bindings, with retained consumer corrections and explicit limits.

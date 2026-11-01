@@ -97,6 +97,7 @@ from xpackage_gams import (gams_data, package_classes, review_text, subclass_mod
                             pareto_diis_review_text, PARETO_DIIS_REPORT,
                             data_ten_review_text, DATA_TEN_REPORT,
                             state_ten_review_text, STATE_TEN_REPORT,
+                            interop_ten_review_text, INTEROP_TEN_REPORT,
                           coverage_data, coverage_review_text, COVERAGE_REPORT,
                           class_evidence, class_tree, mapping_evidence_text, EVIDENCE_REPORT)
 
@@ -844,7 +845,7 @@ class PackageGamsTests(unittest.TestCase):
         self.assertNotEqual(class_evidence(class_tree(data),'I1',[records['dde-solver-api']],
                                           list(drivers.values()))['status'], 'verified')
         self.assertEqual(class_evidence(class_tree(data),'S',[records['lua53-interface']],
-                                       list(drivers.values()))['status'], 'source-supported')
+                                       [delay,embedding])['status'], 'source-supported')
         text = delay_embedding_review_text()
         self.assertEqual((ROOT/DELAY_EMBEDDING_REPORT).read_text(encoding='utf-8'), text)
         self.assertIn('method-of-steps reference', text)
@@ -882,6 +883,52 @@ class PackageGamsTests(unittest.TestCase):
         self.assertIn('22,416',text)
         self.assertIn('Type-2/type-3 transforms',text)
         self.assertIn('two-dimensional NUFFT2D driver',transforms_review_text())
+
+    def test_ten_interop_drivers_keep_independent_references_and_limits(self):
+        data = gams_data()
+        records = {r['id']: r for r in data['procedure_mappings']}
+        drivers = {d['id']: d for d in driver_data(data=data)
+                   if d.get('validation_path') == 'docs/gams-interop-ten-validation.json'}
+        self.assertEqual(set(drivers), {
+            'rojff-json-reference', 'erloff-filter-reference', 'npy-payload-reference',
+            'ftl-state-reference', 'unix-files-reference', 'os-path-reference',
+            'lua53-stack-reference', 'forpy-numpy-reference', 'yaml-values-reference',
+            'flook-table-reference'})
+        for driver in drivers.values():
+            record = records[driver['procedure_id']]
+            self.assertEqual(record['driver_id'], driver['id'])
+            self.assertEqual(class_evidence(class_tree(data), driver['gams_code'], [record], [driver])['status'],
+                             'verified')
+        self.assertEqual(drivers['rojff-json-reference']['checks']['typed_references'], 294)
+        npy = drivers['npy-payload-reference']['checks']
+        self.assertEqual(npy['payload_values'], 420)
+        self.assertFalse(npy['package_reader_used'])
+        self.assertEqual(drivers['ftl-state-reference']['checks']['checkpoints'], 1024)
+        self.assertEqual(drivers['unix-files-reference']['checks']['byte_lengths'], [0, 128])
+        self.assertEqual(drivers['os-path-reference']['checks']['files'], 33)
+        self.assertEqual(drivers['lua53-stack-reference']['checks']['numeric_references'], 258)
+        self.assertEqual(drivers['forpy-numpy-reference']['checks']['norm_relative_tolerance'], 1e-13)
+        self.assertEqual(drivers['yaml-values-reference']['checks']['value_references'], 240)
+        self.assertEqual(drivers['flook-table-reference']['checks']['numeric_references'], 306)
+        text = interop_ten_review_text()
+        self.assertEqual((ROOT/INTEROP_TEN_REPORT).read_text(encoding='utf-8'), text)
+        for phrase in ['little-endian GNU/Linux', 'array-axis or memory-layout',
+                       'consumer corrections', 'categories are not exhausted']:
+            self.assertIn(phrase, text)
+
+    def test_interop_failed_probes_preserve_hashes_pins_and_full_results(self):
+        import hashlib
+        folder = ROOT/'docs/gams-candidates/interop-ten-first-probes'
+        notes = (folder/'README.md').read_text(encoding='utf-8')
+        self.assertEqual(len(list(folder.glob('*.json'))), 2)
+        for path in folder.glob('*.json'):
+            source = path.with_suffix('.f90').read_text(encoding='utf-8')
+            result = json.loads(path.read_text(encoding='utf-8'))
+            self.assertIn(hashlib.sha256(source.encode()).hexdigest(), notes)
+            self.assertIn(result['packages'][0]['revision'], notes)
+            self.assertFalse(result['ok'])
+            self.assertTrue(result['cache']['library_reused'])
+            self.assertTrue(any(not stage['ok'] for stage in result['stages']))
 
     def test_ten_state_drivers_keep_nonempty_and_binary_only_scope(self):
         data = gams_data()

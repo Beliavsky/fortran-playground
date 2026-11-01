@@ -16630,7 +16630,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "JSON parsing and serialization with explicit error values. The main checks numeric/string fields, missing-key reporting, compact serialization round trips and malformed-input rejection. It uses the original Erloff 2.2.0 API with a pinned compatible Strff 3.1.1 and ISO varying string 3.0.3; the Strff 4.0 dependency graph needs an unavailable GitHub mirror. No computational source is patched.",
+        "notes": "JSON parsing and serialization with explicit error values. The main checks numeric/string fields, missing-key reporting, compact serialization round trips and malformed-input rejection. It uses the original Erloff 2.2.0 API with a pinned compatible Strff 3.1.1 and ISO varying string 3.0.3; the Strff 4.0 dependency graph needs an unavailable GitHub mirror. No computational source is patched. Checked driver: 49 signed integer/dyadic REAL64/ASCII string objects checked before and after compact serialization against independent formulas; absent keys and two malformed inputs. Unicode, escaping, arrays and arbitrary malformed input unverified.",
         "evidence": [
           {
             "path": "src/rojff/parser/parser_m.f90",
@@ -16648,7 +16648,8 @@
             "path": "example/get_value/main.f90",
             "sha256": "713cecc42442652ca14dcd87578621074ba23ad098b0bbe8a1ac05c7b3634d68"
           }
-        ]
+        ],
+        "driver_id": "rojff-json-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T23:25:51.211120+00:00"
@@ -17216,7 +17217,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Structured error lists and logging. The checked main collects two fatal validation messages, filters one by OUT_OF_BOUNDS, checks counts and diagnostic text, and prints both messages. The pinned compatible Strff 3.1.1 avoids the unavailable exceptional_numbers mirror requested through Strff 4.0. No library source edits. This does not cover all logging levels, filtering operators or concurrent use.",
+        "notes": "Structured error lists and logging. The checked main collects two fatal validation messages, filters one by OUT_OF_BOUNDS, checks counts and diagnostic text, and prints both messages. The pinned compatible Strff 3.1.1 avoids the unavailable exceptional_numbers mirror requested through Strff 4.0. No library source edits. This does not cover all logging levels, filtering operators or concurrent use. Checked driver: 48 append steps with exact diagnostic membership and parity category counts. Previous copied snapshots retain their size and exclude each newly added message. Other filters, severity classes and memory behavior unverified.",
         "evidence": [
           {
             "path": "src/erloff/error_list_m.f90",
@@ -17224,7 +17225,8 @@
             "line": 1
           }
         ],
-        "author_examples": []
+        "author_examples": [],
+        "driver_id": "erloff-filter-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T00:20:04.805639+00:00"
@@ -19637,7 +19639,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "NumPy NPY writing. An FPM wrapper selects unchanged src/npy.f90. The main writes a 2-by-3 real64 matrix, checks version-2 magic, dtype/order header, exact binary payload and file size, and prints the matrix and header. A separate hosted probe captures the actual file bytes and NumPy independently loads the expected shape, dtype and exact values with pickle disabled. No source edits. The author no longer actively maintains the project. Other kinds/ranks, big-endian platforms and NPZ archive operations are not validated; the browser displays the checked summary rather than offering a general NPY-file download.",
+        "notes": "NumPy NPY writing. An FPM wrapper selects unchanged src/npy.f90. The main writes a 2-by-3 real64 matrix, checks version-2 magic, dtype/order header, exact binary payload and file size, and prints the matrix and header. A separate hosted probe captures the actual file bytes and NumPy independently loads the expected shape, dtype and exact values with pickle disabled. No source edits. The author no longer actively maintains the project. Other kinds/ranks, big-endian platforms and NPZ archive operations are not validated; the browser displays the checked summary rather than offering a general NPY-file download. Checked driver: 35 REAL64 matrix NPY files independently read using native stream I/O: magic/version, little-endian dtype, Fortran order, exact shape, byte size and 420 payload values. Scope is little-endian GNU/Linux; empty arrays, other kinds, NPZ and external NumPy loading unverified.",
         "evidence": [
           {
             "path": "src/npy.f90",
@@ -19650,7 +19652,8 @@
             "path": "src/example.f90",
             "sha256": "50c7f3f3fe87f53cc76a1c23dd9a47bd22e693b6b199e0b7eca48e9509319fa9"
           }
-        ]
+        ],
+        "driver_id": "npy-payload-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T12:53:38.105617+00:00"
@@ -19740,7 +19743,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Selected Fortran Template Library instantiations: integer dynamic arrays and ftlString-to-integer hash maps, plus their unmodified support modules. A checksum-guarded adapter adds CPP-disabled module/dependency declarations so FPM 0.12 can discover modules emitted by templates. Original and adapted compiler-preprocessed output match apart from blank lines. Implicit-external checking is left at the upstream convention to avoid a GNU diagnostic in a character-length specification expression. The checked main verifies array growth, contents and pop, map insertion/replacement, presence, lookup and erase, then explicitly deletes both containers. Sources otherwise remain unchanged, and template headers remain in the source archive. Other instantiations, general algorithms, regex and every ownership/finalization case are not offered or validated.",
+        "notes": "Selected Fortran Template Library instantiations: integer dynamic arrays and ftlString-to-integer hash maps, plus their unmodified support modules. A checksum-guarded adapter adds CPP-disabled module/dependency declarations so FPM 0.12 can discover modules emitted by templates. Original and adapted compiler-preprocessed output match apart from blank lines. Implicit-external checking is left at the upstream convention to avoid a GNU diagnostic in a character-length specification expression. The checked main verifies array growth, contents and pop, map insertion/replacement, presence, lookup and erase, then explicitly deletes both containers. Sources otherwise remain unchanged, and template headers remain in the source archive. Other instantiations, general algorithms, regex and every ownership/finalization case are not offered or validated. Checked driver: Eight 128-step traces compare all dynamic-array values and 17 map membership/value slots against plain-array oracles. Growth, LIFO pops, replacement, conditional deletion, final drain and explicit destruction. Iterators, object copies, missing-key Get, clear/reuse and thread safety unverified.",
         "evidence": [
           {
             "path": "src/ftlDynArray.F90_template",
@@ -19762,7 +19765,8 @@
             "path": "tests/ftlHashMapTests.F90",
             "sha256": "5df81a943d5d0fa611a32cfc34b48a7c5e0fc3124fa00785720e5c32b650a327"
           }
-        ]
+        ],
+        "driver_id": "ftl-state-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T12:53:38.105617+00:00"
@@ -20280,7 +20284,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "POSIX/SysV bindings on the playground 64-bit Linux/glibc environment. The source library is unchanged. The manifest features/profiles tables are removed for FPM 0.12 compatibility and their Linux preprocessor flag is supplied explicitly. A 13-byte sandbox-local file is created, its size is checked through c_stat, then c_unlink removes it and Fortran INQUIRE confirms removal. Other operating systems, process creation, networking, IPC, signals, threads and all ABI structures are not validated or promised in the restricted sandbox.",
+        "notes": "POSIX/SysV bindings on the playground 64-bit Linux/glibc environment. The source library is unchanged. The manifest features/profiles tables are removed for FPM 0.12 compatibility and their Linux preprocessor flag is supplied explicitly. A 13-byte sandbox-local file is created, its size is checked through c_stat, then c_unlink removes it and Fortran INQUIRE confirms removal. Other operating systems, process creation, networking, IPC, signals, threads and all ABI structures are not validated or promised in the restricted sandbox. Checked driver: 129 Linux POSIX file lifecycles with generated binary bytes: c_stat sizes versus expected lengths and INQUIRE, byte content, c_unlink disappearance and failed stat afterward. Permissions, symlinks, errno, directories and non-Linux platforms unverified.",
         "evidence": [
           {
             "path": "src/unix_stat.F90",
@@ -20298,7 +20302,8 @@
             "path": "examples/stat/stat.f90",
             "sha256": "3f774841a7f47bf254cdcabd5c436796c319aa02ae3bd5f9748dca121608ca23"
           }
-        ]
+        ],
+        "driver_id": "unix-files-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T13:26:21.447807+00:00"
@@ -23323,7 +23328,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Mixed C/Fortran operating-system utilities wrapped for FPM. Two checksum-guarded compatibility edits set the Linux os_name constant and restrict the ISO_C_BINDING import to avoid the Fortran 2023 F_C_STRING name collision. OS_SYSTEM_ID is configured as OS_LINUX. The checked consumer creates nested temporary directories and a 14-byte stream file, checks file size and type, basename/dirname and path normalization, then renames and deletes the file and removes both directories. No external files or user environment are required. This configured recipe and exported project target Linux; Windows branches, processes, user/home lookup and every path utility are not validated.",
+        "notes": "Mixed C/Fortran operating-system utilities wrapped for FPM. Two checksum-guarded compatibility edits set the Linux os_name constant and restrict the ISO_C_BINDING import to avoid the Fortran 2023 F_C_STRING name collision. OS_SYSTEM_ID is configured as OS_LINUX. The checked consumer creates nested temporary directories and a 14-byte stream file, checks file size and type, basename/dirname and path normalization, then renames and deletes the file and removes both directories. No external files or user environment are required. This configured recipe and exported project target Linux; Windows branches, processes, user/home lookup and every path utility are not validated. Checked driver: 33 Linux file create/rename/read/unlink lifecycles with exact sizes and contents, relative/absolute normalization fixtures, basename/dirname, nested mkdir/rmdir. Windows paths, symlinks, exceptional I/O and recursive operations unverified.",
         "evidence": [
           {
             "path": "src/os.F90",
@@ -23341,7 +23346,8 @@
             "path": "test/stdlib_test.f90",
             "sha256": "cc99262c73219202f5be74a8c48f3d58588c8646b0e3a916e5a59cb3201fa99a"
           }
-        ]
+        ],
+        "driver_id": "os-path-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T19:56:39.893532+00:00"
@@ -23489,7 +23495,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Upstream Lua 5.3 bindings and source code are unchanged. A checksum-guarded manifest edit links the versioned Debian Lua 5.3 library instead of the unversioned lua name. The native development package is locked to 5.3.6-2+b4. The consumer defines a Lua function in memory, calls it for four integer arguments, independently verifies integer squares and real square roots, checks Lua status and function presence, empties the stack after each call and closes the interpreter. No files or external services are needed. Lua modules, callbacks into Fortran and arbitrary scripts are not comprehensively validated.",
+        "notes": "Upstream Lua 5.3 bindings and source code are unchanged. A checksum-guarded manifest edit links the versioned Debian Lua 5.3 library instead of the unversioned lua name. The native development package is locked to 5.3.6-2+b4. The consumer defines a Lua function in memory, calls it for four integer arguments, independently verifies integer squares and real square roots, checks Lua status and function presence, empties the stack after each call and closes the interpreter. No files or external services are needed. Lua modules, callbacks into Fortran and arbitrary scripts are not comprehensively validated. Checked driver: 129 Lua calls check integer polynomial and dyadic affine values against independent formulas, two-result stack depth and cleanup, plus one rejected syntax error. General Lua applications, callbacks, runtime-error recovery and other platforms unverified.",
         "evidence": [
           {
             "path": "src/lua.f90",
@@ -23502,7 +23508,8 @@
             "path": "examples/fibonacci/fibonacci.f90",
             "sha256": "1f239d6335815023bd747d46cb525ad3d6598972530a2658895a059304aa1b5f"
           }
-        ]
+        ],
+        "driver_id": "lua53-stack-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T20:10:45.271323+00:00"
@@ -23817,7 +23824,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "The existing generated upstream forpy_mod.F90 source is wrapped for FPM without running Fypp or changing the library. It embeds the sandbox Python 3.12 runtime using the linker flags advertised by python3-config --embed --ldflags, with an explicit runtime library search path. The consumer copies a 2-by-3 Fortran real64 array to NumPy, calls numpy.sum and numpy.linalg.norm, verifies both returned scalars independently in Fortran and checks finite values and every API status. Python references are destroyed before finalization. Other Python versions, no-copy array lifetimes, callbacks, Python extension modules and plotting are not validated. Exported projects need Python and NumPy and linker flags appropriate to the local Python installation.",
+        "notes": "The existing generated upstream forpy_mod.F90 source is wrapped for FPM without running Fypp or changing the library. It embeds the sandbox Python 3.12 runtime using the linker flags advertised by python3-config --embed --ldflags, with an explicit runtime library search path. The consumer copies a 2-by-3 Fortran real64 array to NumPy, calls numpy.sum and numpy.linalg.norm, verifies both returned scalars independently in Fortran and checks finite values and every API status. Python references are destroyed before finalization. Other Python versions, no-copy array lifetimes, callbacks, Python extension modules and plotting are not validated. Exported projects need Python and NumPy and linker flags appropriate to the local Python installation. Checked driver: 35 asymmetric REAL64 arrays passed into embedded NumPy. Sum/max match independent scalar loops exactly; Frobenius norm matches the scalar sum-of-squares reference within 1e-13. Array axis/layout observability, mutability, exceptions and general numerical NumPy routines unverified.",
         "evidence": [
           {
             "path": "forpy_mod.F90",
@@ -23830,7 +23837,8 @@
             "path": "README.md",
             "sha256": "5ed77874875b55074a785b4389a43b4dd0dd6a49fa24107915aeb5f2f4e57852"
           }
-        ]
+        ],
+        "driver_id": "forpy-numpy-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T20:54:40.271634+00:00"
@@ -24823,7 +24831,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "The upstream YAML library is wrapped for FPM with pinned gFTL and the selected gFTL-shared containers. The checked main writes a tiny local configuration, parses an integer, a boolean, a string and an integer sequence, checks every returned value and verifies that an absent key is reported missing. Input files are removed afterwards. N1 covers configuration input and N3 covers parsing character data. The upstream parser supports a subset of YAML; full YAML conformance, all schemas and malformed-input recovery are not claimed. Source-recipe-tagged immutable dependency exports retain compatible gFTL builds.",
+        "notes": "The upstream YAML library is wrapped for FPM with pinned gFTL and the selected gFTL-shared containers. The checked main writes a tiny local configuration, parses an integer, a boolean, a string and an integer sequence, checks every returned value and verifies that an absent key is reported missing. Input files are removed afterwards. N1 covers configuration input and N3 covers parsing character data. The upstream parser supports a subset of YAML; full YAML conformance, all schemas and malformed-input recovery are not claimed. Source-recipe-tagged immutable dependency exports retain compatible gFTL builds. Checked driver: 32 fresh core-schema YAML files with signed integer, alternating logical, quoted ASCII text and integer sequences of lengths 1..8. 240 independent value references and absent keys. Malformed inputs, anchors, nested mappings, duplicate keys and repeated loads into the same parser unverified.",
         "evidence": [
           {
             "path": "src/Parser.F90",
@@ -24850,7 +24858,8 @@
             "path": "Examples/Trivial/trivial.F90",
             "sha256": "e9d16a2a02c9e1cb62d0dfb957d38849b8894da9954a9ddf623d7bc8e6c654cd"
           }
-        ]
+        ],
+        "driver_id": "yaml-values-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T22:10:15.755993+00:00"
@@ -25192,7 +25201,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "The procedural flook interface embeds the repository-bundled Lua 5.3.5 and Aotus bridge. The FPM wrapper selects the upstream procedural library and bundled C sources, excludes standalone Lua interpreters and the alternative Fortran 2003 interface, and links the system math/dynamic-loading libraries. The checked consumer passes parameters to Lua, executes a short script, retrieves its real and integer results and independently checks 14 and 21. The bundled versions have their own build context; they do not replace the separately catalogued Aotus package. MPL-2.0 and the bundled Aotus/Lua notices are retained. S covers language interoperability.",
+        "notes": "The procedural flook interface embeds the repository-bundled Lua 5.3.5 and Aotus bridge. The FPM wrapper selects the upstream procedural library and bundled C sources, excludes standalone Lua interpreters and the alternative Fortran 2003 interface, and links the system math/dynamic-loading libraries. The checked consumer passes parameters to Lua, executes a short script, retrieves its real and integer results and independently checks 14 and 21. The bundled versions have their own build context; they do not replace the separately catalogued Aotus package. MPL-2.0 and the bundled Aotus/Lua notices are retained. S covers language interoperability. Checked driver: 153 Lua table set/execute/get traces with signed dyadic parameters and n=0..16. Exact affine arithmetic and triangular-sum references with explicit table/state closure. General scripts, callbacks, table nesting, error recovery and memory leaks unverified.",
         "evidence": [
           {
             "path": "src/flook.F90",
@@ -25209,7 +25218,8 @@
             "path": "src/test/tst_passreturn.f90",
             "sha256": "317a8cd884409af7c19e07d9009dbbae2732695ea50d5df3a35c3ff6d14d38ea"
           }
-        ]
+        ],
+        "driver_id": "flook-table-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T22:54:35.803464+00:00"

@@ -9440,6 +9440,268 @@
           "fpm_catalog/gams-drivers/references/photon-vectors.json": "af0419be4050d5cc7af66a32d99d4c581f0eb95f24e57737ca2ed847f4f9e410"
         }
       }
+    },
+    {
+      "id": "rojff-json-reference",
+      "name": "gams-rojff-json-reference",
+      "package_id": "rojff",
+      "procedure_id": "rojff-json",
+      "gams_code": "N3",
+      "problem_id": "generated-json-typed-value-reference",
+      "path": "fpm_catalog/gams-drivers/rojff-json-reference.f90",
+      "revision": "9f68e5aa4c12b32720d4224f1ac279bfd7d77b93",
+      "author_example": "example/get_value/main.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/interop-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. 49 signed integer/dyadic REAL64/ASCII string objects checked before and after compact serialization against independent formulas; absent keys and two malformed inputs. Unicode, escaping, arrays and arbitrary malformed input unverified.",
+      "validation_path": "docs/gams-interop-ten-validation.json",
+      "review_path": "docs/gams-interop-ten.md",
+      "checks": {
+        "objects": 49,
+        "typed_references": 294,
+        "invalid_inputs": 2
+      }
+    },
+    {
+      "id": "erloff-filter-reference",
+      "name": "gams-erloff-filter-reference",
+      "package_id": "erloff",
+      "procedure_id": "erloff-errors",
+      "gams_code": "R",
+      "problem_id": "immutable-error-filter-membership-reference",
+      "path": "fpm_catalog/gams-drivers/erloff-filter-reference.f90",
+      "revision": "73dfdbf54dafadb42e4705c45824b93917a20965",
+      "author_example": "",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/interop-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. 48 append steps with exact diagnostic membership and parity category counts. Previous copied snapshots retain their size and exclude each newly added message. Other filters, severity classes and memory behavior unverified.",
+      "validation_path": "docs/gams-interop-ten-validation.json",
+      "review_path": "docs/gams-interop-ten.md",
+      "checks": {
+        "append_steps": 48,
+        "snapshot_preservation": true,
+        "category_filtering": true
+      }
+    },
+    {
+      "id": "npy-payload-reference",
+      "name": "gams-npy-payload-reference",
+      "package_id": "npy-for-fortran",
+      "procedure_id": "npy-matrix",
+      "gams_code": "N1",
+      "problem_id": "npy-header-and-stream-payload-oracle",
+      "path": "fpm_catalog/gams-drivers/npy-payload-reference.f90",
+      "revision": "b76d22c6ece4e820d31d71825b2f774d060cd288",
+      "author_example": "src/example.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/interop-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. 35 REAL64 matrix NPY files independently read using native stream I/O: magic/version, little-endian dtype, Fortran order, exact shape, byte size and 420 payload values. Scope is little-endian GNU/Linux; empty arrays, other kinds, NPZ and external NumPy loading unverified.",
+      "validation_path": "docs/gams-interop-ten-validation.json",
+      "review_path": "docs/gams-interop-ten.md",
+      "checks": {
+        "files": 35,
+        "payload_values": 420,
+        "shape_ranges": [
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            7
+          ]
+        ],
+        "package_reader_used": false
+      }
+    },
+    {
+      "id": "ftl-state-reference",
+      "name": "gams-ftl-state-reference",
+      "package_id": "ftl",
+      "procedure_id": "ftl-containers",
+      "gams_code": "N4",
+      "problem_id": "dynamic-array-and-map-operation-traces",
+      "path": "fpm_catalog/gams-drivers/ftl-state-reference.f90",
+      "revision": "e6598dae7db68f68544dc1ca0e64f5bce3744c42",
+      "author_example": "tests/ftlDynArrayTests.F90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/interop-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. Eight 128-step traces compare all dynamic-array values and 17 map membership/value slots against plain-array oracles. Growth, LIFO pops, replacement, conditional deletion, final drain and explicit destruction. Iterators, object copies, missing-key Get, clear/reuse and thread safety unverified.",
+      "validation_path": "docs/gams-interop-ten-validation.json",
+      "review_path": "docs/gams-interop-ten.md",
+      "checks": {
+        "traces": 8,
+        "checkpoints": 1024,
+        "map_key_domain": 17
+      }
+    },
+    {
+      "id": "unix-files-reference",
+      "name": "gams-unix-files-reference",
+      "package_id": "fortran-unix",
+      "procedure_id": "unix-files",
+      "gams_code": "N1",
+      "problem_id": "posix-stat-unlink-byte-length-reference",
+      "path": "fpm_catalog/gams-drivers/unix-files-reference.f90",
+      "revision": "50dc6df511c1cf5a245a4ab14cd4f705d4e66c2f",
+      "author_example": "examples/stat/stat.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/interop-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. 129 Linux POSIX file lifecycles with generated binary bytes: c_stat sizes versus expected lengths and INQUIRE, byte content, c_unlink disappearance and failed stat afterward. Permissions, symlinks, errno, directories and non-Linux platforms unverified.",
+      "validation_path": "docs/gams-interop-ten-validation.json",
+      "review_path": "docs/gams-interop-ten.md",
+      "checks": {
+        "files": 129,
+        "byte_lengths": [
+          0,
+          128
+        ],
+        "missing_stat_verified": true
+      }
+    },
+    {
+      "id": "os-path-reference",
+      "name": "gams-os-path-reference",
+      "package_id": "stdlib-os",
+      "procedure_id": "stdlib-os-files",
+      "gams_code": "N1",
+      "problem_id": "linux-path-and-file-lifecycle-reference",
+      "path": "fpm_catalog/gams-drivers/os-path-reference.f90",
+      "revision": "60768243de9325d9b57b2e825e7312d70b1e538a",
+      "author_example": "test/stdlib_test.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/interop-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. 33 Linux file create/rename/read/unlink lifecycles with exact sizes and contents, relative/absolute normalization fixtures, basename/dirname, nested mkdir/rmdir. Windows paths, symlinks, exceptional I/O and recursive operations unverified.",
+      "validation_path": "docs/gams-interop-ten-validation.json",
+      "review_path": "docs/gams-interop-ten.md",
+      "checks": {
+        "files": 33,
+        "byte_lengths": [
+          0,
+          32
+        ],
+        "normalization_fixtures": 2
+      }
+    },
+    {
+      "id": "lua53-stack-reference",
+      "name": "gams-lua53-stack-reference",
+      "package_id": "fortran-lua53",
+      "procedure_id": "lua53-interface",
+      "gams_code": "S",
+      "problem_id": "lua-integer-real-stack-oracle",
+      "path": "fpm_catalog/gams-drivers/lua53-stack-reference.f90",
+      "revision": "d0d684978e922bbc8c2f7e4be0cc901f80c29de6",
+      "author_example": "examples/fibonacci/fibonacci.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/interop-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. 129 Lua calls check integer polynomial and dyadic affine values against independent formulas, two-result stack depth and cleanup, plus one rejected syntax error. General Lua applications, callbacks, runtime-error recovery and other platforms unverified.",
+      "validation_path": "docs/gams-interop-ten-validation.json",
+      "review_path": "docs/gams-interop-ten.md",
+      "checks": {
+        "calls": 129,
+        "numeric_references": 258,
+        "syntax_rejection": true
+      }
+    },
+    {
+      "id": "forpy-numpy-reference",
+      "name": "gams-forpy-numpy-reference",
+      "package_id": "forpy",
+      "procedure_id": "forpy-embedding",
+      "gams_code": "S",
+      "problem_id": "embedded-numpy-scalar-reductions",
+      "path": "fpm_catalog/gams-drivers/forpy-numpy-reference.f90",
+      "revision": "b4fc550c7282ed0751d6559c4d867a60af3718a7",
+      "author_example": "README.md",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/interop-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. 35 asymmetric REAL64 arrays passed into embedded NumPy. Sum/max match independent scalar loops exactly; Frobenius norm matches the scalar sum-of-squares reference within 1e-13. Array axis/layout observability, mutability, exceptions and general numerical NumPy routines unverified.",
+      "validation_path": "docs/gams-interop-ten-validation.json",
+      "review_path": "docs/gams-interop-ten.md",
+      "checks": {
+        "arrays": 35,
+        "scalar_references": 105,
+        "norm_relative_tolerance": 1e-13
+      }
+    },
+    {
+      "id": "yaml-values-reference",
+      "name": "gams-yaml-values-reference",
+      "package_id": "yafyaml",
+      "procedure_id": "yafyaml-configuration",
+      "gams_code": "N3",
+      "problem_id": "generated-yaml-typed-sequence-oracle",
+      "path": "fpm_catalog/gams-drivers/yaml-values-reference.f90",
+      "revision": "d6005c9f635c02d7be54d09b205b6f16c54f46b5",
+      "author_example": "Examples/Simple/simple.F90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/interop-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. 32 fresh core-schema YAML files with signed integer, alternating logical, quoted ASCII text and integer sequences of lengths 1..8. 240 independent value references and absent keys. Malformed inputs, anchors, nested mappings, duplicate keys and repeated loads into the same parser unverified.",
+      "validation_path": "docs/gams-interop-ten-validation.json",
+      "review_path": "docs/gams-interop-ten.md",
+      "checks": {
+        "files": 32,
+        "value_references": 240,
+        "sequence_lengths": [
+          1,
+          8
+        ]
+      }
+    },
+    {
+      "id": "flook-table-reference",
+      "name": "gams-flook-table-reference",
+      "package_id": "flook",
+      "procedure_id": "flook-lua",
+      "gams_code": "S",
+      "problem_id": "lua-table-affine-and-loop-oracle",
+      "path": "fpm_catalog/gams-drivers/flook-table-reference.f90",
+      "revision": "7b644a2ace47e43772006764a58166b6635e8941",
+      "author_example": "src/test/tst_tbl.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/interop-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. 153 Lua table set/execute/get traces with signed dyadic parameters and n=0..16. Exact affine arithmetic and triangular-sum references with explicit table/state closure. General scripts, callbacks, table nesting, error recovery and memory leaks unverified.",
+      "validation_path": "docs/gams-interop-ten-validation.json",
+      "review_path": "docs/gams-interop-ten.md",
+      "checks": {
+        "traces": 153,
+        "numeric_references": 306,
+        "loop_lengths": [
+          0,
+          16
+        ]
+      }
     }
   ]
 }

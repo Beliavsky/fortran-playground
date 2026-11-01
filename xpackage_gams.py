@@ -99,6 +99,7 @@ FRICTION_TORCH_REPORT = Path('docs/gams-friction-torch.md')
 PARETO_DIIS_REPORT = Path('docs/gams-pareto-diis.md')
 DATA_TEN_REPORT = Path('docs/gams-data-ten.md')
 STATE_TEN_REPORT = Path('docs/gams-state-ten.md')
+INTEROP_TEN_REPORT = Path('docs/gams-interop-ten.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
 EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
@@ -9231,6 +9232,69 @@ def state_ten_review_text(root=ROOT):
     return '\n'.join(lines)
 
 
+def interop_ten_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-interop-ten-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-interop-ten-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Ten checked structured-data and interoperability drivers', '',
+             'Ten independent consumers passed GNU Fortran 16.2.0 with FPM 0.12.0 in the restricted '
+             'hosted sandbox. Every run reused the existing package library and compiled only the '
+             'main and executable. The [verification report](gams-interop-ten-validation.json) '
+             'preserves pins, normalized source hashes, timings and complete output. '
+             'GAMS categories are not exhausted.', '',
+             '## Independent references and limits', '',
+             'JSON and YAML values are compared with the parameters used to generate their inputs; '
+             'the JSON values must match both before and after serialization. The NPY consumer '
+             'uses native stream I/O rather than a package reader, checking header shape/type/order '
+             'and every payload value. Native stream integer/REAL64 representation is scoped to '
+             'the little-endian GNU/Linux sandbox.', '',
+             'Container states are compared with plain indexed arrays after every operation. '
+             'Error lists are checked against independently numbered diagnostics and parity '
+             'categories, including snapshots from before each append. File drivers compare '
+             'expected byte lengths and content through the native runtime and test disappearance '
+             'after deletion. These are Linux filesystem checks, not portability claims.', '',
+             'Lua integer polynomials, dyadic affine arithmetic and finite sums use direct closed-form '
+             'Fortran references; the low-level binding also checks stack depth and one syntax error. '
+             'Embedded NumPy reductions use scalar-loop sum/max/sum-of-squares references. '
+             'Sum/max are exact for the selected dyadic inputs and Frobenius norms allow relative '
+             'error 1e-13. Scalar reductions do not establish array-axis or memory-layout correctness.', '',
+             'The [two retained initial probes](gams-candidates/interop-ten-first-probes/README.md) '
+             'are consumer corrections: erloff category tags require message_type_t, and valid '
+             'NPY shape tuples permit a trailing comma. Exact failed sources, hashes, pins and '
+             'full service results remain available; neither is classified as an upstream defect.', '']
+    for d in drivers:
+        lines += ['### '+d['package_id']+' ('+d['gams_code']+')', '',
+                  d['modifications'], '']
+    lines += ['## Provenance and actual output', '',
+              'Pinned APIs, implementations and available author examples were reviewed. These '
+              'are independent MIT consumers; upstream implementation/example bodies were not '
+              'copied and upstream licenses remain separate. A checked driver demonstrates only '
+              'its recorded class and scope; it does not verify other package classifications. '
+              'Loading an example does not submit a job.', '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -9405,6 +9469,7 @@ def main():
                          (PARETO_DIIS_REPORT, pareto_diis_review_text()),
                          (DATA_TEN_REPORT, data_ten_review_text()),
                          (STATE_TEN_REPORT, state_ten_review_text()),
+                         (INTEROP_TEN_REPORT, interop_ten_review_text()),
                          (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report

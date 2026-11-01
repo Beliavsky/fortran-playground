@@ -1,0 +1,328 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "rojff-json-reference",
+      "source_revision": "9f68e5aa4c12b32720d4224f1ac279bfd7d77b93",
+      "source_sha256": "34dd4bf014c91dda77efec8b76f531134de29c4df6c8686189f63da15bf76284",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T15:44:16.833832+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.418,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "49 objects; 294 independent typed references; two malformed inputs rejected\nPASS rojff-json-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.028,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "ftl-state-reference",
+      "source_revision": "e6598dae7db68f68544dc1ca0e64f5bce3744c42",
+      "source_sha256": "1c96c2d443a0283bd9bb59e967891eb8850a934b6b5540271f6a2723406eabc9",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T15:44:38.618124+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 4.388,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Independent array/map state checkpoints: 1024\nPASS ftl-state-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.042,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "unix-files-reference",
+      "source_revision": "50dc6df511c1cf5a245a4ab14cd4f705d4e66c2f",
+      "source_sha256": "bf62914a133459730af3338e1d061eb52686c5d7b401a2de436ecebdb465e48a",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T15:44:41.570610+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.274,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "129 Linux POSIX file lifecycles, lengths 0..128 including arbitrary bytes\nPASS unix-files-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.039,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "os-path-reference",
+      "source_revision": "60768243de9325d9b57b2e825e7312d70b1e538a",
+      "source_sha256": "bb3a1ca28f40fee9fee5cd7618e783e5f77b8ae20d30f43c3b9411701bdbbc65",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T15:44:44.490381+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.35,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "33 Linux file lifecycle traces and exact path normalization/parts\nPASS os-path-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.039,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "lua53-stack-reference",
+      "source_revision": "d0d684978e922bbc8c2f7e4be0cc901f80c29de6",
+      "source_sha256": "0f623106786171583edf2d9456d2d69c27db37925a198ca2486a1ef9ef8711d1",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T15:44:47.346689+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.308,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "129 Lua calls; 258 exact numeric references, stack balance and syntax rejection\nPASS lua53-stack-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.032,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "forpy-numpy-reference",
+      "source_revision": "b4fc550c7282ed0751d6559c4d867a60af3718a7",
+      "source_sha256": "9b6697cf6f03e6316d27685267cb9707921d974eecae722c44aae8cccbb6e112",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T15:44:50.316136+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.341,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "35 embedded NumPy arrays; scalar-loop sum/max/Frobenius references: 105\nPASS forpy-numpy-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.197,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "yaml-values-reference",
+      "source_revision": "d6005c9f635c02d7be54d09b205b6f16c54f46b5",
+      "source_sha256": "9b1009607b4775835e60bcbc3cfefa3a31a36d075719baef59a19efdc7364ff4",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T15:44:53.792065+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.383,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "32 fresh YAML files; 240 exact scalar/sequence references and absent keys\nPASS yaml-values-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.053,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "flook-table-reference",
+      "source_revision": "7b644a2ace47e43772006764a58166b6635e8941",
+      "source_sha256": "cd8d22715bc920636d1361ee8cf0a85797714cc59e7fcfaa495489d24c4a237a",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T15:44:57.279753+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.563,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "153 Lua table traces; exact affine and triangular-sum references: 306\nPASS flook-table-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.079,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "erloff-filter-reference",
+      "source_revision": "73dfdbf54dafadb42e4705c45824b93917a20965",
+      "source_sha256": "1b047b7a6bb29719720101ad81b8bc2ca9f9d80e5cb00b0cc6f27b98d546f4d8",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T15:45:35.268003+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.311,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "48 immutable append steps; exact parity-filter membership and snapshot preservation\nPASS erloff-filter-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.03,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "npy-payload-reference",
+      "source_revision": "b76d22c6ece4e820d31d71825b2f774d060cd288",
+      "source_sha256": "91d85f6c3006913858a46e988769c7db7729efd544d15f529647e009faa7bca8",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T15:45:37.355373+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.363,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "35 NPY headers and independently read REAL64 payload values: 420\nPASS npy-payload-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.03,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-11-01T15:45:37.404345+00:00"
+}
