@@ -1,0 +1,328 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "stdlib-legendre-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "13273cc8a50773159cbc90d5fa48d10fdc85c4aab32d8a36acaa3601dfb854e7",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T19:06:35.434141+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.231,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "363 Legendre values and 363 derivatives, degrees 0..10, versus explicit polynomial coefficients\nPASS stdlib-legendre-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.03,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-complex-gamma-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "42fb6cc7977d43a3dd3847970ce53f139d7407e7f6f222dcd0fe7972e0ee6f2a",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T19:06:38.165125+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.729,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "24 complex references from independent 80/120-digit mpmath evaluations\nPASS stdlib-complex-gamma-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.025,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-complex-loggamma-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "fc06bd090dffb4203255f7cc641f37d24b9cc990e7bf2b6e27161b20ee9f25ce",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T19:06:40.396123+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.425,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "24 complex references from independent 80/120-digit mpmath evaluations\nPASS stdlib-complex-loggamma-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.025,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-log-factorial-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "c984be5876193b7034788ba767f9fcf7c72d016400d2d9b6d7755411622db21d",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T19:06:43.231356+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.614,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "201 log-factorials versus summed logarithms; upstream result is REAL32 (tolerance 2e-6)\nPASS stdlib-log-factorial-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.025,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-lower-gamma-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "d6276f3f584681a1945eb07dc3d1dd7b881f1ac5dda6bec5cc4bb58128821341",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T19:06:45.353511+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.61,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Finite Poisson-sum reference pairs (integer-valued REAL64 shapes 1..8, x=0..8): 264\nPASS stdlib-lower-gamma-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.023,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-upper-gamma-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "58ea1182f435cd7d761d4844af2b65e746d7d2598a772177f9ba89ec2475d231",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T19:06:48.477521+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.652,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Finite Poisson-sum reference pairs (integer-valued REAL64 shapes 1..8, x=0..8): 264\nPASS stdlib-upper-gamma-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.03,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-regularized-gamma-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "cbb07d409cbbea98095afee04f97b74155daa92f85ad7d71844e49dec5c84af1",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T19:06:49.813590+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.143,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Finite Poisson-sum reference pairs (integer-valued REAL64 shapes 1..8, x=0..8): 264\nPASS stdlib-regularized-gamma-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.023,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-beta-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "2980a0e255c5ba393c2189e6239f9493d228f4d2da49593e4414bcb34a490338",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T19:06:51.915837+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.363,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "288 beta-family references using independent finite products, shapes 1..12\nPASS stdlib-beta-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.024,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-log-beta-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "4f341566ac937bd2e120fb56d36caf4d1c8efb9c942dd4c6bc641d1ee7841ff2",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T19:06:53.834688+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.354,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "288 beta-family references using independent finite products, shapes 1..12\nPASS stdlib-log-beta-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.025,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-incomplete-beta-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "464d10edebd395c9d79b7033f21a03e4e56f7d0d316bdb79c9d42e5eb9083092",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T19:06:55.849035+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.564,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "2112 regularized incomplete-beta references versus independent binomial tail sums\nPASS stdlib-incomplete-beta-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.026,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-11-01T19:06:55.906854+00:00"
+}

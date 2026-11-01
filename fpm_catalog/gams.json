@@ -453,7 +453,9 @@
       "H2",
       "D4",
       "D5",
-      "D6"
+      "D6",
+      "C3",
+      "C7"
     ],
     "bspline-fortran": [
       "E1",
@@ -1690,6 +1692,26 @@
     "D1b2": {
       "label": "Norm",
       "parent": "D1b"
+    },
+    "C3a2": {
+      "label": "Chebyshev, Legendre",
+      "parent": "C3a"
+    },
+    "C7e": {
+      "label": "Incomplete gamma",
+      "parent": "C7"
+    },
+    "C7f": {
+      "label": "Incomplete beta",
+      "parent": "C7"
+    },
+    "C3a": {
+      "label": "Orthogonal",
+      "parent": "C3"
+    },
+    "C7b": {
+      "label": "Beta, log beta",
+      "parent": "C7"
     }
   },
   "procedure_mappings": [
@@ -10618,6 +10640,321 @@
         }
       ],
       "driver_id": "stdlib-lobatto-reference"
+    },
+    {
+      "id": "stdlib-legendre",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_specialfunctions",
+      "procedure": "legendre / dlegendre",
+      "gams_codes": [
+        "C3a2"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Degrees 0..10 at 33 dyadic points including -1, 0 and 1: 363 values and 363 derivatives. Independent explicit Rodrigues coefficients, differentiated term by term, not the upstream three-term recurrence. Scaled absolute tolerance 2e-11. Negative degrees, higher degrees, other kinds and associated/noninteger Legendre functions unverified. No direct author Legendre consumer found in the pinned example/test trees.",
+      "driver_id": "stdlib-legendre-reference",
+      "evidence": [
+        {
+          "path": "src/stdlib_specialfunctions.f90",
+          "line": 8,
+          "sha256": "979978b0583c6413e89d871ac81c468f830e76de989993f7b96b2aeb04a869af"
+        },
+        {
+          "path": "src/stdlib_specialfunctions_legendre.f90",
+          "line": 1,
+          "sha256": "b4a7faee94eb46d44cb84b1d48c806f0ab323c3057af21c16c8a2ece08836b13"
+        }
+      ],
+      "author_examples": []
+    },
+    {
+      "id": "stdlib-complex-gamma",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_specialfunctions_gamma",
+      "procedure": "gamma (complex REAL64)",
+      "gams_codes": [
+        "C7a"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "24 complex REAL64 points with nonzero imaginary parts, including conjugate pairs. Real parts -1.25, -0.25, 0.25, 0.75, 1.5 and 3.5 test reflection and direct branches. Independent mpmath 1.3.0 constants evaluated at 80 digits and confirmed at 120; scaled complex absolute tolerance 2e-11. Poles, near-pole behavior, extreme arguments, single precision and full-plane branch behavior unverified.",
+      "driver_id": "stdlib-complex-gamma-reference",
+      "evidence": [
+        {
+          "path": "src/stdlib_specialfunctions_gamma.f90",
+          "line": 396,
+          "sha256": "be4b2e2d45e53a87b28bf350a2a92ebb5701ecd0afae8b1b269d3d3fb3cd0475"
+        },
+        {
+          "path": "src/stdlib_specialfunctions_gamma.f90",
+          "line": 396,
+          "sha256": "be4b2e2d45e53a87b28bf350a2a92ebb5701ecd0afae8b1b269d3d3fb3cd0475"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_specialfunctions_gamma.f90",
+          "sha256": "0b456e4d452ef3fe67f5c98a804445c9114e6b29081934889cd794d6df16ac32"
+        }
+      ]
+    },
+    {
+      "id": "stdlib-complex-loggamma",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_specialfunctions_gamma",
+      "procedure": "log_gamma (complex REAL64)",
+      "gams_codes": [
+        "C7a"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "24 complex REAL64 points with nonzero imaginary parts, including conjugate pairs. Positive real parts 0.25, 0.75, 1.5, 3.5, 6.5 and 12.5 avoid ambiguity across the negative-real branch cut. Independent mpmath 1.3.0 constants evaluated at 80 digits and confirmed at 120; scaled complex absolute tolerance 2e-11. Poles, near-pole behavior, extreme arguments, single precision and full-plane branch behavior unverified.",
+      "driver_id": "stdlib-complex-loggamma-reference",
+      "evidence": [
+        {
+          "path": "src/stdlib_specialfunctions_gamma.f90",
+          "line": 978,
+          "sha256": "be4b2e2d45e53a87b28bf350a2a92ebb5701ecd0afae8b1b269d3d3fb3cd0475"
+        },
+        {
+          "path": "src/stdlib_specialfunctions_gamma.f90",
+          "line": 978,
+          "sha256": "be4b2e2d45e53a87b28bf350a2a92ebb5701ecd0afae8b1b269d3d3fb3cd0475"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_specialfunctions_gamma.f90",
+          "sha256": "0b456e4d452ef3fe67f5c98a804445c9114e6b29081934889cd794d6df16ac32"
+        }
+      ]
+    },
+    {
+      "id": "stdlib-log-factorial",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_specialfunctions_gamma",
+      "procedure": "log_factorial (INT64 argument, REAL32 result)",
+      "gams_codes": [
+        "C7a"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "201 INT64 arguments 0..200 against a REAL64 running sum of log(k). The pinned API returns REAL32 for every integer kind; converting to REAL64 does not add precision. Scaled tolerance 2e-6 explicitly reflects that contract. Negative arguments, larger integers, overflow boundaries and a REAL64-accuracy result are not claimed.",
+      "driver_id": "stdlib-log-factorial-reference",
+      "evidence": [
+        {
+          "path": "src/stdlib_specialfunctions_gamma.f90",
+          "line": 51,
+          "sha256": "be4b2e2d45e53a87b28bf350a2a92ebb5701ecd0afae8b1b269d3d3fb3cd0475"
+        },
+        {
+          "path": "src/stdlib_specialfunctions_gamma.f90",
+          "line": 1136,
+          "sha256": "be4b2e2d45e53a87b28bf350a2a92ebb5701ecd0afae8b1b269d3d3fb3cd0475"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_specialfunctions_gamma.f90",
+          "sha256": "0b456e4d452ef3fe67f5c98a804445c9114e6b29081934889cd794d6df16ac32"
+        }
+      ]
+    },
+    {
+      "id": "stdlib-lower-gamma",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_specialfunctions_gamma",
+      "procedure": "lower_incomplete_gamma (REAL64 shape/argument)",
+      "gams_codes": [
+        "C7e"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "264 (shape,x) pairs: integer-valued REAL64 shapes 1..8 and x=0..8 in steps of 0.25, including x=shape and both continuation branches. Independent finite Poisson sum Q(n,x)=exp(-x)*sum(x**k/k!,k=0..n-1), P=1-Q; unregularized references multiply by (n-1)!. Scaled absolute tolerance 3e-12, so tiny tails are not certified to relative accuracy. Noninteger shapes, negative x, extreme tails, integer-overload semantics and other kinds unverified.",
+      "driver_id": "stdlib-lower-gamma-reference",
+      "evidence": [
+        {
+          "path": "src/stdlib_specialfunctions_gamma.f90",
+          "line": 62,
+          "sha256": "be4b2e2d45e53a87b28bf350a2a92ebb5701ecd0afae8b1b269d3d3fb3cd0475"
+        },
+        {
+          "path": "src/stdlib_specialfunctions_gamma.f90",
+          "line": 2528,
+          "sha256": "be4b2e2d45e53a87b28bf350a2a92ebb5701ecd0afae8b1b269d3d3fb3cd0475"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_specialfunctions_gamma.f90",
+          "sha256": "0b456e4d452ef3fe67f5c98a804445c9114e6b29081934889cd794d6df16ac32"
+        }
+      ]
+    },
+    {
+      "id": "stdlib-upper-gamma",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_specialfunctions_gamma",
+      "procedure": "upper_incomplete_gamma (REAL64 shape/argument)",
+      "gams_codes": [
+        "C7e"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "264 (shape,x) pairs: integer-valued REAL64 shapes 1..8 and x=0..8 in steps of 0.25, including x=shape and both continuation branches. Independent finite Poisson sum Q(n,x)=exp(-x)*sum(x**k/k!,k=0..n-1), P=1-Q; unregularized references multiply by (n-1)!. Scaled absolute tolerance 3e-12, so tiny tails are not certified to relative accuracy. Noninteger shapes, negative x, extreme tails, integer-overload semantics and other kinds unverified.",
+      "driver_id": "stdlib-upper-gamma-reference",
+      "evidence": [
+        {
+          "path": "src/stdlib_specialfunctions_gamma.f90",
+          "line": 98,
+          "sha256": "be4b2e2d45e53a87b28bf350a2a92ebb5701ecd0afae8b1b269d3d3fb3cd0475"
+        },
+        {
+          "path": "src/stdlib_specialfunctions_gamma.f90",
+          "line": 3144,
+          "sha256": "be4b2e2d45e53a87b28bf350a2a92ebb5701ecd0afae8b1b269d3d3fb3cd0475"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_specialfunctions_gamma.f90",
+          "sha256": "0b456e4d452ef3fe67f5c98a804445c9114e6b29081934889cd794d6df16ac32"
+        }
+      ]
+    },
+    {
+      "id": "stdlib-regularized-gamma",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_specialfunctions_gamma",
+      "procedure": "regularized_gamma_p / regularized_gamma_q (REAL64)",
+      "gams_codes": [
+        "C7e"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "264 (shape,x) pairs: integer-valued REAL64 shapes 1..8 and x=0..8 in steps of 0.25, including x=shape and both continuation branches. Independent finite Poisson sum Q(n,x)=exp(-x)*sum(x**k/k!,k=0..n-1), P=1-Q; unregularized references multiply by (n-1)!. Both P and Q plus P+Q=1 checked. Scaled absolute tolerance 3e-12, so tiny tails are not certified to relative accuracy. Noninteger shapes, negative x, extreme tails, integer-overload semantics and other kinds unverified.",
+      "driver_id": "stdlib-regularized-gamma-reference",
+      "evidence": [
+        {
+          "path": "src/stdlib_specialfunctions_gamma.f90",
+          "line": 134,
+          "sha256": "be4b2e2d45e53a87b28bf350a2a92ebb5701ecd0afae8b1b269d3d3fb3cd0475"
+        },
+        {
+          "path": "src/stdlib_specialfunctions_gamma.f90",
+          "line": 3841,
+          "sha256": "be4b2e2d45e53a87b28bf350a2a92ebb5701ecd0afae8b1b269d3d3fb3cd0475"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_specialfunctions_gamma.f90",
+          "sha256": "0b456e4d452ef3fe67f5c98a804445c9114e6b29081934889cd794d6df16ac32"
+        }
+      ]
+    },
+    {
+      "id": "stdlib-beta",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_specialfunctions_gamma",
+      "procedure": "beta",
+      "gams_codes": [
+        "C7b"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "144 positive integer-valued REAL64 shape pairs 1..12, both argument orders: 288 references. Beta oracle uses B(a,1)=1/a then product recurrence B(a,b+1)=b*B(a,b)/(a+b); log-beta oracle is log of that independently formed product. Scaled absolute tolerance 3e-12. Noninteger shapes, invalid inputs, underflow and extreme parameter scales unverified.",
+      "driver_id": "stdlib-beta-reference",
+      "evidence": [
+        {
+          "path": "src/stdlib_specialfunctions_gamma.f90",
+          "line": 205,
+          "sha256": "be4b2e2d45e53a87b28bf350a2a92ebb5701ecd0afae8b1b269d3d3fb3cd0475"
+        },
+        {
+          "path": "src/stdlib_specialfunctions_gamma.f90",
+          "line": 4438,
+          "sha256": "be4b2e2d45e53a87b28bf350a2a92ebb5701ecd0afae8b1b269d3d3fb3cd0475"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_specialfunctions_gamma.f90",
+          "sha256": "0b456e4d452ef3fe67f5c98a804445c9114e6b29081934889cd794d6df16ac32"
+        }
+      ]
+    },
+    {
+      "id": "stdlib-log-beta",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_specialfunctions_gamma",
+      "procedure": "log_beta",
+      "gams_codes": [
+        "C7b"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "144 positive integer-valued REAL64 shape pairs 1..12, both argument orders: 288 references. Beta oracle uses B(a,1)=1/a then product recurrence B(a,b+1)=b*B(a,b)/(a+b); log-beta oracle is log of that independently formed product. Scaled absolute tolerance 3e-12. Noninteger shapes, invalid inputs, underflow and extreme parameter scales unverified.",
+      "driver_id": "stdlib-log-beta-reference",
+      "evidence": [
+        {
+          "path": "src/stdlib_specialfunctions_gamma.f90",
+          "line": 214,
+          "sha256": "be4b2e2d45e53a87b28bf350a2a92ebb5701ecd0afae8b1b269d3d3fb3cd0475"
+        },
+        {
+          "path": "src/stdlib_specialfunctions_gamma.f90",
+          "line": 4467,
+          "sha256": "be4b2e2d45e53a87b28bf350a2a92ebb5701ecd0afae8b1b269d3d3fb3cd0475"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_specialfunctions_gamma.f90",
+          "sha256": "0b456e4d452ef3fe67f5c98a804445c9114e6b29081934889cd794d6df16ac32"
+        }
+      ]
+    },
+    {
+      "id": "stdlib-incomplete-beta",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_specialfunctions_gamma",
+      "procedure": "incomplete_beta",
+      "gams_codes": [
+        "C7f"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "2,112 regularized I_x(a,b) references for integer-valued REAL64 shapes 1..8 at 33 dyadic x in [0,1], including both endpoints. Independent binomial tail sum from j=a to a+b-1 of choose(a+b-1,j)*x**j*(1-x)**(a+b-1-j); polynomial evaluation needs no gamma/beta or continued fraction calls. Scaled absolute tolerance 5e-12. Noninteger shapes, tiny relative tails, invalid inputs, larger shapes and other kinds unverified.",
+      "driver_id": "stdlib-incomplete-beta-reference",
+      "evidence": [
+        {
+          "path": "src/stdlib_specialfunctions_gamma.f90",
+          "line": 223,
+          "sha256": "be4b2e2d45e53a87b28bf350a2a92ebb5701ecd0afae8b1b269d3d3fb3cd0475"
+        },
+        {
+          "path": "src/stdlib_specialfunctions_gamma.f90",
+          "line": 4520,
+          "sha256": "be4b2e2d45e53a87b28bf350a2a92ebb5701ecd0afae8b1b269d3d3fb3cd0475"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_specialfunctions_gamma.f90",
+          "sha256": "0b456e4d452ef3fe67f5c98a804445c9114e6b29081934889cd794d6df16ac32"
+        }
+      ]
     }
   ],
   "review_notes": {
@@ -11792,6 +12129,15 @@
       "url": "https://netlib.org/misc/gams.html",
       "codes": [
         "D1b2"
+      ]
+    },
+    "special_functions_refinement": {
+      "retrieved_on": "2026-11-01",
+      "url": "https://netlib.org/misc/gams.html",
+      "codes": [
+        "C3a2",
+        "C7e",
+        "C7f"
       ]
     }
   }

@@ -74,12 +74,22 @@ The C10 driver checks 39 complex values at `z=[0.5+0.25i,1+0.5i,2+0.75i]`. For s
 | [Load fastmath-rsqrt-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=fastmath&example=gams-fastmath-rsqrt-reference) · [Source](../fpm_catalog/gams-drivers/fastmath-rsqrt-reference.f90) | C2 | [Procedure](https://github.com/perazz/fastmath/blob/ad0f14c455205c0e6c1b9300cd7f333fafb750e2/src/fast_rsqrt.f90#L55) · [Author example/test](https://github.com/perazz/fastmath/blob/ad0f14c455205c0e6c1b9300cd7f333fafb750e2/test/test.f90) |
 | [Load rpn-sinc-sech-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=rpn-calculator-fortran&example=gams-rpn-sinc-sech-reference) · [Source](../fpm_catalog/gams-drivers/rpn-sinc-sech-reference.f90) | C4 | [Procedure](https://github.com/scivision/rpn-calculator-fortran/blob/7708e4949f17511d81f4e7dd0271a500f0bc3631/src/funcs.f90#L1) · [Author example/test](https://github.com/scivision/rpn-calculator-fortran/blob/7708e4949f17511d81f4e7dd0271a500f0bc3631/test/test.f90) |
 | [Load rpn-beta-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=rpn-calculator-fortran&example=gams-rpn-beta-reference) · [Source](../fpm_catalog/gams-drivers/rpn-beta-reference.f90) | C7 | [Procedure](https://github.com/scivision/rpn-calculator-fortran/blob/7708e4949f17511d81f4e7dd0271a500f0bc3631/src/specfun/gamma.f90#L1) |
+| [Load stdlib-legendre-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-legendre-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-legendre-reference.f90) | C3a2 | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_specialfunctions.f90#L8) |
+| [Load stdlib-complex-gamma-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-complex-gamma-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-complex-gamma-reference.f90) | C7a | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_specialfunctions_gamma.f90#L396) · [Author example/test](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_specialfunctions_gamma.f90) |
+| [Load stdlib-complex-loggamma-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-complex-loggamma-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-complex-loggamma-reference.f90) | C7a | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_specialfunctions_gamma.f90#L978) · [Author example/test](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_specialfunctions_gamma.f90) |
+| [Load stdlib-log-factorial-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-log-factorial-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-log-factorial-reference.f90) | C7a | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_specialfunctions_gamma.f90#L51) · [Author example/test](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_specialfunctions_gamma.f90) |
+| [Load stdlib-lower-gamma-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-lower-gamma-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-lower-gamma-reference.f90) | C7e | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_specialfunctions_gamma.f90#L62) · [Author example/test](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_specialfunctions_gamma.f90) |
+| [Load stdlib-upper-gamma-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-upper-gamma-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-upper-gamma-reference.f90) | C7e | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_specialfunctions_gamma.f90#L98) · [Author example/test](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_specialfunctions_gamma.f90) |
+| [Load stdlib-regularized-gamma-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-regularized-gamma-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-regularized-gamma-reference.f90) | C7e | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_specialfunctions_gamma.f90#L134) · [Author example/test](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_specialfunctions_gamma.f90) |
+| [Load stdlib-beta-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-beta-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-beta-reference.f90) | C7b | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_specialfunctions_gamma.f90#L205) · [Author example/test](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_specialfunctions_gamma.f90) |
+| [Load stdlib-log-beta-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-log-beta-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-log-beta-reference.f90) | C7b | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_specialfunctions_gamma.f90#L214) · [Author example/test](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_specialfunctions_gamma.f90) |
+| [Load stdlib-incomplete-beta-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-incomplete-beta-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-incomplete-beta-reference.f90) | C7f | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_specialfunctions_gamma.f90#L223) · [Author example/test](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_specialfunctions_gamma.f90) |
 
 The programs use author APIs, retain applicable license notices and use deterministic reference checks instead of the larger author harnesses. They appear in hosted and main local FPM example menus and downloaded projects. Loading a link selects source without submitting a job.
 
 ## Recorded results
 
-All 10 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing existing package libraries. Only each main and executable were rebuilt. The [verification report](gams-special-functions-validation.json) records hashes, pins and saved output. These cases establish checked usage and selected-point agreement, rather than accuracy over each function's complete domain.
+All 20 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing existing package libraries. Only each main and executable were rebuilt. The [verification report](gams-special-functions-validation.json) records hashes, pins and saved output. These cases establish checked usage and selected-point agreement, rather than accuracy over each function's complete domain.
 
 ### fullerton-gamma-values
 
@@ -211,6 +221,76 @@ PASS rpn-sinc-sech-reference
 Independent factorial identities, symmetry and both one-step recurrences checked.
 Maximum relative error against closed-form references:   4.4409E-16
 PASS rpn-beta-reference
+```
+
+### stdlib-legendre-reference
+
+```text
+363 Legendre values and 363 derivatives, degrees 0..10, versus explicit polynomial coefficients
+PASS stdlib-legendre-reference
+```
+
+### stdlib-complex-gamma-reference
+
+```text
+24 complex references from independent 80/120-digit mpmath evaluations
+PASS stdlib-complex-gamma-reference
+```
+
+### stdlib-complex-loggamma-reference
+
+```text
+24 complex references from independent 80/120-digit mpmath evaluations
+PASS stdlib-complex-loggamma-reference
+```
+
+### stdlib-log-factorial-reference
+
+```text
+201 log-factorials versus summed logarithms; upstream result is REAL32 (tolerance 2e-6)
+PASS stdlib-log-factorial-reference
+```
+
+### stdlib-lower-gamma-reference
+
+```text
+Finite Poisson-sum reference pairs (integer-valued REAL64 shapes 1..8, x=0..8): 264
+PASS stdlib-lower-gamma-reference
+```
+
+### stdlib-upper-gamma-reference
+
+```text
+Finite Poisson-sum reference pairs (integer-valued REAL64 shapes 1..8, x=0..8): 264
+PASS stdlib-upper-gamma-reference
+```
+
+### stdlib-regularized-gamma-reference
+
+```text
+Finite Poisson-sum reference pairs (integer-valued REAL64 shapes 1..8, x=0..8): 264
+PASS stdlib-regularized-gamma-reference
+```
+
+### stdlib-beta-reference
+
+```text
+288 beta-family references using independent finite products, shapes 1..12
+PASS stdlib-beta-reference
+```
+
+### stdlib-log-beta-reference
+
+```text
+288 beta-family references using independent finite products, shapes 1..12
+PASS stdlib-log-beta-reference
+```
+
+### stdlib-incomplete-beta-reference
+
+```text
+2112 regularized incomplete-beta references versus independent binomial tail sums
+PASS stdlib-incomplete-beta-reference
 ```
 
 ## Maintenance

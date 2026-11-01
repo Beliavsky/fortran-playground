@@ -763,5 +763,25 @@ export const gamsSubclasses = {
   "D1b2": {
     "label": "Norm",
     "parent": "D1b"
+  },
+  "C3a2": {
+    "label": "Chebyshev, Legendre",
+    "parent": "C3a"
+  },
+  "C7e": {
+    "label": "Incomplete gamma",
+    "parent": "C7"
+  },
+  "C7f": {
+    "label": "Incomplete beta",
+    "parent": "C7"
+  },
+  "C3a": {
+    "label": "Orthogonal",
+    "parent": "C3"
+  },
+  "C7b": {
+    "label": "Beta, log beta",
+    "parent": "C7"
   }
 };

@@ -67,6 +67,38 @@ class GamsSiteTests(unittest.TestCase):
             self.assertIn('Open default example', sorting)
             self.assertNotIn('Try in playground', sorting)
 
+    def test_stdlib_special_function_pages_offer_each_matching_checked_driver(self):
+        import copy
+        from xpackage_gams import driver_data, gams_data
+        drivers = [d for d in driver_data(data=gams_data())
+                   if d.get('validation_path') == 'docs/gams-special-functions-ten-validation.json']
+        self.assertEqual(len(drivers), 10)
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects'] if p['playground']['package_id'] == 'stdlib']
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination, feed)
+            for driver in drivers:
+                url = ('https://beliavsky.github.io/fortran-playground/fpm/'
+                       f'?package=stdlib&example={driver["name"]}')
+                page = Page((destination/driver['gams_code']/'index.html').read_text(encoding='utf-8'))
+                self.assertIn((url, driver['id']), page.anchors)
+                detail = (destination/'packages/stdlib/index.html').read_text(encoding='utf-8')
+                card = detail.split('id="'+driver['procedure_id']+'"', 1)[1].split('</article>', 1)[0]
+                self.assertIn('Load checked GAMS driver:', card)
+                self.assertIn(driver['name'], card)
+            for code in {d['gams_code'] for d in drivers}:
+                page = Page((destination/code/'index.html').read_text(encoding='utf-8'))
+                primary = [url for url, label in page.anchors if label == 'Try in playground']
+                self.assertEqual(len(primary), 1)
+                self.assertIn(primary[0], [
+                    'https://beliavsky.github.io/fortran-playground/fpm/'
+                    f'?package=stdlib&example={d["name"]}' for d in drivers if d['gams_code'] == code])
+            beta = Page((destination/'C7b/index.html').read_text(encoding='utf-8'))
+            self.assertFalse(any('gams-stdlib-incomplete-beta' in url for url in beta.links))
+            polynomial = Page((destination/'C3a2/index.html').read_text(encoding='utf-8'))
+            self.assertFalse(any('gams-stdlib-complex-gamma' in url for url in polynomial.links))
+
     def test_stdlib_factorization_rule_pages_link_class_specific_drivers(self):
         import copy
         from xpackage_gams import driver_data, gams_data

@@ -102,6 +102,7 @@ from xpackage_gams import (gams_data, package_classes, review_text, subclass_mod
                             workflows_ten_review_text, WORKFLOWS_TEN_REPORT,
                             statistics_services_ten_review_text, STATISTICS_SERVICES_TEN_REPORT,
                             factorization_rules_ten_review_text, FACTORIZATION_RULES_TEN_REPORT,
+                            special_functions_ten_review_text, SPECIAL_FUNCTIONS_TEN_REPORT,
                           coverage_data, coverage_review_text, COVERAGE_REPORT,
                           class_evidence, class_tree, mapping_evidence_text, EVIDENCE_REPORT)
 
@@ -887,6 +888,51 @@ class PackageGamsTests(unittest.TestCase):
         self.assertIn('22,416',text)
         self.assertIn('Type-2/type-3 transforms',text)
         self.assertIn('two-dimensional NUFFT2D driver',transforms_review_text())
+
+    def test_special_function_drivers_keep_normalization_precision_and_oracles_explicit(self):
+        data = gams_data()
+        records = {r['id']: r for r in data['procedure_mappings']}
+        drivers = {d['id']: d for d in driver_data(data=data)
+                   if d.get('validation_path') == 'docs/gams-special-functions-ten-validation.json'}
+        self.assertEqual(len(drivers), 10)
+        self.assertEqual({d['gams_code'] for d in drivers.values()},
+                         {'C3a2', 'C7a', 'C7b', 'C7e', 'C7f'})
+        reviewed = set(numerical_review(data=data)['packages']['stdlib']['procedure_ids'])
+        for driver in drivers.values():
+            record = records[driver['procedure_id']]
+            self.assertEqual(record['driver_id'], driver['id'])
+            self.assertIn(record['id'], reviewed)
+            self.assertEqual(class_evidence(class_tree(data), driver['gams_code'], [record], [driver])['status'],
+                             'verified')
+        self.assertEqual(class_tree(data)['C3a2']['parent'], 'C3a')
+        self.assertEqual(class_tree(data)['C7f']['parent'], 'C7')
+        self.assertEqual(drivers['stdlib-log-factorial-reference']['checks']['native_result_kind'], 'real32')
+        self.assertEqual(drivers['stdlib-incomplete-beta-reference']['checks']['normalization'],
+                         'regularized I_x(a,b)')
+        for ident, key, count in [('legendre', 'derivative_references', 363),
+                                  ('complex-gamma', 'complex_references', 24),
+                                  ('complex-loggamma', 'complex_references', 24),
+                                  ('log-factorial', 'references', 201),
+                                  ('lower-gamma', 'reference_pairs', 264),
+                                  ('upper-gamma', 'reference_pairs', 264),
+                                  ('regularized-gamma', 'reference_pairs', 264),
+                                  ('beta', 'references', 288), ('log-beta', 'references', 288),
+                                  ('incomplete-beta', 'references', 2112)]:
+            self.assertEqual(drivers['stdlib-'+ident+'-reference']['checks'][key], count)
+        refs = json.loads((ROOT/'docs/gams-special-functions-ten-references.json').read_text())
+        for name, points in refs['points'].items():
+            self.assertEqual(len(points), 24)
+            source = (ROOT/drivers['stdlib-'+name+'-reference']['path']).read_text()
+            for point in points:
+                self.assertIn(point['reference_real']+'_real64', source)
+                self.assertIn(point['reference_imag']+'_real64', source)
+                if name == 'complex-loggamma':
+                    self.assertGreater(point['real'], 0)
+        text = special_functions_ten_review_text()
+        self.assertEqual((ROOT/SPECIAL_FUNCTIONS_TEN_REPORT).read_text(encoding='utf-8'), text)
+        for phrase in ['returns REAL32', 'regularized I_x(a,b)', 'Rodrigues', 'binomial',
+                       '80 decimal digits', 'categories are not exhausted']:
+            self.assertIn(phrase, text)
 
     def test_factorization_rule_drivers_add_reviewed_stdlib_procedures(self):
         data = gams_data()

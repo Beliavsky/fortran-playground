@@ -104,6 +104,7 @@ STORAGE_TEN_REPORT = Path('docs/gams-storage-ten.md')
 WORKFLOWS_TEN_REPORT = Path('docs/gams-workflows-ten.md')
 STATISTICS_SERVICES_TEN_REPORT = Path('docs/gams-statistics-services-ten.md')
 FACTORIZATION_RULES_TEN_REPORT = Path('docs/gams-factorization-rules-ten.md')
+SPECIAL_FUNCTIONS_TEN_REPORT = Path('docs/gams-special-functions-ten.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
 EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
@@ -9603,6 +9604,91 @@ def factorization_rules_ten_review_text(root=ROOT):
     return '\n'.join(lines)
 
 
+def special_functions_ten_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-special-functions-ten-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-special-functions-ten-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Ten checked stdlib special-function drivers', '',
+             'Ten independent drivers passed GNU Fortran 16.2.0 with FPM 0.12.0 in the '
+             'restricted hosted sandbox. Existing stdlib libraries were reused; only mains '
+             'and executables were compiled. The [verification report]'
+             '(gams-special-functions-ten-validation.json) retains normalized source hashes, '
+             'package pins, timings and full output. GAMS categories are not exhausted.', '',
+             '## Independent references and limits', '',
+             'Legendre values and their first derivatives use the explicit Rodrigues '
+             'polynomial coefficients, differentiated term by term. This differs from the '
+             'upstream three-term recurrence. Degrees 0..10 at 33 dyadic points in [-1,1] '
+             'give 363 value references and 363 derivative references, including endpoints. '
+             'The scaled absolute tolerance is 2e-11. This is polynomial class C3a2, without '
+             'a claim about associated or noninteger Legendre functions.', '',
+             'Complex gamma and log-gamma each have 24 independent reference constants from '
+             'mpmath 1.3.0 at 80 decimal digits, confirmed at 120 digits to better than 1e-70. '
+             'The [reference table](gams-special-functions-ten-references.json) records exact '
+             'dyadic arguments and 26-digit component values. Gamma includes negative real '
+             'parts away from poles; log-gamma uses positive real parts and the analytic '
+             'branch real on the positive real axis. Both use scaled complex absolute '
+             'tolerance 2e-11. This does not certify the full complex plane or branch cuts.', '',
+             'Log-factorial checks INT64 arguments 0..200 against a REAL64 running sum of '
+             'log(k). The pinned API returns REAL32 for every integer kind. Converting that '
+             'result to REAL64 does not add precision, so the scaled tolerance is 2e-6; '
+             'a double-precision accuracy claim would be incorrect.', '',
+             'Lower, upper and regularized incomplete gamma use 264 shape/argument pairs '
+             'each: integer-valued REAL64 shapes n=1..8 and x=0..8 in steps of 0.25. The '
+             'independent oracle is Q(n,x)=exp(-x)*sum(x**k/k!,k=0..n-1), P=1-Q. Multiply '
+             'by (n-1)! for unregularized integrals. The regularized driver checks both P '
+             'and Q and their sum. Endpoints, x=n and both continuation branches are '
+             'covered; noninteger shapes and integer overloads are not. Absolute/scaled '
+             'tolerance 3e-12 does not promise relative accuracy in tiny tails.', '',
+             'Beta and log-beta each check 144 integer-valued REAL64 shape pairs 1..12, '
+             'in both argument orders. The reference uses B(a,1)=1/a followed by finite '
+             'products B(a,b+1)=b*B(a,b)/(a+b), with a logarithm for log-beta. There are '
+             '288 references per driver, scaled absolute tolerance 3e-12.', '',
+             'Despite its name, incomplete_beta returns the regularized I_x(a,b), not '
+             'the unnormalized integral. For integer shapes, an independent binomial '
+             'tail sum from j=a to a+b-1 gives I_x. Shapes a,b=1..8 at 33 dyadic x in '
+             '[0,1] give 2,112 references, including both endpoints and both symmetry '
+             'branches, with scaled absolute tolerance 5e-12. No gamma, beta or numerical '
+             'quadrature routine is used by this oracle.', '',
+             'All floating results must be finite. Invalid inputs, extreme parameter '
+             'scales, noninteger incomplete-integral shapes, other kinds and performance '
+             'remain unverified. Passing these bounded examples does not establish '
+             'accuracy for every argument supported by an API.', '',
+             '## Classification and provenance', '',
+             'The [Netlib GAMS taxonomy](https://netlib.org/misc/gams.html) supplies '
+             'C3a2 (Chebyshev, Legendre), C7a (gamma/log gamma), C7b (beta/log beta), '
+             'C7e (incomplete gamma) and C7f (incomplete beta). Log-factorial uses C7a '
+             'as log-gamma evaluated at n+1. '
+             'These are independent MIT consumers; upstream implementation and test '
+             'bodies were not copied. The pinned gamma-family author tests were '
+             'reviewed; no direct Legendre example/test was found in those source trees. '
+             'Loading a driver does not submit a job.', '']
+    for d in drivers:
+        lines += ['### '+d['id']+' ('+d['gams_code']+')', '', d['modifications'], '']
+    lines += ['## Provenance and actual output', '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -9782,6 +9868,7 @@ def main():
                          (WORKFLOWS_TEN_REPORT, workflows_ten_review_text()),
                          (STATISTICS_SERVICES_TEN_REPORT, statistics_services_ten_review_text()),
                          (FACTORIZATION_RULES_TEN_REPORT, factorization_rules_ten_review_text()),
+                         (SPECIAL_FUNCTIONS_TEN_REPORT, special_functions_ten_review_text()),
                          (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report

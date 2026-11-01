@@ -970,7 +970,17 @@
         "stdlib-expm",
         "stdlib-simpson",
         "stdlib-gauss",
-        "stdlib-lobatto"
+        "stdlib-lobatto",
+        "stdlib-legendre",
+        "stdlib-complex-gamma",
+        "stdlib-complex-loggamma",
+        "stdlib-log-factorial",
+        "stdlib-lower-gamma",
+        "stdlib-upper-gamma",
+        "stdlib-regularized-gamma",
+        "stdlib-beta",
+        "stdlib-log-beta",
+        "stdlib-incomplete-beta"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
     },

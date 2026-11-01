@@ -10775,6 +10775,273 @@
         "exactness_degree": "2*n-3",
         "tolerance": 5e-12
       }
+    },
+    {
+      "id": "stdlib-legendre-reference",
+      "name": "gams-stdlib-legendre-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-legendre",
+      "gams_code": "C3a2",
+      "problem_id": "stdlib-legendre-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-legendre-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/special-functions-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. Degrees 0..10 at 33 dyadic points including -1, 0 and 1: 363 values and 363 derivatives. Independent explicit Rodrigues coefficients, differentiated term by term, not the upstream three-term recurrence. Scaled absolute tolerance 2e-11. Negative degrees, higher degrees, other kinds and associated/noninteger Legendre functions unverified. No direct author Legendre consumer found in the pinned example/test trees.",
+      "validation_path": "docs/gams-special-functions-ten-validation.json",
+      "review_path": "docs/gams-special-functions-ten.md",
+      "checks": {
+        "degrees": [
+          0,
+          10
+        ],
+        "abscissas": 33,
+        "value_references": 363,
+        "derivative_references": 363,
+        "tolerance": 2e-11
+      }
+    },
+    {
+      "id": "stdlib-complex-gamma-reference",
+      "name": "gams-stdlib-complex-gamma-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-complex-gamma",
+      "gams_code": "C7a",
+      "problem_id": "stdlib-complex-gamma-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-complex-gamma-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_specialfunctions_gamma.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/special-functions-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 24 complex REAL64 points with nonzero imaginary parts, including conjugate pairs. Real parts -1.25, -0.25, 0.25, 0.75, 1.5 and 3.5 test reflection and direct branches. Independent mpmath 1.3.0 constants evaluated at 80 digits and confirmed at 120; scaled complex absolute tolerance 2e-11. Poles, near-pole behavior, extreme arguments, single precision and full-plane branch behavior unverified.",
+      "validation_path": "docs/gams-special-functions-ten-validation.json",
+      "review_path": "docs/gams-special-functions-ten.md",
+      "checks": {
+        "complex_references": 24,
+        "reference_digits": 80,
+        "confirmation_digits": 120,
+        "tolerance": 2e-11,
+        "negative_real_parts_checked": true
+      }
+    },
+    {
+      "id": "stdlib-complex-loggamma-reference",
+      "name": "gams-stdlib-complex-loggamma-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-complex-loggamma",
+      "gams_code": "C7a",
+      "problem_id": "stdlib-complex-loggamma-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-complex-loggamma-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_specialfunctions_gamma.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/special-functions-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 24 complex REAL64 points with nonzero imaginary parts, including conjugate pairs. Positive real parts 0.25, 0.75, 1.5, 3.5, 6.5 and 12.5 avoid ambiguity across the negative-real branch cut. Independent mpmath 1.3.0 constants evaluated at 80 digits and confirmed at 120; scaled complex absolute tolerance 2e-11. Poles, near-pole behavior, extreme arguments, single precision and full-plane branch behavior unverified.",
+      "validation_path": "docs/gams-special-functions-ten-validation.json",
+      "review_path": "docs/gams-special-functions-ten.md",
+      "checks": {
+        "complex_references": 24,
+        "reference_digits": 80,
+        "confirmation_digits": 120,
+        "tolerance": 2e-11,
+        "negative_real_parts_checked": false
+      }
+    },
+    {
+      "id": "stdlib-log-factorial-reference",
+      "name": "gams-stdlib-log-factorial-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-log-factorial",
+      "gams_code": "C7a",
+      "problem_id": "stdlib-log-factorial-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-log-factorial-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_specialfunctions_gamma.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/special-functions-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 201 INT64 arguments 0..200 against a REAL64 running sum of log(k). The pinned API returns REAL32 for every integer kind; converting to REAL64 does not add precision. Scaled tolerance 2e-6 explicitly reflects that contract. Negative arguments, larger integers, overflow boundaries and a REAL64-accuracy result are not claimed.",
+      "validation_path": "docs/gams-special-functions-ten-validation.json",
+      "review_path": "docs/gams-special-functions-ten.md",
+      "checks": {
+        "integer_arguments": [
+          0,
+          200
+        ],
+        "references": 201,
+        "native_result_kind": "real32",
+        "tolerance": 2e-06
+      }
+    },
+    {
+      "id": "stdlib-lower-gamma-reference",
+      "name": "gams-stdlib-lower-gamma-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-lower-gamma",
+      "gams_code": "C7e",
+      "problem_id": "stdlib-lower-gamma-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-lower-gamma-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_specialfunctions_gamma.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/special-functions-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 264 (shape,x) pairs: integer-valued REAL64 shapes 1..8 and x=0..8 in steps of 0.25, including x=shape and both continuation branches. Independent finite Poisson sum Q(n,x)=exp(-x)*sum(x**k/k!,k=0..n-1), P=1-Q; unregularized references multiply by (n-1)!. Scaled absolute tolerance 3e-12, so tiny tails are not certified to relative accuracy. Noninteger shapes, negative x, extreme tails, integer-overload semantics and other kinds unverified.",
+      "validation_path": "docs/gams-special-functions-ten-validation.json",
+      "review_path": "docs/gams-special-functions-ten.md",
+      "checks": {
+        "shapes": [
+          1,
+          8
+        ],
+        "abscissas": 33,
+        "reference_pairs": 264,
+        "tolerance": 3e-12
+      }
+    },
+    {
+      "id": "stdlib-upper-gamma-reference",
+      "name": "gams-stdlib-upper-gamma-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-upper-gamma",
+      "gams_code": "C7e",
+      "problem_id": "stdlib-upper-gamma-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-upper-gamma-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_specialfunctions_gamma.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/special-functions-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 264 (shape,x) pairs: integer-valued REAL64 shapes 1..8 and x=0..8 in steps of 0.25, including x=shape and both continuation branches. Independent finite Poisson sum Q(n,x)=exp(-x)*sum(x**k/k!,k=0..n-1), P=1-Q; unregularized references multiply by (n-1)!. Scaled absolute tolerance 3e-12, so tiny tails are not certified to relative accuracy. Noninteger shapes, negative x, extreme tails, integer-overload semantics and other kinds unverified.",
+      "validation_path": "docs/gams-special-functions-ten-validation.json",
+      "review_path": "docs/gams-special-functions-ten.md",
+      "checks": {
+        "shapes": [
+          1,
+          8
+        ],
+        "abscissas": 33,
+        "reference_pairs": 264,
+        "tolerance": 3e-12
+      }
+    },
+    {
+      "id": "stdlib-regularized-gamma-reference",
+      "name": "gams-stdlib-regularized-gamma-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-regularized-gamma",
+      "gams_code": "C7e",
+      "problem_id": "stdlib-regularized-gamma-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-regularized-gamma-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_specialfunctions_gamma.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/special-functions-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 264 (shape,x) pairs: integer-valued REAL64 shapes 1..8 and x=0..8 in steps of 0.25, including x=shape and both continuation branches. Independent finite Poisson sum Q(n,x)=exp(-x)*sum(x**k/k!,k=0..n-1), P=1-Q; unregularized references multiply by (n-1)!. Both P and Q plus P+Q=1 checked. Scaled absolute tolerance 3e-12, so tiny tails are not certified to relative accuracy. Noninteger shapes, negative x, extreme tails, integer-overload semantics and other kinds unverified.",
+      "validation_path": "docs/gams-special-functions-ten-validation.json",
+      "review_path": "docs/gams-special-functions-ten.md",
+      "checks": {
+        "shapes": [
+          1,
+          8
+        ],
+        "abscissas": 33,
+        "reference_pairs": 264,
+        "tolerance": 3e-12
+      }
+    },
+    {
+      "id": "stdlib-beta-reference",
+      "name": "gams-stdlib-beta-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-beta",
+      "gams_code": "C7b",
+      "problem_id": "stdlib-beta-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-beta-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_specialfunctions_gamma.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/special-functions-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 144 positive integer-valued REAL64 shape pairs 1..12, both argument orders: 288 references. Beta oracle uses B(a,1)=1/a then product recurrence B(a,b+1)=b*B(a,b)/(a+b); log-beta oracle is log of that independently formed product. Scaled absolute tolerance 3e-12. Noninteger shapes, invalid inputs, underflow and extreme parameter scales unverified.",
+      "validation_path": "docs/gams-special-functions-ten-validation.json",
+      "review_path": "docs/gams-special-functions-ten.md",
+      "checks": {
+        "integer_shape_pairs": 144,
+        "references": 288,
+        "tolerance": 3e-12
+      }
+    },
+    {
+      "id": "stdlib-log-beta-reference",
+      "name": "gams-stdlib-log-beta-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-log-beta",
+      "gams_code": "C7b",
+      "problem_id": "stdlib-log-beta-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-log-beta-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_specialfunctions_gamma.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/special-functions-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 144 positive integer-valued REAL64 shape pairs 1..12, both argument orders: 288 references. Beta oracle uses B(a,1)=1/a then product recurrence B(a,b+1)=b*B(a,b)/(a+b); log-beta oracle is log of that independently formed product. Scaled absolute tolerance 3e-12. Noninteger shapes, invalid inputs, underflow and extreme parameter scales unverified.",
+      "validation_path": "docs/gams-special-functions-ten-validation.json",
+      "review_path": "docs/gams-special-functions-ten.md",
+      "checks": {
+        "integer_shape_pairs": 144,
+        "references": 288,
+        "tolerance": 3e-12
+      }
+    },
+    {
+      "id": "stdlib-incomplete-beta-reference",
+      "name": "gams-stdlib-incomplete-beta-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-incomplete-beta",
+      "gams_code": "C7f",
+      "problem_id": "stdlib-incomplete-beta-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-incomplete-beta-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_specialfunctions_gamma.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/special-functions-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 2,112 regularized I_x(a,b) references for integer-valued REAL64 shapes 1..8 at 33 dyadic x in [0,1], including both endpoints. Independent binomial tail sum from j=a to a+b-1 of choose(a+b-1,j)*x**j*(1-x)**(a+b-1-j); polynomial evaluation needs no gamma/beta or continued fraction calls. Scaled absolute tolerance 5e-12. Noninteger shapes, tiny relative tails, invalid inputs, larger shapes and other kinds unverified.",
+      "validation_path": "docs/gams-special-functions-ten-validation.json",
+      "review_path": "docs/gams-special-functions-ten.md",
+      "checks": {
+        "shape_pairs": 64,
+        "abscissas": 33,
+        "references": 2112,
+        "normalization": "regularized I_x(a,b)",
+        "tolerance": 5e-12
+      }
     }
   ]
 }
