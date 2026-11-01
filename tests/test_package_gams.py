@@ -98,6 +98,7 @@ from xpackage_gams import (gams_data, package_classes, review_text, subclass_mod
                             data_ten_review_text, DATA_TEN_REPORT,
                             state_ten_review_text, STATE_TEN_REPORT,
                             interop_ten_review_text, INTEROP_TEN_REPORT,
+                            storage_ten_review_text, STORAGE_TEN_REPORT,
                           coverage_data, coverage_review_text, COVERAGE_REPORT,
                           class_evidence, class_tree, mapping_evidence_text, EVIDENCE_REPORT)
 
@@ -883,6 +884,51 @@ class PackageGamsTests(unittest.TestCase):
         self.assertIn('22,416',text)
         self.assertIn('Type-2/type-3 transforms',text)
         self.assertIn('two-dimensional NUFFT2D driver',transforms_review_text())
+
+    def test_ten_storage_drivers_keep_exact_references_and_scoped_limits(self):
+        data = gams_data()
+        records = {r['id']: r for r in data['procedure_mappings']}
+        drivers = {d['id']: d for d in driver_data(data=data)
+                   if d.get('validation_path') == 'docs/gams-storage-ten-validation.json'}
+        self.assertEqual(set(drivers), {
+            'graph-storage-reference', 'smart-lifetime-reference', 'nc4-layout-reference',
+            'regex-language-reference', 'lmdb-rollback-reference', 'aotus-config-reference',
+            'gftl-container-reference', 'log-filter-reference', 'curl-url-reference',
+            'netcdf-slices-reference'})
+        for driver in drivers.values():
+            record = records[driver['procedure_id']]
+            self.assertEqual(record['driver_id'], driver['id'])
+            self.assertEqual(class_evidence(class_tree(data), driver['gams_code'], [record], [driver])['status'],
+                             'verified')
+        self.assertEqual(drivers['graph-storage-reference']['checks']['graphs'], 12)
+        self.assertEqual(drivers['smart-lifetime-reference']['checks']['max_aliases'], 3)
+        self.assertEqual(drivers['nc4-layout-reference']['checks']['value_references'], 420)
+        self.assertEqual(drivers['nc4-layout-reference']['checks']['native_api'], 'C')
+        self.assertEqual(drivers['regex-language-reference']['checks']['comparisons'], 680)
+        self.assertEqual(drivers['lmdb-rollback-reference']['checks']['deleted_keys'], 21)
+        self.assertEqual(drivers['aotus-config-reference']['checks']['value_references'], 160)
+        self.assertEqual(drivers['gftl-container-reference']['checks']['value_references'], 49920)
+        self.assertEqual(drivers['log-filter-reference']['checks']['accepted_records'], 64)
+        self.assertEqual(drivers['curl-url-reference']['checks']['network_requests'], 0)
+        self.assertEqual(drivers['netcdf-slices-reference']['checks']['value_references'], 420)
+        text = storage_ten_review_text()
+        self.assertEqual((ROOT/STORAGE_TEN_REPORT).read_text(encoding='utf-8'), text)
+        for phrase in ['independently written character-state grammar',
+                       'APIs share the native NetCDF library', 'categories are not exhausted']:
+            self.assertIn(phrase, text)
+
+    def test_storage_native_module_probe_remains_a_preparation_failure(self):
+        import hashlib
+        folder = ROOT/'docs/gams-candidates/storage-ten-native-module'
+        source = (folder/'driver.f90').read_text(encoding='utf-8')
+        notes = (folder/'README.md').read_text(encoding='utf-8')
+        result = json.loads((folder/'result.json').read_text(encoding='utf-8'))
+        self.assertIn(hashlib.sha256(source.encode()).hexdigest(), notes)
+        self.assertIn(result['packages'][0]['revision'], notes)
+        self.assertFalse(result['ok'])
+        self.assertTrue(result['cache']['library_reused'])
+        self.assertEqual([stage['name'] for stage in result['stages']], ['Build'])
+        self.assertIn('Unable to find source for module dependency', result['stages'][0]['stderr'])
 
     def test_ten_interop_drivers_keep_independent_references_and_limits(self):
         data = gams_data()

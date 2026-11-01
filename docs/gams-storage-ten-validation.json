@@ -1,0 +1,328 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "graph-storage-reference",
+      "source_revision": "51e18bedd638b935be8b9ac744b2e9f9e79213e7",
+      "source_sha256": "476fc3b3de404bc061c4cf5f7509a40ad6260310d07d56161289934172a685e0",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T16:03:53.093740+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 1.347,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "12 dense undirected graphs; every adjacency index, degree, feature and edge weight\nPASS graph-storage-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.034,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "smart-lifetime-reference",
+      "source_revision": "35130adc4be4384a14b2369e5edd36d4665cd994",
+      "source_sha256": "84cf2ab545c0f46b46755f328de283b0d27614092cba2d941ccd1fd183d1e2a6",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T16:03:56.815284+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.328,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "64 owned-array lifetimes; nested aliases, shared mutation and exactly-once cleanup\nPASS smart-lifetime-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.027,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "regex-language-reference",
+      "source_revision": "2ca0043837a86a4f77df494ddad2240c1b70e576",
+      "source_sha256": "d0b3e7e0fe05d9b0d2352742d58f3c5f0f72275b63a420c366a9fd0b0851b861",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T16:04:04.401405+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 4.338,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "340 exhaustive strings; independent decimal/identifier grammar comparisons: 680\nPASS regex-language-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.057,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "lmdb-rollback-reference",
+      "source_revision": "34bb1dc10e11fd470e4643135fa31fccacef7cd7",
+      "source_sha256": "a2dc420af028f7a4c8c3c72e6633bf33f9a88e482d2bc0fc4dea3d0b38cb7f51",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T16:04:06.435339+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.532,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "192 key-state references: committed inserts, full rollback, updates and 21 deletions\nPASS lmdb-rollback-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.027,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "aotus-config-reference",
+      "source_revision": "2c1ec4d4629a4915929e82e873ceebf623648877",
+      "source_sha256": "090b306689881a966efe028b7ebe0ca273bd01c4eeca2d40119497a37504c4d8",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T16:04:12.528534+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 3.291,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "32 Lua configurations; exact computed scalar/table values and missing defaults\nPASS aotus-config-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.065,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "gftl-container-reference",
+      "source_revision": "8009755e846560fbb389c01d76e013ddf14a7f98",
+      "source_sha256": "a5bb08464e6be1201a1556820badc3ceb62160f0dfb0fb61e4697a276492c1ed",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T16:04:15.544457+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.3,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "12 vector/map traces of 64 insertions; every prefix and reverse-order lookup checked\nPASS gftl-container-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.038,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "log-filter-reference",
+      "source_revision": "472c2261d0713c130aa4b2c90bfaf571586dec96",
+      "source_sha256": "5f7a89778a7193eb6cd7acb8d2e1c82151eb1e0b6274cc16932009cfa7556cd3",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T16:04:19.146971+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.6,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "128 log calls; exact 64 ordered warning/error records, debug/info filtered\nPASS log-filter-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.072,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "curl-url-reference",
+      "source_revision": "f29cc78fdc7701bc221a82af9bbd9ed04ef52158",
+      "source_sha256": "4aadc7b93c85ba66f6c702bd8334aad95aebf2d31d5186efa8ff6220695234cb",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T16:04:22.801582+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.434,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "64 offline URLs; 320 exact component/reconstruction references\nPASS curl-url-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.051,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "netcdf-slices-reference",
+      "source_revision": "48d67b73cb2a671d6d27075eb7e53085d5f9538a",
+      "source_sha256": "1283266b38d64840926bafc68fb107042f3aa42a8f322444be1611074a30ef96",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T16:04:26.580606+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.671,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "24 classic files; exact full/indexed values after one-cell update: 420\nPASS netcdf-slices-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.088,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "nc4-layout-reference",
+      "source_revision": "942ac4f83380acdef463002f555aebf30f3c46ac",
+      "source_sha256": "92e547b8ad0dc67d59377f231d8352ea6000c3796604bf71968604f1928aa83a",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T16:05:33.620064+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.588,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "24 NetCDF4 datasets; native indexed values and wrapper values each: 210\nPASS nc4-layout-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.094,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-11-01T16:05:33.703217+00:00"
+}

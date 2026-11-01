@@ -9702,6 +9702,270 @@
           16
         ]
       }
+    },
+    {
+      "id": "graph-storage-reference",
+      "name": "gams-graph-storage-reference",
+      "package_id": "graphstruc",
+      "procedure_id": "graphstruc-add-vertex",
+      "gams_code": "N4",
+      "problem_id": "dense-undirected-graph-state-oracle",
+      "path": "fpm_catalog/gams-drivers/graph-storage-reference.f90",
+      "revision": "51e18bedd638b935be8b9ac744b2e9f9e79213e7",
+      "author_example": "example/example.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/storage-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. Twelve fresh dense undirected graphs with 3..14 vertices. Every incremental adjacency edge index, final degree, vertex id/owned feature and edge weight is compared with plain-array/formula references. No self-loops or duplicate edges; sparse/directed storage, removal and graph algorithms unverified.",
+      "validation_path": "docs/gams-storage-ten-validation.json",
+      "review_path": "docs/gams-storage-ten.md",
+      "checks": {
+        "graphs": 12,
+        "vertex_counts": [
+          3,
+          14
+        ],
+        "incremental_adjacency": true
+      }
+    },
+    {
+      "id": "smart-lifetime-reference",
+      "name": "gams-smart-lifetime-reference",
+      "package_id": "smart-pointers",
+      "procedure_id": "smart-pointer-lifetime",
+      "gams_code": "R",
+      "problem_id": "nested-owned-array-lifetime-oracle",
+      "path": "fpm_catalog/gams-drivers/smart-lifetime-reference.f90",
+      "revision": "35130adc4be4384a14b2369e5edd36d4665cd994",
+      "author_example": "example/user_object_smart_pointer.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/storage-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. 64 owned integer-array resources with nested aliases. Counts 1/2/3/2/1, target association, shared mutation, no premature cleanup and exactly-once cleanup/checksum on subroutine exit. Reassignment, cycles, explicit release, arrays of pointers, leaks and other compiler finalization behavior unverified.",
+      "validation_path": "docs/gams-storage-ten-validation.json",
+      "review_path": "docs/gams-storage-ten.md",
+      "checks": {
+        "lifetimes": 64,
+        "max_aliases": 3,
+        "exactly_once_cleanup": true
+      }
+    },
+    {
+      "id": "nc4-layout-reference",
+      "name": "gams-nc4-layout-reference",
+      "package_id": "nc4fortran",
+      "procedure_id": "nc4fortran-io",
+      "gams_code": "N1",
+      "problem_id": "netcdf4-native-indexed-value-oracle",
+      "path": "fpm_catalog/gams-drivers/nc4-layout-reference.f90",
+      "revision": "942ac4f83380acdef463002f555aebf30f3c46ac",
+      "author_example": "test/test_array.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/storage-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. 24 REAL64 matrix NetCDF4 files written by the wrapper. Native NetCDF C API checks named dimension lengths, reversed C axis order and all 210 indexed values using zero-based C indices; wrapper full reads check the same 210 formula values and units. Both APIs share the underlying NetCDF library; compression, other kinds/ranks and external implementations unverified.",
+      "validation_path": "docs/gams-storage-ten-validation.json",
+      "review_path": "docs/gams-storage-ten.md",
+      "checks": {
+        "files": 24,
+        "shape_ranges": [
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            6
+          ]
+        ],
+        "value_references": 420,
+        "cross_api_read": true,
+        "native_api": "C",
+        "reference_links": [
+          "https://docs.unidata.ucar.edu/netcdf-c/current/group__variables.html",
+          "https://docs.unidata.ucar.edu/netcdf-c/current/group__dimensions.html"
+        ]
+      }
+    },
+    {
+      "id": "regex-language-reference",
+      "name": "gams-regex-language-reference",
+      "package_id": "jeyemhex-regex",
+      "procedure_id": "jeyemhex-regex-strings",
+      "gams_code": "N3",
+      "problem_id": "bounded-language-exhaustive-membership",
+      "path": "fpm_catalog/gams-drivers/regex-language-reference.f90",
+      "revision": "2ca0043837a86a4f77df494ddad2240c1b70e576",
+      "author_example": "example/re_example.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/storage-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. Exhaustive 340 strings of lengths 1..4 over 01a., each checked against decimal and identifier patterns using an independent character-state grammar: 680 comparisons. Empty strings, malformed patterns, captures, splitting/replacement and full regex compatibility unverified.",
+      "validation_path": "docs/gams-storage-ten-validation.json",
+      "review_path": "docs/gams-storage-ten.md",
+      "checks": {
+        "strings": 340,
+        "comparisons": 680,
+        "alphabet": "01a.",
+        "lengths": [
+          1,
+          4
+        ]
+      }
+    },
+    {
+      "id": "lmdb-rollback-reference",
+      "name": "gams-lmdb-rollback-reference",
+      "package_id": "fortran-lmdb",
+      "procedure_id": "lmdb-transactions",
+      "gams_code": "N4",
+      "problem_id": "committed-map-rollback-state-oracle",
+      "path": "fpm_catalog/gams-drivers/lmdb-rollback-reference.f90",
+      "revision": "34bb1dc10e11fd470e4643135fa31fccacef7cd7",
+      "author_example": "test/test_lmdb.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/storage-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. 64 fixed-width text keys/values: committed inserts, aborted replacement of every value, then committed updates and deletion of keys divisible by three. Reverse-order reads compare all 192 key states with independent integer formulas and MDB_NOTFOUND. Concurrent transactions, persistence across processes, cursors, duplicate keys and large maps unverified.",
+      "validation_path": "docs/gams-storage-ten-validation.json",
+      "review_path": "docs/gams-storage-ten.md",
+      "checks": {
+        "keys": 64,
+        "key_state_references": 192,
+        "deleted_keys": 21,
+        "rollback": true
+      }
+    },
+    {
+      "id": "aotus-config-reference",
+      "name": "gams-aotus-config-reference",
+      "package_id": "aotus",
+      "procedure_id": "aotus-config",
+      "gams_code": "N1",
+      "problem_id": "generated-lua-configuration-oracle",
+      "path": "fpm_catalog/gams-drivers/aotus-config-reference.f90",
+      "revision": "2c1ec4d4629a4915929e82e873ceebf623648877",
+      "author_example": "sample/aotus_sample.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/storage-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. 32 fresh Lua configuration files with computed triangular integers, signed dyadic reals and nested table entries; five independent value/default references each, table lengths and missing-key status bits. Malformed scripts, wrong types, callbacks, dump/reload and general Lua operations unverified.",
+      "validation_path": "docs/gams-storage-ten-validation.json",
+      "review_path": "docs/gams-storage-ten.md",
+      "checks": {
+        "files": 32,
+        "value_references": 160,
+        "missing_defaults": true
+      }
+    },
+    {
+      "id": "gftl-container-reference",
+      "name": "gams-gftl-container-reference",
+      "package_id": "gftl-shared",
+      "procedure_id": "gftl-shared-containers",
+      "gams_code": "N4",
+      "problem_id": "integer-vector-map-prefix-oracles",
+      "path": "fpm_catalog/gams-drivers/gftl-container-reference.f90",
+      "revision": "8009755e846560fbb389c01d76e013ddf14a7f98",
+      "author_example": "src/v1/demo.F90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/storage-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. Twelve 64-insertion integer-vector/integer-to-REAL64-map traces. Every stored prefix is read in reverse and compared with independent key/value formulas: 49,920 references, including negative keys and signed dyadic values. Duplicate insertion, erase, iterators, clear/reuse, other instantiations and thread safety unverified.",
+      "validation_path": "docs/gams-storage-ten-validation.json",
+      "review_path": "docs/gams-storage-ten.md",
+      "checks": {
+        "traces": 12,
+        "insertions_per_trace": 64,
+        "value_references": 49920
+      }
+    },
+    {
+      "id": "log-filter-reference",
+      "name": "gams-log-filter-reference",
+      "package_id": "pflogger",
+      "procedure_id": "pflogger-logging",
+      "gams_code": "R",
+      "problem_id": "ordered-severity-filter-file-oracle",
+      "path": "fpm_catalog/gams-drivers/log-filter-reference.f90",
+      "revision": "472c2261d0713c130aa4b2c90bfaf571586dec96",
+      "author_example": "examples/serial/complex.F90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/storage-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. 128 serial calls through a DEBUG logger and WARNING file handler. Exact ordered text oracle requires all 32 WARNING and 32 ERROR records and excludes 64 DEBUG/INFO records. Explicit free/finalize flushes the file before reading. Other severity levels, handler combinations, MPI, repeated initialization and error recovery unverified.",
+      "validation_path": "docs/gams-storage-ten-validation.json",
+      "review_path": "docs/gams-storage-ten.md",
+      "checks": {
+        "log_calls": 128,
+        "accepted_records": 64,
+        "filtered_records": 64
+      }
+    },
+    {
+      "id": "curl-url-reference",
+      "name": "gams-curl-url-reference",
+      "package_id": "fortran-curl",
+      "procedure_id": "fortran-curl-demo-api",
+      "gams_code": "N3",
+      "problem_id": "generated-offline-url-component-oracle",
+      "path": "fpm_catalog/gams-drivers/curl-url-reference.f90",
+      "revision": "f29cc78fdc7701bc221a82af9bbd9ed04ef52158",
+      "author_example": "examples/url/url.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/storage-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. 64 generated HTTPS URLs checked against independently generated host, explicit port, path, query and reconstructed URL after a path change: 320 exact references. Offline only. Encoding, normalization, missing components, invalid URLs, credentials and network transfers unverified.",
+      "validation_path": "docs/gams-storage-ten-validation.json",
+      "review_path": "docs/gams-storage-ten.md",
+      "checks": {
+        "urls": 64,
+        "string_references": 320,
+        "network_requests": 0
+      }
+    },
+    {
+      "id": "netcdf-slices-reference",
+      "name": "gams-netcdf-slices-reference",
+      "package_id": "netcdf-fortran",
+      "procedure_id": "netcdf-classic-io",
+      "gams_code": "N1",
+      "problem_id": "classic-indexed-update-oracle",
+      "path": "fpm_catalog/gams-drivers/netcdf-slices-reference.f90",
+      "revision": "48d67b73cb2a671d6d27075eb7e53085d5f9538a",
+      "author_example": "examples/F90/simple_xy_wr.F90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/storage-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. 24 classic REAL32 matrix files: native CDF-1 magic, dimension names/lengths, units, full and one-cell reads compared with independent formulas after overwriting the last cell with -999.5. 420 exact value references. Reader/writer share the NetCDF library; external implementations, all type/rank combinations, unlimited dimensions and parallel I/O unverified.",
+      "validation_path": "docs/gams-storage-ten-validation.json",
+      "review_path": "docs/gams-storage-ten.md",
+      "checks": {
+        "files": 24,
+        "value_references": 420,
+        "single_cell_updates": 24,
+        "classic_magic": true
+      }
     }
   ]
 }

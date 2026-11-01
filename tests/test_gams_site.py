@@ -67,6 +67,34 @@ class GamsSiteTests(unittest.TestCase):
             self.assertIn('Open default example', sorting)
             self.assertNotIn('Try in playground', sorting)
 
+    def test_ten_storage_driver_links_keep_class_specific_scope(self):
+        import copy
+        from xpackage_gams import driver_data, gams_data
+        drivers = [d for d in driver_data(data=gams_data())
+                   if d.get('validation_path') == 'docs/gams-storage-ten-validation.json']
+        self.assertEqual(len(drivers), 10)
+        feed = copy.deepcopy(self.feed)
+        packages = {d['package_id'] for d in drivers}
+        feed['projects'] = [p for p in feed['projects'] if p['playground']['package_id'] in packages]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination, feed)
+            for driver in drivers:
+                url = ('https://beliavsky.github.io/fortran-playground/fpm/'
+                       f'?package={driver["package_id"]}&example={driver["name"]}')
+                page = Page((destination/driver['gams_code']/'index.html').read_text(encoding='utf-8'))
+                self.assertIn((url, 'Try in playground'), page.anchors)
+                detail = (destination/'packages'/driver['package_id']/'index.html').read_text(encoding='utf-8')
+                card = detail.split('id="'+driver['procedure_id']+'"', 1)[1].split('</article>', 1)[0]
+                self.assertIn('Load checked GAMS driver:', card)
+                self.assertIn(driver['name'], card)
+            searching = Page((destination/'N5/index.html').read_text(encoding='utf-8'))
+            for package, name in [('gftl-shared', 'gftl-container-reference'),
+                                  ('fortran-lmdb', 'lmdb-rollback-reference')]:
+                self.assertNotIn(('https://beliavsky.github.io/fortran-playground/fpm/'
+                                  f'?package={package}&example=gams-{name}', 'Try in playground'),
+                                 searching.anchors)
+
     def test_ten_interop_driver_links_keep_class_specific_scope(self):
         import copy
         from xpackage_gams import driver_data, gams_data

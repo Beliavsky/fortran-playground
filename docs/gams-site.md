@@ -306,3 +306,5 @@ The [ten checked data-handling drivers](gams-data-ten.md) add exact container, t
 The [ten configuration, state and reference drivers](gams-state-ten.md) include checked storage/configuration, SQL transactions, expressions and SI photon calculations, with retained failed probes and explicit scope limits.
 
 The [ten structured-data and interoperability drivers](gams-interop-ten.md) check JSON/YAML values, NPY headers and payloads, container states, diagnostic filtering, Linux file operations and Lua/Python bindings, with retained consumer corrections and explicit limits.
+
+The [ten storage, configuration and binding drivers](gams-storage-ten.md) check graphs, resource lifetimes, NetCDF metadata/indexing, regex languages, transactions, configuration, containers, logging and offline URL parsing with independent references.

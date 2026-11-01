@@ -1,0 +1,44 @@
+{
+  "ok": false,
+  "compiler": "GNU Fortran (GCC) 16.2.0",
+  "compiler_id": "gfortran",
+  "fpm": "0.12.0",
+  "stages": [
+    {
+      "name": "Build",
+      "command": [
+        "fpm",
+        "build",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.033,
+      "ok": false,
+      "exit_code": 1,
+      "error": "",
+      "stdout": "",
+      "stderr": "<ERROR> *cmd_build* Target error: Unable to find source for module dependency: \"netcdf\" used by \"app/main.f90\"\nSTOP 1\n"
+    }
+  ],
+  "cache": {
+    "package": "nc4fortran",
+    "compiler": "GNU Fortran 16.2.0",
+    "key": "835487d957e69361e1d722f1",
+    "library_reused": true,
+    "changed_artifacts": []
+  },
+  "packages": [
+    {
+      "repository": "geospace-code/nc4fortran",
+      "revision": "942ac4f83380acdef463002f555aebf30f3c46ac",
+      "sha256": "f27018e3cffbcab181d422d6cffc2062c95acb03a35314b01f7647cdeca1ec9b"
+    }
+  ]
+}

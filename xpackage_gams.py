@@ -100,6 +100,7 @@ PARETO_DIIS_REPORT = Path('docs/gams-pareto-diis.md')
 DATA_TEN_REPORT = Path('docs/gams-data-ten.md')
 STATE_TEN_REPORT = Path('docs/gams-state-ten.md')
 INTEROP_TEN_REPORT = Path('docs/gams-interop-ten.md')
+STORAGE_TEN_REPORT = Path('docs/gams-storage-ten.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
 EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
@@ -9295,6 +9296,73 @@ def interop_ten_review_text(root=ROOT):
     return '\n'.join(lines)
 
 
+def storage_ten_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-storage-ten-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-storage-ten-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Ten checked storage, configuration and binding drivers', '',
+             'Ten independent consumers passed GNU Fortran 16.2.0 with FPM 0.12.0 in the restricted '
+             'hosted sandbox. Each reused the existing package library and compiled only the main '
+             'and executable. The [verification report](gams-storage-ten-validation.json) preserves '
+             'pins, normalized source hashes, timings and complete output. GAMS categories are not exhausted.', '',
+             '## Independent references and limits', '',
+             'Dense undirected graph adjacency indices, vertex features and degrees are compared with '
+             'plain-array oracles. The smart-pointer consumer owns integer arrays and checks nested '
+             'alias counts, shared mutation, cleanup counts and a closed-form cleanup checksum. '
+             'The gFTL vector/map traces check every prefix in reverse against integer/dyadic formulas.', '',
+             'The regex consumer enumerates every nonempty string of length at most four over 01a. '
+             'and checks two pattern languages with an independently written character-state grammar. '
+             'This is bounded coverage of these patterns, not a general regex conformance suite. '
+             'Offline URL components and path updates are checked against generated exact strings; '
+             'no network request is made.', '',
+             'LMDB transactions are compared with 64 formula-generated key/value states after '
+             'commit, rollback, and committed replacements/deletions. Lua configuration values '
+             'are checked against closed forms, including missing-key defaults and status flags. '
+             'Logging must produce exactly the expected ordered warning/error text while filtering '
+             'debug/info records.', '',
+             'NetCDF4 wrapper files are cross-read with native NetCDF C indexed calls and checked '
+             'against explicit axis-dependent formulas, reversed C axis order, zero-based indices '
+             'and metadata. The [Unidata variable API](https://docs.unidata.ucar.edu/netcdf-c/current/group__variables.html) '
+             'and [dimension API](https://docs.unidata.ucar.edu/netcdf-c/current/group__dimensions.html) '
+             'document the C signatures. Classic NetCDF additionally '
+             'checks CDF-1 magic and full/indexed reads after one-cell updates. These APIs share '
+             'the native NetCDF library, so this does not establish independent file-format '
+             'implementation compatibility. Checks are for the pinned GNU/Linux builds.', '',
+             'The [retained native-module probe](gams-candidates/storage-ten-native-module/README.md) '
+             'failed during FPM dependency discovery because the external netcdf Fortran module '
+             'was not exposed by this consumer setup. It never compiled or ran and is not an '
+             'upstream I/O defect. The successful C API consumer needs no manifest or library changes.', '']
+    for d in drivers:
+        lines += ['### '+d['package_id']+' ('+d['gams_code']+')', '', d['modifications'], '']
+    lines += ['## Provenance and actual output', '',
+              'Pinned APIs, implementations and available author examples were reviewed. These '
+              'independent MIT consumers do not copy upstream implementation/example bodies; '
+              'upstream license terms remain separate. Only each recorded class and tested scope '
+              'is verified. Loading an example does not submit a job.', '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -9470,6 +9538,7 @@ def main():
                          (DATA_TEN_REPORT, data_ten_review_text()),
                          (STATE_TEN_REPORT, state_ten_review_text()),
                          (INTEROP_TEN_REPORT, interop_ten_review_text()),
+                         (STORAGE_TEN_REPORT, storage_ten_review_text()),
                          (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report

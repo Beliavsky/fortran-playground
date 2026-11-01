@@ -11477,12 +11477,17 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Graph storage and construction; this entry is not a shortest-path or graph-optimization algorithm.",
+        "notes": "Graph storage and construction; this entry is not a shortest-path or graph-optimization algorithm. Checked driver: Twelve fresh dense undirected graphs with 3..14 vertices. Every incremental adjacency edge index, final degree, vertex id/owned feature and edge weight is compared with plain-array/formula references. No self-loops or duplicate edges; sparse/directed storage, removal and graph algorithms unverified.",
         "evidence": [
           {
             "path": "src/graphstruc/graphstruc_types.f90",
             "sha256": "4bda7ffeacabd9a45415d11f2f5cf104f2b5a2da2f52ec03358e23d87973e77e",
             "line": 103
+          },
+          {
+            "path": "src/graphstruc/graphstruc_types_sub.f90",
+            "sha256": "150ab88dec9a8651b95f0abd006488c0a43c210e565e106cad6877f1fe031c75",
+            "line": 1
           }
         ],
         "author_examples": [
@@ -11490,7 +11495,8 @@
             "path": "example/example.f90",
             "sha256": "24103aa1092487f238dd6743d925856c85fa622b79cbad8da252921e1dcf3b18"
           }
-        ]
+        ],
+        "driver_id": "graph-storage-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -17436,11 +17442,21 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Reference-counted resource management. Adapted from the author example: a user type extends sp_smart_pointer_t and implements free. The checked main shares one integer resource, verifies reference counts and shared target, checks no premature cleanup and confirms exactly one cleanup after subroutine return. No source edits. This is not exhaustive compiler finalization conformance testing.",
+        "notes": "Reference-counted resource management. Adapted from the author example: a user type extends sp_smart_pointer_t and implements free. The checked main shares one integer resource, verifies reference counts and shared target, checks no premature cleanup and confirms exactly one cleanup after subroutine return. No source edits. This is not exhaustive compiler finalization conformance testing. Checked driver: 64 owned integer-array resources with nested aliases. Counts 1/2/3/2/1, target association, shared mutation, no premature cleanup and exactly-once cleanup/checksum on subroutine exit. Reassignment, cycles, explicit release, arrays of pointers, leaks and other compiler finalization behavior unverified.",
         "evidence": [
           {
             "path": "src/smart_pointer/sp_smart_pointer_m.f90",
             "sha256": "4ba59dde067669f5bab6a37c8f2f4402ebdc10e50ce5b4fc765ca25eeae7d257",
+            "line": 1
+          },
+          {
+            "path": "src/smart_pointer/sp_smart_pointer_s.F90",
+            "sha256": "79cc4550c4641acb76a09de79dc1c4a4c455a5d7094db5f3950d52cf5db67c3d",
+            "line": 1
+          },
+          {
+            "path": "src/smart_pointer/sp_reference_counter_s.f90",
+            "sha256": "777b00eddb9796e472892613a20c7bff2ac5cfbaadd78f8b87658da1759e99c7",
             "line": 1
           }
         ],
@@ -17449,7 +17465,8 @@
             "path": "example/user_object_smart_pointer.f90",
             "sha256": "9aae793e04b1e65fd2eee344c063a1a0e15903c62c03da93fcffa57722fe663e"
           }
-        ]
+        ],
+        "driver_id": "smart-lifetime-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T00:20:04.805639+00:00"
@@ -17671,7 +17688,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "NetCDF4 array and attribute I/O. The checked main writes a 2-by-3 double-precision array with dimension names and a kelvin units attribute, closes the file, reopens and verifies every value and the attribute, then deletes the sandbox file. Native NetCDF and HDF5 development packages and include/library paths are pinned in the build recipe. No source edits. It does not cover every type/rank, compression, slicing or malformed files.",
+        "notes": "NetCDF4 array and attribute I/O. The checked main writes a 2-by-3 double-precision array with dimension names and a kelvin units attribute, closes the file, reopens and verifies every value and the attribute, then deletes the sandbox file. Native NetCDF and HDF5 development packages and include/library paths are pinned in the build recipe. No source edits. It does not cover every type/rank, compression, slicing or malformed files. Checked driver: 24 REAL64 matrix NetCDF4 files written by the wrapper. Native NetCDF C API checks named dimension lengths, reversed C axis order and all 210 indexed values using zero-based C indices; wrapper full reads check the same 210 formula values and units. Both APIs share the underlying NetCDF library; compression, other kinds/ranks and external implementations unverified.",
         "evidence": [
           {
             "path": "src/interface.f90",
@@ -17693,7 +17710,8 @@
             "path": "test/test_attributes.f90",
             "sha256": "0ebf81f0cda89879b306c97c8518076dc9e56a1e4a10caa5f9fc637e262ce212"
           }
-        ]
+        ],
+        "driver_id": "nc4-layout-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T00:50:30.284213+00:00"
@@ -18316,7 +18334,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Pure Fortran regular expressions by Edward Higgins, distinct from perazz/fortran-regex already selected under fortran-regex. The main checks matching and nonmatching anchored decimal measurements, matched substring, comma/space splitting and replacement. No source edits or native regex library. Pattern whitespace is ignored unless escaped; the author documents missing capture references and other features, so PCRE compatibility and all patterns are not claimed.",
+        "notes": "Pure Fortran regular expressions by Edward Higgins, distinct from perazz/fortran-regex already selected under fortran-regex. The main checks matching and nonmatching anchored decimal measurements, matched substring, comma/space splitting and replacement. No source edits or native regex library. Pattern whitespace is ignored unless escaped; the author documents missing capture references and other features, so PCRE compatibility and all patterns are not claimed. Checked driver: Exhaustive 340 strings of lengths 1..4 over 01a., each checked against decimal and identifier patterns using an independent character-state grammar: 680 comparisons. Empty strings, malformed patterns, captures, splitting/replacement and full regex compatibility unverified.",
         "evidence": [
           {
             "path": "src/regex.f90",
@@ -18329,7 +18347,8 @@
             "path": "example/re_example.f90",
             "sha256": "510884d09fa7e656ffea00fc060127a51ace633697c00ad28aaa5ced6a0aa4b7"
           }
-        ]
+        ],
+        "driver_id": "regex-language-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T01:11:46.981596+00:00"
@@ -20117,7 +20136,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "LMDB key-value database bindings with Debian LMDB 0.9.31. A checksum-guarded compatibility edit selects the existing signed-kind fallback rather than GNU unsigned extension kinds, which are unavailable without enabling nondefault unsigned support. The checked consumer creates a small sandbox-local database, inserts and updates a value, verifies committed reads and rollback after an aborted update, deletes the key and checks MDB_NOTFOUND, then closes and removes both database files. No persistent storage is provided. Large mappings, concurrent writers/readers, all cursor interfaces and other platforms are not validated.",
+        "notes": "LMDB key-value database bindings with Debian LMDB 0.9.31. A checksum-guarded compatibility edit selects the existing signed-kind fallback rather than GNU unsigned extension kinds, which are unavailable without enabling nondefault unsigned support. The checked consumer creates a small sandbox-local database, inserts and updates a value, verifies committed reads and rollback after an aborted update, deletes the key and checks MDB_NOTFOUND, then closes and removes both database files. No persistent storage is provided. Large mappings, concurrent writers/readers, all cursor interfaces and other platforms are not validated. Checked driver: 64 fixed-width text keys/values: committed inserts, aborted replacement of every value, then committed updates and deletion of keys divisible by three. Reverse-order reads compare all 192 key states with independent integer formulas and MDB_NOTFOUND. Concurrent transactions, persistence across processes, cursors, duplicate keys and large maps unverified.",
         "evidence": [
           {
             "path": "src/lmdb.F90",
@@ -20130,7 +20149,8 @@
             "path": "test/test_lmdb.f90",
             "sha256": "47b161c7c9d232f68993dd7f3c010569d4db88e9cba79db9f073d11392e0817d"
           }
-        ]
+        ],
+        "driver_id": "lmdb-rollback-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T13:26:21.447807+00:00"
@@ -23001,7 +23021,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Mixed C/Fortran source set selected from the upstream Waf library lists, wrapped for FPM with the bundled Lua 5.4.8 core and libraries, the C dump wrapper and GNU-supported extended/quad precision module variants. Lua command-line interpreter/compiler executables and upstream tests are excluded. Sources are unchanged; the operator-only wrapper now permits explicitly listed locked C files, retaining old adapter identities and the ordinary downloader/archive limits. The consumer creates a small Lua configuration, checks a computed integer, a double-precision scalar, two named nested-table entries and a missing-key default with error bits, closes the state and deletes its file. Broader scripting, dump/reload callbacks, every numeric kind and sandbox-restricted system operations are not verified.",
+        "notes": "Mixed C/Fortran source set selected from the upstream Waf library lists, wrapped for FPM with the bundled Lua 5.4.8 core and libraries, the C dump wrapper and GNU-supported extended/quad precision module variants. Lua command-line interpreter/compiler executables and upstream tests are excluded. Sources are unchanged; the operator-only wrapper now permits explicitly listed locked C files, retaining old adapter identities and the ordinary downloader/archive limits. The consumer creates a small Lua configuration, checks a computed integer, a double-precision scalar, two named nested-table entries and a missing-key default with error bits, closes the state and deletes its file. Broader scripting, dump/reload callbacks, every numeric kind and sandbox-restricted system operations are not verified. Checked driver: 32 fresh Lua configuration files with computed triangular integers, signed dyadic reals and nested table entries; five independent value/default references each, table lengths and missing-key status bits. Malformed scripts, wrong types, callbacks, dump/reload and general Lua operations unverified.",
         "evidence": [
           {
             "path": "source/aotus_module.f90",
@@ -23019,7 +23039,8 @@
             "path": "sample/aotus_sample.f90",
             "sha256": "6a6333125cd8b1dd6738298c18c41ac63030e0e492cb567f2fba60ca58af611c"
           }
-        ]
+        ],
+        "driver_id": "aotus-config-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T19:26:39.127603+00:00"
@@ -23599,7 +23620,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Selected serial classic-format Fortran sources follow the upstream CMake classic-library source set and use the unchanged public netCDF-C API. The operator-owned FPM wrapper retains original include files and sets HAVE_F2008, HAVE_TS29113_SUPPORT and NO_NETCDF_2 for the GNU 16 Linux environment; no library sources are edited. The native libnetcdf-dev package is locked to 1:4.9.3-1. The consumer writes a 3-by-2 real array and units attribute to a classic dataset, reopens it, checks dimension lengths, attribute and every value, then removes the file. NetCDF-4-specific Fortran interfaces, the old V2 API, parallel I/O and all data types are outside this selected build and verification scope. Source exports require the native netCDF C development library.",
+        "notes": "Selected serial classic-format Fortran sources follow the upstream CMake classic-library source set and use the unchanged public netCDF-C API. The operator-owned FPM wrapper retains original include files and sets HAVE_F2008, HAVE_TS29113_SUPPORT and NO_NETCDF_2 for the GNU 16 Linux environment; no library sources are edited. The native libnetcdf-dev package is locked to 1:4.9.3-1. The consumer writes a 3-by-2 real array and units attribute to a classic dataset, reopens it, checks dimension lengths, attribute and every value, then removes the file. NetCDF-4-specific Fortran interfaces, the old V2 API, parallel I/O and all data types are outside this selected build and verification scope. Source exports require the native netCDF C development library. Checked driver: 24 classic REAL32 matrix files: native CDF-1 magic, dimension names/lengths, units, full and one-cell reads compared with independent formulas after overwriting the last cell with -999.5. 420 exact value references. Reader/writer share the NetCDF library; external implementations, all type/rank combinations, unlimited dimensions and parallel I/O unverified.",
         "evidence": [
           {
             "path": "fortran/netcdf.F90",
@@ -23626,7 +23647,8 @@
             "path": "examples/F90/simple_xy_rd.F90",
             "sha256": "1212c63bb5db42052a2385d16ae18a02114d67b48fc56f0b193f17b838fb3bbf"
           }
-        ]
+        ],
+        "driver_id": "netcdf-slices-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T20:10:45.271323+00:00"
@@ -24650,7 +24672,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "The catalog builds an explicitly selected subset: v1 Integer32, Integer64, default Integer, Real64, String and Unlimited vectors; StringString and Integer32Real64 maps; and v2 Integer32, Real64, String and Unlimited vectors. The consumer inserts and retrieves eight vector elements and eight map entries and verifies their sum 204. Generated v2 vector wrappers apply the upstream CMake substitutions; the original templates and Apache-2.0 notices remain intact. N4 covers container storage and N5 covers key lookup. Other upstream instantiations, sets, queues and stacks are outside this selected build and test scope. Compatible dependencies are shared through immutable exports; a source-recipe fingerprint in the FPM preprocessing profile binds generated assets and source selection to the dependency identity.",
+        "notes": "The catalog builds an explicitly selected subset: v1 Integer32, Integer64, default Integer, Real64, String and Unlimited vectors; StringString and Integer32Real64 maps; and v2 Integer32, Real64, String and Unlimited vectors. The consumer inserts and retrieves eight vector elements and eight map entries and verifies their sum 204. Generated v2 vector wrappers apply the upstream CMake substitutions; the original templates and Apache-2.0 notices remain intact. N4 covers container storage and N5 covers key lookup. Other upstream instantiations, sets, queues and stacks are outside this selected build and test scope. Compatible dependencies are shared through immutable exports; a source-recipe fingerprint in the FPM preprocessing profile binds generated assets and source selection to the dependency identity. Checked driver: Twelve 64-insertion integer-vector/integer-to-REAL64-map traces. Every stored prefix is read in reverse and compared with independent key/value formulas: 49,920 references, including negative keys and signed dyadic values. Duplicate insertion, erase, iterators, clear/reuse, other instantiations and thread safety unverified.",
         "evidence": [
           {
             "path": "src/v1/Integer32Vector.F90",
@@ -24673,7 +24695,8 @@
             "path": "src/v1/demo.F90",
             "sha256": "45b5d1677647ed7b1cb01242aae77317c90a96c0daed2bacd5fc2687d77b9239"
           }
-        ]
+        ],
+        "driver_id": "gftl-container-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T22:10:15.755993+00:00"
@@ -25060,7 +25083,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "The serial pFlogger library uses pinned gFTL, selected gFTL-shared containers and yaFyaml. The checked consumer writes YAML configuration, logs four severity levels to a file, and verifies that only the two expected warning/error records were accepted. MPI logging is outside this build scope. Three additional upstream v2 map instantiations are supplied as a separate checksum-locked generated asset, leaving the existing vector asset unchanged. Root COPYRIGHT identifies Apache-2.0; the historical license PDFs are retained alongside it. R covers logging service routines.",
+        "notes": "The serial pFlogger library uses pinned gFTL, selected gFTL-shared containers and yaFyaml. The checked consumer writes YAML configuration, logs four severity levels to a file, and verifies that only the two expected warning/error records were accepted. MPI logging is outside this build scope. Three additional upstream v2 map instantiations are supplied as a separate checksum-locked generated asset, leaving the existing vector asset unchanged. Root COPYRIGHT identifies Apache-2.0; the historical license PDFs are retained alongside it. R covers logging service routines. Checked driver: 128 serial calls through a DEBUG logger and WARNING file handler. Exact ordered text oracle requires all 32 WARNING and 32 ERROR records and excludes 64 DEBUG/INFO records. Explicit free/finalize flushes the file before reading. Other severity levels, handler combinations, MPI, repeated initialization and error recovery unverified.",
         "evidence": [
           {
             "path": "src/LoggerManager.F90",
@@ -25083,7 +25106,8 @@
             "path": "examples/serial/complex.F90",
             "sha256": "6649df22c0ccb4baaa12eadc575cd4421b5400b0cba55d2fb52ca553705f9e03"
           }
-        ]
+        ],
+        "driver_id": "log-filter-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T22:54:35.763474+00:00"
@@ -27760,7 +27784,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Release 0.8.0 is pinned because its documented libcurl minimum is 8.10.0, compatible with the pinned Debian libcurl 8.14.1-2+deb13u7; current main requires 8.20.0. The original FPM library and C helpers are unchanged. The example adapts examples/url/url.f90 and checks successful URL parsing plus exact host, path, port and query strings, changes the path and checks the reconstructed URL. The C URL handle is released and cleared by the caller, following the 0.8 cleanup semantics. N3 describes parsing/constructing character data. No network request is made; sandbox internet access remains disabled. HTTP transfers, authentication, mail protocols and other libcurl facilities are not runtime-verified. ISC notices are retained.",
+        "notes": "Release 0.8.0 is pinned because its documented libcurl minimum is 8.10.0, compatible with the pinned Debian libcurl 8.14.1-2+deb13u7; current main requires 8.20.0. The original FPM library and C helpers are unchanged. The example adapts examples/url/url.f90 and checks successful URL parsing plus exact host, path, port and query strings, changes the path and checks the reconstructed URL. The C URL handle is released and cleared by the caller, following the 0.8 cleanup semantics. N3 describes parsing/constructing character data. No network request is made; sandbox internet access remains disabled. HTTP transfers, authentication, mail protocols and other libcurl facilities are not runtime-verified. ISC notices are retained. Checked driver: 64 generated HTTPS URLs checked against independently generated host, explicit port, path, query and reconstructed URL after a path change: 320 exact references. Offline only. Encoding, normalization, missing components, invalid URLs, credentials and network transfers unverified.",
         "evidence": [
           {
             "path": "src/curl_urlapi.f90",
@@ -27774,7 +27798,8 @@
             "sha256": "710dc4cb40466cccb807e60d56516be4228b362796150f8ea9913ed9addfb36b",
             "line": 1
           }
-        ]
+        ],
+        "driver_id": "curl-url-reference"
       }
     ],
     "stars_updated_at": "2026-10-30T17:10:55.680552+00:00"
