@@ -1,0 +1,79 @@
+{
+  "ok": false,
+  "compiler": "GNU Fortran (GCC) 16.2.0",
+  "compiler_id": "gfortran",
+  "fpm": "0.12.0",
+  "stages": [
+    {
+      "name": "Build",
+      "command": [
+        "fpm",
+        "build",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.386,
+      "ok": true,
+      "exit_code": 0,
+      "error": "",
+      "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+      "stderr": ""
+    },
+    {
+      "name": "Run",
+      "command": [
+        "fpm",
+        "run",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.075,
+      "ok": false,
+      "exit_code": 2,
+      "error": "",
+      "stdout": "",
+      "stderr": "Project is up to date\nAt line 284 of file ./././/../sources/bundle/packages/0/ddPCM-36f22feb86c81c6ba1f59c373ef215368d3e3c13/playground-library/jacobi_diis.f90\nFortran runtime error: Index '-5' of dimension 1 of array 'b' below lower bound of 1\n\nError termination. Backtrace:\n#0  0x2b5ce1728f83 in ???\n#1  0x2b5ce1729c39 in ???\n#2  0x2b5ce172a21b in ???\n#3  0x40a95f in ???\n#4  0x40563e in ???\n#5  0x40cc5c in ???\n#6  0x403377 in jacobi_reference\n\tat app/main.f90:101\n#7  0x40466f in main\n\tat app/main.f90:40\n<ERROR> Execution for object \" playground-main \" returned exit code  2\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 2\n"
+    }
+  ],
+  "cache": {
+    "package": "ddpcm",
+    "compiler": "GNU Fortran 16.2.0",
+    "key": "41392c6b921830a2fcd197be",
+    "library_reused": true,
+    "changed_artifacts": []
+  },
+  "packages": [
+    {
+      "repository": "filippolipparini/ddPCM",
+      "revision": "36f22feb86c81c6ba1f59c373ef215368d3e3c13",
+      "sha256": "a99669b3049317bb2e61cb696eb4252a0fd63b00c2aa60cb9ff2916445f87056"
+    }
+  ],
+  "build_ok": true,
+  "target_groups": {
+    "app": [
+      "playground-main"
+    ],
+    "example": [],
+    "test": []
+  },
+  "targets": [
+    "playground-main"
+  ],
+  "plots": [],
+  "plot_notes": []
+}

@@ -65,12 +65,13 @@ Initialization/solve status must be zero, callback/final points finite and withi
 | [Load optgra-halfspace-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=optgra&example=gams-optgra-halfspace-reference) · [Source](../fpm_catalog/gams-drivers/optgra-halfspace-reference.f90) | G2h3b1b | [Procedure](https://github.com/jacobwilliams/optgra/blob/914bed713e80faa4a190e03beb3a8307077eb028/src/optgra.F90#L36) · [Author example](https://github.com/jacobwilliams/optgra/blob/914bed713e80faa4a190e03beb3a8307077eb028/test/optgra_test.f90) · [Verification](gams-projection-training-validation.json) |
 | [Load conmin-ball-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=conmin&example=gams-conmin-ball-reference) · [Source](../fpm_catalog/gams-drivers/conmin-ball-reference.f90) | G2h3b1b | [Procedure](https://github.com/jacobwilliams/conmin/blob/201f3b29f023baf7bef13ad8f49b906ffb1c7757/src/conmin.F90#L46) · [Author example](https://github.com/jacobwilliams/conmin/blob/201f3b29f023baf7bef13ad8f49b906ffb1c7757/test/TP37.f90) · [Verification](gams-directions-fitting-validation.json) |
 | [Load annealing-rastrigin-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=simulated-annealing&example=gams-annealing-rastrigin-reference) · [Source](../fpm_catalog/gams-drivers/annealing-rastrigin-reference.f90) | G2i | [Procedure](https://github.com/jacobwilliams/simulated-annealing/blob/a2fa094d1ee39525c7e081cfd67866975e9e1dc5/src/simulated_annealing.F90#L59) · [Author example](https://github.com/jacobwilliams/simulated-annealing/blob/a2fa094d1ee39525c7e081cfd67866975e9e1dc5/test/test.f90) · [Verification](gams-directions-fitting-validation.json) |
+| [Load vtmop-pareto-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=vtmop&example=gams-vtmop-pareto-reference) · [Source](../fpm_catalog/gams-drivers/vtmop-pareto-reference.f90) | G2 | [Procedure](https://github.com/vtopt/VTMOP/blob/794a1de23801731ef6edd1924b52d69b679af6a0/src/vtmop.f90#L1) · [Author example](https://github.com/vtopt/VTMOP/blob/794a1de23801731ef6edd1924b52d69b679af6a0/src/samples.f90) · [Verification](gams-pareto-diis-validation.json) |
 
-The L-BFGS-B and SLSQP drivers adapt author API patterns and retain license notices. All 12 appear in hosted and main local FPM example menus and downloaded projects. Loading a link selects source without submitting a job.
+The L-BFGS-B and SLSQP drivers adapt author API patterns and retain license notices. All 13 appear in hosted and main local FPM example menus and downloaded projects. Loading a link selects source without submitting a job.
 
 ## Recorded results
 
-All 12 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing existing package libraries. Only each main and executable were rebuilt. The per-driver reports linked above record hashes, pins and saved output; the [original report](gams-constrained-validation.json) covers its six initial drivers. Evaluation counts exclude derivative sanity checks and describe these simple cases, rather than establishing a general speed ranking.
+All 13 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing existing package libraries. Only each main and executable were rebuilt. The per-driver reports linked above record hashes, pins and saved output; the [original report](gams-constrained-validation.json) covers its six initial drivers. Evaluation counts exclude derivative sanity checks and describe these simple cases, rather than establishing a general speed ranking.
 
 ### lbfgsb-box-quadratic
 
@@ -264,6 +265,27 @@ Seeded annealing runs: 6; global minimizer coordinates: 12
 Independently counted objective callbacks: 271406
 Max independent objective, point error, objective identity error:    2.80888E-12   3.61574E-07   8.16990E-16
 PASS annealing-rastrigin-reference
+```
+
+### vtmop-pareto-reference
+
+```text
+n=2 seed=1729 archive=32 best/worst relative distance and span:    0.000000   0.128205   0.978158
+Near-front points: 28; their segment span:    0.978158
+n=2 seed=2903 archive=32 best/worst relative distance and span:    0.000000   0.128205   0.978158
+Near-front points: 28; their segment span:    0.978158
+n=3 seed=1729 archive=22 best/worst relative distance and span:    0.000000   0.181848   0.970018
+Near-front points: 5; their segment span:    0.970018
+n=3 seed=2903 archive=22 best/worst relative distance and span:    0.000000   0.181848   0.970018
+Near-front points: 5; their segment span:    0.970018
+Seeded Pareto searches: 4; returned points checked: 108
+Objective callback evaluations: 800
+Returned points within relative distance 0.05: 66
+Worst best-distance, worst all-point distance and minimum span:    0.00000E+00   1.81848E-01   9.70018E-01
+Maximum Pareto projection identity error:    3.03702E-16
+Near-front subset verified; the entire archive is not uniformly close to the exact Pareto set.
+Fixed small quadratic searches only; not a general convergence guarantee.
+PASS vtmop-pareto-reference
 ```
 
 ## Maintenance

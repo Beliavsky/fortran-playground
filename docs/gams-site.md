@@ -298,3 +298,7 @@ The [Fiats and ennuf inference review](gams-inference-pairs.md) connects K to 48
 The [checked spherical Helmholtz and uniform-stream drivers](gams-helmholtz-streams.md) cover nonresonant spherical PDEs and exact seeded bitstream/jump behavior. Statistical quality, resonant shifts and the known normal-cache reseeding defect remain outside these checks.
 
 The [checked LuGre and FTorch drivers](gams-friction-torch.md) verify public constitutive state integration and fixed affine tensor inference. Private fitting callbacks, parameter fitting, nonlinear networks and training remain unverified.
+
+The [checked Pareto-segment and Jacobi/DIIS drivers](gams-pareto-diis.md) retain failed small-history and uniform-archive-accuracy probes alongside the successful scoped checks. They verify a near-front subset and default-history linear solves, without claiming either stronger behavior is fixed.
+
+The [ten checked data-handling drivers](gams-data-ten.md) add exact container, text, sorting/searching and register-conversion references, with per-driver limits. All use existing cached libraries.

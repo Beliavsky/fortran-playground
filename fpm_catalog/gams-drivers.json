@@ -8706,6 +8706,437 @@
         "training_verified": false,
         "gpu_verified": false
       }
+    },
+    {
+      "id": "ddpcm-jacobi-reference",
+      "name": "gams-ddpcm-jacobi-reference",
+      "package_id": "ddpcm",
+      "procedure_id": "ddpcm-solvation",
+      "gams_code": "D2",
+      "problem_id": "manufactured-diagonally-dominant-jacobi-diis",
+      "path": "fpm_catalog/gams-drivers/ddpcm-jacobi-reference.f90",
+      "revision": "36f22feb86c81c6ba1f59c373ef215368d3e3c13",
+      "author_example": "main.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/pareto-diis-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer of the external jacobi_diis solver. Manufactured symmetric/nonsymmetric strictly diagonally dominant systems, two exact solution patterns and initial guesses, four norm modes and Jacobi/DIIS(25). Known solutions and an independent full-matrix residual check convergence; the matvec callback supplies only the off-diagonal operator, as required by the implementation. Molecular cosmo coupling, solvation energy and forces are outside this dedicated driver. Retained history-4 bounds-error probe documents the ten-entry history eviction limitation; no library patch.",
+      "validation_path": "docs/gams-pareto-diis-validation.json",
+      "review_path": "docs/gams-pareto-diis.md",
+      "checks": {
+        "linear_systems": 192,
+        "scalar_reference_entries": 1472,
+        "sizes": [
+          3,
+          7,
+          13
+        ],
+        "diis_history": [
+          0,
+          25
+        ],
+        "norm_modes": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "custom_norm_runs": 48,
+        "matrix_patterns": [
+          "symmetric",
+          "nonsymmetric"
+        ],
+        "initial_guesses": 2,
+        "manufactured_solution_patterns": 2,
+        "true_residual_checked": true,
+        "max_normalized_solution_error": 2e-09,
+        "max_normalized_residual": 2e-10,
+        "molecular_coupling_verified": false,
+        "small_history_bug_fixed": false
+      }
+    },
+    {
+      "id": "vtmop-pareto-reference",
+      "name": "gams-vtmop-pareto-reference",
+      "package_id": "vtmop",
+      "procedure_id": "vtmop-tradeoffs",
+      "gams_code": "G2",
+      "problem_id": "quadratic-pareto-segment-reference",
+      "path": "fpm_catalog/gams-drivers/vtmop-pareto-reference.f90",
+      "revision": "794a1de23801731ef6edd1924b52d69b679af6a0",
+      "author_example": "src/samples.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/pareto-diis-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; four seeded derivative-free biobjective searches in two/three variables. Exact Pareto set is the segment between two quadratic centers. Independently recomputes objectives and bounds, finite-set nondominance, projection dominance/orthogonal-distance identities, best/all-point relative distances, at least five points within relative distance 0.05 and near-front segment spread. Predeclared modest finite-budget accuracy thresholds; no general convergence, parallel or other problem-family claim. The failed all-archive 0.15-distance assertion is retained; it is not claimed fixed.",
+      "validation_path": "docs/gams-pareto-diis-validation.json",
+      "review_path": "docs/gams-pareto-diis.md",
+      "checks": {
+        "searches": 4,
+        "dimensions": [
+          2,
+          3
+        ],
+        "seeds": [
+          1729,
+          2903
+        ],
+        "blackbox_budget_per_search": 200,
+        "max_iterations": 40,
+        "best_relative_distance_tolerance": 0.05,
+        "minimum_segment_span": 0.25,
+        "objective_recomputation_tolerance": 1e-12,
+        "projection_identity_tolerance": 1e-12,
+        "exact_pareto_set": "segment joining squared-distance centers",
+        "general_convergence_verified": false,
+        "parallel_verified": false,
+        "minimum_near_front_points_per_search": 5,
+        "near_front_relative_distance": 0.05,
+        "entire_archive_uniform_accuracy_verified": false,
+        "returned_points": 108,
+        "near_front_points": 66,
+        "objective_evaluations": 800,
+        "distinct_problem_configurations": 2,
+        "identical_archives_for_two_seeds_observed": true
+      }
+    },
+    {
+      "id": "vector-edits-reference",
+      "name": "gams-vector-edits-reference",
+      "package_id": "fortran_vector",
+      "procedure_id": "fortran-vector-storage",
+      "gams_code": "N4",
+      "problem_id": "array-model-vector-edit-traces",
+      "path": "fpm_catalog/gams-drivers/vector-edits-reference.f90",
+      "revision": "95469e2ce1162b0ede3ca3435ebd94ec6b6fee79",
+      "author_example": "test/check.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/data-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned implementations and author examples reviewed without copying bodies. 12 deterministic vector edit traces with a plain-array oracle after every operation; scalar/batch growth, fixed-value removal, positional deletion, compaction, pop-to-empty and reinitialization. Unique, sorting, invalid indices and self-aliased arguments unverified.",
+      "validation_path": "docs/gams-data-ten-validation.json",
+      "review_path": "docs/gams-data-ten.md",
+      "checks": {
+        "traces": 12,
+        "unique_verified": false,
+        "sorting_verified": false,
+        "invalid_indices_verified": false,
+        "checked_operations": 2622,
+        "element_references": 143017
+      }
+    },
+    {
+      "id": "integer-set-reference",
+      "name": "gams-integer-set-reference",
+      "package_id": "integer_set",
+      "procedure_id": "integer-set-storage",
+      "gams_code": "N4",
+      "problem_id": "boolean-oracle-integer-set-traces",
+      "path": "fpm_catalog/gams-drivers/integer-set-reference.f90",
+      "revision": "85d336319d6593f9768c599835342912ce0b7bb8",
+      "author_example": "",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/data-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned implementations and author examples reviewed without copying bodies. Eight paired INT32/INT64 edit traces checked against a Boolean membership oracle after every edit, with duplicate and absent removals, clear/reuse, 32-bit sorting and large 64-bit values. 64-bit sorting, integer extrema and reuse after destroy unverified.",
+      "validation_path": "docs/gams-data-ten-validation.json",
+      "review_path": "docs/gams-data-ten.md",
+      "checks": {
+        "traces": 8,
+        "edits_per_trace": 240,
+        "large_value_offset": 5000000000,
+        "int32_sort_verified": true,
+        "int64_sort_verified": false,
+        "membership_checks": 1944,
+        "value_references": 218354
+      }
+    },
+    {
+      "id": "linked-list-reference",
+      "name": "gams-linked-list-reference",
+      "package_id": "slinked-list",
+      "procedure_id": "linked-list-values",
+      "gams_code": "N4",
+      "problem_id": "heterogeneous-list-reuse-oracle",
+      "path": "fpm_catalog/gams-drivers/linked-list-reference.f90",
+      "revision": "aa04fcb392466e52277200d7380913fe071fe620",
+      "author_example": "example/example_reuse.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/data-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned implementations and author examples reviewed without copying bodies. 20 heterogeneous linked-list cycles checking exact typed values and insertion order, replacing dynamic types in retained nodes, retained capacity, iterator exhaustion, empty/reuse and explicit finalization. Empty-list iterator creation and mutation during iteration unverified.",
+      "validation_path": "docs/gams-data-ten-validation.json",
+      "review_path": "docs/gams-data-ten.md",
+      "checks": {
+        "cycles": 20,
+        "dynamic_types": [
+          "integer",
+          "real",
+          "character"
+        ],
+        "empty_iterator_verified": false,
+        "concurrent_mutation_verified": false,
+        "typed_element_references": 601
+      }
+    },
+    {
+      "id": "scanner-cursor-reference",
+      "name": "gams-scanner-cursor-reference",
+      "package_id": "scanner",
+      "procedure_id": "scanner-text",
+      "gams_code": "N3",
+      "problem_id": "direct-ascii-cursor-oracle",
+      "path": "fpm_catalog/gams-drivers/scanner-cursor-reference.f90",
+      "revision": "b0026498c171b615bb3dcfca55a0f20b133e22dc",
+      "author_example": "app/main.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/data-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned implementations and author examples reviewed without copying bodies. 64 generated nonempty ASCII records checked against direct character indexing, including bidirectional traversal, immutable peeks, remaining count, end clamping and forward jump semantics. Empty input, Unicode, reverse jumps and negative moves unverified.",
+      "validation_path": "docs/gams-data-ten-validation.json",
+      "review_path": "docs/gams-data-ten.md",
+      "checks": {
+        "records": 64,
+        "lengths": [
+          1,
+          64
+        ],
+        "empty_input_verified": false,
+        "unicode_verified": false,
+        "checked_positions": 3232
+      }
+    },
+    {
+      "id": "tokenizer-fields-reference",
+      "name": "gams-tokenizer-fields-reference",
+      "package_id": "fortran-tokenizer",
+      "procedure_id": "tokenizer-fields",
+      "gams_code": "N3",
+      "problem_id": "constructed-field-stream-oracle",
+      "path": "fpm_catalog/gams-drivers/tokenizer-fields-reference.f90",
+      "revision": "11ad73ea6102f86593bf2b372d56bf9fbedaebc7",
+      "author_example": "",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/data-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned implementations and author examples reviewed without copying bodies. 64 field streams and empty input with constructed exact expected fields. Five separator bytes, repeated/leading/trailing separators, ignored fields and both stored and optional validator/ignore callbacks. Default validator, quoting/escaping and Unicode rules unverified.",
+      "validation_path": "docs/gams-data-ten-validation.json",
+      "review_path": "docs/gams-data-ten.md",
+      "checks": {
+        "records": 64,
+        "empty_input_verified": true,
+        "delimiter_bytes": [
+          32,
+          44,
+          59,
+          9,
+          10
+        ],
+        "callback_modes": [
+          "stored",
+          "argument"
+        ],
+        "default_validator_verified": false,
+        "retained_fields": 423
+      }
+    },
+    {
+      "id": "enclose-delimiters-reference",
+      "name": "gams-enclose-delimiters-reference",
+      "package_id": "enclose",
+      "procedure_id": "enclose-strings",
+      "gams_code": "N3",
+      "problem_id": "exhaustive-small-delimiter-map",
+      "path": "fpm_catalog/gams-drivers/enclose-delimiters-reference.f90",
+      "revision": "d3ea2ea989296bf855f4cb07ea8db601020805f2",
+      "author_example": "example/demo.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/data-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned implementations and author examples reviewed without copying bodies. Exhaustive strings through width three from nine paired/ordinary symbols with three payloads, checked against an independent SELECT CASE bracket involution. Automatic reverse closures, literal repetition, explicit closures and empty cases; Unicode delimiter semantics unverified.",
+      "validation_path": "docs/gams-data-ten-validation.json",
+      "review_path": "docs/gams-data-ten.md",
+      "checks": {
+        "fixtures": 2460,
+        "opening_strings": 820,
+        "maximum_width": 3,
+        "enclosure_modes": [
+          "automatic",
+          "literal-repeat",
+          "explicit-close"
+        ],
+        "unicode_verified": false
+      }
+    },
+    {
+      "id": "rearray-growth-reference",
+      "name": "gams-rearray-growth-reference",
+      "package_id": "rearrayfx",
+      "procedure_id": "rearrayfx-storage",
+      "gams_code": "N4",
+      "problem_id": "active-prefix-matrix-growth-oracle",
+      "path": "fpm_catalog/gams-drivers/rearray-growth-reference.f90",
+      "revision": "be1a7b08e43b358c8ed27fa80db7896767eb9f6d",
+      "author_example": "app/main.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/data-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned implementations and author examples reviewed without copying bodies. 16 grow/shrink traces and 128 explicit allocations. Exact active-prefix and assigned-matrix references across four fixed row counts and four overprovision factors, plus shape-changing array assignment and scope finalization. Inactive storage, zero-size and container-copy semantics unverified.",
+      "validation_path": "docs/gams-data-ten-validation.json",
+      "review_path": "docs/gams-data-ten.md",
+      "checks": {
+        "traces": 16,
+        "explicit_allocations": 128,
+        "row_counts": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "overprovision_factors": [
+          1,
+          1.5,
+          2,
+          3
+        ],
+        "column_schedule": [
+          1,
+          3,
+          2,
+          7,
+          4,
+          12,
+          1,
+          5
+        ],
+        "zero_sizes_verified": false,
+        "container_copy_verified": false,
+        "scalar_references": 2096
+      }
+    },
+    {
+      "id": "utf8-codepoints-reference",
+      "name": "gams-utf8-codepoints-reference",
+      "package_id": "string-utf-8",
+      "procedure_id": "utf8-strings",
+      "gams_code": "N3",
+      "problem_id": "independent-utf8-encoding-reference",
+      "path": "fpm_catalog/gams-drivers/utf8-codepoints-reference.f90",
+      "revision": "69751115936d5a89439555ddeb1d57537a562e64",
+      "author_example": "app/example.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/data-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned implementations and author examples reviewed without copying bodies. 33 valid UTF-8 fixtures encoded independently from integer code points. Exact round trips, positive substrings, single-code-point search, expanding replacement and deletion across one-to-four-byte sequences including combining marks. Malformed encoding, normalization, grapheme and multi-code-point search semantics unverified.",
+      "validation_path": "docs/gams-data-ten-validation.json",
+      "review_path": "docs/gams-data-ten.md",
+      "checks": {
+        "fixtures": 33,
+        "codepoints": [
+          65,
+          233,
+          8364,
+          119070,
+          769,
+          32
+        ],
+        "original_codepoints": 528,
+        "malformed_utf8_verified": false,
+        "graphemes_verified": false,
+        "multi_codepoint_search_verified": false,
+        "exact_checks": 825
+      }
+    },
+    {
+      "id": "flibcpp-sort-search-reference",
+      "name": "gams-flibcpp-sort-search-reference",
+      "package_id": "flibcpp",
+      "procedure_id": "flibcpp-sort-search",
+      "gams_code": "N6",
+      "problem_id": "insertion-sort-and-membership-reference",
+      "path": "fpm_catalog/gams-drivers/flibcpp-sort-search-reference.f90",
+      "revision": "334b2250230afbb419402ca2f1c0649c3b12a693",
+      "author_example": "example/sort.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/data-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned implementations and author examples reviewed without copying bodies. 780 original-pattern arrays of lengths 0..64 across INT32, large INT64 and dyadic REAL64. Independent insertion-sort references and exact present/absent membership checks. Duplicates require a valid matching index rather than first occurrence. NaNs, custom comparators and strided arrays unverified.",
+      "validation_path": "docs/gams-data-ten-validation.json",
+      "review_path": "docs/gams-data-ten.md",
+      "checks": {
+        "array_fixtures": 780,
+        "sorted_entries": 24960,
+        "search_queries": 31980,
+        "lengths": [
+          0,
+          64
+        ],
+        "kinds": [
+          "int32",
+          "int64",
+          "real64"
+        ],
+        "first_duplicate_match_verified": false,
+        "nan_verified": false,
+        "custom_comparators_verified": false
+      }
+    },
+    {
+      "id": "modbus-registers-reference",
+      "name": "gams-modbus-registers-reference",
+      "package_id": "fortran-modbus",
+      "procedure_id": "fortran-modbus-demo-api",
+      "gams_code": "N2",
+      "problem_id": "explicit-ieee-register-permutation",
+      "path": "fpm_catalog/gams-drivers/modbus-registers-reference.f90",
+      "revision": "1e99906209fbbcdd1f1bf2064a92325cf4bb05fa",
+      "author_example": "test/test_modbus.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/data-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned implementations and author examples reviewed without copying bodies. 264 finite binary32 patterns and four byte/word permutations. Setter words independently compared with bit-assembled register values; getters supplied independent words and compared bitwise. Includes signed zero, subnormal and extreme finite values. NaNs, infinities, device/network I/O unverified.",
+      "validation_path": "docs/gams-data-ten-validation.json",
+      "review_path": "docs/gams-data-ten.md",
+      "checks": {
+        "binary32_patterns": 264,
+        "byte_orders": [
+          "ABCD",
+          "BADC",
+          "CDAB",
+          "DCBA"
+        ],
+        "setter_checks": 1056,
+        "getter_checks": 1056,
+        "paired_roundtrip_only": false,
+        "signed_zero_verified": true,
+        "subnormal_verified": true,
+        "nan_verified": false,
+        "network_io_verified": false
+      }
     }
   ]
 }

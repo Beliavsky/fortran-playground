@@ -67,6 +67,49 @@ class GamsSiteTests(unittest.TestCase):
             self.assertIn('Open default example', sorting)
             self.assertNotIn('Try in playground', sorting)
 
+    def test_ten_data_driver_package_cards_and_primary_class_links(self):
+        import copy
+        from xpackage_gams import driver_data,gams_data
+        drivers = [d for d in driver_data(data=gams_data())
+                   if d.get('validation_path')=='docs/gams-data-ten-validation.json']
+        feed = copy.deepcopy(self.feed)
+        packages = {d['package_id'] for d in drivers}
+        feed['projects'] = [p for p in feed['projects'] if p['playground']['package_id'] in packages]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination,feed)
+            for d in drivers:
+                url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+                page = Page((destination/d['gams_code']/'index.html').read_text(encoding='utf-8'))
+                self.assertIn((url,'Try in playground'),page.anchors)
+                detail = (destination/'packages'/d['package_id']/'index.html').read_text(encoding='utf-8')
+                card = detail.split('id="'+d['procedure_id']+'"',1)[1].split('</article>',1)[0]
+                self.assertIn('Load checked GAMS driver:',card)
+                self.assertIn(d['name'],card)
+            searching = Page((destination/'N5/index.html').read_text(encoding='utf-8'))
+            self.assertNotIn(('https://beliavsky.github.io/fortran-playground/fpm/?package=flibcpp&example=gams-flibcpp-sort-search-reference',
+                              'Try in playground'),searching.anchors)
+
+    def test_pareto_and_diis_links_load_checked_scoped_examples(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects']
+                            if p['playground']['package_id'] in {'vtmop','ddpcm'}]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination,feed)
+            for code,package,driver in [('G2','vtmop','vtmop-pareto-reference'),
+                                        ('D2','ddpcm','ddpcm-jacobi-reference')]:
+                html = (destination/code/'index.html').read_text(encoding='utf-8')
+                primary = {url for url,label in Page(html).anchors if label=='Try in playground'}
+                self.assertIn(f'https://beliavsky.github.io/fortran-playground/fpm/?package={package}&example=gams-{driver}',primary)
+                self.assertIn('Verified: a checked driver',html)
+            detail = (destination/'packages/ddpcm/index.html').read_text(encoding='utf-8')
+            self.assertIn('history-4 bounds failure',detail)
+            detail = (destination/'packages/vtmop/index.html').read_text(encoding='utf-8')
+            self.assertIn('not uniformly near',detail)
+            self.assertIn('not evidence of independent stochastic search',detail)
+
     def test_lugre_and_torch_links_use_checked_drivers_without_promoting_fitting(self):
         import copy
         feed = copy.deepcopy(self.feed)

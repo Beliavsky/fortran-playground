@@ -94,6 +94,8 @@ from xpackage_gams import (gams_data, package_classes, review_text, subclass_mod
                             inference_pairs_review_text, INFERENCE_PAIRS_REPORT,
                             helmholtz_streams_review_text, HELMHOLTZ_STREAMS_REPORT,
                             friction_torch_review_text, FRICTION_TORCH_REPORT,
+                            pareto_diis_review_text, PARETO_DIIS_REPORT,
+                            data_ten_review_text, DATA_TEN_REPORT,
                           coverage_data, coverage_review_text, COVERAGE_REPORT,
                           class_evidence, class_tree, mapping_evidence_text, EVIDENCE_REPORT)
 
@@ -879,6 +881,87 @@ class PackageGamsTests(unittest.TestCase):
         self.assertIn('22,416',text)
         self.assertIn('Type-2/type-3 transforms',text)
         self.assertIn('two-dimensional NUFFT2D driver',transforms_review_text())
+
+    def test_ten_data_drivers_record_exact_oracles_and_scoped_limits(self):
+        data = gams_data()
+        records = {r['id']:r for r in data['procedure_mappings']}
+        drivers = {d['id']:d for d in driver_data(data=data)
+                   if d.get('validation_path')=='docs/gams-data-ten-validation.json'}
+        self.assertEqual(set(drivers),{
+            'vector-edits-reference','integer-set-reference','linked-list-reference','scanner-cursor-reference',
+            'tokenizer-fields-reference','enclose-delimiters-reference','rearray-growth-reference',
+            'utf8-codepoints-reference','flibcpp-sort-search-reference','modbus-registers-reference'})
+        for d in drivers.values():
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'],d['id'])
+            self.assertEqual(class_evidence(class_tree(data),d['gams_code'],[record],[d])['status'],'verified')
+        self.assertEqual(drivers['vector-edits-reference']['checks']['element_references'],143017)
+        self.assertFalse(drivers['vector-edits-reference']['checks']['unique_verified'])
+        self.assertEqual(drivers['integer-set-reference']['checks']['value_references'],218354)
+        self.assertFalse(drivers['integer-set-reference']['checks']['int64_sort_verified'])
+        self.assertEqual(drivers['linked-list-reference']['checks']['typed_element_references'],601)
+        self.assertFalse(drivers['linked-list-reference']['checks']['empty_iterator_verified'])
+        self.assertEqual(drivers['scanner-cursor-reference']['checks']['checked_positions'],3232)
+        self.assertFalse(drivers['scanner-cursor-reference']['checks']['empty_input_verified'])
+        self.assertEqual(drivers['tokenizer-fields-reference']['checks']['retained_fields'],423)
+        self.assertEqual(drivers['enclose-delimiters-reference']['checks']['fixtures'],2460)
+        self.assertEqual(drivers['rearray-growth-reference']['checks']['scalar_references'],2096)
+        self.assertEqual(drivers['utf8-codepoints-reference']['checks']['exact_checks'],825)
+        self.assertFalse(drivers['utf8-codepoints-reference']['checks']['graphemes_verified'])
+        self.assertEqual(drivers['flibcpp-sort-search-reference']['checks']['search_queries'],31980)
+        self.assertFalse(drivers['flibcpp-sort-search-reference']['checks']['first_duplicate_match_verified'])
+        self.assertEqual(drivers['modbus-registers-reference']['checks']['setter_checks'],1056)
+        self.assertEqual(drivers['modbus-registers-reference']['checks']['getter_checks'],1056)
+        self.assertFalse(drivers['modbus-registers-reference']['checks']['paired_roundtrip_only'])
+        text = data_ten_review_text()
+        self.assertEqual((ROOT/DATA_TEN_REPORT).read_text(encoding='utf-8'),text)
+        for phrase in ['Ten independently written','143,017','218,354','31,980','compensating encoder/decoder',
+                       'code points','categories are not exhausted']:
+            self.assertIn(phrase,text)
+
+    def test_pareto_and_diis_drivers_keep_successful_checks_with_explicit_limits(self):
+        data = gams_data()
+        records = {r['id']:r for r in data['procedure_mappings']}
+        drivers = {d['id']:d for d in driver_data(data=data)}
+        for ident,code in [('vtmop-pareto-reference','G2'),('ddpcm-jacobi-reference','D2')]:
+            d = drivers[ident]
+            r = records[d['procedure_id']]
+            self.assertEqual(r['driver_id'],ident)
+            self.assertEqual(class_evidence(class_tree(data),code,[r],[d])['status'],'verified')
+        diis = drivers['ddpcm-jacobi-reference']['checks']
+        self.assertEqual((diis['linear_systems'],diis['scalar_reference_entries']),(192,1472))
+        self.assertEqual(diis['diis_history'],[0,25])
+        self.assertFalse(diis['small_history_bug_fixed'])
+        self.assertFalse(diis['molecular_coupling_verified'])
+        pareto = drivers['vtmop-pareto-reference']['checks']
+        self.assertEqual((pareto['searches'],pareto['returned_points'],pareto['near_front_points']),(4,108,66))
+        self.assertEqual(pareto['minimum_near_front_points_per_search'],5)
+        self.assertTrue(pareto['identical_archives_for_two_seeds_observed'])
+        self.assertFalse(pareto['entire_archive_uniform_accuracy_verified'])
+        self.assertFalse(pareto['general_convergence_verified'])
+        text = pareto_diis_review_text()
+        self.assertEqual((ROOT/PARETO_DIIS_REPORT).read_text(encoding='utf-8'),text)
+        for phrase in ['192 solves','1,472 scalar','index -5','default history 25','66 points met',
+                       '0.181848','not four demonstrably independent','categories are not exhausted']:
+            self.assertIn(phrase,text)
+
+    def test_pareto_and_diis_failed_probes_remain_exact_and_unsuccessful(self):
+        import hashlib
+        for name,fragment in [('ddpcm-diis-history',"Index '-5'"),
+                               ('vtmop-archive-distance','VTMOP Pareto-segment distance')]:
+            folder = ROOT/'docs/gams-candidates'/name
+            source = (folder/'driver.f90').read_text(encoding='utf-8')
+            report = json.loads((folder/'result.json').read_text())
+            notes = (folder/'README.md').read_text(encoding='utf-8')
+            self.assertIn(hashlib.sha256(source.encode()).hexdigest(),notes)
+            self.assertIn(report['packages'][0]['revision'],notes)
+            self.assertFalse(report['ok'])
+            self.assertTrue(report['cache']['library_reused'])
+            run = next(s for s in report['stages'] if s['name']=='Run')
+            self.assertNotEqual(run['exit_code'],0)
+            self.assertIn(fragment,run['stderr'])
+            self.assertNotIn('PASS '+('ddpcm-jacobi-reference' if name.startswith('ddpcm') else 'vtmop-pareto-reference'),
+                             run['stdout'])
 
     def test_lugre_and_torch_scope_keeps_private_fitting_and_training_unverified(self):
         data = gams_data()

@@ -6170,7 +6170,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "Growable real rank-two arrays backed by spare capacity. The main checks data preservation across growth within spare capacity, reallocation, shrinking and plain-array assignment. This proof of concept is not a general-purpose container or a test of copying between container instances.",
+      "notes": "Growable real rank-two arrays backed by spare capacity. The main checks data preservation across growth within spare capacity, reallocation, shrinking and plain-array assignment. This proof of concept is not a general-purpose container or a test of copying between container instances. Dedicated N4 driver: 16 grow/shrink traces and 128 explicit allocations. Exact active-prefix and assigned-matrix references across four fixed row counts and four overprovision factors, plus shape-changing array assignment and scope finalization. Inactive storage, zero-size and container-copy semantics unverified.",
       "evidence": [
         {
           "path": "src/rearrayfx.f90",
@@ -6183,7 +6183,8 @@
           "path": "app/main.f90",
           "sha256": "ab06c4a47886066568aabf5bedfe7234564998eac75c699406ef13980ce06942"
         }
-      ]
+      ],
+      "driver_id": "rearray-growth-reference"
     },
     {
       "id": "amosf90-bessel",
@@ -6272,7 +6273,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "Growable integer vectors. The checked main verifies growth from a two-element capacity, appended arrays, stable duplicate removal, remove/delete/pop and final compaction against independent expected contents. A checksum-guarded one-line edit fixes aliasing in unique: remove the already saved first value instead of the first array element while that array is being compacted. Empty-vector unique and all invalid-input cases are not covered.",
+      "notes": "Growable integer vectors. The checked main verifies growth from a two-element capacity, appended arrays, stable duplicate removal, remove/delete/pop and final compaction against independent expected contents. A checksum-guarded one-line edit fixes aliasing in unique: remove the already saved first value instead of the first array element while that array is being compacted. Empty-vector unique and all invalid-input cases are not covered. Dedicated N4 driver: 12 deterministic vector edit traces with a plain-array oracle after every operation; scalar/batch growth, fixed-value removal, positional deletion, compaction, pop-to-empty and reinitialization. Unique, sorting, invalid indices and self-aliased arguments unverified.",
       "evidence": [
         {
           "path": "src/fortran_vector.f90",
@@ -6285,7 +6286,8 @@
           "path": "test/check.f90",
           "sha256": "fb03bf61a1de30537d9ac4625fed25b2a57326c2a7255f4c534187db5f1b9117"
         }
-      ]
+      ],
+      "driver_id": "vector-edits-reference"
     },
     {
       "id": "scanner-text",
@@ -6298,7 +6300,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "Character-by-character text scanning. The main reconstructs a configuration record through current/next, verifies navigation and end boundaries, and checks that peek does not move the cursor. The recovered fields are converted with ordinary internal READ and compared with known values; this is a small parser example, not a full parsing language.",
+      "notes": "Character-by-character text scanning. The main reconstructs a configuration record through current/next, verifies navigation and end boundaries, and checks that peek does not move the cursor. The recovered fields are converted with ordinary internal READ and compared with known values; this is a small parser example, not a full parsing language. Dedicated N3 driver: 64 generated nonempty ASCII records checked against direct character indexing, including bidirectional traversal, immutable peeks, remaining count, end clamping and forward jump semantics. Empty input, Unicode, reverse jumps and negative moves unverified.",
       "evidence": [
         {
           "path": "src/scanner.f90",
@@ -6311,7 +6313,8 @@
           "path": "app/main.f90",
           "sha256": "653f0d75d9f739e84957dc481b9eeaa368fce97c2e1596c11c1410ce863632bf"
         }
-      ]
+      ],
+      "driver_id": "scanner-cursor-reference"
     },
     {
       "id": "rojff-json",
@@ -6535,15 +6538,26 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "Customizable text tokenization. The checked main uses a module callback to split comma, space and tab-separated fields, verifies all three tokens and checks clearing the list. This is lexical splitting, not expression evaluation. No source edits. Malformed input, every callback combination and token object storage are not covered.",
+      "notes": "Customizable text tokenization. The checked main uses a module callback to split comma, space and tab-separated fields, verifies all three tokens and checks clearing the list. This is lexical splitting, not expression evaluation. No source edits. Malformed input, every callback combination and token object storage are not covered. Dedicated N3 driver: 64 field streams and empty input with constructed exact expected fields. Five separator bytes, repeated/leading/trailing separators, ignored fields and both stored and optional validator/ignore callbacks. Default validator, quoting/escaping and Unicode rules unverified.",
       "evidence": [
         {
           "path": "src/tokenizer.f90",
           "sha256": "b7eb5490b37a5f64f82752969fa05d7535f2375da76be1dc06fb547135634008",
           "line": 1
+        },
+        {
+          "path": "src/token_list.f90",
+          "line": 1,
+          "sha256": "280ca2e98b539db7430b2ef3ee45ab70df831c9f9edfb01050fc492acdb11e19"
+        },
+        {
+          "path": "src/token_type.f90",
+          "line": 1,
+          "sha256": "4d24c9a3bea38d076fe227d69de7edf9364651c3cf3c814fb3d65918e3353bf3"
         }
       ],
-      "author_examples": []
+      "author_examples": [],
+      "driver_id": "tokenizer-fields-reference"
     },
     {
       "id": "integer-set-storage",
@@ -6556,15 +6570,21 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "Simple fixed-width integer sets. The checked main verifies duplicate rejection, removal and sorted contents for 32-bit values, and duplicate rejection for a 64-bit value above the 32-bit range. Membership is checked from public data, not a separate membership API. No source edits. Performance, every boundary and all operations are not validated.",
+      "notes": "Simple fixed-width integer sets. The checked main verifies duplicate rejection, removal and sorted contents for 32-bit values, and duplicate rejection for a 64-bit value above the 32-bit range. Membership is checked from public data, not a separate membership API. No source edits. Performance, every boundary and all operations are not validated. Dedicated N4 driver: Eight paired INT32/INT64 edit traces checked against a Boolean membership oracle after every edit, with duplicate and absent removals, clear/reuse, 32-bit sorting and large 64-bit values. 64-bit sorting, integer extrema and reuse after destroy unverified.",
       "evidence": [
         {
           "path": "src/integer32_set.f90",
           "sha256": "a4a3fdfee506038548995f7f4a88dc4d0fb0df8946a47ece05f4ecf3fdecc2b1",
           "line": 1
+        },
+        {
+          "path": "src/integer64_set.f90",
+          "line": 1,
+          "sha256": "8597d8c6d4605a8144a1a827510317ba426f41a6e7cd33117c2c466c6ef7ee06"
         }
       ],
-      "author_examples": []
+      "author_examples": [],
+      "driver_id": "integer-set-reference"
     },
     {
       "id": "smart-pointer-lifetime",
@@ -6907,7 +6927,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "UTF-8 string handling using one array element per encoded Unicode code point. The main verifies a round trip, code point count, substring, search and replacement of accented text, and prints the results. No source edits. Combining marks remain separate code points; grapheme segmentation, normalization and malformed-input handling are not validated.",
+      "notes": "UTF-8 string handling using one array element per encoded Unicode code point. The main verifies a round trip, code point count, substring, search and replacement of accented text, and prints the results. No source edits. Combining marks remain separate code points; grapheme segmentation, normalization and malformed-input handling are not validated. Dedicated N3 driver: 33 valid UTF-8 fixtures encoded independently from integer code points. Exact round trips, positive substrings, single-code-point search, expanding replacement and deletion across one-to-four-byte sequences including combining marks. Malformed encoding, normalization, grapheme and multi-code-point search semantics unverified.",
       "evidence": [
         {
           "path": "src/string_utf_8.f90",
@@ -6920,7 +6940,8 @@
           "path": "app/example.f90",
           "sha256": "6386ad113502fdce96e8a02ae5bffca704abd8b71991e79cd4da7590bb693345"
         }
-      ]
+      ],
+      "driver_id": "utf8-codepoints-reference"
     },
     {
       "id": "serial-timers",
@@ -7033,7 +7054,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "Generic singly linked list for small datasets. The main checks integer and real payloads in insertion order, list size, iteration count, emptying, retained capacity and the value stored after reuse; iterator and list cleanup are explicit. A checksum-guarded compatibility edit removes PURE from node_init, whose result has a polymorphic allocatable component. Constructor allocation and copying are unchanged, and the call sites are impure. This patched root retains its own small archive instead of sharing an unmodified graph export. No display dependency is needed for the custom consumer. Large-data performance, all mutation operations and ownership of pointer-containing derived types are not validated.",
+      "notes": "Generic singly linked list for small datasets. The main checks integer and real payloads in insertion order, list size, iteration count, emptying, retained capacity and the value stored after reuse; iterator and list cleanup are explicit. A checksum-guarded compatibility edit removes PURE from node_init, whose result has a polymorphic allocatable component. Constructor allocation and copying are unchanged, and the call sites are impure. This patched root retains its own small archive instead of sharing an unmodified graph export. No display dependency is needed for the custom consumer. Large-data performance, all mutation operations and ownership of pointer-containing derived types are not validated. Dedicated N4 driver: 20 heterogeneous linked-list cycles checking exact typed values and insertion order, replacing dynamic types in retained nodes, retained capacity, iterator exhaustion, empty/reuse and explicit finalization. Empty-list iterator creation and mutation during iteration unverified.",
       "evidence": [
         {
           "path": "src/sll_linked_list.f90",
@@ -7044,6 +7065,11 @@
           "path": "src/sll_iterator.f90",
           "sha256": "3add761beb7b1cc638f0af2ad20dda11afd559fd0cb8d7c3cc0886afb9b62273",
           "line": 1
+        },
+        {
+          "path": "src/sll_node.f90",
+          "line": 1,
+          "sha256": "a1c19a030622822592ee5c57fca5b0915bdff22afe72ab9ad6e1f49b7fef87f1"
         }
       ],
       "author_examples": [
@@ -7051,7 +7077,8 @@
           "path": "example/example_reuse.f90",
           "sha256": "8a0b8f40f7aa3ea53b1ce32be8a8c5234aa8e0a83d6edbe5e0ee95d41be40c91"
         }
-      ]
+      ],
+      "driver_id": "linked-list-reference"
     },
     {
       "id": "enclose-strings",
@@ -7064,7 +7091,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "String enclosure with automatically matched closing brackets and explicit delimiters. The main checks nested bracket reversal, square brackets, quotation marks, custom opening/closing strings and disabled autoclosing, and prints examples. No source edits; matches the existing FED dependency revision. This is formatting, not parsing or escaping untrusted text.",
+      "notes": "String enclosure with automatically matched closing brackets and explicit delimiters. The main checks nested bracket reversal, square brackets, quotation marks, custom opening/closing strings and disabled autoclosing, and prints examples. No source edits; matches the existing FED dependency revision. This is formatting, not parsing or escaping untrusted text. Dedicated N3 driver: Exhaustive strings through width three from nine paired/ordinary symbols with three payloads, checked against an independent SELECT CASE bracket involution. Automatic reverse closures, literal repetition, explicit closures and empty cases; Unicode delimiter semantics unverified.",
       "evidence": [
         {
           "path": "src/enclose.f90",
@@ -7077,7 +7104,8 @@
           "path": "example/demo.f90",
           "sha256": "467512cae8a27aee264667ac5ba5cb0d906b8f896506493659bcb61950708a63"
         }
-      ]
+      ],
+      "driver_id": "enclose-delimiters-reference"
     },
     {
       "id": "lookup-interpolation",
@@ -7607,7 +7635,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "None required; derivative-free black-box objectives.",
-      "notes": "Serial derivative-free, bound-constrained multiobjective optimization. An FPM wrapper selects the unchanged solver, surrogate and test-function sources with bundled SLATEC support and links system LP64 BLAS/LAPACK rather than recompiling those bundled libraries. OpenMP linking is enabled, but the checked run uses the serial driver and one execution thread; heap trampolines support internal callbacks in the sandbox. Adapted from the author serial driver and CONVEX function, the seeded 3-variable/2-objective example uses a small evaluation budget, checks feasible design bounds, recomputes both quadratic objectives independently and verifies that no returned point dominates another. It requires multiple distinct trade-off points. This checks the finite returned set, not convergence to the exact global Pareto front or comparative performance. Parallel evaluation, checkpoint recovery, every surrogate and other problem classes are not validated.",
+      "notes": "Serial derivative-free, bound-constrained multiobjective optimization. An FPM wrapper selects the unchanged solver, surrogate and test-function sources with bundled SLATEC support and links system LP64 BLAS/LAPACK rather than recompiling those bundled libraries. OpenMP linking is enabled, but the checked run uses the serial driver and one execution thread; heap trampolines support internal callbacks in the sandbox. Adapted from the author serial driver and CONVEX function, the seeded 3-variable/2-objective example uses a small evaluation budget, checks feasible design bounds, recomputes both quadratic objectives independently and verifies that no returned point dominates another. It requires multiple distinct trade-off points. This checks the finite returned set, not convergence to the exact global Pareto front or comparative performance. Parallel evaluation, checkpoint recovery, every surrogate and other problem classes are not validated. Dedicated G2 driver checks two squared-distance objectives against an exact Pareto segment in two/three dimensions, with two intrinsic-seed settings per dimension. Every archive point has independently recomputed objectives and projection identities; each run has at least five points within relative distance 0.05 and their segment span exceeds 0.25. The full archive is not uniformly near the Pareto set: the failed all-point 0.15-distance assertion is retained in docs/gams-candidates/vtmop-archive-distance. Both seed settings produced the same observed archive per dimension; they are not evidence of independent stochastic search.",
       "evidence": [
         {
           "path": "src/vtmop.f90",
@@ -7625,7 +7653,8 @@
           "path": "src/samples.f90",
           "sha256": "1828a3c86abdddcb3a9f6834b5c597b0d973cb8c5dff4ac78df8045a60ad2bc4"
         }
-      ]
+      ],
+      "driver_id": "vtmop-pareto-reference"
     },
     {
       "id": "fatode-tangent",
@@ -8951,7 +8980,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "The upstream SWIG-generated Fortran modules and C++ wrappers are built together; SWIG is not run. The upstream CMake configuration supplies only a small version-definition source. FPM 0.12 ignores .cxx, so the catalog stages unchanged wrapper contents as .cpp and preserves all original source files. The checked consumer verifies a sorted seven-element array, an existing-key position and a missing-key result. N5 and N6 classify searching and sorting, while S identifies the interoperability utility. Upstream vector, map, set, string and random facilities are included but not exercised by this consumer. MIT notices and the Apache-2.0 CMake helper notice remain intact. Local exports need compatible C++ and Fortran compilers.",
+      "notes": "The upstream SWIG-generated Fortran modules and C++ wrappers are built together; SWIG is not run. The upstream CMake configuration supplies only a small version-definition source. FPM 0.12 ignores .cxx, so the catalog stages unchanged wrapper contents as .cpp and preserves all original source files. The checked consumer verifies a sorted seven-element array, an existing-key position and a missing-key result. N5 and N6 classify searching and sorting, while S identifies the interoperability utility. Upstream vector, map, set, string and random facilities are included but not exercised by this consumer. MIT notices and the Apache-2.0 CMake helper notice remain intact. Local exports need compatible C++ and Fortran compilers. Dedicated N6 driver: 780 original-pattern arrays of lengths 0..64 across INT32, large INT64 and dyadic REAL64. Independent insertion-sort references and exact present/absent membership checks. Duplicates require a valid matching index rather than first occurrence. NaNs, custom comparators and strided arrays unverified.",
       "evidence": [
         {
           "path": "src/flc_algorithm.f90",
@@ -8973,7 +9002,8 @@
           "path": "test/test_algorithm.F90",
           "sha256": "47b1c910ebe10e315c21cac1b1f44f855be48653f6f9f3b5808b6ad26d47f9e7"
         }
-      ]
+      ],
+      "driver_id": "flibcpp-sort-search-reference"
     },
     {
       "id": "libmbd-dispersion",
@@ -9161,7 +9191,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "The pinned ddCOSMO library and original fixed-form Lebedev quadrature source are wrapped for FPM with extension-based source form and legacy external interfaces. OpenMP directives are inactive in this serial profile and OpenBLAS supplies dense linear algebra. The checked consumer adapts the author main and formaldehyde input, embedding its four-atom coordinates, radii, charges and solver settings. It compares solvation energy and all force components against the author reference output, requires finite values and checks zero net force. Full-sized dummy arrays replace the unused one-element placeholders in the example while leaving library numerical routines unchanged. D2 identifies the Jacobi/DIIS linear-system solution used by cosmo; Z denotes the physical solvation model. Other molecules, solvent parameters, quantum densities and parallel performance are outside this verification scope. LGPL notices and author reference requests remain in the source tree.",
+      "notes": "The pinned ddCOSMO library and original fixed-form Lebedev quadrature source are wrapped for FPM with extension-based source form and legacy external interfaces. OpenMP directives are inactive in this serial profile and OpenBLAS supplies dense linear algebra. The checked consumer adapts the author main and formaldehyde input, embedding its four-atom coordinates, radii, charges and solver settings. It compares solvation energy and all force components against the author reference output, requires finite values and checks zero net force. Full-sized dummy arrays replace the unused one-element placeholders in the example while leaving library numerical routines unchanged. D2 identifies the Jacobi/DIIS linear-system solution used by cosmo; Z denotes the physical solvation model. Other molecules, solvent parameters, quantum densities and parallel performance are outside this verification scope. LGPL notices and author reference requests remain in the source tree. Dedicated D2 driver checks jacobi_diis directly on 192 manufactured strictly diagonally dominant systems with true residuals, four norm modes, two guesses and plain Jacobi/default DIIS(25). A history-4 bounds failure from the ten-entry eviction code is retained in docs/gams-candidates/ddpcm-diis-history; no library patch is applied. These direct solver checks do not extend the molecular verification scope.",
       "evidence": [
         {
           "path": "cosmo.f90",
@@ -9192,7 +9222,8 @@
           "path": "tests/formaldehyde.log",
           "sha256": "b2c2befea07ce849172a1b39bed92ebb4de57cec3e42a070a2c9adcf3793bb71"
         }
-      ]
+      ],
+      "driver_id": "ddpcm-jacobi-reference"
     },
     {
       "id": "dftd4-dispersion",
@@ -9452,7 +9483,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "The original Fortran 2018 FPM bindings are compiled against pinned Debian libmodbus 3.1.11-2. The consumer checks positive, negative and zero single-precision values through the ABCD, BADC, CDAB and DCBA register conversion APIs and prints register words in hexadecimal. These are offline operations, with no socket, serial port or Modbus device. N2 covers bit/byte representation; the catalog does not claim verified device communication. The author test/test_modbus.f90 documents context use but is not used as a device test. ISC notices are retained.",
+      "notes": "The original Fortran 2018 FPM bindings are compiled against pinned Debian libmodbus 3.1.11-2. The consumer checks positive, negative and zero single-precision values through the ABCD, BADC, CDAB and DCBA register conversion APIs and prints register words in hexadecimal. These are offline operations, with no socket, serial port or Modbus device. N2 covers bit/byte representation; the catalog does not claim verified device communication. The author test/test_modbus.f90 documents context use but is not used as a device test. ISC notices are retained. Dedicated N2 driver: 264 finite binary32 patterns and four byte/word permutations. Setter words independently compared with bit-assembled register values; getters supplied independent words and compared bitwise. Includes signed zero, subnormal and extreme finite values. NaNs, infinities, device/network I/O unverified.",
       "evidence": [
         {
           "path": "src/modbus.F90",
@@ -9466,7 +9497,8 @@
           "sha256": "6b47e7c40965f2a8c3ee734eefb29e930150c87c5d68fcc2a1ff6b3ed2f2ec2a",
           "line": 1
         }
-      ]
+      ],
+      "driver_id": "modbus-registers-reference"
     },
     {
       "id": "gtk-fortran-demo-api",

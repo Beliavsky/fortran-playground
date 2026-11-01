@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "ddpcm-jacobi-reference",
+      "source_revision": "36f22feb86c81c6ba1f59c373ef215368d3e3c13",
+      "source_sha256": "28b1ac9fb3e86f40ea6f4ff49bc57626ad9b49e2286312c75d6feee102b9cfbd",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T12:46:26.972695+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.493,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Manufactured linear systems: 192; scalar solution references: 1472\nMaximum normalized solution error and true residual:    2.29881E-11   6.57610E-11\nSymmetric/nonsymmetric diagonal dominance; two guesses, four norm modes, Jacobi and DIIS(25).\nOff-diagonal and inverse-diagonal callbacks checked; molecular coupling and forces unverified here.\nPASS ddpcm-jacobi-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.055,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "vtmop-pareto-reference",
+      "source_revision": "794a1de23801731ef6edd1924b52d69b679af6a0",
+      "source_sha256": "30ffac09fbb8f0285cee562cf463e6c76f7d58a671b0bd2842e6d24780161e34",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T12:45:53.096437+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.522,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "n=2 seed=1729 archive=32 best/worst relative distance and span:    0.000000   0.128205   0.978158\nNear-front points: 28; their segment span:    0.978158\nn=2 seed=2903 archive=32 best/worst relative distance and span:    0.000000   0.128205   0.978158\nNear-front points: 28; their segment span:    0.978158\nn=3 seed=1729 archive=22 best/worst relative distance and span:    0.000000   0.181848   0.970018\nNear-front points: 5; their segment span:    0.970018\nn=3 seed=2903 archive=22 best/worst relative distance and span:    0.000000   0.181848   0.970018\nNear-front points: 5; their segment span:    0.970018\nSeeded Pareto searches: 4; returned points checked: 108\nObjective callback evaluations: 800\nReturned points within relative distance 0.05: 66\nWorst best-distance, worst all-point distance and minimum span:    0.00000E+00   1.81848E-01   9.70018E-01\nMaximum Pareto projection identity error:    3.03702E-16\nNear-front subset verified; the entire archive is not uniformly close to the exact Pareto set.\nFixed small quadratic searches only; not a general convergence guarantee.\nPASS vtmop-pareto-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.072,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-11-01T12:46:27.028426+00:00"
+}

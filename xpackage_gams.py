@@ -96,6 +96,8 @@ RADIAL_DENSE_REPORT = Path('docs/gams-radial-dense.md')
 INFERENCE_PAIRS_REPORT = Path('docs/gams-inference-pairs.md')
 HELMHOLTZ_STREAMS_REPORT = Path('docs/gams-helmholtz-streams.md')
 FRICTION_TORCH_REPORT = Path('docs/gams-friction-torch.md')
+PARETO_DIIS_REPORT = Path('docs/gams-pareto-diis.md')
+DATA_TEN_REPORT = Path('docs/gams-data-ten.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
 EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
@@ -8820,6 +8822,256 @@ def friction_torch_review_text(root=ROOT):
     return '\n'.join(lines)
 
 
+def pareto_diis_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-pareto-diis-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-pareto-diis-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Checked Pareto-segment searches and Jacobi/DIIS systems',
+ '',
+ 'Both independent drivers passed GNU Fortran 16.2.0 with FPM 0.12.0 in the restricted hosted sandbox. '
+ 'Existing package libraries were reused; only mains and executables compiled. The [verification '
+ 'report](gams-pareto-diis-validation.json) retains pins, source hashes, build commands and actual '
+ 'output. GAMS categories are not exhausted. Two failed initial probes are preserved with exact sources '
+ 'and full service results; neither failure is described as fixed.',
+ '',
+ '## ddPCM Jacobi/DIIS linear systems (D2)',
+ '',
+ 'The consumer calls the cached external jacobi_diis routine directly, separately from the ordinary '
+ 'formaldehyde solvation demonstration. It manufactures strictly row-diagonally-dominant systems of '
+ 'sizes 3, 7 and 13. The symmetric pattern has off-diagonal a_ij=(modulo(i+j,5)-2)/16; the nonsymmetric '
+ 'pattern uses (modulo(3*i-2*j,7)-3)/16. Both use a_ii=2+i/4+2*sum_j(abs(offdiag_ij)), so the diagonal '
+ 'is positive and dominates the off-diagonal row sum.',
+ '',
+ 'Two prescribed solutions are x_i=(modulo(3*i,11)-5)/4 and x_i=1/(i+1). A separate scalar loop forms '
+ 'b=A*x_exact. Initial guesses are zero or the repeating pattern modulo(i,3)-1. Every combination runs '
+ 'in all four library convergence modes, both as plain Jacobi (history 0) and DIIS with the package '
+ 'default history 25. This gives 192 solves and 1,472 scalar solution references; 48 runs exercise the '
+ 'custom maximum-norm callback.',
+ '',
+ 'The matvec callback must supply only the off-diagonal matrix, because the implementation subtracts it '
+ 'from b before applying the inverse diagonal. The public comments call it a matrix-vector product, but '
+ 'supplying the entire A would implement the wrong splitting. Both callbacks must run; the custom norm '
+ 'must run only in mode 4. Convergence, iteration limit and finite solutions are checked. Every result '
+ 'must match x_exact within normalized error 2e-9 and satisfy an independently formed full-matrix '
+ 'residual within 2e-10. The solver uses tolerance 1e-11; this is an increment criterion, so the true '
+ 'residual is checked separately. Observed maxima were 2.29881e-11 and 6.57610e-11.',
+ '',
+ 'The first probe used history 4 and hit a GNU bounds error at makeb with index -5. Source review finds '
+ 'that diis removes ten entries whenever nmat reaches ndiis, so a small history makes nmat negative. The '
+ '[retained probe](gams-candidates/ddpcm-diis-history/README.md) includes the exact main, normalized '
+ 'hash, package pin and full result. The published consumer uses the existing default history 25; it '
+ 'does not patch the library or claim to repair small histories. Arbitrary matrix conditioning, '
+ 'nonconvergence behavior, every history/eviction path, molecular coupling and forces remain outside '
+ 'this direct-solver check.',
+ '',
+ '## VTMOP quadratic Pareto segment (G2)',
+ '',
+ 'The driver minimizes f1(x)=sum((x-a)**2) and f2(x)=sum((x-b)**2) on [0,1]^n. For n=2 and n=3, '
+ 'a_i=(i+1)/10 and b_i=1-a_i. The exact Pareto set is the segment p(t)=a+t*(b-a), 0<=t<=1. Orthogonal '
+ 'projection onto that segment cannot increase either objective. If the unclamped projection lies inside '
+ 'the segment, both objective improvements equal the squared distance from x to its projection. These '
+ 'formulas provide independent geometric references without another optimizer.',
+ '',
+ 'Two intrinsic RANDOM_SEED settings (1729 and 2903) are applied for each dimension. All four runs use '
+ 'the existing serial VTMOP/GPS/LSHEP setup, a 200-evaluation black-box budget, 40 maximum iterations, '
+ 'search budget 6, initial search budget 10 and local optimization budget 200. Both seed settings '
+ 'produced identical observed archives for each dimension. These are seeded repeats of two problem '
+ 'configurations, not four demonstrably independent stochastic searches or a reproducibility guarantee '
+ 'across compilers.',
+ '',
+ 'Every archive point must be finite and feasible, its two objectives must match independent scalar '
+ 'recomputation within 1e-12, and no other returned point may dominate it. The projection dominance and '
+ 'interior orthogonal-distance identities are checked within 1e-12. Distances to the exact Pareto '
+ 'segment are divided by its length. Each run must have at least five returned points within relative '
+ 'distance 0.05, and those near-front points must span at least 0.25 in clamped segment coordinate t. '
+ 'Best and worst full-archive distances are reported rather than hiding distant points.',
+ '',
+ 'There were 800 objective evaluations and 108 returned points. The two 2-D archives each had 32 points, '
+ '28 near-front points, maximum relative distance 0.128205 and near-front span 0.978158. The two 3-D '
+ 'archives each had 22 points, five near-front points, maximum relative distance 0.181848 and near-front '
+ 'span 0.970018. Thus 66 points met the near-front threshold, all four best distances were zero at '
+ 'printed precision, and the largest projection identity error was 3.03702e-16. This is a modest '
+ 'finite-budget approximation check, not a tight solution-accuracy or global convergence guarantee.',
+ '',
+ 'The first consumer required all archive points to have relative distance <=0.15. It passed both 2-D '
+ 'runs but failed on the first 3-D run. The [retained exact '
+ 'probe](gams-candidates/vtmop-archive-distance/README.md) documents that unsupported stronger '
+ 'assertion. The revised driver verifies a useful near-front subset and reports the full-archive '
+ 'maximum; it does not claim the failed all-point accuracy bound. Other objective families, dimensions, '
+ 'surrogate choices, parallel evaluation, checkpoint recovery and comparative performance remain '
+ 'unverified.',
+ '',
+ '## Sources, licenses and actual output',
+ '',
+ 'Pinned solver interfaces, implementations and author examples were reviewed. The drivers are '
+ 'independently written MIT API consumers; upstream ddPCM LGPL and VTMOP MIT terms remain separate and '
+ 'unchanged. No upstream implementation or example bodies are copied. Loading a driver does not submit a '
+ 'job.',
+ '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
+def data_ten_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-data-ten-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-data-ten-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Ten checked data-handling drivers',
+ '',
+ 'Ten independently written API consumers passed GNU Fortran 16.2.0 with FPM 0.12.0 in the restricted '
+ 'hosted sandbox. All reused existing package libraries and compiled only their mains and executables. '
+ 'The [verification report](gams-data-ten-validation.json) retains pins, normalized source hashes, '
+ 'compiler/build details and complete output. These extend GAMS N data-handling coverage. Numerical '
+ 'records with known failures are not relabeled as verified. GAMS categories are not exhausted.',
+ '',
+ '## Editable integer vectors (fortran_vector, N4)',
+ '',
+ 'Twelve traces begin with capacities 1..5 and append 96 scalar values modulo 19, then six four-element '
+ 'batches modulo 23. A separate plain-array state model checks every active value after each append, '
+ 'removal of the fixed value zero, twelve positional deletions, cut, pop-to-empty and '
+ 'clear/reinitialize. There are 2,622 checked operations and 143,017 element references. Removal '
+ 'arguments do not alias the container storage. Unique, sorting, invalid indices and self-aliased remove '
+ 'arguments remain unverified.',
+ '',
+ '## Integer sets (integer_set, N4)',
+ '',
+ 'Eight traces apply 240 deterministic edits to paired 32-bit and 64-bit sets. Keys lie in [-50,50]; '
+ '64-bit payloads add 5,000,000,000. A Boolean membership array independently tracks duplicate insertion '
+ 'and present/absent removal. Every check rejects duplicate elements and compares complete membership. '
+ 'The 32-bit set is also sorted and must be strictly ascending. Clear/reuse precedes explicit '
+ 'destruction. There are 1,944 paired membership checks and 218,354 stored-value references. 64-bit '
+ 'sorting, integer extrema and reuse after destroy remain unverified.',
+ '',
+ '## Heterogeneous linked lists (slinked-list, N4)',
+ '',
+ 'Twenty cycles use lengths 1+modulo(17*cycle,61) and rotate integer, default-real and fixed-width '
+ 'character values. An independent formula checks all 601 elements, dynamic types and insertion order. '
+ 'Emptying retains capacity; later appends replace values/types in existing nodes. Maximum previous '
+ 'length supplies the capacity reference. Iterator exhaustion and explicit finalization are checked. '
+ 'Empty-list iterators, mutation during iteration, arbitrary pointer lifetimes and memory-leak behavior '
+ 'remain unverified.',
+ '',
+ '## Scanner cursor semantics (scanner, N3)',
+ '',
+ 'Sixty-four generated printable-ASCII strings of lengths 1..64 are compared with direct string '
+ 'indexing. The consumer checks 3,232 cursor positions through forward/backward traversal, immutable '
+ 'peek/peek_back, remaining count, failed end advances, oversized clamped moves and forward jump_to '
+ 'searches. The jump reference starts after the current position. Empty input, Unicode semantics, '
+ 'reverse jumps and negative movement counts remain unverified.',
+ '',
+ '## Token fields and callbacks (fortran-tokenizer, N3)',
+ '',
+ 'Sixty-four constructed records contain named fields separated by space, comma, semicolon, tab and '
+ 'newline. Separators repeat and occur at both ends; fields starting with ! are ignored. The expected '
+ '423 retained strings are saved while constructing the input, rather than parsed by a second tokenizer. '
+ 'Stored procedure-pointer callbacks and optional callback arguments alternate across records. Empty '
+ 'input and clearing every returned list are checked. Default validator, quoting/escaping and Unicode '
+ 'lexical rules remain unverified.',
+ '',
+ '## Delimiter enclosure (enclose, N3)',
+ '',
+ 'All 820 strings through width three over ()[]{}<>x are checked with a separate SELECT CASE '
+ 'bracket-pair involution. The reverse closing sequence must match get_closing_brackets. Three trimmed '
+ 'ASCII payloads give 2,460 fixtures for automatic enclosure, literal repeated delimiters and explicit '
+ 'END closures. Empty delimiters and payloads are included. Arbitrary trailing-blank preservation and '
+ 'UTF-8 delimiter semantics remain unverified.',
+ '',
+ '## Growable matrices (rearrayfx, N4)',
+ '',
+ 'Sixteen traces combine row counts [1,2,3,4] and overprovision factors [1,1.5,2,3]. The column schedule '
+ '[1,3,2,7,4,12,1,5] gives 128 explicit allocations through spare capacity and new backing storage. The '
+ 'active prefix shared with the preceding view must survive before new values are assigned. Explicit '
+ 'dyadic values and a final shape-changing 2-by-3 array assignment supply 2,096 scalar references. '
+ 'Inactive capacity, zero sizes, container-object copying, row-changing preservation and memory-leak '
+ 'behavior remain unverified. Library allocation debug messages are retained in the saved output.',
+ '',
+ '## UTF-8 code points (string-utf-8, N3)',
+ '',
+ 'Thirty-three fixtures of lengths 0..32 use integer code points [65,233,8364,119070,769,32] and an '
+ 'independent arithmetic UTF-8 encoder. They cover one-to-four-byte encodings, a combining mark and '
+ 'space. Direct construction supplies byte references for round trips, positive substrings of up to '
+ 'three code points, first single-code-point searches, expanding replacement of U+00E9 by U+20AC plus x, '
+ 'and deletion. There are 825 exact checks across 528 original code points. Malformed encoding, '
+ 'normalization, grapheme clusters, negative substring semantics and multi-code-point search remain '
+ 'unverified.',
+ '',
+ '## C++ sorting and binary search (flibcpp, N6)',
+ '',
+ 'The 780 original-pattern arrays combine lengths 0..64, four patterns and INT32/INT64/REAL64 wrappers. '
+ 'Patterns are ascending, descending, duplicated modular values and alternating signs. Scalar insertion '
+ 'sort gives the independent reference. INT64 values add 5,000,000,000 and REAL64 values are exact '
+ 'eighths. All 24,960 sorted entries and 31,980 queries over keys -20..20 are checked. Duplicate hits '
+ 'require a valid matching index; absence requires zero. First-occurrence semantics, NaNs, custom '
+ 'comparators, strided arrays, ordering stability and large-size index limits remain unverified. This is '
+ 'class-specific N6 evidence and does not automatically verify every N5 capability.',
+ '',
+ '## Modbus register encoding (fortran-modbus, N2)',
+ '',
+ 'The consumer checks 264 finite binary32 patterns in ABCD, BADC, CDAB and DCBA order. Eight explicit '
+ 'IEEE patterns include signed zeros, normal/subnormal minima, a largest finite value and an asymmetric '
+ 'pattern; 256 further signed patterns vary exponents and mantissas. Expected register words come '
+ 'directly from bit positions and a permutation table, with explicit signed Fortran 16-bit carrier '
+ 'conversion.',
+ '',
+ 'There are 1,056 independent setter and 1,056 independent getter comparisons. Setters must produce '
+ 'reference words; getters receive independently assembled words and must reproduce exact bits. This '
+ 'prevents compensating encoder/decoder errors from passing a paired round trip. The [libmodbus 3.1.11 '
+ 'source contract](https://raw.githubusercontent.com/stephane/libmodbus/v3.1.11/src/modbus-data.c) was '
+ 'reviewed alongside the pinned Fortran binding; the existing cached system package is libmodbus-dev '
+ '3.1.11-2. NaN payloads, infinities, network I/O, physical devices and other floating formats remain '
+ 'unverified.',
+ '',
+ '## Provenance, licenses and actual output',
+ '',
+ 'Pinned public APIs, implementations and available author examples were reviewed. These are '
+ 'independently written MIT API consumers; no upstream implementation or example bodies are copied. '
+ 'Upstream package/system-library terms remain separate and unchanged. Loading a driver does not submit '
+ 'a job. No failed probes occurred in this ten-driver batch.',
+ '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -8991,6 +9243,8 @@ def main():
                          (INFERENCE_PAIRS_REPORT, inference_pairs_review_text()),
                          (HELMHOLTZ_STREAMS_REPORT, helmholtz_streams_review_text()),
                          (FRICTION_TORCH_REPORT, friction_torch_review_text()),
+                         (PARETO_DIIS_REPORT, pareto_diis_review_text()),
+                         (DATA_TEN_REPORT, data_ten_review_text()),
                          (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report
