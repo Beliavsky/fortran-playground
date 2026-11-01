@@ -87,6 +87,7 @@ PRODUCTS_PARTITIONS_REPORT = Path('docs/gams-products-partitions.md')
 MULTIDIMENSIONAL_FFT_REPORT = Path('docs/gams-multidimensional-fft.md')
 SPARSE_SPECTRA_REPORT = Path('docs/gams-sparse-spectra.md')
 PROJECTION_LBFGS_REPORT = Path('docs/gams-projection-lbfgs.md')
+GRADIENT_SWARM_REPORT = Path('docs/gams-gradient-swarm.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
 EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
@@ -1345,19 +1346,26 @@ def constrained_review_text(root=ROOT):
         url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
         author = f'[Author example]({base}{d["author_example"]})' if d['author_example'] else 'Original public-API driver'
         lines.append(f'| [Load {d["id"]}]({url}) · [Source](../{d["path"]}) | {d["gams_code"]} | '
-                     f'[Procedure]({base}{evidence["path"]}#L{evidence["line"]}) · {author} |')
+                     f'[Procedure]({base}{evidence["path"]}#L{evidence["line"]}) · {author} · '
+                     f'[Verification]({Path(driver_validation_path(d)).name}) |')
     lines += ['', 'The L-BFGS-B and SLSQP drivers adapt author API patterns and retain license notices. '
               f'All {len(drivers)} appear in hosted and main local FPM example menus and downloaded projects. '
               'Loading a link selects source without submitting a job.', '', '## Recorded results', '',
               f'All {len(drivers)} passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing '
               'existing package libraries. Only each main and executable were rebuilt. The '
-              '[verification report](gams-constrained-validation.json) records hashes, pins and saved output. '
+              'per-driver reports linked above record hashes, pins and saved output; the '
+              '[original report](gams-constrained-validation.json) covers its six initial drivers. '
               'Evaluation counts exclude derivative sanity checks and describe these simple cases, rather '
               'than establishing a general speed ranking.', '']
     for d in drivers:
         checks = json.loads((root/driver_validation_path(d)).read_text(encoding='utf-8'))
         result = next(r for r in checks['drivers'] if r['driver_id'] == d['id'])
         output = next(s['stdout'] for s in result['stages'] if s['name'] == 'Run')
+        if d['id'] == 'opti-rastrigin-reference':
+            lines += ['The [dedicated review](gams-gradient-swarm.md) explains the seeded tests; '
+                      'the complete progress output remains in its verification report.', '']
+            output = output[output.index('Swarm verification summary:'):]
+        output = '\n'.join(line.rstrip() for line in output.splitlines())
         lines += ['### '+d['id'], '', '```text', output.rstrip(), '```', '']
     lines += ['## Maintenance', '', '```text',
               'python xverify_gams_drivers.py --drivers lbfgsb-box-quadratic nlopt-box-quadratic slsqp-circle-equality',
@@ -7804,6 +7812,114 @@ def projection_lbfgs_review_text(root=ROOT):
     return '\n'.join(lines)
 
 
+def gradient_swarm_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-gradient-swarm-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-gradient-swarm-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Checked fixed gradient steps and seeded particle swarms',
+     '',
+     'These G1b and G2i drivers passed GNU Fortran 16.2.0 with FPM 0.12.0 in the restricted hosted sandbox. '
+     'Existing libraries were reused; only mains and executables were compiled. The [verification '
+     'report](gams-gradient-swarm-validation.json) retains pins, source hashes and complete output. GAMS '
+     'categories are not exhausted.',
+     '',
+     '## ForTimize fixed-step gradient descent (G1b)',
+     '',
+     'The independent consumer minimizes SPD quadratics f(x)=0.5*(x-center)^T*H*(x-center). Dimensions '
+     '[2,3,5], condition ratios [1,5], diagonal/rotated Hessians, step settings [0.5,1.5]/lambda_max, '
+     'iteration counts [1,2,5,25,100] and two starts give 240 runs and 800 coordinate references. Centers '
+     'are quarter-integers; starts have positive or alternating displacements. Elementary adjacent-column '
+     'rotations construct Q and scalar sums form H=Q*diag(lambda)*transpose(Q), with explicit '
+     'symmetrization in working precision.',
+     '',
+     'An independent spectral reference computes '
+     'x_N=center+Q*diag((1-step*lambda)**N)*transpose(Q)*(x_0-center), and the analogous previous point and '
+     'objective. Steps remain strictly inside the SPD stability interval; the larger setting exercises '
+     'sign-alternating contraction in the highest mode. The gradient callback must be requested exactly N '
+     'times. The implementation uses max_iters as a fixed count and does not use convergence_tolerance for '
+     'early termination.',
+     '',
+     'Every returned point and objective must be finite. Coordinate discrepancies, scaled by '
+     '1+max(abs(x_0-center)), must be <= 2e-12. Objectives are compared with the spectral sums using scale '
+     '1+f_0 and the same 2e-12 bound. Recomputed endpoint cost must not exceed initial cost beyond '
+     'roundoff, and f_100/f_0 must be <= 1e-8. Saved maximum point, returned-cost and endpoint-cost '
+     'discrepancies are 1.8504e-16, 1.7504e-16 and 1.2643e-16. The largest f_100/f_0 is 4.6923e-10.',
+     '',
+     '## Verified returned-objective caveat',
+     '',
+     'At this pinned [gradient-descent '
+     'implementation](https://github.com/fedebenelli/ForTimize/blob/3431b656cd86f89135d0f35bf6afdbd787d9daf3/src/with_derivatives/gradient_descent.f90#L23), '
+     'the callback evaluates F before each update and the routine does not refresh F after the final '
+     'update. Returned X is x_N, but returned F is f(x_(N-1)). The driver explicitly checks the '
+     'preceding-iterate reference, then recomputes the objective at returned X. It does not present the '
+     'stale value as the endpoint objective.',
+     '',
+     'The first one-step fixture returns 0.625 while the endpoint objective is 0.15625. This discrepancy is '
+     'printed in the successful proof and is visible when the example is run. No library source patch or '
+     'relaxed numeric comparison was introduced. The dedicated test establishes fixed-step behavior on '
+     'these quadratics, not adaptive stopping, a reliable final-objective API, arbitrary step choices or '
+     'nonquadratic convergence.',
+     '',
+     '## Opti seeded shifted Rastrigin search (G2i)',
+     '',
+     'Two and three dimensions, amplitudes A=[1,10] and seeds [314159,271828,161803] give 12 bounded '
+     'stochastic searches and 30 known minimizer entries. Centers have coordinates (i-2)/4, and each '
+     'coordinate is bounded by center plus/minus 3. The objective is sum(d**2+A*(1-cos(2*pi*d))), '
+     'd=x-center. Every term is nonnegative; zero is attained uniquely at center, providing an analytic '
+     'global reference for these nonconvex multimodal benchmarks.',
+     '',
+     'Each call uses 80 particles, a 1,200-generation cap, desired_error=1e-10 and adaptive topology 2. The '
+     'GNU random-seed array is initialized with seed(i)=base_seed+37*i after querying its required size. '
+     'The resulting positions must be finite and inside their boxes. Callback counts must be positive and '
+     'within the conservative 2*80*(1200+2) bound; the successful run used 644,800 optimizer callback '
+     'evaluations overall.',
+     '',
+     'An independent identity evaluates the returned objective as sum(d**2+2*A*sin(pi*d)**2), avoiding '
+     'subtraction of nearly equal cosine values near a minimum. It must agree with the callback formula '
+     'within 2e-12*(1+reference). The independent objective must be <= 1e-5 and maximum coordinate distance '
+     'from center <= 1e-3. Saved maxima are 9.8261e-11 and 1.6632e-6 respectively.',
+     '',
+     'These are recorded successful seeds and work budgets, not a global-convergence guarantee or a '
+     'measured success probability. The RNG sequence is not claimed portable across compilers or versions. '
+     'The API exposes no termination status, so the driver checks results independently instead of '
+     'interpreting an unavailable success flag. Other topologies, dimensions, bound-active optima, '
+     'arbitrary multimodal landscapes and performance remain unverified. The package prints progress during '
+     'each call; this review shows its final verification summary, while the complete progress output '
+     'remains in the saved report.',
+     '',
+     '## Sources, licenses and actual output',
+     '',
+     'Pinned implementations and author API examples were reviewed before writing these independent '
+     'consumers. Their own MIT notice covers only these drivers. ForTimize upstream licensing remains '
+     'unspecified; the driver notice does not relicense the package, and no upstream example body is '
+     'copied. Opti retains its GPL-2.0-or-later terms. Loading a driver does not submit a job.',
+     '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        if d['id'] == 'opti-rastrigin-reference':
+            output = output[output.index('Swarm verification summary:'):]
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -7966,6 +8082,7 @@ def main():
                          (MULTIDIMENSIONAL_FFT_REPORT, multidimensional_fft_review_text()),
                          (SPARSE_SPECTRA_REPORT, sparse_spectra_review_text()),
                          (PROJECTION_LBFGS_REPORT, projection_lbfgs_review_text()),
+                         (GRADIENT_SWARM_REPORT, gradient_swarm_review_text()),
                          (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report

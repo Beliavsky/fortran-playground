@@ -7366,7 +7366,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "user gradient",
-        "notes": "Fixed-iteration gradient descent. The author example is API evidence, not a verified reference for gradient accuracy.",
+        "notes": "Fixed-iteration gradient descent with a user gradient. The dedicated independent driver checks 240 SPD-quadratic trajectories against spectral powers and exact callback counts. At this pin the returned objective belongs to the iterate before the final position update; the driver explicitly verifies this and recomputes the endpoint objective. convergence_tolerance is not used by this fixed-count implementation. No adaptive stopping or nonquadratic convergence claim; upstream licensing remains unspecified.",
         "evidence": [
           {
             "path": "src/minimize.f90",
@@ -7384,7 +7384,8 @@
             "path": "example/gradient.f90",
             "sha256": "dfdc5b2c20ab4852e8fe4d4230fced87f8bd76b27bcbc84225928da56da73df9"
           }
-        ]
+        ],
+        "driver_id": "fortimize-gradient-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -21537,7 +21538,8 @@
             "path": "test/check.f90",
             "sha256": "481415e61d3ac9944fb6e0bbb7c0dc8c309f0a2d664fb8052c8ce813d9507d21"
           }
-        ]
+        ],
+        "driver_id": "opti-rastrigin-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00",

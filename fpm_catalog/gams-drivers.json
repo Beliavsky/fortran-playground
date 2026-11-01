@@ -7647,6 +7647,97 @@
         "nonquadratic_objectives_verified": false,
         "constrained_operation_verified": false
       }
+    },
+    {
+      "id": "fortimize-gradient-reference",
+      "name": "gams-fortimize-gradient-reference",
+      "package_id": "fortimize",
+      "procedure_id": "fortimize-gradient-descent",
+      "gams_code": "G1b",
+      "problem_id": "fixed-gradient-analytic-iteration-reference",
+      "path": "fpm_catalog/gams-drivers/fortimize-gradient-reference.f90",
+      "revision": "3431b656cd86f89135d0f35bf6afdbd787d9daf3",
+      "author_example": "example/gradient.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/gradient-swarm-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned fixed-step implementation and author API example reviewed without copying bodies. Diagonal/rotated SPD quadratics, three dimensions, condition ratios one/five, two stable step settings, five iteration counts and two starts. Spectral powers independently predict every returned point and pre-update objective; endpoint objective explicitly recomputed. At this pin returned F belongs to the preceding iterate, not returned X; gradient calls equal max_iters and convergence_tolerance is not used. No termination-status or adaptive stopping claim. Upstream licensing unspecified; own driver MIT does not relicense the package.",
+      "validation_path": "docs/gams-gradient-swarm-validation.json",
+      "review_path": "docs/gams-gradient-swarm.md",
+      "checks": {
+        "runs": 240,
+        "analytic_iterate_entries": 800,
+        "dimensions": [
+          2,
+          3,
+          5
+        ],
+        "condition_ratios": [
+          1,
+          5
+        ],
+        "iteration_counts": [
+          1,
+          2,
+          5,
+          25,
+          100
+        ],
+        "gradient_call_counts_checked": true,
+        "returned_objective_lags_one_iteration": true,
+        "endpoint_objective_recomputed": true,
+        "max_normalized_discrepancy": 2e-12,
+        "adaptive_stopping_verified": false,
+        "nonquadratic_objectives_verified": false
+      }
+    },
+    {
+      "id": "opti-rastrigin-reference",
+      "name": "gams-opti-rastrigin-reference",
+      "package_id": "opti",
+      "procedure_id": "opti-optimizer",
+      "gams_code": "G2i",
+      "problem_id": "seeded-shifted-rastrigin-known-global-minima",
+      "path": "fpm_catalog/gams-drivers/opti-rastrigin-reference.f90",
+      "revision": "6fb22db21bd2338e00690ff3706be61a1f101101",
+      "author_example": "test/check.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/gradient-swarm-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned PSO implementation and author API test reviewed without copying bodies. Two/three-dimensional shifted Rastrigin objectives, amplitudes one/ten and three GNU random seeds, adaptive topology, 80 particles and 1200-generation cap. Finite bounded results checked against known unique global minimizers and an independent sin-squared objective identity. Records the actual successful seeds and callback budget, not a general global-convergence or cross-compiler RNG guarantee. No optimizer termination status is exposed by this API.",
+      "validation_path": "docs/gams-gradient-swarm-validation.json",
+      "review_path": "docs/gams-gradient-swarm.md",
+      "checks": {
+        "runs": 12,
+        "global_minimizer_entries": 30,
+        "dimensions": [
+          2,
+          3
+        ],
+        "amplitudes": [
+          1,
+          10
+        ],
+        "seeds": [
+          314159,
+          271828,
+          161803
+        ],
+        "seed_element_stride": 37,
+        "particles": 80,
+        "max_generations": 1200,
+        "topology": 2,
+        "known_global_minima_checked": true,
+        "independent_objective_identity_checked": true,
+        "max_objective": 1e-05,
+        "max_coordinate_error": 0.001,
+        "global_convergence_guaranteed": false,
+        "cross_compiler_rng_reproducibility_verified": false
+      }
     }
   ]
 }

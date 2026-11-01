@@ -85,6 +85,7 @@ from xpackage_gams import (gams_data, package_classes, review_text, subclass_mod
                             multidimensional_fft_review_text, MULTIDIMENSIONAL_FFT_REPORT,
                             sparse_spectra_review_text, SPARSE_SPECTRA_REPORT,
                             projection_lbfgs_review_text, PROJECTION_LBFGS_REPORT,
+                            gradient_swarm_review_text, GRADIENT_SWARM_REPORT,
                           coverage_data, coverage_review_text, COVERAGE_REPORT,
                           class_evidence, class_tree, mapping_evidence_text, EVIDENCE_REPORT)
 
@@ -243,7 +244,7 @@ class PackageGamsTests(unittest.TestCase):
         self.assertEqual({d['id'] for d in driver_data() if d['procedure_id'] in {m['id'] for m in mappings}},
                          {'fmin-sine', 'minpack-bard', 'libdogleg-bard', 'nonlin-rosenbrock-nm',
                           'nonlin-rosenbrock-bfgs', 'nlopt-rosenbrock-lbfgs', 'fortimize-nelder-reference',
-                          'minpack-lmder-reference', 'nonlin-lsq-jacobian-reference', 'seiscope-lbfgs-reference'})
+                          'minpack-lmder-reference', 'nonlin-lsq-jacobian-reference', 'seiscope-lbfgs-reference', 'fortimize-gradient-reference'})
         tree = data['detailed_classes']
         self.assertEqual(tree['G1b1b']['parent'], 'G1b1')
         self.assertEqual(tree['G1b1']['parent'], 'G1b')
@@ -744,7 +745,7 @@ class PackageGamsTests(unittest.TestCase):
             self.assertEqual(record['driver_id'], d['id'])
             self.assertEqual(class_evidence(class_tree(data),d['gams_code'],[record],[d])['status'], 'verified')
         self.assertEqual(class_evidence(class_tree(data),'G1b',[records['fortimize-gradient-descent']],
-                                       list(drivers.values()))['status'], 'source-supported')
+                                       [optimizer])['status'], 'source-supported')
         text = optimization_spacing_review_text()
         self.assertEqual((ROOT/OPTIMIZATION_SPACING_REPORT).read_text(encoding='utf-8'), text)
         self.assertIn('wp=real32', text)
@@ -869,6 +870,35 @@ class PackageGamsTests(unittest.TestCase):
         self.assertIn('22,416',text)
         self.assertIn('Type-2/type-3 transforms',text)
         self.assertIn('two-dimensional NUFFT2D driver',transforms_review_text())
+
+    def test_gradient_and_swarm_drivers_keep_lagged_objective_and_seed_limits_explicit(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for ident,code in [('fortimize-gradient-reference','G1b'),('opti-rastrigin-reference','G2i')]:
+            d = drivers[ident]
+            self.assertEqual(records[d['procedure_id']]['driver_id'],ident)
+            self.assertEqual(class_evidence(class_tree(data),code,[records[d['procedure_id']]],[d])['status'],'verified')
+        gradient = drivers['fortimize-gradient-reference']['checks']
+        self.assertEqual(gradient['runs'],240)
+        self.assertEqual(gradient['analytic_iterate_entries'],800)
+        self.assertTrue(gradient['gradient_call_counts_checked'])
+        self.assertTrue(gradient['returned_objective_lags_one_iteration'])
+        self.assertTrue(gradient['endpoint_objective_recomputed'])
+        self.assertFalse(gradient['adaptive_stopping_verified'])
+        swarm = drivers['opti-rastrigin-reference']['checks']
+        self.assertEqual(swarm['runs'],12)
+        self.assertEqual(swarm['global_minimizer_entries'],30)
+        self.assertEqual(swarm['seeds'],[314159,271828,161803])
+        self.assertTrue(swarm['independent_objective_identity_checked'])
+        self.assertFalse(swarm['global_convergence_guaranteed'])
+        self.assertFalse(swarm['cross_compiler_rng_reproducibility_verified'])
+        text = gradient_swarm_review_text()
+        self.assertEqual((ROOT/GRADIENT_SWARM_REPORT).read_text(encoding='utf-8'),text)
+        self.assertIn('[Verification](gams-gradient-swarm-validation.json)',constrained_review_text())
+        for phrase in ['240 runs','800 coordinate','644,800','0.625','0.15625','licensing remains unspecified',
+                       'not a global-convergence guarantee','categories are not exhausted']:
+            self.assertIn(phrase,text)
 
     def test_projection_and_lbfgs_drivers_have_analytic_answers_and_precision_limits(self):
         data = gams_data()

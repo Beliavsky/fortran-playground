@@ -53,20 +53,21 @@ Initialization/solve status must be zero, callback/final points finite and withi
 
 | Driver | Class | Pinned procedure and author example |
 | --- | --- | --- |
-| [Load lbfgsb-box-quadratic](https://beliavsky.github.io/fortran-playground/fpm/?package=lbfgsb&example=gams-lbfgsb-box-quadratic) · [Source](../fpm_catalog/gams-drivers/lbfgsb-box-quadratic.f90) | G2h1a2 | [Procedure](https://github.com/jacobwilliams/lbfgsb/blob/ce1a9322016d6f31b652393e000a914b63af6fef/src/lbfgsb.f90#L88) · [Author example](https://github.com/jacobwilliams/lbfgsb/blob/ce1a9322016d6f31b652393e000a914b63af6fef/test/driver1.f90) |
-| [Load nlopt-box-quadratic](https://beliavsky.github.io/fortran-playground/fpm/?package=nlopt-f&example=gams-nlopt-box-quadratic) · [Source](../fpm_catalog/gams-drivers/nlopt-box-quadratic.f90) | G2h1a2 | [Procedure](https://github.com/awvwgk/nlopt-f/blob/83d21e7ebda9279a6dd4cc11fe6c735f48eb8689/src/nlopt_wrap.f90#L268) · Original public-API driver |
-| [Load slsqp-circle-equality](https://beliavsky.github.io/fortran-playground/fpm/?package=slsqp&example=gams-slsqp-circle-equality) · [Source](../fpm_catalog/gams-drivers/slsqp-circle-equality.f90) | G2h3b1b | [Procedure](https://github.com/jacobwilliams/slsqp/blob/e28b14fc48189fd4fce5f359327164fca55b52be/src/slsqp_module.f90#L21) · [Author example](https://github.com/jacobwilliams/slsqp/blob/e28b14fc48189fd4fce5f359327164fca55b52be/test/slsqp_test.f90) |
-| [Load conmax-linear-program-certificate](https://beliavsky.github.io/fortran-playground/fpm/?package=conmax&example=gams-conmax-linear-program-certificate) · [Source](../fpm_catalog/gams-drivers/conmax-linear-program-certificate.f90) | G2a | [Procedure](https://github.com/jacobwilliams/conmax/blob/ab7f237d30f94f7d13b86997e0c49f3d67bd7c54/src/conmax.f90#L1912) · [Author example](https://github.com/jacobwilliams/conmax/blob/ab7f237d30f94f7d13b86997e0c49f3d67bd7c54/test/lp.f90) |
-| [Load bobyqa-box-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=powellopt&example=gams-bobyqa-box-reference) · [Source](../fpm_catalog/gams-drivers/bobyqa-box-reference.f90) | G2h1a1 | [Procedure](https://github.com/jacobwilliams/PowellOpt/blob/0987cd09d695cec968a3d02c8230d4ce5af33533/src/bobyqa.f90#L77) · Original public-API driver |
-| [Load pikaia-rastrigin-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=pikaia&example=gams-pikaia-rastrigin-reference) · [Source](../fpm_catalog/gams-drivers/pikaia-rastrigin-reference.f90) | G2i | [Procedure](https://github.com/jacobwilliams/pikaia/blob/c080c4004896243bf9b8bbb4577e402c9e31c5e3/src/pikaia_module.f90#L65) · [Author example](https://github.com/jacobwilliams/pikaia/blob/c080c4004896243bf9b8bbb4577e402c9e31c5e3/test/xpk2.f90) |
-| [Load qnstop-box-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=qnstop&example=gams-qnstop-box-reference) · [Source](../fpm_catalog/gams-drivers/qnstop-box-reference.f90) | G2 | [Procedure](https://github.com/vtopt/qnstop/blob/39e8273247f586fca8305ef3d8e879b27b6512d0/src/qnstops.f95#L1) · [Author example](https://github.com/vtopt/qnstop/blob/39e8273247f586fca8305ef3d8e879b27b6512d0/src/sample_main_s.f95) |
-| [Load psqp-projection-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=psqp&example=gams-psqp-projection-reference) · [Source](../fpm_catalog/gams-drivers/psqp-projection-reference.f90) | G2h3b1b | [Procedure](https://github.com/jacobwilliams/psqp/blob/57a853e14e3806d69adad6d6d44396d9665d842e/src/psqp_module.f90#L62) · [Author example](https://github.com/jacobwilliams/psqp/blob/57a853e14e3806d69adad6d6d44396d9665d842e/test/tsqp.f90) |
+| [Load lbfgsb-box-quadratic](https://beliavsky.github.io/fortran-playground/fpm/?package=lbfgsb&example=gams-lbfgsb-box-quadratic) · [Source](../fpm_catalog/gams-drivers/lbfgsb-box-quadratic.f90) | G2h1a2 | [Procedure](https://github.com/jacobwilliams/lbfgsb/blob/ce1a9322016d6f31b652393e000a914b63af6fef/src/lbfgsb.f90#L88) · [Author example](https://github.com/jacobwilliams/lbfgsb/blob/ce1a9322016d6f31b652393e000a914b63af6fef/test/driver1.f90) · [Verification](gams-constrained-validation.json) |
+| [Load nlopt-box-quadratic](https://beliavsky.github.io/fortran-playground/fpm/?package=nlopt-f&example=gams-nlopt-box-quadratic) · [Source](../fpm_catalog/gams-drivers/nlopt-box-quadratic.f90) | G2h1a2 | [Procedure](https://github.com/awvwgk/nlopt-f/blob/83d21e7ebda9279a6dd4cc11fe6c735f48eb8689/src/nlopt_wrap.f90#L268) · Original public-API driver · [Verification](gams-constrained-validation.json) |
+| [Load slsqp-circle-equality](https://beliavsky.github.io/fortran-playground/fpm/?package=slsqp&example=gams-slsqp-circle-equality) · [Source](../fpm_catalog/gams-drivers/slsqp-circle-equality.f90) | G2h3b1b | [Procedure](https://github.com/jacobwilliams/slsqp/blob/e28b14fc48189fd4fce5f359327164fca55b52be/src/slsqp_module.f90#L21) · [Author example](https://github.com/jacobwilliams/slsqp/blob/e28b14fc48189fd4fce5f359327164fca55b52be/test/slsqp_test.f90) · [Verification](gams-constrained-validation.json) |
+| [Load conmax-linear-program-certificate](https://beliavsky.github.io/fortran-playground/fpm/?package=conmax&example=gams-conmax-linear-program-certificate) · [Source](../fpm_catalog/gams-drivers/conmax-linear-program-certificate.f90) | G2a | [Procedure](https://github.com/jacobwilliams/conmax/blob/ab7f237d30f94f7d13b86997e0c49f3d67bd7c54/src/conmax.f90#L1912) · [Author example](https://github.com/jacobwilliams/conmax/blob/ab7f237d30f94f7d13b86997e0c49f3d67bd7c54/test/lp.f90) · [Verification](gams-constrained-validation.json) |
+| [Load bobyqa-box-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=powellopt&example=gams-bobyqa-box-reference) · [Source](../fpm_catalog/gams-drivers/bobyqa-box-reference.f90) | G2h1a1 | [Procedure](https://github.com/jacobwilliams/PowellOpt/blob/0987cd09d695cec968a3d02c8230d4ce5af33533/src/bobyqa.f90#L77) · Original public-API driver · [Verification](gams-constrained-validation.json) |
+| [Load pikaia-rastrigin-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=pikaia&example=gams-pikaia-rastrigin-reference) · [Source](../fpm_catalog/gams-drivers/pikaia-rastrigin-reference.f90) | G2i | [Procedure](https://github.com/jacobwilliams/pikaia/blob/c080c4004896243bf9b8bbb4577e402c9e31c5e3/src/pikaia_module.f90#L65) · [Author example](https://github.com/jacobwilliams/pikaia/blob/c080c4004896243bf9b8bbb4577e402c9e31c5e3/test/xpk2.f90) · [Verification](gams-constrained-validation.json) |
+| [Load qnstop-box-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=qnstop&example=gams-qnstop-box-reference) · [Source](../fpm_catalog/gams-drivers/qnstop-box-reference.f90) | G2 | [Procedure](https://github.com/vtopt/qnstop/blob/39e8273247f586fca8305ef3d8e879b27b6512d0/src/qnstops.f95#L1) · [Author example](https://github.com/vtopt/qnstop/blob/39e8273247f586fca8305ef3d8e879b27b6512d0/src/sample_main_s.f95) · [Verification](gams-matrix-roots-box-validation.json) |
+| [Load psqp-projection-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=psqp&example=gams-psqp-projection-reference) · [Source](../fpm_catalog/gams-drivers/psqp-projection-reference.f90) | G2h3b1b | [Procedure](https://github.com/jacobwilliams/psqp/blob/57a853e14e3806d69adad6d6d44396d9665d842e/src/psqp_module.f90#L62) · [Author example](https://github.com/jacobwilliams/psqp/blob/57a853e14e3806d69adad6d6d44396d9665d842e/test/tsqp.f90) · [Verification](gams-projection-lbfgs-validation.json) |
+| [Load opti-rastrigin-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=opti&example=gams-opti-rastrigin-reference) · [Source](../fpm_catalog/gams-drivers/opti-rastrigin-reference.f90) | G2i | [Procedure](https://github.com/Konrad1991/opti/blob/6fb22db21bd2338e00690ff3706be61a1f101101/src/particle_swarm.f90#L57) · [Author example](https://github.com/Konrad1991/opti/blob/6fb22db21bd2338e00690ff3706be61a1f101101/test/check.f90) · [Verification](gams-gradient-swarm-validation.json) |
 
-The L-BFGS-B and SLSQP drivers adapt author API patterns and retain license notices. All 8 appear in hosted and main local FPM example menus and downloaded projects. Loading a link selects source without submitting a job.
+The L-BFGS-B and SLSQP drivers adapt author API patterns and retain license notices. All 9 appear in hosted and main local FPM example menus and downloaded projects. Loading a link selects source without submitting a job.
 
 ## Recorded results
 
-All 8 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing existing package libraries. Only each main and executable were rebuilt. The [verification report](gams-constrained-validation.json) records hashes, pins and saved output. Evaluation counts exclude derivative sanity checks and describe these simple cases, rather than establishing a general speed ranking.
+All 9 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing existing package libraries. Only each main and executable were rebuilt. The per-driver reports linked above record hashes, pins and saved output; the [original report](gams-constrained-validation.json) covers its six initial drivers. Evaluation counts exclude derivative sanity checks and describe these simple cases, rather than establishing a general speed ranking.
 
 ### lbfgsb-box-quadratic
 
@@ -164,6 +165,21 @@ Maximum normalized objective error:   9.9295E-12
 Maximum normalized constraint violation:   1.3172E-11
 Maximum analytic-multiplier stationarity residual:   6.7059E-12
 PASS psqp-projection-reference
+```
+
+The [dedicated review](gams-gradient-swarm.md) explains the seeded tests; the complete progress output remains in its verification report.
+
+### opti-rastrigin-reference
+
+```text
+Swarm verification summary:
+Seeded shifted-Rastrigin problems: 12
+Known global-minimizer entries: 30
+Optimizer callback evaluations: 644800
+Maximum independently evaluated objective:   9.8261E-11
+Maximum coordinate error from known global optimum:   1.6632E-06
+These seeded successes do not guarantee global convergence or portability of the RNG sequence.
+PASS opti-rastrigin-reference
 ```
 
 ## Maintenance

@@ -8,7 +8,7 @@ This report assesses each package/class pair, including inherited parent classes
 
 When a driver cannot be created, inspect the pinned implementation and author examples. Narrow or remove a classification that is unsupported; do not substitute an unrelated default example as evidence. Record missing dependencies, sandbox limits and upstream defects separately in the procedure or package review notes. A sandbox failure alone does not disprove an algorithm.
 
-Counts refer to package/class pairs and include parents: 532 verified, 219 source-supported, 246 uncertain.
+Counts refer to package/class pairs and include parents: 535 verified, 216 source-supported, 246 uncertain.
 
 ## Mappings requiring source review
 
@@ -367,7 +367,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [forsolver / forsolver-nlsolver](https://beliavsky.github.io/fortran-playground/gams/packages/forsolver/#forsolver-nlsolver) | F1b | verified |
 | [forsvd / forsvd-api](https://beliavsky.github.io/fortran-playground/gams/packages/forsvd/#forsvd-api) | D6 | verified |
 | [fortime / serial-timers](https://beliavsky.github.io/fortran-playground/gams/packages/fortime/#serial-timers) | R | source-supported |
-| [fortimize / fortimize-gradient-descent](https://beliavsky.github.io/fortran-playground/gams/packages/fortimize/#fortimize-gradient-descent) | G1b | source-supported |
+| [fortimize / fortimize-gradient-descent](https://beliavsky.github.io/fortran-playground/gams/packages/fortimize/#fortimize-gradient-descent) | G1b | verified |
 | [fortimize / fortimize-nelder-mead](https://beliavsky.github.io/fortran-playground/gams/packages/fortimize/#fortimize-nelder-mead) | G1b | verified |
 | [fortran-astrodynamics-toolkit / fortran-astrodynamics-toolkit-orbital-elements-to-rv](https://beliavsky.github.io/fortran-playground/gams/packages/fortran-astrodynamics-toolkit/#fortran-astrodynamics-toolkit-orbital-elements-to-rv) | P | verified |
 | [fortran-bessels / fortran-bessels-api](https://beliavsky.github.io/fortran-playground/gams/packages/fortran-bessels/#fortran-bessels-api) | C10b1 | verified |
@@ -508,7 +508,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [odrpack95 / odrpack95-odr](https://beliavsky.github.io/fortran-playground/gams/packages/odrpack95/#odrpack95-odr) | L8 | verified |
 | [ogpf / ogpf-contour](https://beliavsky.github.io/fortran-playground/gams/packages/ogpf/#ogpf-contour) | Q | source-supported |
 | [optgra / optgra-optgra](https://beliavsky.github.io/fortran-playground/gams/packages/optgra/#optgra-optgra) | G2h3b1b | source-supported |
-| [opti / opti-optimizer](https://beliavsky.github.io/fortran-playground/gams/packages/opti/#opti-optimizer) | G2i | source-supported |
+| [opti / opti-optimizer](https://beliavsky.github.io/fortran-playground/gams/packages/opti/#opti-optimizer) | G2i | verified |
 | [orbs / orbs-bitsets](https://beliavsky.github.io/fortran-playground/gams/packages/orbs/#orbs-bitsets) | A1 | source-supported |
 | [orbs / orbs-bitsets](https://beliavsky.github.io/fortran-playground/gams/packages/orbs/#orbs-bitsets) | N2 | verified |
 | [orderpack / orderpack-rank](https://beliavsky.github.io/fortran-playground/gams/packages/orderpack/#orderpack-rank) | N6 | verified |

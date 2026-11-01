@@ -67,6 +67,29 @@ class GamsSiteTests(unittest.TestCase):
             self.assertIn('Open default example', sorting)
             self.assertNotIn('Try in playground', sorting)
 
+    def test_fixed_gradient_and_swarm_links_load_class_specific_checked_examples(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects']
+                            if p['playground']['package_id'] in {'fortimize','opti'}]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination,feed)
+            for code,expected in [('G1b',{'fortimize-nelder-reference','fortimize-gradient-reference'}),
+                                  ('G2i',{'opti-rastrigin-reference'})]:
+                html = (destination/code/'index.html').read_text(encoding='utf-8')
+                primary = {url for url,label in Page(html).anchors if label=='Try in playground'}
+                package = 'fortimize' if code=='G1b' else 'opti'
+                expected_urls = {
+                    f'https://beliavsky.github.io/fortran-playground/fpm/?package={package}&example=gams-{driver}'
+                    for driver in expected}
+                self.assertEqual(len(primary),1)
+                self.assertTrue(primary <= expected_urls)
+                self.assertTrue(expected_urls <= set(Page(html).links))
+                self.assertIn('Verified: a checked driver',html)
+            detailed = (destination/'G1b1b/index.html').read_text(encoding='utf-8')
+            self.assertNotIn('example=gams-fortimize-gradient-reference',detailed)
+
     def test_projection_and_lbfgs_class_links_do_not_promote_other_configurations(self):
         import copy
         feed = copy.deepcopy(self.feed)
@@ -938,8 +961,8 @@ class GamsSiteTests(unittest.TestCase):
             details = (destination/'packages/fortimize/index.html').read_text()
             gradient = details.split('id="fortimize-gradient-descent"',1)[1].split('</article>',1)[0]
             self.assertIn('minimize with GradientDescent', gradient)
-            self.assertIn('G1b: source-supported', gradient)
-            self.assertNotIn('Checked GAMS driver:', gradient)
+            self.assertIn('gams-fortimize-gradient-reference', gradient)
+            self.assertIn('Load checked GAMS driver:', gradient)
 
     def test_graphics_and_distribution_pages_open_matching_checked_drivers(self):
         import copy
