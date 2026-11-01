@@ -455,7 +455,8 @@
       "D5",
       "D6",
       "C3",
-      "C7"
+      "C7",
+      "L5"
     ],
     "bspline-fortran": [
       "E1",
@@ -1732,6 +1733,34 @@
     "D9b1": {
       "label": "Least squares (L_2) solution",
       "parent": "D9b"
+    },
+    "L5a": {
+      "label": "Univariate",
+      "parent": "L5"
+    },
+    "L5a1": {
+      "label": "Cumulative distribution functions, probability density functions",
+      "parent": "L5a"
+    },
+    "L5a1b": {
+      "label": "Beta, binomial",
+      "parent": "L5a1"
+    },
+    "L5a1e": {
+      "label": "Error function, exponential, extreme value",
+      "parent": "L5a1"
+    },
+    "L5a1g": {
+      "label": "Gamma, general, geometric",
+      "parent": "L5a1"
+    },
+    "L5a1n": {
+      "label": "Negative binomial, normal",
+      "parent": "L5a1"
+    },
+    "L5a1u": {
+      "label": "Uniform",
+      "parent": "L5a1"
     }
   },
   "procedure_mappings": [
@@ -11305,6 +11334,326 @@
           "sha256": "fd05dc7d09afecf9344582d36e40e9b2eae675788a0ac1c8c1d49ff8ab523016"
         }
       ]
+    },
+    {
+      "id": "stdlib-uniform-pdf",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_stats_distribution_uniform",
+      "procedure": "pdf_uniform (REAL64)",
+      "gams_codes": [
+        "L5a1u"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "1,625 REAL64 interval references across five locations, five positive widths and 65 dyadic relative abscissas from -0.5 to 1.5. Density reference is interval membership divided by interval width; the API includes both endpoints. Scaled absolute tolerance 4e-15 and finite/nonnegative results. Invalid widths, integer/complex overloads, other kinds and random generation unverified.",
+      "driver_id": "stdlib-uniform-pdf-reference",
+      "evidence": [
+        {
+          "path": "src/stdlib_stats_distribution_uniform.f90",
+          "line": 57,
+          "sha256": "df8a8064c5f3e456f9955c0e718e16c036230887a03284cb63ac5797a1834a60"
+        },
+        {
+          "path": "src/stdlib_stats_distribution_uniform.f90",
+          "line": 813,
+          "sha256": "df8a8064c5f3e456f9955c0e718e16c036230887a03284cb63ac5797a1834a60"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_distribution_uniform.f90",
+          "sha256": "5a7a88d8f70f184087628559e5e3f1242d47cc6578db98189d80b35ab1916e96"
+        }
+      ]
+    },
+    {
+      "id": "stdlib-uniform-cdf",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_stats_distribution_uniform",
+      "procedure": "cdf_uniform (REAL64)",
+      "gams_codes": [
+        "L5a1u"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "1,625 REAL64 interval references across five locations, five positive widths and 65 dyadic relative abscissas from -0.5 to 1.5. CDF reference is clipped relative interval length; probability bounds and monotonicity also checked. Scaled absolute tolerance 4e-15 and finite/nonnegative results. Invalid widths, integer/complex overloads, other kinds and random generation unverified.",
+      "driver_id": "stdlib-uniform-cdf-reference",
+      "evidence": [
+        {
+          "path": "src/stdlib_stats_distribution_uniform.f90",
+          "line": 76,
+          "sha256": "df8a8064c5f3e456f9955c0e718e16c036230887a03284cb63ac5797a1834a60"
+        },
+        {
+          "path": "src/stdlib_stats_distribution_uniform.f90",
+          "line": 952,
+          "sha256": "df8a8064c5f3e456f9955c0e718e16c036230887a03284cb63ac5797a1834a60"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_distribution_uniform.f90",
+          "sha256": "5a7a88d8f70f184087628559e5e3f1242d47cc6578db98189d80b35ab1916e96"
+        }
+      ]
+    },
+    {
+      "id": "stdlib-normal-pdf",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_stats_distribution_normal",
+      "procedure": "pdf_normal (REAL64)",
+      "gams_codes": [
+        "L5a1n"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "585 REAL64 references: 65 standardized abscissas -8..8 by 0.25, three locations and three positive standard deviations. Independent mpmath 80-digit constants confirmed at 120 digits. Density constants transform with the inverse scale. Scaled absolute tolerance 3e-14; small tails are not certified to relative accuracy. Finite/nonnegative outputs checked. Invalid scales, complex overloads, other kinds, extreme arguments and random generation unverified.",
+      "driver_id": "stdlib-normal-pdf-reference",
+      "evidence": [
+        {
+          "path": "src/stdlib_stats_distribution_normal.f90",
+          "line": 43,
+          "sha256": "5a39682732876edf033d1eba6240d0938bcf7dd766e12c8e4327c4d8bee8ebc8"
+        },
+        {
+          "path": "src/stdlib_stats_distribution_normal.f90",
+          "line": 474,
+          "sha256": "5a39682732876edf033d1eba6240d0938bcf7dd766e12c8e4327c4d8bee8ebc8"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_distribution_normal.f90",
+          "sha256": "f0f081732dc74b0aeb77c16ed934773e789e5a6c4edd341052a125c39a677c47"
+        }
+      ]
+    },
+    {
+      "id": "stdlib-normal-cdf",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_stats_distribution_normal",
+      "procedure": "cdf_normal (REAL64)",
+      "gams_codes": [
+        "L5a1n"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "585 REAL64 references: 65 standardized abscissas -8..8 by 0.25, three locations and three positive standard deviations. Independent mpmath 80-digit constants confirmed at 120 digits. CDF bounds and monotonicity checked. Scaled absolute tolerance 3e-14; small tails are not certified to relative accuracy. Finite/nonnegative outputs checked. Invalid scales, complex overloads, other kinds, extreme arguments and random generation unverified.",
+      "driver_id": "stdlib-normal-cdf-reference",
+      "evidence": [
+        {
+          "path": "src/stdlib_stats_distribution_normal.f90",
+          "line": 56,
+          "sha256": "5a39682732876edf033d1eba6240d0938bcf7dd766e12c8e4327c4d8bee8ebc8"
+        },
+        {
+          "path": "src/stdlib_stats_distribution_normal.f90",
+          "line": 525,
+          "sha256": "5a39682732876edf033d1eba6240d0938bcf7dd766e12c8e4327c4d8bee8ebc8"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_distribution_normal.f90",
+          "sha256": "f0f081732dc74b0aeb77c16ed934773e789e5a6c4edd341052a125c39a677c47"
+        }
+      ]
+    },
+    {
+      "id": "stdlib-exponential-pdf",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_stats_distribution_exponential",
+      "procedure": "pdf_exp (REAL64)",
+      "gams_codes": [
+        "L5a1e"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "1,170 REAL64 comparisons over 585 inputs: z=-0.5..7.5 by 0.125, three locations and three positive scales. Both location/scale and shifted zero-location/rate overloads checked against independent 80/120-digit mpmath references; rate=1/scale. Density reference is exp(-z)/scale on support. Support boundary and negative arguments included. Scaled absolute tolerance 3e-14; tiny relative tails, invalid parameters, complex/other kinds and random generation unverified.",
+      "driver_id": "stdlib-exponential-pdf-reference",
+      "evidence": [
+        {
+          "path": "src/stdlib_stats_distribution_exponential.f90",
+          "line": 56,
+          "sha256": "a1b241691237eff41a53f251a9e41803b9d36cead314e903765b8422a3540e51"
+        },
+        {
+          "path": "src/stdlib_stats_distribution_exponential.f90",
+          "line": 416,
+          "sha256": "a1b241691237eff41a53f251a9e41803b9d36cead314e903765b8422a3540e51"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_distribution_exponential.f90",
+          "sha256": "3a2fa793d6bf507abf6b430370617ce3b149f8a2f3d6af8f1f0417ae89747dca"
+        }
+      ]
+    },
+    {
+      "id": "stdlib-exponential-cdf",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_stats_distribution_exponential",
+      "procedure": "cdf_exp (REAL64)",
+      "gams_codes": [
+        "L5a1e"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "1,170 REAL64 comparisons over 585 inputs: z=-0.5..7.5 by 0.125, three locations and three positive scales. Both location/scale and shifted zero-location/rate overloads checked against independent 80/120-digit mpmath references; rate=1/scale. CDF reference uses high-precision -expm1(-z), with bounds and monotonicity checks. Support boundary and negative arguments included. Scaled absolute tolerance 3e-14; tiny relative tails, invalid parameters, complex/other kinds and random generation unverified.",
+      "driver_id": "stdlib-exponential-cdf-reference",
+      "evidence": [
+        {
+          "path": "src/stdlib_stats_distribution_exponential.f90",
+          "line": 80,
+          "sha256": "a1b241691237eff41a53f251a9e41803b9d36cead314e903765b8422a3540e51"
+        },
+        {
+          "path": "src/stdlib_stats_distribution_exponential.f90",
+          "line": 472,
+          "sha256": "a1b241691237eff41a53f251a9e41803b9d36cead314e903765b8422a3540e51"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_distribution_exponential.f90",
+          "sha256": "3a2fa793d6bf507abf6b430370617ce3b149f8a2f3d6af8f1f0417ae89747dca"
+        }
+      ]
+    },
+    {
+      "id": "stdlib-gamma-pdf",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_stats_distribution_gamma",
+      "procedure": "pdf_gamma (REAL64)",
+      "gams_codes": [
+        "L5a1g"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "486 REAL64 references with shapes [1.0, 1.5, 2.5, 3.0, 5.0, 8.0], three locations, three positive rates and nine standardized abscissas -0.25..8. Independent mpmath density/integral values at 80 digits confirmed at 120; includes noninteger shapes, negative support and x=loc. Shape-one endpoint density is rate; larger-shape endpoint density is zero. Singular density endpoints for shapes below one are deliberately excluded. Scaled absolute tolerance 3e-12; small tails are not certified relatively. Explicit location only; invalid inputs, complex/other kinds, extreme scales and random generation unverified.",
+      "driver_id": "stdlib-gamma-pdf-reference",
+      "evidence": [
+        {
+          "path": "src/stdlib_stats_distribution_gamma.f90",
+          "line": 43,
+          "sha256": "2964e6dfe98e8bf1e9fa9cf5e5e173349a1a929f3da603d41e8b47677529b029"
+        },
+        {
+          "path": "src/stdlib_stats_distribution_gamma.f90",
+          "line": 412,
+          "sha256": "2964e6dfe98e8bf1e9fa9cf5e5e173349a1a929f3da603d41e8b47677529b029"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_distribution_gamma.f90",
+          "sha256": "1c1e56ee5f3edfadfb63f8960bb1f1d1a9317014985750d6523c3372b028ee8e"
+        }
+      ]
+    },
+    {
+      "id": "stdlib-gamma-cdf",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_stats_distribution_gamma",
+      "procedure": "cdf_gamma (REAL64)",
+      "gams_codes": [
+        "L5a1g"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "567 REAL64 references with shapes [0.5, 1.0, 1.5, 2.5, 3.0, 5.0, 8.0], three locations, three positive rates and nine standardized abscissas -0.25..8. Independent mpmath density/integral values at 80 digits confirmed at 120; includes noninteger shapes, negative support and x=loc. CDF normalization is the lower incomplete gamma integral divided by gamma(shape); bounds and monotonicity checked. Scaled absolute tolerance 3e-12; small tails are not certified relatively. Explicit location only; invalid inputs, complex/other kinds, extreme scales and random generation unverified.",
+      "driver_id": "stdlib-gamma-cdf-reference",
+      "evidence": [
+        {
+          "path": "src/stdlib_stats_distribution_gamma.f90",
+          "line": 62,
+          "sha256": "2964e6dfe98e8bf1e9fa9cf5e5e173349a1a929f3da603d41e8b47677529b029"
+        },
+        {
+          "path": "src/stdlib_stats_distribution_gamma.f90",
+          "line": 590,
+          "sha256": "2964e6dfe98e8bf1e9fa9cf5e5e173349a1a929f3da603d41e8b47677529b029"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_distribution_gamma.f90",
+          "sha256": "1c1e56ee5f3edfadfb63f8960bb1f1d1a9317014985750d6523c3372b028ee8e"
+        }
+      ]
+    },
+    {
+      "id": "stdlib-beta-pdf",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_stats_distribution_beta",
+      "procedure": "pdf_beta (REAL64)",
+      "gams_codes": [
+        "L5a1b"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "4,428 REAL64 references: shape pairs a,b=2..7, three locations and 41 dyadic abscissas -0.125..1.125 relative to location. Independent finite-product normalization times z**(a-1)*(1-z)**(b-1), without log-gamma/log-beta. Shapes above one give continuous zero endpoint densities. Scaled absolute tolerance 3e-12; no second probability API supplies the oracle. Shape-one/singular endpoint policies, noninteger shapes, invalid parameters, complex/other kinds and random generation unverified.",
+      "driver_id": "stdlib-beta-pdf-reference",
+      "evidence": [
+        {
+          "path": "src/stdlib_stats_distribution_beta.f90",
+          "line": 37,
+          "sha256": "3c52a922206f61987b76b2fda7ae376f4343308d4e63efab8514e544ec943eba"
+        },
+        {
+          "path": "src/stdlib_stats_distribution_beta.f90",
+          "line": 299,
+          "sha256": "3c52a922206f61987b76b2fda7ae376f4343308d4e63efab8514e544ec943eba"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_distribution_beta.f90",
+          "sha256": "b19d4c03bebc70caa2873cb26a884d9941cd168a93e9aba20f23ba32ae271f08"
+        }
+      ]
+    },
+    {
+      "id": "stdlib-beta-cdf",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_stats_distribution_beta",
+      "procedure": "cdf_beta (REAL64)",
+      "gams_codes": [
+        "L5a1b"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "4,428 REAL64 references: shape pairs a,b=2..7, three locations and 41 dyadic abscissas -0.125..1.125 relative to location. Independent binomial tail polynomial sum from j=a to a+b-1, with support saturation, probability bounds and monotonicity checks. Scaled absolute tolerance 3e-12; no second probability API supplies the oracle. Shape-one/singular endpoint policies, noninteger shapes, invalid parameters, complex/other kinds and random generation unverified.",
+      "driver_id": "stdlib-beta-cdf-reference",
+      "evidence": [
+        {
+          "path": "src/stdlib_stats_distribution_beta.f90",
+          "line": 56,
+          "sha256": "3c52a922206f61987b76b2fda7ae376f4343308d4e63efab8514e544ec943eba"
+        },
+        {
+          "path": "src/stdlib_stats_distribution_beta.f90",
+          "line": 461,
+          "sha256": "3c52a922206f61987b76b2fda7ae376f4343308d4e63efab8514e544ec943eba"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_distribution_beta.f90",
+          "sha256": "b19d4c03bebc70caa2873cb26a884d9941cd168a93e9aba20f23ba32ae271f08"
+        }
+      ]
     }
   ],
   "review_notes": {
@@ -12499,6 +12848,19 @@
         "D4b2",
         "D9b",
         "D9b1"
+      ]
+    },
+    "distribution_refinement": {
+      "retrieved_on": "2026-11-01",
+      "url": "https://netlib.org/misc/gams.html",
+      "codes": [
+        "L5a",
+        "L5a1",
+        "L5a1b",
+        "L5a1e",
+        "L5a1g",
+        "L5a1n",
+        "L5a1u"
       ]
     }
   }

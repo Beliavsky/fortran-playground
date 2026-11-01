@@ -104,6 +104,7 @@ from xpackage_gams import (gams_data, package_classes, review_text, subclass_mod
                             factorization_rules_ten_review_text, FACTORIZATION_RULES_TEN_REPORT,
                             special_functions_ten_review_text, SPECIAL_FUNCTIONS_TEN_REPORT,
                             systems_spectra_ten_review_text, SYSTEMS_SPECTRA_TEN_REPORT,
+                            distribution_ten_review_text, DISTRIBUTION_TEN_REPORT,
                           coverage_data, coverage_review_text, COVERAGE_REPORT,
                           class_evidence, class_tree, mapping_evidence_text, EVIDENCE_REPORT)
 
@@ -889,6 +890,55 @@ class PackageGamsTests(unittest.TestCase):
         self.assertIn('22,416',text)
         self.assertIn('Type-2/type-3 transforms',text)
         self.assertIn('two-dimensional NUFFT2D driver',transforms_review_text())
+
+    def test_distribution_drivers_pair_densities_and_probabilities_with_independent_references(self):
+        data = gams_data()
+        records = {r['id']: r for r in data['procedure_mappings']}
+        drivers = {d['id']: d for d in driver_data(data=data)
+                   if d.get('validation_path') == 'docs/gams-distribution-ten-validation.json'}
+        self.assertEqual(len(drivers), 10)
+        reviewed = set(numerical_review(data=data)['packages']['stdlib']['procedure_ids'])
+        for distribution, code, counts in [
+                ('uniform', 'L5a1u', [1625, 1625]), ('normal', 'L5a1n', [585, 585]),
+                ('exponential', 'L5a1e', [1170, 1170]), ('gamma', 'L5a1g', [486, 567]),
+                ('beta', 'L5a1b', [4428, 4428])]:
+            self.assertEqual(class_tree(data)[code]['parent'], 'L5a1')
+            for kind, count in zip(['pdf', 'cdf'], counts):
+                driver = drivers['stdlib-'+distribution+'-'+kind+'-reference']
+                record = records[driver['procedure_id']]
+                self.assertEqual(driver['gams_code'], code)
+                self.assertEqual(record['driver_id'], driver['id'])
+                self.assertIn(record['id'], reviewed)
+                self.assertEqual(driver['checks']['references'], count)
+                self.assertEqual(class_evidence(class_tree(data), code, [record], [driver])['status'], 'verified')
+        self.assertEqual(sum(d['checks']['references'] for d in drivers.values()), 16669)
+        pdf = drivers['stdlib-gamma-pdf-reference']['checks']
+        cdf = drivers['stdlib-gamma-cdf-reference']['checks']
+        self.assertNotIn(0.5, pdf['shapes'])
+        self.assertIn(0.5, cdf['shapes'])
+        self.assertTrue(any(int(shape) != shape for shape in pdf['shapes']))
+        self.assertEqual(pdf['parameterization'], 'shape/rate, optional location supplied')
+        self.assertEqual(drivers['stdlib-exponential-cdf-reference']['checks']['overloads'],
+                         ['location/scale', 'zero-location/rate'])
+        self.assertEqual(drivers['stdlib-uniform-pdf-reference']['checks']['endpoint_density_convention'],
+                         'both endpoints included')
+        refs = json.loads((ROOT/'docs/gams-distribution-ten-references.json').read_text())
+        self.assertEqual({name: len(points) for name, points in refs['tables'].items()}, {
+            'normal-pdf': 65, 'normal-cdf': 65, 'exponential-pdf': 65, 'exponential-cdf': 65,
+            'gamma-pdf': 54, 'gamma-cdf': 63})
+        for name, points in refs['tables'].items():
+            source = (ROOT/drivers['stdlib-'+name+'-reference']['path']).read_text()
+            for point in points:
+                self.assertIn(point['value']+'_real64', source)
+        report = json.loads((ROOT/'docs/gams-distribution-ten-validation.json').read_text())
+        for result in report['drivers']:
+            output = next(stage['stdout'] for stage in result['stages'] if stage['name'] == 'Run')
+            self.assertIn(str(drivers[result['driver_id']]['checks']['references']), output)
+        text = distribution_ten_review_text()
+        self.assertEqual((ROOT/DISTRIBUTION_TEN_REPORT).read_text(encoding='utf-8'), text)
+        for phrase in ['16,669', 'rate is not scale', 'not random-number generators',
+                       'Singular density endpoints', 'monotonicity', 'categories are not exhausted']:
+            self.assertIn(phrase, text)
 
     def test_system_spectral_drivers_keep_kernel_and_eigenvalue_scope_explicit(self):
         data = gams_data()

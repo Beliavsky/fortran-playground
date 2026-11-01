@@ -106,6 +106,7 @@ STATISTICS_SERVICES_TEN_REPORT = Path('docs/gams-statistics-services-ten.md')
 FACTORIZATION_RULES_TEN_REPORT = Path('docs/gams-factorization-rules-ten.md')
 SPECIAL_FUNCTIONS_TEN_REPORT = Path('docs/gams-special-functions-ten.md')
 SYSTEMS_SPECTRA_TEN_REPORT = Path('docs/gams-systems-spectra-ten.md')
+DISTRIBUTION_TEN_REPORT = Path('docs/gams-distribution-ten.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
 EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
@@ -9805,6 +9806,113 @@ def systems_spectra_ten_review_text(root=ROOT):
     return '\n'.join(lines)
 
 
+def distribution_ten_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-distribution-ten-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-distribution-ten-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Ten checked stdlib probability-distribution drivers', '',
+             'Ten independent drivers passed GNU Fortran 16.2.0 with FPM 0.12.0 in the '
+             'restricted hosted sandbox. Existing stdlib libraries were reused; only mains '
+             'and executables were compiled. The [verification report]'
+             '(gams-distribution-ten-validation.json) saves normalized source hashes, '
+             'package pins, timings and full output. GAMS categories are not exhausted.', '',
+             'These examples demonstrate probability density functions (PDFs) and '
+             'cumulative distribution functions (CDFs), not random-number generators. '
+             'There are 16,669 reference comparisons altogether. Every result must be '
+             'finite and nonnegative; CDFs must also stay at or below one and be '
+             'nondecreasing on the ordered grids (monotonicity slack 3e-14).', '',
+             '## Uniform: interval geometry (L5a1u)', '',
+             'Each driver checks 1,625 inputs: five locations, five positive widths and '
+             '65 dyadic relative positions from -0.5 to 1.5. The PDF reference is interval '
+             'membership divided by width. The pinned API includes both endpoints in '
+             'the density support; endpoint density values are an API convention. '
+             'The CDF reference is the relative interval length clipped to [0,1]. '
+             'Scaled absolute tolerance is 4e-15. Integer/complex overloads, invalid '
+             'widths and other kinds are not covered.', '',
+             '## Normal: high-precision references (L5a1n)', '',
+             'Each driver checks 585 inputs: standardized z=-8..8 by 0.25 at three '
+             'locations and standard deviations [0.25,1,4]. Independent standard '
+             'normal PDF/CDF constants were computed with mpmath 1.3.0 at 80 decimal '
+             'digits and confirmed at 120 digits to absolute difference below 1e-70. '
+             'The [reference table](gams-distribution-ten-references.json) records '
+             'arguments and 26-digit values. Density references transform by inverse '
+             'standard deviation; CDF references remain unchanged. Scaled absolute '
+             'tolerance is 3e-14. This does not certify relative accuracy in tiny tails, '
+             'invalid scales, extreme arguments or complex overloads.', '',
+             '## Exponential: scale and rate interfaces (L5a1e)', '',
+             'Each driver makes 1,170 comparisons over 585 inputs: 65 standardized '
+             'positions z=-0.5..7.5 by 0.125 and nine location/scale pairs. Both '
+             'the location/scale interface and the shifted zero-location/rate '
+             'interface are checked against independent 80/120-digit constants. '
+             'Rate is the reciprocal of scale. The PDF reference is exp(-z)/scale '
+             'on support; the CDF reference uses high-precision -expm1(-z). Negative '
+             'support and the boundary are included, with scaled tolerance 3e-14. '
+             'Invalid parameters, tiny relative tails and other kinds remain unverified.', '',
+             '## Gamma: integer and noninteger shapes (L5a1g)', '',
+             'The PDF driver has 486 references at shapes [1,1.5,2.5,3,5,8]. The '
+             'CDF driver has 567 references and also includes shape 0.5. Each uses '
+             'nine standardized positions [-0.25,0,0.125,0.25,0.5,1,2,4,8], three '
+             'locations and three positive rates [0.25,1,4]. Inputs satisfy '
+             'z=rate*(x-location); rate is not scale. The independent 80/120-digit '
+             'unit-rate density/integral constants transform by rate for PDFs and '
+             'remain unchanged for CDFs. The CDF is the lower incomplete gamma '
+             'integral divided by gamma(shape). No second stdlib special-function '
+             'call supplies the oracle.', '',
+             'The shape-one endpoint density equals rate; for larger shapes it is '
+             'zero. Singular density endpoints for shape below one are deliberately '
+             'excluded, while the CDF checks shape 0.5 at its boundary. The scaled '
+             'absolute tolerance is 3e-12, without a relative-tail accuracy claim. '
+             'Only explicit-location, REAL64 interfaces and bounded parameter scales '
+             'are verified; optional-default/error overloads and other kinds are not.', '',
+             '## Beta: polynomial references (L5a1b)', '',
+             'Each driver has 4,428 references: 36 integer shape pairs a,b=2..7, '
+             'three locations and 41 relative positions from -0.125 to 1.125. '
+             'For the PDF, a finite product supplies 1/B(a,b), multiplied by '
+             'z**(a-1)*(1-z)**(b-1). For the CDF, an independent binomial tail '
+             'sum from j=a to a+b-1 gives the regularized probability. These '
+             'references call neither gamma/log-gamma nor beta/incomplete-beta '
+             'routines. The shapes above one have continuous zero endpoint '
+             'densities; outside-support densities vanish and CDFs saturate. '
+             'Scaled tolerance is 3e-12. Shape-one/singular endpoint conventions, '
+             'noninteger shapes, invalid parameters and other kinds remain unverified.', '',
+             '## Classification and provenance', '',
+             'The [Netlib GAMS taxonomy](https://netlib.org/misc/gams.html) places '
+             'univariate PDFs/CDFs in L5a1, with leaves L5a1u (uniform), L5a1n '
+             '(normal), L5a1e (exponential), L5a1g (gamma) and L5a1b (beta). '
+             'Some leaf labels include other distributions; these drivers verify '
+             'only the specifically named stdlib procedures. They do not establish '
+             'random-sampling quality or performance.', '',
+             'Pinned public APIs, implementations and author tests were reviewed. '
+             'These independent MIT consumers do not copy upstream implementation '
+             'or test bodies; upstream license terms remain separate. No numerical '
+             'source was patched. Loading a driver does not submit a job.', '']
+    for d in drivers:
+        lines += ['### '+d['id']+' ('+d['gams_code']+')', '', d['modifications'], '']
+    lines += ['## Provenance and actual output', '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -9986,6 +10094,7 @@ def main():
                          (FACTORIZATION_RULES_TEN_REPORT, factorization_rules_ten_review_text()),
                          (SPECIAL_FUNCTIONS_TEN_REPORT, special_functions_ten_review_text()),
                          (SYSTEMS_SPECTRA_TEN_REPORT, systems_spectra_ten_review_text()),
+                         (DISTRIBUTION_TEN_REPORT, distribution_ten_review_text()),
                          (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report

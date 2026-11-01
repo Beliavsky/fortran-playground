@@ -803,5 +803,33 @@ export const gamsSubclasses = {
   "D9b1": {
     "label": "Least squares (L_2) solution",
     "parent": "D9b"
+  },
+  "L5a": {
+    "label": "Univariate",
+    "parent": "L5"
+  },
+  "L5a1": {
+    "label": "Cumulative distribution functions, probability density functions",
+    "parent": "L5a"
+  },
+  "L5a1b": {
+    "label": "Beta, binomial",
+    "parent": "L5a1"
+  },
+  "L5a1e": {
+    "label": "Error function, exponential, extreme value",
+    "parent": "L5a1"
+  },
+  "L5a1g": {
+    "label": "Gamma, general, geometric",
+    "parent": "L5a1"
+  },
+  "L5a1n": {
+    "label": "Negative binomial, normal",
+    "parent": "L5a1"
+  },
+  "L5a1u": {
+    "label": "Uniform",
+    "parent": "L5a1"
   }
 };

@@ -11338,6 +11338,319 @@
         "preconditioner": "none",
         "interface": "public kernel with module-level callbacks"
       }
+    },
+    {
+      "id": "stdlib-uniform-pdf-reference",
+      "name": "gams-stdlib-uniform-pdf-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-uniform-pdf",
+      "gams_code": "L5a1u",
+      "problem_id": "stdlib-uniform-pdf-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-uniform-pdf-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_distribution_uniform.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/distribution-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and author tests reviewed. 1,625 REAL64 interval references across five locations, five positive widths and 65 dyadic relative abscissas from -0.5 to 1.5. Density reference is interval membership divided by interval width; the API includes both endpoints. Scaled absolute tolerance 4e-15 and finite/nonnegative results. Invalid widths, integer/complex overloads, other kinds and random generation unverified.",
+      "validation_path": "docs/gams-distribution-ten-validation.json",
+      "review_path": "docs/gams-distribution-ten.md",
+      "checks": {
+        "references": 1625,
+        "locations": 5,
+        "positive_widths": 5,
+        "abscissas": 65,
+        "tolerance": 4e-15,
+        "endpoint_density_convention": "both endpoints included"
+      }
+    },
+    {
+      "id": "stdlib-uniform-cdf-reference",
+      "name": "gams-stdlib-uniform-cdf-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-uniform-cdf",
+      "gams_code": "L5a1u",
+      "problem_id": "stdlib-uniform-cdf-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-uniform-cdf-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_distribution_uniform.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/distribution-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and author tests reviewed. 1,625 REAL64 interval references across five locations, five positive widths and 65 dyadic relative abscissas from -0.5 to 1.5. CDF reference is clipped relative interval length; probability bounds and monotonicity also checked. Scaled absolute tolerance 4e-15 and finite/nonnegative results. Invalid widths, integer/complex overloads, other kinds and random generation unverified.",
+      "validation_path": "docs/gams-distribution-ten-validation.json",
+      "review_path": "docs/gams-distribution-ten.md",
+      "checks": {
+        "references": 1625,
+        "locations": 5,
+        "positive_widths": 5,
+        "abscissas": 65,
+        "tolerance": 4e-15,
+        "endpoint_density_convention": "CDF zero/one"
+      }
+    },
+    {
+      "id": "stdlib-normal-pdf-reference",
+      "name": "gams-stdlib-normal-pdf-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-normal-pdf",
+      "gams_code": "L5a1n",
+      "problem_id": "stdlib-normal-pdf-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-normal-pdf-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_distribution_normal.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/distribution-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and author tests reviewed. 585 REAL64 references: 65 standardized abscissas -8..8 by 0.25, three locations and three positive standard deviations. Independent mpmath 80-digit constants confirmed at 120 digits. Density constants transform with the inverse scale. Scaled absolute tolerance 3e-14; small tails are not certified to relative accuracy. Finite/nonnegative outputs checked. Invalid scales, complex overloads, other kinds, extreme arguments and random generation unverified.",
+      "validation_path": "docs/gams-distribution-ten-validation.json",
+      "review_path": "docs/gams-distribution-ten.md",
+      "checks": {
+        "references": 585,
+        "standard_abscissas": 65,
+        "locations": 3,
+        "positive_scales": 3,
+        "tolerance": 3e-14,
+        "reference_digits": 80,
+        "confirmation_digits": 120
+      }
+    },
+    {
+      "id": "stdlib-normal-cdf-reference",
+      "name": "gams-stdlib-normal-cdf-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-normal-cdf",
+      "gams_code": "L5a1n",
+      "problem_id": "stdlib-normal-cdf-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-normal-cdf-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_distribution_normal.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/distribution-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and author tests reviewed. 585 REAL64 references: 65 standardized abscissas -8..8 by 0.25, three locations and three positive standard deviations. Independent mpmath 80-digit constants confirmed at 120 digits. CDF bounds and monotonicity checked. Scaled absolute tolerance 3e-14; small tails are not certified to relative accuracy. Finite/nonnegative outputs checked. Invalid scales, complex overloads, other kinds, extreme arguments and random generation unverified.",
+      "validation_path": "docs/gams-distribution-ten-validation.json",
+      "review_path": "docs/gams-distribution-ten.md",
+      "checks": {
+        "references": 585,
+        "standard_abscissas": 65,
+        "locations": 3,
+        "positive_scales": 3,
+        "tolerance": 3e-14,
+        "reference_digits": 80,
+        "confirmation_digits": 120
+      }
+    },
+    {
+      "id": "stdlib-exponential-pdf-reference",
+      "name": "gams-stdlib-exponential-pdf-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-exponential-pdf",
+      "gams_code": "L5a1e",
+      "problem_id": "stdlib-exponential-pdf-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-exponential-pdf-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_distribution_exponential.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/distribution-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and author tests reviewed. 1,170 REAL64 comparisons over 585 inputs: z=-0.5..7.5 by 0.125, three locations and three positive scales. Both location/scale and shifted zero-location/rate overloads checked against independent 80/120-digit mpmath references; rate=1/scale. Density reference is exp(-z)/scale on support. Support boundary and negative arguments included. Scaled absolute tolerance 3e-14; tiny relative tails, invalid parameters, complex/other kinds and random generation unverified.",
+      "validation_path": "docs/gams-distribution-ten-validation.json",
+      "review_path": "docs/gams-distribution-ten.md",
+      "checks": {
+        "references": 1170,
+        "input_pairs": 585,
+        "standard_abscissas": 65,
+        "locations": 3,
+        "positive_scales": 3,
+        "overloads": [
+          "location/scale",
+          "zero-location/rate"
+        ],
+        "tolerance": 3e-14,
+        "reference_digits": 80,
+        "confirmation_digits": 120
+      }
+    },
+    {
+      "id": "stdlib-exponential-cdf-reference",
+      "name": "gams-stdlib-exponential-cdf-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-exponential-cdf",
+      "gams_code": "L5a1e",
+      "problem_id": "stdlib-exponential-cdf-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-exponential-cdf-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_distribution_exponential.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/distribution-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and author tests reviewed. 1,170 REAL64 comparisons over 585 inputs: z=-0.5..7.5 by 0.125, three locations and three positive scales. Both location/scale and shifted zero-location/rate overloads checked against independent 80/120-digit mpmath references; rate=1/scale. CDF reference uses high-precision -expm1(-z), with bounds and monotonicity checks. Support boundary and negative arguments included. Scaled absolute tolerance 3e-14; tiny relative tails, invalid parameters, complex/other kinds and random generation unverified.",
+      "validation_path": "docs/gams-distribution-ten-validation.json",
+      "review_path": "docs/gams-distribution-ten.md",
+      "checks": {
+        "references": 1170,
+        "input_pairs": 585,
+        "standard_abscissas": 65,
+        "locations": 3,
+        "positive_scales": 3,
+        "overloads": [
+          "location/scale",
+          "zero-location/rate"
+        ],
+        "tolerance": 3e-14,
+        "reference_digits": 80,
+        "confirmation_digits": 120
+      }
+    },
+    {
+      "id": "stdlib-gamma-pdf-reference",
+      "name": "gams-stdlib-gamma-pdf-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-gamma-pdf",
+      "gams_code": "L5a1g",
+      "problem_id": "stdlib-gamma-pdf-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-gamma-pdf-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_distribution_gamma.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/distribution-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and author tests reviewed. 486 REAL64 references with shapes [1.0, 1.5, 2.5, 3.0, 5.0, 8.0], three locations, three positive rates and nine standardized abscissas -0.25..8. Independent mpmath density/integral values at 80 digits confirmed at 120; includes noninteger shapes, negative support and x=loc. Shape-one endpoint density is rate; larger-shape endpoint density is zero. Singular density endpoints for shapes below one are deliberately excluded. Scaled absolute tolerance 3e-12; small tails are not certified relatively. Explicit location only; invalid inputs, complex/other kinds, extreme scales and random generation unverified.",
+      "validation_path": "docs/gams-distribution-ten-validation.json",
+      "review_path": "docs/gams-distribution-ten.md",
+      "checks": {
+        "references": 486,
+        "shapes": [
+          1.0,
+          1.5,
+          2.5,
+          3.0,
+          5.0,
+          8.0
+        ],
+        "standard_abscissas": 9,
+        "locations": 3,
+        "positive_rates": 3,
+        "tolerance": 3e-12,
+        "reference_digits": 80,
+        "confirmation_digits": 120,
+        "parameterization": "shape/rate, optional location supplied"
+      }
+    },
+    {
+      "id": "stdlib-gamma-cdf-reference",
+      "name": "gams-stdlib-gamma-cdf-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-gamma-cdf",
+      "gams_code": "L5a1g",
+      "problem_id": "stdlib-gamma-cdf-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-gamma-cdf-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_distribution_gamma.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/distribution-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and author tests reviewed. 567 REAL64 references with shapes [0.5, 1.0, 1.5, 2.5, 3.0, 5.0, 8.0], three locations, three positive rates and nine standardized abscissas -0.25..8. Independent mpmath density/integral values at 80 digits confirmed at 120; includes noninteger shapes, negative support and x=loc. CDF normalization is the lower incomplete gamma integral divided by gamma(shape); bounds and monotonicity checked. Scaled absolute tolerance 3e-12; small tails are not certified relatively. Explicit location only; invalid inputs, complex/other kinds, extreme scales and random generation unverified.",
+      "validation_path": "docs/gams-distribution-ten-validation.json",
+      "review_path": "docs/gams-distribution-ten.md",
+      "checks": {
+        "references": 567,
+        "shapes": [
+          0.5,
+          1.0,
+          1.5,
+          2.5,
+          3.0,
+          5.0,
+          8.0
+        ],
+        "standard_abscissas": 9,
+        "locations": 3,
+        "positive_rates": 3,
+        "tolerance": 3e-12,
+        "reference_digits": 80,
+        "confirmation_digits": 120,
+        "parameterization": "shape/rate, optional location supplied"
+      }
+    },
+    {
+      "id": "stdlib-beta-pdf-reference",
+      "name": "gams-stdlib-beta-pdf-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-beta-pdf",
+      "gams_code": "L5a1b",
+      "problem_id": "stdlib-beta-pdf-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-beta-pdf-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_distribution_beta.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/distribution-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and author tests reviewed. 4,428 REAL64 references: shape pairs a,b=2..7, three locations and 41 dyadic abscissas -0.125..1.125 relative to location. Independent finite-product normalization times z**(a-1)*(1-z)**(b-1), without log-gamma/log-beta. Shapes above one give continuous zero endpoint densities. Scaled absolute tolerance 3e-12; no second probability API supplies the oracle. Shape-one/singular endpoint policies, noninteger shapes, invalid parameters, complex/other kinds and random generation unverified.",
+      "validation_path": "docs/gams-distribution-ten-validation.json",
+      "review_path": "docs/gams-distribution-ten.md",
+      "checks": {
+        "references": 4428,
+        "shape_pairs": 36,
+        "shapes": [
+          2,
+          7
+        ],
+        "locations": 3,
+        "abscissas": 41,
+        "tolerance": 3e-12,
+        "oracle": "finite-product polynomial density"
+      }
+    },
+    {
+      "id": "stdlib-beta-cdf-reference",
+      "name": "gams-stdlib-beta-cdf-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-beta-cdf",
+      "gams_code": "L5a1b",
+      "problem_id": "stdlib-beta-cdf-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-beta-cdf-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_distribution_beta.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/distribution-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and author tests reviewed. 4,428 REAL64 references: shape pairs a,b=2..7, three locations and 41 dyadic abscissas -0.125..1.125 relative to location. Independent binomial tail polynomial sum from j=a to a+b-1, with support saturation, probability bounds and monotonicity checks. Scaled absolute tolerance 3e-12; no second probability API supplies the oracle. Shape-one/singular endpoint policies, noninteger shapes, invalid parameters, complex/other kinds and random generation unverified.",
+      "validation_path": "docs/gams-distribution-ten-validation.json",
+      "review_path": "docs/gams-distribution-ten.md",
+      "checks": {
+        "references": 4428,
+        "shape_pairs": 36,
+        "shapes": [
+          2,
+          7
+        ],
+        "locations": 3,
+        "abscissas": 41,
+        "tolerance": 3e-12,
+        "oracle": "binomial tail polynomial"
+      }
     }
   ]
 }

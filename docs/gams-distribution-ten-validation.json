@@ -1,0 +1,328 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "stdlib-uniform-pdf-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "b46f561cb4b6aff7f7354d681a20a2ef54515272707317c44701cda16d77c348",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T20:45:45.762328+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.382,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Uniform references on and outside 25 shifted intervals, including both endpoints: 1625\nPASS stdlib-uniform-pdf-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.025,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-uniform-cdf-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "8d1ea4bf7a729e3489103b82900e3be6b131997f51366867b323dbd1d2a7c27e",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T20:45:49.769037+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.403,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Uniform references on and outside 25 shifted intervals, including both endpoints: 1625\nPASS stdlib-uniform-cdf-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.024,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-normal-pdf-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "ec9811349473133a39a1d62ddd021f971fd2b727127dd90a6071153f5a3b598a",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T20:45:53.960636+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.347,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Normal references from independent 80/120-digit constants, z=-8..8, nine location/scale pairs: 585\nPASS stdlib-normal-pdf-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.031,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-normal-cdf-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "021985dec522b961a62461830754f4ae9b7f19319ffae1d521161f07bd09332e",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T20:46:00.590975+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 2.113,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Normal references from independent 80/120-digit constants, z=-8..8, nine location/scale pairs: 585\nPASS stdlib-normal-cdf-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.03,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-exponential-pdf-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "fef427178d4d917a0ca2fda932f2681a654a4a47a96bbecf701ba0bb827105cc",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T20:46:04.055405+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.391,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Exponential scale and rate overload references, shifted support and z=-0.5..7.5: 1170\nPASS stdlib-exponential-pdf-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.044,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-exponential-cdf-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "c661326bf61881fade7ea678b6093c9fec0e06976533aa2d9283cf9806134098",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T20:46:07.308452+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.499,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Exponential scale and rate overload references, shifted support and z=-0.5..7.5: 1170\nPASS stdlib-exponential-cdf-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.044,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-gamma-pdf-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "38683719a04db82b83a30282cd095f8338f300319c1ec6cf513f47e53d227766",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T20:46:10.540110+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.414,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Gamma references at integer/noninteger shapes, three locations/rates and nine support/tail points: 486\nPASS stdlib-gamma-pdf-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.042,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-gamma-cdf-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "7495eede4ca87397a162b9b3861739b35fe1b34416f9559eadd0c27a748efde0",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T20:46:14.411020+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.678,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Gamma references at integer/noninteger shapes, three locations/rates and nine support/tail points: 567\nPASS stdlib-gamma-cdf-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.025,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-beta-pdf-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "95dcbc2adb425fa2dbb4e20344fca2ef4b10a03c12b39b2b4fbe3f928166a041",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T20:46:17.404883+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.44,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Shifted beta references for integer shapes 2..7, three locations and 41 support/boundary points: 4428\nPASS stdlib-beta-pdf-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.025,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-beta-cdf-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "d1f6891cffa3edafea8513e054bde3e15b52bc0a97bc3ad37b072a4c47605b03",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T20:46:20.578363+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.393,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Shifted beta references for integer shapes 2..7, three locations and 41 support/boundary points: 4428\nPASS stdlib-beta-cdf-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.032,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-11-01T20:46:20.630715+00:00"
+}

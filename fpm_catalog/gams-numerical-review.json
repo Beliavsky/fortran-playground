@@ -990,7 +990,17 @@
         "stdlib-real-schur",
         "stdlib-cg-kernel",
         "stdlib-pcg-kernel",
-        "stdlib-bicgstab-kernel"
+        "stdlib-bicgstab-kernel",
+        "stdlib-uniform-pdf",
+        "stdlib-uniform-cdf",
+        "stdlib-normal-pdf",
+        "stdlib-normal-cdf",
+        "stdlib-exponential-pdf",
+        "stdlib-exponential-cdf",
+        "stdlib-gamma-pdf",
+        "stdlib-gamma-cdf",
+        "stdlib-beta-pdf",
+        "stdlib-beta-cdf"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
     },
