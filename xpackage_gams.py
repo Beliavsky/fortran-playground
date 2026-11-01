@@ -102,6 +102,7 @@ STATE_TEN_REPORT = Path('docs/gams-state-ten.md')
 INTEROP_TEN_REPORT = Path('docs/gams-interop-ten.md')
 STORAGE_TEN_REPORT = Path('docs/gams-storage-ten.md')
 WORKFLOWS_TEN_REPORT = Path('docs/gams-workflows-ten.md')
+STATISTICS_SERVICES_TEN_REPORT = Path('docs/gams-statistics-services-ten.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
 EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
@@ -9430,6 +9431,92 @@ def workflows_ten_review_text(root=ROOT):
     return '\n'.join(lines)
 
 
+def statistics_services_ten_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-statistics-services-ten-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-statistics-services-ten-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Ten checked statistical, matrix, quadrature and service drivers', '',
+             'Ten independent consumers passed GNU Fortran 16.2.0 with FPM 0.12.0 in the restricted '
+             'hosted sandbox. Seven newly reviewed stdlib procedures and three existing service '
+             'records have dedicated drivers. Every successful run reused the existing package '
+             'library and compiled only the main and executable. The '
+             '[verification report](gams-statistics-services-ten-validation.json) preserves pins, '
+             'source hashes, timings and full output. GAMS categories are not exhausted.', '',
+             '## Independent numerical references', '',
+             'Median references come from nine-bin integer histogram ordering, not another sorting '
+             'or selection routine. Covariance references use pairwise differences: the sum over '
+             'k<l of (x[k,i]-x[l,i])*(x[k,j]-x[l,j]), divided by n*(n-c), where c is 1 for sample '
+             'or 0 for population covariance. Correlations normalize these pairwise sums. Both '
+             'axis conventions are checked without using package mean, variance or covariance '
+             'routines to produce the references.', '',
+             'Third/fourth moment references use exact INT64 arithmetic. With x[i]=q[i]/8 and '
+             'S=sum(q), the central moment numerator is sum((n*q[i]-S)**p), with denominator '
+             'n**(p+1)*8**p. Explicit zero-center references instead use sum(q[i]**p)/(n*8**p). '
+             'All integer operations stay within INT64 range; final rational conversion is REAL64.', '',
+             'Determinants of 96 nonsingular 3x3 matrices are checked with the independent six-term '
+             'polynomial. Inverses of 128 nonsymmetric matrices A=D*(I+u*v**T)*E are compared with '
+             'E**(-1)*(I-u*v**T/(1+v**T*u))*D**(-1), plus left/right identity residuals. '
+             'Default calls must preserve input matrices. These are bounded matrix families, '
+             'not a certification for arbitrary conditioning, sizes or singular cases.', '',
+             'Trapezoidal integration checks 864 affine antiderivatives over nonuniform, reversed '
+             'and constant-spacing grids. Selected inputs/results are exact binary values; no '
+             'reference is produced by summing another trapezoidal rule. Nonlinear integration '
+             'errors and adaptivity remain outside this driver.', '',
+             '## Service references and scope', '',
+             'Timer results, multiplied by nloops, must lie between independently sampled inner '
+             'and outer native clock intervals. Four SYSTEM_CLOCK ticks and 2 microseconds CPU '
+             'resolution slack are allowed. Sixteen reused timer pairs also check exact work '
+             'sums. No performance or minimum-duration claim is made.', '',
+             'Assertions are tested through 65 passing pure-contract calls and one deliberately '
+             'false assertion in a self-invoked child. The parent requires nonzero exit and the '
+             'specified diagnostic; the expected failure is checked rather than ignored. '
+             'MPI wrappers run on exactly one process and check 1,408 identity values/statuses '
+             'across 64 traces. This does not verify communication between processes or speedup.', '',
+             '## Retained random-array bounds failure', '',
+             'The [requested-bounds probe](gams-candidates/test-helper-bounds/README.md) for '
+             'fortran_test_helper compiles with cached-library reuse but returns a maximum '
+             '1.944083652 for requested [0,1] bounds. The public source transforms intrinsic draws '
+             'with 0.99*(low+(high+1-low)*draw), explaining the excess. Its exact source, normalized '
+             'hash, package pin and full failed result are retained. That record receives no '
+             'checked driver and no source patch.', '',
+             '## Classification and provenance', '',
+             'The [Netlib GAMS taxonomy](https://netlib.org/misc/gams.html) supplies explicit '
+             'parents for covariance/correlation (L1c1b), shape moments (L1a1c), real general '
+             'determinants (D3a1) and nonautomatic sampled-grid quadrature (H2a1b2). '
+             'Only these reviewed scopes are promoted; adjacent statistical/solver capabilities '
+             'and the retained bounds failure remain separate.', '']
+    for d in drivers:
+        lines += ['### '+d['id']+' ('+d['gams_code']+')', '', d['modifications'], '']
+    lines += ['## Provenance and actual output', '',
+              'Pinned APIs, implementations and available author examples were reviewed. These '
+              'independent MIT consumers do not copy upstream implementation/example bodies; '
+              'upstream license terms remain separate, including the custom assertion-library '
+              'terms. Only each recorded class and tested scope is verified. Loading an example '
+              'does not submit a job.', '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -9607,6 +9694,7 @@ def main():
                          (INTEROP_TEN_REPORT, interop_ten_review_text()),
                          (STORAGE_TEN_REPORT, storage_ten_review_text()),
                          (WORKFLOWS_TEN_REPORT, workflows_ten_review_text()),
+                         (STATISTICS_SERVICES_TEN_REPORT, statistics_services_ten_review_text()),
                          (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report

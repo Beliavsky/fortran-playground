@@ -448,7 +448,9 @@
       "N5",
       "N6",
       "R3",
-      "D9"
+      "D9",
+      "D3",
+      "H2"
     ],
     "bspline-fortran": [
       "E1",
@@ -1649,6 +1651,38 @@
     "J1a3": {
       "label": "Sine and cosine transforms",
       "parent": "J1a"
+    },
+    "L1a1c": {
+      "label": "Shape",
+      "parent": "L1a1"
+    },
+    "L1c": {
+      "label": "Multi-dimensional data",
+      "parent": "L1"
+    },
+    "L1c1": {
+      "label": "Raw data",
+      "parent": "L1c"
+    },
+    "L1c1b": {
+      "label": "Covariance, correlation",
+      "parent": "L1c1"
+    },
+    "D3a": {
+      "label": "Real nonsymmetric matrices",
+      "parent": "D3"
+    },
+    "D3a1": {
+      "label": "General",
+      "parent": "D3a"
+    },
+    "H2a1b": {
+      "label": "Integrand available only on grid",
+      "parent": "H2a1"
+    },
+    "H2a1b2": {
+      "label": "Nonautomatic",
+      "parent": "H2a1b"
     }
   },
   "procedure_mappings": [
@@ -4961,7 +4995,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "Uniform real test arrays generated from RANDOM_NUMBER; assertion routines are separate software-testing tools.",
+      "notes": "Uniform real test arrays generated from RANDOM_NUMBER; assertion routines are separate software-testing tools. A retained GNU 16 bounds probe with xmin=0 and xmax=1 produces values above 1; see docs/gams-candidates/test-helper-bounds. The source uses 0.99*(low+(high+1-low)*draw). Requested-bound behavior remains unverified; no checked GAMS driver or source patch is published.",
       "evidence": [
         {
           "path": "src/fth_arrays.f90",
@@ -6989,7 +7023,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "Serial system_clock and CPU timers. The checked main computes the exact sum of integers 1 through 100000, checks finite nonnegative elapsed times and prints the sum and timings. The root manifest VERSION placeholder is replaced with adapter version 0.0.0; the pinned source commit identifies the actual library. FACE is pinned to an already used revision. No Fortran source edits. MPI/OpenMP timers are not enabled or tested; sandbox timings vary and are not benchmark guarantees.",
+      "notes": "Serial system_clock and CPU timers. The checked main computes the exact sum of integers 1 through 100000, checks finite nonnegative elapsed times and prints the sum and timings. The root manifest VERSION placeholder is replaced with adapter version 0.0.0; the pinned source commit identifies the actual library. FACE is pinned to an already used revision. No Fortran source edits. MPI/OpenMP timers are not enabled or tested; sandbox timings vary and are not benchmark guarantees. Checked driver: 16 reused wall/CPU timer pairs, nloops averaging and exact integer work checksums. Reported durations multiplied by nloops must fall between native inner/outer SYSTEM_CLOCK or CPU_TIME brackets, allowing four wall ticks or 2 microseconds CPU resolution slack. No latency or speed benchmark claim. Pause/resume, wrapping, invalid calls, MPI/OpenMP timers and other platforms unverified.",
       "evidence": [
         {
           "path": "src/fortime.F90",
@@ -7006,7 +7040,8 @@
           "path": "example/example3.f90",
           "sha256": "fa1ee42d66b73178e432a0ec6f81df1ef90f34e5d3a3e7e72f4c42429caad717"
         }
-      ]
+      ],
+      "driver_id": "timer-brackets-reference"
     },
     {
       "id": "assert-values",
@@ -7827,7 +7862,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "Runtime assertion checks in pure procedures, built with ASSERTIONS=1 so enforcement is enabled in the cached library. A checksum-guarded manifest edit adds the upstream include directory; library sources and headers are unchanged. The main checks preconditions and postconditions around a pure square-root function. A separate sandbox probe compiles successfully, intentionally calls assert(.false.), and verifies nonzero termination with the expected descriptive diagnostic and unchanged library artifacts, demonstrating that checks were not compiled away. Multi-image/coarray callbacks and every macro variant are not validated. Full current upstream license terms, including its enhancement-contribution provision, are retained under LicenseRef-Berkeley-Assert rather than labeling them as an unmodified standard BSD license.",
+      "notes": "Runtime assertion checks in pure procedures, built with ASSERTIONS=1 so enforcement is enabled in the cached library. A checksum-guarded manifest edit adds the upstream include directory; library sources and headers are unchanged. The main checks preconditions and postconditions around a pure square-root function. A separate sandbox probe compiles successfully, intentionally calls assert(.false.), and verifies nonzero termination with the expected descriptive diagnostic and unchanged library artifacts, demonstrating that checks were not compiled away. Multi-image/coarray callbacks and every macro variant are not validated. Full current upstream license terms, including its enhancement-contribution provision, are retained under LicenseRef-Berkeley-Assert rather than labeling them as an unmodified standard BSD license. Checked driver: 65 bounded square evaluations inside pure pre/postcondition assertions, plus one deliberately false assertion in a self-invoked child. Parent requires nonzero exit and the specified diagnostic, proving enforcement in the existing enabled library. Child failure is expected and checked. Other macros, callbacks, multi-image behavior and disabled builds unverified. Upstream custom license terms remain unchanged.",
       "evidence": [
         {
           "path": "src/assert_m.F90",
@@ -7840,7 +7875,8 @@
           "path": "example/simple-assertions.f90",
           "sha256": "d1d7504fb8961b24540ab1f30ea23724775daa1d2a046c8ae19e37f1b8a835a8"
         }
-      ]
+      ],
+      "driver_id": "assert-enforcement-reference"
     },
     {
       "id": "fmm2d-potentials",
@@ -8634,7 +8670,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "The upstream CMake library source list is generated with Fypp 3.2, with every generated file checksum locked in the recipe. The example exercises communicator initialization, real-vector broadcast, real and integer all-reduce and in-place maximum reduction on exactly one MPI process, checking API statuses and returned data. MPICH is pinned and UCX transports are limited to self/shared memory. This illustrates typed communication APIs, not parallel execution or speedup; point-to-point messaging, multiple processes and other wrappers are outside verification scope. Classification R covers the tested service routines.",
+      "notes": "The upstream CMake library source list is generated with Fypp 3.2, with every generated file checksum locked in the recipe. The example exercises communicator initialization, real-vector broadcast, real and integer all-reduce and in-place maximum reduction on exactly one MPI process, checking API statuses and returned data. MPICH is pinned and UCX transports are limited to self/shared memory. This illustrates typed communication APIs, not parallel execution or speedup; point-to-point messaging, multiple processes and other wrappers are outside verification scope. Classification R covers the tested service routines. Checked driver: 64 exactly one-process typed collective traces: broadcast, real-vector SUM allreduce, in-place MAX and integer SUM allreduce; all 1,408 values and API statuses checked exactly. Communicator rank/size checked. This verifies wrapper identities, not communication between processes, parallel execution or speedup. Other wrappers/types and multi-process behavior unverified.",
       "evidence": [
         {
           "path": "lib/mpifx_bcast.fpp",
@@ -8661,7 +8697,8 @@
           "path": "test/test_bcast.f90",
           "sha256": "e5c9c90bb4f4132915cb9bb3158bc7fd6ff1e2c65e384fd29c2b0046c8ee4a54"
         }
-      ]
+      ],
+      "driver_id": "mpifx-identity-reference"
     },
     {
       "id": "scalapackfx-symmetric-eigenproblem",
@@ -10030,6 +10067,230 @@
         }
       ],
       "driver_id": "friction-lugre-reference"
+    },
+    {
+      "id": "stdlib-median",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_stats",
+      "procedure": "median (REAL64 rank-one)",
+      "gams_codes": [
+        "L1a1a"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Pinned public API, implementation and author test/example reviewed.  Checked driver: 768 REAL64 vector medians for lengths 1..64 against an independent nine-bin histogram ordering, with odd/even sizes, ties, signed dyadics and input preservation. Empty input returns NaN. Masks, nonfinite data and other ranks/kinds unverified.",
+      "evidence": [
+        {
+          "path": "src/stdlib_stats.f90",
+          "line": 1230,
+          "sha256": "e15ce21ef7f4ae8f3c0df5d99675ad33a5a820167c7565c3b14d3fa2f0acba88"
+        },
+        {
+          "path": "src/stdlib_stats_median.f90",
+          "line": 1,
+          "sha256": "007f1759a66fc84b250b0b480b0bdc908438cd57682b415aaa445c35ff14f74e"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_median.f90",
+          "sha256": "7750a2825f0c358fe675b092cb9e015512e54eaff9def4c51d7ce4d7d4c6b729"
+        }
+      ],
+      "driver_id": "stdlib-median-reference"
+    },
+    {
+      "id": "stdlib-covariance",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_stats",
+      "procedure": "cov (REAL64 rank-two sample/population matrices)",
+      "gams_codes": [
+        "L1c1b"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Pinned public API, implementation and author test/example reviewed.  Checked driver: 29 three-variable REAL64 datasets with 4..32 observations; sample/population matrices and both axis conventions. All 1,044 entries match independent pairwise-difference sums without package mean/variance/covariance calls or MATMUL. Scaled absolute tolerance 2e-12. Missing data, masks, degeneracy, complex values and all numerical conditioning unverified.",
+      "evidence": [
+        {
+          "path": "src/stdlib_stats.f90",
+          "line": 239,
+          "sha256": "e15ce21ef7f4ae8f3c0df5d99675ad33a5a820167c7565c3b14d3fa2f0acba88"
+        },
+        {
+          "path": "src/stdlib_stats_cov.f90",
+          "line": 1,
+          "sha256": "7b1cfefc2fb7525c4c2e2f01be4d9c07a2b863cdb51f48915621360e4fa9bb20"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_cov.f90",
+          "sha256": "b490583679658a96ef6e5714b60885373aa8f74d6680388ddce94f82f7a9c3b8"
+        }
+      ],
+      "driver_id": "stdlib-covariance-reference"
+    },
+    {
+      "id": "stdlib-correlation",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_stats",
+      "procedure": "corr (REAL64 rank-two Pearson matrices)",
+      "gams_codes": [
+        "L1c1b"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Pinned public API, implementation and author test/example reviewed.  Checked driver: 29 nonconstant three-variable REAL64 datasets; 522 Pearson matrix entries for both axis conventions against normalized pairwise-difference sums, absolute tolerance 2e-12. No package covariance, variance or mean supplies the reference. Constant columns, missing data, masks, complex values and general correlation analysis unverified.",
+      "evidence": [
+        {
+          "path": "src/stdlib_stats.f90",
+          "line": 15,
+          "sha256": "e15ce21ef7f4ae8f3c0df5d99675ad33a5a820167c7565c3b14d3fa2f0acba88"
+        },
+        {
+          "path": "src/stdlib_stats_corr.f90",
+          "line": 1,
+          "sha256": "5a52b9ee273b913f7608d1be6cf8667c5d8217823e8594939ed509ca0b93fc48"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_corr.f90",
+          "sha256": "ff19905d95af83cc712d65721b931e82e44ce2420783486ee333c781073df9a7"
+        }
+      ],
+      "driver_id": "stdlib-correlation-reference"
+    },
+    {
+      "id": "stdlib-central-moments",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_stats",
+      "procedure": "moment (REAL64 third/fourth scalar moments)",
+      "gams_codes": [
+        "L1a1c"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Pinned public API, implementation and author test/example reviewed.  Checked driver: 1,152 third/fourth REAL64 moment values about the automatic mean or explicit zero for 32 lengths and nine shifts. Exact INT64 numerators and rational denominators supply independent references; scaled absolute tolerance 2e-12. Standardized skewness/kurtosis, masks, other orders/kinds, nonfinite inputs and stability for extreme data unverified.",
+      "evidence": [
+        {
+          "path": "src/stdlib_stats.f90",
+          "line": 2647,
+          "sha256": "e15ce21ef7f4ae8f3c0df5d99675ad33a5a820167c7565c3b14d3fa2f0acba88"
+        },
+        {
+          "path": "src/stdlib_stats_moment_all.f90",
+          "line": 1,
+          "sha256": "96b5065cfa231963b3d97760dd258bb3f486eae65774305a450103db5c1876ed"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_moment.f90",
+          "sha256": "826b937ede9af1038aa67fe106b45181c2d22566f5861b20fd8d2c8a55b3a09a"
+        }
+      ],
+      "driver_id": "stdlib-moments-reference"
+    },
+    {
+      "id": "stdlib-determinant",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_linalg",
+      "procedure": "det (nonsingular REAL64 square matrices)",
+      "gams_codes": [
+        "D3a1"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Pinned public API, implementation and author test/example reviewed.  Checked driver: 96 nonsingular REAL64 3x3 matrices generated from triangular factors and parity-changing row swaps. Determinants checked against an independent six-term polynomial, relative tolerance 1e-11, and inputs unchanged. Singular matrices, other sizes/kinds, overflow and ill-conditioning unverified.",
+      "evidence": [
+        {
+          "path": "src/stdlib_linalg.f90",
+          "line": 2666,
+          "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+        },
+        {
+          "path": "src/stdlib_linalg_determinant.f90",
+          "line": 1,
+          "sha256": "f083b4e318a7352e1e270358357b6af461bb32957595b9a49c7a44593c37d66e"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_linalg_determinant.f90",
+          "sha256": "0b51f32001c4a2488d75bd29de166a5b3b98f2bdd42efd7198eb156f3682a8ac"
+        }
+      ],
+      "driver_id": "stdlib-determinant-reference"
+    },
+    {
+      "id": "stdlib-inverse",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_linalg",
+      "procedure": "inv (nonsingular REAL64 square matrices)",
+      "gams_codes": [
+        "D2a1"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Pinned public API, implementation and author test/example reviewed.  Checked driver: 128 nonsymmetric REAL64 3x3 matrices from diagonally scaled rank-one updates. Sherman-Morrison closed form supplies 1,152 entries; left/right identity residuals supply 2,304 checks, absolute tolerance 2e-12. Inputs unchanged. Singular matrices, general conditioning, other sizes/kinds and full inverse error handling unverified.",
+      "evidence": [
+        {
+          "path": "src/stdlib_linalg.f90",
+          "line": 2812,
+          "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+        },
+        {
+          "path": "src/stdlib_linalg_inverse.f90",
+          "line": 1,
+          "sha256": "55fd1b20d5ba14d9cf60bd562683726e3ac46559333c8ee63ea3c24ff0f7fd77"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_linalg_inverse.f90",
+          "sha256": "0bcb0b97b9e8ea2e315aa19c2436fbeed8ef817456cdc2764bcd9a0a5e1c9a67"
+        }
+      ],
+      "driver_id": "stdlib-inverse-reference"
+    },
+    {
+      "id": "stdlib-trapezoid",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_quadrature",
+      "procedure": "trapz (REAL64 sampled-grid trapezoidal integration)",
+      "gams_codes": [
+        "H2a1b2"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Pinned public API, implementation and author test/example reviewed.  Checked driver: 864 exact affine-integral references for nine slopes and 32 grid lengths: nonuniform explicit grids, reversed grids and constant-spacing overload. Reference is an analytic antiderivative, not another trapezoidal sum. Nonlinear error estimates, adaptive integration, malformed/empty grids and other kinds unverified.",
+      "evidence": [
+        {
+          "path": "src/stdlib_quadrature.f90",
+          "line": 18,
+          "sha256": "5327d6acb0937845204419e9c3b1da69d4873a53d189ddf06328ea7f6dc01668"
+        },
+        {
+          "path": "src/stdlib_quadrature_trapz.f90",
+          "line": 1,
+          "sha256": "aab07a380a10f64f80ab0f5df893e7695b21f5914d9a22a4bbad0baf3af42de0"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "example/example_trapz.f90",
+          "sha256": "13d7916d69d91baa8cd3b6daf6e65416407440b6ac4a48ba93a9a2279439afb0"
+        }
+      ],
+      "driver_id": "stdlib-trapezoid-reference"
     }
   ],
   "review_notes": {
@@ -10206,7 +10467,8 @@
       "D",
       "L",
       "N",
-      "R"
+      "R",
+      "H"
     ],
     "bspline-fortran": [
       "E"
@@ -11182,6 +11444,20 @@
       "codes": [
         "H2a2a",
         "H2a2a1"
+      ]
+    },
+    "statistics_services_refinement": {
+      "retrieved_on": "2026-11-01",
+      "url": "https://netlib.org/misc/gams.html",
+      "codes": [
+        "L1a1c",
+        "L1c",
+        "L1c1",
+        "L1c1b",
+        "D3a",
+        "D3a1",
+        "H2a1b",
+        "H2a1b2"
       ]
     }
   }

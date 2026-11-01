@@ -67,6 +67,39 @@ class GamsSiteTests(unittest.TestCase):
             self.assertIn('Open default example', sorting)
             self.assertNotIn('Try in playground', sorting)
 
+    def test_statistics_services_pages_link_every_matching_driver_and_new_classes(self):
+        import copy
+        from xpackage_gams import driver_data, gams_data
+        drivers = [d for d in driver_data(data=gams_data())
+                   if d.get('validation_path') == 'docs/gams-statistics-services-ten-validation.json']
+        self.assertEqual(len(drivers), 10)
+        feed = copy.deepcopy(self.feed)
+        packages = {d['package_id'] for d in drivers}
+        feed['projects'] = [p for p in feed['projects'] if p['playground']['package_id'] in packages]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination, feed)
+            for driver in drivers:
+                url = ('https://beliavsky.github.io/fortran-playground/fpm/'
+                       f'?package={driver["package_id"]}&example={driver["name"]}')
+                page = Page((destination/driver['gams_code']/'index.html').read_text(encoding='utf-8'))
+                self.assertIn((url, driver['id']), page.anchors)
+                detail = (destination/'packages'/driver['package_id']/'index.html').read_text(encoding='utf-8')
+                card = detail.split('id="'+driver['procedure_id']+'"', 1)[1].split('</article>', 1)[0]
+                self.assertIn('Load checked GAMS driver:', card)
+                self.assertIn(driver['name'], card)
+                if driver['gams_code'] in {'D3a1', 'H2a1b2', 'L1a1c'}:
+                    self.assertIn((url, 'Try in playground'), page.anchors)
+            covariance = Page((destination/'L1c1b/index.html').read_text(encoding='utf-8'))
+            primary = [url for url, label in covariance.anchors if label == 'Try in playground']
+            self.assertEqual(len(primary), 1)
+            self.assertIn(primary[0], [
+                'https://beliavsky.github.io/fortran-playground/fpm/'
+                '?package=stdlib&example=gams-stdlib-'+name+'-reference'
+                for name in ['covariance', 'correlation']])
+            automatic = Page((destination/'H2a1a1/index.html').read_text(encoding='utf-8'))
+            self.assertFalse(any('example=gams-stdlib-trapezoid' in url for url in automatic.links))
+
     def test_ten_workflow_driver_links_keep_class_specific_scope(self):
         import copy
         from xpackage_gams import driver_data, gams_data

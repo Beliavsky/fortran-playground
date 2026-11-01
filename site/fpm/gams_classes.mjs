@@ -727,5 +727,37 @@ export const gamsSubclasses = {
   "J1a3": {
     "label": "Sine and cosine transforms",
     "parent": "J1a"
+  },
+  "L1a1c": {
+    "label": "Shape",
+    "parent": "L1a1"
+  },
+  "L1c": {
+    "label": "Multi-dimensional data",
+    "parent": "L1"
+  },
+  "L1c1": {
+    "label": "Raw data",
+    "parent": "L1c"
+  },
+  "L1c1b": {
+    "label": "Covariance, correlation",
+    "parent": "L1c1"
+  },
+  "D3a": {
+    "label": "Real nonsymmetric matrices",
+    "parent": "D3"
+  },
+  "D3a1": {
+    "label": "General",
+    "parent": "D3a"
+  },
+  "H2a1b": {
+    "label": "Integrand available only on grid",
+    "parent": "H2a1"
+  },
+  "H2a1b2": {
+    "label": "Nonautomatic",
+    "parent": "H2a1b"
   }
 };

@@ -10217,6 +10217,274 @@
         "integer_insert_delete": true,
         "string_lookup": true
       }
+    },
+    {
+      "id": "stdlib-median-reference",
+      "name": "gams-stdlib-median-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-median",
+      "gams_code": "L1a1a",
+      "problem_id": "histogram-median-order-statistic",
+      "path": "fpm_catalog/gams-drivers/stdlib-median-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_median.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/statistics-services-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. 768 REAL64 vector medians for lengths 1..64 against an independent nine-bin histogram ordering, with odd/even sizes, ties, signed dyadics and input preservation. Empty input returns NaN. Masks, nonfinite data and other ranks/kinds unverified.",
+      "validation_path": "docs/gams-statistics-services-ten-validation.json",
+      "review_path": "docs/gams-statistics-services-ten.md",
+      "checks": {
+        "finite_medians": 768,
+        "lengths": [
+          1,
+          64
+        ],
+        "empty_nan": true
+      }
+    },
+    {
+      "id": "stdlib-covariance-reference",
+      "name": "gams-stdlib-covariance-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-covariance",
+      "gams_code": "L1c1b",
+      "problem_id": "pairwise-difference-covariance-matrices",
+      "path": "fpm_catalog/gams-drivers/stdlib-covariance-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_cov.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/statistics-services-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. 29 three-variable REAL64 datasets with 4..32 observations; sample/population matrices and both axis conventions. All 1,044 entries match independent pairwise-difference sums without package mean/variance/covariance calls or MATMUL. Scaled absolute tolerance 2e-12. Missing data, masks, degeneracy, complex values and all numerical conditioning unverified.",
+      "validation_path": "docs/gams-statistics-services-ten-validation.json",
+      "review_path": "docs/gams-statistics-services-ten.md",
+      "checks": {
+        "datasets": 29,
+        "matrix_entries": 1044,
+        "sample_population": true,
+        "axes": [
+          1,
+          2
+        ],
+        "tolerance": 2e-12
+      }
+    },
+    {
+      "id": "stdlib-correlation-reference",
+      "name": "gams-stdlib-correlation-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-correlation",
+      "gams_code": "L1c1b",
+      "problem_id": "pairwise-difference-pearson-matrices",
+      "path": "fpm_catalog/gams-drivers/stdlib-correlation-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_corr.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/statistics-services-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. 29 nonconstant three-variable REAL64 datasets; 522 Pearson matrix entries for both axis conventions against normalized pairwise-difference sums, absolute tolerance 2e-12. No package covariance, variance or mean supplies the reference. Constant columns, missing data, masks, complex values and general correlation analysis unverified.",
+      "validation_path": "docs/gams-statistics-services-ten-validation.json",
+      "review_path": "docs/gams-statistics-services-ten.md",
+      "checks": {
+        "datasets": 29,
+        "matrix_entries": 522,
+        "axes": [
+          1,
+          2
+        ],
+        "absolute_tolerance": 2e-12
+      }
+    },
+    {
+      "id": "stdlib-moments-reference",
+      "name": "gams-stdlib-moments-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-central-moments",
+      "gams_code": "L1a1c",
+      "problem_id": "exact-integer-rational-moment-reference",
+      "path": "fpm_catalog/gams-drivers/stdlib-moments-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_moment.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/statistics-services-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. 1,152 third/fourth REAL64 moment values about the automatic mean or explicit zero for 32 lengths and nine shifts. Exact INT64 numerators and rational denominators supply independent references; scaled absolute tolerance 2e-12. Standardized skewness/kurtosis, masks, other orders/kinds, nonfinite inputs and stability for extreme data unverified.",
+      "validation_path": "docs/gams-statistics-services-ten-validation.json",
+      "review_path": "docs/gams-statistics-services-ten.md",
+      "checks": {
+        "value_references": 1152,
+        "orders": [
+          3,
+          4
+        ],
+        "lengths": [
+          1,
+          32
+        ],
+        "tolerance": 2e-12
+      }
+    },
+    {
+      "id": "stdlib-determinant-reference",
+      "name": "gams-stdlib-determinant-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-determinant",
+      "gams_code": "D3a1",
+      "problem_id": "six-term-three-by-three-determinants",
+      "path": "fpm_catalog/gams-drivers/stdlib-determinant-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_linalg_determinant.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/statistics-services-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. 96 nonsingular REAL64 3x3 matrices generated from triangular factors and parity-changing row swaps. Determinants checked against an independent six-term polynomial, relative tolerance 1e-11, and inputs unchanged. Singular matrices, other sizes/kinds, overflow and ill-conditioning unverified.",
+      "validation_path": "docs/gams-statistics-services-ten-validation.json",
+      "review_path": "docs/gams-statistics-services-ten.md",
+      "checks": {
+        "matrices": 96,
+        "shape": [
+          3,
+          3
+        ],
+        "relative_tolerance": 1e-11,
+        "input_preserved": true
+      }
+    },
+    {
+      "id": "stdlib-inverse-reference",
+      "name": "gams-stdlib-inverse-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-inverse",
+      "gams_code": "D2a1",
+      "problem_id": "scaled-rank-one-inverse-reference",
+      "path": "fpm_catalog/gams-drivers/stdlib-inverse-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_linalg_inverse.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/statistics-services-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. 128 nonsymmetric REAL64 3x3 matrices from diagonally scaled rank-one updates. Sherman-Morrison closed form supplies 1,152 entries; left/right identity residuals supply 2,304 checks, absolute tolerance 2e-12. Inputs unchanged. Singular matrices, general conditioning, other sizes/kinds and full inverse error handling unverified.",
+      "validation_path": "docs/gams-statistics-services-ten-validation.json",
+      "review_path": "docs/gams-statistics-services-ten.md",
+      "checks": {
+        "matrices": 128,
+        "entry_references": 1152,
+        "two_sided_residual_entries": 2304,
+        "absolute_tolerance": 2e-12
+      }
+    },
+    {
+      "id": "stdlib-trapezoid-reference",
+      "name": "gams-stdlib-trapezoid-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-trapezoid",
+      "gams_code": "H2a1b2",
+      "problem_id": "sampled-affine-antiderivative-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-trapezoid-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_trapz.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/statistics-services-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. 864 exact affine-integral references for nine slopes and 32 grid lengths: nonuniform explicit grids, reversed grids and constant-spacing overload. Reference is an analytic antiderivative, not another trapezoidal sum. Nonlinear error estimates, adaptive integration, malformed/empty grids and other kinds unverified.",
+      "validation_path": "docs/gams-statistics-services-ten-validation.json",
+      "review_path": "docs/gams-statistics-services-ten.md",
+      "checks": {
+        "integral_references": 864,
+        "grid_lengths": [
+          2,
+          33
+        ],
+        "exact_binary_values": true
+      }
+    },
+    {
+      "id": "timer-brackets-reference",
+      "name": "gams-timer-brackets-reference",
+      "package_id": "fortime",
+      "procedure_id": "serial-timers",
+      "gams_code": "R",
+      "problem_id": "native-inner-outer-timer-brackets",
+      "path": "fpm_catalog/gams-drivers/timer-brackets-reference.f90",
+      "revision": "5a31be5a47bf2c0bf49c4d0fb7b67415ccc0a1e7",
+      "author_example": "example/example1.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/statistics-services-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. 16 reused wall/CPU timer pairs, nloops averaging and exact integer work checksums. Reported durations multiplied by nloops must fall between native inner/outer SYSTEM_CLOCK or CPU_TIME brackets, allowing four wall ticks or 2 microseconds CPU resolution slack. No latency or speed benchmark claim. Pause/resume, wrapping, invalid calls, MPI/OpenMP timers and other platforms unverified.",
+      "validation_path": "docs/gams-statistics-services-ten-validation.json",
+      "review_path": "docs/gams-statistics-services-ten.md",
+      "checks": {
+        "timer_pairs": 16,
+        "loop_averaging": true,
+        "wall_slack_ticks": 4,
+        "cpu_slack_seconds": 2e-06
+      }
+    },
+    {
+      "id": "assert-enforcement-reference",
+      "name": "gams-assert-enforcement-reference",
+      "package_id": "berkeley-assert",
+      "procedure_id": "assert-contracts",
+      "gams_code": "S3",
+      "problem_id": "pure-contracts-and-false-child-termination",
+      "path": "fpm_catalog/gams-drivers/assert-enforcement-reference.f90",
+      "revision": "eda03ce48da96c3118ec98d4498f4bd47c0b60ab",
+      "author_example": "example/simple-assertions.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/statistics-services-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. 65 bounded square evaluations inside pure pre/postcondition assertions, plus one deliberately false assertion in a self-invoked child. Parent requires nonzero exit and the specified diagnostic, proving enforcement in the existing enabled library. Child failure is expected and checked. Other macros, callbacks, multi-image behavior and disabled builds unverified. Upstream custom license terms remain unchanged.",
+      "validation_path": "docs/gams-statistics-services-ten-validation.json",
+      "review_path": "docs/gams-statistics-services-ten.md",
+      "checks": {
+        "passing_calls": 65,
+        "intentional_failure_children": 1,
+        "diagnostic_checked": true
+      }
+    },
+    {
+      "id": "mpifx-identity-reference",
+      "name": "gams-mpifx-identity-reference",
+      "package_id": "mpifx",
+      "procedure_id": "mpifx-collectives",
+      "gams_code": "R",
+      "problem_id": "single-process-collective-identities",
+      "path": "fpm_catalog/gams-drivers/mpifx-identity-reference.f90",
+      "revision": "1223bd515bf2ccf39f5575d628ab2867a3d8e155",
+      "author_example": "test/test_allreduce.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/statistics-services-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. 64 exactly one-process typed collective traces: broadcast, real-vector SUM allreduce, in-place MAX and integer SUM allreduce; all 1,408 values and API statuses checked exactly. Communicator rank/size checked. This verifies wrapper identities, not communication between processes, parallel execution or speedup. Other wrappers/types and multi-process behavior unverified.",
+      "validation_path": "docs/gams-statistics-services-ten-validation.json",
+      "review_path": "docs/gams-statistics-services-ten.md",
+      "checks": {
+        "traces": 64,
+        "value_references": 1408,
+        "mpi_processes": 1
+      }
     }
   ]
 }

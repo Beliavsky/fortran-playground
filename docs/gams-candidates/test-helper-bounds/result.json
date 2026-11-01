@@ -1,0 +1,79 @@
+{
+  "ok": false,
+  "compiler": "GNU Fortran (GCC) 16.2.0",
+  "compiler_id": "gfortran",
+  "fpm": "0.12.0",
+  "stages": [
+    {
+      "name": "Build",
+      "command": [
+        "fpm",
+        "build",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.345,
+      "ok": true,
+      "exit_code": 0,
+      "error": "",
+      "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+      "stderr": ""
+    },
+    {
+      "name": "Run",
+      "command": [
+        "fpm",
+        "run",
+        "--profile",
+        "debug",
+        "--compiler",
+        "gfortran",
+        "--c-compiler",
+        "gcc",
+        "--cxx-compiler",
+        "g++",
+        "--no-prune"
+      ],
+      "seconds": 0.03,
+      "ok": false,
+      "exit_code": 1,
+      "error": "",
+      "stdout": "Requested [0,1]; observed min/max:    0.006375527   1.944083652\n",
+      "stderr": "Project is up to date\nERROR STOP Requested bounds violated\n\nError termination. Backtrace:\n#0  0x2afe5aaa1f83 in ???\n#1  0x2afe5aaa2c39 in ???\n#2  0x2afe5aaa4045 in ???\n#3  0x4018e2 in MAIN__\n\tat app/main.f90:16\n#4  0x4019ae in main\n\tat app/main.f90:4\n<ERROR> Execution for object \" playground-main \" returned exit code  1\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 1\n"
+    }
+  ],
+  "cache": {
+    "package": "fortran_test_helper",
+    "compiler": "GNU Fortran 16.2.0",
+    "key": "b1bcad6bdbf15b5485f8522c",
+    "library_reused": true,
+    "changed_artifacts": []
+  },
+  "packages": [
+    {
+      "repository": "jchristopherson/fortran_test_helper",
+      "revision": "1557b1485d8a5b042862042552f1e1a34552ca5e",
+      "sha256": "846d7506d044b41eb307619d84369d97afdd8b4838ea19eae6803735dffc10e2"
+    }
+  ],
+  "build_ok": true,
+  "target_groups": {
+    "app": [
+      "playground-main"
+    ],
+    "example": [],
+    "test": []
+  },
+  "targets": [
+    "playground-main"
+  ],
+  "plots": [],
+  "plot_notes": []
+}

@@ -100,6 +100,7 @@ from xpackage_gams import (gams_data, package_classes, review_text, subclass_mod
                             interop_ten_review_text, INTEROP_TEN_REPORT,
                             storage_ten_review_text, STORAGE_TEN_REPORT,
                             workflows_ten_review_text, WORKFLOWS_TEN_REPORT,
+                            statistics_services_ten_review_text, STATISTICS_SERVICES_TEN_REPORT,
                           coverage_data, coverage_review_text, COVERAGE_REPORT,
                           class_evidence, class_tree, mapping_evidence_text, EVIDENCE_REPORT)
 
@@ -885,6 +886,63 @@ class PackageGamsTests(unittest.TestCase):
         self.assertIn('22,416',text)
         self.assertIn('Type-2/type-3 transforms',text)
         self.assertIn('two-dimensional NUFFT2D driver',transforms_review_text())
+
+    def test_statistics_services_drivers_add_reviewed_numerical_procedures(self):
+        data = gams_data()
+        records = {r['id']: r for r in data['procedure_mappings']}
+        drivers = {d['id']: d for d in driver_data(data=data)
+                   if d.get('validation_path') == 'docs/gams-statistics-services-ten-validation.json'}
+        self.assertEqual(set(drivers), {
+            'stdlib-median-reference', 'stdlib-covariance-reference', 'stdlib-correlation-reference',
+            'stdlib-moments-reference', 'stdlib-determinant-reference', 'stdlib-inverse-reference',
+            'stdlib-trapezoid-reference', 'timer-brackets-reference', 'assert-enforcement-reference',
+            'mpifx-identity-reference'})
+        tree = class_tree(data)
+        for driver in drivers.values():
+            record = records[driver['procedure_id']]
+            self.assertEqual(record['driver_id'], driver['id'])
+            self.assertEqual(class_evidence(tree, driver['gams_code'], [record], [driver])['status'], 'verified')
+        expected_classes = {'L1a1c': 'L1a1', 'L1c1b': 'L1c1', 'L1c1': 'L1c',
+                            'L1c': 'L1', 'D3a1': 'D3a', 'D3a': 'D3',
+                            'H2a1b2': 'H2a1b', 'H2a1b': 'H2a1'}
+        for code, parent in expected_classes.items():
+            self.assertEqual(tree[code]['parent'], parent)
+        reviewed = set(numerical_review(data=data)['packages']['stdlib']['procedure_ids'])
+        self.assertTrue({d['procedure_id'] for d in drivers.values() if d['package_id'] == 'stdlib'} <= reviewed)
+        for ident, field, count in [
+                ('stdlib-median-reference', 'finite_medians', 768),
+                ('stdlib-covariance-reference', 'matrix_entries', 1044),
+                ('stdlib-correlation-reference', 'matrix_entries', 522),
+                ('stdlib-moments-reference', 'value_references', 1152),
+                ('stdlib-determinant-reference', 'matrices', 96),
+                ('stdlib-inverse-reference', 'entry_references', 1152),
+                ('stdlib-trapezoid-reference', 'integral_references', 864),
+                ('timer-brackets-reference', 'timer_pairs', 16),
+                ('assert-enforcement-reference', 'intentional_failure_children', 1),
+                ('mpifx-identity-reference', 'mpi_processes', 1)]:
+            self.assertEqual(drivers[ident]['checks'][field], count)
+        text = statistics_services_ten_review_text()
+        self.assertEqual((ROOT/STATISTICS_SERVICES_TEN_REPORT).read_text(encoding='utf-8'), text)
+        for phrase in ['INT64 arithmetic', 'pairwise differences', 'nonzero exit',
+                       'not a certification', '1.944083652', 'categories are not exhausted']:
+            self.assertIn(phrase, text)
+
+    def test_random_helper_range_failure_keeps_exact_probe_and_remains_unverified(self):
+        import hashlib
+        folder = ROOT/'docs/gams-candidates/test-helper-bounds'
+        source = (folder/'driver.f90').read_text(encoding='utf-8')
+        notes = (folder/'README.md').read_text(encoding='utf-8')
+        result = json.loads((folder/'result.json').read_text(encoding='utf-8'))
+        self.assertIn(hashlib.sha256(source.encode()).hexdigest(), notes)
+        self.assertIn(result['packages'][0]['revision'], notes)
+        self.assertFalse(result['ok'])
+        self.assertTrue(result['cache']['library_reused'])
+        self.assertTrue(result['stages'][0]['ok'])
+        self.assertFalse(result['stages'][1]['ok'])
+        self.assertIn('Requested bounds violated', result['stages'][1]['stderr'])
+        record = next(r for r in gams_data()['procedure_mappings']
+                      if r['id'] == 'fortran-test-helper-create-r64-array')
+        self.assertNotIn('driver_id', record)
 
     def test_ten_workflow_drivers_keep_independent_oracles_and_scope(self):
         data = gams_data()

@@ -8,7 +8,7 @@ This report assesses each package/class pair, including inherited parent classes
 
 When a driver cannot be created, inspect the pinned implementation and author examples. Narrow or remove a classification that is unsupported; do not substitute an unrelated default example as evidence. Record missing dependencies, sandbox limits and upstream defects separately in the procedure or package review notes. A sandbox failure alone does not disprove an algorithm.
 
-Counts refer to package/class pairs and include parents: 671 verified, 78 source-supported, 246 uncertain.
+Counts refer to package/class pairs and include parents: 688 verified, 74 source-supported, 246 uncertain.
 
 ## Mappings requiring source review
 
@@ -279,7 +279,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [array_range / array-range-bounds](https://beliavsky.github.io/fortran-playground/gams/packages/array_range/#array-range-bounds) | R | verified |
 | [astro-fortran / astro-fortran-g2icrs](https://beliavsky.github.io/fortran-playground/gams/packages/astro-fortran/#astro-fortran-g2icrs) | P | verified |
 | [athena / athena-dense](https://beliavsky.github.io/fortran-playground/gams/packages/athena/#athena-dense) | K | verified |
-| [berkeley-assert / assert-contracts](https://beliavsky.github.io/fortran-playground/gams/packages/berkeley-assert/#assert-contracts) | S3 | source-supported |
+| [berkeley-assert / assert-contracts](https://beliavsky.github.io/fortran-playground/gams/packages/berkeley-assert/#assert-contracts) | S3 | verified |
 | [berkeley-assert / assert-contracts](https://beliavsky.github.io/fortran-playground/gams/packages/berkeley-assert/#assert-contracts) | R2 | source-supported |
 | [blas-interface / blas-interface-blas-gemm](https://beliavsky.github.io/fortran-playground/gams/packages/blas-interface/#blas-interface-blas-gemm) | D1b6 | verified |
 | [bspline-fortran / bspline-fortran-bspline-1d](https://beliavsky.github.io/fortran-playground/gams/packages/bspline-fortran/#bspline-fortran-bspline-1d) | E1a | verified |
@@ -366,7 +366,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [forpy / forpy-embedding](https://beliavsky.github.io/fortran-playground/gams/packages/forpy/#forpy-embedding) | S | verified |
 | [forsolver / forsolver-nlsolver](https://beliavsky.github.io/fortran-playground/gams/packages/forsolver/#forsolver-nlsolver) | F1b | verified |
 | [forsvd / forsvd-api](https://beliavsky.github.io/fortran-playground/gams/packages/forsvd/#forsvd-api) | D6 | verified |
-| [fortime / serial-timers](https://beliavsky.github.io/fortran-playground/gams/packages/fortime/#serial-timers) | R | source-supported |
+| [fortime / serial-timers](https://beliavsky.github.io/fortran-playground/gams/packages/fortime/#serial-timers) | R | verified |
 | [fortimize / fortimize-gradient-descent](https://beliavsky.github.io/fortran-playground/gams/packages/fortimize/#fortimize-gradient-descent) | G1b | verified |
 | [fortimize / fortimize-nelder-mead](https://beliavsky.github.io/fortran-playground/gams/packages/fortimize/#fortimize-nelder-mead) | G1b | verified |
 | [fortran-astrodynamics-toolkit / fortran-astrodynamics-toolkit-orbital-elements-to-rv](https://beliavsky.github.io/fortran-playground/gams/packages/fortran-astrodynamics-toolkit/#fortran-astrodynamics-toolkit-orbital-elements-to-rv) | P | verified |
@@ -483,7 +483,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [minres / minres-minres-solver](https://beliavsky.github.io/fortran-playground/gams/packages/minres/#minres-minres-solver) | D2b4 | verified |
 | [mpfun2020-var1 / mpfun2020-var1-mpcmplx](https://beliavsky.github.io/fortran-playground/gams/packages/mpfun2020-var1/#mpfun2020-var1-mpcmplx) | A4c | verified |
 | [mpfun2020-var1 / mpfun2020-var1-mpreal](https://beliavsky.github.io/fortran-playground/gams/packages/mpfun2020-var1/#mpfun2020-var1-mpreal) | A3c | verified |
-| [mpifx / mpifx-collectives](https://beliavsky.github.io/fortran-playground/gams/packages/mpifx/#mpifx-collectives) | R | source-supported |
+| [mpifx / mpifx-collectives](https://beliavsky.github.io/fortran-playground/gams/packages/mpifx/#mpifx-collectives) | R | verified |
 | [nafpack / nafpack-execute-fft-plan-sp](https://beliavsky.github.io/fortran-playground/gams/packages/nafpack/#nafpack-execute-fft-plan-sp) | J1a2 | verified |
 | [nc4fortran / nc4fortran-io](https://beliavsky.github.io/fortran-playground/gams/packages/nc4fortran/#nc4fortran-io) | N1 | verified |
 | [netcdf-fortran / netcdf-classic-io](https://beliavsky.github.io/fortran-playground/gams/packages/netcdf-fortran/#netcdf-classic-io) | N1 | verified |
@@ -581,11 +581,18 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [splpak / splpak-splpak-type](https://beliavsky.github.io/fortran-playground/gams/packages/splpak/#splpak-splpak-type) | K1 | verified |
 | [sqliteff / sqliteff-database](https://beliavsky.github.io/fortran-playground/gams/packages/sqliteff/#sqliteff-database) | N1 | verified |
 | [sqliteff / sqliteff-database](https://beliavsky.github.io/fortran-playground/gams/packages/sqliteff/#sqliteff-database) | N5 | source-supported |
+| [stdlib / stdlib-central-moments](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-central-moments) | L1a1c | verified |
+| [stdlib / stdlib-correlation](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-correlation) | L1c1b | verified |
+| [stdlib / stdlib-covariance](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-covariance) | L1c1b | verified |
+| [stdlib / stdlib-determinant](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-determinant) | D3a1 | verified |
+| [stdlib / stdlib-inverse](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-inverse) | D2a1 | verified |
 | [stdlib / stdlib-lstsq](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-lstsq) | D9a1 | verified |
 | [stdlib / stdlib-mean](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-mean) | L1a1a | verified |
+| [stdlib / stdlib-median](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-median) | L1a1a | verified |
 | [stdlib / stdlib-random-seed](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-random-seed) | L6c | verified |
 | [stdlib / stdlib-solve](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-solve) | D2a1 | verified |
 | [stdlib / stdlib-sort](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-sort) | N6 | verified |
+| [stdlib / stdlib-trapezoid](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-trapezoid) | H2a1b2 | verified |
 | [stdlib / stdlib-var](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-var) | L1a1b | verified |
 | [stdlib-os / stdlib-os-files](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib-os/#stdlib-os-files) | N1 | verified |
 | [stiff3 / stiff3-stiff3](https://beliavsky.github.io/fortran-playground/gams/packages/stiff3/#stiff3-stiff3) | I1a2 | verified |
