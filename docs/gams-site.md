@@ -312,3 +312,5 @@ The [ten storage, configuration and binding drivers](gams-storage-ten.md) check 
 The [ten command-line, testing and workflow drivers](gams-workflows-ten.md) check typed command-line options, native NAMELIST conversion, assertion outcomes, Tcl, pipes, file operations, vector/list state and scripted history edits.
 
 The [ten statistical, matrix, quadrature and service drivers](gams-statistics-services-ten.md) add checked stdlib median/covariance/correlation/moment/determinant/inverse/trapezoidal procedures, native timer brackets, enabled assertion enforcement and one-process MPI identities. The random-helper requested-bound failure remains explicitly unverified with its reproducer retained.
+
+The [ten stdlib factorization, matrix and quadrature drivers](gams-factorization-rules-ten.md) check QR, Cholesky, symmetric eigensystems, SVD, rank-one pseudoinverses, matrix norms/exponentials, Simpson integration and Gauss/Lobatto rules against defining equations and independent analytic references.

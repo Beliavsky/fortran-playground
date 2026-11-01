@@ -103,6 +103,7 @@ INTEROP_TEN_REPORT = Path('docs/gams-interop-ten.md')
 STORAGE_TEN_REPORT = Path('docs/gams-storage-ten.md')
 WORKFLOWS_TEN_REPORT = Path('docs/gams-workflows-ten.md')
 STATISTICS_SERVICES_TEN_REPORT = Path('docs/gams-statistics-services-ten.md')
+FACTORIZATION_RULES_TEN_REPORT = Path('docs/gams-factorization-rules-ten.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
 EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
@@ -9517,6 +9518,91 @@ def statistics_services_ten_review_text(root=ROOT):
     return '\n'.join(lines)
 
 
+def factorization_rules_ten_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-factorization-rules-ten-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-factorization-rules-ten-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Ten checked stdlib factorization, matrix and quadrature drivers', '',
+             'Ten newly reviewed stdlib procedures passed GNU Fortran 16.2.0 with FPM 0.12.0 in '
+             'the restricted hosted sandbox on their first verification runs. Existing compiled '
+             'stdlib libraries were reused; only mains and executables were compiled. The '
+             '[verification report](gams-factorization-rules-ten-validation.json) records package '
+             'pins, normalized source hashes, timings and complete output. GAMS categories are not exhausted.', '',
+             '## Factorizations and spectral references', '',
+             'For 64 real 5x3 inputs, full and reduced QR must reconstruct the input, have '
+             'orthonormal Q columns and triangular R. These defining equations avoid assuming a '
+             'particular choice of factor signs. For 56 SPD matrices, the independent reference '
+             'is the positive-diagonal dyadic lower factor used to form A=L*L**T. Both Cholesky '
+             'triangle choices are compared directly, including unused-half zeroing.', '',
+             'Symmetric eigenproblems use A=shift*I+rho*u*u**T. Its spectrum has n-1 copies of '
+             'shift and one value shift+rho*(u**T*u). Upper/lower triangle selections, eigenpair '
+             'residuals and orthonormality are checked for 96 eigensystems. No arbitrary basis '
+             'is prescribed for the repeated eigenspaces.', '',
+             'The SVD inputs are real 4x3 matrices constructed from orthonormal factors and '
+             'prescribed singular values, with ranks one through three. Forty-eight decompositions '
+             'check all 144 singular values, both singular-vector equations, reconstruction and '
+             'thin-factor orthogonality. Singular-vector signs and nullspace bases are not unique. '
+             'The pseudoinverse reference for A=u*v**T is v*u**T/((u**T*u)*(v**T*v)); 80 rectangular '
+             'cases check 1,120 entries and all four Moore-Penrose identities with explicit rtol=1e-10.', '',
+             '## Norms and matrix exponentials', '',
+             'Independent scalar loops compute maximum absolute column/row sums and the square root '
+             'of the sum of squares. These supply 525 1/infinity/Frobenius norm references, including '
+             '35 zero matrices. This does not test the spectral 2-norm or higher-rank reduction APIs.', '',
+             'For a strictly upper-triangular 3x3 N, N**3=0, so exp(shift*I+N) equals '
+             'exp(shift)*(I+N+N**2/2). A second family is the 2x2 plane-rotation generator, whose '
+             'exponential has analytic sine/cosine entries. Default and order-12 Pade calls '
+             'supply 858 entry references across 132 calls. These bounded families do not certify '
+             'accuracy for general stiff or badly scaled matrices.', '',
+             '## Quadrature references', '',
+             'Simpson integration checks analytic cubic antiderivatives on uniform odd grids and '
+             'quadratic antiderivatives on nonuniform odd grids: 432 references over lengths 3..33. '
+             'No second numerical quadrature routine supplies the expected integral. Even-grid '
+             'policies, adaptivity and arbitrary-integrand errors remain unverified.', '',
+             'Gauss-Legendre and Lobatto node/weight routines each generate 33 rules, orders 2..12, '
+             'on [-1,1], [0,1] and [-0.5,1.5]. With z=(2*x-a-b)/(b-a), the exact integral of z**p '
+             'is zero for odd p and (b-a)/(p+1) for even p. Gauss rules check 462 moments through '
+             'degree 2*n-1; Lobatto rules check 396 through degree 2*n-3 and require interval endpoints. '
+             'Both check positive weights, ordered nodes and symmetry. Moment tolerance is '
+             '5e-12 times interval width; high-order or reversed-interval behavior is not claimed.', '',
+             '## Classification and provenance', '',
+             'The [Netlib GAMS taxonomy](https://netlib.org/misc/gams.html) supplies matrix norm '
+             'class D1b2; QR, real SPD factorization, symmetric eigenproblems, SVD and generalized '
+             'inverses use D5, D2b1b, D4a1, D6 and D9c. Simpson is nonautomatic sampled-grid '
+             'quadrature H2a1b2; node/weight generation uses H2c. Matrix exponentials retain broad '
+             'linear algebra D: a matrix-polynomial classification would not describe the general '
+             'exponential procedure. Verification belongs only to these recorded stdlib APIs '
+             'and configurations; no other package is promoted by these results.', '']
+    for d in drivers:
+        lines += ['### '+d['id']+' ('+d['gams_code']+')', '', d['modifications'], '']
+    lines += ['## Provenance and actual output', '',
+              'Pinned public APIs, implementations and author tests were reviewed. These are '
+              'independent MIT consumers; upstream implementation/test bodies were not copied '
+              'and upstream license terms remain separate. Input preservation and finite outputs '
+              'are checked where specified. Loading an example does not submit a job.', '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -9695,6 +9781,7 @@ def main():
                          (STORAGE_TEN_REPORT, storage_ten_review_text()),
                          (WORKFLOWS_TEN_REPORT, workflows_ten_review_text()),
                          (STATISTICS_SERVICES_TEN_REPORT, statistics_services_ten_review_text()),
+                         (FACTORIZATION_RULES_TEN_REPORT, factorization_rules_ten_review_text()),
                          (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report

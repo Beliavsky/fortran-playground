@@ -8185,6 +8185,16 @@
         "parent": "D"
       },
       {
+        "code": "D1b",
+        "label": "Elementary matrix operations",
+        "parent": "D1"
+      },
+      {
+        "code": "D1b2",
+        "label": "Norm",
+        "parent": "D1b"
+      },
+      {
         "code": "D2",
         "label": "Solution of systems of linear equations (including inversion, LU and related decompositions)",
         "parent": "D"
@@ -8198,6 +8208,21 @@
         "code": "D2a1",
         "label": "General",
         "parent": "D2a"
+      },
+      {
+        "code": "D2b",
+        "label": "Real symmetric matrices",
+        "parent": "D2"
+      },
+      {
+        "code": "D2b1",
+        "label": "General",
+        "parent": "D2b"
+      },
+      {
+        "code": "D2b1b",
+        "label": "Positive definite",
+        "parent": "D2b1"
       },
       {
         "code": "D3",
@@ -8215,6 +8240,31 @@
         "parent": "D3a"
       },
       {
+        "code": "D4",
+        "label": "Eigenvalues, eigenvectors",
+        "parent": "D"
+      },
+      {
+        "code": "D4a",
+        "label": "Ordinary eigenvalue problems (Ax = lambda x)",
+        "parent": "D4"
+      },
+      {
+        "code": "D4a1",
+        "label": "Real symmetric",
+        "parent": "D4a"
+      },
+      {
+        "code": "D5",
+        "label": "QR decomposition, Gram-Schmidt orthogonalization",
+        "parent": "D"
+      },
+      {
+        "code": "D6",
+        "label": "Singular value decomposition",
+        "parent": "D"
+      },
+      {
         "code": "D9",
         "label": "Singular, overdetermined or underdetermined systems of linear equations, generalized inverses",
         "parent": "D"
@@ -8228,6 +8278,11 @@
         "code": "D9a1",
         "label": "Least squares (L_2) solution",
         "parent": "D9a"
+      },
+      {
+        "code": "D9c",
+        "label": "Generalized inverses",
+        "parent": "D9"
       },
       {
         "code": "H",
@@ -8258,6 +8313,11 @@
         "code": "H2a1b2",
         "label": "Nonautomatic",
         "parent": "H2a1b"
+      },
+      {
+        "code": "H2c",
+        "label": "Service routines (e.g., compute weights and nodes for quadrature formulas)",
+        "parent": "H2"
       },
       {
         "code": "L",
@@ -8746,6 +8806,326 @@
           }
         ],
         "driver_id": "stdlib-trapezoid-reference"
+      },
+      {
+        "id": "stdlib-qr",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "qr (full and reduced REAL64 factorizations)",
+        "gams_codes": [
+          "D5"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Pinned public API, implementation and author test reviewed.  Checked driver: 64 real 5x3 inputs factored with full and reduced storage: 128 decompositions. Reconstruction, orthonormal columns, triangular R, finite factors and input preservation checked, scaled absolute tolerance 5e-12. Factor signs are nonunique and not compared. Pivoting, complex values, workspace APIs, other shapes and extreme conditioning unverified.",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 2216,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_qr.f90",
+            "line": 1,
+            "sha256": "94b5f764e0ebeab1cfe715a03e689eaf238646f892714d3790ad48071191a149"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_linalg_qr.f90",
+            "sha256": "0d8b5ec626cc75e5f46e2ba1dbce3d9342c806f70de356ed1ad3ebf66eacf08e"
+          }
+        ],
+        "driver_id": "stdlib-qr-reference"
+      },
+      {
+        "id": "stdlib-cholesky",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "chol (REAL64 lower/upper positive-definite factors)",
+        "gams_codes": [
+          "D2b1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Pinned public API, implementation and author test reviewed.  Checked driver: 56 SPD matrices constructed from known dyadic lower-triangular factors with positive diagonal, orders 2..8. Both lower/upper factors, unused-half zeroing, reconstruction and input preservation checked: 112 factorizations. Factor tolerance 2e-12 and scaled residual tolerance 2e-12. Nonpositive-definite errors, complex values, overwriting and all conditioning unverified.",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 67,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_cholesky.f90",
+            "line": 1,
+            "sha256": "e91a2c14248d443dddfe0b1d7c829b617fc5b78e2b9da04dfdfc666553ac8716"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_linalg_cholesky.f90",
+            "sha256": "3723f999b7cbddadb31dcbfb173ce68410088411232680990f704d1a11714628"
+          }
+        ],
+        "driver_id": "stdlib-cholesky-reference"
+      },
+      {
+        "id": "stdlib-eigh",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "eigh (REAL64 symmetric eigenvectors/eigenvalues)",
+        "gams_codes": [
+          "D4a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Pinned public API, implementation and author test reviewed.  Checked driver: 48 real symmetric shifted rank-one matrices, orders 3..8, each using upper/lower triangle selection. 528 analytic eigenvalues, eigenpair residuals, orthonormal vectors and input preservation; scaled absolute tolerance 3e-12. Repeated eigenspaces are checked by residuals rather than a chosen basis. Generalized/complex problems, inconsistent triangles and ill-conditioning unverified.",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 3725,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_eigenvalues.f90",
+            "line": 1,
+            "sha256": "7e2034f8c37639a146f136c16fb775822cc91a186431a335762f89175361a009"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_linalg_eigenvalues.f90",
+            "sha256": "9ddd1df706b790cc58ffd992325ac58a755a1f1e5ba95558ca01b70f27a7f6f6"
+          }
+        ],
+        "driver_id": "stdlib-eigh-reference"
+      },
+      {
+        "id": "stdlib-svd",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "svd (thin REAL64 singular values and left/right vectors)",
+        "gams_codes": [
+          "D6"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Pinned public API, implementation and author test reviewed.  Checked driver: 48 real 4x3 matrices constructed with orthonormal factors and prescribed ranks 1..3. All 144 singular values, left/right singular equations, reconstruction, thin-factor orthogonality and input preservation checked; scaled absolute tolerance 5e-12. Vector signs/nullspace bases are nonunique. Complex/wide/full-storage problems, near-threshold rank decisions and general conditioning unverified.",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 3922,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_svd.f90",
+            "line": 1,
+            "sha256": "b4805f93545c850095d3a7327fe63a999c56a5b033289e6a2896e9caed840fd4"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_linalg_svd.f90",
+            "sha256": "8f6e8fc78826b99b669ddeb6447c4aac4a800a7d9d456ae893cd7b3d674a1836"
+          }
+        ],
+        "driver_id": "stdlib-svd-reference"
+      },
+      {
+        "id": "stdlib-pinv",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "pinv (rank-one REAL64 Moore-Penrose inverses)",
+        "gams_codes": [
+          "D9c"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Pinned public API, implementation and author test reviewed.  Checked driver: 80 rank-one rectangular outer products with 2..6 rows and 2..5 columns. 1,120 closed-form inverse entries plus all four Moore-Penrose identities, finite output and input preservation. Explicit rtol=1e-10; absolute/scaled identity tolerance 2e-11. Zero matrices, arbitrary ranks, cutoff sensitivity, complex values and all error paths unverified.",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 3013,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_pinv.f90",
+            "line": 1,
+            "sha256": "d15c6fd308540e7ea3eae53d2a86486a5565a8c561d129e53e4c8ffa1756f5dd"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_linalg_pseudoinverse.f90",
+            "sha256": "739bab787f30e08f91bb976d92c3cec936ba00c15110bf6f23ecfa431f0550ec"
+          }
+        ],
+        "driver_id": "stdlib-pinv-reference"
+      },
+      {
+        "id": "stdlib-matrix-norms",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "mnorm (REAL64 rank-two 1/infinity/Frobenius norms)",
+        "gams_codes": [
+          "D1b2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Pinned public API, implementation and author test reviewed.  Checked driver: 175 real matrices of shapes [1..5,1..7], including 35 zero matrices. 525 1/infinity/Frobenius norms against independent scalar row/column sums and sum-of-squares; scaled absolute tolerance 2e-12. Spectral 2-norm, complex/higher-rank inputs, overflow/underflow scaling and invalid orders unverified.",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 6082,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_norms.f90",
+            "line": 1,
+            "sha256": "35bac68506f26e3a59f28dc7b23325fc372d715af69d24166d07dbbca0af2c54"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_linalg_mnorm.f90",
+            "sha256": "b9c8d6af26a98441e40de7a5787463d4b45194f464f300432768e2fb281a6d05"
+          }
+        ],
+        "driver_id": "stdlib-matrix-norms-reference"
+      },
+      {
+        "id": "stdlib-expm",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "expm (REAL64 matrix exponential, default and order 12)",
+        "gams_codes": [
+          "D"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Pinned public API, implementation and author test reviewed.  Checked driver: 132 real matrix-exponential calls using default Pade order and order 12: shifted nilpotent 3x3 matrices with a finite polynomial closed form and 2x2 plane rotations with analytic sine/cosine form. 858 entry references, scaled absolute tolerance 2e-11. Broad D classification avoids inventing a matrix-function leaf. General stiff matrices, scaling extremes, complex values and invalid inputs unverified.",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 6437,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_matrix_functions.f90",
+            "line": 1,
+            "sha256": "25b5fff4b754f6a48f24877d15da81363aa0d2b10dc72dee95154f3409637c34"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_linalg_expm.f90",
+            "sha256": "ecb49bedfa3b4c8efafc87648f560a3fc9d933dcf1fbd981c6e88b629fcef454"
+          }
+        ],
+        "driver_id": "stdlib-expm-reference"
+      },
+      {
+        "id": "stdlib-simpson",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_quadrature",
+        "procedure": "simps (odd-grid REAL64 Simpson integration)",
+        "gams_codes": [
+          "H2a1b2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Pinned public API, implementation and author test reviewed.  Checked driver: 432 analytic integral references on odd grids of lengths 3..33: uniform cubics through explicit-grid/spacing APIs and nonuniform quadratics. Scaled absolute tolerance 2e-12. No numerical quadrature routine supplies the oracle. Even-grid policy, nonlinear error estimates, adaptivity, malformed grids and other kinds unverified.",
+        "evidence": [
+          {
+            "path": "src/stdlib_quadrature.f90",
+            "line": 62,
+            "sha256": "5327d6acb0937845204419e9c3b1da69d4873a53d189ddf06328ea7f6dc01668"
+          },
+          {
+            "path": "src/stdlib_quadrature_simps.f90",
+            "line": 1,
+            "sha256": "0b1e3c4c884ccf20decc2adc0390593580bce26d738b25f7def8c2153076eb46"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_simps.f90",
+            "sha256": "3c6b29a8523dd50197d32147462957f22fb486796acc25ab223152de30d39440"
+          }
+        ],
+        "driver_id": "stdlib-simpson-reference"
+      },
+      {
+        "id": "stdlib-gauss",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_quadrature",
+        "procedure": "gauss_legendre (REAL64 nodes/weights on finite intervals)",
+        "gams_codes": [
+          "H2c"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Pinned public API, implementation and author test reviewed.  Checked driver: 33 Gauss-Legendre node/weight rules, orders 2..12 on three intervals. 462 centered monomial moments through degree 2*n-1 against exact integrals; positive weights, interior ordered nodes and symmetry checked. Interval-scaled absolute tolerance 5e-12. Higher orders, reversed intervals and general integrand accuracy unverified.",
+        "evidence": [
+          {
+            "path": "src/stdlib_quadrature.f90",
+            "line": 113,
+            "sha256": "5327d6acb0937845204419e9c3b1da69d4873a53d189ddf06328ea7f6dc01668"
+          },
+          {
+            "path": "src/stdlib_quadrature_gauss.f90",
+            "line": 1,
+            "sha256": "f51fe58d46d3f17fcba0ec64c64f7f5e50cb1ee453eb42ca20a50ad505e8e54a"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_gauss.f90",
+            "sha256": "1469e746284170b003accfe003029ee580d153af5b0e1dbab7caca557f0cffcd"
+          }
+        ],
+        "driver_id": "stdlib-gauss-reference"
+      },
+      {
+        "id": "stdlib-lobatto",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_quadrature",
+        "procedure": "gauss_legendre_lobatto (REAL64 endpoint-inclusive nodes/weights)",
+        "gams_codes": [
+          "H2c"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Pinned public API, implementation and author test reviewed.  Checked driver: 33 Gauss-Legendre-Lobatto rules, orders 2..12 on three intervals. 396 centered monomial moments through degree 2*n-3 against exact integrals, endpoints, positive weights, node ordering and symmetry. Interval-scaled absolute tolerance 5e-12. Higher orders, reversed intervals and general integrand accuracy unverified.",
+        "evidence": [
+          {
+            "path": "src/stdlib_quadrature.f90",
+            "line": 124,
+            "sha256": "5327d6acb0937845204419e9c3b1da69d4873a53d189ddf06328ea7f6dc01668"
+          },
+          {
+            "path": "src/stdlib_quadrature_gauss.f90",
+            "line": 1,
+            "sha256": "f51fe58d46d3f17fcba0ec64c64f7f5e50cb1ee453eb42ca20a50ad505e8e54a"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_gauss.f90",
+            "sha256": "1469e746284170b003accfe003029ee580d153af5b0e1dbab7caca557f0cffcd"
+          }
+        ],
+        "driver_id": "stdlib-lobatto-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"

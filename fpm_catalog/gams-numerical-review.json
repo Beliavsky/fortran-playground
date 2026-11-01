@@ -960,7 +960,17 @@
         "stdlib-central-moments",
         "stdlib-determinant",
         "stdlib-inverse",
-        "stdlib-trapezoid"
+        "stdlib-trapezoid",
+        "stdlib-qr",
+        "stdlib-cholesky",
+        "stdlib-eigh",
+        "stdlib-svd",
+        "stdlib-pinv",
+        "stdlib-matrix-norms",
+        "stdlib-expm",
+        "stdlib-simpson",
+        "stdlib-gauss",
+        "stdlib-lobatto"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
     },

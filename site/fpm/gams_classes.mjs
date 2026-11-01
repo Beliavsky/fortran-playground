@@ -759,5 +759,9 @@ export const gamsSubclasses = {
   "H2a1b2": {
     "label": "Nonautomatic",
     "parent": "H2a1b"
+  },
+  "D1b2": {
+    "label": "Norm",
+    "parent": "D1b"
   }
 };

@@ -37,12 +37,15 @@ The `dqags` driver adapts the author's inverse-square-root test and adds a logar
 | [Load fgsl-qags-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=fgsl&example=gams-fgsl-qags-reference) · [Driver source](../fpm_catalog/gams-drivers/fgsl-qags-reference.f90) | H2a1a1 | [Procedure](https://github.com/reinh-bader/fgsl/blob/27a3e7cc0809623bcfde680c39a6fdcf0f590c4c/api/integration.finc#L1) · [Author test](https://github.com/reinh-bader/fgsl/blob/27a3e7cc0809623bcfde680c39a6fdcf0f590c4c/doc/examples/integration.f90) |
 | [Load qdutillib-moments-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=qdutillib&example=gams-qdutillib-moments-reference) · [Driver source](../fpm_catalog/gams-drivers/qdutillib-moments-reference.f90) | H2c | [Procedure](https://github.com/lauvergn/QDUtilLib/blob/8a1fa9ca7cf52683c98cc4bcb40f21dc41df6ed5/SRC/Quadrature/Quadrature_m.f90#L81) · [Author test](https://github.com/lauvergn/QDUtilLib/blob/8a1fa9ca7cf52683c98cc4bcb40f21dc41df6ed5/APP/App_QDLib.f90) |
 | [Load stdlib-trapezoid-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-trapezoid-reference) · [Driver source](../fpm_catalog/gams-drivers/stdlib-trapezoid-reference.f90) | H2a1b2 | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_quadrature.f90#L18) · [Author test](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/example/example_trapz.f90) |
+| [Load stdlib-simpson-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-simpson-reference) · [Driver source](../fpm_catalog/gams-drivers/stdlib-simpson-reference.f90) | H2a1b2 | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_quadrature.f90#L62) · [Author test](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_simps.f90) |
+| [Load stdlib-gauss-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-gauss-reference) · [Driver source](../fpm_catalog/gams-drivers/stdlib-gauss-reference.f90) | H2c | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_quadrature.f90#L113) · [Author test](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_gauss.f90) |
+| [Load stdlib-lobatto-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-lobatto-reference) · [Driver source](../fpm_catalog/gams-drivers/stdlib-lobatto-reference.f90) | H2c | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_quadrature.f90#L124) · [Author test](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_gauss.f90) |
 
 Loading a link selects code without submitting a job. The same drivers are available in the hosted and main local FPM playgrounds and in downloaded FPM projects. Author license notices are retained with the drivers.
 
 ## Recorded results
 
-All 13 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0. Existing package libraries were reused; only each main and executable were compiled. The verification reports lock driver hashes and source revisions: [gams-applied-methods-validation.json](gams-applied-methods-validation.json), [gams-cubature-validation.json](gams-cubature-validation.json), [gams-moments-nufft2d-validation.json](gams-moments-nufft2d-validation.json), [gams-quadrature-validation.json](gams-quadrature-validation.json), [gams-rkf-qags-validation.json](gams-rkf-qags-validation.json), [gams-roots-splines-quadrature-validation.json](gams-roots-splines-quadrature-validation.json), [gams-rules-differences-validation.json](gams-rules-differences-validation.json), [gams-sparse-integral-validation.json](gams-sparse-integral-validation.json), [gams-statistics-services-ten-validation.json](gams-statistics-services-ten-validation.json).
+All 16 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0. Existing package libraries were reused; only each main and executable were compiled. The verification reports lock driver hashes and source revisions: [gams-applied-methods-validation.json](gams-applied-methods-validation.json), [gams-cubature-validation.json](gams-cubature-validation.json), [gams-factorization-rules-ten-validation.json](gams-factorization-rules-ten-validation.json), [gams-moments-nufft2d-validation.json](gams-moments-nufft2d-validation.json), [gams-quadrature-validation.json](gams-quadrature-validation.json), [gams-rkf-qags-validation.json](gams-rkf-qags-validation.json), [gams-roots-splines-quadrature-validation.json](gams-roots-splines-quadrature-validation.json), [gams-rules-differences-validation.json](gams-rules-differences-validation.json), [gams-sparse-integral-validation.json](gams-sparse-integral-validation.json), [gams-statistics-services-ten-validation.json](gams-statistics-services-ten-validation.json).
 
 Success is status `0` for QUADPACK and `1` for quadrature-fortran. The latter reports a signed error estimate. Estimates are printed separately from actual errors against the analytic references; they are not certified error bounds. Zero printed actual error means agreement at the working floating-point precision. Evaluation counts describe these runs and do not establish a general speed ranking.
 
@@ -218,12 +221,33 @@ Affine antiderivatives on nonuniform, reversed and constant-spacing grids: 864
 PASS stdlib-trapezoid-reference
 ```
 
+### stdlib-simpson-reference
+
+```text
+Odd grids, lengths 3..33; uniform cubics and nonuniform quadratics versus antiderivatives: 432
+PASS stdlib-simpson-reference
+```
+
+### stdlib-gauss-reference
+
+```text
+33 Gauss-Legendre rules, orders 2..12; centered monomial moments through degree 2*n-1: 462
+PASS stdlib-gauss-reference
+```
+
+### stdlib-lobatto-reference
+
+```text
+33 Lobatto rules, orders 2..12; endpoints and centered monomial moments through degree 2*n-3: 396
+PASS stdlib-lobatto-reference
+```
+
 ## Maintenance
 
 After changing a driver, verify it again using existing compiled package images:
 
 ```text
-python xverify_gams_drivers.py --drivers quadpack-smooth quadrature-fortran-smooth quadpack-endpoint-singular dcuhre-box-integrals gauss-jacobi-polynomial-moments cubatures-simplex-moments integrate-nd-polynomial-reference fitpack-spline-integral scifortran-quadrature-reference kronrod-moments-reference fgsl-qags-reference qdutillib-moments-reference stdlib-trapezoid-reference
+python xverify_gams_drivers.py --drivers quadpack-smooth quadrature-fortran-smooth quadpack-endpoint-singular dcuhre-box-integrals gauss-jacobi-polynomial-moments cubatures-simplex-moments integrate-nd-polynomial-reference fitpack-spline-integral scifortran-quadrature-reference kronrod-moments-reference fgsl-qags-reference qdutillib-moments-reference stdlib-trapezoid-reference stdlib-simpson-reference stdlib-gauss-reference stdlib-lobatto-reference
 python xpackage_gams.py
 python xfpm_examples.py
 python xsite.py

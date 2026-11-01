@@ -101,6 +101,7 @@ from xpackage_gams import (gams_data, package_classes, review_text, subclass_mod
                             storage_ten_review_text, STORAGE_TEN_REPORT,
                             workflows_ten_review_text, WORKFLOWS_TEN_REPORT,
                             statistics_services_ten_review_text, STATISTICS_SERVICES_TEN_REPORT,
+                            factorization_rules_ten_review_text, FACTORIZATION_RULES_TEN_REPORT,
                           coverage_data, coverage_review_text, COVERAGE_REPORT,
                           class_evidence, class_tree, mapping_evidence_text, EVIDENCE_REPORT)
 
@@ -886,6 +887,45 @@ class PackageGamsTests(unittest.TestCase):
         self.assertIn('22,416',text)
         self.assertIn('Type-2/type-3 transforms',text)
         self.assertIn('two-dimensional NUFFT2D driver',transforms_review_text())
+
+    def test_factorization_rule_drivers_add_reviewed_stdlib_procedures(self):
+        data = gams_data()
+        records = {r['id']: r for r in data['procedure_mappings']}
+        drivers = {d['id']: d for d in driver_data(data=data)
+                   if d.get('validation_path') == 'docs/gams-factorization-rules-ten-validation.json'}
+        self.assertEqual(set(drivers), {
+            'stdlib-qr-reference', 'stdlib-cholesky-reference', 'stdlib-eigh-reference',
+            'stdlib-svd-reference', 'stdlib-pinv-reference', 'stdlib-matrix-norms-reference',
+            'stdlib-expm-reference', 'stdlib-simpson-reference', 'stdlib-gauss-reference',
+            'stdlib-lobatto-reference'})
+        reviewed = set(numerical_review(data=data)['packages']['stdlib']['procedure_ids'])
+        self.assertEqual(class_tree(data)['D1b2']['parent'], 'D1b')
+        for driver in drivers.values():
+            record = records[driver['procedure_id']]
+            self.assertEqual(record['driver_id'], driver['id'])
+            self.assertIn(record['id'], reviewed)
+            self.assertEqual(class_evidence(class_tree(data), driver['gams_code'], [record], [driver])['status'],
+                             'verified')
+        for ident, field, count in [
+                ('stdlib-qr-reference', 'factorizations', 128),
+                ('stdlib-cholesky-reference', 'factorizations', 112),
+                ('stdlib-eigh-reference', 'eigenvalue_references', 528),
+                ('stdlib-svd-reference', 'singular_value_references', 144),
+                ('stdlib-pinv-reference', 'entry_references', 1120),
+                ('stdlib-matrix-norms-reference', 'norm_references', 525),
+                ('stdlib-expm-reference', 'entry_references', 858),
+                ('stdlib-simpson-reference', 'integral_references', 432),
+                ('stdlib-gauss-reference', 'moment_references', 462),
+                ('stdlib-lobatto-reference', 'moment_references', 396)]:
+            self.assertEqual(drivers[ident]['checks'][field], count)
+        self.assertEqual(drivers['stdlib-expm-reference']['gams_code'], 'D')
+        self.assertTrue(drivers['stdlib-simpson-reference']['checks']['odd_lengths_only'])
+        text = factorization_rules_ten_review_text()
+        self.assertEqual((ROOT/FACTORIZATION_RULES_TEN_REPORT).read_text(encoding='utf-8'), text)
+        for phrase in ['first verification runs', 'positive-diagonal', 'all four Moore-Penrose',
+                       'particular choice of factor signs', 'No arbitrary basis',
+                       'not test the spectral 2-norm', 'categories are not exhausted']:
+            self.assertIn(phrase, text)
 
     def test_statistics_services_drivers_add_reviewed_numerical_procedures(self):
         data = gams_data()

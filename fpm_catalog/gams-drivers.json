@@ -10485,6 +10485,296 @@
         "value_references": 1408,
         "mpi_processes": 1
       }
+    },
+    {
+      "id": "stdlib-qr-reference",
+      "name": "gams-stdlib-qr-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-qr",
+      "gams_code": "D5",
+      "problem_id": "real-full-and-reduced-qr-invariants",
+      "path": "fpm_catalog/gams-drivers/stdlib-qr-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_linalg_qr.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/factorization-rules-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and author tests reviewed. 64 real 5x3 inputs factored with full and reduced storage: 128 decompositions. Reconstruction, orthonormal columns, triangular R, finite factors and input preservation checked, scaled absolute tolerance 5e-12. Factor signs are nonunique and not compared. Pivoting, complex values, workspace APIs, other shapes and extreme conditioning unverified.",
+      "validation_path": "docs/gams-factorization-rules-ten-validation.json",
+      "review_path": "docs/gams-factorization-rules-ten.md",
+      "checks": {
+        "matrices": 64,
+        "factorizations": 128,
+        "shape": [
+          5,
+          3
+        ],
+        "tolerance": 5e-12
+      }
+    },
+    {
+      "id": "stdlib-cholesky-reference",
+      "name": "gams-stdlib-cholesky-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-cholesky",
+      "gams_code": "D2b1b",
+      "problem_id": "constructed-positive-diagonal-cholesky-factors",
+      "path": "fpm_catalog/gams-drivers/stdlib-cholesky-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_linalg_cholesky.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/factorization-rules-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and author tests reviewed. 56 SPD matrices constructed from known dyadic lower-triangular factors with positive diagonal, orders 2..8. Both lower/upper factors, unused-half zeroing, reconstruction and input preservation checked: 112 factorizations. Factor tolerance 2e-12 and scaled residual tolerance 2e-12. Nonpositive-definite errors, complex values, overwriting and all conditioning unverified.",
+      "validation_path": "docs/gams-factorization-rules-ten-validation.json",
+      "review_path": "docs/gams-factorization-rules-ten.md",
+      "checks": {
+        "matrices": 56,
+        "factorizations": 112,
+        "orders": [
+          2,
+          8
+        ],
+        "tolerance": 2e-12
+      }
+    },
+    {
+      "id": "stdlib-eigh-reference",
+      "name": "gams-stdlib-eigh-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-eigh",
+      "gams_code": "D4a1",
+      "problem_id": "symmetric-rank-one-analytic-spectra",
+      "path": "fpm_catalog/gams-drivers/stdlib-eigh-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_linalg_eigenvalues.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/factorization-rules-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and author tests reviewed. 48 real symmetric shifted rank-one matrices, orders 3..8, each using upper/lower triangle selection. 528 analytic eigenvalues, eigenpair residuals, orthonormal vectors and input preservation; scaled absolute tolerance 3e-12. Repeated eigenspaces are checked by residuals rather than a chosen basis. Generalized/complex problems, inconsistent triangles and ill-conditioning unverified.",
+      "validation_path": "docs/gams-factorization-rules-ten-validation.json",
+      "review_path": "docs/gams-factorization-rules-ten.md",
+      "checks": {
+        "matrices": 48,
+        "eigensystems": 96,
+        "eigenvalue_references": 528,
+        "orders": [
+          3,
+          8
+        ],
+        "tolerance": 3e-12
+      }
+    },
+    {
+      "id": "stdlib-svd-reference",
+      "name": "gams-stdlib-svd-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-svd",
+      "gams_code": "D6",
+      "problem_id": "rectangular-known-singular-value-families",
+      "path": "fpm_catalog/gams-drivers/stdlib-svd-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_linalg_svd.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/factorization-rules-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and author tests reviewed. 48 real 4x3 matrices constructed with orthonormal factors and prescribed ranks 1..3. All 144 singular values, left/right singular equations, reconstruction, thin-factor orthogonality and input preservation checked; scaled absolute tolerance 5e-12. Vector signs/nullspace bases are nonunique. Complex/wide/full-storage problems, near-threshold rank decisions and general conditioning unverified.",
+      "validation_path": "docs/gams-factorization-rules-ten-validation.json",
+      "review_path": "docs/gams-factorization-rules-ten.md",
+      "checks": {
+        "matrices": 48,
+        "singular_value_references": 144,
+        "shape": [
+          4,
+          3
+        ],
+        "ranks": [
+          1,
+          3
+        ],
+        "tolerance": 5e-12
+      }
+    },
+    {
+      "id": "stdlib-pinv-reference",
+      "name": "gams-stdlib-pinv-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-pinv",
+      "gams_code": "D9c",
+      "problem_id": "outer-product-moore-penrose-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-pinv-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_linalg_pseudoinverse.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/factorization-rules-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and author tests reviewed. 80 rank-one rectangular outer products with 2..6 rows and 2..5 columns. 1,120 closed-form inverse entries plus all four Moore-Penrose identities, finite output and input preservation. Explicit rtol=1e-10; absolute/scaled identity tolerance 2e-11. Zero matrices, arbitrary ranks, cutoff sensitivity, complex values and all error paths unverified.",
+      "validation_path": "docs/gams-factorization-rules-ten-validation.json",
+      "review_path": "docs/gams-factorization-rules-ten.md",
+      "checks": {
+        "matrices": 80,
+        "entry_references": 1120,
+        "rows": [
+          2,
+          6
+        ],
+        "columns": [
+          2,
+          5
+        ],
+        "rtol": 1e-10,
+        "tolerance": 2e-11
+      }
+    },
+    {
+      "id": "stdlib-matrix-norms-reference",
+      "name": "gams-stdlib-matrix-norms-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-matrix-norms",
+      "gams_code": "D1b2",
+      "problem_id": "scalar-loop-matrix-norm-oracles",
+      "path": "fpm_catalog/gams-drivers/stdlib-matrix-norms-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_linalg_mnorm.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/factorization-rules-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and author tests reviewed. 175 real matrices of shapes [1..5,1..7], including 35 zero matrices. 525 1/infinity/Frobenius norms against independent scalar row/column sums and sum-of-squares; scaled absolute tolerance 2e-12. Spectral 2-norm, complex/higher-rank inputs, overflow/underflow scaling and invalid orders unverified.",
+      "validation_path": "docs/gams-factorization-rules-ten-validation.json",
+      "review_path": "docs/gams-factorization-rules-ten.md",
+      "checks": {
+        "matrices": 175,
+        "norm_references": 525,
+        "zero_matrices": 35,
+        "tolerance": 2e-12
+      }
+    },
+    {
+      "id": "stdlib-expm-reference",
+      "name": "gams-stdlib-expm-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-expm",
+      "gams_code": "D",
+      "problem_id": "nilpotent-and-plane-rotation-exponentials",
+      "path": "fpm_catalog/gams-drivers/stdlib-expm-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_linalg_expm.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/factorization-rules-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and author tests reviewed. 132 real matrix-exponential calls using default Pade order and order 12: shifted nilpotent 3x3 matrices with a finite polynomial closed form and 2x2 plane rotations with analytic sine/cosine form. 858 entry references, scaled absolute tolerance 2e-11. Broad D classification avoids inventing a matrix-function leaf. General stiff matrices, scaling extremes, complex values and invalid inputs unverified.",
+      "validation_path": "docs/gams-factorization-rules-ten-validation.json",
+      "review_path": "docs/gams-factorization-rules-ten.md",
+      "checks": {
+        "matrix_families": 2,
+        "calls": 132,
+        "entry_references": 858,
+        "orders": [
+          "default",
+          12
+        ],
+        "tolerance": 2e-11
+      }
+    },
+    {
+      "id": "stdlib-simpson-reference",
+      "name": "gams-stdlib-simpson-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-simpson",
+      "gams_code": "H2a1b2",
+      "problem_id": "cubic-and-quadratic-antiderivatives",
+      "path": "fpm_catalog/gams-drivers/stdlib-simpson-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_simps.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/factorization-rules-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and author tests reviewed. 432 analytic integral references on odd grids of lengths 3..33: uniform cubics through explicit-grid/spacing APIs and nonuniform quadratics. Scaled absolute tolerance 2e-12. No numerical quadrature routine supplies the oracle. Even-grid policy, nonlinear error estimates, adaptivity, malformed grids and other kinds unverified.",
+      "validation_path": "docs/gams-factorization-rules-ten-validation.json",
+      "review_path": "docs/gams-factorization-rules-ten.md",
+      "checks": {
+        "integral_references": 432,
+        "grid_lengths": [
+          3,
+          33
+        ],
+        "odd_lengths_only": true,
+        "tolerance": 2e-12
+      }
+    },
+    {
+      "id": "stdlib-gauss-reference",
+      "name": "gams-stdlib-gauss-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-gauss",
+      "gams_code": "H2c",
+      "problem_id": "gauss-legendre-centered-moment-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-gauss-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_gauss.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/factorization-rules-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and author tests reviewed. 33 Gauss-Legendre node/weight rules, orders 2..12 on three intervals. 462 centered monomial moments through degree 2*n-1 against exact integrals; positive weights, interior ordered nodes and symmetry checked. Interval-scaled absolute tolerance 5e-12. Higher orders, reversed intervals and general integrand accuracy unverified.",
+      "validation_path": "docs/gams-factorization-rules-ten-validation.json",
+      "review_path": "docs/gams-factorization-rules-ten.md",
+      "checks": {
+        "rules": 33,
+        "orders": [
+          2,
+          12
+        ],
+        "moment_references": 462,
+        "exactness_degree": "2*n-1",
+        "tolerance": 5e-12
+      }
+    },
+    {
+      "id": "stdlib-lobatto-reference",
+      "name": "gams-stdlib-lobatto-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-lobatto",
+      "gams_code": "H2c",
+      "problem_id": "lobatto-centered-moment-and-endpoint-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-lobatto-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_gauss.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/factorization-rules-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and author tests reviewed. 33 Gauss-Legendre-Lobatto rules, orders 2..12 on three intervals. 396 centered monomial moments through degree 2*n-3 against exact integrals, endpoints, positive weights, node ordering and symmetry. Interval-scaled absolute tolerance 5e-12. Higher orders, reversed intervals and general integrand accuracy unverified.",
+      "validation_path": "docs/gams-factorization-rules-ten-validation.json",
+      "review_path": "docs/gams-factorization-rules-ten.md",
+      "checks": {
+        "rules": 33,
+        "orders": [
+          2,
+          12
+        ],
+        "moment_references": 396,
+        "exactness_degree": "2*n-3",
+        "tolerance": 5e-12
+      }
     }
   ]
 }
