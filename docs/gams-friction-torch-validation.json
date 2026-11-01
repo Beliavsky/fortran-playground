@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "friction-lugre-reference",
+      "source_revision": "8e75dcac26f47417a439adfcbaa24834105d89fe",
+      "source_sha256": "1dd30adb88bc2585c5d6172f83f0b55b2bff68c219854775a3714cf62101e854",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T12:24:03.328032+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.429,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "LuGre constant-velocity segments: 288; state/derivative/force references each: 1440\nNumerical integration callback evaluations: 80598\nMax normalized state, derivative and force errors:    1.18833E-11   4.33973E-17   1.13208E-10\n72 histories; velocity reversals, rest, changing loads and nonzero initial bristle states.\nPublic LuGre state integration only; private fitting callbacks and parameter fitting unverified.\nPASS friction-lugre-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.041,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "ftorch-affine-reference",
+      "source_revision": "b1b1bb3b9138642ac51d55608e7f3af9070c43f1",
+      "source_sha256": "d3a2d7792084293edf415796d893aff0b431c26bddf59cd95e18cb3b96224509",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T12:24:08.150088+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.995,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "10 tensor configurations: REAL32/REAL64, ranks 1/2/3, identity and asymmetric axis permutations.\nCPU forward calls: 130; exact scalar output references: 1742\nMaximum absolute affine prediction error:    0.00000E+00\nIn-place input updates and exact replay; input rank/shape/stride/dtype and input immutability checked.\nExisting y=2*x+1 fixture only; nonlinear networks, training, gradients and GPU execution unverified.\nPASS ftorch-affine-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 1.261,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-11-01T12:24:08.198642+00:00"
+}

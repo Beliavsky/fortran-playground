@@ -93,6 +93,7 @@ from xpackage_gams import (gams_data, package_classes, review_text, subclass_mod
                             radial_dense_review_text, RADIAL_DENSE_REPORT,
                             inference_pairs_review_text, INFERENCE_PAIRS_REPORT,
                             helmholtz_streams_review_text, HELMHOLTZ_STREAMS_REPORT,
+                            friction_torch_review_text, FRICTION_TORCH_REPORT,
                           coverage_data, coverage_review_text, COVERAGE_REPORT,
                           class_evidence, class_tree, mapping_evidence_text, EVIDENCE_REPORT)
 
@@ -878,6 +879,54 @@ class PackageGamsTests(unittest.TestCase):
         self.assertIn('22,416',text)
         self.assertIn('Type-2/type-3 transforms',text)
         self.assertIn('two-dimensional NUFFT2D driver',transforms_review_text())
+
+    def test_lugre_and_torch_scope_keeps_private_fitting_and_training_unverified(self):
+        data = gams_data()
+        records = {r['id']:r for r in data['procedure_mappings']}
+        drivers = {d['id']:d for d in driver_data(data=data)}
+        for ident,code in [('friction-lugre-reference','I1'),('ftorch-affine-reference','K')]:
+            d = drivers[ident]
+            r = records[d['procedure_id']]
+            self.assertEqual(r['driver_id'],ident)
+            self.assertEqual(class_evidence(class_tree(data),code,[r],[d])['status'],'verified')
+        self.assertNotIn('driver_id',records['friction-internal-state'])
+        self.assertNotIn('driver_id',records['friction-fit'])
+        self.assertEqual(class_evidence(class_tree(data),'L8',[records['friction-fit']],list(drivers.values()))['status'],
+                         'source-supported')
+        lugre = drivers['friction-lugre-reference']['checks']
+        self.assertEqual((lugre['histories'],lugre['segments'],lugre['reference_points']),(72,288,1440))
+        self.assertFalse(lugre['private_fit_callbacks_verified'])
+        self.assertFalse(lugre['parameter_fitting_verified'])
+        torch = drivers['ftorch-affine-reference']['checks']
+        self.assertEqual((torch['tensor_configurations'],torch['forward_calls'],torch['scalar_reference_entries']),
+                         (10,130,1742))
+        self.assertEqual(torch['asymmetric_permutations'],[[2,1],[2,3,1]])
+        self.assertFalse(torch['nonlinear_model_verified'])
+        self.assertFalse(torch['training_verified'])
+        text = friction_torch_review_text()
+        self.assertEqual((ROOT/FRICTION_TORCH_REPORT).read_text(encoding='utf-8'),text)
+        for phrase in ['72 histories','1,440 requested','closed-form reference propagates its own exact endpoint',
+                       'private callbacks and parameter fitting remain unverified','1,742 scalar',
+                       'not verify a trained scientific model','categories are not exhausted']:
+            self.assertIn(phrase,text)
+
+    def test_torch_embedded_model_is_the_existing_auditable_affine_fixture(self):
+        import hashlib
+        import re
+        import zipfile
+        from io import BytesIO
+        def model(path):
+            text = path.read_text(encoding='utf-8')
+            literal = text.split('character(*), parameter :: model_hex = &',1)[1].split('integer(int8) :: bytes',1)[0]
+            return bytes.fromhex(''.join(re.findall("'([0-9a-fA-F]+)'",literal)))
+        driver = next(d for d in driver_data() if d['id']=='ftorch-affine-reference')
+        content = model(ROOT/driver['path'])
+        self.assertEqual(content,model(ROOT/'fpm_catalog/demos/ftorch.f90'))
+        self.assertEqual(len(content),1766)
+        self.assertEqual(hashlib.sha256(content).hexdigest(),driver['checks']['existing_model_sha256'])
+        with zipfile.ZipFile(BytesIO(content)) as archive:
+            code = archive.read('tiny/code/__torch__.py').decode()
+        self.assertIn('torch.add(torch.mul(x, 2.), 1.)',code)
 
     def test_helmholtz_and_stream_driver_scope_and_review(self):
         data = gams_data()

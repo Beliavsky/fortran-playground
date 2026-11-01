@@ -296,3 +296,5 @@ The [radial-state and dense-layer review](gams-radial-dense.md) connects I1 to 3
 The [Fiats and ennuf inference review](gams-inference-pairs.md) connects K to 48 Fiats multilayer networks with scalar references and 2,640 ennuf pipeline batches with 35,200 layer-output references, plus an 81-point closed-form check of the existing generated model across all four ReLU regions. Fixed function evaluation is checked; training, model conversion and approximation quality on datasets remain unverified.
 
 The [checked spherical Helmholtz and uniform-stream drivers](gams-helmholtz-streams.md) cover nonresonant spherical PDEs and exact seeded bitstream/jump behavior. Statistical quality, resonant shifts and the known normal-cache reseeding defect remain outside these checks.
+
+The [checked LuGre and FTorch drivers](gams-friction-torch.md) verify public constitutive state integration and fixed affine tensor inference. Private fitting callbacks, parameter fitting, nonlinear networks and training remain unverified.

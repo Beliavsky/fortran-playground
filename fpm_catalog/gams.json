@@ -5834,7 +5834,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "Constitutive friction models, with nonlinear parameter fitting and internal-state ODE integration in the reviewed source. The checked main covers algebraic Coulomb and Stribeck forces only; it does not validate parameter fitting or dynamic internal-state integration.",
+      "notes": "Constitutive friction models, with nonlinear parameter fitting and internal-state ODE integration in the reviewed source. The checked main covers algebraic Coulomb and Stribeck forces only; it does not validate parameter fitting or dynamic internal-state integration. Public LuGre state integration is now separately checked by friction-lugre-state; this does not verify the private interpolation/fitting callbacks recorded here.",
       "evidence": [
         {
           "path": "src/friction_core.f90",
@@ -9243,7 +9243,7 @@
       ],
       "review_level": "source-reviewed",
       "derivatives": "not applicable",
-      "notes": "The original FTorch Fortran and C++ sources are wrapped for FPM, using pinned Debian CPU LibTorch 2.6.0+dfsg-7, the C++20 mode, C++11 ABI and include/definition settings from the upstream CMake target. The operator C++ flag setting is restricted to a current, unshared source-package recipe; public requests cannot set it and previous cache keys are preserved. The self-contained consumer embeds a reproducibly generated 1,766-byte TorchScript model as hexadecimal text, writes tiny.pt in the sandbox and calls the author tensor/model API in REAL64. Two different five-element inputs exercise y=2*x+1, with each output checked independently for finiteness and absolute error below 1e-12. The second call also verifies that the input tensor observes updated Fortran storage. No Python or model download runs in visitor jobs. This is an illustrative affine inference model, not a trained scientific predictor. K covers inference as function approximation; no training or optimization classification is inferred. GPU use, training, autograd, parallel execution and arbitrary external models are not verified. FTorch MIT notices and native Debian dependency notices are retained. APT estimates about 924 MB of additional native dependencies in the isolated FTorch image; these are separate from the catalog logical library-artifact total.",
+      "notes": "The original FTorch Fortran and C++ sources are wrapped for FPM, using pinned Debian CPU LibTorch 2.6.0+dfsg-7, the C++20 mode, C++11 ABI and include/definition settings from the upstream CMake target. The operator C++ flag setting is restricted to a current, unshared source-package recipe; public requests cannot set it and previous cache keys are preserved. The self-contained consumer embeds a reproducibly generated 1,766-byte TorchScript model as hexadecimal text, writes tiny.pt in the sandbox and calls the author tensor/model API in REAL64. Two different five-element inputs exercise y=2*x+1, with each output checked independently for finiteness and absolute error below 1e-12. The second call also verifies that the input tensor observes updated Fortran storage. No Python or model download runs in visitor jobs. This is an illustrative affine inference model, not a trained scientific predictor. K covers inference as function approximation; no training or optimization classification is inferred. GPU use, training, autograd, parallel execution and arbitrary external models are not verified. FTorch MIT notices and native Debian dependency notices are retained. APT estimates about 924 MB of additional native dependencies in the isolated FTorch image; these are separate from the catalog logical library-artifact total. Dedicated K driver now checks the same fixed affine model across REAL32/REAL64 tensor ranks 1/2/3, asymmetric dimension permutations, metadata, in-place input updates and replay. It verifies 1742 exact dyadic output entries; nonlinear models, gradients and training remain unverified.",
       "evidence": [
         {
           "path": "src/ftorch_model.f90",
@@ -9267,7 +9267,8 @@
           "sha256": "2695e927b69cf67c4af9f40a98116328119cadd60dc1a3984497348bc567cb2f",
           "line": 1
         }
-      ]
+      ],
+      "driver_id": "ftorch-affine-reference"
     },
     {
       "id": "tsunami-periodic-differences",
@@ -9909,6 +9910,34 @@
         }
       ],
       "driver_id": "slicot-discrete-sylvester"
+    },
+    {
+      "id": "friction-lugre-state",
+      "package_id": "friction",
+      "revision": "8e75dcac26f47417a439adfcbaa24834105d89fe",
+      "module": "friction_lugre",
+      "procedure": "lugre_model%state / evaluate (integrated with diffeq runge_kutta_23)",
+      "gams_codes": [
+        "I1"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Public LuGre constitutive internal-state ODE, distinct from the private fitting/interpolation callbacks in friction_core. Dedicated driver integrates constant-velocity segments with reversals, rest, changing segment loads and nonzero initial states against a closed-form exponential solution. Force histories and state derivatives are independently checked. No parameter-fitting or private callback claim.",
+      "evidence": [
+        {
+          "path": "src/models/friction_lugre.f90",
+          "sha256": "f9f3c6376eb600ce00edb00a2b88dd9963a1948fb76b76b998d1658c7df961ba",
+          "line": 161
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "examples/lugre_example.f90",
+          "sha256": "41ff9971a214b652d1ed932075fadf8fbd0de75c49def49c0ebd08c806762e26",
+          "line": 1
+        }
+      ],
+      "driver_id": "friction-lugre-reference"
     }
   ],
   "review_notes": {

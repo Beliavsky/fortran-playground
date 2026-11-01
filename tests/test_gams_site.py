@@ -67,6 +67,28 @@ class GamsSiteTests(unittest.TestCase):
             self.assertIn('Open default example', sorting)
             self.assertNotIn('Try in playground', sorting)
 
+    def test_lugre_and_torch_links_use_checked_drivers_without_promoting_fitting(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects']
+                            if p['playground']['package_id'] in {'friction','ftorch'}]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination,feed)
+            for code,package,driver in [('I1','friction','friction-lugre-reference'),
+                                        ('K','ftorch','ftorch-affine-reference')]:
+                html = (destination/code/'index.html').read_text(encoding='utf-8')
+                primary = {url for url,label in Page(html).anchors if label=='Try in playground'}
+                self.assertIn(f'https://beliavsky.github.io/fortran-playground/fpm/?package={package}&example=gams-{driver}',primary)
+                self.assertIn('Verified: a checked driver',html)
+            fitting = (destination/'L8/index.html').read_text(encoding='utf-8')
+            self.assertNotIn('Try in playground',{label for url,label in Page(fitting).anchors})
+            detail = (destination/'packages/friction/index.html').read_text(encoding='utf-8')
+            private = detail.split('id="friction-internal-state"',1)[1].split('</article>',1)[0]
+            self.assertNotIn('Load checked GAMS driver:',private)
+            public = detail.split('id="friction-lugre-state"',1)[1].split('</article>',1)[0]
+            self.assertIn('example=gams-friction-lugre-reference',public)
+
     def test_helmholtz_and_stream_pages_load_class_specific_drivers(self):
         import copy
         feed = copy.deepcopy(self.feed)

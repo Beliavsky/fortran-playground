@@ -8606,6 +8606,106 @@
           "fpm_catalog/gams-drivers/references/xoroshiro-vectors.json": "6bafaf38d1856cb5316bb7ebe3ab6f93395841f101b80d0e932946961fd6fde2"
         }
       }
+    },
+    {
+      "id": "friction-lugre-reference",
+      "name": "gams-friction-lugre-reference",
+      "package_id": "friction",
+      "procedure_id": "friction-lugre-state",
+      "gams_code": "I1",
+      "problem_id": "piecewise-constant-lugre-closed-form",
+      "path": "fpm_catalog/gams-drivers/friction-lugre-reference.f90",
+      "revision": "8e75dcac26f47417a439adfcbaa24834105d89fe",
+      "author_example": "examples/lugre_example.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/friction-torch-drivers-MIT.txt"
+      ],
+      "modifications": "Public LuGre constitutive internal-state ODE, distinct from the private fitting/interpolation callbacks in friction_core. Dedicated driver integrates constant-velocity segments with reversals, rest, changing segment loads and nonzero initial states against a closed-form exponential solution. Force histories and state derivatives are independently checked. No parameter-fitting or private callback claim.",
+      "validation_path": "docs/gams-friction-torch-validation.json",
+      "review_path": "docs/gams-friction-torch.md",
+      "checks": {
+        "histories": 72,
+        "segments": 288,
+        "reference_points": 1440,
+        "parameter_sets": 4,
+        "shape_parameters": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "initial_states": [
+          -0.0625,
+          0,
+          0.0625
+        ],
+        "velocity_reversals_verified": true,
+        "rest_segments_verified": true,
+        "load_changes_at_segment_boundaries": true,
+        "max_normalized_state_error": 2e-08,
+        "max_normalized_derivative_error": 2e-13,
+        "max_normalized_force_error": 2e-07,
+        "private_fit_callbacks_verified": false,
+        "parameter_fitting_verified": false
+      }
+    },
+    {
+      "id": "ftorch-affine-reference",
+      "name": "gams-ftorch-affine-reference",
+      "package_id": "ftorch",
+      "procedure_id": "ftorch-inference",
+      "gams_code": "K",
+      "problem_id": "embedded-affine-tensor-layout-reference",
+      "path": "fpm_catalog/gams-drivers/ftorch-affine-reference.f90",
+      "revision": "b1b1bb3b9138642ac51d55608e7f3af9070c43f1",
+      "author_example": "examples/02_SimpleNet/simplenet_infer_fortran.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/friction-torch-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; existing playground-owned affine TorchScript fixture reused as data. Ten REAL32/REAL64 rank 1/2/3 tensor layouts including asymmetric axis permutations, in-place input updates and replay, exact dyadic scalar references, input metadata and immutability checked. No new model generation, nonlinear model, gradients, training or GPU claim.",
+      "validation_path": "docs/gams-friction-torch-validation.json",
+      "review_path": "docs/gams-friction-torch.md",
+      "checks": {
+        "tensor_configurations": 10,
+        "forward_calls": 130,
+        "scalar_reference_entries": 1742,
+        "ranks": [
+          1,
+          2,
+          3
+        ],
+        "kinds": [
+          "real32",
+          "real64"
+        ],
+        "asymmetric_permutations": [
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            3,
+            1
+          ]
+        ],
+        "input_metadata_checked": [
+          "rank",
+          "shape",
+          "stride",
+          "dtype"
+        ],
+        "input_immutability_checked": true,
+        "exact_dyadic_reference": true,
+        "existing_model_sha256": "13b09124005d3c931b04a5da83624973b3f78b231a579217932469ab8179077c",
+        "nonlinear_model_verified": false,
+        "training_verified": false,
+        "gpu_verified": false
+      }
     }
   ]
 }

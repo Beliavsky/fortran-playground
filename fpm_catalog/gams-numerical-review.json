@@ -1162,9 +1162,10 @@
       "status": "procedure-reviewed",
       "procedure_ids": [
         "friction-fit",
-        "friction-internal-state"
+        "friction-internal-state",
+        "friction-lugre-state"
       ],
-      "notes": "Constitutive friction models, with nonlinear parameter fitting and internal-state ODE integration in the reviewed source. The checked main covers algebraic Coulomb and Stribeck forces only; it does not validate parameter fitting or dynamic internal-state integration."
+      "notes": "Constitutive friction models, with nonlinear parameter fitting and internal-state ODE integration in the reviewed source. The checked main covers algebraic Coulomb and Stribeck forces only; it does not validate parameter fitting or dynamic internal-state integration. Public LuGre state/evaluate APIs separately reviewed with an analytical piecewise-constant IVP consumer; private fitting callbacks and the known fitting failure remain outside the checked scope."
     },
     "feq-parse": {
       "revision": "2e80c5940b128a52c5070a3f56909674fb85a379",

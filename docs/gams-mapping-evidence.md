@@ -8,7 +8,7 @@ This report assesses each package/class pair, including inherited parent classes
 
 When a driver cannot be created, inspect the pinned implementation and author examples. Narrow or remove a classification that is unsupported; do not substitute an unrelated default example as evidence. Record missing dependencies, sandbox limits and upstream defects separately in the procedure or package review notes. A sandbox failure alone does not disprove an algorithm.
 
-Counts refer to package/class pairs and include parents: 574 verified, 175 source-supported, 246 uncertain.
+Counts refer to package/class pairs and include parents: 577 verified, 172 source-supported, 246 uncertain.
 
 ## Mappings requiring source review
 
@@ -409,13 +409,14 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [forwarddiff / forwarddiff-derivative](https://beliavsky.github.io/fortran-playground/gams/packages/forwarddiff/#forwarddiff-derivative) | H1 | verified |
 | [friction / friction-fit](https://beliavsky.github.io/fortran-playground/gams/packages/friction/#friction-fit) | L8 | source-supported |
 | [friction / friction-internal-state](https://beliavsky.github.io/fortran-playground/gams/packages/friction/#friction-internal-state) | I1 | source-supported |
+| [friction / friction-lugre-state](https://beliavsky.github.io/fortran-playground/gams/packages/friction/#friction-lugre-state) | I1 | verified |
 | [fsparse / fsparse-dense2coo](https://beliavsky.github.io/fortran-playground/gams/packages/fsparse/#fsparse-dense2coo) | D1b9 | verified |
 | [fsparse / fsparse-matvec](https://beliavsky.github.io/fortran-playground/gams/packages/fsparse/#fsparse-matvec) | D1b4 | verified |
 | [fstats / fstats-mean](https://beliavsky.github.io/fortran-playground/gams/packages/fstats/#fstats-mean) | L1a1a | verified |
 | [fstats / fstats-variance](https://beliavsky.github.io/fortran-playground/gams/packages/fstats/#fstats-variance) | L1a1b | verified |
 | [ftl / ftl-containers](https://beliavsky.github.io/fortran-playground/gams/packages/ftl/#ftl-containers) | N4 | source-supported |
 | [ftl / ftl-containers](https://beliavsky.github.io/fortran-playground/gams/packages/ftl/#ftl-containers) | N5 | source-supported |
-| [ftorch / ftorch-inference](https://beliavsky.github.io/fortran-playground/gams/packages/ftorch/#ftorch-inference) | K | source-supported |
+| [ftorch / ftorch-inference](https://beliavsky.github.io/fortran-playground/gams/packages/ftorch/#ftorch-inference) | K | verified |
 | [fundamental_constants / fundamental-codata](https://beliavsky.github.io/fortran-playground/gams/packages/fundamental_constants/#fundamental-codata) | R | source-supported |
 | [fycollections / fycollections-demo-api](https://beliavsky.github.io/fortran-playground/gams/packages/fycollections/#fycollections-demo-api) | N4 | source-supported |
 | [fycollections / fycollections-demo-api](https://beliavsky.github.io/fortran-playground/gams/packages/fycollections/#fycollections-demo-api) | N5 | source-supported |

@@ -45,6 +45,7 @@ A separate RK4 experiment integrates the same problem directly to `2*pi` with no
 | [Load daskr-dae-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=daskr&example=gams-daskr-dae-reference) · [Source](../fpm_catalog/gams-drivers/daskr-dae-reference.f90) | I1a2 | [Procedure](https://github.com/davidpfister/daskr/blob/b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f#L1) · [Author example](https://github.com/davidpfister/daskr/blob/b43533edc5d6900088a846d802e3a86d0f9a06ad/examples/web/dweb.f) |
 | [Load fatode-tangent-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=fatode&example=gams-fatode-tangent-reference) · [Source](../fpm_catalog/gams-drivers/fatode-tangent-reference.f90) | I1 | [Procedure](https://github.com/ComputationalScienceLaboratory/FATODE/blob/3f237c49bd377644a597c2a49ae5a83f090bfab5/TLM/ERK_TLM/ERK_TLM_f90_Integrator.F90#L1) · [Author example](https://github.com/ComputationalScienceLaboratory/FATODE/blob/3f237c49bd377644a597c2a49ae5a83f090bfab5/EXAMPLES/swe/SWE_ERK_TLM/swe2D_erk_tlm_dr.F90) |
 | [Load dftatom-hydrogen-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=dftatom&example=gams-dftatom-hydrogen-reference) · [Source](../fpm_catalog/gams-drivers/dftatom-hydrogen-reference.f90) | I1 | [Procedure](https://github.com/certik/dftatom/blob/e49b3042de6e2471afe5eea992c9ba50dac08f95/src/reigen.f90#L1) · [Author example](https://github.com/certik/dftatom/blob/e49b3042de6e2471afe5eea992c9ba50dac08f95/tests/hydrogen/hydrogen.f90) |
+| [Load friction-lugre-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=friction&example=gams-friction-lugre-reference) · [Source](../fpm_catalog/gams-drivers/friction-lugre-reference.f90) | I1 | [Procedure](https://github.com/jchristopherson/friction/blob/8e75dcac26f47417a439adfcbaa24834105d89fe/src/models/friction_lugre.f90#L161) · [Author example](https://github.com/jchristopherson/friction/blob/8e75dcac26f47417a439adfcbaa24834105d89fe/examples/lugre_example.f90) |
 
 The drivers adapt author callback and integration API patterns to the shared analytic problem, without plotting dependencies; license notices are retained. They appear in hosted and main local FPM example menus and downloaded FPM projects. Loading a link selects source without submitting a job.
 
@@ -322,6 +323,17 @@ Radial eigenproblems: 36; P references and Q references each: 135036
 Max energy, P, Q, normalization, radius and inverse-radius errors:    4.76529E-11   9.19163E-10   1.20398E-05   3.53696E-06   2.11486E-09   9.09494E-11
 Nonrelativistic Coulomb states only; Dirac, general potentials and self-consistent DFT unverified.
 PASS dftatom-hydrogen-reference
+```
+
+### friction-lugre-reference
+
+```text
+LuGre constant-velocity segments: 288; state/derivative/force references each: 1440
+Numerical integration callback evaluations: 80598
+Max normalized state, derivative and force errors:    1.18833E-11   4.33973E-17   1.13208E-10
+72 histories; velocity reversals, rest, changing loads and nonzero initial bristle states.
+Public LuGre state integration only; private fitting callbacks and parameter fitting unverified.
+PASS friction-lugre-reference
 ```
 
 ## Maintenance
