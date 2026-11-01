@@ -8,7 +8,7 @@ This report assesses each package/class pair, including inherited parent classes
 
 When a driver cannot be created, inspect the pinned implementation and author examples. Narrow or remove a classification that is unsupported; do not substitute an unrelated default example as evidence. Record missing dependencies, sandbox limits and upstream defects separately in the procedure or package review notes. A sandbox failure alone does not disprove an algorithm.
 
-Counts refer to package/class pairs and include parents: 653 verified, 96 source-supported, 246 uncertain.
+Counts refer to package/class pairs and include parents: 671 verified, 78 source-supported, 246 uncertain.
 
 ## Mappings requiring source review
 
@@ -274,7 +274,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [amosf90 / amosf90-bessel](https://beliavsky.github.io/fortran-playground/gams/packages/amosf90/#amosf90-bessel) | C10 | verified |
 | [any / any-values](https://beliavsky.github.io/fortran-playground/gams/packages/any/#any-values) | N4 | verified |
 | [aotus / aotus-config](https://beliavsky.github.io/fortran-playground/gams/packages/aotus/#aotus-config) | N1 | verified |
-| [argparse-f / argparse-f-options](https://beliavsky.github.io/fortran-playground/gams/packages/argparse-f/#argparse-f-options) | N3 | source-supported |
+| [argparse-f / argparse-f-options](https://beliavsky.github.io/fortran-playground/gams/packages/argparse-f/#argparse-f-options) | N3 | verified |
 | [arpack-ng / arpack-eigenpairs](https://beliavsky.github.io/fortran-playground/gams/packages/arpack-ng/#arpack-eigenpairs) | D4a1 | verified |
 | [array_range / array-range-bounds](https://beliavsky.github.io/fortran-playground/gams/packages/array_range/#array-range-bounds) | R | verified |
 | [astro-fortran / astro-fortran-g2icrs](https://beliavsky.github.io/fortran-playground/gams/packages/astro-fortran/#astro-fortran-g2icrs) | P | verified |
@@ -393,7 +393,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [fortran-simplify / fortran-simplify-perpendicular](https://beliavsky.github.io/fortran-playground/gams/packages/fortran-simplify/#fortran-simplify-perpendicular) | P | source-supported |
 | [fortran-simplify / fortran-simplify-perpendicular](https://beliavsky.github.io/fortran-playground/gams/packages/fortran-simplify/#fortran-simplify-perpendicular) | K | source-supported |
 | [fortran-string-to-real / fortran-string-to-real-str2real](https://beliavsky.github.io/fortran-playground/gams/packages/fortran-string-to-real/#fortran-string-to-real-str2real) | A6 | verified |
-| [fortran-tcl86 / tcl-evaluate](https://beliavsky.github.io/fortran-playground/gams/packages/fortran-tcl86/#tcl-evaluate) | S | source-supported |
+| [fortran-tcl86 / tcl-evaluate](https://beliavsky.github.io/fortran-playground/gams/packages/fortran-tcl86/#tcl-evaluate) | S | verified |
 | [fortran-tokenizer / tokenizer-fields](https://beliavsky.github.io/fortran-playground/gams/packages/fortran-tokenizer/#tokenizer-fields) | N3 | verified |
 | [fortran-unix / unix-files](https://beliavsky.github.io/fortran-playground/gams/packages/fortran-unix/#unix-files) | N1 | verified |
 | [fortran-utils / fortran-utils-splines](https://beliavsky.github.io/fortran-playground/gams/packages/fortran-utils/#fortran-utils-splines) | E1 | verified |
@@ -418,12 +418,12 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [ftl / ftl-containers](https://beliavsky.github.io/fortran-playground/gams/packages/ftl/#ftl-containers) | N5 | source-supported |
 | [ftorch / ftorch-inference](https://beliavsky.github.io/fortran-playground/gams/packages/ftorch/#ftorch-inference) | K | verified |
 | [fundamental_constants / fundamental-codata](https://beliavsky.github.io/fortran-playground/gams/packages/fundamental_constants/#fundamental-codata) | R | verified |
-| [fycollections / fycollections-demo-api](https://beliavsky.github.io/fortran-playground/gams/packages/fycollections/#fycollections-demo-api) | N4 | source-supported |
+| [fycollections / fycollections-demo-api](https://beliavsky.github.io/fortran-playground/gams/packages/fycollections/#fycollections-demo-api) | N4 | verified |
 | [fycollections / fycollections-demo-api](https://beliavsky.github.io/fortran-playground/gams/packages/fycollections/#fycollections-demo-api) | N5 | source-supported |
 | [gaussjacobiquad / gaussjacobiquad-gauss-jacobi](https://beliavsky.github.io/fortran-playground/gams/packages/gaussjacobiquad/#gaussjacobiquad-gauss-jacobi) | H2c | verified |
 | [geodesic-fortran / geodesic-fortran-inverse](https://beliavsky.github.io/fortran-playground/gams/packages/geodesic-fortran/#geodesic-fortran-inverse) | P | verified |
 | [geompack / geompack-r8tris2](https://beliavsky.github.io/fortran-playground/gams/packages/geompack/#geompack-r8tris2) | P | verified |
-| [gftl / gftl-vector](https://beliavsky.github.io/fortran-playground/gams/packages/gftl/#gftl-vector) | N4 | source-supported |
+| [gftl / gftl-vector](https://beliavsky.github.io/fortran-playground/gams/packages/gftl/#gftl-vector) | N4 | verified |
 | [gftl-shared / gftl-shared-containers](https://beliavsky.github.io/fortran-playground/gams/packages/gftl-shared/#gftl-shared-containers) | N4 | verified |
 | [gftl-shared / gftl-shared-containers](https://beliavsky.github.io/fortran-playground/gams/packages/gftl-shared/#gftl-shared-containers) | N5 | source-supported |
 | [graphstruc / graphstruc-add-vertex](https://beliavsky.github.io/fortran-playground/gams/packages/graphstruc/#graphstruc-add-vertex) | N4 | verified |
@@ -441,7 +441,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [io_utilities / io-utilities-keyvars](https://beliavsky.github.io/fortran-playground/gams/packages/io_utilities/#io-utilities-keyvars) | N1 | verified |
 | [jeyemhex-regex / jeyemhex-regex-strings](https://beliavsky.github.io/fortran-playground/gams/packages/jeyemhex-regex/#jeyemhex-regex-strings) | N3 | verified |
 | [jeyemhex-regex / jeyemhex-regex-strings](https://beliavsky.github.io/fortran-playground/gams/packages/jeyemhex-regex/#jeyemhex-regex-strings) | N5 | source-supported |
-| [julienne / julienne-diagnosis](https://beliavsky.github.io/fortran-playground/gams/packages/julienne/#julienne-diagnosis) | S3 | source-supported |
+| [julienne / julienne-diagnosis](https://beliavsky.github.io/fortran-playground/gams/packages/julienne/#julienne-diagnosis) | S3 | verified |
 | [julienne / julienne-diagnosis](https://beliavsky.github.io/fortran-playground/gams/packages/julienne/#julienne-diagnosis) | R2 | source-supported |
 | [kdtree2 / spatial-neighbors](https://beliavsky.github.io/fortran-playground/gams/packages/kdtree2/#spatial-neighbors) | P | source-supported |
 | [kdtree2 / spatial-neighbors](https://beliavsky.github.io/fortran-playground/gams/packages/kdtree2/#spatial-neighbors) | N5 | verified |
@@ -465,14 +465,14 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [lsmr / lsmr-lsmr](https://beliavsky.github.io/fortran-playground/gams/packages/lsmr/#lsmr-lsmr) | D9a1 | verified |
 | [lsqr / lsqr-lsqr-solver-ez](https://beliavsky.github.io/fortran-playground/gams/packages/lsqr/#lsqr-lsqr-solver-ez) | D9a1 | verified |
 | [lusol / lusol-api](https://beliavsky.github.io/fortran-playground/gams/packages/lusol/#lusol-api) | D2a4 | verified |
-| [m-process / m-process-pipe](https://beliavsky.github.io/fortran-playground/gams/packages/m-process/#m-process-pipe) | S | source-supported |
-| [m-system / m-system-files](https://beliavsky.github.io/fortran-playground/gams/packages/m-system/#m-system-files) | N1 | source-supported |
+| [m-process / m-process-pipe](https://beliavsky.github.io/fortran-playground/gams/packages/m-process/#m-process-pipe) | S | verified |
+| [m-system / m-system-files](https://beliavsky.github.io/fortran-playground/gams/packages/m-system/#m-system-files) | N1 | verified |
 | [m_calculator / m-calculator-dnum0](https://beliavsky.github.io/fortran-playground/gams/packages/m_calculator/#m-calculator-dnum0) | N3 | verified |
 | [m_cli / m-cli-demo-api](https://beliavsky.github.io/fortran-playground/gams/packages/m_cli/#m-cli-demo-api) | N1 | source-supported |
-| [m_cli / m-cli-demo-api](https://beliavsky.github.io/fortran-playground/gams/packages/m_cli/#m-cli-demo-api) | N3 | source-supported |
+| [m_cli / m-cli-demo-api](https://beliavsky.github.io/fortran-playground/gams/packages/m_cli/#m-cli-demo-api) | N3 | verified |
 | [m_draw / m-draw-raster](https://beliavsky.github.io/fortran-playground/gams/packages/m_draw/#m-draw-raster) | Q | source-supported |
 | [m_history / m-history-demo-api](https://beliavsky.github.io/fortran-playground/gams/packages/m_history/#m-history-demo-api) | N1 | source-supported |
-| [m_history / m-history-demo-api](https://beliavsky.github.io/fortran-playground/gams/packages/m_history/#m-history-demo-api) | N3 | source-supported |
+| [m_history / m-history-demo-api](https://beliavsky.github.io/fortran-playground/gams/packages/m_history/#m-history-demo-api) | N3 | verified |
 | [m_la / m-la-api](https://beliavsky.github.io/fortran-playground/gams/packages/m_la/#m-la-api) | D1 | verified |
 | [maptran3d / maptran3d-geodetic2ecef](https://beliavsky.github.io/fortran-playground/gams/packages/maptran3d/#maptran3d-geodetic2ecef) | P | verified |
 | [mersenne-twister-fortran / mersenne-twister-fortran-genrand64-real2](https://beliavsky.github.io/fortran-playground/gams/packages/mersenne-twister-fortran/#mersenne-twister-fortran-genrand64-real2) | L6a21 | verified |
@@ -596,7 +596,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [tsunami / tsunami-periodic-differences](https://beliavsky.github.io/fortran-playground/gams/packages/tsunami/#tsunami-periodic-differences) | H1 | verified |
 | [twopnt / twopnt-solve](https://beliavsky.github.io/fortran-playground/gams/packages/twopnt/#twopnt-solve) | I1b | source-supported |
 | [uint-fortran / uint-fortran-arithmetic](https://beliavsky.github.io/fortran-playground/gams/packages/uint-fortran/#uint-fortran-arithmetic) | A1 | verified |
-| [veggies / veggies-tests](https://beliavsky.github.io/fortran-playground/gams/packages/veggies/#veggies-tests) | S3 | source-supported |
+| [veggies / veggies-tests](https://beliavsky.github.io/fortran-playground/gams/packages/veggies/#veggies-tests) | S3 | verified |
 | [vtmop / vtmop-tradeoffs](https://beliavsky.github.io/fortran-playground/gams/packages/vtmop/#vtmop-tradeoffs) | G2 | verified |
 | [y12m / y12m-y12mc](https://beliavsky.github.io/fortran-playground/gams/packages/y12m/#y12m-y12mc) | D2a4 | verified |
 | [yafyaml / yafyaml-configuration](https://beliavsky.github.io/fortran-playground/gams/packages/yafyaml/#yafyaml-configuration) | N1 | source-supported |

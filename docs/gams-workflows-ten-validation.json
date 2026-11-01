@@ -1,0 +1,328 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "argparse-options-reference",
+      "source_revision": "435cc1676d6064162a3c36b91f1aa50d926fdd45",
+      "source_sha256": "c727eb8c73aee34697402cf5f0ea92ce9274148bb7004ac42d8172db0be84ffa",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T16:24:22.549646+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.411,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "12 child invocations; 72 typed/default/flag references, short and long option names\nPASS argparse-options-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.059,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "veggies-results-reference",
+      "source_revision": "8388f5e2633afa3d08cf5c6e7db1eeb0dcab2dc8",
+      "source_sha256": "c29f2eddf90d3a3a61655a793682eab22ec98c127d1b686c44be66990e802a3f",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T16:24:24.457861+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.358,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Running Tests\n\nChecked framework consumers\n    integer references\n    exact binary real\n\nA total of 2 test cases\n\nAll Passed\nTook 3.2478e-4 seconds\n\nA total of 2 test cases containing a total of 66 assertions\n\n289 equality outcomes and 17 mixed-result counts; two passing specification cases\nPASS veggies-results-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.023,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "system-files-reference",
+      "source_revision": "cb558fe8be200783e603e33a66aaba0289b6d3d1",
+      "source_sha256": "6d5b37ed3bd9cde6a8e8d06d58aad43f385ff0d5d2a3114f08ba21a02b533fda",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T16:24:30.038180+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 1.783,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "65 Linux binary file lifecycles, lengths 0..64; directory/file type checks\nPASS system-files-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.05,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "tcl-sums-reference",
+      "source_revision": "5d5cc9dbf39679d75d2a58d149112aedde2567d6",
+      "source_sha256": "6052cbddd4dbf6d549e37c96c89e6de21b834680a4f27b25b2afcb40b85e9bd3",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T16:24:31.924185+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.408,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "65 Tcl finite-sum references, syntax rejection and successful interpreter recovery\nPASS tcl-sums-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.056,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "julienne-diagnosis-reference",
+      "source_revision": "b2648cc10d8cdd0549d5c286b56d023a642e2a3e",
+      "source_sha256": "2339ee8c676821f6abf73c4d93c07d2f4e08756b40f1ccabc9b6d68ca0b74146",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T16:24:34.036592+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.439,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Exact equality and inclusive absolute-tolerance truth-table references: 1054\nPASS julienne-diagnosis-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.045,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "process-lines-reference",
+      "source_revision": "a38afc744f991a602eded0f7782beb2eff87c8cd",
+      "source_sha256": "5a0ec8d39c6c117a44c697ac82a95099042384e7eaaf4fe9de6229c3315239b2",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T16:24:35.773137+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.377,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Four fixed local printf pipes; exact ordered records with EOF/status checks: 170\nPASS process-lines-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.028,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "gftl-prefix-reference",
+      "source_revision": "4af86210b6cc6ac46d3298b6861571aa26bd6acc",
+      "source_sha256": "792fecf162246fbb4b533f5b25de7ee42df5f3321188210e3bdb3ef427556858",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T16:24:37.641494+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.431,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "12 vectors of 96 integers; 55,872 exact prefix values and 1,152 closed-form sums\nPASS gftl-prefix-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.028,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "history-edit-reference",
+      "source_revision": "fe7dd940a5d15792653233962d8df9cb3b5443f6",
+      "source_sha256": "12cb74c746ebbe798bee4ada2381112099dd94553bb1c9ce39424e828456f872",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T16:24:39.609217+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.214,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "!parameter_12 = 1012\n!parameter_01 = 1001\n!parameter_01 = 2001\n!parameter_01 = 2001\n!parameter_01 = 1001\n!parameter_01 = 1001\n!parameter_02 = 1002\n!parameter_02 = 2002\n!parameter_02 = 2002\n!parameter_02 = 1002\n!parameter_02 = 1002\n!parameter_03 = 1003\n!parameter_03 = 2003\n!parameter_03 = 2003\n!parameter_03 = 1003\n!parameter_03 = 1003\n!parameter_04 = 1004\n!parameter_04 = 2004\n!parameter_04 = 2004\n!parameter_04 = 1004\n!parameter_04 = 1004\n!parameter_05 = 1005\n!parameter_05 = 2005\n!parameter_05 = 2005\n!parameter_05 = 1005\n!parameter_05 = 1005\n!parameter_06 = 1006\n!parameter_06 = 2006\n!parameter_06 = 2006\n!parameter_06 = 1006\n!parameter_06 = 1006\n!parameter_07 = 1007\n!parameter_07 = 2007\n!parameter_07 = 2007\n!parameter_07 = 1007\n!parameter_07 = 1007\n!parameter_08 = 1008\n!parameter_08 = 2008\n!parameter_08 = 2008\n!parameter_08 = 1008\n!parameter_08 = 1008\n!parameter_09 = 1009\n!parameter_09 = 2009\n!parameter_09 = 2009\n!parameter_09 = 1009\n!parameter_09 = 1009\n!parameter_10 = 1010\n!parameter_10 = 2010\n!parameter_10 = 2010\n!parameter_10 = 1010\n!parameter_10 = 1010\n!parameter_11 = 1011\n!parameter_11 = 2011\n!parameter_11 = 2011\n!parameter_11 = 1011\n!parameter_11 = 1011\n!parameter_12 = 1012\n!parameter_12 = 2012\n!parameter_12 = 2012\n!parameter_12 = 1012\n12 recorded commands; exact edited recalls and unchanged originals using 1024-character buffers\nPASS history-edit-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.039,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "cli-namelist-reference",
+      "source_revision": "45a7cbcdc12b71b828c482fb4c33498db7fb5618",
+      "source_sha256": "ea6ea85f6e646afc43c6a05ef5eff63e387c4179940ab01a5f2f4372da1d2ed1",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T16:24:41.148067+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.356,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "32 NAMELIST prototypes; 224 exact integer/real/array/logical/quoted-string references\nPASS cli-namelist-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.031,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fy-list-reference",
+      "source_revision": "f67b874669e63834f30cd83f2b96889072b4eec7",
+      "source_sha256": "be9a398a16fbd8b502cf785bedf91ac222d6b0b0f79ff755976ec8f40f440019",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T16:24:42.993490+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.437,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Eight integer/string list traces: append, middle insert/delete, lookup and absent search\nPASS fy-list-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.034,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-11-01T16:24:43.046245+00:00"
+}

@@ -16716,7 +16716,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Typed process command-line parsing. The main launches itself once with fixed example arguments, then checks an integer, double, string, logical flag and untouched default. No supplied files or playground argument-setting changes are needed. Error exits, positional/named arguments, truncation and every syntax variant are not covered.",
+        "notes": "Typed process command-line parsing. The main launches itself once with fixed example arguments, then checks an integer, double, string, logical flag and untouched default. No supplied files or playground argument-setting changes are needed. Error exits, positional/named arguments, truncation and every syntax variant are not covered. Checked driver: 12 bounded self-invocations with short/long integer option names, signed dyadic doubles, quoted labels with spaces, absent integer defaults and present/absent logical flags. 72 exact references. Invalid options, help exits, positional/named arguments and all parser syntaxes unverified.",
         "evidence": [
           {
             "path": "src/argparse-f.f90",
@@ -16729,7 +16729,8 @@
             "path": "test/check.f90",
             "sha256": "e0dadf4984269ec263260b31889ea01dfc73baf86f5f1378a71fd8c42705cef6"
           }
-        ]
+        ],
+        "driver_id": "argparse-options-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T23:25:51.211120+00:00"
@@ -16964,15 +16965,21 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Functional unit-testing framework. The main runs three specification-style cases checking a small user-written Simpson formula against known constant, linear and quadratic integrals. The numerical formula belongs to the example, not the package. Parallel testing, generators and the complete framework are not validated.",
+        "notes": "Functional unit-testing framework. The main runs three specification-style cases checking a small user-written Simpson formula against known constant, linear and quadratic integrals. The numerical formula belongs to the example, not the package. Parallel testing, generators and the complete framework are not validated. Checked driver: 289 exact integer equality outcomes, 17 combined assertion/failure counts, plus two passing test-runner cases checking 64 integer sums and an exact binary real. The arithmetic examples are user calculations, not numerical algorithms supplied by Veggies. Intentionally failed result objects are inspected without running a failing suite. Filtering, generators, full diagnostics and parallelism unverified.",
         "evidence": [
           {
             "path": "src/veggies/run_tests_m.f90",
             "sha256": "886c21672e9ac70570e694c9a17c9cb61ab40f23eb6b362f2c43bbebe3606594",
             "line": 13
+          },
+          {
+            "path": "src/veggies/result_m.f90",
+            "sha256": "71e8f3e80831befbbac090054b9ac1d091754fbb3db5a026bcecba18b1fc6251",
+            "line": 1
           }
         ],
-        "author_examples": []
+        "author_examples": [],
+        "driver_id": "veggies-results-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T23:25:51.211120+00:00"
@@ -21615,7 +21622,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Unmodified mixed C/Fortran POSIX system library in the Linux/glibc sandbox. The checked example creates a local directory with owner-only permissions, writes and reads back the integer 42, checks directory and regular-file types, removes both and confirms cleanup. Other system calls, processes, networking, permissions changes and Windows portability are not validated or promised. Upstream development dependencies and applications are not part of the consumer demonstration.",
+        "notes": "Unmodified mixed C/Fortran POSIX system library in the Linux/glibc sandbox. The checked example creates a local directory with owner-only permissions, writes and reads back the integer 42, checks directory and regular-file types, removes both and confirms cleanup. Other system calls, processes, networking, permissions changes and Windows portability are not validated or promised. Upstream development dependencies and applications are not part of the consumer demonstration. Checked driver: 65 Linux sandbox file create/read/remove traces under an owner-only directory. Generated binary contents and native directory/regular-file predicates are checked; files and directory must disappear after removal. Other system calls, permissions inspection, symlinks and Windows behavior unverified.",
         "evidence": [
           {
             "path": "src/M_system.F90",
@@ -21637,7 +21644,8 @@
             "path": "example/demo_system_remove.f90",
             "sha256": "83099379d359fac75ac25dbad65ba70496273f39ae5ae28341947046581c5254"
           }
-        ]
+        ],
+        "driver_id": "system-files-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T18:43:21.308518+00:00"
@@ -21708,7 +21716,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Fortran/C bindings linked to pinned Debian Tcl/Tk 8.6 development libraries. A checksum-guarded include edit selects Debian's tcl8.6/tcl.h path for the C macro wrappers; interfaces and calculation code are unchanged. Adapted from the upstream evaluation example, the consumer creates a Tcl interpreter, evaluates an in-memory sum-of-squares script, checks evaluation status and the integer result against Fortran, then destroys the interpreter. Tk graphical windows, extension modules, Tcl stubs and all bindings are not validated; the browser example requires no graphical display or network.",
+        "notes": "Fortran/C bindings linked to pinned Debian Tcl/Tk 8.6 development libraries. A checksum-guarded include edit selects Debian's tcl8.6/tcl.h path for the C macro wrappers; interfaces and calculation code are unchanged. Adapted from the upstream evaluation example, the consumer creates a Tcl interpreter, evaluates an in-memory sum-of-squares script, checks evaluation status and the integer result against Fortran, then destroys the interpreter. Tk graphical windows, extension modules, Tcl stubs and all bindings are not validated; the browser example requires no graphical display or network. Checked driver: Tcl computes sums of squares for n=0..64, compared with independent integer closed forms. One malformed expression must produce nonempty error text; a subsequent expression must return 56. One reused interpreter, no GUI/network. Other bindings, callbacks, arbitrary scripts and thread safety unverified.",
         "evidence": [
           {
             "path": "src/tcl.f90",
@@ -21726,7 +21734,8 @@
             "path": "examples/eval/eval.f90",
             "sha256": "c95f6eadfe34d6e9b735c4c7e080091c2d35c12f25e6439cc654ff7c25ac0309"
           }
-        ]
+        ],
+        "driver_id": "tcl-sums-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T18:43:21.308518+00:00"
@@ -22051,7 +22060,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Standalone demonstration of the modern Julienne testing framework, with its pinned Assert dependency and single-image coarrays. The numerical source is unchanged. The checked consumer verifies an approximate real comparison and an exact integer sum, then deliberately creates a failed test_diagnosis_t, checks its failure flag and nonempty appended diagnostic and prints it while completing successfully. This demonstrates diagnosis construction and inspection rather than macro assertion termination. The full test harness, automatic test discovery, macro enforcement and multi-image behavior are not validated. Original Berkeley Lab/Sourcery Institute license terms and dependency notices are retained.",
+        "notes": "Standalone demonstration of the modern Julienne testing framework, with its pinned Assert dependency and single-image coarrays. The numerical source is unchanged. The checked consumer verifies an approximate real comparison and an exact integer sum, then deliberately creates a failed test_diagnosis_t, checks its failure flag and nonempty appended diagnostic and prints it while completing successfully. This demonstrates diagnosis construction and inspection rather than macro assertion termination. The full test harness, automatic test discovery, macro enforcement and multi-image behavior are not validated. Original Berkeley Lab/Sourcery Institute license terms and dependency notices are retained. Checked driver: 289 integer equality and 765 default-real absolute-tolerance outcomes, including exact boundary acceptance and zero tolerance. Inputs are exact dyadics and expected flags follow integer inequalities. One failed diagnosis retains an appended annotation. Relative/percentage tolerances, arrays, nonfinite inputs, macro termination and multi-image testing unverified.",
         "evidence": [
           {
             "path": "src/julienne/julienne_test_diagnosis_m.F90",
@@ -22069,7 +22078,8 @@
             "path": "test/modules/test_diagnosis_test_m.F90",
             "sha256": "29a187641e4903b16e92c7d9557cb4b5a8137897e9dbc19a59546215f10a0407"
           }
-        ]
+        ],
+        "driver_id": "julienne-diagnosis-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T19:03:06.361094+00:00"
@@ -22121,7 +22131,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Unmodified Fortran/C POSIX pipe interfaces in the restricted Linux sandbox. Following the upstream process_open_read example, the consumer opens a local printf command, reads and checks the integers 7 and 11, verifies end of output and requires a successful process_close status. Commands run under the ordinary sandbox restrictions; this does not add network or host-system access. Interactive terminals, graphical subprocesses, arbitrary process behavior, write pipes and Windows portability are not verified.",
+        "notes": "Unmodified Fortran/C POSIX pipe interfaces in the restricted Linux sandbox. Following the upstream process_open_read example, the consumer opens a local printf command, reads and checks the integers 7 and 11, verifies end of output and requires a successful process_close status. Commands run under the ordinary sandbox restrictions; this does not add network or host-system access. Interactive terminals, graphical subprocesses, arbitrary process behavior, write pipes and Windows portability are not verified. Checked driver: Four fixed local printf read pipes return 170 independently generated integer records; order, end of output and successful process_close status are checked. Sandbox restrictions remain in effect. Write pipes, arbitrary commands, stderr/nonzero-status handling, interactive terminals and Windows behavior unverified.",
         "evidence": [
           {
             "path": "src/M_process.f90",
@@ -22134,7 +22144,8 @@
             "path": "example/demo_process_open_read.f90",
             "sha256": "8942bfbad8b2f77d370b89e428421f8ff6c404e5d9b1ede7f739994ebd61be4d"
           }
-        ]
+        ],
+        "driver_id": "process-lines-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T19:03:06.361094+00:00"
@@ -24549,7 +24560,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "gFTL is a header/template library, not a standalone compiled library. The catalog supplies a small integer-vector instantiation using the upstream v2 template, then verifies growth to 100 elements, retrieval of every stored square, and the independent sum 338350. Audited generated include files are committed as checksum-locked assets, with original m4 input hashes; generation follows the pinned CMake rules while omitting diagnostic line markers. GNU m4 on Windows and Linux reproduces identical assets. N4 covers the tested storage container. Other template/container configurations are not verified.",
+        "notes": "gFTL is a header/template library, not a standalone compiled library. The catalog supplies a small integer-vector instantiation using the upstream v2 template, then verifies growth to 100 elements, retrieval of every stored square, and the independent sum 338350. Audited generated include files are committed as checksum-locked assets, with original m4 input hashes; generation follows the pinned CMake rules while omitting diagnostic line markers. GNU m4 on Windows and Linux reproduces identical assets. N4 covers the tested storage container. Other template/container configurations are not verified. Checked driver: 12 vectors with 96 appends each through the existing audited integer instantiation. 55,872 reverse-order prefix values and 1,152 independent closed-form prefix sums, with append status and size checks. Other templates/types, deletion, iterators, copies, clear/reuse and memory leaks unverified.",
         "evidence": [
           {
             "path": "include/v2/vector/template.inc",
@@ -24567,7 +24578,8 @@
             "path": "examples/v2/Vector/VecIntAndReal.F90",
             "sha256": "6e04e0a03f7b7adc8c32abbfc05f4a8f1cdb0a0e2fb2f9dc547fa80dcb9369af"
           }
-        ]
+        ],
+        "driver_id": "gftl-prefix-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T22:10:15.755993+00:00"
@@ -27704,7 +27716,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "The unmodified M_history redo editor records two commands in its scratch history file. The self-contained main supplies editing directives through the optional lun argument, recalls line 1, changes 290 to 300 and checks the result, then recalls line 2 and verifies that its original text remains unchanged. No shell command is executed and no interactive terminal is required. The main follows the author application in using a 1024-character buffer. An initial 120-character buffer triggered an upstream bounds error at cin(1:255); that diagnostic is retained separately, and shorter buffers are not verified/supported by this catalog example. N1/N3 cover command input and character editing; no numerical-method classification is inferred. MIT library notices and the public-domain author application notice are retained.",
+        "notes": "The unmodified M_history redo editor records two commands in its scratch history file. The self-contained main supplies editing directives through the optional lun argument, recalls line 1, changes 290 to 300 and checks the result, then recalls line 2 and verifies that its original text remains unchanged. No shell command is executed and no interactive terminal is required. The main follows the author application in using a 1024-character buffer. An initial 120-character buffer triggered an upstream bounds error at cin(1:255); that diagnostic is retained separately, and shorter buffers are not verified/supported by this catalog example. N1/N3 cover command input and character editing; no numerical-method classification is inferred. MIT library notices and the public-domain author application notice are retained. Checked driver: 12 generated original history commands, each recalled and edited with a scripted numeric substitution, then recalled again to require the unchanged original. Uses supported 1024-character line buffers and scratch directive units; no shell command is executed. Short buffers, other editing directives, interactive terminals and malformed history commands unverified.",
         "evidence": [
           {
             "path": "src/M_history.f90",
@@ -27718,7 +27730,8 @@
             "sha256": "b12efc0e63635c4af61a0b4d4a494e63d7a5b3817dee3cedd10941065aa062b3",
             "line": 1
           }
-        ]
+        ],
+        "driver_id": "history-edit-reference"
       }
     ],
     "stars_updated_at": "2026-10-30T17:10:55.680552+00:00"
@@ -27953,7 +27966,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "The original M_CLI FPM library is unchanged. The checked consumer adapts the author example/demo3.f90, translating a prototype command into NAMELIST text and checking integer, real, logical, character and three-element real array defaults before using the scaled sum. No stdin or program arguments are required; the editable prototype supplies the defaults. Actual command-line overrides, help/error paths and interactive examples are not runtime-verified here. N1/N3 cover command input and character parsing; no numerical-method classification is inferred. Public-domain/Unlicense notices are retained.",
+        "notes": "The original M_CLI FPM library is unchanged. The checked consumer adapts the author example/demo3.f90, translating a prototype command into NAMELIST text and checking integer, real, logical, character and three-element real array defaults before using the scaled sum. No stdin or program arguments are required; the editable prototype supplies the defaults. Actual command-line overrides, help/error paths and interactive examples are not runtime-verified here. N1/N3 cover command input and character parsing; no numerical-method classification is inferred. Public-domain/Unlicense notices are retained. Checked driver: 32 generated default prototypes converted to native NAMELIST text. Exact integer, dyadic real, three-element real array, alternating logical and quoted label references; 224 values. Repeated calls exercise dictionary reinitialization. Actual CLI overrides, malformed input, help paths and all quoting rules unverified.",
         "evidence": [
           {
             "path": "src/M_CLI.f90",
@@ -27967,7 +27980,8 @@
             "sha256": "03954d1c75dc0fa49cb89cfc83ef36b12371e6320df03f5a95b3a51c783c62c8",
             "line": 1
           }
-        ]
+        ],
+        "driver_id": "cli-namelist-reference"
       }
     ],
     "stars_updated_at": "2026-10-30T18:11:46.121287+00:00"
@@ -28276,7 +28290,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "The original FyCollections backend and author examples/list/type_intlist.fpp and type_stringlist.fpp are generated with Fypp 3.2 without changing their algorithms. Six generated Fortran files, checksums of all template/license inputs, and xgenerate_fycollections.py retain a reproducible recipe. The package supplies the author IntList and StringList specializations, not automatic runtime generation for arbitrary user types. Its operator FPM wrapper uses version 0.0.0 to identify no inferred upstream release; the source is pinned by commit. The checked main adapts the author integer/string list examples and checks append, insertion, retrieval, successful/missing searches, integer deletion and allocatable-list finalization. N4/N5 cover storage containers and searching. Pointer/array list specializations and the complete upstream tests are not verified. BSD-2-Clause notices are retained.",
+        "notes": "The original FyCollections backend and author examples/list/type_intlist.fpp and type_stringlist.fpp are generated with Fypp 3.2 without changing their algorithms. Six generated Fortran files, checksums of all template/license inputs, and xgenerate_fycollections.py retain a reproducible recipe. The package supplies the author IntList and StringList specializations, not automatic runtime generation for arbitrary user types. Its operator FPM wrapper uses version 0.0.0 to identify no inferred upstream release; the source is pinned by commit. The checked main adapts the author integer/string list examples and checks append, insertion, retrieval, successful/missing searches, integer deletion and allocatable-list finalization. N4/N5 cover storage containers and searching. Pointer/array list specializations and the complete upstream tests are not verified. BSD-2-Clause notices are retained. Checked driver: Eight fresh integer/string list traces of 48 steps. Plain integer-array oracles follow append/middle insertion/deletion; every integer and string element and exact lookup index is checked in reverse after each step, plus absent searches and allocatable destruction. Generated author IntList/StringList specializations only; string insert/delete, negative indexing, list copies and other types unverified.",
         "evidence": [
           {
             "path": "include/fycollections.fypp",
@@ -28300,7 +28314,8 @@
             "sha256": "20648ca382bbaaff9efa5783c7cb0f1b07893136fb527c8fff9ecfae99c5811b",
             "line": 1
           }
-        ]
+        ],
+        "driver_id": "fy-list-reference"
       }
     ],
     "stars_updated_at": "2026-10-30T18:33:11.712116+00:00"

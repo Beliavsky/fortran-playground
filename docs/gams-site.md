@@ -308,3 +308,5 @@ The [ten configuration, state and reference drivers](gams-state-ten.md) include 
 The [ten structured-data and interoperability drivers](gams-interop-ten.md) check JSON/YAML values, NPY headers and payloads, container states, diagnostic filtering, Linux file operations and Lua/Python bindings, with retained consumer corrections and explicit limits.
 
 The [ten storage, configuration and binding drivers](gams-storage-ten.md) check graphs, resource lifetimes, NetCDF metadata/indexing, regex languages, transactions, configuration, containers, logging and offline URL parsing with independent references.
+
+The [ten command-line, testing and workflow drivers](gams-workflows-ten.md) check typed command-line options, native NAMELIST conversion, assertion outcomes, Tcl, pipes, file operations, vector/list state and scripted history edits.

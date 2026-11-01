@@ -9966,6 +9966,257 @@
         "single_cell_updates": 24,
         "classic_magic": true
       }
+    },
+    {
+      "id": "argparse-options-reference",
+      "name": "gams-argparse-options-reference",
+      "package_id": "argparse-f",
+      "procedure_id": "argparse-f-options",
+      "gams_code": "N3",
+      "problem_id": "typed-command-line-child-oracles",
+      "path": "fpm_catalog/gams-drivers/argparse-options-reference.f90",
+      "revision": "435cc1676d6064162a3c36b91f1aa50d926fdd45",
+      "author_example": "test/check.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/workflows-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. 12 bounded self-invocations with short/long integer option names, signed dyadic doubles, quoted labels with spaces, absent integer defaults and present/absent logical flags. 72 exact references. Invalid options, help exits, positional/named arguments and all parser syntaxes unverified.",
+      "validation_path": "docs/gams-workflows-ten-validation.json",
+      "review_path": "docs/gams-workflows-ten.md",
+      "checks": {
+        "child_invocations": 12,
+        "value_references": 72,
+        "short_long_names": true
+      }
+    },
+    {
+      "id": "veggies-results-reference",
+      "name": "gams-veggies-results-reference",
+      "package_id": "veggies",
+      "procedure_id": "veggies-tests",
+      "gams_code": "S3",
+      "problem_id": "assertion-truth-table-and-runner-oracle",
+      "path": "fpm_catalog/gams-drivers/veggies-results-reference.f90",
+      "revision": "8388f5e2633afa3d08cf5c6e7db1eeb0dcab2dc8",
+      "author_example": "",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/workflows-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. 289 exact integer equality outcomes, 17 combined assertion/failure counts, plus two passing test-runner cases checking 64 integer sums and an exact binary real. The arithmetic examples are user calculations, not numerical algorithms supplied by Veggies. Intentionally failed result objects are inspected without running a failing suite. Filtering, generators, full diagnostics and parallelism unverified.",
+      "validation_path": "docs/gams-workflows-ten-validation.json",
+      "review_path": "docs/gams-workflows-ten.md",
+      "checks": {
+        "equality_cases": 289,
+        "combined_results": 17,
+        "runner_cases": 2
+      }
+    },
+    {
+      "id": "system-files-reference",
+      "name": "gams-system-files-reference",
+      "package_id": "m-system",
+      "procedure_id": "m-system-files",
+      "gams_code": "N1",
+      "problem_id": "linux-system-file-type-payload-oracle",
+      "path": "fpm_catalog/gams-drivers/system-files-reference.f90",
+      "revision": "cb558fe8be200783e603e33a66aaba0289b6d3d1",
+      "author_example": "example/demo_system_mkdir.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/workflows-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. 65 Linux sandbox file create/read/remove traces under an owner-only directory. Generated binary contents and native directory/regular-file predicates are checked; files and directory must disappear after removal. Other system calls, permissions inspection, symlinks and Windows behavior unverified.",
+      "validation_path": "docs/gams-workflows-ten-validation.json",
+      "review_path": "docs/gams-workflows-ten.md",
+      "checks": {
+        "files": 65,
+        "byte_lengths": [
+          0,
+          64
+        ],
+        "directory_lifecycle": true
+      }
+    },
+    {
+      "id": "tcl-sums-reference",
+      "name": "gams-tcl-sums-reference",
+      "package_id": "fortran-tcl86",
+      "procedure_id": "tcl-evaluate",
+      "gams_code": "S",
+      "problem_id": "tcl-finite-sum-and-recovery-oracle",
+      "path": "fpm_catalog/gams-drivers/tcl-sums-reference.f90",
+      "revision": "5d5cc9dbf39679d75d2a58d149112aedde2567d6",
+      "author_example": "examples/eval/eval.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/workflows-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. Tcl computes sums of squares for n=0..64, compared with independent integer closed forms. One malformed expression must produce nonempty error text; a subsequent expression must return 56. One reused interpreter, no GUI/network. Other bindings, callbacks, arbitrary scripts and thread safety unverified.",
+      "validation_path": "docs/gams-workflows-ten-validation.json",
+      "review_path": "docs/gams-workflows-ten.md",
+      "checks": {
+        "sum_references": 65,
+        "syntax_rejection": true,
+        "recovery_reference": 56
+      }
+    },
+    {
+      "id": "julienne-diagnosis-reference",
+      "name": "gams-julienne-diagnosis-reference",
+      "package_id": "julienne",
+      "procedure_id": "julienne-diagnosis",
+      "gams_code": "S3",
+      "problem_id": "integer-and-inclusive-tolerance-truth-tables",
+      "path": "fpm_catalog/gams-drivers/julienne-diagnosis-reference.f90",
+      "revision": "b2648cc10d8cdd0549d5c286b56d023a642e2a3e",
+      "author_example": "test/modules/test_diagnosis_test_m.F90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/workflows-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. 289 integer equality and 765 default-real absolute-tolerance outcomes, including exact boundary acceptance and zero tolerance. Inputs are exact dyadics and expected flags follow integer inequalities. One failed diagnosis retains an appended annotation. Relative/percentage tolerances, arrays, nonfinite inputs, macro termination and multi-image testing unverified.",
+      "validation_path": "docs/gams-workflows-ten-validation.json",
+      "review_path": "docs/gams-workflows-ten.md",
+      "checks": {
+        "integer_comparisons": 289,
+        "tolerance_comparisons": 765,
+        "total_comparisons": 1054
+      }
+    },
+    {
+      "id": "process-lines-reference",
+      "name": "gams-process-lines-reference",
+      "package_id": "m-process",
+      "procedure_id": "m-process-pipe",
+      "gams_code": "S",
+      "problem_id": "ordered-local-pipe-record-oracle",
+      "path": "fpm_catalog/gams-drivers/process-lines-reference.f90",
+      "revision": "a38afc744f991a602eded0f7782beb2eff87c8cd",
+      "author_example": "example/demo_process_open_read.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/workflows-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. Four fixed local printf read pipes return 170 independently generated integer records; order, end of output and successful process_close status are checked. Sandbox restrictions remain in effect. Write pipes, arbitrary commands, stderr/nonzero-status handling, interactive terminals and Windows behavior unverified.",
+      "validation_path": "docs/gams-workflows-ten-validation.json",
+      "review_path": "docs/gams-workflows-ten.md",
+      "checks": {
+        "pipes": 4,
+        "record_references": 170,
+        "record_counts": [
+          17,
+          34,
+          51,
+          68
+        ]
+      }
+    },
+    {
+      "id": "gftl-prefix-reference",
+      "name": "gams-gftl-prefix-reference",
+      "package_id": "gftl",
+      "procedure_id": "gftl-vector",
+      "gams_code": "N4",
+      "problem_id": "integer-vector-prefix-values-and-sums",
+      "path": "fpm_catalog/gams-drivers/gftl-prefix-reference.f90",
+      "revision": "4af86210b6cc6ac46d3298b6861571aa26bd6acc",
+      "author_example": "examples/v2/Vector/VecIntAndReal.F90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/workflows-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. 12 vectors with 96 appends each through the existing audited integer instantiation. 55,872 reverse-order prefix values and 1,152 independent closed-form prefix sums, with append status and size checks. Other templates/types, deletion, iterators, copies, clear/reuse and memory leaks unverified.",
+      "validation_path": "docs/gams-workflows-ten-validation.json",
+      "review_path": "docs/gams-workflows-ten.md",
+      "checks": {
+        "vectors": 12,
+        "appends_each": 96,
+        "value_references": 55872,
+        "prefix_sums": 1152
+      }
+    },
+    {
+      "id": "history-edit-reference",
+      "name": "gams-history-edit-reference",
+      "package_id": "m_history",
+      "procedure_id": "m-history-demo-api",
+      "gams_code": "N3",
+      "problem_id": "scripted-history-recall-edit-oracle",
+      "path": "fpm_catalog/gams-drivers/history-edit-reference.f90",
+      "revision": "fe7dd940a5d15792653233962d8df9cb3b5443f6",
+      "author_example": "app/redo.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/workflows-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. 12 generated original history commands, each recalled and edited with a scripted numeric substitution, then recalled again to require the unchanged original. Uses supported 1024-character line buffers and scratch directive units; no shell command is executed. Short buffers, other editing directives, interactive terminals and malformed history commands unverified.",
+      "validation_path": "docs/gams-workflows-ten-validation.json",
+      "review_path": "docs/gams-workflows-ten.md",
+      "checks": {
+        "original_commands": 12,
+        "edited_recalls": 12,
+        "unchanged_original_recalls": 12,
+        "buffer_length": 1024
+      }
+    },
+    {
+      "id": "cli-namelist-reference",
+      "name": "gams-cli-namelist-reference",
+      "package_id": "m_cli",
+      "procedure_id": "m-cli-demo-api",
+      "gams_code": "N3",
+      "problem_id": "generated-prototype-namelist-value-oracle",
+      "path": "fpm_catalog/gams-drivers/cli-namelist-reference.f90",
+      "revision": "45a7cbcdc12b71b828c482fb4c33498db7fb5618",
+      "author_example": "example/demo3.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/workflows-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. 32 generated default prototypes converted to native NAMELIST text. Exact integer, dyadic real, three-element real array, alternating logical and quoted label references; 224 values. Repeated calls exercise dictionary reinitialization. Actual CLI overrides, malformed input, help paths and all quoting rules unverified.",
+      "validation_path": "docs/gams-workflows-ten-validation.json",
+      "review_path": "docs/gams-workflows-ten.md",
+      "checks": {
+        "prototypes": 32,
+        "value_references": 224,
+        "real_array_length": 3
+      }
+    },
+    {
+      "id": "fy-list-reference",
+      "name": "gams-fy-list-reference",
+      "package_id": "fycollections",
+      "procedure_id": "fycollections-demo-api",
+      "gams_code": "N4",
+      "problem_id": "integer-string-list-operation-oracles",
+      "path": "fpm_catalog/gams-drivers/fy-list-reference.f90",
+      "revision": "f67b874669e63834f30cd83f2b96889072b4eec7",
+      "author_example": "examples/list/intlist_example.fpp",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/workflows-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources and available author examples reviewed. Eight fresh integer/string list traces of 48 steps. Plain integer-array oracles follow append/middle insertion/deletion; every integer and string element and exact lookup index is checked in reverse after each step, plus absent searches and allocatable destruction. Generated author IntList/StringList specializations only; string insert/delete, negative indexing, list copies and other types unverified.",
+      "validation_path": "docs/gams-workflows-ten-validation.json",
+      "review_path": "docs/gams-workflows-ten.md",
+      "checks": {
+        "traces": 8,
+        "steps_each": 48,
+        "integer_insert_delete": true,
+        "string_lookup": true
+      }
     }
   ]
 }

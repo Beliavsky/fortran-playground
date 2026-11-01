@@ -99,6 +99,7 @@ from xpackage_gams import (gams_data, package_classes, review_text, subclass_mod
                             state_ten_review_text, STATE_TEN_REPORT,
                             interop_ten_review_text, INTEROP_TEN_REPORT,
                             storage_ten_review_text, STORAGE_TEN_REPORT,
+                            workflows_ten_review_text, WORKFLOWS_TEN_REPORT,
                           coverage_data, coverage_review_text, COVERAGE_REPORT,
                           class_evidence, class_tree, mapping_evidence_text, EVIDENCE_REPORT)
 
@@ -884,6 +885,36 @@ class PackageGamsTests(unittest.TestCase):
         self.assertIn('22,416',text)
         self.assertIn('Type-2/type-3 transforms',text)
         self.assertIn('two-dimensional NUFFT2D driver',transforms_review_text())
+
+    def test_ten_workflow_drivers_keep_independent_oracles_and_scope(self):
+        data = gams_data()
+        records = {r['id']: r for r in data['procedure_mappings']}
+        drivers = {d['id']: d for d in driver_data(data=data)
+                   if d.get('validation_path') == 'docs/gams-workflows-ten-validation.json'}
+        self.assertEqual(set(drivers), {
+            'argparse-options-reference', 'veggies-results-reference', 'system-files-reference',
+            'tcl-sums-reference', 'julienne-diagnosis-reference', 'process-lines-reference',
+            'gftl-prefix-reference', 'history-edit-reference', 'cli-namelist-reference', 'fy-list-reference'})
+        for driver in drivers.values():
+            record = records[driver['procedure_id']]
+            self.assertEqual(record['driver_id'], driver['id'])
+            self.assertEqual(class_evidence(class_tree(data), driver['gams_code'], [record], [driver])['status'],
+                             'verified')
+        self.assertEqual(drivers['argparse-options-reference']['checks']['value_references'], 72)
+        self.assertEqual(drivers['veggies-results-reference']['checks']['equality_cases'], 289)
+        self.assertEqual(drivers['system-files-reference']['checks']['byte_lengths'], [0, 64])
+        self.assertTrue(drivers['tcl-sums-reference']['checks']['syntax_rejection'])
+        self.assertEqual(drivers['julienne-diagnosis-reference']['checks']['total_comparisons'], 1054)
+        self.assertEqual(drivers['process-lines-reference']['checks']['record_references'], 170)
+        self.assertEqual(drivers['gftl-prefix-reference']['checks']['value_references'], 55872)
+        self.assertEqual(drivers['history-edit-reference']['checks']['buffer_length'], 1024)
+        self.assertEqual(drivers['cli-namelist-reference']['checks']['value_references'], 224)
+        self.assertTrue(drivers['fy-list-reference']['checks']['integer_insert_delete'])
+        text = workflows_ten_review_text()
+        self.assertEqual((ROOT/WORKFLOWS_TEN_REPORT).read_text(encoding='utf-8'), text)
+        for phrase in ['first verification runs', 'integer inequalities', 'no failed service probes',
+                       'executes no recorded text as shell code', 'categories are not exhausted']:
+            self.assertIn(phrase, text)
 
     def test_ten_storage_drivers_keep_exact_references_and_scoped_limits(self):
         data = gams_data()

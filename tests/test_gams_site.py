@@ -67,6 +67,35 @@ class GamsSiteTests(unittest.TestCase):
             self.assertIn('Open default example', sorting)
             self.assertNotIn('Try in playground', sorting)
 
+    def test_ten_workflow_driver_links_keep_class_specific_scope(self):
+        import copy
+        from xpackage_gams import driver_data, gams_data
+        drivers = [d for d in driver_data(data=gams_data())
+                   if d.get('validation_path') == 'docs/gams-workflows-ten-validation.json']
+        self.assertEqual(len(drivers), 10)
+        feed = copy.deepcopy(self.feed)
+        packages = {d['package_id'] for d in drivers}
+        feed['projects'] = [p for p in feed['projects'] if p['playground']['package_id'] in packages]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination, feed)
+            for driver in drivers:
+                url = ('https://beliavsky.github.io/fortran-playground/fpm/'
+                       f'?package={driver["package_id"]}&example={driver["name"]}')
+                page = Page((destination/driver['gams_code']/'index.html').read_text(encoding='utf-8'))
+                self.assertIn((url, 'Try in playground'), page.anchors)
+                detail = (destination/'packages'/driver['package_id']/'index.html').read_text(encoding='utf-8')
+                card = detail.split('id="'+driver['procedure_id']+'"', 1)[1].split('</article>', 1)[0]
+                self.assertIn('Load checked GAMS driver:', card)
+                self.assertIn(driver['name'], card)
+            for code, package, name in [('N5', 'fycollections', 'fy-list-reference'),
+                                        ('N1', 'm_cli', 'cli-namelist-reference'),
+                                        ('R2', 'julienne', 'julienne-diagnosis-reference')]:
+                page = Page((destination/code/'index.html').read_text(encoding='utf-8'))
+                self.assertNotIn(('https://beliavsky.github.io/fortran-playground/fpm/'
+                                  f'?package={package}&example=gams-{name}', 'Try in playground'),
+                                 page.anchors)
+
     def test_ten_storage_driver_links_keep_class_specific_scope(self):
         import copy
         from xpackage_gams import driver_data, gams_data
