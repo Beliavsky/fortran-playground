@@ -8,7 +8,7 @@ This report assesses each package/class pair, including inherited parent classes
 
 When a driver cannot be created, inspect the pinned implementation and author examples. Narrow or remove a classification that is unsupported; do not substitute an unrelated default example as evidence. Record missing dependencies, sandbox limits and upstream defects separately in the procedure or package review notes. A sandbox failure alone does not disprove an algorithm.
 
-Counts refer to package/class pairs and include parents: 545 verified, 206 source-supported, 246 uncertain.
+Counts refer to package/class pairs and include parents: 555 verified, 196 source-supported, 246 uncertain.
 
 ## Mappings requiring source review
 
@@ -290,7 +290,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [config-fortran / configuration-values](https://beliavsky.github.io/fortran-playground/gams/packages/config-fortran/#configuration-values) | N1 | source-supported |
 | [config-fortran / configuration-values](https://beliavsky.github.io/fortran-playground/gams/packages/config-fortran/#configuration-values) | N3 | source-supported |
 | [conmax / conmax-slnpro](https://beliavsky.github.io/fortran-playground/gams/packages/conmax/#conmax-slnpro) | G2a | verified |
-| [conmin / conmin-conmin-class](https://beliavsky.github.io/fortran-playground/gams/packages/conmin/#conmin-conmin-class) | G2h3b1b | source-supported |
+| [conmin / conmin-conmin-class](https://beliavsky.github.io/fortran-playground/gams/packages/conmin/#conmin-conmin-class) | G2h3b1b | verified |
 | [coretran / coretran-neighbor](https://beliavsky.github.io/fortran-playground/gams/packages/coretran/#coretran-neighbor) | P | source-supported |
 | [coretran / coretran-neighbor](https://beliavsky.github.io/fortran-playground/gams/packages/coretran/#coretran-neighbor) | N5 | source-supported |
 | [coretran / coretran-sort](https://beliavsky.github.io/fortran-playground/gams/packages/coretran/#coretran-sort) | N6 | verified |
@@ -561,7 +561,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [scifortran / scifortran-integration](https://beliavsky.github.io/fortran-playground/gams/packages/scifortran/#scifortran-integration) | H2 | verified |
 | [seiscope-optimization / seiscope-optimization-api](https://beliavsky.github.io/fortran-playground/gams/packages/seiscope-optimization/#seiscope-optimization-api) | G1b1b | verified |
 | [shunting-yard-fortran / shunting-yard-parser](https://beliavsky.github.io/fortran-playground/gams/packages/shunting-yard-fortran/#shunting-yard-parser) | N3 | source-supported |
-| [simulated-annealing / simulated-annealing-simulated-annealing-type](https://beliavsky.github.io/fortran-playground/gams/packages/simulated-annealing/#simulated-annealing-simulated-annealing-type) | G2i | source-supported |
+| [simulated-annealing / simulated-annealing-simulated-annealing-type](https://beliavsky.github.io/fortran-playground/gams/packages/simulated-annealing/#simulated-annealing-simulated-annealing-type) | G2i | verified |
 | [slicot / slicot-lyapunov](https://beliavsky.github.io/fortran-playground/gams/packages/slicot/#slicot-lyapunov) | D8 | verified |
 | [slicot / slicot-sb04md](https://beliavsky.github.io/fortran-playground/gams/packages/slicot/#slicot-sb04md) | D8 | verified |
 | [slicot / slicot-sb04qd](https://beliavsky.github.io/fortran-playground/gams/packages/slicot/#slicot-sb04qd) | D8 | verified |

@@ -7824,6 +7824,113 @@
         "general_optimizer_verified": false,
         "cross_compiler_rng_reproducibility_verified": false
       }
+    },
+    {
+      "id": "conmin-ball-reference",
+      "name": "gams-conmin-ball-reference",
+      "package_id": "conmin",
+      "procedure_id": "conmin-conmin-class",
+      "gams_code": "G2h3b1b",
+      "problem_id": "convex-ball-projection-analytic-kkt",
+      "path": "fpm_catalog/gams-drivers/conmin-ball-reference.f90",
+      "revision": "201f3b29f023baf7bef13ad8f49b906ffb1c7757",
+      "author_example": "test/TP37.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/directions-fitting-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer, pinned reverse-communication implementation and author example reviewed without copying bodies. Three dimensions, two radii, translated centers, signed target directions, noncollinear feasible/infeasible starts. NFDG=1 objective gradients and active constraint Jacobians; analytic projection, KKT multiplier, feasibility, returned objective and iteration/request caps checked. No distinct success status is exposed by this interface; IGOTO=0 alone is insufficient. No multiple constraints, active variable bounds or nonconvex problems verified.",
+      "validation_path": "docs/gams-directions-fitting-validation.json",
+      "review_path": "docs/gams-directions-fitting.md",
+      "checks": {
+        "problems": 48,
+        "optimizer_entries": 160,
+        "dimensions": [
+          2,
+          3,
+          5
+        ],
+        "radii": [
+          0.5,
+          2
+        ],
+        "analytic_derivative_mode": 1,
+        "user_gradient_requests": 426,
+        "noncollinear_feasible_infeasible_starts_checked": true,
+        "analytic_multipliers_checked": true,
+        "iteration_limit": 300,
+        "request_limit": 10000,
+        "max_normalized_point_error": 0.0002,
+        "max_normalized_objective_error": 2e-07,
+        "max_normalized_feasibility_violation": 2e-07,
+        "max_normalized_kkt_residual": 0.0002,
+        "multiple_constraints_verified": false,
+        "active_variable_bounds_verified": false,
+        "nonconvex_problems_verified": false
+      }
+    },
+    {
+      "id": "annealing-rastrigin-reference",
+      "name": "gams-annealing-rastrigin-reference",
+      "package_id": "simulated-annealing",
+      "procedure_id": "simulated-annealing-simulated-annealing-type",
+      "gams_code": "G2i",
+      "problem_id": "seeded-shifted-rastrigin-known-minima",
+      "path": "fpm_catalog/gams-drivers/annealing-rastrigin-reference.f90",
+      "revision": "a2fa094d1ee39525c7e081cfd67866975e9e1dc5",
+      "author_example": "test/test.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/directions-fitting-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer, pinned implementation and author example reviewed without copying bodies. Six 2D shifted Rastrigin searches: two amplitudes, three original seed pairs, single main-loop run, cooling factor 0.9. Known global minima, bounds, exact callback counts and independent sin-squared objective identity checked. Failed 3D finite schedules, a two-loop objective discrepancy and an invalid zero-loop consumer are retained. No general global-convergence, multidimensional scaling, multi-loop correctness or cross-compiler RNG guarantee.",
+      "validation_path": "docs/gams-directions-fitting-validation.json",
+      "review_path": "docs/gams-directions-fitting.md",
+      "checks": {
+        "runs": 6,
+        "global_minimizer_entries": 12,
+        "dimensions": [
+          2
+        ],
+        "amplitudes": [
+          1,
+          10
+        ],
+        "seed_pairs": [
+          [
+            1,
+            2
+          ],
+          [
+            1234,
+            5678
+          ],
+          [
+            91,
+            2718
+          ]
+        ],
+        "initial_temperature": 20,
+        "cooling_factor": 0.9,
+        "main_loop_runs": 1,
+        "ns": 20,
+        "nt": 10,
+        "neps": 4,
+        "termination_tolerance": 1e-09,
+        "max_callbacks_per_run": 600000,
+        "objective_callbacks": 271406,
+        "known_minimum_early_stop_enabled": false,
+        "callback_counts_checked": true,
+        "independent_objective_identity_checked": true,
+        "max_objective": 1e-05,
+        "max_coordinate_error": 0.001,
+        "global_convergence_guaranteed": false,
+        "three_dimensional_global_search_verified": false,
+        "multiple_main_loop_runs_verified": false,
+        "cross_compiler_rng_reproducibility_verified": false
+      }
     }
   ]
 }

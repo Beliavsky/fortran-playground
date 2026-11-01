@@ -63,12 +63,14 @@ Initialization/solve status must be zero, callback/final points finite and withi
 | [Load psqp-projection-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=psqp&example=gams-psqp-projection-reference) · [Source](../fpm_catalog/gams-drivers/psqp-projection-reference.f90) | G2h3b1b | [Procedure](https://github.com/jacobwilliams/psqp/blob/57a853e14e3806d69adad6d6d44396d9665d842e/src/psqp_module.f90#L62) · [Author example](https://github.com/jacobwilliams/psqp/blob/57a853e14e3806d69adad6d6d44396d9665d842e/test/tsqp.f90) · [Verification](gams-projection-lbfgs-validation.json) |
 | [Load opti-rastrigin-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=opti&example=gams-opti-rastrigin-reference) · [Source](../fpm_catalog/gams-drivers/opti-rastrigin-reference.f90) | G2i | [Procedure](https://github.com/Konrad1991/opti/blob/6fb22db21bd2338e00690ff3706be61a1f101101/src/particle_swarm.f90#L57) · [Author example](https://github.com/Konrad1991/opti/blob/6fb22db21bd2338e00690ff3706be61a1f101101/test/check.f90) · [Verification](gams-gradient-swarm-validation.json) |
 | [Load optgra-halfspace-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=optgra&example=gams-optgra-halfspace-reference) · [Source](../fpm_catalog/gams-drivers/optgra-halfspace-reference.f90) | G2h3b1b | [Procedure](https://github.com/jacobwilliams/optgra/blob/914bed713e80faa4a190e03beb3a8307077eb028/src/optgra.F90#L36) · [Author example](https://github.com/jacobwilliams/optgra/blob/914bed713e80faa4a190e03beb3a8307077eb028/test/optgra_test.f90) · [Verification](gams-projection-training-validation.json) |
+| [Load conmin-ball-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=conmin&example=gams-conmin-ball-reference) · [Source](../fpm_catalog/gams-drivers/conmin-ball-reference.f90) | G2h3b1b | [Procedure](https://github.com/jacobwilliams/conmin/blob/201f3b29f023baf7bef13ad8f49b906ffb1c7757/src/conmin.F90#L46) · [Author example](https://github.com/jacobwilliams/conmin/blob/201f3b29f023baf7bef13ad8f49b906ffb1c7757/test/TP37.f90) · [Verification](gams-directions-fitting-validation.json) |
+| [Load annealing-rastrigin-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=simulated-annealing&example=gams-annealing-rastrigin-reference) · [Source](../fpm_catalog/gams-drivers/annealing-rastrigin-reference.f90) | G2i | [Procedure](https://github.com/jacobwilliams/simulated-annealing/blob/a2fa094d1ee39525c7e081cfd67866975e9e1dc5/src/simulated_annealing.F90#L59) · [Author example](https://github.com/jacobwilliams/simulated-annealing/blob/a2fa094d1ee39525c7e081cfd67866975e9e1dc5/test/test.f90) · [Verification](gams-directions-fitting-validation.json) |
 
-The L-BFGS-B and SLSQP drivers adapt author API patterns and retain license notices. All 10 appear in hosted and main local FPM example menus and downloaded projects. Loading a link selects source without submitting a job.
+The L-BFGS-B and SLSQP drivers adapt author API patterns and retain license notices. All 12 appear in hosted and main local FPM example menus and downloaded projects. Loading a link selects source without submitting a job.
 
 ## Recorded results
 
-All 10 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing existing package libraries. Only each main and executable were rebuilt. The per-driver reports linked above record hashes, pins and saved output; the [original report](gams-constrained-validation.json) covers its six initial drivers. Evaluation counts exclude derivative sanity checks and describe these simple cases, rather than establishing a general speed ranking.
+All 12 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing existing package libraries. Only each main and executable were rebuilt. The per-driver reports linked above record hashes, pins and saved output; the [original report](gams-constrained-validation.json) covers its six initial drivers. Evaluation counts exclude derivative sanity checks and describe these simple cases, rather than establishing a general speed ranking.
 
 ### lbfgsb-box-quadratic
 
@@ -190,6 +192,78 @@ Halfspace projections: 48; analytic coordinates: 160
 Analytic derivative callbacks: 240
 Max point, objective, feasibility, KKT, returned-value errors:    1.34283E-06   4.12945E-12   1.25825E-15   2.16013E-06   4.11316E-17
 PASS optgra-halfspace-reference
+```
+
+### conmin-ball-reference
+
+```text
+Case:     2    1    0    1    0    9   1.093E-05   2.778E-10   4.441E-17   1.581E-05   0.000E+00
+Case:     2    1    0    1    1   13   1.458E-05   4.946E-10   0.000E+00   2.110E-05   0.000E+00
+Case:     2    1    0    2    0    9   1.094E-05   2.783E-10   0.000E+00   1.583E-05   0.000E+00
+Case:     2    1    0    2    1   13   1.458E-05   4.945E-10   0.000E+00   2.110E-05   0.000E+00
+Case:     2    1    1    1    0    9   1.080E-05   2.815E-10   0.000E+00   1.592E-05   0.000E+00
+Case:     2    1    1    1    1   13   1.431E-05   4.944E-10   0.000E+00   2.109E-05   0.000E+00
+Case:     2    1    1    2    0    9   1.919E-05   8.570E-10   0.000E+00   2.777E-05   0.000E+00
+Case:     2    1    1    2    1   11   3.882E-08   3.503E-15   0.000E+00   5.618E-08   0.000E+00
+Case:     2    2    0    1    0    9   2.268E-05   1.667E-09   1.776E-16   2.530E-05   0.000E+00
+Case:     2    2    0    1    1   13   3.026E-05   2.967E-09   0.000E+00   3.376E-05   0.000E+00
+Case:     2    2    0    2    0   10   2.270E-05   1.669E-09   1.776E-16   2.532E-05   0.000E+00
+Case:     2    2    0    2    1   13   3.026E-05   2.967E-09   0.000E+00   3.375E-05   0.000E+00
+Case:     2    2    1    1    0   10   2.270E-05   1.670E-09   0.000E+00   2.533E-05   0.000E+00
+Case:     2    2    1    1    1   13   3.026E-05   2.967E-09   0.000E+00   3.375E-05   0.000E+00
+Case:     2    2    1    2    0   10   2.269E-05   1.668E-09   0.000E+00   2.531E-05   0.000E+00
+Case:     2    2    1    2    1   13   3.026E-05   2.967E-09   0.000E+00   3.375E-05   0.000E+00
+Case:     3    1    0    1    0   10   1.216E-05   2.777E-10   0.000E+00   1.703E-05   0.000E+00
+Case:     3    1    0    1    1   13   1.623E-05   4.947E-10   0.000E+00   2.273E-05   0.000E+00
+Case:     3    1    0    2    0    9   1.216E-05   2.780E-10   4.441E-17   1.704E-05   0.000E+00
+Case:     3    1    0    2    1   13   1.623E-05   4.946E-10   0.000E+00   2.273E-05   0.000E+00
+Case:     3    1    1    1    0    9   1.211E-05   2.685E-10   0.000E+00   1.675E-05   0.000E+00
+Case:     3    1    1    1    1   13   1.641E-05   4.934E-10   0.000E+00   2.270E-05   0.000E+00
+Case:     3    1    1    2    0    9   1.032E-05   2.778E-10   0.000E+00   1.704E-05   0.000E+00
+Case:     3    1    1    2    1   13   1.377E-05   4.946E-10   0.000E+00   2.273E-05   0.000E+00
+Case:     3    2    0    1    0   10   2.617E-05   1.666E-09   0.000E+00   2.725E-05   0.000E+00
+Case:     3    2    0    1    1   13   3.492E-05   2.967E-09   1.776E-16   3.637E-05   0.000E+00
+Case:     3    2    0    2    0   10   2.619E-05   1.669E-09   1.776E-16   2.727E-05   0.000E+00
+Case:     3    2    0    2    1   13   3.492E-05   2.967E-09   0.000E+00   3.637E-05   0.000E+00
+Case:     3    2    1    1    0   10   2.896E-05   1.668E-09   1.776E-16   2.727E-05   0.000E+00
+Case:     3    2    1    1    1   13   3.863E-05   2.968E-09   0.000E+00   3.637E-05   0.000E+00
+Case:     3    2    1    2    0   10   2.389E-05   1.668E-09   0.000E+00   2.727E-05   0.000E+00
+Case:     3    2    1    2    1   13   3.186E-05   2.967E-09   0.000E+00   3.637E-05   0.000E+00
+Case:     5    1    0    1    0    7   3.465E-05   1.944E-09   0.000E+00   4.634E-05   0.000E+00
+Case:     5    1    0    1    1   11   1.059E-06   1.814E-12   0.000E+00   1.416E-06   0.000E+00
+Case:     5    1    0    2    0    7   3.465E-05   1.944E-09   0.000E+00   4.634E-05   0.000E+00
+Case:     5    1    0    2    1   11   3.743E-06   2.268E-11   0.000E+00   5.005E-06   0.000E+00
+Case:     5    1    1    1    0    9   9.838E-06   2.744E-10   0.000E+00   1.741E-05   0.000E+00
+Case:     5    1    1    1    1   13   1.312E-05   4.879E-10   0.000E+00   2.322E-05   0.000E+00
+Case:     5    1    1    2    0    9   8.397E-06   2.781E-10   0.000E+00   1.753E-05   0.000E+00
+Case:     5    1    1    2    1   13   1.119E-05   4.942E-10   0.000E+00   2.336E-05   0.000E+00
+Case:     5    2    0    1    0   10   2.984E-05   1.667E-09   0.000E+00   2.803E-05   0.000E+00
+Case:     5    2    0    1    1   13   3.963E-05   2.941E-09   0.000E+00   3.723E-05   0.000E+00
+Case:     5    2    0    2    0   10   2.985E-05   1.668E-09   0.000E+00   2.804E-05   0.000E+00
+Case:     5    2    0    2    1   13   3.981E-05   2.967E-09   0.000E+00   3.739E-05   0.000E+00
+Case:     5    2    1    1    0   10   2.728E-05   1.680E-09   0.000E+00   2.814E-05   0.000E+00
+Case:     5    2    1    1    1   13   3.625E-05   2.966E-09   0.000E+00   3.739E-05   0.000E+00
+Case:     5    2    1    2    0    8   5.982E-05   1.166E-08   0.000E+00   7.414E-05   0.000E+00
+Case:     5    2    1    2    1   11   2.873E-08   2.665E-15   0.000E+00   3.561E-08   0.000E+00
+Ball projections: 48; analytic coordinates: 160
+User-gradient requests: 426
+Max point, objective, feasibility, KKT, returned-objective errors:    5.98188E-05   1.16625E-08   1.77636E-16   7.41370E-05   0.00000E+00
+PASS conmin-ball-reference
+```
+
+### annealing-rastrigin-reference
+
+```text
+Case dimension, amplitude, seed pair, objective/point/identity:         2        1        1        2   1.50725E-12   2.27304E-07   5.60958E-17
+Case dimension, amplitude, seed pair, objective/point/identity:         2        1     1234     5678   2.80888E-12   3.61574E-07   2.64689E-17
+Case dimension, amplitude, seed pair, objective/point/identity:         2        1       91     2718   6.50271E-13   1.74380E-07   7.81583E-17
+Case dimension, amplitude, seed pair, objective/point/identity:         2       10        1        2   1.31118E-12   7.95924E-08   5.91253E-17
+Case dimension, amplitude, seed pair, objective/point/identity:         2       10     1234     5678   6.55403E-14   1.30836E-08   8.16990E-16
+Case dimension, amplitude, seed pair, objective/point/identity:         2       10       91     2718   2.19404E-12   1.03784E-07   2.80461E-16
+Seeded annealing runs: 6; global minimizer coordinates: 12
+Independently counted objective callbacks: 271406
+Max independent objective, point error, objective identity error:    2.80888E-12   3.61574E-07   8.16990E-16
+PASS annealing-rastrigin-reference
 ```
 
 ## Maintenance

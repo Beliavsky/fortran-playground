@@ -89,6 +89,7 @@ SPARSE_SPECTRA_REPORT = Path('docs/gams-sparse-spectra.md')
 PROJECTION_LBFGS_REPORT = Path('docs/gams-projection-lbfgs.md')
 GRADIENT_SWARM_REPORT = Path('docs/gams-gradient-swarm.md')
 PROJECTION_TRAINING_REPORT = Path('docs/gams-projection-training.md')
+DIRECTIONS_FITTING_REPORT = Path('docs/gams-directions-fitting.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
 EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
@@ -8022,6 +8023,130 @@ def projection_training_review_text(root=ROOT):
     return '\n'.join(lines)
 
 
+def directions_fitting_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-directions-fitting-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-directions-fitting-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Checked feasible directions and annealing; a failed friction fit',
+ '',
+ 'The G2h3b1b and G2i drivers passed GNU Fortran 16.2.0 with FPM 0.12.0 in the restricted hosted '
+ 'sandbox. Existing libraries were reused; only mains and executables were compiled. The [verification '
+ 'report](gams-directions-fitting-validation.json) retains pins, source hashes and complete output. '
+ 'GAMS categories are not exhausted.',
+ '',
+ '## CONMIN nonlinear ball projections (G2h3b1b)',
+ '',
+ 'The independent driver minimizes f(x)=0.5*norm(x-target)**2 subject to '
+ 'g(x)=norm(x-center)**2-R**2<=0. The target is center+2*R*d for a unit direction d; the exact solution '
+ 'is center+R*d, with objective R**2/2 and multiplier 1/2 for the constraint g<=0. Strict convexity '
+ 'gives a unique global minimizer on this convex ball. Independent endpoint checks use these formulas, '
+ 'including the stationarity residual (x-target)+(x-center).',
+ '',
+ 'Dimensions [2,3,5], radii [0.5,2], zero/quarter-integer centers, two signed target directions and '
+ 'feasible/infeasible noncollinear starts give 48 problems and 160 coordinate references. Direction d '
+ 'normalizes entries (-1)**(direction*i)*i. A perpendicular unit vector q is obtained by normalizing '
+ 'e1-d(1)*d. Starts are center+R*(0.25*d+0.1*q) and center+R*(1.25*d+0.1*q), so the optimizer must '
+ 'correct a tangential error as well as the radial error.',
+ '',
+ 'NFDG=1 supplies both objective and constraint derivatives. Reverse communication services INFO=1 with '
+ 'values and INFO=2 with the objective gradient and active constraint Jacobian, stored by columns. The '
+ 'active set is provided through NAC/IC when g>=CT; the sphere is marked nonlinear. There were 426 '
+ 'user-gradient requests. Variable bounds and automatic scaling are disabled. The nonlinear constraint '
+ 'thickness starts at -0.01*R**2 and its minimum magnitude is 1e-9*R**2. Objective relative and '
+ 'absolute change settings are 1e-12.',
+ '',
+ 'The driver caps solver iterations at 300 and reverse-communication requests at 10,000. IGOTO=0 is '
+ 'required, with the iteration cap not reached, finite values and positive gradient-request counts. '
+ 'CONMIN exposes no separate success code here, so return alone is not an accuracy certificate. '
+ 'Independent normalized coordinate error must be <=2e-4, objective error <=2e-7, positive ball '
+ 'violation <=2e-7, stationarity residual <=2e-4 and returned/direct objective discrepancy <=1e-8. '
+ 'Normalizers are respectively 1+max(abs(x_star)), 1+R**2/2, 1+R**2, 1+2*R and 1+actual_f.',
+ '',
+ 'Saved maxima were 5.98188e-5, 1.16625e-8, 1.77636e-16, 7.41370e-5 and zero. Multiple simultaneous '
+ 'constraints, equality constraints, active variable bounds, nonconvex feasible sets and general '
+ 'optimizer robustness remain unverified.',
+ '',
+ '## Simulated annealing shifted Rastrigin (G2i)',
+ '',
+ 'The driver searches R(x)=sum(z_i**2+A*(1-cos(2*pi*z_i))), with z=x-center, center=[-0.25,0] and '
+ 'bounds center +/- 3. Every summand is nonnegative, and only z=0 makes all quadratic terms zero; the '
+ 'unique global minimizer is center with objective zero. An independent sin-squared identity '
+ 'sum(z_i**2+2*A*sin(pi*z_i)**2) checks the returned value.',
+ '',
+ 'Two amplitudes [1,10] and seed pairs [(1,2),(1234,5678),(91,2718)] give six two-dimensional searches '
+ 'and 12 known minimizer coordinates. Seeds use the library generator, not Fortran random_seed. The '
+ 'start is center+[-2.5,2.5], initial steps are 1, temperature is 20 and the cooling factor is 0.9. '
+ 'Settings are ns=20, nt=10, neps=4, eps=1e-9, adaptive step mode 1, and n_resets=1. At this pin '
+ 'n_resets counts complete main-loop runs, not additional restarts. Known-minimum early stopping is '
+ 'disabled, so the reference answer does not steer termination.',
+ '',
+ 'Termination must return status 0; finite callback and final points must remain inside bounds. Each '
+ 'reported evaluation count must equal the independent callback count and be <=600,000. Independent '
+ 'objective must be <=1e-5, maximum coordinate error <=1e-3, and normalized returned-value discrepancy '
+ '<=2e-12. Saved maxima were 2.80888e-12, 3.61574e-7 and 8.16990e-16; the six runs used 271,406 '
+ 'callbacks. These are fixture results, not a performance comparison.',
+ '',
+ 'A valid three-dimensional amplitude-10 search with seed (1,2) returned status 0 at objective '
+ 'approximately 0.994959, both with cooling factors 0.85 and 0.9. The [finite-schedule '
+ 'probes](gams-candidates/annealing-finite-budget/README.md) retain exact sources and results. That is '
+ 'a nonglobal finite-budget outcome, not evidence of a certified global solution or necessarily a '
+ 'library defect. The published driver covers only two dimensions and keeps all three original seed '
+ 'pairs and its original answer tolerances.',
+ '',
+ 'A separate [two-loop probe](gams-candidates/annealing-reset-objective/README.md) failed objective '
+ 'identity checks, consistent with repeated conversion of the internally negated minimization value. '
+ 'The checked driver uses one main-loop run; multi-loop correctness remains unverified. An earlier '
+ '[zero-loop consumer](gams-candidates/annealing-loop-count/README.md) used an invalid configuration '
+ 'and is documented as a consumer error. No general global-convergence, success-probability or '
+ 'cross-compiler RNG guarantee follows from the six successes.',
+ '',
+ '## Friction fitting remains unverified (L8)',
+ '',
+ 'The independent Coulomb probe generated exact signed-force data for coefficient 0.375 and varied '
+ 'positive normal loads. The identifiable scalar least-squares answer is sum(a_i*F_i)/sum(a_i**2), '
+ 'where a_i=sign(v_i)*N_i, giving exactly 0.375. The cached library instead fitted 0.7499999991182843 '
+ 'and reported residual convergence; independently recomputed force discrepancy reached '
+ '1.499999996473137. The unchanged 1e-7 coefficient comparison rejected it.',
+ '',
+ 'Source review finds fit_fcn subtracts observed force before returning callback values, while fmdl_fit '
+ 'also supplies observed force as the least-squares dependent data. The pinned fstats dependency '
+ 'expects model predictions, so this explains the observed doubling. The [preserved '
+ 'probe](gams-candidates/friction-double-subtraction/README.md) records the complete cached GNU 16 '
+ 'result, source hash, pins and source-based diagnosis. The L8 record has no checked driver, and no '
+ 'library patch or upstream-confirmed fix is claimed. Ordinary algebraic force evaluation remains '
+ 'separately demonstrated; dynamic internal-state fitting is not verified.',
+ '',
+ '## Sources, licenses and actual output',
+ '',
+ 'Pinned APIs, implementations and author tests were reviewed before writing these independent '
+ 'consumers. No implementation or test bodies are copied. Drivers/probes have their own MIT notice; '
+ 'upstream CONMIN, simulated-annealing and friction licenses remain separate. Loading a driver does not '
+ 'submit a job.',
+ '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -8186,6 +8311,7 @@ def main():
                          (PROJECTION_LBFGS_REPORT, projection_lbfgs_review_text()),
                          (GRADIENT_SWARM_REPORT, gradient_swarm_review_text()),
                          (PROJECTION_TRAINING_REPORT, projection_training_review_text()),
+                         (DIRECTIONS_FITTING_REPORT, directions_fitting_review_text()),
                          (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report

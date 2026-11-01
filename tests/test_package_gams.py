@@ -87,6 +87,7 @@ from xpackage_gams import (gams_data, package_classes, review_text, subclass_mod
                             projection_lbfgs_review_text, PROJECTION_LBFGS_REPORT,
                             gradient_swarm_review_text, GRADIENT_SWARM_REPORT,
                             projection_training_review_text, PROJECTION_TRAINING_REPORT,
+                            directions_fitting_review_text, DIRECTIONS_FITTING_REPORT,
                           coverage_data, coverage_review_text, COVERAGE_REPORT,
                           class_evidence, class_tree, mapping_evidence_text, EVIDENCE_REPORT)
 
@@ -871,6 +872,66 @@ class PackageGamsTests(unittest.TestCase):
         self.assertIn('22,416',text)
         self.assertIn('Type-2/type-3 transforms',text)
         self.assertIn('two-dimensional NUFFT2D driver',transforms_review_text())
+
+    def test_feasible_directions_and_annealing_keep_reference_and_failure_scope(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for ident,code in [('conmin-ball-reference','G2h3b1b'),('annealing-rastrigin-reference','G2i')]:
+            d = drivers[ident]
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'],ident)
+            self.assertEqual(class_evidence(class_tree(data),code,[record],[d])['status'],'verified')
+        directions = drivers['conmin-ball-reference']['checks']
+        self.assertEqual(directions['problems'],48)
+        self.assertEqual(directions['optimizer_entries'],160)
+        self.assertEqual(directions['analytic_derivative_mode'],1)
+        self.assertEqual(directions['user_gradient_requests'],426)
+        self.assertTrue(directions['noncollinear_feasible_infeasible_starts_checked'])
+        self.assertTrue(directions['analytic_multipliers_checked'])
+        self.assertFalse(directions['multiple_constraints_verified'])
+        annealing = drivers['annealing-rastrigin-reference']['checks']
+        self.assertEqual(annealing['runs'],6)
+        self.assertEqual(annealing['global_minimizer_entries'],12)
+        self.assertEqual(annealing['objective_callbacks'],271406)
+        self.assertEqual(annealing['main_loop_runs'],1)
+        self.assertEqual(annealing['seed_pairs'],[[1,2],[1234,5678],[91,2718]])
+        self.assertTrue(annealing['callback_counts_checked'])
+        self.assertFalse(annealing['known_minimum_early_stop_enabled'])
+        self.assertFalse(annealing['three_dimensional_global_search_verified'])
+        self.assertFalse(annealing['multiple_main_loop_runs_verified'])
+        text = directions_fitting_review_text()
+        self.assertEqual((ROOT/DIRECTIONS_FITTING_REPORT).read_text(encoding='utf-8'),text)
+        self.assertIn('[Verification](gams-directions-fitting-validation.json)',constrained_review_text())
+        for phrase in ['48 problems','NFDG=1','six two-dimensional','271,406','0.994959',
+                       '0.7499999991182843','categories are not exhausted']:
+            self.assertIn(phrase,text)
+
+    def test_failed_friction_and_annealing_probes_are_preserved_without_false_verification(self):
+        import hashlib
+        data = gams_data()
+        records = {r['id']: r for r in data['procedure_mappings']}
+        self.assertNotIn('driver_id',records['friction-fit'])
+        drivers = driver_data(data=data)
+        self.assertEqual(class_evidence(class_tree(data),'L8',[records['friction-fit']],drivers)['status'],
+                         'source-supported')
+        paths = ['friction-double-subtraction/fit-result.json','annealing-loop-count/zero-loops-result.json',
+                 'annealing-finite-budget/one-loop-result.json','annealing-finite-budget/slow-one-loop-result.json',
+                 'annealing-reset-objective/two-loops-result.json']
+        for path in paths:
+            probe = json.loads((ROOT/'docs/gams-candidates'/path).read_text(encoding='utf-8'))
+            source = (ROOT/probe['source_path']).read_text(encoding='utf-8')
+            self.assertEqual(hashlib.sha256(source.encode()).hexdigest(),probe['source_sha256'])
+            self.assertFalse(probe['result']['ok'])
+            self.assertTrue(probe['result']['cache']['library_reused'])
+            self.assertEqual(probe['revision'],next(p['revision'] for p in
+                             json.loads((ROOT/'fpm_catalog.json').read_text())['packages']
+                             if p['id']==probe['package_id']))
+        fit = json.loads((ROOT/'docs/gams-candidates/friction-double-subtraction/fit-result.json').read_text())
+        run = next(s for s in fit['result']['stages'] if s['name']=='Run')
+        self.assertIn('7.499999991182843E-01',run['stdout'])
+        self.assertIn('known Coulomb fit differs',run['stderr'])
+        self.assertNotIn('friction-fit-reference',{d['id'] for d in drivers})
 
     def test_halfspace_and_affine_training_drivers_keep_analytic_scope(self):
         data = gams_data()

@@ -14319,7 +14319,8 @@
             "path": "test/TP37.f90",
             "sha256": "516506566d0a246976e2114f641833a3fac8da964d84674aae6dd5f0e83b2d18"
           }
-        ]
+        ],
+        "driver_id": "conmin-ball-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -17870,7 +17871,8 @@
             "path": "test/test.f90",
             "sha256": "2388f5a4911ac89d6f4c8d6271053a89d801c43f57cfc39f84f68d82f03a2a32"
           }
-        ]
+        ],
+        "driver_id": "annealing-rastrigin-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -19416,7 +19418,7 @@
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Constitutive friction models, with nonlinear parameter fitting and internal-state ODE integration in the reviewed source. The checked main covers algebraic Coulomb and Stribeck forces only; it does not validate parameter fitting or dynamic internal-state integration.",
+        "notes": "Parameter fitting remains unverified: the pinned Coulomb fit returned approximately 0.75 for noiseless observations with true coefficient 0.375 while reporting residual convergence. Source review finds fit_fcn returns model minus observed force, then passes observed force again as the least-squares target. Exact reproducer and cached GNU 16 result are retained in docs/gams-candidates/friction-double-subtraction. Ordinary algebraic force evaluation is separately checked; dynamic-state fitting remains unverified.",
         "evidence": [
           {
             "path": "src/friction_core.f90",

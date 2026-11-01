@@ -1,0 +1,86 @@
+{
+  "package_id": "simulated-annealing",
+  "revision": "a2fa094d1ee39525c7e081cfd67866975e9e1dc5",
+  "source_path": "docs/gams-candidates/annealing-finite-budget/slow-one-loop.f90",
+  "source_sha256": "ccb90b2859e0f50ed40c37b307323e632187b97ad8a7046fe4948c40fcc901d2",
+  "hash_normalization": "utf-8-lf",
+  "result": {
+    "ok": false,
+    "compiler": "GNU Fortran (GCC) 16.2.0",
+    "compiler_id": "gfortran",
+    "fpm": "0.12.0",
+    "stages": [
+      {
+        "name": "Build",
+        "command": [
+          "fpm",
+          "build",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 0.293,
+        "ok": true,
+        "exit_code": 0,
+        "error": "",
+        "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+        "stderr": ""
+      },
+      {
+        "name": "Run",
+        "command": [
+          "fpm",
+          "run",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 0.159,
+        "ok": false,
+        "exit_code": 1,
+        "error": "",
+        "stdout": "Case dimension, amplitude, seed pair, objective/point/identity:         2        1        1        2   1.50725E-12   2.27304E-07   5.60958E-17\nCase dimension, amplitude, seed pair, objective/point/identity:         2        1     1234     5678   2.80888E-12   3.61574E-07   2.64689E-17\nCase dimension, amplitude, seed pair, objective/point/identity:         2        1       91     2718   6.50271E-13   1.74380E-07   7.81583E-17\nCase dimension, amplitude, seed pair, objective/point/identity:         2       10        1        2   1.31118E-12   7.95924E-08   5.91253E-17\nCase dimension, amplitude, seed pair, objective/point/identity:         2       10     1234     5678   6.55403E-14   1.30836E-08   8.16990E-16\nCase dimension, amplitude, seed pair, objective/point/identity:         2       10       91     2718   2.19404E-12   1.03784E-07   2.80461E-16\nCase dimension, amplitude, seed pair, objective/point/identity:         3        1        1        2   1.33807E-11   6.21329E-07   5.83108E-17\nCase dimension, amplitude, seed pair, objective/point/identity:         3        1     1234     5678   7.72499E-12   4.10201E-07   5.26106E-17\nCase dimension, amplitude, seed pair, objective/point/identity:         3        1       91     2718   2.13730E-11   7.63480E-07   4.87361E-17\nCase dimension, amplitude, seed pair, objective/point/identity:         3       10        1        2   9.94959E-01   9.94959E-01   2.22606E-16\n",
+        "stderr": "Project is up to date\nERROR STOP known global minimum differs\n\nError termination. Backtrace:\n#0  0x2aebfd2dbf83 in ???\n#1  0x2aebfd2dcc39 in ???\n#2  0x2aebfd2de045 in ???\n#3  0x405084 in reference_annealing\n\tat app/main.f90:60\n#4  0x405607 in main\n\tat app/main.f90:27\n<ERROR> Execution for object \" playground-main \" returned exit code  1\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 1\n"
+      }
+    ],
+    "cache": {
+      "package": "simulated-annealing",
+      "compiler": "GNU Fortran 16.2.0",
+      "key": "860c59c160a1f4763ecdfd75",
+      "library_reused": true,
+      "changed_artifacts": []
+    },
+    "packages": [
+      {
+        "repository": "jacobwilliams/simulated-annealing",
+        "revision": "a2fa094d1ee39525c7e081cfd67866975e9e1dc5",
+        "sha256": "d2fb01dfd123ccbda75b4bcfc547da517f3ef9ea8e71a686ef6572253b9b58ba"
+      }
+    ],
+    "build_ok": true,
+    "target_groups": {
+      "app": [
+        "playground-main"
+      ],
+      "example": [],
+      "test": []
+    },
+    "targets": [
+      "playground-main"
+    ],
+    "plots": [],
+    "plot_notes": []
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "package_id": "simulated-annealing",
+  "revision": "a2fa094d1ee39525c7e081cfd67866975e9e1dc5",
+  "source_path": "docs/gams-candidates/annealing-loop-count/zero-loops.f90",
+  "source_sha256": "233306ce2c47cb17248d9f209880a31479125ebfcbc947f609167346a74aad8e",
+  "hash_normalization": "utf-8-lf",
+  "result": {
+    "ok": false,
+    "compiler": "GNU Fortran (GCC) 16.2.0",
+    "compiler_id": "gfortran",
+    "fpm": "0.12.0",
+    "stages": [
+      {
+        "name": "Build",
+        "command": [
+          "fpm",
+          "build",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 0.566,
+        "ok": true,
+        "exit_code": 0,
+        "error": "",
+        "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+        "stderr": ""
+      },
+      {
+        "name": "Run",
+        "command": [
+          "fpm",
+          "run",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 0.031,
+        "ok": false,
+        "exit_code": 1,
+        "error": "",
+        "stdout": "Case dimension, amplitude, seed pair, objective/point/identity:         2        1        1        2   1.65000E+01   2.50000E+00   1.88571E+00\n",
+        "stderr": "Project is up to date\nERROR STOP annealing did not meet its termination criteria\n\nError termination. Backtrace:\n#0  0x2b41a3ae9f83 in ???\n#1  0x2b41a3aeac39 in ???\n#2  0x2b41a3aec045 in ???\n#3  0x404c05 in reference_annealing\n\tat app/main.f90:56\n#4  0x405607 in main\n\tat app/main.f90:27\n<ERROR> Execution for object \" playground-main \" returned exit code  1\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 1\n"
+      }
+    ],
+    "cache": {
+      "package": "simulated-annealing",
+      "compiler": "GNU Fortran 16.2.0",
+      "key": "860c59c160a1f4763ecdfd75",
+      "library_reused": true,
+      "changed_artifacts": []
+    },
+    "packages": [
+      {
+        "repository": "jacobwilliams/simulated-annealing",
+        "revision": "a2fa094d1ee39525c7e081cfd67866975e9e1dc5",
+        "sha256": "d2fb01dfd123ccbda75b4bcfc547da517f3ef9ea8e71a686ef6572253b9b58ba"
+      }
+    ],
+    "build_ok": true,
+    "target_groups": {
+      "app": [
+        "playground-main"
+      ],
+      "example": [],
+      "test": []
+    },
+    "targets": [
+      "playground-main"
+    ],
+    "plots": [],
+    "plot_notes": []
+  }
+}

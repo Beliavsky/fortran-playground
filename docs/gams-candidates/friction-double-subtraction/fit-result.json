@@ -1,0 +1,111 @@
+{
+  "package_id": "friction",
+  "revision": "8e75dcac26f47417a439adfcbaa24834105d89fe",
+  "source_path": "docs/gams-candidates/friction-double-subtraction/fit-reference.f90",
+  "source_sha256": "dda1d6ad1f6661af6d98cffdd20c49c1fbb07015b488513c2bd26f49be61a637",
+  "hash_normalization": "utf-8-lf",
+  "result": {
+    "ok": false,
+    "compiler": "GNU Fortran (GCC) 16.2.0",
+    "compiler_id": "gfortran",
+    "fpm": "0.12.0",
+    "stages": [
+      {
+        "name": "Build",
+        "command": [
+          "fpm",
+          "build",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 0.507,
+        "ok": true,
+        "exit_code": 0,
+        "error": "",
+        "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+        "stderr": ""
+      },
+      {
+        "name": "Run",
+        "command": [
+          "fpm",
+          "run",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 0.05,
+        "ok": false,
+        "exit_code": 1,
+        "error": "",
+        "stdout": "True and fitted Coulomb coefficient:    3.750000000000000E-01   7.499999991182843E-01\nGradient/step/residual convergence:  F F T\nMaximum independently recomputed force discrepancy:    1.499999996473137E+00\n",
+        "stderr": "Project is up to date\nERROR STOP known Coulomb fit differs\n\nError termination. Backtrace:\n#0  0x2b19800bbf83 in ???\n#1  0x2b19800bcc39 in ???\n#2  0x2b19800be045 in ???\n#3  0x4032e7 in friction_fit_probe\n\tat app/main.f90:29\n#4  0x4033b3 in main\n\tat app/main.f90:4\n<ERROR> Execution for object \" playground-main \" returned exit code  1\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 1\n"
+      }
+    ],
+    "cache": {
+      "package": "friction",
+      "compiler": "GNU Fortran 16.2.0",
+      "key": "90cd0fea926fd3229b83fb54",
+      "library_reused": true,
+      "changed_artifacts": []
+    },
+    "packages": [
+      {
+        "repository": "jchristopherson/friction",
+        "revision": "8e75dcac26f47417a439adfcbaa24834105d89fe",
+        "sha256": "71dddc287abf50fc6c174e610eda1711fa5befc0b970fa931cc854381b1603cb"
+      },
+      {
+        "repository": "jchristopherson/diffeq",
+        "revision": "989b320179c23aaff4bfe72994c90e9034f50c74",
+        "sha256": "09f6e92aea1dc8c9eb9233d4052b012e3b53a739e1ce078453d0421ddb1d4e87"
+      },
+      {
+        "repository": "jchristopherson/linalg",
+        "revision": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+        "sha256": "6210b8b167b50694941f48b20ad5d94bdacab026f1eb4720e2d55e8ddde0b59a"
+      },
+      {
+        "repository": "jchristopherson/fstats",
+        "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+        "sha256": "cf6b7367fc2a0d74f46000dc80a4cbedd07fd554e29117144b695b3a9ffa6fef"
+      },
+      {
+        "repository": "jchristopherson/collections",
+        "revision": "ce37c94e72b3ae5db2e2208489999260a7875f81",
+        "sha256": "5d53caf3c0b35e9e2a8bed49f8e96dca1b282434859c8c6f53fae3123528f265"
+      },
+      {
+        "repository": "jchristopherson/fstring",
+        "revision": "1bb1043a1ed34b8bd57f2687166463dd573bce3d",
+        "sha256": "0272f644a9217485fa2a3a18e41010c88f81ccc7398fc855c37518be2ac8eb3f"
+      }
+    ],
+    "build_ok": true,
+    "target_groups": {
+      "app": [
+        "playground-main"
+      ],
+      "example": [],
+      "test": []
+    },
+    "targets": [
+      "playground-main"
+    ],
+    "plots": [],
+    "plot_notes": []
+  }
+}
