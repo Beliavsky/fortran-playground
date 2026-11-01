@@ -67,6 +67,77 @@ class GamsSiteTests(unittest.TestCase):
             self.assertIn('Open default example', sorting)
             self.assertNotIn('Try in playground', sorting)
 
+    def test_radial_and_dense_links_load_checked_examples_without_narrower_claims(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects']
+                            if p['playground']['package_id'] in {'dftatom','athena'}]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination,feed)
+            for code,package,driver in [('I1','dftatom','dftatom-hydrogen-reference'),
+                                        ('K','athena','athena-dense-reference')]:
+                html = (destination/code/'index.html').read_text(encoding='utf-8')
+                primary = {url for url,label in Page(html).anchors if label=='Try in playground'}
+                self.assertEqual(primary,{
+                    f'https://beliavsky.github.io/fortran-playground/fpm/?package={package}&example=gams-{driver}'})
+                self.assertIn('Verified: a checked driver',html)
+            stiff = (destination/'I1a2/index.html').read_text(encoding='utf-8')
+            self.assertNotIn('example=gams-dftatom-hydrogen-reference',stiff)
+            training = (destination/'G1b/index.html').read_text(encoding='utf-8')
+            self.assertNotIn('example=gams-athena-dense-reference',training)
+            for package,procedure,driver in [('dftatom','dftatom-radial','dftatom-hydrogen-reference'),
+                                            ('athena','athena-dense','athena-dense-reference')]:
+                detail = (destination/'packages'/package/'index.html').read_text(encoding='utf-8')
+                card = detail.split('id="'+procedure+'"',1)[1].split('</article>',1)[0]
+                self.assertIn('Load checked GAMS driver:',card)
+                self.assertIn('example=gams-'+driver,card)
+
+    def test_tangent_and_block_links_do_not_promote_stiff_or_distributed_operation(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects']
+                            if p['playground']['package_id'] in {'fatode','dbcsr'}]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination,feed)
+            for code,package,driver in [('I1','fatode','fatode-tangent-reference'),
+                                        ('D1','dbcsr','dbcsr-products-reference')]:
+                html = (destination/code/'index.html').read_text(encoding='utf-8')
+                primary = {url for url,label in Page(html).anchors if label=='Try in playground'}
+                self.assertEqual(primary,{
+                    f'https://beliavsky.github.io/fortran-playground/fpm/?package={package}&example=gams-{driver}'})
+                self.assertIn('Verified: a checked driver',html)
+            stiff = (destination/'I1a2/index.html').read_text(encoding='utf-8')
+            self.assertNotIn('example=gams-fatode-tangent-reference',stiff)
+            for package,procedure,driver in [('fatode','fatode-tangent','fatode-tangent-reference'),
+                                            ('dbcsr','dbcsr-block-multiply','dbcsr-products-reference')]:
+                detail = (destination/'packages'/package/'index.html').read_text(encoding='utf-8')
+                card = detail.split('id="'+procedure+'"',1)[1].split('</article>',1)[0]
+                self.assertIn('Load checked GAMS driver:',card)
+                self.assertIn('example=gams-'+driver,card)
+
+    def test_kiss_uniform_and_normalized_spacing_links_keep_distinct_distributions(self):
+        import copy
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects']
+                            if p['playground']['package_id'] in {'rndgen-fortran','pointsets'}]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination,feed)
+            uniform = (destination/'L6a21/index.html').read_text(encoding='utf-8')
+            primary = {url for url,label in Page(uniform).anchors if label=='Try in playground'}
+            self.assertEqual(primary,{
+                'https://beliavsky.github.io/fortran-playground/fpm/?package=rndgen-fortran&example=gams-rndgen-kiss-reference'})
+            self.assertNotIn('example=gams-pointsets-random-reference',uniform)
+            broad = (destination/'L6/index.html').read_text(encoding='utf-8')
+            self.assertIn('example=gams-pointsets-random-reference',broad)
+            detail = (destination/'packages/pointsets/index.html').read_text(encoding='utf-8')
+            card = detail.split('id="pointsets-random-spacing"',1)[1].split('</article>',1)[0]
+            self.assertIn('Load checked GAMS driver:',card)
+            self.assertIn('example=gams-pointsets-random-reference',card)
+            self.assertIn('not uniform',card)
+
     def test_directions_and_annealing_links_do_not_publish_failed_friction_fit(self):
         import copy
         feed = copy.deepcopy(self.feed)

@@ -6670,16 +6670,6 @@
         "parent": "L"
       },
       {
-        "code": "L6a",
-        "label": "Univariate",
-        "parent": "L6"
-      },
-      {
-        "code": "L6a21",
-        "label": "Uniform (continuous, discrete), uniform order statistics",
-        "parent": "L6a"
-      },
-      {
         "code": "P",
         "label": "Computational geometry",
         "parent": null
@@ -6725,11 +6715,11 @@
         "module": "pointsets",
         "procedure": "random_spacing",
         "gams_codes": [
-          "L6a21"
+          "L6"
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Uniform pseudorandom coordinates on an interval; the catalog demonstration uses deterministic spacing instead.",
+        "notes": "Random coordinates from normalized uniform increments, with fixed interval endpoints; not uniform coordinates or uniform order statistics. For three points the interior coordinate is U/(U+V), with CDF 1/6 at 1/4. The checked driver verifies that construction and law, replay, interval handling and empty/singleton no-ops. No statistical-quality guarantee follows.",
         "evidence": [
           {
             "path": "src/pointsets.f90",
@@ -6742,7 +6732,8 @@
             "path": "test/pointsets/test_pointsets.f90",
             "sha256": "0234c57e0c3b578938c909e67d3ea1a24fc45e2873e85db7fed3522a51d7e837"
           }
-        ]
+        ],
+        "driver_id": "pointsets-random-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -7144,8 +7135,13 @@
           {
             "path": "example/PL.f90",
             "sha256": "cfd506aa3841afc95bb42f6117ca2d73932dcde2fd2a6f62544b80e7da4ce113"
+          },
+          {
+            "path": "example/simple.f90",
+            "sha256": "9b427282e44ddcec31be811f7ddd4ed55466838159a02267fd080d5b20f11e4c"
           }
-        ]
+        ],
+        "driver_id": "rndgen-kiss-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -15976,7 +15972,8 @@
             "path": "test/test_full_layer.f90",
             "sha256": "5a87fd9d549312f85a5c18ca3226750cefbf1dbac269d88b920eaf03dd6f66ee"
           }
-        ]
+        ],
+        "driver_id": "athena-dense-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T22:42:25.593426+00:00"
@@ -20422,7 +20419,8 @@
             "path": "EXAMPLES/swe/SWE_ERK_TLM/swe2D_erk_tlm_dr.F90",
             "sha256": "52e4c46deed18a2b65039d398047d0f9a29e2b5809a6ce278cd07dc5e3e30546"
           }
-        ]
+        ],
+        "driver_id": "fatode-tangent-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T13:59:01.916745+00:00"
@@ -21468,7 +21466,8 @@
             "path": "tests/hydrogen/hydrogen.f90",
             "sha256": "9c1945012f5efaa7861e858b283b5e30ec0131efb699c04f0523d5e78cf45406"
           }
-        ]
+        ],
+        "driver_id": "dftatom-hydrogen-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T18:43:21.308518+00:00"
@@ -26653,7 +26652,8 @@
             "path": "examples/dbcsr_example_3.F",
             "sha256": "04d0f4e311c5fd6c33be433174992729e652e12f0983d8c25f8e8fc4b5e8a7de"
           }
-        ]
+        ],
+        "driver_id": "dbcsr-products-reference"
       }
     ],
     "stars_updated_at": "2026-10-30T00:56:25.350646+00:00"

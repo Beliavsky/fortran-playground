@@ -7931,6 +7931,439 @@
         "multiple_main_loop_runs_verified": false,
         "cross_compiler_rng_reproducibility_verified": false
       }
+    },
+    {
+      "id": "rndgen-kiss-reference",
+      "name": "gams-rndgen-kiss-reference",
+      "package_id": "rndgen-fortran",
+      "procedure_id": "rndgen-fortran-rnd",
+      "gams_code": "L6a21",
+      "problem_id": "independent-modular-kiss-vectors",
+      "path": "fpm_catalog/gams-drivers/rndgen-kiss-reference.f90",
+      "revision": "3fa553608324913eed6cb178b398e7f661e4f63a",
+      "author_example": "example/simple.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/random-references-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned KISS arithmetic and initialization conventions and author API examples reviewed without copying bodies. Unbounded-Python unsigned-modular oracle, direct Park-Miller multiplication and explicit signed seed-shuffle interpretation generate exact prefixes and rolling checksums. Seven interleaved streams, 31-bit output grid, reset replay and in-memory state continuations checked. GNU 16 wraparound behavior only, not statistical quality, cryptographic suitability or cross-compiler portability.",
+      "validation_path": "docs/gams-random-references-validation.json",
+      "review_path": "docs/gams-random-references.md",
+      "checks": {
+        "streams": 7,
+        "samples_per_stream": 4096,
+        "uniform_outputs": 28672,
+        "exact_prefix_entries": 56,
+        "independent_stream_checksums": 7,
+        "reset_replay_entries": 28672,
+        "saved_state_replay_entries": 1799,
+        "seeds": [
+          0,
+          1,
+          -1,
+          12345,
+          -67890,
+          294727492,
+          2147483646
+        ],
+        "independent_integer_reference": true,
+        "interleaved_states_checked": true,
+        "output_grid_bits": 31,
+        "reference_files": {
+          "fpm_catalog/gams-drivers/references/kiss_vectors.py": "58fe3e25c515281d404a8ef63b6172cd6f46655787afcb3560340d826e1652d2",
+          "fpm_catalog/gams-drivers/references/kiss-vectors.json": "49db8ae21e3739a4b4e600b333f82241723703e7a074428aa74f6b217f54149a"
+        },
+        "statistical_quality_verified": false,
+        "cross_compiler_wraparound_verified": false,
+        "minimum_int32_seed_verified": false,
+        "file_state_serialization_verified": false
+      }
+    },
+    {
+      "id": "pointsets-random-reference",
+      "name": "gams-pointsets-random-reference",
+      "package_id": "pointsets",
+      "procedure_id": "pointsets-random-spacing",
+      "gams_code": "L6",
+      "problem_id": "normalized-random-increments-analytic-law",
+      "path": "fpm_catalog/gams-drivers/pointsets-random-reference.f90",
+      "revision": "a1c381777f893d656018366cfabfa4cc7531e4dd",
+      "author_example": "test/pointsets/test_pointsets.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/random-references-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned implementation and author API test reviewed without copying bodies. Normalized random-increment construction checked with a real64 mathematical oracle fed by replayed intrinsic uniform draws. Seven sizes, three intervals/seeds; exact state consumption, replay and empty/singleton no-ops. Three-point U/(U+V) CDF and mean smoke checks. Classification broadened from uniform/order statistics L6a21 to random generation L6 because returned coordinates are not uniform order statistics. Cached default real32 GNU runtime only, not RNG certification or other point-set algorithms.",
+      "validation_path": "docs/gams-random-references-validation.json",
+      "review_path": "docs/gams-random-references.md",
+      "checks": {
+        "fixtures": 63,
+        "reference_coordinates": 1584,
+        "empty_singleton_noop_fixtures": 18,
+        "sizes": [
+          0,
+          1,
+          2,
+          3,
+          9,
+          33,
+          129
+        ],
+        "seeds": [
+          42,
+          1729,
+          314159
+        ],
+        "intervals": [
+          [
+            0,
+            1
+          ],
+          [
+            -3.5,
+            2.25
+          ],
+          [
+            0.25,
+            0.25
+          ]
+        ],
+        "real64_construction_oracle": true,
+        "random_state_consumption_checked": true,
+        "exact_replay_checked": true,
+        "three_point_law_samples": 60000,
+        "cdf_reference_points": [
+          0.25,
+          0.75
+        ],
+        "cdf_reference_values": [
+          0.16666666666666666,
+          0.8333333333333334
+        ],
+        "max_cdf_error": 0.015,
+        "max_mean_error": 0.015,
+        "uniform_order_statistics_verified": false,
+        "statistical_quality_verified": false,
+        "reversed_intervals_verified": false,
+        "cross_compiler_rng_reproducibility_verified": false
+      }
+    },
+    {
+      "id": "fatode-tangent-reference",
+      "name": "gams-fatode-tangent-reference",
+      "package_id": "fatode",
+      "procedure_id": "fatode-tangent",
+      "gams_code": "I1",
+      "problem_id": "coupled-decay-analytic-tangent-flow",
+      "path": "fpm_catalog/gams-drivers/fatode-tangent-reference.f90",
+      "revision": "3f237c49bd377644a597c2a49ae5a83f090bfab5",
+      "author_example": "EXAMPLES/swe/SWE_ERK_TLM/swe2D_erk_tlm_dr.F90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/tangents-blocks-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned ERK/TLM implementation and author callback example reviewed without copying bodies. Coupled two-state triangular decay augmented by constant rate/coupling states, with four identity tangent columns. Two explicit methods, three rates/couplings/initial vectors, five positive/negative durations and two time origins. Analytic flow and full initial-state/parameter derivative, positive success status, endpoint time, finite values, callback use and constant states checked. No finite-difference Jacobian, implicit/stiff methods, adjoints, sparse variants or arbitrary nonlinear dynamics verified.",
+      "validation_path": "docs/gams-tangents-blocks-validation.json",
+      "review_path": "docs/gams-tangents-blocks.md",
+      "checks": {
+        "integrations": 540,
+        "state_entries": 2160,
+        "tangent_entries": 8640,
+        "methods": [
+          4,
+          6
+        ],
+        "method_names": [
+          "Dopri5",
+          "Dopri853"
+        ],
+        "rates": [
+          0.25,
+          2,
+          8
+        ],
+        "couplings": [
+          -1.5,
+          0,
+          2
+        ],
+        "durations": [
+          -1,
+          -0.125,
+          0.125,
+          1,
+          2
+        ],
+        "time_origins": [
+          0,
+          0.75
+        ],
+        "initial_physical_states": [
+          [
+            1,
+            0.5
+          ],
+          [
+            -0.75,
+            1.25
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "tangent_columns": 4,
+        "absolute_tolerance": 1e-12,
+        "relative_tolerance": 1e-10,
+        "step_limit": 10000,
+        "max_normalized_state_error": 2e-07,
+        "max_normalized_tangent_error": 2e-07,
+        "analytic_jacobian_used": true,
+        "tangent_error_control_enabled": true,
+        "backward_time_checked": true,
+        "full_parameter_derivatives_checked": true,
+        "rhs_callbacks": 535978,
+        "jacobian_callbacks": 535978,
+        "stiff_integrators_verified": false,
+        "adjoint_integrators_verified": false,
+        "all_erk_methods_verified": false
+      }
+    },
+    {
+      "id": "dbcsr-products-reference",
+      "name": "gams-dbcsr-products-reference",
+      "package_id": "dbcsr",
+      "procedure_id": "dbcsr-block-multiply",
+      "gams_code": "D1",
+      "problem_id": "rectangular-irregular-block-scaled-products",
+      "path": "fpm_catalog/gams-drivers/dbcsr-products-reference.f90",
+      "revision": "cd6f522ec5005da8c59d2883975a89a2da607eac",
+      "author_example": "examples/dbcsr_example_3.F",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/tangents-blocks-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned serial real64 DBCSR API and author matrix example reviewed without copying bodies. Two irregular block layouts, four data patterns and all four N/T flag pairs give 32 products; six alpha/beta pairs cycle across those fixtures, rather than forming a Cartesian scalar product. Scalar-loop reference includes accumulation, sparse and structurally empty A, dyadic/non-dyadic values. Array-temporary diagnostics are retained; full 288-case draft hit output limit, and an early intent(in) unpacking handle was a consumer interface error. No MPI, accelerator, symmetry storage, complex values or general sparsity guarantee.",
+      "validation_path": "docs/gams-tangents-blocks-validation.json",
+      "review_path": "docs/gams-tangents-blocks.md",
+      "checks": {
+        "products": 32,
+        "scalar_reference_entries": 496,
+        "operator_dimensions": [
+          [
+            4,
+            3,
+            4
+          ],
+          [
+            3,
+            6,
+            5
+          ]
+        ],
+        "block_partitions": [
+          [
+            [
+              1,
+              2,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              1,
+              3
+            ]
+          ],
+          [
+            [
+              2,
+              1
+            ],
+            [
+              1,
+              3,
+              2
+            ],
+            [
+              2,
+              1,
+              2
+            ]
+          ]
+        ],
+        "data_patterns": [
+          "dense-dyadic",
+          "block-sparse-dyadic",
+          "dense-nondyadic",
+          "structurally-empty-A"
+        ],
+        "transpose_pairs": [
+          "NN",
+          "NT",
+          "TN",
+          "TT"
+        ],
+        "alpha_beta_pairs": [
+          [
+            1,
+            0
+          ],
+          [
+            -1.25,
+            0.5
+          ],
+          [
+            0,
+            -1
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0.5,
+            1
+          ]
+        ],
+        "scalar_pairs_cycled_across_fixtures": true,
+        "full_scalar_cartesian_product_verified": false,
+        "independent_scalar_loop_reference": true,
+        "filter_epsilon": 0,
+        "scaled_error_bound_eps_factor": 128,
+        "native_diagnostics_retained": true,
+        "mpi_verified": false,
+        "accelerators_verified": false,
+        "symmetric_storage_verified": false,
+        "complex_arithmetic_verified": false
+      }
+    },
+    {
+      "id": "dftatom-hydrogen-reference",
+      "name": "gams-dftatom-hydrogen-reference",
+      "package_id": "dftatom",
+      "procedure_id": "dftatom-radial",
+      "gams_code": "I1",
+      "problem_id": "hydrogenic-energies-radial-shapes-and-moments",
+      "path": "fpm_catalog/gams-drivers/dftatom-hydrogen-reference.f90",
+      "revision": "e49b3042de6e2471afe5eea992c9ba50dac08f95",
+      "author_example": "tests/hydrogen/hydrogen.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/radial-dense-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned radial shooting implementation and author hydrogen example reviewed without copying bodies. Three nuclear charges, all six n<=3 nonrelativistic Coulomb states and two meshes. Analytic energies, normalized Laguerre radial functions P and their derivatives Q, common-sign alignment, independent trapezoidal normalization and radius/inverse-radius moments. Solver status and all finite values checked. No Dirac, arbitrary potentials, Poisson, self-consistent DFT or general high-state accuracy verified.",
+      "validation_path": "docs/gams-radial-dense-validation.json",
+      "review_path": "docs/gams-radial-dense.md",
+      "checks": {
+        "eigenproblems": 36,
+        "nuclear_charges": [
+          1,
+          2,
+          4
+        ],
+        "maximum_principal_quantum_number": 3,
+        "mesh_intervals": [
+          3000,
+          4500
+        ],
+        "mesh_radius_bounds_scaled_by_z": [
+          1e-08,
+          100
+        ],
+        "mesh_ratio": 1000000.0,
+        "P_reference_entries": 135036,
+        "Q_reference_entries": 135036,
+        "energy_references": 36,
+        "normalization_checks": 36,
+        "moment_references": 72,
+        "analytical_laguerre_degrees": [
+          0,
+          1,
+          2
+        ],
+        "common_wavefunction_sign_alignment": true,
+        "independent_trapezoidal_integrals": true,
+        "max_z_scaled_energy_error": 1e-07,
+        "max_sqrt_z_scaled_P_error": 2e-05,
+        "max_z_power_1p5_scaled_Q_error": 5e-05,
+        "max_normalization_error": 2e-05,
+        "max_scaled_moment_error": 2e-05,
+        "relativistic_dirac_verified": false,
+        "general_potentials_verified": false,
+        "self_consistent_dft_verified": false
+      }
+    },
+    {
+      "id": "athena-dense-reference",
+      "name": "gams-athena-dense-reference",
+      "package_id": "athena",
+      "procedure_id": "athena-dense",
+      "gams_code": "K",
+      "problem_id": "fixed-dense-four-activation-scalar-reference",
+      "path": "fpm_catalog/gams-drivers/athena-dense-reference.f90",
+      "revision": "4b81aeac07113628c2c9a476648d5ac2a91b7c91",
+      "author_example": "test/test_full_layer.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/radial-dense-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned layer forward/activation implementations and author API test reviewed without copying bodies. Four input widths, three output widths, four activations, bias on/off and dyadic/non-dyadic fixed parameters. Zero, every coordinate basis and mixed inputs are checked with real64 scalar sums and elementary activation identities; exact repeat after other forward calls checks stale state. The persistent input is explicitly non-temporary, correcting an early ownership-related abort retained separately. No training, automatic derivatives, batches, dataset approximation quality or general memory safety verified.",
+      "validation_path": "docs/gams-radial-dense-validation.json",
+      "review_path": "docs/gams-radial-dense.md",
+      "checks": {
+        "layers": 192,
+        "forward_calls": 2304,
+        "output_reference_entries": 4928,
+        "exact_replay_entries": 448,
+        "input_widths": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "output_widths": [
+          1,
+          2,
+          4
+        ],
+        "activations": [
+          "none",
+          "relu",
+          "tanh",
+          "sigmoid"
+        ],
+        "bias_settings": [
+          false,
+          true
+        ],
+        "weight_patterns": [
+          "dyadic",
+          "non-dyadic"
+        ],
+        "inputs_per_layer": 11,
+        "zero_and_all_coordinate_basis_inputs_checked": true,
+        "real64_scalar_oracle": true,
+        "persistent_input_marked_non_temporary": true,
+        "max_normalized_output_error": 2e-06,
+        "training_verified": false,
+        "automatic_derivatives_verified": false,
+        "batch_inference_verified": false,
+        "dataset_approximation_quality_verified": false,
+        "general_memory_safety_verified": false
+      }
     }
   ]
 }

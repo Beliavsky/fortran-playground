@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "dftatom-hydrogen-reference",
+      "source_revision": "e49b3042de6e2471afe5eea992c9ba50dac08f95",
+      "source_sha256": "97df4d73bc45c13f1400b43d8ee3d98f6c072ae299083db797cf9c8b14ece4e5",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T11:27:40.078660+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.641,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Case Z,mesh,n,l and six errors:      1  3000     1     0   2.171E-11   9.504E-11   1.204E-05   3.537E-06   7.696E-11   5.373E-11\nCase Z,mesh,n,l and six errors:      1  3000     2     0   2.637E-11   3.242E-10   4.257E-06   3.537E-06   5.302E-10   5.208E-11\nCase Z,mesh,n,l and six errors:      1  3000     2     1   8.325E-12   1.624E-10   4.719E-11   3.537E-06   1.841E-10   1.621E-11\nCase Z,mesh,n,l and six errors:      1  3000     3     0   4.765E-11   9.192E-10   2.317E-06   3.537E-06   2.115E-09   9.095E-11\nCase Z,mesh,n,l and six errors:      1  3000     3     1   2.604E-11   6.062E-10   1.374E-10   3.537E-06   1.190E-09   4.860E-11\nCase Z,mesh,n,l and six errors:      1  3000     3     2   6.144E-12   2.419E-10   4.210E-11   3.537E-06   3.026E-10   1.172E-11\nCase Z,mesh,n,l and six errors:      1  4500     1     0   5.142E-12   1.943E-11   5.226E-06   1.572E-06   1.664E-11   1.341E-11\nCase Z,mesh,n,l and six errors:      1  4500     2     0   5.229E-12   6.474E-11   1.848E-06   1.572E-06   1.072E-10   1.100E-11\nCase Z,mesh,n,l and six errors:      1  4500     2     1   1.649E-12   3.214E-11   9.322E-12   1.572E-06   3.660E-11   3.243E-12\nCase Z,mesh,n,l and six errors:      1  4500     3     0   1.229E-12   2.745E-10   1.006E-06   1.572E-06   6.493E-10   4.669E-11\nCase Z,mesh,n,l and six errors:      1  4500     3     1   5.143E-12   1.202E-10   2.722E-11   1.572E-06   2.369E-10   9.819E-12\nCase Z,mesh,n,l and six errors:      1  4500     3     2   1.217E-12   4.792E-11   9.130E-12   1.572E-06   6.031E-11   2.359E-12\nCase Z,mesh,n,l and six errors:      2  3000     1     0   2.171E-11   9.504E-11   1.204E-05   3.537E-06   7.696E-11   5.373E-11\nCase Z,mesh,n,l and six errors:      2  3000     2     0   2.637E-11   3.242E-10   4.257E-06   3.537E-06   5.302E-10   5.208E-11\nCase Z,mesh,n,l and six errors:      2  3000     2     1   8.325E-12   1.624E-10   4.719E-11   3.537E-06   1.841E-10   1.621E-11\nCase Z,mesh,n,l and six errors:      2  3000     3     0   4.765E-11   9.192E-10   2.317E-06   3.537E-06   2.115E-09   9.095E-11\nCase Z,mesh,n,l and six errors:      2  3000     3     1   2.604E-11   6.062E-10   1.374E-10   3.537E-06   1.190E-09   4.860E-11\nCase Z,mesh,n,l and six errors:      2  3000     3     2   6.144E-12   2.419E-10   4.210E-11   3.537E-06   3.026E-10   1.172E-11\nCase Z,mesh,n,l and six errors:      2  4500     1     0   5.142E-12   1.943E-11   5.226E-06   1.572E-06   1.664E-11   1.341E-11\nCase Z,mesh,n,l and six errors:      2  4500     2     0   5.229E-12   6.474E-11   1.848E-06   1.572E-06   1.072E-10   1.100E-11\nCase Z,mesh,n,l and six errors:      2  4500     2     1   1.649E-12   3.214E-11   9.322E-12   1.572E-06   3.660E-11   3.243E-12\nCase Z,mesh,n,l and six errors:      2  4500     3     0   1.229E-12   2.745E-10   1.006E-06   1.572E-06   6.493E-10   4.669E-11\nCase Z,mesh,n,l and six errors:      2  4500     3     1   5.143E-12   1.202E-10   2.722E-11   1.572E-06   2.369E-10   9.819E-12\nCase Z,mesh,n,l and six errors:      2  4500     3     2   1.217E-12   4.792E-11   9.130E-12   1.572E-06   6.031E-11   2.359E-12\nCase Z,mesh,n,l and six errors:      4  3000     1     0   2.171E-11   9.504E-11   1.204E-05   3.537E-06   7.696E-11   5.373E-11\nCase Z,mesh,n,l and six errors:      4  3000     2     0   2.637E-11   3.242E-10   4.257E-06   3.537E-06   5.302E-10   5.208E-11\nCase Z,mesh,n,l and six errors:      4  3000     2     1   8.325E-12   1.624E-10   4.719E-11   3.537E-06   1.841E-10   1.621E-11\nCase Z,mesh,n,l and six errors:      4  3000     3     0   4.765E-11   9.192E-10   2.317E-06   3.537E-06   2.115E-09   9.095E-11\nCase Z,mesh,n,l and six errors:      4  3000     3     1   2.604E-11   6.062E-10   1.374E-10   3.537E-06   1.190E-09   4.860E-11\nCase Z,mesh,n,l and six errors:      4  3000     3     2   6.144E-12   2.419E-10   4.210E-11   3.537E-06   3.026E-10   1.172E-11\nCase Z,mesh,n,l and six errors:      4  4500     1     0   5.142E-12   1.943E-11   5.226E-06   1.572E-06   1.664E-11   1.341E-11\nCase Z,mesh,n,l and six errors:      4  4500     2     0   5.229E-12   6.474E-11   1.848E-06   1.572E-06   1.072E-10   1.100E-11\nCase Z,mesh,n,l and six errors:      4  4500     2     1   1.649E-12   3.214E-11   9.322E-12   1.572E-06   3.660E-11   3.243E-12\nCase Z,mesh,n,l and six errors:      4  4500     3     0   1.229E-12   2.745E-10   1.006E-06   1.572E-06   6.493E-10   4.669E-11\nCase Z,mesh,n,l and six errors:      4  4500     3     1   5.143E-12   1.202E-10   2.722E-11   1.572E-06   2.369E-10   9.819E-12\nCase Z,mesh,n,l and six errors:      4  4500     3     2   1.217E-12   4.792E-11   9.130E-12   1.572E-06   6.031E-11   2.359E-12\nRadial eigenproblems: 36; P references and Q references each: 135036\nMax energy, P, Q, normalization, radius and inverse-radius errors:    4.76529E-11   9.19163E-10   1.20398E-05   3.53696E-06   2.11486E-09   9.09494E-11\nNonrelativistic Coulomb states only; Dirac, general potentials and self-consistent DFT unverified.\nPASS dftatom-hydrogen-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.131,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "athena-dense-reference",
+      "source_revision": "4b81aeac07113628c2c9a476648d5ac2a91b7c91",
+      "source_sha256": "e4d64b2c8c81c81abda82a20aff3c55f7d3f7e7dee9e1428c3362a083c8f9009",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T11:28:52.304549+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.794,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Fixed dense layers: 192; forward calls: 2304\nIndependent output references: 4928; exact replay entries: 448\nMaximum normalized output error against real64 scalar oracle:    5.77239E-08\nFour activations, bias on/off, rectangular weights, zero/basis/mixed inputs and repeated forward checked.\nInference only; training, automatic derivatives, batch inference and approximation quality unverified.\nPASS athena-dense-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.154,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-11-01T11:28:52.351791+00:00"
+}

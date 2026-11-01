@@ -1,0 +1,51 @@
+{
+  "package_id": "dbcsr",
+  "revision": "cd6f522ec5005da8c59d2883975a89a2da607eac",
+  "source_path": "docs/gams-candidates/dbcsr-consumer-intent/read-only-handle.f90",
+  "source_sha256": "b4c61982744f7db3fe1f7b27d812370eea3ae5ed0e81e4df61806e4ee2ee63ff",
+  "hash_normalization": "utf-8-lf",
+  "result": {
+    "ok": false,
+    "compiler": "GNU Fortran (GCC) 16.2.0",
+    "compiler_id": "gfortran",
+    "fpm": "0.12.0",
+    "stages": [
+      {
+        "name": "Build",
+        "command": [
+          "fpm",
+          "build",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 0.31,
+        "ok": false,
+        "exit_code": 1,
+        "error": "",
+        "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n\napp/main.f90:47:76:\n\n   47 |             call dbcsr_get_block_p(handle%matrix,i,j,block,transposed,found)\n      |                                                                            1\nError: There is no specific subroutine for the generic \u2018dbcsr_get_block_p\u2019 at (1)\ncompilation terminated due to -fmax-errors=1.\n",
+        "stderr": "<ERROR> Compilation failed for object \" app_main.f90.o \"\n<ERROR> stopping due to failed compilation\nSTOP 1\n"
+      }
+    ],
+    "cache": {
+      "package": "dbcsr",
+      "compiler": "GNU Fortran 16.2.0",
+      "key": "2955c95946184bc6a25e18c6",
+      "library_reused": true,
+      "changed_artifacts": []
+    },
+    "packages": [
+      {
+        "repository": "cp2k/dbcsr",
+        "revision": "cd6f522ec5005da8c59d2883975a89a2da607eac",
+        "sha256": "a92dbde8e23b2e1cf3447a67f4ffd08679ff70af0812ca99fef3ae9879f80ff9"
+      }
+    ]
+  }
+}

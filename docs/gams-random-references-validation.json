@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "rndgen-kiss-reference",
+      "source_revision": "3fa553608324913eed6cb178b398e7f661e4f63a",
+      "source_sha256": "4f8d39a7479abbd67bf3bd6b1bc9316acf7f9a7dbd960b5e4c088a8481bdda8d",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T02:00:46.567224+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.366,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Interleaved streams: 7; uniform outputs: 28672\nExact independent prefix entries: 56; whole-stream checksums: 7\nExact reset replays: 28672; saved-state continuations: 1799\nGNU 16 wraparound convention checked; no statistical-quality or cross-compiler guarantee.\nPASS rndgen-kiss-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.03,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "pointsets-random-reference",
+      "source_revision": "a1c381777f893d656018366cfabfa4cc7531e4dd",
+      "source_sha256": "214740b88a044daba55f15eef8310a704d0fea7f8ebd6c53a7861d8767b0bd39",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-01T02:00:47.942861+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.267,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Seed       42; empirical CDF at 1/4,3/4 and mean:    0.1642500   0.8330500   0.5016029\nSeed     1729; empirical CDF at 1/4,3/4 and mean:    0.1651000   0.8360500   0.4986118\nSeed   314159; empirical CDF at 1/4,3/4 and mean:    0.1658500   0.8328500   0.4993280\nSpacing fixtures: 63; reference coordinates: 1584; no-op fixtures: 18\nThree-point law samples: 60000; seed groups: 3\nMax normalized coordinate and CDF errors:    2.84632E-07   2.71667E-03\nNormalized uniform increments are not uniform order statistics; no randomness certification.\nPASS pointsets-random-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.026,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-11-01T02:00:48.002368+00:00"
+}

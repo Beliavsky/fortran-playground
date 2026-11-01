@@ -43,6 +43,8 @@ A separate RK4 experiment integrates the same problem directly to `2*pi` with no
 | [Load dynamics-response-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=dynamics&example=gams-dynamics-response-reference) · [Source](../fpm_catalog/gams-drivers/dynamics-response-reference.f90) | I1 | [Procedure](https://github.com/jchristopherson/dynamics/blob/580d04859a25126d3261e44b3fbec5111835e3a4/src/frequency/dynamics_frequency_response.f90#L119) · [Author example](https://github.com/jchristopherson/dynamics/blob/580d04859a25126d3261e44b3fbec5111835e3a4/examples/frf_example_1.f90) |
 | [Load flint-ivp-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=flint&example=gams-flint-ivp-reference) · [Source](../fpm_catalog/gams-drivers/flint-ivp-reference.f90) | I1a1a | [Procedure](https://github.com/princemahajan/FLINT/blob/b6322037cb751b11fa64ea66cf23173ae572fff6/src/ERK.f90#L72) · [Author example](https://github.com/princemahajan/FLINT/blob/b6322037cb751b11fa64ea66cf23173ae572fff6/tests/test_WP.f90) |
 | [Load daskr-dae-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=daskr&example=gams-daskr-dae-reference) · [Source](../fpm_catalog/gams-drivers/daskr-dae-reference.f90) | I1a2 | [Procedure](https://github.com/davidpfister/daskr/blob/b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f#L1) · [Author example](https://github.com/davidpfister/daskr/blob/b43533edc5d6900088a846d802e3a86d0f9a06ad/examples/web/dweb.f) |
+| [Load fatode-tangent-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=fatode&example=gams-fatode-tangent-reference) · [Source](../fpm_catalog/gams-drivers/fatode-tangent-reference.f90) | I1 | [Procedure](https://github.com/ComputationalScienceLaboratory/FATODE/blob/3f237c49bd377644a597c2a49ae5a83f090bfab5/TLM/ERK_TLM/ERK_TLM_f90_Integrator.F90#L1) · [Author example](https://github.com/ComputationalScienceLaboratory/FATODE/blob/3f237c49bd377644a597c2a49ae5a83f090bfab5/EXAMPLES/swe/SWE_ERK_TLM/swe2D_erk_tlm_dr.F90) |
+| [Load dftatom-hydrogen-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=dftatom&example=gams-dftatom-hydrogen-reference) · [Source](../fpm_catalog/gams-drivers/dftatom-hydrogen-reference.f90) | I1 | [Procedure](https://github.com/certik/dftatom/blob/e49b3042de6e2471afe5eea992c9ba50dac08f95/src/reigen.f90#L1) · [Author example](https://github.com/certik/dftatom/blob/e49b3042de6e2471afe5eea992c9ba50dac08f95/tests/hydrogen/hydrogen.f90) |
 
 The drivers adapt author callback and integration API patterns to the shared analytic problem, without plotting dependencies; license notices are retained. They appear in hosted and main local FPM example menus and downloaded FPM projects. Loading a link selects source without submitting a job.
 
@@ -265,6 +267,61 @@ Maximum normalized derivative error:   1.6290E-07
 Maximum normalized constraint error:   6.9436E-11
 Maximum scaled residual:   1.0779E-08
 PASS daskr-dae-reference
+```
+
+### fatode-tangent-reference
+
+```text
+Tangent integrations: 540; state entries: 2160; derivative entries: 8640
+Actual RHS and analytic-Jacobian callbacks:       535978      535978
+Maximum normalized state and tangent errors:    4.43326E-10   7.23387E-10
+Dopri5/Dopri853, forward/backward time, full initial-state/parameter derivatives checked.
+PASS fatode-tangent-reference
+```
+
+### dftatom-hydrogen-reference
+
+```text
+Case Z,mesh,n,l and six errors:      1  3000     1     0   2.171E-11   9.504E-11   1.204E-05   3.537E-06   7.696E-11   5.373E-11
+Case Z,mesh,n,l and six errors:      1  3000     2     0   2.637E-11   3.242E-10   4.257E-06   3.537E-06   5.302E-10   5.208E-11
+Case Z,mesh,n,l and six errors:      1  3000     2     1   8.325E-12   1.624E-10   4.719E-11   3.537E-06   1.841E-10   1.621E-11
+Case Z,mesh,n,l and six errors:      1  3000     3     0   4.765E-11   9.192E-10   2.317E-06   3.537E-06   2.115E-09   9.095E-11
+Case Z,mesh,n,l and six errors:      1  3000     3     1   2.604E-11   6.062E-10   1.374E-10   3.537E-06   1.190E-09   4.860E-11
+Case Z,mesh,n,l and six errors:      1  3000     3     2   6.144E-12   2.419E-10   4.210E-11   3.537E-06   3.026E-10   1.172E-11
+Case Z,mesh,n,l and six errors:      1  4500     1     0   5.142E-12   1.943E-11   5.226E-06   1.572E-06   1.664E-11   1.341E-11
+Case Z,mesh,n,l and six errors:      1  4500     2     0   5.229E-12   6.474E-11   1.848E-06   1.572E-06   1.072E-10   1.100E-11
+Case Z,mesh,n,l and six errors:      1  4500     2     1   1.649E-12   3.214E-11   9.322E-12   1.572E-06   3.660E-11   3.243E-12
+Case Z,mesh,n,l and six errors:      1  4500     3     0   1.229E-12   2.745E-10   1.006E-06   1.572E-06   6.493E-10   4.669E-11
+Case Z,mesh,n,l and six errors:      1  4500     3     1   5.143E-12   1.202E-10   2.722E-11   1.572E-06   2.369E-10   9.819E-12
+Case Z,mesh,n,l and six errors:      1  4500     3     2   1.217E-12   4.792E-11   9.130E-12   1.572E-06   6.031E-11   2.359E-12
+Case Z,mesh,n,l and six errors:      2  3000     1     0   2.171E-11   9.504E-11   1.204E-05   3.537E-06   7.696E-11   5.373E-11
+Case Z,mesh,n,l and six errors:      2  3000     2     0   2.637E-11   3.242E-10   4.257E-06   3.537E-06   5.302E-10   5.208E-11
+Case Z,mesh,n,l and six errors:      2  3000     2     1   8.325E-12   1.624E-10   4.719E-11   3.537E-06   1.841E-10   1.621E-11
+Case Z,mesh,n,l and six errors:      2  3000     3     0   4.765E-11   9.192E-10   2.317E-06   3.537E-06   2.115E-09   9.095E-11
+Case Z,mesh,n,l and six errors:      2  3000     3     1   2.604E-11   6.062E-10   1.374E-10   3.537E-06   1.190E-09   4.860E-11
+Case Z,mesh,n,l and six errors:      2  3000     3     2   6.144E-12   2.419E-10   4.210E-11   3.537E-06   3.026E-10   1.172E-11
+Case Z,mesh,n,l and six errors:      2  4500     1     0   5.142E-12   1.943E-11   5.226E-06   1.572E-06   1.664E-11   1.341E-11
+Case Z,mesh,n,l and six errors:      2  4500     2     0   5.229E-12   6.474E-11   1.848E-06   1.572E-06   1.072E-10   1.100E-11
+Case Z,mesh,n,l and six errors:      2  4500     2     1   1.649E-12   3.214E-11   9.322E-12   1.572E-06   3.660E-11   3.243E-12
+Case Z,mesh,n,l and six errors:      2  4500     3     0   1.229E-12   2.745E-10   1.006E-06   1.572E-06   6.493E-10   4.669E-11
+Case Z,mesh,n,l and six errors:      2  4500     3     1   5.143E-12   1.202E-10   2.722E-11   1.572E-06   2.369E-10   9.819E-12
+Case Z,mesh,n,l and six errors:      2  4500     3     2   1.217E-12   4.792E-11   9.130E-12   1.572E-06   6.031E-11   2.359E-12
+Case Z,mesh,n,l and six errors:      4  3000     1     0   2.171E-11   9.504E-11   1.204E-05   3.537E-06   7.696E-11   5.373E-11
+Case Z,mesh,n,l and six errors:      4  3000     2     0   2.637E-11   3.242E-10   4.257E-06   3.537E-06   5.302E-10   5.208E-11
+Case Z,mesh,n,l and six errors:      4  3000     2     1   8.325E-12   1.624E-10   4.719E-11   3.537E-06   1.841E-10   1.621E-11
+Case Z,mesh,n,l and six errors:      4  3000     3     0   4.765E-11   9.192E-10   2.317E-06   3.537E-06   2.115E-09   9.095E-11
+Case Z,mesh,n,l and six errors:      4  3000     3     1   2.604E-11   6.062E-10   1.374E-10   3.537E-06   1.190E-09   4.860E-11
+Case Z,mesh,n,l and six errors:      4  3000     3     2   6.144E-12   2.419E-10   4.210E-11   3.537E-06   3.026E-10   1.172E-11
+Case Z,mesh,n,l and six errors:      4  4500     1     0   5.142E-12   1.943E-11   5.226E-06   1.572E-06   1.664E-11   1.341E-11
+Case Z,mesh,n,l and six errors:      4  4500     2     0   5.229E-12   6.474E-11   1.848E-06   1.572E-06   1.072E-10   1.100E-11
+Case Z,mesh,n,l and six errors:      4  4500     2     1   1.649E-12   3.214E-11   9.322E-12   1.572E-06   3.660E-11   3.243E-12
+Case Z,mesh,n,l and six errors:      4  4500     3     0   1.229E-12   2.745E-10   1.006E-06   1.572E-06   6.493E-10   4.669E-11
+Case Z,mesh,n,l and six errors:      4  4500     3     1   5.143E-12   1.202E-10   2.722E-11   1.572E-06   2.369E-10   9.819E-12
+Case Z,mesh,n,l and six errors:      4  4500     3     2   1.217E-12   4.792E-11   9.130E-12   1.572E-06   6.031E-11   2.359E-12
+Radial eigenproblems: 36; P references and Q references each: 135036
+Max energy, P, Q, normalization, radius and inverse-radius errors:    4.76529E-11   9.19163E-10   1.20398E-05   3.53696E-06   2.11486E-09   9.09494E-11
+Nonrelativistic Coulomb states only; Dirac, general potentials and self-consistent DFT unverified.
+PASS dftatom-hydrogen-reference
 ```
 
 ## Maintenance

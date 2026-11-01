@@ -88,6 +88,9 @@ from xpackage_gams import (gams_data, package_classes, review_text, subclass_mod
                             gradient_swarm_review_text, GRADIENT_SWARM_REPORT,
                             projection_training_review_text, PROJECTION_TRAINING_REPORT,
                             directions_fitting_review_text, DIRECTIONS_FITTING_REPORT,
+                            random_references_review_text, RANDOM_REFERENCES_REPORT,
+                            tangents_blocks_review_text, TANGENTS_BLOCKS_REPORT,
+                            radial_dense_review_text, RADIAL_DENSE_REPORT,
                           coverage_data, coverage_review_text, COVERAGE_REPORT,
                           class_evidence, class_tree, mapping_evidence_text, EVIDENCE_REPORT)
 
@@ -872,6 +875,154 @@ class PackageGamsTests(unittest.TestCase):
         self.assertIn('22,416',text)
         self.assertIn('Type-2/type-3 transforms',text)
         self.assertIn('two-dimensional NUFFT2D driver',transforms_review_text())
+
+    def test_radial_states_and_dense_layers_keep_independent_reference_scope(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for ident,code in [('dftatom-hydrogen-reference','I1'),('athena-dense-reference','K')]:
+            d = drivers[ident]
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'],ident)
+            self.assertEqual(class_evidence(class_tree(data),code,[record],[d])['status'],'verified')
+        radial = drivers['dftatom-hydrogen-reference']['checks']
+        self.assertEqual(radial['eigenproblems'],36)
+        self.assertEqual(radial['P_reference_entries'],135036)
+        self.assertEqual(radial['Q_reference_entries'],135036)
+        self.assertEqual(radial['nuclear_charges'],[1,2,4])
+        self.assertEqual(radial['moment_references'],72)
+        self.assertTrue(radial['common_wavefunction_sign_alignment'])
+        self.assertTrue(radial['independent_trapezoidal_integrals'])
+        self.assertFalse(radial['relativistic_dirac_verified'])
+        dense = drivers['athena-dense-reference']['checks']
+        self.assertEqual(dense['layers'],192)
+        self.assertEqual(dense['output_reference_entries'],4928)
+        self.assertEqual(dense['exact_replay_entries'],448)
+        self.assertEqual(dense['forward_calls'],2304)
+        self.assertTrue(dense['real64_scalar_oracle'])
+        self.assertTrue(dense['persistent_input_marked_non_temporary'])
+        self.assertFalse(dense['training_verified'])
+        self.assertFalse(dense['dataset_approximation_quality_verified'])
+        text = radial_dense_review_text()
+        self.assertEqual((ROOT/RADIAL_DENSE_REPORT).read_text(encoding='utf-8'),text)
+        for phrase in ['36 eigenproblems','135,036 P entries','135,036 Q entries','192 fixed layers',
+                       '4,928 independent output entries','is_temporary=.false.','categories are not exhausted']:
+            self.assertIn(phrase,text)
+
+    def test_temporary_athena_input_probe_is_preserved_as_a_consumer_error(self):
+        import hashlib
+        probe = json.loads((ROOT/'docs/gams-candidates/athena-temporary-input/temporary-input-result.json').read_text())
+        source = (ROOT/probe['source_path']).read_text(encoding='utf-8')
+        self.assertEqual(hashlib.sha256(source.encode()).hexdigest(),probe['source_sha256'])
+        self.assertFalse(probe['result']['ok'])
+        self.assertTrue(probe['result']['cache']['library_reused'])
+        self.assertEqual(probe['revision'],next(r['revision'] for r in gams_data()['procedure_mappings']
+                                               if r['id']=='athena-dense'))
+        run = next(s for s in probe['result']['stages'] if s['name']=='Run')
+        self.assertIn('invalid pointer',run['stderr'])
+        self.assertIn('SIGABRT',run['stderr'])
+        good = (ROOT/'fpm_catalog/gams-drivers/athena-dense-reference.f90').read_text()
+        self.assertIn('feature(1,1)%is_temporary=.false.',good)
+        self.assertNotIn('feature(1,1)%is_temporary=.false.',source)
+
+    def test_tangent_and_block_drivers_keep_analytic_and_serial_scope(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for ident,code in [('fatode-tangent-reference','I1'),('dbcsr-products-reference','D1')]:
+            d = drivers[ident]
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'],ident)
+            self.assertEqual(class_evidence(class_tree(data),code,[record],[d])['status'],'verified')
+        tangent = drivers['fatode-tangent-reference']['checks']
+        self.assertEqual(tangent['integrations'],540)
+        self.assertEqual(tangent['state_entries'],2160)
+        self.assertEqual(tangent['tangent_entries'],8640)
+        self.assertEqual(tangent['methods'],[4,6])
+        self.assertTrue(tangent['analytic_jacobian_used'])
+        self.assertTrue(tangent['tangent_error_control_enabled'])
+        self.assertTrue(tangent['backward_time_checked'])
+        self.assertFalse(tangent['stiff_integrators_verified'])
+        product = drivers['dbcsr-products-reference']['checks']
+        self.assertEqual(product['products'],32)
+        self.assertEqual(product['scalar_reference_entries'],496)
+        self.assertEqual(product['transpose_pairs'],['NN','NT','TN','TT'])
+        self.assertTrue(product['independent_scalar_loop_reference'])
+        self.assertTrue(product['native_diagnostics_retained'])
+        self.assertFalse(product['full_scalar_cartesian_product_verified'])
+        self.assertFalse(product['mpi_verified'])
+        text = tangents_blocks_review_text()
+        self.assertEqual((ROOT/TANGENTS_BLOCKS_REPORT).read_text(encoding='utf-8'),text)
+        for phrase in ['540 integrations','8,640 tangent entries','535,978','32 products','496 scalar reference',
+                       '200,000-byte output limit','categories are not exhausted']:
+            self.assertIn(phrase,text)
+
+    def test_dbcsr_consumer_and_output_limit_probes_remain_distinct_from_accuracy_failures(self):
+        import hashlib
+        for path,diagnostic in [('dbcsr-consumer-intent/read-only-handle-result.json','no specific subroutine'),
+                                ('dbcsr-output-limit/full-cartesian-result.json','200000-byte stage limit')]:
+            probe = json.loads((ROOT/'docs/gams-candidates'/path).read_text(encoding='utf-8'))
+            source = (ROOT/probe['source_path']).read_text(encoding='utf-8')
+            self.assertEqual(hashlib.sha256(source.encode()).hexdigest(),probe['source_sha256'])
+            self.assertFalse(probe['result']['ok'])
+            self.assertTrue(probe['result']['cache']['library_reused'])
+            self.assertEqual(probe['revision'],next(r['revision'] for r in gams_data()['procedure_mappings']
+                                                   if r['id']=='dbcsr-block-multiply'))
+            stages = json.dumps(probe['result']['stages'])
+            self.assertIn(diagnostic,stages)
+        report = json.loads((ROOT/'docs/gams-tangents-blocks-validation.json').read_text(encoding='utf-8'))
+        product = next(d for d in report['drivers'] if d['driver_id']=='dbcsr-products-reference')
+        run = next(s for s in product['stages'] if s['name']=='Run')
+        self.assertTrue(run['ok'])
+        self.assertIn('array temporary',run['stderr'])
+        self.assertIn('PASS dbcsr-products-reference',run['stdout'])
+
+    def test_kiss_and_spacing_references_keep_distribution_and_arithmetic_scope(self):
+        data = gams_data()
+        drivers = {d['id']: d for d in driver_data(data=data)}
+        records = {r['id']: r for r in data['procedure_mappings']}
+        for ident,code in [('rndgen-kiss-reference','L6a21'),('pointsets-random-reference','L6')]:
+            d = drivers[ident]
+            record = records[d['procedure_id']]
+            self.assertEqual(record['driver_id'],ident)
+            self.assertEqual(class_evidence(class_tree(data),code,[record],[d])['status'],'verified')
+        kiss = drivers['rndgen-kiss-reference']['checks']
+        self.assertEqual(kiss['uniform_outputs'],28672)
+        self.assertEqual(kiss['exact_prefix_entries'],56)
+        self.assertEqual(kiss['independent_stream_checksums'],7)
+        self.assertEqual(kiss['saved_state_replay_entries'],1799)
+        self.assertTrue(kiss['independent_integer_reference'])
+        self.assertFalse(kiss['cross_compiler_wraparound_verified'])
+        spacing = drivers['pointsets-random-reference']['checks']
+        self.assertEqual(spacing['fixtures'],63)
+        self.assertEqual(spacing['reference_coordinates'],1584)
+        self.assertEqual(spacing['empty_singleton_noop_fixtures'],18)
+        self.assertEqual(spacing['three_point_law_samples'],60000)
+        self.assertTrue(spacing['random_state_consumption_checked'])
+        self.assertFalse(spacing['uniform_order_statistics_verified'])
+        self.assertEqual(records['pointsets-random-spacing']['gams_codes'],['L6'])
+        self.assertNotEqual(class_evidence(class_tree(data),'L6a21',
+                            [records['pointsets-random-spacing']],[drivers['pointsets-random-reference']])['status'],
+                            'verified')
+        text = random_references_review_text()
+        self.assertEqual((ROOT/RANDOM_REFERENCES_REPORT).read_text(encoding='utf-8'),text)
+        for phrase in ['28,672 outputs','63 fixtures','60,000 law samples','not a collision-free',
+                       'not uniform draws or uniform order statistics','categories are not exhausted']:
+            self.assertIn(phrase,text)
+
+    def test_independent_kiss_vectors_match_the_verified_consumer_constants(self):
+        import hashlib
+        import subprocess
+        import sys
+        d = next(d for d in driver_data() if d['id']=='rndgen-kiss-reference')
+        for path,digest in d['checks']['reference_files'].items():
+            source = (ROOT/path).read_text(encoding='utf-8')
+            self.assertEqual(hashlib.sha256(source.encode()).hexdigest(),digest)
+        result = subprocess.run([sys.executable,'-X','utf8',
+                    str(ROOT/'fpm_catalog/gams-drivers/references/kiss_vectors.py')],
+                    cwd=ROOT,capture_output=True,text=True,timeout=15)
+        self.assertEqual(result.returncode,0,result.stdout+result.stderr)
+        self.assertIn('consumer constants agree',result.stdout)
 
     def test_feasible_directions_and_annealing_keep_reference_and_failure_scope(self):
         data = gams_data()

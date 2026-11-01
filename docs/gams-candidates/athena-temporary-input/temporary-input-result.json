@@ -1,0 +1,101 @@
+{
+  "package_id": "athena",
+  "revision": "4b81aeac07113628c2c9a476648d5ac2a91b7c91",
+  "source_path": "docs/gams-candidates/athena-temporary-input/temporary-input.f90",
+  "source_sha256": "44abf3c480478cdf517d1adee0012d4da8aa3373af2fd06d82c76a758347a895",
+  "hash_normalization": "utf-8-lf",
+  "result": {
+    "ok": false,
+    "compiler": "GNU Fortran (GCC) 16.2.0",
+    "compiler_id": "gfortran",
+    "fpm": "0.12.0",
+    "stages": [
+      {
+        "name": "Build",
+        "command": [
+          "fpm",
+          "build",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 1.367,
+        "ok": true,
+        "exit_code": 0,
+        "error": "",
+        "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+        "stderr": ""
+      },
+      {
+        "name": "Run",
+        "command": [
+          "fpm",
+          "run",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 0.219,
+        "ok": false,
+        "exit_code": 134,
+        "error": "",
+        "stdout": "",
+        "stderr": "Project is up to date\nfree(): invalid pointer\n\nProgram received signal SIGABRT: Process abort signal.\n\nBacktrace for this error:\n#0  0x2ae0498c6f83 in ???\n#1  0x2ae0498c5b35 in ???\n#2  0x2ae049d5dd6f in ???\n#3  0x2ae049db269c in ???\n#4  0x2ae049d5dc41 in ???\n#5  0x2ae049d464ab in ???\n#6  0x2ae049d47290 in ???\n#7  0x2ae049dbc1a4 in ???\n#8  0x2ae049dc115b in ???\n#9  0x5404c6 in ???\n#10  0x4d9b65 in ???\n#11  0x53e4f8 in ???\n#12  0x53ca85 in ???\n#13  0x446c71 in ???\n#14  0x40c681 in reference_dense_layers\n\tat app/main.f90:49\n#15  0x40e8ea in main\n\tat app/main.f90:3\nAborted\n<ERROR> Execution for object \" playground-main \" returned exit code  134\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 134\n"
+      }
+    ],
+    "cache": {
+      "package": "athena",
+      "compiler": "GNU Fortran 16.2.0",
+      "key": "4ac5236c428438c4d954ec01",
+      "library_reused": true,
+      "changed_artifacts": []
+    },
+    "packages": [
+      {
+        "repository": "nedtaylor/athena",
+        "revision": "4b81aeac07113628c2c9a476648d5ac2a91b7c91",
+        "sha256": "2cc29f7f0b259e50642c1b05facf6bcb733acd992d0775df45c3ab1f58a6035c"
+      },
+      {
+        "repository": "nedtaylor/coreutils",
+        "revision": "ead4501f4b695c4f0fe3267f1bf5318544c9b1e2",
+        "sha256": "a2979763627707ba61169b4abacd7ee60b586df9115ac2beb9ee674c25031554"
+      },
+      {
+        "repository": "nedtaylor/diffstruc",
+        "revision": "88565f8e01792706edc0bd7e70dde957c26122a4",
+        "sha256": "84daa1e2c23f1cd2285b5212f4f5390cf930336c98feae7da0b5eb4534a7e65f"
+      },
+      {
+        "repository": "nedtaylor/graphstruc",
+        "revision": "ad41c6bca04cadd1df20319b29f231469c530dae",
+        "sha256": "4d6a942f76bdc0ccca609ac0a90a7b728d56fc403c4af2f7c597fb764885ea3e"
+      }
+    ],
+    "build_ok": true,
+    "target_groups": {
+      "app": [
+        "playground-main"
+      ],
+      "example": [],
+      "test": []
+    },
+    "targets": [
+      "playground-main"
+    ],
+    "plots": [],
+    "plot_notes": []
+  }
+}

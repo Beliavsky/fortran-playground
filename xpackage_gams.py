@@ -90,6 +90,9 @@ PROJECTION_LBFGS_REPORT = Path('docs/gams-projection-lbfgs.md')
 GRADIENT_SWARM_REPORT = Path('docs/gams-gradient-swarm.md')
 PROJECTION_TRAINING_REPORT = Path('docs/gams-projection-training.md')
 DIRECTIONS_FITTING_REPORT = Path('docs/gams-directions-fitting.md')
+RANDOM_REFERENCES_REPORT = Path('docs/gams-random-references.md')
+TANGENTS_BLOCKS_REPORT = Path('docs/gams-tangents-blocks.md')
+RADIAL_DENSE_REPORT = Path('docs/gams-radial-dense.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
 EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
@@ -8147,6 +8150,349 @@ def directions_fitting_review_text(root=ROOT):
     return '\n'.join(lines)
 
 
+def random_references_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-random-references-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-random-references-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Checked KISS streams and normalized random spacing',
+ '',
+ 'These L6a21 and L6 drivers passed GNU Fortran 16.2.0 with FPM 0.12.0 in the restricted hosted '
+ 'sandbox. Existing libraries were reused; only mains and executables were compiled. The [verification '
+ 'report](gams-random-references-validation.json) retains pins, source hashes and complete output. GAMS '
+ 'categories are not exhausted. These are sequence/construction checks and selected-seed law smoke '
+ 'checks, not statistical-quality certification.',
+ '',
+ '## rndgen-fortran KISS streams (L6a21)',
+ '',
+ 'Seven interleaved generators use seeds [0,1,-1,12345,-67890,294727492,2147483646]. Each yields 4,096 '
+ 'draws, for 28,672 outputs. Every draw must be finite in [0,1), lie exactly on the 31-bit grid '
+ 'k/2**31, and reproduce on reset. The first eight decoded integers per stream, 56 entries, must match '
+ 'independent constants exactly. A rolling modular checksum over every stream must also match its '
+ 'independent reference. Checksums compactly check the long streams; they are not a collision-free '
+ 'comparison of every entry to a stored reference.',
+ '',
+ 'The [reference generator](../fpm_catalog/gams-drivers/references/kiss_vectors.py) uses unbounded '
+ 'Python integers and explicit modulo-2**32 arithmetic, rather than Fortran signed overflow. The seed '
+ 'shuffle interprets its modular product as signed int32 before taking its absolute value and clamping '
+ 'it to [1,2147483646]. Four Park-Miller seed steps use direct multiplication modulo 2**31-1 rather '
+ 'than the library Schrage decomposition; one initial KISS draw is discarded. The reference implements '
+ 'the reviewed mathematical KISS convention, not an independent statistical randomness oracle. No '
+ 'upstream implementation or test bodies were copied.',
+ '',
+ 'The KISS state combines a linear-congruential component, a three-shift xor component and two '
+ 'multiply-with-carry components. Explicitly wrapping the combined sum to 32 bits and discarding its '
+ 'low bit produces k. For each 4,096-entry stream, checksum starts at zero and updates as '
+ '(65599*checksum+k) modulo 2147483647; its int64 products fit safely. Stored '
+ '[vectors](../fpm_catalog/gams-drivers/references/kiss-vectors.json) and embedded Fortran constants '
+ 'are checked by running the generator without --write. The Fortran consumer requires no Python '
+ 'installation.',
+ '',
+ 'The consumer additionally saves an opaque in-memory state after each reset replay, generates 257 more '
+ 'values, restores the state and checks all of them exactly: 1,799 continuation entries. Interleaving '
+ 'checks these objects do not contaminate one another, not that streams are statistically independent. '
+ 'Positive and negative seeds with equal absolute value intentionally share a stream. All 56 prefixes, '
+ 'seven long-stream checksums, 28,672 reset replay entries and 1,799 continuation entries passed.',
+ '',
+ 'The upstream implementation relies on signed int32 overflow in several updates. This result checks '
+ 'the cached GNU 16 wraparound behavior; it does not establish standard-conforming integer overflow, '
+ 'other-compiler behavior, generator period, statistical quality or cryptographic suitability. The '
+ 'minimum int32 seed, file serialization and integer/ranged-real convenience APIs remain unverified.',
+ '',
+ '## Pointsets normalized random increments (L6)',
+ '',
+ 'The pinned random_spacing routine draws n intrinsic uniform values, discards the first, accumulates '
+ 'the remaining positive increments, and rescales the cumulative sequence to the requested interval. '
+ 'For n>=2 its mathematical construction is x_i=a+(b-a)*sum(U_2,...,U_i)/sum(U_2,...,U_n), with x_1=a '
+ 'and x_n=b. It does not sort uniform points or use exponential spacings. The former L6a21 procedure '
+ 'mapping has been broadened to L6 random-number generation: the returned coordinates are not uniform '
+ 'draws or uniform order statistics.',
+ '',
+ 'Seven sizes [0,1,2,3,9,33,129], intervals [0,1], [-3.5,2.25], [0.25,0.25] and seeds [42,1729,314159] '
+ 'give 63 fixtures. GNU random seed arrays contain seed+37*i. A separately seeded intrinsic draw '
+ 'supplies the same raw inputs to a real64 sum-and-ratio oracle, while the cached package works in '
+ 'real32. This isolates the construction from the intrinsic generator: it does not independently verify '
+ 'the generator itself.',
+ '',
+ 'For the 45 nontrivial-size fixtures, all 1,584 coordinates are checked against the oracle within '
+ 'normalized tolerance 8*n*epsilon(real32), using normalizer 1+max(abs(a),abs(b)). Finite values, '
+ 'nondecreasing order and endpoints are checked. All 18 empty/singleton fixtures must leave their input '
+ 'unchanged, including the singleton sentinel -99. They consume no random draws; larger arrays consume '
+ 'exactly n. The next intrinsic random value and exact full-result seeded replay verify this behavior. '
+ 'The maximum normalized coordinate error was 2.84632e-7.',
+ '',
+ 'With three points on [0,1], the only interior coordinate is R=U/(U+V) for independent uniform '
+ 'increments U,V. For 0<=r<=1/2, P(R<=r)=r/(2*(1-r)); for 1/2<=r<=1 it is 1-(1-r)/(2*r). The two '
+ 'expressions follow from integrating the area U<=r*V/(1-r) in the unit square. Consequently the CDF '
+ 'values at 1/4 and 3/4 are 1/6 and 5/6, and symmetry gives mean 1/2. A single uniform interior point '
+ 'would instead have CDF 1/4 and 3/4 there.',
+ '',
+ 'Each of the three seeds supplies 20,000 three-point sets, for 60,000 law samples. The empirical CDFs '
+ 'must be within 0.015 of 1/6 and 5/6, the empirical mean within 0.015 of 1/2, and the quarter-point '
+ 'CDF must differ from 1/4 by at least 0.04. Observed quarter-point CDFs were 0.16425, 0.16510 and '
+ '0.16585; the largest CDF discrepancy was 0.00271667. These fixed-seed smoke checks distinguish this '
+ 'construction from uniform order statistics without certifying the full distribution or statistical '
+ 'quality of an RNG.',
+ '',
+ 'Reversed intervals, rare all-zero increment sums, other precisions, other pointsets generators and '
+ 'cross-compiler intrinsic RNG sequences remain unverified. No library patch, backend redeployment or '
+ 'cached package rebuild is required by either driver.',
+ '',
+ '## Sources, licenses and actual output',
+ '',
+ 'Pinned APIs/implementations and author examples were reviewed before writing the independent '
+ 'consumers and reference arithmetic. Drivers and reference generator have their own MIT notice; '
+ 'upstream rndgen-fortran and pointsets license terms remain separate. Loading a driver does not submit '
+ 'a job.',
+ '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
+def tangents_blocks_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-tangents-blocks-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-tangents-blocks-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Checked tangent flows and block-sparse products',
+ '',
+ 'These I1 and D1 drivers passed GNU Fortran 16.2.0 with FPM 0.12.0 in the restricted hosted sandbox. '
+ 'Existing libraries were reused; only mains and executables were compiled. The [verification '
+ 'report](gams-tangents-blocks-validation.json) retains pins, source hashes and complete output. GAMS '
+ 'categories are not exhausted.',
+ '',
+ '## FATODE coupled decay and full tangent derivatives (I1)',
+ '',
+ 'The independent consumer integrates y1_prime=-k*y1+c*y2, y2_prime=-k*y2, k_prime=0, c_prime=0. The '
+ 'last two constant states expose derivatives with respect to rate k and coupling c through the same '
+ 'tangent-linear interface as initial-condition derivatives. Four identity columns initialize the '
+ 'tangent matrix. The supplied analytical Jacobian is explicitly selected and tangent variables '
+ 'participate in adaptive error control. This verifies the explicit ERK/TLM implementation compiled by '
+ 'the existing wrapper; no bundled binary or changed numerical library is used.',
+ '',
+ 'For elapsed time tau and initial physical states a,b, let E=exp(-k*tau). The exact final state is '
+ '[E*(a+c*b*tau), E*b, k, c]. The exact flow-derivative rows, with columns for initial a,b,k,c, are '
+ '[E,c*tau*E,-tau*y1,b*tau*E], [0,E,-tau*y2,0], [0,0,1,0] and [0,0,0,1]. These elementary formulas give '
+ 'independent endpoint references without finite differencing or another ODE solver.',
+ '',
+ 'Methods 4 (Dopri5) and 6 (Dopri853), rates [0.25,2,8], couplings [-1.5,0,2], durations '
+ '[-1,-0.125,0.125,1,2], initial physical states [(1,0.5),(-0.75,1.25),(0,0)] and time origins [0,0.75] '
+ 'give 540 integrations. This includes forward/backward evolution, coupled and uncoupled states, signed '
+ 'and zero initial states, and translation of the time origin. All 2,160 state entries and 8,640 '
+ 'tangent entries are checked, including the constant-state derivative rows.',
+ '',
+ 'Absolute/relative tolerances are 1e-12/1e-10 for both state and tangent arrays, with a 10,000-step '
+ 'cap. Return status must be exactly 1, callbacks and accepted steps must be present, and all output '
+ 'values must be finite. Exit time must agree with the requested endpoint within '
+ '64*epsilon(real64)*max(1,abs(endpoint)). Constant k,c states must be unchanged exactly. Each '
+ 'state/tangent entry error divided by 1+abs(analytic_entry) must be <=2e-7.',
+ '',
+ 'The saved maximum state and tangent discrepancies were 4.43326e-10 and 7.23387e-10. Each callback '
+ 'type was actually invoked 535,978 times. These counts describe this suite and are not a performance '
+ 'comparison. Finite-difference Jacobians, the other ERK methods, implicit/stiff integrators, adjoints, '
+ 'sparse variants and arbitrary nonlinear systems remain unverified. I1 is the maintained broad ODE '
+ 'mapping; these checks do not establish a narrower stiff-solver class.',
+ '',
+ '## DBCSR irregular block products and accumulation (D1)',
+ '',
+ 'The independent serial real64 consumer checks C_out=alpha*op(A)*op(B)+beta*C_in, comparing every '
+ 'entry against scalar loops. No MATMUL, BLAS call or other sparse library supplies the reference. '
+ 'Operator dimensions (m,k,n) are (4,3,4) and (3,6,5). Their block partitions are respectively '
+ 'm=[1,2,1], k=[2,1], n=[1,3] and m=[2,1], k=[1,3,2], n=[2,1,2], exercising unequal block sizes and '
+ 'rectangular operands/results. Stored arrays/partitions are transposed when a T operand is requested.',
+ '',
+ 'Each layout uses four data patterns: full dyadic values, block-sparse dyadic values, full non-dyadic '
+ 'values, and a structurally empty A. Entry formulas before applying block masks are '
+ 'A_ij=(2*i-3*j+1)/dA, B_ij=(3*i+j-2)/dB and C_ij=(i-2*j+3)/dC. Dyadic denominators are all 8; '
+ 'non-dyadic denominators are 7,11,13. In the sparse pattern, A keeps blocks with even row+column block '
+ 'index, while B removes blocks for which 2*row_block+column_block is divisible by 3. C_in contains its '
+ 'full formula. Zero blocks are not inserted.',
+ '',
+ 'Both layouts, four patterns and every NN/NT/TN/TT pair give 32 products and 496 scalar reference '
+ 'entries. The six alpha/beta pairs [(1,0),(-1.25,0.5),(0,-1),(2,0),(0,0),(0.5,1)] cycle through those '
+ 'fixtures in order. They are not an extra Cartesian dimension, so not every scalar pair is tested with '
+ 'every matrix. This covers overwriting C, scaling an existing C, negative accumulation, zero '
+ 'multipliers and structurally empty input.',
+ '',
+ 'Filtering is explicitly set to zero. The consumer reconstructs stored C blocks, treating missing '
+ 'blocks as zeros and honoring returned block-transposition flags. Every entry must be finite. Absolute '
+ 'discrepancy divided by 1+abs(beta*C_in_ij)+sum_h(abs(alpha*A_ih*B_hj)) must be '
+ '<=128*epsilon(real64)*(k+2). The maximum normalized discrepancy was 1.91702e-16. Serial nonsymmetric '
+ 'real64 CPU operation is verified here; MPI, OpenMP, GPU, accelerators, symmetry storage, complex '
+ 'arithmetic and general sparse-pattern behavior remain unverified.',
+ '',
+ 'The [288-case Cartesian draft](gams-candidates/dbcsr-output-limit/README.md) compiled but was stopped '
+ 'by the 200,000-byte output limit because the checked library build repeatedly reported array '
+ 'temporaries. It is not counted as numerical verification. The successful selected driver supplies '
+ 'contiguous copied blocks and preserves its remaining native diagnostics in the proof (about 105 KB of '
+ 'run stderr). No diagnostics are suppressed and no backend limit or library source is changed. An '
+ 'earlier [read-only unpacking handle](gams-candidates/dbcsr-consumer-intent/README.md) was a consumer '
+ 'interface error, corrected to intent(inout) without changing the reference or tolerance.',
+ '',
+ '## Sources, licenses and actual output',
+ '',
+ 'Pinned APIs, implementations and author examples were reviewed before writing the independent '
+ 'consumers. No upstream implementation or example bodies are copied. The drivers have their own MIT '
+ 'notice; upstream FATODE and DBCSR license terms remain separate. Loading a driver does not submit a '
+ 'job.',
+ '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
+def radial_dense_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-radial-dense-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-radial-dense-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Checked radial eigenstates and dense-layer inference',
+ '',
+ 'These I1 and K drivers passed GNU Fortran 16.2.0 with FPM 0.12.0 in the restricted hosted sandbox. '
+ 'Existing libraries were reused; only mains and executables were compiled. The [verification '
+ 'report](gams-radial-dense-validation.json) retains pins, source hashes and complete output. GAMS '
+ 'categories are not exhausted.',
+ '',
+ '## dftatom nonrelativistic Coulomb eigenstates (I1)',
+ '',
+ 'The independent consumer solves the radial eigenproblem for V(r)=-Z/r with nuclear charges Z=[1,2,4]. '
+ 'All six (n,l) states through n=3 are tested on meshes with 3,000 and 4,500 intervals, giving 36 '
+ 'eigenproblems. The library exponential mesh runs from 1e-8/Z to 100/Z with a largest/smallest '
+ 'interval ratio of 1e6. Initial energy is -0.4*Z**2/n**2, bracket [-Z**2,0], energy tolerance '
+ '1e-11*Z**2 and iteration limit 100. The nonrelativistic mode is selected and Coulomb-tail '
+ 'perturbation corrections are enabled.',
+ '',
+ 'The exact energy is -Z**2/(2*n**2) Hartree. See the [MIT hydrogen '
+ 'lecture](https://ocw.mit.edu/courses/5-61-physical-chemistry-fall-2007/c2078ff25c61c136e67ceb6fd8eb9b34_lecture21to22.pdf) '
+ 'for Coulomb energies and radial eigenstates. The wavefunction normalization convention used here is '
+ 'the generalized-Laguerre form in [Gonzalez et al., equations '
+ '(1.2)-(1.4)](https://arxiv.org/html/1505.06274v3). In atomic units, rho=2*Z*r/n and '
+ 'P=r*R_nl=C*r*exp(-rho/2)*rho**l*L_(n-l-1)^(2*l+1)(rho), with '
+ 'C=sqrt((2*Z/n)**3*(n-l-1)!/(2*n*(n+l)!)). The reference Q is the direct derivative dP/dr.',
+ '',
+ 'Only polynomial degrees 0,1,2 are needed. The driver evaluates their elementary formulas and '
+ 'derivatives directly; the convention is documented by [NIST DLMF '
+ '18.5.12](https://dlmf.nist.gov/18.5.E12). No special-function library or numerical differencing '
+ 'supplies the reference. One common sign aligns P and Q with the analytic state, since an '
+ 'eigenfunction phase is arbitrary. Every one of the 135,036 P entries and 135,036 Q entries is '
+ 'compared, including zeros and tails.',
+ '',
+ 'The driver independently integrates P**2, r*P**2 and P**2/r with scalar trapezoidal sums on the '
+ 'physical nonuniform mesh. It checks normalization one, mean radius (3*n**2-l*(l+1))/(2*Z), and mean '
+ 'inverse radius Z/n**2. Moments are divided by the independently computed norm; the norm is also '
+ 'checked separately. These moment formulas also follow by integrating the explicit degree-at-most-two '
+ 'polynomials. The library normalization quadrature is not reused.',
+ '',
+ 'Solver status must be zero, and energy/P/Q must be finite. Absolute energy discrepancy divided by '
+ 'Z**2 must be <=1e-7. Maximum P discrepancy divided by sqrt(Z) must be <=2e-5; maximum Q discrepancy '
+ 'divided by Z**1.5 must be <=5e-5. Trapezoidal norm discrepancy must be <=2e-5. Radius discrepancy '
+ 'times Z/(1+n**2) and inverse-radius discrepancy divided by Z must each be <=2e-5. Finite-domain tails '
+ 'and quadrature discretization are part of this acceptance test; it is not a rigorous continuous error '
+ 'bound.',
+ '',
+ 'Saved maxima for energy, P, Q, norm, radius and inverse-radius checks were 4.76529e-11, 9.19163e-10, '
+ '1.20398e-5, 3.53696e-6, 2.11486e-9 and 9.09494e-11. The trapezoidal norm discrepancy decreases from '
+ 'about 3.537e-6 on the 3,000-interval mesh to 1.572e-6 on the finer mesh; it should not be read as an '
+ 'error in the library normalization routine. Q errors are larger than P errors and remain subject to '
+ 'their separately stated bound. Dirac eigenstates, general potentials, higher states, Poisson and '
+ 'self-consistent density-functional calculations remain unverified. The maintained I1 mapping is '
+ 'broad, not a claim to verify every radial solver mode.',
+ '',
+ '## Athena fixed dense-layer forward evaluation (K)',
+ '',
+ 'The independent consumer creates 192 fixed layers: input widths [1,2,3,5], output widths [1,2,4], '
+ 'activations [none,relu,tanh,sigmoid], bias on/off and two parameter patterns. With one-based indices, '
+ 'weights W_ij=(2*i-3*j+1)/8 and biases b_i=(2*i-3)/8 in the dyadic pattern; denominators are 7 and 9 '
+ 'in the non-dyadic pattern. Values are first rounded to the cached library real32 precision; the '
+ 'oracle uses these actual stored coefficients widened to real64. Randomly initialized weights are '
+ 'overwritten completely.',
+ '',
+ 'Each layer evaluates 11 inputs: zero, every coordinate basis vector, then deterministic mixed signed '
+ 'dyadic vectors. Zero/basis inputs expose bias handling and individual weight columns. The mixed '
+ 'vectors use x_j=(modulo(sample*(2*j+1),17)-8)/8. A scalar real64 loop forms z_i=b_i+sum_j(W_ij*x_j), '
+ 'omitting bias when disabled. Reference activations are z, max(0,z), 2/(1+exp(-2*z))-1 and a '
+ 'sign-stable sigmoid expression. No MATMUL or another network package supplies the oracle.',
+ '',
+ 'There are 4,928 independent output entries. Every output must have the requested dimension and be '
+ 'finite, with error divided by 1+abs(reference) <=2e-6. After the other inputs, the initial zero '
+ 'feature is evaluated again and all 448 output entries must match their original values exactly, '
+ 'giving 2,304 total forward calls. The maximum normalized real64-oracle discrepancy was 5.77239e-8. '
+ 'This verifies forward evaluation of known functions, not how well a trained network approximates an '
+ 'external dataset. K remains the broad approximation class.',
+ '',
+ 'The input array is deliberately persistent and marked is_temporary=.false. after allocation. An '
+ '[earlier draft](gams-candidates/athena-temporary-input/README.md) left the default temporary '
+ 'ownership flag in place and aborted during repeated forward calls. Its exact source, dependency pins '
+ 'and failed result are retained. Correcting the consumer flag preserved all weights, fixtures and '
+ 'tolerances; no library source was patched. Training, automatic derivatives, batch inference, graph '
+ 'networks, serialization and general memory safety remain unverified.',
+ '',
+ '## Sources, licenses and actual output',
+ '',
+ 'Pinned APIs, implementations and author tests were reviewed before writing the independent consumers. '
+ 'No upstream implementation or test bodies are copied. The drivers have their own MIT notice; upstream '
+ 'dftatom and Athena license terms remain separate. Loading a driver does not submit a job.',
+ '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -8312,6 +8658,9 @@ def main():
                          (GRADIENT_SWARM_REPORT, gradient_swarm_review_text()),
                          (PROJECTION_TRAINING_REPORT, projection_training_review_text()),
                          (DIRECTIONS_FITTING_REPORT, directions_fitting_review_text()),
+                         (RANDOM_REFERENCES_REPORT, random_references_review_text()),
+                         (TANGENTS_BLOCKS_REPORT, tangents_blocks_review_text()),
+                         (RADIAL_DENSE_REPORT, radial_dense_review_text()),
                          (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report
