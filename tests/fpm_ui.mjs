@@ -598,6 +598,32 @@ assert.equal(programOutputText(execution('Project is up to date\n', 'Project is 
 assert.equal(programOutputText(execution('', 'Project is up to date\n')), 'Program completed successfully with no output.');
 assert.equal(programOutputText(execution('  \n')), '  \n');
 assert.equal(programOutputText({ok: true, stages: []}), 'Build completed successfully.');
+const runtimeWarning = (path = '../library/dbcsr_block_access.f90', line = 882,
+  message = 'An array temporary was created', ending = '\n') =>
+  `At line ${line} of file ${path}${ending}Fortran runtime warning: ${message}${ending}`;
+const warning = runtimeWarning();
+const repeated = execution('PASS dbcsr-products-reference\n', warning.repeat(3));
+assert.equal(programOutputText(repeated), 'PASS dbcsr-products-reference\n' + warning
+  + '  [3 occurrences; full output in build details]\n');
+assert.equal(repeated.stages[0].stderr, warning.repeat(3), 'Compacting does not mutate stored output');
+assert.equal(resultText(repeated).split(warning).length - 1, 3, 'Build details keep every warning');
+assert.equal(programOutputText(execution(warning.repeat(3))), warning.repeat(3), 'Never deduplicate stdout');
+assert.equal(programOutputText(execution('', warning)), warning, 'A single warning is unchanged');
+const otherDiagnostics = runtimeWarning('../other/dbcsr_block_access.f90')
+  + runtimeWarning(undefined, 883) + runtimeWarning(undefined, undefined, 'Different warning');
+assert.equal(programOutputText(execution('', warning + otherDiagnostics)), warning + otherDiagnostics,
+  'Match full paths, line numbers and messages, not basenames or messages alone');
+const ordinary = '42\n42\nFortran runtime warning: user text\nFortran runtime warning: user text\n';
+assert.equal(programOutputText(execution('', warning + ordinary + warning)),
+  warning + '  [2 occurrences; full output in build details]\n' + ordinary,
+  'Collapse separated identical diagnostics while preserving ordinary stderr');
+const crlf = runtimeWarning(undefined, undefined, undefined, '\r\n');
+assert.equal(programOutputText(execution('', crlf + crlf.trimEnd())),
+  crlf + '  [2 occurrences; full output in build details]\r\n', 'Handle CRLF and a final unterminated line');
+const failedWarnings = execution('partial\n', warning.repeat(3)); failedWarnings.ok = false;
+assert.equal(programOutputText(failedWarnings), resultText(failedWarnings), 'Failed jobs retain complete diagnostics');
+assert.equal(programOutputText({ok: true, stages: [execution('', warning).stages[0], execution('', warning).stages[0]]}),
+  warning.repeat(2), 'Do not merge diagnostics across separate execution stages');
 for (const name of ['Build', 'Run']) {
   const failed = execution('partial output\n', 'compiler or runtime error');
   failed.ok = false; failed.stages[0].ok = false; failed.stages[0].name = name;

@@ -540,6 +540,34 @@ function compactEligible(result) {
     && !(result.stages ?? []).some(stage => !stage.ok);
 }
 
+function collapseRuntimeWarnings(stderr) {
+  // Recognize GNU's two-line runtime diagnostic only, on stderr. Keep the full
+  // path, line and message in the key: equal messages at different sites differ.
+  const lines = stderr.match(/[^\n]*\n|[^\n]+$/g) || [];
+  const warnings = new Map(), output = [];
+  for (let i = 0; i < lines.length; i++) {
+    if (/^At line \d+ of file [^\r\n]+\r?\n$/.test(lines[i])
+        && /^Fortran runtime warning: [^\r\n]+(?:\r?\n|$)$/.test(lines[i + 1] || '')) {
+      const key = lines[i].replace(/\r?\n$/, '') + '\n' + lines[i + 1].replace(/\r?\n$/, '');
+      const previous = warnings.get(key);
+      if (previous) previous.count++;
+      else {
+        const warning = {text: lines[i] + lines[i + 1], count: 1};
+        warnings.set(key, warning); output.push(warning);
+      }
+      i++;
+    } else output.push(lines[i]);
+  }
+  return output.map(item => {
+    if (typeof item === 'string') return item;
+    if (item.count === 1) return item.text;
+    const newline = item.text.includes('\r\n') ? '\r\n' : '\n';
+    return item.text.replace(/\r?\n$/, '') + newline
+      + `  [${item.count} occurrences; full output in build details]`
+      + (item.text.endsWith('\n') ? newline : '');
+  }).join('');
+}
+
 export function programOutputText(result) {
   if (!compactEligible(result)) return resultText(result);
   const executions = (result.stages ?? []).filter(stage => ['Run', 'Examples', 'Test'].includes(stage.name));
@@ -547,8 +575,8 @@ export function programOutputText(result) {
   let output = '';
   for (const stage of executions) {
     // FPM writes this leading status line to stderr before executing the program.
-    // Leave stdout and all subsequent stderr lines untouched.
-    const stderr = (stage.stderr || '').replace(/^Project is up to date\r?\n/, '');
+    // Preserve stdout verbatim; compact only recognized repeated diagnostics.
+    const stderr = collapseRuntimeWarnings((stage.stderr || '').replace(/^Project is up to date\r?\n/, ''));
     for (const stream of [stage.stdout || '', stderr]) {
       if (!stream) continue;
       if (output && !output.endsWith('\n')) output += '\n';
