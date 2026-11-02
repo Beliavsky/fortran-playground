@@ -1,0 +1,48 @@
+{
+  "source_sha256": "8bbe8eeabf81a8974985607cb071b8175fd8e995e49c400d7553164c2fdacc2d",
+  "revision": "416e5612167b6133100bef4cec116322890f66f7",
+  "result": {
+    "ok": false,
+    "compiler": "GNU Fortran (GCC) 16.2.0",
+    "compiler_id": "gfortran",
+    "fpm": "0.12.0",
+    "stages": [
+      {
+        "name": "Build",
+        "command": [
+          "fpm",
+          "build",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 0.24,
+        "ok": false,
+        "exit_code": 1,
+        "error": "",
+        "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n\napp/main.f90:39:19:\n\n   39 |       if(any(shape(actual)/=shape(reference))) error stop 'Matrix shape'\n      |                   1\nError: Syntax error in argument list at (1)\ncompilation terminated due to -fmax-errors=1.\n",
+        "stderr": "<ERROR> Compilation failed for object \" app_main.f90.o \"\n<ERROR> stopping due to failed compilation\nSTOP 1\n"
+      }
+    ],
+    "cache": {
+      "package": "forlab",
+      "compiler": "GNU Fortran 16.2.0",
+      "key": "b578caaad7752f6e7489b431",
+      "library_reused": true,
+      "changed_artifacts": []
+    },
+    "packages": [
+      {
+        "repository": "zoziha/forlab",
+        "revision": "416e5612167b6133100bef4cec116322890f66f7",
+        "sha256": "784431a7c880c6a6dcfdd7687e3b0f2f8340dc13bd187a3546acd09d883628f3"
+      }
+    ]
+  }
+}

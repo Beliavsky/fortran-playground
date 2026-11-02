@@ -86,16 +86,16 @@ Selected package details link to the NIST definitions. Other collections are not
 | [D1b6](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D1b6) | Multiplication | 3 |
 | [D1b9](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D1b9) | Storage mode conversion | 1 |
 | [D2](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D2) | Solution of systems of linear equations (including inversion, LU and related decompositions) | 21 |
-| [D2a](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D2a) | Real nonsymmetric matrices | 6 |
-| [D2a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D2a1) | General | 4 |
+| [D2a](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D2a) | Real nonsymmetric matrices | 7 |
+| [D2a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D2a1) | General | 5 |
 | [D2a2](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D2a2) | Banded | 1 |
 | [D2a2a](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D2a2a) | Tridiagonal | 1 |
 | [D2a3](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D2a3) | Triangular | 1 |
 | [D2a4](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D2a4) | Sparse | 2 |
-| [D2b](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D2b) | Real symmetric matrices | 5 |
-| [D2b1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D2b1) | General | 3 |
+| [D2b](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D2b) | Real symmetric matrices | 6 |
+| [D2b1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D2b1) | General | 4 |
 | [D2b1a](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D2b1a) | Indefinite | 1 |
-| [D2b1b](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D2b1b) | Positive definite | 2 |
+| [D2b1b](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D2b1b) | Positive definite | 3 |
 | [D2b2](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D2b2) | Positive definite banded | 1 |
 | [D2b2a](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D2b2a) | Tridiagonal | 1 |
 | [D2b4](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D2b4) | Sparse | 2 |
@@ -114,9 +114,9 @@ Selected package details link to the NIST definitions. Other collections are not
 | [D3b2a](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D3b2a) | Tridiagonal | 1 |
 | [D3c](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D3c) | Complex non-Hermitian matrices | 1 |
 | [D3c1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D3c1) | General | 1 |
-| [D4](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D4) | Eigenvalues, eigenvectors | 12 |
-| [D4a](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D4a) | Ordinary eigenvalue problems (Ax = lambda x) | 8 |
-| [D4a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D4a1) | Real symmetric | 8 |
+| [D4](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D4) | Eigenvalues, eigenvectors | 13 |
+| [D4a](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D4a) | Ordinary eigenvalue problems (Ax = lambda x) | 9 |
+| [D4a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D4a1) | Real symmetric | 9 |
 | [D4a2](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D4a2) | Real nonsymmetric | 2 |
 | [D4a3](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D4a3) | Complex Hermitian | 1 |
 | [D4a4](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D4a4) | Complex non-Hermitian | 1 |
@@ -125,7 +125,7 @@ Selected package details link to the NIST definitions. Other collections are not
 | [D4b2](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D4b2) | Real general | 1 |
 | [D4b4](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D4b4) | Complex general | 1 |
 | [D5](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D5) | QR decomposition, Gram-Schmidt orthogonalization | 3 |
-| [D6](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D6) | Singular value decomposition | 9 |
+| [D6](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D6) | Singular value decomposition | 10 |
 | [D7](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D7) | Update matrix decompositions | 0 |
 | [D8](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D8) | Other matrix equations (e.g., AX+XB=C) | 1 |
 | [D9](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D9) | Singular, overdetermined or underdetermined systems of linear equations, generalized inverses | 7 |
@@ -177,8 +177,8 @@ Selected package details link to the NIST definitions. Other collections are not
 | [G2i](https://gams.nist.gov/cgi-bin/serve.cgi/Class/G2i) | Global solution to nonconvex problems | 3 |
 | [G3](https://gams.nist.gov/cgi-bin/serve.cgi/Class/G3) | Optimal control | 0 |
 | [G4](https://gams.nist.gov/cgi-bin/serve.cgi/Class/G4) | Service routines | 0 |
-| [H](https://gams.nist.gov/cgi-bin/serve.cgi/Class/H) | Differentiation, integration | 23 |
-| [H1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/H1) | Numerical differentiation | 11 |
+| [H](https://gams.nist.gov/cgi-bin/serve.cgi/Class/H) | Differentiation, integration | 24 |
+| [H1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/H1) | Numerical differentiation | 12 |
 | [H2](https://gams.nist.gov/cgi-bin/serve.cgi/Class/H2) | Quadrature (numerical evaluation of definite integrals) | 14 |
 | [H2a](https://gams.nist.gov/cgi-bin/serve.cgi/Class/H2a) | One-dimensional integrals | 5 |
 | [H2a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/H2a1) | Finite interval (general integrand) | 4 |
@@ -233,26 +233,27 @@ Selected package details link to the NIST definitions. Other collections are not
 | [K6](https://gams.nist.gov/cgi-bin/serve.cgi/Class/K6) | Service routines for approximation | 0 |
 | [L](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L) | Statistics, probability | 19 |
 | [L1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1) | Data summarization | 5 |
-| [L1a](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1a) | One-dimensional data | 3 |
-| [L1a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1a1) | Raw data | 3 |
-| [L1a1a](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1a1a) | Location | 3 |
-| [L1a1b](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1a1b) | Dispersion | 2 |
-| [L1a1c](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1a1c) | Shape | 1 |
+| [L1a](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1a) | One-dimensional data | 4 |
+| [L1a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1a1) | Raw data | 4 |
+| [L1a1a](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1a1a) | Location | 4 |
+| [L1a1b](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1a1b) | Dispersion | 3 |
+| [L1a1c](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1a1c) | Shape | 2 |
 | [L1a1d](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1a1d) | Frequency, cumulative frequency | 1 |
-| [L1c](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1c) | Multi-dimensional data | 1 |
-| [L1c1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1c1) | Raw data | 1 |
-| [L1c1b](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1c1b) | Covariance, correlation | 1 |
+| [L1c](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1c) | Multi-dimensional data | 2 |
+| [L1c1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1c1) | Raw data | 2 |
+| [L1c1b](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1c1b) | Covariance, correlation | 2 |
 | [L2](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L2) | Data manipulation | 3 |
 | [L2c](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L2c) | Subset | 1 |
 | [L3](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L3) | Elementary statistical graphics | 0 |
 | [L4](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L4) | Elementary data analysis | 2 |
-| [L5](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L5) | Function evaluation | 3 |
-| [L5a](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L5a) | Univariate | 2 |
-| [L5a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L5a1) | Cumulative distribution functions, probability density functions | 2 |
+| [L5](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L5) | Function evaluation | 4 |
+| [L5a](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L5a) | Univariate | 3 |
+| [L5a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L5a1) | Cumulative distribution functions, probability density functions | 3 |
 | [L5a1b](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L5a1b) | Beta, binomial | 2 |
+| [L5a1c](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L5a1c) | Cauchy, chi-squared | 1 |
 | [L5a1e](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L5a1e) | Error function, exponential, extreme value | 1 |
 | [L5a1g](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L5a1g) | Gamma, general, geometric | 1 |
-| [L5a1n](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L5a1n) | Negative binomial, normal | 1 |
+| [L5a1n](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L5a1n) | Negative binomial, normal | 2 |
 | [L5a1u](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L5a1u) | Uniform | 1 |
 | [L6](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L6) | Random number generation | 8 |
 | [L6a](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L6a) | Univariate | 5 |
@@ -410,7 +411,7 @@ Counts overlap because a package may implement several kinds of problems. All 20
 | [forgex](https://github.com/ShinobuAmasaki/forgex/tree/e79f4792a1ac776fb0b1612de560f7791795ea8e) | [N — Data handling](https://gams.nist.gov/cgi-bin/serve.cgi/Class/N), [N3 — Character manipulation](https://gams.nist.gov/cgi-bin/serve.cgi/Class/N3), [N5 — Searching](https://gams.nist.gov/cgi-bin/serve.cgi/Class/N5) | Regular expressions with Unicode support and full or substring matching. |  [Catalog example](../fpm_catalog/demos/forgex.f90) |
 | [forimage](https://github.com/gha3mi/forimage/tree/65f53ce6a53c3a3ee38f05e6a065505bc3fa0dfb) | [N — Data handling](https://gams.nist.gov/cgi-bin/serve.cgi/Class/N), [N1 — Input, output](https://gams.nist.gov/cgi-bin/serve.cgi/Class/N1), [Q — Graphics](https://gams.nist.gov/cgi-bin/serve.cgi/Class/Q) | Create, read, write and transform PNM images and convert color representations. |  [Catalog example](../fpm_catalog/demos/forimage.f90) |
 | [forinv](https://github.com/gha3mi/forinv/tree/80b5dbed9709c001e4309382424276a2ceb984f3) | [D — Linear Algebra](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D), [D2 — Solution of systems of linear equations (including inversion, LU and related decompositions)](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D2), [D6 — Singular value decomposition](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D6), [D9 — Singular, overdetermined or underdetermined systems of linear equations, generalized inverses](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D9), [D9c — Generalized inverses](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D9c) | Matrix inverses and singular-value-decomposition pseudoinverses. |  [Catalog example](../fpm_catalog/demos/forinv.f90) |
-| [forlab](https://github.com/zoziha/forlab/tree/416e5612167b6133100bef4cec116322890f66f7) | [D — Linear Algebra](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D), [D1 — Elementary vector and matrix operations](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D1), [D2 — Solution of systems of linear equations (including inversion, LU and related decompositions)](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D2), [D9 — Singular, overdetermined or underdetermined systems of linear equations, generalized inverses](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D9), [D9a — Unconstrained](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D9a), [D9a1 — Least squares (L_2) solution](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D9a1), [E — Interpolation](https://gams.nist.gov/cgi-bin/serve.cgi/Class/E), [E1 — Univariate data (curve fitting)](https://gams.nist.gov/cgi-bin/serve.cgi/Class/E1), [L — Statistics, probability](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L), [L1 — Data summarization](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1) | MATLAB/NumPy-style numerical utilities, linear algebra, interpolation and statistics. |  [Catalog example](../fpm_catalog/demos/forlab.f90) |
+| [forlab](https://github.com/zoziha/forlab/tree/416e5612167b6133100bef4cec116322890f66f7) | [D — Linear Algebra](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D), [D1 — Elementary vector and matrix operations](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D1), [D2 — Solution of systems of linear equations (including inversion, LU and related decompositions)](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D2), [D2a — Real nonsymmetric matrices](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D2a), [D2a1 — General](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D2a1), [D2b — Real symmetric matrices](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D2b), [D2b1 — General](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D2b1), [D2b1b — Positive definite](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D2b1b), [D4 — Eigenvalues, eigenvectors](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D4), [D4a — Ordinary eigenvalue problems (Ax = lambda x)](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D4a), [D4a1 — Real symmetric](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D4a1), [D6 — Singular value decomposition](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D6), [D9 — Singular, overdetermined or underdetermined systems of linear equations, generalized inverses](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D9), [D9a — Unconstrained](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D9a), [D9a1 — Least squares (L_2) solution](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D9a1), [E — Interpolation](https://gams.nist.gov/cgi-bin/serve.cgi/Class/E), [E1 — Univariate data (curve fitting)](https://gams.nist.gov/cgi-bin/serve.cgi/Class/E1), [H — Differentiation, integration](https://gams.nist.gov/cgi-bin/serve.cgi/Class/H), [H1 — Numerical differentiation](https://gams.nist.gov/cgi-bin/serve.cgi/Class/H1), [L — Statistics, probability](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L), [L1 — Data summarization](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1), [L1a — One-dimensional data](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1a), [L1a1 — Raw data](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1a1), [L1a1a — Location](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1a1a), [L1a1b — Dispersion](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1a1b), [L1a1c — Shape](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1a1c), [L1c — Multi-dimensional data](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1c), [L1c1 — Raw data](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1c1), [L1c1b — Covariance, correlation](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1c1b), [L5 — Function evaluation](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L5), [L5a — Univariate](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L5a), [L5a1 — Cumulative distribution functions, probability density functions](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L5a1), [L5a1c — Cauchy, chi-squared](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L5a1c), [L5a1n — Negative binomial, normal](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L5a1n) | MATLAB/NumPy-style numerical utilities, linear algebra, interpolation and statistics. |  [Catalog example](../fpm_catalog/demos/forlab.f90) |
 | [formal](https://github.com/BerkeleyLab/formal/tree/d28eee9b37b4b74abe7f21bb2ccbdfb5c17f3e8a) | [H — Differentiation, integration](https://gams.nist.gov/cgi-bin/serve.cgi/Class/H), [H1 — Numerical differentiation](https://gams.nist.gov/cgi-bin/serve.cgi/Class/H1), [H2 — Quadrature (numerical evaluation of definite integrals)](https://gams.nist.gov/cgi-bin/serve.cgi/Class/H2), [I — Differential and integral equations](https://gams.nist.gov/cgi-bin/serve.cgi/Class/I), [I2 — Partial differential equations](https://gams.nist.gov/cgi-bin/serve.cgi/Class/I2) | Mimetic discrete vector calculus with gradients, divergence and integration. | Mimetic vector-calculus library with pinned Julienne and Assert dependencies. A single-image coarray build is used. The checked consumer adapts the author's extended Gauss-divergence example to f=x**2/2 and v=x on a 64-cell unit interval. It checks the two volume integrals against 1/3 and 1/6, the boundary flux against 1/2, finiteness and the conservation residual using single-precision tolerances. The command-line parsing and shell display calls of the upstream example are omitted. Library numerical sources are unchanged. Other 2D/3D operators, time integration and convergence orders are not validated. Original Berkeley Lab license terms, including the enhancements clause, are retained; this is not labeled plain BSD-3-Clause. [Catalog example](../fpm_catalog/demos/formal.f90) |
 | [formatmul](https://github.com/gha3mi/formatmul/tree/4b5747d49c27f0df92288e7a61d0e479e34ac78e) | [D — Linear Algebra](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D), [D1 — Elementary vector and matrix operations](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D1) | Matrix products with transpose options and selectable multiplication methods. | Methods m1 through m4 are checked for rectangular matrix multiplication, all transpose combinations and a matrix-vector product. The demo is single-process and does not validate every implementation or coarray branch. At this pin a single explicitly false transpose flag is misrouted; the demo passes both flags whenever either is specified. Separate failing probes and the successful workaround are retained. [Catalog example](../fpm_catalog/demos/formatmul.f90) |
 | [forpca](https://github.com/gha3mi/forpca/tree/d5d87badc4c25c647b3618f22560e712728d8165) | [D — Linear Algebra](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D), [D4 — Eigenvalues, eigenvectors](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D4), [D6 — Singular value decomposition](https://gams.nist.gov/cgi-bin/serve.cgi/Class/D6), [L — Statistics, probability](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L), [L13 — Covariance structure models](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L13), [L13b — Principal components analysis](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L13b) | Principal component directions from eigendecomposition or singular value decomposition. | D4 and D6 describe the eigenvalue/SVD methods. PCA retains the parent L assignment rather than guessing an immediate statistical subclass. [Catalog example](../fpm_catalog/demos/forpca.f90) |

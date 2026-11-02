@@ -348,3 +348,5 @@ Ordering and Runge-Kutta checks: [review and actual results](gams-ordering-runge
 Gamma and relative-function checks: [review and actual results](gams-gamma-relative-ten.md).
 
 Banded matrices and structured products: [review and actual results](gams-banded-products-ten.md).
+
+Forlab statistics and matrices: [review and actual results](gams-forlab-statistics-ten.md).

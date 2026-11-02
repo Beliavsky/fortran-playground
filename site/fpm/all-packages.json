@@ -40083,6 +40083,51 @@
         "parent": "D"
       },
       {
+        "code": "D2a",
+        "label": "Real nonsymmetric matrices",
+        "parent": "D2"
+      },
+      {
+        "code": "D2a1",
+        "label": "General",
+        "parent": "D2a"
+      },
+      {
+        "code": "D2b",
+        "label": "Real symmetric matrices",
+        "parent": "D2"
+      },
+      {
+        "code": "D2b1",
+        "label": "General",
+        "parent": "D2b"
+      },
+      {
+        "code": "D2b1b",
+        "label": "Positive definite",
+        "parent": "D2b1"
+      },
+      {
+        "code": "D4",
+        "label": "Eigenvalues, eigenvectors",
+        "parent": "D"
+      },
+      {
+        "code": "D4a",
+        "label": "Ordinary eigenvalue problems (Ax = lambda x)",
+        "parent": "D4"
+      },
+      {
+        "code": "D4a1",
+        "label": "Real symmetric",
+        "parent": "D4a"
+      },
+      {
+        "code": "D6",
+        "label": "Singular value decomposition",
+        "parent": "D"
+      },
+      {
         "code": "D9",
         "label": "Singular, overdetermined or underdetermined systems of linear equations, generalized inverses",
         "parent": "D"
@@ -40108,6 +40153,16 @@
         "parent": "E"
       },
       {
+        "code": "H",
+        "label": "Differentiation, integration",
+        "parent": null
+      },
+      {
+        "code": "H1",
+        "label": "Numerical differentiation",
+        "parent": "H"
+      },
+      {
         "code": "L",
         "label": "Statistics, probability",
         "parent": null
@@ -40116,6 +40171,71 @@
         "code": "L1",
         "label": "Data summarization",
         "parent": "L"
+      },
+      {
+        "code": "L1a",
+        "label": "One-dimensional data",
+        "parent": "L1"
+      },
+      {
+        "code": "L1a1",
+        "label": "Raw data",
+        "parent": "L1a"
+      },
+      {
+        "code": "L1a1a",
+        "label": "Location",
+        "parent": "L1a1"
+      },
+      {
+        "code": "L1a1b",
+        "label": "Dispersion",
+        "parent": "L1a1"
+      },
+      {
+        "code": "L1a1c",
+        "label": "Shape",
+        "parent": "L1a1"
+      },
+      {
+        "code": "L1c",
+        "label": "Multi-dimensional data",
+        "parent": "L1"
+      },
+      {
+        "code": "L1c1",
+        "label": "Raw data",
+        "parent": "L1c"
+      },
+      {
+        "code": "L1c1b",
+        "label": "Covariance, correlation",
+        "parent": "L1c1"
+      },
+      {
+        "code": "L5",
+        "label": "Function evaluation",
+        "parent": "L"
+      },
+      {
+        "code": "L5a",
+        "label": "Univariate",
+        "parent": "L5"
+      },
+      {
+        "code": "L5a1",
+        "label": "Cumulative distribution functions, probability density functions",
+        "parent": "L5a"
+      },
+      {
+        "code": "L5a1c",
+        "label": "Cauchy, chi-squared",
+        "parent": "L5a1"
+      },
+      {
+        "code": "L5a1n",
+        "label": "Negative binomial, normal",
+        "parent": "L5a1"
       }
     ],
     "gams_procedures": [
@@ -40140,6 +40260,318 @@
         ],
         "author_examples": [],
         "driver_id": "forlab-least-squares-reference"
+      },
+      {
+        "id": "forlab-location-dispersion",
+        "package_id": "forlab",
+        "revision": "416e5612167b6133100bef4cec116322890f66f7",
+        "module": "forlab",
+        "procedure": "mean,var,std",
+        "gams_codes": [
+          "L1a1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "96 finite REAL32 data sets n=2..33 and three dyadic affine families. Mean, sample/population variance and standard deviation checked against explicit REAL64 centered sums. Singleton, empty and missing-value conventions excluded.",
+        "driver_id": "forlab-location-dispersion-reference",
+        "evidence": [
+          {
+            "path": "src/forlab.F90",
+            "line": 5988,
+            "sha256": "4f9be44e66ad2fdb67841ee14d0156b7fa315b137f33333b84abb100f7e48246"
+          },
+          {
+            "path": "src/forlab.F90",
+            "line": 9187,
+            "sha256": "4f9be44e66ad2fdb67841ee14d0156b7fa315b137f33333b84abb100f7e48246"
+          },
+          {
+            "path": "src/forlab.F90",
+            "line": 8314,
+            "sha256": "4f9be44e66ad2fdb67841ee14d0156b7fa315b137f33333b84abb100f7e48246"
+          }
+        ],
+        "author_examples": []
+      },
+      {
+        "id": "forlab-covariance-matrices",
+        "package_id": "forlab",
+        "revision": "416e5612167b6133100bef4cec116322890f66f7",
+        "module": "forlab",
+        "procedure": "cov",
+        "gams_codes": [
+          "L1c1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "96 finite REAL32 three-column data sets n=2..33. Sample/population covariance matrices and separate two-vector covariance checked against explicit REAL64 centered cross-products. Other normalization options and missing data excluded.",
+        "driver_id": "forlab-covariance-matrices-reference",
+        "evidence": [
+          {
+            "path": "src/forlab.F90",
+            "line": 1809,
+            "sha256": "4f9be44e66ad2fdb67841ee14d0156b7fa315b137f33333b84abb100f7e48246"
+          },
+          {
+            "path": "src/forlab.F90",
+            "line": 1828,
+            "sha256": "4f9be44e66ad2fdb67841ee14d0156b7fa315b137f33333b84abb100f7e48246"
+          },
+          {
+            "path": "src/forlab.F90",
+            "line": 1848,
+            "sha256": "4f9be44e66ad2fdb67841ee14d0156b7fa315b137f33333b84abb100f7e48246"
+          }
+        ],
+        "author_examples": []
+      },
+      {
+        "id": "forlab-median-percentiles",
+        "package_id": "forlab",
+        "revision": "416e5612167b6133100bef4cec116322890f66f7",
+        "module": "forlab",
+        "procedure": "median,prctile",
+        "gams_codes": [
+          "L1a1a"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "99 finite REAL32 data sets n=1..33. Median and seven scalar/vector percentiles checked against an independent sorted-data reference using plotting positions (i-1/2)/n and endpoint clamping. Integer percentile API only; other quantile conventions excluded. Built but crashed with SIGSEGV at the first median call for n=1; retained exact probe and output. No median or percentile driver published.",
+        "evidence": [
+          {
+            "path": "src/forlab.F90",
+            "line": 6059,
+            "sha256": "4f9be44e66ad2fdb67841ee14d0156b7fa315b137f33333b84abb100f7e48246"
+          },
+          {
+            "path": "src/forlab.F90",
+            "line": 6617,
+            "sha256": "4f9be44e66ad2fdb67841ee14d0156b7fa315b137f33333b84abb100f7e48246"
+          },
+          {
+            "path": "src/forlab.F90",
+            "line": 6627,
+            "sha256": "4f9be44e66ad2fdb67841ee14d0156b7fa315b137f33333b84abb100f7e48246"
+          }
+        ],
+        "author_examples": []
+      },
+      {
+        "id": "forlab-population-shape-moments",
+        "package_id": "forlab",
+        "revision": "416e5612167b6133100bef4cec116322890f66f7",
+        "module": "forlab",
+        "procedure": "skewness,kurtosis",
+        "gams_codes": [
+          "L1a1c"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "90 nonconstant finite REAL32 data sets n=4..33, three affine families. Population skewness and non-excess kurtosis (flag=1) checked against explicit REAL64 centered third/fourth moments. Bias-adjusted flag=0, constant arrays and missing data are not verified.",
+        "driver_id": "forlab-population-shape-moments-reference",
+        "evidence": [
+          {
+            "path": "src/forlab.F90",
+            "line": 7732,
+            "sha256": "4f9be44e66ad2fdb67841ee14d0156b7fa315b137f33333b84abb100f7e48246"
+          },
+          {
+            "path": "src/forlab.F90",
+            "line": 4982,
+            "sha256": "4f9be44e66ad2fdb67841ee14d0156b7fa315b137f33333b84abb100f7e48246"
+          }
+        ],
+        "author_examples": []
+      },
+      {
+        "id": "forlab-normal-density",
+        "package_id": "forlab",
+        "revision": "416e5612167b6133100bef4cec116322890f66f7",
+        "module": "forlab",
+        "procedure": "normpdf",
+        "gams_codes": [
+          "L5a1n"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "189 normal PDF comparisons: mu=-1,0,1; sigma=1/2,1,2; 21 standardized dyadic offsets -5..5. Scalar/vector APIs checked against the independent exponential formula in REAL64. CDFs, tails beyond this range and invalid sigma excluded. Relative tolerance 3e-5 with reference floor 1e-20.",
+        "driver_id": "forlab-normal-density-reference",
+        "evidence": [
+          {
+            "path": "src/forlab.F90",
+            "line": 6296,
+            "sha256": "4f9be44e66ad2fdb67841ee14d0156b7fa315b137f33333b84abb100f7e48246"
+          },
+          {
+            "path": "src/forlab.F90",
+            "line": 6304,
+            "sha256": "4f9be44e66ad2fdb67841ee14d0156b7fa315b137f33333b84abb100f7e48246"
+          }
+        ],
+        "author_examples": []
+      },
+      {
+        "id": "forlab-even-chi-square",
+        "package_id": "forlab",
+        "revision": "416e5612167b6133100bef4cec116322890f66f7",
+        "module": "forlab",
+        "procedure": "chi2pdf,chi2cdf",
+        "gams_codes": [
+          "L5a1c"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "24 strictly positive chi-square inputs for even degrees of freedom 2,4,6,8 and x=1/8,1/2,1,2,4,8. PDF and CDF checked with finite exponential/factorial formulas, not another incomplete-gamma API. Boundary x=0 and odd degrees excluded. Relative tolerance 3e-5 with reference floor 1e-20.",
+        "driver_id": "forlab-even-chi-square-reference",
+        "evidence": [
+          {
+            "path": "src/forlab.F90",
+            "line": 1375,
+            "sha256": "4f9be44e66ad2fdb67841ee14d0156b7fa315b137f33333b84abb100f7e48246"
+          },
+          {
+            "path": "src/forlab.F90",
+            "line": 1505,
+            "sha256": "4f9be44e66ad2fdb67841ee14d0156b7fa315b137f33333b84abb100f7e48246"
+          }
+        ],
+        "author_examples": []
+      },
+      {
+        "id": "forlab-cholesky-factors",
+        "package_id": "forlab",
+        "revision": "416e5612167b6133100bef4cec116322890f66f7",
+        "module": "forlab",
+        "procedure": "chol",
+        "gams_codes": [
+          "D2b1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "Seven REAL32 SPD matrices n=2..8 constructed from known nonsingular lower-triangular dyadic factors. Returned factor and A=L*transpose(L) reconstruction checked against REAL64 references. Nonpositive-definite inputs excluded.",
+        "driver_id": "forlab-cholesky-factors-reference",
+        "evidence": [
+          {
+            "path": "src/forlab.F90",
+            "line": 1595,
+            "sha256": "4f9be44e66ad2fdb67841ee14d0156b7fa315b137f33333b84abb100f7e48246"
+          }
+        ],
+        "author_examples": []
+      },
+      {
+        "id": "forlab-symmetric-eigenpairs",
+        "package_id": "forlab",
+        "revision": "416e5612167b6133100bef4cec116322890f66f7",
+        "module": "forlab",
+        "procedure": "eig",
+        "gams_codes": [
+          "D4a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "Seven REAL32 symmetric eigensystems n=2..8 with known Householder-rotated alternating-sign eigenvalues. Dense residuals, orthogonality and order-independent analytic eigenvalues checked; eigenvector signs and ordering are not prescribed.",
+        "driver_id": "forlab-symmetric-eigenpairs-reference",
+        "evidence": [
+          {
+            "path": "src/forlab.F90",
+            "line": 2956,
+            "sha256": "4f9be44e66ad2fdb67841ee14d0156b7fa315b137f33333b84abb100f7e48246"
+          }
+        ],
+        "author_examples": []
+      },
+      {
+        "id": "forlab-tall-svd",
+        "package_id": "forlab",
+        "revision": "416e5612167b6133100bef4cec116322890f66f7",
+        "module": "forlab",
+        "procedure": "svd",
+        "gams_codes": [
+          "D6"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "Five REAL32 tall matrices (m=n+2,n=2..6) from known orthonormal Householder columns and positive distinct singular values. Status, analytic singular-value set, thin-factor orthogonality and reconstruction checked. Wide, rank-deficient and optional-mode state behavior excluded.",
+        "driver_id": "forlab-tall-svd-reference",
+        "evidence": [
+          {
+            "path": "src/forlab.F90",
+            "line": 8386,
+            "sha256": "4f9be44e66ad2fdb67841ee14d0156b7fa315b137f33333b84abb100f7e48246"
+          }
+        ],
+        "author_examples": []
+      },
+      {
+        "id": "forlab-dense-inverses",
+        "package_id": "forlab",
+        "revision": "416e5612167b6133100bef4cec116322890f66f7",
+        "module": "forlab",
+        "procedure": "inv",
+        "gams_codes": [
+          "D2a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "Seven nonsymmetric diagonally dominant REAL32 matrices n=2..8, including direct 2x2/3x3 and larger LU paths. Both left/right inverse products checked against identity using the original dense matrix. Singular and ill-conditioned inputs excluded.",
+        "driver_id": "forlab-dense-inverses-reference",
+        "evidence": [
+          {
+            "path": "src/forlab.F90",
+            "line": 4293,
+            "sha256": "4f9be44e66ad2fdb67841ee14d0156b7fa315b137f33333b84abb100f7e48246"
+          }
+        ],
+        "author_examples": []
+      },
+      {
+        "id": "forlab-polynomial-differences",
+        "package_id": "forlab",
+        "revision": "416e5612167b6133100bef4cec116322890f66f7",
+        "module": "forlab",
+        "procedure": "diff",
+        "gams_codes": [
+          "H1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "48 dyadic uniform-grid cubic samples, lengths 5..20 and h=1/8,1/4,1/2. First, second and third forward difference quotients checked with exact polynomial formulas. Does not verify cumsum (separate retained failed probe), general derivative-error estimation or numerical quadrature.",
+        "evidence": [
+          {
+            "path": "src/forlab.F90",
+            "line": 2673,
+            "sha256": "4f9be44e66ad2fdb67841ee14d0156b7fa315b137f33333b84abb100f7e48246"
+          }
+        ],
+        "author_examples": [],
+        "driver_id": "forlab-polynomial-differences-reference"
+      },
+      {
+        "id": "forlab-difference-cumsum",
+        "package_id": "forlab",
+        "revision": "416e5612167b6133100bef4cec116322890f66f7",
+        "module": "forlab",
+        "procedure": "diff,cumsum",
+        "gams_codes": [
+          "H1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "48 dyadic uniform-grid cubic samples, lengths 5..20 and h=1/8,1/4,1/2. First, second and third forward difference quotients checked with exact polynomial formulas; first-difference cumulative reconstruction checked. Not a general derivative-error estimator or integration quadrature. Combined probe failed cumulative reconstruction: 4.458984375 instead of 4.486328125. cumsum sorts before prefix summation; full probe retained. Not a checked cumsum API.",
+        "evidence": [
+          {
+            "path": "src/forlab.F90",
+            "line": 2673,
+            "sha256": "4f9be44e66ad2fdb67841ee14d0156b7fa315b137f33333b84abb100f7e48246"
+          },
+          {
+            "path": "src/forlab.F90",
+            "line": 1902,
+            "sha256": "4f9be44e66ad2fdb67841ee14d0156b7fa315b137f33333b84abb100f7e48246"
+          }
+        ],
+        "author_examples": []
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"

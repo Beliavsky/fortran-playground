@@ -1035,5 +1035,9 @@ export const gamsSubclasses = {
   "D2a3": {
     "label": "Triangular",
     "parent": "D2a"
+  },
+  "L5a1c": {
+    "label": "Cauchy, chi-squared",
+    "parent": "L5a1"
   }
 };

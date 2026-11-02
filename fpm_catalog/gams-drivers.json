@@ -15427,6 +15427,248 @@
         "relative_tolerance": 2e-09,
         "oracle": "manual dense matrices, manufactured solutions, dense pivoted elimination or triangular spectra"
       }
+    },
+    {
+      "id": "forlab-location-dispersion-reference",
+      "name": "gams-forlab-location-dispersion-reference",
+      "package_id": "forlab",
+      "procedure_id": "forlab-location-dispersion",
+      "gams_code": "L1a1b",
+      "problem_id": "forlab-location-dispersion-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/forlab-location-dispersion-reference.f90",
+      "revision": "416e5612167b6133100bef4cec116322890f66f7",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/forlab-statistics-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 96 finite REAL32 data sets n=2..33 and three dyadic affine families. Mean, sample/population variance and standard deviation checked against explicit REAL64 centered sums. Singleton, empty and missing-value conventions excluded.",
+      "validation_path": "docs/gams-forlab-statistics-ten-validation.json",
+      "review_path": "docs/gams-forlab-statistics-ten.md",
+      "checks": {
+        "scalar_kind": "pinned Forlab RPRE REAL32",
+        "relative_tolerance": 3e-05,
+        "oracle": "explicit REAL64 formulas or independently constructed matrix references"
+      }
+    },
+    {
+      "id": "forlab-covariance-matrices-reference",
+      "name": "gams-forlab-covariance-matrices-reference",
+      "package_id": "forlab",
+      "procedure_id": "forlab-covariance-matrices",
+      "gams_code": "L1c1b",
+      "problem_id": "forlab-covariance-matrices-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/forlab-covariance-matrices-reference.f90",
+      "revision": "416e5612167b6133100bef4cec116322890f66f7",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/forlab-statistics-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 96 finite REAL32 three-column data sets n=2..33. Sample/population covariance matrices and separate two-vector covariance checked against explicit REAL64 centered cross-products. Other normalization options and missing data excluded.",
+      "validation_path": "docs/gams-forlab-statistics-ten-validation.json",
+      "review_path": "docs/gams-forlab-statistics-ten.md",
+      "checks": {
+        "scalar_kind": "pinned Forlab RPRE REAL32",
+        "relative_tolerance": 3e-05,
+        "oracle": "explicit REAL64 formulas or independently constructed matrix references"
+      }
+    },
+    {
+      "id": "forlab-polynomial-differences-reference",
+      "name": "gams-forlab-polynomial-differences-reference",
+      "package_id": "forlab",
+      "procedure_id": "forlab-polynomial-differences",
+      "gams_code": "H1",
+      "problem_id": "forlab-polynomial-differences-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/forlab-polynomial-differences-reference.f90",
+      "revision": "416e5612167b6133100bef4cec116322890f66f7",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/forlab-statistics-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 48 dyadic uniform-grid cubic samples, lengths 5..20 and h=1/8,1/4,1/2. First, second and third forward difference quotients checked with exact polynomial formulas. Does not verify cumsum (separate retained failed probe), general derivative-error estimation or numerical quadrature.",
+      "validation_path": "docs/gams-forlab-statistics-ten-validation.json",
+      "review_path": "docs/gams-forlab-statistics-ten.md",
+      "checks": {
+        "scalar_kind": "pinned Forlab RPRE REAL32",
+        "relative_tolerance": 3e-05,
+        "oracle": "explicit REAL64 formulas or independently constructed matrix references"
+      }
+    },
+    {
+      "id": "forlab-population-shape-moments-reference",
+      "name": "gams-forlab-population-shape-moments-reference",
+      "package_id": "forlab",
+      "procedure_id": "forlab-population-shape-moments",
+      "gams_code": "L1a1c",
+      "problem_id": "forlab-population-shape-moments-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/forlab-population-shape-moments-reference.f90",
+      "revision": "416e5612167b6133100bef4cec116322890f66f7",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/forlab-statistics-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 90 nonconstant finite REAL32 data sets n=4..33, three affine families. Population skewness and non-excess kurtosis (flag=1) checked against explicit REAL64 centered third/fourth moments. Bias-adjusted flag=0, constant arrays and missing data are not verified.",
+      "validation_path": "docs/gams-forlab-statistics-ten-validation.json",
+      "review_path": "docs/gams-forlab-statistics-ten.md",
+      "checks": {
+        "scalar_kind": "pinned Forlab RPRE REAL32",
+        "relative_tolerance": 3e-05,
+        "oracle": "explicit REAL64 formulas or independently constructed matrix references"
+      }
+    },
+    {
+      "id": "forlab-normal-density-reference",
+      "name": "gams-forlab-normal-density-reference",
+      "package_id": "forlab",
+      "procedure_id": "forlab-normal-density",
+      "gams_code": "L5a1n",
+      "problem_id": "forlab-normal-density-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/forlab-normal-density-reference.f90",
+      "revision": "416e5612167b6133100bef4cec116322890f66f7",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/forlab-statistics-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 189 normal PDF comparisons: mu=-1,0,1; sigma=1/2,1,2; 21 standardized dyadic offsets -5..5. Scalar/vector APIs checked against the independent exponential formula in REAL64. CDFs, tails beyond this range and invalid sigma excluded. Relative comparisons use reference floor 1e-20, rather than a unit absolute floor.",
+      "validation_path": "docs/gams-forlab-statistics-ten-validation.json",
+      "review_path": "docs/gams-forlab-statistics-ten.md",
+      "checks": {
+        "scalar_kind": "pinned Forlab RPRE REAL32",
+        "relative_tolerance": 3e-05,
+        "oracle": "explicit REAL64 formulas or independently constructed matrix references",
+        "reference_floor": 1e-20
+      }
+    },
+    {
+      "id": "forlab-even-chi-square-reference",
+      "name": "gams-forlab-even-chi-square-reference",
+      "package_id": "forlab",
+      "procedure_id": "forlab-even-chi-square",
+      "gams_code": "L5a1c",
+      "problem_id": "forlab-even-chi-square-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/forlab-even-chi-square-reference.f90",
+      "revision": "416e5612167b6133100bef4cec116322890f66f7",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/forlab-statistics-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 24 strictly positive chi-square inputs for even degrees of freedom 2,4,6,8 and x=1/8,1/2,1,2,4,8. PDF and CDF checked with finite exponential/factorial formulas, not another incomplete-gamma API. Boundary x=0 and odd degrees excluded. Relative comparisons use reference floor 1e-20, rather than a unit absolute floor.",
+      "validation_path": "docs/gams-forlab-statistics-ten-validation.json",
+      "review_path": "docs/gams-forlab-statistics-ten.md",
+      "checks": {
+        "scalar_kind": "pinned Forlab RPRE REAL32",
+        "relative_tolerance": 3e-05,
+        "oracle": "explicit REAL64 formulas or independently constructed matrix references",
+        "reference_floor": 1e-20
+      }
+    },
+    {
+      "id": "forlab-cholesky-factors-reference",
+      "name": "gams-forlab-cholesky-factors-reference",
+      "package_id": "forlab",
+      "procedure_id": "forlab-cholesky-factors",
+      "gams_code": "D2b1b",
+      "problem_id": "forlab-cholesky-factors-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/forlab-cholesky-factors-reference.f90",
+      "revision": "416e5612167b6133100bef4cec116322890f66f7",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/forlab-statistics-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. Seven REAL32 SPD matrices n=2..8 constructed from known nonsingular lower-triangular dyadic factors. Returned factor and A=L*transpose(L) reconstruction checked against REAL64 references. Nonpositive-definite inputs excluded.",
+      "validation_path": "docs/gams-forlab-statistics-ten-validation.json",
+      "review_path": "docs/gams-forlab-statistics-ten.md",
+      "checks": {
+        "scalar_kind": "pinned Forlab RPRE REAL32",
+        "relative_tolerance": 3e-05,
+        "oracle": "explicit REAL64 formulas or independently constructed matrix references"
+      }
+    },
+    {
+      "id": "forlab-symmetric-eigenpairs-reference",
+      "name": "gams-forlab-symmetric-eigenpairs-reference",
+      "package_id": "forlab",
+      "procedure_id": "forlab-symmetric-eigenpairs",
+      "gams_code": "D4a1",
+      "problem_id": "forlab-symmetric-eigenpairs-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/forlab-symmetric-eigenpairs-reference.f90",
+      "revision": "416e5612167b6133100bef4cec116322890f66f7",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/forlab-statistics-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. Seven REAL32 symmetric eigensystems n=2..8 with known Householder-rotated alternating-sign eigenvalues. Dense residuals, orthogonality and order-independent analytic eigenvalues checked; eigenvector signs and ordering are not prescribed.",
+      "validation_path": "docs/gams-forlab-statistics-ten-validation.json",
+      "review_path": "docs/gams-forlab-statistics-ten.md",
+      "checks": {
+        "scalar_kind": "pinned Forlab RPRE REAL32",
+        "relative_tolerance": 3e-05,
+        "oracle": "explicit REAL64 formulas or independently constructed matrix references"
+      }
+    },
+    {
+      "id": "forlab-tall-svd-reference",
+      "name": "gams-forlab-tall-svd-reference",
+      "package_id": "forlab",
+      "procedure_id": "forlab-tall-svd",
+      "gams_code": "D6",
+      "problem_id": "forlab-tall-svd-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/forlab-tall-svd-reference.f90",
+      "revision": "416e5612167b6133100bef4cec116322890f66f7",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/forlab-statistics-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. Five REAL32 tall matrices (m=n+2,n=2..6) from known orthonormal Householder columns and positive distinct singular values. Status, analytic singular-value set, thin-factor orthogonality and reconstruction checked. Wide, rank-deficient and optional-mode state behavior excluded.",
+      "validation_path": "docs/gams-forlab-statistics-ten-validation.json",
+      "review_path": "docs/gams-forlab-statistics-ten.md",
+      "checks": {
+        "scalar_kind": "pinned Forlab RPRE REAL32",
+        "relative_tolerance": 3e-05,
+        "oracle": "explicit REAL64 formulas or independently constructed matrix references"
+      }
+    },
+    {
+      "id": "forlab-dense-inverses-reference",
+      "name": "gams-forlab-dense-inverses-reference",
+      "package_id": "forlab",
+      "procedure_id": "forlab-dense-inverses",
+      "gams_code": "D2a1",
+      "problem_id": "forlab-dense-inverses-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/forlab-dense-inverses-reference.f90",
+      "revision": "416e5612167b6133100bef4cec116322890f66f7",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/forlab-statistics-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. Seven nonsymmetric diagonally dominant REAL32 matrices n=2..8, including direct 2x2/3x3 and larger LU paths. Both left/right inverse products checked against identity using the original dense matrix. Singular and ill-conditioned inputs excluded.",
+      "validation_path": "docs/gams-forlab-statistics-ten-validation.json",
+      "review_path": "docs/gams-forlab-statistics-ten.md",
+      "checks": {
+        "scalar_kind": "pinned Forlab RPRE REAL32",
+        "relative_tolerance": 3e-05,
+        "oracle": "explicit REAL64 formulas or independently constructed matrix references"
+      }
     }
   ]
 }

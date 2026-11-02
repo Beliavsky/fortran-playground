@@ -1,0 +1,328 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "forlab-location-dispersion-reference",
+      "source_revision": "416e5612167b6133100bef4cec116322890f66f7",
+      "source_sha256": "d6cdd86d90cf49cb2d5d6c838c674ef7993eee2ce818d9deb87995e5ad72bbb4",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T21:03:18.760551+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.239,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Three dyadic affine data families, sizes through 33, independently checked.\nForlab real storage bits: 32\nPASS forlab-location-dispersion-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.037,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "forlab-covariance-matrices-reference",
+      "source_revision": "416e5612167b6133100bef4cec116322890f66f7",
+      "source_sha256": "ece6f6830ac92867f9142eae7b5cc89da8b2a26ade738db76c3ef927759d1651",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T21:03:20.313128+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.298,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Three dyadic affine data families, sizes through 33, independently checked.\nForlab real storage bits: 32\nPASS forlab-covariance-matrices-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.039,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "forlab-population-shape-moments-reference",
+      "source_revision": "416e5612167b6133100bef4cec116322890f66f7",
+      "source_sha256": "c8fb6d5fdd5736f16b5722fe1fe218b901f61f10e9fbda07105ab8b026b546cf",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T21:03:24.767105+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.485,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Three dyadic affine data families, sizes through 33, independently checked.\nForlab real storage bits: 32\nPASS forlab-population-shape-moments-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.039,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "forlab-normal-density-reference",
+      "source_revision": "416e5612167b6133100bef4cec116322890f66f7",
+      "source_sha256": "0b094f1a92f11fbcf42e362e2a86e96bf2be08ecd188faecbf75c54057e474fe",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T21:04:19.695514+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 3.46,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "189 normal densities; scalar and vector APIs checked.\nForlab real storage bits: 32\nPASS forlab-normal-density-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.052,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "forlab-cholesky-factors-reference",
+      "source_revision": "416e5612167b6133100bef4cec116322890f66f7",
+      "source_sha256": "0cf008916e879c3c5c3f7b433a3d85914539c1b7ffebcb3dc81e2e5d0d742471",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T21:03:29.507766+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.379,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Seven known Cholesky factors and reconstructions checked.\nForlab real storage bits: 32\nPASS forlab-cholesky-factors-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.027,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "forlab-symmetric-eigenpairs-reference",
+      "source_revision": "416e5612167b6133100bef4cec116322890f66f7",
+      "source_sha256": "29cdc5f1e241c151cc02e5948a7788ed5780c20f48d69756ea0f76b815d22a2f",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T21:03:31.260941+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.512,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Seven analytically constructed symmetric eigensystems checked.\nForlab real storage bits: 32\nPASS forlab-symmetric-eigenpairs-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.036,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "forlab-tall-svd-reference",
+      "source_revision": "416e5612167b6133100bef4cec116322890f66f7",
+      "source_sha256": "1649b1d7f93df4c8421e1aebe81571b65c5017708cb8f413eb33865e04e6a757",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T21:03:37.305204+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 4.101,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Five tall SVDs: exact singular values and reconstruction checked.\nForlab real storage bits: 32\nPASS forlab-tall-svd-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.05,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "forlab-dense-inverses-reference",
+      "source_revision": "416e5612167b6133100bef4cec116322890f66f7",
+      "source_sha256": "1b2ff3aaa367255560f1878adb8a99b3a5153d147cbf34c89f0042a9f52006f3",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T21:03:38.841261+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.38,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Seven nonsymmetric inverses, left and right identities checked.\nForlab real storage bits: 32\nPASS forlab-dense-inverses-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.037,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "forlab-even-chi-square-reference",
+      "source_revision": "416e5612167b6133100bef4cec116322890f66f7",
+      "source_sha256": "e58958a2de14037d86801b3e76e7687b1ca34e81b90ac905417cbac6e2bdfe2d",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T21:04:14.877532+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.294,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "24 even-degree chi-square PDF/CDF cases independently checked.\nForlab real storage bits: 32\nPASS forlab-even-chi-square-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.029,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "forlab-polynomial-differences-reference",
+      "source_revision": "416e5612167b6133100bef4cec116322890f66f7",
+      "source_sha256": "f153097890d476cb5783ec7cf430c3078924a8bd0ccd24fdac3864b8a754386b",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T21:05:59.948858+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 2.106,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "48 cubic grids: first, second and third polynomial forward differences checked.\nPASS forlab-polynomial-differences-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.048,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-11-02T21:06:00.002952+00:00"
+}

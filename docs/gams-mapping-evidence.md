@@ -8,7 +8,7 @@ This report assesses each package/class pair, including inherited parent classes
 
 When a driver cannot be created, inspect the pinned implementation and author examples. Narrow or remove a classification that is unsupported; do not substitute an unrelated default example as evidence. Record missing dependencies, sandbox limits and upstream defects separately in the procedure or package review notes. A sandbox failure alone does not disprove an algorithm.
 
-Counts refer to package/class pairs and include parents: 826 verified, 80 source-supported, 235 uncertain.
+Counts refer to package/class pairs and include parents: 852 verified, 81 source-supported, 232 uncertain.
 
 ## Mappings requiring source review
 
@@ -79,11 +79,8 @@ Inspect these discovery assignments before making a specific algorithm claim. Th
 | [forinv](https://beliavsky.github.io/fortran-playground/gams/packages/forinv/) | [D2](https://beliavsky.github.io/fortran-playground/gams/D2/) | Solution of systems of linear equations (including inversion, LU and related decompositions) |
 | [forinv](https://beliavsky.github.io/fortran-playground/gams/packages/forinv/) | [D6](https://beliavsky.github.io/fortran-playground/gams/D6/) | Singular value decomposition |
 | [forlab](https://beliavsky.github.io/fortran-playground/gams/packages/forlab/) | [D1](https://beliavsky.github.io/fortran-playground/gams/D1/) | Elementary vector and matrix operations |
-| [forlab](https://beliavsky.github.io/fortran-playground/gams/packages/forlab/) | [D2](https://beliavsky.github.io/fortran-playground/gams/D2/) | Solution of systems of linear equations (including inversion, LU and related decompositions) |
 | [forlab](https://beliavsky.github.io/fortran-playground/gams/packages/forlab/) | [E](https://beliavsky.github.io/fortran-playground/gams/E/) | Interpolation |
 | [forlab](https://beliavsky.github.io/fortran-playground/gams/packages/forlab/) | [E1](https://beliavsky.github.io/fortran-playground/gams/E1/) | Univariate data (curve fitting) |
-| [forlab](https://beliavsky.github.io/fortran-playground/gams/packages/forlab/) | [L](https://beliavsky.github.io/fortran-playground/gams/L/) | Statistics, probability |
-| [forlab](https://beliavsky.github.io/fortran-playground/gams/packages/forlab/) | [L1](https://beliavsky.github.io/fortran-playground/gams/L1/) | Data summarization |
 | [forpca](https://beliavsky.github.io/fortran-playground/gams/packages/forpca/) | [D4](https://beliavsky.github.io/fortran-playground/gams/D4/) | Eigenvalues, eigenvectors |
 | [forsolver](https://beliavsky.github.io/fortran-playground/gams/packages/forsolver/) | [D](https://beliavsky.github.io/fortran-playground/gams/D/) | Linear Algebra |
 | [forsolver](https://beliavsky.github.io/fortran-playground/gams/packages/forsolver/) | [D2](https://beliavsky.github.io/fortran-playground/gams/D2/) | Solution of systems of linear equations (including inversion, LU and related decompositions) |
@@ -354,7 +351,19 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [fordot / fordot-products](https://beliavsky.github.io/fortran-playground/gams/packages/fordot/#fordot-products) | D1 | verified |
 | [foreig / foreig-eig](https://beliavsky.github.io/fortran-playground/gams/packages/foreig/#foreig-eig) | D4a1 | verified |
 | [forinv / forinv-inv](https://beliavsky.github.io/fortran-playground/gams/packages/forinv/#forinv-inv) | D9c | verified |
+| [forlab / forlab-cholesky-factors](https://beliavsky.github.io/fortran-playground/gams/packages/forlab/#forlab-cholesky-factors) | D2b1b | verified |
+| [forlab / forlab-covariance-matrices](https://beliavsky.github.io/fortran-playground/gams/packages/forlab/#forlab-covariance-matrices) | L1c1b | verified |
+| [forlab / forlab-dense-inverses](https://beliavsky.github.io/fortran-playground/gams/packages/forlab/#forlab-dense-inverses) | D2a1 | verified |
+| [forlab / forlab-difference-cumsum](https://beliavsky.github.io/fortran-playground/gams/packages/forlab/#forlab-difference-cumsum) | H1 | source-supported |
+| [forlab / forlab-even-chi-square](https://beliavsky.github.io/fortran-playground/gams/packages/forlab/#forlab-even-chi-square) | L5a1c | verified |
+| [forlab / forlab-location-dispersion](https://beliavsky.github.io/fortran-playground/gams/packages/forlab/#forlab-location-dispersion) | L1a1b | verified |
+| [forlab / forlab-median-percentiles](https://beliavsky.github.io/fortran-playground/gams/packages/forlab/#forlab-median-percentiles) | L1a1a | source-supported |
+| [forlab / forlab-normal-density](https://beliavsky.github.io/fortran-playground/gams/packages/forlab/#forlab-normal-density) | L5a1n | verified |
+| [forlab / forlab-polynomial-differences](https://beliavsky.github.io/fortran-playground/gams/packages/forlab/#forlab-polynomial-differences) | H1 | verified |
+| [forlab / forlab-population-shape-moments](https://beliavsky.github.io/fortran-playground/gams/packages/forlab/#forlab-population-shape-moments) | L1a1c | verified |
 | [forlab / forlab-solve](https://beliavsky.github.io/fortran-playground/gams/packages/forlab/#forlab-solve) | D9a1 | verified |
+| [forlab / forlab-symmetric-eigenpairs](https://beliavsky.github.io/fortran-playground/gams/packages/forlab/#forlab-symmetric-eigenpairs) | D4a1 | verified |
+| [forlab / forlab-tall-svd](https://beliavsky.github.io/fortran-playground/gams/packages/forlab/#forlab-tall-svd) | D6 | verified |
 | [formal / formal-divergence](https://beliavsky.github.io/fortran-playground/gams/packages/formal/#formal-divergence) | H1 | verified |
 | [formal / formal-divergence](https://beliavsky.github.io/fortran-playground/gams/packages/formal/#formal-divergence) | H2 | source-supported |
 | [formal / formal-divergence](https://beliavsky.github.io/fortran-playground/gams/packages/formal/#formal-divergence) | I2 | source-supported |

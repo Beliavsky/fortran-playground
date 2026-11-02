@@ -121,6 +121,7 @@ ROOTS_STRUCTURED_TEN_REPORT = Path('docs/gams-roots-structured-ten.md')
 ORDERING_RUNGE_TEN_REPORT = Path('docs/gams-ordering-runge-ten.md')
 GAMMA_RELATIVE_TEN_REPORT = Path('docs/gams-gamma-relative-ten.md')
 BANDED_PRODUCTS_TEN_REPORT = Path('docs/gams-banded-products-ten.md')
+FORLAB_STATISTICS_TEN_REPORT = Path('docs/gams-forlab-statistics-ten.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
 EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
@@ -11572,6 +11573,132 @@ def banded_products_ten_review_text(root=ROOT):
     return '\n'.join(lines)
 
 
+def forlab_statistics_ten_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-forlab-statistics-ten-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-forlab-statistics-ten-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Ten checked Forlab statistics and matrix drivers',
+     '',
+     'Ten independent Forlab consumers passed GNU Fortran 16.2.0 and FPM 0.12.0 in the hosted sandbox. The '
+     'cached library was reused; only main.f90 and playground-main were compiled. The [verification '
+     'report](gams-forlab-statistics-ten-validation.json) records normalized UTF-8/LF source hashes, exact pins, '
+     'timings and full output. GAMS coverage remains unfinished.',
+     '',
+     '## Precision and acceptance',
+     '',
+     'The pinned Forlab module exports RPRE=4. These drivers import wp=>RPRE and explicitly verify 32-bit real '
+     'storage; this is native REAL32, not REAL64. Independent references use REAL64 arithmetic on the actual '
+     'input data or analytic formulas. Ordinary statistics and matrix checks require finite results and '
+     'abs(actual-reference)<=3e-5*max(1,abs(reference)). Normal PDF and chi-square PDF/CDF checks instead '
+     'require relative error <=3e-5 with a 1e-20 reference floor, retaining sensitivity to small positive '
+     'probabilities. These bounded checks are not a high-precision or performance benchmark.',
+     '',
+     '| Driver | GAMS | Independent checks |\n'
+     '| --- | --- | --- |\n'
+     '| Location and dispersion | L1a1b | 96 data sets: mean, sample/population variance and standard deviation '
+     '|\n'
+     '| Covariance matrices | L1c1b | 96 three-column data sets plus separate two-vector calls, both '
+     'normalization choices |\n'
+     '| Population shape moments | L1a1c | 90 data sets: centered third/fourth moments, population skewness and '
+     'non-excess kurtosis |\n'
+     '| Normal density | L5a1n | 189 values, scalar/vector APIs, three locations and three scales |\n'
+     '| Even-degree chi-square | L5a1c | 24 positive inputs: PDF/CDF against finite exponential/factorial '
+     'formulas |\n'
+     '| Cholesky factors | D2b1b | Seven SPD matrices with known lower-triangular factors and reconstruction |\n'
+     '| Symmetric eigenpairs | D4a1 | Seven known Householder-rotated spectra, dense residuals and orthogonality '
+     '|\n'
+     '| Tall SVD | D6 | Five known tall factorizations, status, singular values, orthogonality and '
+     'reconstruction |\n'
+     '| Dense inverses | D2a1 | Seven nonsymmetric diagonally dominant matrices, left/right inverse identities '
+     '|\n'
+     '| Polynomial differences | H1 | 48 cubic grids: first, second and third forward-difference quotients |',
+     '',
+     '## Statistics and distributions',
+     '',
+     'Data families use dyadic values and three affine transformations, with n=2..33 for '
+     'location/dispersion/covariance and n=4..33 for shape moments. Covariance references explicitly center each '
+     'actual column and form cross-products in REAL64. Sample normalization divides by n-1; population '
+     'normalization divides by n. Only flag=1 population skewness and non-excess kurtosis are verified; '
+     'bias-adjusted flag=0, constant arrays, missing values and singleton normalization are excluded.',
+     '',
+     'Normal PDF cases use mu=-1,0,1; sigma=1/2,1,2; and 21 standardized offsets -5..5. References use '
+     'exp(-z*z/2)/(sigma*sqrt(2*pi)). Chi-square cases use degrees of freedom 2,4,6,8 and x=1/8,1/2,1,2,4,8. '
+     'Setting k=degrees/2 and t=x/2 gives PDF=t**(k-1)*exp(-t)/(2*(k-1)!) and CDF=1-exp(-t)*sum_{j=0}^{k-1} '
+     't**j/j!. This oracle does not call an incomplete-gamma library. Boundary x=0, odd degrees, invalid sigma '
+     'and extreme tails are excluded.',
+     '',
+     '## Matrices and differences',
+     '',
+     'Cholesky inputs are formed from independently constructed dyadic lower-triangular factors for n=2..8; both '
+     'the returned factor and product are checked. Symmetric eigenproblems use a local analytic Householder '
+     'matrix Q and alternating-sign distinct diagonal eigenvalues: A=Q*diag(d)*transpose(Q). Every residual and '
+     'column inner product is checked, as is the known eigenvalue set without prescribing vector signs or '
+     'ordering.',
+     '',
+     'Tall SVD inputs have m=n+2,n=2..6 and known orthonormal columns scaled by distinct positive singular '
+     'values. Both thin-factor orthogonality conditions, status, known singular values and reconstruction are '
+     'checked. Wide/rank-deficient cases and optional-mode state behavior are excluded. Inverse cases cover '
+     'n=2..8, exercising the direct 2x2/3x3 and larger LU paths, with both inverse identities checked. Singular '
+     'and ill-conditioned matrices are excluded.',
+     '',
+     'Forward-difference cases sample p(t)=t**3+2*t*t-3*t+1 at lengths 5..20 and h=1/8,1/4,1/2. First quotient '
+     'references are 3*t*t+4*t-3+(3*t+2)*h+h*h; second quotients are 6*(t+h)+4; third quotients are 6. These '
+     'exact polynomial identities check all returned entries and lengths. This does not verify a general '
+     'derivative error estimator or numerical quadrature.',
+     '',
+     '## Retained unsuccessful probes',
+     '',
+     'The [saved probes](gams-candidates/forlab-statistics/README.md) include exact sources, normalized hashes, '
+     'pins and full hosted results. The median/percentile consumer built but crashed with SIGSEGV on the first '
+     'median call at n=1; the cause is undiagnosed. Its combined procedure record has no checked driver, and '
+     'unreached percentile calls or larger medians are not promoted.',
+     '',
+     'The initial chi-square consumer named a variable shape, hiding the SHAPE intrinsic in an unused helper; '
+     'renaming it corrected that consumer compile error. The corrected driver passed stricter relative checks. A '
+     'combined diff/cumsum consumer built and passed its first-difference quotients, then failed cumulative '
+     'reconstruction: 4.458984375 instead of 4.486328125. The pinned cumsum sorts values before accumulation, so '
+     'it does not produce input-order prefixes. That combined record has no checked driver. The published '
+     'diff-only consumer separately verifies all three orders on all 48 grids and makes no cumsum claim. No '
+     'upstream numerical code was patched.',
+     '',
+     '## Provenance',
+     '',
+     'Pinned public interfaces and implementations were reviewed directly. The pinned example directory contains '
+     'clustering, interpolation and random-generation consumers, rather than author examples of these exact '
+     'calls; author_example is therefore null for these independently authored drivers. All ten drivers use the '
+     'MIT consumer license and copy no implementation bodies. Classifications follow the [Netlib GAMS '
+     'taxonomy](https://netlib.org/misc/gams.html). Loading an example does not submit a job. See the [coverage '
+     'report](gams-coverage.md) for remaining work.',
+     '',
+     '## Driver details',
+     '']
+    for d in drivers:
+        lines += ['### '+d['id']+' ('+d['gams_code']+')', '', d['modifications'], '']
+    lines += ['## Provenance and actual output', '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -11768,6 +11895,7 @@ def main():
                          (ORDERING_RUNGE_TEN_REPORT, ordering_runge_ten_review_text()),
                          (GAMMA_RELATIVE_TEN_REPORT, gamma_relative_ten_review_text()),
                          (BANDED_PRODUCTS_TEN_REPORT, banded_products_ten_review_text()),
+                         (FORLAB_STATISTICS_TEN_REPORT, forlab_statistics_ten_review_text()),
                          (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report

@@ -238,7 +238,19 @@
       "archive_sha256": "784431a7c880c6a6dcfdd7687e3b0f2f8340dc13bd187a3546acd09d883628f3",
       "status": "procedure-reviewed",
       "procedure_ids": [
-        "forlab-solve"
+        "forlab-solve",
+        "forlab-location-dispersion",
+        "forlab-covariance-matrices",
+        "forlab-median-percentiles",
+        "forlab-population-shape-moments",
+        "forlab-normal-density",
+        "forlab-even-chi-square",
+        "forlab-cholesky-factors",
+        "forlab-symmetric-eigenpairs",
+        "forlab-tall-svd",
+        "forlab-dense-inverses",
+        "forlab-polynomial-differences",
+        "forlab-difference-cumsum"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
     },
