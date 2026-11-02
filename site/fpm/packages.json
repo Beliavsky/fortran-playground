@@ -804,6 +804,11 @@
         "parent": "D1"
       },
       {
+        "code": "D1a3",
+        "label": "Norm",
+        "parent": "D1a"
+      },
+      {
         "code": "D1a5",
         "label": "Copy or exchange (swap)",
         "parent": "D1a"
@@ -826,6 +831,11 @@
       {
         "code": "D1b2",
         "label": "Norm",
+        "parent": "D1b"
+      },
+      {
+        "code": "D1b3",
+        "label": "Transpose",
         "parent": "D1b"
       },
       {
@@ -864,6 +874,21 @@
         "parent": "D2b1"
       },
       {
+        "code": "D2d",
+        "label": "Complex Hermitian matrices",
+        "parent": "D2"
+      },
+      {
+        "code": "D2d1",
+        "label": "General",
+        "parent": "D2d"
+      },
+      {
+        "code": "D2d1b",
+        "label": "Positive definite",
+        "parent": "D2d1"
+      },
+      {
         "code": "D3",
         "label": "Determinants",
         "parent": "D"
@@ -896,6 +921,11 @@
       {
         "code": "D4a2",
         "label": "Real nonsymmetric",
+        "parent": "D4a"
+      },
+      {
+        "code": "D4a3",
+        "label": "Complex Hermitian",
         "parent": "D4a"
       },
       {
@@ -3836,6 +3866,306 @@
           {
             "path": "example/example_math_swap.F90",
             "sha256": "011c23ed8a7b457e64b044af7590420ddc8329f221bc9c3215eeeda166036371"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-matrix-trace",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "trace",
+        "gams_codes": [
+          "D1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "REAL64, COMPLEX128 and INT64 traces for 90 rectangular shapes including empty dimensions; closed-form diagonal sums from entry formulas, plus exact input preservation. Rectangular trace means the sum through min(m,n). Integer overflow and arbitrary kinds excluded.",
+        "driver_id": "stdlib-matrix-trace-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 402,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_trace.f90",
+            "sha256": "f84b09b380f1f39b4907d7c8acef24dd915bca719bdfcfb3c920aff68f93fab9"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-identity-matrices",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "eye",
+        "gams_codes": [
+          "D1b1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "90 rectangular identities with REAL64 default, COMPLEX128 and INT64 mold selection, including empty shapes; entrywise Kronecker-delta references. Ten default square shapes also checked. Negative dimensions excluded.",
+        "driver_id": "stdlib-identity-matrices-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 419,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_eye1.f90",
+            "sha256": "bc97a02897555870ac8163f835e4c73717bad177de5cf6a48dbd5df9d4d928c5"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-conjugate-transpose",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "hermitian",
+        "gams_codes": [
+          "D1b3"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "REAL64 and COMPLEX128 conjugate transpose over 90 rectangular shapes including empty dimensions; independent entry formulas, reversed shapes, exact input preservation and secondary involution. Integer and other overloads excluded.",
+        "driver_id": "stdlib-conjugate-transpose-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 646,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_hermitian.f90",
+            "sha256": "7ea52f327fb9128289608489e8d29503bacba1af90d39727f7b062813b25ddd5"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-matrix-structure",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "is_square, is_diagonal, is_symmetric, is_skew_symmetric, is_hermitian, is_triangular, is_hessenberg",
+        "gams_codes": [
+          "R2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Seven exact matrix predicates: 204 one-hot positions in square sizes 1..8 with real/complex input; zero matrices, real symmetric/skew pairs and genuinely complex Hermitian pairs; triangular/Hessenberg orientations and 42 rectangular squareness checks. No tolerance, nonfinite or invalid-selector behavior claimed.",
+        "driver_id": "stdlib-matrix-structure-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 558,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_linalg.f90",
+            "sha256": "a6123f572cbf1cea7f46a539bb92cb53e0354aac460ff7c46adc7f1ff0da5981"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-vector-norms",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "norm",
+        "gams_codes": [
+          "D1a3"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "REAL64/COMPLEX128 vector norms for the exact 3-4-12 triple with zero (L1=19,L2=13,Linf=12,min=0), 17 dyadic scales, and complex coordinate phases. Rank-two arrays have three scaled columns, known aggregate norms and explicit dimension reductions. Only orders 1,2,inf,-inf; no empty or extreme-scale inputs claimed.",
+        "driver_id": "stdlib-vector-norms-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 4219,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_norms.f90",
+            "line": 1,
+            "sha256": "35bac68506f26e3a59f28dc7b23325fc372d715af69d24166d07dbbca0af2c54"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_norm.f90",
+            "sha256": "e10ef51ed227e8f5614f1e7200413de76e5c7067984712e298e1457a8b963c17"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-pivoted-lu-systems",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "solve_lu",
+        "gams_codes": [
+          "D2a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "REAL64 pivoted LU with preallocated solution/pivots: sizes 1..10, three dyadic scales, vector and three-column RHS, both preservation and overwrite_a modes (120 calls). Row-reversed diagonally dominant matrices force pivoting for n>1. Known manufactured solutions, residuals and pivot ranges; singular/error cases excluded.",
+        "driver_id": "stdlib-pivoted-lu-systems-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 916,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_solve.f90",
+            "line": 1,
+            "sha256": "1adcdd3a5f9b2663ac1e8211dd3d36b6e740c2b0ce44db687effb3fe770bffcb"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_linalg_solve.f90",
+            "sha256": "379fce1b49a35b2acc12befbf36f5be89a083199bbe623fe38598e69ecd2bd0c"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-complex-cholesky",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "cholesky",
+        "gams_codes": [
+          "D2d1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "COMPLEX128 positive-definite matrices manufactured as L*L^H from explicit positive-real-diagonal triangular factors: sizes 1..8, three entry patterns and three scales (72 matrices; 144 lower/upper calls). Compare unique factors, zero unused triangles, reconstruction and input preservation. No indefinite/error cases or extreme conditioning claimed.",
+        "driver_id": "stdlib-complex-cholesky-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 126,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_cholesky.f90",
+            "line": 1,
+            "sha256": "e91a2c14248d443dddfe0b1d7c829b617fc5b78e2b9da04dfdfc666553ac8716"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_cholesky.f90",
+            "sha256": "cd8251df477289f0f90d603bacce38bb1bfafe4fd57e34c619ccc3fb1c356f21"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-complex-hermitian-eigenpairs",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "eigh",
+        "gams_codes": [
+          "D4a3"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "COMPLEX128 Hermitian spectra built with independently checked Householder unitary matrices and prescribed distinct integer eigenvalues: sizes 2..9, four patterns, five scales, both lower/upper storage (320 solves). Eigenvalues, residuals, orthonormality, reconstruction and input preservation checked; no phase-specific eigenvector comparison, repeated eigenvalues or generalized problem claimed.",
+        "driver_id": "stdlib-complex-hermitian-eigenpairs-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 3725,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_eigenvalues.f90",
+            "line": 1,
+            "sha256": "7e2034f8c37639a146f136c16fb775822cc91a186431a335762f89175361a009"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_eigh.f90",
+            "sha256": "fd61e308f5c4a82d8f362dadcbf337229495ce77f029ef3f9c60f9c3b526a7e5"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-complex-thin-svd",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "svd",
+        "gams_codes": [
+          "D6"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "COMPLEX128 thin SVD for 25 tall/square/wide sizes 2..6, full-rank and one-zero-singular-value spectra, three dyadic scales (150 cases). Independently checked unitary factors manufacture known singular values; reconstruction and both unitary Gram matrices verified without choosing singular-vector phases. No ill-conditioned rank cutoff or full-matrix API claim.",
+        "driver_id": "stdlib-complex-thin-svd-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 3922,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_svd.f90",
+            "line": 1,
+            "sha256": "b4805f93545c850095d3a7327fe63a999c56a5b033289e6a2896e9caed840fd4"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_svd.f90",
+            "sha256": "90efb35f1e5c7cd1f0d176065b17234c08d0c085b0abeadce47524eb7a5ad677"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-complex-least-squares",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "lstsq",
+        "gams_codes": [
+          "D9a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "COMPLEX128 full-column-rank overdetermined least squares: n=1..5, m=n+2..n+4, three unitary patterns (45 cases). Known coefficients and nonzero residual in an explicitly checked orthogonal complement; recovered coefficients, rank, residual and A^H*r stationarity checked. Inputs preserved; no rank-deficient or underdetermined/minimum-norm claim.",
+        "driver_id": "stdlib-complex-least-squares-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 1457,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_least_squares.f90",
+            "line": 1,
+            "sha256": "4b0813fe092a342f258c8f014fcdfb919e770900e22c8dddecab8f1ae8ca70b6"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_lstsq1.f90",
+            "sha256": "aeb94a3308199023078fd6f77042eb590daedc71cc098b1ffc37a4988a8c0644"
           }
         ]
       }

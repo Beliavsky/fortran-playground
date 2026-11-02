@@ -110,6 +110,7 @@ DISTRIBUTION_TEN_REPORT = Path('docs/gams-distribution-ten.md')
 PCA_ORDERING_TEN_REPORT = Path('docs/gams-pca-ordering-ten.md')
 ACTIVATIONS_TEN_REPORT = Path('docs/gams-activations-ten.md')
 GRIDS_TEN_REPORT = Path('docs/gams-grids-ten.md')
+COMPLEX_TEN_REPORT = Path('docs/gams-complex-ten.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
 EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
@@ -10260,6 +10261,113 @@ def grids_ten_review_text(root=ROOT):
     return '\n'.join(lines)
 
 
+def complex_ten_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-complex-ten-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-complex-ten-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Ten checked stdlib matrix and complex linear algebra drivers',
+     '',
+     'Ten independent drivers passed GNU Fortran 16.2.0 and FPM 0.12.0 in the restricted hosted sandbox. '
+     'Existing stdlib libraries were reused; only mains and executables were compiled. The [verification '
+     'report](gams-complex-ten-validation.json) saves normalized UTF-8/LF source hashes, package pins, timings '
+     'and complete output. GAMS categories are not exhausted.',
+     '',
+     '## Independent references and scope',
+     '',
+     'The first five drivers check elementary matrix operations, predicates and vector norms. The next five '
+     'exercise pivoted LU and complex Cholesky, Hermitian eigenpairs, thin SVD and least squares. The drivers '
+     'are independent MIT consumers; pinned API declarations, implementations and linked author examples were '
+     'reviewed. Upstream implementations and test bodies were not copied. No upstream numerical source was '
+     'patched.',
+     '',
+     '- **Trace (D1b):** 90 rectangular shapes, including empty dimensions, for REAL64, COMPLEX128 and INT64. '
+     'Closed-form diagonal sums follow from polynomial entry formulas; input preservation is checked. '
+     'Rectangular trace means summing through min(m,n).\n'
+     '- **Identity (D1b1):** 90 rectangular identities in three kinds and ten default square shapes, checked by '
+     'entrywise Kronecker deltas, including empty shapes.\n'
+     '- **Conjugate transpose (D1b3):** 90 real/complex rectangular shapes, including empty shapes. Independent '
+     'coordinate formulas check transposition, conjugation and input preservation; involution is a secondary '
+     'check.\n'
+     '- **Structure predicates (R2):** 204 one-hot positions in sizes 1..8, zero matrices, positive real '
+     'symmetric/skew pairs and genuinely complex Hermitian pairs. Seven APIs distinguish exact structural '
+     'properties; both triangle orientations and 42 rectangular squareness checks are included. This is an '
+     'exact-zero test, not approximate symmetry.\n'
+     '- **Vector norms (D1a3):** the exact 3-4-12 Pythagorean triple plus zero gives L1=19, L2=13, Linf=12 and '
+     'minimum magnitude 0. Seventeen dyadic scales, complex coordinate phases and rank-two dimension reductions '
+     'use known column factors and independent square-root references. Only orders 1, 2, inf and -inf are '
+     'claimed.\n'
+     '- **Pivoted LU (D2a1):** 120 REAL64 calls for sizes 1..10, three scales, vector/multiple right-hand sides, '
+     'preservation and overwrite modes. Row-reversed diagonally dominant matrices have known manufactured '
+     'solutions; solution errors, residuals and pivot ranges are checked.\n'
+     '- **Complex Cholesky (D2d1b):** 72 positive-definite matrices formed from explicit positive-diagonal lower '
+     'factors, tested with 144 lower/upper calls. The unique factors, reconstruction, zero unused triangles and '
+     'input preservation are checked.\n'
+     '- **Complex Hermitian eigenpairs (D4a3):** 320 solves for sizes 2..9, four independently checked unitary '
+     'patterns, five scales and both storage triangles. Prescribed distinct eigenvalues, eigenpair residuals, '
+     'orthonormality, reconstruction and input preservation are checked. Eigenvector phases are unrestricted.\n'
+     '- **Complex thin SVD (D6):** 150 cases covering 25 tall/square/wide shapes, full-rank and '
+     'one-zero-singular-value spectra, and three scales. Known singular values, reconstruction and both '
+     'singular-vector Gram matrices are checked, without fixing phases or null-space bases.\n'
+     '- **Complex least squares (D9a1):** 45 full-column-rank overdetermined systems with known coefficients and '
+     'a nonzero residual in an independently checked orthogonal complement. Coefficients, rank, residual, A^H*r '
+     'stationarity and input preservation are checked. Rank-deficient and underdetermined minimum-norm problems '
+     'remain outside this driver.',
+     '',
+     '## Manufacturing the complex problems',
+     '',
+     'Each unitary matrix is constructed locally as Q=I-2*v*v^H/(v^H*v), with integer real/imaginary entries of '
+     'v and nonzero denominator. Q^H*Q is explicitly checked before Q is used. Eigenproblems use '
+     'A=Q*diag(lambda)*Q^H with prescribed distinct integer eigenvalues at dyadic scales. SVD uses A=Q*Sigma*P^H '
+     'with prescribed singular values. Least squares uses columns Q(:,j)*(j+1), a known coefficient vector and a '
+     'nonzero multiple of Q(:,n+1) as residual. Cholesky uses a directly specified triangular factor with '
+     'positive real diagonal. These constructions supply mathematical references independently of the package '
+     'routines under test.',
+     '',
+     'Real and imaginary components must be finite and agree to scaled absolute tolerance '
+     '2e-10*max(1,abs(reference component)); integer/predicate and input-preservation checks are exact. These '
+     'are bounded, moderately conditioned examples, not a precision benchmark. Extreme scales, ill-conditioned '
+     'systems, repeated eigenvalues, singular/error handling and other overloads need separate drivers. Full '
+     'storage is populated even when selecting an upper/lower triangle; poisoned-unused-triangle behavior is not '
+     'tested.',
+     '',
+     '## GAMS classifications',
+     '',
+     'The [Netlib GAMS taxonomy](https://netlib.org/misc/gams.html) supplies elementary matrix operations (D1b), '
+     'initialization (D1b1), transpose (D1b3), vector norms (D1a3), error checking (R2), general real systems '
+     '(D2a1), positive-definite complex Hermitian systems/factorization (D2d1b), ordinary complex Hermitian '
+     'eigenproblems (D4a3), SVD (D6) and linear least squares (D9a1). Predicates do not claim to solve the '
+     'matrix problems they recognize. Loading a driver does not submit a job. The [coverage '
+     'report](gams-coverage.md) records remaining work.',
+     '',
+     '## Driver details',
+     '']
+    for d in drivers:
+        lines += ['### '+d['id']+' ('+d['gams_code']+')', '', d['modifications'], '']
+    lines += ['## Provenance and actual output', '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -10445,6 +10553,7 @@ def main():
                          (PCA_ORDERING_TEN_REPORT, pca_ordering_ten_review_text()),
                          (ACTIVATIONS_TEN_REPORT, activations_ten_review_text()),
                          (GRIDS_TEN_REPORT, grids_ten_review_text()),
+                         (COMPLEX_TEN_REPORT, complex_ten_review_text()),
                          (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report

@@ -1033,7 +1033,17 @@
         "stdlib-tolerance-comparison",
         "stdlib-complex-phase",
         "stdlib-angle-units",
-        "stdlib-vector-exchange"
+        "stdlib-vector-exchange",
+        "stdlib-matrix-trace",
+        "stdlib-identity-matrices",
+        "stdlib-conjugate-transpose",
+        "stdlib-matrix-structure",
+        "stdlib-vector-norms",
+        "stdlib-pivoted-lu-systems",
+        "stdlib-complex-cholesky",
+        "stdlib-complex-hermitian-eigenpairs",
+        "stdlib-complex-thin-svd",
+        "stdlib-complex-least-squares"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
     },

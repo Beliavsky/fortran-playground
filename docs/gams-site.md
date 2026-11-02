@@ -326,3 +326,5 @@ The [ten checked ordering and array-algebra drivers](gams-pca-ordering-ten.md) c
 The [ten activation and normalization drivers](gams-activations-ten.md) check scalar activation values, independently differentiated references, and stable softmax/log-softmax normalization. Failed GELU/SiLU gradients are retained separately and are excluded from the published value-only examples.
 
 Grid and numerical utility drivers: [review and actual results](gams-grids-ten.md).
+
+Matrix and complex linear algebra drivers: [review and actual results](gams-complex-ten.md).

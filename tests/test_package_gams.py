@@ -893,6 +893,45 @@ class PackageGamsTests(unittest.TestCase):
         self.assertIn('Type-2/type-3 transforms',text)
         self.assertIn('two-dimensional NUFFT2D driver',transforms_review_text())
 
+    def test_complex_linear_algebra_drivers_keep_problem_classes_and_oracles_explicit(self):
+        from xpackage_gams import complex_ten_review_text, COMPLEX_TEN_REPORT
+        data = gams_data()
+        records = {r['id']: r for r in data['procedure_mappings']}
+        drivers = {d['id']: d for d in driver_data(data=data)
+                   if d.get('validation_path') == 'docs/gams-complex-ten-validation.json'}
+        expected = {'matrix-trace': ('D1b', 'shapes', 90),
+                    'identity-matrices': ('D1b1', 'rectangles', 90),
+                    'conjugate-transpose': ('D1b3', 'shapes', 90),
+                    'matrix-structure': ('R2', 'one_hot_positions', 204),
+                    'vector-norms': ('D1a3', 'scales', 17),
+                    'pivoted-lu-systems': ('D2a1', 'calls', 120),
+                    'complex-cholesky': ('D2d1b', 'factorizations', 144),
+                    'complex-hermitian-eigenpairs': ('D4a3', 'solves', 320),
+                    'complex-thin-svd': ('D6', 'cases', 150),
+                    'complex-least-squares': ('D9a1', 'cases', 45)}
+        self.assertEqual(set(drivers), {'stdlib-'+name+'-reference' for name in expected})
+        reviewed = numerical_review(data=data)['packages']['stdlib']['procedure_ids']
+        for name, (code, field, count) in expected.items():
+            driver = drivers['stdlib-'+name+'-reference']
+            record = records[driver['procedure_id']]
+            self.assertEqual(record['driver_id'], driver['id'])
+            self.assertEqual(driver['gams_code'], code)
+            self.assertEqual(driver['checks'][field], count)
+            self.assertIn(record['id'], reviewed)
+            self.assertNotIn('linalg_state_type', record['procedure'])
+            self.assertEqual(class_evidence(class_tree(data), code, [record], [driver])['status'], 'verified')
+        for name in ['complex-hermitian-eigenpairs', 'complex-thin-svd', 'complex-least-squares']:
+            source = (ROOT/drivers['stdlib-'+name+'-reference']['path']).read_text()
+            self.assertIn('q(i,j)=q(i,j)-2*v(i)*conjg(v(j))/denominator', source)
+            self.assertIn('call check_matrix(matmul(conjg(transpose(q)),q),identity(n))', source)
+        text = complex_ten_review_text()
+        self.assertEqual((ROOT/COMPLEX_TEN_REPORT).read_text(encoding='utf-8'), text)
+        for phrase in ['320 solves', '150 cases', '45 full-column-rank', '144 lower/upper',
+                       'Q^H*Q', 'nonzero residual', 'Eigenvector phases are unrestricted',
+                       'No upstream numerical source was patched', 'categories are not exhausted',
+                       'poisoned-unused-triangle behavior is not tested']:
+            self.assertIn(phrase, text)
+
     def test_grid_utility_drivers_preserve_reference_provenance_and_tested_scope(self):
         from fractions import Fraction
         from xpackage_gams import grids_ten_review_text, GRIDS_TEN_REPORT

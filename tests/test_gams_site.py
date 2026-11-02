@@ -67,6 +67,32 @@ class GamsSiteTests(unittest.TestCase):
             self.assertIn('Open default example', sorting)
             self.assertNotIn('Try in playground', sorting)
 
+    def test_stdlib_complex_linear_algebra_pages_link_problem_specific_drivers(self):
+        import copy
+        from xpackage_gams import driver_data, gams_data
+        drivers = [d for d in driver_data(data=gams_data())
+                   if d.get('validation_path') == 'docs/gams-complex-ten-validation.json']
+        self.assertEqual(len(drivers), 10)
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects'] if p['playground']['package_id'] == 'stdlib']
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination, feed)
+            detail = (destination/'packages/stdlib/index.html').read_text(encoding='utf-8')
+            for driver in drivers:
+                url = ('https://beliavsky.github.io/fortran-playground/fpm/'
+                       f'?package=stdlib&example={driver["name"]}')
+                page = Page((destination/driver['gams_code']/'index.html').read_text(encoding='utf-8'))
+                self.assertIn((url, driver['id']), page.anchors)
+                card = detail.split('id="'+driver['procedure_id']+'"', 1)[1].split('</article>', 1)[0]
+                self.assertIn('Load checked GAMS driver:', card)
+                self.assertIn(url.replace('&', '&amp;'), card)
+            hermitian = Page((destination/'D4a3/index.html').read_text(encoding='utf-8'))
+            self.assertEqual([url for url, label in hermitian.anchors if label == 'Try in playground'],
+                             ['https://beliavsky.github.io/fortran-playground/fpm/'
+                              '?package=stdlib&example=gams-stdlib-complex-hermitian-eigenpairs-reference'])
+            self.assertFalse(any('example=gams-stdlib-eigh-reference' in url for url in hermitian.links))
+
     def test_stdlib_grid_utility_pages_link_each_checked_problem_driver(self):
         import copy
         from xpackage_gams import driver_data, gams_data

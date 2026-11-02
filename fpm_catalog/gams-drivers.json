@@ -12569,6 +12569,277 @@
         ],
         "strided_slices": "disjoint"
       }
+    },
+    {
+      "id": "stdlib-matrix-trace-reference",
+      "name": "gams-stdlib-matrix-trace-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-matrix-trace",
+      "gams_code": "D1b",
+      "problem_id": "stdlib-matrix-trace-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-matrix-trace-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_trace.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/complex-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. REAL64, COMPLEX128 and INT64 traces for 90 rectangular shapes including empty dimensions; closed-form diagonal sums from entry formulas, plus exact input preservation. Rectangular trace means the sum through min(m,n). Integer overflow and arbitrary kinds excluded.",
+      "validation_path": "docs/gams-complex-ten-validation.json",
+      "review_path": "docs/gams-complex-ten.md",
+      "checks": {
+        "shapes": 90,
+        "kinds": [
+          "REAL64",
+          "COMPLEX128",
+          "INT64"
+        ],
+        "oracle": "closed-form polynomial diagonal sums"
+      }
+    },
+    {
+      "id": "stdlib-identity-matrices-reference",
+      "name": "gams-stdlib-identity-matrices-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-identity-matrices",
+      "gams_code": "D1b1",
+      "problem_id": "stdlib-identity-matrices-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-identity-matrices-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_eye1.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/complex-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 90 rectangular identities with REAL64 default, COMPLEX128 and INT64 mold selection, including empty shapes; entrywise Kronecker-delta references. Ten default square shapes also checked. Negative dimensions excluded.",
+      "validation_path": "docs/gams-complex-ten-validation.json",
+      "review_path": "docs/gams-complex-ten.md",
+      "checks": {
+        "rectangles": 90,
+        "square_shapes": 10,
+        "oracle": "Kronecker delta"
+      }
+    },
+    {
+      "id": "stdlib-conjugate-transpose-reference",
+      "name": "gams-stdlib-conjugate-transpose-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-conjugate-transpose",
+      "gams_code": "D1b3",
+      "problem_id": "stdlib-conjugate-transpose-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-conjugate-transpose-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_hermitian.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/complex-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. REAL64 and COMPLEX128 conjugate transpose over 90 rectangular shapes including empty dimensions; independent entry formulas, reversed shapes, exact input preservation and secondary involution. Integer and other overloads excluded.",
+      "validation_path": "docs/gams-complex-ten-validation.json",
+      "review_path": "docs/gams-complex-ten.md",
+      "checks": {
+        "shapes": 90,
+        "oracle": "swapped coordinate formulas and negated imaginary part"
+      }
+    },
+    {
+      "id": "stdlib-matrix-structure-reference",
+      "name": "gams-stdlib-matrix-structure-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-matrix-structure",
+      "gams_code": "R2",
+      "problem_id": "stdlib-matrix-structure-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-matrix-structure-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_linalg.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/complex-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. Seven exact matrix predicates: 204 one-hot positions in square sizes 1..8 with real/complex input; zero matrices, real symmetric/skew pairs and genuinely complex Hermitian pairs; triangular/Hessenberg orientations and 42 rectangular squareness checks. No tolerance, nonfinite or invalid-selector behavior claimed.",
+      "validation_path": "docs/gams-complex-ten-validation.json",
+      "review_path": "docs/gams-complex-ten.md",
+      "checks": {
+        "one_hot_positions": 204,
+        "square_sizes": 8,
+        "rectangle_shapes": 42,
+        "predicates": 7,
+        "oracle": "one-hot coordinates and paired entries"
+      }
+    },
+    {
+      "id": "stdlib-vector-norms-reference",
+      "name": "gams-stdlib-vector-norms-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-vector-norms",
+      "gams_code": "D1a3",
+      "problem_id": "stdlib-vector-norms-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-vector-norms-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_norm.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/complex-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. REAL64/COMPLEX128 vector norms for the exact 3-4-12 triple with zero (L1=19,L2=13,Linf=12,min=0), 17 dyadic scales, and complex coordinate phases. Rank-two arrays have three scaled columns, known aggregate norms and explicit dimension reductions. Only orders 1,2,inf,-inf; no empty or extreme-scale inputs claimed.",
+      "validation_path": "docs/gams-complex-ten-validation.json",
+      "review_path": "docs/gams-complex-ten.md",
+      "checks": {
+        "scales": 17,
+        "orders": [
+          "1",
+          "2",
+          "inf",
+          "-inf"
+        ],
+        "oracle": "3-4-12 Pythagorean triple and column scale factors"
+      }
+    },
+    {
+      "id": "stdlib-pivoted-lu-systems-reference",
+      "name": "gams-stdlib-pivoted-lu-systems-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-pivoted-lu-systems",
+      "gams_code": "D2a1",
+      "problem_id": "stdlib-pivoted-lu-systems-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-pivoted-lu-systems-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_linalg_solve.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/complex-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. REAL64 pivoted LU with preallocated solution/pivots: sizes 1..10, three dyadic scales, vector and three-column RHS, both preservation and overwrite_a modes (120 calls). Row-reversed diagonally dominant matrices force pivoting for n>1. Known manufactured solutions, residuals and pivot ranges; singular/error cases excluded.",
+      "validation_path": "docs/gams-complex-ten-validation.json",
+      "review_path": "docs/gams-complex-ten.md",
+      "checks": {
+        "sizes": 10,
+        "scales": 3,
+        "calls": 120,
+        "rhs_columns": [
+          1,
+          3
+        ],
+        "overwrite_modes": [
+          false,
+          true
+        ]
+      }
+    },
+    {
+      "id": "stdlib-complex-cholesky-reference",
+      "name": "gams-stdlib-complex-cholesky-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-complex-cholesky",
+      "gams_code": "D2d1b",
+      "problem_id": "stdlib-complex-cholesky-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-complex-cholesky-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_cholesky.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/complex-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. COMPLEX128 positive-definite matrices manufactured as L*L^H from explicit positive-real-diagonal triangular factors: sizes 1..8, three entry patterns and three scales (72 matrices; 144 lower/upper calls). Compare unique factors, zero unused triangles, reconstruction and input preservation. No indefinite/error cases or extreme conditioning claimed.",
+      "validation_path": "docs/gams-complex-ten-validation.json",
+      "review_path": "docs/gams-complex-ten.md",
+      "checks": {
+        "matrices": 72,
+        "factorizations": 144,
+        "sizes": 8,
+        "scales": 3,
+        "oracle": "explicit positive-diagonal factors"
+      }
+    },
+    {
+      "id": "stdlib-complex-hermitian-eigenpairs-reference",
+      "name": "gams-stdlib-complex-hermitian-eigenpairs-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-complex-hermitian-eigenpairs",
+      "gams_code": "D4a3",
+      "problem_id": "stdlib-complex-hermitian-eigenpairs-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-complex-hermitian-eigenpairs-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_eigh.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/complex-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. COMPLEX128 Hermitian spectra built with independently checked Householder unitary matrices and prescribed distinct integer eigenvalues: sizes 2..9, four patterns, five scales, both lower/upper storage (320 solves). Eigenvalues, residuals, orthonormality, reconstruction and input preservation checked; no phase-specific eigenvector comparison, repeated eigenvalues or generalized problem claimed.",
+      "validation_path": "docs/gams-complex-ten-validation.json",
+      "review_path": "docs/gams-complex-ten.md",
+      "checks": {
+        "solves": 320,
+        "sizes": 8,
+        "unitary_patterns": 4,
+        "scales": 5,
+        "storage_triangles": 2,
+        "oracle": "prescribed spectra under checked unitary similarity"
+      }
+    },
+    {
+      "id": "stdlib-complex-thin-svd-reference",
+      "name": "gams-stdlib-complex-thin-svd-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-complex-thin-svd",
+      "gams_code": "D6",
+      "problem_id": "stdlib-complex-thin-svd-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-complex-thin-svd-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_svd.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/complex-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. COMPLEX128 thin SVD for 25 tall/square/wide sizes 2..6, full-rank and one-zero-singular-value spectra, three dyadic scales (150 cases). Independently checked unitary factors manufacture known singular values; reconstruction and both unitary Gram matrices verified without choosing singular-vector phases. No ill-conditioned rank cutoff or full-matrix API claim.",
+      "validation_path": "docs/gams-complex-ten-validation.json",
+      "review_path": "docs/gams-complex-ten.md",
+      "checks": {
+        "cases": 150,
+        "shapes": 25,
+        "rank_patterns": 2,
+        "scales": 3,
+        "oracle": "prescribed singular values and checked unitary factors"
+      }
+    },
+    {
+      "id": "stdlib-complex-least-squares-reference",
+      "name": "gams-stdlib-complex-least-squares-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-complex-least-squares",
+      "gams_code": "D9a1",
+      "problem_id": "stdlib-complex-least-squares-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-complex-least-squares-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_lstsq1.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/complex-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. COMPLEX128 full-column-rank overdetermined least squares: n=1..5, m=n+2..n+4, three unitary patterns (45 cases). Known coefficients and nonzero residual in an explicitly checked orthogonal complement; recovered coefficients, rank, residual and A^H*r stationarity checked. Inputs preserved; no rank-deficient or underdetermined/minimum-norm claim.",
+      "validation_path": "docs/gams-complex-ten-validation.json",
+      "review_path": "docs/gams-complex-ten.md",
+      "checks": {
+        "cases": 45,
+        "columns": 5,
+        "extra_rows": [
+          2,
+          3,
+          4
+        ],
+        "unitary_patterns": 3,
+        "oracle": "known coefficients plus orthogonal-complement residual"
+      }
     }
   ]
 }

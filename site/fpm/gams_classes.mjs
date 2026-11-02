@@ -855,5 +855,29 @@ export const gamsSubclasses = {
   "D1a5": {
     "label": "Copy or exchange (swap)",
     "parent": "D1a"
+  },
+  "D1a3": {
+    "label": "Norm",
+    "parent": "D1a"
+  },
+  "D1b3": {
+    "label": "Transpose",
+    "parent": "D1b"
+  },
+  "D2d": {
+    "label": "Complex Hermitian matrices",
+    "parent": "D2"
+  },
+  "D2d1": {
+    "label": "General",
+    "parent": "D2d"
+  },
+  "D2d1b": {
+    "label": "Positive definite",
+    "parent": "D2d1"
+  },
+  "D4a3": {
+    "label": "Complex Hermitian",
+    "parent": "D4a"
   }
 };
