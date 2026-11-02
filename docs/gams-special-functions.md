@@ -95,12 +95,22 @@ The C10 driver checks 39 complex values at `z=[0.5+0.25i,1+0.5i,2+0.75i]`. For s
 | [Load stdlib-activation-softplus-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-activation-softplus-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-activation-softplus-reference.f90) | C19 | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_specialfunctions.f90#L498) |
 | [Load stdlib-complex-phase-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-complex-phase-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-complex-phase-reference.f90) | C4a | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_math.f90#L1106) · [Author example/test](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/example/example_math_arg.f90) |
 | [Load specfunc-fullerton-beta-pairs-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=specfunc-fullerton&example=gams-specfunc-fullerton-beta-pairs-reference) · [Source](../fpm_catalog/gams-drivers/specfunc-fullerton-beta-pairs-reference.f90) | C7b | [Procedure](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_beta.f90#L30) · [Author example/test](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/test/beta/test_beta.f90) |
+| [Load specfunc-fullerton-airy-values-derivatives-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=specfunc-fullerton&example=gams-specfunc-fullerton-airy-values-derivatives-reference) · [Source](../fpm_catalog/gams-drivers/specfunc-fullerton-airy-values-derivatives-reference.f90) | C10d | [Procedure](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_airy.f90#L39) · [Author example/test](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/test/airy/test_airy.f90) |
+| [Load specfunc-fullerton-modified-bessel-i01-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=specfunc-fullerton&example=gams-specfunc-fullerton-modified-bessel-i01-reference) · [Source](../fpm_catalog/gams-drivers/specfunc-fullerton-modified-bessel-i01-reference.f90) | C10b1 | [Procedure](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_bessel.f90#L52) · [Author example/test](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/test/bessel_i0/test_i0.f90) |
+| [Load specfunc-fullerton-modified-bessel-k01-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=specfunc-fullerton&example=gams-specfunc-fullerton-modified-bessel-k01-reference) · [Source](../fpm_catalog/gams-drivers/specfunc-fullerton-modified-bessel-k01-reference.f90) | C10b1 | [Procedure](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_bessel.f90#L458) · [Author example/test](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/test/bessel_k0/test_k0.f90) |
+| [Load specfunc-fullerton-exponential-logarithmic-integrals-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=specfunc-fullerton&example=gams-specfunc-fullerton-exponential-logarithmic-integrals-reference) · [Source](../fpm_catalog/gams-drivers/specfunc-fullerton-exponential-logarithmic-integrals-reference.f90) | C5 | [Procedure](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_ei.f90#L51) · [Author example/test](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/test/ei/test_ei.f90) |
+| [Load specfunc-fullerton-positive-exponential-integrals-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=specfunc-fullerton&example=gams-specfunc-fullerton-positive-exponential-integrals-reference) · [Source](../fpm_catalog/gams-drivers/specfunc-fullerton-positive-exponential-integrals-reference.f90) | C5 | [Procedure](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_ei.f90#L62) · [Author example/test](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/test/ei/test_ei.f90) |
+| [Load specfunc-fullerton-sine-cosine-integrals-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=specfunc-fullerton&example=gams-specfunc-fullerton-sine-cosine-integrals-reference) · [Source](../fpm_catalog/gams-drivers/specfunc-fullerton-sine-cosine-integrals-reference.f90) | C6 | [Procedure](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_ei.f90#L378) · [Author example/test](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/test/ei/test_ei.f90) |
+| [Load specfunc-fullerton-hyperbolic-integrals-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=specfunc-fullerton&example=gams-specfunc-fullerton-hyperbolic-integrals-reference) · [Source](../fpm_catalog/gams-drivers/specfunc-fullerton-hyperbolic-integrals-reference.f90) | C4d | [Procedure](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_ei.f90#L506) · [Author example/test](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/test/ei/test_ei.f90) |
+| [Load specfunc-fullerton-dawson-values-derivatives-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=specfunc-fullerton&example=gams-specfunc-fullerton-dawson-values-derivatives-reference) · [Source](../fpm_catalog/gams-drivers/specfunc-fullerton-dawson-values-derivatives-reference.f90) | C8c | [Procedure](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_misc.f90#L211) |
+| [Load specfunc-fullerton-real-dilogarithm-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=specfunc-fullerton&example=gams-specfunc-fullerton-real-dilogarithm-reference) · [Source](../fpm_catalog/gams-drivers/specfunc-fullerton-real-dilogarithm-reference.f90) | C5 | [Procedure](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_misc.f90#L386) |
+| [Load specfunc-fullerton-near-zero-exponential-logarithm-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=specfunc-fullerton&example=gams-specfunc-fullerton-near-zero-exponential-logarithm-reference) · [Source](../fpm_catalog/gams-drivers/specfunc-fullerton-near-zero-exponential-logarithm-reference.f90) | C4b | [Procedure](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_misc.f90#L90) · [Author example/test](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/test/misc_exp/test_misc_exp.f90) |
 
 The programs use author APIs, retain applicable license notices and use deterministic reference checks instead of the larger author harnesses. They appear in hosted and main local FPM example menus and downloaded projects. Loading a link selects source without submitting a job.
 
 ## Recorded results
 
-All 31 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing existing package libraries. Only each main and executable were rebuilt. The [verification report](gams-special-functions-validation.json) records hashes, pins and saved output. These cases establish checked usage and selected-point agreement, rather than accuracy over each function's complete domain.
+All 41 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing existing package libraries. Only each main and executable were rebuilt. The [verification report](gams-special-functions-validation.json) records hashes, pins and saved output. These cases establish checked usage and selected-point agreement, rather than accuracy over each function's complete domain.
 
 ### fullerton-gamma-values
 
@@ -379,6 +389,86 @@ PASS stdlib-complex-phase-reference
 ```text
 Positive integer/half-integer beta and log-beta reference pairs: 64
 PASS specfunc-fullerton-beta-pairs-reference
+```
+
+### specfunc-fullerton-airy-values-derivatives-reference
+
+```text
+Default REAL32 function comparisons with independent references: 56
+Maximum relative error (reference floor 1e-30):   4.7517E-06
+PASS specfunc-fullerton-airy-values-derivatives-reference
+```
+
+### specfunc-fullerton-modified-bessel-i01-reference
+
+```text
+Default REAL32 function comparisons with independent references: 36
+Maximum relative error (reference floor 1e-30):   1.2325E-07
+PASS specfunc-fullerton-modified-bessel-i01-reference
+```
+
+### specfunc-fullerton-modified-bessel-k01-reference
+
+```text
+Default REAL32 function comparisons with independent references: 18
+Maximum relative error (reference floor 1e-30):   2.0714E-07
+PASS specfunc-fullerton-modified-bessel-k01-reference
+```
+
+### specfunc-fullerton-exponential-logarithmic-integrals-reference
+
+```text
+Default REAL32 function comparisons with independent references: 25
+Maximum relative error (reference floor 1e-30):   1.8218E-06
+PASS specfunc-fullerton-exponential-logarithmic-integrals-reference
+```
+
+### specfunc-fullerton-positive-exponential-integrals-reference
+
+```text
+Default REAL32 function comparisons with independent references: 29
+Maximum relative error (reference floor 1e-30):   1.9123E-07
+PASS specfunc-fullerton-positive-exponential-integrals-reference
+```
+
+### specfunc-fullerton-sine-cosine-integrals-reference
+
+```text
+Default REAL32 function comparisons with independent references: 18
+Maximum relative error (reference floor 1e-30):   1.6805E-07
+PASS specfunc-fullerton-sine-cosine-integrals-reference
+```
+
+### specfunc-fullerton-hyperbolic-integrals-reference
+
+```text
+Default REAL32 function comparisons with independent references: 20
+Maximum relative error (reference floor 1e-30):   5.2300E-07
+PASS specfunc-fullerton-hyperbolic-integrals-reference
+```
+
+### specfunc-fullerton-dawson-values-derivatives-reference
+
+```text
+Default REAL32 function comparisons with independent references: 28
+Maximum relative error (reference floor 1e-30):   1.8587E-05
+PASS specfunc-fullerton-dawson-values-derivatives-reference
+```
+
+### specfunc-fullerton-real-dilogarithm-reference
+
+```text
+Default REAL32 function comparisons with independent references: 12
+Maximum relative error (reference floor 1e-30):   6.6263E-08
+PASS specfunc-fullerton-real-dilogarithm-reference
+```
+
+### specfunc-fullerton-near-zero-exponential-logarithm-reference
+
+```text
+Default REAL32 function comparisons with independent references: 38
+Maximum relative error (reference floor 1e-30):   8.1069E-08
+PASS specfunc-fullerton-near-zero-exponential-logarithm-reference
 ```
 
 ## Maintenance

@@ -116,6 +116,7 @@ STATISTICS_RANK_TEN_REPORT = Path('docs/gams-statistics-rank-ten.md')
 GRIDS_SPECTRA_TEN_REPORT = Path('docs/gams-grids-spectra-ten.md')
 INTEGRALS_TENSORS_TEN_REPORT = Path('docs/gams-integrals-tensors-ten.md')
 TRANSFORMS_STRUCTURES_TEN_REPORT = Path('docs/gams-transforms-structures-ten.md')
+FULLERTON_FUNCTIONS_TEN_REPORT = Path('docs/gams-fullerton-functions-ten.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
 EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
@@ -11010,6 +11011,134 @@ def transforms_structures_ten_review_text(root=ROOT):
     return '\n'.join(lines)
 
 
+def fullerton_functions_ten_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-fullerton-functions-ten-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-fullerton-functions-ten-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Ten checked Fullerton special-function drivers',
+     '',
+     'Ten independent specfunc-fullerton drivers passed GNU Fortran 16.2.0 and FPM 0.12.0 in the restricted '
+     'hosted sandbox. The existing package library was reused; only each main and executable were compiled. The '
+     '[verification report](gams-fullerton-functions-ten-validation.json) saves normalized UTF-8/LF source '
+     'hashes, the exact package pin, timings and complete output. GAMS categories are not exhausted.',
+     '',
+     '## Precision and independent references',
+     '',
+     'The pinned APIs accept and return default REAL32. The drivers use exact dyadic input arguments, convert '
+     'them to that kind for each call, and widen the returned values solely for checking. This does not supply '
+     'REAL64 accuracy. References were generated independently with mpmath 1.3.0 at 80 decimal digits and '
+     'confirmed at 120 digits with absolute differences below 1e-60. The [reference '
+     'table](gams-fullerton-functions-ten-references.json) records every API, argument, integer order where '
+     'applicable, and 18-significant-digit expected value.',
+     '',
+     'Every returned value must be finite and satisfy abs(actual-reference)/max(abs(reference),1e-30)<=5e-5. The '
+     'small floor makes the exact zero cases effectively exact checks without relaxing relative accuracy for '
+     'tiny nonzero results. Each driver reports its actual maximum relative error under this convention. These '
+     'bounded checks are not a precision or performance benchmark, and do not establish accuracy near excluded '
+     'function zeros, singularities, overflow or underflow.',
+     '',
+     '## Checked APIs and problem classes',
+     '',
+     '| Driver | GAMS | Checked cases |\n'
+     '| --- | --- | --- |\n'
+     '| Airy values and derivatives | C10d | 56 Ai, Bi, Ai-prime and Bi-prime comparisons at 14 dyadics in '
+     '[-8,8] |\n'
+     '| Modified Bessel I0/I1 | C10b1 | 36 comparisons at 18 signed dyadics in [-16,16], including zero |\n'
+     '| Modified Bessel K0/K1 | C10b1 | 18 comparisons at nine positive dyadics from 1/256 to 16 |\n'
+     '| Exponential/logarithmic integrals | C5 | 15 real Ei and 10 real li comparisons, avoiding their singular '
+     'arguments |\n'
+     '| Positive exponential integrals | C5 | Nine E1 values and 20 En values, with n=1..5 |\n'
+     '| Sine/cosine integrals | C6 | 18 positive-argument Si/Ci comparisons |\n'
+     '| Hyperbolic integrals | C4d | 20 positive-argument Shi/Chi comparisons, including x=3/8 |\n'
+     '| Dawson values and derivatives | C8c | 28 signed-argument value/first-derivative comparisons in [-8,8] |\n'
+     '| Real dilogarithm | C5 | 12 Li2 comparisons on [-8,1], including zero and one |\n'
+     '| Near-zero exponential/logarithm | C4b | 38 log1p/exprel comparisons, including tiny arguments and zero '
+     'limits |',
+     '',
+     '## Definitions and scope',
+     '',
+     '**Airy functions:** both function values and first derivatives are compared directly with high-precision '
+     'Airy references. Samples include oscillatory negative arguments and decaying/growing positive arguments, '
+     'along with zero. Complex/scaled variants and arguments near function zeros are excluded. Independent tests '
+     'check the ODE power series on a bounded subset, exact zero-argument gamma formulas and the Wronskian '
+     'identity using the saved values.',
+     '',
+     '**Modified Bessel functions:** the I0/I1 driver includes both signs, testing the even/odd conventions, '
+     'while K0/K1 uses strictly positive arguments. Relative comparisons retain sensitivity for the small '
+     'exponentially decaying K values. Only orders zero and one are verified. The separate bessel_in/bessel_kn '
+     'higher-order wrappers, fractional-order routines, scaled functions and extreme-range behavior are not '
+     'promoted by these results. Independent tests reconstruct I0/I1 with their power series and check K0/K1 '
+     'using their defining positive quadrature integral.',
+     '',
+     '**Ei, li and En:** Ei uses the real principal-value branch on nonzero real arguments. li(x) is the '
+     'unoffset logarithmic integral Ei(log(x)), not the offset integral starting at 2; x=1 is excluded. E1 and '
+     'En use integral_1^infinity exp(-x*t)/t**n dt for positive x. E1 is checked on nine dyadics 1/256..16; En '
+     'is checked for n=1..5 at x=1/8,1/2,1,2. No conclusion is drawn about the higher-order forward recurrence '
+     'at larger x. Independent tests use exponential-integral power series on a bounded subset and the En '
+     'integration-by-parts recurrence.',
+     '',
+     '**Si/Ci and Shi/Chi:** Si(x)=integral_0^x sin(t)/t dt, while Ci(x)=EulerGamma+log(x)+integral_0^x '
+     '(cos(t)-1)/t dt on the positive real domain. The hyperbolic counterparts replace sin/cos by sinh/cosh. Chi '
+     'and Ci are tested only for positive arguments, with no complex-continuation claim. Independent tests use '
+     'the corresponding power series on a bounded subset.',
+     '',
+     '**Dawson:** F(x)=sqrt(pi)*exp(-x*x)*erfi(x)/2. The high-precision derivative reference is obtained by '
+     'differentiating this definition with mpmath, rather than by reusing the package derivative. Independent '
+     'tests also check F-prime+2*x*F=1 and the ODE power series for bounded arguments. Extreme asymptotics and '
+     'derivative zeros are excluded.',
+     '',
+     '**Spence/dilogarithm:** the public integral_spence routine uses integral_0^x -log(abs(1-t))/t dt. On the '
+     'demonstrated domain x<=1 it equals real Li2(x), the mpmath polylog(2,x) reference. This convention differs '
+     "from APIs that call Li2(1-x) Spence's function. Independent tests use the convergent dilogarithm series "
+     'and negative-argument inversion identities. The x>1 real continuation and complex values are excluded.',
+     '',
+     '**Near zero:** lnrel(x)=log(1+x) and exprel(x)=(exp(x)-1)/x, with exprel(0)=1. Independent log1p/expm1 '
+     'references avoid subtractive cancellation. The 19 arguments include signed powers down to 2**(-24), zero, '
+     'and dyadic samples on both sides of the 3/8 and 1/2 approximation boundaries. All lnrel inputs are greater '
+     'than -1; overflow regions are excluded.',
+     '',
+     '## Provenance and maintenance',
+     '',
+     'Pinned public APIs, implementations and available linked author tests were reviewed. Dawson and '
+     'dilogarithm have no pinned author driver in the reviewed test tree; their public implementations were '
+     'reviewed directly and the examples are original consumers. All ten are independent MIT consumers; upstream '
+     'implementation and author-test bodies were not copied. No upstream numerical source was patched.',
+     '',
+     'The [Netlib GAMS taxonomy](https://netlib.org/misc/gams.html) supplies C10d Airy/Scorer, C10b1 real '
+     'integer-order modified Bessel, C5 exponential/logarithmic integrals, C6 sine/cosine integrals, C4d '
+     'elementary-function integrals, C8c Dawson and C4b exponential/logarithmic classifications. No new '
+     'numerical failure was observed in these bounded probes. Loading an example does not submit a job. The '
+     '[coverage report](gams-coverage.md) records remaining work.',
+     '',
+     '## Driver details',
+     '']
+    for d in drivers:
+        lines += ['### '+d['id']+' ('+d['gams_code']+')', '', d['modifications'], '']
+    lines += ['## Provenance and actual output', '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -11201,6 +11330,7 @@ def main():
                          (GRIDS_SPECTRA_TEN_REPORT, grids_spectra_ten_review_text()),
                          (INTEGRALS_TENSORS_TEN_REPORT, integrals_tensors_ten_review_text()),
                          (TRANSFORMS_STRUCTURES_TEN_REPORT, transforms_structures_ten_review_text()),
+                         (FULLERTON_FUNCTIONS_TEN_REPORT, fullerton_functions_ten_review_text()),
                          (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report

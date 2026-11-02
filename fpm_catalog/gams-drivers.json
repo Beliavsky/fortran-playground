@@ -14144,6 +14144,293 @@
         "absolute_tolerance": 3e-06,
         "oracle": "exact rational binomial-tail polynomial"
       }
+    },
+    {
+      "id": "specfunc-fullerton-airy-values-derivatives-reference",
+      "name": "gams-specfunc-fullerton-airy-values-derivatives-reference",
+      "package_id": "specfunc-fullerton",
+      "procedure_id": "specfunc-fullerton-airy-values-derivatives",
+      "gams_code": "C10d",
+      "problem_id": "specfunc-fullerton-airy-values-derivatives-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specfunc-fullerton-airy-values-derivatives-reference.f90",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "author_example": "test/airy/test_airy.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fullerton-functions-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 56 default REAL32 Ai/Bi values and first derivatives at 14 exact dyadic arguments spanning -8..8, including zero and oscillatory/decaying/growing regions. Independent high-precision values and derivatives, relative tolerance 5e-5 with reference floor 1e-30. Complex/scaled variants, function zeros and extreme arguments excluded.",
+      "validation_path": "docs/gams-fullerton-functions-ten-validation.json",
+      "review_path": "docs/gams-fullerton-functions-ten.md",
+      "checks": {
+        "comparisons": 56,
+        "scalar_kind": "default REAL32",
+        "relative_tolerance": 5e-05,
+        "reference_floor": 1e-30,
+        "oracle": "independent 80/120 digit mpmath references",
+        "arguments": 14
+      }
+    },
+    {
+      "id": "specfunc-fullerton-modified-bessel-i01-reference",
+      "name": "gams-specfunc-fullerton-modified-bessel-i01-reference",
+      "package_id": "specfunc-fullerton",
+      "procedure_id": "specfunc-fullerton-modified-bessel-i01",
+      "gams_code": "C10b1",
+      "problem_id": "specfunc-fullerton-modified-bessel-i01-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specfunc-fullerton-modified-bessel-i01-reference.f90",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "author_example": "test/bessel_i0/test_i0.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fullerton-functions-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 36 default REAL32 modified Bessel I0/I1 values at 18 signed dyadic arguments spanning -16..16, including zero. Independent high-precision references include parity and near-zero behavior. Only orders zero and one are verified; bessel_in, higher-order recurrences, scaled functions and overflow ranges are excluded.",
+      "validation_path": "docs/gams-fullerton-functions-ten-validation.json",
+      "review_path": "docs/gams-fullerton-functions-ten.md",
+      "checks": {
+        "comparisons": 36,
+        "scalar_kind": "default REAL32",
+        "relative_tolerance": 5e-05,
+        "reference_floor": 1e-30,
+        "oracle": "independent 80/120 digit mpmath references",
+        "arguments": 18,
+        "orders_verified": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "id": "specfunc-fullerton-modified-bessel-k01-reference",
+      "name": "gams-specfunc-fullerton-modified-bessel-k01-reference",
+      "package_id": "specfunc-fullerton",
+      "procedure_id": "specfunc-fullerton-modified-bessel-k01",
+      "gams_code": "C10b1",
+      "problem_id": "specfunc-fullerton-modified-bessel-k01-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specfunc-fullerton-modified-bessel-k01-reference.f90",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "author_example": "test/bessel_k0/test_k0.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fullerton-functions-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 18 default REAL32 modified Bessel K0/K1 values at nine strictly positive dyadic arguments from 1/256 to 16. High-precision relative references check logarithmic/pole behavior at small positive x and exponential decay. Only orders zero and one; bessel_kn, fractional/higher orders, zero arguments, scaling and underflow excluded.",
+      "validation_path": "docs/gams-fullerton-functions-ten-validation.json",
+      "review_path": "docs/gams-fullerton-functions-ten.md",
+      "checks": {
+        "comparisons": 18,
+        "scalar_kind": "default REAL32",
+        "relative_tolerance": 5e-05,
+        "reference_floor": 1e-30,
+        "oracle": "independent 80/120 digit mpmath references",
+        "arguments": 9,
+        "orders_verified": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "id": "specfunc-fullerton-exponential-logarithmic-integrals-reference",
+      "name": "gams-specfunc-fullerton-exponential-logarithmic-integrals-reference",
+      "package_id": "specfunc-fullerton",
+      "procedure_id": "specfunc-fullerton-exponential-logarithmic-integrals",
+      "gams_code": "C5",
+      "problem_id": "specfunc-fullerton-exponential-logarithmic-integrals-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specfunc-fullerton-exponential-logarithmic-integrals-reference.f90",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "author_example": "test/ei/test_ei.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fullerton-functions-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 25 default REAL32 real-branch Ei/li references: Ei on 15 nonzero signed dyadic arguments -16..16 and logarithmic integral li on ten positive dyadics away from x=1. Independent principal-value definitions via mpmath; singular arguments, complex branches and large overflow regions excluded.",
+      "validation_path": "docs/gams-fullerton-functions-ten-validation.json",
+      "review_path": "docs/gams-fullerton-functions-ten.md",
+      "checks": {
+        "comparisons": 25,
+        "scalar_kind": "default REAL32",
+        "relative_tolerance": 5e-05,
+        "reference_floor": 1e-30,
+        "oracle": "independent 80/120 digit mpmath references",
+        "ei_arguments": 15,
+        "li_arguments": 10
+      }
+    },
+    {
+      "id": "specfunc-fullerton-positive-exponential-integrals-reference",
+      "name": "gams-specfunc-fullerton-positive-exponential-integrals-reference",
+      "package_id": "specfunc-fullerton",
+      "procedure_id": "specfunc-fullerton-positive-exponential-integrals",
+      "gams_code": "C5",
+      "problem_id": "specfunc-fullerton-positive-exponential-integrals-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specfunc-fullerton-positive-exponential-integrals-reference.f90",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "author_example": "test/ei/test_ei.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fullerton-functions-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 29 default REAL32 positive-domain exponential integral references: E1 on nine dyadics 1/256..16 and En for n=1..5 at x=1/8,1/2,1,2. References independently evaluate integral_1^infinity exp(-x*t)/t**n dt. Higher-order forward recurrence at large x, zero/negative x and underflow excluded.",
+      "validation_path": "docs/gams-fullerton-functions-ten-validation.json",
+      "review_path": "docs/gams-fullerton-functions-ten.md",
+      "checks": {
+        "comparisons": 29,
+        "scalar_kind": "default REAL32",
+        "relative_tolerance": 5e-05,
+        "reference_floor": 1e-30,
+        "oracle": "independent 80/120 digit mpmath references",
+        "e1_arguments": 9,
+        "en_queries": 20,
+        "orders_verified": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      }
+    },
+    {
+      "id": "specfunc-fullerton-sine-cosine-integrals-reference",
+      "name": "gams-specfunc-fullerton-sine-cosine-integrals-reference",
+      "package_id": "specfunc-fullerton",
+      "procedure_id": "specfunc-fullerton-sine-cosine-integrals",
+      "gams_code": "C6",
+      "problem_id": "specfunc-fullerton-sine-cosine-integrals-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specfunc-fullerton-sine-cosine-integrals-reference.f90",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "author_example": "test/ei/test_ei.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fullerton-functions-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 18 default REAL32 sine/cosine integral values at nine positive dyadic arguments 1/256..16, spanning small-argument, series-transition and oscillatory ranges. Independent high-precision Si/Ci definitions; nonpositive Ci, complex branches and extreme arguments excluded.",
+      "validation_path": "docs/gams-fullerton-functions-ten-validation.json",
+      "review_path": "docs/gams-fullerton-functions-ten.md",
+      "checks": {
+        "comparisons": 18,
+        "scalar_kind": "default REAL32",
+        "relative_tolerance": 5e-05,
+        "reference_floor": 1e-30,
+        "oracle": "independent 80/120 digit mpmath references",
+        "arguments": 9
+      }
+    },
+    {
+      "id": "specfunc-fullerton-hyperbolic-integrals-reference",
+      "name": "gams-specfunc-fullerton-hyperbolic-integrals-reference",
+      "package_id": "specfunc-fullerton",
+      "procedure_id": "specfunc-fullerton-hyperbolic-integrals",
+      "gams_code": "C4d",
+      "problem_id": "specfunc-fullerton-hyperbolic-integrals-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specfunc-fullerton-hyperbolic-integrals-reference.f90",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "author_example": "test/ei/test_ei.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fullerton-functions-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 20 default REAL32 Shi/Chi references at ten positive dyadic arguments 1/256..16, including the small-argument branch boundary 3/8. Independent hyperbolic-integral values with relative tolerance 5e-5. Nonpositive Chi, complex continuation and overflow ranges excluded.",
+      "validation_path": "docs/gams-fullerton-functions-ten-validation.json",
+      "review_path": "docs/gams-fullerton-functions-ten.md",
+      "checks": {
+        "comparisons": 20,
+        "scalar_kind": "default REAL32",
+        "relative_tolerance": 5e-05,
+        "reference_floor": 1e-30,
+        "oracle": "independent 80/120 digit mpmath references",
+        "arguments": 10
+      }
+    },
+    {
+      "id": "specfunc-fullerton-dawson-values-derivatives-reference",
+      "name": "gams-specfunc-fullerton-dawson-values-derivatives-reference",
+      "package_id": "specfunc-fullerton",
+      "procedure_id": "specfunc-fullerton-dawson-values-derivatives",
+      "gams_code": "C8c",
+      "problem_id": "specfunc-fullerton-dawson-values-derivatives-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specfunc-fullerton-dawson-values-derivatives-reference.f90",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fullerton-functions-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 28 default REAL32 Dawson integral/first-derivative references at 14 signed dyadic arguments -8..8. Values use the independent high-precision erfi definition; derivatives use mpmath differentiation of that definition. Includes zero, odd/even parity and multiple approximation ranges. Extreme asymptotic arguments and derivative zeros excluded.",
+      "validation_path": "docs/gams-fullerton-functions-ten-validation.json",
+      "review_path": "docs/gams-fullerton-functions-ten.md",
+      "checks": {
+        "comparisons": 28,
+        "scalar_kind": "default REAL32",
+        "relative_tolerance": 5e-05,
+        "reference_floor": 1e-30,
+        "oracle": "independent 80/120 digit mpmath references",
+        "arguments": 14
+      }
+    },
+    {
+      "id": "specfunc-fullerton-real-dilogarithm-reference",
+      "name": "gams-specfunc-fullerton-real-dilogarithm-reference",
+      "package_id": "specfunc-fullerton",
+      "procedure_id": "specfunc-fullerton-real-dilogarithm",
+      "gams_code": "C5",
+      "problem_id": "specfunc-fullerton-real-dilogarithm-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specfunc-fullerton-real-dilogarithm-reference.f90",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fullerton-functions-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 12 default REAL32 real dilogarithm Li2(x) references at dyadic x in [-8,1], including zero/one and transformation boundaries. Public integral_spence uses integral_0^x -log(abs(1-t))/t dt, which equals real Li2 here. No claim about the x>1 real continuation or complex values.",
+      "validation_path": "docs/gams-fullerton-functions-ten-validation.json",
+      "review_path": "docs/gams-fullerton-functions-ten.md",
+      "checks": {
+        "comparisons": 12,
+        "scalar_kind": "default REAL32",
+        "relative_tolerance": 5e-05,
+        "reference_floor": 1e-30,
+        "oracle": "independent 80/120 digit mpmath references",
+        "arguments": 12
+      }
+    },
+    {
+      "id": "specfunc-fullerton-near-zero-exponential-logarithm-reference",
+      "name": "gams-specfunc-fullerton-near-zero-exponential-logarithm-reference",
+      "package_id": "specfunc-fullerton",
+      "procedure_id": "specfunc-fullerton-near-zero-exponential-logarithm",
+      "gams_code": "C4b",
+      "problem_id": "specfunc-fullerton-near-zero-exponential-logarithm-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specfunc-fullerton-near-zero-exponential-logarithm-reference.f90",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "author_example": "test/misc_exp/test_misc_exp.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fullerton-functions-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 38 default REAL32 lnrel(x)=log(1+x) and exprel(x)=(exp(x)-1)/x references at 19 dyadics from -7/8 to 8. Tiny signed arguments down to 2**(-24), exact zero limits and samples around 3/8 and 1/2 branch boundaries. High-precision log1p/expm1 references avoid cancellation. x<=-1 and overflow ranges excluded.",
+      "validation_path": "docs/gams-fullerton-functions-ten-validation.json",
+      "review_path": "docs/gams-fullerton-functions-ten.md",
+      "checks": {
+        "comparisons": 38,
+        "scalar_kind": "default REAL32",
+        "relative_tolerance": 5e-05,
+        "reference_floor": 1e-30,
+        "oracle": "independent 80/120 digit mpmath references",
+        "arguments": 19
+      }
     }
   ]
 }

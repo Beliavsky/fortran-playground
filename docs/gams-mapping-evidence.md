@@ -8,7 +8,7 @@ This report assesses each package/class pair, including inherited parent classes
 
 When a driver cannot be created, inspect the pinned implementation and author examples. Narrow or remove a classification that is unsupported; do not substitute an unrelated default example as evidence. Record missing dependencies, sandbox limits and upstream defects separately in the procedure or package review notes. A sandbox failure alone does not disprove an algorithm.
 
-Counts refer to package/class pairs and include parents: 778 verified, 80 source-supported, 241 uncertain.
+Counts refer to package/class pairs and include parents: 789 verified, 80 source-supported, 239 uncertain.
 
 ## Mappings requiring source review
 
@@ -233,8 +233,6 @@ Inspect these discovery assignments before making a specific algorithm claim. Th
 | [ryu_fortran](https://beliavsky.github.io/fortran-playground/gams/packages/ryu_fortran/) | [N3](https://beliavsky.github.io/fortran-playground/gams/N3/) | Character manipulation |
 | [specfun](https://beliavsky.github.io/fortran-playground/gams/packages/specfun/) | [C7](https://beliavsky.github.io/fortran-playground/gams/C7/) | Gamma |
 | [specfun](https://beliavsky.github.io/fortran-playground/gams/packages/specfun/) | [C10](https://beliavsky.github.io/fortran-playground/gams/C10/) | Bessel functions |
-| [specfunc-fullerton](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/) | [C5](https://beliavsky.github.io/fortran-playground/gams/C5/) | Exponential and logarithmic integrals |
-| [specfunc-fullerton](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/) | [C10](https://beliavsky.github.io/fortran-playground/gams/C10/) | Bessel functions |
 | [specialmatrices](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/) | [D1](https://beliavsky.github.io/fortran-playground/gams/D1/) | Elementary vector and matrix operations |
 | [specialmatrices](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/) | [D3](https://beliavsky.github.io/fortran-playground/gams/D3/) | Determinants |
 | [spectrum](https://beliavsky.github.io/fortran-playground/gams/packages/spectrum/) | [K](https://beliavsky.github.io/fortran-playground/gams/K/) | Approximation |
@@ -585,10 +583,20 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [smart-pointers / smart-pointer-lifetime](https://beliavsky.github.io/fortran-playground/gams/packages/smart-pointers/#smart-pointer-lifetime) | R | verified |
 | [sparse_fortran / sparse-fortran-matmul](https://beliavsky.github.io/fortran-playground/gams/packages/sparse_fortran/#sparse-fortran-matmul) | D1b4 | verified |
 | [specfun / specfun-bernob](https://beliavsky.github.io/fortran-playground/gams/packages/specfun/#specfun-bernob) | C19 | verified |
+| [specfunc-fullerton / specfunc-fullerton-airy-values-derivatives](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-airy-values-derivatives) | C10d | verified |
 | [specfunc-fullerton / specfunc-fullerton-beta-pairs](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-beta-pairs) | C7b | verified |
+| [specfunc-fullerton / specfunc-fullerton-dawson-values-derivatives](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-dawson-values-derivatives) | C8c | verified |
 | [specfunc-fullerton / specfunc-fullerton-digamma](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-digamma) | C7c | verified |
+| [specfunc-fullerton / specfunc-fullerton-exponential-logarithmic-integrals](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-exponential-logarithmic-integrals) | C5 | verified |
 | [specfunc-fullerton / specfunc-fullerton-fgamma](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-fgamma) | C7a | verified |
+| [specfunc-fullerton / specfunc-fullerton-hyperbolic-integrals](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-hyperbolic-integrals) | C4d | verified |
 | [specfunc-fullerton / specfunc-fullerton-integer-beta-cdf](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-integer-beta-cdf) | L5a1b | verified |
+| [specfunc-fullerton / specfunc-fullerton-modified-bessel-i01](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-modified-bessel-i01) | C10b1 | verified |
+| [specfunc-fullerton / specfunc-fullerton-modified-bessel-k01](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-modified-bessel-k01) | C10b1 | verified |
+| [specfunc-fullerton / specfunc-fullerton-near-zero-exponential-logarithm](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-near-zero-exponential-logarithm) | C4b | verified |
+| [specfunc-fullerton / specfunc-fullerton-positive-exponential-integrals](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-positive-exponential-integrals) | C5 | verified |
+| [specfunc-fullerton / specfunc-fullerton-real-dilogarithm](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-real-dilogarithm) | C5 | verified |
+| [specfunc-fullerton / specfunc-fullerton-sine-cosine-integrals](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-sine-cosine-integrals) | C6 | verified |
 | [specialmatrices / specialmatrices-circulant-systems](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-circulant-systems) | D2a1 | verified |
 | [specialmatrices / specialmatrices-rectangular-poisson](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-rectangular-poisson) | I2b1a1a | verified |
 | [specialmatrices / specialmatrices-solve](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-solve) | D2 | verified |

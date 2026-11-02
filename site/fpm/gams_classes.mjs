@@ -384,6 +384,10 @@ export const gamsSubclasses = {
     "label": "Dynamic program analysis tools",
     "parent": "S"
   },
+  "C4d": {
+    "label": "Integrals of elementary transcendental functions",
+    "parent": "C4"
+  },
   "G1a": {
     "label": "Univariate",
     "parent": "G1"
@@ -955,5 +959,13 @@ export const gamsSubclasses = {
   "I2b1a1a": {
     "label": "Rectangular domain (or topologically rectangular in the coordinate system)",
     "parent": "I2b1a1"
+  },
+  "C10d": {
+    "label": "Airy and Scorer functions",
+    "parent": "C10"
+  },
+  "C8c": {
+    "label": "Dawson's integral",
+    "parent": "C8"
   }
 };

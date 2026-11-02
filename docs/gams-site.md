@@ -338,3 +338,5 @@ Grid weights, complex spectra and masked statistics: [review and actual results]
 Specialized integrals, tensor interpolation and analytic-Jacobian systems: [review and actual results](gams-integrals-tensors-ten.md).
 
 Transforms, structured systems, splines and beta functions: [review and actual results](gams-transforms-structures-ten.md).
+
+Fullerton special functions and derivative checks: [review and actual results](gams-fullerton-functions-ten.md).

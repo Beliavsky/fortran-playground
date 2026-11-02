@@ -1314,8 +1314,28 @@
         "parent": null
       },
       {
+        "code": "C4",
+        "label": "Elementary transcendental functions",
+        "parent": "C"
+      },
+      {
+        "code": "C4b",
+        "label": "Exponential, logarithmic",
+        "parent": "C4"
+      },
+      {
+        "code": "C4d",
+        "label": "Integrals of elementary transcendental functions",
+        "parent": "C4"
+      },
+      {
         "code": "C5",
         "label": "Exponential and logarithmic integrals",
+        "parent": "C"
+      },
+      {
+        "code": "C6",
+        "label": "Cosine and sine integrals",
         "parent": "C"
       },
       {
@@ -1339,9 +1359,34 @@
         "parent": "C7"
       },
       {
+        "code": "C8",
+        "label": "Error functions",
+        "parent": "C"
+      },
+      {
+        "code": "C8c",
+        "label": "Dawson's integral",
+        "parent": "C8"
+      },
+      {
         "code": "C10",
         "label": "Bessel functions",
         "parent": "C"
+      },
+      {
+        "code": "C10b",
+        "label": "I, K",
+        "parent": "C10"
+      },
+      {
+        "code": "C10b1",
+        "label": "Real argument, integer order",
+        "parent": "C10b"
+      },
+      {
+        "code": "C10d",
+        "label": "Airy and Scorer functions",
+        "parent": "C10"
       },
       {
         "code": "L",
@@ -1490,6 +1535,329 @@
           {
             "path": "test/beta/test_beta.f90",
             "sha256": "959eb880d4a983a9890acbd44502f0d34b2015dd5945fda17c2821347ca6d416"
+          }
+        ]
+      },
+      {
+        "id": "specfunc-fullerton-airy-values-derivatives",
+        "package_id": "specfunc-fullerton",
+        "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+        "module": "specfunc_fullerton",
+        "procedure": "airy_ai, airy_bi, airy_aiprime, airy_biprime",
+        "gams_codes": [
+          "C10d"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "first derivatives verified",
+        "notes": "56 default REAL32 Ai/Bi values and first derivatives at 14 exact dyadic arguments spanning -8..8, including zero and oscillatory/decaying/growing regions. Independent high-precision values and derivatives, relative tolerance 5e-5 with reference floor 1e-30. Complex/scaled variants, function zeros and extreme arguments excluded.",
+        "driver_id": "specfunc-fullerton-airy-values-derivatives-reference",
+        "evidence": [
+          {
+            "path": "src/fullerton_airy.f90",
+            "line": 39,
+            "sha256": "8dc892bdbb74156c825e250d8c7ca032569c0e56ca0f3526d77728488075a56e"
+          },
+          {
+            "path": "src/fullerton_airy.f90",
+            "line": 128,
+            "sha256": "8dc892bdbb74156c825e250d8c7ca032569c0e56ca0f3526d77728488075a56e"
+          },
+          {
+            "path": "src/fullerton_airy.f90",
+            "line": 515,
+            "sha256": "8dc892bdbb74156c825e250d8c7ca032569c0e56ca0f3526d77728488075a56e"
+          },
+          {
+            "path": "src/fullerton_airy.f90",
+            "line": 652,
+            "sha256": "8dc892bdbb74156c825e250d8c7ca032569c0e56ca0f3526d77728488075a56e"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/airy/test_airy.f90",
+            "sha256": "57979d66d9e42ea6f40afb8cbce6fd287558dcc7572af4600dcb4a35d3692c9c"
+          }
+        ]
+      },
+      {
+        "id": "specfunc-fullerton-modified-bessel-i01",
+        "package_id": "specfunc-fullerton",
+        "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+        "module": "specfunc_fullerton",
+        "procedure": "bessel_i0, bessel_i1",
+        "gams_codes": [
+          "C10b1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "36 default REAL32 modified Bessel I0/I1 values at 18 signed dyadic arguments spanning -16..16, including zero. Independent high-precision references include parity and near-zero behavior. Only orders zero and one are verified; bessel_in, higher-order recurrences, scaled functions and overflow ranges are excluded.",
+        "driver_id": "specfunc-fullerton-modified-bessel-i01-reference",
+        "evidence": [
+          {
+            "path": "src/fullerton_bessel.f90",
+            "line": 52,
+            "sha256": "c7c52232140e5f31f218e6e4b1c720ed8857cda4f11d6659af71cc203ee07d9f"
+          },
+          {
+            "path": "src/fullerton_bessel.f90",
+            "line": 238,
+            "sha256": "c7c52232140e5f31f218e6e4b1c720ed8857cda4f11d6659af71cc203ee07d9f"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/bessel_i0/test_i0.f90",
+            "sha256": "41a8a72363431f5a957ae96bd6fe84337d1d781bb2729f065918c740f39f8556"
+          },
+          {
+            "path": "test/bessel_i1/test_i1.f90",
+            "sha256": "44355318cbf600776fbfa42009c56c4f514ee4b3e86bfe98f69334ca2ad1171f"
+          }
+        ]
+      },
+      {
+        "id": "specfunc-fullerton-modified-bessel-k01",
+        "package_id": "specfunc-fullerton",
+        "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+        "module": "specfunc_fullerton",
+        "procedure": "bessel_k0, bessel_k1",
+        "gams_codes": [
+          "C10b1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "18 default REAL32 modified Bessel K0/K1 values at nine strictly positive dyadic arguments from 1/256 to 16. High-precision relative references check logarithmic/pole behavior at small positive x and exponential decay. Only orders zero and one; bessel_kn, fractional/higher orders, zero arguments, scaling and underflow excluded.",
+        "driver_id": "specfunc-fullerton-modified-bessel-k01-reference",
+        "evidence": [
+          {
+            "path": "src/fullerton_bessel.f90",
+            "line": 458,
+            "sha256": "c7c52232140e5f31f218e6e4b1c720ed8857cda4f11d6659af71cc203ee07d9f"
+          },
+          {
+            "path": "src/fullerton_bessel.f90",
+            "line": 641,
+            "sha256": "c7c52232140e5f31f218e6e4b1c720ed8857cda4f11d6659af71cc203ee07d9f"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/bessel_k0/test_k0.f90",
+            "sha256": "3cf2dad73096847cd88561b236277e4641a9a2223c0db306528ddb263616b9e7"
+          },
+          {
+            "path": "test/bessel_k1/test_k1.f90",
+            "sha256": "ac2a3477dd66a5e6a1e510a7ceda6bc035f51caa0edce0ea4704771233ba454f"
+          }
+        ]
+      },
+      {
+        "id": "specfunc-fullerton-exponential-logarithmic-integrals",
+        "package_id": "specfunc-fullerton",
+        "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+        "module": "specfunc_fullerton",
+        "procedure": "integral_ei, integral_li",
+        "gams_codes": [
+          "C5"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "25 default REAL32 real-branch Ei/li references: Ei on 15 nonzero signed dyadic arguments -16..16 and logarithmic integral li on ten positive dyadics away from x=1. Independent principal-value definitions via mpmath; singular arguments, complex branches and large overflow regions excluded.",
+        "driver_id": "specfunc-fullerton-exponential-logarithmic-integrals-reference",
+        "evidence": [
+          {
+            "path": "src/fullerton_ei.f90",
+            "line": 51,
+            "sha256": "1e24acb2fc60ad58f42b5a16c0fe0fa1f19896a95b76fa5bed0b4a8c9b1b8bd4"
+          },
+          {
+            "path": "src/fullerton_ei.f90",
+            "line": 349,
+            "sha256": "1e24acb2fc60ad58f42b5a16c0fe0fa1f19896a95b76fa5bed0b4a8c9b1b8bd4"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/ei/test_ei.f90",
+            "sha256": "7803e7a01d6f65758d97bac4564dbabe7e871519844d99b297251040fdd37f7f"
+          }
+        ]
+      },
+      {
+        "id": "specfunc-fullerton-positive-exponential-integrals",
+        "package_id": "specfunc-fullerton",
+        "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+        "module": "specfunc_fullerton",
+        "procedure": "integral_e1, integral_en",
+        "gams_codes": [
+          "C5"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "29 default REAL32 positive-domain exponential integral references: E1 on nine dyadics 1/256..16 and En for n=1..5 at x=1/8,1/2,1,2. References independently evaluate integral_1^infinity exp(-x*t)/t**n dt. Higher-order forward recurrence at large x, zero/negative x and underflow excluded.",
+        "driver_id": "specfunc-fullerton-positive-exponential-integrals-reference",
+        "evidence": [
+          {
+            "path": "src/fullerton_ei.f90",
+            "line": 62,
+            "sha256": "1e24acb2fc60ad58f42b5a16c0fe0fa1f19896a95b76fa5bed0b4a8c9b1b8bd4"
+          },
+          {
+            "path": "src/fullerton_ei.f90",
+            "line": 771,
+            "sha256": "1e24acb2fc60ad58f42b5a16c0fe0fa1f19896a95b76fa5bed0b4a8c9b1b8bd4"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/ei/test_ei.f90",
+            "sha256": "7803e7a01d6f65758d97bac4564dbabe7e871519844d99b297251040fdd37f7f"
+          }
+        ]
+      },
+      {
+        "id": "specfunc-fullerton-sine-cosine-integrals",
+        "package_id": "specfunc-fullerton",
+        "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+        "module": "specfunc_fullerton",
+        "procedure": "integral_si, integral_ci",
+        "gams_codes": [
+          "C6"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "18 default REAL32 sine/cosine integral values at nine positive dyadic arguments 1/256..16, spanning small-argument, series-transition and oscillatory ranges. Independent high-precision Si/Ci definitions; nonpositive Ci, complex branches and extreme arguments excluded.",
+        "driver_id": "specfunc-fullerton-sine-cosine-integrals-reference",
+        "evidence": [
+          {
+            "path": "src/fullerton_ei.f90",
+            "line": 378,
+            "sha256": "1e24acb2fc60ad58f42b5a16c0fe0fa1f19896a95b76fa5bed0b4a8c9b1b8bd4"
+          },
+          {
+            "path": "src/fullerton_ei.f90",
+            "line": 440,
+            "sha256": "1e24acb2fc60ad58f42b5a16c0fe0fa1f19896a95b76fa5bed0b4a8c9b1b8bd4"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/ei/test_ei.f90",
+            "sha256": "7803e7a01d6f65758d97bac4564dbabe7e871519844d99b297251040fdd37f7f"
+          }
+        ]
+      },
+      {
+        "id": "specfunc-fullerton-hyperbolic-integrals",
+        "package_id": "specfunc-fullerton",
+        "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+        "module": "specfunc_fullerton",
+        "procedure": "integral_shi, integral_chi",
+        "gams_codes": [
+          "C4d"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "20 default REAL32 Shi/Chi references at ten positive dyadic arguments 1/256..16, including the small-argument branch boundary 3/8. Independent hyperbolic-integral values with relative tolerance 5e-5. Nonpositive Chi, complex continuation and overflow ranges excluded.",
+        "driver_id": "specfunc-fullerton-hyperbolic-integrals-reference",
+        "evidence": [
+          {
+            "path": "src/fullerton_ei.f90",
+            "line": 506,
+            "sha256": "1e24acb2fc60ad58f42b5a16c0fe0fa1f19896a95b76fa5bed0b4a8c9b1b8bd4"
+          },
+          {
+            "path": "src/fullerton_ei.f90",
+            "line": 562,
+            "sha256": "1e24acb2fc60ad58f42b5a16c0fe0fa1f19896a95b76fa5bed0b4a8c9b1b8bd4"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/ei/test_ei.f90",
+            "sha256": "7803e7a01d6f65758d97bac4564dbabe7e871519844d99b297251040fdd37f7f"
+          }
+        ]
+      },
+      {
+        "id": "specfunc-fullerton-dawson-values-derivatives",
+        "package_id": "specfunc-fullerton",
+        "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+        "module": "specfunc_fullerton",
+        "procedure": "integral_dawson, dawson_prime",
+        "gams_codes": [
+          "C8c"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "first derivatives verified",
+        "notes": "28 default REAL32 Dawson integral/first-derivative references at 14 signed dyadic arguments -8..8. Values use the independent high-precision erfi definition; derivatives use mpmath differentiation of that definition. Includes zero, odd/even parity and multiple approximation ranges. Extreme asymptotic arguments and derivative zeros excluded.",
+        "driver_id": "specfunc-fullerton-dawson-values-derivatives-reference",
+        "evidence": [
+          {
+            "path": "src/fullerton_misc.f90",
+            "line": 211,
+            "sha256": "9bdddc58f24267cf5a3372c0c36db22813f8809ca81ce7073c68f0b77dc5b40e"
+          },
+          {
+            "path": "src/fullerton_misc.f90",
+            "line": 362,
+            "sha256": "9bdddc58f24267cf5a3372c0c36db22813f8809ca81ce7073c68f0b77dc5b40e"
+          }
+        ],
+        "author_examples": []
+      },
+      {
+        "id": "specfunc-fullerton-real-dilogarithm",
+        "package_id": "specfunc-fullerton",
+        "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+        "module": "specfunc_fullerton",
+        "procedure": "integral_spence",
+        "gams_codes": [
+          "C5"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "12 default REAL32 real dilogarithm Li2(x) references at dyadic x in [-8,1], including zero/one and transformation boundaries. Public integral_spence uses integral_0^x -log(abs(1-t))/t dt, which equals real Li2 here. No claim about the x>1 real continuation or complex values.",
+        "driver_id": "specfunc-fullerton-real-dilogarithm-reference",
+        "evidence": [
+          {
+            "path": "src/fullerton_misc.f90",
+            "line": 386,
+            "sha256": "9bdddc58f24267cf5a3372c0c36db22813f8809ca81ce7073c68f0b77dc5b40e"
+          }
+        ],
+        "author_examples": []
+      },
+      {
+        "id": "specfunc-fullerton-near-zero-exponential-logarithm",
+        "package_id": "specfunc-fullerton",
+        "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+        "module": "specfunc_fullerton",
+        "procedure": "lnrel, exprel",
+        "gams_codes": [
+          "C4b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "38 default REAL32 lnrel(x)=log(1+x) and exprel(x)=(exp(x)-1)/x references at 19 dyadics from -7/8 to 8. Tiny signed arguments down to 2**(-24), exact zero limits and samples around 3/8 and 1/2 branch boundaries. High-precision log1p/expm1 references avoid cancellation. x<=-1 and overflow ranges excluded.",
+        "driver_id": "specfunc-fullerton-near-zero-exponential-logarithm-reference",
+        "evidence": [
+          {
+            "path": "src/fullerton_misc.f90",
+            "line": 90,
+            "sha256": "9bdddc58f24267cf5a3372c0c36db22813f8809ca81ce7073c68f0b77dc5b40e"
+          },
+          {
+            "path": "src/fullerton_misc.f90",
+            "line": 164,
+            "sha256": "9bdddc58f24267cf5a3372c0c36db22813f8809ca81ce7073c68f0b77dc5b40e"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/misc_exp/test_misc_exp.f90",
+            "sha256": "c6f57275b1eddb2943cae0678772803fc26be587b4539880c3079b958abf229c"
           }
         ]
       }

@@ -1,0 +1,1985 @@
+{
+  "generator": "mpmath 1.3.0 at 80 decimal digits, confirmed at 120 digits with absolute differences below 1e-60; 18-significant-digit Fortran constants; all input arguments are exact dyadics representable in REAL32",
+  "drivers": {
+    "specfunc-fullerton-airy-values-derivatives-reference": [
+      {
+        "api": "airy_ai",
+        "which": 1,
+        "x": "-8",
+        "order": 0,
+        "reference": "-0.0527050503563862026"
+      },
+      {
+        "api": "airy_bi",
+        "which": 2,
+        "x": "-8",
+        "order": 0,
+        "reference": "-0.33125158075113786"
+      },
+      {
+        "api": "airy_aiprime",
+        "which": 3,
+        "x": "-8",
+        "order": 0,
+        "reference": "0.935560938198306551"
+      },
+      {
+        "api": "airy_biprime",
+        "which": 4,
+        "x": "-8",
+        "order": 0,
+        "reference": "-0.159450497812981389"
+      },
+      {
+        "api": "airy_ai",
+        "which": 1,
+        "x": "-4",
+        "order": 0,
+        "reference": "-0.0702655329492895151"
+      },
+      {
+        "api": "airy_bi",
+        "which": 2,
+        "x": "-4",
+        "order": 0,
+        "reference": "0.39223470570699929"
+      },
+      {
+        "api": "airy_aiprime",
+        "which": 3,
+        "x": "-4",
+        "order": 0,
+        "reference": "-0.79062857536858138"
+      },
+      {
+        "api": "airy_biprime",
+        "which": 4,
+        "x": "-4",
+        "order": 0,
+        "reference": "-0.116670567438340894"
+      },
+      {
+        "api": "airy_ai",
+        "which": 1,
+        "x": "-2",
+        "order": 0,
+        "reference": "0.227407428201685576"
+      },
+      {
+        "api": "airy_bi",
+        "which": 2,
+        "x": "-2",
+        "order": 0,
+        "reference": "-0.412302587956398488"
+      },
+      {
+        "api": "airy_aiprime",
+        "which": 3,
+        "x": "-2",
+        "order": 0,
+        "reference": "0.618259020741691041"
+      },
+      {
+        "api": "airy_biprime",
+        "which": 4,
+        "x": "-2",
+        "order": 0,
+        "reference": "0.278795166921169523"
+      },
+      {
+        "api": "airy_ai",
+        "which": 1,
+        "x": "-1",
+        "order": 0,
+        "reference": "0.535560883292352119"
+      },
+      {
+        "api": "airy_bi",
+        "which": 2,
+        "x": "-1",
+        "order": 0,
+        "reference": "0.103997389496944612"
+      },
+      {
+        "api": "airy_aiprime",
+        "which": 3,
+        "x": "-1",
+        "order": 0,
+        "reference": "-0.0101605671166452094"
+      },
+      {
+        "api": "airy_biprime",
+        "which": 4,
+        "x": "-1",
+        "order": 0,
+        "reference": "0.592375626422792351"
+      },
+      {
+        "api": "airy_ai",
+        "which": 1,
+        "x": "-1/2",
+        "order": 0,
+        "reference": "0.475728091610539589"
+      },
+      {
+        "api": "airy_bi",
+        "which": 2,
+        "x": "-1/2",
+        "order": 0,
+        "reference": "0.38035265975105385"
+      },
+      {
+        "api": "airy_aiprime",
+        "which": 3,
+        "x": "-1/2",
+        "order": 0,
+        "reference": "-0.204081670339547386"
+      },
+      {
+        "api": "airy_biprime",
+        "which": 4,
+        "x": "-1/2",
+        "order": 0,
+        "reference": "0.505933713623847167"
+      },
+      {
+        "api": "airy_ai",
+        "which": 1,
+        "x": "-1/8",
+        "order": 0,
+        "reference": "0.387259652408395772"
+      },
+      {
+        "api": "airy_bi",
+        "which": 2,
+        "x": "-1/8",
+        "order": 0,
+        "reference": "0.558699544406067727"
+      },
+      {
+        "api": "airy_aiprime",
+        "which": 3,
+        "x": "-1/8",
+        "order": 0,
+        "reference": "-0.25587761975663491"
+      },
+      {
+        "api": "airy_biprime",
+        "which": 4,
+        "x": "-1/8",
+        "order": 0,
+        "reference": "0.45280001547160431"
+      },
+      {
+        "api": "airy_ai",
+        "which": 1,
+        "x": "0",
+        "order": 0,
+        "reference": "0.355028053887817239"
+      },
+      {
+        "api": "airy_bi",
+        "which": 2,
+        "x": "0",
+        "order": 0,
+        "reference": "0.614926627446000735"
+      },
+      {
+        "api": "airy_aiprime",
+        "which": 3,
+        "x": "0",
+        "order": 0,
+        "reference": "-0.258819403792806798"
+      },
+      {
+        "api": "airy_biprime",
+        "which": 4,
+        "x": "0",
+        "order": 0,
+        "reference": "0.448288357353826358"
+      },
+      {
+        "api": "airy_ai",
+        "which": 1,
+        "x": "1/8",
+        "order": 0,
+        "reference": "0.322785939026777916"
+      },
+      {
+        "api": "airy_bi",
+        "which": 2,
+        "x": "1/8",
+        "order": 0,
+        "reference": "0.671171977449897641"
+      },
+      {
+        "api": "airy_aiprime",
+        "which": 3,
+        "x": "1/8",
+        "order": 0,
+        "reference": "-0.25621390188308172"
+      },
+      {
+        "api": "airy_biprime",
+        "which": 4,
+        "x": "1/8",
+        "order": 0,
+        "reference": "0.453384975343142057"
+      },
+      {
+        "api": "airy_ai",
+        "which": 1,
+        "x": "1/2",
+        "order": 0,
+        "reference": "0.23169360648083349"
+      },
+      {
+        "api": "airy_bi",
+        "which": 2,
+        "x": "1/2",
+        "order": 0,
+        "reference": "0.854277043103155493"
+      },
+      {
+        "api": "airy_aiprime",
+        "which": 3,
+        "x": "1/2",
+        "order": 0,
+        "reference": "-0.224910532664683893"
+      },
+      {
+        "api": "airy_biprime",
+        "which": 4,
+        "x": "1/2",
+        "order": 0,
+        "reference": "0.544572564140592302"
+      },
+      {
+        "api": "airy_ai",
+        "which": 1,
+        "x": "1",
+        "order": 0,
+        "reference": "0.135292416312881416"
+      },
+      {
+        "api": "airy_bi",
+        "which": 2,
+        "x": "1",
+        "order": 0,
+        "reference": "1.20742359495287126"
+      },
+      {
+        "api": "airy_aiprime",
+        "which": 3,
+        "x": "1",
+        "order": 0,
+        "reference": "-0.159147441296793213"
+      },
+      {
+        "api": "airy_biprime",
+        "which": 4,
+        "x": "1",
+        "order": 0,
+        "reference": "0.932435933392775633"
+      },
+      {
+        "api": "airy_ai",
+        "which": 1,
+        "x": "2",
+        "order": 0,
+        "reference": "0.0349241304232743791"
+      },
+      {
+        "api": "airy_bi",
+        "which": 2,
+        "x": "2",
+        "order": 0,
+        "reference": "3.29809499997821471"
+      },
+      {
+        "api": "airy_aiprime",
+        "which": 3,
+        "x": "2",
+        "order": 0,
+        "reference": "-0.0530903844336536317"
+      },
+      {
+        "api": "airy_biprime",
+        "which": 4,
+        "x": "2",
+        "order": 0,
+        "reference": "4.10068204993288989"
+      },
+      {
+        "api": "airy_ai",
+        "which": 1,
+        "x": "3",
+        "order": 0,
+        "reference": "0.00659113935746071914"
+      },
+      {
+        "api": "airy_bi",
+        "which": 2,
+        "x": "3",
+        "order": 0,
+        "reference": "14.037328963730232"
+      },
+      {
+        "api": "airy_aiprime",
+        "which": 3,
+        "x": "3",
+        "order": 0,
+        "reference": "-0.0119129767059513185"
+      },
+      {
+        "api": "airy_biprime",
+        "which": 4,
+        "x": "3",
+        "order": 0,
+        "reference": "22.9222149663821702"
+      },
+      {
+        "api": "airy_ai",
+        "which": 1,
+        "x": "4",
+        "order": 0,
+        "reference": "0.000951563851204801874"
+      },
+      {
+        "api": "airy_bi",
+        "which": 2,
+        "x": "4",
+        "order": 0,
+        "reference": "83.8470714084681399"
+      },
+      {
+        "api": "airy_aiprime",
+        "which": 3,
+        "x": "4",
+        "order": 0,
+        "reference": "-0.0019586409502041789"
+      },
+      {
+        "api": "airy_biprime",
+        "which": 4,
+        "x": "4",
+        "order": 0,
+        "reference": "161.926683504613402"
+      },
+      {
+        "api": "airy_ai",
+        "which": 1,
+        "x": "8",
+        "order": 0,
+        "reference": "4.69220761609923163e-8"
+      },
+      {
+        "api": "airy_bi",
+        "which": 2,
+        "x": "8",
+        "order": 0,
+        "reference": "1199586.00412445993"
+      },
+      {
+        "api": "airy_aiprime",
+        "which": 3,
+        "x": "8",
+        "order": 0,
+        "reference": "-1.34143929790678657e-7"
+      },
+      {
+        "api": "airy_biprime",
+        "which": 4,
+        "x": "8",
+        "order": 0,
+        "reference": "3354342.31274453888"
+      }
+    ],
+    "specfunc-fullerton-modified-bessel-i01-reference": [
+      {
+        "api": "bessel_i0",
+        "which": 1,
+        "x": "-16",
+        "order": 0,
+        "reference": "893446.227920105017"
+      },
+      {
+        "api": "bessel_i1",
+        "which": 2,
+        "x": "-16",
+        "order": 0,
+        "reference": "-865059.435854839471"
+      },
+      {
+        "api": "bessel_i0",
+        "which": 1,
+        "x": "-8",
+        "order": 0,
+        "reference": "427.564115721804785"
+      },
+      {
+        "api": "bessel_i1",
+        "which": 2,
+        "x": "-8",
+        "order": 0,
+        "reference": "-399.873136782560098"
+      },
+      {
+        "api": "bessel_i0",
+        "which": 1,
+        "x": "-4",
+        "order": 0,
+        "reference": "11.3019219521363305"
+      },
+      {
+        "api": "bessel_i1",
+        "which": 2,
+        "x": "-4",
+        "order": 0,
+        "reference": "-9.75946515370444991"
+      },
+      {
+        "api": "bessel_i0",
+        "which": 1,
+        "x": "-2",
+        "order": 0,
+        "reference": "2.27958530233606727"
+      },
+      {
+        "api": "bessel_i1",
+        "which": 2,
+        "x": "-2",
+        "order": 0,
+        "reference": "-1.59063685463732906"
+      },
+      {
+        "api": "bessel_i0",
+        "which": 1,
+        "x": "-1",
+        "order": 0,
+        "reference": "1.26606587775200834"
+      },
+      {
+        "api": "bessel_i1",
+        "which": 2,
+        "x": "-1",
+        "order": 0,
+        "reference": "-0.565159103992485027"
+      },
+      {
+        "api": "bessel_i0",
+        "which": 1,
+        "x": "-1/2",
+        "order": 0,
+        "reference": "1.06348337074132352"
+      },
+      {
+        "api": "bessel_i1",
+        "which": 2,
+        "x": "-1/2",
+        "order": 0,
+        "reference": "-0.257894305390896316"
+      },
+      {
+        "api": "bessel_i0",
+        "which": 1,
+        "x": "-1/8",
+        "order": 0,
+        "reference": "1.00391006635335449"
+      },
+      {
+        "api": "bessel_i1",
+        "which": 2,
+        "x": "-1/8",
+        "order": 0,
+        "reference": "-0.0626221498112348254"
+      },
+      {
+        "api": "bessel_i0",
+        "which": 1,
+        "x": "-1/256",
+        "order": 0,
+        "reference": "1.00000381470090361"
+      },
+      {
+        "api": "bessel_i1",
+        "which": 2,
+        "x": "-1/256",
+        "order": 0,
+        "reference": "-0.00195312872529266694"
+      },
+      {
+        "api": "bessel_i0",
+        "which": 1,
+        "x": "0",
+        "order": 0,
+        "reference": "1.0"
+      },
+      {
+        "api": "bessel_i1",
+        "which": 2,
+        "x": "0",
+        "order": 0,
+        "reference": "0.0"
+      },
+      {
+        "api": "bessel_i0",
+        "which": 1,
+        "x": "1/256",
+        "order": 0,
+        "reference": "1.00000381470090361"
+      },
+      {
+        "api": "bessel_i1",
+        "which": 2,
+        "x": "1/256",
+        "order": 0,
+        "reference": "0.00195312872529266694"
+      },
+      {
+        "api": "bessel_i0",
+        "which": 1,
+        "x": "1/8",
+        "order": 0,
+        "reference": "1.00391006635335449"
+      },
+      {
+        "api": "bessel_i1",
+        "which": 2,
+        "x": "1/8",
+        "order": 0,
+        "reference": "0.0626221498112348254"
+      },
+      {
+        "api": "bessel_i0",
+        "which": 1,
+        "x": "1/2",
+        "order": 0,
+        "reference": "1.06348337074132352"
+      },
+      {
+        "api": "bessel_i1",
+        "which": 2,
+        "x": "1/2",
+        "order": 0,
+        "reference": "0.257894305390896316"
+      },
+      {
+        "api": "bessel_i0",
+        "which": 1,
+        "x": "1",
+        "order": 0,
+        "reference": "1.26606587775200834"
+      },
+      {
+        "api": "bessel_i1",
+        "which": 2,
+        "x": "1",
+        "order": 0,
+        "reference": "0.565159103992485027"
+      },
+      {
+        "api": "bessel_i0",
+        "which": 1,
+        "x": "2",
+        "order": 0,
+        "reference": "2.27958530233606727"
+      },
+      {
+        "api": "bessel_i1",
+        "which": 2,
+        "x": "2",
+        "order": 0,
+        "reference": "1.59063685463732906"
+      },
+      {
+        "api": "bessel_i0",
+        "which": 1,
+        "x": "3",
+        "order": 0,
+        "reference": "4.88079258586502409"
+      },
+      {
+        "api": "bessel_i1",
+        "which": 2,
+        "x": "3",
+        "order": 0,
+        "reference": "3.9533702174026094"
+      },
+      {
+        "api": "bessel_i0",
+        "which": 1,
+        "x": "4",
+        "order": 0,
+        "reference": "11.3019219521363305"
+      },
+      {
+        "api": "bessel_i1",
+        "which": 2,
+        "x": "4",
+        "order": 0,
+        "reference": "9.75946515370444991"
+      },
+      {
+        "api": "bessel_i0",
+        "which": 1,
+        "x": "8",
+        "order": 0,
+        "reference": "427.564115721804785"
+      },
+      {
+        "api": "bessel_i1",
+        "which": 2,
+        "x": "8",
+        "order": 0,
+        "reference": "399.873136782560098"
+      },
+      {
+        "api": "bessel_i0",
+        "which": 1,
+        "x": "16",
+        "order": 0,
+        "reference": "893446.227920105017"
+      },
+      {
+        "api": "bessel_i1",
+        "which": 2,
+        "x": "16",
+        "order": 0,
+        "reference": "865059.435854839471"
+      }
+    ],
+    "specfunc-fullerton-modified-bessel-k01-reference": [
+      {
+        "api": "bessel_k0",
+        "which": 1,
+        "x": "1/256",
+        "order": 0,
+        "reference": "5.66113437027816317"
+      },
+      {
+        "api": "bessel_k1",
+        "which": 2,
+        "x": "1/256",
+        "order": 0,
+        "reference": "255.987966558316326"
+      },
+      {
+        "api": "bessel_k0",
+        "which": 1,
+        "x": "1/8",
+        "order": 0,
+        "reference": "2.20786908674497006"
+      },
+      {
+        "api": "bessel_k1",
+        "which": 2,
+        "x": "1/8",
+        "order": 0,
+        "reference": "7.83111829911575116"
+      },
+      {
+        "api": "bessel_k0",
+        "which": 1,
+        "x": "1/2",
+        "order": 0,
+        "reference": "0.924419071227665862"
+      },
+      {
+        "api": "bessel_k1",
+        "which": 2,
+        "x": "1/2",
+        "order": 0,
+        "reference": "1.65644112000330089"
+      },
+      {
+        "api": "bessel_k0",
+        "which": 1,
+        "x": "1",
+        "order": 0,
+        "reference": "0.421024438240708333"
+      },
+      {
+        "api": "bessel_k1",
+        "which": 2,
+        "x": "1",
+        "order": 0,
+        "reference": "0.601907230197234575"
+      },
+      {
+        "api": "bessel_k0",
+        "which": 1,
+        "x": "2",
+        "order": 0,
+        "reference": "0.113893872749533436"
+      },
+      {
+        "api": "bessel_k1",
+        "which": 2,
+        "x": "2",
+        "order": 0,
+        "reference": "0.139865881816522427"
+      },
+      {
+        "api": "bessel_k0",
+        "which": 1,
+        "x": "3",
+        "order": 0,
+        "reference": "0.0347395043862792481"
+      },
+      {
+        "api": "bessel_k1",
+        "which": 2,
+        "x": "3",
+        "order": 0,
+        "reference": "0.0401564311281941844"
+      },
+      {
+        "api": "bessel_k0",
+        "which": 1,
+        "x": "4",
+        "order": 0,
+        "reference": "0.0111596760858530243"
+      },
+      {
+        "api": "bessel_k1",
+        "which": 2,
+        "x": "4",
+        "order": 0,
+        "reference": "0.0124834988872684315"
+      },
+      {
+        "api": "bessel_k0",
+        "which": 1,
+        "x": "8",
+        "order": 0,
+        "reference": "0.000146470705222815387"
+      },
+      {
+        "api": "bessel_k1",
+        "which": 2,
+        "x": "8",
+        "order": 0,
+        "reference": "0.000155369211805001134"
+      },
+      {
+        "api": "bessel_k0",
+        "which": 1,
+        "x": "16",
+        "order": 0,
+        "reference": "3.49941166393649894e-8"
+      },
+      {
+        "api": "bessel_k1",
+        "which": 2,
+        "x": "16",
+        "order": 0,
+        "reference": "3.60715711752877969e-8"
+      }
+    ],
+    "specfunc-fullerton-exponential-logarithmic-integrals-reference": [
+      {
+        "api": "integral_ei",
+        "which": 1,
+        "x": "-16",
+        "order": 0,
+        "reference": "-6.64048724944104279e-9"
+      },
+      {
+        "api": "integral_ei",
+        "which": 1,
+        "x": "-8",
+        "order": 0,
+        "reference": "-0.0000376656228439249018"
+      },
+      {
+        "api": "integral_ei",
+        "which": 1,
+        "x": "-4",
+        "order": 0,
+        "reference": "-0.00377935240984890648"
+      },
+      {
+        "api": "integral_ei",
+        "which": 1,
+        "x": "-2",
+        "order": 0,
+        "reference": "-0.0489005107080611196"
+      },
+      {
+        "api": "integral_ei",
+        "which": 1,
+        "x": "-1",
+        "order": 0,
+        "reference": "-0.219383934395520274"
+      },
+      {
+        "api": "integral_ei",
+        "which": 1,
+        "x": "-1/2",
+        "order": 0,
+        "reference": "-0.559773594776160812"
+      },
+      {
+        "api": "integral_ei",
+        "which": 1,
+        "x": "-1/8",
+        "order": 0,
+        "reference": "-1.62342564058416879"
+      },
+      {
+        "api": "integral_ei",
+        "which": 1,
+        "x": "1/8",
+        "order": 0,
+        "reference": "-1.37320852494298334"
+      },
+      {
+        "api": "integral_ei",
+        "which": 1,
+        "x": "3/8",
+        "order": 0,
+        "reference": "0.00969137720934199948"
+      },
+      {
+        "api": "integral_ei",
+        "which": 1,
+        "x": "1/2",
+        "order": 0,
+        "reference": "0.45421990486317358"
+      },
+      {
+        "api": "integral_ei",
+        "which": 1,
+        "x": "1",
+        "order": 0,
+        "reference": "1.89511781635593676"
+      },
+      {
+        "api": "integral_ei",
+        "which": 1,
+        "x": "2",
+        "order": 0,
+        "reference": "4.95423435600189016"
+      },
+      {
+        "api": "integral_ei",
+        "which": 1,
+        "x": "4",
+        "order": 0,
+        "reference": "19.63087447005622"
+      },
+      {
+        "api": "integral_ei",
+        "which": 1,
+        "x": "8",
+        "order": 0,
+        "reference": "440.379899534838269"
+      },
+      {
+        "api": "integral_ei",
+        "which": 1,
+        "x": "16",
+        "order": 0,
+        "reference": "595560.998670837002"
+      },
+      {
+        "api": "integral_li",
+        "which": 2,
+        "x": "1/8",
+        "order": 0,
+        "reference": "-0.0438315544340059198"
+      },
+      {
+        "api": "integral_li",
+        "which": 2,
+        "x": "1/2",
+        "order": 0,
+        "reference": "-0.378671043061087977"
+      },
+      {
+        "api": "integral_li",
+        "which": 2,
+        "x": "3/4",
+        "order": 0,
+        "reference": "-0.936930011012645492"
+      },
+      {
+        "api": "integral_li",
+        "which": 2,
+        "x": "7/8",
+        "order": 0,
+        "reference": "-1.56540578019534512"
+      },
+      {
+        "api": "integral_li",
+        "which": 2,
+        "x": "9/8",
+        "order": 0,
+        "reference": "-1.44035129627940811"
+      },
+      {
+        "api": "integral_li",
+        "which": 2,
+        "x": "3/2",
+        "order": 0,
+        "reference": "0.125064986315296356"
+      },
+      {
+        "api": "integral_li",
+        "which": 2,
+        "x": "2",
+        "order": 0,
+        "reference": "1.04516378011749278"
+      },
+      {
+        "api": "integral_li",
+        "which": 2,
+        "x": "4",
+        "order": 0,
+        "reference": "2.96758509503905088"
+      },
+      {
+        "api": "integral_li",
+        "which": 2,
+        "x": "8",
+        "order": 0,
+        "reference": "5.25371829955893118"
+      },
+      {
+        "api": "integral_li",
+        "which": 2,
+        "x": "16",
+        "order": 0,
+        "reference": "8.51971646371105908"
+      }
+    ],
+    "specfunc-fullerton-positive-exponential-integrals-reference": [
+      {
+        "api": "integral_e1",
+        "which": 1,
+        "x": "1/256",
+        "order": 1,
+        "reference": "4.97186421818970934"
+      },
+      {
+        "api": "integral_e1",
+        "which": 1,
+        "x": "1/8",
+        "order": 1,
+        "reference": "1.62342564058416879"
+      },
+      {
+        "api": "integral_e1",
+        "which": 1,
+        "x": "1/2",
+        "order": 1,
+        "reference": "0.559773594776160812"
+      },
+      {
+        "api": "integral_e1",
+        "which": 1,
+        "x": "1",
+        "order": 1,
+        "reference": "0.219383934395520274"
+      },
+      {
+        "api": "integral_e1",
+        "which": 1,
+        "x": "2",
+        "order": 1,
+        "reference": "0.0489005107080611196"
+      },
+      {
+        "api": "integral_e1",
+        "which": 1,
+        "x": "3",
+        "order": 1,
+        "reference": "0.0130483810941970374"
+      },
+      {
+        "api": "integral_e1",
+        "which": 1,
+        "x": "4",
+        "order": 1,
+        "reference": "0.00377935240984890648"
+      },
+      {
+        "api": "integral_e1",
+        "which": 1,
+        "x": "8",
+        "order": 1,
+        "reference": "0.0000376656228439249018"
+      },
+      {
+        "api": "integral_e1",
+        "which": 1,
+        "x": "16",
+        "order": 1,
+        "reference": "6.64048724944104279e-9"
+      },
+      {
+        "api": "integral_en",
+        "which": 2,
+        "x": "1/8",
+        "order": 1,
+        "reference": "1.62342564058416879"
+      },
+      {
+        "api": "integral_en",
+        "which": 2,
+        "x": "1/8",
+        "order": 2,
+        "reference": "0.679568697511574304"
+      },
+      {
+        "api": "integral_en",
+        "which": 2,
+        "x": "1/8",
+        "order": 3,
+        "reference": "0.398775407697824307"
+      },
+      {
+        "api": "integral_en",
+        "which": 2,
+        "x": "1/8",
+        "order": 4,
+        "reference": "0.277549992207455788"
+      },
+      {
+        "api": "integral_en",
+        "which": 2,
+        "x": "1/8",
+        "order": 5,
+        "reference": "0.211950788389665857"
+      },
+      {
+        "api": "integral_en",
+        "which": 2,
+        "x": "1/2",
+        "order": 1,
+        "reference": "0.559773594776160812"
+      },
+      {
+        "api": "integral_en",
+        "which": 2,
+        "x": "1/2",
+        "order": 2,
+        "reference": "0.326643862324553018"
+      },
+      {
+        "api": "integral_en",
+        "which": 2,
+        "x": "1/2",
+        "order": 3,
+        "reference": "0.221604364275178457"
+      },
+      {
+        "api": "integral_en",
+        "which": 2,
+        "x": "1/2",
+        "order": 4,
+        "reference": "0.165242825858348065"
+      },
+      {
+        "api": "integral_en",
+        "which": 2,
+        "x": "1/2",
+        "order": 5,
+        "reference": "0.130977311695864848"
+      },
+      {
+        "api": "integral_en",
+        "which": 2,
+        "x": "1",
+        "order": 1,
+        "reference": "0.219383934395520274"
+      },
+      {
+        "api": "integral_en",
+        "which": 2,
+        "x": "1",
+        "order": 2,
+        "reference": "0.148495506775922048"
+      },
+      {
+        "api": "integral_en",
+        "which": 2,
+        "x": "1",
+        "order": 3,
+        "reference": "0.109691967197760137"
+      },
+      {
+        "api": "integral_en",
+        "which": 2,
+        "x": "1",
+        "order": 4,
+        "reference": "0.0860624913245607283"
+      },
+      {
+        "api": "integral_en",
+        "which": 2,
+        "x": "1",
+        "order": 5,
+        "reference": "0.0704542374617203983"
+      },
+      {
+        "api": "integral_en",
+        "which": 2,
+        "x": "2",
+        "order": 1,
+        "reference": "0.0489005107080611196"
+      },
+      {
+        "api": "integral_en",
+        "which": 2,
+        "x": "2",
+        "order": 2,
+        "reference": "0.0375342618204904528"
+      },
+      {
+        "api": "integral_en",
+        "which": 2,
+        "x": "2",
+        "order": 3,
+        "reference": "0.0301333797978158932"
+      },
+      {
+        "api": "integral_en",
+        "which": 2,
+        "x": "2",
+        "order": 4,
+        "reference": "0.0250228412136603018"
+      },
+      {
+        "api": "integral_en",
+        "which": 2,
+        "x": "2",
+        "order": 5,
+        "reference": "0.0213224002023230221"
+      }
+    ],
+    "specfunc-fullerton-sine-cosine-integrals-reference": [
+      {
+        "api": "integral_si",
+        "which": 1,
+        "x": "1/256",
+        "order": 0,
+        "reference": "0.00390624668863236164"
+      },
+      {
+        "api": "integral_ci",
+        "which": 2,
+        "x": "1/256",
+        "order": 0,
+        "reference": "-4.96796559427286992"
+      },
+      {
+        "api": "integral_si",
+        "which": 1,
+        "x": "1/8",
+        "order": 0,
+        "reference": "0.124891543904672252"
+      },
+      {
+        "api": "integral_ci",
+        "which": 2,
+        "x": "1/8",
+        "order": 0,
+        "reference": "-1.50612958452963966"
+      },
+      {
+        "api": "integral_si",
+        "which": 1,
+        "x": "1/2",
+        "order": 0,
+        "reference": "0.493107418043066689"
+      },
+      {
+        "api": "integral_ci",
+        "which": 2,
+        "x": "1/2",
+        "order": 0,
+        "reference": "-0.177784078806612901"
+      },
+      {
+        "api": "integral_si",
+        "which": 1,
+        "x": "1",
+        "order": 0,
+        "reference": "0.946083070367183015"
+      },
+      {
+        "api": "integral_ci",
+        "which": 2,
+        "x": "1",
+        "order": 0,
+        "reference": "0.337403922900968135"
+      },
+      {
+        "api": "integral_si",
+        "which": 1,
+        "x": "2",
+        "order": 0,
+        "reference": "1.60541297680269485"
+      },
+      {
+        "api": "integral_ci",
+        "which": 2,
+        "x": "2",
+        "order": 0,
+        "reference": "0.422980828774864996"
+      },
+      {
+        "api": "integral_si",
+        "which": 1,
+        "x": "3",
+        "order": 0,
+        "reference": "1.84865252799946826"
+      },
+      {
+        "api": "integral_ci",
+        "which": 2,
+        "x": "3",
+        "order": 0,
+        "reference": "0.119629786008000328"
+      },
+      {
+        "api": "integral_si",
+        "which": 1,
+        "x": "4",
+        "order": 0,
+        "reference": "1.75820313894905306"
+      },
+      {
+        "api": "integral_ci",
+        "which": 2,
+        "x": "4",
+        "order": 0,
+        "reference": "-0.140981697886930412"
+      },
+      {
+        "api": "integral_si",
+        "which": 1,
+        "x": "8",
+        "order": 0,
+        "reference": "1.57418682170694205"
+      },
+      {
+        "api": "integral_ci",
+        "which": 2,
+        "x": "8",
+        "order": 0,
+        "reference": "0.122433882532009557"
+      },
+      {
+        "api": "integral_si",
+        "which": 1,
+        "x": "16",
+        "order": 0,
+        "reference": "1.63130226827003289"
+      },
+      {
+        "api": "integral_ci",
+        "which": 2,
+        "x": "16",
+        "order": 0,
+        "reference": "-0.0142001901201900224"
+      }
+    ],
+    "specfunc-fullerton-hyperbolic-integrals-reference": [
+      {
+        "api": "integral_shi",
+        "which": 1,
+        "x": "1/256",
+        "order": 0,
+        "reference": "0.00390625331137067001"
+      },
+      {
+        "api": "integral_chi",
+        "which": 2,
+        "x": "1/256",
+        "order": 0,
+        "reference": "-4.96795796487833867"
+      },
+      {
+        "api": "integral_shi",
+        "which": 1,
+        "x": "1/8",
+        "order": 0,
+        "reference": "0.125108557820592727"
+      },
+      {
+        "api": "integral_chi",
+        "which": 2,
+        "x": "1/8",
+        "order": 0,
+        "reference": "-1.49831708276357606"
+      },
+      {
+        "api": "integral_shi",
+        "which": 1,
+        "x": "3/8",
+        "order": 0,
+        "reference": "0.377942076723128804"
+      },
+      {
+        "api": "integral_chi",
+        "which": 2,
+        "x": "3/8",
+        "order": 0,
+        "reference": "-0.368250699513786805"
+      },
+      {
+        "api": "integral_shi",
+        "which": 1,
+        "x": "1/2",
+        "order": 0,
+        "reference": "0.506996749819667196"
+      },
+      {
+        "api": "integral_chi",
+        "which": 2,
+        "x": "1/2",
+        "order": 0,
+        "reference": "-0.0527768449564936159"
+      },
+      {
+        "api": "integral_shi",
+        "which": 1,
+        "x": "1",
+        "order": 0,
+        "reference": "1.05725087537572851"
+      },
+      {
+        "api": "integral_chi",
+        "which": 2,
+        "x": "1",
+        "order": 0,
+        "reference": "0.837866940980208241"
+      },
+      {
+        "api": "integral_shi",
+        "which": 1,
+        "x": "2",
+        "order": 0,
+        "reference": "2.50156743335497564"
+      },
+      {
+        "api": "integral_chi",
+        "which": 2,
+        "x": "2",
+        "order": 0,
+        "reference": "2.45266692264691452"
+      },
+      {
+        "api": "integral_shi",
+        "which": 1,
+        "x": "3",
+        "order": 0,
+        "reference": "4.9734404758598068"
+      },
+      {
+        "api": "integral_chi",
+        "which": 2,
+        "x": "3",
+        "order": 0,
+        "reference": "4.96039209476560976"
+      },
+      {
+        "api": "integral_shi",
+        "which": 1,
+        "x": "4",
+        "order": 0,
+        "reference": "9.81732691123303446"
+      },
+      {
+        "api": "integral_chi",
+        "which": 2,
+        "x": "4",
+        "order": 0,
+        "reference": "9.81354755882318556"
+      },
+      {
+        "api": "integral_shi",
+        "which": 1,
+        "x": "8",
+        "order": 0,
+        "reference": "220.189968600230556"
+      },
+      {
+        "api": "integral_chi",
+        "which": 2,
+        "x": "8",
+        "order": 0,
+        "reference": "220.189930934607713"
+      },
+      {
+        "api": "integral_shi",
+        "which": 1,
+        "x": "16",
+        "order": 0,
+        "reference": "297780.499335421821"
+      },
+      {
+        "api": "integral_chi",
+        "which": 2,
+        "x": "16",
+        "order": 0,
+        "reference": "297780.499335415181"
+      }
+    ],
+    "specfunc-fullerton-dawson-values-derivatives-reference": [
+      {
+        "api": "integral_dawson",
+        "which": 1,
+        "x": "-8",
+        "order": 0,
+        "reference": "-0.0630001987075533879"
+      },
+      {
+        "api": "dawson_prime",
+        "which": 2,
+        "x": "-8",
+        "order": 0,
+        "reference": "-0.00800317932085420671"
+      },
+      {
+        "api": "integral_dawson",
+        "which": 1,
+        "x": "-4",
+        "order": 0,
+        "reference": "-0.129348001236005116"
+      },
+      {
+        "api": "dawson_prime",
+        "which": 2,
+        "x": "-4",
+        "order": 0,
+        "reference": "-0.0347840098880409247"
+      },
+      {
+        "api": "integral_dawson",
+        "which": 1,
+        "x": "-2",
+        "order": 0,
+        "reference": "-0.301340388923791966"
+      },
+      {
+        "api": "dawson_prime",
+        "which": 2,
+        "x": "-2",
+        "order": 0,
+        "reference": "-0.205361555695167864"
+      },
+      {
+        "api": "integral_dawson",
+        "which": 1,
+        "x": "-1",
+        "order": 0,
+        "reference": "-0.538079506912768419"
+      },
+      {
+        "api": "dawson_prime",
+        "which": 2,
+        "x": "-1",
+        "order": 0,
+        "reference": "-0.0761590138255368383"
+      },
+      {
+        "api": "integral_dawson",
+        "which": 1,
+        "x": "-1/2",
+        "order": 0,
+        "reference": "-0.424436383502022296"
+      },
+      {
+        "api": "dawson_prime",
+        "which": 2,
+        "x": "-1/2",
+        "order": 0,
+        "reference": "0.575563616497977704"
+      },
+      {
+        "api": "integral_dawson",
+        "which": 1,
+        "x": "-1/8",
+        "order": 0,
+        "reference": "-0.123706018482839734"
+      },
+      {
+        "api": "dawson_prime",
+        "which": 2,
+        "x": "-1/8",
+        "order": 0,
+        "reference": "0.969073495379290067"
+      },
+      {
+        "api": "integral_dawson",
+        "which": 1,
+        "x": "0",
+        "order": 0,
+        "reference": "0.0"
+      },
+      {
+        "api": "dawson_prime",
+        "which": 2,
+        "x": "0",
+        "order": 0,
+        "reference": "1.0"
+      },
+      {
+        "api": "integral_dawson",
+        "which": 1,
+        "x": "1/8",
+        "order": 0,
+        "reference": "0.123706018482839734"
+      },
+      {
+        "api": "dawson_prime",
+        "which": 2,
+        "x": "1/8",
+        "order": 0,
+        "reference": "0.969073495379290067"
+      },
+      {
+        "api": "integral_dawson",
+        "which": 1,
+        "x": "1/2",
+        "order": 0,
+        "reference": "0.424436383502022296"
+      },
+      {
+        "api": "dawson_prime",
+        "which": 2,
+        "x": "1/2",
+        "order": 0,
+        "reference": "0.575563616497977704"
+      },
+      {
+        "api": "integral_dawson",
+        "which": 1,
+        "x": "1",
+        "order": 0,
+        "reference": "0.538079506912768419"
+      },
+      {
+        "api": "dawson_prime",
+        "which": 2,
+        "x": "1",
+        "order": 0,
+        "reference": "-0.0761590138255368383"
+      },
+      {
+        "api": "integral_dawson",
+        "which": 1,
+        "x": "2",
+        "order": 0,
+        "reference": "0.301340388923791966"
+      },
+      {
+        "api": "dawson_prime",
+        "which": 2,
+        "x": "2",
+        "order": 0,
+        "reference": "-0.205361555695167864"
+      },
+      {
+        "api": "integral_dawson",
+        "which": 1,
+        "x": "3",
+        "order": 0,
+        "reference": "0.178271030610558287"
+      },
+      {
+        "api": "dawson_prime",
+        "which": 2,
+        "x": "3",
+        "order": 0,
+        "reference": "-0.0696261836633497241"
+      },
+      {
+        "api": "integral_dawson",
+        "which": 1,
+        "x": "4",
+        "order": 0,
+        "reference": "0.129348001236005116"
+      },
+      {
+        "api": "dawson_prime",
+        "which": 2,
+        "x": "4",
+        "order": 0,
+        "reference": "-0.0347840098880409247"
+      },
+      {
+        "api": "integral_dawson",
+        "which": 1,
+        "x": "8",
+        "order": 0,
+        "reference": "0.0630001987075533879"
+      },
+      {
+        "api": "dawson_prime",
+        "which": 2,
+        "x": "8",
+        "order": 0,
+        "reference": "-0.00800317932085420671"
+      }
+    ],
+    "specfunc-fullerton-real-dilogarithm-reference": [
+      {
+        "api": "integral_spence",
+        "which": 1,
+        "x": "-8",
+        "order": 0,
+        "reference": "-3.68567600075740637"
+      },
+      {
+        "api": "integral_spence",
+        "which": 1,
+        "x": "-4",
+        "order": 0,
+        "reference": "-2.36993979699836583"
+      },
+      {
+        "api": "integral_spence",
+        "which": 1,
+        "x": "-2",
+        "order": 0,
+        "reference": "-1.43674636688368095"
+      },
+      {
+        "api": "integral_spence",
+        "which": 1,
+        "x": "-1",
+        "order": 0,
+        "reference": "-0.822467033424113218"
+      },
+      {
+        "api": "integral_spence",
+        "which": 1,
+        "x": "-1/2",
+        "order": 0,
+        "reference": "-0.448414206923646202"
+      },
+      {
+        "api": "integral_spence",
+        "which": 1,
+        "x": "-1/8",
+        "order": 0,
+        "reference": "-0.121296628722726479"
+      },
+      {
+        "api": "integral_spence",
+        "which": 1,
+        "x": "0",
+        "order": 0,
+        "reference": "0.0"
+      },
+      {
+        "api": "integral_spence",
+        "which": 1,
+        "x": "1/8",
+        "order": 0,
+        "reference": "0.129139860109953406"
+      },
+      {
+        "api": "integral_spence",
+        "which": 1,
+        "x": "1/2",
+        "order": 0,
+        "reference": "0.582240526465012506"
+      },
+      {
+        "api": "integral_spence",
+        "which": 1,
+        "x": "3/4",
+        "order": 0,
+        "reference": "0.978469392930306104"
+      },
+      {
+        "api": "integral_spence",
+        "which": 1,
+        "x": "7/8",
+        "order": 0,
+        "reference": "1.23812348179648023"
+      },
+      {
+        "api": "integral_spence",
+        "which": 1,
+        "x": "1",
+        "order": 0,
+        "reference": "1.64493406684822644"
+      }
+    ],
+    "specfunc-fullerton-near-zero-exponential-logarithm-reference": [
+      {
+        "api": "lnrel",
+        "which": 1,
+        "x": "-7/8",
+        "order": 0,
+        "reference": "-2.07944154167983593"
+      },
+      {
+        "api": "exprel",
+        "which": 2,
+        "x": "-7/8",
+        "order": 0,
+        "reference": "0.666443406081704683"
+      },
+      {
+        "api": "lnrel",
+        "which": 1,
+        "x": "-1/2",
+        "order": 0,
+        "reference": "-0.693147180559945309"
+      },
+      {
+        "api": "exprel",
+        "which": 2,
+        "x": "-1/2",
+        "order": 0,
+        "reference": "0.786938680574733153"
+      },
+      {
+        "api": "lnrel",
+        "which": 1,
+        "x": "-1/256",
+        "order": 0,
+        "reference": "-0.00391389932113632909"
+      },
+      {
+        "api": "exprel",
+        "which": 2,
+        "x": "-1/256",
+        "order": 0,
+        "reference": "0.998049415649922544"
+      },
+      {
+        "api": "lnrel",
+        "which": 1,
+        "x": "-1/65536",
+        "order": 0,
+        "reference": "-0.0000152589054790060784"
+      },
+      {
+        "api": "exprel",
+        "which": 2,
+        "x": "-1/65536",
+        "order": 0,
+        "reference": "0.999992370644273709"
+      },
+      {
+        "api": "lnrel",
+        "which": 1,
+        "x": "-1/16777216",
+        "order": 0,
+        "reference": "-5.9604646551747535e-8"
+      },
+      {
+        "api": "exprel",
+        "which": 2,
+        "x": "-1/16777216",
+        "order": 0,
+        "reference": "0.999999970197678204"
+      },
+      {
+        "api": "lnrel",
+        "which": 1,
+        "x": "0",
+        "order": 0,
+        "reference": "0.0"
+      },
+      {
+        "api": "exprel",
+        "which": 2,
+        "x": "0",
+        "order": 0,
+        "reference": "1.0"
+      },
+      {
+        "api": "lnrel",
+        "which": 1,
+        "x": "1/16777216",
+        "order": 0,
+        "reference": "5.96046429990338562e-8"
+      },
+      {
+        "api": "exprel",
+        "which": 2,
+        "x": "1/16777216",
+        "order": 0,
+        "reference": "1.00000002980232298"
+      },
+      {
+        "api": "lnrel",
+        "which": 1,
+        "x": "1/65536",
+        "order": 0,
+        "reference": "0.0000152586726483623974"
+      },
+      {
+        "api": "exprel",
+        "which": 2,
+        "x": "1/65536",
+        "order": 0,
+        "reference": "1.00000762943333651"
+      },
+      {
+        "api": "lnrel",
+        "which": 1,
+        "x": "1/256",
+        "order": 0,
+        "reference": "0.00389864041565732301"
+      },
+      {
+        "api": "exprel",
+        "which": 2,
+        "x": "1/256",
+        "order": 0,
+        "reference": "1.0019556706169788"
+      },
+      {
+        "api": "lnrel",
+        "which": 1,
+        "x": "393215/1048576",
+        "order": 0,
+        "reference": "0.318453037536973065"
+      },
+      {
+        "api": "exprel",
+        "which": 2,
+        "x": "393215/1048576",
+        "order": 0,
+        "reference": "1.21330982435556695"
+      },
+      {
+        "api": "lnrel",
+        "which": 1,
+        "x": "3/8",
+        "order": 0,
+        "reference": "0.318453731118534616"
+      },
+      {
+        "api": "exprel",
+        "which": 2,
+        "x": "3/8",
+        "order": 0,
+        "reference": "1.21331043898187023"
+      },
+      {
+        "api": "lnrel",
+        "which": 1,
+        "x": "393217/1048576",
+        "order": 0,
+        "reference": "0.318454424699615111"
+      },
+      {
+        "api": "exprel",
+        "which": 2,
+        "x": "393217/1048576",
+        "order": 0,
+        "reference": "1.21331105360857617"
+      },
+      {
+        "api": "lnrel",
+        "which": 1,
+        "x": "524287/1048576",
+        "order": 0,
+        "reference": "0.405464472325084668"
+      },
+      {
+        "api": "exprel",
+        "which": 2,
+        "x": "524287/1048576",
+        "order": 0,
+        "reference": "1.29744187138947379"
+      },
+      {
+        "api": "lnrel",
+        "which": 1,
+        "x": "1/2",
+        "order": 0,
+        "reference": "0.405465108108164382"
+      },
+      {
+        "api": "exprel",
+        "which": 2,
+        "x": "1/2",
+        "order": 0,
+        "reference": "1.29744254140025629"
+      },
+      {
+        "api": "lnrel",
+        "which": 1,
+        "x": "524289/1048576",
+        "order": 0,
+        "reference": "0.405465743890839876"
+      },
+      {
+        "api": "exprel",
+        "which": 2,
+        "x": "524289/1048576",
+        "order": 0,
+        "reference": "1.29744321141148192"
+      },
+      {
+        "api": "lnrel",
+        "which": 1,
+        "x": "1",
+        "order": 0,
+        "reference": "0.693147180559945309"
+      },
+      {
+        "api": "exprel",
+        "which": 2,
+        "x": "1",
+        "order": 0,
+        "reference": "1.71828182845904524"
+      },
+      {
+        "api": "lnrel",
+        "which": 1,
+        "x": "2",
+        "order": 0,
+        "reference": "1.09861228866810969"
+      },
+      {
+        "api": "exprel",
+        "which": 2,
+        "x": "2",
+        "order": 0,
+        "reference": "3.19452804946532511"
+      },
+      {
+        "api": "lnrel",
+        "which": 1,
+        "x": "4",
+        "order": 0,
+        "reference": "1.60943791243410037"
+      },
+      {
+        "api": "exprel",
+        "which": 2,
+        "x": "4",
+        "order": 0,
+        "reference": "13.3995375082860598"
+      },
+      {
+        "api": "lnrel",
+        "which": 1,
+        "x": "8",
+        "order": 0,
+        "reference": "2.19722457733621938"
+      },
+      {
+        "api": "exprel",
+        "which": 2,
+        "x": "8",
+        "order": 0,
+        "reference": "372.494748380216034"
+      }
+    ]
+  }
+}

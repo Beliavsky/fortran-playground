@@ -893,6 +893,181 @@ class PackageGamsTests(unittest.TestCase):
         self.assertIn('Type-2/type-3 transforms',text)
         self.assertIn('two-dimensional NUFFT2D driver',transforms_review_text())
 
+    def test_fullerton_function_scopes_and_submitted_reference_tables(self):
+        from fractions import Fraction as F
+        import re
+        from xpackage_gams import fullerton_functions_ten_review_text, FULLERTON_FUNCTIONS_TEN_REPORT
+        data = gams_data()
+        records = {r['id']: r for r in data['procedure_mappings']}
+        drivers = {d['id']: d for d in driver_data(data=data)
+                   if d.get('validation_path') == 'docs/gams-fullerton-functions-ten-validation.json'}
+        expected = {'airy-values-derivatives': ('C10d', 56),
+                    'modified-bessel-i01': ('C10b1', 36), 'modified-bessel-k01': ('C10b1', 18),
+                    'exponential-logarithmic-integrals': ('C5', 25),
+                    'positive-exponential-integrals': ('C5', 29), 'sine-cosine-integrals': ('C6', 18),
+                    'hyperbolic-integrals': ('C4d', 20), 'dawson-values-derivatives': ('C8c', 28),
+                    'real-dilogarithm': ('C5', 12), 'near-zero-exponential-logarithm': ('C4b', 38)}
+        self.assertEqual(set(drivers), {'specfunc-fullerton-'+name+'-reference' for name in expected})
+        tables = json.loads((ROOT/'docs/gams-fullerton-functions-ten-references.json').read_text())['drivers']
+        self.assertEqual(set(tables), set(drivers))
+        reviewed = numerical_review(data=data)['packages']['specfunc-fullerton']['procedure_ids']
+        for short, (code, comparisons) in expected.items():
+            driver = drivers['specfunc-fullerton-'+short+'-reference']
+            record = records[driver['procedure_id']]
+            self.assertEqual(driver['gams_code'], code)
+            self.assertEqual(driver['checks']['comparisons'], comparisons)
+            self.assertEqual(driver['checks']['scalar_kind'], 'default REAL32')
+            self.assertEqual(driver['checks']['relative_tolerance'], 5e-5)
+            self.assertEqual(driver['checks']['reference_floor'], 1e-30)
+            self.assertEqual(record['driver_id'], driver['id'])
+            self.assertIn(record['id'], reviewed)
+            self.assertEqual(class_evidence(class_tree(data), code, [record], [driver])['status'], 'verified')
+            cases = tables[driver['id']]
+            self.assertEqual(len(cases), comparisons)
+            source = (ROOT/driver['path']).read_text()
+            real_constants = lambda name: [float(v) for v in re.findall(
+                r'([-+0-9.eE]+)_wp', re.search(name+r'\(\*\)=\[(.*?)\]', source, re.S).group(1))]
+            integer_constants = lambda name: [int(v) for v in re.findall(
+                r'-?\d+', re.search(name+r'\(\*\)=\[(.*?)\]', source, re.S).group(1))]
+            self.assertEqual(real_constants('inputs'), [float(F(c['x'])) for c in cases])
+            self.assertEqual(real_constants('references'), [float(c['reference']) for c in cases])
+            self.assertEqual(integer_constants('which'), [c['which'] for c in cases])
+            self.assertEqual(integer_constants('orders'), [c['order'] for c in cases])
+            self.assertIn('relative_error>5.e-5_wp', source)
+            self.assertIn('real(inputs(i))', source)
+        for ident in ['modified-bessel-i01', 'modified-bessel-k01']:
+            record = records['specfunc-fullerton-'+ident]
+            self.assertNotIn('bessel_in', record['procedure'])
+            self.assertNotIn('bessel_kn', record['procedure'])
+            self.assertIn('excluded', record['notes'])
+        text = fullerton_functions_ten_review_text()
+        self.assertEqual((ROOT/FULLERTON_FUNCTIONS_TEN_REPORT).read_text(encoding='utf-8'), text)
+        for phrase in ['categories are not exhausted', 'default REAL32', 'Only orders zero and one',
+                       'No upstream numerical source was patched', 'No new numerical failure',
+                       'not the offset integral starting at 2']:
+            self.assertIn(phrase, text)
+
+    def test_fullerton_airy_bessel_dawson_references_have_independent_definitions(self):
+        import math
+        from fractions import Fraction as F
+        tables = json.loads((ROOT/'docs/gams-fullerton-functions-ten-references.json').read_text())['drivers']
+        def close(actual, expected, relative=3e-13):
+            self.assertLessEqual(abs(actual-expected), relative*max(abs(expected), 1e-30))
+        ai0 = 1/(3**(2/3)*math.gamma(2/3))
+        aip0 = -1/(3**(1/3)*math.gamma(1/3))
+        initial = {'airy_ai': (ai0, aip0), 'airy_aiprime': (ai0, aip0),
+                   'airy_bi': (math.sqrt(3)*ai0, -math.sqrt(3)*aip0),
+                   'airy_biprime': (math.sqrt(3)*ai0, -math.sqrt(3)*aip0)}
+        airy = tables['specfunc-fullerton-airy-values-derivatives-reference']
+        for case in airy:
+            x = float(F(case['x']))
+            if abs(x) <= 2:
+                a0, a1 = initial[case['api']]
+                coefficients = [a0, a1, 0.]
+                for n in range(3, 90):
+                    coefficients.append(coefficients[n-3]/(n*(n-1)))
+                if 'prime' in case['api']:
+                    expected = math.fsum(n*coefficients[n]*x**(n-1) for n in range(1, 90))
+                else:
+                    expected = math.fsum(coefficients[n]*x**n for n in range(90))
+                close(expected, float(case['reference']))
+        for argument in {c['x'] for c in airy}:
+            values = {c['api']: float(c['reference']) for c in airy if c['x'] == argument}
+            close(values['airy_ai']*values['airy_biprime']-values['airy_aiprime']*values['airy_bi'], 1/math.pi)
+        for case in tables['specfunc-fullerton-modified-bessel-i01-reference']:
+            x = float(F(case['x']))
+            order = 0 if case['api'] == 'bessel_i0' else 1
+            term, terms = (x/2)**order, []
+            for k in range(160):
+                terms.append(term)
+                term *= (x/2)**2/((k+1)*(k+1+order))
+            close(math.fsum(terms), float(case['reference']))
+        # K_n(x)=integral_0^infinity exp(-x*cosh(t))*cosh(n*t) dt for n=0,1.
+        # The finite upper bound 14 leaves a negligible tail even at the smallest x=1/256.
+        count, upper = 8192, 14.
+        for case in tables['specfunc-fullerton-modified-bessel-k01-reference']:
+            x = float(F(case['x']))
+            order = 0 if case['api'] == 'bessel_k0' else 1
+            h = upper/count
+            f = lambda t: math.exp(-x*math.cosh(t))*math.cosh(order*t)
+            integral = h/3*(f(0)+f(upper)+math.fsum((4 if k % 2 else 2)*f(k*h) for k in range(1, count)))
+            close(integral, float(case['reference']), 3e-12)
+        dawson = tables['specfunc-fullerton-dawson-values-derivatives-reference']
+        for argument in {c['x'] for c in dawson}:
+            x = float(F(argument))
+            values = {c['api']: float(c['reference']) for c in dawson if c['x'] == argument}
+            self.assertAlmostEqual(values['dawson_prime']+2*x*values['integral_dawson'], 1., places=14)
+            if abs(x) <= 2:
+                coefficient, terms = 1., []
+                for k in range(70):
+                    terms.append(coefficient*x**(2*k+1))
+                    coefficient *= -2/(2*k+3)
+                close(math.fsum(terms), values['integral_dawson'])
+
+    def test_fullerton_integral_tables_match_series_and_recurrence_references(self):
+        import math
+        from fractions import Fraction as F
+        tables = json.loads((ROOT/'docs/gams-fullerton-functions-ten-references.json').read_text())['drivers']
+        euler = 0.5772156649015328606065120900824
+        def ein_series(x):
+            return math.fsum(x**k/(k*math.factorial(k)) for k in range(1, 90))
+        for case in tables['specfunc-fullerton-exponential-logarithmic-integrals-reference']:
+            x = float(F(case['x']))
+            if case['api'] == 'integral_li':
+                x = math.log(x)
+            elif abs(x) > 2:
+                continue
+            expected = euler+math.log(abs(x))+ein_series(x)
+            self.assertAlmostEqual(expected, float(case['reference']), delta=3e-13*max(abs(expected), 1e-30))
+        for case in tables['specfunc-fullerton-positive-exponential-integrals-reference']:
+            x = float(F(case['x']))
+            if x > 2:
+                continue
+            expected = -euler-math.log(x)-ein_series(-x)
+            for n in range(1, case['order']):
+                expected = (math.exp(-x)-x*expected)/n
+            self.assertAlmostEqual(expected, float(case['reference']), delta=3e-13*abs(expected))
+        for ident in ['sine-cosine-integrals', 'hyperbolic-integrals']:
+            for case in tables['specfunc-fullerton-'+ident+'-reference']:
+                x = float(F(case['x']))
+                if x > 4:
+                    continue
+                oscillatory = case['api'] in ['integral_si', 'integral_ci']
+                odd = case['api'] in ['integral_si', 'integral_shi']
+                if odd:
+                    terms = [(-1 if oscillatory and k % 2 else 1)*x**(2*k+1)
+                             /((2*k+1)*math.factorial(2*k+1)) for k in range(45)]
+                    expected = math.fsum(terms)
+                else:
+                    terms = [(-1 if oscillatory and k % 2 else 1)*x**(2*k)
+                             /((2*k)*math.factorial(2*k)) for k in range(1, 45)]
+                    expected = euler+math.log(x)+math.fsum(terms)
+                self.assertAlmostEqual(expected, float(case['reference']), delta=5e-13*max(abs(expected), 1e-30))
+
+    def test_fullerton_dilogarithm_and_near_zero_references_use_correct_conventions(self):
+        import math
+        from fractions import Fraction as F
+        tables = json.loads((ROOT/'docs/gams-fullerton-functions-ten-references.json').read_text())['drivers']
+        def dilogarithm(x):
+            if x == 1:
+                return math.pi**2/6
+            if x == -1:
+                return -math.pi**2/12
+            if x < -1:
+                return -math.pi**2/6-math.log(-x)**2/2-dilogarithm(1/x)
+            return math.fsum(x**k/(k*k) for k in range(1, 700))
+        for case in tables['specfunc-fullerton-real-dilogarithm-reference']:
+            expected = dilogarithm(float(F(case['x'])))
+            self.assertAlmostEqual(expected, float(case['reference']), delta=3e-14*max(abs(expected), 1e-30))
+        cases = tables['specfunc-fullerton-near-zero-exponential-logarithm-reference']
+        self.assertEqual(len(cases), 38)
+        for case in cases:
+            x = float(F(case['x']))
+            expected = math.log1p(x) if case['api'] == 'lnrel' else math.expm1(x)/x if x else 1.
+            self.assertAlmostEqual(expected, float(case['reference']), delta=3e-15*max(abs(expected), 1e-30))
+        self.assertTrue(any(F(c['x']) == F(1, 2**24) for c in cases))
+        self.assertTrue(any(F(c['x']) == -F(1, 2**24) for c in cases))
+
     def test_transforms_structures_scopes_and_retained_unsuccessful_probes(self):
         import hashlib
         import re
