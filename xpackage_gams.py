@@ -120,6 +120,7 @@ FULLERTON_FUNCTIONS_TEN_REPORT = Path('docs/gams-fullerton-functions-ten.md')
 ROOTS_STRUCTURED_TEN_REPORT = Path('docs/gams-roots-structured-ten.md')
 ORDERING_RUNGE_TEN_REPORT = Path('docs/gams-ordering-runge-ten.md')
 GAMMA_RELATIVE_TEN_REPORT = Path('docs/gams-gamma-relative-ten.md')
+BANDED_PRODUCTS_TEN_REPORT = Path('docs/gams-banded-products-ten.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
 EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
@@ -11457,6 +11458,120 @@ def gamma_relative_ten_review_text(root=ROOT):
     return '\n'.join(lines)
 
 
+def banded_products_ten_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-banded-products-ten-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-banded-products-ten-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Ten checked banded-matrix and structured-product drivers',
+     '',
+     'Ten independent REAL64 SpecialMatrices consumers passed GNU Fortran 16.2.0 and FPM 0.12.0 in the hosted '
+     'sandbox. The cached library was reused; only main.f90 and playground-main were compiled. The [verification '
+     'report](gams-banded-products-ten-validation.json) saves normalized UTF-8/LF source hashes, the exact '
+     'package pin, timings and full output. GAMS coverage remains unfinished.',
+     '',
+     '## Checked problems and independent references',
+     '',
+     '| Driver | GAMS | Cases and oracle |\n'
+     '| --- | --- | --- |\n'
+     '| Symmetric positive systems | D2b2a | 15 variable SPD tridiagonal systems; manufactured solutions, vector '
+     'and three-column RHS, refinement off/on |\n'
+     '| Symmetric indefinite systems | D2b1a | 15 alternating-sign symmetric tridiagonal systems; general '
+     'factorization, same independent solution/residual checks |\n'
+     '| Pivoted tridiagonal systems | D2a2a | 15 nonsymmetric systems requiring a first-column row pivot; vector '
+     'and multiple RHS, refinement off/on |\n'
+     '| Positive tridiagonal determinants | D3b2a | 15 SPD matrices; independent dense elimination with row '
+     'pivoting |\n'
+     '| Nonsymmetric tridiagonal determinants | D3a2a | 15 matrices with a small leading diagonal; independent '
+     'pivoted dense determinants |\n'
+     '| Variable tridiagonal eigenpairs | D4a5 | 15 symmetric indefinite matrices; residuals, orthogonality, '
+     'spectrum invariants and eigenvalues-only agreement |\n'
+     '| Rectangular Toeplitz products | D1b6 | 48 shapes; manual elementwise matrices, vector/matrix products '
+     'and transpose products |\n'
+     '| Rectangular Hankel products | D1b6 | 48 shapes; independent A(i,j)=v(i+j-1), vector/matrix products and '
+     'transpose products |\n'
+     '| Bidiagonal systems | D2a3 | 30 lower/upper systems; vector and three-column manufactured solutions |\n'
+     '| Bidiagonal spectra | D4a2 | 30 lower/upper matrices; known distinct diagonal eigenvalues, trace and '
+     'determinant |',
+     '',
+     'All scalar comparisons require finite results and abs(actual-reference)<=2e-9*max(1,abs(reference)); '
+     'matrix comparisons also check shape. Square problems cover n=2..16. Matrices, RHS and expected solutions '
+     'are assembled independently without dense() or another package solver supplying the oracle. Singular, '
+     'extremely scaled and ill-conditioned cases are excluded.',
+     '',
+     '## Linear systems and determinants',
+     '',
+     'Positive symmetric matrices have variable positive diagonal 3+mod(i,4)/8 and small off-diagonals; strict '
+     'diagonal dominance establishes positive definiteness. The indefinite family alternates the diagonal signs '
+     'and uses the general symmetric tridiagonal path. The nonsymmetric family sets the first diagonal to 1/8 '
+     'and first subdiagonal to 5/4, requiring a first-column pivot. Each of these three solve drivers checks '
+     'three manufactured RHS together and a separate vector RHS, both with and without refinement. Dense '
+     'residuals independently verify the matrix convention and returned solution.',
+     '',
+     'Both determinant drivers compare the structured continuant routines against an independently authored '
+     'dense Gaussian-elimination routine with row pivoting, not a second implementation of the same recurrence. '
+     'The bidiagonal solver checks lower and upper orientations, alternating-sign nonzero diagonals and variable '
+     'off-diagonals. These bounded accuracy tests do not characterize conditioning or refinement improvement.',
+     '',
+     '## Spectra',
+     '',
+     'The variable symmetric eigensystem driver uses alternating-sign diagonal matrices and checks every dense '
+     'eigenvector residual, all column inner products, ascending eigenvalue order, the trace, sum of squared '
+     'eigenvalues against the dense Frobenius norm squared, and the eigenvalue product against an independent '
+     'dense determinant. The eigenvalues-only API must also agree. Residuals and orthogonality establish the '
+     'complete returned eigensystem without invoking a second eigensolver as a reference.',
+     '',
+     'A triangular bidiagonal matrix has the diagonal entries as its spectrum. Both orientations are checked '
+     'against these known distinct real values using nearest matching, with additional trace and determinant '
+     'checks. The pinned implementation delegates this API to a dense stdlib eigensolver; this example makes no '
+     'claim that it exploits a specialized bidiagonal eigenvalue algorithm. Eigenvectors, repeated eigenvalues '
+     'and strongly nonnormal conditioning are excluded.',
+     '',
+     '## Rectangular products',
+     '',
+     'Toeplitz and Hankel cases cover m=2..7 and n=2..9, including tall, wide and square shapes with odd and '
+     'even dimensions. Each checks dense conversion, a three-column product, a vector product, dense transpose '
+     'conversion and transpose-vector multiplication. Toeplitz entries are assembled from first-column/first-row '
+     'vectors, with the first column defining the shared (1,1) entry. Hankel uses A(i,j)=v(i+j-1). The reference '
+     'products use ordinary dense intrinsic operations on the manual matrices. No FFT performance or large-size '
+     'claim is made.',
+     '',
+     '## Provenance and maintenance',
+     '',
+     'Pinned constructors, implementations and linked author tests were reviewed. These original MIT consumers '
+     'copy no upstream numerical or author-test bodies, and no upstream source was patched. Classifications '
+     'follow the [Netlib GAMS taxonomy](https://netlib.org/misc/gams.html), including D3 for determinants and D2 '
+     'for linear systems. Loading an example does not submit a job. The [coverage report](gams-coverage.md) '
+     'tracks remaining work.',
+     '',
+     '## Driver details',
+     '']
+    for d in drivers:
+        lines += ['### '+d['id']+' ('+d['gams_code']+')', '', d['modifications'], '']
+    lines += ['## Provenance and actual output', '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -11652,6 +11767,7 @@ def main():
                          (ROOTS_STRUCTURED_TEN_REPORT, roots_structured_ten_review_text()),
                          (ORDERING_RUNGE_TEN_REPORT, ordering_runge_ten_review_text()),
                          (GAMMA_RELATIVE_TEN_REPORT, gamma_relative_ten_review_text()),
+                         (BANDED_PRODUCTS_TEN_REPORT, banded_products_ten_review_text()),
                          (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report

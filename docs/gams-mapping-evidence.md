@@ -8,7 +8,7 @@ This report assesses each package/class pair, including inherited parent classes
 
 When a driver cannot be created, inspect the pinned implementation and author examples. Narrow or remove a classification that is unsupported; do not substitute an unrelated default example as evidence. Record missing dependencies, sandbox limits and upstream defects separately in the procedure or package review notes. A sandbox failure alone does not disprove an algorithm.
 
-Counts refer to package/class pairs and include parents: 810 verified, 80 source-supported, 237 uncertain.
+Counts refer to package/class pairs and include parents: 826 verified, 80 source-supported, 235 uncertain.
 
 ## Mappings requiring source review
 
@@ -231,8 +231,6 @@ Inspect these discovery assignments before making a specific algorithm claim. Th
 | [ryu_fortran](https://beliavsky.github.io/fortran-playground/gams/packages/ryu_fortran/) | [N3](https://beliavsky.github.io/fortran-playground/gams/N3/) | Character manipulation |
 | [specfun](https://beliavsky.github.io/fortran-playground/gams/packages/specfun/) | [C7](https://beliavsky.github.io/fortran-playground/gams/C7/) | Gamma |
 | [specfun](https://beliavsky.github.io/fortran-playground/gams/packages/specfun/) | [C10](https://beliavsky.github.io/fortran-playground/gams/C10/) | Bessel functions |
-| [specialmatrices](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/) | [D1](https://beliavsky.github.io/fortran-playground/gams/D1/) | Elementary vector and matrix operations |
-| [specialmatrices](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/) | [D3](https://beliavsky.github.io/fortran-playground/gams/D3/) | Determinants |
 | [spectrum](https://beliavsky.github.io/fortran-playground/gams/packages/spectrum/) | [K](https://beliavsky.github.io/fortran-playground/gams/K/) | Approximation |
 | [spectrum](https://beliavsky.github.io/fortran-playground/gams/packages/spectrum/) | [K5](https://beliavsky.github.io/fortran-playground/gams/K5/) | Smoothing |
 | [spectrum](https://beliavsky.github.io/fortran-playground/gams/packages/spectrum/) | [N](https://beliavsky.github.io/fortran-playground/gams/N/) | Data handling |
@@ -624,15 +622,25 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [specfunc-fullerton / specfunc-fullerton-tricomi-incomplete-gamma](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-tricomi-incomplete-gamma) | C7e | verified |
 | [specfunc-fullerton / specfunc-fullerton-upper-gamma-positive-x](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-upper-gamma-positive-x) | C7e | verified |
 | [specfunc-fullerton / specfunc-fullerton-upper-incomplete-gamma](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-upper-incomplete-gamma) | C7e | source-supported |
+| [specialmatrices / specialmatrices-bidiagonal-spectra](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-bidiagonal-spectra) | D4a2 | verified |
+| [specialmatrices / specialmatrices-bidiagonal-systems](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-bidiagonal-systems) | D2a3 | verified |
 | [specialmatrices / specialmatrices-circulant-eigenpairs](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-circulant-eigenpairs) | D4a2 | verified |
 | [specialmatrices / specialmatrices-circulant-inverses](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-circulant-inverses) | D2a1 | verified |
 | [specialmatrices / specialmatrices-circulant-singular-values](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-circulant-singular-values) | D6 | verified |
 | [specialmatrices / specialmatrices-circulant-systems](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-circulant-systems) | D2a1 | verified |
+| [specialmatrices / specialmatrices-hankel-rectangular-products](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-hankel-rectangular-products) | D1b6 | verified |
+| [specialmatrices / specialmatrices-nonsymmetric-tridiagonal-determinants](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-nonsymmetric-tridiagonal-determinants) | D3a2a | verified |
+| [specialmatrices / specialmatrices-pivoted-tridiagonal-systems](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-pivoted-tridiagonal-systems) | D2a2a | verified |
 | [specialmatrices / specialmatrices-poisson-eigenpairs](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-poisson-eigenpairs) | D4a1 | verified |
+| [specialmatrices / specialmatrices-positive-tridiagonal-determinants](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-positive-tridiagonal-determinants) | D3b2a | verified |
 | [specialmatrices / specialmatrices-rectangular-poisson](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-rectangular-poisson) | I2b1a1a | verified |
 | [specialmatrices / specialmatrices-solve](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-solve) | D2 | verified |
 | [specialmatrices / specialmatrices-strang-eigenpairs](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-strang-eigenpairs) | D4a1 | verified |
 | [specialmatrices / specialmatrices-strang-systems](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-strang-systems) | D2b2a | verified |
+| [specialmatrices / specialmatrices-symmetric-indefinite-systems](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-symmetric-indefinite-systems) | D2b1a | verified |
+| [specialmatrices / specialmatrices-symmetric-positive-systems](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-symmetric-positive-systems) | D2b2a | verified |
+| [specialmatrices / specialmatrices-toeplitz-rectangular-products](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-toeplitz-rectangular-products) | D1b6 | verified |
+| [specialmatrices / specialmatrices-variable-tridiagonal-eigenpairs](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-variable-tridiagonal-eigenpairs) | D4a5 | verified |
 | [spectrum / spectrum-convolve](https://beliavsky.github.io/fortran-playground/gams/packages/spectrum/#spectrum-convolve) | J2 | verified |
 | [spectrum / spectrum-rfft](https://beliavsky.github.io/fortran-playground/gams/packages/spectrum/#spectrum-rfft) | J1a1 | verified |
 | [spherepack / spherepack-api](https://beliavsky.github.io/fortran-playground/gams/packages/spherepack/#spherepack-api) | I2 | verified |

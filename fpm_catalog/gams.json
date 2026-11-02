@@ -1942,6 +1942,46 @@
     "L2c": {
       "label": "Subset",
       "parent": "L2"
+    },
+    "D3a2": {
+      "label": "Banded",
+      "parent": "D3a"
+    },
+    "D3a2a": {
+      "label": "Tridiagonal",
+      "parent": "D3a2"
+    },
+    "D3b": {
+      "label": "Real symmetric matrices",
+      "parent": "D3"
+    },
+    "D3b2": {
+      "label": "Positive definite banded",
+      "parent": "D3b"
+    },
+    "D3b2a": {
+      "label": "Tridiagonal",
+      "parent": "D3b2"
+    },
+    "D2b1a": {
+      "label": "Indefinite",
+      "parent": "D2b1"
+    },
+    "D4a5": {
+      "label": "Tridiagonal",
+      "parent": "D4a"
+    },
+    "D2a2": {
+      "label": "Banded",
+      "parent": "D2a"
+    },
+    "D2a2a": {
+      "label": "Tridiagonal",
+      "parent": "D2a2"
+    },
+    "D2a3": {
+      "label": "Triangular",
+      "parent": "D2a"
     }
   },
   "procedure_mappings": [
@@ -16138,6 +16178,301 @@
         {
           "path": "test/gamma/test_gamma.f90",
           "sha256": "49a48e63b10b05c318c6696e7b050a808ba5f530117ad518a6b398348d66e1e1"
+        }
+      ]
+    },
+    {
+      "id": "specialmatrices-symmetric-positive-systems",
+      "package_id": "specialmatrices",
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "module": "SpecialMatrices",
+      "procedure": "solve(SymTridiagonal), with/without refinement",
+      "gams_codes": [
+        "D2b2a"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not required",
+      "notes": "Variable diagonally dominant symmetric positive-definite tridiagonal systems; explicit positive-definite path. Fifteen dimensions 2..16, three manufactured RHS and separate vector RHS, both refinement settings. Independent solution and dense residual checks; singular and ill-conditioned cases excluded.",
+      "driver_id": "specialmatrices-symmetric-positive-systems-reference",
+      "evidence": [
+        {
+          "path": "src/SymTridiagonal/solve.f90",
+          "line": 12,
+          "sha256": "6283c3c647ad7915dbc431b2ece4f06c37c5b7c370ccaaac8ccb752382592f7a"
+        },
+        {
+          "path": "src/SymTridiagonal/constructors.f90",
+          "line": 1,
+          "sha256": "331a3ec548b9c8028341d425a9e3d4c04812beb9b33275629307e1c8cf824bce"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_symtridiagonal_matrices.f90",
+          "sha256": "75fe6e985c53d461c81ec9833e49b0f40b85eaf6073193f687f67120c5de1aac"
+        }
+      ]
+    },
+    {
+      "id": "specialmatrices-symmetric-indefinite-systems",
+      "package_id": "specialmatrices",
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "module": "SpecialMatrices",
+      "procedure": "solve(SymTridiagonal), with/without refinement",
+      "gams_codes": [
+        "D2b1a"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not required",
+      "notes": "Variable symmetric indefinite tridiagonal systems with alternating-sign diagonal; general factorization path. Fifteen dimensions 2..16, three manufactured RHS and separate vector RHS, both refinement settings. Independent solution and dense residual checks; singular and ill-conditioned cases excluded.",
+      "driver_id": "specialmatrices-symmetric-indefinite-systems-reference",
+      "evidence": [
+        {
+          "path": "src/SymTridiagonal/solve.f90",
+          "line": 12,
+          "sha256": "6283c3c647ad7915dbc431b2ece4f06c37c5b7c370ccaaac8ccb752382592f7a"
+        },
+        {
+          "path": "src/SymTridiagonal/constructors.f90",
+          "line": 1,
+          "sha256": "331a3ec548b9c8028341d425a9e3d4c04812beb9b33275629307e1c8cf824bce"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_symtridiagonal_matrices.f90",
+          "sha256": "75fe6e985c53d461c81ec9833e49b0f40b85eaf6073193f687f67120c5de1aac"
+        }
+      ]
+    },
+    {
+      "id": "specialmatrices-pivoted-tridiagonal-systems",
+      "package_id": "specialmatrices",
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "module": "SpecialMatrices",
+      "procedure": "solve(Tridiagonal), with/without refinement",
+      "gams_codes": [
+        "D2a2a"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not required",
+      "notes": "Nonsymmetric tridiagonal systems with a small leading diagonal and larger first subdiagonal, requiring a first-column pivot. Fifteen dimensions 2..16, three manufactured RHS and separate vector RHS, both refinement settings. Independent solution and dense residual checks; singular and ill-conditioned cases excluded.",
+      "driver_id": "specialmatrices-pivoted-tridiagonal-systems-reference",
+      "evidence": [
+        {
+          "path": "src/Tridiagonal/solve.f90",
+          "line": 12,
+          "sha256": "17fc4d6232dfae92cc99b7cf1d90f050a27fa758eb04c749236f63cc623921fe"
+        },
+        {
+          "path": "src/Tridiagonal/constructors.f90",
+          "line": 1,
+          "sha256": "8fb8b5108ab0b4f368f85aeddd87b10bd2f025aec8b8411dbaebc829ac0c0b29"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_tridiagonal_matrices.f90",
+          "sha256": "6ea4f0339edb845c5f136ccb9de4a80aaea1b767b547583e3aa8939adc665216"
+        }
+      ]
+    },
+    {
+      "id": "specialmatrices-positive-tridiagonal-determinants",
+      "package_id": "specialmatrices",
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "module": "SpecialMatrices",
+      "procedure": "det(SymTridiagonal)",
+      "gams_codes": [
+        "D3b2a"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not required",
+      "notes": "Fifteen dimensions 2..16; structured determinant compared with independent dense Gaussian elimination with row pivoting, not the package continuant recurrence. Positive symmetric banded or nonsymmetric pivot-requiring family as named. Singular and extreme-scale matrices excluded.",
+      "driver_id": "specialmatrices-positive-tridiagonal-determinants-reference",
+      "evidence": [
+        {
+          "path": "src/SymTridiagonal/det.f90",
+          "line": 5,
+          "sha256": "88b1d967783e2e0458c6207ce308ddfc8aa0ba6a3b6968ff39b23e57d1a471ae"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_symtridiagonal_matrices.f90",
+          "sha256": "75fe6e985c53d461c81ec9833e49b0f40b85eaf6073193f687f67120c5de1aac"
+        }
+      ]
+    },
+    {
+      "id": "specialmatrices-nonsymmetric-tridiagonal-determinants",
+      "package_id": "specialmatrices",
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "module": "SpecialMatrices",
+      "procedure": "det(Tridiagonal)",
+      "gams_codes": [
+        "D3a2a"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not required",
+      "notes": "Fifteen dimensions 2..16; structured determinant compared with independent dense Gaussian elimination with row pivoting, not the package continuant recurrence. Positive symmetric banded or nonsymmetric pivot-requiring family as named. Singular and extreme-scale matrices excluded.",
+      "driver_id": "specialmatrices-nonsymmetric-tridiagonal-determinants-reference",
+      "evidence": [
+        {
+          "path": "src/Tridiagonal/det.f90",
+          "line": 5,
+          "sha256": "493abbe9f8479806d8f21f403f4187aa6470b39820f535353167e4e2e0bfae0a"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_tridiagonal_matrices.f90",
+          "sha256": "6ea4f0339edb845c5f136ccb9de4a80aaea1b767b547583e3aa8939adc665216"
+        }
+      ]
+    },
+    {
+      "id": "specialmatrices-variable-tridiagonal-eigenpairs",
+      "package_id": "specialmatrices",
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "module": "SpecialMatrices",
+      "procedure": "eigh(SymTridiagonal), eigvalsh",
+      "gams_codes": [
+        "D4a5"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not required",
+      "notes": "Fifteen variable symmetric indefinite tridiagonal eigensystems, n=2..16. Dense residuals, full orthogonality, ascending order, eigenvalues-only agreement, trace, Frobenius invariant and determinant product checked. No second eigenvalue library supplies the oracle; repeated or ill-conditioned cases excluded.",
+      "driver_id": "specialmatrices-variable-tridiagonal-eigenpairs-reference",
+      "evidence": [
+        {
+          "path": "src/SymTridiagonal/eigh.f90",
+          "line": 50,
+          "sha256": "51cdc9faa7e19e5143c33fe00bcad21cd6d3827cd2adebdd497aff19cae5dff7"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_symtridiagonal_matrices.f90",
+          "sha256": "75fe6e985c53d461c81ec9833e49b0f40b85eaf6073193f687f67120c5de1aac"
+        }
+      ]
+    },
+    {
+      "id": "specialmatrices-toeplitz-rectangular-products",
+      "package_id": "specialmatrices",
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "module": "SpecialMatrices",
+      "procedure": "matmul(Toeplitz), dense, transpose",
+      "gams_codes": [
+        "D1b6"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not required",
+      "notes": "48 rectangular shapes m=2..7,n=2..9, including square/tall/wide and odd/even dimensions. Independent elementwise dense reference; vector and three-column matrix products, transpose dense values and transpose-vector products checked. First-column entry overrides the first-row entry at (1,1). Extreme dimensions and FFT performance excluded.",
+      "driver_id": "specialmatrices-toeplitz-rectangular-products-reference",
+      "evidence": [
+        {
+          "path": "src/Toeplitz/constructors.f90",
+          "line": 5,
+          "sha256": "7720a3f0372b2ba1f2a51a248265749f1f358ef470a4126050001147e3a3e330"
+        },
+        {
+          "path": "src/Toeplitz/matvecs.f90",
+          "line": 5,
+          "sha256": "d88bc2b3e90694c4d0bec0a35dcc5fc3e7aeb7aa869d801771357d0de0d070d5"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_toeplitz.f90",
+          "sha256": "f415a8c4ee78175a9ec30b8dac26bb136a29c184065c184f3df2c5cf538d14c4"
+        }
+      ]
+    },
+    {
+      "id": "specialmatrices-hankel-rectangular-products",
+      "package_id": "specialmatrices",
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "module": "SpecialMatrices",
+      "procedure": "matmul(Hankel), dense, transpose",
+      "gams_codes": [
+        "D1b6"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not required",
+      "notes": "48 rectangular shapes m=2..7,n=2..9, including square/tall/wide and odd/even dimensions. Independent elementwise dense reference; vector and three-column matrix products, transpose dense values and transpose-vector products checked. A(i,j)=v(i+j-1). Extreme dimensions and FFT performance excluded.",
+      "driver_id": "specialmatrices-hankel-rectangular-products-reference",
+      "evidence": [
+        {
+          "path": "src/Hankel/constructors.f90",
+          "line": 5,
+          "sha256": "cc925ea5c685a1d1c05389e23bc869c77e0523deb48fbb58f9fca4c7f52dee8b"
+        },
+        {
+          "path": "src/Hankel/matvecs.f90",
+          "line": 5,
+          "sha256": "41c23e4eacb98e3396a6588110e61d413387dfe058b73fbce61208e7c51812cf"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_hankel.f90",
+          "sha256": "d435b28902452c2872eb6127e38b42fa80e8a36bff61b4c0e17495db25e4a9ed"
+        }
+      ]
+    },
+    {
+      "id": "specialmatrices-bidiagonal-systems",
+      "package_id": "specialmatrices",
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "module": "SpecialMatrices",
+      "procedure": "solve(Bidiagonal)",
+      "gams_codes": [
+        "D2a3"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not required",
+      "notes": "Thirty lower/upper bidiagonal systems n=2..16, distinct alternating-sign diagonals and variable off-diagonals. Three manufactured RHS and a separate vector RHS checked against exact solutions and manually assembled dense residuals. Singular diagonals excluded.",
+      "driver_id": "specialmatrices-bidiagonal-systems-reference",
+      "evidence": [
+        {
+          "path": "src/Bidiagonal/solve.f90",
+          "line": 40,
+          "sha256": "c8fdec0cb440a111db1fa248dc6a11adb9c6ca85ca79675993247ee33f706bdc"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_bidiagonal_matrices.f90",
+          "sha256": "f76282034ecc325628f88c41b4f934751d4f9ab0d8814acc57e5541b55acd362"
+        }
+      ]
+    },
+    {
+      "id": "specialmatrices-bidiagonal-spectra",
+      "package_id": "specialmatrices",
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "module": "SpecialMatrices",
+      "procedure": "eigvals(Bidiagonal)",
+      "gams_codes": [
+        "D4a2"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not required",
+      "notes": "Thirty lower/upper bidiagonal spectra n=2..16, compared with known distinct real diagonal eigenvalues using order-independent nearest matching, plus trace and determinant products. Eigenvectors, repeated eigenvalues and ill-conditioned nonnormal families excluded.",
+      "driver_id": "specialmatrices-bidiagonal-spectra-reference",
+      "evidence": [
+        {
+          "path": "src/Bidiagonal/eig.f90",
+          "line": 6,
+          "sha256": "495e1ac955e61cee2d2b403a599212815e8aae8aebdd65b423695a697ff4dc05"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_bidiagonal_matrices.f90",
+          "sha256": "f76282034ecc325628f88c41b4f934751d4f9ab0d8814acc57e5541b55acd362"
         }
       ]
     }

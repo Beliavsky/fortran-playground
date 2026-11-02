@@ -995,5 +995,45 @@ export const gamsSubclasses = {
   "L2c": {
     "label": "Subset",
     "parent": "L2"
+  },
+  "D3a2": {
+    "label": "Banded",
+    "parent": "D3a"
+  },
+  "D3a2a": {
+    "label": "Tridiagonal",
+    "parent": "D3a2"
+  },
+  "D3b": {
+    "label": "Real symmetric matrices",
+    "parent": "D3"
+  },
+  "D3b2": {
+    "label": "Positive definite banded",
+    "parent": "D3b"
+  },
+  "D3b2a": {
+    "label": "Tridiagonal",
+    "parent": "D3b2"
+  },
+  "D2b1a": {
+    "label": "Indefinite",
+    "parent": "D2b1"
+  },
+  "D4a5": {
+    "label": "Tridiagonal",
+    "parent": "D4a"
+  },
+  "D2a2": {
+    "label": "Banded",
+    "parent": "D2a"
+  },
+  "D2a2a": {
+    "label": "Tridiagonal",
+    "parent": "D2a2"
+  },
+  "D2a3": {
+    "label": "Triangular",
+    "parent": "D2a"
   }
 };

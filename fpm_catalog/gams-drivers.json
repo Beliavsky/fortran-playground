@@ -15197,6 +15197,236 @@
         "reference_floor": 1e-30,
         "oracle": "mpmath 80/120 digit independent reference values"
       }
+    },
+    {
+      "id": "specialmatrices-symmetric-positive-systems-reference",
+      "name": "gams-specialmatrices-symmetric-positive-systems-reference",
+      "package_id": "specialmatrices",
+      "procedure_id": "specialmatrices-symmetric-positive-systems",
+      "gams_code": "D2b2a",
+      "problem_id": "specialmatrices-symmetric-positive-systems-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specialmatrices-symmetric-positive-systems-reference.f90",
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "author_example": "test/test_symtridiagonal_matrices.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/banded-products-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. Variable diagonally dominant symmetric positive-definite tridiagonal systems; explicit positive-definite path. Fifteen dimensions 2..16, three manufactured RHS and separate vector RHS, both refinement settings. Independent solution and dense residual checks; singular and ill-conditioned cases excluded.",
+      "validation_path": "docs/gams-banded-products-ten-validation.json",
+      "review_path": "docs/gams-banded-products-ten.md",
+      "checks": {
+        "relative_tolerance": 2e-09,
+        "oracle": "manual dense matrices, manufactured solutions, dense pivoted elimination or triangular spectra"
+      }
+    },
+    {
+      "id": "specialmatrices-symmetric-indefinite-systems-reference",
+      "name": "gams-specialmatrices-symmetric-indefinite-systems-reference",
+      "package_id": "specialmatrices",
+      "procedure_id": "specialmatrices-symmetric-indefinite-systems",
+      "gams_code": "D2b1a",
+      "problem_id": "specialmatrices-symmetric-indefinite-systems-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specialmatrices-symmetric-indefinite-systems-reference.f90",
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "author_example": "test/test_symtridiagonal_matrices.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/banded-products-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. Variable symmetric indefinite tridiagonal systems with alternating-sign diagonal; general factorization path. Fifteen dimensions 2..16, three manufactured RHS and separate vector RHS, both refinement settings. Independent solution and dense residual checks; singular and ill-conditioned cases excluded.",
+      "validation_path": "docs/gams-banded-products-ten-validation.json",
+      "review_path": "docs/gams-banded-products-ten.md",
+      "checks": {
+        "relative_tolerance": 2e-09,
+        "oracle": "manual dense matrices, manufactured solutions, dense pivoted elimination or triangular spectra"
+      }
+    },
+    {
+      "id": "specialmatrices-pivoted-tridiagonal-systems-reference",
+      "name": "gams-specialmatrices-pivoted-tridiagonal-systems-reference",
+      "package_id": "specialmatrices",
+      "procedure_id": "specialmatrices-pivoted-tridiagonal-systems",
+      "gams_code": "D2a2a",
+      "problem_id": "specialmatrices-pivoted-tridiagonal-systems-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specialmatrices-pivoted-tridiagonal-systems-reference.f90",
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "author_example": "test/test_tridiagonal_matrices.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/banded-products-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. Nonsymmetric tridiagonal systems with a small leading diagonal and larger first subdiagonal, requiring a first-column pivot. Fifteen dimensions 2..16, three manufactured RHS and separate vector RHS, both refinement settings. Independent solution and dense residual checks; singular and ill-conditioned cases excluded.",
+      "validation_path": "docs/gams-banded-products-ten-validation.json",
+      "review_path": "docs/gams-banded-products-ten.md",
+      "checks": {
+        "relative_tolerance": 2e-09,
+        "oracle": "manual dense matrices, manufactured solutions, dense pivoted elimination or triangular spectra"
+      }
+    },
+    {
+      "id": "specialmatrices-positive-tridiagonal-determinants-reference",
+      "name": "gams-specialmatrices-positive-tridiagonal-determinants-reference",
+      "package_id": "specialmatrices",
+      "procedure_id": "specialmatrices-positive-tridiagonal-determinants",
+      "gams_code": "D3b2a",
+      "problem_id": "specialmatrices-positive-tridiagonal-determinants-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specialmatrices-positive-tridiagonal-determinants-reference.f90",
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "author_example": "test/test_symtridiagonal_matrices.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/banded-products-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. Fifteen dimensions 2..16; structured determinant compared with independent dense Gaussian elimination with row pivoting, not the package continuant recurrence. Positive symmetric banded or nonsymmetric pivot-requiring family as named. Singular and extreme-scale matrices excluded.",
+      "validation_path": "docs/gams-banded-products-ten-validation.json",
+      "review_path": "docs/gams-banded-products-ten.md",
+      "checks": {
+        "relative_tolerance": 2e-09,
+        "oracle": "manual dense matrices, manufactured solutions, dense pivoted elimination or triangular spectra"
+      }
+    },
+    {
+      "id": "specialmatrices-nonsymmetric-tridiagonal-determinants-reference",
+      "name": "gams-specialmatrices-nonsymmetric-tridiagonal-determinants-reference",
+      "package_id": "specialmatrices",
+      "procedure_id": "specialmatrices-nonsymmetric-tridiagonal-determinants",
+      "gams_code": "D3a2a",
+      "problem_id": "specialmatrices-nonsymmetric-tridiagonal-determinants-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specialmatrices-nonsymmetric-tridiagonal-determinants-reference.f90",
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "author_example": "test/test_tridiagonal_matrices.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/banded-products-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. Fifteen dimensions 2..16; structured determinant compared with independent dense Gaussian elimination with row pivoting, not the package continuant recurrence. Positive symmetric banded or nonsymmetric pivot-requiring family as named. Singular and extreme-scale matrices excluded.",
+      "validation_path": "docs/gams-banded-products-ten-validation.json",
+      "review_path": "docs/gams-banded-products-ten.md",
+      "checks": {
+        "relative_tolerance": 2e-09,
+        "oracle": "manual dense matrices, manufactured solutions, dense pivoted elimination or triangular spectra"
+      }
+    },
+    {
+      "id": "specialmatrices-variable-tridiagonal-eigenpairs-reference",
+      "name": "gams-specialmatrices-variable-tridiagonal-eigenpairs-reference",
+      "package_id": "specialmatrices",
+      "procedure_id": "specialmatrices-variable-tridiagonal-eigenpairs",
+      "gams_code": "D4a5",
+      "problem_id": "specialmatrices-variable-tridiagonal-eigenpairs-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specialmatrices-variable-tridiagonal-eigenpairs-reference.f90",
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "author_example": "test/test_symtridiagonal_matrices.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/banded-products-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. Fifteen variable symmetric indefinite tridiagonal eigensystems, n=2..16. Dense residuals, full orthogonality, ascending order, eigenvalues-only agreement, trace, Frobenius invariant and determinant product checked. No second eigenvalue library supplies the oracle; repeated or ill-conditioned cases excluded.",
+      "validation_path": "docs/gams-banded-products-ten-validation.json",
+      "review_path": "docs/gams-banded-products-ten.md",
+      "checks": {
+        "relative_tolerance": 2e-09,
+        "oracle": "manual dense matrices, manufactured solutions, dense pivoted elimination or triangular spectra"
+      }
+    },
+    {
+      "id": "specialmatrices-toeplitz-rectangular-products-reference",
+      "name": "gams-specialmatrices-toeplitz-rectangular-products-reference",
+      "package_id": "specialmatrices",
+      "procedure_id": "specialmatrices-toeplitz-rectangular-products",
+      "gams_code": "D1b6",
+      "problem_id": "specialmatrices-toeplitz-rectangular-products-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specialmatrices-toeplitz-rectangular-products-reference.f90",
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "author_example": "test/test_toeplitz.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/banded-products-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 48 rectangular shapes m=2..7,n=2..9, including square/tall/wide and odd/even dimensions. Independent elementwise dense reference; vector and three-column matrix products, transpose dense values and transpose-vector products checked. First-column entry overrides the first-row entry at (1,1). Extreme dimensions and FFT performance excluded.",
+      "validation_path": "docs/gams-banded-products-ten-validation.json",
+      "review_path": "docs/gams-banded-products-ten.md",
+      "checks": {
+        "relative_tolerance": 2e-09,
+        "oracle": "manual dense matrices, manufactured solutions, dense pivoted elimination or triangular spectra"
+      }
+    },
+    {
+      "id": "specialmatrices-hankel-rectangular-products-reference",
+      "name": "gams-specialmatrices-hankel-rectangular-products-reference",
+      "package_id": "specialmatrices",
+      "procedure_id": "specialmatrices-hankel-rectangular-products",
+      "gams_code": "D1b6",
+      "problem_id": "specialmatrices-hankel-rectangular-products-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specialmatrices-hankel-rectangular-products-reference.f90",
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "author_example": "test/test_hankel.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/banded-products-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 48 rectangular shapes m=2..7,n=2..9, including square/tall/wide and odd/even dimensions. Independent elementwise dense reference; vector and three-column matrix products, transpose dense values and transpose-vector products checked. A(i,j)=v(i+j-1). Extreme dimensions and FFT performance excluded.",
+      "validation_path": "docs/gams-banded-products-ten-validation.json",
+      "review_path": "docs/gams-banded-products-ten.md",
+      "checks": {
+        "relative_tolerance": 2e-09,
+        "oracle": "manual dense matrices, manufactured solutions, dense pivoted elimination or triangular spectra"
+      }
+    },
+    {
+      "id": "specialmatrices-bidiagonal-systems-reference",
+      "name": "gams-specialmatrices-bidiagonal-systems-reference",
+      "package_id": "specialmatrices",
+      "procedure_id": "specialmatrices-bidiagonal-systems",
+      "gams_code": "D2a3",
+      "problem_id": "specialmatrices-bidiagonal-systems-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specialmatrices-bidiagonal-systems-reference.f90",
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "author_example": "test/test_bidiagonal_matrices.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/banded-products-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. Thirty lower/upper bidiagonal systems n=2..16, distinct alternating-sign diagonals and variable off-diagonals. Three manufactured RHS and a separate vector RHS checked against exact solutions and manually assembled dense residuals. Singular diagonals excluded.",
+      "validation_path": "docs/gams-banded-products-ten-validation.json",
+      "review_path": "docs/gams-banded-products-ten.md",
+      "checks": {
+        "relative_tolerance": 2e-09,
+        "oracle": "manual dense matrices, manufactured solutions, dense pivoted elimination or triangular spectra"
+      }
+    },
+    {
+      "id": "specialmatrices-bidiagonal-spectra-reference",
+      "name": "gams-specialmatrices-bidiagonal-spectra-reference",
+      "package_id": "specialmatrices",
+      "procedure_id": "specialmatrices-bidiagonal-spectra",
+      "gams_code": "D4a2",
+      "problem_id": "specialmatrices-bidiagonal-spectra-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specialmatrices-bidiagonal-spectra-reference.f90",
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "author_example": "test/test_bidiagonal_matrices.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/banded-products-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. Thirty lower/upper bidiagonal spectra n=2..16, compared with known distinct real diagonal eigenvalues using order-independent nearest matching, plus trace and determinant products. Eigenvectors, repeated eigenvalues and ill-conditioned nonnormal families excluded.",
+      "validation_path": "docs/gams-banded-products-ten-validation.json",
+      "review_path": "docs/gams-banded-products-ten.md",
+      "checks": {
+        "relative_tolerance": 2e-09,
+        "oracle": "manual dense matrices, manufactured solutions, dense pivoted elimination or triangular spectra"
+      }
     }
   ]
 }

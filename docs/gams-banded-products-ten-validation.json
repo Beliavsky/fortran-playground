@@ -1,0 +1,328 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "specialmatrices-symmetric-positive-systems-reference",
+      "source_revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "source_sha256": "8d27bbd879eeb86759bbe9431f84eef69d9723675c0469c47991abfe6e1afdb5",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T20:42:44.120731+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.691,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "15 independently assembled matrices, dimensions 2..16, checked.\nPASS specialmatrices-symmetric-positive-systems-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.065,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "specialmatrices-symmetric-indefinite-systems-reference",
+      "source_revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "source_sha256": "68e14a869e1796bca85c3530a65ea2a0f56827e8c12c16a6bc80ad4c23044e22",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T20:42:45.729792+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.458,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "15 independently assembled matrices, dimensions 2..16, checked.\nPASS specialmatrices-symmetric-indefinite-systems-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.056,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "specialmatrices-pivoted-tridiagonal-systems-reference",
+      "source_revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "source_sha256": "28383f03c672121aff0e3f36a7484e52d37dc9387878722865d6028f0aabd62f",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T20:42:47.294094+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.393,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "15 independently assembled matrices, dimensions 2..16, checked.\nPASS specialmatrices-pivoted-tridiagonal-systems-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.057,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "specialmatrices-positive-tridiagonal-determinants-reference",
+      "source_revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "source_sha256": "13594ab4920191ad30f1575faea77101e6ce38e38e11037b7a087992d35c0fe8",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T20:42:49.264581+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.522,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "15 independently assembled matrices, dimensions 2..16, checked.\nPASS specialmatrices-positive-tridiagonal-determinants-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.07,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "specialmatrices-nonsymmetric-tridiagonal-determinants-reference",
+      "source_revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "source_sha256": "ad66b69b61bad45a3e2464ee8a0bdd51f6d134ca611611b43ddd57c036df6208",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T20:42:51.964721+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 1.23,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "15 independently assembled matrices, dimensions 2..16, checked.\nPASS specialmatrices-nonsymmetric-tridiagonal-determinants-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.068,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "specialmatrices-variable-tridiagonal-eigenpairs-reference",
+      "source_revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "source_sha256": "4710c418040a7540125e896c98cba629f357a118b6e02191bf5a56bd33cdad0a",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T20:42:54.241163+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.557,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "15 independently assembled matrices, dimensions 2..16, checked.\nPASS specialmatrices-variable-tridiagonal-eigenpairs-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.061,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "specialmatrices-toeplitz-rectangular-products-reference",
+      "source_revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "source_sha256": "148f1286a51cf85e53b9ce109ef6777a0182654fb9f12aa1c4879780099542bc",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T20:42:56.664913+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.808,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "48 rectangular shapes: dense, vector/matrix products and transposes checked.\nPASS specialmatrices-toeplitz-rectangular-products-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.09,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "specialmatrices-hankel-rectangular-products-reference",
+      "source_revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "source_sha256": "aa570c3acde73686447de1924bb903b905afced02b51ef0468dca6cc6a3a8f27",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T20:42:58.770641+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.488,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "48 rectangular shapes: dense, vector/matrix products and transposes checked.\nPASS specialmatrices-hankel-rectangular-products-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.095,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "specialmatrices-bidiagonal-systems-reference",
+      "source_revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "source_sha256": "f995892f2efc932aef8d12974cec13dc4edc2cbe9d41c083da10e03f522ee99a",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T20:43:00.386918+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.459,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "30 lower/upper bidiagonal matrices, dimensions 2..16, checked.\nPASS specialmatrices-bidiagonal-systems-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.053,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "specialmatrices-bidiagonal-spectra-reference",
+      "source_revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "source_sha256": "327a0b9fc47e28904dc3e70b9c311595c26e01271a004436ef6c44a27529902b",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T20:43:02.692047+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.952,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "30 lower/upper bidiagonal matrices, dimensions 2..16, checked.\nPASS specialmatrices-bidiagonal-spectra-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.072,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-11-02T20:43:02.742888+00:00"
+}
