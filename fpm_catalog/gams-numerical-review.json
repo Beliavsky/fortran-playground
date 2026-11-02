@@ -632,7 +632,17 @@
       "archive_sha256": "fab50ff6999afd7ab8bfeabdf8aaf3a93b3e23f6ff9d8e85c74d84d0664f5a51",
       "status": "procedure-reviewed",
       "procedure_ids": [
-        "nafpack-execute-fft-plan-sp"
+        "nafpack-execute-fft-plan-sp",
+        "nafpack-triangular-substitution",
+        "nafpack-known-lu-factors",
+        "nafpack-known-ldu-factors",
+        "nafpack-cholesky-lower-factor",
+        "nafpack-known-ldlt-factors",
+        "nafpack-qr-householder",
+        "nafpack-qr-givens",
+        "nafpack-qr-classical-gram-schmidt",
+        "nafpack-qr-modified-gram-schmidt",
+        "nafpack-characteristic-coefficients"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
     },

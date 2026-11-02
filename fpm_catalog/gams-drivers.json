@@ -15669,6 +15669,246 @@
         "relative_tolerance": 3e-05,
         "oracle": "explicit REAL64 formulas or independently constructed matrix references"
       }
+    },
+    {
+      "id": "nafpack-triangular-substitution-reference",
+      "name": "gams-nafpack-triangular-substitution-reference",
+      "package_id": "nafpack",
+      "procedure_id": "nafpack-triangular-substitution",
+      "gams_code": "D2a3",
+      "problem_id": "nafpack-triangular-substitution-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/nafpack-triangular-substitution-reference.f90",
+      "revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/nafpack-factors-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 27 known lower/upper triangular pairs, n=2..10 and three scales. Manufactured vector RHS, exact solutions and direct residuals checked independently. No zero-diagonal, singular or extreme-scale inputs.",
+      "validation_path": "docs/gams-nafpack-factors-ten-validation.json",
+      "review_path": "docs/gams-nafpack-factors-ten.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "relative_tolerance": 2e-09,
+        "oracle": "known factors, manufactured solutions, orthogonality or polynomial products"
+      }
+    },
+    {
+      "id": "nafpack-known-lu-factors-reference",
+      "name": "gams-nafpack-known-lu-factors-reference",
+      "package_id": "nafpack",
+      "procedure_id": "nafpack-known-lu-factors",
+      "gams_code": "D2a1",
+      "problem_id": "nafpack-known-lu-factors-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/nafpack-known-lu-factors-reference.f90",
+      "revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/nafpack-factors-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 27 matrices constructed from known unit-lower and nonsingular upper factors. Both exact factors, A=L*U, triangular structure and manufactured-solution forward/back substitution checked. Unpivoted LU with nonzero leading minors only.",
+      "validation_path": "docs/gams-nafpack-factors-ten-validation.json",
+      "review_path": "docs/gams-nafpack-factors-ten.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "relative_tolerance": 2e-09,
+        "oracle": "known factors, manufactured solutions, orthogonality or polynomial products"
+      }
+    },
+    {
+      "id": "nafpack-known-ldu-factors-reference",
+      "name": "gams-nafpack-known-ldu-factors-reference",
+      "package_id": "nafpack",
+      "procedure_id": "nafpack-known-ldu-factors",
+      "gams_code": "D2a1",
+      "problem_id": "nafpack-known-ldu-factors-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/nafpack-known-ldu-factors-reference.f90",
+      "revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/nafpack-factors-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 27 matrices constructed from known L,D,U factors, unit diagonals in L/U, three scales and n=2..10. Individual factors and reconstruction checked independently. No pivoting, singular leading minors or ill-conditioned matrices.",
+      "validation_path": "docs/gams-nafpack-factors-ten-validation.json",
+      "review_path": "docs/gams-nafpack-factors-ten.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "relative_tolerance": 2e-09,
+        "oracle": "known factors, manufactured solutions, orthogonality or polynomial products"
+      }
+    },
+    {
+      "id": "nafpack-cholesky-lower-factor-reference",
+      "name": "gams-nafpack-cholesky-lower-factor-reference",
+      "package_id": "nafpack",
+      "procedure_id": "nafpack-cholesky-lower-factor",
+      "gams_code": "D2b1b",
+      "problem_id": "nafpack-cholesky-lower-factor-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/nafpack-cholesky-lower-factor-reference.f90",
+      "revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/nafpack-factors-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 27 SPD matrices formed from known lower-triangular factors. Only returned lower-triangle entries are consumed, copied to a zero-filled matrix and checked against exact factors and A=L*transpose(L). Pinned implementation does not write the upper triangle; no zero-upper-output claim. Non-SPD inputs excluded.",
+      "validation_path": "docs/gams-nafpack-factors-ten-validation.json",
+      "review_path": "docs/gams-nafpack-factors-ten.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "relative_tolerance": 2e-09,
+        "oracle": "known factors, manufactured solutions, orthogonality or polynomial products"
+      }
+    },
+    {
+      "id": "nafpack-known-ldlt-factors-reference",
+      "name": "gams-nafpack-known-ldlt-factors-reference",
+      "package_id": "nafpack",
+      "procedure_id": "nafpack-known-ldlt-factors",
+      "gams_code": "D2b1b",
+      "problem_id": "nafpack-known-ldlt-factors-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/nafpack-known-ldlt-factors-reference.f90",
+      "revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/nafpack-factors-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 27 SPD matrices formed from known unit-lower factors and positive diagonal D. Individual factors and A=L*D*transpose(L) checked. No pivoted indefinite LDL, singular or non-SPD claim.",
+      "validation_path": "docs/gams-nafpack-factors-ten-validation.json",
+      "review_path": "docs/gams-nafpack-factors-ten.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "relative_tolerance": 2e-09,
+        "oracle": "known factors, manufactured solutions, orthogonality or polynomial products"
+      }
+    },
+    {
+      "id": "nafpack-qr-householder-reference",
+      "name": "gams-nafpack-qr-householder-reference",
+      "package_id": "nafpack",
+      "procedure_id": "nafpack-qr-householder",
+      "gams_code": "D5",
+      "problem_id": "nafpack-qr-householder-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/nafpack-qr-householder-reference.f90",
+      "revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/nafpack-factors-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 27 square full-rank matrices n=2..10 and three scales, Householder QR. Orthogonality, upper-triangular R, reconstruction and manufactured-solution back substitution checked. Signs are not fixed; rectangular, rank-deficient and ill-conditioned cases excluded.",
+      "validation_path": "docs/gams-nafpack-factors-ten-validation.json",
+      "review_path": "docs/gams-nafpack-factors-ten.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "relative_tolerance": 2e-09,
+        "oracle": "known factors, manufactured solutions, orthogonality or polynomial products"
+      }
+    },
+    {
+      "id": "nafpack-qr-givens-reference",
+      "name": "gams-nafpack-qr-givens-reference",
+      "package_id": "nafpack",
+      "procedure_id": "nafpack-qr-givens",
+      "gams_code": "D5",
+      "problem_id": "nafpack-qr-givens-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/nafpack-qr-givens-reference.f90",
+      "revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/nafpack-factors-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 27 square full-rank matrices n=2..10 and three scales, Givens QR. Orthogonality, upper-triangular R, reconstruction and manufactured-solution back substitution checked. Signs are not fixed; rectangular, rank-deficient and ill-conditioned cases excluded.",
+      "validation_path": "docs/gams-nafpack-factors-ten-validation.json",
+      "review_path": "docs/gams-nafpack-factors-ten.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "relative_tolerance": 2e-09,
+        "oracle": "known factors, manufactured solutions, orthogonality or polynomial products"
+      }
+    },
+    {
+      "id": "nafpack-qr-classical-gram-schmidt-reference",
+      "name": "gams-nafpack-qr-classical-gram-schmidt-reference",
+      "package_id": "nafpack",
+      "procedure_id": "nafpack-qr-classical-gram-schmidt",
+      "gams_code": "D5",
+      "problem_id": "nafpack-qr-classical-gram-schmidt-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/nafpack-qr-classical-gram-schmidt-reference.f90",
+      "revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/nafpack-factors-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 27 square full-rank matrices n=2..10 and three scales, Gram_Schmidt_Classical QR. Orthogonality, upper-triangular R, reconstruction and manufactured-solution back substitution checked. Signs are not fixed; rectangular, rank-deficient and ill-conditioned cases excluded.",
+      "validation_path": "docs/gams-nafpack-factors-ten-validation.json",
+      "review_path": "docs/gams-nafpack-factors-ten.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "relative_tolerance": 2e-09,
+        "oracle": "known factors, manufactured solutions, orthogonality or polynomial products"
+      }
+    },
+    {
+      "id": "nafpack-qr-modified-gram-schmidt-reference",
+      "name": "gams-nafpack-qr-modified-gram-schmidt-reference",
+      "package_id": "nafpack",
+      "procedure_id": "nafpack-qr-modified-gram-schmidt",
+      "gams_code": "D5",
+      "problem_id": "nafpack-qr-modified-gram-schmidt-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/nafpack-qr-modified-gram-schmidt-reference.f90",
+      "revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/nafpack-factors-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 27 square full-rank matrices n=2..10 and three scales, Gram_Schmidt_Modified QR. Orthogonality, upper-triangular R, reconstruction and manufactured-solution back substitution checked. Signs are not fixed; rectangular, rank-deficient and ill-conditioned cases excluded.",
+      "validation_path": "docs/gams-nafpack-factors-ten-validation.json",
+      "review_path": "docs/gams-nafpack-factors-ten.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "relative_tolerance": 2e-09,
+        "oracle": "known factors, manufactured solutions, orthogonality or polynomial products"
+      }
+    },
+    {
+      "id": "nafpack-characteristic-coefficients-reference",
+      "name": "gams-nafpack-characteristic-coefficients-reference",
+      "package_id": "nafpack",
+      "procedure_id": "nafpack-characteristic-coefficients",
+      "gams_code": "D4c",
+      "problem_id": "nafpack-characteristic-coefficients-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/nafpack-characteristic-coefficients-reference.f90",
+      "revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/nafpack-factors-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 15 known Householder-rotated spectra, n=2..6 and three scales. Every characteristic coefficient checked against independently multiplied linear factors, plus Cayley-Hamilton matrix residual and scalar root evaluations. Optional inverse output, large degree, repeated roots and ill-conditioned coefficient problems excluded.",
+      "validation_path": "docs/gams-nafpack-factors-ten-validation.json",
+      "review_path": "docs/gams-nafpack-factors-ten.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "relative_tolerance": 2e-09,
+        "oracle": "known factors, manufactured solutions, orthogonality or polynomial products"
+      }
     }
   ]
 }

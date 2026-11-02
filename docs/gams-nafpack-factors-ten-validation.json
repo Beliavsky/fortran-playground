@@ -1,0 +1,328 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "nafpack-triangular-substitution-reference",
+      "source_revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+      "source_sha256": "956476f9f05a95a3cdcc7d0c18316d4625169d41851da1713e9aa9936954c8f9",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T22:14:09.356398+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 8.863,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "27 known matrix families, dimensions 2..10 and three scales, checked.\nPASS nafpack-triangular-substitution-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.07,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "nafpack-known-lu-factors-reference",
+      "source_revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+      "source_sha256": "e04701bc6bfe70f8e29f0b6240e80bf45bc024287313e0536764ab2673bbcc4d",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T22:14:36.945513+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 8.448,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "27 known matrix families, dimensions 2..10 and three scales, checked.\nPASS nafpack-known-lu-factors-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.071,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "nafpack-known-ldu-factors-reference",
+      "source_revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+      "source_sha256": "dfd3ec395e699ff6dc23df6fa6c3e488ed4be63c9718f9a2c9223e23bef2ac51",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T22:14:38.877016+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.425,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "27 known matrix families, dimensions 2..10 and three scales, checked.\nPASS nafpack-known-ldu-factors-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.055,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "nafpack-cholesky-lower-factor-reference",
+      "source_revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+      "source_sha256": "1f7ef62aa551e7f0dfb9be718d4ece44f978e59e78f9cf6d9b80629b6b680da5",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T22:14:40.870989+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.458,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "27 known matrix families, dimensions 2..10 and three scales, checked.\nPASS nafpack-cholesky-lower-factor-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.087,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "nafpack-known-ldlt-factors-reference",
+      "source_revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+      "source_sha256": "e2b5424236589c1e5e8dc6daabc24f7f2b32776b99cc28141736f6cef3ba1e58",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T22:14:42.451620+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.411,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "27 known matrix families, dimensions 2..10 and three scales, checked.\nPASS nafpack-known-ldlt-factors-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.053,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "nafpack-qr-householder-reference",
+      "source_revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+      "source_sha256": "7f2b511ca8ed7b4d417233da03098b3b23d8f090fab7f984ec5242643ca1239f",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T22:14:45.083047+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.529,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "27 known matrix families, dimensions 2..10 and three scales, checked.\nPASS nafpack-qr-householder-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.074,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "nafpack-qr-givens-reference",
+      "source_revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+      "source_sha256": "7cc35ad2596629597b809b4c0efa670cf4de94d12947d78523f1ee9249a9da99",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T22:15:02.513798+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 8.966,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "27 known matrix families, dimensions 2..10 and three scales, checked.\nPASS nafpack-qr-givens-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.073,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "nafpack-qr-classical-gram-schmidt-reference",
+      "source_revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+      "source_sha256": "c3b6abe505c7c2f31481d8ce6effbca3f01a0f6dcfd5aa76a9e23b7e2edd6870",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T22:15:04.673137+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.529,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "27 known matrix families, dimensions 2..10 and three scales, checked.\nPASS nafpack-qr-classical-gram-schmidt-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.077,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "nafpack-qr-modified-gram-schmidt-reference",
+      "source_revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+      "source_sha256": "64ace310a9b16acd3ae39811b973b1b589a428e80cf3f6f89352c5722ba1d3fc",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T22:15:06.581176+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.523,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "27 known matrix families, dimensions 2..10 and three scales, checked.\nPASS nafpack-qr-modified-gram-schmidt-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.083,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "nafpack-characteristic-coefficients-reference",
+      "source_revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+      "source_sha256": "335f6468d2c85f0f44f69b0418b67a45b7f1aea776c1234c40434a808ad0c384",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T22:15:08.887893+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.47,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "15 characteristic polynomials: coefficient products and Cayley-Hamilton checked.\nPASS nafpack-characteristic-coefficients-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.08,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-11-02T22:15:08.938737+00:00"
+}

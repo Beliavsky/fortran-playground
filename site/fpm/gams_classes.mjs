@@ -1039,5 +1039,9 @@ export const gamsSubclasses = {
   "L5a1c": {
     "label": "Cauchy, chi-squared",
     "parent": "L5a1"
+  },
+  "D4c": {
+    "label": "Associated operations",
+    "parent": "D4"
   }
 };

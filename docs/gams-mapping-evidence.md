@@ -8,7 +8,7 @@ This report assesses each package/class pair, including inherited parent classes
 
 When a driver cannot be created, inspect the pinned implementation and author examples. Narrow or remove a classification that is unsupported; do not substitute an unrelated default example as evidence. Record missing dependencies, sandbox limits and upstream defects separately in the procedure or package review notes. A sandbox failure alone does not disprove an algorithm.
 
-Counts refer to package/class pairs and include parents: 852 verified, 81 source-supported, 232 uncertain.
+Counts refer to package/class pairs and include parents: 863 verified, 81 source-supported, 229 uncertain.
 
 ## Mappings requiring source review
 
@@ -197,9 +197,6 @@ Inspect these discovery assignments before making a specific algorithm claim. Th
 | [metis-fpm](https://beliavsky.github.io/fortran-playground/gams/packages/metis-fpm/) | [D](https://beliavsky.github.io/fortran-playground/gams/D/) | Linear Algebra |
 | [minpack](https://beliavsky.github.io/fortran-playground/gams/packages/minpack/) | [K](https://beliavsky.github.io/fortran-playground/gams/K/) | Approximation |
 | [minpack](https://beliavsky.github.io/fortran-playground/gams/packages/minpack/) | [K1](https://beliavsky.github.io/fortran-playground/gams/K1/) | Least squares (L-2) approximation |
-| [nafpack](https://beliavsky.github.io/fortran-playground/gams/packages/nafpack/) | [D](https://beliavsky.github.io/fortran-playground/gams/D/) | Linear Algebra |
-| [nafpack](https://beliavsky.github.io/fortran-playground/gams/packages/nafpack/) | [D2](https://beliavsky.github.io/fortran-playground/gams/D2/) | Solution of systems of linear equations (including inversion, LU and related decompositions) |
-| [nafpack](https://beliavsky.github.io/fortran-playground/gams/packages/nafpack/) | [D4](https://beliavsky.github.io/fortran-playground/gams/D4/) | Eigenvalues, eigenvectors |
 | [ncio](https://beliavsky.github.io/fortran-playground/gams/packages/ncio/) | [N](https://beliavsky.github.io/fortran-playground/gams/N/) | Data handling |
 | [ncio](https://beliavsky.github.io/fortran-playground/gams/packages/ncio/) | [N1](https://beliavsky.github.io/fortran-playground/gams/N1/) | Input, output |
 | [neural-fortran](https://beliavsky.github.io/fortran-playground/gams/packages/neural-fortran/) | [K](https://beliavsky.github.io/fortran-playground/gams/K/) | Approximation |
@@ -492,7 +489,17 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [mpfun2020-var1 / mpfun2020-var1-mpcmplx](https://beliavsky.github.io/fortran-playground/gams/packages/mpfun2020-var1/#mpfun2020-var1-mpcmplx) | A4c | verified |
 | [mpfun2020-var1 / mpfun2020-var1-mpreal](https://beliavsky.github.io/fortran-playground/gams/packages/mpfun2020-var1/#mpfun2020-var1-mpreal) | A3c | verified |
 | [mpifx / mpifx-collectives](https://beliavsky.github.io/fortran-playground/gams/packages/mpifx/#mpifx-collectives) | R | verified |
+| [nafpack / nafpack-characteristic-coefficients](https://beliavsky.github.io/fortran-playground/gams/packages/nafpack/#nafpack-characteristic-coefficients) | D4c | verified |
+| [nafpack / nafpack-cholesky-lower-factor](https://beliavsky.github.io/fortran-playground/gams/packages/nafpack/#nafpack-cholesky-lower-factor) | D2b1b | verified |
 | [nafpack / nafpack-execute-fft-plan-sp](https://beliavsky.github.io/fortran-playground/gams/packages/nafpack/#nafpack-execute-fft-plan-sp) | J1a2 | verified |
+| [nafpack / nafpack-known-ldlt-factors](https://beliavsky.github.io/fortran-playground/gams/packages/nafpack/#nafpack-known-ldlt-factors) | D2b1b | verified |
+| [nafpack / nafpack-known-ldu-factors](https://beliavsky.github.io/fortran-playground/gams/packages/nafpack/#nafpack-known-ldu-factors) | D2a1 | verified |
+| [nafpack / nafpack-known-lu-factors](https://beliavsky.github.io/fortran-playground/gams/packages/nafpack/#nafpack-known-lu-factors) | D2a1 | verified |
+| [nafpack / nafpack-qr-classical-gram-schmidt](https://beliavsky.github.io/fortran-playground/gams/packages/nafpack/#nafpack-qr-classical-gram-schmidt) | D5 | verified |
+| [nafpack / nafpack-qr-givens](https://beliavsky.github.io/fortran-playground/gams/packages/nafpack/#nafpack-qr-givens) | D5 | verified |
+| [nafpack / nafpack-qr-householder](https://beliavsky.github.io/fortran-playground/gams/packages/nafpack/#nafpack-qr-householder) | D5 | verified |
+| [nafpack / nafpack-qr-modified-gram-schmidt](https://beliavsky.github.io/fortran-playground/gams/packages/nafpack/#nafpack-qr-modified-gram-schmidt) | D5 | verified |
+| [nafpack / nafpack-triangular-substitution](https://beliavsky.github.io/fortran-playground/gams/packages/nafpack/#nafpack-triangular-substitution) | D2a3 | verified |
 | [nc4fortran / nc4fortran-io](https://beliavsky.github.io/fortran-playground/gams/packages/nc4fortran/#nc4fortran-io) | N1 | verified |
 | [netcdf-fortran / netcdf-classic-io](https://beliavsky.github.io/fortran-playground/gams/packages/netcdf-fortran/#netcdf-classic-io) | N1 | verified |
 | [neural-fortran / neural-network-train](https://beliavsky.github.io/fortran-playground/gams/packages/neural-fortran/#neural-network-train) | G1b | verified |

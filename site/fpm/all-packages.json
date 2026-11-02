@@ -29900,8 +29900,48 @@
         "parent": "D"
       },
       {
+        "code": "D2a",
+        "label": "Real nonsymmetric matrices",
+        "parent": "D2"
+      },
+      {
+        "code": "D2a1",
+        "label": "General",
+        "parent": "D2a"
+      },
+      {
+        "code": "D2a3",
+        "label": "Triangular",
+        "parent": "D2a"
+      },
+      {
+        "code": "D2b",
+        "label": "Real symmetric matrices",
+        "parent": "D2"
+      },
+      {
+        "code": "D2b1",
+        "label": "General",
+        "parent": "D2b"
+      },
+      {
+        "code": "D2b1b",
+        "label": "Positive definite",
+        "parent": "D2b1"
+      },
+      {
         "code": "D4",
         "label": "Eigenvalues, eigenvectors",
+        "parent": "D"
+      },
+      {
+        "code": "D4c",
+        "label": "Associated operations",
+        "parent": "D4"
+      },
+      {
+        "code": "D5",
+        "label": "QR decomposition, Gram-Schmidt orthogonalization",
         "parent": "D"
       },
       {
@@ -29952,6 +29992,231 @@
           }
         ],
         "driver_id": "nafpack-fft-reference"
+      },
+      {
+        "id": "nafpack-triangular-substitution",
+        "package_id": "nafpack",
+        "revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+        "module": "NAFPack_matrix_decomposition",
+        "procedure": "forward,backward",
+        "gams_codes": [
+          "D2a3"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "27 known lower/upper triangular pairs, n=2..10 and three scales. Manufactured vector RHS, exact solutions and direct residuals checked independently. No zero-diagonal, singular or extreme-scale inputs.",
+        "driver_id": "nafpack-triangular-substitution-reference",
+        "evidence": [
+          {
+            "path": "src/linear_algebra/Matrix/NAFPack_matrix_decomposition.f90",
+            "line": 28,
+            "sha256": "93572dfae73189389d8cc13b52fde3435b9a3278568ba490b175bf69bc5bd80a"
+          },
+          {
+            "path": "src/linear_algebra/Matrix/NAFPack_matrix_decomposition.f90",
+            "line": 48,
+            "sha256": "93572dfae73189389d8cc13b52fde3435b9a3278568ba490b175bf69bc5bd80a"
+          }
+        ],
+        "author_examples": []
+      },
+      {
+        "id": "nafpack-known-lu-factors",
+        "package_id": "nafpack",
+        "revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+        "module": "NAFPack_matrix_decomposition",
+        "procedure": "LU_decomposition,forward,backward",
+        "gams_codes": [
+          "D2a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "27 matrices constructed from known unit-lower and nonsingular upper factors. Both exact factors, A=L*U, triangular structure and manufactured-solution forward/back substitution checked. Unpivoted LU with nonzero leading minors only.",
+        "driver_id": "nafpack-known-lu-factors-reference",
+        "evidence": [
+          {
+            "path": "src/linear_algebra/Matrix/NAFPack_matrix_decomposition.f90",
+            "line": 67,
+            "sha256": "93572dfae73189389d8cc13b52fde3435b9a3278568ba490b175bf69bc5bd80a"
+          }
+        ],
+        "author_examples": []
+      },
+      {
+        "id": "nafpack-known-ldu-factors",
+        "package_id": "nafpack",
+        "revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+        "module": "NAFPack_matrix_decomposition",
+        "procedure": "LDU_decomposition",
+        "gams_codes": [
+          "D2a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "27 matrices constructed from known L,D,U factors, unit diagonals in L/U, three scales and n=2..10. Individual factors and reconstruction checked independently. No pivoting, singular leading minors or ill-conditioned matrices.",
+        "driver_id": "nafpack-known-ldu-factors-reference",
+        "evidence": [
+          {
+            "path": "src/linear_algebra/Matrix/NAFPack_matrix_decomposition.f90",
+            "line": 95,
+            "sha256": "93572dfae73189389d8cc13b52fde3435b9a3278568ba490b175bf69bc5bd80a"
+          }
+        ],
+        "author_examples": []
+      },
+      {
+        "id": "nafpack-cholesky-lower-factor",
+        "package_id": "nafpack",
+        "revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+        "module": "NAFPack_matrix_decomposition",
+        "procedure": "Cholesky_decomposition",
+        "gams_codes": [
+          "D2b1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "27 SPD matrices formed from known lower-triangular factors. Only returned lower-triangle entries are consumed, copied to a zero-filled matrix and checked against exact factors and A=L*transpose(L). Pinned implementation does not write the upper triangle; no zero-upper-output claim. Non-SPD inputs excluded.",
+        "driver_id": "nafpack-cholesky-lower-factor-reference",
+        "evidence": [
+          {
+            "path": "src/linear_algebra/Matrix/NAFPack_matrix_decomposition.f90",
+            "line": 179,
+            "sha256": "93572dfae73189389d8cc13b52fde3435b9a3278568ba490b175bf69bc5bd80a"
+          }
+        ],
+        "author_examples": []
+      },
+      {
+        "id": "nafpack-known-ldlt-factors",
+        "package_id": "nafpack",
+        "revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+        "module": "NAFPack_matrix_decomposition",
+        "procedure": "LDL_Cholesky_decomposition",
+        "gams_codes": [
+          "D2b1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "27 SPD matrices formed from known unit-lower factors and positive diagonal D. Individual factors and A=L*D*transpose(L) checked. No pivoted indefinite LDL, singular or non-SPD claim.",
+        "driver_id": "nafpack-known-ldlt-factors-reference",
+        "evidence": [
+          {
+            "path": "src/linear_algebra/Matrix/NAFPack_matrix_decomposition.f90",
+            "line": 200,
+            "sha256": "93572dfae73189389d8cc13b52fde3435b9a3278568ba490b175bf69bc5bd80a"
+          }
+        ],
+        "author_examples": []
+      },
+      {
+        "id": "nafpack-qr-householder",
+        "package_id": "nafpack",
+        "revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+        "module": "NAFPack_matrix_decomposition",
+        "procedure": "QR_Householder_decomposition",
+        "gams_codes": [
+          "D5"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "27 square full-rank matrices n=2..10 and three scales, Householder QR. Orthogonality, upper-triangular R, reconstruction and manufactured-solution back substitution checked. Signs are not fixed; rectangular, rank-deficient and ill-conditioned cases excluded.",
+        "driver_id": "nafpack-qr-householder-reference",
+        "evidence": [
+          {
+            "path": "src/linear_algebra/Matrix/NAFPack_matrix_decomposition.f90",
+            "line": 283,
+            "sha256": "93572dfae73189389d8cc13b52fde3435b9a3278568ba490b175bf69bc5bd80a"
+          }
+        ],
+        "author_examples": []
+      },
+      {
+        "id": "nafpack-qr-givens",
+        "package_id": "nafpack",
+        "revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+        "module": "NAFPack_matrix_decomposition",
+        "procedure": "QR_Givens_decomposition",
+        "gams_codes": [
+          "D5"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "27 square full-rank matrices n=2..10 and three scales, Givens QR. Orthogonality, upper-triangular R, reconstruction and manufactured-solution back substitution checked. Signs are not fixed; rectangular, rank-deficient and ill-conditioned cases excluded.",
+        "driver_id": "nafpack-qr-givens-reference",
+        "evidence": [
+          {
+            "path": "src/linear_algebra/Matrix/NAFPack_matrix_decomposition.f90",
+            "line": 333,
+            "sha256": "93572dfae73189389d8cc13b52fde3435b9a3278568ba490b175bf69bc5bd80a"
+          }
+        ],
+        "author_examples": []
+      },
+      {
+        "id": "nafpack-qr-classical-gram-schmidt",
+        "package_id": "nafpack",
+        "revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+        "module": "NAFPack_matrix_decomposition",
+        "procedure": "QR_Gram_Schmidt_Classical_decomposition",
+        "gams_codes": [
+          "D5"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "27 square full-rank matrices n=2..10 and three scales, Gram_Schmidt_Classical QR. Orthogonality, upper-triangular R, reconstruction and manufactured-solution back substitution checked. Signs are not fixed; rectangular, rank-deficient and ill-conditioned cases excluded.",
+        "driver_id": "nafpack-qr-classical-gram-schmidt-reference",
+        "evidence": [
+          {
+            "path": "src/linear_algebra/Matrix/NAFPack_matrix_decomposition.f90",
+            "line": 360,
+            "sha256": "93572dfae73189389d8cc13b52fde3435b9a3278568ba490b175bf69bc5bd80a"
+          }
+        ],
+        "author_examples": []
+      },
+      {
+        "id": "nafpack-qr-modified-gram-schmidt",
+        "package_id": "nafpack",
+        "revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+        "module": "NAFPack_matrix_decomposition",
+        "procedure": "QR_Gram_Schmidt_Modified_decomposition",
+        "gams_codes": [
+          "D5"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "27 square full-rank matrices n=2..10 and three scales, Gram_Schmidt_Modified QR. Orthogonality, upper-triangular R, reconstruction and manufactured-solution back substitution checked. Signs are not fixed; rectangular, rank-deficient and ill-conditioned cases excluded.",
+        "driver_id": "nafpack-qr-modified-gram-schmidt-reference",
+        "evidence": [
+          {
+            "path": "src/linear_algebra/Matrix/NAFPack_matrix_decomposition.f90",
+            "line": 383,
+            "sha256": "93572dfae73189389d8cc13b52fde3435b9a3278568ba490b175bf69bc5bd80a"
+          }
+        ],
+        "author_examples": []
+      },
+      {
+        "id": "nafpack-characteristic-coefficients",
+        "package_id": "nafpack",
+        "revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+        "module": "NAFPack_matrix_tools",
+        "procedure": "Faddeev_Leverrier",
+        "gams_codes": [
+          "D4c"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "15 known Householder-rotated spectra, n=2..6 and three scales. Every characteristic coefficient checked against independently multiplied linear factors, plus Cayley-Hamilton matrix residual and scalar root evaluations. Optional inverse output, large degree, repeated roots and ill-conditioned coefficient problems excluded.",
+        "driver_id": "nafpack-characteristic-coefficients-reference",
+        "evidence": [
+          {
+            "path": "src/linear_algebra/Matrix/NAFPack_matrix_tools.f90",
+            "line": 13,
+            "sha256": "51c0a440992b807e4225aad09e0b87569cd22d466f30b462a339a2f74c82349b"
+          }
+        ],
+        "author_examples": []
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"

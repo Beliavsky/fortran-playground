@@ -350,3 +350,5 @@ Gamma and relative-function checks: [review and actual results](gams-gamma-relat
 Banded matrices and structured products: [review and actual results](gams-banded-products-ten.md).
 
 Forlab statistics and matrices: [review and actual results](gams-forlab-statistics-ten.md).
+
+NAFPack factorizations and characteristic coefficients: [review and actual results](gams-nafpack-factors-ten.md).

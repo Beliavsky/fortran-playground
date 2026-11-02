@@ -122,6 +122,7 @@ ORDERING_RUNGE_TEN_REPORT = Path('docs/gams-ordering-runge-ten.md')
 GAMMA_RELATIVE_TEN_REPORT = Path('docs/gams-gamma-relative-ten.md')
 BANDED_PRODUCTS_TEN_REPORT = Path('docs/gams-banded-products-ten.md')
 FORLAB_STATISTICS_TEN_REPORT = Path('docs/gams-forlab-statistics-ten.md')
+NAFPACK_FACTORS_TEN_REPORT = Path('docs/gams-nafpack-factors-ten.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
 EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
@@ -11699,6 +11700,119 @@ def forlab_statistics_ten_review_text(root=ROOT):
     return '\n'.join(lines)
 
 
+def nafpack_factors_ten_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-nafpack-factors-ten-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-nafpack-factors-ten-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Ten checked NAFPack factorization drivers',
+     '',
+     'Ten independent REAL64 NAFPack consumers passed GNU Fortran 16.2.0 and FPM 0.12.0 in the hosted sandbox. '
+     'The existing cached library was reused; only main.f90 and playground-main were compiled. The [verification '
+     'report](gams-nafpack-factors-ten-validation.json) records normalized UTF-8/LF source hashes, exact pins, '
+     'timings and full output. GAMS coverage remains unfinished.',
+     '',
+     '## Checked APIs and references',
+     '',
+     '| Driver | GAMS | Independent checks |\n'
+     '| --- | --- | --- |\n'
+     '| Triangular substitution | D2a3 | 27 lower/upper pairs; known vector solutions and residuals |\n'
+     '| Known LU factors | D2a1 | 27 known unit-lower/upper factorizations, reconstruction and solved RHS |\n'
+     '| Known LDU factors | D2a1 | 27 known L,D,U factors, unit triangular diagonals and reconstruction |\n'
+     '| Cholesky lower factor | D2b1b | 27 known lower factors; consume only written lower entries and '
+     'reconstruct SPD matrices |\n'
+     '| Known LDL-transpose factors | D2b1b | 27 known unit-lower/positive diagonal factors and reconstruction '
+     '|\n'
+     '| Householder QR | D5 | 27 full-rank square cases; orthogonality, triangularity, reconstruction and solved '
+     'RHS |\n'
+     '| Givens QR | D5 | Same independent checks on 27 cases |\n'
+     '| Classical Gram-Schmidt QR | D5 | Same independent checks on 27 cases |\n'
+     '| Modified Gram-Schmidt QR | D5 | Same independent checks on 27 cases |\n'
+     '| Characteristic coefficients | D4c | 15 known spectra; independent polynomial products, scalar root '
+     'evaluations and Cayley-Hamilton residuals |',
+     '',
+     'All drivers explicitly require NAFPack REAL64 storage and finite results. The scalar tolerance is '
+     'abs(actual-reference)<=2e-9*max(1,abs(reference)); matrix checks also verify shape. No upstream numerical '
+     'source was patched. These bounded tests do not establish performance, difficult-matrix accuracy or '
+     'behavior outside the demonstrated domains.',
+     '',
+     '## Known factors and triangular solves',
+     '',
+     'The nine solve/factor drivers use n=2..10 at scales 1/2,1,2. Deterministic dyadic unit-lower factors and '
+     'nonsingular upper factors form A=L*U. For LU, both returned factors are checked individually before '
+     'reconstructing A. A manufactured solution supplies a RHS for the returned forward/backward factors. LDU '
+     'checks the known diagonal and corresponding unit-upper factor separately. These unpivoted decompositions '
+     'are tested only with nonzero leading minors; matrices requiring pivoting are excluded.',
+     '',
+     'The triangular-substitution driver independently forms RHS values from the original known triangular '
+     'matrices, then checks each recovered solution and direct residual. LDL-transpose cases use '
+     'A=L*D*transpose(L), with positive diagonal D and known unit-lower L. This verifies the SPD path, not '
+     'pivoted indefinite LDL.',
+     '',
+     '## Cholesky output convention',
+     '',
+     'The pinned Cholesky_decomposition writes the diagonal and lower triangle of its output but leaves the '
+     'upper triangle unwritten. The driver never reads those unwritten entries. It copies the lower entries into '
+     'a separate zero-filled matrix, checks them against a known lower-triangular factor, and verifies '
+     'A=L*transpose(L). It does not claim the returned upper triangle contains zeros. Nonpositive-definite or '
+     'singular inputs are excluded.',
+     '',
+     '## Four QR algorithms',
+     '',
+     'Each direct QR API is checked separately on 27 square full-rank matrices. The driver checks '
+     'transpose(Q)*Q=I, every entry below R diagonal, and Q*R=A. A known solution gives b=A*x; a local '
+     'upper-triangular substitution applied to transpose(Q)*b must recover x, and the original matrix must '
+     'reproduce b. This uses the returned factors to solve an actual system while keeping the known solution '
+     'independent of the algorithm. Factor signs are not prescribed. Rectangular, rank-deficient and '
+     'ill-conditioned cases, pivoted QR and stability comparisons are excluded.',
+     '',
+     '## Characteristic-polynomial coefficients',
+     '',
+     'For n=2..6 and three scales, the driver constructs an analytic Householder matrix Q and distinct signed '
+     'eigenvalues d, then A=Q*diag(d)*transpose(Q). Independently multiplying the linear factors (lambda-d_i) '
+     'supplies every expected coefficient in descending-power order. Faddeev_Leverrier results must match these '
+     'coefficients, vanish at each known eigenvalue under scalar Horner evaluation, and satisfy the matrix '
+     'Cayley-Hamilton identity under matrix Horner evaluation. The optional inverse output is not requested or '
+     'verified. Large degree and ill-conditioned coefficient problems are excluded. D4c is the broad GAMS '
+     'associated-eigenvalue-operations class; no unsupported finer leaf is invented.',
+     '',
+     '## Provenance and maintenance',
+     '',
+     'Pinned public interfaces and implementations were reviewed directly. No matching direct-call author '
+     'examples for these routines were found in the reviewed pinned test tree, so author_example is null rather '
+     'than pointing at unrelated Fourier or array examples. The consumers are original MIT examples and copy no '
+     'implementation bodies. Classifications follow the [Netlib GAMS '
+     'taxonomy](https://netlib.org/misc/gams.html). Loading a driver does not submit a job. The [coverage '
+     'report](gams-coverage.md) tracks remaining work.',
+     '',
+     '## Driver details',
+     '']
+    for d in drivers:
+        lines += ['### '+d['id']+' ('+d['gams_code']+')', '', d['modifications'], '']
+    lines += ['## Provenance and actual output', '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -11896,6 +12010,7 @@ def main():
                          (GAMMA_RELATIVE_TEN_REPORT, gamma_relative_ten_review_text()),
                          (BANDED_PRODUCTS_TEN_REPORT, banded_products_ten_review_text()),
                          (FORLAB_STATISTICS_TEN_REPORT, forlab_statistics_ten_review_text()),
+                         (NAFPACK_FACTORS_TEN_REPORT, nafpack_factors_ten_review_text()),
                          (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report
