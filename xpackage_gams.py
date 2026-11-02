@@ -114,6 +114,7 @@ COMPLEX_TEN_REPORT = Path('docs/gams-complex-ten.md')
 COMPLEX_OPERATORS_TEN_REPORT = Path('docs/gams-complex-operators-ten.md')
 STATISTICS_RANK_TEN_REPORT = Path('docs/gams-statistics-rank-ten.md')
 GRIDS_SPECTRA_TEN_REPORT = Path('docs/gams-grids-spectra-ten.md')
+INTEGRALS_TENSORS_TEN_REPORT = Path('docs/gams-integrals-tensors-ten.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
 EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
@@ -10725,6 +10726,138 @@ def grids_spectra_ten_review_text(root=ROOT):
     return '\n'.join(lines)
 
 
+def integrals_tensors_ten_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-integrals-tensors-ten-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-integrals-tensors-ten-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Ten checked specialized integrals, tensor interpolation and nonlinear-system drivers',
+     '',
+     'Ten independent drivers across QUADPACK, finterp, bspline-fortran and MINPACK passed GNU Fortran 16.2.0 '
+     'and FPM 0.12.0 in the restricted hosted sandbox. Existing package libraries were reused; only mains and '
+     'executables were compiled. The [verification report](gams-integrals-tensors-ten-validation.json) saves '
+     'normalized UTF-8/LF source hashes, pins, timings and complete output. GAMS categories are not exhausted.',
+     '',
+     '## QUADPACK: specialized integration APIs',
+     '',
+     'Five drivers use module-procedure callbacks, separate workspace arrays and the pinned public wrappers. '
+     'Every call requires ier=0, positive integrand evaluations, finite result and finite nonnegative estimated '
+     'error. Returned error estimates are sanity-checked; the actual result is judged independently against an '
+     'analytic reference. These examples do not establish that estimated error bounds are rigorous.',
+     '',
+     '- **DQAGI half-lines (H2a3a1):** 32 exponential tails, decay rates 1/2,1,2,4 and finite bound magnitudes '
+     '0,1/2,1,3/2, on both right and left half-lines. The callback is exp(-rate*abs(x)); the exact integral is '
+     'exp(-rate*bound)/rate on the tested domains. Whole-line, oscillatory-tail and divergent cases are '
+     'excluded.\n'
+     '- **DQAGP interior breakpoints (H2a2a1):** 18 integrals of abs(x-c)**p, p=-1/2,1/2,3/2, on [0,1] and '
+     '[-1,2], at quarter/midpoint/three-quarter breakpoints. Splitting the elementary antiderivative at c '
+     'supplies the reference. A value of zero at the isolated singular point does not change the integral.\n'
+     '- **DQAWC principal values (H2a2a1):** 36 integrals on [0,1], [-1,2] and [-2,3], using three interior pole '
+     'fractions and smooth numerator (x-c)**power, power=0..3. The integrator supplies the 1/(x-c) weight. The '
+     'constant numerator has principal value log((b-c)/(c-a)); the other powers have ordinary polynomial '
+     'antiderivatives.\n'
+     '- **DQAWO sine/cosine weights (H2a2a1):** 72 finite exponential integrals, three rates/lengths, '
+     'frequencies 1/2,4,32,-4, and both trigonometric weights. Direct elementary antiderivatives supply '
+     'references, including the sign change for negative-frequency sine. Infinite Fourier integration and reuse '
+     'of Chebyshev moments are outside this driver.\n'
+     '- **DQAWS endpoint weights (H2a2a1):** 144 integrals on [0,1], endpoint exponents alpha,beta=-1/2,0,1/2, '
+     'smooth numerators x**p, p=0..3, and all four no-log/log(x)/log(1-x)/both-log modes. The callback supplies '
+     'only x**p.',
+     '',
+     'For DQAWS let A=alpha+p+1, B=beta+1, S=A+B and W=Beta(A,B). The four exact expressions are W, '
+     'W*(psi(A)-psi(S)), W*(psi(B)-psi(S)), and W*((psi(A)-psi(S))*(psi(B)-psi(S))-psi1(S)), where psi and psi1 '
+     'are digamma/trigamma. The [reference table](gams-integrals-tensors-ten-references.json) saves every '
+     'configuration and 18-digit value. mpmath 1.3.0 evaluations at 80 digits were confirmed at 120 digits '
+     'within absolute 1e-65; no numerical quadrature generated these references. Tests additionally reconstruct '
+     'the references from integer/half-integer Gamma and polygamma recurrences.',
+     '',
+     '### Retained DQAWO counter probe',
+     '',
+     'The initial consumer failed its last>0 assertion before checking the first numerical result. The pinned '
+     'DQAWOE implementation initializes Last=0 and returns directly if the initial estimate is accepted. The '
+     '[original exact source and complete hosted result](gams-candidates/quadpack-oscillatory-counter/README.md) '
+     'are retained. The corrected driver accepts nonnegative last, still requires positive neval and ier=0, and '
+     'reports how many calls used last=0. All 72 independent numerical comparisons remain in place. This counter '
+     'assertion did not establish a numerical error or sandbox limit; no upstream source was patched.',
+     '',
+     '## finterp: three- and four-dimensional cells (E2a)',
+     '',
+     'Two drivers use four nonuniform nodes per axis: [-1,-1/4,1/2,2]*j/2 for coordinate j. One dataset is the '
+     'multiaffine polynomial 1+sum(j*x_j)+product(x)+x1*x2-2*x2*x3, which tensor linear interpolation must '
+     "reproduce. The second adds sum(j*x_j**2). Its reference uses each cell's exact quadratic secant "
+     '(a+b)*x-a*b, rather than incorrectly requiring reproduction of the original quadratic. Every cell is '
+     'queried at all endpoint/midpoint combinations: 1458 queries in 3D and 13122 in 4D across the two datasets. '
+     'Thus grid nodes, shared boundaries and cell interiors are checked. API statuses, finite results and '
+     'input-data preservation are required; extrapolation is excluded.',
+     '',
+     '## bspline-fortran: tensor mixed derivatives (E3a2)',
+     '',
+     'Two independent cubic tensor consumers fit five dyadic nonuniform nodes per axis, [-1,-1/2,0,3/4,2]*j/2, '
+     'using spline order four in every dimension. Input values use the explicit polynomial '
+     '1+sum(j*x_j**3)+product(x)+2*x1**2*x2-x2*x3**2. Reference derivatives use separately recorded '
+     'coefficients/exponents and analytic falling factorials; those tables are saved with the endpoint-weight '
+     'references. These are not finite-difference references.',
+     '',
+     'The 3D example checks all 27 partial-order combinations 0..2 per coordinate at 64 interior points (1728 '
+     'evaluations). The 4D example checks all 81 combinations at 256 interior points (20736 evaluations). The '
+     'coefficient representation and explicit nodal formula are independently cross-checked in tests. '
+     'Initialization/evaluation statuses, finite scaled agreement within 1e-8 and exact nodal-data preservation '
+     'are required. Records also retain gridded-interpolation E2a assignments, while the checked drivers '
+     'primarily demonstrate derivative evaluation E3a2. Extrapolation, noisy fitting and higher derivative '
+     'orders are outside scope.',
+     '',
+     '## MINPACK: user-supplied Jacobians (F2)',
+     '',
+     'HYBRJ1 solves 60 triangular nonlinear systems with dimensions n=2..6, three component-scaled '
+     'alternating-sign start patterns and four displacement scales. Define u_i=x_i-i/4; f_1=u_1+u_1**3/8 and '
+     'f_i=u_i+u_i**3/8+u_(i-1)**2/4 for i>1. The unique real root follows by forward induction because u+u**3/8 '
+     'is strictly increasing with its only real zero at zero. The Jacobian is bidiagonal, with diagonal '
+     '1+3*u_i**2/8 and subdiagonal u_(i-1)/2. Tests check that analytic Jacobian against independent exact '
+     'polynomial differentiation. The consumer requires info=1, both callback paths, root/residual errors <=1e-8 '
+     'and returned/recomputed residual agreement within 1e-12. Singular systems and global convergence are not '
+     'claimed.',
+     '',
+     '## Limits, provenance and maintenance',
+     '',
+     'Real results must be finite and agree within 2e-9*max(1,abs(reference)), except spline mixed derivatives '
+     'use 1e-8 and the nonlinear-system checks use their stated tolerances. QUADPACK requests absolute and '
+     'relative tolerance 1e-10. These are bounded correctness demonstrations, not performance or '
+     'extreme-condition benchmarks.',
+     '',
+     'Pinned public APIs, implementations and linked author tests were reviewed. These are independent MIT '
+     'consumers; upstream implementation and author-test bodies were not copied. No upstream numerical source '
+     'was patched. The [Netlib GAMS taxonomy](https://netlib.org/misc/gams.html) supplies the classifications, '
+     'including automatic half-line quadrature H2a3a1 and interpolation derivative evaluation E3a2. Loading an '
+     'example does not submit a job. The [coverage report](gams-coverage.md) records remaining work.',
+     '',
+     '## Driver details',
+     '']
+    for d in drivers:
+        lines += ['### '+d['id']+' ('+d['gams_code']+')', '', d['modifications'], '']
+    lines += ['## Provenance and actual output', '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -10914,6 +11047,7 @@ def main():
                          (COMPLEX_OPERATORS_TEN_REPORT, complex_operators_ten_review_text()),
                          (STATISTICS_RANK_TEN_REPORT, statistics_rank_ten_review_text()),
                          (GRIDS_SPECTRA_TEN_REPORT, grids_spectra_ten_review_text()),
+                         (INTEGRALS_TENSORS_TEN_REPORT, integrals_tensors_ten_review_text()),
                          (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report

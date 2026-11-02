@@ -37,7 +37,9 @@
       "status": "procedure-reviewed",
       "procedure_ids": [
         "bspline-fortran-bspline-1d",
-        "bspline-fortran-bspline-2d"
+        "bspline-fortran-bspline-2d",
+        "bspline-fortran-3d-mixed-partials",
+        "bspline-fortran-4d-mixed-partials"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
     },
@@ -157,7 +159,9 @@
       "status": "procedure-reviewed",
       "procedure_ids": [
         "finterp-linear-interp-1d",
-        "finterp-linear-interp-2d"
+        "finterp-linear-interp-2d",
+        "finterp-3d-cell-polynomials",
+        "finterp-4d-cell-polynomials"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
     },
@@ -584,7 +588,8 @@
       "procedure_ids": [
         "minpack-lmdif1",
         "minpack-lmder1",
-        "minpack-hybrd1"
+        "minpack-hybrd1",
+        "minpack-analytic-jacobian-systems"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
     },
@@ -775,7 +780,12 @@
       "status": "procedure-reviewed",
       "procedure_ids": [
         "quadpack-dqag",
-        "quadpack-dqags"
+        "quadpack-dqags",
+        "quadpack-improper-halflines",
+        "quadpack-interior-breakpoints",
+        "quadpack-cauchy-principal-values",
+        "quadpack-oscillatory-weights",
+        "quadpack-endpoint-weights"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
     },

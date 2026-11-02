@@ -8,7 +8,7 @@ This report assesses each package/class pair, including inherited parent classes
 
 When a driver cannot be created, inspect the pinned implementation and author examples. Narrow or remove a classification that is unsupported; do not substitute an unrelated default example as evidence. Record missing dependencies, sandbox limits and upstream defects separately in the procedure or package review notes. A sandbox failure alone does not disprove an algorithm.
 
-Counts refer to package/class pairs and include parents: 750 verified, 76 source-supported, 241 uncertain.
+Counts refer to package/class pairs and include parents: 756 verified, 76 source-supported, 241 uncertain.
 
 ## Mappings requiring source review
 
@@ -277,6 +277,10 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [berkeley-assert / assert-contracts](https://beliavsky.github.io/fortran-playground/gams/packages/berkeley-assert/#assert-contracts) | S3 | verified |
 | [berkeley-assert / assert-contracts](https://beliavsky.github.io/fortran-playground/gams/packages/berkeley-assert/#assert-contracts) | R2 | source-supported |
 | [blas-interface / blas-interface-blas-gemm](https://beliavsky.github.io/fortran-playground/gams/packages/blas-interface/#blas-interface-blas-gemm) | D1b6 | verified |
+| [bspline-fortran / bspline-fortran-3d-mixed-partials](https://beliavsky.github.io/fortran-playground/gams/packages/bspline-fortran/#bspline-fortran-3d-mixed-partials) | E3a2 | verified |
+| [bspline-fortran / bspline-fortran-3d-mixed-partials](https://beliavsky.github.io/fortran-playground/gams/packages/bspline-fortran/#bspline-fortran-3d-mixed-partials) | E2a | source-supported |
+| [bspline-fortran / bspline-fortran-4d-mixed-partials](https://beliavsky.github.io/fortran-playground/gams/packages/bspline-fortran/#bspline-fortran-4d-mixed-partials) | E3a2 | verified |
+| [bspline-fortran / bspline-fortran-4d-mixed-partials](https://beliavsky.github.io/fortran-playground/gams/packages/bspline-fortran/#bspline-fortran-4d-mixed-partials) | E2a | source-supported |
 | [bspline-fortran / bspline-fortran-bspline-1d](https://beliavsky.github.io/fortran-playground/gams/packages/bspline-fortran/#bspline-fortran-bspline-1d) | E1a | verified |
 | [bspline-fortran / bspline-fortran-bspline-2d](https://beliavsky.github.io/fortran-playground/gams/packages/bspline-fortran/#bspline-fortran-bspline-2d) | E2a | verified |
 | [bstrith / bstrith-operations](https://beliavsky.github.io/fortran-playground/gams/packages/bstrith/#bstrith-operations) | A1 | source-supported |
@@ -331,6 +335,8 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [fglm / fglm-api](https://beliavsky.github.io/fortran-playground/gams/packages/fglm/#fglm-api) | D1 | verified |
 | [fgsl / fgsl-qags](https://beliavsky.github.io/fortran-playground/gams/packages/fgsl/#fgsl-qags) | H2a1a1 | verified |
 | [fiats / fiats-inference](https://beliavsky.github.io/fortran-playground/gams/packages/fiats/#fiats-inference) | K | verified |
+| [finterp / finterp-3d-cell-polynomials](https://beliavsky.github.io/fortran-playground/gams/packages/finterp/#finterp-3d-cell-polynomials) | E2a | verified |
+| [finterp / finterp-4d-cell-polynomials](https://beliavsky.github.io/fortran-playground/gams/packages/finterp/#finterp-4d-cell-polynomials) | E2a | verified |
 | [finterp / finterp-linear-interp-1d](https://beliavsky.github.io/fortran-playground/gams/packages/finterp/#finterp-linear-interp-1d) | E1a | verified |
 | [finterp / finterp-linear-interp-2d](https://beliavsky.github.io/fortran-playground/gams/packages/finterp/#finterp-linear-interp-2d) | E2a | verified |
 | [fishpack / fishpack-api](https://beliavsky.github.io/fortran-playground/gams/packages/fishpack/#fishpack-api) | I2 | verified |
@@ -472,6 +478,7 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [maptran3d / maptran3d-geodetic2ecef](https://beliavsky.github.io/fortran-playground/gams/packages/maptran3d/#maptran3d-geodetic2ecef) | P | verified |
 | [mersenne-twister-fortran / mersenne-twister-fortran-genrand64-real2](https://beliavsky.github.io/fortran-playground/gams/packages/mersenne-twister-fortran/#mersenne-twister-fortran-genrand64-real2) | L6a21 | verified |
 | [metis-fpm / metis-fpm-metis-partgraphkway](https://beliavsky.github.io/fortran-playground/gams/packages/metis-fpm/#metis-fpm-metis-partgraphkway) | P | verified |
+| [minpack / minpack-analytic-jacobian-systems](https://beliavsky.github.io/fortran-playground/gams/packages/minpack/#minpack-analytic-jacobian-systems) | F2 | verified |
 | [minpack / minpack-hybrd1](https://beliavsky.github.io/fortran-playground/gams/packages/minpack/#minpack-hybrd1) | F2 | verified |
 | [minpack / minpack-lmder1](https://beliavsky.github.io/fortran-playground/gams/packages/minpack/#minpack-lmder1) | G1b1b | verified |
 | [minpack / minpack-lmdif1](https://beliavsky.github.io/fortran-playground/gams/packages/minpack/#minpack-lmdif1) | G1b1a | verified |
@@ -528,8 +535,13 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [qdldl-fortran / qdldl-fortran-api](https://beliavsky.github.io/fortran-playground/gams/packages/qdldl-fortran/#qdldl-fortran-api) | D2b4 | verified |
 | [qdutillib / qdutillib-api](https://beliavsky.github.io/fortran-playground/gams/packages/qdutillib/#qdutillib-api) | H2c | verified |
 | [qnstop / qnstop-bounded](https://beliavsky.github.io/fortran-playground/gams/packages/qnstop/#qnstop-bounded) | G2 | verified |
+| [quadpack / quadpack-cauchy-principal-values](https://beliavsky.github.io/fortran-playground/gams/packages/quadpack/#quadpack-cauchy-principal-values) | H2a2a1 | verified |
 | [quadpack / quadpack-dqag](https://beliavsky.github.io/fortran-playground/gams/packages/quadpack/#quadpack-dqag) | H2a1a1 | verified |
 | [quadpack / quadpack-dqags](https://beliavsky.github.io/fortran-playground/gams/packages/quadpack/#quadpack-dqags) | H2a2a1 | verified |
+| [quadpack / quadpack-endpoint-weights](https://beliavsky.github.io/fortran-playground/gams/packages/quadpack/#quadpack-endpoint-weights) | H2a2a1 | verified |
+| [quadpack / quadpack-improper-halflines](https://beliavsky.github.io/fortran-playground/gams/packages/quadpack/#quadpack-improper-halflines) | H2a3a1 | verified |
+| [quadpack / quadpack-interior-breakpoints](https://beliavsky.github.io/fortran-playground/gams/packages/quadpack/#quadpack-interior-breakpoints) | H2a2a1 | verified |
+| [quadpack / quadpack-oscillatory-weights](https://beliavsky.github.io/fortran-playground/gams/packages/quadpack/#quadpack-oscillatory-weights) | H2a2a1 | verified |
 | [quadrature-fortran / quadrature-fortran-integration-class-1d](https://beliavsky.github.io/fortran-playground/gams/packages/quadrature-fortran/#quadrature-fortran-integration-class-1d) | H2a1a1 | verified |
 | [quaff / quaff-length-t](https://beliavsky.github.io/fortran-playground/gams/packages/quaff/#quaff-length-t) | A | verified |
 | [raffle / raffle-periodic-distance](https://beliavsky.github.io/fortran-playground/gams/packages/raffle/#raffle-periodic-distance) | P | verified |

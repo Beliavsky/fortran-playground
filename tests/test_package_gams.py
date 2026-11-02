@@ -893,6 +893,130 @@ class PackageGamsTests(unittest.TestCase):
         self.assertIn('Type-2/type-3 transforms',text)
         self.assertIn('two-dimensional NUFFT2D driver',transforms_review_text())
 
+    def test_integrals_tensors_scope_and_retained_counter_assertion(self):
+        import hashlib
+        from xpackage_gams import integrals_tensors_ten_review_text, INTEGRALS_TENSORS_TEN_REPORT
+        data = gams_data()
+        records = {r['id']: r for r in data['procedure_mappings']}
+        drivers = {d['id']: d for d in driver_data(data=data)
+                   if d.get('validation_path') == 'docs/gams-integrals-tensors-ten-validation.json'}
+        expected = {'quadpack-improper-halflines': ('H2a3a1', 'cases', 32),
+                    'quadpack-interior-breakpoints': ('H2a2a1', 'cases', 18),
+                    'quadpack-cauchy-principal-values': ('H2a2a1', 'cases', 36),
+                    'quadpack-oscillatory-weights': ('H2a2a1', 'cases', 72),
+                    'quadpack-endpoint-weights': ('H2a2a1', 'cases', 144),
+                    'finterp-3d-cell-polynomials': ('E2a', 'queries', 1458),
+                    'finterp-4d-cell-polynomials': ('E2a', 'queries', 13122),
+                    'bspline-fortran-3d-mixed-partials': ('E3a2', 'queries', 1728),
+                    'bspline-fortran-4d-mixed-partials': ('E3a2', 'queries', 20736),
+                    'minpack-analytic-jacobian-systems': ('F2', 'cases', 60)}
+        self.assertEqual(set(drivers), {s+'-reference' for s in expected})
+        reviewed = numerical_review(data=data)['packages']
+        for short, (code, field, count) in expected.items():
+            driver = drivers[short+'-reference']
+            record = records[driver['procedure_id']]
+            self.assertEqual(record['driver_id'], driver['id'])
+            self.assertEqual(driver['gams_code'], code)
+            self.assertEqual(driver['checks'][field], count)
+            self.assertIn(record['id'], reviewed[driver['package_id']]['procedure_ids'])
+            self.assertEqual(class_evidence(class_tree(data), code, [record], [driver])['status'], 'verified')
+        evidence = json.loads((ROOT/'docs/gams-candidates/quadpack-oscillatory-counter/positive-last-consumer-result.json').read_text())
+        original = (ROOT/evidence['source_path']).read_text(encoding='utf-8')
+        self.assertEqual(hashlib.sha256(original.encode()).hexdigest(), evidence['source_sha256'])
+        self.assertEqual(evidence['revision'], records['quadpack-oscillatory-weights']['revision'])
+        self.assertFalse(evidence['result']['ok'])
+        self.assertTrue(evidence['result']['cache']['library_reused'])
+        self.assertTrue(next(s for s in evidence['result']['stages'] if s['name'] == 'Build')['ok'])
+        self.assertIn('QUADPACK work counters', next(s for s in evidence['result']['stages'] if s['name'] == 'Run')['stderr'])
+        final = (ROOT/drivers['quadpack-oscillatory-weights-reference']['path']).read_text()
+        self.assertIn('if(neval<=0.or.last<0)', final)
+        self.assertIn('call status_check(); call check(result,expected)', original)
+        self.assertIn('call status_check(); call check(result,expected)', final)
+        text = integrals_tensors_ten_review_text()
+        self.assertEqual((ROOT/INTEGRALS_TENSORS_TEN_REPORT).read_text(encoding='utf-8'), text)
+        for phrase in ['categories are not exhausted', 'All 72 independent numerical comparisons',
+                       'No upstream numerical source was patched', '20736 evaluations', '60 triangular nonlinear systems']:
+            self.assertIn(phrase, text)
+
+    def test_endpoint_weight_references_match_half_integer_closed_form_recurrences(self):
+        import math
+        import re
+        from fractions import Fraction as F
+        cases = json.loads((ROOT/'docs/gams-integrals-tensors-ten-references.json').read_text())['endpoint_weights']
+        self.assertEqual(len(cases), 144)
+        def gamma_psi_trigamma(x):
+            # Explicit half-integer/integer anchors; common -EulerGamma cancels from psi differences.
+            if x.denominator == 1:
+                current, gamma, psi, trigamma = F(1), 1., 0., math.pi**2/6
+            else:
+                current, gamma, psi, trigamma = F(1, 2), math.sqrt(math.pi), -2*math.log(2), math.pi**2/2
+            while current < x:
+                gamma *= float(current)
+                psi += 1/float(current)
+                trigamma -= 1/float(current)**2
+                current += 1
+            self.assertEqual(current, x)
+            return gamma, psi, trigamma
+        for case in cases:
+            a, b = F(case['alpha'])+case['power']+1, F(case['beta'])+1
+            ga, pa, _ = gamma_psi_trigamma(a)
+            gb, pb, _ = gamma_psi_trigamma(b)
+            gs, ps, ts = gamma_psi_trigamma(a+b)
+            expected = ga*gb/gs*[1, pa-ps, pb-ps, (pa-ps)*(pb-ps)-ts][case['integr']-1]
+            self.assertLessEqual(abs(float(case['reference'])-expected), 3e-14*max(1, abs(expected)))
+        source = (ROOT/'fpm_catalog/gams-drivers/quadpack-endpoint-weights-reference.f90').read_text()
+        constants = re.findall(r'([-+0-9.eE]+)_wp', source.split('   integer,parameter :: limit')[0])
+        self.assertEqual([float(x) for x in constants], [float(c['reference']) for c in cases])
+        self.assertEqual({c['integr'] for c in cases}, {1, 2, 3, 4})
+
+    def test_tensor_polynomials_and_nonlinear_jacobian_have_independent_exact_oracles(self):
+        from fractions import Fraction as F
+        import math
+        import re
+        references = json.loads((ROOT/'docs/gams-integrals-tensors-ten-references.json').read_text())['polynomials']
+        for dimension in [3, 4]:
+            terms = references[str(dimension)+'d']
+            self.assertEqual(len(terms), dimension+4)
+            source = (ROOT/f'fpm_catalog/gams-drivers/bspline-fortran-{dimension}d-mixed-partials-reference.f90').read_text()
+            stored_degrees = re.search(r'degrees.*?reshape\(\[\s*&\s*(.*?)\],\[', source, re.S).group(1)
+            self.assertEqual(list(map(int, stored_degrees.split(','))),
+                             [p for t in terms for p in t['exponents']])
+            stored_coefficients = re.search(r'coefficients\(\d+\)=\[(.*?)\]', source).group(1)
+            self.assertEqual([float(x.replace('_wp', '')) for x in stored_coefficients.split(',')],
+                             [t['coefficient'] for t in terms])
+            for pattern in range(1, 5):
+                x = [F(j-pattern, 4) for j in range(1, dimension+1)]
+                polynomial = sum(F(t['coefficient'])*math.prod(v**p for v, p in zip(x, t['exponents'])) for t in terms)
+                explicit = 1+sum(j*v**3 for j, v in enumerate(x, 1))+math.prod(x)+2*x[0]**2*x[1]-x[1]*x[2]**2
+                self.assertEqual(polynomial, explicit)
+                # Independently verify the quadratic secant used by the linear-interpolation consumers.
+                for j in range(1, dimension+1):
+                    a, b = F(-j, 2), F(j, 4)
+                    for weight in [F(0), F(1, 2), F(1)]:
+                        query = a+weight*(b-a)
+                        self.assertEqual((1-weight)*a*a+weight*b*b, (a+b)*query-a*b)
+        # Exact central differences of a cubic have a known h**2 term; subtracting it gives
+        # independent symbolic derivatives, including the nonlinear coupling subdiagonal.
+        for n in range(2, 7):
+            for pattern in range(1, 4):
+                u = [F((-1)**(i+pattern)*(i+pattern), n+pattern) for i in range(1, n+1)]
+                def equations(values):
+                    return [v+v**3/8+(values[i-1]**2/4 if i else 0) for i, v in enumerate(values)]
+                h = F(1, 16)
+                for column in range(n):
+                    plus, minus = u.copy(), u.copy()
+                    plus[column] += h
+                    minus[column] -= h
+                    fp, fm = equations(plus), equations(minus)
+                    for row in range(n):
+                        derivative = (fp[row]-fm[row])/(2*h)
+                        if row == column:
+                            derivative -= h*h/8
+                            expected = 1+3*u[row]**2/8
+                        else:
+                            expected = u[column]/2 if row == column+1 else F(0)
+                        self.assertEqual(derivative, expected)
+
     def test_grids_spectra_verified_scope_and_consumer_normalization_correction(self):
         import hashlib
         from xpackage_gams import grids_spectra_ten_review_text, GRIDS_SPECTRA_TEN_REPORT

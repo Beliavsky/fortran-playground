@@ -1,0 +1,328 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "quadpack-improper-halflines-reference",
+      "source_revision": "ab42d50794280a8e7996f2ee4cda1f8753dfde5b",
+      "source_sha256": "a2c43127bd89500948dab27c9d96ebfe249cc4b0f7098b25dfa0c10085daf7b3",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T16:15:54.243360+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.801,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Left/right exponential half-line integrals: 32\nPASS quadpack-improper-halflines-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.042,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "quadpack-interior-breakpoints-reference",
+      "source_revision": "ab42d50794280a8e7996f2ee4cda1f8753dfde5b",
+      "source_sha256": "20a1f84081f874bd111bbd885a001e70ac15c355beca7b6f3928296a1c8fd73c",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T16:15:56.097047+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.251,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Supplied interior breakpoints, cusps and integrable singularities: 18\nPASS quadpack-interior-breakpoints-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.029,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "quadpack-cauchy-principal-values-reference",
+      "source_revision": "ab42d50794280a8e7996f2ee4cda1f8753dfde5b",
+      "source_sha256": "a7f0cff5d6a28fcebc522c69adb50d0a70a0d5fb9909fd6a2c995e5523c809d9",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T16:15:57.715776+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.322,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Cauchy principal values with polynomial numerators: 36\nPASS quadpack-cauchy-principal-values-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.028,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "quadpack-endpoint-weights-reference",
+      "source_revision": "ab42d50794280a8e7996f2ee4cda1f8753dfde5b",
+      "source_sha256": "7ebdbb8bdff3ef67205efd7902a977c7f099bf26af4debef6c5afd84149080a4",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T16:16:00.614291+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.369,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Algebraic/logarithmic endpoint weights against beta derivatives: 144\nPASS quadpack-endpoint-weights-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.029,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "finterp-3d-cell-polynomials-reference",
+      "source_revision": "95aaceaf86f5d4d49328b783c5dff9b006b0bfc9",
+      "source_sha256": "63dabf4b7be31bbb05a368f6ea331a2857d9bc1c37291b7f2e43ef0c853dbc6f",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T16:16:04.903620+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 2.381,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Tensor linear node/interior/cell-boundary checks: 1458\nPASS finterp-3d-cell-polynomials-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.028,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "finterp-4d-cell-polynomials-reference",
+      "source_revision": "95aaceaf86f5d4d49328b783c5dff9b006b0bfc9",
+      "source_sha256": "ee1473745e31e1c835b9cb02a89df59d82f732ed59aac55e6416ec3cfc5b92e9",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T16:16:10.143591+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 3.634,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Tensor linear node/interior/cell-boundary checks: 13122\nPASS finterp-4d-cell-polynomials-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.029,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "bspline-fortran-3d-mixed-partials-reference",
+      "source_revision": "047c724451aeee7f883c0d5acba3f7bd22a5de01",
+      "source_sha256": "cf0977c50990f83dc9d200f277fe87b384ee538fb2400a8951605f739d92f52c",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T16:16:12.017672+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.324,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Tensor cubic values and analytic mixed partial derivatives: 1728\nPASS bspline-fortran-3d-mixed-partials-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.046,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "bspline-fortran-4d-mixed-partials-reference",
+      "source_revision": "047c724451aeee7f883c0d5acba3f7bd22a5de01",
+      "source_sha256": "95b5858974c1200b3f8aca1006bc5e7b7d26f041e64217d040a4dde45581c3d5",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T16:16:18.349453+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 4.195,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Tensor cubic values and analytic mixed partial derivatives: 20736\nPASS bspline-fortran-4d-mixed-partials-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.278,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "minpack-analytic-jacobian-systems-reference",
+      "source_revision": "c0b5aea9fcd2b83865af921a7a7e881904f8d3c2",
+      "source_sha256": "3e9481700331af00635bb52aa9df86637ae14fe63c287135b101328d846a0584",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T16:17:25.326751+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 2.77,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Known-root triangular nonlinear systems with analytic Jacobians: 60\nMaximum root error:   5.6475E-12; residual:   5.6475E-12\nPASS minpack-analytic-jacobian-systems-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.042,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "quadpack-oscillatory-weights-reference",
+      "source_revision": "ab42d50794280a8e7996f2ee4cda1f8753dfde5b",
+      "source_sha256": "31fe297d0d3e199591cf4ac0ca01b02e537e03e5d8cf6f840839bd2eb2b0c73d",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T16:17:21.512846+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 2.544,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Finite sine/cosine-weighted exponential integrals: 72\nInitial-estimate acceptances with last=0: 72\nPASS quadpack-oscillatory-weights-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.04,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-11-02T16:17:25.389154+00:00"
+}

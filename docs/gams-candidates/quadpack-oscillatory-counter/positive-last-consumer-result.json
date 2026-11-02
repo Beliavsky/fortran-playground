@@ -1,0 +1,84 @@
+{
+  "source_path": "docs/gams-candidates/quadpack-oscillatory-counter/positive-last-consumer.f90",
+  "source_sha256": "24d2a15f402cca6fb2d12950a88c94bea68e8e3deba94d32852122e62a26f5b3",
+  "revision": "ab42d50794280a8e7996f2ee4cda1f8753dfde5b",
+  "result": {
+    "ok": false,
+    "compiler": "GNU Fortran (GCC) 16.2.0",
+    "compiler_id": "gfortran",
+    "fpm": "0.12.0",
+    "stages": [
+      {
+        "name": "Build",
+        "command": [
+          "fpm",
+          "build",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 0.216,
+        "ok": true,
+        "exit_code": 0,
+        "error": "",
+        "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+        "stderr": ""
+      },
+      {
+        "name": "Run",
+        "command": [
+          "fpm",
+          "run",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 0.043,
+        "ok": false,
+        "exit_code": 1,
+        "error": "",
+        "stdout": "",
+        "stderr": "Project is up to date\nERROR STOP QUADPACK work counters\n\nError termination. Backtrace:\n#0  0x2b0dfb0bcf83 in ???\n#1  0x2b0dfb0bdc39 in ???\n#2  0x2b0dfb0bf045 in ???\n#3  0x4012d7 in status_check\n\tat app/main.f90:54\n#4  0x401728 in MAIN__\n\tat app/main.f90:39\n#5  0x4019b5 in main\n\tat app/main.f90:15\n<ERROR> Execution for object \" playground-main \" returned exit code  1\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 1\n"
+      }
+    ],
+    "cache": {
+      "package": "quadpack",
+      "compiler": "GNU Fortran 16.2.0",
+      "key": "1c5373093e928b9932bfeafc",
+      "library_reused": true,
+      "changed_artifacts": []
+    },
+    "packages": [
+      {
+        "repository": "jacobwilliams/quadpack",
+        "revision": "ab42d50794280a8e7996f2ee4cda1f8753dfde5b",
+        "sha256": "973158fce8508717b04496a0546c3ad1c7a2408ac1d7d5822b0331e116fab7f0"
+      }
+    ],
+    "build_ok": true,
+    "target_groups": {
+      "app": [
+        "playground-main"
+      ],
+      "example": [],
+      "test": []
+    },
+    "targets": [
+      "playground-main"
+    ],
+    "plots": [],
+    "plot_notes": []
+  }
+}

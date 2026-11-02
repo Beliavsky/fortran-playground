@@ -13649,6 +13649,259 @@
         "scalar_kind": "COMPLEX128",
         "oracle": "pair-specific exact cross moments and variances"
       }
+    },
+    {
+      "id": "quadpack-improper-halflines-reference",
+      "name": "gams-quadpack-improper-halflines-reference",
+      "package_id": "quadpack",
+      "procedure_id": "quadpack-improper-halflines",
+      "gams_code": "H2a3a1",
+      "problem_id": "quadpack-improper-halflines-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/quadpack-improper-halflines-reference.f90",
+      "revision": "ab42d50794280a8e7996f2ee4cda1f8753dfde5b",
+      "author_example": "test/quadpack_test_module.F90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/integrals-tensors-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 32 REAL64 exponential integrals on left/right half-lines: four positive decay rates and four finite nonnegative bound magnitudes. Exact antiderivative exp(-rate*bound)/rate; ier=0, finite nonnegative error estimate and positive work counters required. Whole-line integrals, divergent/oscillatory tails and error-estimator guarantees excluded.",
+      "validation_path": "docs/gams-integrals-tensors-ten-validation.json",
+      "review_path": "docs/gams-integrals-tensors-ten.md",
+      "checks": {
+        "cases": 32,
+        "oracle": "closed exponential antiderivative",
+        "scalar_kind": "REAL64"
+      }
+    },
+    {
+      "id": "quadpack-interior-breakpoints-reference",
+      "name": "gams-quadpack-interior-breakpoints-reference",
+      "package_id": "quadpack",
+      "procedure_id": "quadpack-interior-breakpoints",
+      "gams_code": "H2a2a1",
+      "problem_id": "quadpack-interior-breakpoints-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/quadpack-interior-breakpoints-reference.f90",
+      "revision": "ab42d50794280a8e7996f2ee4cda1f8753dfde5b",
+      "author_example": "test/quadpack_test_module.F90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/integrals-tensors-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 18 REAL64 finite integrals of abs(x-c)**p with supplied interior breakpoint c, p=-1/2,1/2,3/2, two intervals and three breakpoint fractions. Independent split antiderivatives; ier=0 and work/error sanity checks. The callback assigns zero at the isolated singular point, which has no effect on the integral. Multiple singularities and divergent exponents excluded.",
+      "validation_path": "docs/gams-integrals-tensors-ten-validation.json",
+      "review_path": "docs/gams-integrals-tensors-ten.md",
+      "checks": {
+        "cases": 18,
+        "oracle": "split power antiderivatives",
+        "scalar_kind": "REAL64"
+      }
+    },
+    {
+      "id": "quadpack-cauchy-principal-values-reference",
+      "name": "gams-quadpack-cauchy-principal-values-reference",
+      "package_id": "quadpack",
+      "procedure_id": "quadpack-cauchy-principal-values",
+      "gams_code": "H2a2a1",
+      "problem_id": "quadpack-cauchy-principal-values-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/quadpack-cauchy-principal-values-reference.f90",
+      "revision": "ab42d50794280a8e7996f2ee4cda1f8753dfde5b",
+      "author_example": "test/quadpack_test_module.F90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/integrals-tensors-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 36 REAL64 Cauchy principal-value integrals of (x-c)**power/(x-c), powers 0..3, three intervals and three interior pole fractions. Logarithmic principal value for constant numerator and polynomial antiderivatives otherwise. The callback supplies only the smooth numerator. ier=0 and finite error/work checks; endpoint poles excluded.",
+      "validation_path": "docs/gams-integrals-tensors-ten-validation.json",
+      "review_path": "docs/gams-integrals-tensors-ten.md",
+      "checks": {
+        "cases": 36,
+        "oracle": "principal-value logarithm and power antiderivatives",
+        "scalar_kind": "REAL64"
+      }
+    },
+    {
+      "id": "quadpack-oscillatory-weights-reference",
+      "name": "gams-quadpack-oscillatory-weights-reference",
+      "package_id": "quadpack",
+      "procedure_id": "quadpack-oscillatory-weights",
+      "gams_code": "H2a2a1",
+      "problem_id": "quadpack-oscillatory-weights-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/quadpack-oscillatory-weights-reference.f90",
+      "revision": "ab42d50794280a8e7996f2ee4cda1f8753dfde5b",
+      "author_example": "test/quadpack_test_module.F90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/integrals-tensors-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 72 REAL64 finite-interval exponential integrals with sine/cosine weights: three rates, three lengths and four signed frequencies. Closed elementary antiderivatives, ier=0 and error/work checks. Callback supplies exp(-rate*x), not the oscillating weight. Infinite Fourier integrals and reused Chebyshev moments excluded. The pinned initial-estimate acceptance path leaves last=0; this is allowed and counted, while neval must remain positive.",
+      "validation_path": "docs/gams-integrals-tensors-ten-validation.json",
+      "review_path": "docs/gams-integrals-tensors-ten.md",
+      "checks": {
+        "cases": 72,
+        "oracle": "closed sine/cosine exponential antiderivatives",
+        "scalar_kind": "REAL64"
+      }
+    },
+    {
+      "id": "quadpack-endpoint-weights-reference",
+      "name": "gams-quadpack-endpoint-weights-reference",
+      "package_id": "quadpack",
+      "procedure_id": "quadpack-endpoint-weights",
+      "gams_code": "H2a2a1",
+      "problem_id": "quadpack-endpoint-weights-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/quadpack-endpoint-weights-reference.f90",
+      "revision": "ab42d50794280a8e7996f2ee4cda1f8753dfde5b",
+      "author_example": "test/quadpack_test_module.F90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/integrals-tensors-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 144 REAL64 endpoint-weighted integrals on [0,1], alpha/beta=-1/2,0,1/2, numerator x**power for powers 0..3, and all four no-log/log(x)/log(1-x)/both-log modes. Analytic beta-function derivatives evaluated independently at 80/120 digits; 18-digit constants and exact configurations saved. ier=0 plus finite error/work checks. Nonintegrable endpoint exponents excluded.",
+      "validation_path": "docs/gams-integrals-tensors-ten-validation.json",
+      "review_path": "docs/gams-integrals-tensors-ten.md",
+      "checks": {
+        "cases": 144,
+        "oracle": "analytic beta derivatives, 80/120 digit references",
+        "scalar_kind": "REAL64"
+      }
+    },
+    {
+      "id": "finterp-3d-cell-polynomials-reference",
+      "name": "gams-finterp-3d-cell-polynomials-reference",
+      "package_id": "finterp",
+      "procedure_id": "finterp-3d-cell-polynomials",
+      "gams_code": "E2a",
+      "problem_id": "finterp-3d-cell-polynomials-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/finterp-3d-cell-polynomials-reference.f90",
+      "revision": "95aaceaf86f5d4d49328b783c5dff9b006b0bfc9",
+      "author_example": "test/test.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/integrals-tensors-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 1458 REAL64 3D tensor interpolation queries on dyadic nonuniform grids: two datasets, every cell at endpoint/midpoint coordinate combinations. A multiaffine polynomial must reproduce exactly; added coordinate squares use independently derived cell secants (a+b)*x-a*b rather than the original quadratic value. Data preservation, node/cell boundaries and API statuses checked. Extrapolation excluded.",
+      "validation_path": "docs/gams-integrals-tensors-ten-validation.json",
+      "review_path": "docs/gams-integrals-tensors-ten.md",
+      "checks": {
+        "queries": 1458,
+        "dimensions": 3,
+        "oracle": "multiaffine reproduction and analytic quadratic cell secants",
+        "scalar_kind": "REAL64"
+      }
+    },
+    {
+      "id": "finterp-4d-cell-polynomials-reference",
+      "name": "gams-finterp-4d-cell-polynomials-reference",
+      "package_id": "finterp",
+      "procedure_id": "finterp-4d-cell-polynomials",
+      "gams_code": "E2a",
+      "problem_id": "finterp-4d-cell-polynomials-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/finterp-4d-cell-polynomials-reference.f90",
+      "revision": "95aaceaf86f5d4d49328b783c5dff9b006b0bfc9",
+      "author_example": "test/test.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/integrals-tensors-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 13122 REAL64 4D tensor interpolation queries on dyadic nonuniform grids: two datasets, every cell at endpoint/midpoint coordinate combinations. A multiaffine polynomial must reproduce exactly; added coordinate squares use independently derived cell secants (a+b)*x-a*b rather than the original quadratic value. Data preservation, node/cell boundaries and API statuses checked. Extrapolation excluded.",
+      "validation_path": "docs/gams-integrals-tensors-ten-validation.json",
+      "review_path": "docs/gams-integrals-tensors-ten.md",
+      "checks": {
+        "queries": 13122,
+        "dimensions": 4,
+        "oracle": "multiaffine reproduction and analytic quadratic cell secants",
+        "scalar_kind": "REAL64"
+      }
+    },
+    {
+      "id": "bspline-fortran-3d-mixed-partials-reference",
+      "name": "gams-bspline-fortran-3d-mixed-partials-reference",
+      "package_id": "bspline-fortran",
+      "procedure_id": "bspline-fortran-3d-mixed-partials",
+      "gams_code": "E3a2",
+      "problem_id": "bspline-fortran-3d-mixed-partials-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/bspline-fortran-3d-mixed-partials-reference.f90",
+      "revision": "047c724451aeee7f883c0d5acba3f7bd22a5de01",
+      "author_example": "test/test_oo.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/integrals-tensors-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 1728 REAL64 cubic tensor value/derivative queries on a five-node-per-axis dyadic nonuniform grid. Every partial-order combination 0..2 per coordinate at 64 interior points; explicit cubic/cross-term input formulas and independent coefficient/falling-factorial derivatives. API statuses, finite scaled agreement within 1e-8 and data preservation required. Extrapolation, noisy data and derivative orders above two excluded.",
+      "validation_path": "docs/gams-integrals-tensors-ten-validation.json",
+      "review_path": "docs/gams-integrals-tensors-ten.md",
+      "checks": {
+        "queries": 1728,
+        "dimensions": 3,
+        "oracle": "manufactured cubic and analytic falling-factorial mixed partials",
+        "relative_scaled_tolerance": 1e-08,
+        "scalar_kind": "REAL64"
+      }
+    },
+    {
+      "id": "bspline-fortran-4d-mixed-partials-reference",
+      "name": "gams-bspline-fortran-4d-mixed-partials-reference",
+      "package_id": "bspline-fortran",
+      "procedure_id": "bspline-fortran-4d-mixed-partials",
+      "gams_code": "E3a2",
+      "problem_id": "bspline-fortran-4d-mixed-partials-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/bspline-fortran-4d-mixed-partials-reference.f90",
+      "revision": "047c724451aeee7f883c0d5acba3f7bd22a5de01",
+      "author_example": "test/test_oo.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/integrals-tensors-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 20736 REAL64 cubic tensor value/derivative queries on a five-node-per-axis dyadic nonuniform grid. Every partial-order combination 0..2 per coordinate at 256 interior points; explicit cubic/cross-term input formulas and independent coefficient/falling-factorial derivatives. API statuses, finite scaled agreement within 1e-8 and data preservation required. Extrapolation, noisy data and derivative orders above two excluded.",
+      "validation_path": "docs/gams-integrals-tensors-ten-validation.json",
+      "review_path": "docs/gams-integrals-tensors-ten.md",
+      "checks": {
+        "queries": 20736,
+        "dimensions": 4,
+        "oracle": "manufactured cubic and analytic falling-factorial mixed partials",
+        "relative_scaled_tolerance": 1e-08,
+        "scalar_kind": "REAL64"
+      }
+    },
+    {
+      "id": "minpack-analytic-jacobian-systems-reference",
+      "name": "gams-minpack-analytic-jacobian-systems-reference",
+      "package_id": "minpack",
+      "procedure_id": "minpack-analytic-jacobian-systems",
+      "gams_code": "F2",
+      "problem_id": "minpack-analytic-jacobian-systems-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/minpack-analytic-jacobian-systems-reference.f90",
+      "revision": "c0b5aea9fcd2b83865af921a7a7e881904f8d3c2",
+      "author_example": "test/test_hybrj.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/integrals-tensors-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 60 REAL64 triangular nonlinear systems, dimensions 2..6, three alternating-sign, component-scaled patterns and four initial displacement scales. f_i=u_i+u_i**3/8+u_(i-1)**2/4 (last term omitted for i=1), u_i=x_i-i/4. Strict monotonicity in each u_i gives the unique known real root by forward induction. Analytic bidiagonal Jacobian, ier/info=1, both callback paths, returned/recomputed residual consistency and root error <=1e-8. Singular systems and global-convergence claims excluded.",
+      "validation_path": "docs/gams-integrals-tensors-ten-validation.json",
+      "review_path": "docs/gams-integrals-tensors-ten.md",
+      "checks": {
+        "cases": 60,
+        "dimensions": [
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "oracle": "unique triangular monotone root and recomputed residual",
+        "scalar_kind": "REAL64"
+      }
     }
   ]
 }

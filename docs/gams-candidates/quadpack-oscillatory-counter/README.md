@@ -1,0 +1,5 @@
+# QUADPACK oscillatory integration: retained counter assertion
+
+The original independent DQAWO consumer required `last>0` after success. Its first run compiled, returned `ier=0`, but stopped at that counter assertion before checking the numerical result. The exact source and full hosted result are retained with the pin and normalized UTF-8/LF source SHA256 in [the result record](positive-last-consumer-result.json).
+
+At the pinned QUADPACK commit ab42d50794280a8e7996f2ee4cda1f8753dfde5b, `dqawoe` initializes `Last=0` at src/quadpack_generic.F90:3454 and returns at lines 3487..3489 when the initial estimate satisfies the requested error bound. The published consumer allows `last=0` on that path, still requires positive evaluations and `ier=0`, and reports the number of initial acceptances. All 72 analytic result comparisons remain intact. No upstream code was patched. The counter failure alone did not establish a numerical failure or sandbox limit; the final numerical checks are saved in [the batch report](../../gams-integrals-tensors-ten-validation.json).

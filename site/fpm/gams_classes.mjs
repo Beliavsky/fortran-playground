@@ -903,5 +903,25 @@ export const gamsSubclasses = {
   "D4b4": {
     "label": "Complex general",
     "parent": "D4b"
+  },
+  "H2a3": {
+    "label": "Semi-infinite interval (including exp(-x) weight function)",
+    "parent": "H2a"
+  },
+  "H2a3a": {
+    "label": "Integrand available via user-defined procedure",
+    "parent": "H2a3"
+  },
+  "H2a3a1": {
+    "label": "Automatic (user need only specify required accuracy)",
+    "parent": "H2a3a"
+  },
+  "E3a": {
+    "label": "Evaluation of fitted functions, including quadrature",
+    "parent": "E3"
+  },
+  "E3a2": {
+    "label": "Derivative evaluation",
+    "parent": "E3a"
   }
 };

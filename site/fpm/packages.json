@@ -5261,6 +5261,21 @@
         "code": "E2a",
         "label": "Gridded",
         "parent": "E2"
+      },
+      {
+        "code": "E3",
+        "label": "Service routines for interpolation",
+        "parent": "E"
+      },
+      {
+        "code": "E3a",
+        "label": "Evaluation of fitted functions, including quadrature",
+        "parent": "E3"
+      },
+      {
+        "code": "E3a2",
+        "label": "Derivative evaluation",
+        "parent": "E3a"
       }
     ],
     "gams_procedures": [
@@ -5322,6 +5337,72 @@
           }
         ],
         "driver_id": "bspline-tensor-surface"
+      },
+      {
+        "id": "bspline-fortran-3d-mixed-partials",
+        "package_id": "bspline-fortran",
+        "revision": "047c724451aeee7f883c0d5acba3f7bd22a5de01",
+        "module": "bspline_module",
+        "procedure": "bspline_3d%initialize, evaluate",
+        "gams_codes": [
+          "E3a2",
+          "E2a"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "analytic derivatives of fitted spline",
+        "notes": "1728 REAL64 cubic tensor value/derivative queries on a five-node-per-axis dyadic nonuniform grid. Every partial-order combination 0..2 per coordinate at 64 interior points; explicit cubic/cross-term input formulas and independent coefficient/falling-factorial derivatives. API statuses, finite scaled agreement within 1e-8 and data preservation required. Extrapolation, noisy data and derivative orders above two excluded.",
+        "driver_id": "bspline-fortran-3d-mixed-partials-reference",
+        "evidence": [
+          {
+            "path": "src/bspline_oo_module.f90",
+            "line": 1448,
+            "sha256": "2b1bd0fb16092ccb4bb2bc4cf499249eb19252c888f582123f4c31c8de29772a"
+          },
+          {
+            "path": "src/bspline_oo_module.f90",
+            "line": 1610,
+            "sha256": "2b1bd0fb16092ccb4bb2bc4cf499249eb19252c888f582123f4c31c8de29772a"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_oo.f90",
+            "sha256": "da44e4cc9de187984e10fade22525403a42847f79056e13dd154572af486afda"
+          }
+        ]
+      },
+      {
+        "id": "bspline-fortran-4d-mixed-partials",
+        "package_id": "bspline-fortran",
+        "revision": "047c724451aeee7f883c0d5acba3f7bd22a5de01",
+        "module": "bspline_module",
+        "procedure": "bspline_4d%initialize, evaluate",
+        "gams_codes": [
+          "E3a2",
+          "E2a"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "analytic derivatives of fitted spline",
+        "notes": "20736 REAL64 cubic tensor value/derivative queries on a five-node-per-axis dyadic nonuniform grid. Every partial-order combination 0..2 per coordinate at 256 interior points; explicit cubic/cross-term input formulas and independent coefficient/falling-factorial derivatives. API statuses, finite scaled agreement within 1e-8 and data preservation required. Extrapolation, noisy data and derivative orders above two excluded.",
+        "driver_id": "bspline-fortran-4d-mixed-partials-reference",
+        "evidence": [
+          {
+            "path": "src/bspline_oo_module.f90",
+            "line": 1751,
+            "sha256": "2b1bd0fb16092ccb4bb2bc4cf499249eb19252c888f582123f4c31c8de29772a"
+          },
+          {
+            "path": "src/bspline_oo_module.f90",
+            "line": 1937,
+            "sha256": "2b1bd0fb16092ccb4bb2bc4cf499249eb19252c888f582123f4c31c8de29772a"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_oo.f90",
+            "sha256": "da44e4cc9de187984e10fade22525403a42847f79056e13dd154572af486afda"
+          }
+        ]
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -5510,6 +5591,60 @@
           }
         ],
         "driver_id": "finterp-bilinear-surface"
+      },
+      {
+        "id": "finterp-3d-cell-polynomials",
+        "package_id": "finterp",
+        "revision": "95aaceaf86f5d4d49328b783c5dff9b006b0bfc9",
+        "module": "linear_interpolation_module",
+        "procedure": "linear_interp_3d%initialize, evaluate",
+        "gams_codes": [
+          "E2a"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "1458 REAL64 3D tensor interpolation queries on dyadic nonuniform grids: two datasets, every cell at endpoint/midpoint coordinate combinations. A multiaffine polynomial must reproduce exactly; added coordinate squares use independently derived cell secants (a+b)*x-a*b rather than the original quadratic value. Data preservation, node/cell boundaries and API statuses checked. Extrapolation excluded.",
+        "driver_id": "finterp-3d-cell-polynomials-reference",
+        "evidence": [
+          {
+            "path": "src/linear_interpolation_module.F90",
+            "line": 519,
+            "sha256": "ce7c98c39bacbf0b72e5c5c0c9a6e4e55b0bec297b105974263e3554eb038238"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test.f90",
+            "sha256": "2ba3595858555dd5239c1e0b2364d8d135cb400468c232457fd80f5fe04e64d8"
+          }
+        ]
+      },
+      {
+        "id": "finterp-4d-cell-polynomials",
+        "package_id": "finterp",
+        "revision": "95aaceaf86f5d4d49328b783c5dff9b006b0bfc9",
+        "module": "linear_interpolation_module",
+        "procedure": "linear_interp_4d%initialize, evaluate",
+        "gams_codes": [
+          "E2a"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "13122 REAL64 4D tensor interpolation queries on dyadic nonuniform grids: two datasets, every cell at endpoint/midpoint coordinate combinations. A multiaffine polynomial must reproduce exactly; added coordinate squares use independently derived cell secants (a+b)*x-a*b rather than the original quadratic value. Data preservation, node/cell boundaries and API statuses checked. Extrapolation excluded.",
+        "driver_id": "finterp-4d-cell-polynomials-reference",
+        "evidence": [
+          {
+            "path": "src/linear_interpolation_module.F90",
+            "line": 563,
+            "sha256": "ce7c98c39bacbf0b72e5c5c0c9a6e4e55b0bec297b105974263e3554eb038238"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test.f90",
+            "sha256": "2ba3595858555dd5239c1e0b2364d8d135cb400468c232457fd80f5fe04e64d8"
+          }
+        ]
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -5588,6 +5723,21 @@
         "code": "H2a2a1",
         "label": "Automatic (user need only specify required accuracy)",
         "parent": "H2a2a"
+      },
+      {
+        "code": "H2a3",
+        "label": "Semi-infinite interval (including exp(-x) weight function)",
+        "parent": "H2a"
+      },
+      {
+        "code": "H2a3a",
+        "label": "Integrand available via user-defined procedure",
+        "parent": "H2a3"
+      },
+      {
+        "code": "H2a3a1",
+        "label": "Automatic (user need only specify required accuracy)",
+        "parent": "H2a3a"
       }
     ],
     "gams_procedures": [
@@ -5645,6 +5795,141 @@
           }
         ],
         "driver_id": "quadpack-endpoint-singular"
+      },
+      {
+        "id": "quadpack-improper-halflines",
+        "package_id": "quadpack",
+        "revision": "ab42d50794280a8e7996f2ee4cda1f8753dfde5b",
+        "module": "quadpack",
+        "procedure": "dqagi",
+        "gams_codes": [
+          "H2a3a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "32 REAL64 exponential integrals on left/right half-lines: four positive decay rates and four finite nonnegative bound magnitudes. Exact antiderivative exp(-rate*bound)/rate; ier=0, finite nonnegative error estimate and positive work counters required. Whole-line integrals, divergent/oscillatory tails and error-estimator guarantees excluded.",
+        "driver_id": "quadpack-improper-halflines-reference",
+        "evidence": [
+          {
+            "path": "src/quadpack_generic.F90",
+            "line": 514,
+            "sha256": "c99ab78b9639e4c66c82ae3acd56efcd53a50026d3b8993ce4737fbaa91e88e8"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/quadpack_test_module.F90",
+            "sha256": "6583d801d13851ac7626444aff65e6714e3e561f7d8442d5424655bcb50c56b4"
+          }
+        ]
+      },
+      {
+        "id": "quadpack-interior-breakpoints",
+        "package_id": "quadpack",
+        "revision": "ab42d50794280a8e7996f2ee4cda1f8753dfde5b",
+        "module": "quadpack",
+        "procedure": "dqagp",
+        "gams_codes": [
+          "H2a2a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "18 REAL64 finite integrals of abs(x-c)**p with supplied interior breakpoint c, p=-1/2,1/2,3/2, two intervals and three breakpoint fractions. Independent split antiderivatives; ier=0 and work/error sanity checks. The callback assigns zero at the isolated singular point, which has no effect on the integral. Multiple singularities and divergent exponents excluded.",
+        "driver_id": "quadpack-interior-breakpoints-reference",
+        "evidence": [
+          {
+            "path": "src/quadpack_generic.F90",
+            "line": 1058,
+            "sha256": "c99ab78b9639e4c66c82ae3acd56efcd53a50026d3b8993ce4737fbaa91e88e8"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/quadpack_test_module.F90",
+            "sha256": "6583d801d13851ac7626444aff65e6714e3e561f7d8442d5424655bcb50c56b4"
+          }
+        ]
+      },
+      {
+        "id": "quadpack-cauchy-principal-values",
+        "package_id": "quadpack",
+        "revision": "ab42d50794280a8e7996f2ee4cda1f8753dfde5b",
+        "module": "quadpack",
+        "procedure": "dqawc",
+        "gams_codes": [
+          "H2a2a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "36 REAL64 Cauchy principal-value integrals of (x-c)**power/(x-c), powers 0..3, three intervals and three interior pole fractions. Logarithmic principal value for constant numerator and polynomial antiderivatives otherwise. The callback supplies only the smooth numerator. ier=0 and finite error/work checks; endpoint poles excluded.",
+        "driver_id": "quadpack-cauchy-principal-values-reference",
+        "evidence": [
+          {
+            "path": "src/quadpack_generic.F90",
+            "line": 2233,
+            "sha256": "c99ab78b9639e4c66c82ae3acd56efcd53a50026d3b8993ce4737fbaa91e88e8"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/quadpack_test_module.F90",
+            "sha256": "6583d801d13851ac7626444aff65e6714e3e561f7d8442d5424655bcb50c56b4"
+          }
+        ]
+      },
+      {
+        "id": "quadpack-oscillatory-weights",
+        "package_id": "quadpack",
+        "revision": "ab42d50794280a8e7996f2ee4cda1f8753dfde5b",
+        "module": "quadpack",
+        "procedure": "dqawo",
+        "gams_codes": [
+          "H2a2a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "72 REAL64 finite-interval exponential integrals with sine/cosine weights: three rates, three lengths and four signed frequencies. Closed elementary antiderivatives, ier=0 and error/work checks. Callback supplies exp(-rate*x), not the oscillating weight. Infinite Fourier integrals and reused Chebyshev moments excluded. The pinned initial-estimate acceptance path leaves last=0; this is allowed and counted, while neval must remain positive.",
+        "driver_id": "quadpack-oscillatory-weights-reference",
+        "evidence": [
+          {
+            "path": "src/quadpack_generic.F90",
+            "line": 3107,
+            "sha256": "c99ab78b9639e4c66c82ae3acd56efcd53a50026d3b8993ce4737fbaa91e88e8"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/quadpack_test_module.F90",
+            "sha256": "6583d801d13851ac7626444aff65e6714e3e561f7d8442d5424655bcb50c56b4"
+          }
+        ]
+      },
+      {
+        "id": "quadpack-endpoint-weights",
+        "package_id": "quadpack",
+        "revision": "ab42d50794280a8e7996f2ee4cda1f8753dfde5b",
+        "module": "quadpack",
+        "procedure": "dqaws",
+        "gams_codes": [
+          "H2a2a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "144 REAL64 endpoint-weighted integrals on [0,1], alpha/beta=-1/2,0,1/2, numerator x**power for powers 0..3, and all four no-log/log(x)/log(1-x)/both-log modes. Analytic beta-function derivatives evaluated independently at 80/120 digits; 18-digit constants and exact configurations saved. ier=0 plus finite error/work checks. Nonintegrable endpoint exponents excluded.",
+        "driver_id": "quadpack-endpoint-weights-reference",
+        "evidence": [
+          {
+            "path": "src/quadpack_generic.F90",
+            "line": 3757,
+            "sha256": "c99ab78b9639e4c66c82ae3acd56efcd53a50026d3b8993ce4737fbaa91e88e8"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/quadpack_test_module.F90",
+            "sha256": "6583d801d13851ac7626444aff65e6714e3e561f7d8442d5424655bcb50c56b4"
+          }
+        ]
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -5973,6 +6258,33 @@
           }
         ],
         "driver_id": "minpack-rosenbrock-system"
+      },
+      {
+        "id": "minpack-analytic-jacobian-systems",
+        "package_id": "minpack",
+        "revision": "c0b5aea9fcd2b83865af921a7a7e881904f8d3c2",
+        "module": "minpack_module",
+        "procedure": "hybrj1",
+        "gams_codes": [
+          "F2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "user-supplied analytic Jacobian",
+        "notes": "60 REAL64 triangular nonlinear systems, dimensions 2..6, three alternating-sign, component-scaled patterns and four initial displacement scales. f_i=u_i+u_i**3/8+u_(i-1)**2/4 (last term omitted for i=1), u_i=x_i-i/4. Strict monotonicity in each u_i gives the unique known real root by forward induction. Analytic bidiagonal Jacobian, ier/info=1, both callback paths, returned/recomputed residual consistency and root error <=1e-8. Singular systems and global-convergence claims excluded.",
+        "driver_id": "minpack-analytic-jacobian-systems-reference",
+        "evidence": [
+          {
+            "path": "src/minpack.f90",
+            "line": 1401,
+            "sha256": "44ff6b6482af824875c3af49feb4bfe9b63933cd3cf5ecf05159f931353cbe27"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_hybrj.f90",
+            "sha256": "33ebc15bcdd828dc03bd05e560ca048d1f5b0f4dc2fd849bf2018c33086138cd"
+          }
+        ]
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"

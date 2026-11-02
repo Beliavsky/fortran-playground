@@ -334,3 +334,5 @@ Complex matrix operators and fitting drivers: [review and actual results](gams-c
 Complex statistics and rank-sensitive linear algebra drivers: [review and actual results](gams-statistics-rank-ten.md).
 
 Grid weights, complex spectra and masked statistics: [review and actual results](gams-grids-spectra-ten.md).
+
+Specialized integrals, tensor interpolation and analytic-Jacobian systems: [review and actual results](gams-integrals-tensors-ten.md).

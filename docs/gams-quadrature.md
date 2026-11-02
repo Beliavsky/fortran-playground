@@ -42,12 +42,17 @@ The `dqags` driver adapts the author's inverse-square-root test and adds a logar
 | [Load stdlib-lobatto-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-lobatto-reference) · [Driver source](../fpm_catalog/gams-drivers/stdlib-lobatto-reference.f90) | H2c | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_quadrature.f90#L124) · [Author test](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_gauss.f90) |
 | [Load stdlib-trapz-grid-weights-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-trapz-grid-weights-reference) · [Driver source](../fpm_catalog/gams-drivers/stdlib-trapz-grid-weights-reference.f90) | H2a1b2 | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_quadrature.f90#L46) · [Author test](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/example/example_trapz_weights.f90) |
 | [Load stdlib-simps-grid-weights-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-simps-grid-weights-reference) · [Driver source](../fpm_catalog/gams-drivers/stdlib-simps-grid-weights-reference.f90) | H2a1b2 | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_quadrature.f90#L95) · [Author test](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/example/example_simps_weights.f90) |
+| [Load quadpack-improper-halflines-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=quadpack&example=gams-quadpack-improper-halflines-reference) · [Driver source](../fpm_catalog/gams-drivers/quadpack-improper-halflines-reference.f90) | H2a3a1 | [Procedure](https://github.com/jacobwilliams/quadpack/blob/ab42d50794280a8e7996f2ee4cda1f8753dfde5b/src/quadpack_generic.F90#L514) · [Author test](https://github.com/jacobwilliams/quadpack/blob/ab42d50794280a8e7996f2ee4cda1f8753dfde5b/test/quadpack_test_module.F90) |
+| [Load quadpack-interior-breakpoints-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=quadpack&example=gams-quadpack-interior-breakpoints-reference) · [Driver source](../fpm_catalog/gams-drivers/quadpack-interior-breakpoints-reference.f90) | H2a2a1 | [Procedure](https://github.com/jacobwilliams/quadpack/blob/ab42d50794280a8e7996f2ee4cda1f8753dfde5b/src/quadpack_generic.F90#L1058) · [Author test](https://github.com/jacobwilliams/quadpack/blob/ab42d50794280a8e7996f2ee4cda1f8753dfde5b/test/quadpack_test_module.F90) |
+| [Load quadpack-cauchy-principal-values-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=quadpack&example=gams-quadpack-cauchy-principal-values-reference) · [Driver source](../fpm_catalog/gams-drivers/quadpack-cauchy-principal-values-reference.f90) | H2a2a1 | [Procedure](https://github.com/jacobwilliams/quadpack/blob/ab42d50794280a8e7996f2ee4cda1f8753dfde5b/src/quadpack_generic.F90#L2233) · [Author test](https://github.com/jacobwilliams/quadpack/blob/ab42d50794280a8e7996f2ee4cda1f8753dfde5b/test/quadpack_test_module.F90) |
+| [Load quadpack-oscillatory-weights-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=quadpack&example=gams-quadpack-oscillatory-weights-reference) · [Driver source](../fpm_catalog/gams-drivers/quadpack-oscillatory-weights-reference.f90) | H2a2a1 | [Procedure](https://github.com/jacobwilliams/quadpack/blob/ab42d50794280a8e7996f2ee4cda1f8753dfde5b/src/quadpack_generic.F90#L3107) · [Author test](https://github.com/jacobwilliams/quadpack/blob/ab42d50794280a8e7996f2ee4cda1f8753dfde5b/test/quadpack_test_module.F90) |
+| [Load quadpack-endpoint-weights-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=quadpack&example=gams-quadpack-endpoint-weights-reference) · [Driver source](../fpm_catalog/gams-drivers/quadpack-endpoint-weights-reference.f90) | H2a2a1 | [Procedure](https://github.com/jacobwilliams/quadpack/blob/ab42d50794280a8e7996f2ee4cda1f8753dfde5b/src/quadpack_generic.F90#L3757) · [Author test](https://github.com/jacobwilliams/quadpack/blob/ab42d50794280a8e7996f2ee4cda1f8753dfde5b/test/quadpack_test_module.F90) |
 
 Loading a link selects code without submitting a job. The same drivers are available in the hosted and main local FPM playgrounds and in downloaded FPM projects. Author license notices are retained with the drivers.
 
 ## Recorded results
 
-All 18 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0. Existing package libraries were reused; only each main and executable were compiled. The verification reports lock driver hashes and source revisions: [gams-applied-methods-validation.json](gams-applied-methods-validation.json), [gams-cubature-validation.json](gams-cubature-validation.json), [gams-factorization-rules-ten-validation.json](gams-factorization-rules-ten-validation.json), [gams-grids-spectra-ten-validation.json](gams-grids-spectra-ten-validation.json), [gams-moments-nufft2d-validation.json](gams-moments-nufft2d-validation.json), [gams-quadrature-validation.json](gams-quadrature-validation.json), [gams-rkf-qags-validation.json](gams-rkf-qags-validation.json), [gams-roots-splines-quadrature-validation.json](gams-roots-splines-quadrature-validation.json), [gams-rules-differences-validation.json](gams-rules-differences-validation.json), [gams-sparse-integral-validation.json](gams-sparse-integral-validation.json), [gams-statistics-services-ten-validation.json](gams-statistics-services-ten-validation.json).
+All 23 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0. Existing package libraries were reused; only each main and executable were compiled. The verification reports lock driver hashes and source revisions: [gams-applied-methods-validation.json](gams-applied-methods-validation.json), [gams-cubature-validation.json](gams-cubature-validation.json), [gams-factorization-rules-ten-validation.json](gams-factorization-rules-ten-validation.json), [gams-grids-spectra-ten-validation.json](gams-grids-spectra-ten-validation.json), [gams-integrals-tensors-ten-validation.json](gams-integrals-tensors-ten-validation.json), [gams-moments-nufft2d-validation.json](gams-moments-nufft2d-validation.json), [gams-quadrature-validation.json](gams-quadrature-validation.json), [gams-rkf-qags-validation.json](gams-rkf-qags-validation.json), [gams-roots-splines-quadrature-validation.json](gams-roots-splines-quadrature-validation.json), [gams-rules-differences-validation.json](gams-rules-differences-validation.json), [gams-sparse-integral-validation.json](gams-sparse-integral-validation.json), [gams-statistics-services-ten-validation.json](gams-statistics-services-ten-validation.json).
 
 Success is status `0` for QUADPACK and `1` for quadrature-fortran. The latter reports a signed error estimate. Estimates are printed separately from actual errors against the analytic references; they are not certified error bounds. Zero printed actual error means agreement at the working floating-point precision. Evaluation counts describe these runs and do not establish a general speed ranking.
 
@@ -258,12 +263,48 @@ Irregular-grid weight cases and exact polynomial integrals: 306
 PASS stdlib-simps-grid-weights-reference
 ```
 
+### quadpack-improper-halflines-reference
+
+```text
+Left/right exponential half-line integrals: 32
+PASS quadpack-improper-halflines-reference
+```
+
+### quadpack-interior-breakpoints-reference
+
+```text
+Supplied interior breakpoints, cusps and integrable singularities: 18
+PASS quadpack-interior-breakpoints-reference
+```
+
+### quadpack-cauchy-principal-values-reference
+
+```text
+Cauchy principal values with polynomial numerators: 36
+PASS quadpack-cauchy-principal-values-reference
+```
+
+### quadpack-oscillatory-weights-reference
+
+```text
+Finite sine/cosine-weighted exponential integrals: 72
+Initial-estimate acceptances with last=0: 72
+PASS quadpack-oscillatory-weights-reference
+```
+
+### quadpack-endpoint-weights-reference
+
+```text
+Algebraic/logarithmic endpoint weights against beta derivatives: 144
+PASS quadpack-endpoint-weights-reference
+```
+
 ## Maintenance
 
 After changing a driver, verify it again using existing compiled package images:
 
 ```text
-python xverify_gams_drivers.py --drivers quadpack-smooth quadrature-fortran-smooth quadpack-endpoint-singular dcuhre-box-integrals gauss-jacobi-polynomial-moments cubatures-simplex-moments integrate-nd-polynomial-reference fitpack-spline-integral scifortran-quadrature-reference kronrod-moments-reference fgsl-qags-reference qdutillib-moments-reference stdlib-trapezoid-reference stdlib-simpson-reference stdlib-gauss-reference stdlib-lobatto-reference stdlib-trapz-grid-weights-reference stdlib-simps-grid-weights-reference
+python xverify_gams_drivers.py --drivers quadpack-smooth quadrature-fortran-smooth quadpack-endpoint-singular dcuhre-box-integrals gauss-jacobi-polynomial-moments cubatures-simplex-moments integrate-nd-polynomial-reference fitpack-spline-integral scifortran-quadrature-reference kronrod-moments-reference fgsl-qags-reference qdutillib-moments-reference stdlib-trapezoid-reference stdlib-simpson-reference stdlib-gauss-reference stdlib-lobatto-reference stdlib-trapz-grid-weights-reference stdlib-simps-grid-weights-reference quadpack-improper-halflines-reference quadpack-interior-breakpoints-reference quadpack-cauchy-principal-values-reference quadpack-oscillatory-weights-reference quadpack-endpoint-weights-reference
 python xpackage_gams.py
 python xfpm_examples.py
 python xsite.py
