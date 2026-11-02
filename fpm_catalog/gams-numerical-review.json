@@ -1023,7 +1023,17 @@
         "stdlib-activation-softplus",
         "stdlib-softmax-normalization",
         "stdlib-activation-gelu-gradient",
-        "stdlib-activation-silu-gradient"
+        "stdlib-activation-silu-gradient",
+        "stdlib-gcd",
+        "stdlib-linear-grids",
+        "stdlib-logarithmic-grids",
+        "stdlib-stepped-ranges",
+        "stdlib-cartesian-grids",
+        "stdlib-bounded-clipping",
+        "stdlib-tolerance-comparison",
+        "stdlib-complex-phase",
+        "stdlib-angle-units",
+        "stdlib-vector-exchange"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
     },

@@ -893,6 +893,52 @@ class PackageGamsTests(unittest.TestCase):
         self.assertIn('Type-2/type-3 transforms',text)
         self.assertIn('two-dimensional NUFFT2D driver',transforms_review_text())
 
+    def test_grid_utility_drivers_preserve_reference_provenance_and_tested_scope(self):
+        from fractions import Fraction
+        from xpackage_gams import grids_ten_review_text, GRIDS_TEN_REPORT
+        data = gams_data()
+        records = {r['id']: r for r in data['procedure_mappings']}
+        drivers = {d['id']: d for d in driver_data(data=data)
+                   if d.get('validation_path') == 'docs/gams-grids-ten-validation.json'}
+        expected = {'gcd': 'B', 'linear-grids': 'D1a11', 'logarithmic-grids': 'D1a11',
+                    'stepped-ranges': 'D1a11', 'cartesian-grids': 'D1b1',
+                    'bounded-clipping': 'A3a', 'tolerance-comparison': 'R2',
+                    'complex-phase': 'C4a', 'angle-units': 'R', 'vector-exchange': 'D1a5'}
+        self.assertEqual(set(drivers), {'stdlib-'+name+'-reference' for name in expected})
+        reviewed = numerical_review(data=data)['packages']['stdlib']['procedure_ids']
+        for name, code in expected.items():
+            driver = drivers['stdlib-'+name+'-reference']
+            record = records[driver['procedure_id']]
+            self.assertEqual(driver['gams_code'], code)
+            self.assertEqual(record['driver_id'], driver['id'])
+            self.assertIn(record['id'], reviewed)
+            self.assertEqual(class_evidence(class_tree(data), code, [record], [driver])['status'], 'verified')
+        refs = json.loads((ROOT/'docs/gams-grids-ten-references.json').read_text())['tables']
+        points = refs['logarithmic-grids']
+        self.assertEqual(len(points), 372)
+        self.assertEqual(len({(p['base'], p['start'], p['end'], p['n']) for p in points}), 60)
+        source = (ROOT/drivers['stdlib-logarithmic-grids-reference']['path']).read_text()
+        for point in points:
+            self.assertIn(point['value']+'_real64', source)
+        truth = refs['tolerance-comparison']['expected']
+        self.assertEqual(len(truth), 289)
+        for j in range(17):
+            for i in range(17):
+                a, b = Fraction(i-8, 4), Fraction(j-8, 4)
+                self.assertEqual(truth[i+17*j],
+                                 abs(a-b) <= max(Fraction(1, 8)*max(abs(a), abs(b)), Fraction(1, 16)))
+        self.assertEqual(drivers['stdlib-gcd-reference']['checks']['signed_pairs'], 6561)
+        self.assertEqual(drivers['stdlib-linear-grids-reference']['checks']['grids_per_kind'], 2916)
+        self.assertEqual(drivers['stdlib-stepped-ranges-reference']['checks']['real_ranges'], 867)
+        self.assertEqual(drivers['stdlib-cartesian-grids-reference']['checks']['rectangles'], 42)
+        self.assertEqual(drivers['stdlib-bounded-clipping-reference']['checks']['real_references'], 1935)
+        self.assertEqual(drivers['stdlib-tolerance-comparison-reference']['checks']['complex_policy'], 'componentwise')
+        text = grids_ten_review_text()
+        self.assertEqual((ROOT/GRIDS_TEN_REPORT).read_text(encoding='utf-8'), text)
+        for phrase in ['6,561', '372', '289', 'componentwise', 'singleton returns the end',
+                       'Aliasing', 'No upstream numerical source was patched', 'categories are not exhausted']:
+            self.assertIn(phrase, text)
+
     def test_activation_drivers_keep_independent_references_and_gradient_scope_explicit(self):
         data = gams_data()
         records = {r['id']: r for r in data['procedure_mappings']}

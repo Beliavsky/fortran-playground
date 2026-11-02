@@ -458,7 +458,10 @@
       "C7",
       "L5",
       "L13",
-      "C19"
+      "C19",
+      "A3",
+      "C4",
+      "R2"
     ],
     "bspline-fortran": [
       "E1",
@@ -1775,6 +1778,18 @@
     "D1b1": {
       "label": "Initialize (e.g., to zero or identity)",
       "parent": "D1b"
+    },
+    "A3a": {
+      "label": "Standard precision",
+      "parent": "A3"
+    },
+    "C4a": {
+      "label": "Trigonometric, inverse trigonometric",
+      "parent": "C4"
+    },
+    "D1a5": {
+      "label": "Copy or exchange (swap)",
+      "parent": "D1a"
     }
   },
   "procedure_mappings": [
@@ -12396,6 +12411,306 @@
           "sha256": "2ccb657a1c278d394048d312b22e66fe4768461acc0b4b3038c8b614fba01155"
         }
       ]
+    },
+    {
+      "id": "stdlib-gcd",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_math",
+      "procedure": "gcd",
+      "gams_codes": [
+        "B"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "INT64 greatest common divisors for all signed pairs -40..40, using exhaustive common-divisor enumeration rather than Euclid; zero-zero convention and four large exact cases. Minimum representable integers and overflow are not tested.",
+      "driver_id": "stdlib-gcd-reference",
+      "evidence": [
+        {
+          "path": "src/stdlib_math.f90",
+          "line": 75,
+          "sha256": "3e111c602b3a73f3c259f328bd78dc4a7bb06c34ce1012cd92c86bc627b79674"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "example/example_gcd.f90",
+          "sha256": "43ec8fdcaf5535a23db50bbb3212589a603ad09274721478f3e16974004c867d"
+        }
+      ]
+    },
+    {
+      "id": "stdlib-linear-grids",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_math",
+      "procedure": "linspace",
+      "gams_codes": [
+        "D1a11"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "REAL64 and COMPLEX128 linear grids for 81 endpoint pairs and lengths -2..33, checked by independent convex endpoint weights; singleton returns the end and nonpositive lengths are empty. Default length 100 also checked. No overflow or other kinds claimed.",
+      "driver_id": "stdlib-linear-grids-reference",
+      "evidence": [
+        {
+          "path": "src/stdlib_math.f90",
+          "line": 82,
+          "sha256": "3e111c602b3a73f3c259f328bd78dc4a7bb06c34ce1012cd92c86bc627b79674"
+        },
+        {
+          "path": "src/stdlib_math_linspace.f90",
+          "line": 1,
+          "sha256": "47bd9502814b8a311ce0c274f6c9a43c542a8005ab8014517c2a2b6d8a30a05e"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "example/example_linspace_complex.f90",
+          "sha256": "9c30d3e3cb951f640968691b2591a04a95a662c77aae17681f0ae8761516f3af"
+        }
+      ]
+    },
+    {
+      "id": "stdlib-logarithmic-grids",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_math",
+      "procedure": "logspace",
+      "gams_codes": [
+        "D1a11"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "60 REAL64 logarithmic grids, four positive bases (2,4,10,0.5), ascending/descending/constant exponents and lengths 1,2,3,8,17; 372 stored 80/120-digit independent references. Empty/negative lengths and default length/base also checked. No complex bases or negative-base domains claimed.",
+      "driver_id": "stdlib-logarithmic-grids-reference",
+      "evidence": [
+        {
+          "path": "src/stdlib_math.f90",
+          "line": 217,
+          "sha256": "3e111c602b3a73f3c259f328bd78dc4a7bb06c34ce1012cd92c86bc627b79674"
+        },
+        {
+          "path": "src/stdlib_math_logspace.f90",
+          "line": 1,
+          "sha256": "0a2b87336f89679f62fa084baa5f6ec2e1068210cb94793a58bfec0fb70dee49"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "example/example_logspace_int.f90",
+          "sha256": "ac5b10fcde3128963082b01530aefaef2a62509c6ae46d6e6e4fcfca0b46309e"
+        }
+      ]
+    },
+    {
+      "id": "stdlib-stepped-ranges",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_math",
+      "procedure": "arange",
+      "gams_codes": [
+        "D1a11"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "867 REAL64 dyadic ranges checked by independent repeated addition including descending endpoints and a final partial step. The upper endpoint is included when reached; step magnitude is directed toward the end. Also checks 17 single-argument INT64 ranges. Zero/negative explicit steps and large allocations are excluded.",
+      "driver_id": "stdlib-stepped-ranges-reference",
+      "evidence": [
+        {
+          "path": "src/stdlib_math.f90",
+          "line": 14,
+          "sha256": "3e111c602b3a73f3c259f328bd78dc4a7bb06c34ce1012cd92c86bc627b79674"
+        },
+        {
+          "path": "src/stdlib_math_arange.f90",
+          "line": 1,
+          "sha256": "2f89f24a97f705c5214d746f7cff518c0a38ebfe09a39a3f731814c8aec7424e"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "example/example_math_arange.f90",
+          "sha256": "66b938987227b97d15dbe15876b02c560b824f396e7f405972477cb191cd2dd4"
+        }
+      ]
+    },
+    {
+      "id": "stdlib-cartesian-grids",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_math",
+      "procedure": "meshgrid, stdlib_meshgrid_ij",
+      "gams_codes": [
+        "D1b1"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "REAL64 Cartesian grids for all 42 rectangular sizes nx=1..7, ny=1..6, both default xy and explicit ij layouts, using coordinate lookup references. Coordinates and inputs are exact dyadics; no rank-three/four or invalid shape behavior claimed.",
+      "driver_id": "stdlib-cartesian-grids-reference",
+      "evidence": [
+        {
+          "path": "src/stdlib_math.f90",
+          "line": 983,
+          "sha256": "3e111c602b3a73f3c259f328bd78dc4a7bb06c34ce1012cd92c86bc627b79674"
+        },
+        {
+          "path": "src/stdlib_math_meshgrid.f90",
+          "line": 1,
+          "sha256": "fcf16b15d44de3ab6d3e8563901af1111cca05fbcf077b65e78ae05dfb4f42a2"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "example/example_meshgrid.f90",
+          "sha256": "992089f27a898f256d09ae0c44df33f7f7f94c492686f708a0cc0258a70448cc"
+        }
+      ]
+    },
+    {
+      "id": "stdlib-bounded-clipping",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_math",
+      "procedure": "clip",
+      "gams_codes": [
+        "A3a"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "REAL64 elemental clipping over 129 dyadic values and 15 valid bound pairs, including equal bounds; independent branch references and vector/scalar checks. Also checks INT64 clipping at 10^12 scale. Reversed bounds and nonfinite values excluded.",
+      "driver_id": "stdlib-bounded-clipping-reference",
+      "evidence": [
+        {
+          "path": "src/stdlib_math.f90",
+          "line": 1070,
+          "sha256": "3e111c602b3a73f3c259f328bd78dc4a7bb06c34ce1012cd92c86bc627b79674"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "example/example_clip_real.f90",
+          "sha256": "9b1a25de9b0ba869b5fd3c2760692b1eeafc0fe58609524fa026ab875dc93b11"
+        }
+      ]
+    },
+    {
+      "id": "stdlib-tolerance-comparison",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_math",
+      "procedure": "is_close, all_close",
+      "gams_codes": [
+        "R2"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "289 exact rational truth-table pairs with explicit dyadic relative/absolute tolerances, symmetry, scalar and elemental REAL64 comparisons, plus rank-two REAL64/COMPLEX128 all_close and explicit NaN policy. Complex comparison is componentwise; infinities and implicit default tolerances excluded.",
+      "driver_id": "stdlib-tolerance-comparison-reference",
+      "evidence": [
+        {
+          "path": "src/stdlib_math.f90",
+          "line": 539,
+          "sha256": "3e111c602b3a73f3c259f328bd78dc4a7bb06c34ce1012cd92c86bc627b79674"
+        },
+        {
+          "path": "src/stdlib_math_is_close.f90",
+          "line": 1,
+          "sha256": "d7e149cb2852521741948cac33e90bd29ba68ce5d6cc3a691b97be4b0cc2e6c2"
+        },
+        {
+          "path": "src/stdlib_math_all_close.f90",
+          "line": 1,
+          "sha256": "1a09ab7ab8901b3987f95171b65efd24d8354e3175d1b2391936ad252b067fc2"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "example/example_math_is_close.f90",
+          "sha256": "763af6b5ffc9d9a8b1311ae99d371a44ae31aa3772021bfe579e02e46478a4da"
+        }
+      ]
+    },
+    {
+      "id": "stdlib-complex-phase",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_math",
+      "procedure": "arg, argd, argpi",
+      "gams_codes": [
+        "C4a"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "COMPLEX128 phase in radians, degrees and multiples of pi for eight exact axis/diagonal directions at 25 powers-of-two scales; known quadrant fractions of an independently stored pi constant. Origin, signed-zero branch cuts, nonfinite values and general off-diagonal angles excluded.",
+      "driver_id": "stdlib-complex-phase-reference",
+      "evidence": [
+        {
+          "path": "src/stdlib_math.f90",
+          "line": 1106,
+          "sha256": "3e111c602b3a73f3c259f328bd78dc4a7bb06c34ce1012cd92c86bc627b79674"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "example/example_math_arg.f90",
+          "sha256": "e2e4541381ef60a11d008b7063d570a60524ae602b3bdae57df49480d9bcf0e2"
+        }
+      ]
+    },
+    {
+      "id": "stdlib-angle-units",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_math",
+      "procedure": "deg2rad, rad2deg",
+      "gams_codes": [
+        "R"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "REAL64 degree/radian conversion for 145 values -1080..1080 by 15 degrees, checked independently in both directions against a stored 80/120-digit pi constant. Round trips are secondary, not the oracle. No huge-angle reduction or trigonometric accuracy claimed. Classified broadly as service routines, not an inverse-trigonometric solver.",
+      "driver_id": "stdlib-angle-units-reference",
+      "evidence": [
+        {
+          "path": "src/stdlib_math.f90",
+          "line": 523,
+          "sha256": "3e111c602b3a73f3c259f328bd78dc4a7bb06c34ce1012cd92c86bc627b79674"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "example/example_math_deg2rad.f90",
+          "sha256": "bd057ba8d6d6c634806c4beb692a61e651816e4dc5f625821c9577eb21b9ca33"
+        }
+      ]
+    },
+    {
+      "id": "stdlib-vector-exchange",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_math",
+      "procedure": "swap",
+      "gams_codes": [
+        "D1a5"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "Elemental exchange for disjoint REAL64, COMPLEX128 and INT64 vectors of lengths 0..64, checked against saved inputs after one and two exchanges. Also checks disjoint strided slices. Aliasing, character/string and derived-type overloads excluded.",
+      "driver_id": "stdlib-vector-exchange-reference",
+      "evidence": [
+        {
+          "path": "src/stdlib_math.f90",
+          "line": 1251,
+          "sha256": "3e111c602b3a73f3c259f328bd78dc4a7bb06c34ce1012cd92c86bc627b79674"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "example/example_math_swap.F90",
+          "sha256": "011c23ed8a7b457e64b044af7590420ddc8329f221bc9c3215eeeda166036371"
+        }
+      ]
     }
   ],
   "review_notes": {
@@ -12573,7 +12888,8 @@
       "L",
       "N",
       "R",
-      "H"
+      "H",
+      "B"
     ],
     "bspline-fortran": [
       "E"

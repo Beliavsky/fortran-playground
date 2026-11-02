@@ -8,7 +8,7 @@ This report assesses each package/class pair, including inherited parent classes
 
 When a driver cannot be created, inspect the pinned implementation and author examples. Narrow or remove a classification that is unsupported; do not substitute an unrelated default example as evidence. Record missing dependencies, sandbox limits and upstream defects separately in the procedure or package review notes. A sandbox failure alone does not disprove an algorithm.
 
-Counts refer to package/class pairs and include parents: 729 verified, 76 source-supported, 243 uncertain.
+Counts refer to package/class pairs and include parents: 738 verified, 76 source-supported, 241 uncertain.
 
 ## Mappings requiring source review
 
@@ -240,10 +240,8 @@ Inspect these discovery assignments before making a specific algorithm claim. Th
 | [spectrum](https://beliavsky.github.io/fortran-playground/gams/packages/spectrum/) | [K](https://beliavsky.github.io/fortran-playground/gams/K/) | Approximation |
 | [spectrum](https://beliavsky.github.io/fortran-playground/gams/packages/spectrum/) | [K5](https://beliavsky.github.io/fortran-playground/gams/K5/) | Smoothing |
 | [spectrum](https://beliavsky.github.io/fortran-playground/gams/packages/spectrum/) | [N](https://beliavsky.github.io/fortran-playground/gams/N/) | Data handling |
-| [stdlib](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/) | [A](https://beliavsky.github.io/fortran-playground/gams/A/) | Arithmetic, error analysis |
 | [stdlib](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/) | [N3](https://beliavsky.github.io/fortran-playground/gams/N3/) | Character manipulation |
 | [stdlib](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/) | [N4](https://beliavsky.github.io/fortran-playground/gams/N4/) | Storage management (e.g., stacks, heaps, trees) |
-| [stdlib](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/) | [R](https://beliavsky.github.io/fortran-playground/gams/R/) | Service routines |
 | [stdlib](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/) | [R3](https://beliavsky.github.io/fortran-playground/gams/R3/) | Error handling |
 | [strff](https://beliavsky.github.io/fortran-playground/gams/packages/strff/) | [N](https://beliavsky.github.io/fortran-playground/gams/N/) | Data handling |
 | [strff](https://beliavsky.github.io/fortran-playground/gams/packages/strff/) | [N3](https://beliavsky.github.io/fortran-playground/gams/N3/) | Character manipulation |
@@ -589,16 +587,20 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [stdlib / stdlib-activation-silu](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-activation-silu) | C19 | verified |
 | [stdlib / stdlib-activation-silu-gradient](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-activation-silu-gradient) | C19 | source-supported |
 | [stdlib / stdlib-activation-softplus](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-activation-softplus) | C19 | verified |
+| [stdlib / stdlib-angle-units](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-angle-units) | R | verified |
 | [stdlib / stdlib-arg-select](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-arg-select) | N5 | verified |
 | [stdlib / stdlib-beta](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-beta) | C7b | verified |
 | [stdlib / stdlib-beta-cdf](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-beta-cdf) | L5a1b | verified |
 | [stdlib / stdlib-beta-pdf](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-beta-pdf) | L5a1b | verified |
 | [stdlib / stdlib-bicgstab-kernel](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-bicgstab-kernel) | D2a1 | verified |
+| [stdlib / stdlib-bounded-clipping](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-bounded-clipping) | A3a | verified |
+| [stdlib / stdlib-cartesian-grids](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-cartesian-grids) | D1b1 | verified |
 | [stdlib / stdlib-central-moments](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-central-moments) | L1a1c | verified |
 | [stdlib / stdlib-cg-kernel](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-cg-kernel) | D2b1b | verified |
 | [stdlib / stdlib-cholesky](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-cholesky) | D2b1b | verified |
 | [stdlib / stdlib-complex-gamma](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-complex-gamma) | C7a | verified |
 | [stdlib / stdlib-complex-loggamma](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-complex-loggamma) | C7a | verified |
+| [stdlib / stdlib-complex-phase](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-complex-phase) | C4a | verified |
 | [stdlib / stdlib-constrained-ls](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-constrained-ls) | D9b1 | verified |
 | [stdlib / stdlib-correlation](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-correlation) | L1c1b | verified |
 | [stdlib / stdlib-covariance](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-covariance) | L1c1b | verified |
@@ -614,14 +616,17 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [stdlib / stdlib-gamma-cdf](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-gamma-cdf) | L5a1g | verified |
 | [stdlib / stdlib-gamma-pdf](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-gamma-pdf) | L5a1g | verified |
 | [stdlib / stdlib-gauss](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-gauss) | H2c | verified |
+| [stdlib / stdlib-gcd](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-gcd) | B | verified |
 | [stdlib / stdlib-generalized-eig](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-generalized-eig) | D4b2 | verified |
 | [stdlib / stdlib-incomplete-beta](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-incomplete-beta) | C7f | verified |
 | [stdlib / stdlib-inverse](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-inverse) | D2a1 | verified |
 | [stdlib / stdlib-kronecker](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-kronecker) | D1b | verified |
 | [stdlib / stdlib-legendre](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-legendre) | C3a2 | verified |
+| [stdlib / stdlib-linear-grids](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-linear-grids) | D1a11 | verified |
 | [stdlib / stdlib-lobatto](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-lobatto) | H2c | verified |
 | [stdlib / stdlib-log-beta](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-log-beta) | C7b | verified |
 | [stdlib / stdlib-log-factorial](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-log-factorial) | C7a | verified |
+| [stdlib / stdlib-logarithmic-grids](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-logarithmic-grids) | D1a11 | verified |
 | [stdlib / stdlib-lower-gamma](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-lower-gamma) | C7e | verified |
 | [stdlib / stdlib-lstsq](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-lstsq) | D9a1 | verified |
 | [stdlib / stdlib-matrix-norms](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-matrix-norms) | D1b2 | verified |
@@ -646,13 +651,16 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [stdlib / stdlib-sort-adjoint](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-sort-adjoint) | N6 | verified |
 | [stdlib / stdlib-sort-index](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-sort-index) | N6 | verified |
 | [stdlib / stdlib-spd-solve](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-spd-solve) | D2b1b | verified |
+| [stdlib / stdlib-stepped-ranges](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-stepped-ranges) | D1a11 | verified |
 | [stdlib / stdlib-svd](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-svd) | D6 | verified |
+| [stdlib / stdlib-tolerance-comparison](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-tolerance-comparison) | R2 | verified |
 | [stdlib / stdlib-trapezoid](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-trapezoid) | H2a1b2 | verified |
 | [stdlib / stdlib-uniform-cdf](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-uniform-cdf) | L5a1u | verified |
 | [stdlib / stdlib-uniform-pdf](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-uniform-pdf) | L5a1u | verified |
 | [stdlib / stdlib-unique](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-unique) | N6 | verified |
 | [stdlib / stdlib-upper-gamma](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-upper-gamma) | C7e | verified |
 | [stdlib / stdlib-var](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-var) | L1a1b | verified |
+| [stdlib / stdlib-vector-exchange](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-vector-exchange) | D1a5 | verified |
 | [stdlib / stdlib-weighted-ls](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-weighted-ls) | D9a1 | verified |
 | [stdlib-os / stdlib-os-files](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib-os/#stdlib-os-files) | N1 | verified |
 | [stiff3 / stiff3-stiff3](https://beliavsky.github.io/fortran-playground/gams/packages/stiff3/#stiff3-stiff3) | I1a2 | verified |

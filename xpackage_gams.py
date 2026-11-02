@@ -109,6 +109,7 @@ SYSTEMS_SPECTRA_TEN_REPORT = Path('docs/gams-systems-spectra-ten.md')
 DISTRIBUTION_TEN_REPORT = Path('docs/gams-distribution-ten.md')
 PCA_ORDERING_TEN_REPORT = Path('docs/gams-pca-ordering-ten.md')
 ACTIVATIONS_TEN_REPORT = Path('docs/gams-activations-ten.md')
+GRIDS_TEN_REPORT = Path('docs/gams-grids-ten.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
 EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
@@ -10165,6 +10166,100 @@ def activations_ten_review_text(root=ROOT):
     return '\n'.join(lines)
 
 
+def grids_ten_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-grids-ten-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-grids-ten-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Ten checked stdlib grid and numerical utility drivers',
+     '',
+     'Ten independent drivers passed GNU Fortran 16.2.0 and FPM 0.12.0 in the restricted hosted sandbox. '
+     'Existing stdlib libraries were reused; only mains and executables were compiled. The [verification '
+     'report](gams-grids-ten-validation.json) saves normalized UTF-8/LF source hashes, pins, timings and '
+     'complete output. GAMS categories are not exhausted.',
+     '',
+     '## Independent references and tested scope',
+     '',
+     'These drivers cover numerical setup and checking utilities, rather than ten new solvers. The [reference '
+     'tables](gams-grids-ten-references.json) save logarithmic-grid values, an exact rational tolerance truth '
+     'table and an independent pi constant. The reference generator uses mpmath 1.3.0 at 80 digits, confirmed at '
+     '120 digits to absolute difference below 1e-65, for powers and pi. No upstream implementation or '
+     'author-test body was copied; pinned public APIs, implementations and linked author examples were reviewed.',
+     '',
+     '- **Greatest common divisor (B):** all 6,561 signed INT64 pairs -40..40, with exhaustive common-divisor '
+     'enumeration rather than Euclid, plus four large exact cases. The zero-zero convention is checked. The '
+     'minimum representable integer and overflow are excluded.\n'
+     '- **Linear grids (D1a11):** 2,916 REAL64 and 2,916 COMPLEX128 grids, with independent convex endpoint '
+     'weights. Lengths -2..33 cover empty and singleton behavior; a singleton returns the end. Default length '
+     '100 is also checked.\n'
+     '- **Logarithmic grids (D1a11):** 60 grids with 372 high-precision references for positive bases 2, 4, 10 '
+     'and 0.5, ascending/descending/constant exponents and lengths 1, 2, 3, 8 and 17. Empty/negative lengths and '
+     'default base/length are checked separately. Complex and negative bases are excluded.\n'
+     '- **Stepped ranges (D1a11):** 867 bounded REAL64 dyadic ranges checked by repeated addition, and 17 '
+     'single-argument INT64 ranges. Endpoints are inclusive when reached; positive step magnitudes are directed '
+     'toward descending endpoints as documented by this API. Explicit zero/negative steps are excluded.\n'
+     '- **Cartesian grids (D1b1):** 42 rectangular sizes with both xy and ij layouts checked by coordinate '
+     'lookup. Only the rank-two API is claimed.\n'
+     '- **Clipping (A3a):** 1,935 value/bound combinations, scalar and elemental calls, plus five INT64 values '
+     'at 10^12 scale. Bounds are ordered, including equal bounds. Nonfinite values and reversed bounds are '
+     'excluded.\n'
+     '- **Tolerance comparisons (R2):** 289 exact rational truth-table pairs with explicit relative tolerance '
+     '1/8 and absolute tolerance 1/16; scalar/elemental symmetry, REAL64 and COMPLEX128 matrix all_close, and '
+     'NaN policy. The complex policy is componentwise, not a complex-modulus tolerance. Default tolerances and '
+     'infinities are excluded.\n'
+     '- **Complex phase (C4a):** eight exact axis/diagonal directions at 25 powers-of-two scales, checked in '
+     'radians, degrees and multiples of pi (600 references). Origin, signed-zero branch cuts and general '
+     'off-diagonal angles are excluded.\n'
+     '- **Angle units (R):** 145 degree/radian values from -1080 to 1080 degrees, checked independently in each '
+     'direction; round trips are secondary. This is unit conversion, not huge-angle reduction or a trigonometric '
+     'accuracy claim.\n'
+     '- **Vector exchange (D1a5):** lengths 0..64 for REAL64, COMPLEX128 and INT64, checked after one and two '
+     'swaps, plus disjoint strided slices and unchanged untouched elements. Aliasing and other overloads are '
+     'excluded.',
+     '',
+     'All comparisons require finite real results where applicable. Real checks use scaled absolute tolerance '
+     '3e-13; integer, truth-table and exchange checks are exact. These are bounded test sets, not blanket claims '
+     'for all overloads, inputs or performance.',
+     '',
+     '## Classification and provenance',
+     '',
+     'The [Netlib GAMS taxonomy](https://netlib.org/misc/gams.html) supplies B (number theory), A3a (standard '
+     'precision arithmetic), C4a (trigonometric and inverse trigonometric functions), D1a5 (copy/exchange), '
+     'D1a11 (other vector operations), D1b1 (matrix initialization), R2 (error checking) and broad R (service '
+     'routines). Grid constructors do not claim interpolation or integration; the angle converter uses broad '
+     'service classification. Loading any example does not submit a job.',
+     '',
+     'These are independent MIT consumers; upstream package license terms remain separate. No upstream numerical '
+     'source was patched. The [coverage report](gams-coverage.md) records remaining work.',
+     '',
+     '## Driver details',
+     '']
+    for d in drivers:
+        lines += ['### '+d['id']+' ('+d['gams_code']+')', '', d['modifications'], '']
+    lines += ['## Provenance and actual output', '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -10349,6 +10444,7 @@ def main():
                          (DISTRIBUTION_TEN_REPORT, distribution_ten_review_text()),
                          (PCA_ORDERING_TEN_REPORT, pca_ordering_ten_review_text()),
                          (ACTIVATIONS_TEN_REPORT, activations_ten_review_text()),
+                         (GRIDS_TEN_REPORT, grids_ten_review_text()),
                          (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report

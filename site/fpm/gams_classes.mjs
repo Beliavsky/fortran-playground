@@ -843,5 +843,17 @@ export const gamsSubclasses = {
   "D1b1": {
     "label": "Initialize (e.g., to zero or identity)",
     "parent": "D1b"
+  },
+  "A3a": {
+    "label": "Standard precision",
+    "parent": "A3"
+  },
+  "C4a": {
+    "label": "Trigonometric, inverse trigonometric",
+    "parent": "C4"
+  },
+  "D1a5": {
+    "label": "Copy or exchange (swap)",
+    "parent": "D1a"
   }
 };

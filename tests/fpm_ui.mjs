@@ -344,7 +344,15 @@ assert.equal(classLink.href, 'https://gams.nist.gov/cgi-bin/serve.cgi/Class/D');
 assert.equal(classLink.target, '_blank');
 assert.equal(classLink.rel, 'noopener noreferrer');
 get('package-search').value = 'GAMS: B'; get('package-search').listeners.input();
-assert.equal(get('available-package').options.length, 1, 'Contradictory class filters give no matches');
+assert.deepEqual(get('available-package').options.slice(1).map(p => p.value).sort(),
+  packages.filter(p => p.gams.some(c => c.code === 'B') && p.gams.some(c => c.code === 'D'))
+    .map(p => p.id).sort(),
+  'Class filters intersect; a package may provide both number theory and linear algebra');
+const disjointClass = [...new Set(packages.flatMap(p => p.gams.map(c => c.code)))].find(code =>
+  !packages.some(p => p.gams.some(c => c.code === 'B') && p.gams.some(c => c.code === code)));
+assert.ok(disjointClass, 'The catalog has a class disjoint from number theory for the empty-search recovery test');
+get('package-gams').value = disjointClass; get('package-gams').listeners.change();
+assert.equal(get('available-package').options.length, 1, 'Disjoint class filters give no matches');
 await get('package-search-results').options.find(p => p.textContent === 'Search all GAMS classes').listeners.click();
 assert.ok(get('available-package').options.some(p => p.value === 'fortran-primes'));
 get('package-search').value = 'GAMS L'; get('package-search').listeners.input();
