@@ -964,6 +964,11 @@
         "parent": "D4b"
       },
       {
+        "code": "D4b4",
+        "label": "Complex general",
+        "parent": "D4b"
+      },
+      {
         "code": "D5",
         "label": "QR decomposition, Gram-Schmidt orthogonalization",
         "parent": "D"
@@ -4869,6 +4874,336 @@
           }
         ],
         "driver_id": "stdlib-complex-minimum-norm-pinv-reference"
+      },
+      {
+        "id": "stdlib-trapz-grid-weights",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_quadrature",
+        "procedure": "trapz_weights (REAL64)",
+        "gams_codes": [
+          "H2a1b2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "102 REAL64 irregular-grid weight cases; n=0..16, three dyadic spacing patterns and both directions. Exact rational integrals of local Lagrange basis polynomials supply individual weights; polynomial integrals and input preservation checked. Linear exactness checked. Repeated nodes and nonfinite inputs excluded.",
+        "driver_id": "stdlib-trapz-grid-weights-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_quadrature.f90",
+            "line": 46,
+            "sha256": "5327d6acb0937845204419e9c3b1da69d4873a53d189ddf06328ea7f6dc01668"
+          },
+          {
+            "path": "src/stdlib_quadrature_trapz.f90",
+            "line": 1,
+            "sha256": "aab07a380a10f64f80ab0f5df893e7695b21f5914d9a22a4bbad0baf3af42de0"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_trapz_weights.f90",
+            "sha256": "3f735fd029e9f53f8b53829f971fc2c21a8435ee7622922b9cdad2b5f51b64c8"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-simps-grid-weights",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_quadrature",
+        "procedure": "simps_weights (REAL64)",
+        "gams_codes": [
+          "H2a1b2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "306 REAL64 irregular-grid weight cases; n=0..16, three dyadic spacing patterns and both directions. Exact rational integrals of local Lagrange basis polynomials supply individual weights; polynomial integrals and input preservation checked. All even=-1/0/1 modes and omitted default checked; quadratic exactness only when n>=3. Repeated nodes and nonfinite inputs excluded.",
+        "driver_id": "stdlib-simps-grid-weights-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_quadrature.f90",
+            "line": 95,
+            "sha256": "5327d6acb0937845204419e9c3b1da69d4873a53d189ddf06328ea7f6dc01668"
+          },
+          {
+            "path": "src/stdlib_quadrature_simps.f90",
+            "line": 1,
+            "sha256": "0b1e3c4c884ccf20decc2adc0390593580bce26d738b25f7def8c2153076eb46"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_simps_weights.f90",
+            "sha256": "769440d18e553f9953d973ed58e0f94edc45fc28bfe57f203c0bd6fbb55e5365"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-complex-matrix-norms",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "mnorm (COMPLEX128)",
+        "gams_codes": [
+          "D1b2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "108 COMPLEX128 rectangular matrices with entries (3+4i)*integer/8; exact modulus 5*abs(integer)/8 supplies one/infinity/Frobenius references. Rank-three batched dim=[1,2] calls, integer and character orders, zero matrices and input preservation. Spectral norm and extreme-range scaling excluded.",
+        "driver_id": "stdlib-complex-matrix-norms-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 6082,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_norms.f90",
+            "line": 1,
+            "sha256": "35bac68506f26e3a59f28dc7b23325fc372d715af69d24166d07dbbca0af2c54"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_mnorm.f90",
+            "sha256": "12c318de4098f02b1e7931475d6f76629a8f30b10945efd48f8a85c85d152509"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-complex-eigenvectors",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "eig (COMPLEX128)",
+        "gams_codes": [
+          "D4a4"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "63 COMPLEX128 dense nonnormal matrix eigenproblems of sizes 2..8, three patterns/scales. Explicit invertible shear and checked Householder factors prescribe distinct finite complex spectra. One-to-one eigenvalue matching, normalized left/right eigenvectors, both residual equations and exact input preservation. Eigenvector phases/order unrestricted; defective, clustered and infinite spectra excluded.",
+        "driver_id": "stdlib-complex-eigenvectors-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 3469,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_eigenvalues.f90",
+            "line": 1,
+            "sha256": "7e2034f8c37639a146f136c16fb775822cc91a186431a335762f89175361a009"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_eig.f90",
+            "sha256": "fec62b85b5f9da40bd0dc60c329e38b901fd6861dba57625eb220c1777662bea"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-complex-generalized-eigenvectors",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "eig (COMPLEX128)",
+        "gams_codes": [
+          "D4b4"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "63 COMPLEX128 general nonsingular matrix-pair eigenproblems of sizes 2..8, three patterns/scales. Explicit invertible shear and checked Householder factors prescribe distinct finite complex spectra. One-to-one eigenvalue matching, GGEV-scaled left/right eigenvectors, both residual equations and exact input preservation. Eigenvector phases/order unrestricted; defective, clustered and infinite spectra excluded.",
+        "driver_id": "stdlib-complex-generalized-eigenvectors-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 3505,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_eigenvalues.f90",
+            "line": 1,
+            "sha256": "7e2034f8c37639a146f136c16fb775822cc91a186431a335762f89175361a009"
+          },
+          {
+            "path": "src/stdlib_lapack_eigv_gen.f90",
+            "line": 6310,
+            "sha256": "550ec91013a428798b722f626ff14677373343f76bad7a5d912a08f5949cc9d9"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_eig_generalized.f90",
+            "sha256": "60b2eccac24a8cfbf5b8367be76c81eb80d6dc437a46a62da6b10c9f9a32668a"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-integer-uniform-pmf",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_stats_distribution_uniform",
+        "procedure": "pdf_uniform (default REAL32)",
+        "gams_codes": [
+          "L5a1u"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "3672 integer32 support queries: loc=-8..8, positive scale=1..16, x=loc-2..loc+scale+2. Exact enumeration of inclusive support loc..loc+scale supplies masses and normalization. Integer overload returns default REAL32, so absolute tolerance is 2e-7. Zero/negative scale and overflow excluded.",
+        "driver_id": "stdlib-integer-uniform-pmf-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_stats_distribution_uniform.f90",
+            "line": 57,
+            "sha256": "df8a8064c5f3e456f9955c0e718e16c036230887a03284cb63ac5797a1834a60"
+          },
+          {
+            "path": "src/stdlib_stats_distribution_uniform.f90",
+            "line": 1,
+            "sha256": "df8a8064c5f3e456f9955c0e718e16c036230887a03284cb63ac5797a1834a60"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_uniform_pdf.f90",
+            "sha256": "79113da2fceb15543d4f88b486534dd51ddcaef1ce24a7e5f167c19ef9ce4553"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-integer-uniform-cdf",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_stats_distribution_uniform",
+        "procedure": "cdf_uniform (default REAL32)",
+        "gams_codes": [
+          "L5a1u"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "3672 integer32 support queries: loc=-8..8, positive scale=1..16, x=loc-2..loc+scale+2. Exact enumeration of inclusive support loc..loc+scale supplies cumulative counts and endpoint checks. Integer overload returns default REAL32, so absolute tolerance is 2e-7. Zero/negative scale and overflow excluded.",
+        "driver_id": "stdlib-integer-uniform-cdf-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_stats_distribution_uniform.f90",
+            "line": 76,
+            "sha256": "df8a8064c5f3e456f9955c0e718e16c036230887a03284cb63ac5797a1834a60"
+          },
+          {
+            "path": "src/stdlib_stats_distribution_uniform.f90",
+            "line": 1,
+            "sha256": "df8a8064c5f3e456f9955c0e718e16c036230887a03284cb63ac5797a1834a60"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_uniform_cdf.f90",
+            "sha256": "25b3a9222870f3d2c8452756cbca69de4d8b628a58d02eb07c53b3f797d0a5e6"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-masked-real-medians",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_stats",
+        "procedure": "median (REAL64)",
+        "gams_codes": [
+          "L1a1a"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "90 variable-specific REAL64 masked median selections, n=3..12 and three dyadic-data patterns. Python exact rational order statistics, ties and odd/even sample counts; rank-one and rank-two dim=1/2 reductions and ignored-value replacement. Empty masks and nonfinite data excluded.",
+        "driver_id": "stdlib-masked-real-medians-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_stats.f90",
+            "line": 1230,
+            "sha256": "e15ce21ef7f4ae8f3c0df5d99675ad33a5a820167c7565c3b14d3fa2f0acba88"
+          },
+          {
+            "path": "src/stdlib_stats_median.f90",
+            "line": 1,
+            "sha256": "007f1759a66fc84b250b0b480b0bdc908438cd57682b415aaa445c35ff14f74e"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_median.f90",
+            "sha256": "2860b4dcaed4286041475927f9e5f0429e5dbba436ac1ae09ff44de4168c71fe"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-masked-real-moments",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_stats",
+        "procedure": "moment (REAL64)",
+        "gams_codes": [
+          "L1a1c"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "1080 REAL64 masked moment references: orders 2..5, n=3..12, three patterns, variable-specific masks and default mean/zero/supplied dyadic centers. Exact rational binomial expansion of raw powers; rank-one and dim=1/2 calls. No empty masks, nonfinite or high-order stability claim.",
+        "driver_id": "stdlib-masked-real-moments-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_stats.f90",
+            "line": 2647,
+            "sha256": "e15ce21ef7f4ae8f3c0df5d99675ad33a5a820167c7565c3b14d3fa2f0acba88"
+          },
+          {
+            "path": "src/stdlib_stats_moment_mask.f90",
+            "line": 1,
+            "sha256": "f155971f53623743a9d5ae6c0a34696cae263ac5716884c1a85f93727dc24e0d"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_moment.f90",
+            "sha256": "e6dc01c063a98bbc5c2d484310f7bb0b057902f38479ce8acc6371e5a0e7fd54"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-complex-pairwise-missingness",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_stats",
+        "procedure": "cov, corr (COMPLEX128)",
+        "gams_codes": [
+          "L1c1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "15 three-variable COMPLEX128 datasets with different observation masks per variable; 135 pairwise intersections each containing at least three observations. Exact rational cross-moments and 80/120-digit normalization, population/sample covariance, correlation and transpose conjugacy. Excluded finite sentinels must be ignored. Pairwise deletion is not claimed to preserve positive semidefiniteness; empty/constant pairs excluded.",
+        "driver_id": "stdlib-complex-pairwise-missingness-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_stats.f90",
+            "line": 450,
+            "sha256": "e15ce21ef7f4ae8f3c0df5d99675ad33a5a820167c7565c3b14d3fa2f0acba88"
+          },
+          {
+            "path": "src/stdlib_stats_cov.f90",
+            "line": 1,
+            "sha256": "7b1cfefc2fb7525c4c2e2f01be4d9c07a2b863cdb51f48915621360e4fa9bb20"
+          },
+          {
+            "path": "src/stdlib_stats_corr.f90",
+            "line": 720,
+            "sha256": "5a52b9ee273b913f7608d1be6cf8667c5d8217823e8594939ed509ca0b93fc48"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_cov.f90",
+            "sha256": "852720cc0797f81b41e3ee89cd7b67d96f208193161acf0fa7bebe8578e76fde"
+          }
+        ]
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"

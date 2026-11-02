@@ -13404,6 +13404,251 @@
           "upper"
         ]
       }
+    },
+    {
+      "id": "stdlib-trapz-grid-weights-reference",
+      "name": "gams-stdlib-trapz-grid-weights-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-trapz-grid-weights",
+      "gams_code": "H2a1b2",
+      "problem_id": "stdlib-trapz-grid-weights-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-trapz-grid-weights-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_trapz_weights.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/grids-spectra-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 102 REAL64 irregular-grid weight cases; n=0..16, three dyadic spacing patterns and both directions. Exact rational integrals of local Lagrange basis polynomials supply individual weights; polynomial integrals and input preservation checked. Linear exactness checked. Repeated nodes and nonfinite inputs excluded.",
+      "validation_path": "docs/gams-grids-spectra-ten-validation.json",
+      "review_path": "docs/gams-grids-spectra-ten.md",
+      "checks": {
+        "cases": 102,
+        "oracle": "exact rational Lagrange basis integration",
+        "scalar_kind": "REAL64"
+      }
+    },
+    {
+      "id": "stdlib-simps-grid-weights-reference",
+      "name": "gams-stdlib-simps-grid-weights-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-simps-grid-weights",
+      "gams_code": "H2a1b2",
+      "problem_id": "stdlib-simps-grid-weights-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-simps-grid-weights-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_simps_weights.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/grids-spectra-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 306 REAL64 irregular-grid weight cases; n=0..16, three dyadic spacing patterns and both directions. Exact rational integrals of local Lagrange basis polynomials supply individual weights; polynomial integrals and input preservation checked. All even=-1/0/1 modes and omitted default checked; quadratic exactness only when n>=3. Repeated nodes and nonfinite inputs excluded.",
+      "validation_path": "docs/gams-grids-spectra-ten-validation.json",
+      "review_path": "docs/gams-grids-spectra-ten.md",
+      "checks": {
+        "cases": 306,
+        "oracle": "exact rational Lagrange basis integration",
+        "scalar_kind": "REAL64"
+      }
+    },
+    {
+      "id": "stdlib-complex-matrix-norms-reference",
+      "name": "gams-stdlib-complex-matrix-norms-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-complex-matrix-norms",
+      "gams_code": "D1b2",
+      "problem_id": "stdlib-complex-matrix-norms-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-complex-matrix-norms-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_mnorm.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/grids-spectra-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 108 COMPLEX128 rectangular matrices with entries (3+4i)*integer/8; exact modulus 5*abs(integer)/8 supplies one/infinity/Frobenius references. Rank-three batched dim=[1,2] calls, integer and character orders, zero matrices and input preservation. Spectral norm and extreme-range scaling excluded.",
+      "validation_path": "docs/gams-grids-spectra-ten-validation.json",
+      "review_path": "docs/gams-grids-spectra-ten.md",
+      "checks": {
+        "matrices": 108,
+        "orders": [
+          "one",
+          "infinity",
+          "Frobenius"
+        ]
+      }
+    },
+    {
+      "id": "stdlib-complex-eigenvectors-reference",
+      "name": "gams-stdlib-complex-eigenvectors-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-complex-eigenvectors",
+      "gams_code": "D4a4",
+      "problem_id": "stdlib-complex-eigenvectors-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-complex-eigenvectors-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_eig.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/grids-spectra-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 63 COMPLEX128 dense nonnormal matrix eigenproblems of sizes 2..8, three patterns/scales. Explicit invertible shear and checked Householder factors prescribe distinct finite complex spectra. One-to-one eigenvalue matching, normalized left/right eigenvectors, both residual equations and exact input preservation. Eigenvector phases/order unrestricted; defective, clustered and infinite spectra excluded.",
+      "validation_path": "docs/gams-grids-spectra-ten-validation.json",
+      "review_path": "docs/gams-grids-spectra-ten.md",
+      "checks": {
+        "cases": 63,
+        "scalar_kind": "COMPLEX128",
+        "oracle": "prescribed spectrum and left/right residuals"
+      }
+    },
+    {
+      "id": "stdlib-complex-generalized-eigenvectors-reference",
+      "name": "gams-stdlib-complex-generalized-eigenvectors-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-complex-generalized-eigenvectors",
+      "gams_code": "D4b4",
+      "problem_id": "stdlib-complex-generalized-eigenvectors-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-complex-generalized-eigenvectors-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_eig_generalized.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/grids-spectra-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 63 COMPLEX128 general nonsingular matrix-pair eigenproblems of sizes 2..8, three patterns/scales. Explicit invertible shear and checked Householder factors prescribe distinct finite complex spectra. One-to-one eigenvalue matching, GGEV-scaled left/right eigenvectors, both residual equations and exact input preservation. Eigenvector phases/order unrestricted; defective, clustered and infinite spectra excluded.",
+      "validation_path": "docs/gams-grids-spectra-ten-validation.json",
+      "review_path": "docs/gams-grids-spectra-ten.md",
+      "checks": {
+        "cases": 63,
+        "scalar_kind": "COMPLEX128",
+        "oracle": "prescribed spectrum and left/right residuals",
+        "normalization": "max(abs(real(v))+abs(aimag(v)))=1"
+      }
+    },
+    {
+      "id": "stdlib-integer-uniform-pmf-reference",
+      "name": "gams-stdlib-integer-uniform-pmf-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-integer-uniform-pmf",
+      "gams_code": "L5a1u",
+      "problem_id": "stdlib-integer-uniform-pmf-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-integer-uniform-pmf-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_uniform_pdf.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/grids-spectra-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 3672 integer32 support queries: loc=-8..8, positive scale=1..16, x=loc-2..loc+scale+2. Exact enumeration of inclusive support loc..loc+scale supplies masses and normalization. Integer overload returns default REAL32, so absolute tolerance is 2e-7. Zero/negative scale and overflow excluded.",
+      "validation_path": "docs/gams-grids-spectra-ten-validation.json",
+      "review_path": "docs/gams-grids-spectra-ten.md",
+      "checks": {
+        "queries": 3672,
+        "return_kind": "default REAL32",
+        "absolute_tolerance": 2e-07
+      }
+    },
+    {
+      "id": "stdlib-integer-uniform-cdf-reference",
+      "name": "gams-stdlib-integer-uniform-cdf-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-integer-uniform-cdf",
+      "gams_code": "L5a1u",
+      "problem_id": "stdlib-integer-uniform-cdf-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-integer-uniform-cdf-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_uniform_cdf.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/grids-spectra-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 3672 integer32 support queries: loc=-8..8, positive scale=1..16, x=loc-2..loc+scale+2. Exact enumeration of inclusive support loc..loc+scale supplies cumulative counts and endpoint checks. Integer overload returns default REAL32, so absolute tolerance is 2e-7. Zero/negative scale and overflow excluded.",
+      "validation_path": "docs/gams-grids-spectra-ten-validation.json",
+      "review_path": "docs/gams-grids-spectra-ten.md",
+      "checks": {
+        "queries": 3672,
+        "return_kind": "default REAL32",
+        "absolute_tolerance": 2e-07
+      }
+    },
+    {
+      "id": "stdlib-masked-real-medians-reference",
+      "name": "gams-stdlib-masked-real-medians-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-masked-real-medians",
+      "gams_code": "L1a1a",
+      "problem_id": "stdlib-masked-real-medians-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-masked-real-medians-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_median.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/grids-spectra-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 90 variable-specific REAL64 masked median selections, n=3..12 and three dyadic-data patterns. Python exact rational order statistics, ties and odd/even sample counts; rank-one and rank-two dim=1/2 reductions and ignored-value replacement. Empty masks and nonfinite data excluded.",
+      "validation_path": "docs/gams-grids-spectra-ten-validation.json",
+      "review_path": "docs/gams-grids-spectra-ten.md",
+      "checks": {
+        "selections": 90,
+        "scalar_kind": "REAL64",
+        "oracle": "exact rational order statistics"
+      }
+    },
+    {
+      "id": "stdlib-masked-real-moments-reference",
+      "name": "gams-stdlib-masked-real-moments-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-masked-real-moments",
+      "gams_code": "L1a1c",
+      "problem_id": "stdlib-masked-real-moments-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-masked-real-moments-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_moment.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/grids-spectra-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 1080 REAL64 masked moment references: orders 2..5, n=3..12, three patterns, variable-specific masks and default mean/zero/supplied dyadic centers. Exact rational binomial expansion of raw powers; rank-one and dim=1/2 calls. No empty masks, nonfinite or high-order stability claim.",
+      "validation_path": "docs/gams-grids-spectra-ten-validation.json",
+      "review_path": "docs/gams-grids-spectra-ten.md",
+      "checks": {
+        "reference_entries": 1080,
+        "scalar_kind": "REAL64",
+        "oracle": "exact binomial expansion of raw powers"
+      }
+    },
+    {
+      "id": "stdlib-complex-pairwise-missingness-reference",
+      "name": "gams-stdlib-complex-pairwise-missingness-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-complex-pairwise-missingness",
+      "gams_code": "L1c1b",
+      "problem_id": "stdlib-complex-pairwise-missingness-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-complex-pairwise-missingness-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_cov.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/grids-spectra-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 15 three-variable COMPLEX128 datasets with different observation masks per variable; 135 pairwise intersections each containing at least three observations. Exact rational cross-moments and 80/120-digit normalization, population/sample covariance, correlation and transpose conjugacy. Excluded finite sentinels must be ignored. Pairwise deletion is not claimed to preserve positive semidefiniteness; empty/constant pairs excluded.",
+      "validation_path": "docs/gams-grids-spectra-ten-validation.json",
+      "review_path": "docs/gams-grids-spectra-ten.md",
+      "checks": {
+        "datasets": 15,
+        "pairs": 135,
+        "scalar_kind": "COMPLEX128",
+        "oracle": "pair-specific exact cross moments and variances"
+      }
     }
   ]
 }

@@ -1,0 +1,328 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "stdlib-trapz-grid-weights-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "748ec1ea194d1e0c1ac0ad7124b44a600ce08ac9d17eba0af809c9deca86fb09",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T15:18:57.782968+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.409,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Irregular-grid weight cases and exact polynomial integrals: 102\nPASS stdlib-trapz-grid-weights-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.029,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-simps-grid-weights-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "dfba2a01e306c6e0ae578f5aeb0160dda881a1128a4fcb180e79fa3dab1eef14",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T15:19:00.249121+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.321,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Irregular-grid weight cases and exact polynomial integrals: 306\nPASS stdlib-simps-grid-weights-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.024,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-complex-matrix-norms-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "10a40a405ff302dc5ab7b92b701db2f29810272014bdd1c0f437fabb95083cb0",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T15:19:04.177991+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 2.479,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Complex rectangular one/infinity/Frobenius norm matrices: 108\nPASS stdlib-complex-matrix-norms-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.022,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-complex-eigenvectors-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "32caac50ea751786bf147acc7a0fc4f8e0e21422b9198838e14db6e5c032c2b2",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T15:19:06.082207+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.472,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Distinct prescribed spectra and left/right residuals: 63\nPASS stdlib-complex-eigenvectors-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.046,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-integer-uniform-pmf-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "b3a9c667ae2c39139f929a39127d5226fc21ffdb34872930e17663712364aa57",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T15:19:11.651171+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.671,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Inclusive integer uniform support-count comparisons: 3672\nPASS stdlib-integer-uniform-pmf-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.025,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-integer-uniform-cdf-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "9e570fe92b46a7c0d80571c2eb2c7b78ac16fe4e1dfbd10bf083755e6b11d3f7",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T15:19:13.476268+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.212,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Inclusive integer uniform support-count comparisons: 3672\nPASS stdlib-integer-uniform-cdf-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.026,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-masked-real-medians-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "ddf23b364fe26174d96e8c9297dbdae945cad9ac0f3bfae6b19de64c3391596c",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T15:19:15.143986+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.287,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Masked reductions against exact rational references: 90\nPASS stdlib-masked-real-medians-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.028,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-masked-real-moments-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "d06214584f904e00849b4ea043bb1360c2463b66b019ebdc24c0460920e2a9f0",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T15:19:20.267569+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 2.26,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Masked reductions against exact rational references: 1080\nPASS stdlib-masked-real-moments-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.03,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-complex-pairwise-missingness-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "d50a062db3a9638503b47464df5dbc0451fb21361286da8eb3ead763e642c46f",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T15:19:22.287639+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.55,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Variable-specific missingness datasets and pairwise deletion references: 15\nPASS stdlib-complex-pairwise-missingness-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.028,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "stdlib-complex-generalized-eigenvectors-reference",
+      "source_revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "source_sha256": "e00014c1cf69034ecf47b98582f583ce2c1ef75788f677b1b38a208eff55eaf2",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T15:20:43.098650+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 10.997,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Distinct prescribed spectra and left/right residuals: 63\nPASS stdlib-complex-generalized-eigenvectors-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.043,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-11-02T15:20:43.152467+00:00"
+}

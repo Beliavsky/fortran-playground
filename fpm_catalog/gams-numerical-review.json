@@ -1064,7 +1064,17 @@
         "stdlib-complex-rank-deficient-fits",
         "stdlib-complex-underdetermined-fits",
         "stdlib-complex-factored-positive-systems",
-        "stdlib-complex-minimum-norm-pinv"
+        "stdlib-complex-minimum-norm-pinv",
+        "stdlib-trapz-grid-weights",
+        "stdlib-simps-grid-weights",
+        "stdlib-complex-matrix-norms",
+        "stdlib-complex-eigenvectors",
+        "stdlib-complex-generalized-eigenvectors",
+        "stdlib-integer-uniform-pmf",
+        "stdlib-integer-uniform-cdf",
+        "stdlib-masked-real-medians",
+        "stdlib-masked-real-moments",
+        "stdlib-complex-pairwise-missingness"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
     },

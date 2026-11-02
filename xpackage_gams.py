@@ -113,6 +113,7 @@ GRIDS_TEN_REPORT = Path('docs/gams-grids-ten.md')
 COMPLEX_TEN_REPORT = Path('docs/gams-complex-ten.md')
 COMPLEX_OPERATORS_TEN_REPORT = Path('docs/gams-complex-operators-ten.md')
 STATISTICS_RANK_TEN_REPORT = Path('docs/gams-statistics-rank-ten.md')
+GRIDS_SPECTRA_TEN_REPORT = Path('docs/gams-grids-spectra-ten.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
 EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
@@ -10599,6 +10600,131 @@ def statistics_rank_ten_review_text(root=ROOT):
     return '\n'.join(lines)
 
 
+def grids_spectra_ten_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-grids-spectra-ten-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-grids-spectra-ten-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Ten checked grid weights, complex spectra and masked statistics drivers',
+     '',
+     'Ten independent drivers passed GNU Fortran 16.2.0 and FPM 0.12.0 in the restricted hosted sandbox. '
+     'Existing stdlib libraries were reused; only mains and executables were compiled. The [verification '
+     'report](gams-grids-spectra-ten-validation.json) saves normalized UTF-8/LF source hashes, pins, timings and '
+     'complete output. GAMS categories are not exhausted.',
+     '',
+     '## Reusable sampled-grid quadrature weights (H2a1b2)',
+     '',
+     'The two weight drivers use lengths n=0..16, three dyadic spacing patterns and ascending/descending grids. '
+     'The first node is -3/4 and each subsequent increment is (1+mod(i*k,4))/8. Empty and singleton grids '
+     'produce empty/zero weights. Python Fraction arithmetic integrates each local Lagrange basis polynomial '
+     'exactly, by polynomial multiplication and analytic antiderivatives, rather than reproducing upstream '
+     'spacing formulas. The [reference table](gams-grids-spectra-ten-references.json) saves every node and exact '
+     'rational weight. The Fortran consumers compare individual weights, polynomial integrals and exact grid '
+     'preservation.',
+     '',
+     '- **Trapezoidal weights:** 102 grid cases, piecewise linear interpolation, exact constant and linear '
+     'integrals for n>=2.\n'
+     '- **Simpson weights:** 306 grid/mode cases, with even=-1,0,1 and omitted-default equivalence. Two nodes '
+     'use a linear panel, three nodes a quadratic panel, and four nodes a cubic panel. Larger odd grids use '
+     'quadratic panels. Larger even grids place a cubic panel at the left/right end or average the two schemes. '
+     'Constant, linear and (when n>=3) quadratic integrals are checked; arbitrary cubic exactness on nonuniform '
+     'composite quadratic panels is not claimed.',
+     '',
+     '## Complex matrix norms and eigenvectors',
+     '',
+     '- **Matrix norms (D1b2):** 108 rectangular matrices of sizes 1..6 by 1..6, including zeros. Entries '
+     '(3+4i)*t/8 have the exact modulus 5*abs(t)/8, which supplies independent one-, infinity- and '
+     'Frobenius-norm references. Character/integer orders and rank-three batched infinity reductions with '
+     'dim=[1,2] are checked. Spectral norms and extreme-range scaling are outside this example.\n'
+     '- **Ordinary complex eigenvectors (D4a4):** 63 dense nonnormal problems, sizes 2..8, three patterns and '
+     'scales. A checked Householder factor Q and invertible shear S construct A=Q*S*D*inverse(S)*Q^H from '
+     'prescribed distinct complex diagonal entries.\n'
+     '- **Generalized complex eigenvectors (D4b4):** 63 nonsingular matrix pairs A=Q*D*inverse(S), '
+     'B=Q*inverse(S), sharing the prescribed finite spectrum. The explicit inverse shear is checked before use.',
+     '',
+     'Both eigenvector consumers require one-to-one eigenvalue matching, the respective GEEV/GGEV vector '
+     'normalization and the right '
+     'residual A*v-lambda*B*v and left residual A^H*u-conjg(lambda)*B^H*u. Eigenvector order and phase are '
+     'unrestricted. Inputs must be preserved exactly. Ordinary problems use B=I. Defective, nearly clustered, '
+     'infinite or ill-conditioned spectra are excluded. The generalized COMPLEX128 path is independently checked '
+     'and does not change the status of the previously retained failing generalized REAL64 eigenvector consumer.',
+     '',
+     'Ordinary GEEV vectors have Euclidean norm one. Generalized GGEV vectors instead satisfy '
+     'max(abs(real(v))+abs(aimag(v)))=1. The initial generalized consumer incorrectly required Euclidean '
+     'unit norms and failed; its [exact source and full result](gams-candidates/stdlib-complex-ggev/README.md) '
+     'are retained. Correcting only those two assertions passed all prescribed eigenvalue, left/right '
+     'residual and input-preservation checks. This was a consumer error, not an established numerical '
+     'library failure or sandbox limit.',
+     '',
+     '## Discrete uniform probabilities (L5a1u)',
+     '',
+     'Two integer32 drivers enumerate the inclusive support loc..loc+scale: loc=-8..8, scale=1..16, and queries '
+     'from loc-2 through loc+scale+2 (3672 queries per driver). PMF references count equal support points; CDF '
+     'references count points <=x, divided by scale+1. PMF normalization and the CDF upper endpoint are checked. '
+     'These integer overloads return default REAL32, so the explicit absolute tolerance is 2e-7. Zero/negative '
+     'scale and integer overflow are excluded. No random-number sampling is involved.',
+     '',
+     '## Masked medians, moments and pairwise deletion',
+     '',
+     'REAL64 median/moment data use n=3..12, patterns k=1..3 and three variables j=1..3. Values are '
+     '(mod(i*i+3*j*i+2*k*j,17)-8)/8; each variable excludes its own mod(i+j+k,4)=0 observations. The reference '
+     'table saves selected indices, 90 exact rational medians and 1080 exact moments. Python rational order '
+     'statistics supply medians; an exact binomial expansion of raw powers supplies moments of orders 2..5 about '
+     'the default selected mean, zero, or supplied center j/8. Rank-one and rank-two dim=1/2 calls are checked. '
+     'The median driver also replaces excluded values with a finite sentinel and requires unchanged results.',
+     '',
+     'The combined COMPLEX128 covariance/correlation driver uses n=8..12, patterns k=1..3, the same real '
+     'components/masks and imaginary components (mod(2*i*i+j*i+k*(j+1),19)-9)/8. Each of the 135 variable pairs '
+     'uses its own mask intersection and pair-specific means/variances. Python Fraction exact raw cross-moments '
+     "provide population covariance; sample correction uses that pair's N/(N-1). Correlation normalization uses "
+     'mpmath 1.3.0 at 80 digits, confirmed at 120 digits within 1e-65. Constants retain 18 significant digits. '
+     'Column observations conjugate the first variable; transposed row observations produce the conjugate '
+     'matrix. Population/sample covariance, correlation, transpose orientation and replacement of excluded '
+     'finite values are checked across 15 datasets. Pairwise deletion is not claimed to preserve positive '
+     'semidefiniteness.',
+     '',
+     '## Limits, provenance and maintenance',
+     '',
+     'Unless stated otherwise, real/imaginary components must be finite and agree within '
+     '2e-10*max(1,abs(reference component)); preservation and integer checks are exact. Repeated grid nodes, '
+     'nonfinite data, empty selected statistics, constant-variable correlations, singular generalized B and '
+     'extreme-range inputs are outside these bounded demonstrations. They are not precision or performance '
+     'benchmarks.',
+     '',
+     'Pinned public APIs, implementations and linked author examples were reviewed. These are independent MIT '
+     'consumers; upstream implementation and author-test bodies were not copied. No upstream numerical source '
+     'was patched. The [Netlib GAMS taxonomy](https://netlib.org/misc/gams.html) supplies the classifications, '
+     'including complex general generalized eigenproblems D4b4. Loading an example does not submit a job. The '
+     '[coverage report](gams-coverage.md) records remaining work.',
+     '',
+     '## Driver details',
+     '']
+    for d in drivers:
+        lines += ['### '+d['id']+' ('+d['gams_code']+')', '', d['modifications'], '']
+    lines += ['## Provenance and actual output', '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -10787,6 +10913,7 @@ def main():
                          (COMPLEX_TEN_REPORT, complex_ten_review_text()),
                          (COMPLEX_OPERATORS_TEN_REPORT, complex_operators_ten_review_text()),
                          (STATISTICS_RANK_TEN_REPORT, statistics_rank_ten_review_text()),
+                         (GRIDS_SPECTRA_TEN_REPORT, grids_spectra_ten_review_text()),
                          (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report

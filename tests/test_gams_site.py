@@ -67,6 +67,27 @@ class GamsSiteTests(unittest.TestCase):
             self.assertIn('Open default example', sorting)
             self.assertNotIn('Try in playground', sorting)
 
+    def test_grids_spectra_pages_link_each_checked_problem(self):
+        import copy
+        from xpackage_gams import driver_data, gams_data
+        drivers = [d for d in driver_data(data=gams_data())
+                   if d.get('validation_path') == 'docs/gams-grids-spectra-ten-validation.json']
+        self.assertEqual(len(drivers), 10)
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects'] if p['playground']['package_id'] == 'stdlib']
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination, feed)
+            detail = (destination/'packages/stdlib/index.html').read_text(encoding='utf-8')
+            for driver in drivers:
+                url = ('https://beliavsky.github.io/fortran-playground/fpm/'
+                       f'?package=stdlib&example={driver["name"]}')
+                page = Page((destination/driver['gams_code']/'index.html').read_text(encoding='utf-8'))
+                self.assertIn((url, driver['id']), page.anchors)
+                card = detail.split('id="'+driver['procedure_id']+'"', 1)[1].split('</article>', 1)[0]
+                self.assertIn('Load checked GAMS driver:', card)
+                self.assertIn(url.replace('&', '&amp;'), card)
+
     def test_statistics_rank_pages_link_checked_examples_without_promoting_failed_lstsq(self):
         import copy
         from xpackage_gams import driver_data, gams_data

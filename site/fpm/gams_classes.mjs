@@ -899,5 +899,9 @@ export const gamsSubclasses = {
   "D4a4": {
     "label": "Complex non-Hermitian",
     "parent": "D4a"
+  },
+  "D4b4": {
+    "label": "Complex general",
+    "parent": "D4b"
   }
 };

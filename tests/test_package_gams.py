@@ -893,6 +893,138 @@ class PackageGamsTests(unittest.TestCase):
         self.assertIn('Type-2/type-3 transforms',text)
         self.assertIn('two-dimensional NUFFT2D driver',transforms_review_text())
 
+    def test_grids_spectra_verified_scope_and_consumer_normalization_correction(self):
+        import hashlib
+        from xpackage_gams import grids_spectra_ten_review_text, GRIDS_SPECTRA_TEN_REPORT
+        data = gams_data()
+        records = {r['id']: r for r in data['procedure_mappings']}
+        drivers = {d['id']: d for d in driver_data(data=data)
+                   if d.get('validation_path') == 'docs/gams-grids-spectra-ten-validation.json'}
+        expected = {'trapz-grid-weights': ('H2a1b2', 'cases', 102),
+                    'simps-grid-weights': ('H2a1b2', 'cases', 306),
+                    'complex-matrix-norms': ('D1b2', 'matrices', 108),
+                    'complex-eigenvectors': ('D4a4', 'cases', 63),
+                    'complex-generalized-eigenvectors': ('D4b4', 'cases', 63),
+                    'integer-uniform-pmf': ('L5a1u', 'queries', 3672),
+                    'integer-uniform-cdf': ('L5a1u', 'queries', 3672),
+                    'masked-real-medians': ('L1a1a', 'selections', 90),
+                    'masked-real-moments': ('L1a1c', 'reference_entries', 1080),
+                    'complex-pairwise-missingness': ('L1c1b', 'pairs', 135)}
+        self.assertEqual(set(drivers), {'stdlib-'+s+'-reference' for s in expected})
+        reviewed = numerical_review(data=data)['packages']['stdlib']['procedure_ids']
+        for short, (code, field, count) in expected.items():
+            driver = drivers['stdlib-'+short+'-reference']
+            record = records[driver['procedure_id']]
+            self.assertEqual(record['driver_id'], driver['id'])
+            self.assertEqual(driver['gams_code'], code)
+            self.assertEqual(driver['checks'][field], count)
+            self.assertIn(record['id'], reviewed)
+            self.assertEqual(class_evidence(class_tree(data), code, [record], [driver])['status'], 'verified')
+        evidence = json.loads((ROOT/'docs/gams-candidates/stdlib-complex-ggev/euclidean-norm-consumer-result.json').read_text())
+        original = (ROOT/evidence['source_path']).read_text(encoding='utf-8')
+        self.assertEqual(hashlib.sha256(original.encode()).hexdigest(), evidence['source_sha256'])
+        final = (ROOT/drivers['stdlib-complex-generalized-eigenvectors-reference']['path']).read_text()
+        corrected = original.replace('real(dot_product(right(:,j),right(:,j)),real64)',
+                                     'maxval(abs(real(right(:,j),real64))+abs(aimag(right(:,j))))')
+        corrected = corrected.replace('real(dot_product(left(:,j),left(:,j)),real64)',
+                                      'maxval(abs(real(left(:,j),real64))+abs(aimag(left(:,j))))')
+        self.assertEqual(corrected, final)
+        self.assertFalse(evidence['result']['ok'])
+        self.assertTrue(evidence['result']['cache']['library_reused'])
+        self.assertTrue(next(s for s in evidence['result']['stages'] if s['name'] == 'Build')['ok'])
+        self.assertIn('Independent reference', next(s for s in evidence['result']['stages'] if s['name'] == 'Run')['stderr'])
+        text = grids_spectra_ten_review_text()
+        self.assertEqual((ROOT/GRIDS_SPECTRA_TEN_REPORT).read_text(encoding='utf-8'), text)
+        for phrase in ['categories are not exhausted', 'consumer error', 'No upstream numerical source was patched',
+                       '3672 queries', 'positive semidefiniteness', '1080 exact moments']:
+            self.assertIn(phrase, text)
+
+    def test_grid_weight_tables_integrate_independent_panel_monomials(self):
+        from fractions import Fraction as F
+        cases = json.loads((ROOT/'docs/gams-grids-spectra-ten-references.json').read_text())['grids']
+        self.assertEqual(len(cases), 408)
+        for case in cases:
+            x, weights = list(map(F, case['x'])), list(map(F, case['weights']))
+            n = case['n']
+            self.assertEqual(len(x), n)
+            self.assertEqual(len(weights), n)
+            if n < 2:
+                self.assertTrue(all(w == 0 for w in weights))
+                continue
+            # For n<=4, Simpson uses a single interpolating panel: uniquely verify every weight
+            # by its monomial moments. Composite rules still reproduce constants/linears/quadratics.
+            degree = 1 if case['method'] == 'trapz' else (n-1 if n <= 4 else 2)
+            for power in range(degree+1):
+                self.assertEqual(sum(w*t**power for w, t in zip(weights, x)),
+                                 (x[-1]**(power+1)-x[0]**(power+1))/(power+1))
+        lookup = {(c['method'], c['n'], c['pattern'], c['reverse'], c['even']): c for c in cases}
+        for case in cases:
+            if case['method'] != 'simps' or case['even'] != 0:
+                continue
+            key = ('simps', case['n'], case['pattern'], case['reverse'])
+            left = list(map(F, lookup[(*key, -1)]['weights']))
+            right = list(map(F, lookup[(*key, 1)]['weights']))
+            self.assertEqual(list(map(F, case['weights'])), [(a+b)/2 for a, b in zip(left, right)])
+
+    def test_masked_statistics_exact_references_and_submitted_constants(self):
+        from fractions import Fraction as F
+        import math
+        import re
+        data = json.loads((ROOT/'docs/gams-grids-spectra-ten-references.json').read_text())
+        medians, moments = [], []
+        self.assertEqual(len(data['statistics']), 30)
+        for case in data['statistics']:
+            n, k = case['n'], case['pattern']
+            columns = []
+            for j in range(1, 4):
+                indices = [i for i in range(1, n+1) if (i+j+k) % 4 != 0]
+                self.assertEqual(indices, case['indices'][j-1])
+                col = sorted(F((i*i+3*j*i+2*k*j) % 17-8, 8) for i in indices)
+                columns.append(col)
+                median = (col[(len(col)-1)//2]+col[len(col)//2])/2
+                self.assertEqual(median, F(case['median'][j-1]))
+                medians.append(median)
+            # Centered powers directly, independent of the generator's raw-power binomial expansion.
+            values = [sum((z-center)**order for z in col)/len(col)
+                      for order in range(2, 6) for mode in range(3)
+                      for j, col in enumerate(columns, 1)
+                      for center in [sum(col)/len(col) if mode == 0 else F(0) if mode == 1 else F(j, 8)]]
+            self.assertEqual(values, list(map(F, case['powers'])))
+            moments.extend(values)
+        for short, values in [('masked-real-medians', medians), ('masked-real-moments', moments)]:
+            source = (ROOT/f'fpm_catalog/gams-drivers/stdlib-{short}-reference.f90').read_text()
+            constants = [float(v) for v in re.findall(r'([-+0-9.eE]+)_real64', source.split('   real(real64),allocatable')[0])]
+            self.assertEqual(len(constants), len(values))
+            for actual, exact in zip(constants, values):
+                self.assertLessEqual(abs(actual-float(exact)), 2e-15*max(1, abs(float(exact))))
+        self.assertEqual(len(data['pairs']), 15)
+        def mul(a, b): return a[0]*b[0]-a[1]*b[1], a[0]*b[1]+a[1]*b[0]
+        def sub(a, b): return a[0]-b[0], a[1]-b[1]
+        def conj(a): return a[0], -a[1]
+        for case in data['pairs']:
+            n, k = case['n'], case['pattern']
+            for j in range(1, 4):
+                for i in range(1, 4):
+                    index = i-1+3*(j-1)
+                    ix = [a for a in range(1, n+1) if (a+i+k) % 4 != 0 and (a+j+k) % 4 != 0]
+                    self.assertEqual(case['indices'][index], ix)
+                    self.assertEqual(case['counts'][index], len(ix))
+                    column = lambda v: [(F((a*a+3*v*a+2*k*v) % 17-8, 8),
+                                         F((2*a*a+v*a+k*(v+1)) % 19-9, 8)) for a in ix]
+                    u, v = column(i), column(j)
+                    # Pairwise differences independently avoid the generator's raw cross-moment formula.
+                    products = [mul(conj(sub(u[a], u[b])), sub(v[a], v[b]))
+                                for a in range(len(ix)) for b in range(len(ix))]
+                    covariance = tuple(sum(z[c] for z in products)/(2*len(ix)**2) for c in range(2))
+                    self.assertEqual(covariance, tuple(map(F, case['covariance'][index])))
+                    variances = [sum(sum(t*t for t in sub(col[a], col[b]))
+                                     for a in range(len(ix)) for b in range(len(ix)))/(2*len(ix)**2)
+                                 for col in [u, v]]
+                    denominator = math.sqrt(float(variances[0]*variances[1]))
+                    for component in range(2):
+                        self.assertAlmostEqual(float(covariance[component])/denominator,
+                                               float(case['correlation'][index][component]), places=14)
+
     def test_statistics_rank_drivers_preserve_scope_and_failed_lstsq_evidence(self):
         import hashlib
         from xpackage_gams import statistics_rank_ten_review_text, STATISTICS_RANK_TEN_REPORT

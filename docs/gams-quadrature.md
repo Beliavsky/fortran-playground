@@ -40,12 +40,14 @@ The `dqags` driver adapts the author's inverse-square-root test and adds a logar
 | [Load stdlib-simpson-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-simpson-reference) · [Driver source](../fpm_catalog/gams-drivers/stdlib-simpson-reference.f90) | H2a1b2 | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_quadrature.f90#L62) · [Author test](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_simps.f90) |
 | [Load stdlib-gauss-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-gauss-reference) · [Driver source](../fpm_catalog/gams-drivers/stdlib-gauss-reference.f90) | H2c | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_quadrature.f90#L113) · [Author test](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_gauss.f90) |
 | [Load stdlib-lobatto-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-lobatto-reference) · [Driver source](../fpm_catalog/gams-drivers/stdlib-lobatto-reference.f90) | H2c | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_quadrature.f90#L124) · [Author test](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_gauss.f90) |
+| [Load stdlib-trapz-grid-weights-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-trapz-grid-weights-reference) · [Driver source](../fpm_catalog/gams-drivers/stdlib-trapz-grid-weights-reference.f90) | H2a1b2 | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_quadrature.f90#L46) · [Author test](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/example/example_trapz_weights.f90) |
+| [Load stdlib-simps-grid-weights-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-simps-grid-weights-reference) · [Driver source](../fpm_catalog/gams-drivers/stdlib-simps-grid-weights-reference.f90) | H2a1b2 | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_quadrature.f90#L95) · [Author test](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/example/example_simps_weights.f90) |
 
 Loading a link selects code without submitting a job. The same drivers are available in the hosted and main local FPM playgrounds and in downloaded FPM projects. Author license notices are retained with the drivers.
 
 ## Recorded results
 
-All 16 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0. Existing package libraries were reused; only each main and executable were compiled. The verification reports lock driver hashes and source revisions: [gams-applied-methods-validation.json](gams-applied-methods-validation.json), [gams-cubature-validation.json](gams-cubature-validation.json), [gams-factorization-rules-ten-validation.json](gams-factorization-rules-ten-validation.json), [gams-moments-nufft2d-validation.json](gams-moments-nufft2d-validation.json), [gams-quadrature-validation.json](gams-quadrature-validation.json), [gams-rkf-qags-validation.json](gams-rkf-qags-validation.json), [gams-roots-splines-quadrature-validation.json](gams-roots-splines-quadrature-validation.json), [gams-rules-differences-validation.json](gams-rules-differences-validation.json), [gams-sparse-integral-validation.json](gams-sparse-integral-validation.json), [gams-statistics-services-ten-validation.json](gams-statistics-services-ten-validation.json).
+All 18 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0. Existing package libraries were reused; only each main and executable were compiled. The verification reports lock driver hashes and source revisions: [gams-applied-methods-validation.json](gams-applied-methods-validation.json), [gams-cubature-validation.json](gams-cubature-validation.json), [gams-factorization-rules-ten-validation.json](gams-factorization-rules-ten-validation.json), [gams-grids-spectra-ten-validation.json](gams-grids-spectra-ten-validation.json), [gams-moments-nufft2d-validation.json](gams-moments-nufft2d-validation.json), [gams-quadrature-validation.json](gams-quadrature-validation.json), [gams-rkf-qags-validation.json](gams-rkf-qags-validation.json), [gams-roots-splines-quadrature-validation.json](gams-roots-splines-quadrature-validation.json), [gams-rules-differences-validation.json](gams-rules-differences-validation.json), [gams-sparse-integral-validation.json](gams-sparse-integral-validation.json), [gams-statistics-services-ten-validation.json](gams-statistics-services-ten-validation.json).
 
 Success is status `0` for QUADPACK and `1` for quadrature-fortran. The latter reports a signed error estimate. Estimates are printed separately from actual errors against the analytic references; they are not certified error bounds. Zero printed actual error means agreement at the working floating-point precision. Evaluation counts describe these runs and do not establish a general speed ranking.
 
@@ -242,12 +244,26 @@ PASS stdlib-gauss-reference
 PASS stdlib-lobatto-reference
 ```
 
+### stdlib-trapz-grid-weights-reference
+
+```text
+Irregular-grid weight cases and exact polynomial integrals: 102
+PASS stdlib-trapz-grid-weights-reference
+```
+
+### stdlib-simps-grid-weights-reference
+
+```text
+Irregular-grid weight cases and exact polynomial integrals: 306
+PASS stdlib-simps-grid-weights-reference
+```
+
 ## Maintenance
 
 After changing a driver, verify it again using existing compiled package images:
 
 ```text
-python xverify_gams_drivers.py --drivers quadpack-smooth quadrature-fortran-smooth quadpack-endpoint-singular dcuhre-box-integrals gauss-jacobi-polynomial-moments cubatures-simplex-moments integrate-nd-polynomial-reference fitpack-spline-integral scifortran-quadrature-reference kronrod-moments-reference fgsl-qags-reference qdutillib-moments-reference stdlib-trapezoid-reference stdlib-simpson-reference stdlib-gauss-reference stdlib-lobatto-reference
+python xverify_gams_drivers.py --drivers quadpack-smooth quadrature-fortran-smooth quadpack-endpoint-singular dcuhre-box-integrals gauss-jacobi-polynomial-moments cubatures-simplex-moments integrate-nd-polynomial-reference fitpack-spline-integral scifortran-quadrature-reference kronrod-moments-reference fgsl-qags-reference qdutillib-moments-reference stdlib-trapezoid-reference stdlib-simpson-reference stdlib-gauss-reference stdlib-lobatto-reference stdlib-trapz-grid-weights-reference stdlib-simps-grid-weights-reference
 python xpackage_gams.py
 python xfpm_examples.py
 python xsite.py
