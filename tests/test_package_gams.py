@@ -893,6 +893,115 @@ class PackageGamsTests(unittest.TestCase):
         self.assertIn('Type-2/type-3 transforms',text)
         self.assertIn('two-dimensional NUFFT2D driver',transforms_review_text())
 
+    def test_statistics_rank_drivers_preserve_scope_and_failed_lstsq_evidence(self):
+        import hashlib
+        from xpackage_gams import statistics_rank_ten_review_text, STATISTICS_RANK_TEN_REPORT
+        data = gams_data()
+        records = {r['id']: r for r in data['procedure_mappings']}
+        drivers = {d['id']: d for d in driver_data(data=data)
+                   if d.get('validation_path') == 'docs/gams-statistics-rank-ten-validation.json'}
+        expected = {'complex-means': ('L1a1a', 'selections', 64),
+                    'complex-variances': ('L1a1b', 'selections', 64),
+                    'complex-covariances': ('L1c1b', 'calls', 384),
+                    'complex-correlations': ('L1c1b', 'calls', 192),
+                    'complex-central-powers': ('L1a1c', 'reference_entries', 768),
+                    'real-pivoted-qr': ('D5', 'factorizations', 180),
+                    'complex-pivoted-qr': ('D5', 'factorizations', 180),
+                    'complex-rank-deficient-fits': ('D9a1', 'cases', 45),
+                    'complex-minimum-norm-pinv': ('D9a1', 'cases', 45),
+                    'complex-factored-positive-systems': ('D2d1b', 'calls', 288)}
+        self.assertEqual(set(drivers), {'stdlib-'+name+'-reference' for name in expected})
+        reviewed = numerical_review(data=data)['packages']['stdlib']['procedure_ids']
+        for name, (code, field, count) in expected.items():
+            driver = drivers['stdlib-'+name+'-reference']
+            record = records[driver['procedure_id']]
+            self.assertEqual(record['driver_id'], driver['id'])
+            self.assertEqual(driver['gams_code'], code)
+            self.assertEqual(driver['checks'][field], count)
+            self.assertIn(record['id'], reviewed)
+            self.assertEqual(class_evidence(class_tree(data), code, [record], [driver])['status'], 'verified')
+        failed = records['stdlib-complex-underdetermined-fits']
+        self.assertNotIn('driver_id', failed)
+        self.assertIn(failed['id'], reviewed)
+        self.assertEqual(class_evidence(class_tree(data), 'D9a1', [failed], list(drivers.values()))['status'], 'source-supported')
+        for name in ['lstsq-initial', 'lstsq-diagnostic']:
+            evidence = json.loads((ROOT/f'docs/gams-candidates/stdlib-underdetermined/{name}-result.json').read_text())
+            source = (ROOT/evidence['source_path']).read_text(encoding='utf-8')
+            self.assertEqual(hashlib.sha256(source.encode()).hexdigest(), evidence['source_sha256'])
+            self.assertEqual(evidence['revision'], failed['revision'])
+            self.assertFalse(evidence['result']['ok'])
+            self.assertTrue(evidence['result']['cache']['library_reused'])
+            self.assertTrue(next(s for s in evidence['result']['stages'] if s['name'] == 'Build')['ok'])
+            run = next(s for s in evidence['result']['stages'] if s['name'] == 'Run')
+            self.assertFalse(run['ok'])
+            self.assertIn('Minimum-norm least-squares API error', run['stderr'])
+            if name == 'lstsq-diagnostic':
+                self.assertIn('invalid problem size', run['stdout'])
+        text = statistics_rank_ten_review_text()
+        self.assertEqual((ROOT/STATISTICS_RANK_TEN_REPORT).read_text(encoding='utf-8'), text)
+        for phrase in ['64 selections', '768 exact references', 'pairwise-difference', 'binomial',
+                       'null-space orthogonality', 'Successful PINV solves do not promote',
+                       'No upstream numerical source was patched', 'categories are not exhausted']:
+            self.assertIn(phrase, text)
+
+    def test_complex_statistics_tables_match_exact_raw_sums_and_centered_powers(self):
+        from fractions import Fraction as F
+        import math
+        import re
+        def add(a, b): return a[0]+b[0], a[1]+b[1]
+        def mul(a, b): return a[0]*b[0]-a[1]*b[1], a[0]*b[1]+a[1]*b[0]
+        def average(values):
+            value = (F(0), F(0))
+            for z in values: value = add(value, z)
+            return value[0]/len(values), value[1]/len(values)
+        def power(z, order):
+            value = (F(1), F(0))
+            for _ in range(order): value = mul(value, z)
+            return value
+        cases = json.loads((ROOT/'docs/gams-statistics-rank-ten-references.json').read_text())['cases']
+        self.assertEqual(len(cases), 64)
+        stored = {'complex-means': [], 'complex-variances': [], 'complex-covariances': [],
+                  'complex-correlations': [], 'complex-central-powers': []}
+        for case in cases:
+            n, k, mode = case['n'], case['pattern'], case['mask_mode']
+            indices = [i for i in range(1, n+1) if mode == 0 or (i+k) % 3 != 0]
+            self.assertEqual(case['indices'], indices)
+            data = [[(F((i*i+3*j*i+2*k*j) % 17-8, 8), F((2*i*i+j*i+k*(j+1)) % 19-9, 8))
+                     for i in indices] for j in range(1, 4)]
+            means = [average(col) for col in data]
+            self.assertEqual(means, [tuple(map(F, z)) for z in case['mean']])
+            covariance = []
+            for j in range(3):
+                for i in range(3):
+                    raw = average([mul((a[0], -a[1]), b) for a, b in zip(data[i], data[j])])
+                    product = mul((means[i][0], -means[i][1]), means[j])
+                    covariance.append((raw[0]-product[0], raw[1]-product[1]))
+            self.assertEqual(covariance, [tuple(map(F, z)) for z in case['population_covariance']])
+            variances = [covariance[i+3*i][0] for i in range(3)]
+            self.assertEqual(variances, list(map(F, case['population_variance'])))
+            for j in range(3):
+                for i in range(3):
+                    denominator = math.sqrt(float(variances[i]*variances[j]))
+                    for component in range(2):
+                        self.assertAlmostEqual(float(covariance[i+3*j][component])/denominator,
+                                               float(case['correlation'][i+3*j][component]), places=14)
+            moments = [average([power((z[0]-mu[0], z[1]-mu[1]), order) for z in col])
+                       for order in range(2, 6) for col, mu in zip(data, means)]
+            self.assertEqual(moments, [tuple(map(F, z)) for z in case['central_powers']])
+            for name, values in [('complex-means', means), ('complex-variances', variances),
+                                 ('complex-covariances', covariance), ('complex-correlations', case['correlation']),
+                                 ('complex-central-powers', moments)]:
+                stored[name].extend(values)
+        for name, values in stored.items():
+            source = (ROOT/f'fpm_catalog/gams-drivers/stdlib-{name}-reference.f90').read_text()
+            for suffix, component in ([('reference', None)] if name == 'complex-variances' else [('refre', 0), ('refim', 1)]):
+                table = re.search(r'\b'+suffix+r'\([^)]*\)=reshape\(\[(.*?)\],\[', source, re.S).group(1)
+                literals = re.findall(r'([+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?)_real64', table)
+                self.assertEqual(len(literals), len(values))
+                for actual, expected in zip(literals, values):
+                    expected = expected if component is None else expected[component]
+                    self.assertAlmostEqual(float(actual), float(expected), places=14)
+
     def test_complex_operator_drivers_record_matching_procedures_oracles_and_limits(self):
         from xpackage_gams import complex_operators_ten_review_text, COMPLEX_OPERATORS_TEN_REPORT
         data = gams_data()

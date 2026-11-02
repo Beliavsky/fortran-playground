@@ -4513,6 +4513,362 @@
             "sha256": "37f8dc0d4ad52803512e317aa4840d210ef117f0b95a9310f476df47a784b384"
           }
         ]
+      },
+      {
+        "id": "stdlib-complex-means",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_stats",
+        "procedure": "mean (COMPLEX128)",
+        "gams_codes": [
+          "L1a1a"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "64 COMPLEX128 three-variable data selections (32 datasets, all/row masks), exact Fraction means; rank-one, rank-two whole-array and dimension-1/2 masked reductions, plus unmasked reductions. No empty/all-false masks, missing values or high-rank arrays claimed.",
+        "driver_id": "stdlib-complex-means-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_stats.f90",
+            "line": 494,
+            "sha256": "e15ce21ef7f4ae8f3c0df5d99675ad33a5a820167c7565c3b14d3fa2f0acba88"
+          },
+          {
+            "path": "src/stdlib_stats_mean.f90",
+            "line": 1,
+            "sha256": "75a0e5d6ccbf5ae6d5307bbc2e2944316ec08ce48996f738800c69e354713cc4"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_mean.f90",
+            "sha256": "4cad035607ea7969110ce3d4ab6d47e2c1cb97d8fd62b2a95001bd915005e4d1"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-complex-variances",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_stats",
+        "procedure": "var (COMPLEX128)",
+        "gams_codes": [
+          "L1a1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "64 COMPLEX128 data selections, population/sample variance with REAL64 nonnegative results. Exact pairwise squared-distance references; scalar masked and dimension-1/2 reductions. This is E(abs(Z-mean)**2), not the analytic second central power. Empty/singleton and nonfinite cases excluded.",
+        "driver_id": "stdlib-complex-variances-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_stats.f90",
+            "line": 1782,
+            "sha256": "e15ce21ef7f4ae8f3c0df5d99675ad33a5a820167c7565c3b14d3fa2f0acba88"
+          },
+          {
+            "path": "src/stdlib_stats_var.f90",
+            "line": 1,
+            "sha256": "762670047824d1e5152444272f281daddf7376fc485f77adb41990e3f4662dee"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_var.f90",
+            "sha256": "b88ae78ed5d4e108356e5fa425fd25224bf69f7c6053ed6e5dfe5133ddf13954"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-complex-covariances",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_stats",
+        "procedure": "cov (COMPLEX128)",
+        "gams_codes": [
+          "L1c1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "64 COMPLEX128 three-variable selections, both population/sample corrections and masked/unmasked paths. Exact pairwise-difference covariance oracle. Column observations dim=1 conjugate the first variable; transpose to row observations dim=2 gives the conjugate covariance matrix. Only common row masks, not variable-specific missingness, claimed.",
+        "driver_id": "stdlib-complex-covariances-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_stats.f90",
+            "line": 239,
+            "sha256": "e15ce21ef7f4ae8f3c0df5d99675ad33a5a820167c7565c3b14d3fa2f0acba88"
+          },
+          {
+            "path": "src/stdlib_stats_cov.f90",
+            "line": 1,
+            "sha256": "7b1cfefc2fb7525c4c2e2f01be4d9c07a2b863cdb51f48915621360e4fa9bb20"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_cov.f90",
+            "sha256": "852720cc0797f81b41e3ee89cd7b67d96f208193161acf0fa7bebe8578e76fde"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-complex-correlations",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_stats",
+        "procedure": "corr (COMPLEX128)",
+        "gams_codes": [
+          "L1c1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "64 COMPLEX128 selections with strictly positive component variances. Correlations from exact rational pairwise covariance and independently evaluated square roots (80/120 digits); masked/unmasked and dim=1/2 conjugation conventions, unit diagonal and Hermitian structure. Constant-variable and nonfinite cases excluded.",
+        "driver_id": "stdlib-complex-correlations-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_stats.f90",
+            "line": 15,
+            "sha256": "e15ce21ef7f4ae8f3c0df5d99675ad33a5a820167c7565c3b14d3fa2f0acba88"
+          },
+          {
+            "path": "src/stdlib_stats_corr.f90",
+            "line": 1,
+            "sha256": "5a52b9ee273b913f7608d1be6cf8667c5d8217823e8594939ed509ca0b93fc48"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_corr.f90",
+            "sha256": "fb06383782ad925f3214271f98c6c722207cb397167ce0a167eb6660c4a3515a"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-complex-central-powers",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_stats",
+        "procedure": "moment (COMPLEX128)",
+        "gams_codes": [
+          "L1a1c"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "768 exact rational analytic central-power references of orders 2..5 for 64 selections and three complex variables. Independent binomial expansion of raw powers; packed selected-vector and unmasked dimension-1/2 APIs. E((Z-mean)**p) is complex and differs from magnitude moments/variance. User centers, bias corrections and nonfinite cases excluded.",
+        "driver_id": "stdlib-complex-central-powers-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_stats.f90",
+            "line": 2647,
+            "sha256": "e15ce21ef7f4ae8f3c0df5d99675ad33a5a820167c7565c3b14d3fa2f0acba88"
+          },
+          {
+            "path": "src/stdlib_stats_moment_all.f90",
+            "line": 1,
+            "sha256": "96b5065cfa231963b3d97760dd258bb3f486eae65774305a450103db5c1876ed"
+          },
+          {
+            "path": "src/stdlib_stats_moment.f90",
+            "line": 742,
+            "sha256": "fc71883c04f3f5d8351ede7802aa0e5f1c941e954d12ca92968c050662933ba5"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_moment.f90",
+            "sha256": "e6dc01c063a98bbc5c2d484310f7bb0b057902f38479ce8acc6371e5a0e7fd54"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-real-pivoted-qr",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "qr with column pivots (REAL64)",
+        "gams_codes": [
+          "D5"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "REAL64 pivoted QR: 180 full/reduced factorizations of 30 tall/square/wide shapes with three scaled triangular templates. Pivot permutations, reconstruction of A(:,pivots), orthonormal columns, triangular zeros and preservation; at least one nonidentity pivot required. No fixed phases, prescribed pivot order or rank cutoff claimed.",
+        "driver_id": "stdlib-real-pivoted-qr-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 2216,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_qr.f90",
+            "line": 1,
+            "sha256": "94b5f764e0ebeab1cfe715a03e689eaf238646f892714d3790ad48071191a149"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_pivoting_qr.f90",
+            "sha256": "7b061908cf67f0b37d1d691775dfb72eebb47a3c56fa3791bbaf585db5ca475b"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-complex-pivoted-qr",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "qr with column pivots (COMPLEX128)",
+        "gams_codes": [
+          "D5"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "COMPLEX128 pivoted QR: 180 full/reduced factorizations of 30 tall/square/wide shapes with three scaled triangular templates. Pivot permutations, reconstruction of A(:,pivots), orthonormal columns, triangular zeros and preservation; at least one nonidentity pivot required. No fixed phases, prescribed pivot order or rank cutoff claimed.",
+        "driver_id": "stdlib-complex-pivoted-qr-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 2216,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_qr.f90",
+            "line": 1,
+            "sha256": "94b5f764e0ebeab1cfe715a03e689eaf238646f892714d3790ad48071191a149"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_pivoting_qr.f90",
+            "sha256": "7b061908cf67f0b37d1d691775dfb72eebb47a3c56fa3791bbaf585db5ca475b"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-complex-rank-deficient-fits",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "lstsq (COMPLEX128)",
+        "gams_codes": [
+          "D9a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "45 COMPLEX128 rank-(n-1) overdetermined with nonzero orthogonal residual least-squares problems, built with checked unitary factors and prescribed singular values. Known minimum-norm solution, returned rank, residual, stationarity and null-space orthogonality; cond=1e-12. Near-cutoff or ill-conditioned rank decisions excluded.",
+        "driver_id": "stdlib-complex-rank-deficient-fits-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 1457,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_least_squares.f90",
+            "line": 1,
+            "sha256": "4b0813fe092a342f258c8f014fcdfb919e770900e22c8dddecab8f1ae8ca70b6"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_lstsq1.f90",
+            "sha256": "aeb94a3308199023078fd6f77042eb590daedc71cc098b1ffc37a4988a8c0644"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-complex-underdetermined-fits",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "lstsq (COMPLEX128)",
+        "gams_codes": [
+          "D9a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "Retained failed COMPLEX128 underdetermined LSTSQ consumer at shape 2x4. The API returns invalid problem size before producing numerical results. Exact original and diagnostic probes and full output: docs/gams-candidates/stdlib-underdetermined/README.md. Successful PINV-based solves do not verify this LSTSQ API.",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 1457,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_least_squares.f90",
+            "line": 1,
+            "sha256": "4b0813fe092a342f258c8f014fcdfb919e770900e22c8dddecab8f1ae8ca70b6"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_lstsq1.f90",
+            "sha256": "aeb94a3308199023078fd6f77042eb590daedc71cc098b1ffc37a4988a8c0644"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-complex-factored-positive-systems",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "solve_lower_chol, solve_upper_chol (COMPLEX128)",
+        "gams_codes": [
+          "D2d1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "288 COMPLEX128 vector/multiple-RHS solves using explicitly supplied lower/upper Cholesky factors of 72 positive-definite matrices. Sizes 1..8, three patterns/scales; known coefficients, residuals and exact factor/RHS preservation. Factors are manufactured directly; no factorization is performed in these calls. Invalid factors and unused-triangle poisoning excluded.",
+        "driver_id": "stdlib-complex-factored-positive-systems-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 1189,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_solve.f90",
+            "line": 1,
+            "sha256": "1adcdd3a5f9b2663ac1e8211dd3d36b6e740c2b0ce44db687effb3fe770bffcb"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_solve_lower_chol.f90",
+            "sha256": "abf2f28a2590729ec728814c38c0b1338b418d395c7d1218f60bcd48e7dfef5c"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-complex-minimum-norm-pinv",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "pinv + MATMUL (COMPLEX128 minimum-norm underdetermined solution)",
+        "gams_codes": [
+          "D9a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "45 full-row-rank COMPLEX128 underdetermined systems solved using the Moore-Penrose inverse. Checked unitary factors prescribe the unique minimum-norm solution; consistency, stationarity and explicit null-space orthogonality verified, rtol=1e-12. This does not promote the retained failing LSTSQ consumer.",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 3013,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_pinv.f90",
+            "line": 347,
+            "sha256": "d15c6fd308540e7ea3eae53d2a86486a5565a8c561d129e53e4c8ffa1756f5dd"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_pseudoinverse.f90",
+            "sha256": "8a298ff373fccfe48211714a7dcd0920baed5607558392fa8409da673060df84"
+          }
+        ],
+        "driver_id": "stdlib-complex-minimum-norm-pinv-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"

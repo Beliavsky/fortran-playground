@@ -13128,6 +13128,282 @@
         "equalities": 1,
         "oracle": "closed-form complex diagonal-Hessian KKT correction"
       }
+    },
+    {
+      "id": "stdlib-complex-means-reference",
+      "name": "gams-stdlib-complex-means-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-complex-means",
+      "gams_code": "L1a1a",
+      "problem_id": "stdlib-complex-means-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-complex-means-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_mean.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/statistics-rank-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 64 COMPLEX128 three-variable data selections (32 datasets, all/row masks), exact Fraction means; rank-one, rank-two whole-array and dimension-1/2 masked reductions, plus unmasked reductions. No empty/all-false masks, missing values or high-rank arrays claimed.",
+      "validation_path": "docs/gams-statistics-rank-ten-validation.json",
+      "review_path": "docs/gams-statistics-rank-ten.md",
+      "checks": {
+        "selections": 64,
+        "variables": 3,
+        "datasets": 32,
+        "oracle": "exact rational sums of real and imaginary components"
+      }
+    },
+    {
+      "id": "stdlib-complex-variances-reference",
+      "name": "gams-stdlib-complex-variances-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-complex-variances",
+      "gams_code": "L1a1b",
+      "problem_id": "stdlib-complex-variances-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-complex-variances-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_var.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/statistics-rank-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 64 COMPLEX128 data selections, population/sample variance with REAL64 nonnegative results. Exact pairwise squared-distance references; scalar masked and dimension-1/2 reductions. This is E(abs(Z-mean)**2), not the analytic second central power. Empty/singleton and nonfinite cases excluded.",
+      "validation_path": "docs/gams-statistics-rank-ten-validation.json",
+      "review_path": "docs/gams-statistics-rank-ten.md",
+      "checks": {
+        "selections": 64,
+        "corrections": 2,
+        "variables": 3,
+        "oracle": "exact pairwise squared distances"
+      }
+    },
+    {
+      "id": "stdlib-complex-covariances-reference",
+      "name": "gams-stdlib-complex-covariances-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-complex-covariances",
+      "gams_code": "L1c1b",
+      "problem_id": "stdlib-complex-covariances-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-complex-covariances-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_cov.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/statistics-rank-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 64 COMPLEX128 three-variable selections, both population/sample corrections and masked/unmasked paths. Exact pairwise-difference covariance oracle. Column observations dim=1 conjugate the first variable; transpose to row observations dim=2 gives the conjugate covariance matrix. Only common row masks, not variable-specific missingness, claimed.",
+      "validation_path": "docs/gams-statistics-rank-ten-validation.json",
+      "review_path": "docs/gams-statistics-rank-ten.md",
+      "checks": {
+        "selections": 64,
+        "corrections": 2,
+        "variables": 3,
+        "calls": 384,
+        "oracle": "exact pairwise complex differences; orientation explicitly tested"
+      }
+    },
+    {
+      "id": "stdlib-complex-correlations-reference",
+      "name": "gams-stdlib-complex-correlations-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-complex-correlations",
+      "gams_code": "L1c1b",
+      "problem_id": "stdlib-complex-correlations-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-complex-correlations-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_corr.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/statistics-rank-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 64 COMPLEX128 selections with strictly positive component variances. Correlations from exact rational pairwise covariance and independently evaluated square roots (80/120 digits); masked/unmasked and dim=1/2 conjugation conventions, unit diagonal and Hermitian structure. Constant-variable and nonfinite cases excluded.",
+      "validation_path": "docs/gams-statistics-rank-ten-validation.json",
+      "review_path": "docs/gams-statistics-rank-ten.md",
+      "checks": {
+        "selections": 64,
+        "variables": 3,
+        "calls": 192,
+        "reference_entries": 576,
+        "precision_digits": [
+          80,
+          120
+        ]
+      }
+    },
+    {
+      "id": "stdlib-complex-central-powers-reference",
+      "name": "gams-stdlib-complex-central-powers-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-complex-central-powers",
+      "gams_code": "L1a1c",
+      "problem_id": "stdlib-complex-central-powers-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-complex-central-powers-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_moment.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/statistics-rank-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 768 exact rational analytic central-power references of orders 2..5 for 64 selections and three complex variables. Independent binomial expansion of raw powers; packed selected-vector and unmasked dimension-1/2 APIs. E((Z-mean)**p) is complex and differs from magnitude moments/variance. User centers, bias corrections and nonfinite cases excluded.",
+      "validation_path": "docs/gams-statistics-rank-ten-validation.json",
+      "review_path": "docs/gams-statistics-rank-ten.md",
+      "checks": {
+        "selections": 64,
+        "variables": 3,
+        "orders": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "reference_entries": 768,
+        "oracle": "exact binomial expansion of raw complex powers"
+      }
+    },
+    {
+      "id": "stdlib-real-pivoted-qr-reference",
+      "name": "gams-stdlib-real-pivoted-qr-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-real-pivoted-qr",
+      "gams_code": "D5",
+      "problem_id": "stdlib-real-pivoted-qr-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-real-pivoted-qr-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_pivoting_qr.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/statistics-rank-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. REAL64 pivoted QR: 180 full/reduced factorizations of 30 tall/square/wide shapes with three scaled triangular templates. Pivot permutations, reconstruction of A(:,pivots), orthonormal columns, triangular zeros and preservation; at least one nonidentity pivot required. No fixed phases, prescribed pivot order or rank cutoff claimed.",
+      "validation_path": "docs/gams-statistics-rank-ten-validation.json",
+      "review_path": "docs/gams-statistics-rank-ten.md",
+      "checks": {
+        "factorizations": 180,
+        "shapes": 30,
+        "patterns": 3,
+        "output_modes": [
+          "full",
+          "reduced"
+        ],
+        "scalar_kind": "real"
+      }
+    },
+    {
+      "id": "stdlib-complex-pivoted-qr-reference",
+      "name": "gams-stdlib-complex-pivoted-qr-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-complex-pivoted-qr",
+      "gams_code": "D5",
+      "problem_id": "stdlib-complex-pivoted-qr-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-complex-pivoted-qr-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_pivoting_qr.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/statistics-rank-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. COMPLEX128 pivoted QR: 180 full/reduced factorizations of 30 tall/square/wide shapes with three scaled triangular templates. Pivot permutations, reconstruction of A(:,pivots), orthonormal columns, triangular zeros and preservation; at least one nonidentity pivot required. No fixed phases, prescribed pivot order or rank cutoff claimed.",
+      "validation_path": "docs/gams-statistics-rank-ten-validation.json",
+      "review_path": "docs/gams-statistics-rank-ten.md",
+      "checks": {
+        "factorizations": 180,
+        "shapes": 30,
+        "patterns": 3,
+        "output_modes": [
+          "full",
+          "reduced"
+        ],
+        "scalar_kind": "complex"
+      }
+    },
+    {
+      "id": "stdlib-complex-rank-deficient-fits-reference",
+      "name": "gams-stdlib-complex-rank-deficient-fits-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-complex-rank-deficient-fits",
+      "gams_code": "D9a1",
+      "problem_id": "stdlib-complex-rank-deficient-fits-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-complex-rank-deficient-fits-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_lstsq1.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/statistics-rank-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 45 COMPLEX128 rank-(n-1) overdetermined with nonzero orthogonal residual least-squares problems, built with checked unitary factors and prescribed singular values. Known minimum-norm solution, returned rank, residual, stationarity and null-space orthogonality; cond=1e-12. Near-cutoff or ill-conditioned rank decisions excluded.",
+      "validation_path": "docs/gams-statistics-rank-ten-validation.json",
+      "review_path": "docs/gams-statistics-rank-ten.md",
+      "checks": {
+        "cases": 45,
+        "rank_pattern": "n-1",
+        "cond": 1e-12,
+        "oracle": "known coefficients in row space, orthogonal to explicit null space"
+      }
+    },
+    {
+      "id": "stdlib-complex-minimum-norm-pinv-reference",
+      "name": "gams-stdlib-complex-minimum-norm-pinv-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-complex-minimum-norm-pinv",
+      "gams_code": "D9a1",
+      "problem_id": "stdlib-complex-minimum-norm-pinv-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-complex-minimum-norm-pinv-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_pseudoinverse.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/statistics-rank-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 45 full-row-rank COMPLEX128 underdetermined systems solved using the Moore-Penrose inverse. Checked unitary factors prescribe the unique minimum-norm solution; consistency, stationarity and explicit null-space orthogonality verified, rtol=1e-12. This does not promote the retained failing LSTSQ consumer.",
+      "validation_path": "docs/gams-statistics-rank-ten-validation.json",
+      "review_path": "docs/gams-statistics-rank-ten.md",
+      "checks": {
+        "cases": 45,
+        "rank_pattern": "full row rank",
+        "rtol": 1e-12,
+        "oracle": "known row-space solution orthogonal to explicit null space",
+        "retained_lstsq_failure": "docs/gams-candidates/stdlib-underdetermined/lstsq-diagnostic-result.json"
+      }
+    },
+    {
+      "id": "stdlib-complex-factored-positive-systems-reference",
+      "name": "gams-stdlib-complex-factored-positive-systems-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-complex-factored-positive-systems",
+      "gams_code": "D2d1b",
+      "problem_id": "stdlib-complex-factored-positive-systems-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-complex-factored-positive-systems-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_solve_lower_chol.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/statistics-rank-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 288 COMPLEX128 vector/multiple-RHS solves using explicitly supplied lower/upper Cholesky factors of 72 positive-definite matrices. Sizes 1..8, three patterns/scales; known coefficients, residuals and exact factor/RHS preservation. Factors are manufactured directly; no factorization is performed in these calls. Invalid factors and unused-triangle poisoning excluded.",
+      "validation_path": "docs/gams-statistics-rank-ten-validation.json",
+      "review_path": "docs/gams-statistics-rank-ten.md",
+      "checks": {
+        "calls": 288,
+        "matrices": 72,
+        "rhs_columns": [
+          1,
+          3
+        ],
+        "factor_types": [
+          "lower",
+          "upper"
+        ]
+      }
     }
   ]
 }

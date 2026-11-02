@@ -1,0 +1,87 @@
+{
+  "package_id": "stdlib",
+  "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+  "source_path": "docs/gams-candidates/stdlib-underdetermined/lstsq-initial.f90",
+  "source_sha256": "72f648b1005706bc05654798a127acafd01d31b451a15f7d5683044225225ac7",
+  "hash_normalization": "utf-8-lf",
+  "interpretation": "The original complex underdetermined LSTSQ consumer builds but returns an API error, before numerical comparison.",
+  "result": {
+    "ok": false,
+    "compiler": "GNU Fortran (GCC) 16.2.0",
+    "compiler_id": "gfortran",
+    "fpm": "0.12.0",
+    "stages": [
+      {
+        "name": "Build",
+        "command": [
+          "fpm",
+          "build",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 0.451,
+        "ok": true,
+        "exit_code": 0,
+        "error": "",
+        "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+        "stderr": ""
+      },
+      {
+        "name": "Run",
+        "command": [
+          "fpm",
+          "run",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 0.024,
+        "ok": false,
+        "exit_code": 1,
+        "error": "",
+        "stdout": "",
+        "stderr": "Project is up to date\nNote: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG\nERROR STOP Minimum-norm least-squares API error\n\nError termination. Backtrace:\n#0  0x2aab16333f83 in ???\n#1  0x2aab16334c39 in ???\n#2  0x2aab16336045 in ???\n#3  0x4067b5 in MAIN__\n\tat app/main.f90:29\n#4  0x409a6c in main\n\tat app/main.f90:4\n<ERROR> Execution for object \" playground-main \" returned exit code  1\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 1\n"
+      }
+    ],
+    "cache": {
+      "package": "stdlib",
+      "compiler": "GNU Fortran 16.2.0",
+      "key": "1bae985a1993dd280a6324e4",
+      "library_reused": true,
+      "changed_artifacts": []
+    },
+    "packages": [
+      {
+        "repository": "fortran-lang/stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+      }
+    ],
+    "build_ok": true,
+    "target_groups": {
+      "app": [
+        "playground-main"
+      ],
+      "example": [],
+      "test": []
+    },
+    "targets": [
+      "playground-main"
+    ],
+    "plots": [],
+    "plot_notes": []
+  }
+}

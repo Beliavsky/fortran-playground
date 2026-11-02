@@ -2,7 +2,7 @@
 
 **The GAMS categories are not exhausted.** Some procedures already map to the deepest available GAMS class, but that does not mean all procedures or problem configurations in that class have been demonstrated.
 
-The selected catalog has 391 source-reviewed procedure records. 373 independently checked drivers cover 373 of those records and 19 of the 20 top-level GAMS classes. Among the 133 maintained classes used directly by procedure records, 1 still has no class-specific checked driver.
+The selected catalog has 402 source-reviewed procedure records. 383 independently checked drivers cover 383 of those records and 19 of the 20 top-level GAMS classes. Among the 133 maintained classes used directly by procedure records, 1 still has no class-specific checked driver.
 
 These counts concern the dedicated GAMS drivers. The ordinary precompiled-package demonstrations have their own build/run verification and are not counted as class-specific drivers here.
 
@@ -24,7 +24,7 @@ Procedure and driver counts include descendants. A procedure assigned to multipl
 | [A](https://beliavsky.github.io/fortran-playground/gams/A/) | Arithmetic, error analysis | 13 | 12 | 10 | 10 |
 | [B](https://beliavsky.github.io/fortran-playground/gams/B/) | Number theory | 3 | 3 | 3 | 3 |
 | [C](https://beliavsky.github.io/fortran-playground/gams/C/) | Elementary and special functions | 12 | 32 | 30 | 30 |
-| [D](https://beliavsky.github.io/fortran-playground/gams/D/) | Linear Algebra | 39 | 100 | 97 | 97 |
+| [D](https://beliavsky.github.io/fortran-playground/gams/D/) | Linear Algebra | 39 | 106 | 102 | 102 |
 | [E](https://beliavsky.github.io/fortran-playground/gams/E/) | Interpolation | 13 | 13 | 11 | 11 |
 | [F](https://beliavsky.github.io/fortran-playground/gams/F/) | Solution of nonlinear equations | 8 | 11 | 11 | 11 |
 | [G](https://beliavsky.github.io/fortran-playground/gams/G/) | Optimization | 22 | 25 | 25 | 25 |
@@ -32,7 +32,7 @@ Procedure and driver counts include descendants. A procedure assigned to multipl
 | [I](https://beliavsky.github.io/fortran-playground/gams/I/) | Differential and integral equations | 26 | 26 | 21 | 21 |
 | [J](https://beliavsky.github.io/fortran-playground/gams/J/) | Integral transforms | 11 | 12 | 12 | 12 |
 | [K](https://beliavsky.github.io/fortran-playground/gams/K/) | Approximation | 19 | 7 | 6 | 6 |
-| [L](https://beliavsky.github.io/fortran-playground/gams/L/) | Statistics, probability | 18 | 34 | 30 | 30 |
+| [L](https://beliavsky.github.io/fortran-playground/gams/L/) | Statistics, probability | 18 | 39 | 35 | 35 |
 | [M](https://beliavsky.github.io/fortran-playground/gams/M/) | Simulation, stochastic modeling | 2 | 1 | 1 | 1 |
 | [N](https://beliavsky.github.io/fortran-playground/gams/N/) | Data handling | 101 | 59 | 56 | 56 |
 | [O](https://beliavsky.github.io/fortran-playground/gams/O/) | Symbolic computation | 0 | 0 | 0 | 0 |
@@ -90,7 +90,7 @@ These are the most specific classes currently recorded for procedures, not neces
 | [D2b1b](https://beliavsky.github.io/fortran-playground/gams/D2b1b/) | Positive definite | 6 | 6 | 6 |
 | [D2b4](https://beliavsky.github.io/fortran-playground/gams/D2b4/) | Sparse | 2 | 2 | 2 |
 | [D2c1](https://beliavsky.github.io/fortran-playground/gams/D2c1/) | General | 2 | 2 | 2 |
-| [D2d1b](https://beliavsky.github.io/fortran-playground/gams/D2d1b/) | Positive definite | 2 | 2 | 2 |
+| [D2d1b](https://beliavsky.github.io/fortran-playground/gams/D2d1b/) | Positive definite | 3 | 3 | 3 |
 | [D3a1](https://beliavsky.github.io/fortran-playground/gams/D3a1/) | General | 1 | 1 | 1 |
 | [D3c1](https://beliavsky.github.io/fortran-playground/gams/D3c1/) | General | 1 | 1 | 1 |
 | [D4](https://beliavsky.github.io/fortran-playground/gams/D4/) | Eigenvalues, eigenvectors | 1 | 1 | 1 |
@@ -99,10 +99,10 @@ These are the most specific classes currently recorded for procedures, not neces
 | [D4a3](https://beliavsky.github.io/fortran-playground/gams/D4a3/) | Complex Hermitian | 1 | 1 | 1 |
 | [D4a4](https://beliavsky.github.io/fortran-playground/gams/D4a4/) | Complex non-Hermitian | 1 | 1 | 1 |
 | [D4b2](https://beliavsky.github.io/fortran-playground/gams/D4b2/) | Real general | 1 | 1 | 1 |
-| [D5](https://beliavsky.github.io/fortran-playground/gams/D5/) | QR decomposition, Gram-Schmidt orthogonalization | 4 | 4 | 4 |
+| [D5](https://beliavsky.github.io/fortran-playground/gams/D5/) | QR decomposition, Gram-Schmidt orthogonalization | 6 | 6 | 6 |
 | [D6](https://beliavsky.github.io/fortran-playground/gams/D6/) | Singular value decomposition | 8 | 6 | 6 |
 | [D8](https://beliavsky.github.io/fortran-playground/gams/D8/) | Other matrix equations (e.g., AX+XB=C) | 3 | 3 | 3 |
-| [D9a1](https://beliavsky.github.io/fortran-playground/gams/D9a1/) | Least squares (L_2) solution | 9 | 9 | 9 |
+| [D9a1](https://beliavsky.github.io/fortran-playground/gams/D9a1/) | Least squares (L_2) solution | 12 | 11 | 11 |
 | [D9b1](https://beliavsky.github.io/fortran-playground/gams/D9b1/) | Least squares (L_2) solution | 2 | 2 | 2 |
 | [D9c](https://beliavsky.github.io/fortran-playground/gams/D9c/) | Generalized inverses | 3 | 3 | 3 |
 | [E1](https://beliavsky.github.io/fortran-playground/gams/E1/) | Univariate data (curve fitting) | 2 | 1 | 1 |
@@ -148,10 +148,10 @@ These are the most specific classes currently recorded for procedures, not neces
 | [J2](https://beliavsky.github.io/fortran-playground/gams/J2/) | Convolutions | 2 | 2 | 2 |
 | [K](https://beliavsky.github.io/fortran-playground/gams/K/) | Approximation | 6 | 5 | 5 |
 | [K1](https://beliavsky.github.io/fortran-playground/gams/K1/) | Least squares (L-2) approximation | 1 | 1 | 1 |
-| [L1a1a](https://beliavsky.github.io/fortran-playground/gams/L1a1a/) | Location | 3 | 3 | 3 |
-| [L1a1b](https://beliavsky.github.io/fortran-playground/gams/L1a1b/) | Dispersion | 2 | 2 | 2 |
-| [L1a1c](https://beliavsky.github.io/fortran-playground/gams/L1a1c/) | Shape | 1 | 1 | 1 |
-| [L1c1b](https://beliavsky.github.io/fortran-playground/gams/L1c1b/) | Covariance, correlation | 2 | 2 | 2 |
+| [L1a1a](https://beliavsky.github.io/fortran-playground/gams/L1a1a/) | Location | 4 | 4 | 4 |
+| [L1a1b](https://beliavsky.github.io/fortran-playground/gams/L1a1b/) | Dispersion | 3 | 3 | 3 |
+| [L1a1c](https://beliavsky.github.io/fortran-playground/gams/L1a1c/) | Shape | 2 | 2 | 2 |
+| [L1c1b](https://beliavsky.github.io/fortran-playground/gams/L1c1b/) | Covariance, correlation | 4 | 4 | 4 |
 | [L4](https://beliavsky.github.io/fortran-playground/gams/L4/) | Elementary data analysis | 1 | 1 | 1 |
 | [L5a1b](https://beliavsky.github.io/fortran-playground/gams/L5a1b/) | Beta, binomial | 2 | 2 | 2 |
 | [L5a1e](https://beliavsky.github.io/fortran-playground/gams/L5a1e/) | Error function, exponential, extreme value | 2 | 2 | 2 |

@@ -1053,7 +1053,18 @@
         "stdlib-complex-general-systems",
         "stdlib-complex-positive-systems",
         "stdlib-complex-weighted-fits",
-        "stdlib-complex-equality-fits"
+        "stdlib-complex-equality-fits",
+        "stdlib-complex-means",
+        "stdlib-complex-variances",
+        "stdlib-complex-covariances",
+        "stdlib-complex-correlations",
+        "stdlib-complex-central-powers",
+        "stdlib-real-pivoted-qr",
+        "stdlib-complex-pivoted-qr",
+        "stdlib-complex-rank-deficient-fits",
+        "stdlib-complex-underdetermined-fits",
+        "stdlib-complex-factored-positive-systems",
+        "stdlib-complex-minimum-norm-pinv"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
     },
