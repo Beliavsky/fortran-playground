@@ -149,7 +149,10 @@
       "status": "procedure-reviewed",
       "procedure_ids": [
         "fftpack-fft",
-        "fftpack-dct2"
+        "fftpack-dct2",
+        "fftpack-cosine-type1",
+        "fftpack-sine-type1",
+        "fftpack-packed-real-transforms"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
     },
@@ -722,7 +725,9 @@
       "archive_sha256": "22a2fb25220452a409363a8d8a2c039491fe62df0b91fc89141b28d3dcc115c6",
       "status": "procedure-reviewed",
       "procedure_ids": [
-        "pchip-dpchim"
+        "pchip-dpchim",
+        "pchip-hermite-integrals",
+        "pchip-cubic-boundaries"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
     },
@@ -794,7 +799,9 @@
       "archive_sha256": "b099c2ee3e5c9c993e888cff0724fd7035dfb36559b09bc516ac94c45a610a34",
       "status": "procedure-reviewed",
       "procedure_ids": [
-        "quadrature-fortran-integration-class-1d"
+        "quadrature-fortran-integration-class-1d",
+        "quadrature-fortran-2d-rectangles",
+        "quadrature-fortran-3d-rectangles"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
     },
@@ -921,7 +928,9 @@
       "status": "procedure-reviewed",
       "procedure_ids": [
         "specfunc-fullerton-fgamma",
-        "specfunc-fullerton-digamma"
+        "specfunc-fullerton-digamma",
+        "specfunc-fullerton-beta-pairs",
+        "specfunc-fullerton-integer-beta-cdf"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
     },
@@ -930,7 +939,10 @@
       "archive_sha256": "b44d6c7e8806a2588fcbfde53fa280a867e0ce9fe31bd2d68828c6131194ce22",
       "status": "procedure-reviewed",
       "procedure_ids": [
-        "specialmatrices-solve"
+        "specialmatrices-solve",
+        "specialmatrices-strang-systems",
+        "specialmatrices-circulant-systems",
+        "specialmatrices-rectangular-poisson"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
     },

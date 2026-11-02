@@ -115,6 +115,7 @@ COMPLEX_OPERATORS_TEN_REPORT = Path('docs/gams-complex-operators-ten.md')
 STATISTICS_RANK_TEN_REPORT = Path('docs/gams-statistics-rank-ten.md')
 GRIDS_SPECTRA_TEN_REPORT = Path('docs/gams-grids-spectra-ten.md')
 INTEGRALS_TENSORS_TEN_REPORT = Path('docs/gams-integrals-tensors-ten.md')
+TRANSFORMS_STRUCTURES_TEN_REPORT = Path('docs/gams-transforms-structures-ten.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
 EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
@@ -10858,6 +10859,157 @@ def integrals_tensors_ten_review_text(root=ROOT):
     return '\n'.join(lines)
 
 
+def transforms_structures_ten_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-transforms-structures-ten-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-transforms-structures-ten-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Ten checked transforms, structured systems, splines and beta-function drivers',
+     '',
+     'Ten independent drivers across FFTPACK, SpecialMatrices, PCHIP and specfunc-fullerton passed GNU Fortran '
+     '16.2.0 and FPM 0.12.0 in the restricted hosted sandbox. Existing package libraries were reused; only mains '
+     'and executables were compiled. The [verification report](gams-transforms-structures-ten-validation.json) '
+     'saves normalized UTF-8/LF source hashes, pins, timings and complete output. GAMS categories are not '
+     'exhausted.',
+     '',
+     '## FFTPACK: real and trigonometric transforms',
+     '',
+     '- **DCT-I (J1a3):** 92 cases, lengths n=2..24 and four deterministic signals: constant, an impulse, an '
+     'alternating signed ramp, and a dyadic modular sequence. The independent direct sum is '
+     'x(0)+(-1)**k*x(n-1)+2*sum(x(j)*cos(pi*j*k/(n-1))), with j=1..n-2 and k=0..n-1. The inverse is normalized '
+     'by 2*(n-1).\n'
+     '- **DST-I (J1a3):** 96 cases, lengths n=1..24 and the same signal families. Direct sums use '
+     '2*sum(x(j)*sin(pi*j*k/(n+1))), j,k=1..n. Two in-place transforms divide by 2*(n+1) for the inverse. The '
+     'initialization workspace is reused.\n'
+     '- **Packed real FFT (J1a1):** 156 cases, source lengths m=4..16, four signals, and requested lengths '
+     'm-2,m,m+3, checking truncation and zero-padding. Direct Fourier sums check DC, interleaved '
+     'real/negative-sine components, and the separate even-length Nyquist component. The unnormalized inverse '
+     'divides by n. The API returns n real packed entries, not a complex half-spectrum.',
+     '',
+     'All transform results must be finite. Wrapper inputs are preserved exactly and output sizes are checked '
+     'where requested lengths change them. The DST intentionally transforms a copy in place. These bounded '
+     'examples do not cover invalid sizes, nonfinite inputs or extreme dynamic range. The direct sums are '
+     'separate from the package fast-transform algorithms.',
+     '',
+     '## SpecialMatrices: structured solves',
+     '',
+     '- **Strang systems (D2b2a):** 276 vector/multiple-RHS solves, n=2..24, three dyadic solution patterns and '
+     'iterative refinement off/on. The SPD tridiagonal matrix has diagonal 2 and adjacent diagonals -1. Explicit '
+     'three-point stencil operations construct RHS vectors and recompute residuals; no package matvec or dense '
+     'conversion supplies the oracle.\n'
+     '- **Circulant systems (D2a1):** 132 vector/multiple-RHS solves, n=2..23 and three nonsymmetric generators. '
+     'For i>=2, c(i)=(-1)**i*(1+mod(i*i+pattern,7))/32, while c(1)=2+sum(abs(c(2:n))). Strict diagonal dominance '
+     'ensures nonsingularity. A locally assembled dense matrix A(i,j)=c(modulo(i-j,n)+1) supplies RHS/residual '
+     'references and known solutions. This is the first-column generator convention implemented by pinned '
+     'dense()/FFT routines; the constructor comment displays the transpose convention. No numerical source was '
+     'changed.\n'
+     '- **Rectangular Poisson systems (I2b1a1a):** 288 vector/multiple-RHS solves, nx,ny=2..7, two rectangular '
+     'domains and two manufactured solutions. Lx=domain/2 and Ly=(domain+1)/2. The operator is Delta with '
+     'homogeneous Dirichlet boundaries, not -Delta.',
+     '',
+     'For the Poisson example, u=x*(Lx-x)*y*(Ly-y) has forcing -2*(x*(Lx-x)+y*(Ly-y)), and the five-point '
+     'stencil reproduces this continuous forcing exactly. A second example uses '
+     'sin(pi*i/(nx+1))*sin(2*pi*j/(ny+1)) with its discrete Laplacian eigenvalue, not its continuous eigenvalue. '
+     'Known grid solutions, independent five-point residuals, a second scaled RHS and exact input preservation '
+     'are checked. These examples verify the specified discrete systems; they do not establish convergence rates '
+     'for general continuum solutions, variable coefficients, nonzero boundaries or nearly singular systems.',
+     '',
+     '## PCHIP: integrating Hermite pieces and choosing spline boundaries',
+     '',
+     '- **Hermite integrals (E3a3):** 117 arbitrary-bound/node-index integrals of a genuinely piecewise cubic '
+     'with six nonuniform nodes and caller-supplied dyadic values/slopes. The 81 arbitrary intervals include '
+     'zero length, reversal, partial panels and multiple panels; another 36 use DPCHID node indices. The driver '
+     'independently integrates each clipped panel with two-point Gauss quadrature, exact for a cubic. It '
+     'evaluates the Hermite basis locally, rather than calling a package evaluator for the oracle. The '
+     '[reference table](gams-transforms-structures-ten-references.json) additionally saves exact Python Fraction '
+     'antiderivatives for the 81 arbitrary intervals. DPCHIM slope selection and extrapolation are outside this '
+     'driver.\n'
+     '- **Cubic spline boundaries (E1a):** 225 value/first-derivative queries for three shifted cubics '
+     '(x-pattern/4)**3-2*x+pattern/8, six nonuniform nodes and '
+     'not-a-knot/supplied-first-derivative/supplied-second-derivative endpoint conditions. DPCHSP constructs the '
+     'slopes and DPCHFD evaluates values/derivatives, checked against explicit polynomial formulas at 25 points. '
+     'The supplied endpoint conditions match each cubic; zero natural conditions are not substituted.',
+     '',
+     'The Hermite nodes are [-1,-1/2,1/4,1,7/4,3], values [2,-1/4,1/2,3/4,-1,3/2], and slopes '
+     '[1/2,-3/4,1,0,5/4,-1/2]. Arbitrary bounds divide the full interval into eight equal subintervals. '
+     'Independent tests check the saved rational antiderivatives using exact Simpson integration of each clipped '
+     "Hermite panel, a different rule from the driver's Gauss oracle. Successful statuses are required; no "
+     'extrapolation warnings are accepted.',
+     '',
+     '## Fullerton: default REAL32 beta functions',
+     '',
+     'The pinned specfunc-fullerton APIs accept and return default REAL32. Consumers convert the exactly '
+     'representable input parameters to that kind and widen results for comparison; widening does not supply '
+     'REAL64 accuracy.',
+     '',
+     '- **Beta/log-beta pairs (C7b):** 64 positive pairs a,b from {1/2,1,3/2,5/2,4,8,16,32}, including the '
+     'larger-argument logarithmic path. Independent mpmath 1.3.0 beta/log-beta values at 80 digits were '
+     'confirmed at 120 digits within absolute 1e-65. The saved table retains 18 significant digits. Beta must be '
+     'positive/finite with relative error <=5e-5; log-beta uses 5e-5*max(1,abs(reference)). Independent tests '
+     'additionally use integer/half-integer Gamma recurrences.\n'
+     '- **Integer-shape regularized beta CDF (L5a1b):** 252 queries with a,b=1..6 and x=0,1/8,1/4,1/2,3/4,7/8,1. '
+     'Exact rational references use sum(binomial(n,j)*x**j*(1-x)**(n-j)), j=a..n, n=a+b-1. Results must be '
+     'finite, within [0,1], sampled monotone in x and agree within absolute 3e-6. Noninteger shapes, extreme '
+     'tails, nonpositive parameters, underflow and REAL64 accuracy claims are excluded.',
+     '',
+     '## Retained unsuccessful probes',
+     '',
+     'The [2D/3D quadrature-fortran sources and full '
+     'results](gams-candidates/quadrature-fortran-nested/README.md) are retained with pins and normalized source '
+     'hashes. Both compiled and reused cached libraries, then segfaulted with process exit 139 before numerical '
+     'output. Their procedure records remain source-supported with no checked drivers and are excluded from '
+     'menus. The implementation assigns pointers to internal wrapper procedures; compatibility with that '
+     'mechanism is one possible cause to investigate, not an established diagnosis. These were execution '
+     'failures, not observed numerical mismatches or reported time/size limits. The separate working 1D consumer '
+     'is unchanged.',
+     '',
+     'The initial beta-CDF consumer had a [generated literal '
+     'error](gams-candidates/fullerton-beta-cdf-literals/README.md): zero/one constants appeared as integer '
+     '0_wp/1_wp in a REAL64 constructor. That consumer compilation failure is preserved with exact source and '
+     'response. Changing only those literals to 0._wp/1._wp passed all 252 numerical comparisons and '
+     'bounds/monotonicity checks. This was a consumer error, not a package numerical failure or sandbox limit.',
+     '',
+     '## Limits, provenance and maintenance',
+     '',
+     'Except for the stated REAL32 beta-function tolerances, results must be finite and agree within '
+     '2e-9*max(1,abs(reference)); integer/status and preservation checks are exact. These are bounded '
+     'correctness demonstrations, not precision or performance benchmarks.',
+     '',
+     'Pinned public APIs, implementations and linked author tests were reviewed. These are independent MIT '
+     'consumers; upstream implementation and author-test bodies were not copied. No upstream numerical source '
+     'was patched. The [Netlib GAMS taxonomy](https://netlib.org/misc/gams.html) supplies the classifications, '
+     'including real/trigonometric transforms, SPD tridiagonal systems, rectangular Poisson problems and '
+     'fitted-function quadrature. Loading an example does not submit a job. The [coverage '
+     'report](gams-coverage.md) records remaining work.',
+     '',
+     '## Driver details',
+     '']
+    for d in drivers:
+        lines += ['### '+d['id']+' ('+d['gams_code']+')', '', d['modifications'], '']
+    lines += ['## Provenance and actual output', '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -11048,6 +11200,7 @@ def main():
                          (STATISTICS_RANK_TEN_REPORT, statistics_rank_ten_review_text()),
                          (GRIDS_SPECTRA_TEN_REPORT, grids_spectra_ten_review_text()),
                          (INTEGRALS_TENSORS_TEN_REPORT, integrals_tensors_ten_review_text()),
+                         (TRANSFORMS_STRUCTURES_TEN_REPORT, transforms_structures_ten_review_text()),
                          (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report

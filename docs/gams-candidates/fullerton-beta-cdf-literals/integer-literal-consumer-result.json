@@ -1,0 +1,49 @@
+{
+  "source_path": "docs/gams-candidates/fullerton-beta-cdf-literals/integer-literal-consumer.f90",
+  "source_sha256": "fb5dc946651a93f76c0232fe05de55c2a0e7589f21d55eb6f6efa4ac541677e3",
+  "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+  "result": {
+    "ok": false,
+    "compiler": "GNU Fortran (GCC) 16.2.0",
+    "compiler_id": "gfortran",
+    "fpm": "0.12.0",
+    "stages": [
+      {
+        "name": "Build",
+        "command": [
+          "fpm",
+          "build",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 2.74,
+        "ok": false,
+        "exit_code": 1,
+        "error": "",
+        "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n\napp/main.f90:9:11:\n\n    9 |       0_wp, 0.125_wp, 0.25_wp, &\n      |           1\nError: Element in INTEGER(8) array constructor at (1) is REAL(8)\ncompilation terminated due to -fmax-errors=1.\n",
+        "stderr": "<ERROR> Compilation failed for object \" app_main.f90.o \"\n<ERROR> stopping due to failed compilation\nSTOP 1\n"
+      }
+    ],
+    "cache": {
+      "package": "specfunc-fullerton",
+      "compiler": "GNU Fortran 16.2.0",
+      "key": "33806d56fed498291155fcc3",
+      "library_reused": true,
+      "changed_artifacts": []
+    },
+    "packages": [
+      {
+        "repository": "arjenmarkus/specfunc-fullerton",
+        "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+        "sha256": "f7910a7403f1653b7917f16db3818a4ed55a080185c86b02d96c6a391164a6f7"
+      }
+    ]
+  }
+}

@@ -893,6 +893,167 @@ class PackageGamsTests(unittest.TestCase):
         self.assertIn('Type-2/type-3 transforms',text)
         self.assertIn('two-dimensional NUFFT2D driver',transforms_review_text())
 
+    def test_transforms_structures_scopes_and_retained_unsuccessful_probes(self):
+        import hashlib
+        import re
+        from xpackage_gams import transforms_structures_ten_review_text, TRANSFORMS_STRUCTURES_TEN_REPORT
+        data = gams_data()
+        records = {r['id']: r for r in data['procedure_mappings']}
+        drivers = {d['id']: d for d in driver_data(data=data)
+                   if d.get('validation_path') == 'docs/gams-transforms-structures-ten-validation.json'}
+        expected = {'fftpack-cosine-type1': ('J1a3', 'cases', 92),
+                    'fftpack-sine-type1': ('J1a3', 'cases', 96),
+                    'fftpack-packed-real-transforms': ('J1a1', 'cases', 156),
+                    'specialmatrices-strang-systems': ('D2b2a', 'calls', 276),
+                    'specialmatrices-circulant-systems': ('D2a1', 'calls', 132),
+                    'specialmatrices-rectangular-poisson': ('I2b1a1a', 'calls', 288),
+                    'pchip-hermite-integrals': ('E3a3', 'calls', 117),
+                    'pchip-cubic-boundaries': ('E1a', 'queries', 225),
+                    'specfunc-fullerton-beta-pairs': ('C7b', 'pairs', 64),
+                    'specfunc-fullerton-integer-beta-cdf': ('L5a1b', 'queries', 252)}
+        self.assertEqual(set(drivers), {s+'-reference' for s in expected})
+        reviewed = numerical_review(data=data)['packages']
+        for short, (code, field, count) in expected.items():
+            driver = drivers[short+'-reference']
+            record = records[driver['procedure_id']]
+            self.assertEqual(record['driver_id'], driver['id'])
+            self.assertEqual(driver['gams_code'], code)
+            self.assertEqual(driver['checks'][field], count)
+            self.assertIn(record['id'], reviewed[driver['package_id']]['procedure_ids'])
+            self.assertEqual(class_evidence(class_tree(data), code, [record], [driver])['status'], 'verified')
+        for dimension in [2, 3]:
+            ident = f'quadrature-fortran-{dimension}d-rectangles'
+            record = records[ident]
+            self.assertNotIn('driver_id', record)
+            self.assertIn(ident, reviewed['quadrature-fortran']['procedure_ids'])
+            self.assertEqual(class_evidence(class_tree(data), 'H2b1a1', [record], list(drivers.values()))['status'],
+                             'source-supported')
+            evidence = json.loads((ROOT/f'docs/gams-candidates/quadrature-fortran-nested/{ident}-reference-result.json').read_text())
+            source = (ROOT/evidence['source_path']).read_text(encoding='utf-8')
+            self.assertEqual(hashlib.sha256(source.encode()).hexdigest(), evidence['source_sha256'])
+            self.assertEqual(record['revision'], evidence['revision'])
+            self.assertFalse(evidence['result']['ok'])
+            self.assertTrue(evidence['result']['cache']['library_reused'])
+            self.assertTrue(next(s for s in evidence['result']['stages'] if s['name'] == 'Build')['ok'])
+            run = next(s for s in evidence['result']['stages'] if s['name'] == 'Run')
+            self.assertEqual(run['exit_code'], 139)
+            self.assertIn('SIGSEGV', run['stderr'])
+        evidence = json.loads((ROOT/'docs/gams-candidates/fullerton-beta-cdf-literals/integer-literal-consumer-result.json').read_text())
+        source = (ROOT/evidence['source_path']).read_text(encoding='utf-8')
+        self.assertEqual(hashlib.sha256(source.encode()).hexdigest(), evidence['source_sha256'])
+        build = next(s for s in evidence['result']['stages'] if s['name'] == 'Build')
+        self.assertFalse(build['ok'])
+        self.assertIn('array constructor', build['stdout'])
+        final = (ROOT/drivers['specfunc-fullerton-integer-beta-cdf-reference']['path']).read_text()
+        self.assertEqual(re.sub(r'(?<=[ ,])([01])_wp\b', r'\1._wp', source), final)
+        text = transforms_structures_ten_review_text()
+        self.assertEqual((ROOT/TRANSFORMS_STRUCTURES_TEN_REPORT).read_text(encoding='utf-8'), text)
+        for phrase in ['categories are not exhausted', 'source-supported with no checked drivers',
+                       'No upstream numerical source was patched', 'default REAL32', 'not -Delta']:
+            self.assertIn(phrase, text)
+
+    def test_piecewise_hermite_antiderivatives_match_exact_simpson_panels(self):
+        from fractions import Fraction as F
+        import re
+        source = (ROOT/'fpm_catalog/gams-drivers/pchip-hermite-integrals-reference.f90').read_text()
+        parse = lambda text: [F(x.strip().replace('_wp', '')) for x in text.split(',')]
+        nodes = parse(re.search(r'nodes\(6\)=\[(.*?)\]', source).group(1))
+        values = parse(re.search(r'values\(1,6\)=reshape\(\[(.*?)\]', source).group(1))
+        slopes = parse(re.search(r'slopes\(1,6\)=reshape\(\[(.*?)\]', source).group(1))
+        cases = json.loads((ROOT/'docs/gams-transforms-structures-ten-references.json').read_text())['hermite_cases']
+        self.assertEqual(len(cases), 81)
+        def hermite(i, x):
+            h = nodes[i+1]-nodes[i]
+            t = (x-nodes[i])/h
+            return ((2*t**3-3*t*t+1)*values[i]+(-2*t**3+3*t*t)*values[i+1]
+                    +h*((t**3-2*t*t+t)*slopes[i]+(t**3-t*t)*slopes[i+1]))
+        for case in cases:
+            a, b = F(case['a']), F(case['b'])
+            result = F(0)
+            for i in range(5):
+                left, right = max(min(a, b), nodes[i]), min(max(a, b), nodes[i+1])
+                if left < right:
+                    result += (right-left)*(hermite(i, left)+4*hermite(i, (left+right)/2)+hermite(i, right))/6
+            if b < a:
+                result = -result
+            self.assertEqual(result, F(case['integral']))
+
+    def test_fullerton_beta_tables_match_gamma_recurrences_and_exact_binomial_tails(self):
+        from fractions import Fraction as F
+        import math
+        import re
+        references = json.loads((ROOT/'docs/gams-transforms-structures-ten-references.json').read_text())
+        self.assertEqual(len(references['beta_values']), 64)
+        def gamma_half_integer(x):
+            z, value = (F(1), 1.) if x.denominator == 1 else (F(1, 2), math.sqrt(math.pi))
+            while z < x:
+                value *= float(z)
+                z += 1
+            self.assertEqual(z, x)
+            return value
+        for case in references['beta_values']:
+            a, b = F(case['a']), F(case['b'])
+            beta = gamma_half_integer(a)*gamma_half_integer(b)/gamma_half_integer(a+b)
+            self.assertLessEqual(abs(beta-float(case['beta'])), 2e-14*float(case['beta']))
+            self.assertLessEqual(abs(math.log(beta)-float(case['log_beta'])), 2e-14*max(1, abs(math.log(beta))))
+        cases = references['beta_cdf']
+        self.assertEqual(len(cases), 252)
+        for case in cases:
+            x, a, b = F(case['x']), case['a'], case['b']
+            # Directly integrate the integer beta density by expanding (1-t)**(b-1),
+            # independently of the generator's binomial-tail identity.
+            normalization = F(math.factorial(a+b-1), math.factorial(a-1)*math.factorial(b-1))
+            integrated = normalization*sum(F((-1)**j*math.comb(b-1, j), a+j)*x**(a+j) for j in range(b))
+            self.assertEqual(integrated, F(case['cdf']))
+        for filename, name, expected in [
+                ('specfunc-fullerton-integer-beta-cdf-reference.f90', 'expected', [float(F(c['cdf'])) for c in cases]),
+                ('specfunc-fullerton-beta-pairs-reference.f90', 'expected_beta',
+                 [float(c['beta']) for c in references['beta_values']]),
+                ('specfunc-fullerton-beta-pairs-reference.f90', 'expected_log',
+                 [float(c['log_beta']) for c in references['beta_values']])]:
+            source = (ROOT/'fpm_catalog/gams-drivers'/filename).read_text()
+            body = re.search(name+r'\(\*\)=\[(.*?)\]', source, re.S).group(1)
+            constants = [float(v) for v in re.findall(r'([-+0-9.eE]+)_wp', body)]
+            self.assertEqual(constants, expected)
+
+    def test_transform_normalization_and_structured_stencils_have_independent_oracles(self):
+        import cmath
+        import math
+        from fractions import Fraction as F
+        for n in range(2, 10):
+            # Basis-vector transforms check the normalization independently of round-tripping package calls.
+            for j in range(n):
+                cosine = [(1 if j == 0 else (-1)**k if j == n-1 else 2*math.cos(math.pi*j*k/(n-1)))
+                          for k in range(n)]
+                restored = [sum((1 if k == 0 else (-1)**i if k == n-1
+                                 else 2*math.cos(math.pi*k*i/(n-1)))*cosine[k] for k in range(n))/(2*(n-1))
+                            for i in range(n)]
+                for i, value in enumerate(restored):
+                    self.assertAlmostEqual(value, float(i == j), places=12)
+                sine = [2*math.sin(math.pi*(j+1)*(k+1)/(n+1)) for k in range(n)]
+                for i in range(n):
+                    restored = sum(2*math.sin(math.pi*(k+1)*(i+1)/(n+1))*sine[k]
+                                   for k in range(n))/(2*(n+1))
+                    self.assertAlmostEqual(restored, float(i == j), places=12)
+        # The continuous quartic manufactured solution must satisfy the stated discrete Delta,
+        # with zero boundary values, without depending on any package operator.
+        for nx, ny in [(2, 3), (3, 2), (5, 7)]:
+            lx, ly = F(1, 2), F(3, 2)
+            hx, hy = lx/(nx+1), ly/(ny+1)
+            u = lambda x, y: x*(lx-x)*y*(ly-y)
+            for i in range(1, nx+1):
+                for j in range(1, ny+1):
+                    x, y = i*hx, j*hy
+                    stencil = ((u(x-hx, y)-2*u(x, y)+u(x+hx, y))/hx**2
+                               +(u(x, y-hy)-2*u(x, y)+u(x, y+hy))/hy**2)
+                    self.assertEqual(stencil, -2*(x*(lx-x)+y*(ly-y)))
+        for n in range(2, 10):
+            c = [F(0)]+[F((-1)**i*(1+(i*i+2) % 7), 32) for i in range(2, n+1)]
+            c[0] = 2+sum(abs(v) for v in c[1:])
+            for k in range(n):
+                eigenvalue = sum(float(v)*cmath.exp(-2j*math.pi*j*k/n) for j, v in enumerate(c))
+                self.assertGreaterEqual(abs(eigenvalue), 2-1e-12)
+
     def test_integrals_tensors_scope_and_retained_counter_assertion(self):
         import hashlib
         from xpackage_gams import integrals_tensors_ten_review_text, INTEGRALS_TENSORS_TEN_REPORT
@@ -4041,7 +4202,8 @@ class PackageGamsTests(unittest.TestCase):
         self.assertIn('nonlin-bfgs', by_class['G1b1b']['checked_procedure_ids'])
         self.assertEqual(set(by_class['J1a2']['driver_ids']), {
             'fftpack-complex-transform','kissfft-f-complex-transform','nafpack-fft-reference'})
-        self.assertEqual(len(by_class['J1a3']['driver_ids']), 1)
+        self.assertEqual(set(by_class['J1a3']['driver_ids']), {
+            'fftpack-cosine-transform', 'fftpack-cosine-type1-reference', 'fftpack-sine-type1-reference'})
         self.assertTrue(any(not r['driver_ids'] for r in coverage['procedure_classes']))
         self.assertEqual({r['code'] for r in coverage['top_level'] if r['driver_ids']}, set('ABCDEFGHIJKLMNPQRSZ'))
         self.assertEqual((ROOT / COVERAGE_REPORT).read_text(encoding='utf-8'), coverage_review_text())

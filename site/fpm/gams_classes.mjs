@@ -923,5 +923,37 @@ export const gamsSubclasses = {
   "E3a2": {
     "label": "Derivative evaluation",
     "parent": "E3a"
+  },
+  "D2b2": {
+    "label": "Positive definite banded",
+    "parent": "D2b"
+  },
+  "D2b2a": {
+    "label": "Tridiagonal",
+    "parent": "D2b2"
+  },
+  "E3a3": {
+    "label": "Quadrature",
+    "parent": "E3a"
+  },
+  "I2b": {
+    "label": "Elliptic boundary value problems",
+    "parent": "I2"
+  },
+  "I2b1": {
+    "label": "Linear",
+    "parent": "I2b"
+  },
+  "I2b1a": {
+    "label": "Second order",
+    "parent": "I2b1"
+  },
+  "I2b1a1": {
+    "label": "Poisson (Laplace) or Helmholtz equation",
+    "parent": "I2b1a"
+  },
+  "I2b1a1a": {
+    "label": "Rectangular domain (or topologically rectangular in the coordinate system)",
+    "parent": "I2b1a1"
   }
 };

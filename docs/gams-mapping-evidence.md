@@ -8,7 +8,7 @@ This report assesses each package/class pair, including inherited parent classes
 
 When a driver cannot be created, inspect the pinned implementation and author examples. Narrow or remove a classification that is unsupported; do not substitute an unrelated default example as evidence. Record missing dependencies, sandbox limits and upstream defects separately in the procedure or package review notes. A sandbox failure alone does not disprove an algorithm.
 
-Counts refer to package/class pairs and include parents: 756 verified, 76 source-supported, 241 uncertain.
+Counts refer to package/class pairs and include parents: 778 verified, 80 source-supported, 241 uncertain.
 
 ## Mappings requiring source review
 
@@ -330,8 +330,11 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [fed / fed-format](https://beliavsky.github.io/fortran-playground/gams/packages/fed/#fed-format) | N1 | verified |
 | [fed / fed-format](https://beliavsky.github.io/fortran-playground/gams/packages/fed/#fed-format) | N3 | source-supported |
 | [feq-parse / feq-parse-evaluate](https://beliavsky.github.io/fortran-playground/gams/packages/feq-parse/#feq-parse-evaluate) | N3 | verified |
+| [fftpack / fftpack-cosine-type1](https://beliavsky.github.io/fortran-playground/gams/packages/fftpack/#fftpack-cosine-type1) | J1a3 | verified |
 | [fftpack / fftpack-dct2](https://beliavsky.github.io/fortran-playground/gams/packages/fftpack/#fftpack-dct2) | J1a3 | verified |
 | [fftpack / fftpack-fft](https://beliavsky.github.io/fortran-playground/gams/packages/fftpack/#fftpack-fft) | J1a2 | verified |
+| [fftpack / fftpack-packed-real-transforms](https://beliavsky.github.io/fortran-playground/gams/packages/fftpack/#fftpack-packed-real-transforms) | J1a1 | verified |
+| [fftpack / fftpack-sine-type1](https://beliavsky.github.io/fortran-playground/gams/packages/fftpack/#fftpack-sine-type1) | J1a3 | verified |
 | [fglm / fglm-api](https://beliavsky.github.io/fortran-playground/gams/packages/fglm/#fglm-api) | D1 | verified |
 | [fgsl / fgsl-qags](https://beliavsky.github.io/fortran-playground/gams/packages/fgsl/#fgsl-qags) | H2a1a1 | verified |
 | [fiats / fiats-inference](https://beliavsky.github.io/fortran-playground/gams/packages/fiats/#fiats-inference) | K | verified |
@@ -515,7 +518,9 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [orbs / orbs-bitsets](https://beliavsky.github.io/fortran-playground/gams/packages/orbs/#orbs-bitsets) | A1 | source-supported |
 | [orbs / orbs-bitsets](https://beliavsky.github.io/fortran-playground/gams/packages/orbs/#orbs-bitsets) | N2 | verified |
 | [orderpack / orderpack-rank](https://beliavsky.github.io/fortran-playground/gams/packages/orderpack/#orderpack-rank) | N6 | verified |
+| [pchip / pchip-cubic-boundaries](https://beliavsky.github.io/fortran-playground/gams/packages/pchip/#pchip-cubic-boundaries) | E1a | verified |
 | [pchip / pchip-dpchim](https://beliavsky.github.io/fortran-playground/gams/packages/pchip/#pchip-dpchim) | E1a | verified |
+| [pchip / pchip-hermite-integrals](https://beliavsky.github.io/fortran-playground/gams/packages/pchip/#pchip-hermite-integrals) | E3a3 | verified |
 | [penf / numerical-portability](https://beliavsky.github.io/fortran-playground/gams/packages/penf/#numerical-portability) | R1 | verified |
 | [penf / numerical-portability](https://beliavsky.github.io/fortran-playground/gams/packages/penf/#numerical-portability) | N3 | source-supported |
 | [pflogger / pflogger-logging](https://beliavsky.github.io/fortran-playground/gams/packages/pflogger/#pflogger-logging) | R | verified |
@@ -542,6 +547,8 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [quadpack / quadpack-improper-halflines](https://beliavsky.github.io/fortran-playground/gams/packages/quadpack/#quadpack-improper-halflines) | H2a3a1 | verified |
 | [quadpack / quadpack-interior-breakpoints](https://beliavsky.github.io/fortran-playground/gams/packages/quadpack/#quadpack-interior-breakpoints) | H2a2a1 | verified |
 | [quadpack / quadpack-oscillatory-weights](https://beliavsky.github.io/fortran-playground/gams/packages/quadpack/#quadpack-oscillatory-weights) | H2a2a1 | verified |
+| [quadrature-fortran / quadrature-fortran-2d-rectangles](https://beliavsky.github.io/fortran-playground/gams/packages/quadrature-fortran/#quadrature-fortran-2d-rectangles) | H2b1a1 | source-supported |
+| [quadrature-fortran / quadrature-fortran-3d-rectangles](https://beliavsky.github.io/fortran-playground/gams/packages/quadrature-fortran/#quadrature-fortran-3d-rectangles) | H2b1a1 | source-supported |
 | [quadrature-fortran / quadrature-fortran-integration-class-1d](https://beliavsky.github.io/fortran-playground/gams/packages/quadrature-fortran/#quadrature-fortran-integration-class-1d) | H2a1a1 | verified |
 | [quaff / quaff-length-t](https://beliavsky.github.io/fortran-playground/gams/packages/quaff/#quaff-length-t) | A | verified |
 | [raffle / raffle-periodic-distance](https://beliavsky.github.io/fortran-playground/gams/packages/raffle/#raffle-periodic-distance) | P | verified |
@@ -578,9 +585,14 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [smart-pointers / smart-pointer-lifetime](https://beliavsky.github.io/fortran-playground/gams/packages/smart-pointers/#smart-pointer-lifetime) | R | verified |
 | [sparse_fortran / sparse-fortran-matmul](https://beliavsky.github.io/fortran-playground/gams/packages/sparse_fortran/#sparse-fortran-matmul) | D1b4 | verified |
 | [specfun / specfun-bernob](https://beliavsky.github.io/fortran-playground/gams/packages/specfun/#specfun-bernob) | C19 | verified |
+| [specfunc-fullerton / specfunc-fullerton-beta-pairs](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-beta-pairs) | C7b | verified |
 | [specfunc-fullerton / specfunc-fullerton-digamma](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-digamma) | C7c | verified |
 | [specfunc-fullerton / specfunc-fullerton-fgamma](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-fgamma) | C7a | verified |
+| [specfunc-fullerton / specfunc-fullerton-integer-beta-cdf](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-integer-beta-cdf) | L5a1b | verified |
+| [specialmatrices / specialmatrices-circulant-systems](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-circulant-systems) | D2a1 | verified |
+| [specialmatrices / specialmatrices-rectangular-poisson](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-rectangular-poisson) | I2b1a1a | verified |
 | [specialmatrices / specialmatrices-solve](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-solve) | D2 | verified |
+| [specialmatrices / specialmatrices-strang-systems](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-strang-systems) | D2b2a | verified |
 | [spectrum / spectrum-convolve](https://beliavsky.github.io/fortran-playground/gams/packages/spectrum/#spectrum-convolve) | J2 | verified |
 | [spectrum / spectrum-rfft](https://beliavsky.github.io/fortran-playground/gams/packages/spectrum/#spectrum-rfft) | J1a1 | verified |
 | [spherepack / spherepack-api](https://beliavsky.github.io/fortran-playground/gams/packages/spherepack/#spherepack-api) | I2 | verified |

@@ -33,6 +33,7 @@ The B-spline driver separately interpolates `p(x)=1-2*x+0.5*x**2+x**3` with orde
 | [Load interp1-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=interpolation&example=gams-interp1-reference) · [Source](../fpm_catalog/gams-drivers/interp1-reference.f90) | [Procedure](https://github.com/furstj/interpolation/blob/bf6d22ad931855d510dcfb5bdd6870cce8924b22/src/interpolation.f90#L14) · [Author example/test](https://github.com/furstj/interpolation/blob/bf6d22ad931855d510dcfb5bdd6870cce8924b22/test/interp1_test.f90) |
 | [Load regridpack-polynomial-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=regridpack&example=gams-regridpack-polynomial-reference) · [Source](../fpm_catalog/gams-drivers/regridpack-polynomial-reference.f90) | [Procedure](https://github.com/jacobwilliams/regridpack/blob/e47346d9244ab93f70367f16364d73217fbc0451/src/regridpack_module.f90#L22) · Independent API consumer |
 | [Load fitpack-polynomial-values](https://beliavsky.github.io/fortran-playground/fpm/?package=fitpack&example=gams-fitpack-polynomial-values) · [Source](../fpm_catalog/gams-drivers/fitpack-polynomial-values.f90) | [Procedure](https://github.com/perazz/fitpack/blob/1907c7bad9f5c4557970e906bdd4909eb52b2d4c/src/fitpack_curves.f90#L54) · [Author example/test](https://github.com/perazz/fitpack/blob/1907c7bad9f5c4557970e906bdd4909eb52b2d4c/test/fitpack_curve_tests.f90) |
+| [Load pchip-cubic-boundaries-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=pchip&example=gams-pchip-cubic-boundaries-reference) · [Source](../fpm_catalog/gams-drivers/pchip-cubic-boundaries-reference.f90) | [Procedure](https://github.com/jacobwilliams/PCHIP/blob/8f5350565072622a2344dd0ec75193832b31eb10/src/pchip_module.f90#L2456) · [Author example/test](https://github.com/jacobwilliams/PCHIP/blob/8f5350565072622a2344dd0ec75193832b31eb10/test/pchip_test.f90) |
 
 The three shape-comparison programs adapt author API patterns and retain the package license notices. They use shared deterministic data instead of the larger author test harnesses. The drivers appear in hosted and main local FPM example menus and downloaded projects. Loading a link selects source without submitting a job.
 
@@ -171,6 +172,13 @@ Polynomial fits: 144; value references: 11016
 Degrees 1/3/5; uniform and reversed nonuniform data; scalar/vector overloads.
 Maximum normalized value error:   6.6613E-16
 PASS fitpack-polynomial-values
+```
+
+### pchip-cubic-boundaries-reference
+
+```text
+Cubic spline values/derivatives: not-a-knot, first/second derivative boundaries: 225
+PASS pchip-cubic-boundaries-reference
 ```
 
 ## Maintenance

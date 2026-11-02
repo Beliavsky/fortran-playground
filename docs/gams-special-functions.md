@@ -94,12 +94,13 @@ The C10 driver checks 39 complex values at `z=[0.5+0.25i,1+0.5i,2+0.75i]`. For s
 | [Load stdlib-activation-silu-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-activation-silu-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-activation-silu-reference.f90) | C19 | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_specialfunctions.f90#L296) · [Author example/test](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_specialfunctions_activations.f90) |
 | [Load stdlib-activation-softplus-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-activation-softplus-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-activation-softplus-reference.f90) | C19 | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_specialfunctions.f90#L498) |
 | [Load stdlib-complex-phase-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=stdlib&example=gams-stdlib-complex-phase-reference) · [Source](../fpm_catalog/gams-drivers/stdlib-complex-phase-reference.f90) | C4a | [Procedure](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_math.f90#L1106) · [Author example/test](https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/example/example_math_arg.f90) |
+| [Load specfunc-fullerton-beta-pairs-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=specfunc-fullerton&example=gams-specfunc-fullerton-beta-pairs-reference) · [Source](../fpm_catalog/gams-drivers/specfunc-fullerton-beta-pairs-reference.f90) | C7b | [Procedure](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_beta.f90#L30) · [Author example/test](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/test/beta/test_beta.f90) |
 
 The programs use author APIs, retain applicable license notices and use deterministic reference checks instead of the larger author harnesses. They appear in hosted and main local FPM example menus and downloaded projects. Loading a link selects source without submitting a job.
 
 ## Recorded results
 
-All 30 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing existing package libraries. Only each main and executable were rebuilt. The [verification report](gams-special-functions-validation.json) records hashes, pins and saved output. These cases establish checked usage and selected-point agreement, rather than accuracy over each function's complete domain.
+All 31 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing existing package libraries. Only each main and executable were rebuilt. The [verification report](gams-special-functions-validation.json) records hashes, pins and saved output. These cases establish checked usage and selected-point agreement, rather than accuracy over each function's complete domain.
 
 ### fullerton-gamma-values
 
@@ -371,6 +372,13 @@ PASS stdlib-activation-softplus-reference
 ```text
 Independent quadrant phase references: 600 (radians, degrees, pi units)
 PASS stdlib-complex-phase-reference
+```
+
+### specfunc-fullerton-beta-pairs-reference
+
+```text
+Positive integer/half-integer beta and log-beta reference pairs: 64
+PASS specfunc-fullerton-beta-pairs-reference
 ```
 
 ## Maintenance

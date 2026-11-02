@@ -13902,6 +13902,248 @@
         "oracle": "unique triangular monotone root and recomputed residual",
         "scalar_kind": "REAL64"
       }
+    },
+    {
+      "id": "fftpack-cosine-type1-reference",
+      "name": "gams-fftpack-cosine-type1-reference",
+      "package_id": "fftpack",
+      "procedure_id": "fftpack-cosine-type1",
+      "gams_code": "J1a3",
+      "problem_id": "fftpack-cosine-type1-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/fftpack-cosine-type1-reference.f90",
+      "revision": "0fffe7c05a918363a7cc12ae138a695afd115f36",
+      "author_example": "test/test_fftpack_dct.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/transforms-structures-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 92 REAL64 DCT-I cases, lengths 2..24 and four deterministic signal patterns. Independent endpoint-weighted direct cosine sums and inverse normalization 2*(n-1), including smallest valid length. Finite results and source preservation; invalid sizes excluded.",
+      "validation_path": "docs/gams-transforms-structures-ten-validation.json",
+      "review_path": "docs/gams-transforms-structures-ten.md",
+      "checks": {
+        "cases": 92,
+        "oracle": "direct trigonometric sums and inverse normalization",
+        "scalar_kind": "REAL64"
+      }
+    },
+    {
+      "id": "fftpack-sine-type1-reference",
+      "name": "gams-fftpack-sine-type1-reference",
+      "package_id": "fftpack",
+      "procedure_id": "fftpack-sine-type1",
+      "gams_code": "J1a3",
+      "problem_id": "fftpack-sine-type1-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/fftpack-sine-type1-reference.f90",
+      "revision": "0fffe7c05a918363a7cc12ae138a695afd115f36",
+      "author_example": "test/test_fftpack_original.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/transforms-structures-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 96 REAL64 in-place DST-I cases, lengths 1..24 and four deterministic signal patterns. Direct 2*sum(x_j*sin(pi*j*k/(n+1))) references, normalization 2*(n+1), reused initialization workspace and finite checks. Invalid sizes and extreme-range inputs excluded.",
+      "validation_path": "docs/gams-transforms-structures-ten-validation.json",
+      "review_path": "docs/gams-transforms-structures-ten.md",
+      "checks": {
+        "cases": 96,
+        "oracle": "direct trigonometric sums and inverse normalization",
+        "scalar_kind": "REAL64"
+      }
+    },
+    {
+      "id": "fftpack-packed-real-transforms-reference",
+      "name": "gams-fftpack-packed-real-transforms-reference",
+      "package_id": "fftpack",
+      "procedure_id": "fftpack-packed-real-transforms",
+      "gams_code": "J1a1",
+      "problem_id": "fftpack-packed-real-transforms-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/fftpack-packed-real-transforms-reference.f90",
+      "revision": "0fffe7c05a918363a7cc12ae138a695afd115f36",
+      "author_example": "test/test_fftpack_rfft.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/transforms-structures-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 156 REAL64 packed real-transform cases, source lengths 4..16, four patterns and truncation/unchanged/zero-padding lengths m-2,m,m+3. Direct Fourier sums check DC, interleaved real/negative-sine components and even-length Nyquist coefficient; inverse normalized by n. Exact source preservation and output shapes checked. Packed representation is real, not a complex half-spectrum.",
+      "validation_path": "docs/gams-transforms-structures-ten-validation.json",
+      "review_path": "docs/gams-transforms-structures-ten.md",
+      "checks": {
+        "cases": 156,
+        "oracle": "direct Fourier sums with explicit packed layout",
+        "scalar_kind": "REAL64"
+      }
+    },
+    {
+      "id": "specialmatrices-strang-systems-reference",
+      "name": "gams-specialmatrices-strang-systems-reference",
+      "package_id": "specialmatrices",
+      "procedure_id": "specialmatrices-strang-systems",
+      "gams_code": "D2b2a",
+      "problem_id": "specialmatrices-strang-systems-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specialmatrices-strang-systems-reference.f90",
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "author_example": "test/test_strang.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/transforms-structures-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 276 REAL64 vector/multiple-RHS solves for the SPD tridiagonal Strang matrix (2 on diagonal, -1 off diagonal), n=2..24, three solution patterns and refinement off/on. Known dyadic solutions and independently assembled three-point stencil RHS/residuals; exact RHS preservation and finite checks. General variable-coefficient tridiagonals excluded.",
+      "validation_path": "docs/gams-transforms-structures-ten-validation.json",
+      "review_path": "docs/gams-transforms-structures-ten.md",
+      "checks": {
+        "calls": 276,
+        "oracle": "known solutions and explicit three-point stencil",
+        "scalar_kind": "REAL64"
+      }
+    },
+    {
+      "id": "specialmatrices-circulant-systems-reference",
+      "name": "gams-specialmatrices-circulant-systems-reference",
+      "package_id": "specialmatrices",
+      "procedure_id": "specialmatrices-circulant-systems",
+      "gams_code": "D2a1",
+      "problem_id": "specialmatrices-circulant-systems-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specialmatrices-circulant-systems-reference.f90",
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "author_example": "test/test_circulant.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/transforms-structures-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 132 REAL64 vector/multiple-RHS solves, n=2..23 and three strictly diagonally dominant nonsymmetric circulant generators. Explicit dense reference A(i,j)=c(modulo(i-j,n)+1), known dyadic solutions, independent dense RHS/residuals and exact RHS preservation. The generator is the first column, following pinned dense()/FFT implementation; the constructor comment displays a transposed convention. Near-singular Fourier eigenvalues excluded.",
+      "validation_path": "docs/gams-transforms-structures-ten-validation.json",
+      "review_path": "docs/gams-transforms-structures-ten.md",
+      "checks": {
+        "calls": 132,
+        "oracle": "explicit first-column circulant matrix and known solutions",
+        "scalar_kind": "REAL64"
+      }
+    },
+    {
+      "id": "specialmatrices-rectangular-poisson-reference",
+      "name": "gams-specialmatrices-rectangular-poisson-reference",
+      "package_id": "specialmatrices",
+      "procedure_id": "specialmatrices-rectangular-poisson",
+      "gams_code": "I2b1a1a",
+      "problem_id": "specialmatrices-rectangular-poisson-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specialmatrices-rectangular-poisson-reference.f90",
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "author_example": "test/test_poisson2D.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/transforms-structures-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 288 REAL64 vector/multiple-RHS rectangular Dirichlet Laplacian solves: nx,ny=2..7, two aspect-ratio domains and polynomial/sine manufactured solutions. The quartic product x*(Lx-x)*y*(Ly-y) has exactly reproduced continuous forcing under the five-point stencil; the sine case uses the discrete eigenvalue. Independent stencil residuals, known grid solutions and exact RHS preservation. Operator is Delta, not -Delta. No continuum-convergence or nonzero-boundary claim.",
+      "validation_path": "docs/gams-transforms-structures-ten-validation.json",
+      "review_path": "docs/gams-transforms-structures-ten.md",
+      "checks": {
+        "calls": 288,
+        "oracle": "continuous polynomial forcing, discrete sine eigenvalue and independent stencil",
+        "scalar_kind": "REAL64"
+      }
+    },
+    {
+      "id": "pchip-hermite-integrals-reference",
+      "name": "gams-pchip-hermite-integrals-reference",
+      "package_id": "pchip",
+      "procedure_id": "pchip-hermite-integrals",
+      "gams_code": "E3a3",
+      "problem_id": "pchip-hermite-integrals-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/pchip-hermite-integrals-reference.f90",
+      "revision": "8f5350565072622a2344dd0ec75193832b31eb10",
+      "author_example": "test/pchip_test.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/transforms-structures-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 117 REAL64 piecewise cubic Hermite integrals on a six-node nonuniform grid with explicitly supplied dyadic values/slopes. 81 arbitrary-bound and 36 node-index intervals include zero/reversed/multi-panel bounds. Independent per-panel two-point Gauss integration of Hermite basis polynomials, plus saved Python Fraction antiderivatives. The slopes are caller-supplied; this does not test DPCHIM slope selection. Extrapolation excluded.",
+      "validation_path": "docs/gams-transforms-structures-ten-validation.json",
+      "review_path": "docs/gams-transforms-structures-ten.md",
+      "checks": {
+        "calls": 117,
+        "oracle": "exact cubic Gaussian panel quadrature and rational antiderivatives",
+        "scalar_kind": "REAL64"
+      }
+    },
+    {
+      "id": "pchip-cubic-boundaries-reference",
+      "name": "gams-pchip-cubic-boundaries-reference",
+      "package_id": "pchip",
+      "procedure_id": "pchip-cubic-boundaries",
+      "gams_code": "E1a",
+      "problem_id": "pchip-cubic-boundaries-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/pchip-cubic-boundaries-reference.f90",
+      "revision": "8f5350565072622a2344dd0ec75193832b31eb10",
+      "author_example": "test/pchip_test.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/transforms-structures-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 225 REAL64 cubic reproduction queries: three shifted cubics, six nonuniform nodes, and not-a-knot/supplied first derivative/supplied second derivative endpoint conditions. DPCHSP constructs slopes; DPCHFD values and first derivatives must match independent explicit cubic formulas at 25 points per case. Natural zero-second-derivative conditions are not imposed on nonmatching cubics. Extrapolation and noisy-data claims excluded.",
+      "validation_path": "docs/gams-transforms-structures-ten-validation.json",
+      "review_path": "docs/gams-transforms-structures-ten.md",
+      "checks": {
+        "queries": 225,
+        "oracle": "explicit cubic values and derivatives with exact endpoint conditions",
+        "scalar_kind": "REAL64"
+      }
+    },
+    {
+      "id": "specfunc-fullerton-beta-pairs-reference",
+      "name": "gams-specfunc-fullerton-beta-pairs-reference",
+      "package_id": "specfunc-fullerton",
+      "procedure_id": "specfunc-fullerton-beta-pairs",
+      "gams_code": "C7b",
+      "problem_id": "specfunc-fullerton-beta-pairs-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specfunc-fullerton-beta-pairs-reference.f90",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "author_example": "test/beta/test_beta.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/transforms-structures-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 64 positive-parameter pairs for default REAL32 beta/log_beta functions, a,b in {1/2,1,3/2,5/2,4,8,16,32}. Independent mpmath 80/120-digit references saved to 18 digits; beta requires relative error <=5e-5 and log-beta scaled absolute error <=5e-5. Includes the large-argument log-domain path. Nonpositive parameters, underflow and REAL64 accuracy claims excluded.",
+      "validation_path": "docs/gams-transforms-structures-ten-validation.json",
+      "review_path": "docs/gams-transforms-structures-ten.md",
+      "checks": {
+        "pairs": 64,
+        "scalar_kind": "default REAL32",
+        "relative_tolerance": 5e-05,
+        "oracle": "80/120 digit independent beta/log-beta references"
+      }
+    },
+    {
+      "id": "specfunc-fullerton-integer-beta-cdf-reference",
+      "name": "gams-specfunc-fullerton-integer-beta-cdf-reference",
+      "package_id": "specfunc-fullerton",
+      "procedure_id": "specfunc-fullerton-integer-beta-cdf",
+      "gams_code": "L5a1b",
+      "problem_id": "specfunc-fullerton-integer-beta-cdf-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specfunc-fullerton-integer-beta-cdf-reference.f90",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "author_example": "test/beta/test_beta.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/transforms-structures-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 252 default REAL32 regularized beta-CDF queries, integer a,b=1..6 and seven dyadic x values including endpoints. Independent exact rational binomial upper-tail formula with n=a+b-1; absolute error <=3e-6, boundedness and sampled monotonicity. Noninteger shapes, extreme tails and REAL64 accuracy excluded.",
+      "validation_path": "docs/gams-transforms-structures-ten-validation.json",
+      "review_path": "docs/gams-transforms-structures-ten.md",
+      "checks": {
+        "queries": 252,
+        "scalar_kind": "default REAL32",
+        "absolute_tolerance": 3e-06,
+        "oracle": "exact rational binomial-tail polynomial"
+      }
     }
   ]
 }

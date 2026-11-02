@@ -67,6 +67,32 @@ class GamsSiteTests(unittest.TestCase):
             self.assertIn('Open default example', sorting)
             self.assertNotIn('Try in playground', sorting)
 
+    def test_transforms_structures_pages_link_checked_drivers_and_leave_failed_wrappers_unverified(self):
+        import copy
+        from xpackage_gams import driver_data, gams_data
+        drivers = [d for d in driver_data(data=gams_data())
+                   if d.get('validation_path') == 'docs/gams-transforms-structures-ten-validation.json']
+        self.assertEqual(len(drivers), 10)
+        feed = copy.deepcopy(self.feed)
+        ids = {d['package_id'] for d in drivers} | {'quadrature-fortran'}
+        feed['projects'] = [p for p in feed['projects'] if p['playground']['package_id'] in ids]
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination, feed)
+            for driver in drivers:
+                url = ('https://beliavsky.github.io/fortran-playground/fpm/'
+                       f'?package={driver["package_id"]}&example={driver["name"]}')
+                page = Page((destination/driver['gams_code']/'index.html').read_text(encoding='utf-8'))
+                self.assertIn((url, driver['id']), page.anchors)
+                detail = (destination/f'packages/{driver["package_id"]}/index.html').read_text(encoding='utf-8')
+                card = detail.split('id="'+driver['procedure_id']+'"', 1)[1].split('</article>', 1)[0]
+                self.assertIn('Load checked GAMS driver:', card)
+                self.assertIn(url.replace('&', '&amp;'), card)
+            detail = (destination/'packages/quadrature-fortran/index.html').read_text(encoding='utf-8')
+            for dimension in [2, 3]:
+                card = detail.split(f'id="quadrature-fortran-{dimension}d-rectangles"', 1)[1].split('</article>', 1)[0]
+                self.assertNotIn('Load checked GAMS driver:', card)
+
     def test_integrals_tensors_pages_open_checked_specialized_drivers(self):
         import copy
         from xpackage_gams import driver_data, gams_data

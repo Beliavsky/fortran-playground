@@ -1,0 +1,328 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "fftpack-cosine-type1-reference",
+      "source_revision": "0fffe7c05a918363a7cc12ae138a695afd115f36",
+      "source_sha256": "9951a7bd657ecae5b680ede639102b6c287a3d5e5ef352ab38488db40329a5e2",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T17:19:05.477167+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.726,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Independent direct trigonometric sums and normalized inverse cases: 92\nPASS fftpack-cosine-type1-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.042,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fftpack-sine-type1-reference",
+      "source_revision": "0fffe7c05a918363a7cc12ae138a695afd115f36",
+      "source_sha256": "22159179fbdf7ddb3008b4bcdf7cefff30226b4c0b69bd06917d5154cd264ef9",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T17:19:07.666605+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.421,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Independent direct trigonometric sums and normalized inverse cases: 96\nPASS fftpack-sine-type1-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.044,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fftpack-packed-real-transforms-reference",
+      "source_revision": "0fffe7c05a918363a7cc12ae138a695afd115f36",
+      "source_sha256": "60620ba6166803c52cfa1e8f885d934100515ef1303e228c94c3b0280cd94b27",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T17:19:13.946234+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 4.416,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Packed real DFT, odd/even lengths, truncation and zero-padding cases: 156\nPASS fftpack-packed-real-transforms-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.043,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "specialmatrices-strang-systems-reference",
+      "source_revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "source_sha256": "9581c137c3170f64edfc4d900c33944a5bebb777b712372451d8a5333e0c592c",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T17:19:24.266855+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 8.186,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "SPD tridiagonal vector/multiple-RHS solves, with/without refinement: 276\nPASS specialmatrices-strang-systems-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.072,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "specialmatrices-circulant-systems-reference",
+      "source_revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "source_sha256": "0fe2937d98e473425b974ac044f207f7a5eac20bf8cba3bb3d1d686336557ec0",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T17:19:33.009920+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 6.824,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Strictly diagonally dominant circulant vector/multiple-RHS systems: 132\nPASS specialmatrices-circulant-systems-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.064,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "specialmatrices-rectangular-poisson-reference",
+      "source_revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "source_sha256": "a15ae508fd8b7f824888db8ee15730304485dd91c2912e10dbb95dc1edbf0aaf",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T17:19:35.206305+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.667,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Rectangular homogeneous-Dirichlet Laplacian vector/multiple-RHS solves: 288\nPASS specialmatrices-rectangular-poisson-reference\n",
+          "stderr": "Project is up to date\nAt line 29 of file ../sources/bundle/packages/0/SpecialMatrices-2f53a4b51afbeb2efd2b60eb379283f978359d2f/src/Poisson2D/solve.f90\nFortran runtime warning: An array temporary was created for argument 'x' of procedure 'dsint'\nAt line 47 of file ../sources/bundle/packages/0/SpecialMatrices-2f53a4b51afbeb2efd2b60eb379283f978359d2f/src/Poisson2D/solve.f90\nFortran runtime warning: An array temporary was created for argument 'x' of procedure 'dsint'\n",
+          "seconds": 0.067,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "pchip-hermite-integrals-reference",
+      "source_revision": "8f5350565072622a2344dd0ec75193832b31eb10",
+      "source_sha256": "d0638de3b6dabd2a70d5eb012616202f446e4b8e99c1e2c17ade1ed5b0845755",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T17:19:37.495857+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.398,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Piecewise cubic integrals with arbitrary/reversed/node-index bounds: 117\nPASS pchip-hermite-integrals-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.028,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "pchip-cubic-boundaries-reference",
+      "source_revision": "8f5350565072622a2344dd0ec75193832b31eb10",
+      "source_sha256": "788f15b3bb3a6412945b01b8ef61d164eebc92daabdea7c8bd4bb8c80bfbb146",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T17:19:39.331599+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.488,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Cubic spline values/derivatives: not-a-knot, first/second derivative boundaries: 225\nPASS pchip-cubic-boundaries-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.026,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "specfunc-fullerton-beta-pairs-reference",
+      "source_revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "source_sha256": "c7a20b7eaa6cdf21d075baf58a191042c117db84b54ec3c67f1605dfb367243d",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T17:21:28.816429+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.51,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Positive integer/half-integer beta and log-beta reference pairs: 64\nPASS specfunc-fullerton-beta-pairs-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.04,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "specfunc-fullerton-integer-beta-cdf-reference",
+      "source_revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "source_sha256": "d9fbc3838dfd871317f0546e8f972cb53ab8f3e94d81577ceeb63e79215ef048",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T17:22:40.789368+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.566,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Integer-parameter regularized beta CDF versus exact binomial tails: 252\nPASS specfunc-fullerton-integer-beta-cdf-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.037,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-11-02T17:22:40.840949+00:00"
+}

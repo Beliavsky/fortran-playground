@@ -469,7 +469,8 @@
       "E3"
     ],
     "pchip": [
-      "E1"
+      "E1",
+      "E3"
     ],
     "finterp": [
       "E1",
@@ -679,7 +680,8 @@
     "specialmatrices": [
       "D1",
       "D2",
-      "D3"
+      "D3",
+      "I2"
     ],
     "forpca": [
       "D4",
@@ -747,7 +749,8 @@
     "specfunc-fullerton": [
       "C5",
       "C7",
-      "C10"
+      "C10",
+      "L5"
     ],
     "lib_statistics": [
       "L8",
@@ -1859,6 +1862,38 @@
     "E3a2": {
       "label": "Derivative evaluation",
       "parent": "E3a"
+    },
+    "D2b2": {
+      "label": "Positive definite banded",
+      "parent": "D2b"
+    },
+    "D2b2a": {
+      "label": "Tridiagonal",
+      "parent": "D2b2"
+    },
+    "E3a3": {
+      "label": "Quadrature",
+      "parent": "E3a"
+    },
+    "I2b": {
+      "label": "Elliptic boundary value problems",
+      "parent": "I2"
+    },
+    "I2b1": {
+      "label": "Linear",
+      "parent": "I2b"
+    },
+    "I2b1a": {
+      "label": "Second order",
+      "parent": "I2b1"
+    },
+    "I2b1a1": {
+      "label": "Poisson (Laplace) or Helmholtz equation",
+      "parent": "I2b1a"
+    },
+    "I2b1a1a": {
+      "label": "Rectangular domain (or topologically rectangular in the coordinate system)",
+      "parent": "I2b1a1"
     }
   },
   "procedure_mappings": [
@@ -14368,6 +14403,388 @@
           "sha256": "33ebc15bcdd828dc03bd05e560ca048d1f5b0f4dc2fd849bf2018c33086138cd"
         }
       ]
+    },
+    {
+      "id": "fftpack-cosine-type1",
+      "package_id": "fftpack",
+      "revision": "0fffe7c05a918363a7cc12ae138a695afd115f36",
+      "module": "fftpack",
+      "procedure": "dct(type=1), idct(type=1)",
+      "gams_codes": [
+        "J1a3"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "92 REAL64 DCT-I cases, lengths 2..24 and four deterministic signal patterns. Independent endpoint-weighted direct cosine sums and inverse normalization 2*(n-1), including smallest valid length. Finite results and source preservation; invalid sizes excluded.",
+      "driver_id": "fftpack-cosine-type1-reference",
+      "evidence": [
+        {
+          "path": "src/fftpack_dct.f90",
+          "line": 6,
+          "sha256": "9d17f44e068b88b6989b466084ea2ef134ba28c0a620ff9164c655ce2e905aa7"
+        },
+        {
+          "path": "src/dcost.f90",
+          "line": 1,
+          "sha256": "854b22cbe1ef82fd5e8b10e1f74b080ef311b36c6eabb8a5765f85c4699aac21"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_fftpack_dct.f90",
+          "sha256": "1e520dd7bdc81e4d8878ea1d8da2f7962d21bfffe1d83f14faaa1956c7af11e3"
+        }
+      ]
+    },
+    {
+      "id": "fftpack-sine-type1",
+      "package_id": "fftpack",
+      "revision": "0fffe7c05a918363a7cc12ae138a695afd115f36",
+      "module": "fftpack",
+      "procedure": "dsinti, dsint",
+      "gams_codes": [
+        "J1a3"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "96 REAL64 in-place DST-I cases, lengths 1..24 and four deterministic signal patterns. Direct 2*sum(x_j*sin(pi*j*k/(n+1))) references, normalization 2*(n+1), reused initialization workspace and finite checks. Invalid sizes and extreme-range inputs excluded.",
+      "driver_id": "fftpack-sine-type1-reference",
+      "evidence": [
+        {
+          "path": "src/fftpack.f90",
+          "line": 190,
+          "sha256": "8d8ab19d3ee948a764fdd6fcd47d8ad96e19e6384d84753cb7687f34ac8b9857"
+        },
+        {
+          "path": "src/dsint.f90",
+          "line": 1,
+          "sha256": "f8d57279e559be7de5233d41cef4b24e65d91ee05bee77dfea2a3f972e3f0721"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_fftpack_original.f90",
+          "sha256": "5e32af3be7f3fcc6a0875da1e01de0e60b679b6f6ef7ce130617587780b1398a"
+        }
+      ]
+    },
+    {
+      "id": "fftpack-packed-real-transforms",
+      "package_id": "fftpack",
+      "revision": "0fffe7c05a918363a7cc12ae138a695afd115f36",
+      "module": "fftpack",
+      "procedure": "rfft, irfft",
+      "gams_codes": [
+        "J1a1"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "156 REAL64 packed real-transform cases, source lengths 4..16, four patterns and truncation/unchanged/zero-padding lengths m-2,m,m+3. Direct Fourier sums check DC, interleaved real/negative-sine components and even-length Nyquist coefficient; inverse normalized by n. Exact source preservation and output shapes checked. Packed representation is real, not a complex half-spectrum.",
+      "driver_id": "fftpack-packed-real-transforms-reference",
+      "evidence": [
+        {
+          "path": "src/fftpack_rfft.f90",
+          "line": 6,
+          "sha256": "588e422bf38aba6acce09ea67676e8a17585fa3dc7036c6dde76606cec0feb87"
+        },
+        {
+          "path": "src/fftpack_irfft.f90",
+          "line": 6,
+          "sha256": "c5113e914e18d3c563108eac276ea0bf9f93932698b2c94e826200e656583f1b"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_fftpack_rfft.f90",
+          "sha256": "24c08bd5468624758283c2dc15f4004517a1aa8e2b4e06e8ba16dc4a34108fc4"
+        }
+      ]
+    },
+    {
+      "id": "specialmatrices-strang-systems",
+      "package_id": "specialmatrices",
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "module": "specialmatrices_strang",
+      "procedure": "Strang, solve",
+      "gams_codes": [
+        "D2b2a"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "276 REAL64 vector/multiple-RHS solves for the SPD tridiagonal Strang matrix (2 on diagonal, -1 off diagonal), n=2..24, three solution patterns and refinement off/on. Known dyadic solutions and independently assembled three-point stencil RHS/residuals; exact RHS preservation and finite checks. General variable-coefficient tridiagonals excluded.",
+      "driver_id": "specialmatrices-strang-systems-reference",
+      "evidence": [
+        {
+          "path": "src/Strang/specialmatrices_strang.f90",
+          "line": 137,
+          "sha256": "64386c79a7f26065c9d600b16d95af7350af00ccebf15c767ce438a4af906bbf"
+        },
+        {
+          "path": "src/Strang/solve.f90",
+          "line": 11,
+          "sha256": "f973a59cbdac61b342b4e436a521ca196a4c3bd155b0d92140623dc3ff6fd6c8"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_strang.f90",
+          "sha256": "40afeae43dfb67bfe408b3144415c6404f68325198f37586c24f6618ac5a7a4f"
+        }
+      ]
+    },
+    {
+      "id": "specialmatrices-circulant-systems",
+      "package_id": "specialmatrices",
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "module": "specialmatrices_circulant",
+      "procedure": "Circulant, solve",
+      "gams_codes": [
+        "D2a1"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "132 REAL64 vector/multiple-RHS solves, n=2..23 and three strictly diagonally dominant nonsymmetric circulant generators. Explicit dense reference A(i,j)=c(modulo(i-j,n)+1), known dyadic solutions, independent dense RHS/residuals and exact RHS preservation. The generator is the first column, following pinned dense()/FFT implementation; the constructor comment displays a transposed convention. Near-singular Fourier eigenvalues excluded.",
+      "driver_id": "specialmatrices-circulant-systems-reference",
+      "evidence": [
+        {
+          "path": "src/Circulant/specialmatrices_circulant.f90",
+          "line": 155,
+          "sha256": "3a5a60f88a12e8bc31da809289af968eac578a8fafb47d58c94602576919a12e"
+        },
+        {
+          "path": "src/Circulant/solve.f90",
+          "line": 5,
+          "sha256": "387f2af1b20e0db818376961d89f1f341633ed708fba3ad5e581d83cc139cb86"
+        },
+        {
+          "path": "src/Circulant/utils.f90",
+          "line": 5,
+          "sha256": "ff1a7a034b2de3c0ad19071070cf306a6460d0ef6beeea21abb4a0a7e4cf565b"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_circulant.f90",
+          "sha256": "9838bac0e850f1ad5a2467d64d790dfc0220e7cffe4d9254f0228012ef37b34b"
+        }
+      ]
+    },
+    {
+      "id": "specialmatrices-rectangular-poisson",
+      "package_id": "specialmatrices",
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "module": "specialmatrices_poisson2D",
+      "procedure": "Poisson2D, solve",
+      "gams_codes": [
+        "I2b1a1a"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "288 REAL64 vector/multiple-RHS rectangular Dirichlet Laplacian solves: nx,ny=2..7, two aspect-ratio domains and polynomial/sine manufactured solutions. The quartic product x*(Lx-x)*y*(Ly-y) has exactly reproduced continuous forcing under the five-point stencil; the sine case uses the discrete eigenvalue. Independent stencil residuals, known grid solutions and exact RHS preservation. Operator is Delta, not -Delta. No continuum-convergence or nonzero-boundary claim.",
+      "driver_id": "specialmatrices-rectangular-poisson-reference",
+      "evidence": [
+        {
+          "path": "src/Poisson2D/specialmatrices_poisson2D.f90",
+          "line": 152,
+          "sha256": "11981a48e34a5a7da03049636a622d3c0335ed9faa42831ef31eb749e04dce68"
+        },
+        {
+          "path": "src/Poisson2D/solve.f90",
+          "line": 9,
+          "sha256": "ade74b8d71158b7fa382424553943e83547e128b3aaf44e2c629acc82462f8b7"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_poisson2D.f90",
+          "sha256": "9735950884556e59bf0279ab95d6b086ac480a8cbbb1ee026ec86456305a9ac1"
+        }
+      ]
+    },
+    {
+      "id": "pchip-hermite-integrals",
+      "package_id": "pchip",
+      "revision": "8f5350565072622a2344dd0ec75193832b31eb10",
+      "module": "pchip_module",
+      "procedure": "dpchia, dpchid",
+      "gams_codes": [
+        "E3a3"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "117 REAL64 piecewise cubic Hermite integrals on a six-node nonuniform grid with explicitly supplied dyadic values/slopes. 81 arbitrary-bound and 36 node-index intervals include zero/reversed/multi-panel bounds. Independent per-panel two-point Gauss integration of Hermite basis polynomials, plus saved Python Fraction antiderivatives. The slopes are caller-supplied; this does not test DPCHIM slope selection. Extrapolation excluded.",
+      "driver_id": "pchip-hermite-integrals-reference",
+      "evidence": [
+        {
+          "path": "src/pchip_module.f90",
+          "line": 1652,
+          "sha256": "d92e5471b464d79b742256fd611c1f12ce294bffaac5d864d1d9163784d1fb32"
+        },
+        {
+          "path": "src/pchip_module.f90",
+          "line": 2085,
+          "sha256": "d92e5471b464d79b742256fd611c1f12ce294bffaac5d864d1d9163784d1fb32"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/pchip_test.f90",
+          "sha256": "63f9e869e896f9792b2d3b6ccc23fde01e4911a436eb73a158edeaf150742664"
+        }
+      ]
+    },
+    {
+      "id": "pchip-cubic-boundaries",
+      "package_id": "pchip",
+      "revision": "8f5350565072622a2344dd0ec75193832b31eb10",
+      "module": "pchip_module",
+      "procedure": "dpchsp, dpchfd",
+      "gams_codes": [
+        "E1a"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "first derivatives of fitted spline",
+      "notes": "225 REAL64 cubic reproduction queries: three shifted cubics, six nonuniform nodes, and not-a-knot/supplied first derivative/supplied second derivative endpoint conditions. DPCHSP constructs slopes; DPCHFD values and first derivatives must match independent explicit cubic formulas at 25 points per case. Natural zero-second-derivative conditions are not imposed on nonmatching cubics. Extrapolation and noisy-data claims excluded.",
+      "driver_id": "pchip-cubic-boundaries-reference",
+      "evidence": [
+        {
+          "path": "src/pchip_module.f90",
+          "line": 2456,
+          "sha256": "d92e5471b464d79b742256fd611c1f12ce294bffaac5d864d1d9163784d1fb32"
+        },
+        {
+          "path": "src/pchip_module.f90",
+          "line": 1216,
+          "sha256": "d92e5471b464d79b742256fd611c1f12ce294bffaac5d864d1d9163784d1fb32"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/pchip_test.f90",
+          "sha256": "63f9e869e896f9792b2d3b6ccc23fde01e4911a436eb73a158edeaf150742664"
+        }
+      ]
+    },
+    {
+      "id": "quadrature-fortran-2d-rectangles",
+      "package_id": "quadrature-fortran",
+      "revision": "1d208fc59569a97b1c2abf9c45f7c352dcc7b318",
+      "module": "quadrature_module",
+      "procedure": "integration_class_2d%initialize, integrate",
+      "gams_codes": [
+        "H2b1a1"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "36 REAL64 2D polynomial integrals on three rectangular domains using 6/8/10-point adaptive Gaussian methods and monomial powers 0..3 in every coordinate. Product antiderivatives supply exact references; successful status, finite nonnegative error and positive callback counts required. Variable bounds, nonsmooth integrands and rigorous global error guarantees excluded. The exact hosted consumer compiled but segfaulted before numerical output; saved under docs/gams-candidates/quadrature-fortran-nested. No checked driver is assigned.",
+      "evidence": [
+        {
+          "path": "src/quadrature_module.F90",
+          "line": 295,
+          "sha256": "9c407f2553745d6d07ec30f4101199a644b0558cdc9d951602da59c5dfeb315f"
+        },
+        {
+          "path": "src/quadrature_module.F90",
+          "line": 533,
+          "sha256": "9c407f2553745d6d07ec30f4101199a644b0558cdc9d951602da59c5dfeb315f"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test.f90",
+          "sha256": "c654bec4a4141cfc48a1fca81f670f946d27532d68e0ac4c734dc4fbcad051e3"
+        }
+      ]
+    },
+    {
+      "id": "quadrature-fortran-3d-rectangles",
+      "package_id": "quadrature-fortran",
+      "revision": "1d208fc59569a97b1c2abf9c45f7c352dcc7b318",
+      "module": "quadrature_module",
+      "procedure": "integration_class_3d%initialize, integrate",
+      "gams_codes": [
+        "H2b1a1"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "36 REAL64 3D polynomial integrals on three rectangular domains using 6/8/10-point adaptive Gaussian methods and monomial powers 0..3 in every coordinate. Product antiderivatives supply exact references; successful status, finite nonnegative error and positive callback counts required. Variable bounds, nonsmooth integrands and rigorous global error guarantees excluded. The exact hosted consumer compiled but segfaulted before numerical output; saved under docs/gams-candidates/quadrature-fortran-nested. No checked driver is assigned.",
+      "evidence": [
+        {
+          "path": "src/quadrature_module.F90",
+          "line": 329,
+          "sha256": "9c407f2553745d6d07ec30f4101199a644b0558cdc9d951602da59c5dfeb315f"
+        },
+        {
+          "path": "src/quadrature_module.F90",
+          "line": 573,
+          "sha256": "9c407f2553745d6d07ec30f4101199a644b0558cdc9d951602da59c5dfeb315f"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test.f90",
+          "sha256": "c654bec4a4141cfc48a1fca81f670f946d27532d68e0ac4c734dc4fbcad051e3"
+        }
+      ]
+    },
+    {
+      "id": "specfunc-fullerton-beta-pairs",
+      "package_id": "specfunc-fullerton",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "module": "specfunc_fullerton",
+      "procedure": "beta, log_beta",
+      "gams_codes": [
+        "C7b"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "64 positive-parameter pairs for default REAL32 beta/log_beta functions, a,b in {1/2,1,3/2,5/2,4,8,16,32}. Independent mpmath 80/120-digit references saved to 18 digits; beta requires relative error <=5e-5 and log-beta scaled absolute error <=5e-5. Includes the large-argument log-domain path. Nonpositive parameters, underflow and REAL64 accuracy claims excluded.",
+      "driver_id": "specfunc-fullerton-beta-pairs-reference",
+      "evidence": [
+        {
+          "path": "src/fullerton_beta.f90",
+          "line": 30,
+          "sha256": "d3ed23c6d602181fd4b3a0c2ff1e98b5a0b31af8b3da967f867583fb71fa95ce"
+        },
+        {
+          "path": "src/fullerton_beta.f90",
+          "line": 215,
+          "sha256": "d3ed23c6d602181fd4b3a0c2ff1e98b5a0b31af8b3da967f867583fb71fa95ce"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/beta/test_beta.f90",
+          "sha256": "959eb880d4a983a9890acbd44502f0d34b2015dd5945fda17c2821347ca6d416"
+        }
+      ]
+    },
+    {
+      "id": "specfunc-fullerton-integer-beta-cdf",
+      "package_id": "specfunc-fullerton",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "module": "specfunc_fullerton",
+      "procedure": "beta_inc",
+      "gams_codes": [
+        "L5a1b"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not applicable",
+      "notes": "252 default REAL32 regularized beta-CDF queries, integer a,b=1..6 and seven dyadic x values including endpoints. Independent exact rational binomial upper-tail formula with n=a+b-1; absolute error <=3e-6, boundedness and sampled monotonicity. Noninteger shapes, extreme tails and REAL64 accuracy excluded.",
+      "driver_id": "specfunc-fullerton-integer-beta-cdf-reference",
+      "evidence": [
+        {
+          "path": "src/fullerton_beta.f90",
+          "line": 75,
+          "sha256": "d3ed23c6d602181fd4b3a0c2ff1e98b5a0b31af8b3da967f867583fb71fa95ce"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/beta/test_beta.f90",
+          "sha256": "959eb880d4a983a9890acbd44502f0d34b2015dd5945fda17c2821347ca6d416"
+        }
+      ]
     }
   ],
   "review_notes": {
@@ -14762,7 +15179,8 @@
       "Z"
     ],
     "specialmatrices": [
-      "D"
+      "D",
+      "I"
     ],
     "quaff": [
       "A",
@@ -14836,7 +15254,8 @@
       "I"
     ],
     "specfunc-fullerton": [
-      "C"
+      "C",
+      "L"
     ],
     "lib_statistics": [
       "L"

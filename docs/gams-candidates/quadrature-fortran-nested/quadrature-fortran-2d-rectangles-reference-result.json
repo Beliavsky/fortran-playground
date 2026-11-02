@@ -1,0 +1,84 @@
+{
+  "source_path": "docs/gams-candidates/quadrature-fortran-nested/quadrature-fortran-2d-rectangles-reference.f90",
+  "source_sha256": "6557238727616c9b39a24fa878d4c6606006c7a44d345d500700e48db332d55d",
+  "revision": "1d208fc59569a97b1c2abf9c45f7c352dcc7b318",
+  "result": {
+    "ok": false,
+    "compiler": "GNU Fortran (GCC) 16.2.0",
+    "compiler_id": "gfortran",
+    "fpm": "0.12.0",
+    "stages": [
+      {
+        "name": "Build",
+        "command": [
+          "fpm",
+          "build",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 0.38,
+        "ok": true,
+        "exit_code": 0,
+        "error": "",
+        "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+        "stderr": ""
+      },
+      {
+        "name": "Run",
+        "command": [
+          "fpm",
+          "run",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 0.028,
+        "ok": false,
+        "exit_code": 139,
+        "error": "",
+        "stdout": "",
+        "stderr": "Project is up to date\n\nProgram received signal SIGSEGV: Segmentation fault - invalid memory reference.\n\nBacktrace for this error:\n#0  0x2b0e6c8e5f83 in ???\n#1  0x2b0e6c8e4b35 in ???\n#2  0x2b0e6cd7ad6f in ???\n#3  0x7f2738cb7294 in ???\nSegmentation fault\n<ERROR> Execution for object \" playground-main \" returned exit code  139\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 139\n"
+      }
+    ],
+    "cache": {
+      "package": "quadrature-fortran",
+      "compiler": "GNU Fortran 16.2.0",
+      "key": "e5cf5347e6cb7fc7883f3c35",
+      "library_reused": true,
+      "changed_artifacts": []
+    },
+    "packages": [
+      {
+        "repository": "jacobwilliams/quadrature-fortran",
+        "revision": "1d208fc59569a97b1c2abf9c45f7c352dcc7b318",
+        "sha256": "b099c2ee3e5c9c993e888cff0724fd7035dfb36559b09bc516ac94c45a610a34"
+      }
+    ],
+    "build_ok": true,
+    "target_groups": {
+      "app": [
+        "playground-main"
+      ],
+      "example": [],
+      "test": []
+    },
+    "targets": [
+      "playground-main"
+    ],
+    "plots": [],
+    "plot_notes": []
+  }
+}
