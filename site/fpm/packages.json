@@ -874,6 +874,16 @@
         "parent": "D2b1"
       },
       {
+        "code": "D2c",
+        "label": "Complex non-Hermitian matrices",
+        "parent": "D2"
+      },
+      {
+        "code": "D2c1",
+        "label": "General",
+        "parent": "D2c"
+      },
+      {
         "code": "D2d",
         "label": "Complex Hermitian matrices",
         "parent": "D2"
@@ -904,6 +914,16 @@
         "parent": "D3a"
       },
       {
+        "code": "D3c",
+        "label": "Complex non-Hermitian matrices",
+        "parent": "D3"
+      },
+      {
+        "code": "D3c1",
+        "label": "General",
+        "parent": "D3c"
+      },
+      {
         "code": "D4",
         "label": "Eigenvalues, eigenvectors",
         "parent": "D"
@@ -926,6 +946,11 @@
       {
         "code": "D4a3",
         "label": "Complex Hermitian",
+        "parent": "D4a"
+      },
+      {
+        "code": "D4a4",
+        "label": "Complex non-Hermitian",
         "parent": "D4a"
       },
       {
@@ -4166,6 +4191,326 @@
           {
             "path": "example/example_lstsq1.f90",
             "sha256": "aeb94a3308199023078fd6f77042eb590daedc71cc098b1ffc37a4988a8c0644"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-complex-determinants",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "det (COMPLEX128)",
+        "gams_codes": [
+          "D3c1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "72 COMPLEX128 determinants: sizes 1..8, three spectral patterns and three scales; checked unitary similarity of prescribed nonzero complex diagonal entries followed by a cyclic row permutation. Independent product and permutation sign; input preservation. Singular matrices, overflow and extreme conditioning excluded.",
+        "driver_id": "stdlib-complex-determinants-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 2666,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_determinant.f90",
+            "line": 1,
+            "sha256": "f083b4e318a7352e1e270358357b6af461bb32957595b9a49c7a44593c37d66e"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_determinant.f90",
+            "sha256": "1e5f5451e5093b5cc10aadc71a5fa878e1baead8f7238a0cf6e9fef9105c6b28"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-complex-inverses",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "inv (COMPLEX128)",
+        "gams_codes": [
+          "D2c1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "72 COMPLEX128 inverses: sizes 1..8, three patterns and three scales. Checked unitary similarity gives independent reciprocal-diagonal inverse; both left/right identity residuals and exact input preservation. Singular and ill-conditioned matrices excluded.",
+        "driver_id": "stdlib-complex-inverses-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 2812,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_inverse.f90",
+            "line": 1,
+            "sha256": "55fd1b20d5ba14d9cf60bd562683726e3ac46559333c8ee63ea3c24ff0f7fd77"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_inverse_function.f90",
+            "sha256": "f20ed41c227d5ff1a7cc65077ef56916f6000adb7af914b67cf2f62a4610b57a"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-complex-pseudoinverses",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "pinv (COMPLEX128)",
+        "gams_codes": [
+          "D9c"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "150 COMPLEX128 pseudoinverses on 25 tall/square/wide shapes, full-rank and one-zero-singular-value spectra, three scales. Independent reciprocal nonzero singular values, all four Moore-Penrose identities and input preservation; explicit rtol=1e-12. Near-cutoff singular values, zero matrices and other tolerances excluded.",
+        "driver_id": "stdlib-complex-pseudoinverses-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 3013,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_pinv.f90",
+            "line": 1,
+            "sha256": "d15c6fd308540e7ea3eae53d2a86486a5565a8c561d129e53e4c8ffa1756f5dd"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_pseudoinverse.f90",
+            "sha256": "8a298ff373fccfe48211714a7dcd0920baed5607558392fa8409da673060df84"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-complex-qr",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "qr (COMPLEX128)",
+        "gams_codes": [
+          "D5"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "150 COMPLEX128 QR factorizations: 25 tall/square/wide shapes, three prescribed upper-trapezoidal patterns, full/reduced outputs. Checked unitary-times-triangular construction supplies diagonal magnitudes; reconstruction, orthonormal columns, triangular zeros and input preservation. No fixed phases, pivoted or rank-deficient QR claim.",
+        "driver_id": "stdlib-complex-qr-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 2216,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_qr.f90",
+            "line": 1,
+            "sha256": "94b5f764e0ebeab1cfe715a03e689eaf238646f892714d3790ad48071191a149"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_qr.f90",
+            "sha256": "82e1f981218cd2ac11c1522bf7cbc841db773a2b89986cc89c5266ab8427df22"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-complex-schur",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "schur (COMPLEX128)",
+        "gams_codes": [
+          "D4a4"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "63 COMPLEX128 Schur decompositions of nonnormal matrices: sizes 2..8, three triangular templates and three scales under checked unitary similarity. Independent diagonal eigenvalues matched one-to-one without ordering assumptions; Schur triangularity, unitary vectors, reconstruction and input preservation. Repeated/clustered eigenvalues and sorting excluded.",
+        "driver_id": "stdlib-complex-schur-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 2458,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_schur.f90",
+            "line": 1,
+            "sha256": "7f9c90402ca46b737169884d7030a0401f4a31d74d8c093a2e13485b67a40258"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_schur_complex.f90",
+            "sha256": "5391a15ee5cfe434c071ed61e9fc9aba4e41d1fe580a084ae35cd43eac238fb1"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-complex-matrix-exponential",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "expm (COMPLEX128)",
+        "gams_codes": [
+          "D"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "180 COMPLEX128 matrix exponentials: sizes 2..7, three nilpotent superdiagonal patterns, five scales, default and order-12 Pade. Independent finite Taylor polynomial for nilpotent N and scalar exp(lambda) for A=lambda*I+N; input preservation. Bounded nonnormal Jordan-type cases only, no general stability/performance claim.",
+        "driver_id": "stdlib-complex-matrix-exponential-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 6437,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_matrix_functions.f90",
+            "line": 1,
+            "sha256": "25b5fff4b754f6a48f24877d15da81363aa0d2b10dc72dee95154f3409637c34"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_expm.f90",
+            "sha256": "3805a9eccf42af5b6a7001b09423a20692830dffc2a0e7afe2ac144cc746c793"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-complex-general-systems",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "solve (COMPLEX128)",
+        "gams_codes": [
+          "D2c1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "144 COMPLEX128 general linear solves: sizes 1..8, three patterns, three scales, vector and three-column RHS. Row-reversed diagonally dominant non-Hermitian matrices with manufactured solutions; residuals and input preservation. Singular/ill-conditioned cases and overwrite mode excluded.",
+        "driver_id": "stdlib-complex-general-systems-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 734,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_solve.f90",
+            "line": 1,
+            "sha256": "1adcdd3a5f9b2663ac1e8211dd3d36b6e740c2b0ce44db687effb3fe770bffcb"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_linalg_solve.f90",
+            "sha256": "379fce1b49a35b2acc12befbf36f5be89a083199bbe623fe38598e69ecd2bd0c"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-complex-positive-systems",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "solve_chol (COMPLEX128)",
+        "gams_codes": [
+          "D2d1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "288 COMPLEX128 positive-definite solves: 72 known-factor matrices of sizes 1..8, three patterns/scales, vector and multiple RHS with lower/upper factorization. Manufactured coefficients, residuals and preservation. Both triangles populated; no indefinite or poisoned-unused-triangle behavior claimed.",
+        "driver_id": "stdlib-complex-positive-systems-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 1052,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_solve.f90",
+            "line": 1,
+            "sha256": "1adcdd3a5f9b2663ac1e8211dd3d36b6e740c2b0ce44db687effb3fe770bffcb"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_solve_chol.f90",
+            "sha256": "0e1a7608bc479cdb300f049ea9fa335759d43c603be5a77ffce86fd727ad908d"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-complex-weighted-fits",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "solve_weighted_lstsq (COMPLEX128)",
+        "gams_codes": [
+          "D9a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "45 COMPLEX128 weighted least-squares fits: n=1..5, m=n+2..n+4, three unitary patterns. Positive weights are exact squares 1,4,16; weighted design columns and a nonzero weighted residual are orthogonal by construction. Known coefficients, rank, weighted stationarity and input preservation checked. Extreme/zero weights and rank deficiency excluded.",
+        "driver_id": "stdlib-complex-weighted-fits-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 2122,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_least_squares.f90",
+            "line": 1,
+            "sha256": "4b0813fe092a342f258c8f014fcdfb919e770900e22c8dddecab8f1ae8ca70b6"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_weighted_lstsq.f90",
+            "sha256": "e98c08cd94834e32f4de7bb01e1edc8cb9b85a775f670c5b5ae44855c23c727d"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-complex-equality-fits",
+        "package_id": "stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "module": "stdlib_linalg",
+        "procedure": "solve_constrained_lstsq (COMPLEX128)",
+        "gams_codes": [
+          "D9b1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "72 COMPLEX128 equality-constrained fits: n=2..7, four unitary patterns, three diagonal scales. Independent diagonal-Hessian one-complex-equality KKT minimizer transformed by checked unitary coordinates; coefficients, feasibility, stationarity and all input preservation. Only one full-row-rank equality and full-column-rank cost; inequalities and deficient ranks excluded.",
+        "driver_id": "stdlib-complex-equality-fits-reference",
+        "evidence": [
+          {
+            "path": "src/stdlib_linalg.f90",
+            "line": 1903,
+            "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+          },
+          {
+            "path": "src/stdlib_linalg_least_squares.f90",
+            "line": 1,
+            "sha256": "4b0813fe092a342f258c8f014fcdfb919e770900e22c8dddecab8f1ae8ca70b6"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "example/example_constrained_lstsq1.f90",
+            "sha256": "37f8dc0d4ad52803512e317aa4840d210ef117f0b95a9310f476df47a784b384"
           }
         ]
       }

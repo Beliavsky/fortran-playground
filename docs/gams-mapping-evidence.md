@@ -8,7 +8,7 @@ This report assesses each package/class pair, including inherited parent classes
 
 When a driver cannot be created, inspect the pinned implementation and author examples. Narrow or remove a classification that is unsupported; do not substitute an unrelated default example as evidence. Record missing dependencies, sandbox limits and upstream defects separately in the procedure or package review notes. A sandbox failure alone does not disprove an algorithm.
 
-Counts refer to package/class pairs and include parents: 744 verified, 76 source-supported, 241 uncertain.
+Counts refer to package/class pairs and include parents: 749 verified, 76 source-supported, 241 uncertain.
 
 ## Mappings requiring source review
 
@@ -599,12 +599,22 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [stdlib / stdlib-cg-kernel](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-cg-kernel) | D2b1b | verified |
 | [stdlib / stdlib-cholesky](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-cholesky) | D2b1b | verified |
 | [stdlib / stdlib-complex-cholesky](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-complex-cholesky) | D2d1b | verified |
+| [stdlib / stdlib-complex-determinants](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-complex-determinants) | D3c1 | verified |
+| [stdlib / stdlib-complex-equality-fits](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-complex-equality-fits) | D9b1 | verified |
 | [stdlib / stdlib-complex-gamma](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-complex-gamma) | C7a | verified |
+| [stdlib / stdlib-complex-general-systems](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-complex-general-systems) | D2c1 | verified |
 | [stdlib / stdlib-complex-hermitian-eigenpairs](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-complex-hermitian-eigenpairs) | D4a3 | verified |
+| [stdlib / stdlib-complex-inverses](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-complex-inverses) | D2c1 | verified |
 | [stdlib / stdlib-complex-least-squares](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-complex-least-squares) | D9a1 | verified |
 | [stdlib / stdlib-complex-loggamma](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-complex-loggamma) | C7a | verified |
+| [stdlib / stdlib-complex-matrix-exponential](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-complex-matrix-exponential) | D | verified |
 | [stdlib / stdlib-complex-phase](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-complex-phase) | C4a | verified |
+| [stdlib / stdlib-complex-positive-systems](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-complex-positive-systems) | D2d1b | verified |
+| [stdlib / stdlib-complex-pseudoinverses](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-complex-pseudoinverses) | D9c | verified |
+| [stdlib / stdlib-complex-qr](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-complex-qr) | D5 | verified |
+| [stdlib / stdlib-complex-schur](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-complex-schur) | D4a4 | verified |
 | [stdlib / stdlib-complex-thin-svd](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-complex-thin-svd) | D6 | verified |
+| [stdlib / stdlib-complex-weighted-fits](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-complex-weighted-fits) | D9a1 | verified |
 | [stdlib / stdlib-conjugate-transpose](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-conjugate-transpose) | D1b3 | verified |
 | [stdlib / stdlib-constrained-ls](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-constrained-ls) | D9b1 | verified |
 | [stdlib / stdlib-correlation](https://beliavsky.github.io/fortran-playground/gams/packages/stdlib/#stdlib-correlation) | L1c1b | verified |

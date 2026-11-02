@@ -1043,7 +1043,17 @@
         "stdlib-complex-cholesky",
         "stdlib-complex-hermitian-eigenpairs",
         "stdlib-complex-thin-svd",
-        "stdlib-complex-least-squares"
+        "stdlib-complex-least-squares",
+        "stdlib-complex-determinants",
+        "stdlib-complex-inverses",
+        "stdlib-complex-pseudoinverses",
+        "stdlib-complex-qr",
+        "stdlib-complex-schur",
+        "stdlib-complex-matrix-exponential",
+        "stdlib-complex-general-systems",
+        "stdlib-complex-positive-systems",
+        "stdlib-complex-weighted-fits",
+        "stdlib-complex-equality-fits"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
     },

@@ -111,6 +111,7 @@ PCA_ORDERING_TEN_REPORT = Path('docs/gams-pca-ordering-ten.md')
 ACTIVATIONS_TEN_REPORT = Path('docs/gams-activations-ten.md')
 GRIDS_TEN_REPORT = Path('docs/gams-grids-ten.md')
 COMPLEX_TEN_REPORT = Path('docs/gams-complex-ten.md')
+COMPLEX_OPERATORS_TEN_REPORT = Path('docs/gams-complex-operators-ten.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
 EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
@@ -10368,6 +10369,114 @@ def complex_ten_review_text(root=ROOT):
     return '\n'.join(lines)
 
 
+def complex_operators_ten_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-complex-operators-ten-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-complex-operators-ten-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Ten checked complex matrix operator and fitting drivers',
+     '',
+     'Ten independent drivers passed GNU Fortran 16.2.0 and FPM 0.12.0 in the restricted hosted sandbox. '
+     'Existing stdlib libraries were reused; only mains and executables were compiled. The [verification '
+     'report](gams-complex-operators-ten-validation.json) saves normalized UTF-8/LF source hashes, pins, timings '
+     'and complete output. GAMS categories are not exhausted.',
+     '',
+     '## Independent references and scope',
+     '',
+     'All ten drivers exercise COMPLEX128 APIs. Independent mathematical constructions define expected answers, '
+     'with residuals and structural identities as additional checks. The pinned public API declarations, '
+     'implementations and linked author examples were reviewed. The examples are independent MIT consumers; '
+     'upstream implementation and author-test bodies were not copied. No upstream numerical source was patched.',
+     '',
+     '- **Determinants (D3c1):** 72 matrices of sizes 1..8, three diagonal spectra and three dyadic scales. '
+     'Unitary similarity preserves the known product of diagonal entries; a cyclic row permutation adds an '
+     'independently known sign. This checks nonzero complex determinants and exact input preservation.\n'
+     '- **Inverses (D2c1):** 72 matrices with independent reciprocal-diagonal inverses under checked unitary '
+     'similarity. Both left and right identity residuals and input preservation are checked.\n'
+     '- **Pseudoinverses (D9c):** 150 tall/square/wide cases from 25 shapes, full-rank and '
+     'one-zero-singular-value patterns, and three scales. Reciprocal nonzero singular values supply the expected '
+     'pseudoinverse. All four Moore-Penrose identities and input preservation are checked with explicit '
+     'rtol=1e-12.\n'
+     '- **QR (D5):** 150 full/reduced factorizations across 25 tall/square/wide shapes and three '
+     'upper-trapezoidal templates. Reconstruction, orthonormal columns, upper-trapezoidal zeros and prescribed '
+     'diagonal magnitudes are checked without imposing factor phases.\n'
+     '- **Schur (D4a4):** 63 nonnormal matrices from known complex upper-triangular templates under unitary '
+     'similarity. Eigenvalues are matched one-to-one without assuming order. Unitary Schur vectors, '
+     'triangularity, reconstruction and preservation are checked.\n'
+     '- **Matrix exponential (D):** 180 evaluations for sizes 2..7, three superdiagonal templates, five scales '
+     'and default/order-12 Pade. For A=lambda*I+N with nilpotent N, the independent answer is exp(lambda) times '
+     'the finite sum of N^j/j! for j=0..n-1. The next nilpotent term is explicitly checked as zero.\n'
+     '- **General linear systems (D2c1):** 144 vector/multiple-RHS calls with known complex coefficients in '
+     'row-reversed diagonally dominant matrices of sizes 1..8. Residuals and preservation are checked.\n'
+     '- **Positive-definite systems (D2d1b):** 288 vector/multiple-RHS calls on 72 known-factor matrices with '
+     'lower/upper factorizations. Coefficients, residuals and preservation are checked. Both triangles are '
+     'populated.\n'
+     '- **Weighted least squares (D9a1):** 45 overdetermined full-column-rank fits with weights 1, 4 and 16. '
+     'Known coefficients and a nonzero weighted-orthogonal residual provide independent references; weighted '
+     'stationarity, rank and preservation are checked.\n'
+     '- **Equality-constrained least squares (D9b1):** 72 fits with one complex equality and a full-column-rank '
+     'cost. A closed-form complex diagonal-Hessian KKT correction supplies the minimizer. Coefficients, equality '
+     'feasibility, stationarity and preservation of A, b, C and d are checked.',
+     '',
+     '## Mathematical constructions',
+     '',
+     'The drivers construct Q=I-2*v*v^H/(v^H*v) locally and check Q^H*Q before using Q. Determinant/inverse '
+     'examples use Q*diag(z)*Q^H with nonzero prescribed z. Pseudoinverses use A=Q*Sigma*P^H and '
+     'A+=P*Sigma+*Q^H. QR uses Q times a known upper trapezoid; Schur uses Q*T*Q^H with known nonnormal '
+     'triangular T. No library factorization is used to manufacture these references.',
+     '',
+     'For weighted fitting, sqrt(w) is an exact power of two. The columns of sqrt(W)*A are checked-unitary '
+     'columns scaled by j+1, and sqrt(W)*r is a nonzero multiple of the next orthogonal column. For constrained '
+     'fitting, write y=Q*x and H=diag(5*D^2). The unconstrained minimizer is u=(D*b1+2*D*b2)/diag(H). For the '
+     'nonconjugated equality c*y=d, lambda=(c*u-d)/(c*H^-1*c^H), y=u-H^-1*c^H*lambda and x=Q^H*y. The '
+     'stationarity assertion uses A^H*(A*x-b)+C^H*lambda=0. These formulas retain the conjugations required for '
+     'genuinely complex constraints.',
+     '',
+     'All real/imaginary components must be finite and agree to scaled absolute tolerance '
+     '2e-10*max(1,abs(reference component)); input-preservation assertions are exact. The tests are bounded, '
+     'moderately conditioned examples, not a precision or performance benchmark. Singular square solves, '
+     'ill-conditioned inverses, near-cutoff pseudoinverse decisions, zero matrices, extreme weights, deficient '
+     'fitting ranks, inequalities, repeated/clustered Schur spectra, pivoted QR and poisoned unused triangles '
+     'remain outside these drivers. The exponential driver covers bounded nonnormal Jordan-type matrices, not '
+     'general matrix-function stability.',
+     '',
+     '## GAMS classification and provenance',
+     '',
+     'The [Netlib GAMS taxonomy](https://netlib.org/misc/gams.html) supplies general complex non-Hermitian '
+     'determinants (D3c1), systems/inversion (D2c1), positive-definite complex Hermitian systems (D2d1b), '
+     'ordinary complex non-Hermitian spectra (D4a4), QR (D5), unconstrained least squares (D9a1), constrained '
+     'least squares (D9b1) and generalized inverses (D9c). The matrix exponential retains broad D rather than '
+     'inventing a matrix-function leaf. Loading an example does not submit a job. The [coverage '
+     'report](gams-coverage.md) records remaining work.',
+     '',
+     '## Driver details',
+     '']
+    for d in drivers:
+        lines += ['### '+d['id']+' ('+d['gams_code']+')', '', d['modifications'], '']
+    lines += ['## Provenance and actual output', '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -10554,6 +10663,7 @@ def main():
                          (ACTIVATIONS_TEN_REPORT, activations_ten_review_text()),
                          (GRIDS_TEN_REPORT, grids_ten_review_text()),
                          (COMPLEX_TEN_REPORT, complex_ten_review_text()),
+                         (COMPLEX_OPERATORS_TEN_REPORT, complex_operators_ten_review_text()),
                          (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report

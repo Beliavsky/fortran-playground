@@ -12840,6 +12840,294 @@
         "unitary_patterns": 3,
         "oracle": "known coefficients plus orthogonal-complement residual"
       }
+    },
+    {
+      "id": "stdlib-complex-determinants-reference",
+      "name": "gams-stdlib-complex-determinants-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-complex-determinants",
+      "gams_code": "D3c1",
+      "problem_id": "stdlib-complex-determinants-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-complex-determinants-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_determinant.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/complex-operators-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 72 COMPLEX128 determinants: sizes 1..8, three spectral patterns and three scales; checked unitary similarity of prescribed nonzero complex diagonal entries followed by a cyclic row permutation. Independent product and permutation sign; input preservation. Singular matrices, overflow and extreme conditioning excluded.",
+      "validation_path": "docs/gams-complex-operators-ten-validation.json",
+      "review_path": "docs/gams-complex-operators-ten.md",
+      "checks": {
+        "cases": 72,
+        "sizes": 8,
+        "patterns": 3,
+        "scales": 3,
+        "oracle": "product of prescribed diagonal entries times cyclic permutation sign"
+      }
+    },
+    {
+      "id": "stdlib-complex-inverses-reference",
+      "name": "gams-stdlib-complex-inverses-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-complex-inverses",
+      "gams_code": "D2c1",
+      "problem_id": "stdlib-complex-inverses-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-complex-inverses-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_inverse_function.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/complex-operators-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 72 COMPLEX128 inverses: sizes 1..8, three patterns and three scales. Checked unitary similarity gives independent reciprocal-diagonal inverse; both left/right identity residuals and exact input preservation. Singular and ill-conditioned matrices excluded.",
+      "validation_path": "docs/gams-complex-operators-ten-validation.json",
+      "review_path": "docs/gams-complex-operators-ten.md",
+      "checks": {
+        "cases": 72,
+        "sizes": 8,
+        "patterns": 3,
+        "scales": 3,
+        "oracle": "reciprocal prescribed spectrum under checked unitary similarity"
+      }
+    },
+    {
+      "id": "stdlib-complex-pseudoinverses-reference",
+      "name": "gams-stdlib-complex-pseudoinverses-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-complex-pseudoinverses",
+      "gams_code": "D9c",
+      "problem_id": "stdlib-complex-pseudoinverses-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-complex-pseudoinverses-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_pseudoinverse.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/complex-operators-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 150 COMPLEX128 pseudoinverses on 25 tall/square/wide shapes, full-rank and one-zero-singular-value spectra, three scales. Independent reciprocal nonzero singular values, all four Moore-Penrose identities and input preservation; explicit rtol=1e-12. Near-cutoff singular values, zero matrices and other tolerances excluded.",
+      "validation_path": "docs/gams-complex-operators-ten-validation.json",
+      "review_path": "docs/gams-complex-operators-ten.md",
+      "checks": {
+        "cases": 150,
+        "shapes": 25,
+        "rank_patterns": 2,
+        "scales": 3,
+        "rtol": 1e-12,
+        "oracle": "known reciprocal nonzero singular values"
+      }
+    },
+    {
+      "id": "stdlib-complex-qr-reference",
+      "name": "gams-stdlib-complex-qr-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-complex-qr",
+      "gams_code": "D5",
+      "problem_id": "stdlib-complex-qr-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-complex-qr-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_qr.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/complex-operators-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 150 COMPLEX128 QR factorizations: 25 tall/square/wide shapes, three prescribed upper-trapezoidal patterns, full/reduced outputs. Checked unitary-times-triangular construction supplies diagonal magnitudes; reconstruction, orthonormal columns, triangular zeros and input preservation. No fixed phases, pivoted or rank-deficient QR claim.",
+      "validation_path": "docs/gams-complex-operators-ten-validation.json",
+      "review_path": "docs/gams-complex-operators-ten.md",
+      "checks": {
+        "factorizations": 150,
+        "shapes": 25,
+        "patterns": 3,
+        "output_modes": [
+          "full",
+          "reduced"
+        ],
+        "oracle": "known unitary times upper trapezoid"
+      }
+    },
+    {
+      "id": "stdlib-complex-schur-reference",
+      "name": "gams-stdlib-complex-schur-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-complex-schur",
+      "gams_code": "D4a4",
+      "problem_id": "stdlib-complex-schur-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-complex-schur-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_schur_complex.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/complex-operators-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 63 COMPLEX128 Schur decompositions of nonnormal matrices: sizes 2..8, three triangular templates and three scales under checked unitary similarity. Independent diagonal eigenvalues matched one-to-one without ordering assumptions; Schur triangularity, unitary vectors, reconstruction and input preservation. Repeated/clustered eigenvalues and sorting excluded.",
+      "validation_path": "docs/gams-complex-operators-ten-validation.json",
+      "review_path": "docs/gams-complex-operators-ten.md",
+      "checks": {
+        "cases": 63,
+        "sizes": 7,
+        "patterns": 3,
+        "scales": 3,
+        "oracle": "prescribed triangular eigenvalues under unitary similarity"
+      }
+    },
+    {
+      "id": "stdlib-complex-matrix-exponential-reference",
+      "name": "gams-stdlib-complex-matrix-exponential-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-complex-matrix-exponential",
+      "gams_code": "D",
+      "problem_id": "stdlib-complex-matrix-exponential-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-complex-matrix-exponential-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_expm.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/complex-operators-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 180 COMPLEX128 matrix exponentials: sizes 2..7, three nilpotent superdiagonal patterns, five scales, default and order-12 Pade. Independent finite Taylor polynomial for nilpotent N and scalar exp(lambda) for A=lambda*I+N; input preservation. Bounded nonnormal Jordan-type cases only, no general stability/performance claim.",
+      "validation_path": "docs/gams-complex-operators-ten-validation.json",
+      "review_path": "docs/gams-complex-operators-ten.md",
+      "checks": {
+        "evaluations": 180,
+        "sizes": 6,
+        "patterns": 3,
+        "scales": 5,
+        "orders": [
+          "default",
+          12
+        ],
+        "oracle": "finite nilpotent exponential polynomial times scalar exponential"
+      }
+    },
+    {
+      "id": "stdlib-complex-general-systems-reference",
+      "name": "gams-stdlib-complex-general-systems-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-complex-general-systems",
+      "gams_code": "D2c1",
+      "problem_id": "stdlib-complex-general-systems-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-complex-general-systems-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "test/test_linalg_solve.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/complex-operators-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 144 COMPLEX128 general linear solves: sizes 1..8, three patterns, three scales, vector and three-column RHS. Row-reversed diagonally dominant non-Hermitian matrices with manufactured solutions; residuals and input preservation. Singular/ill-conditioned cases and overwrite mode excluded.",
+      "validation_path": "docs/gams-complex-operators-ten-validation.json",
+      "review_path": "docs/gams-complex-operators-ten.md",
+      "checks": {
+        "calls": 144,
+        "sizes": 8,
+        "patterns": 3,
+        "scales": 3,
+        "rhs_columns": [
+          1,
+          3
+        ],
+        "oracle": "manufactured coefficients in pivot-requiring dense systems"
+      }
+    },
+    {
+      "id": "stdlib-complex-positive-systems-reference",
+      "name": "gams-stdlib-complex-positive-systems-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-complex-positive-systems",
+      "gams_code": "D2d1b",
+      "problem_id": "stdlib-complex-positive-systems-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-complex-positive-systems-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_solve_chol.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/complex-operators-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 288 COMPLEX128 positive-definite solves: 72 known-factor matrices of sizes 1..8, three patterns/scales, vector and multiple RHS with lower/upper factorization. Manufactured coefficients, residuals and preservation. Both triangles populated; no indefinite or poisoned-unused-triangle behavior claimed.",
+      "validation_path": "docs/gams-complex-operators-ten-validation.json",
+      "review_path": "docs/gams-complex-operators-ten.md",
+      "checks": {
+        "calls": 288,
+        "matrices": 72,
+        "sizes": 8,
+        "scales": 3,
+        "patterns": 3,
+        "triangles": 2,
+        "rhs_columns": [
+          1,
+          3
+        ],
+        "oracle": "known factors and manufactured coefficients"
+      }
+    },
+    {
+      "id": "stdlib-complex-weighted-fits-reference",
+      "name": "gams-stdlib-complex-weighted-fits-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-complex-weighted-fits",
+      "gams_code": "D9a1",
+      "problem_id": "stdlib-complex-weighted-fits-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-complex-weighted-fits-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_weighted_lstsq.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/complex-operators-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 45 COMPLEX128 weighted least-squares fits: n=1..5, m=n+2..n+4, three unitary patterns. Positive weights are exact squares 1,4,16; weighted design columns and a nonzero weighted residual are orthogonal by construction. Known coefficients, rank, weighted stationarity and input preservation checked. Extreme/zero weights and rank deficiency excluded.",
+      "validation_path": "docs/gams-complex-operators-ten-validation.json",
+      "review_path": "docs/gams-complex-operators-ten.md",
+      "checks": {
+        "cases": 45,
+        "columns": 5,
+        "extra_rows": [
+          2,
+          3,
+          4
+        ],
+        "patterns": 3,
+        "weights": [
+          1,
+          4,
+          16
+        ],
+        "oracle": "weighted orthogonal-complement residual with known coefficients"
+      }
+    },
+    {
+      "id": "stdlib-complex-equality-fits-reference",
+      "name": "gams-stdlib-complex-equality-fits-reference",
+      "package_id": "stdlib",
+      "procedure_id": "stdlib-complex-equality-fits",
+      "gams_code": "D9b1",
+      "problem_id": "stdlib-complex-equality-fits-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/stdlib-complex-equality-fits-reference.f90",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "author_example": "example/example_constrained_lstsq1.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/complex-operators-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer; pinned sources reviewed. 72 COMPLEX128 equality-constrained fits: n=2..7, four unitary patterns, three diagonal scales. Independent diagonal-Hessian one-complex-equality KKT minimizer transformed by checked unitary coordinates; coefficients, feasibility, stationarity and all input preservation. Only one full-row-rank equality and full-column-rank cost; inequalities and deficient ranks excluded.",
+      "validation_path": "docs/gams-complex-operators-ten-validation.json",
+      "review_path": "docs/gams-complex-operators-ten.md",
+      "checks": {
+        "cases": 72,
+        "columns": 6,
+        "patterns": 4,
+        "scales": 3,
+        "equalities": 1,
+        "oracle": "closed-form complex diagonal-Hessian KKT correction"
+      }
     }
   ]
 }

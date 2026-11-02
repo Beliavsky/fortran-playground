@@ -67,6 +67,34 @@ class GamsSiteTests(unittest.TestCase):
             self.assertIn('Open default example', sorting)
             self.assertNotIn('Try in playground', sorting)
 
+    def test_stdlib_complex_operator_pages_open_checked_problem_drivers(self):
+        import copy
+        from xpackage_gams import driver_data, gams_data
+        drivers = [d for d in driver_data(data=gams_data())
+                   if d.get('validation_path') == 'docs/gams-complex-operators-ten-validation.json']
+        self.assertEqual(len(drivers), 10)
+        feed = copy.deepcopy(self.feed)
+        feed['projects'] = [p for p in feed['projects'] if p['playground']['package_id'] == 'stdlib']
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary)
+            generate_gams_site(destination, feed)
+            detail = (destination/'packages/stdlib/index.html').read_text(encoding='utf-8')
+            for driver in drivers:
+                url = ('https://beliavsky.github.io/fortran-playground/fpm/'
+                       f'?package=stdlib&example={driver["name"]}')
+                page = Page((destination/driver['gams_code']/'index.html').read_text(encoding='utf-8'))
+                self.assertIn((url, driver['id']), page.anchors)
+                card = detail.split('id="'+driver['procedure_id']+'"', 1)[1].split('</article>', 1)[0]
+                self.assertIn('Load checked GAMS driver:', card)
+                self.assertIn(url.replace('&', '&amp;'), card)
+            for code, name in [('D3c1', 'complex-determinants'), ('D4a4', 'complex-schur')]:
+                page = Page((destination/code/'index.html').read_text(encoding='utf-8'))
+                self.assertEqual([url for url, label in page.anchors if label == 'Try in playground'],
+                                 ['https://beliavsky.github.io/fortran-playground/fpm/'
+                                  f'?package=stdlib&example=gams-stdlib-{name}-reference'])
+            schur = Page((destination/'D4a4/index.html').read_text(encoding='utf-8'))
+            self.assertFalse(any('example=gams-stdlib-real-schur-reference' in url for url in schur.links))
+
     def test_stdlib_complex_linear_algebra_pages_link_problem_specific_drivers(self):
         import copy
         from xpackage_gams import driver_data, gams_data

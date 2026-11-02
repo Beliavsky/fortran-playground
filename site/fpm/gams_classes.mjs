@@ -879,5 +879,25 @@ export const gamsSubclasses = {
   "D4a3": {
     "label": "Complex Hermitian",
     "parent": "D4a"
+  },
+  "D3c": {
+    "label": "Complex non-Hermitian matrices",
+    "parent": "D3"
+  },
+  "D3c1": {
+    "label": "General",
+    "parent": "D3c"
+  },
+  "D2c": {
+    "label": "Complex non-Hermitian matrices",
+    "parent": "D2"
+  },
+  "D2c1": {
+    "label": "General",
+    "parent": "D2c"
+  },
+  "D4a4": {
+    "label": "Complex non-Hermitian",
+    "parent": "D4a"
   }
 };

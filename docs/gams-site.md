@@ -328,3 +328,5 @@ The [ten activation and normalization drivers](gams-activations-ten.md) check sc
 Grid and numerical utility drivers: [review and actual results](gams-grids-ten.md).
 
 Matrix and complex linear algebra drivers: [review and actual results](gams-complex-ten.md).
+
+Complex matrix operators and fitting drivers: [review and actual results](gams-complex-operators-ten.md).

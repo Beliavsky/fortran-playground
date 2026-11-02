@@ -893,6 +893,44 @@ class PackageGamsTests(unittest.TestCase):
         self.assertIn('Type-2/type-3 transforms',text)
         self.assertIn('two-dimensional NUFFT2D driver',transforms_review_text())
 
+    def test_complex_operator_drivers_record_matching_procedures_oracles_and_limits(self):
+        from xpackage_gams import complex_operators_ten_review_text, COMPLEX_OPERATORS_TEN_REPORT
+        data = gams_data()
+        records = {r['id']: r for r in data['procedure_mappings']}
+        drivers = {d['id']: d for d in driver_data(data=data)
+                   if d.get('validation_path') == 'docs/gams-complex-operators-ten-validation.json'}
+        expected = {'complex-determinants': ('D3c1', 'cases', 72),
+                    'complex-inverses': ('D2c1', 'cases', 72),
+                    'complex-pseudoinverses': ('D9c', 'cases', 150),
+                    'complex-qr': ('D5', 'factorizations', 150),
+                    'complex-schur': ('D4a4', 'cases', 63),
+                    'complex-matrix-exponential': ('D', 'evaluations', 180),
+                    'complex-general-systems': ('D2c1', 'calls', 144),
+                    'complex-positive-systems': ('D2d1b', 'calls', 288),
+                    'complex-weighted-fits': ('D9a1', 'cases', 45),
+                    'complex-equality-fits': ('D9b1', 'cases', 72)}
+        self.assertEqual(set(drivers), {'stdlib-'+name+'-reference' for name in expected})
+        reviewed = numerical_review(data=data)['packages']['stdlib']['procedure_ids']
+        for name, (code, field, count) in expected.items():
+            driver = drivers['stdlib-'+name+'-reference']
+            record = records[driver['procedure_id']]
+            self.assertEqual(record['driver_id'], driver['id'])
+            self.assertEqual(record['gams_codes'], [code])
+            self.assertEqual(driver['gams_code'], code)
+            self.assertEqual(driver['checks'][field], count)
+            self.assertIn(record['id'], reviewed)
+            self.assertIn('COMPLEX128', record['procedure'])
+            self.assertEqual(class_evidence(class_tree(data), code, [record], [driver])['status'], 'verified')
+        self.assertEqual(drivers['stdlib-complex-pseudoinverses-reference']['checks']['rtol'], 1e-12)
+        self.assertEqual(drivers['stdlib-complex-weighted-fits-reference']['checks']['weights'], [1, 4, 16])
+        self.assertEqual(drivers['stdlib-complex-equality-fits-reference']['checks']['equalities'], 1)
+        text = complex_operators_ten_review_text()
+        self.assertEqual((ROOT/COMPLEX_OPERATORS_TEN_REPORT).read_text(encoding='utf-8'), text)
+        for phrase in ['all four Moore-Penrose', 'one-to-one', 'finite sum', 'weighted stationarity',
+                       'C^H*lambda', '2e-10', 'near-cutoff', 'pivoted QR',
+                       'No upstream numerical source was patched', 'categories are not exhausted']:
+            self.assertIn(phrase.lower(), text.lower())
+
     def test_complex_linear_algebra_drivers_keep_problem_classes_and_oracles_explicit(self):
         from xpackage_gams import complex_ten_review_text, COMPLEX_TEN_REPORT
         data = gams_data()
