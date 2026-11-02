@@ -8,7 +8,7 @@ This report assesses each package/class pair, including inherited parent classes
 
 When a driver cannot be created, inspect the pinned implementation and author examples. Narrow or remove a classification that is unsupported; do not substitute an unrelated default example as evidence. Record missing dependencies, sandbox limits and upstream defects separately in the procedure or package review notes. A sandbox failure alone does not disprove an algorithm.
 
-Counts refer to package/class pairs and include parents: 807 verified, 80 source-supported, 237 uncertain.
+Counts refer to package/class pairs and include parents: 810 verified, 80 source-supported, 237 uncertain.
 
 ## Mappings requiring source review
 
@@ -602,16 +602,28 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [specfunc-fullerton / specfunc-fullerton-beta-pairs](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-beta-pairs) | C7b | verified |
 | [specfunc-fullerton / specfunc-fullerton-dawson-values-derivatives](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-dawson-values-derivatives) | C8c | verified |
 | [specfunc-fullerton / specfunc-fullerton-digamma](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-digamma) | C7c | verified |
+| [specfunc-fullerton / specfunc-fullerton-entire-cosine-integral](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-entire-cosine-integral) | C6 | verified |
+| [specfunc-fullerton / specfunc-fullerton-entire-hyperbolic-integral](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-entire-hyperbolic-integral) | C4d | source-supported |
 | [specfunc-fullerton / specfunc-fullerton-exponential-logarithmic-integrals](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-exponential-logarithmic-integrals) | C5 | verified |
+| [specfunc-fullerton / specfunc-fullerton-factorials-real32](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-factorials-real32) | C1 | verified |
 | [specfunc-fullerton / specfunc-fullerton-fgamma](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-fgamma) | C7a | verified |
 | [specfunc-fullerton / specfunc-fullerton-hyperbolic-integrals](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-hyperbolic-integrals) | C4d | verified |
 | [specfunc-fullerton / specfunc-fullerton-integer-beta-cdf](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-integer-beta-cdf) | L5a1b | verified |
+| [specfunc-fullerton / specfunc-fullerton-lower-incomplete-gamma](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-lower-incomplete-gamma) | C7e | verified |
 | [specfunc-fullerton / specfunc-fullerton-modified-bessel-i01](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-modified-bessel-i01) | C10b1 | verified |
 | [specfunc-fullerton / specfunc-fullerton-modified-bessel-k01](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-modified-bessel-k01) | C10b1 | verified |
 | [specfunc-fullerton / specfunc-fullerton-near-zero-exponential-logarithm](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-near-zero-exponential-logarithm) | C4b | verified |
+| [specfunc-fullerton / specfunc-fullerton-pochhammer-ratios](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-pochhammer-ratios) | C7a | verified |
 | [specfunc-fullerton / specfunc-fullerton-positive-exponential-integrals](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-positive-exponential-integrals) | C5 | verified |
 | [specfunc-fullerton / specfunc-fullerton-real-dilogarithm](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-real-dilogarithm) | C5 | verified |
+| [specfunc-fullerton / specfunc-fullerton-reciprocal-gamma-pole-zeros](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-reciprocal-gamma-pole-zeros) | C7a | verified |
+| [specfunc-fullerton / specfunc-fullerton-relative-pochhammer](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-relative-pochhammer) | C7a | verified |
+| [specfunc-fullerton / specfunc-fullerton-signed-cube-roots](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-signed-cube-roots) | C2 | verified |
+| [specfunc-fullerton / specfunc-fullerton-signed-log-gamma](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-signed-log-gamma) | C7a | verified |
 | [specfunc-fullerton / specfunc-fullerton-sine-cosine-integrals](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-sine-cosine-integrals) | C6 | verified |
+| [specfunc-fullerton / specfunc-fullerton-tricomi-incomplete-gamma](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-tricomi-incomplete-gamma) | C7e | verified |
+| [specfunc-fullerton / specfunc-fullerton-upper-gamma-positive-x](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-upper-gamma-positive-x) | C7e | verified |
+| [specfunc-fullerton / specfunc-fullerton-upper-incomplete-gamma](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-upper-incomplete-gamma) | C7e | source-supported |
 | [specialmatrices / specialmatrices-circulant-eigenpairs](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-circulant-eigenpairs) | D4a2 | verified |
 | [specialmatrices / specialmatrices-circulant-inverses](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-circulant-inverses) | D2a1 | verified |
 | [specialmatrices / specialmatrices-circulant-singular-values](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-circulant-singular-values) | D6 | verified |

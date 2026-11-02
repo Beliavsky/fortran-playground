@@ -1,0 +1,328 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "specfunc-fullerton-lower-incomplete-gamma-reference",
+      "source_revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "source_sha256": "04cb2d8a5e33bcaf504c2c4c34a0d94ff271112a4982871e0d847714cc522571",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T20:03:24.141716+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.411,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Default REAL32 comparisons with independent high precision references: 49\nMaximum relative error (reference floor 1e-30):   8.0582E-07\nPASS specfunc-fullerton-lower-incomplete-gamma-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.04,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "specfunc-fullerton-tricomi-incomplete-gamma-reference",
+      "source_revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "source_sha256": "13447676ffac8ee63c7c8281adba8376b10df19f4b286180077027fc43b3c039",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T20:03:28.313674+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.377,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Default REAL32 comparisons with independent high precision references: 49\nMaximum relative error (reference floor 1e-30):   5.0771E-07\nPASS specfunc-fullerton-tricomi-incomplete-gamma-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.04,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "specfunc-fullerton-signed-log-gamma-reference",
+      "source_revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "source_sha256": "b3f4de77bbfa9cfd1326e3af73f9772544006ad66533b540e08f21d9181a509b",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T20:03:29.926981+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.204,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Default REAL32 comparisons with independent high precision references: 18\nMaximum relative error (reference floor 1e-30):   6.8320E-07\nPASS specfunc-fullerton-signed-log-gamma-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.035,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "specfunc-fullerton-pochhammer-ratios-reference",
+      "source_revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "source_sha256": "f8fc51578a562370b2015a1cdff65ca8fc9f34a2b726824e79151a6f2d4612ef",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T20:03:32.312811+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.328,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Default REAL32 comparisons with independent high precision references: 48\nMaximum relative error (reference floor 1e-30):   8.1681E-08\nPASS specfunc-fullerton-pochhammer-ratios-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.035,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "specfunc-fullerton-relative-pochhammer-reference",
+      "source_revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "source_sha256": "60f152672619844703c598b7c2c9d4f6c61ee640b8dd8e2bb74d94217bb5303a",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T20:03:33.874651+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.394,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Default REAL32 comparisons with independent high precision references: 35\nMaximum relative error (reference floor 1e-30):   1.0143E-05\nPASS specfunc-fullerton-relative-pochhammer-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.025,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "specfunc-fullerton-factorials-real32-reference",
+      "source_revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "source_sha256": "326851d7fd2906431e8abc81a79bdf74768c380a26311e85738a141e5771dc5f",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T20:03:35.761687+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.403,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Default REAL32 comparisons with independent high precision references: 34\nMaximum relative error (reference floor 1e-30):   3.1331E-06\nPASS specfunc-fullerton-factorials-real32-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.035,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "specfunc-fullerton-signed-cube-roots-reference",
+      "source_revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "source_sha256": "b904d0850848ac316cac79965211f54ae57311dc3e33237c3a0e5ace210faca8",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T20:03:50.447653+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 9.662,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Default REAL32 comparisons with independent high precision references: 55\nMaximum relative error (reference floor 1e-30):   6.5368E-08\nPASS specfunc-fullerton-signed-cube-roots-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.039,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "specfunc-fullerton-entire-cosine-integral-reference",
+      "source_revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "source_sha256": "94aa77692c31f5c29b3db39a56eb85976b7f5a4cd1816ea70a7b02701bcf284c",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T20:03:52.052583+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.349,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Default REAL32 comparisons with independent high precision references: 11\nMaximum relative error (reference floor 1e-30):   5.9834E-08\nPASS specfunc-fullerton-entire-cosine-integral-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.036,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "specfunc-fullerton-upper-gamma-positive-x-reference",
+      "source_revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "source_sha256": "2ab09a4ac4e60e03d6bc8c8a199cf8862058ce987080f063db61c0f017e5f0e8",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T20:05:03.086580+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 2.227,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Default REAL32 comparisons with independent high precision references: 66\nMaximum relative error (reference floor 1e-30):   9.4607E-07\nPASS specfunc-fullerton-upper-gamma-positive-x-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.037,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "specfunc-fullerton-reciprocal-gamma-pole-zeros-reference",
+      "source_revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "source_sha256": "6d38b2d319828996a60dbb4ce729d4395879f91e40f5307927a4554a972dac71",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T20:05:04.802116+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.326,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Default REAL32 comparisons with independent high precision references: 41\nMaximum relative error (reference floor 1e-30):   3.4738E-06\nPASS specfunc-fullerton-reciprocal-gamma-pole-zeros-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.028,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-11-02T20:05:04.857995+00:00"
+}

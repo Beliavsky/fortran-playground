@@ -105,12 +105,22 @@ The C10 driver checks 39 complex values at `z=[0.5+0.25i,1+0.5i,2+0.75i]`. For s
 | [Load specfunc-fullerton-dawson-values-derivatives-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=specfunc-fullerton&example=gams-specfunc-fullerton-dawson-values-derivatives-reference) · [Source](../fpm_catalog/gams-drivers/specfunc-fullerton-dawson-values-derivatives-reference.f90) | C8c | [Procedure](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_misc.f90#L211) |
 | [Load specfunc-fullerton-real-dilogarithm-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=specfunc-fullerton&example=gams-specfunc-fullerton-real-dilogarithm-reference) · [Source](../fpm_catalog/gams-drivers/specfunc-fullerton-real-dilogarithm-reference.f90) | C5 | [Procedure](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_misc.f90#L386) |
 | [Load specfunc-fullerton-near-zero-exponential-logarithm-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=specfunc-fullerton&example=gams-specfunc-fullerton-near-zero-exponential-logarithm-reference) · [Source](../fpm_catalog/gams-drivers/specfunc-fullerton-near-zero-exponential-logarithm-reference.f90) | C4b | [Procedure](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_misc.f90#L90) · [Author example/test](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/test/misc_exp/test_misc_exp.f90) |
+| [Load specfunc-fullerton-lower-incomplete-gamma-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=specfunc-fullerton&example=gams-specfunc-fullerton-lower-incomplete-gamma-reference) · [Source](../fpm_catalog/gams-drivers/specfunc-fullerton-lower-incomplete-gamma-reference.f90) | C7e | [Procedure](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_gamma.f90#L238) · [Author example/test](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/test/gamma/test_gamma.f90) |
+| [Load specfunc-fullerton-tricomi-incomplete-gamma-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=specfunc-fullerton&example=gams-specfunc-fullerton-tricomi-incomplete-gamma-reference) · [Source](../fpm_catalog/gams-drivers/specfunc-fullerton-tricomi-incomplete-gamma-reference.f90) | C7e | [Procedure](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_gamma.f90#L412) · [Author example/test](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/test/gamma/test_gamma.f90) |
+| [Load specfunc-fullerton-signed-log-gamma-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=specfunc-fullerton&example=gams-specfunc-fullerton-signed-log-gamma-reference) · [Source](../fpm_catalog/gams-drivers/specfunc-fullerton-signed-log-gamma-reference.f90) | C7a | [Procedure](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_gamma.f90#L55) · [Author example/test](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/test/gamma/test_gamma.f90) |
+| [Load specfunc-fullerton-pochhammer-ratios-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=specfunc-fullerton&example=gams-specfunc-fullerton-pochhammer-ratios-reference) · [Source](../fpm_catalog/gams-drivers/specfunc-fullerton-pochhammer-ratios-reference.f90) | C7a | [Procedure](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_poch.f90#L33) · [Author example/test](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/test/poch/test_poch.f90) |
+| [Load specfunc-fullerton-relative-pochhammer-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=specfunc-fullerton&example=gams-specfunc-fullerton-relative-pochhammer-reference) · [Source](../fpm_catalog/gams-drivers/specfunc-fullerton-relative-pochhammer-reference.f90) | C7a | [Procedure](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_poch.f90#L187) · [Author example/test](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/test/poch/test_poch.f90) |
+| [Load specfunc-fullerton-factorials-real32-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=specfunc-fullerton&example=gams-specfunc-fullerton-factorials-real32-reference) · [Source](../fpm_catalog/gams-drivers/specfunc-fullerton-factorials-real32-reference.f90) | C1 | [Procedure](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_poch.f90#L419) · [Author example/test](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/test/poch/test_poch.f90) |
+| [Load specfunc-fullerton-signed-cube-roots-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=specfunc-fullerton&example=gams-specfunc-fullerton-signed-cube-roots-reference) · [Source](../fpm_catalog/gams-drivers/specfunc-fullerton-signed-cube-roots-reference.f90) | C2 | [Procedure](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_misc.f90#L39) |
+| [Load specfunc-fullerton-entire-cosine-integral-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=specfunc-fullerton&example=gams-specfunc-fullerton-entire-cosine-integral-reference) · [Source](../fpm_catalog/gams-drivers/specfunc-fullerton-entire-cosine-integral-reference.f90) | C6 | [Procedure](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_inv_ci.f90#L101) · [Author example/test](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/test/inv_ci/test_inv_ci.f90) |
+| [Load specfunc-fullerton-upper-gamma-positive-x-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=specfunc-fullerton&example=gams-specfunc-fullerton-upper-gamma-positive-x-reference) · [Source](../fpm_catalog/gams-drivers/specfunc-fullerton-upper-gamma-positive-x-reference.f90) | C7e | [Procedure](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_gamma.f90#L282) · [Author example/test](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/test/gamma/test_gamma.f90) |
+| [Load specfunc-fullerton-reciprocal-gamma-pole-zeros-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=specfunc-fullerton&example=gams-specfunc-fullerton-reciprocal-gamma-pole-zeros-reference) · [Source](../fpm_catalog/gams-drivers/specfunc-fullerton-reciprocal-gamma-pole-zeros-reference.f90) | C7a | [Procedure](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_gamma.f90#L204) · [Author example/test](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/test/gamma/test_gamma.f90) |
 
 The programs use author APIs, retain applicable license notices and use deterministic reference checks instead of the larger author harnesses. They appear in hosted and main local FPM example menus and downloaded projects. Loading a link selects source without submitting a job.
 
 ## Recorded results
 
-All 41 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing existing package libraries. Only each main and executable were rebuilt. The [verification report](gams-special-functions-validation.json) records hashes, pins and saved output. These cases establish checked usage and selected-point agreement, rather than accuracy over each function's complete domain.
+All 51 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing existing package libraries. Only each main and executable were rebuilt. The [verification report](gams-special-functions-validation.json) records hashes, pins and saved output. These cases establish checked usage and selected-point agreement, rather than accuracy over each function's complete domain.
 
 ### fullerton-gamma-values
 
@@ -469,6 +479,86 @@ PASS specfunc-fullerton-real-dilogarithm-reference
 Default REAL32 function comparisons with independent references: 38
 Maximum relative error (reference floor 1e-30):   8.1069E-08
 PASS specfunc-fullerton-near-zero-exponential-logarithm-reference
+```
+
+### specfunc-fullerton-lower-incomplete-gamma-reference
+
+```text
+Default REAL32 comparisons with independent high precision references: 49
+Maximum relative error (reference floor 1e-30):   8.0582E-07
+PASS specfunc-fullerton-lower-incomplete-gamma-reference
+```
+
+### specfunc-fullerton-tricomi-incomplete-gamma-reference
+
+```text
+Default REAL32 comparisons with independent high precision references: 49
+Maximum relative error (reference floor 1e-30):   5.0771E-07
+PASS specfunc-fullerton-tricomi-incomplete-gamma-reference
+```
+
+### specfunc-fullerton-signed-log-gamma-reference
+
+```text
+Default REAL32 comparisons with independent high precision references: 18
+Maximum relative error (reference floor 1e-30):   6.8320E-07
+PASS specfunc-fullerton-signed-log-gamma-reference
+```
+
+### specfunc-fullerton-pochhammer-ratios-reference
+
+```text
+Default REAL32 comparisons with independent high precision references: 48
+Maximum relative error (reference floor 1e-30):   8.1681E-08
+PASS specfunc-fullerton-pochhammer-ratios-reference
+```
+
+### specfunc-fullerton-relative-pochhammer-reference
+
+```text
+Default REAL32 comparisons with independent high precision references: 35
+Maximum relative error (reference floor 1e-30):   1.0143E-05
+PASS specfunc-fullerton-relative-pochhammer-reference
+```
+
+### specfunc-fullerton-factorials-real32-reference
+
+```text
+Default REAL32 comparisons with independent high precision references: 34
+Maximum relative error (reference floor 1e-30):   3.1331E-06
+PASS specfunc-fullerton-factorials-real32-reference
+```
+
+### specfunc-fullerton-signed-cube-roots-reference
+
+```text
+Default REAL32 comparisons with independent high precision references: 55
+Maximum relative error (reference floor 1e-30):   6.5368E-08
+PASS specfunc-fullerton-signed-cube-roots-reference
+```
+
+### specfunc-fullerton-entire-cosine-integral-reference
+
+```text
+Default REAL32 comparisons with independent high precision references: 11
+Maximum relative error (reference floor 1e-30):   5.9834E-08
+PASS specfunc-fullerton-entire-cosine-integral-reference
+```
+
+### specfunc-fullerton-upper-gamma-positive-x-reference
+
+```text
+Default REAL32 comparisons with independent high precision references: 66
+Maximum relative error (reference floor 1e-30):   9.4607E-07
+PASS specfunc-fullerton-upper-gamma-positive-x-reference
+```
+
+### specfunc-fullerton-reciprocal-gamma-pole-zeros-reference
+
+```text
+Default REAL32 comparisons with independent high precision references: 41
+Maximum relative error (reference floor 1e-30):   3.4738E-06
+PASS specfunc-fullerton-reciprocal-gamma-pole-zeros-reference
 ```
 
 ## Maintenance

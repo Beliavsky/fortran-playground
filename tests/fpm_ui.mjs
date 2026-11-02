@@ -335,7 +335,10 @@ get('package-gams-subclass').value = 'C10'; get('package-gams-subclass').listene
 assert.ok(get('available-package').options.some(p => p.value === 'specfun'));
 assert.ok(!get('available-package').options.some(p => p.value === 'm_calculator'), 'A child excludes broad-only assignments');
 get('package-gams-subclass').value = 'C1'; get('package-gams-subclass').listeners.change();
-assert.equal(get('available-package').options.length, 1, 'C1 must not match sibling C10');
+assert.ok(get('available-package').options.some(p => p.value === 'specfunc-fullerton'),
+  'C1 includes the checked Fullerton factorial package');
+assert.ok(!get('available-package').options.some(p => p.value === 'specfun'),
+  'C1 must not match the C10-only special-function package');
 get('package-gams').value = 'L'; get('package-gams').listeners.change();
 assert.equal(get('package-gams-subclass').value, '', 'Changing parents clears the old subclass');
 get('package-gams-subclass').value = 'L6'; get('package-gams-subclass').listeners.change();

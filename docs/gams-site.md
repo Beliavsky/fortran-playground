@@ -344,3 +344,5 @@ Fullerton special functions and derivative checks: [review and actual results](g
 Root solvers and structured eigensystems: [review and actual results](gams-roots-structured-ten.md).
 
 Ordering and Runge-Kutta checks: [review and actual results](gams-ordering-runge-ten.md).
+
+Gamma and relative-function checks: [review and actual results](gams-gamma-relative-ten.md).

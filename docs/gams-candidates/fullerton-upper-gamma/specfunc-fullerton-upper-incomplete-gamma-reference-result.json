@@ -1,0 +1,83 @@
+{
+  "source_sha256": "a272d789a593990815067ce521c9b0a30c2787b2a4db7e864e4203de97309d18",
+  "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+  "result": {
+    "ok": false,
+    "compiler": "GNU Fortran (GCC) 16.2.0",
+    "compiler_id": "gfortran",
+    "fpm": "0.12.0",
+    "stages": [
+      {
+        "name": "Build",
+        "command": [
+          "fpm",
+          "build",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 0.494,
+        "ok": true,
+        "exit_code": 0,
+        "error": "",
+        "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+        "stderr": ""
+      },
+      {
+        "name": "Run",
+        "command": [
+          "fpm",
+          "run",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 0.049,
+        "ok": false,
+        "exit_code": 1,
+        "error": "",
+        "stdout": "",
+        "stderr": "Project is up to date\nERROR STOP Nonfinite result\n\nError termination. Backtrace:\n#0  0x2b2ca0c80f83 in ???\n#1  0x2b2ca0c81c39 in ???\n#2  0x2b2ca0c83045 in ???\n#3  0x4013b7 in MAIN__\n\tat app/main.f90:95\n#4  0x4019a1 in main\n\tat app/main.f90:4\n<ERROR> Execution for object \" playground-main \" returned exit code  1\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 1\n"
+      }
+    ],
+    "cache": {
+      "package": "specfunc-fullerton",
+      "compiler": "GNU Fortran 16.2.0",
+      "key": "33806d56fed498291155fcc3",
+      "library_reused": true,
+      "changed_artifacts": []
+    },
+    "packages": [
+      {
+        "repository": "arjenmarkus/specfunc-fullerton",
+        "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+        "sha256": "f7910a7403f1653b7917f16db3818a4ed55a080185c86b02d96c6a391164a6f7"
+      }
+    ],
+    "build_ok": true,
+    "target_groups": {
+      "app": [
+        "playground-main"
+      ],
+      "example": [],
+      "test": []
+    },
+    "targets": [
+      "playground-main"
+    ],
+    "plots": [],
+    "plot_notes": []
+  }
+}

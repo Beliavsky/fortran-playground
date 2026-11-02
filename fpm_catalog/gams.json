@@ -756,7 +756,9 @@
       "L5",
       "C4",
       "C6",
-      "C8"
+      "C8",
+      "C1",
+      "C2"
     ],
     "lib_statistics": [
       "L8",
@@ -15821,6 +15823,323 @@
         }
       ],
       "driver_id": "orderpack-inverse-unique-ranks-reference"
+    },
+    {
+      "id": "specfunc-fullerton-lower-incomplete-gamma",
+      "package_id": "specfunc-fullerton",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "module": "specfunc_fullerton",
+      "procedure": "inc_gamma",
+      "gams_codes": [
+        "C7e"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not required",
+      "notes": "49 unnormalized lower incomplete gamma integrals, seven positive integer/half-integer shapes 1/2..8 and seven x=0..8. Direct high precision lower-integral references; not regularized probabilities. Negative shapes, analytic continuation and extremes excluded.",
+      "driver_id": "specfunc-fullerton-lower-incomplete-gamma-reference",
+      "evidence": [
+        {
+          "path": "src/fullerton_gamma.f90",
+          "line": 238,
+          "sha256": "7609fcd9f17f20a9b66a562a64e2244c48d92e6ef3474261b732c13e24397a05"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/gamma/test_gamma.f90",
+          "sha256": "49a48e63b10b05c318c6696e7b050a808ba5f530117ad518a6b398348d66e1e1"
+        }
+      ]
+    },
+    {
+      "id": "specfunc-fullerton-upper-incomplete-gamma",
+      "package_id": "specfunc-fullerton",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "module": "specfunc_fullerton",
+      "procedure": "inc_gamma_compl",
+      "gams_codes": [
+        "C7e"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not required",
+      "notes": "73 unnormalized upper incomplete gamma integrals: 49 positive-shape cases including x=0, plus 24 strictly positive-x cases with shape -2,-1,-1/2,0. Direct high precision tail-integral references. Undefined nonpositive-shape x=0 and near-pole noninteger shapes excluded. Failed at a=1/2,x=0: NaN instead of sqrt(pi); diagnostic retained. Only a separate strictly positive-x consumer can be promoted.",
+      "evidence": [
+        {
+          "path": "src/fullerton_gamma.f90",
+          "line": 282,
+          "sha256": "7609fcd9f17f20a9b66a562a64e2244c48d92e6ef3474261b732c13e24397a05"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/gamma/test_gamma.f90",
+          "sha256": "49a48e63b10b05c318c6696e7b050a808ba5f530117ad518a6b398348d66e1e1"
+        }
+      ]
+    },
+    {
+      "id": "specfunc-fullerton-tricomi-incomplete-gamma",
+      "package_id": "specfunc-fullerton",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "module": "specfunc_fullerton",
+      "procedure": "gamma_tricomi",
+      "gams_codes": [
+        "C7e"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not required",
+      "notes": "49 scaled Tricomi incomplete gamma values for positive shapes 1/2..8 and x=0..8. Independent x**(-a)*lower_gamma(a,x)/Gamma(a) references, with limit 1/Gamma(a+1) at zero. Nonpositive-shape analytic continuation excluded.",
+      "driver_id": "specfunc-fullerton-tricomi-incomplete-gamma-reference",
+      "evidence": [
+        {
+          "path": "src/fullerton_gamma.f90",
+          "line": 412,
+          "sha256": "7609fcd9f17f20a9b66a562a64e2244c48d92e6ef3474261b732c13e24397a05"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/gamma/test_gamma.f90",
+          "sha256": "49a48e63b10b05c318c6696e7b050a808ba5f530117ad518a6b398348d66e1e1"
+        }
+      ]
+    },
+    {
+      "id": "specfunc-fullerton-signed-log-gamma",
+      "package_id": "specfunc-fullerton",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "module": "specfunc_fullerton",
+      "procedure": "sign_log_gamma",
+      "gams_codes": [
+        "C7a"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not required",
+      "notes": "18 signed log-absolute-gamma evaluations, including eight negative half-integers and positive dyadics 1/8..32. Independent log(abs(Gamma(x))) and exact sign checked separately. Gamma poles and neighborhoods of poles excluded.",
+      "driver_id": "specfunc-fullerton-signed-log-gamma-reference",
+      "evidence": [
+        {
+          "path": "src/fullerton_gamma.f90",
+          "line": 55,
+          "sha256": "7609fcd9f17f20a9b66a562a64e2244c48d92e6ef3474261b732c13e24397a05"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/gamma/test_gamma.f90",
+          "sha256": "49a48e63b10b05c318c6696e7b050a808ba5f530117ad518a6b398348d66e1e1"
+        }
+      ]
+    },
+    {
+      "id": "specfunc-fullerton-pochhammer-ratios",
+      "package_id": "specfunc-fullerton",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "module": "specfunc_fullerton",
+      "procedure": "poch",
+      "gams_codes": [
+        "C7a"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not required",
+      "notes": "48 generalized Pochhammer Gamma(a+x)/Gamma(a) values for positive dyadic a=1/2..8 and signed/fractional/integer shifts -1/4..5; a+x stays positive. Independent rising-factorial references; poles and large-argument asymptotics excluded.",
+      "driver_id": "specfunc-fullerton-pochhammer-ratios-reference",
+      "evidence": [
+        {
+          "path": "src/fullerton_poch.f90",
+          "line": 33,
+          "sha256": "225926948a13c0b361b9014173b42beed9a5d781992f78d4354e384001e44fd0"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/poch/test_poch.f90",
+          "sha256": "4de48b2649be8ffabd0e10491c2a5e20016e292bb6e3c9e60f72dde623b15375"
+        }
+      ]
+    },
+    {
+      "id": "specfunc-fullerton-relative-pochhammer",
+      "package_id": "specfunc-fullerton",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "module": "specfunc_fullerton",
+      "procedure": "poch1",
+      "gams_codes": [
+        "C7a"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not required",
+      "notes": "35 relative Pochhammer values (Gamma(a+x)/Gamma(a)-1)/x with positive a=1/2..8 and signed shifts down to 2**(-16), including exact x=0 digamma limits. Independent high precision expm1/loggamma references avoid cancellation. Negative a, poles and large shifts excluded.",
+      "driver_id": "specfunc-fullerton-relative-pochhammer-reference",
+      "evidence": [
+        {
+          "path": "src/fullerton_poch.f90",
+          "line": 187,
+          "sha256": "225926948a13c0b361b9014173b42beed9a5d781992f78d4354e384001e44fd0"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/poch/test_poch.f90",
+          "sha256": "4de48b2649be8ffabd0e10491c2a5e20016e292bb6e3c9e60f72dde623b15375"
+        }
+      ]
+    },
+    {
+      "id": "specfunc-fullerton-factorials-real32",
+      "package_id": "specfunc-fullerton",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "module": "specfunc_fullerton",
+      "procedure": "factorial",
+      "gams_codes": [
+        "C1"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not required",
+      "notes": "34 default REAL32 factorials n=0..33 compared with independently computed integer factorials. Includes zero and moderately large finite factorials; invalid negative inputs and n>=34 excluded (34! is also representable but not tested here).",
+      "driver_id": "specfunc-fullerton-factorials-real32-reference",
+      "evidence": [
+        {
+          "path": "src/fullerton_poch.f90",
+          "line": 419,
+          "sha256": "225926948a13c0b361b9014173b42beed9a5d781992f78d4354e384001e44fd0"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/poch/test_poch.f90",
+          "sha256": "4de48b2649be8ffabd0e10491c2a5e20016e292bb6e3c9e60f72dde623b15375"
+        }
+      ]
+    },
+    {
+      "id": "specfunc-fullerton-signed-cube-roots",
+      "package_id": "specfunc-fullerton",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "module": "specfunc_fullerton",
+      "procedure": "cbrt",
+      "gams_codes": [
+        "C2"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not required",
+      "notes": "55 signed cube roots, zero and exact dyadic inputs with exponents -90..90 and significands 1,5/4,7/4. Independent high precision real cube roots; signs, small and large normal REAL32 magnitudes checked. Subnormal inputs and exceptional values excluded.",
+      "driver_id": "specfunc-fullerton-signed-cube-roots-reference",
+      "evidence": [
+        {
+          "path": "src/fullerton_misc.f90",
+          "line": 39,
+          "sha256": "9bdddc58f24267cf5a3372c0c36db22813f8809ca81ce7073c68f0b77dc5b40e"
+        }
+      ],
+      "author_examples": []
+    },
+    {
+      "id": "specfunc-fullerton-entire-cosine-integral",
+      "package_id": "specfunc-fullerton",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "module": "specfunc_fullerton",
+      "procedure": "inverse_ci",
+      "gams_codes": [
+        "C6"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not required",
+      "notes": "11 nonnegative Cin integral values, x=0..16 including tiny positive arguments. Public inverse_ci computes Cin(x)=integral_0^x (1-cos(t))/t dt; it is not an inverse of Ci. Independent high precision entire-integral references. Negative inputs and complex continuation excluded.",
+      "driver_id": "specfunc-fullerton-entire-cosine-integral-reference",
+      "evidence": [
+        {
+          "path": "src/fullerton_inv_ci.f90",
+          "line": 101,
+          "sha256": "ab0632d1cabd912d40dca118539ffa3b16d016b6a7519db1b11d2210bf3fd4b5"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/inv_ci/test_inv_ci.f90",
+          "sha256": "6253405fe5caa2358eadf6ef53c164e6a502aff0a4a0f68c53c578262353fc74"
+        }
+      ]
+    },
+    {
+      "id": "specfunc-fullerton-entire-hyperbolic-integral",
+      "package_id": "specfunc-fullerton",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "module": "specfunc_fullerton",
+      "procedure": "inverse_chi",
+      "gams_codes": [
+        "C4d"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not required",
+      "notes": "21 signed Cinh integral values, x=-16..16 including zero and tiny dyadics. Public inverse_chi computes integral_0^x (cosh(t)-1)/t dt, an even entire integral, not an inverse function. Independent high precision references; complex continuation and extreme magnitudes excluded. Failed at x=-3: 2.7167096138 instead of 3.2845641412. This full-domain path has no checked driver; failure retained.",
+      "evidence": [
+        {
+          "path": "src/fullerton_inv_ci.f90",
+          "line": 32,
+          "sha256": "ab0632d1cabd912d40dca118539ffa3b16d016b6a7519db1b11d2210bf3fd4b5"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/inv_ci/test_inv_ci.f90",
+          "sha256": "6253405fe5caa2358eadf6ef53c164e6a502aff0a4a0f68c53c578262353fc74"
+        }
+      ]
+    },
+    {
+      "id": "specfunc-fullerton-upper-gamma-positive-x",
+      "package_id": "specfunc-fullerton",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "module": "specfunc_fullerton",
+      "procedure": "inc_gamma_compl",
+      "gams_codes": [
+        "C7e"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not required",
+      "notes": "66 unnormalized upper incomplete gamma integrals for strictly positive x=1/8..8, with seven positive shapes 1/2..8 and shapes -2,-1,-1/2,0. Independent high precision tail integrals. The documented x=0 path returns NaN in a retained failed probe and is expressly excluded, not repaired or verified. Near-pole noninteger negative shapes and extremes excluded.",
+      "driver_id": "specfunc-fullerton-upper-gamma-positive-x-reference",
+      "evidence": [
+        {
+          "path": "src/fullerton_gamma.f90",
+          "line": 282,
+          "sha256": "7609fcd9f17f20a9b66a562a64e2244c48d92e6ef3474261b732c13e24397a05"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/gamma/test_gamma.f90",
+          "sha256": "49a48e63b10b05c318c6696e7b050a808ba5f530117ad518a6b398348d66e1e1"
+        }
+      ]
+    },
+    {
+      "id": "specfunc-fullerton-reciprocal-gamma-pole-zeros",
+      "package_id": "specfunc-fullerton",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "module": "specfunc_fullerton",
+      "procedure": "reciprocal_gamma",
+      "gams_codes": [
+        "C7a"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not required",
+      "notes": "41 reciprocal-gamma values: exact zeros at 0,-1,..,-12 and signed half-integers -23/2..31/2. Independent high precision entire reciprocal gamma references test sign changes, pole zeros and finite values. Near-pole perturbations and extreme magnitudes excluded.",
+      "driver_id": "specfunc-fullerton-reciprocal-gamma-pole-zeros-reference",
+      "evidence": [
+        {
+          "path": "src/fullerton_gamma.f90",
+          "line": 204,
+          "sha256": "7609fcd9f17f20a9b66a562a64e2244c48d92e6ef3474261b732c13e24397a05"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/gamma/test_gamma.f90",
+          "sha256": "49a48e63b10b05c318c6696e7b050a808ba5f530117ad518a6b398348d66e1e1"
+        }
+      ]
     }
   ],
   "review_notes": {

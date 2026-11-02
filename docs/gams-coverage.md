@@ -2,7 +2,7 @@
 
 **The GAMS categories are not exhausted.** Some procedures already map to the deepest available GAMS class, but that does not mean all procedures or problem configurations in that class have been demonstrated.
 
-The selected catalog has 466 source-reviewed procedure records. 443 independently checked drivers cover 443 of those records and 19 of the 20 top-level GAMS classes. Among the 148 maintained classes used directly by procedure records, 1 still has no class-specific checked driver.
+The selected catalog has 478 source-reviewed procedure records. 453 independently checked drivers cover 453 of those records and 19 of the 20 top-level GAMS classes. Among the 149 maintained classes used directly by procedure records, 1 still has no class-specific checked driver.
 
 These counts concern the dedicated GAMS drivers. The ordinary precompiled-package demonstrations have their own build/run verification and are not counted as class-specific drivers here.
 
@@ -23,7 +23,7 @@ Procedure and driver counts include descendants. A procedure assigned to multipl
 | --- | --- | ---: | ---: | ---: | ---: |
 | [A](https://beliavsky.github.io/fortran-playground/gams/A/) | Arithmetic, error analysis | 13 | 12 | 10 | 10 |
 | [B](https://beliavsky.github.io/fortran-playground/gams/B/) | Number theory | 3 | 3 | 3 | 3 |
-| [C](https://beliavsky.github.io/fortran-playground/gams/C/) | Elementary and special functions | 12 | 43 | 41 | 41 |
+| [C](https://beliavsky.github.io/fortran-playground/gams/C/) | Elementary and special functions | 12 | 55 | 51 | 51 |
 | [D](https://beliavsky.github.io/fortran-playground/gams/D/) | Linear Algebra | 39 | 116 | 112 | 112 |
 | [E](https://beliavsky.github.io/fortran-playground/gams/E/) | Interpolation | 13 | 19 | 17 | 17 |
 | [F](https://beliavsky.github.io/fortran-playground/gams/F/) | Solution of nonlinear equations | 8 | 18 | 17 | 17 |
@@ -57,19 +57,20 @@ These are the most specific classes currently recorded for procedures, not neces
 | [A4c](https://beliavsky.github.io/fortran-playground/gams/A4c/) | Extended precision | 1 | 1 | 1 |
 | [A6](https://beliavsky.github.io/fortran-playground/gams/A6/) | Change of representation | 3 | 2 | 2 |
 | [B](https://beliavsky.github.io/fortran-playground/gams/B/) | Number theory | 3 | 3 | 3 |
-| [C2](https://beliavsky.github.io/fortran-playground/gams/C2/) | Powers, roots, reciprocals | 2 | 1 | 1 |
+| [C1](https://beliavsky.github.io/fortran-playground/gams/C1/) | Integer-valued functions (e.g., factorial, binomial coefficient, permutations, combinations, floor, ceiling) | 1 | 1 | 1 |
+| [C2](https://beliavsky.github.io/fortran-playground/gams/C2/) | Powers, roots, reciprocals | 3 | 2 | 2 |
 | [C3a2](https://beliavsky.github.io/fortran-playground/gams/C3a2/) | Chebyshev, Legendre | 1 | 1 | 1 |
 | [C4](https://beliavsky.github.io/fortran-playground/gams/C4/) | Elementary transcendental functions | 1 | 1 | 1 |
 | [C4a](https://beliavsky.github.io/fortran-playground/gams/C4a/) | Trigonometric, inverse trigonometric | 1 | 1 | 1 |
 | [C4b](https://beliavsky.github.io/fortran-playground/gams/C4b/) | Exponential, logarithmic | 2 | 2 | 2 |
-| [C4d](https://beliavsky.github.io/fortran-playground/gams/C4d/) | Integrals of elementary transcendental functions | 1 | 1 | 1 |
+| [C4d](https://beliavsky.github.io/fortran-playground/gams/C4d/) | Integrals of elementary transcendental functions | 2 | 1 | 1 |
 | [C5](https://beliavsky.github.io/fortran-playground/gams/C5/) | Exponential and logarithmic integrals | 3 | 3 | 3 |
-| [C6](https://beliavsky.github.io/fortran-playground/gams/C6/) | Cosine and sine integrals | 1 | 1 | 1 |
+| [C6](https://beliavsky.github.io/fortran-playground/gams/C6/) | Cosine and sine integrals | 2 | 2 | 2 |
 | [C7](https://beliavsky.github.io/fortran-playground/gams/C7/) | Gamma | 1 | 1 | 1 |
-| [C7a](https://beliavsky.github.io/fortran-playground/gams/C7a/) | Gamma, log gamma, reciprocal gamma | 4 | 4 | 4 |
+| [C7a](https://beliavsky.github.io/fortran-playground/gams/C7a/) | Gamma, log gamma, reciprocal gamma | 8 | 8 | 8 |
 | [C7b](https://beliavsky.github.io/fortran-playground/gams/C7b/) | Beta, log beta | 3 | 3 | 3 |
 | [C7c](https://beliavsky.github.io/fortran-playground/gams/C7c/) | Psi function | 1 | 1 | 1 |
-| [C7e](https://beliavsky.github.io/fortran-playground/gams/C7e/) | Incomplete gamma | 3 | 3 | 3 |
+| [C7e](https://beliavsky.github.io/fortran-playground/gams/C7e/) | Incomplete gamma | 7 | 6 | 6 |
 | [C7f](https://beliavsky.github.io/fortran-playground/gams/C7f/) | Incomplete beta | 1 | 1 | 1 |
 | [C8c](https://beliavsky.github.io/fortran-playground/gams/C8c/) | Dawson's integral | 1 | 1 | 1 |
 | [C10](https://beliavsky.github.io/fortran-playground/gams/C10/) | Bessel functions | 2 | 1 | 1 |

@@ -119,6 +119,7 @@ TRANSFORMS_STRUCTURES_TEN_REPORT = Path('docs/gams-transforms-structures-ten.md'
 FULLERTON_FUNCTIONS_TEN_REPORT = Path('docs/gams-fullerton-functions-ten.md')
 ROOTS_STRUCTURED_TEN_REPORT = Path('docs/gams-roots-structured-ten.md')
 ORDERING_RUNGE_TEN_REPORT = Path('docs/gams-ordering-runge-ten.md')
+GAMMA_RELATIVE_TEN_REPORT = Path('docs/gams-gamma-relative-ten.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
 EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
@@ -11341,6 +11342,121 @@ def ordering_runge_ten_review_text(root=ROOT):
     return '\n'.join(lines)
 
 
+def gamma_relative_ten_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-gamma-relative-ten-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-gamma-relative-ten-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Ten checked gamma and relative-function drivers',
+     '',
+     'Ten independent specfunc-fullerton consumers passed GNU Fortran 16.2.0 and FPM 0.12.0 in the hosted '
+     'sandbox. The cached library was reused and only main.f90 and playground-main were compiled. The '
+     '[verification report](gams-gamma-relative-ten-validation.json) retains normalized UTF-8/LF source hashes, '
+     'exact pins, timings and full output. GAMS coverage remains unfinished.',
+     '',
+     '## Precision and references',
+     '',
+     'All demonstrated public APIs accept and return default REAL32. Exact dyadic inputs are converted to that '
+     'kind; widening outputs to REAL64 for comparison does not provide REAL64 function accuracy. Independent '
+     'references were generated with mpmath 1.3.0 at 80 decimal digits and confirmed at 120 digits, with '
+     'absolute differences below 1e-60. The [reference table](gams-gamma-relative-ten-references.json) records '
+     'every argument, integer order where relevant and 18-significant-digit expected value.',
+     '',
+     'All returned values must be finite and satisfy abs(actual-reference)/max(abs(reference),1e-30)<=5e-5. '
+     'Exact zero references are therefore checked effectively exactly. Gamma signs are checked separately '
+     'against exact +/-1. Each driver prints its actual maximum relative error. These bounded cases are not a '
+     'precision or performance benchmark.',
+     '',
+     '| Driver | GAMS | Independent checks |\n'
+     '| --- | --- | --- |\n'
+     '| Lower incomplete gamma | C7e | 49 unnormalized lower integrals; positive shapes 1/2..8, x=0..8 |\n'
+     '| Upper gamma, positive x | C7e | 66 unnormalized tail integrals; positive and selected nonpositive '
+     'shapes, strictly positive x |\n'
+     '| Tricomi incomplete gamma | C7e | 49 scaled lower-gamma values, including exact x=0 limits |\n'
+     '| Signed log gamma | C7a | 18 log-absolute values plus exact signs, including negative half-integers |\n'
+     '| Generalized Pochhammer | C7a | 48 gamma ratios, including signed, fractional and integer shifts |\n'
+     '| Relative Pochhammer | C7a | 35 cancellation-sensitive ratios and exact zero-shift digamma limits |\n'
+     '| Factorials | C1 | 34 finite REAL32 factorials n=0..33 |\n'
+     '| Signed cube roots | C2 | 55 dyadic inputs, signs and zero, exponents -90..90 |\n'
+     '| Entire cosine integral | C6 | 11 nonnegative Cin values, zero, tiny inputs and x up to 16 |\n'
+     '| Reciprocal gamma pole zeros | C7a | 13 exact pole zeros and 28 signed half-integer values |',
+     '',
+     '## Definitions and bounded scope',
+     '',
+     'The lower incomplete gamma is integral_0^x exp(-t)*t**(a-1) dt, not a regularized probability. Its '
+     'positive-shape cases include x=0. The upper incomplete gamma is the corresponding tail '
+     'integral_x^infinity. The positive-x driver tests x=1/8,1/2,1,2,4,8 for shapes '
+     '1/2,1,3/2,2,3,4,8,-2,-1,-1/2,0. Its documented but broken x=0 path is excluded and retained separately '
+     'below. Tricomi uses x**(-a)*lower_gamma(a,x)/Gamma(a), with limit 1/Gamma(a+1) at x=0; only positive '
+     'shapes are verified.',
+     '',
+     'sign_log_gamma returns log(abs(Gamma(x))) and a separate sign, verified at eight negative half-integers '
+     'and ten positive dyadics in [1/8,32]. Pochhammer uses Gamma(a+x)/Gamma(a) with positive a and a+x. poch1 '
+     'uses (Gamma(a+x)/Gamma(a)-1)/x; independent expm1/loggamma references avoid cancellation for signed shifts '
+     'as small as 2**(-16), and x=0 uses the digamma limit. Poles, near-pole perturbations, negative-base '
+     'continuation and large-shift asymptotics are excluded.',
+     '',
+     'Factorials n=0..33 are compared with independent integer factorials rounded only when making reference '
+     'constants. This does not claim n=33 is the largest representable factorial: 34! is also within REAL32 '
+     'range but is not tested here. Signed real cube roots include zero and normal REAL32 inputs with '
+     'significands 1,5/4,7/4 and exponents -90,-30,-9,-3,0,3,9,30,90. Subnormal and exceptional inputs are '
+     'excluded.',
+     '',
+     'The misleading public name inverse_ci denotes Cin(x)=integral_0^x (1-cos(t))/t dt, not an inverse '
+     'function. Only x>=0 is checked. Independent high-precision EulerGamma+log(x)-Ci(x) references handle tiny '
+     'nonzero arguments; zero is supplied by the exact limit. Reciprocal gamma is checked as an entire function '
+     'with exact zeros at 0,-1,...,-12 and signed half-integer values from -23/2 to 31/2.',
+     '',
+     '## Retained failures',
+     '',
+     'The broad upper-gamma probe returned NaN at a=1/2,x=0 instead of sqrt(pi). The source rejects x<=0 before '
+     'an x==0 branch, making that branch unreachable. The [original '
+     'probe](gams-candidates/fullerton-upper-gamma/) and [diagnostic '
+     'probe](gams-candidates/fullerton-gamma-cinh/README.md) are retained with normalized hashes, pins and full '
+     'hosted results. Its broad procedure record has no driver. The separate positive-x consumer does not verify '
+     'or repair that endpoint.',
+     '',
+     'The inverse_chi/Cinh probe built but returned 2.7167096138000488 at x=-3 instead of 3.2845641411959674. '
+     'Its exact source and full result are retained alongside the gamma diagnostic. This broad Cinh record has '
+     'no checked driver; no assertion was relaxed and no library code was patched. The separate reciprocal-gamma '
+     'consumer replaces this candidate. Other successful special functions do not establish Cinh correctness.',
+     '',
+     '## Provenance',
+     '',
+     'Pinned public APIs, implementations and linked author tests were reviewed. The cube-root example has no '
+     'author test in the reviewed pinned test tree, so its implementation was reviewed directly. All ten '
+     'consumers are independent MIT examples; upstream implementations and author test bodies were not copied. '
+     'Classifications follow the [Netlib GAMS taxonomy](https://netlib.org/misc/gams.html). Loading a driver '
+     'does not submit a job. See the [coverage report](gams-coverage.md) for remaining work.',
+     '',
+     '## Driver details',
+     '']
+    for d in drivers:
+        lines += ['### '+d['id']+' ('+d['gams_code']+')', '', d['modifications'], '']
+    lines += ['## Provenance and actual output', '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -11535,6 +11651,7 @@ def main():
                          (FULLERTON_FUNCTIONS_TEN_REPORT, fullerton_functions_ten_review_text()),
                          (ROOTS_STRUCTURED_TEN_REPORT, roots_structured_ten_review_text()),
                          (ORDERING_RUNGE_TEN_REPORT, ordering_runge_ten_review_text()),
+                         (GAMMA_RELATIVE_TEN_REPORT, gamma_relative_ten_review_text()),
                          (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report

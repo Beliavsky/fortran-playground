@@ -14937,6 +14937,266 @@
         "states": 5,
         "oracle": "closed form exact IVP solutions and expected step-halving ratios"
       }
+    },
+    {
+      "id": "specfunc-fullerton-lower-incomplete-gamma-reference",
+      "name": "gams-specfunc-fullerton-lower-incomplete-gamma-reference",
+      "package_id": "specfunc-fullerton",
+      "procedure_id": "specfunc-fullerton-lower-incomplete-gamma",
+      "gams_code": "C7e",
+      "problem_id": "specfunc-fullerton-lower-incomplete-gamma-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specfunc-fullerton-lower-incomplete-gamma-reference.f90",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "author_example": "test/gamma/test_gamma.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/gamma-relative-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 49 unnormalized lower incomplete gamma integrals, seven positive integer/half-integer shapes 1/2..8 and seven x=0..8. Direct high precision lower-integral references; not regularized probabilities. Negative shapes, analytic continuation and extremes excluded.",
+      "validation_path": "docs/gams-gamma-relative-ten-validation.json",
+      "review_path": "docs/gams-gamma-relative-ten.md",
+      "checks": {
+        "comparisons": 49,
+        "scalar_kind": "default REAL32",
+        "relative_tolerance": 5e-05,
+        "reference_floor": 1e-30,
+        "oracle": "mpmath 80/120 digit independent reference values"
+      }
+    },
+    {
+      "id": "specfunc-fullerton-tricomi-incomplete-gamma-reference",
+      "name": "gams-specfunc-fullerton-tricomi-incomplete-gamma-reference",
+      "package_id": "specfunc-fullerton",
+      "procedure_id": "specfunc-fullerton-tricomi-incomplete-gamma",
+      "gams_code": "C7e",
+      "problem_id": "specfunc-fullerton-tricomi-incomplete-gamma-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specfunc-fullerton-tricomi-incomplete-gamma-reference.f90",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "author_example": "test/gamma/test_gamma.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/gamma-relative-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 49 scaled Tricomi incomplete gamma values for positive shapes 1/2..8 and x=0..8. Independent x**(-a)*lower_gamma(a,x)/Gamma(a) references, with limit 1/Gamma(a+1) at zero. Nonpositive-shape analytic continuation excluded.",
+      "validation_path": "docs/gams-gamma-relative-ten-validation.json",
+      "review_path": "docs/gams-gamma-relative-ten.md",
+      "checks": {
+        "comparisons": 49,
+        "scalar_kind": "default REAL32",
+        "relative_tolerance": 5e-05,
+        "reference_floor": 1e-30,
+        "oracle": "mpmath 80/120 digit independent reference values"
+      }
+    },
+    {
+      "id": "specfunc-fullerton-signed-log-gamma-reference",
+      "name": "gams-specfunc-fullerton-signed-log-gamma-reference",
+      "package_id": "specfunc-fullerton",
+      "procedure_id": "specfunc-fullerton-signed-log-gamma",
+      "gams_code": "C7a",
+      "problem_id": "specfunc-fullerton-signed-log-gamma-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specfunc-fullerton-signed-log-gamma-reference.f90",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "author_example": "test/gamma/test_gamma.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/gamma-relative-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 18 signed log-absolute-gamma evaluations, including eight negative half-integers and positive dyadics 1/8..32. Independent log(abs(Gamma(x))) and exact sign checked separately. Gamma poles and neighborhoods of poles excluded.",
+      "validation_path": "docs/gams-gamma-relative-ten-validation.json",
+      "review_path": "docs/gams-gamma-relative-ten.md",
+      "checks": {
+        "comparisons": 18,
+        "scalar_kind": "default REAL32",
+        "relative_tolerance": 5e-05,
+        "reference_floor": 1e-30,
+        "oracle": "mpmath 80/120 digit independent reference values"
+      }
+    },
+    {
+      "id": "specfunc-fullerton-pochhammer-ratios-reference",
+      "name": "gams-specfunc-fullerton-pochhammer-ratios-reference",
+      "package_id": "specfunc-fullerton",
+      "procedure_id": "specfunc-fullerton-pochhammer-ratios",
+      "gams_code": "C7a",
+      "problem_id": "specfunc-fullerton-pochhammer-ratios-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specfunc-fullerton-pochhammer-ratios-reference.f90",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "author_example": "test/poch/test_poch.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/gamma-relative-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 48 generalized Pochhammer Gamma(a+x)/Gamma(a) values for positive dyadic a=1/2..8 and signed/fractional/integer shifts -1/4..5; a+x stays positive. Independent rising-factorial references; poles and large-argument asymptotics excluded.",
+      "validation_path": "docs/gams-gamma-relative-ten-validation.json",
+      "review_path": "docs/gams-gamma-relative-ten.md",
+      "checks": {
+        "comparisons": 48,
+        "scalar_kind": "default REAL32",
+        "relative_tolerance": 5e-05,
+        "reference_floor": 1e-30,
+        "oracle": "mpmath 80/120 digit independent reference values"
+      }
+    },
+    {
+      "id": "specfunc-fullerton-relative-pochhammer-reference",
+      "name": "gams-specfunc-fullerton-relative-pochhammer-reference",
+      "package_id": "specfunc-fullerton",
+      "procedure_id": "specfunc-fullerton-relative-pochhammer",
+      "gams_code": "C7a",
+      "problem_id": "specfunc-fullerton-relative-pochhammer-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specfunc-fullerton-relative-pochhammer-reference.f90",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "author_example": "test/poch/test_poch.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/gamma-relative-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 35 relative Pochhammer values (Gamma(a+x)/Gamma(a)-1)/x with positive a=1/2..8 and signed shifts down to 2**(-16), including exact x=0 digamma limits. Independent high precision expm1/loggamma references avoid cancellation. Negative a, poles and large shifts excluded.",
+      "validation_path": "docs/gams-gamma-relative-ten-validation.json",
+      "review_path": "docs/gams-gamma-relative-ten.md",
+      "checks": {
+        "comparisons": 35,
+        "scalar_kind": "default REAL32",
+        "relative_tolerance": 5e-05,
+        "reference_floor": 1e-30,
+        "oracle": "mpmath 80/120 digit independent reference values"
+      }
+    },
+    {
+      "id": "specfunc-fullerton-factorials-real32-reference",
+      "name": "gams-specfunc-fullerton-factorials-real32-reference",
+      "package_id": "specfunc-fullerton",
+      "procedure_id": "specfunc-fullerton-factorials-real32",
+      "gams_code": "C1",
+      "problem_id": "specfunc-fullerton-factorials-real32-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specfunc-fullerton-factorials-real32-reference.f90",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "author_example": "test/poch/test_poch.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/gamma-relative-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 34 default REAL32 factorials n=0..33 compared with independently computed integer factorials. Includes zero and moderately large finite factorials; invalid negative inputs and n>=34 excluded (34! is also representable but not tested here).",
+      "validation_path": "docs/gams-gamma-relative-ten-validation.json",
+      "review_path": "docs/gams-gamma-relative-ten.md",
+      "checks": {
+        "comparisons": 34,
+        "scalar_kind": "default REAL32",
+        "relative_tolerance": 5e-05,
+        "reference_floor": 1e-30,
+        "oracle": "mpmath 80/120 digit independent reference values"
+      }
+    },
+    {
+      "id": "specfunc-fullerton-signed-cube-roots-reference",
+      "name": "gams-specfunc-fullerton-signed-cube-roots-reference",
+      "package_id": "specfunc-fullerton",
+      "procedure_id": "specfunc-fullerton-signed-cube-roots",
+      "gams_code": "C2",
+      "problem_id": "specfunc-fullerton-signed-cube-roots-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specfunc-fullerton-signed-cube-roots-reference.f90",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/gamma-relative-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 55 signed cube roots, zero and exact dyadic inputs with exponents -90..90 and significands 1,5/4,7/4. Independent high precision real cube roots; signs, small and large normal REAL32 magnitudes checked. Subnormal inputs and exceptional values excluded.",
+      "validation_path": "docs/gams-gamma-relative-ten-validation.json",
+      "review_path": "docs/gams-gamma-relative-ten.md",
+      "checks": {
+        "comparisons": 55,
+        "scalar_kind": "default REAL32",
+        "relative_tolerance": 5e-05,
+        "reference_floor": 1e-30,
+        "oracle": "mpmath 80/120 digit independent reference values"
+      }
+    },
+    {
+      "id": "specfunc-fullerton-entire-cosine-integral-reference",
+      "name": "gams-specfunc-fullerton-entire-cosine-integral-reference",
+      "package_id": "specfunc-fullerton",
+      "procedure_id": "specfunc-fullerton-entire-cosine-integral",
+      "gams_code": "C6",
+      "problem_id": "specfunc-fullerton-entire-cosine-integral-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specfunc-fullerton-entire-cosine-integral-reference.f90",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "author_example": "test/inv_ci/test_inv_ci.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/gamma-relative-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 11 nonnegative Cin integral values, x=0..16 including tiny positive arguments. Public inverse_ci computes Cin(x)=integral_0^x (1-cos(t))/t dt; it is not an inverse of Ci. Independent high precision entire-integral references. Negative inputs and complex continuation excluded.",
+      "validation_path": "docs/gams-gamma-relative-ten-validation.json",
+      "review_path": "docs/gams-gamma-relative-ten.md",
+      "checks": {
+        "comparisons": 11,
+        "scalar_kind": "default REAL32",
+        "relative_tolerance": 5e-05,
+        "reference_floor": 1e-30,
+        "oracle": "mpmath 80/120 digit independent reference values"
+      }
+    },
+    {
+      "id": "specfunc-fullerton-upper-gamma-positive-x-reference",
+      "name": "gams-specfunc-fullerton-upper-gamma-positive-x-reference",
+      "package_id": "specfunc-fullerton",
+      "procedure_id": "specfunc-fullerton-upper-gamma-positive-x",
+      "gams_code": "C7e",
+      "problem_id": "specfunc-fullerton-upper-gamma-positive-x-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specfunc-fullerton-upper-gamma-positive-x-reference.f90",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "author_example": "test/gamma/test_gamma.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/gamma-relative-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 66 unnormalized upper incomplete gamma integrals for strictly positive x=1/8..8, with seven positive shapes 1/2..8 and shapes -2,-1,-1/2,0. Independent high precision tail integrals. The documented x=0 path returns NaN in a retained failed probe and is expressly excluded, not repaired or verified. Near-pole noninteger negative shapes and extremes excluded.",
+      "validation_path": "docs/gams-gamma-relative-ten-validation.json",
+      "review_path": "docs/gams-gamma-relative-ten.md",
+      "checks": {
+        "comparisons": 66,
+        "scalar_kind": "default REAL32",
+        "relative_tolerance": 5e-05,
+        "reference_floor": 1e-30,
+        "oracle": "mpmath 80/120 digit independent reference values"
+      }
+    },
+    {
+      "id": "specfunc-fullerton-reciprocal-gamma-pole-zeros-reference",
+      "name": "gams-specfunc-fullerton-reciprocal-gamma-pole-zeros-reference",
+      "package_id": "specfunc-fullerton",
+      "procedure_id": "specfunc-fullerton-reciprocal-gamma-pole-zeros",
+      "gams_code": "C7a",
+      "problem_id": "specfunc-fullerton-reciprocal-gamma-pole-zeros-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specfunc-fullerton-reciprocal-gamma-pole-zeros-reference.f90",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "author_example": "test/gamma/test_gamma.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/gamma-relative-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 41 reciprocal-gamma values: exact zeros at 0,-1,..,-12 and signed half-integers -23/2..31/2. Independent high precision entire reciprocal gamma references test sign changes, pole zeros and finite values. Near-pole perturbations and extreme magnitudes excluded.",
+      "validation_path": "docs/gams-gamma-relative-ten-validation.json",
+      "review_path": "docs/gams-gamma-relative-ten.md",
+      "checks": {
+        "comparisons": 41,
+        "scalar_kind": "default REAL32",
+        "relative_tolerance": 5e-05,
+        "reference_floor": 1e-30,
+        "oracle": "mpmath 80/120 digit independent reference values"
+      }
     }
   ]
 }
