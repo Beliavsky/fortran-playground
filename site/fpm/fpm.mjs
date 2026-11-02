@@ -27,6 +27,7 @@ editor.setIndentation({width: 3, automatic: true});
 let origin = '', examples = [], busy = false, job = '', targetsKey = '', ready = false;
 const outputPreference = 'fortran-playground-fpm-program-output-only';
 let lastResult = null, showBuildDetails = false;
+let loadedGamsExample = null;
 get('program-output-only').checked = true;
 try {get('program-output-only').checked = localStorage.getItem(outputPreference) !== 'false';} catch {}
 let compilerLabels = {gfortran: 'GNU Fortran 16.2.0'};
@@ -163,22 +164,40 @@ function renderGams(packageEntry) {
   container.replaceChildren();
   container.hidden = !classes.length;
   if (!classes.length) return;
-  const label = document.createElement('span'); label.textContent = 'GAMS classes:'; container.appendChild(label);
-  for (const {code, label} of classes) {
-    const link = document.createElement('a');
-    link.textContent = `${code} — ${label}`;
-    link.href = `https://gams.nist.gov/cgi-bin/serve.cgi/Class/${code}`;
-    link.target = '_blank'; link.rel = 'noopener noreferrer';
-    link.setAttribute('aria-label', `NIST GAMS class ${code}: ${label}`);
-    container.appendChild(link);
+  const catalog = 'https://beliavsky.github.io/fortran-playground/gams/';
+  const linkTo = (label, href) => {
+    const link = document.createElement('a'); link.textContent = label; link.href = href;
+    link.target = '_blank'; link.rel = 'noopener noreferrer'; return link;
+  };
+  const procedures = packageEntry.gams_procedures || [];
+  const current = loadedGamsExample?.gams_driver_id && loadedGamsExample.repository === packageEntry.repository
+    && loadedGamsExample.revision === packageEntry.revision
+    && procedures.find(p => p.driver_id === loadedGamsExample.gams_driver_id);
+  if (current) {
+    const code = loadedGamsExample.category.slice(5);
+    const classification = classes.find(c => c.code === code && current.gams_codes.includes(code));
+    if (classification) {
+      const line = document.createElement('p'); line.className = 'gams-example-class';
+      const label = document.createElement('span'); label.textContent = 'Example GAMS class: ';
+      line.appendChild(label);
+      line.appendChild(linkTo(`${code} — ${classification.label}`, `${catalog}${code}/`));
+      container.appendChild(line);
+    }
   }
-  for (const procedure of packageEntry?.gams_procedures || []) {
+  const browse = document.createElement('details'); browse.className = 'gams-browser';
+  const summary = document.createElement('summary');
+  summary.textContent = `Explore ${packageEntry.id}’s GAMS classifications`;
+  browse.appendChild(summary);
+  const full = document.createElement('p');
+  full.appendChild(linkTo('View full package catalog', `${catalog}packages/${encodeURIComponent(packageEntry.id)}/`));
+  browse.appendChild(full);
+  const appendProcedure = (parent, procedure) => {
+    const row = document.createElement('li');
     const evidence = procedure.evidence[0];
-    const link = document.createElement('a');
-    link.textContent = `${procedure.module}: ${procedure.procedure} (${procedure.gams_codes.join(', ')})`;
+    const link = linkTo(`${procedure.module}: ${procedure.procedure}`,
+      `https://github.com/${packageEntry.repository}/blob/${procedure.revision}/${evidence.path}#L${evidence.line}`);
     link.title = `${procedure.derivatives}. ${procedure.notes}`;
-    link.href = `https://github.com/${packageEntry.repository}/blob/${procedure.revision}/${evidence.path}#L${evidence.line}`;
-    link.target = '_blank'; link.rel = 'noopener noreferrer'; container.appendChild(link);
+    row.appendChild(link);
     const example = examples.find(e => e.gams_driver_id === procedure.driver_id && procedure.driver_id);
     if (example) {
       const button = document.createElement('button'); button.type = 'button';
@@ -188,9 +207,52 @@ function renderGams(packageEntry) {
         if (busy) return;
         get('example').value = example.name; loadExample();
       });
-      container.appendChild(button);
+      row.appendChild(button);
     }
-  }
+    parent.appendChild(row);
+  };
+  // Use the taxonomy parents rather than string prefixes (C1 and C10 are siblings).
+  const codes = new Set(classes.map(c => c.code));
+  const parentCode = code => {
+    for (let parent = gamsSubclasses[code]?.parent; parent; parent = gamsSubclasses[parent]?.parent) {
+      if (codes.has(parent)) return parent;
+    }
+    return '';
+  };
+  const sorted = [...classes].sort((a, b) => a.code.localeCompare(b.code, 'en', {numeric: true}));
+  const appendClasses = (parent, code) => {
+    const list = document.createElement('ul'); list.className = 'gams-class-tree';
+    for (const entry of sorted.filter(c => parentCode(c.code) === code)) {
+      const item = document.createElement('li');
+      const branch = document.createElement('details'); branch.dataset.gamsCode = entry.code;
+      const heading = document.createElement('summary'); heading.textContent = `${entry.code} — ${entry.label}`;
+      branch.appendChild(heading);
+      let populated = false;
+      branch.addEventListener('toggle', () => {
+        if (!branch.open || populated) return;
+        populated = true;
+        const links = document.createElement('p');
+        links.appendChild(linkTo('Browse this class', `${catalog}${entry.code}/`));
+        links.appendChild(linkTo('NIST definition', `https://gams.nist.gov/cgi-bin/serve.cgi/Class/${entry.code}`));
+        branch.appendChild(links);
+        const matches = procedures.filter(p => p.gams_codes.includes(entry.code));
+        if (matches.length) {
+          const matchesList = document.createElement('ul'); matchesList.className = 'gams-procedures';
+          for (const procedure of matches) appendProcedure(matchesList, procedure);
+          branch.appendChild(matchesList);
+        }
+        appendClasses(branch, entry.code);
+      });
+      item.appendChild(branch); list.appendChild(item);
+    }
+    if (list.children.length) parent.appendChild(list);
+  };
+  let populated = false;
+  browse.addEventListener('toggle', () => {
+    if (!browse.open || populated) return;
+    populated = true; appendClasses(browse, '');
+  });
+  container.appendChild(browse);
 }
 
 function descendsFrom(code, parent) {
@@ -603,6 +665,8 @@ get('compiler').addEventListener('change', () => {
   controls();
 });
 for (const id of ['package-url', 'revision', 'subdirectory']) get(id).addEventListener('input', () => {
+  loadedGamsExample = null;
+  renderGams(null);
   resetTargets();
   sourceLinks({repository: githubRepository(get('package-url').value.trim()),
     revision: get('revision').value.trim(), subdirectory: get('subdirectory').value.trim()});
@@ -670,6 +734,8 @@ get('load-package').addEventListener('click', loadPackage);
 function loadPackage() {
   const selected = packages.find(p => p.id === get('available-package').value);
   if (!selected || get('load-package').disabled) return;
+  loadedGamsExample = null;
+  renderGams(selected);
   get('package-url').value = `https://github.com/${selected.repository}`;
   get('revision').value = selected.revision;
   get('subdirectory').value = selected.subdirectory || '';
@@ -687,6 +753,8 @@ function loadPackage() {
 function loadExample() {
   const example = examples.find(item => item.name === get('example').value);
   if (!example) return;
+  loadedGamsExample = example;
+  renderGams(packages.find(p => p.repository === example.repository && p.revision === example.revision));
   get('package-url').value = `https://github.com/${example.repository}`;
   get('revision').value = example.revision;
   get('subdirectory').value = '';
@@ -714,6 +782,7 @@ async function loadSharedState(hash, initial = false) {
     if (!state) return;
     if (busy || collectionLoading || exporting) throw new Error('Wait for the current operation to finish before restoring state.');
     if (!initial && !confirm('Replace the current package, code, input, and settings with this state link?')) return;
+    loadedGamsExample = null;
     get('package-collection').value = state.values['package-collection'] || 'general';
     const unavailableCollection = get('package-collection').value === 'all' && !allPackagesEnabled;
     await selectCollection();

@@ -1,6 +1,14 @@
 .package-fields { display: grid; grid-template-columns: auto minmax(180px, 1fr); gap: 12px; align-items: center; }
 .package-fields input, #target { font: inherit; padding: 9px; border: 1px solid #aebfba; border-radius: 6px; min-width: 0; }
 .package-fields label { font-weight: 600; }
+#package-gams-details:not([hidden]) { display: block; }
+.gams-example-class { margin: 6px 0; }
+.gams-browser { margin: 8px 0; }
+.gams-browser summary { cursor: pointer; padding: 4px 0; }
+.gams-browser p { margin: 6px 0; }
+.gams-browser a, .gams-browser button { margin-right: 12px; }
+.gams-class-tree, .gams-procedures { list-style: none; padding-left: 20px; margin: 6px 0; }
+.gams-procedures li { margin: 8px 0; overflow-wrap: anywhere; }
 #available-package { min-width: 0; max-width: 100%; flex: 1 1 28rem; }
 .package-filter { display: flex; align-items: center; gap: 8px; min-width: 0; max-width: 100%; }
 .package-filter label { white-space: nowrap; }

@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {createStateLink, stateFromHash} from '../site/state_links.mjs';
 import {playgroundConfig} from '../site/config.mjs';
+import {gamsSubclasses} from '../site/fpm/gams_classes.mjs';
 const allEnabled = process.argv.includes('--all-enabled')
   || (!process.argv.includes('--all-link') && playgroundConfig.enableAllFpmPackages === true);
 playgroundConfig.enableAllFpmPackages = allEnabled;
@@ -31,6 +32,12 @@ if (linkedPackage) {
 }
 const driverLink = process.argv.includes('--gams-driver-link');
 const badDriverLink = process.argv.includes('--bad-gams-driver-link');
+const stdlibDriverLink = process.argv.includes('--stdlib-driver-link');
+if (stdlibDriverLink) {
+  globalThis.location ||= new URL('https://example.test/fpm/');
+  globalThis.location.searchParams.set('package', 'stdlib');
+  globalThis.location.searchParams.set('example', 'gams-stdlib-cholesky-reference');
+}
 if (driverLink || badDriverLink) {
   globalThis.location ||= new URL('https://example.test/fpm/');
   globalThis.location.searchParams.set('package', driverLink ? 'minpack' : 'fortran-lapack');
@@ -78,10 +85,29 @@ globalThis.document = {
     });
     return elements.get(id);
   },
-  createElement(tag) {return tag === 'a' ? {setAttribute(key, value) {this[key] = value;}, click() {downloads.push({name: this.download, blob: blobs.get(this.href)});}}
-    : {listeners: {}, addEventListener(name, fn) {this.listeners[name] = fn;}};},
+  createElement(tag) {return {tagName: tag.toUpperCase(), options: [], dataset: {}, listeners: {},
+    get children() {return this.options;},
+    appendChild(child) {this.options.push(child);},
+    setAttribute(key, value) {this[key] = value;},
+    addEventListener(name, fn) {this.listeners[name] = fn;},
+    click() {if (tag === 'a' && this.download) downloads.push({name: this.download, blob: blobs.get(this.href)});}};},
 };
 const get = id => document.getElementById(id);
+const descendants = node => (node.options || []).flatMap(child => [child, ...descendants(child)]);
+function openGamsBrowser() {
+  const browser = get('package-gams-details').options.find(node => node.tagName === 'DETAILS');
+  assert.ok(browser); assert.ok(!browser.open, 'Package classifications start collapsed');
+  browser.open = true; browser.listeners.toggle();
+  return browser;
+}
+function openGamsClass(browser, code) {
+  // Expand ancestors through the official taxonomy, never by prefix.
+  const parent = gamsSubclasses[code]?.parent;
+  if (parent && !descendants(browser).some(node => node.dataset?.gamsCode === code)) openGamsClass(browser, parent);
+  const branch = descendants(browser).find(node => node.dataset?.gamsCode === code);
+  assert.ok(branch, `Missing GAMS class ${code}`);
+  branch.open = true; branch.listeners.toggle(); return branch;
+}
 get('workflow').value = 'consumer';
 get('action').value = 'run';
 get('compiler').options = ['gfortran', 'gfortran17', 'ifx', 'flang'].map(value => ({value}));
@@ -127,7 +153,8 @@ globalThis.fetch = async (url, options = {}) => {
     ...(legacyService ? {} : {features: {translated_r: true, run_examples: true, preprocess: true}}),
     ...(legacyService ? {} : {compilers: {gfortran: 'GNU Fortran 16.2.0', ifx: 'Intel ifx',
       ...(localExecution ? {lfortran: 'LFortran local'} : {})},
-      precompiled: localExecution ? {} : {[packages[0].id]: {revision: packages[0].revision, compiler: 'gfortran'}}}),
+      precompiled: localExecution ? {} : {[packages[0].id]: {revision: packages[0].revision, compiler: 'gfortran'},
+        ...(stdlibDriverLink ? {stdlib: {revision: packages.find(p => p.id === 'stdlib').revision, compiler: 'gfortran'}} : {})}}),
     ...(localExecution ? {local: true, workspace: 'C:/test'} : {})};
   else if (url.endsWith('/cancel')) {cancellations++; value = {state: 'cancelling'};}
   else if (url.endsWith('/api/jobs')) {
@@ -142,6 +169,37 @@ globalThis.fetch = async (url, options = {}) => {
 const originalTimeout = globalThis.setTimeout;
 globalThis.setTimeout = fn => {queueMicrotask(fn); return 1;};
 const {resultText, programOutputText} = await import('../site/fpm/fpm.mjs');
+if (stdlibDriverLink) {
+  const container = get('package-gams-details');
+  const classification = descendants(container).find(node => node.href?.endsWith('/gams/D2b1b/'));
+  assert.ok(classification, 'The loaded Cholesky driver shows its exact class');
+  assert.match(classification.textContent, /^D2b1b/);
+  assert.equal(container.options.length, 2, 'Only the example class and collapsed browser appear by default');
+  assert.ok(!descendants(container).some(node => node.tagName === 'BUTTON'));
+  const browser = openGamsBrowser();
+  assert.ok(descendants(browser).some(node => node.href?.endsWith('/gams/packages/stdlib/')));
+  assert.ok(!descendants(browser).some(node => node.tagName === 'BUTTON'), 'Opening the browser shows classes first');
+  const branch = openGamsClass(browser, 'D2b1b');
+  const buttons = descendants(branch).filter(node => node.tagName === 'BUTTON');
+  assert.ok(buttons.some(node => node.textContent === 'Load gams-stdlib-cholesky-reference'));
+  assert.ok(!buttons.some(node => node.textContent.includes('sorting')), 'Only matching procedures are shown');
+  const before = descendants(branch).length;
+  branch.listeners.toggle();
+  assert.equal(descendants(branch).length, before, 'Reopening does not duplicate entries');
+  buttons.find(node => node.textContent === 'Load gams-stdlib-cholesky-reference').listeners.click();
+  assert.equal(get('source').value, examples.find(e => e.name === 'gams-stdlib-cholesky-reference').source);
+  assert.ok(!container.options.find(node => node.tagName === 'DETAILS').open);
+  get('available-package').value = 'stdlib'; get('available-package').listeners.change();
+  get('load-package').listeners.click();
+  assert.ok(!descendants(container).some(node => node.href?.endsWith('/gams/D2b1b/')),
+    'Loading an ordinary package example clears the previous driver classification');
+  openGamsBrowser();
+  get('package-url').listeners.input();
+  assert.equal(container.hidden, true, 'A custom URL does not retain the previous classification');
+  assert.equal(submissions.length, 0);
+  console.log('Compact stdlib driver class, collapsed lazy hierarchy, matching procedures and reset behavior passed.');
+  process.exit(0);
+}
 if (stateLinkCase) {
   assert.equal(get('source').value, savedState.source);
   assert.equal(get('stdin').value, savedState.stdin);
@@ -175,11 +233,13 @@ if (driverLink || badDriverLink) {
     assert.equal(get('source').value, driver.source);
     assert.equal(get('revision').value, driver.revision);
     assert.equal(get('workflow').value, 'consumer');
-    const button = get('package-gams-details').options.find(p => p.textContent === 'Load gams-minpack-bard');
+    const browser = openGamsBrowser();
+    const branch = openGamsClass(browser, driver.category.slice(5));
+    const button = descendants(branch).find(p => p.textContent === 'Load gams-minpack-bard');
     assert.ok(button);
+    assert.ok(descendants(branch).some(p => p.href?.includes('/blob/' + driver.revision + '/src/minpack.f90#L')));
     get('source').value = 'changed'; button.listeners.click();
     assert.equal(get('source').value, driver.source);
-    assert.ok(get('package-gams-details').options.some(p => p.href?.includes('/blob/' + driver.revision + '/src/minpack.f90#L')));
   } else {
     assert.match(get('package-note').textContent, /does not match/);
     assert.notEqual(get('source').value, driver.source);
@@ -338,8 +398,9 @@ assert.equal(get('available-package').options.length, 1, 'GAMS, category, and te
 await get('package-search-results').options.find(p => p.textContent === 'Search all categories').listeners.click();
 assert.ok(get('available-package').options.length > 1);
 get('available-package').value = 'fortran-lapack'; get('available-package').listeners.change();
-const classLink = get('package-gams-details').options[1];
-assert.equal(classLink.textContent, 'D — Linear Algebra');
+const gamsBrowser = openGamsBrowser();
+const linearAlgebra = openGamsClass(gamsBrowser, 'D');
+const classLink = descendants(linearAlgebra).find(node => node.textContent === 'NIST definition');
 assert.equal(classLink.href, 'https://gams.nist.gov/cgi-bin/serve.cgi/Class/D');
 assert.equal(classLink.target, '_blank');
 assert.equal(classLink.rel, 'noopener noreferrer');
