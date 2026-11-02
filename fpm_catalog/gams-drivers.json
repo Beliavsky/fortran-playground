@@ -14431,6 +14431,236 @@
         "oracle": "independent 80/120 digit mpmath references",
         "arguments": 19
       }
+    },
+    {
+      "id": "roots-fortran-bisection-bracketed-reference",
+      "name": "gams-roots-fortran-bisection-bracketed-reference",
+      "package_id": "roots-fortran",
+      "procedure_id": "roots-fortran-bisection-bracketed",
+      "gams_code": "F1b",
+      "problem_id": "roots-fortran-bisection-bracketed-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/roots-fortran-bisection-bracketed-reference.f90",
+      "revision": "85dc6b98404a61d49944939414f7f56c3f32edd1",
+      "author_example": "test/root_tests.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/roots-structured-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 85 manufactured roots across shifted cubic, exponential, sine, logarithmic and rational families; exact root, returned residual, independently reevaluated residual, bracket and status checked. Bisection fallback explicitly disabled. Smooth simple roots only; not a convergence or speed benchmark. Uses direct object API and a module callback; root_scalar convenience wrapper crashed in the hosted sandbox and is not verified.",
+      "validation_path": "docs/gams-roots-structured-ten-validation.json",
+      "review_path": "docs/gams-roots-structured-ten.md",
+      "checks": {
+        "relative_tolerance": 2e-09,
+        "oracle": "manufactured exact roots or independent dense residuals and analytic spectra"
+      }
+    },
+    {
+      "id": "roots-fortran-ridders-bracketed-reference",
+      "name": "gams-roots-fortran-ridders-bracketed-reference",
+      "package_id": "roots-fortran",
+      "procedure_id": "roots-fortran-ridders-bracketed",
+      "gams_code": "F1b",
+      "problem_id": "roots-fortran-ridders-bracketed-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/roots-fortran-ridders-bracketed-reference.f90",
+      "revision": "85dc6b98404a61d49944939414f7f56c3f32edd1",
+      "author_example": "test/root_tests.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/roots-structured-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 85 manufactured roots across shifted cubic, exponential, sine, logarithmic and rational families; exact root, returned residual, independently reevaluated residual, bracket and status checked. Bisection fallback explicitly disabled. Smooth simple roots only; not a convergence or speed benchmark. Uses direct object API and a module callback; root_scalar convenience wrapper crashed in the hosted sandbox and is not verified.",
+      "validation_path": "docs/gams-roots-structured-ten-validation.json",
+      "review_path": "docs/gams-roots-structured-ten.md",
+      "checks": {
+        "relative_tolerance": 2e-09,
+        "oracle": "manufactured exact roots or independent dense residuals and analytic spectra"
+      }
+    },
+    {
+      "id": "roots-fortran-brentq-bracketed-reference",
+      "name": "gams-roots-fortran-brentq-bracketed-reference",
+      "package_id": "roots-fortran",
+      "procedure_id": "roots-fortran-brentq-bracketed",
+      "gams_code": "F1b",
+      "problem_id": "roots-fortran-brentq-bracketed-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/roots-fortran-brentq-bracketed-reference.f90",
+      "revision": "85dc6b98404a61d49944939414f7f56c3f32edd1",
+      "author_example": "test/root_tests.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/roots-structured-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 85 manufactured roots across shifted cubic, exponential, sine, logarithmic and rational families; exact root, returned residual, independently reevaluated residual, bracket and status checked. Bisection fallback explicitly disabled. Smooth simple roots only; not a convergence or speed benchmark. Uses the direct brentq object API and a module callback; no numerical source patched.",
+      "validation_path": "docs/gams-roots-structured-ten-validation.json",
+      "review_path": "docs/gams-roots-structured-ten.md",
+      "checks": {
+        "relative_tolerance": 2e-09,
+        "oracle": "manufactured exact roots or independent dense residuals and analytic spectra"
+      }
+    },
+    {
+      "id": "roots-fortran-itp-bracketed-reference",
+      "name": "gams-roots-fortran-itp-bracketed-reference",
+      "package_id": "roots-fortran",
+      "procedure_id": "roots-fortran-itp-bracketed",
+      "gams_code": "F1b",
+      "problem_id": "roots-fortran-itp-bracketed-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/roots-fortran-itp-bracketed-reference.f90",
+      "revision": "85dc6b98404a61d49944939414f7f56c3f32edd1",
+      "author_example": "test/root_tests.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/roots-structured-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 85 manufactured roots across shifted cubic, exponential, sine, logarithmic and rational families; exact root, returned residual, independently reevaluated residual, bracket and status checked. Bisection fallback explicitly disabled. Smooth simple roots only; not a convergence or speed benchmark. Uses direct object API and a module callback; root_scalar convenience wrapper crashed in the hosted sandbox and is not verified.",
+      "validation_path": "docs/gams-roots-structured-ten-validation.json",
+      "review_path": "docs/gams-roots-structured-ten.md",
+      "checks": {
+        "relative_tolerance": 2e-09,
+        "oracle": "manufactured exact roots or independent dense residuals and analytic spectra"
+      }
+    },
+    {
+      "id": "roots-fortran-chandrupatla-bracketed-reference",
+      "name": "gams-roots-fortran-chandrupatla-bracketed-reference",
+      "package_id": "roots-fortran",
+      "procedure_id": "roots-fortran-chandrupatla-bracketed",
+      "gams_code": "F1b",
+      "problem_id": "roots-fortran-chandrupatla-bracketed-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/roots-fortran-chandrupatla-bracketed-reference.f90",
+      "revision": "85dc6b98404a61d49944939414f7f56c3f32edd1",
+      "author_example": "test/root_tests.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/roots-structured-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 85 manufactured roots across shifted cubic, exponential, sine, logarithmic and rational families; exact root, returned residual, independently reevaluated residual, bracket and status checked. Bisection fallback explicitly disabled. Smooth simple roots only; not a convergence or speed benchmark. Uses direct object API and a module callback; root_scalar convenience wrapper crashed in the hosted sandbox and is not verified.",
+      "validation_path": "docs/gams-roots-structured-ten-validation.json",
+      "review_path": "docs/gams-roots-structured-ten.md",
+      "checks": {
+        "relative_tolerance": 2e-09,
+        "oracle": "manufactured exact roots or independent dense residuals and analytic spectra"
+      }
+    },
+    {
+      "id": "specialmatrices-strang-eigenpairs-reference",
+      "name": "gams-specialmatrices-strang-eigenpairs-reference",
+      "package_id": "specialmatrices",
+      "procedure_id": "specialmatrices-strang-eigenpairs",
+      "gams_code": "D4a1",
+      "problem_id": "specialmatrices-strang-eigenpairs-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specialmatrices-strang-eigenpairs-reference.f90",
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "author_example": "test/test_strang.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/roots-structured-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. Strang tridiagonal eigensystems for n=2..18; independent dense stencil, sine eigenvalues, eigenvector residuals and orthogonality. Simple real symmetric spectra only.",
+      "validation_path": "docs/gams-roots-structured-ten-validation.json",
+      "review_path": "docs/gams-roots-structured-ten.md",
+      "checks": {
+        "relative_tolerance": 2e-09,
+        "oracle": "manufactured exact roots or independent dense residuals and analytic spectra"
+      }
+    },
+    {
+      "id": "specialmatrices-poisson-eigenpairs-reference",
+      "name": "gams-specialmatrices-poisson-eigenpairs-reference",
+      "package_id": "specialmatrices",
+      "procedure_id": "specialmatrices-poisson-eigenpairs",
+      "gams_code": "D4a1",
+      "problem_id": "specialmatrices-poisson-eigenpairs-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specialmatrices-poisson-eigenpairs-reference.f90",
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "author_example": "test/test_poisson2D.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/roots-structured-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. Twelve rectangular Poisson eigensystems (nx=2..5, ny=2..4), unequal side lengths 2 and 3; manually assembled negative Laplacian stencil, sorted analytic tensor-sine spectra, residuals and orthogonality. Homogeneous Dirichlet boundaries only.",
+      "validation_path": "docs/gams-roots-structured-ten-validation.json",
+      "review_path": "docs/gams-roots-structured-ten.md",
+      "checks": {
+        "relative_tolerance": 2e-09,
+        "oracle": "manufactured exact roots or independent dense residuals and analytic spectra"
+      }
+    },
+    {
+      "id": "specialmatrices-circulant-eigenpairs-reference",
+      "name": "gams-specialmatrices-circulant-eigenpairs-reference",
+      "package_id": "specialmatrices",
+      "procedure_id": "specialmatrices-circulant-eigenpairs",
+      "gams_code": "D4a2",
+      "problem_id": "specialmatrices-circulant-eigenpairs-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specialmatrices-circulant-eigenpairs-reference.f90",
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "author_example": "test/test_circulant.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/roots-structured-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. Fifteen nonsymmetric real circulants n=3..17; manual first-column dense matrices, direct O(n^2) complex DFT eigenvalues, right eigenvector residuals and unitary orthogonality. Does not verify left eigenvectors.",
+      "validation_path": "docs/gams-roots-structured-ten-validation.json",
+      "review_path": "docs/gams-roots-structured-ten.md",
+      "checks": {
+        "relative_tolerance": 2e-09,
+        "oracle": "manufactured exact roots or independent dense residuals and analytic spectra"
+      }
+    },
+    {
+      "id": "specialmatrices-circulant-singular-values-reference",
+      "name": "gams-specialmatrices-circulant-singular-values-reference",
+      "package_id": "specialmatrices",
+      "procedure_id": "specialmatrices-circulant-singular-values",
+      "gams_code": "D6",
+      "problem_id": "specialmatrices-circulant-singular-values-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specialmatrices-circulant-singular-values-reference.f90",
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "author_example": "test/test_circulant.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/roots-structured-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. Fifteen circulants n=3..17; singular values compared with magnitudes of an independently summed complex DFT, sorted by a local insertion sort. Full SVD vectors, rank-deficient matrices and tiny singular values excluded.",
+      "validation_path": "docs/gams-roots-structured-ten-validation.json",
+      "review_path": "docs/gams-roots-structured-ten.md",
+      "checks": {
+        "relative_tolerance": 2e-09,
+        "oracle": "manufactured exact roots or independent dense residuals and analytic spectra"
+      }
+    },
+    {
+      "id": "specialmatrices-circulant-inverses-reference",
+      "name": "gams-specialmatrices-circulant-inverses-reference",
+      "package_id": "specialmatrices",
+      "procedure_id": "specialmatrices-circulant-inverses",
+      "gams_code": "D2a1",
+      "problem_id": "specialmatrices-circulant-inverses-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/specialmatrices-circulant-inverses-reference.f90",
+      "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "author_example": "test/test_circulant.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/roots-structured-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. Fifteen diagonally dominant nonsymmetric circulants n=3..17; both left and right inverse products checked against identity using a manually assembled first-column matrix. Singular and ill-conditioned cases excluded.",
+      "validation_path": "docs/gams-roots-structured-ten-validation.json",
+      "review_path": "docs/gams-roots-structured-ten.md",
+      "checks": {
+        "relative_tolerance": 2e-09,
+        "oracle": "manufactured exact roots or independent dense residuals and analytic spectra"
+      }
     }
   ]
 }

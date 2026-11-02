@@ -340,3 +340,5 @@ Specialized integrals, tensor interpolation and analytic-Jacobian systems: [revi
 Transforms, structured systems, splines and beta functions: [review and actual results](gams-transforms-structures-ten.md).
 
 Fullerton special functions and derivative checks: [review and actual results](gams-fullerton-functions-ten.md).
+
+Root solvers and structured eigensystems: [review and actual results](gams-roots-structured-ten.md).

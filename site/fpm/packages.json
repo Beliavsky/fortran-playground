@@ -716,6 +716,167 @@
         ],
         "author_examples": [],
         "driver_id": "roots-fortran-brent"
+      },
+      {
+        "id": "roots-fortran-bisection-bracketed",
+        "package_id": "roots-fortran",
+        "revision": "85dc6b98404a61d49944939414f7f56c3f32edd1",
+        "module": "root_module",
+        "procedure": "bisection_solver%initialize, solve",
+        "gams_codes": [
+          "F1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "85 manufactured roots across shifted cubic, exponential, sine, logarithmic and rational families; exact root, returned residual, independently reevaluated residual, bracket and status checked. Bisection fallback explicitly disabled. Smooth simple roots only; not a convergence or speed benchmark. Uses direct object API and a module callback; root_scalar convenience wrapper crashed in the hosted sandbox and is not verified.",
+        "driver_id": "roots-fortran-bisection-bracketed-reference",
+        "evidence": [
+          {
+            "path": "src/root_module.F90",
+            "line": 335,
+            "sha256": "a1e4d4337d643384167d963e87973c80b4e805e38869be2fca071876fd306ad2"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/root_tests.f90",
+            "sha256": "7b998aafc7eeb8f4d3a378a621ce62e40cfd6a5e17442bff46cd21f8ab184e06"
+          }
+        ]
+      },
+      {
+        "id": "roots-fortran-ridders-bracketed",
+        "package_id": "roots-fortran",
+        "revision": "85dc6b98404a61d49944939414f7f56c3f32edd1",
+        "module": "root_module",
+        "procedure": "ridders_solver%initialize, solve",
+        "gams_codes": [
+          "F1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "85 manufactured roots across shifted cubic, exponential, sine, logarithmic and rational families; exact root, returned residual, independently reevaluated residual, bracket and status checked. Bisection fallback explicitly disabled. Smooth simple roots only; not a convergence or speed benchmark. Uses direct object API and a module callback; root_scalar convenience wrapper crashed in the hosted sandbox and is not verified.",
+        "driver_id": "roots-fortran-ridders-bracketed-reference",
+        "evidence": [
+          {
+            "path": "src/root_module.F90",
+            "line": 335,
+            "sha256": "a1e4d4337d643384167d963e87973c80b4e805e38869be2fca071876fd306ad2"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/root_tests.f90",
+            "sha256": "7b998aafc7eeb8f4d3a378a621ce62e40cfd6a5e17442bff46cd21f8ab184e06"
+          }
+        ]
+      },
+      {
+        "id": "roots-fortran-toms748-bracketed",
+        "package_id": "roots-fortran",
+        "revision": "85dc6b98404a61d49944939414f7f56c3f32edd1",
+        "module": "root_module",
+        "procedure": "toms748_solver%initialize, solve",
+        "gams_codes": [
+          "F1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "85 manufactured roots across shifted cubic, exponential, sine, logarithmic and rational families; exact root, returned residual, independently reevaluated residual, bracket and status checked. Bisection fallback explicitly disabled. Smooth simple roots only; not a convergence or speed benchmark. Uses direct object API and a module callback; root_scalar convenience wrapper crashed in the hosted sandbox and is not verified. Direct-object probe also failed solver status with IEEE_OVERFLOW_FLAG; retained exact and diagnostic probes; no checked driver.",
+        "evidence": [
+          {
+            "path": "src/root_module.F90",
+            "line": 335,
+            "sha256": "a1e4d4337d643384167d963e87973c80b4e805e38869be2fca071876fd306ad2"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/root_tests.f90",
+            "sha256": "7b998aafc7eeb8f4d3a378a621ce62e40cfd6a5e17442bff46cd21f8ab184e06"
+          }
+        ]
+      },
+      {
+        "id": "roots-fortran-itp-bracketed",
+        "package_id": "roots-fortran",
+        "revision": "85dc6b98404a61d49944939414f7f56c3f32edd1",
+        "module": "root_module",
+        "procedure": "itp_solver%initialize, solve",
+        "gams_codes": [
+          "F1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "85 manufactured roots across shifted cubic, exponential, sine, logarithmic and rational families; exact root, returned residual, independently reevaluated residual, bracket and status checked. Bisection fallback explicitly disabled. Smooth simple roots only; not a convergence or speed benchmark. Uses direct object API and a module callback; root_scalar convenience wrapper crashed in the hosted sandbox and is not verified.",
+        "driver_id": "roots-fortran-itp-bracketed-reference",
+        "evidence": [
+          {
+            "path": "src/root_module.F90",
+            "line": 335,
+            "sha256": "a1e4d4337d643384167d963e87973c80b4e805e38869be2fca071876fd306ad2"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/root_tests.f90",
+            "sha256": "7b998aafc7eeb8f4d3a378a621ce62e40cfd6a5e17442bff46cd21f8ab184e06"
+          }
+        ]
+      },
+      {
+        "id": "roots-fortran-chandrupatla-bracketed",
+        "package_id": "roots-fortran",
+        "revision": "85dc6b98404a61d49944939414f7f56c3f32edd1",
+        "module": "root_module",
+        "procedure": "chandrupatla_solver%initialize, solve",
+        "gams_codes": [
+          "F1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "85 manufactured roots across shifted cubic, exponential, sine, logarithmic and rational families; exact root, returned residual, independently reevaluated residual, bracket and status checked. Bisection fallback explicitly disabled. Smooth simple roots only; not a convergence or speed benchmark. Uses direct object API and a module callback; root_scalar convenience wrapper crashed in the hosted sandbox and is not verified.",
+        "driver_id": "roots-fortran-chandrupatla-bracketed-reference",
+        "evidence": [
+          {
+            "path": "src/root_module.F90",
+            "line": 335,
+            "sha256": "a1e4d4337d643384167d963e87973c80b4e805e38869be2fca071876fd306ad2"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/root_tests.f90",
+            "sha256": "7b998aafc7eeb8f4d3a378a621ce62e40cfd6a5e17442bff46cd21f8ab184e06"
+          }
+        ]
+      },
+      {
+        "id": "roots-fortran-brentq-bracketed",
+        "package_id": "roots-fortran",
+        "revision": "85dc6b98404a61d49944939414f7f56c3f32edd1",
+        "module": "root_module",
+        "procedure": "brentq_solver%initialize, solve",
+        "gams_codes": [
+          "F1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "85 manufactured roots across shifted cubic, exponential, sine, logarithmic and rational families; exact root, returned residual, independently reevaluated residual, bracket and status checked. Bisection fallback explicitly disabled. Smooth simple roots only; not a convergence or speed benchmark. Uses the direct brentq object API and a module callback; no numerical source patched.",
+        "evidence": [
+          {
+            "path": "src/root_module.F90",
+            "line": 335,
+            "sha256": "a1e4d4337d643384167d963e87973c80b4e805e38869be2fca071876fd306ad2"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/root_tests.f90",
+            "sha256": "7b998aafc7eeb8f4d3a378a621ce62e40cfd6a5e17442bff46cd21f8ab184e06"
+          }
+        ],
+        "driver_id": "roots-fortran-brentq-bracketed-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -10500,6 +10661,31 @@
         "parent": "D"
       },
       {
+        "code": "D4",
+        "label": "Eigenvalues, eigenvectors",
+        "parent": "D"
+      },
+      {
+        "code": "D4a",
+        "label": "Ordinary eigenvalue problems (Ax = lambda x)",
+        "parent": "D4"
+      },
+      {
+        "code": "D4a1",
+        "label": "Real symmetric",
+        "parent": "D4a"
+      },
+      {
+        "code": "D4a2",
+        "label": "Real nonsymmetric",
+        "parent": "D4a"
+      },
+      {
+        "code": "D6",
+        "label": "Singular value decomposition",
+        "parent": "D"
+      },
+      {
         "code": "I",
         "label": "Differential and integral equations",
         "parent": null
@@ -10656,6 +10842,141 @@
           {
             "path": "test/test_poisson2D.f90",
             "sha256": "9735950884556e59bf0279ab95d6b086ac480a8cbbb1ee026ec86456305a9ac1"
+          }
+        ]
+      },
+      {
+        "id": "specialmatrices-strang-eigenpairs",
+        "package_id": "specialmatrices",
+        "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+        "module": "SpecialMatrices",
+        "procedure": "eigh(Strang), eigvalsh(Strang)",
+        "gams_codes": [
+          "D4a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "Strang tridiagonal eigensystems for n=2..18; independent dense stencil, sine eigenvalues, eigenvector residuals and orthogonality. Simple real symmetric spectra only.",
+        "driver_id": "specialmatrices-strang-eigenpairs-reference",
+        "evidence": [
+          {
+            "path": "src/Strang/eigh.f90",
+            "line": 6,
+            "sha256": "e0dc6d07c2927e8727b82a33e43602cb615095095705945d9b8749e4581d323b"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_strang.f90",
+            "sha256": "40afeae43dfb67bfe408b3144415c6404f68325198f37586c24f6618ac5a7a4f"
+          }
+        ]
+      },
+      {
+        "id": "specialmatrices-poisson-eigenpairs",
+        "package_id": "specialmatrices",
+        "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+        "module": "SpecialMatrices",
+        "procedure": "eigh(Poisson2D), eigvalsh(Poisson2D)",
+        "gams_codes": [
+          "D4a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "Twelve rectangular Poisson eigensystems (nx=2..5, ny=2..4), unequal side lengths 2 and 3; manually assembled negative Laplacian stencil, sorted analytic tensor-sine spectra, residuals and orthogonality. Homogeneous Dirichlet boundaries only.",
+        "driver_id": "specialmatrices-poisson-eigenpairs-reference",
+        "evidence": [
+          {
+            "path": "src/Poisson2D/eigh.f90",
+            "line": 8,
+            "sha256": "df416cd8bd16b6706083558837fd2a823d421e3a4a530e69b5a32d0d93738044"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_poisson2D.f90",
+            "sha256": "9735950884556e59bf0279ab95d6b086ac480a8cbbb1ee026ec86456305a9ac1"
+          }
+        ]
+      },
+      {
+        "id": "specialmatrices-circulant-eigenpairs",
+        "package_id": "specialmatrices",
+        "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+        "module": "SpecialMatrices",
+        "procedure": "eig(Circulant), eigvals(Circulant)",
+        "gams_codes": [
+          "D4a2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "Fifteen nonsymmetric real circulants n=3..17; manual first-column dense matrices, direct O(n^2) complex DFT eigenvalues, right eigenvector residuals and unitary orthogonality. Does not verify left eigenvectors.",
+        "driver_id": "specialmatrices-circulant-eigenpairs-reference",
+        "evidence": [
+          {
+            "path": "src/Circulant/eig.f90",
+            "line": 6,
+            "sha256": "4ccfbc881e8d21d6d2976f9ab922644d0880754ca42c1387f2a0fc08d565c182"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_circulant.f90",
+            "sha256": "9838bac0e850f1ad5a2467d64d790dfc0220e7cffe4d9254f0228012ef37b34b"
+          }
+        ]
+      },
+      {
+        "id": "specialmatrices-circulant-singular-values",
+        "package_id": "specialmatrices",
+        "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+        "module": "SpecialMatrices",
+        "procedure": "svdvals(Circulant)",
+        "gams_codes": [
+          "D6"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "Fifteen circulants n=3..17; singular values compared with magnitudes of an independently summed complex DFT, sorted by a local insertion sort. Full SVD vectors, rank-deficient matrices and tiny singular values excluded.",
+        "driver_id": "specialmatrices-circulant-singular-values-reference",
+        "evidence": [
+          {
+            "path": "src/Circulant/svd.f90",
+            "line": 7,
+            "sha256": "ae7916ce3bbf4e2388740fc7fff01cd4f51bfa73386c721e7cf2aa883b5eedb3"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_circulant.f90",
+            "sha256": "9838bac0e850f1ad5a2467d64d790dfc0220e7cffe4d9254f0228012ef37b34b"
+          }
+        ]
+      },
+      {
+        "id": "specialmatrices-circulant-inverses",
+        "package_id": "specialmatrices",
+        "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+        "module": "SpecialMatrices",
+        "procedure": "inv(Circulant), dense",
+        "gams_codes": [
+          "D2a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "Fifteen diagonally dominant nonsymmetric circulants n=3..17; both left and right inverse products checked against identity using a manually assembled first-column matrix. Singular and ill-conditioned cases excluded.",
+        "driver_id": "specialmatrices-circulant-inverses-reference",
+        "evidence": [
+          {
+            "path": "src/Circulant/inv.f90",
+            "line": 5,
+            "sha256": "4bb0ccb5c0f98c61c293e8fed4b6a3ba95e67b10dc42a70732008514b30bc360"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test_circulant.f90",
+            "sha256": "9838bac0e850f1ad5a2467d64d790dfc0220e7cffe4d9254f0228012ef37b34b"
           }
         ]
       }

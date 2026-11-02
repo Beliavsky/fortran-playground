@@ -1,0 +1,93 @@
+{
+  "source_sha256": "ead0450a1f3c4d58ed1dc9db24741a7c4b10af94bdb36ffbe515e502bfa3d783",
+  "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+  "result": {
+    "ok": false,
+    "compiler": "GNU Fortran (GCC) 16.2.0",
+    "compiler_id": "gfortran",
+    "fpm": "0.12.0",
+    "stages": [
+      {
+        "name": "Build",
+        "command": [
+          "fpm",
+          "build",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 0.641,
+        "ok": true,
+        "exit_code": 0,
+        "error": "",
+        "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+        "stderr": ""
+      },
+      {
+        "name": "Run",
+        "command": [
+          "fpm",
+          "run",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 0.074,
+        "ok": false,
+        "exit_code": 2,
+        "error": "",
+        "stdout": "",
+        "stderr": "Project is up to date\nAt line 13 of file ../sources/bundle/packages/0/SpecialMatrices-2f53a4b51afbeb2efd2b60eb379283f978359d2f/src/Circulant/eig.f90\nFortran runtime error: Array bound mismatch for dimension 1 of array 'lambda' (1/3)\n\nError termination. Backtrace:\n#0  0x2b987d5e1f83 in ???\n#1  0x2b987d5e2c39 in ???\n#2  0x2b987d5e321b in ???\n#3  0x4042ae in ???\n#4  0x401ef7 in MAIN__\n\tat app/main.f90:24\n#5  0x40359f in main\n\tat app/main.f90:4\n<ERROR> Execution for object \" playground-main \" returned exit code  2\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 2\n"
+      }
+    ],
+    "cache": {
+      "package": "specialmatrices",
+      "compiler": "GNU Fortran 16.2.0",
+      "key": "13deecfe9ad99dcad8d2c6a7",
+      "library_reused": true,
+      "changed_artifacts": []
+    },
+    "packages": [
+      {
+        "repository": "loiseaujc/SpecialMatrices",
+        "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+        "sha256": "b44d6c7e8806a2588fcbfde53fa280a867e0ce9fe31bd2d68828c6131194ce22"
+      },
+      {
+        "repository": "fortran-lang/stdlib",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "sha256": "2826cedc6566feef1344f40cbaaf5c3e820a5e4b581d8a635f38ff99decefef5"
+      },
+      {
+        "repository": "nshalle/fftpack",
+        "revision": "73745a4e82f5f9c3fa07f49cac0439c21ba50829",
+        "sha256": "6fdc6a1fdf2642c94aa0f2c294ed012fe3d99b1ef4efe05395a9367bd06af8b6"
+      }
+    ],
+    "build_ok": true,
+    "target_groups": {
+      "app": [
+        "playground-main"
+      ],
+      "example": [],
+      "test": []
+    },
+    "targets": [
+      "playground-main"
+    ],
+    "plots": [],
+    "plot_notes": []
+  }
+}

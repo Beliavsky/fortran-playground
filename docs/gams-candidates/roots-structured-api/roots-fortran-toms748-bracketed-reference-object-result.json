@@ -1,0 +1,83 @@
+{
+  "source_sha256": "7bb585443ac020880c96f151ffc1dd5f48315a82a4d14b712d14376c0f9ec47c",
+  "revision": "85dc6b98404a61d49944939414f7f56c3f32edd1",
+  "result": {
+    "ok": false,
+    "compiler": "GNU Fortran (GCC) 16.2.0",
+    "compiler_id": "gfortran",
+    "fpm": "0.12.0",
+    "stages": [
+      {
+        "name": "Build",
+        "command": [
+          "fpm",
+          "build",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 0.394,
+        "ok": true,
+        "exit_code": 0,
+        "error": "",
+        "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+        "stderr": ""
+      },
+      {
+        "name": "Run",
+        "command": [
+          "fpm",
+          "run",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 0.034,
+        "ok": false,
+        "exit_code": 1,
+        "error": "",
+        "stdout": "",
+        "stderr": "Project is up to date\nNote: The following floating-point exceptions are signalling: IEEE_OVERFLOW_FLAG\nERROR STOP Root solver status or fallback\n\nError termination. Backtrace:\n#0  0x2b8f14152f83 in ???\n#1  0x2b8f14153c39 in ???\n#2  0x2b8f14155045 in ???\n#3  0x401746 in MAIN__\n\tat app/main.f90:51\n#4  0x401994 in main\n\tat app/main.f90:35\n<ERROR> Execution for object \" playground-main \" returned exit code  1\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 1\n"
+      }
+    ],
+    "cache": {
+      "package": "roots-fortran",
+      "compiler": "GNU Fortran 16.2.0",
+      "key": "e3f66671394da1fdb3e36beb",
+      "library_reused": true,
+      "changed_artifacts": []
+    },
+    "packages": [
+      {
+        "repository": "jacobwilliams/roots-fortran",
+        "revision": "85dc6b98404a61d49944939414f7f56c3f32edd1",
+        "sha256": "77e3839b1df2500887afbba0924a36fc6265c705f5189c2c8a6c48f169cb8228"
+      }
+    ],
+    "build_ok": true,
+    "target_groups": {
+      "app": [
+        "playground-main"
+      ],
+      "example": [],
+      "test": []
+    },
+    "targets": [
+      "playground-main"
+    ],
+    "plots": [],
+    "plot_notes": []
+  }
+}

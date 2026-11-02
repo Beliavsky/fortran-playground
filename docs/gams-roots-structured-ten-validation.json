@@ -1,0 +1,328 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "specialmatrices-strang-eigenpairs-reference",
+      "source_revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "source_sha256": "784cdd0490401c6dcd3b34b3726534ea84113e727fe42e1b24d99de991347f5d",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T18:31:24.608993+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.454,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "17 Strang spectra: analytic eigenvalues, residuals and orthogonality checked.\nPASS specialmatrices-strang-eigenpairs-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.065,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "specialmatrices-poisson-eigenpairs-reference",
+      "source_revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "source_sha256": "eaa6d4b962c7ac9cd8c990a8fe95303361dc58cdf0806e6681ac871b6e165da0",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T18:31:30.561352+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 3.478,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "12 rectangular Poisson spectra: stencil residuals and tensor-sine values checked.\nPASS specialmatrices-poisson-eigenpairs-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.071,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "specialmatrices-circulant-singular-values-reference",
+      "source_revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "source_sha256": "1d557876161fe60e5d801cebc3e89b8283f780d9b0a59069accaaab1d5e9c100",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T18:31:40.968923+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 3.782,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "15 nonsymmetric real circulants, dimensions 3..17, independently checked.\nPASS specialmatrices-circulant-singular-values-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.073,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "specialmatrices-circulant-inverses-reference",
+      "source_revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "source_sha256": "d1b3c4e0d51903b542d44a6fef1a85c9106c789684154701251dc7dfddc1cd76",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T18:31:42.992684+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.367,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "15 nonsymmetric real circulants, dimensions 3..17, independently checked.\nPASS specialmatrices-circulant-inverses-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.052,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "roots-fortran-bisection-bracketed-reference",
+      "source_revision": "85dc6b98404a61d49944939414f7f56c3f32edd1",
+      "source_sha256": "c2a84a2418788447b22ef03458f1305302220ed00ca88c176deeb5a3b419ba7f",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T18:28:45.475316+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.618,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Manufactured roots, five nonlinear families: 85\nPASS roots-fortran-bisection-bracketed-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.031,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "roots-fortran-ridders-bracketed-reference",
+      "source_revision": "85dc6b98404a61d49944939414f7f56c3f32edd1",
+      "source_sha256": "e72cc3d544312e61a40567dd1e0c12d14724e0b873581e3faa7bf279c975d9f7",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T18:28:48.479881+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.498,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Manufactured roots, five nonlinear families: 85\nPASS roots-fortran-ridders-bracketed-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.03,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "roots-fortran-itp-bracketed-reference",
+      "source_revision": "85dc6b98404a61d49944939414f7f56c3f32edd1",
+      "source_sha256": "ce40066151bdcae28dc4ea59651ac7ccf90c3ec02a6771a8aab14d07971f874f",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T18:28:53.793556+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.492,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Manufactured roots, five nonlinear families: 85\nPASS roots-fortran-itp-bracketed-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.03,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "roots-fortran-chandrupatla-bracketed-reference",
+      "source_revision": "85dc6b98404a61d49944939414f7f56c3f32edd1",
+      "source_sha256": "5bc6acb2bb1c4f307706e2bd2939838f65054825a0eb606c92d189c2225ca787",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T18:28:55.958188+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.37,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Manufactured roots, five nonlinear families: 85\nPASS roots-fortran-chandrupatla-bracketed-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.023,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "specialmatrices-circulant-eigenpairs-reference",
+      "source_revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+      "source_sha256": "156d5d6ff6ea26717d484b946017d600972b98aabfe70f95eecc5fe03f5c6acd",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T18:31:34.063849+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.409,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "15 nonsymmetric real circulants, dimensions 3..17, independently checked.\nPASS specialmatrices-circulant-eigenpairs-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.055,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "roots-fortran-brentq-bracketed-reference",
+      "source_revision": "85dc6b98404a61d49944939414f7f56c3f32edd1",
+      "source_sha256": "f2df9a2a0e5f406750314c86f5fe849adaf122c9b453702aaad8a3a95e4b04be",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T18:30:23.936874+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 6.362,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Manufactured roots, five nonlinear families: 85\nPASS roots-fortran-brentq-bracketed-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.029,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-11-02T18:31:43.053610+00:00"
+}

@@ -117,6 +117,7 @@ GRIDS_SPECTRA_TEN_REPORT = Path('docs/gams-grids-spectra-ten.md')
 INTEGRALS_TENSORS_TEN_REPORT = Path('docs/gams-integrals-tensors-ten.md')
 TRANSFORMS_STRUCTURES_TEN_REPORT = Path('docs/gams-transforms-structures-ten.md')
 FULLERTON_FUNCTIONS_TEN_REPORT = Path('docs/gams-fullerton-functions-ten.md')
+ROOTS_STRUCTURED_TEN_REPORT = Path('docs/gams-roots-structured-ten.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
 EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
@@ -11139,6 +11140,102 @@ def fullerton_functions_ten_review_text(root=ROOT):
     return '\n'.join(lines)
 
 
+def roots_structured_ten_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-roots-structured-ten-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-roots-structured-ten-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Ten checked root-solver and structured-matrix drivers',
+     '',
+     'Ten independent REAL64 consumers passed GNU Fortran 16.2.0 and FPM 0.12.0 in the hosted sandbox, reusing '
+     'existing libraries and compiling only main.f90 and playground-main. The [verification '
+     'report](gams-roots-structured-ten-validation.json) retains normalized UTF-8/LF source hashes, pins, '
+     'timings and full output. GAMS coverage remains unfinished.',
+     '',
+     '## Root solvers (F1b)',
+     '',
+     'Separate drivers exercise bisection, Ridders, Brent-Q, ITP and Chandrupatla through their direct solver '
+     'objects. Each solves 85 manufactured problems: 17 exact dyadic roots r in [-2,2] in each of five families '
+     'with z=x-r: z*(1+z*z), exp(z)-1, sin(z), log(1+z), and z/(2+z*z). Brackets are [r-0.75,r+1.25], safely '
+     'inside the logarithm domain. The function shapes and slopes differ; all cases have simple smooth roots. '
+     'These bounded examples do not establish performance or difficult-root robustness.',
+     '',
+     'Each run checks status, bracket containment, the exact root, reported residual and independently '
+     'reevaluated residual. Bisection fallback is explicitly disabled and must remain unused. Requested solver '
+     'tolerances are 1e-13 for function values and 1e-12 for absolute/relative root errors; acceptance uses '
+     '2e-9*max(1,abs(reference)). Module callbacks avoid nested callback wrappers.',
+     '',
+     '## Structured matrices',
+     '',
+     '**Strang eigensystems (D4a1):** 17 dimensions n=2..18, manually assembled tridiagonal matrices with '
+     'diagonal 2 and off-diagonals -1. Eigenvalues are compared with 4*sin(pi*k/(2*(n+1)))**2. Every returned '
+     'vector is checked against the manual matrix and all columns must be orthonormal. The eigenvalues-only API '
+     'is checked separately.',
+     '',
+     '**Rectangular Poisson eigensystems (D4a1):** twelve grids nx=2..5, ny=2..4 on side lengths 2 and 3. A '
+     'manual finite-difference stencil represents the negative-spectrum Laplacian with homogeneous Dirichlet '
+     'boundaries. Sorted tensor-sine eigenvalues, every vector residual and orthogonality are checked. '
+     'Eigenvalues-only results are also compared. No other boundary conditions are verified.',
+     '',
+     '**Circulant eigenpairs (D4a2):** fifteen nonsymmetric real matrices n=3..17. The generating vector is the '
+     'first column, A(i,j)=c(modulo(i-j,n)+1). Direct complex DFT sums supply independent eigenvalues; manually '
+     'assembled matrices supply right-vector residuals and unitary orthogonality checks. Left eigenvectors are '
+     'not verified. Caller-owned outputs are explicitly allocated as required by the pinned public interface.',
+     '',
+     '**Circulant singular values (D6):** magnitudes of directly summed DFT eigenvalues, sorted by a local '
+     'insertion sort, independently check svdvals. This does not verify full SVD vectors or rank-deficient '
+     'inputs.',
+     '',
+     '**Circulant inverses (D2a1):** both A*inverse and inverse*A must equal identity for fifteen manually '
+     'assembled diagonally dominant matrices n=3..17. Singular or ill-conditioned matrices are excluded. All '
+     'matrix checks require finite results and tolerance 2e-9*max(1,abs(reference)).',
+     '',
+     '## Retained unsuccessful probes and provenance',
+     '',
+     'The initial root_scalar convenience-wrapper probes built successfully but crashed with SIGSEGV before '
+     'numerical output. Their exact sources, pins, hashes and full results are '
+     '[retained](gams-candidates/roots-structured-api/README.md). The implementation creates a nested internal '
+     'callback; a sandbox callback/trampoline issue is possible but not established. Successful direct-object '
+     'drivers do not verify that convenience wrapper. The first circulant eig probe omitted required output '
+     'allocation and stopped with an array-bound mismatch; this consumer error is preserved with the correction '
+     'explained. The direct TOMS 748 probe found the exact first root (family 1, r=-2) but returned nonzero '
+     'status 11021 and signalled IEEE_OVERFLOW_FLAG; a second diagnostic probe confirms this. Both are retained. '
+     'The cause is undiagnosed; that path has no checked driver. Brent-Q passed the same 85 cases as a separate '
+     'replacement. No assertion was relaxed and no upstream numerical source was patched.',
+     '',
+     'Pinned implementations and linked author tests were reviewed. These MIT consumers copy no upstream '
+     'implementation or test bodies. Classifications follow the [Netlib GAMS '
+     'taxonomy](https://netlib.org/misc/gams.html). Loading an example does not submit a job. See the [coverage '
+     'report](gams-coverage.md) for remaining work.',
+     '',
+     '## Driver details',
+     '']
+    for d in drivers:
+        lines += ['### '+d['id']+' ('+d['gams_code']+')', '', d['modifications'], '']
+    lines += ['## Provenance and actual output', '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -11331,6 +11428,7 @@ def main():
                          (INTEGRALS_TENSORS_TEN_REPORT, integrals_tensors_ten_review_text()),
                          (TRANSFORMS_STRUCTURES_TEN_REPORT, transforms_structures_ten_review_text()),
                          (FULLERTON_FUNCTIONS_TEN_REPORT, fullerton_functions_ten_review_text()),
+                         (ROOTS_STRUCTURED_TEN_REPORT, roots_structured_ten_review_text()),
                          (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report

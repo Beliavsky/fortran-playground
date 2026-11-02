@@ -8,7 +8,7 @@ This report assesses each package/class pair, including inherited parent classes
 
 When a driver cannot be created, inspect the pinned implementation and author examples. Narrow or remove a classification that is unsupported; do not substitute an unrelated default example as evidence. Record missing dependencies, sandbox limits and upstream defects separately in the procedure or package review notes. A sandbox failure alone does not disprove an algorithm.
 
-Counts refer to package/class pairs and include parents: 789 verified, 80 source-supported, 239 uncertain.
+Counts refer to package/class pairs and include parents: 794 verified, 80 source-supported, 239 uncertain.
 
 ## Mappings requiring source review
 
@@ -562,7 +562,13 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [rngff / rngff-linear-congruential-t](https://beliavsky.github.io/fortran-playground/gams/packages/rngff/#rngff-linear-congruential-t) | L6a21 | verified |
 | [rojff / rojff-json](https://beliavsky.github.io/fortran-playground/gams/packages/rojff/#rojff-json) | N1 | source-supported |
 | [rojff / rojff-json](https://beliavsky.github.io/fortran-playground/gams/packages/rojff/#rojff-json) | N3 | verified |
+| [roots-fortran / roots-fortran-bisection-bracketed](https://beliavsky.github.io/fortran-playground/gams/packages/roots-fortran/#roots-fortran-bisection-bracketed) | F1b | verified |
 | [roots-fortran / roots-fortran-brent](https://beliavsky.github.io/fortran-playground/gams/packages/roots-fortran/#roots-fortran-brent) | F1b | verified |
+| [roots-fortran / roots-fortran-brentq-bracketed](https://beliavsky.github.io/fortran-playground/gams/packages/roots-fortran/#roots-fortran-brentq-bracketed) | F1b | verified |
+| [roots-fortran / roots-fortran-chandrupatla-bracketed](https://beliavsky.github.io/fortran-playground/gams/packages/roots-fortran/#roots-fortran-chandrupatla-bracketed) | F1b | verified |
+| [roots-fortran / roots-fortran-itp-bracketed](https://beliavsky.github.io/fortran-playground/gams/packages/roots-fortran/#roots-fortran-itp-bracketed) | F1b | verified |
+| [roots-fortran / roots-fortran-ridders-bracketed](https://beliavsky.github.io/fortran-playground/gams/packages/roots-fortran/#roots-fortran-ridders-bracketed) | F1b | verified |
+| [roots-fortran / roots-fortran-toms748-bracketed](https://beliavsky.github.io/fortran-playground/gams/packages/roots-fortran/#roots-fortran-toms748-bracketed) | F1b | source-supported |
 | [rpn-calculator-fortran / rpn-elementary](https://beliavsky.github.io/fortran-playground/gams/packages/rpn-calculator-fortran/#rpn-elementary) | C2 | source-supported |
 | [rpn-calculator-fortran / rpn-elementary](https://beliavsky.github.io/fortran-playground/gams/packages/rpn-calculator-fortran/#rpn-elementary) | C4 | verified |
 | [rpn-calculator-fortran / rpn-integer](https://beliavsky.github.io/fortran-playground/gams/packages/rpn-calculator-fortran/#rpn-integer) | B | verified |
@@ -597,9 +603,14 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [specfunc-fullerton / specfunc-fullerton-positive-exponential-integrals](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-positive-exponential-integrals) | C5 | verified |
 | [specfunc-fullerton / specfunc-fullerton-real-dilogarithm](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-real-dilogarithm) | C5 | verified |
 | [specfunc-fullerton / specfunc-fullerton-sine-cosine-integrals](https://beliavsky.github.io/fortran-playground/gams/packages/specfunc-fullerton/#specfunc-fullerton-sine-cosine-integrals) | C6 | verified |
+| [specialmatrices / specialmatrices-circulant-eigenpairs](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-circulant-eigenpairs) | D4a2 | verified |
+| [specialmatrices / specialmatrices-circulant-inverses](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-circulant-inverses) | D2a1 | verified |
+| [specialmatrices / specialmatrices-circulant-singular-values](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-circulant-singular-values) | D6 | verified |
 | [specialmatrices / specialmatrices-circulant-systems](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-circulant-systems) | D2a1 | verified |
+| [specialmatrices / specialmatrices-poisson-eigenpairs](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-poisson-eigenpairs) | D4a1 | verified |
 | [specialmatrices / specialmatrices-rectangular-poisson](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-rectangular-poisson) | I2b1a1a | verified |
 | [specialmatrices / specialmatrices-solve](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-solve) | D2 | verified |
+| [specialmatrices / specialmatrices-strang-eigenpairs](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-strang-eigenpairs) | D4a1 | verified |
 | [specialmatrices / specialmatrices-strang-systems](https://beliavsky.github.io/fortran-playground/gams/packages/specialmatrices/#specialmatrices-strang-systems) | D2b2a | verified |
 | [spectrum / spectrum-convolve](https://beliavsky.github.io/fortran-playground/gams/packages/spectrum/#spectrum-convolve) | J2 | verified |
 | [spectrum / spectrum-rfft](https://beliavsky.github.io/fortran-playground/gams/packages/spectrum/#spectrum-rfft) | J1a1 | verified |

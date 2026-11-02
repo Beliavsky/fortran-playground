@@ -873,7 +873,13 @@
       "archive_sha256": "77e3839b1df2500887afbba0924a36fc6265c705f5189c2c8a6c48f169cb8228",
       "status": "procedure-reviewed",
       "procedure_ids": [
-        "roots-fortran-brent"
+        "roots-fortran-brent",
+        "roots-fortran-bisection-bracketed",
+        "roots-fortran-ridders-bracketed",
+        "roots-fortran-toms748-bracketed",
+        "roots-fortran-itp-bracketed",
+        "roots-fortran-chandrupatla-bracketed",
+        "roots-fortran-brentq-bracketed"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
     },
@@ -952,7 +958,12 @@
         "specialmatrices-solve",
         "specialmatrices-strang-systems",
         "specialmatrices-circulant-systems",
-        "specialmatrices-rectangular-poisson"
+        "specialmatrices-rectangular-poisson",
+        "specialmatrices-strang-eigenpairs",
+        "specialmatrices-poisson-eigenpairs",
+        "specialmatrices-circulant-eigenpairs",
+        "specialmatrices-circulant-singular-values",
+        "specialmatrices-circulant-inverses"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
     },
