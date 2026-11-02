@@ -223,15 +223,17 @@ Selected package details link to the NIST definitions. Other collections are not
 | [K6](https://gams.nist.gov/cgi-bin/serve.cgi/Class/K6) | Service routines for approximation | 0 |
 | [L](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L) | Statistics, probability | 19 |
 | [L1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1) | Data summarization | 5 |
-| [L1a](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1a) | One-dimensional data | 2 |
-| [L1a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1a1) | Raw data | 2 |
-| [L1a1a](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1a1a) | Location | 2 |
+| [L1a](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1a) | One-dimensional data | 3 |
+| [L1a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1a1) | Raw data | 3 |
+| [L1a1a](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1a1a) | Location | 3 |
 | [L1a1b](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1a1b) | Dispersion | 2 |
 | [L1a1c](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1a1c) | Shape | 1 |
+| [L1a1d](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1a1d) | Frequency, cumulative frequency | 1 |
 | [L1c](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1c) | Multi-dimensional data | 1 |
 | [L1c1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1c1) | Raw data | 1 |
 | [L1c1b](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1c1b) | Covariance, correlation | 1 |
-| [L2](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L2) | Data manipulation | 2 |
+| [L2](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L2) | Data manipulation | 3 |
+| [L2c](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L2c) | Subset | 1 |
 | [L3](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L3) | Elementary statistical graphics | 0 |
 | [L4](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L4) | Elementary data analysis | 2 |
 | [L5](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L5) | Function evaluation | 3 |
@@ -273,6 +275,11 @@ Selected package details link to the NIST definitions. Other collections are not
 | [N4](https://gams.nist.gov/cgi-bin/serve.cgi/Class/N4) | Storage management (e.g., stacks, heaps, trees) | 25 |
 | [N5](https://gams.nist.gov/cgi-bin/serve.cgi/Class/N5) | Searching | 26 |
 | [N6](https://gams.nist.gov/cgi-bin/serve.cgi/Class/N6) | Sorting | 9 |
+| [N6a](https://gams.nist.gov/cgi-bin/serve.cgi/Class/N6a) | Internal | 1 |
+| [N6a1](https://gams.nist.gov/cgi-bin/serve.cgi/Class/N6a1) | Passive (construct pointer array, rank) | 1 |
+| [N6a1b](https://gams.nist.gov/cgi-bin/serve.cgi/Class/N6a1b) | Real | 1 |
+| [N6a2](https://gams.nist.gov/cgi-bin/serve.cgi/Class/N6a2) | Active | 1 |
+| [N6a2b](https://gams.nist.gov/cgi-bin/serve.cgi/Class/N6a2b) | Real | 1 |
 | [N7](https://gams.nist.gov/cgi-bin/serve.cgi/Class/N7) | Merging | 0 |
 | [N8](https://gams.nist.gov/cgi-bin/serve.cgi/Class/N8) | Permuting | 0 |
 | [O](https://gams.nist.gov/cgi-bin/serve.cgi/Class/O) | Symbolic computation | 0 |
@@ -531,7 +538,7 @@ Counts overlap because a package may implement several kinds of problems. All 20
 | [optgra](https://github.com/jacobwilliams/optgra/tree/914bed713e80faa4a190e03beb3a8307077eb028) | [G — Optimization](https://gams.nist.gov/cgi-bin/serve.cgi/Class/G), [G2 — Constrained](https://gams.nist.gov/cgi-bin/serve.cgi/Class/G2), [G2h — General nonlinear programming](https://gams.nist.gov/cgi-bin/serve.cgi/Class/G2h), [G2h3 — Nonlinear constraints](https://gams.nist.gov/cgi-bin/serve.cgi/Class/G2h3), [G2h3b — Equality and inequality constraints](https://gams.nist.gov/cgi-bin/serve.cgi/Class/G2h3b), [G2h3b1 — Smooth function and constraints](https://gams.nist.gov/cgi-bin/serve.cgi/Class/G2h3b1), [G2h3b1b — User provides first derivatives of function and constraints](https://gams.nist.gov/cgi-bin/serve.cgi/Class/G2h3b1b) | Constrained optimization designed for nearly linear problems with many constraints. |  [Catalog example](../fpm_catalog/demos/optgra.f90) |
 | [opti](https://github.com/Konrad1991/opti/tree/6fb22db21bd2338e00690ff3706be61a1f101101) | [G — Optimization](https://gams.nist.gov/cgi-bin/serve.cgi/Class/G), [G2 — Constrained](https://gams.nist.gov/cgi-bin/serve.cgi/Class/G2), [G2i — Global solution to nonconvex problems](https://gams.nist.gov/cgi-bin/serve.cgi/Class/G2i) | Particle swarm optimization with star and adaptive neighborhood topologies. |  [Catalog example](../fpm_catalog/demos/opti.f90) |
 | [orbs](https://github.com/degawa/orbs/tree/3cf7fcec19798367f6f5bd26bad861c510449265) | [A — Arithmetic, error analysis](https://gams.nist.gov/cgi-bin/serve.cgi/Class/A), [A1 — Integer](https://gams.nist.gov/cgi-bin/serve.cgi/Class/A1), [N — Data handling](https://gams.nist.gov/cgi-bin/serve.cgi/Class/N), [N2 — Bit manipulation](https://gams.nist.gov/cgi-bin/serve.cgi/Class/N2) | Arithmetic, logical and shift operators for stdlib-backed bitsets. | Fixed-width bitset arithmetic and logical operations. The main computes an x neighbor for every cell of a two-dimensional 4-by-4 Morton grid, checking all sixteen results and wraparound against independent intrinsic integer operations. [Catalog example](../fpm_catalog/demos/orbs.f90) |
-| [orderpack](https://github.com/urbanjost/orderpack/tree/9696eee2670beae1601ae59e125ff9f10e6c88a7) | [L — Statistics, probability](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L), [L1 — Data summarization](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1), [N — Data handling](https://gams.nist.gov/cgi-bin/serve.cgi/Class/N), [N6 — Sorting](https://gams.nist.gov/cgi-bin/serve.cgi/Class/N6) | Sorting, ranking, medians, and partial ordering of arrays. |  [Catalog example](../fpm_catalog/demos/orderpack.f90) |
+| [orderpack](https://github.com/urbanjost/orderpack/tree/9696eee2670beae1601ae59e125ff9f10e6c88a7) | [L — Statistics, probability](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L), [L1 — Data summarization](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1), [L1a — One-dimensional data](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1a), [L1a1 — Raw data](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1a1), [L1a1a — Location](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1a1a), [L1a1d — Frequency, cumulative frequency](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L1a1d), [L2 — Data manipulation](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L2), [L2c — Subset](https://gams.nist.gov/cgi-bin/serve.cgi/Class/L2c), [N — Data handling](https://gams.nist.gov/cgi-bin/serve.cgi/Class/N), [N6 — Sorting](https://gams.nist.gov/cgi-bin/serve.cgi/Class/N6), [N6a — Internal](https://gams.nist.gov/cgi-bin/serve.cgi/Class/N6a), [N6a1 — Passive (construct pointer array, rank)](https://gams.nist.gov/cgi-bin/serve.cgi/Class/N6a1), [N6a1b — Real](https://gams.nist.gov/cgi-bin/serve.cgi/Class/N6a1b), [N6a2 — Active](https://gams.nist.gov/cgi-bin/serve.cgi/Class/N6a2), [N6a2b — Real](https://gams.nist.gov/cgi-bin/serve.cgi/Class/N6a2b) | Sorting, ranking, medians, and partial ordering of arrays. |  [Catalog example](../fpm_catalog/demos/orderpack.f90) |
 | [paramcard](https://github.com/tueda/paramcard/tree/ffd6bfc0066f3aaa493333179a01257011b77f78) | [N — Data handling](https://gams.nist.gov/cgi-bin/serve.cgi/Class/N), [N1 — Input, output](https://gams.nist.gov/cgi-bin/serve.cgi/Class/N1), [N3 — Character manipulation](https://gams.nist.gov/cgi-bin/serve.cgi/Class/N3) | Named input parameters, defaults, string parsing and configuration summaries. |  [Catalog example](../fpm_catalog/demos/paramcard.f90) |
 | [parff](https://github.com/everythingfunctional/parff/tree/dbce6a04992fbc1e2d13b6c633480d3cd4bbe35c) | [N — Data handling](https://gams.nist.gov/cgi-bin/serve.cgi/Class/N), [N3 — Character manipulation](https://gams.nist.gov/cgi-bin/serve.cgi/Class/N3) | Composable functional parsers for structured text and useful parse errors. |  [Catalog example](../fpm_catalog/demos/parff.f90) |
 | [pchip](https://github.com/jacobwilliams/PCHIP/tree/8f5350565072622a2344dd0ec75193832b31eb10) | [E — Interpolation](https://gams.nist.gov/cgi-bin/serve.cgi/Class/E), [E1 — Univariate data (curve fitting)](https://gams.nist.gov/cgi-bin/serve.cgi/Class/E1), [E1a — Polynomial splines (piecewise polynomials)](https://gams.nist.gov/cgi-bin/serve.cgi/Class/E1a), [E3 — Service routines for interpolation](https://gams.nist.gov/cgi-bin/serve.cgi/Class/E3), [E3a — Evaluation of fitted functions, including quadrature](https://gams.nist.gov/cgi-bin/serve.cgi/Class/E3a), [E3a3 — Quadrature](https://gams.nist.gov/cgi-bin/serve.cgi/Class/E3a3) | Shape-preserving piecewise cubic interpolation. |  [Catalog example](../fpm_catalog/demos/pchip.f90) |

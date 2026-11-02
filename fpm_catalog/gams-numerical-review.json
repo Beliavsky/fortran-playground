@@ -716,7 +716,14 @@
       "archive_sha256": "54a5156b7b9e10267d742316c42eb87fa05bb7dbe8cad68820fc7e1d59c8e244",
       "status": "procedure-reviewed",
       "procedure_ids": [
-        "orderpack-rank"
+        "orderpack-rank",
+        "orderpack-partial-sort",
+        "orderpack-partial-ranks",
+        "orderpack-stable-unique",
+        "orderpack-multiplicities",
+        "orderpack-order-statistics",
+        "orderpack-median-conventions",
+        "orderpack-inverse-unique-ranks"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
     },
@@ -846,7 +853,11 @@
       "archive_sha256": "6c70084cb47a59f6d61b326801135cdf2889ec723b7454a82f9e04b3735593d8",
       "status": "procedure-reviewed",
       "procedure_ids": [
-        "rklib-rk4"
+        "rklib-rk4",
+        "rklib-midpoint-exact-ivp",
+        "rklib-rk3-exact-ivp",
+        "rklib-rkssp54-exact-ivp",
+        "rklib-rk5-exact-ivp"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
     },

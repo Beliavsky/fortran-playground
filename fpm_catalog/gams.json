@@ -547,7 +547,8 @@
     ],
     "orderpack": [
       "L1",
-      "N6"
+      "N6",
+      "L2"
     ],
     "fortran-regex": [
       "N3",
@@ -1911,6 +1912,34 @@
     "C8c": {
       "label": "Dawson's integral",
       "parent": "C8"
+    },
+    "N6a": {
+      "label": "Internal",
+      "parent": "N6"
+    },
+    "N6a1": {
+      "label": "Passive (construct pointer array, rank)",
+      "parent": "N6a"
+    },
+    "N6a1b": {
+      "label": "Real",
+      "parent": "N6a1"
+    },
+    "N6a2": {
+      "label": "Active",
+      "parent": "N6a"
+    },
+    "N6a2b": {
+      "label": "Real",
+      "parent": "N6a2"
+    },
+    "L1a1d": {
+      "label": "Frequency, cumulative frequency",
+      "parent": "L1a1"
+    },
+    "L2c": {
+      "label": "Subset",
+      "parent": "L2"
     }
   },
   "procedure_mappings": [
@@ -15421,6 +15450,377 @@
         }
       ],
       "driver_id": "roots-fortran-brentq-bracketed-reference"
+    },
+    {
+      "id": "orderpack-partial-sort",
+      "package_id": "orderpack",
+      "revision": "9696eee2670beae1601ae59e125ff9f10e6c88a7",
+      "module": "M_orderpack",
+      "procedure": "psort",
+      "gams_codes": [
+        "N6a2b"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not required",
+      "notes": "325 finite REAL64 data sets, n=1..65 and five patterns: repeated unsorted, sorted, reverse, constant and distinct dyadics. All partial sorted prefixes and complete multiset preservation checked. NaNs, infinities, empty inputs and other kinds excluded.",
+      "driver_id": "orderpack-partial-sort-reference",
+      "evidence": [
+        {
+          "path": "src/M_orderpack.f90",
+          "line": 1,
+          "sha256": "2413fc033ff4a130f83a26329057cc528159cdb80f3e7d17613263b820a66084"
+        },
+        {
+          "path": "src/M_orderpack__inspar.f90",
+          "line": 8,
+          "sha256": "c8bf919e558e657afad22fe01af70b2a822434584802f883dbd556b15efbf593"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_suite_M_orderpack.f90",
+          "sha256": "e4540d000b641137d161207aaf9b1def966dc3e4b670bea18d64d3d4a95a5708"
+        }
+      ]
+    },
+    {
+      "id": "orderpack-partial-ranks",
+      "package_id": "orderpack",
+      "revision": "9696eee2670beae1601ae59e125ff9f10e6c88a7",
+      "module": "M_orderpack",
+      "procedure": "prank",
+      "gams_codes": [
+        "N6a1b"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not required",
+      "notes": "325 finite REAL64 data sets, n=1..65 and five patterns: repeated unsorted, sorted, reverse, constant and distinct dyadics. Every requested prefix: valid distinct indices and independently sorted values; tie stability not required. NaNs, infinities, empty inputs and other kinds excluded.",
+      "driver_id": "orderpack-partial-ranks-reference",
+      "evidence": [
+        {
+          "path": "src/M_orderpack.f90",
+          "line": 1,
+          "sha256": "2413fc033ff4a130f83a26329057cc528159cdb80f3e7d17613263b820a66084"
+        },
+        {
+          "path": "src/M_orderpack__rnkpar.f90",
+          "line": 8,
+          "sha256": "80bbd0646572d3f0739326efc2732d71604d547c215af7f58a938e0273736918"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_suite_M_orderpack.f90",
+          "sha256": "e4540d000b641137d161207aaf9b1def966dc3e4b670bea18d64d3d4a95a5708"
+        }
+      ]
+    },
+    {
+      "id": "orderpack-stable-unique",
+      "package_id": "orderpack",
+      "revision": "9696eee2670beae1601ae59e125ff9f10e6c88a7",
+      "module": "M_orderpack",
+      "procedure": "unique",
+      "gams_codes": [
+        "L2c"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not required",
+      "notes": "325 finite REAL64 data sets, n=1..65 and five patterns: repeated unsorted, sorted, reverse, constant and distinct dyadics. Stable duplicate removal compared with a first-occurrence scan; only the documented first nu entries are checked. NaNs, infinities, empty inputs and other kinds excluded.",
+      "driver_id": "orderpack-stable-unique-reference",
+      "evidence": [
+        {
+          "path": "src/M_orderpack.f90",
+          "line": 1,
+          "sha256": "2413fc033ff4a130f83a26329057cc528159cdb80f3e7d17613263b820a66084"
+        },
+        {
+          "path": "src/M_orderpack__unista.f90",
+          "line": 8,
+          "sha256": "5e2f0f0190477da3111bfa0861e50a45394d99eb94c6958ee7c1f07061080595"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_suite_M_orderpack.f90",
+          "sha256": "e4540d000b641137d161207aaf9b1def966dc3e4b670bea18d64d3d4a95a5708"
+        }
+      ]
+    },
+    {
+      "id": "orderpack-multiplicities",
+      "package_id": "orderpack",
+      "revision": "9696eee2670beae1601ae59e125ff9f10e6c88a7",
+      "module": "M_orderpack",
+      "procedure": "occurrences",
+      "gams_codes": [
+        "L1a1d"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not required",
+      "notes": "325 finite REAL64 data sets, n=1..65 and five patterns: repeated unsorted, sorted, reverse, constant and distinct dyadics. Per-element multiplicities compared with independent direct counting. NaNs, infinities, empty inputs and other kinds excluded.",
+      "driver_id": "orderpack-multiplicities-reference",
+      "evidence": [
+        {
+          "path": "src/M_orderpack.f90",
+          "line": 1,
+          "sha256": "2413fc033ff4a130f83a26329057cc528159cdb80f3e7d17613263b820a66084"
+        },
+        {
+          "path": "src/M_orderpack__mulcnt.f90",
+          "line": 8,
+          "sha256": "50bda42334878f30e5a05c41cc273ada2caeacfabe6b67873d48a4a7e000cf8b"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_suite_M_orderpack.f90",
+          "sha256": "e4540d000b641137d161207aaf9b1def966dc3e4b670bea18d64d3d4a95a5708"
+        }
+      ]
+    },
+    {
+      "id": "orderpack-order-statistics",
+      "package_id": "orderpack",
+      "revision": "9696eee2670beae1601ae59e125ff9f10e6c88a7",
+      "module": "M_orderpack",
+      "procedure": "orderloc,orderval,orderval_special",
+      "gams_codes": [
+        "L1a1a"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not required",
+      "notes": "Unsuccessful order-statistics probe: orderloc returns an incorrect third-order statistic for [-1.25,-2.75,1.5,0]. Expected 0, returned index 3/value 1.5. Original and diagnostic probes retained; orderval and orderval_special were not reached for that case and are not verified by this combined probe.",
+      "evidence": [
+        {
+          "path": "src/M_orderpack.f90",
+          "line": 1,
+          "sha256": "2413fc033ff4a130f83a26329057cc528159cdb80f3e7d17613263b820a66084"
+        },
+        {
+          "path": "src/M_orderpack__indnth.f90",
+          "line": 8,
+          "sha256": "a1d0252b61114cef952685649bb752cefb19065593a6dff5abb68281f3e4373d"
+        },
+        {
+          "path": "src/M_orderpack__valnth.f90",
+          "line": 8,
+          "sha256": "865fae5547c7bb0b3c474c689a933e910c679435091a63b9f8f7467648720c34"
+        },
+        {
+          "path": "src/M_orderpack__fndnth.f90",
+          "line": 8,
+          "sha256": "0c20bde14fed23839ed6c5c14a2e0e99d0d68006ea51849fb4bcd7369e0abc13"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_suite_M_orderpack.f90",
+          "sha256": "e4540d000b641137d161207aaf9b1def966dc3e4b670bea18d64d3d4a95a5708"
+        }
+      ]
+    },
+    {
+      "id": "orderpack-median-conventions",
+      "package_id": "orderpack",
+      "revision": "9696eee2670beae1601ae59e125ff9f10e6c88a7",
+      "module": "M_orderpack",
+      "procedure": "median,medianval,medianloc",
+      "gams_codes": [
+        "L1a1a"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not required",
+      "notes": "325 finite REAL64 data sets, n=1..65 and five patterns: repeated unsorted, sorted, reverse, constant and distinct dyadics. Arithmetic central-pair median versus lower-middle medianval/medianloc conventions; odd and even sizes checked. NaNs, infinities, empty inputs and other kinds excluded.",
+      "driver_id": "orderpack-median-conventions-reference",
+      "evidence": [
+        {
+          "path": "src/M_orderpack.f90",
+          "line": 1,
+          "sha256": "2413fc033ff4a130f83a26329057cc528159cdb80f3e7d17613263b820a66084"
+        },
+        {
+          "path": "src/M_orderpack__median.f90",
+          "line": 8,
+          "sha256": "1afe0a5707a3c530b74f90bc543588a4eaf3a062a8e2ef2e6f68d807961f8107"
+        },
+        {
+          "path": "src/M_orderpack__valmed.f90",
+          "line": 8,
+          "sha256": "2065dcc5a01470a444849dcbe74f6f7c3011f86c87ffdb7336a291909a0f31ef"
+        },
+        {
+          "path": "src/M_orderpack__indmed.f90",
+          "line": 8,
+          "sha256": "a5234ec8530db10b368ecf067a024b9076cea5e86ba5a57f2deabd9f35601f18"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_suite_M_orderpack.f90",
+          "sha256": "e4540d000b641137d161207aaf9b1def966dc3e4b670bea18d64d3d4a95a5708"
+        }
+      ]
+    },
+    {
+      "id": "rklib-midpoint-exact-ivp",
+      "package_id": "rklib",
+      "revision": "e3d51f9e8a2e6756612e8e53687ab2d4b67dfb76",
+      "module": "rklib_module",
+      "procedure": "midpoint_class%initialize, integrate, status",
+      "gams_codes": [
+        "I1a1a"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not required",
+      "notes": "Fixed-step midpoint method (order 2) on five REAL64 states: exponential decay, harmonic oscillator pair, nonlinear logistic and explicitly time-dependent polynomial forcing. Ten checkpoints on [0,2] for each of h=0.1,0.05,0.025, with exact solutions, status, finite/bounded states and two expected step-halving ratios. Nonstiff smooth system only; not an SSP, stability-region, adaptive, backward-integration or performance claim.",
+      "driver_id": "rklib-midpoint-exact-ivp-reference",
+      "evidence": [
+        {
+          "path": "src/rklib_fixed_classes.inc",
+          "line": 10,
+          "sha256": "539c8d5029ddd5a6e669a655c759ce328e49d0e88f26b829d91e717cd9f9b067"
+        },
+        {
+          "path": "src/rklib_fixed_steps.f90",
+          "line": 33,
+          "sha256": "c9809cb3c27a44c7ff6b4237bfb3258a8d1223ff30917d6d7b1b97c5f579e46a"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/rk_test_order.F90",
+          "sha256": "608aada38eb604d93152248c2ad4754fc5b5fa9a73919cf33e1725487373e0db"
+        }
+      ]
+    },
+    {
+      "id": "rklib-rk3-exact-ivp",
+      "package_id": "rklib",
+      "revision": "e3d51f9e8a2e6756612e8e53687ab2d4b67dfb76",
+      "module": "rklib_module",
+      "procedure": "rk3_class%initialize, integrate, status",
+      "gams_codes": [
+        "I1a1a"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not required",
+      "notes": "Fixed-step rk3 method (order 3) on five REAL64 states: exponential decay, harmonic oscillator pair, nonlinear logistic and explicitly time-dependent polynomial forcing. Ten checkpoints on [0,2] for each of h=0.1,0.05,0.025, with exact solutions, status, finite/bounded states and two expected step-halving ratios. Nonstiff smooth system only; not an SSP, stability-region, adaptive, backward-integration or performance claim.",
+      "driver_id": "rklib-rk3-exact-ivp-reference",
+      "evidence": [
+        {
+          "path": "src/rklib_fixed_classes.inc",
+          "line": 31,
+          "sha256": "539c8d5029ddd5a6e669a655c759ce328e49d0e88f26b829d91e717cd9f9b067"
+        },
+        {
+          "path": "src/rklib_fixed_steps.f90",
+          "line": 95,
+          "sha256": "c9809cb3c27a44c7ff6b4237bfb3258a8d1223ff30917d6d7b1b97c5f579e46a"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/rk_test_order.F90",
+          "sha256": "608aada38eb604d93152248c2ad4754fc5b5fa9a73919cf33e1725487373e0db"
+        }
+      ]
+    },
+    {
+      "id": "rklib-rkssp54-exact-ivp",
+      "package_id": "rklib",
+      "revision": "e3d51f9e8a2e6756612e8e53687ab2d4b67dfb76",
+      "module": "rklib_module",
+      "procedure": "rkssp54_class%initialize, integrate, status",
+      "gams_codes": [
+        "I1a1a"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not required",
+      "notes": "Fixed-step rkssp54 method (order 4) on five REAL64 states: exponential decay, harmonic oscillator pair, nonlinear logistic and explicitly time-dependent polynomial forcing. Ten checkpoints on [0,2] for each of h=0.1,0.05,0.025, with exact solutions, status, finite/bounded states and two expected step-halving ratios. Nonstiff smooth system only; not an SSP, stability-region, adaptive, backward-integration or performance claim.",
+      "driver_id": "rklib-rkssp54-exact-ivp-reference",
+      "evidence": [
+        {
+          "path": "src/rklib_fixed_classes.inc",
+          "line": 87,
+          "sha256": "539c8d5029ddd5a6e669a655c759ce328e49d0e88f26b829d91e717cd9f9b067"
+        },
+        {
+          "path": "src/rklib_fixed_steps.f90",
+          "line": 357,
+          "sha256": "c9809cb3c27a44c7ff6b4237bfb3258a8d1223ff30917d6d7b1b97c5f579e46a"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/rk_test_order.F90",
+          "sha256": "608aada38eb604d93152248c2ad4754fc5b5fa9a73919cf33e1725487373e0db"
+        }
+      ]
+    },
+    {
+      "id": "rklib-rk5-exact-ivp",
+      "package_id": "rklib",
+      "revision": "e3d51f9e8a2e6756612e8e53687ab2d4b67dfb76",
+      "module": "rklib_module",
+      "procedure": "rk5_class%initialize, integrate, status",
+      "gams_codes": [
+        "I1a1a"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not required",
+      "notes": "Fixed-step rk5 method (order 5) on five REAL64 states: exponential decay, harmonic oscillator pair, nonlinear logistic and explicitly time-dependent polynomial forcing. Ten checkpoints on [0,2] for each of h=0.1,0.05,0.025, with exact solutions, status, finite/bounded states and two expected step-halving ratios. Nonstiff smooth system only; not an SSP, stability-region, adaptive, backward-integration or performance claim.",
+      "driver_id": "rklib-rk5-exact-ivp-reference",
+      "evidence": [
+        {
+          "path": "src/rklib_fixed_classes.inc",
+          "line": 101,
+          "sha256": "539c8d5029ddd5a6e669a655c759ce328e49d0e88f26b829d91e717cd9f9b067"
+        },
+        {
+          "path": "src/rklib_fixed_steps.f90",
+          "line": 510,
+          "sha256": "c9809cb3c27a44c7ff6b4237bfb3258a8d1223ff30917d6d7b1b97c5f579e46a"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/rk_test_order.F90",
+          "sha256": "608aada38eb604d93152248c2ad4754fc5b5fa9a73919cf33e1725487373e0db"
+        }
+      ]
+    },
+    {
+      "id": "orderpack-inverse-unique-ranks",
+      "package_id": "orderpack",
+      "revision": "9696eee2670beae1601ae59e125ff9f10e6c88a7",
+      "module": "M_orderpack",
+      "procedure": "rank_decreasing (alias of inverse unique ranking)",
+      "gams_codes": [
+        "N6a1b"
+      ],
+      "review_level": "source-reviewed",
+      "derivatives": "not required",
+      "notes": "325 finite REAL64 data sets n=1..65 and five patterns. Despite its public alias, rank_decreasing maps each original entry to its ascending dense rank among distinct values; direct counting of distinct smaller values independently verifies every rank, including ties. No descending-sort or stable-permutation claim.",
+      "evidence": [
+        {
+          "path": "src/M_orderpack.f90",
+          "line": 11,
+          "sha256": "2413fc033ff4a130f83a26329057cc528159cdb80f3e7d17613263b820a66084"
+        },
+        {
+          "path": "src/M_orderpack__uniinv.f90",
+          "line": 8,
+          "sha256": "a9771868d07b138dcfeb59ecc6695c2fa77b5801908ace1e7c385d39b75fa11a"
+        }
+      ],
+      "author_examples": [
+        {
+          "path": "test/test_suite_M_orderpack.f90",
+          "sha256": "e4540d000b641137d161207aaf9b1def966dc3e4b670bea18d64d3d4a95a5708"
+        }
+      ],
+      "driver_id": "orderpack-inverse-unique-ranks-reference"
     }
   ],
   "review_notes": {

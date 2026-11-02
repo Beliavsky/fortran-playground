@@ -8,7 +8,7 @@ This report assesses each package/class pair, including inherited parent classes
 
 When a driver cannot be created, inspect the pinned implementation and author examples. Narrow or remove a classification that is unsupported; do not substitute an unrelated default example as evidence. Record missing dependencies, sandbox limits and upstream defects separately in the procedure or package review notes. A sandbox failure alone does not disprove an algorithm.
 
-Counts refer to package/class pairs and include parents: 794 verified, 80 source-supported, 239 uncertain.
+Counts refer to package/class pairs and include parents: 807 verified, 80 source-supported, 237 uncertain.
 
 ## Mappings requiring source review
 
@@ -212,8 +212,6 @@ Inspect these discovery assignments before making a specific algorithm claim. Th
 | [odrpack95](https://beliavsky.github.io/fortran-playground/gams/packages/odrpack95/) | [G2](https://beliavsky.github.io/fortran-playground/gams/G2/) | Constrained |
 | [odrpack95](https://beliavsky.github.io/fortran-playground/gams/packages/odrpack95/) | [K](https://beliavsky.github.io/fortran-playground/gams/K/) | Approximation |
 | [odrpack95](https://beliavsky.github.io/fortran-playground/gams/packages/odrpack95/) | [K1](https://beliavsky.github.io/fortran-playground/gams/K1/) | Least squares (L-2) approximation |
-| [orderpack](https://beliavsky.github.io/fortran-playground/gams/packages/orderpack/) | [L](https://beliavsky.github.io/fortran-playground/gams/L/) | Statistics, probability |
-| [orderpack](https://beliavsky.github.io/fortran-playground/gams/packages/orderpack/) | [L1](https://beliavsky.github.io/fortran-playground/gams/L1/) | Data summarization |
 | [paramcard](https://beliavsky.github.io/fortran-playground/gams/packages/paramcard/) | [N](https://beliavsky.github.io/fortran-playground/gams/N/) | Data handling |
 | [paramcard](https://beliavsky.github.io/fortran-playground/gams/packages/paramcard/) | [N1](https://beliavsky.github.io/fortran-playground/gams/N1/) | Input, output |
 | [paramcard](https://beliavsky.github.io/fortran-playground/gams/packages/paramcard/) | [N3](https://beliavsky.github.io/fortran-playground/gams/N3/) | Character manipulation |
@@ -515,7 +513,14 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [opti / opti-optimizer](https://beliavsky.github.io/fortran-playground/gams/packages/opti/#opti-optimizer) | G2i | verified |
 | [orbs / orbs-bitsets](https://beliavsky.github.io/fortran-playground/gams/packages/orbs/#orbs-bitsets) | A1 | source-supported |
 | [orbs / orbs-bitsets](https://beliavsky.github.io/fortran-playground/gams/packages/orbs/#orbs-bitsets) | N2 | verified |
+| [orderpack / orderpack-inverse-unique-ranks](https://beliavsky.github.io/fortran-playground/gams/packages/orderpack/#orderpack-inverse-unique-ranks) | N6a1b | verified |
+| [orderpack / orderpack-median-conventions](https://beliavsky.github.io/fortran-playground/gams/packages/orderpack/#orderpack-median-conventions) | L1a1a | verified |
+| [orderpack / orderpack-multiplicities](https://beliavsky.github.io/fortran-playground/gams/packages/orderpack/#orderpack-multiplicities) | L1a1d | verified |
+| [orderpack / orderpack-order-statistics](https://beliavsky.github.io/fortran-playground/gams/packages/orderpack/#orderpack-order-statistics) | L1a1a | source-supported |
+| [orderpack / orderpack-partial-ranks](https://beliavsky.github.io/fortran-playground/gams/packages/orderpack/#orderpack-partial-ranks) | N6a1b | verified |
+| [orderpack / orderpack-partial-sort](https://beliavsky.github.io/fortran-playground/gams/packages/orderpack/#orderpack-partial-sort) | N6a2b | verified |
 | [orderpack / orderpack-rank](https://beliavsky.github.io/fortran-playground/gams/packages/orderpack/#orderpack-rank) | N6 | verified |
+| [orderpack / orderpack-stable-unique](https://beliavsky.github.io/fortran-playground/gams/packages/orderpack/#orderpack-stable-unique) | L2c | verified |
 | [pchip / pchip-cubic-boundaries](https://beliavsky.github.io/fortran-playground/gams/packages/pchip/#pchip-cubic-boundaries) | E1a | verified |
 | [pchip / pchip-dpchim](https://beliavsky.github.io/fortran-playground/gams/packages/pchip/#pchip-dpchim) | E1a | verified |
 | [pchip / pchip-hermite-integrals](https://beliavsky.github.io/fortran-playground/gams/packages/pchip/#pchip-hermite-integrals) | E3a3 | verified |
@@ -554,7 +559,11 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [rearrayfx / rearrayfx-storage](https://beliavsky.github.io/fortran-playground/gams/packages/rearrayfx/#rearrayfx-storage) | N4 | verified |
 | [regridpack / regridpack-regrid](https://beliavsky.github.io/fortran-playground/gams/packages/regridpack/#regridpack-regrid) | E1a | verified |
 | [rkf45 / rkf45-rkf45](https://beliavsky.github.io/fortran-playground/gams/packages/rkf45/#rkf45-rkf45) | I1a1a | verified |
+| [rklib / rklib-midpoint-exact-ivp](https://beliavsky.github.io/fortran-playground/gams/packages/rklib/#rklib-midpoint-exact-ivp) | I1a1a | verified |
+| [rklib / rklib-rk3-exact-ivp](https://beliavsky.github.io/fortran-playground/gams/packages/rklib/#rklib-rk3-exact-ivp) | I1a1a | verified |
 | [rklib / rklib-rk4](https://beliavsky.github.io/fortran-playground/gams/packages/rklib/#rklib-rk4) | I1a1a | verified |
+| [rklib / rklib-rk5-exact-ivp](https://beliavsky.github.io/fortran-playground/gams/packages/rklib/#rklib-rk5-exact-ivp) | I1a1a | verified |
+| [rklib / rklib-rkssp54-exact-ivp](https://beliavsky.github.io/fortran-playground/gams/packages/rklib/#rklib-rkssp54-exact-ivp) | I1a1a | verified |
 | [rndgen-fortran / rndgen-fortran-rnd](https://beliavsky.github.io/fortran-playground/gams/packages/rndgen-fortran/#rndgen-fortran-rnd) | L6a21 | verified |
 | [rng-fortran / rng-distributions](https://beliavsky.github.io/fortran-playground/gams/packages/rng-fortran/#rng-distributions) | L6 | verified |
 | [rng-fortran / rng-uniform](https://beliavsky.github.io/fortran-playground/gams/packages/rng-fortran/#rng-uniform) | L6a21 | verified |

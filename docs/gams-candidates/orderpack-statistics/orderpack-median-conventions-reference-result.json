@@ -1,0 +1,48 @@
+{
+  "source_sha256": "c534dfec0b805b46a02fd02f3bdd504cd088a638c81909d7944490db35f3a48d",
+  "revision": "9696eee2670beae1601ae59e125ff9f10e6c88a7",
+  "result": {
+    "ok": false,
+    "compiler": "GNU Fortran (GCC) 16.2.0",
+    "compiler_id": "gfortran",
+    "fpm": "0.12.0",
+    "stages": [
+      {
+        "name": "Build",
+        "command": [
+          "fpm",
+          "build",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 0.113,
+        "ok": false,
+        "exit_code": 1,
+        "error": "",
+        "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n\napp/main.f90:31:12:\n\n   31 |          if(median(x)/=expected) error stop 'Averaged median'\n      |            1\nWarning: Inequality comparison for REAL(8) at (1) [-Wcompare-reals]\napp/main.f90:33:12:\n\n   33 |          if(medianval(x)/=expected) error stop 'Lower median value'\n      |            1\nWarning: Inequality comparison for REAL(8) at (1) [-Wcompare-reals]\napp/main.f90:34:13:\n\n   34 |          loc=medianloc(x)\n      |             1\nError: There is no specific function for the generic \u2018medianloc\u2019 at (1)\ncompilation terminated due to -fmax-errors=1.\n",
+        "stderr": "<ERROR> Compilation failed for object \" app_main.f90.o \"\n<ERROR> stopping due to failed compilation\nSTOP 1\n"
+      }
+    ],
+    "cache": {
+      "package": "orderpack",
+      "compiler": "GNU Fortran 16.2.0",
+      "key": "dabd5b27a255b11f3dd52e0f",
+      "library_reused": true,
+      "changed_artifacts": []
+    },
+    "packages": [
+      {
+        "repository": "urbanjost/orderpack",
+        "revision": "9696eee2670beae1601ae59e125ff9f10e6c88a7",
+        "sha256": "54a5156b7b9e10267d742316c42eb87fa05bb7dbe8cad68820fc7e1d59c8e244"
+      }
+    ]
+  }
+}

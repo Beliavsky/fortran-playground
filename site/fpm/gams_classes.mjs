@@ -967,5 +967,33 @@ export const gamsSubclasses = {
   "C8c": {
     "label": "Dawson's integral",
     "parent": "C8"
+  },
+  "N6a": {
+    "label": "Internal",
+    "parent": "N6"
+  },
+  "N6a1": {
+    "label": "Passive (construct pointer array, rank)",
+    "parent": "N6a"
+  },
+  "N6a1b": {
+    "label": "Real",
+    "parent": "N6a1"
+  },
+  "N6a2": {
+    "label": "Active",
+    "parent": "N6a"
+  },
+  "N6a2b": {
+    "label": "Real",
+    "parent": "N6a2"
+  },
+  "L1a1d": {
+    "label": "Frequency, cumulative frequency",
+    "parent": "L1a1"
+  },
+  "L2c": {
+    "label": "Subset",
+    "parent": "L2"
   }
 };

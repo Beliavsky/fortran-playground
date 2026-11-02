@@ -14661,6 +14661,282 @@
         "relative_tolerance": 2e-09,
         "oracle": "manufactured exact roots or independent dense residuals and analytic spectra"
       }
+    },
+    {
+      "id": "orderpack-partial-sort-reference",
+      "name": "gams-orderpack-partial-sort-reference",
+      "package_id": "orderpack",
+      "procedure_id": "orderpack-partial-sort",
+      "gams_code": "N6a2b",
+      "problem_id": "orderpack-partial-sort-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/orderpack-partial-sort-reference.f90",
+      "revision": "9696eee2670beae1601ae59e125ff9f10e6c88a7",
+      "author_example": "test/test_suite_M_orderpack.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/ordering-runge-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 325 finite REAL64 data sets, n=1..65 and five patterns: repeated unsorted, sorted, reverse, constant and distinct dyadics. All partial sorted prefixes and complete multiset preservation checked. NaNs, infinities, empty inputs and other kinds excluded.",
+      "validation_path": "docs/gams-ordering-runge-ten-validation.json",
+      "review_path": "docs/gams-ordering-runge-ten.md",
+      "checks": {
+        "data_sets": 325,
+        "minimum_size": 1,
+        "maximum_size": 65,
+        "oracle": "independent insertion sort, first occurrence scan or direct counting",
+        "exact_comparisons": true
+      }
+    },
+    {
+      "id": "orderpack-partial-ranks-reference",
+      "name": "gams-orderpack-partial-ranks-reference",
+      "package_id": "orderpack",
+      "procedure_id": "orderpack-partial-ranks",
+      "gams_code": "N6a1b",
+      "problem_id": "orderpack-partial-ranks-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/orderpack-partial-ranks-reference.f90",
+      "revision": "9696eee2670beae1601ae59e125ff9f10e6c88a7",
+      "author_example": "test/test_suite_M_orderpack.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/ordering-runge-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 325 finite REAL64 data sets, n=1..65 and five patterns: repeated unsorted, sorted, reverse, constant and distinct dyadics. Every requested prefix: valid distinct indices and independently sorted values; tie stability not required. NaNs, infinities, empty inputs and other kinds excluded.",
+      "validation_path": "docs/gams-ordering-runge-ten-validation.json",
+      "review_path": "docs/gams-ordering-runge-ten.md",
+      "checks": {
+        "data_sets": 325,
+        "minimum_size": 1,
+        "maximum_size": 65,
+        "oracle": "independent insertion sort, first occurrence scan or direct counting",
+        "exact_comparisons": true
+      }
+    },
+    {
+      "id": "orderpack-stable-unique-reference",
+      "name": "gams-orderpack-stable-unique-reference",
+      "package_id": "orderpack",
+      "procedure_id": "orderpack-stable-unique",
+      "gams_code": "L2c",
+      "problem_id": "orderpack-stable-unique-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/orderpack-stable-unique-reference.f90",
+      "revision": "9696eee2670beae1601ae59e125ff9f10e6c88a7",
+      "author_example": "test/test_suite_M_orderpack.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/ordering-runge-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 325 finite REAL64 data sets, n=1..65 and five patterns: repeated unsorted, sorted, reverse, constant and distinct dyadics. Stable duplicate removal compared with a first-occurrence scan; only the documented first nu entries are checked. NaNs, infinities, empty inputs and other kinds excluded.",
+      "validation_path": "docs/gams-ordering-runge-ten-validation.json",
+      "review_path": "docs/gams-ordering-runge-ten.md",
+      "checks": {
+        "data_sets": 325,
+        "minimum_size": 1,
+        "maximum_size": 65,
+        "oracle": "independent insertion sort, first occurrence scan or direct counting",
+        "exact_comparisons": true
+      }
+    },
+    {
+      "id": "orderpack-multiplicities-reference",
+      "name": "gams-orderpack-multiplicities-reference",
+      "package_id": "orderpack",
+      "procedure_id": "orderpack-multiplicities",
+      "gams_code": "L1a1d",
+      "problem_id": "orderpack-multiplicities-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/orderpack-multiplicities-reference.f90",
+      "revision": "9696eee2670beae1601ae59e125ff9f10e6c88a7",
+      "author_example": "test/test_suite_M_orderpack.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/ordering-runge-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 325 finite REAL64 data sets, n=1..65 and five patterns: repeated unsorted, sorted, reverse, constant and distinct dyadics. Per-element multiplicities compared with independent direct counting. NaNs, infinities, empty inputs and other kinds excluded.",
+      "validation_path": "docs/gams-ordering-runge-ten-validation.json",
+      "review_path": "docs/gams-ordering-runge-ten.md",
+      "checks": {
+        "data_sets": 325,
+        "minimum_size": 1,
+        "maximum_size": 65,
+        "oracle": "independent insertion sort, first occurrence scan or direct counting",
+        "exact_comparisons": true
+      }
+    },
+    {
+      "id": "orderpack-inverse-unique-ranks-reference",
+      "name": "gams-orderpack-inverse-unique-ranks-reference",
+      "package_id": "orderpack",
+      "procedure_id": "orderpack-inverse-unique-ranks",
+      "gams_code": "N6a1b",
+      "problem_id": "orderpack-inverse-unique-ranks-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/orderpack-inverse-unique-ranks-reference.f90",
+      "revision": "9696eee2670beae1601ae59e125ff9f10e6c88a7",
+      "author_example": "test/test_suite_M_orderpack.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/ordering-runge-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 325 finite REAL64 data sets n=1..65 and five patterns. Despite its public alias, rank_decreasing maps each original entry to its ascending dense rank among distinct values; direct counting of distinct smaller values independently verifies every rank, including ties. No descending-sort or stable-permutation claim.",
+      "validation_path": "docs/gams-ordering-runge-ten-validation.json",
+      "review_path": "docs/gams-ordering-runge-ten.md",
+      "checks": {
+        "data_sets": 325,
+        "minimum_size": 1,
+        "maximum_size": 65,
+        "oracle": "independent insertion sort, first occurrence scan or direct counting",
+        "exact_comparisons": true
+      }
+    },
+    {
+      "id": "orderpack-median-conventions-reference",
+      "name": "gams-orderpack-median-conventions-reference",
+      "package_id": "orderpack",
+      "procedure_id": "orderpack-median-conventions",
+      "gams_code": "L1a1a",
+      "problem_id": "orderpack-median-conventions-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/orderpack-median-conventions-reference.f90",
+      "revision": "9696eee2670beae1601ae59e125ff9f10e6c88a7",
+      "author_example": "test/test_suite_M_orderpack.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/ordering-runge-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 325 finite REAL64 data sets, n=1..65 and five patterns: repeated unsorted, sorted, reverse, constant and distinct dyadics. Arithmetic central-pair median versus lower-middle medianval/medianloc conventions; odd and even sizes checked. NaNs, infinities, empty inputs and other kinds excluded.",
+      "validation_path": "docs/gams-ordering-runge-ten-validation.json",
+      "review_path": "docs/gams-ordering-runge-ten.md",
+      "checks": {
+        "data_sets": 325,
+        "minimum_size": 1,
+        "maximum_size": 65,
+        "oracle": "independent insertion sort, first occurrence scan or direct counting",
+        "exact_comparisons": true
+      }
+    },
+    {
+      "id": "rklib-midpoint-exact-ivp-reference",
+      "name": "gams-rklib-midpoint-exact-ivp-reference",
+      "package_id": "rklib",
+      "procedure_id": "rklib-midpoint-exact-ivp",
+      "gams_code": "I1a1a",
+      "problem_id": "rklib-midpoint-exact-ivp-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/rklib-midpoint-exact-ivp-reference.f90",
+      "revision": "e3d51f9e8a2e6756612e8e53687ab2d4b67dfb76",
+      "author_example": "test/rk_test_order.F90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/ordering-runge-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. Fixed-step midpoint method (order 2) on five REAL64 states: exponential decay, harmonic oscillator pair, nonlinear logistic and explicitly time-dependent polynomial forcing. Ten checkpoints on [0,2] for each of h=0.1,0.05,0.025, with exact solutions, status, finite/bounded states and two expected step-halving ratios. Nonstiff smooth system only; not an SSP, stability-region, adaptive, backward-integration or performance claim.",
+      "validation_path": "docs/gams-ordering-runge-ten-validation.json",
+      "review_path": "docs/gams-ordering-runge-ten.md",
+      "checks": {
+        "order": 2,
+        "steps": [
+          0.1,
+          0.05,
+          0.025
+        ],
+        "checkpoints_per_level": 10,
+        "states": 5,
+        "oracle": "closed form exact IVP solutions and expected step-halving ratios"
+      }
+    },
+    {
+      "id": "rklib-rk3-exact-ivp-reference",
+      "name": "gams-rklib-rk3-exact-ivp-reference",
+      "package_id": "rklib",
+      "procedure_id": "rklib-rk3-exact-ivp",
+      "gams_code": "I1a1a",
+      "problem_id": "rklib-rk3-exact-ivp-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/rklib-rk3-exact-ivp-reference.f90",
+      "revision": "e3d51f9e8a2e6756612e8e53687ab2d4b67dfb76",
+      "author_example": "test/rk_test_order.F90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/ordering-runge-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. Fixed-step rk3 method (order 3) on five REAL64 states: exponential decay, harmonic oscillator pair, nonlinear logistic and explicitly time-dependent polynomial forcing. Ten checkpoints on [0,2] for each of h=0.1,0.05,0.025, with exact solutions, status, finite/bounded states and two expected step-halving ratios. Nonstiff smooth system only; not an SSP, stability-region, adaptive, backward-integration or performance claim.",
+      "validation_path": "docs/gams-ordering-runge-ten-validation.json",
+      "review_path": "docs/gams-ordering-runge-ten.md",
+      "checks": {
+        "order": 3,
+        "steps": [
+          0.1,
+          0.05,
+          0.025
+        ],
+        "checkpoints_per_level": 10,
+        "states": 5,
+        "oracle": "closed form exact IVP solutions and expected step-halving ratios"
+      }
+    },
+    {
+      "id": "rklib-rkssp54-exact-ivp-reference",
+      "name": "gams-rklib-rkssp54-exact-ivp-reference",
+      "package_id": "rklib",
+      "procedure_id": "rklib-rkssp54-exact-ivp",
+      "gams_code": "I1a1a",
+      "problem_id": "rklib-rkssp54-exact-ivp-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/rklib-rkssp54-exact-ivp-reference.f90",
+      "revision": "e3d51f9e8a2e6756612e8e53687ab2d4b67dfb76",
+      "author_example": "test/rk_test_order.F90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/ordering-runge-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. Fixed-step rkssp54 method (order 4) on five REAL64 states: exponential decay, harmonic oscillator pair, nonlinear logistic and explicitly time-dependent polynomial forcing. Ten checkpoints on [0,2] for each of h=0.1,0.05,0.025, with exact solutions, status, finite/bounded states and two expected step-halving ratios. Nonstiff smooth system only; not an SSP, stability-region, adaptive, backward-integration or performance claim.",
+      "validation_path": "docs/gams-ordering-runge-ten-validation.json",
+      "review_path": "docs/gams-ordering-runge-ten.md",
+      "checks": {
+        "order": 4,
+        "steps": [
+          0.1,
+          0.05,
+          0.025
+        ],
+        "checkpoints_per_level": 10,
+        "states": 5,
+        "oracle": "closed form exact IVP solutions and expected step-halving ratios"
+      }
+    },
+    {
+      "id": "rklib-rk5-exact-ivp-reference",
+      "name": "gams-rklib-rk5-exact-ivp-reference",
+      "package_id": "rklib",
+      "procedure_id": "rklib-rk5-exact-ivp",
+      "gams_code": "I1a1a",
+      "problem_id": "rklib-rk5-exact-ivp-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/rklib-rk5-exact-ivp-reference.f90",
+      "revision": "e3d51f9e8a2e6756612e8e53687ab2d4b67dfb76",
+      "author_example": "test/rk_test_order.F90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/ordering-runge-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. Fixed-step rk5 method (order 5) on five REAL64 states: exponential decay, harmonic oscillator pair, nonlinear logistic and explicitly time-dependent polynomial forcing. Ten checkpoints on [0,2] for each of h=0.1,0.05,0.025, with exact solutions, status, finite/bounded states and two expected step-halving ratios. Nonstiff smooth system only; not an SSP, stability-region, adaptive, backward-integration or performance claim.",
+      "validation_path": "docs/gams-ordering-runge-ten-validation.json",
+      "review_path": "docs/gams-ordering-runge-ten.md",
+      "checks": {
+        "order": 5,
+        "steps": [
+          0.1,
+          0.05,
+          0.025
+        ],
+        "checkpoints_per_level": 10,
+        "states": 5,
+        "oracle": "closed form exact IVP solutions and expected step-halving ratios"
+      }
     }
   ]
 }

@@ -1,0 +1,83 @@
+{
+  "source_sha256": "c71bb7dc2108095ea0d910d96f7ceaab7101fce7f0ed3be8839b95ea5e7b0183",
+  "revision": "9696eee2670beae1601ae59e125ff9f10e6c88a7",
+  "result": {
+    "ok": false,
+    "compiler": "GNU Fortran (GCC) 16.2.0",
+    "compiler_id": "gfortran",
+    "fpm": "0.12.0",
+    "stages": [
+      {
+        "name": "Build",
+        "command": [
+          "fpm",
+          "build",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 0.485,
+        "ok": true,
+        "exit_code": 0,
+        "error": "",
+        "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+        "stderr": ""
+      },
+      {
+        "name": "Run",
+        "command": [
+          "fpm",
+          "run",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 0.062,
+        "ok": false,
+        "exit_code": 1,
+        "error": "",
+        "stdout": "",
+        "stderr": "Project is up to date\nERROR STOP Order location value\n\nError termination. Backtrace:\n#0  0x2aeed5f06f83 in ???\n#1  0x2aeed5f07c39 in ???\n#2  0x2aeed5f09045 in ???\n#3  0x4028fa in MAIN__\n\tat app/main.f90:33\n#4  0x402e69 in main\n\tat app/main.f90:4\n<ERROR> Execution for object \" playground-main \" returned exit code  1\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 1\n"
+      }
+    ],
+    "cache": {
+      "package": "orderpack",
+      "compiler": "GNU Fortran 16.2.0",
+      "key": "dabd5b27a255b11f3dd52e0f",
+      "library_reused": true,
+      "changed_artifacts": []
+    },
+    "packages": [
+      {
+        "repository": "urbanjost/orderpack",
+        "revision": "9696eee2670beae1601ae59e125ff9f10e6c88a7",
+        "sha256": "54a5156b7b9e10267d742316c42eb87fa05bb7dbe8cad68820fc7e1d59c8e244"
+      }
+    ],
+    "build_ok": true,
+    "target_groups": {
+      "app": [
+        "playground-main"
+      ],
+      "example": [],
+      "test": []
+    },
+    "targets": [
+      "playground-main"
+    ],
+    "plots": [],
+    "plot_notes": []
+  }
+}

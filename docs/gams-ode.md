@@ -46,6 +46,10 @@ A separate RK4 experiment integrates the same problem directly to `2*pi` with no
 | [Load fatode-tangent-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=fatode&example=gams-fatode-tangent-reference) · [Source](../fpm_catalog/gams-drivers/fatode-tangent-reference.f90) | I1 | [Procedure](https://github.com/ComputationalScienceLaboratory/FATODE/blob/3f237c49bd377644a597c2a49ae5a83f090bfab5/TLM/ERK_TLM/ERK_TLM_f90_Integrator.F90#L1) · [Author example](https://github.com/ComputationalScienceLaboratory/FATODE/blob/3f237c49bd377644a597c2a49ae5a83f090bfab5/EXAMPLES/swe/SWE_ERK_TLM/swe2D_erk_tlm_dr.F90) |
 | [Load dftatom-hydrogen-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=dftatom&example=gams-dftatom-hydrogen-reference) · [Source](../fpm_catalog/gams-drivers/dftatom-hydrogen-reference.f90) | I1 | [Procedure](https://github.com/certik/dftatom/blob/e49b3042de6e2471afe5eea992c9ba50dac08f95/src/reigen.f90#L1) · [Author example](https://github.com/certik/dftatom/blob/e49b3042de6e2471afe5eea992c9ba50dac08f95/tests/hydrogen/hydrogen.f90) |
 | [Load friction-lugre-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=friction&example=gams-friction-lugre-reference) · [Source](../fpm_catalog/gams-drivers/friction-lugre-reference.f90) | I1 | [Procedure](https://github.com/jchristopherson/friction/blob/8e75dcac26f47417a439adfcbaa24834105d89fe/src/models/friction_lugre.f90#L161) · [Author example](https://github.com/jchristopherson/friction/blob/8e75dcac26f47417a439adfcbaa24834105d89fe/examples/lugre_example.f90) |
+| [Load rklib-midpoint-exact-ivp-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=rklib&example=gams-rklib-midpoint-exact-ivp-reference) · [Source](../fpm_catalog/gams-drivers/rklib-midpoint-exact-ivp-reference.f90) | I1a1a | [Procedure](https://github.com/jacobwilliams/rklib/blob/e3d51f9e8a2e6756612e8e53687ab2d4b67dfb76/src/rklib_fixed_classes.inc#L10) · [Author example](https://github.com/jacobwilliams/rklib/blob/e3d51f9e8a2e6756612e8e53687ab2d4b67dfb76/test/rk_test_order.F90) |
+| [Load rklib-rk3-exact-ivp-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=rklib&example=gams-rklib-rk3-exact-ivp-reference) · [Source](../fpm_catalog/gams-drivers/rklib-rk3-exact-ivp-reference.f90) | I1a1a | [Procedure](https://github.com/jacobwilliams/rklib/blob/e3d51f9e8a2e6756612e8e53687ab2d4b67dfb76/src/rklib_fixed_classes.inc#L31) · [Author example](https://github.com/jacobwilliams/rklib/blob/e3d51f9e8a2e6756612e8e53687ab2d4b67dfb76/test/rk_test_order.F90) |
+| [Load rklib-rkssp54-exact-ivp-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=rklib&example=gams-rklib-rkssp54-exact-ivp-reference) · [Source](../fpm_catalog/gams-drivers/rklib-rkssp54-exact-ivp-reference.f90) | I1a1a | [Procedure](https://github.com/jacobwilliams/rklib/blob/e3d51f9e8a2e6756612e8e53687ab2d4b67dfb76/src/rklib_fixed_classes.inc#L87) · [Author example](https://github.com/jacobwilliams/rklib/blob/e3d51f9e8a2e6756612e8e53687ab2d4b67dfb76/test/rk_test_order.F90) |
+| [Load rklib-rk5-exact-ivp-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=rklib&example=gams-rklib-rk5-exact-ivp-reference) · [Source](../fpm_catalog/gams-drivers/rklib-rk5-exact-ivp-reference.f90) | I1a1a | [Procedure](https://github.com/jacobwilliams/rklib/blob/e3d51f9e8a2e6756612e8e53687ab2d4b67dfb76/src/rklib_fixed_classes.inc#L101) · [Author example](https://github.com/jacobwilliams/rklib/blob/e3d51f9e8a2e6756612e8e53687ab2d4b67dfb76/test/rk_test_order.F90) |
 
 The drivers adapt author callback and integration API patterns to the shared analytic problem, without plotting dependencies; license notices are retained. They appear in hosted and main local FPM example menus and downloaded FPM projects. Loading a link selects source without submitting a job.
 
@@ -334,6 +338,54 @@ Max normalized state, derivative and force errors:    1.18833E-11   4.33973E-17 
 72 histories; velocity reversals, rest, changing loads and nonzero initial bristle states.
 Public LuGre state integration only; private fitting callbacks and parameter fitting unverified.
 PASS friction-lugre-reference
+```
+
+### rklib-midpoint-exact-ivp-reference
+
+```text
+Step  0.1000: maximum state error   3.1244E-03, RHS calls 42
+Step  0.0500: maximum state error   7.7006E-04, RHS calls 82
+Step  0.0250: maximum state error   1.9102E-04, RHS calls 172
+Step-halving error ratio:      4.05729
+Step-halving error ratio:      4.03135
+Decay, oscillator, nonlinear logistic and nonautonomous polynomial states checked.
+PASS rklib-midpoint-exact-ivp-reference
+```
+
+### rklib-rk3-exact-ivp-reference
+
+```text
+Step  0.1000: maximum state error   7.8290E-05, RHS calls 63
+Step  0.0500: maximum state error   9.6372E-06, RHS calls 123
+Step  0.0250: maximum state error   1.1946E-06, RHS calls 258
+Step-halving error ratio:      8.12371
+Step-halving error ratio:      8.06755
+Decay, oscillator, nonlinear logistic and nonautonomous polynomial states checked.
+PASS rklib-rk3-exact-ivp-reference
+```
+
+### rklib-rkssp54-exact-ivp-reference
+
+```text
+Step  0.1000: maximum state error   7.2036E-07, RHS calls 105
+Step  0.0500: maximum state error   4.4444E-08, RHS calls 205
+Step  0.0250: maximum state error   2.7587E-09, RHS calls 430
+Step-halving error ratio:     16.20815
+Step-halving error ratio:     16.11077
+Decay, oscillator, nonlinear logistic and nonautonomous polynomial states checked.
+PASS rklib-rkssp54-exact-ivp-reference
+```
+
+### rklib-rk5-exact-ivp-reference
+
+```text
+Step  0.1000: maximum state error   2.6153E-08, RHS calls 126
+Step  0.0500: maximum state error   8.0406E-10, RHS calls 246
+Step  0.0250: maximum state error   2.4901E-11, RHS calls 516
+Step-halving error ratio:     32.52645
+Step-halving error ratio:     32.28979
+Decay, oscillator, nonlinear logistic and nonautonomous polynomial states checked.
+PASS rklib-rk5-exact-ivp-reference
 ```
 
 ## Maintenance

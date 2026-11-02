@@ -118,6 +118,7 @@ INTEGRALS_TENSORS_TEN_REPORT = Path('docs/gams-integrals-tensors-ten.md')
 TRANSFORMS_STRUCTURES_TEN_REPORT = Path('docs/gams-transforms-structures-ten.md')
 FULLERTON_FUNCTIONS_TEN_REPORT = Path('docs/gams-fullerton-functions-ten.md')
 ROOTS_STRUCTURED_TEN_REPORT = Path('docs/gams-roots-structured-ten.md')
+ORDERING_RUNGE_TEN_REPORT = Path('docs/gams-ordering-runge-ten.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
 EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
@@ -11236,6 +11237,110 @@ def roots_structured_ten_review_text(root=ROOT):
     return '\n'.join(lines)
 
 
+def ordering_runge_ten_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-ordering-runge-ten-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-ordering-runge-ten-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Ten checked ordering and Runge-Kutta drivers',
+     '',
+     'Ten independent consumers passed GNU Fortran 16.2.0 and FPM 0.12.0 in the hosted sandbox. Existing '
+     'ORDERPACK and rklib libraries were reused; only main.f90 and playground-main were compiled. The '
+     '[verification report](gams-ordering-runge-ten-validation.json) records normalized UTF-8/LF source hashes, '
+     'exact pins, timings and full output. GAMS coverage remains unfinished.',
+     '',
+     '## ORDERPACK: six distinct operations',
+     '',
+     'Each driver tests 325 finite REAL64 data sets: sizes 1..65, each with five deterministic patterns '
+     '(unsorted duplicate-rich data, sorted repeated values, reverse repeated values, constant values, and '
+     'distinct values). All are exact dyadics. The independent reference is a local insertion sort, a direct '
+     'first-occurrence scan or direct counting; no second library routine supplies the oracle. Every applicable '
+     'partial prefix is tested. Empty arrays, NaNs, infinities, integer and character '
+     'overloads are excluded.',
+     '',
+     '| Operation | GAMS | Independent checks |\n'
+     '| --- | --- | --- |\n'
+     '| Partial sort (psort) | N6a2b | Every requested prefix equals the reference prefix; the complete multiset '
+     'is preserved |\n'
+     '| Partial ranks (prank) | N6a1b | Every prefix contains valid, distinct indices selecting the reference '
+     'values; tie stability is not assumed |\n'
+     '| Stable unique (unique) | L2c | First-occurrence scan checks both the distinct count and retained order; '
+     'undocumented tail entries are ignored |\n'
+     '| Multiplicities (occurrences) | L1a1d | Every count agrees with direct equality counting in the original '
+     'data |\n'
+     '| Inverse unique ranks | N6a1b | Each original entry receives its ascending dense rank among distinct '
+     'values; the public alias rank_decreasing does not mean descending sorting |\n'
+     '| Median conventions | L1a1a | median averages the central pair; medianval and medianloc select the lower '
+     'middle for even sizes |',
+     '',
+     'REAL64 median comparisons are exact here because all central values and their averages are dyadic and '
+     'comfortably representable. These tests establish the demonstrated conventions and bounded data cases, not '
+     'performance, asymptotic complexity or robustness to nonfinite inputs.',
+     '',
+     '## Four Runge-Kutta methods (I1a1a)',
+     '',
+     'The explicit midpoint (order 2), rk3 (order 3), Spiteri-Ruuth rkssp54 (order 4) and rk5 (order 5) drivers '
+     'each integrate a five-state nonstiff system. Closed forms are exp(-t), cos(t), -sin(t), 1/(1+exp(-t)), and '
+     't*t+1/4. These exercise exponential decay, a coupled oscillator, nonlinear logistic growth and explicitly '
+     'time-dependent polynomial forcing. Module callbacks use the direct solver objects.',
+     '',
+     'Each method is checked at ten checkpoints on [0,2] for h=0.1, 0.05 and 0.025. Every state must be finite, '
+     'the status must succeed, decay must stay positive and logistic growth must stay in (0,1). The maximum '
+     'absolute state error must be <=2*h**p at every checkpoint. The time-dependent polynomial state has a '
+     'separate 1e-11 absolute tolerance. RHS callback counts must be positive.',
+     '',
+     'A separate convergence assertion compares the maximum checkpoint error between successive step sizes: each '
+     'ratio must lie in [0.7*2**p,1.4*2**p]. Actual errors, ratios and RHS counts are printed. These are '
+     'accuracy checks for this smooth bounded system, not a speed comparison, an SSP-property or '
+     'stability-region proof, nor verification of adaptive control, backward integration or stiff systems.',
+     '',
+     '## Retained unsuccessful probes',
+     '',
+     'The first median consumer treated medianloc as a function; correcting it to call medianloc(x,loc) '
+     'resolved that consumer compile error without changing numerical assertions. The combined order-statistics '
+     'probe found an actual orderloc mismatch for [-1.25,-2.75,1.5,0]: the third ordered value should be 0, '
+     'but the routine returned index 3/value 1.5. Original and diagnostic probes, normalized hashes, pins '
+     'and full outputs are [retained](gams-candidates/orderpack-statistics/README.md). Its procedure record '
+     'has no checked driver; the other two order-statistic APIs were not reached for that failing case. '
+     'No upstream source or assertion was changed to promote the failed routine. Inverse unique ranks '
+     'are a separate verified replacement.',
+     '',
+     '## Provenance and scope',
+     '',
+     'Pinned public APIs and implementation files, ORDERPACK author tests and rklib author order tests were '
+     'reviewed. Consumers are independently authored MIT examples; no upstream numerical or test body was copied '
+     'or patched. GAMS classifications follow the [Netlib taxonomy](https://netlib.org/misc/gams.html): '
+     'active/passive real internal sorting, data subsets, frequency, location and one-step ODE methods. Loading '
+     'a driver does not submit a job. The [coverage report](gams-coverage.md) tracks remaining work.',
+     '',
+     '## Driver details',
+     '']
+    for d in drivers:
+        lines += ['### '+d['id']+' ('+d['gams_code']+')', '', d['modifications'], '']
+    lines += ['## Provenance and actual output', '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -11429,6 +11534,7 @@ def main():
                          (TRANSFORMS_STRUCTURES_TEN_REPORT, transforms_structures_ten_review_text()),
                          (FULLERTON_FUNCTIONS_TEN_REPORT, fullerton_functions_ten_review_text()),
                          (ROOTS_STRUCTURED_TEN_REPORT, roots_structured_ten_review_text()),
+                         (ORDERING_RUNGE_TEN_REPORT, ordering_runge_ten_review_text()),
                          (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report

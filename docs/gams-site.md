@@ -342,3 +342,5 @@ Transforms, structured systems, splines and beta functions: [review and actual r
 Fullerton special functions and derivative checks: [review and actual results](gams-fullerton-functions-ten.md).
 
 Root solvers and structured eigensystems: [review and actual results](gams-roots-structured-ten.md).
+
+Ordering and Runge-Kutta checks: [review and actual results](gams-ordering-runge-ten.md).
