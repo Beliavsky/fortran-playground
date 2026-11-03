@@ -2,7 +2,7 @@
 
 Planning review: 2026-11-03. This is an audit of the current pinned selected-package records, not a new compilation run, an exhaustive package API inventory, or a ranking of software quality.
 
-There are **509 checked drivers for 509 of 536 source-reviewed procedure records**. **27 records across 19 packages** have no dedicated checked driver. Another **34 mapped procedure/class claims** belong to procedures with a driver for a different class or configuration.
+There are **514 checked drivers for 514 of 541 source-reviewed procedure records**. **27 records across 19 packages** have no dedicated checked driver. Another **34 mapped procedure/class claims** belong to procedures with a driver for a different class or configuration.
 
 A missing driver does not mean the package cannot compile: ordinary catalog examples have separate evidence. A driver under one class does not automatically establish every other classification of its procedure. Conversely, a cross-class mismatch is not automatically a missing algorithm test; it may need a mapping or presentation review.
 
@@ -204,6 +204,16 @@ Review these before treating them as new-driver requests. A checked descendant a
 | R2 | `assert-values` | [S3](../fpm_catalog/gams-drivers/fassert-captured-reference.f90) | Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically. |
 | R2 | `julienne-diagnosis` | [S3](../fpm_catalog/gams-drivers/julienne-diagnosis-reference.f90) | Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically. |
 | R3 | `error-validation` | [R2](../fpm_catalog/gams-drivers/error-bounds-reference.f90) | Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically. |
+
+## Benefit assessment (2026-11-03)
+
+Routine gap-filling batches now have diminishing benefit: the remaining mapped records mostly contain retained failures, sandbox limits or overlapping class claims. Do not add duplicate variants merely to reach ten drivers.
+
+Five separately reviewed scientific-table APIs remain worthwhile: logarithmic interpolation, logarithmic integration and cumulative prefixes, conservative rebinning, bilinear interpolation and masked histograms. See docs/gams-fortranlib-tables.md. These are new capabilities, not evidence that the full package API inventory has been exhausted.
+
+Pause automatic gap-filling batches. Prefer named new APIs with independent oracles, common problems comparing multiple packages, resolving the PCA linking limit, or retesting an upstream repair. Review each proposed batch for distinct mathematical coverage before implementation.
+
+See the [scientific-table batch review](gams-fortranlib-tables.md) for the latest checked additions.
 
 ## Further expansion after these candidates
 

@@ -8,7 +8,7 @@ This report assesses each package/class pair, including inherited parent classes
 
 When a driver cannot be created, inspect the pinned implementation and author examples. Narrow or remove a classification that is unsupported; do not substitute an unrelated default example as evidence. Record missing dependencies, sandbox limits and upstream defects separately in the procedure or package review notes. A sandbox failure alone does not disprove an algorithm.
 
-Counts refer to package/class pairs and include parents: 901 verified, 75 source-supported, 227 uncertain.
+Counts refer to package/class pairs and include parents: 914 verified, 75 source-supported, 227 uncertain.
 
 ## Mappings requiring source review
 
@@ -404,7 +404,12 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [fortran_function_parser / fortran-function-parser-evaluate](https://beliavsky.github.io/fortran-playground/gams/packages/fortran_function_parser/#fortran-function-parser-evaluate) | N3 | verified |
 | [fortran_test_helper / fortran-test-helper-create-r64-array](https://beliavsky.github.io/fortran-playground/gams/packages/fortran_test_helper/#fortran-test-helper-create-r64-array) | L6a21 | source-supported |
 | [fortran_vector / fortran-vector-storage](https://beliavsky.github.io/fortran-playground/gams/packages/fortran_vector/#fortran-vector-storage) | N4 | verified |
+| [fortranlib / fortranlib-bilinear-surfaces](https://beliavsky.github.io/fortran-playground/gams/packages/fortranlib/#fortranlib-bilinear-surfaces) | E2a | verified |
+| [fortranlib / fortranlib-conservative-rebinning](https://beliavsky.github.io/fortran-playground/gams/packages/fortranlib/#fortranlib-conservative-rebinning) | H2c | verified |
 | [fortranlib / fortranlib-linear-interpolation](https://beliavsky.github.io/fortran-playground/gams/packages/fortranlib/#fortranlib-linear-interpolation) | E1 | verified |
+| [fortranlib / fortranlib-logarithmic-areas](https://beliavsky.github.io/fortran-playground/gams/packages/fortranlib/#fortranlib-logarithmic-areas) | H2a1b2 | verified |
+| [fortranlib / fortranlib-logarithmic-interpolation](https://beliavsky.github.io/fortran-playground/gams/packages/fortranlib/#fortranlib-logarithmic-interpolation) | E1c | verified |
+| [fortranlib / fortranlib-masked-histograms](https://beliavsky.github.io/fortran-playground/gams/packages/fortranlib/#fortranlib-masked-histograms) | L1a1d | verified |
 | [fortranlib / fortranlib-numerics](https://beliavsky.github.io/fortran-playground/gams/packages/fortranlib/#fortranlib-numerics) | F1 | verified |
 | [fortranlib / fortranlib-tabulated-integrals](https://beliavsky.github.io/fortran-playground/gams/packages/fortranlib/#fortranlib-tabulated-integrals) | H2 | verified |
 | [fortsa / fortsa-acvf](https://beliavsky.github.io/fortran-playground/gams/packages/fortsa/#fortsa-acvf) | L10a2a | verified |

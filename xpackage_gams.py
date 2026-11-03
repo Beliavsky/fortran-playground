@@ -126,6 +126,7 @@ NAFPACK_FACTORS_TEN_REPORT = Path('docs/gams-nafpack-factors-ten.md')
 FSTATS_SUMMARIES_TEN_REPORT = Path('docs/gams-fstats-summaries-ten.md')
 FSTATS_FITTING_TEN_REPORT = Path('docs/gams-fstats-fitting-ten.md')
 NEXT_NUMERICAL_REPORT = Path('docs/gams-next-numerical.md')
+FORTRANLIB_TABLES_REPORT = Path('docs/gams-fortranlib-tables.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
 EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
@@ -12180,6 +12181,140 @@ def next_numerical_review_text(root=ROOT):
     return '\n'.join(lines)
 
 
+def fortranlib_tables_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-fortranlib-tables-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-fortranlib-tables-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Five checked scientific-table drivers for fortranlib',
+     '',
+     'All five independent REAL64 consumers passed GNU Fortran 16.2.0 / FPM 0.12.0 with the existing cached '
+     'fortranlib library. Only main.f90 and playground-main were compiled. The [verification '
+     'report](gams-fortranlib-tables-validation.json) preserves exact package pins, normalized UTF-8/LF source '
+     'hashes, timings and full output. No new failed probe was produced. No backend deployment or package '
+     'rebuild is needed. GAMS coverage remains unfinished.',
+     '',
+     '## Checked problems',
+     '',
+     '| Driver | GAMS | Independent checks |\n'
+     '| --- | --- | --- |\n'
+     '| Logarithmic interpolation | E1c | 715 scalar/vector query pairs from eleven analytic families |\n'
+     '| Logarithmic areas and prefixes | H2a1b2 | 726 subset areas, eleven full integrals and 55 cumulative '
+     'values |\n'
+     '| Conservative rebinning | H2c | 84 cell means and fourteen total-area identities |\n'
+     '| Bilinear surfaces | E2a | 1875 interior/boundary values and twelve outside fills |\n'
+     '| Masked histograms | L1a1d | Six weighted/unweighted 1D histograms and three 2D count maps |',
+     '',
+     '## Why this smaller batch',
+     '',
+     'The existing mapped-procedure queue is mostly retained failures, service limits or overlapping '
+     'classification claims. Repeating near-identical drivers solely to fill another batch of ten would offer '
+     'little benefit. These five consumers instead cover previously unreviewed public APIs and distinct '
+     'scientific-data operations in an already compiled package. This does not imply that all package APIs or '
+     'all GAMS branches have been exhausted.',
+     '',
+     'For subsequent work, prefer a named capability with a clear independent oracle, a common problem comparing '
+     'multiple packages, resolution of the PCA linking limitation, or retesting an upstream repair. I recommend '
+     'pausing automatic gap-filling batches rather than treating the driver count as a target. The [coverage '
+     'audit](gams-driver-audit.md) retains the outstanding work.',
+     '',
+     '## Analytic table conventions',
+     '',
+     'The data consumers use the irregular positive grid [1/2,1,2,4,8]. A shared independent reference model '
+     'defines four elementary families and explicit antiderivatives: linear 2+p*x; exponential 3*exp(p*x); '
+     'affine-logarithm 2+p*log(x); and power law 3*x**p. Exponential parameters are -1/4,0,1/4, affine-log '
+     'parameters -1/2,0,1/2, and power exponents -2,-1,0,1/2,2. Linear rebinning also uses p=-1,0,1. These are '
+     'eleven log-mode families and fourteen rebinning families, not separate drivers for each variation.',
+     '',
+     'The upstream names linlog, loglin and loglog mean log(y) versus linear x, linear y versus log(x), and '
+     'log(y) versus log(x), respectively. These conventions are stated explicitly because reversing the axes '
+     'changes the mathematical problem. Constant cases and the reciprocal power-law integral are checked without '
+     'dividing by a zero parameter. All finite numerical comparisons use '
+     'abs(actual-reference)<=2e-11*max(1,abs(reference)).',
+     '',
+     '## Interpolation and integration',
+     '',
+     'For every log family, interpolation checks 61 in-domain queries including knots and boundaries, plus four '
+     'positive outside-domain queries using bounds_error=false and fill_value=-123. Both scalar and array '
+     'interfaces are checked against the defining elementary function. Invalid/nonpositive log inputs, '
+     'duplicate/descending knots, extrapolation and arbitrary nonanalytic tables are excluded.',
+     '',
+     'The area consumer evaluates every ordered pair from eleven limits spanning [1/4,9], giving 66 intervals '
+     'per family. Limits are independently clipped to [1/2,8] and the explicit antiderivative supplies the '
+     'reference. Empty, outside, same-segment and knot-crossing intervals are included. Full-domain and each '
+     'cumulative-prefix value are checked independently. Reversed limits, error estimation and ill-conditioned '
+     'near-reciprocal/near-constant branches are not established.',
+     '',
+     'These tests use functions exactly representable by the selected interpolant. They do not claim that '
+     'interpolating or integrating arbitrary data reproduces an unknown underlying physical function, or that an '
+     'adaptive accuracy target is supported. E1c records nonpolynomial interpolation; H2a1b2 records a '
+     'nonautomatic finite-grid quadrature API.',
+     '',
+     '## Conservative remapping',
+     '',
+     'All four rebin APIs map samples onto six irregular cell centers [1/2,1,3/2,5/2,4,8]. For linear-x modes '
+     'the interior cell edges are arithmetic midpoints; for log-x modes they are geometric midpoints. The first '
+     'and last centers themselves bound the domain, rather than extending half a cell beyond it.',
+     '',
+     'Each expected output is the independent analytic integral over its cell divided by cell width. The '
+     'width-weighted sum of all six returned means must equal the known full-domain integral. This checks a '
+     'conservation property and distinguishes cell averaging from evaluating the field at the center. Arbitrary '
+     'density reconstruction, degenerate cells and invalid log inputs are excluded.',
+     '',
+     '## Bilinear surfaces and histograms',
+     '',
+     'Three fields a+b*x+c*y+d*x*y on irregular 4-by-3 grids check axis orientation and independent cross terms. '
+     'Each uses a 25-by-25 query grid including all four outer edges and corners, followed by four explicit '
+     'outside-fill calls. Higher-order surfaces, invalid shapes, descending coordinates and extrapolation are '
+     'not checked.',
+     '',
+     'One-dimensional histograms use eleven exact dyadic samples spanning outside [-1,1], four equal bins, '
+     'positive dyadic weights, and three masks (all, alternating, none). Each mask is checked with and without '
+     'weights. Independent half-open membership enumeration supplies bin counts and weight sums, with the final '
+     'upper endpoint included in the last bin. Bin centers are checked separately. The Cartesian 121-point grid '
+     'supplies three masked two-dimensional count maps, checked cell by cell. 2D weighting, density '
+     'normalization, variable widths, descending bounds and random-distribution quality are not asserted.',
+     '',
+     '## Provenance and limits',
+     '',
+     'Pinned lib_array APIs and implementations were reviewed directly; no matching pinned author example is '
+     'recorded for these consumers. The independent MIT drivers copy no author implementation or test bodies. '
+     'The source pin is 60fd094d3e137137ce00ec120b085e9b23ebf68b; the cached image already contains the '
+     'checksum-locked upstream lib_array fixes matching 844611933cba06d71490033e68b355f6f0ff704f. Those existing '
+     'adaptations, dependency pins, image recipe and precompiled build report remain unchanged.',
+     '',
+     'Classifications use the [Netlib GAMS taxonomy](https://netlib.org/misc/gams.html). Loading an example does '
+     'not submit a job. The catalog now has 514 checked drivers and 541 mapped procedure records. These new APIs '
+     'add an E1c class demonstration; the previously outstanding PCA class remains unverified.',
+     '',
+     '## Driver details',
+     '']
+    for d in drivers:
+        lines += ['### '+d['id']+' ('+d['gams_code']+')', '', d['modifications'], '']
+    lines += ['## Provenance and actual output', '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -12381,6 +12516,7 @@ def main():
                          (FSTATS_SUMMARIES_TEN_REPORT, fstats_summaries_ten_review_text()),
                          (FSTATS_FITTING_TEN_REPORT, fstats_fitting_ten_review_text()),
                          (NEXT_NUMERICAL_REPORT, next_numerical_review_text()),
+                         (FORTRANLIB_TABLES_REPORT, fortranlib_tables_review_text()),
                          (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report

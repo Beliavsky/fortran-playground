@@ -38,6 +38,7 @@ The B-spline driver separately interpolates `p(x)=1-2*x+0.5*x**2+x**3` with orde
 | [Load fstats-polynomial-interpolation-values-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=fstats&example=gams-fstats-polynomial-interpolation-values-reference) · [Source](../fpm_catalog/gams-drivers/fstats-polynomial-interpolation-values-reference.f90) | [Procedure](https://github.com/jchristopherson/fstats/blob/5fdb86d1e7fa057d776d7d9477942fd6d387dd2f/src/interpolation/fstats_interp.f90#L576) · [Author example/test](https://github.com/jchristopherson/fstats/blob/5fdb86d1e7fa057d776d7d9477942fd6d387dd2f/tests/fstats_interp_tests.f90) |
 | [Load fstats-hermite-values-derivatives-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=fstats&example=gams-fstats-hermite-values-derivatives-reference) · [Source](../fpm_catalog/gams-drivers/fstats-hermite-values-derivatives-reference.f90) | [Procedure](https://github.com/jchristopherson/fstats/blob/5fdb86d1e7fa057d776d7d9477942fd6d387dd2f/src/interpolation/fstats_interp.f90#L979) · [Author example/test](https://github.com/jchristopherson/fstats/blob/5fdb86d1e7fa057d776d7d9477942fd6d387dd2f/tests/fstats_interp_tests.f90) |
 | [Load fortranlib-linear-interpolation-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=fortranlib&example=gams-fortranlib-linear-interpolation-reference) · [Source](../fpm_catalog/gams-drivers/fortranlib-linear-interpolation-reference.f90) | [Procedure](https://github.com/astrofrog/fortranlib/blob/60fd094d3e137137ce00ec120b085e9b23ebf68b/src/lib_array.f90#L1) · Independent API consumer |
+| [Load fortranlib-logarithmic-interpolation-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=fortranlib&example=gams-fortranlib-logarithmic-interpolation-reference) · [Source](../fpm_catalog/gams-drivers/fortranlib-logarithmic-interpolation-reference.f90) | [Procedure](https://github.com/astrofrog/fortranlib/blob/60fd094d3e137137ce00ec120b085e9b23ebf68b/src/lib_array.f90#L579) · Independent API consumer |
 
 The three shape-comparison programs adapt author API patterns and retain the package license notices. They use shared deterministic data instead of the larger author test harnesses. The drivers appear in hosted and main local FPM example menus and downloaded projects. Loading a link selects source without submitting a job.
 
@@ -211,6 +212,13 @@ PASS fstats-hermite-values-derivatives-reference
 ```text
 Irregular-grid scalar/vector queries including fill values: 207
 PASS fortranlib-linear-interpolation-reference
+```
+
+### fortranlib-logarithmic-interpolation-reference
+
+```text
+Logarithmic scalar/vector query pairs checked: 715
+PASS fortranlib-logarithmic-interpolation-reference
 ```
 
 ## Maintenance

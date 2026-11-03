@@ -1115,5 +1115,9 @@ export const gamsSubclasses = {
   "L5b1n": {
     "label": "Normal",
     "parent": "L5b1"
+  },
+  "E1c": {
+    "label": "Other functions (e.g., rational, trigonometric)",
+    "parent": "E1"
   }
 };

@@ -82,6 +82,7 @@ def audit(root=ROOT):
                                                 for d in manifest['drivers'])), key=class_order)
     return {
         'schema': 1, 'reviewed_on': policy['reviewed_on'], 'scope': policy['scope'],
+        'benefit_review': policy.get('benefit_review'),
         'hash_normalization': 'utf-8-lf',
         'input_sha256': {name: hashlib.sha256((root/name).read_text(encoding='utf-8').encode('utf-8')).hexdigest()
                          for name in INPUTS},
@@ -175,6 +176,11 @@ def markdown(report):
     for record in report['additional_class_claims']:
         drivers = ', '.join(f"[{d['gams_code']}](../{d['path']})" for d in record['drivers'])
         lines.append(f"| {record['unmatched_code']} | `{record['procedure_id']}` | {drivers} | {record['action']} |")
+    benefit = report.get('benefit_review')
+    if benefit:
+        lines += ['', '## Benefit assessment ('+benefit['reviewed_on']+')', '',
+                  benefit['assessment'], '', benefit['latest_batch'], '', benefit['recommendation'], '',
+                  'See the [scientific-table batch review](gams-fortranlib-tables.md) for the latest checked additions.']
     lines += ['', '## Further expansion after these candidates', '',
         'The mapped ledger is representative, not a full procedure inventory. Additional valuable work can come from new APIs in already compiled packages, '
         'especially common problems enabling accuracy comparisons across libraries. Review each new API and its GAMS mapping before adding a checked driver. '

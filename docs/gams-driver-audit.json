@@ -2,21 +2,27 @@
   "schema": 1,
   "reviewed_on": "2026-11-03",
   "scope": "Planning judgments for the mapped selected-package procedures; not new compilation or numerical verification.",
+  "benefit_review": {
+    "reviewed_on": "2026-11-03",
+    "assessment": "Routine gap-filling batches now have diminishing benefit: the remaining mapped records mostly contain retained failures, sandbox limits or overlapping class claims. Do not add duplicate variants merely to reach ten drivers.",
+    "latest_batch": "Five separately reviewed scientific-table APIs remain worthwhile: logarithmic interpolation, logarithmic integration and cumulative prefixes, conservative rebinning, bilinear interpolation and masked histograms. See docs/gams-fortranlib-tables.md. These are new capabilities, not evidence that the full package API inventory has been exhausted.",
+    "recommendation": "Pause automatic gap-filling batches. Prefer named new APIs with independent oracles, common problems comparing multiple packages, resolving the PCA linking limit, or retesting an upstream repair. Review each proposed batch for distinct mathematical coverage before implementation."
+  },
   "hash_normalization": "utf-8-lf",
   "input_sha256": {
     "fpm_catalog.json": "24aeb33fc6ccbfaf9f4893790c0b1e585e9612e8de789e04c0227ec92d32b194",
-    "fpm_catalog/gams.json": "ded3b7008296b782aa932fcc5f179d5f50f356f79c266bb14328847c96f6ed19",
-    "fpm_catalog/gams-drivers.json": "405b1f8cdf602fe92706a9843e46f08ef548e5db04942a380873296508b3b2e9",
-    "fpm_catalog/gams-driver-priorities.json": "c65e23bfce4459ae51b3fa7554257160bc842c559d1bda3729ffde01affb9bb5"
+    "fpm_catalog/gams.json": "a4b6e4993715516c84adb43e715fe279ef0a69d5272d526d04692467a95b4636",
+    "fpm_catalog/gams-drivers.json": "4601261224561f57ca15fb31244ad20c7516a3262e3a3ece93d78e530defd9ec",
+    "fpm_catalog/gams-driver-priorities.json": "2a4cb625559320bbd8bbe848a66335898fa14cdeb5af0ef6b5c4bf7a4a50b63e"
   },
   "counts": {
-    "procedure_records": 536,
-    "checked_drivers": 509,
-    "procedures_with_drivers": 509,
+    "procedure_records": 541,
+    "checked_drivers": 514,
+    "procedures_with_drivers": 514,
     "procedures_without_drivers": 27,
     "unchecked_packages": 19,
     "additional_class_claims": 34,
-    "directly_mapped_classes": 167,
+    "directly_mapped_classes": 168,
     "classes_without_drivers": 1,
     "unchecked_by_status": {
       "graphics-promotion": 5,

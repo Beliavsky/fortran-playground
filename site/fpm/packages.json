@@ -30205,6 +30205,21 @@
         "parent": "E"
       },
       {
+        "code": "E1c",
+        "label": "Other functions (e.g., rational, trigonometric)",
+        "parent": "E1"
+      },
+      {
+        "code": "E2",
+        "label": "Multivariate data (surface fitting)",
+        "parent": "E"
+      },
+      {
+        "code": "E2a",
+        "label": "Gridded",
+        "parent": "E2"
+      },
+      {
         "code": "F",
         "label": "Solution of nonlinear equations",
         "parent": null
@@ -30223,6 +30238,56 @@
         "code": "H2",
         "label": "Quadrature (numerical evaluation of definite integrals)",
         "parent": "H"
+      },
+      {
+        "code": "H2a",
+        "label": "One-dimensional integrals",
+        "parent": "H2"
+      },
+      {
+        "code": "H2a1",
+        "label": "Finite interval (general integrand)",
+        "parent": "H2a"
+      },
+      {
+        "code": "H2a1b",
+        "label": "Integrand available only on grid",
+        "parent": "H2a1"
+      },
+      {
+        "code": "H2a1b2",
+        "label": "Nonautomatic",
+        "parent": "H2a1b"
+      },
+      {
+        "code": "H2c",
+        "label": "Service routines (e.g., compute weights and nodes for quadrature formulas)",
+        "parent": "H2"
+      },
+      {
+        "code": "L",
+        "label": "Statistics, probability",
+        "parent": null
+      },
+      {
+        "code": "L1",
+        "label": "Data summarization",
+        "parent": "L"
+      },
+      {
+        "code": "L1a",
+        "label": "One-dimensional data",
+        "parent": "L1"
+      },
+      {
+        "code": "L1a1",
+        "label": "Raw data",
+        "parent": "L1a"
+      },
+      {
+        "code": "L1a1d",
+        "label": "Frequency, cumulative frequency",
+        "parent": "L1a1"
       }
     ],
     "gams_procedures": [
@@ -30296,6 +30361,116 @@
         ],
         "author_examples": [],
         "driver_id": "fortranlib-tabulated-integrals-reference"
+      },
+      {
+        "id": "fortranlib-logarithmic-interpolation",
+        "package_id": "fortranlib",
+        "revision": "60fd094d3e137137ce00ec120b085e9b23ebf68b",
+        "module": "lib_array",
+        "procedure": "interp1d_linlog,interp1d_loglin,interp1d_loglog (real64 scalar and array)",
+        "gams_codes": [
+          "E1c"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "715 scalar/vector evaluations across eleven exact exponential, affine-logarithm and power-law tables. Irregular positive grid, 61 in-domain values and four explicit fill queries per family. Modes mean log(y) versus x, y versus log(x), and log(y) versus log(x), respectively. Constant data, negative/zero exponents and reciprocal power included. Tolerance 2e-11*max(1,abs(reference)); nonpositive log inputs, descending/duplicate grids and extrapolation excluded.",
+        "driver_id": "fortranlib-logarithmic-interpolation-reference",
+        "evidence": [
+          {
+            "path": "src/lib_array.f90",
+            "sha256": "d1c2f979d1498c0e505632c02df66ff5ad240a733d00fa71ab59725d71f458ac",
+            "line": 579
+          }
+        ],
+        "author_examples": []
+      },
+      {
+        "id": "fortranlib-logarithmic-areas",
+        "package_id": "fortranlib",
+        "revision": "60fd094d3e137137ce00ec120b085e9b23ebf68b",
+        "module": "lib_array",
+        "procedure": "integral_{linlog,loglin,loglog}, cumulative_integral_{linlog,loglin,loglog} (real64)",
+        "gams_codes": [
+          "H2a1b2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "Eleven exponential, affine-log and power-law families. 726 ordered clipped subset integrals, eleven full integrals and 55 cumulative prefix values against explicit antiderivatives. Includes constant/reciprocal cases, empty/outside/same-segment and knot-crossing intervals. Existing pinned lib_array upstream fixes are reused. Tolerance 2e-11*max(1,abs(reference)); reversed limits, invalid log inputs and near-reciprocal cancellation are excluded.",
+        "driver_id": "fortranlib-logarithmic-areas-reference",
+        "evidence": [
+          {
+            "path": "src/lib_array.f90",
+            "sha256": "d1c2f979d1498c0e505632c02df66ff5ad240a733d00fa71ab59725d71f458ac",
+            "line": 330
+          }
+        ],
+        "author_examples": []
+      },
+      {
+        "id": "fortranlib-conservative-rebinning",
+        "package_id": "fortranlib",
+        "revision": "60fd094d3e137137ce00ec120b085e9b23ebf68b",
+        "module": "lib_array",
+        "procedure": "rebin,rebin_linlog,rebin_loglin,rebin_loglog (real64)",
+        "gams_codes": [
+          "H2c"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "Fourteen linear/exponential/affine-log/power-law data sets rebinned onto six irregular cell centers. 84 cell means checked against independently integrated analytic densities and fourteen total-area conservation identities. Arithmetic cell edges for linear-x modes and geometric edges for log-x modes; first/last centers are domain edges. Existing upstream fixes unchanged. Tolerance 2e-11*max(1,abs(reference)); not pointwise interpolation, arbitrary nonanalytic densities or invalid log inputs.",
+        "driver_id": "fortranlib-conservative-rebinning-reference",
+        "evidence": [
+          {
+            "path": "src/lib_array.f90",
+            "sha256": "d1c2f979d1498c0e505632c02df66ff5ad240a733d00fa71ab59725d71f458ac",
+            "line": 852
+          }
+        ],
+        "author_examples": []
+      },
+      {
+        "id": "fortranlib-bilinear-surfaces",
+        "package_id": "fortranlib",
+        "revision": "60fd094d3e137137ce00ec120b085e9b23ebf68b",
+        "module": "lib_array",
+        "procedure": "interp2d (real64)",
+        "gams_codes": [
+          "E2a"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "Three bilinear surfaces with independent cross terms on irregular 4-by-3 grids. 1875 values including edges/corners plus twelve explicit outside-fill queries; direct analytic field reference checks axis orientation and boundary handling. Tolerance 2e-11*max(1,abs(reference)); higher-order surfaces, invalid shapes and extrapolation excluded.",
+        "driver_id": "fortranlib-bilinear-surfaces-reference",
+        "evidence": [
+          {
+            "path": "src/lib_array.f90",
+            "sha256": "d1c2f979d1498c0e505632c02df66ff5ad240a733d00fa71ab59725d71f458ac",
+            "line": 772
+          }
+        ],
+        "author_examples": []
+      },
+      {
+        "id": "fortranlib-masked-histograms",
+        "package_id": "fortranlib",
+        "revision": "60fd094d3e137137ce00ec120b085e9b23ebf68b",
+        "module": "lib_array",
+        "procedure": "histogram1d, histogram2d (real64)",
+        "gams_codes": [
+          "L1a1d"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "Six masked/unmasked weighted/unweighted 1D histograms and three 2D count histograms on exact dyadic boundary/outside fixtures. Independent half-open bin enumeration, closed final endpoint, empty-mask zeros, bin centers and per-cell counts/sums. 1D weights positive dyadics; 2D API unweighted. Counts and weight sums checked exactly; not probability densities, random-distribution validation, descending bounds or arbitrary bin widths.",
+        "driver_id": "fortranlib-masked-histograms-reference",
+        "evidence": [
+          {
+            "path": "src/lib_array.f90",
+            "sha256": "d1c2f979d1498c0e505632c02df66ff5ad240a733d00fa71ab59725d71f458ac",
+            "line": 1016
+          }
+        ],
+        "author_examples": []
       }
     ],
     "stars_updated_at": "2026-10-29T19:03:06.361094+00:00"

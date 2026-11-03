@@ -1,0 +1,168 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "fortranlib-logarithmic-interpolation-reference",
+      "source_revision": "60fd094d3e137137ce00ec120b085e9b23ebf68b",
+      "source_sha256": "02bac8e53477a7eb70b47c1ee5d4254160fef745fdf638028df615e9aa68ce31",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-03T12:24:57.781346+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.399,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Logarithmic scalar/vector query pairs checked: 715\nPASS fortranlib-logarithmic-interpolation-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.027,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fortranlib-logarithmic-areas-reference",
+      "source_revision": "60fd094d3e137137ce00ec120b085e9b23ebf68b",
+      "source_sha256": "eac1a35026ce432e926124d0a1b8462036aea51ef95c74287d73f5e348649299",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-03T12:24:59.534064+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.482,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Logarithmic subset areas checked: 726\n11 full integrals and 55 cumulative-prefix values independently checked.\nPASS fortranlib-logarithmic-areas-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.029,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fortranlib-conservative-rebinning-reference",
+      "source_revision": "60fd094d3e137137ce00ec120b085e9b23ebf68b",
+      "source_sha256": "3727b0db3f3403f1bed30f1bdab478282eb6885913750b5f75da51a0b7b23133",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-03T12:25:01.236125+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.35,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Independent conservative cell means checked: 84\n14 total-area conservation identities checked.\nPASS fortranlib-conservative-rebinning-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.032,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fortranlib-bilinear-surfaces-reference",
+      "source_revision": "60fd094d3e137137ce00ec120b085e9b23ebf68b",
+      "source_sha256": "10edb67da280664e1c7611c2551a01cbea119e94bc6c3ec26aaf08c9497d6fbe",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-03T12:25:02.804942+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.392,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Independent bilinear values including boundaries: 1875\n12 explicit outside-fill values checked.\nPASS fortranlib-bilinear-surfaces-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.029,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fortranlib-masked-histograms-reference",
+      "source_revision": "60fd094d3e137137ce00ec120b085e9b23ebf68b",
+      "source_sha256": "c1c3bc4fa8e1e0e521f81804d010401dc5e5fd3bbbcc5419f8f1786565d05f47",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-03T12:25:04.704809+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.489,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "6 one-dimensional histograms and 3 two-dimensional histograms independently checked.\nPASS fortranlib-masked-histograms-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.048,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-11-03T12:25:04.749824+00:00"
+}

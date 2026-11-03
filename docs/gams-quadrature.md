@@ -48,12 +48,14 @@ The `dqags` driver adapts the author's inverse-square-root test and adds a logar
 | [Load quadpack-oscillatory-weights-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=quadpack&example=gams-quadpack-oscillatory-weights-reference) · [Driver source](../fpm_catalog/gams-drivers/quadpack-oscillatory-weights-reference.f90) | H2a2a1 | [Procedure](https://github.com/jacobwilliams/quadpack/blob/ab42d50794280a8e7996f2ee4cda1f8753dfde5b/src/quadpack_generic.F90#L3107) · [Author test](https://github.com/jacobwilliams/quadpack/blob/ab42d50794280a8e7996f2ee4cda1f8753dfde5b/test/quadpack_test_module.F90) |
 | [Load quadpack-endpoint-weights-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=quadpack&example=gams-quadpack-endpoint-weights-reference) · [Driver source](../fpm_catalog/gams-drivers/quadpack-endpoint-weights-reference.f90) | H2a2a1 | [Procedure](https://github.com/jacobwilliams/quadpack/blob/ab42d50794280a8e7996f2ee4cda1f8753dfde5b/src/quadpack_generic.F90#L3757) · [Author test](https://github.com/jacobwilliams/quadpack/blob/ab42d50794280a8e7996f2ee4cda1f8753dfde5b/test/quadpack_test_module.F90) |
 | [Load fortranlib-tabulated-integrals-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=fortranlib&example=gams-fortranlib-tabulated-integrals-reference) · [Driver source](../fpm_catalog/gams-drivers/fortranlib-tabulated-integrals-reference.f90) | H2 | [Procedure](https://github.com/astrofrog/fortranlib/blob/60fd094d3e137137ce00ec120b085e9b23ebf68b/src/lib_array.f90#L1) · [Author test](https://github.com/astrofrog/fortranlib/blob/60fd094d3e137137ce00ec120b085e9b23ebf68b/None) |
+| [Load fortranlib-logarithmic-areas-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=fortranlib&example=gams-fortranlib-logarithmic-areas-reference) · [Driver source](../fpm_catalog/gams-drivers/fortranlib-logarithmic-areas-reference.f90) | H2a1b2 | [Procedure](https://github.com/astrofrog/fortranlib/blob/60fd094d3e137137ce00ec120b085e9b23ebf68b/src/lib_array.f90#L330) · [Author test](https://github.com/astrofrog/fortranlib/blob/60fd094d3e137137ce00ec120b085e9b23ebf68b/None) |
+| [Load fortranlib-conservative-rebinning-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=fortranlib&example=gams-fortranlib-conservative-rebinning-reference) · [Driver source](../fpm_catalog/gams-drivers/fortranlib-conservative-rebinning-reference.f90) | H2c | [Procedure](https://github.com/astrofrog/fortranlib/blob/60fd094d3e137137ce00ec120b085e9b23ebf68b/src/lib_array.f90#L852) · [Author test](https://github.com/astrofrog/fortranlib/blob/60fd094d3e137137ce00ec120b085e9b23ebf68b/None) |
 
 Loading a link selects code without submitting a job. The same drivers are available in the hosted and main local FPM playgrounds and in downloaded FPM projects. Author license notices are retained with the drivers.
 
 ## Recorded results
 
-All 24 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0. Existing package libraries were reused; only each main and executable were compiled. The verification reports lock driver hashes and source revisions: [gams-applied-methods-validation.json](gams-applied-methods-validation.json), [gams-cubature-validation.json](gams-cubature-validation.json), [gams-factorization-rules-ten-validation.json](gams-factorization-rules-ten-validation.json), [gams-grids-spectra-ten-validation.json](gams-grids-spectra-ten-validation.json), [gams-integrals-tensors-ten-validation.json](gams-integrals-tensors-ten-validation.json), [gams-moments-nufft2d-validation.json](gams-moments-nufft2d-validation.json), [gams-next-numerical-validation.json](gams-next-numerical-validation.json), [gams-quadrature-validation.json](gams-quadrature-validation.json), [gams-rkf-qags-validation.json](gams-rkf-qags-validation.json), [gams-roots-splines-quadrature-validation.json](gams-roots-splines-quadrature-validation.json), [gams-rules-differences-validation.json](gams-rules-differences-validation.json), [gams-sparse-integral-validation.json](gams-sparse-integral-validation.json), [gams-statistics-services-ten-validation.json](gams-statistics-services-ten-validation.json).
+All 26 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0. Existing package libraries were reused; only each main and executable were compiled. The verification reports lock driver hashes and source revisions: [gams-applied-methods-validation.json](gams-applied-methods-validation.json), [gams-cubature-validation.json](gams-cubature-validation.json), [gams-factorization-rules-ten-validation.json](gams-factorization-rules-ten-validation.json), [gams-fortranlib-tables-validation.json](gams-fortranlib-tables-validation.json), [gams-grids-spectra-ten-validation.json](gams-grids-spectra-ten-validation.json), [gams-integrals-tensors-ten-validation.json](gams-integrals-tensors-ten-validation.json), [gams-moments-nufft2d-validation.json](gams-moments-nufft2d-validation.json), [gams-next-numerical-validation.json](gams-next-numerical-validation.json), [gams-quadrature-validation.json](gams-quadrature-validation.json), [gams-rkf-qags-validation.json](gams-rkf-qags-validation.json), [gams-roots-splines-quadrature-validation.json](gams-roots-splines-quadrature-validation.json), [gams-rules-differences-validation.json](gams-rules-differences-validation.json), [gams-sparse-integral-validation.json](gams-sparse-integral-validation.json), [gams-statistics-services-ten-validation.json](gams-statistics-services-ten-validation.json).
 
 Success is status `0` for QUADPACK and `1` for quadrature-fortran. The latter reports a signed error estimate. Estimates are printed separately from actual errors against the analytic references; they are not certified error bounds. Zero printed actual error means agreement at the working floating-point precision. Evaluation counts describe these runs and do not establish a general speed ranking.
 
@@ -307,12 +309,28 @@ Clipped piecewise-linear area intervals plus three full integrals: 198
 PASS fortranlib-tabulated-integrals-reference
 ```
 
+### fortranlib-logarithmic-areas-reference
+
+```text
+Logarithmic subset areas checked: 726
+11 full integrals and 55 cumulative-prefix values independently checked.
+PASS fortranlib-logarithmic-areas-reference
+```
+
+### fortranlib-conservative-rebinning-reference
+
+```text
+Independent conservative cell means checked: 84
+14 total-area conservation identities checked.
+PASS fortranlib-conservative-rebinning-reference
+```
+
 ## Maintenance
 
 After changing a driver, verify it again using existing compiled package images:
 
 ```text
-python xverify_gams_drivers.py --drivers quadpack-smooth quadrature-fortran-smooth quadpack-endpoint-singular dcuhre-box-integrals gauss-jacobi-polynomial-moments cubatures-simplex-moments integrate-nd-polynomial-reference fitpack-spline-integral scifortran-quadrature-reference kronrod-moments-reference fgsl-qags-reference qdutillib-moments-reference stdlib-trapezoid-reference stdlib-simpson-reference stdlib-gauss-reference stdlib-lobatto-reference stdlib-trapz-grid-weights-reference stdlib-simps-grid-weights-reference quadpack-improper-halflines-reference quadpack-interior-breakpoints-reference quadpack-cauchy-principal-values-reference quadpack-oscillatory-weights-reference quadpack-endpoint-weights-reference fortranlib-tabulated-integrals-reference
+python xverify_gams_drivers.py --drivers quadpack-smooth quadrature-fortran-smooth quadpack-endpoint-singular dcuhre-box-integrals gauss-jacobi-polynomial-moments cubatures-simplex-moments integrate-nd-polynomial-reference fitpack-spline-integral scifortran-quadrature-reference kronrod-moments-reference fgsl-qags-reference qdutillib-moments-reference stdlib-trapezoid-reference stdlib-simpson-reference stdlib-gauss-reference stdlib-lobatto-reference stdlib-trapz-grid-weights-reference stdlib-simps-grid-weights-reference quadpack-improper-halflines-reference quadpack-interior-breakpoints-reference quadpack-cauchy-principal-values-reference quadpack-oscillatory-weights-reference quadpack-endpoint-weights-reference fortranlib-tabulated-integrals-reference fortranlib-logarithmic-areas-reference fortranlib-conservative-rebinning-reference
 python xpackage_gams.py
 python xfpm_examples.py
 python xsite.py

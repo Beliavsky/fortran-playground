@@ -1705,7 +1705,12 @@
       "procedure_ids": [
         "fortranlib-numerics",
         "fortranlib-linear-interpolation",
-        "fortranlib-tabulated-integrals"
+        "fortranlib-tabulated-integrals",
+        "fortranlib-logarithmic-interpolation",
+        "fortranlib-logarithmic-areas",
+        "fortranlib-conservative-rebinning",
+        "fortranlib-bilinear-surfaces",
+        "fortranlib-masked-histograms"
       ],
       "notes": "Selected base_types, lib_algebra and lib_array modules, using the pinned revision immediately before the upstream FPM test suite introduced source symlinks. Nine checksum-guarded edits bring lib_array exactly to upstream commit 844611933cba06d71490033e68b355f6f0ff704f, retaining its integration-limit, descending histogram-bin and precision fixes. The other selected modules are unchanged. The ordinary archive policy remains unchanged. A synthetic FPM wrapper uses the already generated Fortran sources, not the Python templates. The checked consumer integrates the affine function 2*x+1 on [0,1], checks linear interpolation at an interior off-grid point, and solves x**2-5*x+6 against the exact roots 2 and 3. Additional checks cover integration limits outside the tabulated range, descending histogram bins and bin-center precision; the expanded example fails with the older unpatched array module and passes with the upstream fixes. GAMS F1 denotes the quadratic solver, not a general iterative root finder. Random sampling, statistics, geometry, HDF5/FITS bindings and other modules are not selected; the example does not validate every routine in the included modules."
     },

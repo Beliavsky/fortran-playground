@@ -16548,6 +16548,126 @@
         "scalar_kind": "REAL64",
         "oracle": "independent mathematical references and status checks"
       }
+    },
+    {
+      "id": "fortranlib-logarithmic-interpolation-reference",
+      "name": "gams-fortranlib-logarithmic-interpolation-reference",
+      "package_id": "fortranlib",
+      "procedure_id": "fortranlib-logarithmic-interpolation",
+      "gams_code": "E1c",
+      "problem_id": "fortranlib-logarithmic-interpolation-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/fortranlib-logarithmic-interpolation-reference.f90",
+      "revision": "60fd094d3e137137ce00ec120b085e9b23ebf68b",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fortranlib-tables-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 715 scalar/vector evaluations across eleven exact exponential, affine-logarithm and power-law tables. Irregular positive grid, 61 in-domain values and four explicit fill queries per family. Modes mean log(y) versus x, y versus log(x), and log(y) versus log(x), respectively. Constant data, negative/zero exponents and reciprocal power included. Tolerance 2e-11*max(1,abs(reference)); nonpositive log inputs, descending/duplicate grids and extrapolation excluded.",
+      "validation_path": "docs/gams-fortranlib-tables-validation.json",
+      "review_path": "docs/gams-fortranlib-tables.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "absolute_scaled_tolerance": 2e-11,
+        "oracle": "independent elementary functions, analytic antiderivatives or exact bin-membership enumeration"
+      }
+    },
+    {
+      "id": "fortranlib-logarithmic-areas-reference",
+      "name": "gams-fortranlib-logarithmic-areas-reference",
+      "package_id": "fortranlib",
+      "procedure_id": "fortranlib-logarithmic-areas",
+      "gams_code": "H2a1b2",
+      "problem_id": "fortranlib-logarithmic-areas-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/fortranlib-logarithmic-areas-reference.f90",
+      "revision": "60fd094d3e137137ce00ec120b085e9b23ebf68b",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fortranlib-tables-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. Eleven exponential, affine-log and power-law families. 726 ordered clipped subset integrals, eleven full integrals and 55 cumulative prefix values against explicit antiderivatives. Includes constant/reciprocal cases, empty/outside/same-segment and knot-crossing intervals. Existing pinned lib_array upstream fixes are reused. Tolerance 2e-11*max(1,abs(reference)); reversed limits, invalid log inputs and near-reciprocal cancellation are excluded.",
+      "validation_path": "docs/gams-fortranlib-tables-validation.json",
+      "review_path": "docs/gams-fortranlib-tables.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "absolute_scaled_tolerance": 2e-11,
+        "oracle": "independent elementary functions, analytic antiderivatives or exact bin-membership enumeration"
+      }
+    },
+    {
+      "id": "fortranlib-conservative-rebinning-reference",
+      "name": "gams-fortranlib-conservative-rebinning-reference",
+      "package_id": "fortranlib",
+      "procedure_id": "fortranlib-conservative-rebinning",
+      "gams_code": "H2c",
+      "problem_id": "fortranlib-conservative-rebinning-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/fortranlib-conservative-rebinning-reference.f90",
+      "revision": "60fd094d3e137137ce00ec120b085e9b23ebf68b",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fortranlib-tables-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. Fourteen linear/exponential/affine-log/power-law data sets rebinned onto six irregular cell centers. 84 cell means checked against independently integrated analytic densities and fourteen total-area conservation identities. Arithmetic cell edges for linear-x modes and geometric edges for log-x modes; first/last centers are domain edges. Existing upstream fixes unchanged. Tolerance 2e-11*max(1,abs(reference)); not pointwise interpolation, arbitrary nonanalytic densities or invalid log inputs.",
+      "validation_path": "docs/gams-fortranlib-tables-validation.json",
+      "review_path": "docs/gams-fortranlib-tables.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "absolute_scaled_tolerance": 2e-11,
+        "oracle": "independent elementary functions, analytic antiderivatives or exact bin-membership enumeration"
+      }
+    },
+    {
+      "id": "fortranlib-bilinear-surfaces-reference",
+      "name": "gams-fortranlib-bilinear-surfaces-reference",
+      "package_id": "fortranlib",
+      "procedure_id": "fortranlib-bilinear-surfaces",
+      "gams_code": "E2a",
+      "problem_id": "fortranlib-bilinear-surfaces-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/fortranlib-bilinear-surfaces-reference.f90",
+      "revision": "60fd094d3e137137ce00ec120b085e9b23ebf68b",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fortranlib-tables-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. Three bilinear surfaces with independent cross terms on irregular 4-by-3 grids. 1875 values including edges/corners plus twelve explicit outside-fill queries; direct analytic field reference checks axis orientation and boundary handling. Tolerance 2e-11*max(1,abs(reference)); higher-order surfaces, invalid shapes and extrapolation excluded.",
+      "validation_path": "docs/gams-fortranlib-tables-validation.json",
+      "review_path": "docs/gams-fortranlib-tables.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "absolute_scaled_tolerance": 2e-11,
+        "oracle": "independent elementary functions, analytic antiderivatives or exact bin-membership enumeration"
+      }
+    },
+    {
+      "id": "fortranlib-masked-histograms-reference",
+      "name": "gams-fortranlib-masked-histograms-reference",
+      "package_id": "fortranlib",
+      "procedure_id": "fortranlib-masked-histograms",
+      "gams_code": "L1a1d",
+      "problem_id": "fortranlib-masked-histograms-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/fortranlib-masked-histograms-reference.f90",
+      "revision": "60fd094d3e137137ce00ec120b085e9b23ebf68b",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fortranlib-tables-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. Six masked/unmasked weighted/unweighted 1D histograms and three 2D count histograms on exact dyadic boundary/outside fixtures. Independent half-open bin enumeration, closed final endpoint, empty-mask zeros, bin centers and per-cell counts/sums. 1D weights positive dyadics; 2D API unweighted. Counts and weight sums checked exactly; not probability densities, random-distribution validation, descending bounds or arbitrary bin widths.",
+      "validation_path": "docs/gams-fortranlib-tables-validation.json",
+      "review_path": "docs/gams-fortranlib-tables.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "absolute_scaled_tolerance": 2e-11,
+        "oracle": "independent elementary functions, analytic antiderivatives or exact bin-membership enumeration"
+      }
     }
   ]
 }

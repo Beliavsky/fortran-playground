@@ -27,6 +27,8 @@ class GamsDriverAuditTests(unittest.TestCase):
                           if r['procedure_id'] in {'fortran-lapack-eigh', 'fortran-lapack-svd'}},
                          {'sandbox-limit'})
         self.assertNotIn('fortran-lapack-eigh', {r['procedure_id'] for r in report['next_candidates']})
+        self.assertIn('diminishing benefit', report['benefit_review']['assessment'])
+        self.assertIn('Pause automatic', report['benefit_review']['recommendation'])
 
     def copy_inputs(self, destination):
         for name in INPUTS:
