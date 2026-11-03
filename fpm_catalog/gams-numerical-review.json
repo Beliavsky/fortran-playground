@@ -704,7 +704,9 @@
         "nonlin-least-squares",
         "nonlin-newton-solver",
         "nonlin-brent-solver",
-        "nonlin-newton-1var"
+        "nonlin-newton-1var",
+        "nonlin-bfgs-finite-differences",
+        "nonlin-lsq-finite-differences"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
     },
@@ -1533,7 +1535,9 @@
       "procedure_ids": [
         "rpn-elementary",
         "rpn-special",
-        "rpn-integer"
+        "rpn-integer",
+        "rpn-real-cube-roots",
+        "rpn-bessel-i0-values"
       ],
       "notes": "Numerical routines from the RPN calculator, called directly without its interactive interface. The checked main verifies a negative cube root, sinc and sech at zero, beta(2,3), modified Bessel I0 at zero, and integer gcd/lcm against known results. A checksum-guarded manifest correction sets source-form=default so .f and .f90 files use their respective forms. No numerical sources are changed. The tests do not establish accuracy over full argument ranges or validate the complete calculator."
     },
@@ -1699,7 +1703,9 @@
       "archive_sha256": "2306ae4dedaa431c7a77f8cbc15e8ab3c04230de3a8cf0c38654f065db649536",
       "status": "procedure-reviewed",
       "procedure_ids": [
-        "fortranlib-numerics"
+        "fortranlib-numerics",
+        "fortranlib-linear-interpolation",
+        "fortranlib-tabulated-integrals"
       ],
       "notes": "Selected base_types, lib_algebra and lib_array modules, using the pinned revision immediately before the upstream FPM test suite introduced source symlinks. Nine checksum-guarded edits bring lib_array exactly to upstream commit 844611933cba06d71490033e68b355f6f0ff704f, retaining its integration-limit, descending histogram-bin and precision fixes. The other selected modules are unchanged. The ordinary archive policy remains unchanged. A synthetic FPM wrapper uses the already generated Fortran sources, not the Python templates. The checked consumer integrates the affine function 2*x+1 on [0,1], checks linear interpolation at an interior off-grid point, and solves x**2-5*x+6 against the exact roots 2 and 3. Additional checks cover integration limits outside the tabulated range, descending histogram bins and bin-center precision; the expanded example fails with the older unpatched array module and passes with the upstream fixes. GAMS F1 denotes the quadratic solver, not a general iterative root finder. Random sampling, statistics, geometry, HDF5/FITS bindings and other modules are not selected; the example does not validate every routine in the included modules."
     },

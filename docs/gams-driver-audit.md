@@ -2,7 +2,7 @@
 
 Planning review: 2026-11-03. This is an audit of the current pinned selected-package records, not a new compilation run, an exhaustive package API inventory, or a ranking of software quality.
 
-There are **503 checked drivers for 503 of 530 source-reviewed procedure records**. **27 records across 19 packages** have no dedicated checked driver. Another **40 mapped procedure/class claims** belong to procedures with a driver for a different class or configuration.
+There are **509 checked drivers for 509 of 536 source-reviewed procedure records**. **27 records across 19 packages** have no dedicated checked driver. Another **34 mapped procedure/class claims** belong to procedures with a driver for a different class or configuration.
 
 A missing driver does not mean the package cannot compile: ordinary catalog examples have separate evidence. A driver under one class does not automatically establish every other classification of its procedure. Conversely, a cross-class mismatch is not automatically a missing algorithm test; it may need a mapping or presentation review.
 
@@ -10,50 +10,7 @@ A missing driver does not mean the package cannot compile: ordinary catalog exam
 
 These are ranked **candidates to probe**, not newly verified examples. Prefer a new API or derivative mode over another variation of an already checked routine. Use author examples for API setup and add independent references; do not weaken existing failed assertions to make a batch pass. There is no requirement to fill a batch of ten.
 
-| Priority | Package / mapped procedure | GAMS | New coverage and independent oracle |
-| ---: | --- | --- | --- |
-| 1 | [nonlin: BFGS without a supplied gradient](https://github.com/jchristopherson/nonlin/blob/2133d067886ea6eca0552ebca9ed7bb8a262e5b8/src/nonlin_optimize.f90#L584) | G1b1a | Existing driver supplies analytic derivatives; finite-difference fallback is a distinct unverified configuration. Use translated positive-definite quadratics and Rosenbrock problems with known minima; independently evaluate final objective and gradient and require successful solver status. |
-| 2 | [nonlin: Nonlinear least squares without a supplied Jacobian](https://github.com/jchristopherson/nonlin/blob/2133d067886ea6eca0552ebca9ed7bb8a262e5b8/src/nonlin_least_squares.f90#L141) | G1b1a | Existing driver supplies the residual Jacobian; automatic differencing needs its own checked configuration. Reuse the independently checked exact exponential family and explicit step factor 1 from the analytic-Jacobian consumer, without supplying its Jacobian. Independently recompute parameters, residual norms and stationarity. |
-| 3 | [rpn-calculator-fortran: Signed real cube roots](https://github.com/scivision/rpn-calculator-fortran/blob/7708e4949f17511d81f4e7dd0271a500f0bc3631/src/funcs.f90#L1) | C2 | The existing consumer checks sinc and sech, leaving this separately mapped procedure unchecked. Use signed exact dyadic cubes, zero, and independently generated high-precision noncube references over a bounded normal range; check finite values, signs and scaled reconstruction. |
-| 4 | [rpn-calculator-fortran: Modified Bessel I0](https://github.com/scivision/rpn-calculator-fortran/blob/7708e4949f17511d81f4e7dd0271a500f0bc3631/src/specfun/i0.f#L1) | C10 | The existing special-function driver covers beta, not the separately mapped Bessel function. Compare besi0 with high-precision modified-Bessel references confirmed at two precisions; include zero, signed values, parity and arguments on both sides of implementation branch boundaries. |
-| 5 | [fortranlib: Integration of tabulated data](https://github.com/astrofrog/fortranlib/blob/60fd094d3e137137ce00ec120b085e9b23ebf68b/src/lib_array.f90#L1) | H2 | The checked procedure record currently has a quadratic-root driver; tabulated integration is a different public capability. Derive exact area from the documented piecewise interpolation rule; test affine data, irregular grids, partial intervals and the supported integration-limit conventions. |
-| 6 | [fortranlib: Interpolation of tabulated data](https://github.com/astrofrog/fortranlib/blob/60fd094d3e137137ce00ec120b085e9b23ebf68b/src/lib_array.f90#L1) | E1 | A distinct mapped public API currently demonstrated only in the ordinary catalog main. Use irregular knots and independently computed segment weights, exact knot values and the documented endpoint/outside-range behavior. |
-
-### 1. BFGS without a supplied gradient
-
-Mapped record: `nonlin-bfgs`. [Author example/test](https://github.com/jchristopherson/nonlin/blob/2133d067886ea6eca0552ebca9ed7bb8a262e5b8/examples/nonlin_bfgs_example.f90) / [Author example/test](https://github.com/jchristopherson/nonlin/blob/2133d067886ea6eca0552ebca9ed7bb8a262e5b8/examples/example_problems.f90)
-
-Do not register the gradient callback. Reuse comparable problems from the analytic-gradient driver, with tolerances suitable for numerical differentiation; do not infer a speed ranking.
-
-### 2. Nonlinear least squares without a supplied Jacobian
-
-Mapped record: `nonlin-least-squares`. [Author example/test](https://github.com/jchristopherson/nonlin/blob/2133d067886ea6eca0552ebca9ed7bb8a262e5b8/examples/nonlin_least_squares_example.f90)
-
-Do not register the residual-Jacobian callback. Retained default-step and nonzero-residual probes already fail even with analytic Jacobians: see docs/gams-candidates/nonlin-least-squares/README.md. Do not broaden this candidate into a general noisy-fit claim or accept convergence status without a correct answer.
-
-### 3. Signed real cube roots
-
-Mapped record: `rpn-elementary`. [Author example/test](https://github.com/scivision/rpn-calculator-fortran/blob/7708e4949f17511d81f4e7dd0271a500f0bc3631/test/test.f90)
-
-Call the real cube-root API directly; establish the supported kind first. Exclude overflow and subnormals unless independently checked.
-
-### 4. Modified Bessel I0
-
-Mapped record: `rpn-special`. No matching author example is recorded; review the pinned API directly.
-
-Inspect the pinned fixed-form implementation for precision and valid range. Do not reuse the package beta implementation as a reference or claim unscaled overflow behavior.
-
-### 5. Integration of tabulated data
-
-Mapped record: `fortranlib-numerics`. No matching author example is recorded; review the pinned API directly.
-
-Use the catalog's pinned upstream lib_array fixes. Review the actual integral convention before assigning a more specific H2 subclass; do not demand exact integration of arbitrary nonlinear data.
-
-### 6. Interpolation of tabulated data
-
-Mapped record: `fortranlib-numerics`. No matching author example is recorded; review the pinned API directly.
-
-Confirm construction and evaluation semantics in the staged, upstream-patched source. Refine the GAMS subclass only after confirming the interpolant; avoid copying the existing ordinary smoke check alone.
+All candidates from this planning review now have checked drivers. Review the remaining blocked records and cross-class claims before ranking another batch.
 
 ## The remaining uncovered mapped class
 
@@ -216,17 +173,11 @@ Review these before treating them as new-driver requests. A checked descendant a
 | A1 | `bstrith-operations` | [N2](../fpm_catalog/gams-drivers/bstrith-bit-reference.f90) | The N2 consumer already contains independently checked additions/subtractions. Review the arithmetic scope of A1 before adding duplicate arithmetic assertions. |
 | A1 | `orbs-bitsets` | [N2](../fpm_catalog/gams-drivers/orbs-bitwise-reference.f90) | Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically. |
 | A6 | `strith-api` | [A1](../fpm_catalog/gams-drivers/strith-integer-reference.f90) | Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically. |
-| C2 | `rpn-elementary` | [C4](../fpm_catalog/gams-drivers/rpn-sinc-sech-reference.f90) | Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically. |
-| C10 | `rpn-special` | [C7](../fpm_catalog/gams-drivers/rpn-beta-reference.f90) | Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically. |
-| E1 | `fortranlib-numerics` | [F1](../fpm_catalog/gams-drivers/fortranlib-quadratic-reference.f90) | Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically. |
 | E1a | `lookup-interpolation` | [E3](../fpm_catalog/gams-drivers/lookup-services-reference.f90) | The E3 service consumer already checks interpolated values. A new E1a driver should demonstrate a distinct construction/interpolation problem; otherwise review cross-class presentation. |
 | E2 | `gslib-api` | [L13](../fpm_catalog/gams-drivers/gslib-kriging-reference.f90) | Existing L13 driver checks ordinary kriging systems and covariance. Review E2 interpolation scope and classification; a new driver should add a distinct spatial interpolation problem. |
 | E2a | `bspline-fortran-3d-mixed-partials` | [E3a2](../fpm_catalog/gams-drivers/bspline-fortran-3d-mixed-partials-reference.f90) | Existing driver constructs the interpolant and checks values as well as derivatives. Review E2a versus E3a2 presentation before duplicating the same experiment. |
 | E2a | `bspline-fortran-4d-mixed-partials` | [E3a2](../fpm_catalog/gams-drivers/bspline-fortran-4d-mixed-partials-reference.f90) | Existing driver constructs the interpolant and checks values as well as derivatives. Review E2a versus E3a2 presentation before duplicating the same experiment. |
-| G1b1a | `nonlin-bfgs` | [G1b1b](../fpm_catalog/gams-drivers/nonlin-rosenbrock-bfgs.f90) | Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically. |
-| G1b1a | `nonlin-least-squares` | [G1b1b](../fpm_catalog/gams-drivers/nonlin-lsq-jacobian-reference.f90) | Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically. |
 | H2 | `formal-divergence` | [H1](../fpm_catalog/gams-drivers/formal-polynomial-reference.f90) | H1 divergence/gradient success is not a time-dependent PDE solution. Split volume-integration and PDE claims; I2 needs a real evolution/boundary problem, not relabeling the operator test. |
-| H2 | `fortranlib-numerics` | [F1](../fpm_catalog/gams-drivers/fortranlib-quadratic-reference.f90) | Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically. |
 | I2 | `fmm2d-potentials` | [D1](../fpm_catalog/gams-drivers/fmm2d-laplace-reference.f90) | Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically. |
 | I2 | `formal-divergence` | [H1](../fpm_catalog/gams-drivers/formal-polynomial-reference.f90) | H1 divergence/gradient success is not a time-dependent PDE solution. Split volume-integration and PDE claims; I2 needs a real evolution/boundary problem, not relabeling the operator test. |
 | L6c | `rng-uniform` | [L6a21](../fpm_catalog/gams-drivers/rng-xoroshiro-reference.f90) | Existing golden-stream driver already checks seed/jump behavior. Review whether to expose that proof under L6c before writing a duplicate; cached-normal reseeding remains a separate retained failure. |

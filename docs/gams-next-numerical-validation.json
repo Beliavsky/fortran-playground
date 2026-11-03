@@ -1,0 +1,200 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "nonlin-bfgs-finite-differences-reference",
+      "source_revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+      "source_sha256": "b6ac39cf12bb04ed8f7cf799ce58fdcc60e7f0e3d95713878ed90d4df4316721",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-03T11:44:09.939551+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.19,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Finite-difference BFGS fits with no gradient callback: 15\nWorst normalized parameter / independent gradient errors:    8.96291E-06   5.97998E-06\nPASS nonlin-bfgs-finite-differences-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.022,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "nonlin-lsq-finite-differences-reference",
+      "source_revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+      "source_sha256": "924e2b6d33b8a10ff05ce7572e53cb59ca9be9738ebd981329d75d0c036de836",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-03T11:44:12.274672+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.474,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Total / exact-fit solves:    24   24\nIndependent stationarity Jacobian entries checked at starting points: 240\nMaximum normalized parameter error:   1.1102E-16\nMaximum normalized Jacobian finite-difference error:   4.1373E-11\nMaximum absolute J-transpose-residual component:   5.7772E-15\nPASS nonlin-lsq-finite-differences-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.027,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "rpn-real-cube-roots-reference",
+      "source_revision": "7708e4949f17511d81f4e7dd0271a500f0bc3631",
+      "source_sha256": "2f6fcc446d31397c97304a9997e80f6cd293cfd5cacf9f54fbed6ed638b8a593",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-03T11:44:14.378694+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.419,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Independent high precision reference points: 55\nPASS rpn-real-cube-roots-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.047,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "rpn-bessel-i0-values-reference",
+      "source_revision": "7708e4949f17511d81f4e7dd0271a500f0bc3631",
+      "source_sha256": "a66c31e820b011b3b0f994c8f8395506fac438577e88106af78f589bbc01662f",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-03T11:44:16.751742+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.38,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Independent high precision reference points: 29\nPASS rpn-bessel-i0-values-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.048,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fortranlib-linear-interpolation-reference",
+      "source_revision": "60fd094d3e137137ce00ec120b085e9b23ebf68b",
+      "source_sha256": "3c9af2e9c38ac63ede0927be8e7953281c9c2b57dd851a2245469729f0a0ce16",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-03T11:44:19.080371+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.389,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Irregular-grid scalar/vector queries including fill values: 207\nPASS fortranlib-linear-interpolation-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.033,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fortranlib-tabulated-integrals-reference",
+      "source_revision": "60fd094d3e137137ce00ec120b085e9b23ebf68b",
+      "source_sha256": "44a367e6274f92ade78d8bc6d7a002df81dbcec2ff17957ec2d3b8a222d7ecdc",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-03T11:44:21.921381+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.369,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Clipped piecewise-linear area intervals plus three full integrals: 198\nPASS fortranlib-tabulated-integrals-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.024,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-11-03T11:44:21.971925+00:00"
+}

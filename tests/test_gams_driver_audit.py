@@ -19,7 +19,8 @@ class GamsDriverAuditTests(unittest.TestCase):
         claims = {r['procedure_id'] for r in report['additional_class_claims']}
         self.assertFalse(unchecked & claims)
         self.assertIn('stdlib-pca', unchecked)
-        self.assertIn('nonlin-bfgs', claims)
+        self.assertIn('rng-uniform', claims)
+        self.assertNotIn('nonlin-bfgs', claims)
         self.assertEqual({r['status'] for r in report['unchecked_procedures']
                           if r['procedure_id'] == 'stdlib-pca'}, {'sandbox-limit'})
         self.assertEqual({r['status'] for r in report['unchecked_procedures']
@@ -48,8 +49,13 @@ class GamsDriverAuditTests(unittest.TestCase):
             self.copy_inputs(destination)
             p = destination/'fpm_catalog/gams-drivers.json'
             manifest = json.loads(p.read_text())
-            original = next(d for d in manifest['drivers'] if d['procedure_id'] == 'nonlin-bfgs')
-            manifest['drivers'].append(dict(original, id='audit-synthetic-proof', gams_code='G1b1a'))
+            original = next(d for d in manifest['drivers'] if d['procedure_id'] == 'nonlin-bfgs-finite-differences')
+            manifest['drivers'].remove(original)
+            p.write_text(json.dumps(manifest))
+            pending = audit(destination)
+            self.assertIn(('nonlin-bfgs-finite-differences', 'G1b1a'),
+                          {(r['procedure_id'], r['gams_code']) for r in pending['next_candidates']})
+            manifest['drivers'].append(original)
             p.write_text(json.dumps(manifest))
             p = destination/'fpm_catalog/gams.json'
             data = json.loads(p.read_text())
@@ -58,7 +64,7 @@ class GamsDriverAuditTests(unittest.TestCase):
             data['procedure_mappings'].append(record)
             p.write_text(json.dumps(data))
             report = audit(destination)
-            self.assertNotIn(('nonlin-bfgs', 'G1b1a'),
+            self.assertNotIn(('nonlin-bfgs-finite-differences', 'G1b1a'),
                              {(r['procedure_id'], r['gams_code']) for r in report['next_candidates']})
             new = next(r for r in report['unchecked_procedures'] if r['procedure_id'] == record['id'])
             self.assertEqual(new['status'], 'needs-triage')

@@ -16410,6 +16410,144 @@
         "relative_tolerance": 2e-10,
         "oracle": "independent sorted data, exact moments, Cartesian products or high precision distribution definitions"
       }
+    },
+    {
+      "id": "nonlin-bfgs-finite-differences-reference",
+      "name": "gams-nonlin-bfgs-finite-differences-reference",
+      "package_id": "nonlin",
+      "procedure_id": "nonlin-bfgs-finite-differences",
+      "gams_code": "G1b1a",
+      "problem_id": "nonlin-bfgs-finite-differences-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/nonlin-bfgs-finite-differences-reference.f90",
+      "revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+      "author_example": "examples/nonlin_bfgs_example.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/next-numerical-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 15 REAL64 minimizations: 12 coupled positive-definite quadratics of sizes 2..5 and three Rosenbrock starts. No gradient callback registered. Independent known minimizers, objective values, analytic stationarity, reported objective and termination flags checked. Parameter tolerance 5e-5, objective 2e-9 and gradient 2e-5. Not a benchmark or global-convergence claim.",
+      "validation_path": "docs/gams-next-numerical-validation.json",
+      "review_path": "docs/gams-next-numerical.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "oracle": "independent mathematical references and status checks"
+      }
+    },
+    {
+      "id": "nonlin-lsq-finite-differences-reference",
+      "name": "gams-nonlin-lsq-finite-differences-reference",
+      "package_id": "nonlin",
+      "procedure_id": "nonlin-lsq-finite-differences",
+      "gams_code": "G1b1a",
+      "problem_id": "nonlin-lsq-finite-differences-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/nonlin-lsq-finite-differences-reference.f90",
+      "revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+      "author_example": "examples/nonlin_least_squares_example.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/next-numerical-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 24 exact exponential fits with step factor 1 and no registered residual Jacobian. Same independent parameters, residual norm, returned residual consistency and analytic stationarity as the checked analytic-Jacobian family. Numerical parameter tolerance 2e-7; exact-fit residual 1e-8. Analytic callback invocation count must stay zero. Known default-step and noisy-fit failures remain unverified; see docs/gams-candidates/nonlin-least-squares/README.md.",
+      "validation_path": "docs/gams-next-numerical-validation.json",
+      "review_path": "docs/gams-next-numerical.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "oracle": "independent mathematical references and status checks"
+      }
+    },
+    {
+      "id": "rpn-real-cube-roots-reference",
+      "name": "gams-rpn-real-cube-roots-reference",
+      "package_id": "rpn-calculator-fortran",
+      "procedure_id": "rpn-real-cube-roots",
+      "gams_code": "C2",
+      "problem_id": "rpn-real-cube-roots-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/rpn-real-cube-roots-reference.f90",
+      "revision": "7708e4949f17511d81f4e7dd0271a500f0bc3631",
+      "author_example": "test/test.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/next-numerical-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 55 REAL64 values, independent 80/120 digit definitions and 18-digit constants. Signed dyadic cubes spanning input exponents -90..90, zero and noncubes; signs and cube reconstruction. Complex and subnormal roots excluded. Relative tolerance 2e-12 with floor 1e-100; no upstream source changes.",
+      "validation_path": "docs/gams-next-numerical-validation.json",
+      "review_path": "docs/gams-next-numerical.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "oracle": "independent mathematical references and status checks"
+      }
+    },
+    {
+      "id": "rpn-bessel-i0-values-reference",
+      "name": "gams-rpn-bessel-i0-values-reference",
+      "package_id": "rpn-calculator-fortran",
+      "procedure_id": "rpn-bessel-i0-values",
+      "gams_code": "C10",
+      "problem_id": "rpn-bessel-i0-values-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/rpn-bessel-i0-values-reference.f90",
+      "revision": "7708e4949f17511d81f4e7dd0271a500f0bc3631",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/next-numerical-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 29 REAL64 values, independent 80/120 digit definitions and 18-digit constants. Signed arguments through 64, zero, tiny dyadics and values either side of branch 15; positivity and evenness. Unscaled I0 only; overflow and scaled functions excluded. Relative tolerance 2e-12 with floor 1e-100; no upstream source changes.",
+      "validation_path": "docs/gams-next-numerical-validation.json",
+      "review_path": "docs/gams-next-numerical.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "oracle": "independent mathematical references and status checks"
+      }
+    },
+    {
+      "id": "fortranlib-linear-interpolation-reference",
+      "name": "gams-fortranlib-linear-interpolation-reference",
+      "package_id": "fortranlib",
+      "procedure_id": "fortranlib-linear-interpolation",
+      "gams_code": "E1",
+      "problem_id": "fortranlib-linear-interpolation-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/fortranlib-linear-interpolation-reference.f90",
+      "revision": "60fd094d3e137137ce00ec120b085e9b23ebf68b",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/next-numerical-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 207 scalar/vector queries over three irregular-grid data sets; exact knots, segment weights and explicit out-of-domain fill values. Independent segment interpolation, absolute-scaled tolerance 2e-12. Increasing knots and explicit nonfatal bounds mode only; descending/duplicate grids and other interpolants excluded. Existing catalog lib_array upstream fixes remain unchanged.",
+      "validation_path": "docs/gams-next-numerical-validation.json",
+      "review_path": "docs/gams-next-numerical.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "oracle": "independent mathematical references and status checks"
+      }
+    },
+    {
+      "id": "fortranlib-tabulated-integrals-reference",
+      "name": "gams-fortranlib-tabulated-integrals-reference",
+      "package_id": "fortranlib",
+      "procedure_id": "fortranlib-tabulated-integrals",
+      "gams_code": "H2",
+      "problem_id": "fortranlib-tabulated-integrals-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/fortranlib-tabulated-integrals-reference.f90",
+      "revision": "60fd094d3e137137ce00ec120b085e9b23ebf68b",
+      "author_example": null,
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/next-numerical-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 198 ordered intervals plus three full integrals on three five-knot irregular-grid data sets. Independent piecewise polynomial antiderivatives, clipped domain, same-segment/empty/outside/partial/full intervals and signed areas. Tolerance 2e-12*max(1,abs(reference)). Reversed limits and non-linear interpolation variants excluded. Uses existing pinned upstream lib_array integration fixes; no new package edits.",
+      "validation_path": "docs/gams-next-numerical-validation.json",
+      "review_path": "docs/gams-next-numerical.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "oracle": "independent mathematical references and status checks"
+      }
     }
   ]
 }

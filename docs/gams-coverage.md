@@ -2,7 +2,7 @@
 
 **The GAMS categories are not exhausted.** Some procedures already map to the deepest available GAMS class, but that does not mean all procedures or problem configurations in that class have been demonstrated.
 
-The selected catalog has 530 source-reviewed procedure records. 503 independently checked drivers cover 503 of those records and 19 of the 20 top-level GAMS classes. Among the 167 maintained classes used directly by procedure records, 1 still has no class-specific checked driver.
+The selected catalog has 536 source-reviewed procedure records. 509 independently checked drivers cover 509 of those records and 19 of the 20 top-level GAMS classes. Among the 167 maintained classes used directly by procedure records, 1 still has no class-specific checked driver.
 
 These counts concern the dedicated GAMS drivers. The ordinary precompiled-package demonstrations have their own build/run verification and are not counted as class-specific drivers here.
 
@@ -23,12 +23,12 @@ Procedure and driver counts include descendants. A procedure assigned to multipl
 | --- | --- | ---: | ---: | ---: | ---: |
 | [A](https://beliavsky.github.io/fortran-playground/gams/A/) | Arithmetic, error analysis | 13 | 12 | 10 | 10 |
 | [B](https://beliavsky.github.io/fortran-playground/gams/B/) | Number theory | 3 | 3 | 3 | 3 |
-| [C](https://beliavsky.github.io/fortran-playground/gams/C/) | Elementary and special functions | 12 | 55 | 51 | 51 |
+| [C](https://beliavsky.github.io/fortran-playground/gams/C/) | Elementary and special functions | 12 | 57 | 53 | 53 |
 | [D](https://beliavsky.github.io/fortran-playground/gams/D/) | Linear Algebra | 39 | 140 | 136 | 136 |
-| [E](https://beliavsky.github.io/fortran-playground/gams/E/) | Interpolation | 14 | 22 | 20 | 20 |
+| [E](https://beliavsky.github.io/fortran-playground/gams/E/) | Interpolation | 14 | 22 | 21 | 21 |
 | [F](https://beliavsky.github.io/fortran-playground/gams/F/) | Solution of nonlinear equations | 8 | 18 | 17 | 17 |
-| [G](https://beliavsky.github.io/fortran-playground/gams/G/) | Optimization | 22 | 25 | 25 | 25 |
-| [H](https://beliavsky.github.io/fortran-playground/gams/H/) | Differentiation, integration | 24 | 38 | 34 | 34 |
+| [G](https://beliavsky.github.io/fortran-playground/gams/G/) | Optimization | 22 | 27 | 27 | 27 |
+| [H](https://beliavsky.github.io/fortran-playground/gams/H/) | Differentiation, integration | 24 | 38 | 35 | 35 |
 | [I](https://beliavsky.github.io/fortran-playground/gams/I/) | Differential and integral equations | 27 | 31 | 26 | 26 |
 | [J](https://beliavsky.github.io/fortran-playground/gams/J/) | Integral transforms | 11 | 15 | 15 | 15 |
 | [K](https://beliavsky.github.io/fortran-playground/gams/K/) | Approximation | 19 | 7 | 6 | 6 |
@@ -58,7 +58,7 @@ These are the most specific classes currently recorded for procedures, not neces
 | [A6](https://beliavsky.github.io/fortran-playground/gams/A6/) | Change of representation | 3 | 2 | 2 |
 | [B](https://beliavsky.github.io/fortran-playground/gams/B/) | Number theory | 3 | 3 | 3 |
 | [C1](https://beliavsky.github.io/fortran-playground/gams/C1/) | Integer-valued functions (e.g., factorial, binomial coefficient, permutations, combinations, floor, ceiling) | 1 | 1 | 1 |
-| [C2](https://beliavsky.github.io/fortran-playground/gams/C2/) | Powers, roots, reciprocals | 3 | 2 | 2 |
+| [C2](https://beliavsky.github.io/fortran-playground/gams/C2/) | Powers, roots, reciprocals | 3 | 3 | 3 |
 | [C3a2](https://beliavsky.github.io/fortran-playground/gams/C3a2/) | Chebyshev, Legendre | 1 | 1 | 1 |
 | [C4](https://beliavsky.github.io/fortran-playground/gams/C4/) | Elementary transcendental functions | 1 | 1 | 1 |
 | [C4a](https://beliavsky.github.io/fortran-playground/gams/C4a/) | Trigonometric, inverse trigonometric | 1 | 1 | 1 |
@@ -73,7 +73,7 @@ These are the most specific classes currently recorded for procedures, not neces
 | [C7e](https://beliavsky.github.io/fortran-playground/gams/C7e/) | Incomplete gamma | 7 | 6 | 6 |
 | [C7f](https://beliavsky.github.io/fortran-playground/gams/C7f/) | Incomplete beta | 1 | 1 | 1 |
 | [C8c](https://beliavsky.github.io/fortran-playground/gams/C8c/) | Dawson's integral | 1 | 1 | 1 |
-| [C10](https://beliavsky.github.io/fortran-playground/gams/C10/) | Bessel functions | 2 | 1 | 1 |
+| [C10](https://beliavsky.github.io/fortran-playground/gams/C10/) | Bessel functions | 2 | 2 | 2 |
 | [C10b1](https://beliavsky.github.io/fortran-playground/gams/C10b1/) | Real argument, integer order | 3 | 3 | 3 |
 | [C10d](https://beliavsky.github.io/fortran-playground/gams/C10d/) | Airy and Scorer functions | 1 | 1 | 1 |
 | [C14](https://beliavsky.github.io/fortran-playground/gams/C14/) | Elliptic integrals | 1 | 1 | 1 |
@@ -120,7 +120,7 @@ These are the most specific classes currently recorded for procedures, not neces
 | [D9a1](https://beliavsky.github.io/fortran-playground/gams/D9a1/) | Least squares (L_2) solution | 12 | 11 | 11 |
 | [D9b1](https://beliavsky.github.io/fortran-playground/gams/D9b1/) | Least squares (L_2) solution | 2 | 2 | 2 |
 | [D9c](https://beliavsky.github.io/fortran-playground/gams/D9c/) | Generalized inverses | 3 | 3 | 3 |
-| [E1](https://beliavsky.github.io/fortran-playground/gams/E1/) | Univariate data (curve fitting) | 2 | 1 | 1 |
+| [E1](https://beliavsky.github.io/fortran-playground/gams/E1/) | Univariate data (curve fitting) | 2 | 2 | 2 |
 | [E1a](https://beliavsky.github.io/fortran-playground/gams/E1a/) | Polynomial splines (piecewise polynomials) | 9 | 8 | 8 |
 | [E1b](https://beliavsky.github.io/fortran-playground/gams/E1b/) | Polynomials | 2 | 2 | 2 |
 | [E2](https://beliavsky.github.io/fortran-playground/gams/E2/) | Multivariate data (surface fitting) | 2 | 1 | 1 |
@@ -134,7 +134,7 @@ These are the most specific classes currently recorded for procedures, not neces
 | [F2](https://beliavsky.github.io/fortran-playground/gams/F2/) | System of equations | 4 | 4 | 4 |
 | [G1a1a](https://beliavsky.github.io/fortran-playground/gams/G1a1a/) | User provides no derivatives | 1 | 1 | 1 |
 | [G1b](https://beliavsky.github.io/fortran-playground/gams/G1b/) | Multivariate | 3 | 3 | 3 |
-| [G1b1a](https://beliavsky.github.io/fortran-playground/gams/G1b1a/) | User provides no derivatives | 4 | 2 | 2 |
+| [G1b1a](https://beliavsky.github.io/fortran-playground/gams/G1b1a/) | User provides no derivatives | 4 | 4 | 4 |
 | [G1b1b](https://beliavsky.github.io/fortran-playground/gams/G1b1b/) | User provides first derivatives | 6 | 6 | 6 |
 | [G2](https://beliavsky.github.io/fortran-playground/gams/G2/) | Constrained | 2 | 2 | 2 |
 | [G2a](https://beliavsky.github.io/fortran-playground/gams/G2a/) | Linear programming | 1 | 1 | 1 |
@@ -143,7 +143,7 @@ These are the most specific classes currently recorded for procedures, not neces
 | [G2h3b1b](https://beliavsky.github.io/fortran-playground/gams/G2h3b1b/) | User provides first derivatives of function and constraints | 4 | 4 | 4 |
 | [G2i](https://beliavsky.github.io/fortran-playground/gams/G2i/) | Global solution to nonconvex problems | 3 | 3 | 3 |
 | [H1](https://beliavsky.github.io/fortran-playground/gams/H1/) | Numerical differentiation | 12 | 11 | 11 |
-| [H2](https://beliavsky.github.io/fortran-playground/gams/H2/) | Quadrature (numerical evaluation of definite integrals) | 3 | 1 | 1 |
+| [H2](https://beliavsky.github.io/fortran-playground/gams/H2/) | Quadrature (numerical evaluation of definite integrals) | 3 | 2 | 2 |
 | [H2a1a1](https://beliavsky.github.io/fortran-playground/gams/H2a1a1/) | Automatic (user need only specify required accuracy) | 3 | 3 | 3 |
 | [H2a1b2](https://beliavsky.github.io/fortran-playground/gams/H2a1b2/) | Nonautomatic | 4 | 4 | 4 |
 | [H2a2a1](https://beliavsky.github.io/fortran-playground/gams/H2a2a1/) | Automatic (user need only specify required accuracy) | 5 | 5 | 5 |

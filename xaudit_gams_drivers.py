@@ -119,6 +119,9 @@ def markdown(report):
         'There is no requirement to fill a batch of ten.', '',
         '| Priority | Package / mapped procedure | GAMS | New coverage and independent oracle |',
         '| ---: | --- | --- | --- |']
+    if not report['next_candidates']:
+        lines = lines[:-2]+['All candidates from this planning review now have checked drivers. '
+            'Review the remaining blocked records and cross-class claims before ranking another batch.']
     all_rows = {r['procedure_id']: r for r in report['unchecked_procedures']+report['additional_class_claims']}
     for item in report['next_candidates']:
         record = all_rows[item['procedure_id']]

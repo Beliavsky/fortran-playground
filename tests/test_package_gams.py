@@ -254,7 +254,7 @@ class PackageGamsTests(unittest.TestCase):
     def test_g1_procedures_and_verified_drivers(self):
         data = gams_data()
         mappings = g1_procedures(data)
-        self.assertEqual(len(mappings), 12)
+        self.assertEqual(len(mappings), 14)
         self.assertEqual(len({m['package_id'] for m in mappings}), 8)
         self.assertEqual(data['detailed_classes']['G1a']['parent'], 'G1')
         self.assertEqual(data['detailed_classes']['G1b']['parent'], 'G1')
@@ -265,7 +265,8 @@ class PackageGamsTests(unittest.TestCase):
         self.assertEqual({d['id'] for d in driver_data() if d['procedure_id'] in {m['id'] for m in mappings}},
                          {'fmin-sine', 'minpack-bard', 'libdogleg-bard', 'nonlin-rosenbrock-nm',
                           'nonlin-rosenbrock-bfgs', 'nlopt-rosenbrock-lbfgs', 'fortimize-nelder-reference',
-                          'minpack-lmder-reference', 'nonlin-lsq-jacobian-reference', 'seiscope-lbfgs-reference', 'fortimize-gradient-reference', 'neural-affine-reference'})
+                          'minpack-lmder-reference', 'nonlin-lsq-jacobian-reference', 'seiscope-lbfgs-reference', 'fortimize-gradient-reference', 'neural-affine-reference',
+                          'nonlin-bfgs-finite-differences-reference', 'nonlin-lsq-finite-differences-reference'})
         tree = data['detailed_classes']
         self.assertEqual(tree['G1b1b']['parent'], 'G1b1')
         self.assertEqual(tree['G1b1']['parent'], 'G1b')
@@ -273,7 +274,8 @@ class PackageGamsTests(unittest.TestCase):
         self.assertEqual(by_id['fmin-scalar']['gams_codes'], ['G1a1a'])
         self.assertEqual(by_id['nonlin-nelder-mead']['gams_codes'], ['G1b1a'])
         self.assertEqual(by_id['nlopt-lbfgs']['gams_codes'], ['G1b1b'])
-        self.assertEqual(by_id['nonlin-bfgs']['gams_codes'], ['G1b1a', 'G1b1b'])
+        self.assertEqual(by_id['nonlin-bfgs']['gams_codes'], ['G1b1b'])
+        self.assertEqual(by_id['nonlin-bfgs-finite-differences']['gams_codes'], ['G1b1a'])
         self.assertEqual((ROOT / PILOT_REPORT).read_text(encoding='utf-8'), g1_review_text())
         examples = json.loads((ROOT / 'site/fpm/examples.json').read_text(encoding='utf-8'))
         for driver in driver_data():
@@ -644,9 +646,11 @@ class PackageGamsTests(unittest.TestCase):
             record = records[d['procedure_id']]
             self.assertEqual(record['driver_id'], d['id'])
             self.assertEqual(class_evidence(class_tree(data),d['gams_code'],[record],[d])['status'], 'verified')
-        for code,rid in [('C2','rpn-elementary'),('C10','rpn-special')]:
+        for code,rid,old in [('C2','rpn-real-cube-roots','rpn-elementary'),
+                             ('C10','rpn-bessel-i0-values','rpn-special')]:
+            self.assertNotIn(code, records[old]['gams_codes'])
             self.assertEqual(class_evidence(class_tree(data),code,[records[rid]],
-                                           list(drivers.values()))['status'], 'source-supported')
+                                           list(drivers.values()))['status'], 'verified')
         text = circuits_beta_review_text()
         self.assertEqual((ROOT/CIRCUITS_BETA_REPORT).read_text(encoding='utf-8'), text)
         self.assertIn('composition is supplied by the driver', text)
@@ -706,7 +710,11 @@ class PackageGamsTests(unittest.TestCase):
             record = records[d['procedure_id']]
             self.assertEqual(record['driver_id'], d['id'])
             self.assertEqual(class_evidence(class_tree(data),d['gams_code'],[record],[d])['status'], 'verified')
-        for code,rid in [('E1','fortranlib-numerics'),('H2','fortranlib-numerics'),('N6','fortran-utils-splines')]:
+        for code,rid in [('E1','fortranlib-linear-interpolation'),('H2','fortranlib-tabulated-integrals')]:
+            self.assertNotIn(code, records['fortranlib-numerics']['gams_codes'])
+            self.assertEqual(class_evidence(class_tree(data),code,[records[rid]],
+                                           list(drivers.values()))['status'], 'verified')
+        for code,rid in [('N6','fortran-utils-splines')]:
             self.assertEqual(class_evidence(class_tree(data),code,[records[rid]],
                                            list(drivers.values()))['status'], 'source-supported')
         text = roots_splines_quadrature_review_text()
@@ -3394,7 +3402,10 @@ class PackageGamsTests(unittest.TestCase):
             self.assertEqual(class_evidence(class_tree(data),code,[record],[d])['status'],'verified')
         d = drivers['nonlin-lsq-jacobian-reference']
         record = records[d['procedure_id']]
-        self.assertEqual(class_evidence(class_tree(data),'G1b1a',[record],[d])['status'],'source-supported')
+        self.assertNotIn('G1b1a', record['gams_codes'])
+        finite = drivers['nonlin-lsq-finite-differences-reference']
+        self.assertEqual(class_evidence(class_tree(data),'G1b1a',
+                                       [records[finite['procedure_id']]],[finite])['status'],'verified')
         self.assertEqual(d['checks']['nonlinear_fits'],24)
         self.assertEqual(d['checks']['starting_jacobian_entries'],240)
         self.assertEqual(d['checks']['initial_step_bound_factor'],1)
@@ -4372,8 +4383,8 @@ class PackageGamsTests(unittest.TestCase):
         self.assertEqual(coverage['procedure_count'], len(data['procedure_mappings']))
         self.assertEqual(coverage['driver_count'], len(driver_data(data=data)))
         by_class = {r['code']: r for r in coverage['procedure_classes']}
-        self.assertIn('nonlin-bfgs', by_class['G1b1a']['procedure_ids'])
-        self.assertNotIn('nonlin-bfgs', by_class['G1b1a']['checked_procedure_ids'])
+        self.assertNotIn('nonlin-bfgs', by_class['G1b1a']['procedure_ids'])
+        self.assertIn('nonlin-bfgs-finite-differences', by_class['G1b1a']['checked_procedure_ids'])
         self.assertIn('nonlin-bfgs', by_class['G1b1b']['checked_procedure_ids'])
         self.assertEqual(set(by_class['J1a2']['driver_ids']), {
             'fftpack-complex-transform','kissfft-f-complex-transform','nafpack-fft-reference'})

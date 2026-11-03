@@ -17150,12 +17150,11 @@
         "module": "nonlin",
         "procedure": "bfgs%solve",
         "gams_codes": [
-          "G1b1a",
           "G1b1b"
         ],
         "review_level": "source-reviewed",
         "derivatives": "optional user gradient; finite-difference fallback",
-        "notes": "User gradients are registered with fcnnvar_helper%set_gradient_fcn. G1b1a applies to finite-difference mode; G1b1b applies when the user supplies the gradient/Jacobian. The driver, where present, identifies its selected configuration.",
+        "notes": "User gradients are registered with fcnnvar_helper%set_gradient_fcn. G1b1a applies to finite-difference mode; G1b1b applies when the user supplies the gradient/Jacobian. The driver, where present, identifies its selected configuration. The G1b1a capability is now separately recorded and checked as nonlin-bfgs-finite-differences.",
         "evidence": [
           {
             "path": "src/nonlin_optimize.f90",
@@ -17188,12 +17187,11 @@
         "module": "nonlin",
         "procedure": "least_squares_solver%solve",
         "gams_codes": [
-          "G1b1a",
           "G1b1b"
         ],
         "review_level": "source-reviewed",
         "derivatives": "optional user residual Jacobian",
-        "notes": "The unconstrained least_squares_solver is mapped; constrained_least_squares_solver is a distinct type. For smooth nonlinear least squares, the user residual Jacobian supplies first-derivative information for the squared-residual objective; this is not a general scalar-objective gradient interface. G1b1a applies to finite-difference mode; G1b1b applies when the user supplies the gradient/Jacobian. The driver, where present, identifies its selected configuration.",
+        "notes": "The unconstrained least_squares_solver is mapped; constrained_least_squares_solver is a distinct type. For smooth nonlinear least squares, the user residual Jacobian supplies first-derivative information for the squared-residual objective; this is not a general scalar-objective gradient interface. G1b1a applies to finite-difference mode; G1b1b applies when the user supplies the gradient/Jacobian. The driver, where present, identifies its selected configuration. The G1b1a capability is now separately recorded and checked as nonlin-lsq-finite-differences.",
         "evidence": [
           {
             "path": "src/nonlin_least_squares.f90",
@@ -17294,6 +17292,65 @@
           }
         ],
         "driver_id": "nonlin-roots-newton"
+      },
+      {
+        "id": "nonlin-bfgs-finite-differences",
+        "package_id": "nonlin",
+        "revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+        "module": "nonlin",
+        "procedure": "bfgs%solve",
+        "gams_codes": [
+          "G1b1a"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "No user derivative callback registered; package finite differences.",
+        "notes": "15 REAL64 minimizations: 12 coupled positive-definite quadratics of sizes 2..5 and three Rosenbrock starts. No gradient callback registered. Independent known minimizers, objective values, analytic stationarity, reported objective and termination flags checked. Parameter tolerance 5e-5, objective 2e-9 and gradient 2e-5. Not a benchmark or global-convergence claim.",
+        "evidence": [
+          {
+            "path": "src/nonlin_optimize.f90",
+            "line": 584,
+            "sha256": "51aca88be20946a42cf59c9ec833a481e3f15774eb13d19f5a3e859a41c3cb4d"
+          },
+          {
+            "path": "src/nonlin_multi_var.f90",
+            "line": 204,
+            "sha256": "d7d000db98bbe779d13dc4e643085711fef6dd817b1127265c05afb50deb49c4"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "examples/nonlin_bfgs_example.f90",
+            "sha256": "d1f6750301ffc98d17659eee49729ac77e78df168036eeb76789229f00e71880"
+          }
+        ],
+        "driver_id": "nonlin-bfgs-finite-differences-reference"
+      },
+      {
+        "id": "nonlin-lsq-finite-differences",
+        "package_id": "nonlin",
+        "revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+        "module": "nonlin",
+        "procedure": "least_squares_solver%solve",
+        "gams_codes": [
+          "G1b1a"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "No user derivative callback registered; package finite differences.",
+        "notes": "24 exact exponential fits with step factor 1 and no registered residual Jacobian. Same independent parameters, residual norm, returned residual consistency and analytic stationarity as the checked analytic-Jacobian family. Numerical parameter tolerance 2e-7; exact-fit residual 1e-8. Analytic callback invocation count must stay zero. Known default-step and noisy-fit failures remain unverified; see docs/gams-candidates/nonlin-least-squares/README.md.",
+        "evidence": [
+          {
+            "path": "src/nonlin_least_squares.f90",
+            "line": 141,
+            "sha256": "cca74546680f2599f994d89415279792ca6b22a56ea5f4e6749bb72aa85b3cb5"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "examples/nonlin_least_squares_example.f90",
+            "sha256": "5b3c6e6e1a98864ddc12d1faca3132372f9a2958ba88cf340dc2af5dfcfc7d35"
+          }
+        ],
+        "driver_id": "nonlin-lsq-finite-differences-reference"
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"
@@ -25810,12 +25867,11 @@
         "module": "funcs / hyper",
         "procedure": "cuberoot / sinc / sech",
         "gams_codes": [
-          "C2",
           "C4"
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Numerical routines from the RPN calculator, called directly without its interactive interface. The checked main verifies a negative cube root, sinc and sech at zero, beta(2,3), modified Bessel I0 at zero, and integer gcd/lcm against known results. A checksum-guarded manifest correction sets source-form=default so .f and .f90 files use their respective forms. No numerical sources are changed. The tests do not establish accuracy over full argument ranges or validate the complete calculator. Dedicated C4 consumer verifies real sinc against a 64-term independent series and sech against a stable exponential formula for 133 real arguments, including zero and signed near-zero values. Finite values, symmetry, range and scalar/array agreement are checked. This driver does not verify the separate C2 cube-root mapping or complex overloads.",
+        "notes": "Numerical routines from the RPN calculator, called directly without its interactive interface. The checked main verifies a negative cube root, sinc and sech at zero, beta(2,3), modified Bessel I0 at zero, and integer gcd/lcm against known results. A checksum-guarded manifest correction sets source-form=default so .f and .f90 files use their respective forms. No numerical sources are changed. The tests do not establish accuracy over full argument ranges or validate the complete calculator. Dedicated C4 consumer verifies real sinc against a 64-term independent series and sech against a stable exponential formula for 133 real arguments, including zero and signed near-zero values. Finite values, symmetry, range and scalar/array agreement are checked. This driver does not verify the separate C2 cube-root mapping or complex overloads. The C2 capability is now separately recorded and checked as rpn-real-cube-roots.",
         "evidence": [
           {
             "path": "src/funcs.f90",
@@ -25843,12 +25899,11 @@
         "module": "fgamma / i0",
         "procedure": "beta / besi0",
         "gams_codes": [
-          "C7",
-          "C10"
+          "C7"
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Numerical routines from the RPN calculator, called directly without its interactive interface. The checked main verifies a negative cube root, sinc and sech at zero, beta(2,3), modified Bessel I0 at zero, and integer gcd/lcm against known results. A checksum-guarded manifest correction sets source-form=default so .f and .f90 files use their respective forms. No numerical sources are changed. The tests do not establish accuracy over full argument ranges or validate the complete calculator. Dedicated C7 consumer verifies 128 positive integer/half-integer beta pairs with independent factorial identities, plus symmetry and both one-step recurrences (512 evaluations). Finite positive values and relative error within 2e-13 are required. C10 Bessel functions, complex beta, poles, large arguments and overflow handling are outside this driver.",
+        "notes": "Numerical routines from the RPN calculator, called directly without its interactive interface. The checked main verifies a negative cube root, sinc and sech at zero, beta(2,3), modified Bessel I0 at zero, and integer gcd/lcm against known results. A checksum-guarded manifest correction sets source-form=default so .f and .f90 files use their respective forms. No numerical sources are changed. The tests do not establish accuracy over full argument ranges or validate the complete calculator. Dedicated C7 consumer verifies 128 positive integer/half-integer beta pairs with independent factorial identities, plus symmetry and both one-step recurrences (512 evaluations). Finite positive values and relative error within 2e-13 are required. C10 Bessel functions, complex beta, poles, large arguments and overflow handling are outside this driver. The C10 capability is now separately recorded and checked as rpn-bessel-i0-values.",
         "evidence": [
           {
             "path": "src/specfun/gamma.f90",
@@ -25885,6 +25940,55 @@
         ],
         "author_examples": [],
         "driver_id": "rpn-gcd-lcm-reference"
+      },
+      {
+        "id": "rpn-real-cube-roots",
+        "package_id": "rpn-calculator-fortran",
+        "revision": "7708e4949f17511d81f4e7dd0271a500f0bc3631",
+        "module": "funcs",
+        "procedure": "cuberoot (real64)",
+        "gams_codes": [
+          "C2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "55 REAL64 values, independent 80/120 digit definitions and 18-digit constants. Signed dyadic cubes spanning input exponents -90..90, zero and noncubes; signs and cube reconstruction. Complex and subnormal roots excluded. Relative tolerance 2e-12 with floor 1e-100; no upstream source changes.",
+        "evidence": [
+          {
+            "path": "src/funcs.f90",
+            "sha256": "45efe8c3beb31e519578af744301ddf25d90a8942432fd4def62ba3cc08d7084",
+            "line": 229
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "test/test.f90",
+            "sha256": "e9475b7ba78c098109893540c4e515d2261d972ecf291745563ee64d67b4f2bc"
+          }
+        ],
+        "driver_id": "rpn-real-cube-roots-reference"
+      },
+      {
+        "id": "rpn-bessel-i0-values",
+        "package_id": "rpn-calculator-fortran",
+        "revision": "7708e4949f17511d81f4e7dd0271a500f0bc3631",
+        "module": "funcs",
+        "procedure": "besi0 (real64)",
+        "gams_codes": [
+          "C10"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "29 REAL64 values, independent 80/120 digit definitions and 18-digit constants. Signed arguments through 64, zero, tiny dyadics and values either side of branch 15; positivity and evenness. Unscaled I0 only; overflow and scaled functions excluded. Relative tolerance 2e-12 with floor 1e-100; no upstream source changes.",
+        "evidence": [
+          {
+            "path": "src/specfun/i0.f",
+            "sha256": "b051aff4b48973d3e189f43e567aa2cc0c0484c4693cbf4c3266d79aa1c03a88",
+            "line": 1
+          }
+        ],
+        "author_examples": [],
+        "driver_id": "rpn-bessel-i0-values-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T00:50:30.284213+00:00"
@@ -30129,13 +30233,11 @@
         "module": "lib_algebra / lib_array",
         "procedure": "quadratic / linspace / integral / interp1d",
         "gams_codes": [
-          "E1",
-          "F1",
-          "H2"
+          "F1"
         ],
         "review_level": "source-reviewed",
         "derivatives": "not applicable",
-        "notes": "Selected base_types, lib_algebra and lib_array modules, using the pinned revision immediately before the upstream FPM test suite introduced source symlinks. Nine checksum-guarded edits bring lib_array exactly to upstream commit 844611933cba06d71490033e68b355f6f0ff704f, retaining its integration-limit, descending histogram-bin and precision fixes. The other selected modules are unchanged. The ordinary archive policy remains unchanged. A synthetic FPM wrapper uses the already generated Fortran sources, not the Python templates. The checked consumer integrates the affine function 2*x+1 on [0,1], checks linear interpolation at an interior off-grid point, and solves x**2-5*x+6 against the exact roots 2 and 3. Additional checks cover integration limits outside the tabulated range, descending histogram bins and bin-center precision; the expanded example fails with the older unpatched array module and passes with the upstream fixes. GAMS F1 denotes the quadratic solver, not a general iterative root finder. Random sampling, statistics, geometry, HDF5/FITS bindings and other modules are not selected; the example does not validate every routine in the included modules. Dedicated F1 consumer verifies 84 real64 quadratic calls from 21 distinct dyadic root pairs and four signed coefficient scales, comparing sorted roots, root sums/products and normalized residuals. Uses only the ordinary quadratic API, not Pascal/reduced variants. Repeated/complex roots, zero leading coefficient, severe cancellation and extreme scaling are not verified. The separate E1 interpolation and H2 integration mappings remain source-supported.",
+        "notes": "Selected base_types, lib_algebra and lib_array modules, using the pinned revision immediately before the upstream FPM test suite introduced source symlinks. Nine checksum-guarded edits bring lib_array exactly to upstream commit 844611933cba06d71490033e68b355f6f0ff704f, retaining its integration-limit, descending histogram-bin and precision fixes. The other selected modules are unchanged. The ordinary archive policy remains unchanged. A synthetic FPM wrapper uses the already generated Fortran sources, not the Python templates. The checked consumer integrates the affine function 2*x+1 on [0,1], checks linear interpolation at an interior off-grid point, and solves x**2-5*x+6 against the exact roots 2 and 3. Additional checks cover integration limits outside the tabulated range, descending histogram bins and bin-center precision; the expanded example fails with the older unpatched array module and passes with the upstream fixes. GAMS F1 denotes the quadratic solver, not a general iterative root finder. Random sampling, statistics, geometry, HDF5/FITS bindings and other modules are not selected; the example does not validate every routine in the included modules. Dedicated F1 consumer verifies 84 real64 quadratic calls from 21 distinct dyadic root pairs and four signed coefficient scales, comparing sorted roots, root sums/products and normalized residuals. Uses only the ordinary quadratic API, not Pascal/reduced variants. Repeated/complex roots, zero leading coefficient, severe cancellation and extreme scaling are not verified. The separate E1 interpolation and H2 integration mappings remain source-supported. The E1 capability is now separately recorded and checked as fortranlib-linear-interpolation. The H2 capability is now separately recorded and checked as fortranlib-tabulated-integrals.",
         "evidence": [
           {
             "path": "src/lib_algebra.f90",
@@ -30150,6 +30252,50 @@
         ],
         "author_examples": [],
         "driver_id": "fortranlib-quadratic-reference"
+      },
+      {
+        "id": "fortranlib-linear-interpolation",
+        "package_id": "fortranlib",
+        "revision": "60fd094d3e137137ce00ec120b085e9b23ebf68b",
+        "module": "lib_array",
+        "procedure": "interp1d (real64 scalar and array)",
+        "gams_codes": [
+          "E1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "207 scalar/vector queries over three irregular-grid data sets; exact knots, segment weights and explicit out-of-domain fill values. Independent segment interpolation, absolute-scaled tolerance 2e-12. Increasing knots and explicit nonfatal bounds mode only; descending/duplicate grids and other interpolants excluded. Existing catalog lib_array upstream fixes remain unchanged.",
+        "evidence": [
+          {
+            "path": "src/lib_array.f90",
+            "sha256": "d1c2f979d1498c0e505632c02df66ff5ad240a733d00fa71ab59725d71f458ac",
+            "line": 1
+          }
+        ],
+        "author_examples": [],
+        "driver_id": "fortranlib-linear-interpolation-reference"
+      },
+      {
+        "id": "fortranlib-tabulated-integrals",
+        "package_id": "fortranlib",
+        "revision": "60fd094d3e137137ce00ec120b085e9b23ebf68b",
+        "module": "lib_array",
+        "procedure": "integral (real64 full and subset)",
+        "gams_codes": [
+          "H2"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not applicable",
+        "notes": "198 ordered intervals plus three full integrals on three five-knot irregular-grid data sets. Independent piecewise polynomial antiderivatives, clipped domain, same-segment/empty/outside/partial/full intervals and signed areas. Tolerance 2e-12*max(1,abs(reference)). Reversed limits and non-linear interpolation variants excluded. Uses existing pinned upstream lib_array integration fixes; no new package edits.",
+        "evidence": [
+          {
+            "path": "src/lib_array.f90",
+            "sha256": "d1c2f979d1498c0e505632c02df66ff5ad240a733d00fa71ab59725d71f458ac",
+            "line": 1
+          }
+        ],
+        "author_examples": [],
+        "driver_id": "fortranlib-tabulated-integrals-reference"
       }
     ],
     "stars_updated_at": "2026-10-29T19:03:06.361094+00:00"

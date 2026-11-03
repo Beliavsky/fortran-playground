@@ -8,7 +8,7 @@ This report assesses each package/class pair, including inherited parent classes
 
 When a driver cannot be created, inspect the pinned implementation and author examples. Narrow or remove a classification that is unsupported; do not substitute an unrelated default example as evidence. Record missing dependencies, sandbox limits and upstream defects separately in the procedure or package review notes. A sandbox failure alone does not disprove an algorithm.
 
-Counts refer to package/class pairs and include parents: 895 verified, 81 source-supported, 227 uncertain.
+Counts refer to package/class pairs and include parents: 901 verified, 75 source-supported, 227 uncertain.
 
 ## Mappings requiring source review
 
@@ -404,9 +404,9 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [fortran_function_parser / fortran-function-parser-evaluate](https://beliavsky.github.io/fortran-playground/gams/packages/fortran_function_parser/#fortran-function-parser-evaluate) | N3 | verified |
 | [fortran_test_helper / fortran-test-helper-create-r64-array](https://beliavsky.github.io/fortran-playground/gams/packages/fortran_test_helper/#fortran-test-helper-create-r64-array) | L6a21 | source-supported |
 | [fortran_vector / fortran-vector-storage](https://beliavsky.github.io/fortran-playground/gams/packages/fortran_vector/#fortran-vector-storage) | N4 | verified |
-| [fortranlib / fortranlib-numerics](https://beliavsky.github.io/fortran-playground/gams/packages/fortranlib/#fortranlib-numerics) | E1 | source-supported |
+| [fortranlib / fortranlib-linear-interpolation](https://beliavsky.github.io/fortran-playground/gams/packages/fortranlib/#fortranlib-linear-interpolation) | E1 | verified |
 | [fortranlib / fortranlib-numerics](https://beliavsky.github.io/fortran-playground/gams/packages/fortranlib/#fortranlib-numerics) | F1 | verified |
-| [fortranlib / fortranlib-numerics](https://beliavsky.github.io/fortran-playground/gams/packages/fortranlib/#fortranlib-numerics) | H2 | source-supported |
+| [fortranlib / fortranlib-tabulated-integrals](https://beliavsky.github.io/fortran-playground/gams/packages/fortranlib/#fortranlib-tabulated-integrals) | H2 | verified |
 | [fortsa / fortsa-acvf](https://beliavsky.github.io/fortran-playground/gams/packages/fortsa/#fortsa-acvf) | L10a2a | verified |
 | [forwarddiff / forwarddiff-derivative](https://beliavsky.github.io/fortran-playground/gams/packages/forwarddiff/#forwarddiff-derivative) | H1 | verified |
 | [friction / friction-fit](https://beliavsky.github.io/fortran-playground/gams/packages/friction/#friction-fit) | L8 | source-supported |
@@ -524,11 +524,11 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [nlesolver-fortran / nlesolver-fortran-nlesolver-type](https://beliavsky.github.io/fortran-playground/gams/packages/nlesolver-fortran/#nlesolver-fortran-nlesolver-type) | F2 | verified |
 | [nlopt-f / nlopt-lbfgs](https://beliavsky.github.io/fortran-playground/gams/packages/nlopt-f/#nlopt-lbfgs) | G1b1b | verified |
 | [nlopt-f / nlopt-lbfgs-bounds](https://beliavsky.github.io/fortran-playground/gams/packages/nlopt-f/#nlopt-lbfgs-bounds) | G2h1a2 | verified |
-| [nonlin / nonlin-bfgs](https://beliavsky.github.io/fortran-playground/gams/packages/nonlin/#nonlin-bfgs) | G1b1a | source-supported |
 | [nonlin / nonlin-bfgs](https://beliavsky.github.io/fortran-playground/gams/packages/nonlin/#nonlin-bfgs) | G1b1b | verified |
+| [nonlin / nonlin-bfgs-finite-differences](https://beliavsky.github.io/fortran-playground/gams/packages/nonlin/#nonlin-bfgs-finite-differences) | G1b1a | verified |
 | [nonlin / nonlin-brent-solver](https://beliavsky.github.io/fortran-playground/gams/packages/nonlin/#nonlin-brent-solver) | F1b | verified |
-| [nonlin / nonlin-least-squares](https://beliavsky.github.io/fortran-playground/gams/packages/nonlin/#nonlin-least-squares) | G1b1a | source-supported |
 | [nonlin / nonlin-least-squares](https://beliavsky.github.io/fortran-playground/gams/packages/nonlin/#nonlin-least-squares) | G1b1b | verified |
+| [nonlin / nonlin-lsq-finite-differences](https://beliavsky.github.io/fortran-playground/gams/packages/nonlin/#nonlin-lsq-finite-differences) | G1b1a | verified |
 | [nonlin / nonlin-nelder-mead](https://beliavsky.github.io/fortran-playground/gams/packages/nonlin/#nonlin-nelder-mead) | G1b1a | verified |
 | [nonlin / nonlin-newton-1var](https://beliavsky.github.io/fortran-playground/gams/packages/nonlin/#nonlin-newton-1var) | F1b | verified |
 | [nonlin / nonlin-newton-solver](https://beliavsky.github.io/fortran-playground/gams/packages/nonlin/#nonlin-newton-solver) | F2 | verified |
@@ -610,11 +610,11 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [roots-fortran / roots-fortran-itp-bracketed](https://beliavsky.github.io/fortran-playground/gams/packages/roots-fortran/#roots-fortran-itp-bracketed) | F1b | verified |
 | [roots-fortran / roots-fortran-ridders-bracketed](https://beliavsky.github.io/fortran-playground/gams/packages/roots-fortran/#roots-fortran-ridders-bracketed) | F1b | verified |
 | [roots-fortran / roots-fortran-toms748-bracketed](https://beliavsky.github.io/fortran-playground/gams/packages/roots-fortran/#roots-fortran-toms748-bracketed) | F1b | source-supported |
-| [rpn-calculator-fortran / rpn-elementary](https://beliavsky.github.io/fortran-playground/gams/packages/rpn-calculator-fortran/#rpn-elementary) | C2 | source-supported |
+| [rpn-calculator-fortran / rpn-bessel-i0-values](https://beliavsky.github.io/fortran-playground/gams/packages/rpn-calculator-fortran/#rpn-bessel-i0-values) | C10 | verified |
 | [rpn-calculator-fortran / rpn-elementary](https://beliavsky.github.io/fortran-playground/gams/packages/rpn-calculator-fortran/#rpn-elementary) | C4 | verified |
 | [rpn-calculator-fortran / rpn-integer](https://beliavsky.github.io/fortran-playground/gams/packages/rpn-calculator-fortran/#rpn-integer) | B | verified |
+| [rpn-calculator-fortran / rpn-real-cube-roots](https://beliavsky.github.io/fortran-playground/gams/packages/rpn-calculator-fortran/#rpn-real-cube-roots) | C2 | verified |
 | [rpn-calculator-fortran / rpn-special](https://beliavsky.github.io/fortran-playground/gams/packages/rpn-calculator-fortran/#rpn-special) | C7 | verified |
-| [rpn-calculator-fortran / rpn-special](https://beliavsky.github.io/fortran-playground/gams/packages/rpn-calculator-fortran/#rpn-special) | C10 | source-supported |
 | [ryu_fortran / ryu-fortran-d2shortest](https://beliavsky.github.io/fortran-playground/gams/packages/ryu_fortran/#ryu-fortran-d2shortest) | A6 | verified |
 | [scalapackfx / scalapackfx-symmetric-eigenproblem](https://beliavsky.github.io/fortran-playground/gams/packages/scalapackfx/#scalapackfx-symmetric-eigenproblem) | D4a1 | verified |
 | [scanner / scanner-text](https://beliavsky.github.io/fortran-playground/gams/packages/scanner/#scanner-text) | N3 | verified |

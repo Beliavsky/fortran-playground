@@ -115,12 +115,14 @@ The C10 driver checks 39 complex values at `z=[0.5+0.25i,1+0.5i,2+0.75i]`. For s
 | [Load specfunc-fullerton-entire-cosine-integral-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=specfunc-fullerton&example=gams-specfunc-fullerton-entire-cosine-integral-reference) · [Source](../fpm_catalog/gams-drivers/specfunc-fullerton-entire-cosine-integral-reference.f90) | C6 | [Procedure](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_inv_ci.f90#L101) · [Author example/test](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/test/inv_ci/test_inv_ci.f90) |
 | [Load specfunc-fullerton-upper-gamma-positive-x-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=specfunc-fullerton&example=gams-specfunc-fullerton-upper-gamma-positive-x-reference) · [Source](../fpm_catalog/gams-drivers/specfunc-fullerton-upper-gamma-positive-x-reference.f90) | C7e | [Procedure](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_gamma.f90#L282) · [Author example/test](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/test/gamma/test_gamma.f90) |
 | [Load specfunc-fullerton-reciprocal-gamma-pole-zeros-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=specfunc-fullerton&example=gams-specfunc-fullerton-reciprocal-gamma-pole-zeros-reference) · [Source](../fpm_catalog/gams-drivers/specfunc-fullerton-reciprocal-gamma-pole-zeros-reference.f90) | C7a | [Procedure](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_gamma.f90#L204) · [Author example/test](https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/test/gamma/test_gamma.f90) |
+| [Load rpn-real-cube-roots-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=rpn-calculator-fortran&example=gams-rpn-real-cube-roots-reference) · [Source](../fpm_catalog/gams-drivers/rpn-real-cube-roots-reference.f90) | C2 | [Procedure](https://github.com/scivision/rpn-calculator-fortran/blob/7708e4949f17511d81f4e7dd0271a500f0bc3631/src/funcs.f90#L229) · [Author example/test](https://github.com/scivision/rpn-calculator-fortran/blob/7708e4949f17511d81f4e7dd0271a500f0bc3631/test/test.f90) |
+| [Load rpn-bessel-i0-values-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=rpn-calculator-fortran&example=gams-rpn-bessel-i0-values-reference) · [Source](../fpm_catalog/gams-drivers/rpn-bessel-i0-values-reference.f90) | C10 | [Procedure](https://github.com/scivision/rpn-calculator-fortran/blob/7708e4949f17511d81f4e7dd0271a500f0bc3631/src/specfun/i0.f#L1) |
 
 The programs use author APIs, retain applicable license notices and use deterministic reference checks instead of the larger author harnesses. They appear in hosted and main local FPM example menus and downloaded projects. Loading a link selects source without submitting a job.
 
 ## Recorded results
 
-All 51 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing existing package libraries. Only each main and executable were rebuilt. The [verification report](gams-special-functions-validation.json) records hashes, pins and saved output. These cases establish checked usage and selected-point agreement, rather than accuracy over each function's complete domain.
+All 53 passed in the restricted GNU Fortran 16.2.0 sandbox with FPM 0.12.0, reusing existing package libraries. Only each main and executable were rebuilt. The [verification report](gams-special-functions-validation.json) records hashes, pins and saved output. These cases establish checked usage and selected-point agreement, rather than accuracy over each function's complete domain.
 
 ### fullerton-gamma-values
 
@@ -559,6 +561,20 @@ PASS specfunc-fullerton-upper-gamma-positive-x-reference
 Default REAL32 comparisons with independent high precision references: 41
 Maximum relative error (reference floor 1e-30):   3.4738E-06
 PASS specfunc-fullerton-reciprocal-gamma-pole-zeros-reference
+```
+
+### rpn-real-cube-roots-reference
+
+```text
+Independent high precision reference points: 55
+PASS rpn-real-cube-roots-reference
+```
+
+### rpn-bessel-i0-values-reference
+
+```text
+Independent high precision reference points: 29
+PASS rpn-bessel-i0-values-reference
 ```
 
 ## Maintenance

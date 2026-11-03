@@ -125,6 +125,7 @@ FORLAB_STATISTICS_TEN_REPORT = Path('docs/gams-forlab-statistics-ten.md')
 NAFPACK_FACTORS_TEN_REPORT = Path('docs/gams-nafpack-factors-ten.md')
 FSTATS_SUMMARIES_TEN_REPORT = Path('docs/gams-fstats-summaries-ten.md')
 FSTATS_FITTING_TEN_REPORT = Path('docs/gams-fstats-fitting-ten.md')
+NEXT_NUMERICAL_REPORT = Path('docs/gams-next-numerical.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
 EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
@@ -12053,6 +12054,132 @@ def fstats_fitting_ten_review_text(root=ROOT):
     return '\n'.join(lines)
 
 
+def next_numerical_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-next-numerical-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-next-numerical-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Six checked drivers from the numerical coverage audit',
+     '',
+     'All six ranked candidates passed GNU Fortran 16.2.0 / FPM 0.12.0 in the hosted sandbox, reusing the '
+     'existing package libraries and compiling only main.f90 and playground-main. The [verification '
+     'report](gams-next-numerical-validation.json) preserves exact package pins, normalized UTF-8/LF source '
+     'hashes, timings and complete output. The [coverage audit](gams-driver-audit.md) now removes these '
+     'completed candidates from its pending list. GAMS coverage remains unfinished.',
+     '',
+     '## Checked problems',
+     '',
+     '| Driver | GAMS | Independent checks |\n'
+     '| --- | --- | --- |\n'
+     '| nonlin BFGS, finite differences | G1b1a | 12 coupled SPD quadratics and three Rosenbrock starts |\n'
+     '| nonlin least squares, finite differences | G1b1a | 24 exact exponential fits without a registered '
+     'Jacobian |\n'
+     '| RPN signed real cube roots | C2 | 55 zero, signed dyadic cube and noncube references |\n'
+     '| RPN modified Bessel I0 | C10 | 29 values, signs, tiny inputs and branch-15 neighbors |\n'
+     '| fortranlib tabulated interpolation | E1 | 207 scalar/vector queries on irregular knots and explicit fill '
+     'values |\n'
+     '| fortranlib tabulated integration | H2 | 198 clipped intervals and three full integrals |',
+     '',
+     '## Finite-difference optimization configurations',
+     '',
+     'The BFGS consumer registers only an objective callback. Twelve coupled positive-definite quadratic '
+     'problems cover dimensions 2..5 with three starts each, and three further starts solve Rosenbrock. '
+     'Independent known minimizers, explicit objective and analytic stationarity formulas, reported-objective '
+     'agreement and normal termination flags are required. Maximum normalized parameter error is bounded by '
+     '5e-5, objective by 2e-9 and gradient infinity norm by 2e-5; reported objective agreement is 1e-12 '
+     'absolute. These are correctness checks, not global convergence or performance guarantees.',
+     '',
+     'The residual-only least-squares consumer registers no Jacobian and requires its analytic callback count to '
+     'remain zero. It keeps the same 24 exact exponential fixtures and explicit step factor 1 as the separately '
+     'checked analytic-Jacobian driver. Independent model formulas check the known parameters (normalized '
+     'tolerance 2e-7), returned residuals (1e-11 consistency), exact-fit residual infinity norm (1e-8), squared '
+     'residual norm (1e-10) and analytic J-transpose-residual (1e-6). The independently computed stationarity '
+     'Jacobian is also checked by central differences at the starting points; it is never supplied to the '
+     'solver.',
+     '',
+     'The [retained nonlin least-squares failures](gams-candidates/nonlin-least-squares/README.md) with default '
+     'step factor and nonzero-residual families remain unresolved. Passing the exact-fit family in another '
+     'derivative mode does not verify those cases. No stopping rule, library implementation or tolerance was '
+     'patched to make this batch pass.',
+     '',
+     '## Elementary and special functions',
+     '',
+     'The [reference tables](gams-next-numerical-references.json) contain exact rational inputs and '
+     '18-significant-digit outputs generated with mpmath 1.3.0 at 80 and 120 decimal digits. Definitions agree '
+     'within 1e-50*max(1,abs(reference)). The consumer requires the package kind to equal REAL64 and finite '
+     'relative error <=2e-12 with a reference floor of 1e-100.',
+     '',
+     'Cube roots include 42 signed exact cubes from dyadic roots at exponents -30..30 (input exponents around '
+     '-90..90), zero and 12 additional signed noncube-family inputs. Checks compare high-precision real cube '
+     'roots, signs and cube reconstruction. Some additional inputs are themselves exact cubes; no complex-root '
+     'or subnormal claim is made.',
+     '',
+     'Unscaled modified Bessel I0 uses 29 signed inputs through 64, including zero, tiny dyadics, and '
+     '15-1/1024,15,15+1/1024 on both signs around the pinned implementation branch. Positivity and evenness are '
+     'checked. Independent high-precision Bessel definitions supply the values; separate Decimal-series tests '
+     'check the recorded constants. Scaled Bessel functions, overflow and arbitrary extreme arguments are '
+     'excluded.',
+     '',
+     '## Tabulated interpolation and integration',
+     '',
+     'Both consumers use five irregular knots [-2,-3/4,0,1/2,2] and three deterministic signed value sets. '
+     'Interpolation checks 65 in-domain queries and four outside queries per set, for 207 scalar/vector '
+     'comparisons. Independent segment weights supply the interior references; the caller explicitly requests '
+     'bounds_error=false and fill_value=-123. Outside values are filled, not extrapolated. Increasing grids '
+     'only; duplicate/descending knots and log interpolants are excluded.',
+     '',
+     'Integration checks every ordered pair from eleven limits (-3..3), including equal, same-segment, partial, '
+     'outside and clipped intervals, for 198 subset integrals plus three full-domain integrals. Independent '
+     'polynomial antiderivatives are integrated over the clipped overlap of each segment. These are areas under '
+     'the piecewise-linear tabulated interpolant, not exact quadrature of an arbitrary underlying nonlinear '
+     'function. Reversed limits and non-linear interpolant variants are excluded. Both consumers use '
+     'absolute-scaled error <=2e-12*max(1,abs(reference)).',
+     '',
+     'The cached fortranlib image already contains the checksum-locked upstream lib_array fixes recorded in the '
+     'catalog (matching upstream 844611933cba06d71490033e68b355f6f0ff704f). Those adaptations, dependency pins, '
+     'images and build report are unchanged. This batch adds consumers only; it does not apply new package '
+     'edits.',
+     '',
+     '## Classification, provenance and maintenance',
+     '',
+     'Six separate records now identify the finite-difference modes and the individual cube-root, Bessel, '
+     'interpolation and integration APIs. Their classes have been removed from the older composite records, '
+     'which retain their existing analytic-gradient, sinc/sech, beta and quadratic drivers. This avoids leaving '
+     'fulfilled claims in the audit or suggesting one driver validates a different mode. There are now 509 '
+     'checked drivers and 536 mapped procedure records; 27 records still have no dedicated checked driver.',
+     '',
+     'Pinned implementations and recorded author examples/tests informed API usage. These are independent MIT '
+     'consumers, including reuse of the playground-owned exact-fit fixture in a distinct solver configuration. '
+     'Loading a driver submits no job. No backend redeployment or library rebuilding is needed.',
+     '',
+     '## Driver details',
+     '']
+    for d in drivers:
+        lines += ['### '+d['id']+' ('+d['gams_code']+')', '', d['modifications'], '']
+    lines += ['## Provenance and actual output', '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -12253,6 +12380,7 @@ def main():
                          (NAFPACK_FACTORS_TEN_REPORT, nafpack_factors_ten_review_text()),
                          (FSTATS_SUMMARIES_TEN_REPORT, fstats_summaries_ten_review_text()),
                          (FSTATS_FITTING_TEN_REPORT, fstats_fitting_ten_review_text()),
+                         (NEXT_NUMERICAL_REPORT, next_numerical_review_text()),
                          (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report

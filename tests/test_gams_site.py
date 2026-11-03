@@ -1620,15 +1620,15 @@ class GamsSiteTests(unittest.TestCase):
             generate_gams_site(destination, feed)
             for code, package, driver in [('A4','ecx','ecx-rlc-reference'),
                                           ('C4','rpn-calculator-fortran','rpn-sinc-sech-reference'),
-                                          ('C7','rpn-calculator-fortran','rpn-beta-reference')]:
+                                          ('C7','rpn-calculator-fortran','rpn-beta-reference'),
+                                          ('C2','rpn-calculator-fortran','rpn-real-cube-roots-reference'),
+                                          ('C10','rpn-calculator-fortran','rpn-bessel-i0-values-reference')]:
                 html = (destination/code/'index.html').read_text()
                 primary = [url for url, label in Page(html).anchors if label == 'Try in playground']
                 self.assertEqual(primary, [f'https://beliavsky.github.io/fortran-playground/fpm/?package={package}&example=gams-{driver}'])
                 self.assertIn('Verified: a checked driver', html)
             for code, driver in [('C2','rpn-sinc-sech-reference'),('C10','rpn-beta-reference')]:
                 page = Page((destination/code/'index.html').read_text())
-                self.assertIn(('https://beliavsky.github.io/fortran-playground/fpm/?package=rpn-calculator-fortran',
-                               'Open default example'), page.anchors)
                 self.assertNotIn((f'https://beliavsky.github.io/fortran-playground/fpm/?package=rpn-calculator-fortran&example=gams-{driver}',
                                   'Try in playground'), page.anchors)
 
@@ -1665,12 +1665,16 @@ class GamsSiteTests(unittest.TestCase):
                                           ('H2','scifortran','scifortran-quadrature-reference')]:
                 html = (destination/code/'index.html').read_text()
                 primary = [url for url, label in Page(html).anchors if label == 'Try in playground']
-                self.assertEqual(primary, [f'https://beliavsky.github.io/fortran-playground/fpm/?package={package}&example=gams-{driver}'])
+                expected = [f'https://beliavsky.github.io/fortran-playground/fpm/?package={package}&example=gams-{driver}']
+                if code in ['E1','H2']:
+                    additional = {'E1':'fortranlib-linear-interpolation-reference',
+                                  'H2':'fortranlib-tabulated-integrals-reference'}[code]
+                    expected.append('https://beliavsky.github.io/fortran-playground/fpm/'
+                                    f'?package=fortranlib&example=gams-{additional}')
+                self.assertCountEqual(primary, expected)
                 self.assertIn('Verified: a checked driver', html)
             for code in ['E1','H2']:
                 page = Page((destination/code/'index.html').read_text())
-                self.assertIn(('https://beliavsky.github.io/fortran-playground/fpm/?package=fortranlib',
-                               'Open default example'), page.anchors)
                 self.assertNotIn(('https://beliavsky.github.io/fortran-playground/fpm/?package=fortranlib&example=gams-fortranlib-quadratic-reference',
                                   'Try in playground'), page.anchors)
             sorting = Page((destination/'N6/index.html').read_text())

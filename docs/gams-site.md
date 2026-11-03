@@ -356,3 +356,5 @@ NAFPack factorizations and characteristic coefficients: [review and actual resul
 Fstats summaries, distributions and designs: [review and actual results](gams-fstats-summaries-ten.md).
 
 Fstats probabilities, interpolation and regression: [review and actual results](gams-fstats-fitting-ten.md).
+
+Numerical audit candidates: [six checked configurations and APIs](gams-next-numerical.md).
