@@ -15909,6 +15909,258 @@
         "relative_tolerance": 2e-09,
         "oracle": "known factors, manufactured solutions, orthogonality or polynomial products"
       }
+    },
+    {
+      "id": "fstats-median-quantile-conventions-reference",
+      "name": "gams-fstats-median-quantile-conventions-reference",
+      "package_id": "fstats",
+      "procedure_id": "fstats-median-quantile-conventions",
+      "gams_code": "L1a1a",
+      "problem_id": "fstats-median-quantile-conventions-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/fstats-median-quantile-conventions-reference.f90",
+      "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "author_example": "tests/fstats_statistics_tests.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fstats-summaries-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 99 data sets n=1..33. Median and seven quantiles checked against independently sorted values with clamped (n+1)*q interpolation, with the mathematical convention stated explicitly rather than relying on method numbering. Nonfinite/empty inputs and other quantile conventions excluded.",
+      "validation_path": "docs/gams-fstats-summaries-ten-validation.json",
+      "review_path": "docs/gams-fstats-summaries-ten.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "relative_tolerance": 2e-10,
+        "oracle": "independent sorted data, exact moments, Cartesian products or high precision distribution definitions"
+      }
+    },
+    {
+      "id": "fstats-trimmed-locations-reference",
+      "name": "gams-fstats-trimmed-locations-reference",
+      "package_id": "fstats",
+      "procedure_id": "fstats-trimmed-locations",
+      "gams_code": "L1a1a",
+      "problem_id": "fstats-trimmed-locations-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/fstats-trimmed-locations-reference.f90",
+      "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "author_example": "tests/fstats_statistics_tests.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fstats-summaries-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 99 data sets n=1..33 and per-tail fractions 0,1/8,1/4. Explicit sorted-subset means and documented in-place sorting checked. Invalid fractions and missing data excluded.",
+      "validation_path": "docs/gams-fstats-summaries-ten-validation.json",
+      "review_path": "docs/gams-fstats-summaries-ten.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "relative_tolerance": 2e-10,
+        "oracle": "independent sorted data, exact moments, Cartesian products or high precision distribution definitions"
+      }
+    },
+    {
+      "id": "fstats-paired-covariances-reference",
+      "name": "gams-fstats-paired-covariances-reference",
+      "package_id": "fstats",
+      "procedure_id": "fstats-paired-covariances",
+      "gams_code": "L1c1b",
+      "problem_id": "fstats-paired-covariances-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/fstats-paired-covariances-reference.f90",
+      "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "author_example": "tests/fstats_statistics_tests.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fstats-summaries-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 96 paired data sets n=2..33; explicit centered cross-products, argument symmetry and covariance of x with 2*x+1 checked. Sample normalization n-1 only; nonfinite and unequal-length inputs excluded.",
+      "validation_path": "docs/gams-fstats-summaries-ten-validation.json",
+      "review_path": "docs/gams-fstats-summaries-ten.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "relative_tolerance": 2e-10,
+        "oracle": "independent sorted data, exact moments, Cartesian products or high precision distribution definitions"
+      }
+    },
+    {
+      "id": "fstats-raw-median-deviations-reference",
+      "name": "gams-fstats-raw-median-deviations-reference",
+      "package_id": "fstats",
+      "procedure_id": "fstats-raw-median-deviations",
+      "gams_code": "L1a1b",
+      "problem_id": "fstats-raw-median-deviations-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/fstats-raw-median-deviations-reference.f90",
+      "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "author_example": "tests/fstats_statistics_tests.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fstats-summaries-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 99 data sets n=1..33. Raw, unscaled MAD checked by independently sorting absolute distances from the independently computed median. No normal-consistency multiplier, missing data or overflow-limit claim.",
+      "validation_path": "docs/gams-fstats-summaries-ten-validation.json",
+      "review_path": "docs/gams-fstats-summaries-ten.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "relative_tolerance": 2e-10,
+        "oracle": "independent sorted data, exact moments, Cartesian products or high precision distribution definitions"
+      }
+    },
+    {
+      "id": "fstats-pooled-group-variances-reference",
+      "name": "gams-fstats-pooled-group-variances-reference",
+      "package_id": "fstats",
+      "procedure_id": "fstats-pooled-group-variances",
+      "gams_code": "L1a1b",
+      "problem_id": "fstats-pooled-group-variances-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/fstats-pooled-group-variances-reference.f90",
+      "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "author_example": "tests/fstats_statistics_tests.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fstats-summaries-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. Fifteen summaries of 2..6 groups with three scaling choices. Pooled sample variance compared with explicit degrees-of-freedom weighted sums. Summary-variance overload only; raw array-container/column overloads and invalid group sizes excluded.",
+      "validation_path": "docs/gams-fstats-summaries-ten-validation.json",
+      "review_path": "docs/gams-fstats-summaries-ten.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "relative_tolerance": 2e-10,
+        "oracle": "independent sorted data, exact moments, Cartesian products or high precision distribution definitions"
+      }
+    },
+    {
+      "id": "fstats-normal-tail-functions-reference",
+      "name": "gams-fstats-normal-tail-functions-reference",
+      "package_id": "fstats",
+      "procedure_id": "fstats-normal-tail-functions",
+      "gams_code": "L5a1n",
+      "problem_id": "fstats-normal-tail-functions-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/fstats-normal-tail-functions-reference.f90",
+      "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "author_example": "tests/fstats_distribution_tests.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fstats-summaries-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 66 REAL64 distribution inputs. Normal locations -1,0,1, scales 1/2,2 and standardized offsets -6..6. PDF/PMF, CDF, strict upper survival and finite log-density checked with independent 80/120 digit references. Probability relative tolerance 2e-9 with floor 1e-30; invalid parameters and infinite log values excluded.",
+      "validation_path": "docs/gams-fstats-summaries-ten-validation.json",
+      "review_path": "docs/gams-fstats-summaries-ten.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "relative_tolerance": 2e-10,
+        "oracle": "independent sorted data, exact moments, Cartesian products or high precision distribution definitions",
+        "probability_tolerance": 2e-09,
+        "probability_reference_floor": 1e-30,
+        "comparisons": 66
+      }
+    },
+    {
+      "id": "fstats-binomial-boundaries-reference",
+      "name": "gams-fstats-binomial-boundaries-reference",
+      "package_id": "fstats",
+      "procedure_id": "fstats-binomial-boundaries",
+      "gams_code": "L5a1b",
+      "problem_id": "fstats-binomial-boundaries-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/fstats-binomial-boundaries-reference.f90",
+      "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "author_example": "tests/fstats_distribution_tests.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fstats-summaries-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 165 REAL64 distribution inputs. Trials n=0,1,2,5,10; probabilities 0,1/8,1/2,7/8,1; every integer k=-1..n+1 including support and degenerate boundaries. PDF/PMF, CDF, strict upper survival and finite log-density checked with independent 80/120 digit references. Probability relative tolerance 2e-9 with floor 1e-30; invalid parameters and infinite log values excluded.",
+      "validation_path": "docs/gams-fstats-summaries-ten-validation.json",
+      "review_path": "docs/gams-fstats-summaries-ten.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "relative_tolerance": 2e-10,
+        "oracle": "independent sorted data, exact moments, Cartesian products or high precision distribution definitions",
+        "probability_tolerance": 2e-09,
+        "probability_reference_floor": 1e-30,
+        "comparisons": 165
+      }
+    },
+    {
+      "id": "fstats-poisson-tail-functions-reference",
+      "name": "gams-fstats-poisson-tail-functions-reference",
+      "package_id": "fstats",
+      "procedure_id": "fstats-poisson-tail-functions",
+      "gams_code": "L5a1p",
+      "problem_id": "fstats-poisson-tail-functions-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/fstats-poisson-tail-functions-reference.f90",
+      "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "author_example": "tests/fstats_distribution_tests.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fstats-summaries-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 35 REAL64 distribution inputs. Rates 0,1/8,1/2,2,8; integer k=-1,0,1,2,4,8,12, with high precision finite PMF sums and independently retained tails. PDF/PMF, CDF, strict upper survival and finite log-density checked with independent 80/120 digit references. Probability relative tolerance 2e-9 with floor 1e-30; invalid parameters and infinite log values excluded.",
+      "validation_path": "docs/gams-fstats-summaries-ten-validation.json",
+      "review_path": "docs/gams-fstats-summaries-ten.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "relative_tolerance": 2e-10,
+        "oracle": "independent sorted data, exact moments, Cartesian products or high precision distribution definitions",
+        "probability_tolerance": 2e-09,
+        "probability_reference_floor": 1e-30,
+        "comparisons": 35
+      }
+    },
+    {
+      "id": "fstats-student-t-finite-values-reference",
+      "name": "gams-fstats-student-t-finite-values-reference",
+      "package_id": "fstats",
+      "procedure_id": "fstats-student-t-finite-values",
+      "gams_code": "L5a1t",
+      "problem_id": "fstats-student-t-finite-values-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/fstats-student-t-finite-values-reference.f90",
+      "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "author_example": "tests/fstats_distribution_tests.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fstats-summaries-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 44 REAL64 distribution inputs. Student t degrees 1,2,5,10 at eleven signed dyadic values -8..8. Only function evaluation; undefined low-degree moments are not requested. PDF/PMF, CDF, strict upper survival and finite log-density checked with independent 80/120 digit references. Probability relative tolerance 2e-9 with floor 1e-30; invalid parameters and infinite log values excluded.",
+      "validation_path": "docs/gams-fstats-summaries-ten-validation.json",
+      "review_path": "docs/gams-fstats-summaries-ten.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "relative_tolerance": 2e-10,
+        "oracle": "independent sorted data, exact moments, Cartesian products or high precision distribution definitions",
+        "probability_tolerance": 2e-09,
+        "probability_reference_floor": 1e-30,
+        "comparisons": 44
+      }
+    },
+    {
+      "id": "fstats-full-factorial-designs-reference",
+      "name": "gams-fstats-full-factorial-designs-reference",
+      "package_id": "fstats",
+      "procedure_id": "fstats-full-factorial-designs",
+      "gams_code": "L7f",
+      "problem_id": "fstats-full-factorial-designs-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/fstats-full-factorial-designs-reference.f90",
+      "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "author_example": "tests/fstats_experimental_design_tests.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fstats-summaries-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. Twelve full factorial designs with 1..4 factors and 1..4 levels. Independent dimensions, all legal levels, unique mixed-radix keys covering the full Cartesian product, and exact marginal/pairwise level balance checked. Row order not prescribed; huge designs and fractional factorials excluded.",
+      "validation_path": "docs/gams-fstats-summaries-ten-validation.json",
+      "review_path": "docs/gams-fstats-summaries-ten.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "relative_tolerance": 2e-10,
+        "oracle": "independent sorted data, exact moments, Cartesian products or high precision distribution definitions"
+      }
     }
   ]
 }

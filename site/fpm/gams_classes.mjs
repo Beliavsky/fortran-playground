@@ -1043,5 +1043,17 @@ export const gamsSubclasses = {
   "D4c": {
     "label": "Associated operations",
     "parent": "D4"
+  },
+  "L5a1p": {
+    "label": "Pareto, Poisson",
+    "parent": "L5a1"
+  },
+  "L5a1t": {
+    "label": "t distribution",
+    "parent": "L5a1"
+  },
+  "L7f": {
+    "label": "Generate experimental designs",
+    "parent": "L7"
   }
 };

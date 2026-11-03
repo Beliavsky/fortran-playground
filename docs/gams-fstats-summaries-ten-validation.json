@@ -1,0 +1,328 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "fstats-median-quantile-conventions-reference",
+      "source_revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "source_sha256": "13c70195308dcad430618e48415a42c7014a1d9b1a9b0575841f79f5d506c4cb",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T23:54:14.071269+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.398,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Three finite dyadic data families, lengths through 33, independently checked.\nPASS fstats-median-quantile-conventions-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.146,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fstats-trimmed-locations-reference",
+      "source_revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "source_sha256": "e74157be4347fe566d13760ac923e0bc06bf87446ad24898bbfa21119d448c57",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T23:54:17.370832+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.69,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Three finite dyadic data families, lengths through 33, independently checked.\nPASS fstats-trimmed-locations-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.194,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fstats-paired-covariances-reference",
+      "source_revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "source_sha256": "78215a36fbc39c132a07cadd1691ec2dfd6338ca760162485efa204bc3b3ae2f",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T23:54:21.157751+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.941,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Three finite dyadic data families, lengths through 33, independently checked.\nPASS fstats-paired-covariances-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.159,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fstats-raw-median-deviations-reference",
+      "source_revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "source_sha256": "d20b7726fe61272fc6d089baa35b530581c2cc54c7265ad80292e7883f14e468",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T23:54:23.759125+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.538,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Three finite dyadic data families, lengths through 33, independently checked.\nPASS fstats-raw-median-deviations-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.143,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fstats-pooled-group-variances-reference",
+      "source_revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "source_sha256": "8b13df8aa5a7096f04664a90ce5060dfa6fa7e76d850beb5c18cea7891a6ed25",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T23:54:26.998494+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.809,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "15 pooled-variance summaries independently checked.\nPASS fstats-pooled-group-variances-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.157,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fstats-normal-tail-functions-reference",
+      "source_revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "source_sha256": "d6b5db6e5bb6b7a6e47cd747515ffee45adc2143569569ad347580d13e5d8d0f",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T23:54:29.012865+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.506,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Independent distribution reference cases: 66\nPASS fstats-normal-tail-functions-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.148,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fstats-binomial-boundaries-reference",
+      "source_revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "source_sha256": "14547630a0f8864d74e203f2a4467db4a11232118fb5848aabbaf2e16d516352",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T23:54:31.180069+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.534,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Independent distribution reference cases: 165\nPASS fstats-binomial-boundaries-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.144,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fstats-poisson-tail-functions-reference",
+      "source_revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "source_sha256": "7b1078a559ce0fd3e7d796e0fd6809859671c03c11b79553f3d652607a230b4d",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T23:54:33.084499+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.434,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Independent distribution reference cases: 35\nPASS fstats-poisson-tail-functions-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.107,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fstats-student-t-finite-values-reference",
+      "source_revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "source_sha256": "d52b71457560ba7792f05577487f5a556cd486459179718a3dde13bd62a83b8f",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T23:54:36.018461+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.587,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Independent distribution reference cases: 44\nPASS fstats-student-t-finite-values-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.149,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fstats-full-factorial-designs-reference",
+      "source_revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "source_sha256": "c0887bbf15f0a8acfc9dd6987dd67b6b7aa6b9a83d4c5e62a2972354c1801314",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-02T23:54:38.208809+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.61,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "12 full-factorial designs: Cartesian coverage and level balance checked.\nPASS fstats-full-factorial-designs-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.155,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-11-02T23:54:38.256510+00:00"
+}

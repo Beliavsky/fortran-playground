@@ -352,3 +352,5 @@ Banded matrices and structured products: [review and actual results](gams-banded
 Forlab statistics and matrices: [review and actual results](gams-forlab-statistics-ten.md).
 
 NAFPack factorizations and characteristic coefficients: [review and actual results](gams-nafpack-factors-ten.md).
+
+Fstats summaries, distributions and designs: [review and actual results](gams-fstats-summaries-ten.md).

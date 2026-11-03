@@ -123,6 +123,7 @@ GAMMA_RELATIVE_TEN_REPORT = Path('docs/gams-gamma-relative-ten.md')
 BANDED_PRODUCTS_TEN_REPORT = Path('docs/gams-banded-products-ten.md')
 FORLAB_STATISTICS_TEN_REPORT = Path('docs/gams-forlab-statistics-ten.md')
 NAFPACK_FACTORS_TEN_REPORT = Path('docs/gams-nafpack-factors-ten.md')
+FSTATS_SUMMARIES_TEN_REPORT = Path('docs/gams-fstats-summaries-ten.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
 EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
@@ -11813,6 +11814,121 @@ def nafpack_factors_ten_review_text(root=ROOT):
     return '\n'.join(lines)
 
 
+def fstats_summaries_ten_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-fstats-summaries-ten-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-fstats-summaries-ten-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Ten checked Fstats summaries, distributions and design drivers',
+     '',
+     'Ten independent REAL64 Fstats consumers passed GNU Fortran 16.2.0 and FPM 0.12.0 in the hosted sandbox. '
+     'The cached library was reused; only main.f90 and playground-main were compiled. The [verification '
+     'report](gams-fstats-summaries-ten-validation.json) retains normalized UTF-8/LF source hashes, exact pins, '
+     'timings and complete output. GAMS coverage remains unfinished.',
+     '',
+     '## Checked problems',
+     '',
+     '| Driver | GAMS | Independent checks |\n'
+     '| --- | --- | --- |\n'
+     '| Median and quantile conventions | L1a1a | 99 data sets; median and seven clamped (n+1)*q quantiles |\n'
+     '| Trimmed locations | L1a1a | 99 data sets at three per-tail fractions; subset means and in-place sorting '
+     '|\n'
+     '| Paired covariances | L1c1b | 96 paired data sets; centered sums, symmetry and affine relation |\n'
+     '| Raw median deviations | L1a1b | 99 data sets; median of absolute distances from an independent median |\n'
+     '| Pooled group variances | L1a1b | 15 summaries of 2..6 groups; explicit degrees-of-freedom weighting |\n'
+     '| Normal tail functions | L5a1n | 66 inputs; PDF, CDF, survival and finite log density |\n'
+     '| Binomial boundaries | L5a1b | 165 inputs; degenerate parameters, complete integer support and adjacent '
+     'outside values |\n'
+     '| Poisson tail functions | L5a1p | 35 inputs; five rates including zero, integer support and tails |\n'
+     '| Student t finite values | L5a1t | 44 inputs; degrees 1,2,5,10 and signed values -8..8 |\n'
+     '| Full factorial designs | L7f | 12 designs; exact dimensions, Cartesian coverage and marginal/pairwise '
+     'balance |',
+     '',
+     '## Summaries and conventions',
+     '',
+     'The four raw-data summary drivers use three deterministic affine dyadic families at sizes 1..33 '
+     '(covariance starts at n=2). Local insertion sorting supplies independent references. Median averages the '
+     'central pair for even sizes. Quantiles explicitly use the plotting position (n+1)*q, linear interpolation '
+     'and endpoint clamping, with q=0,0.1,0.25,0.5,0.75,0.9,1; method numbering is not relied upon.',
+     '',
+     'Trimmed means remove floor(n*p) entries from each end for p=0,1/8,1/4. The consumer also checks the '
+     'documented in-place sorting of its work array. Covariances use explicit centered cross-products divided by '
+     'n-1, plus argument symmetry and covariance(x,2*x+1)=2*sample_variance(x). MAD is the raw median absolute '
+     'deviation, with no normal-consistency scaling. Pooled variance uses supplied sample variances and sample '
+     'counts with weights n_i-1; raw-container and column overloads are not verified.',
+     '',
+     'Summary and finite log-density comparisons require finite results and '
+     'abs(actual-reference)<=2e-10*max(1,abs(reference)). Empty arrays, nonfinite data, invalid '
+     'trimming/quantile parameters, constant/near-overflow robustness and missing-value policies are not '
+     'established by these bounded tests.',
+     '',
+     '## Probability references and tails',
+     '',
+     'The [reference table](gams-fstats-summaries-ten-references.json) records every distribution parameter, '
+     'evaluation point, PDF/PMF, CDF and survival value. References were generated independently with mpmath '
+     '1.3.0 at 80 decimal digits, confirmed at 120 digits with absolute differences below 1e-60, and written as '
+     '18-significant-digit constants. Inputs are exact dyadics. Every probability must be finite and satisfy '
+     'abs(actual-reference)/max(abs(reference),1e-30)<=2e-9. Exact zero references are effectively checked '
+     'exactly. Finite log densities are checked against log of the independently referenced positive density; '
+     'infinite log values are not requested.',
+     '',
+     'Normal cases use means -1,0,1, standard deviations 1/2,2, and eleven standardized offsets from -6 to 6. '
+     'PDF references use the defining Gaussian exponential and CDF/survival use high-precision complementary '
+     'error functions. Binomial cases use n=0,1,2,5,10, p=0,1/8,1/2,7/8,1 and every integer k=-1..n+1; '
+     'independent finite binomial sums test both support boundaries and degenerate p=0/1 or n=0.',
+     '',
+     'Poisson rates are 0,1/8,1/2,2,8 at k=-1,0,1,2,4,8,12. PMF and CDF references use the defining '
+     'exponential/factorial finite sums, retaining tails in high precision rather than subtracting rounded '
+     'REAL64 CDFs. Student t degrees are 1,2,5,10 at eleven signed arguments -8..8, using high-precision '
+     'gamma/beta definitions. Separate tests check the degree-1 Cauchy and degree-2 closed forms. All survival '
+     'functions represent the strict upper tail P(X>x), including discrete distributions. Undefined low-degree '
+     'moments, invalid parameters, fractional discrete inputs, extreme-tail underflow and inverse distributions '
+     'are excluded.',
+     '',
+     '## Experimental designs',
+     '',
+     'The full-factorial consumer uses 1..4 factors with 1..4 levels, twelve combinations of factor count and '
+     'level pattern. It checks dimensions against an independent product, all legal levels, unique mixed-radix '
+     'keys spanning the entire Cartesian product, and exact marginal and pairwise level counts. It does not '
+     'prescribe row ordering. Huge designs, fractional factorials, model fitting and statistical optimality are '
+     'excluded.',
+     '',
+     '## Provenance and maintenance',
+     '',
+     'Pinned public APIs, implementations and linked author statistics/distribution/experimental-design tests '
+     'were reviewed. Those tests informed API conventions; these drivers are independent MIT consumers and copy '
+     'no implementation or author-test bodies. No upstream code was patched. Classifications follow the [Netlib '
+     'GAMS taxonomy](https://netlib.org/misc/gams.html). Loading a driver does not submit a job. The [coverage '
+     'report](gams-coverage.md) records remaining work.',
+     '',
+     '## Driver details',
+     '']
+    for d in drivers:
+        lines += ['### '+d['id']+' ('+d['gams_code']+')', '', d['modifications'], '']
+    lines += ['## Provenance and actual output', '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -12011,6 +12127,7 @@ def main():
                          (BANDED_PRODUCTS_TEN_REPORT, banded_products_ten_review_text()),
                          (FORLAB_STATISTICS_TEN_REPORT, forlab_statistics_ten_review_text()),
                          (NAFPACK_FACTORS_TEN_REPORT, nafpack_factors_ten_review_text()),
+                         (FSTATS_SUMMARIES_TEN_REPORT, fstats_summaries_ten_review_text()),
                          (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report

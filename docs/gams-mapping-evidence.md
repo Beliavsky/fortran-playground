@@ -8,7 +8,7 @@ This report assesses each package/class pair, including inherited parent classes
 
 When a driver cannot be created, inspect the pinned implementation and author examples. Narrow or remove a classification that is unsupported; do not substitute an unrelated default example as evidence. Record missing dependencies, sandbox limits and upstream defects separately in the procedure or package review notes. A sandbox failure alone does not disprove an algorithm.
 
-Counts refer to package/class pairs and include parents: 863 verified, 81 source-supported, 229 uncertain.
+Counts refer to package/class pairs and include parents: 875 verified, 81 source-supported, 228 uncertain.
 
 ## Mappings requiring source review
 
@@ -126,7 +126,6 @@ Inspect these discovery assignments before making a specific algorithm claim. Th
 | [fortsa](https://beliavsky.github.io/fortran-playground/gams/packages/fortsa/) | [L11](https://beliavsky.github.io/fortran-playground/gams/L11/) | Correlation analysis |
 | [fstats](https://beliavsky.github.io/fortran-playground/gams/packages/fstats/) | [L2](https://beliavsky.github.io/fortran-playground/gams/L2/) | Data manipulation |
 | [fstats](https://beliavsky.github.io/fortran-playground/gams/packages/fstats/) | [L4](https://beliavsky.github.io/fortran-playground/gams/L4/) | Elementary data analysis |
-| [fstats](https://beliavsky.github.io/fortran-playground/gams/packages/fstats/) | [L5](https://beliavsky.github.io/fortran-playground/gams/L5/) | Function evaluation |
 | [fstats](https://beliavsky.github.io/fortran-playground/gams/packages/fstats/) | [L6](https://beliavsky.github.io/fortran-playground/gams/L6/) | Random number generation |
 | [fstats](https://beliavsky.github.io/fortran-playground/gams/packages/fstats/) | [L8](https://beliavsky.github.io/fortran-playground/gams/L8/) | Regression |
 | [fstats](https://beliavsky.github.io/fortran-playground/gams/packages/fstats/) | [M](https://beliavsky.github.io/fortran-playground/gams/M/) | Simulation, stochastic modeling |
@@ -416,7 +415,17 @@ Statuses below apply to each recorded procedure/class pair. A driver for a diffe
 | [friction / friction-lugre-state](https://beliavsky.github.io/fortran-playground/gams/packages/friction/#friction-lugre-state) | I1 | verified |
 | [fsparse / fsparse-dense2coo](https://beliavsky.github.io/fortran-playground/gams/packages/fsparse/#fsparse-dense2coo) | D1b9 | verified |
 | [fsparse / fsparse-matvec](https://beliavsky.github.io/fortran-playground/gams/packages/fsparse/#fsparse-matvec) | D1b4 | verified |
+| [fstats / fstats-binomial-boundaries](https://beliavsky.github.io/fortran-playground/gams/packages/fstats/#fstats-binomial-boundaries) | L5a1b | verified |
+| [fstats / fstats-full-factorial-designs](https://beliavsky.github.io/fortran-playground/gams/packages/fstats/#fstats-full-factorial-designs) | L7f | verified |
 | [fstats / fstats-mean](https://beliavsky.github.io/fortran-playground/gams/packages/fstats/#fstats-mean) | L1a1a | verified |
+| [fstats / fstats-median-quantile-conventions](https://beliavsky.github.io/fortran-playground/gams/packages/fstats/#fstats-median-quantile-conventions) | L1a1a | verified |
+| [fstats / fstats-normal-tail-functions](https://beliavsky.github.io/fortran-playground/gams/packages/fstats/#fstats-normal-tail-functions) | L5a1n | verified |
+| [fstats / fstats-paired-covariances](https://beliavsky.github.io/fortran-playground/gams/packages/fstats/#fstats-paired-covariances) | L1c1b | verified |
+| [fstats / fstats-poisson-tail-functions](https://beliavsky.github.io/fortran-playground/gams/packages/fstats/#fstats-poisson-tail-functions) | L5a1p | verified |
+| [fstats / fstats-pooled-group-variances](https://beliavsky.github.io/fortran-playground/gams/packages/fstats/#fstats-pooled-group-variances) | L1a1b | verified |
+| [fstats / fstats-raw-median-deviations](https://beliavsky.github.io/fortran-playground/gams/packages/fstats/#fstats-raw-median-deviations) | L1a1b | verified |
+| [fstats / fstats-student-t-finite-values](https://beliavsky.github.io/fortran-playground/gams/packages/fstats/#fstats-student-t-finite-values) | L5a1t | verified |
+| [fstats / fstats-trimmed-locations](https://beliavsky.github.io/fortran-playground/gams/packages/fstats/#fstats-trimmed-locations) | L1a1a | verified |
 | [fstats / fstats-variance](https://beliavsky.github.io/fortran-playground/gams/packages/fstats/#fstats-variance) | L1a1b | verified |
 | [ftl / ftl-containers](https://beliavsky.github.io/fortran-playground/gams/packages/ftl/#ftl-containers) | N4 | verified |
 | [ftl / ftl-containers](https://beliavsky.github.io/fortran-playground/gams/packages/ftl/#ftl-containers) | N5 | source-supported |

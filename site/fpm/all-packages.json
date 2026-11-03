@@ -25500,6 +25500,21 @@
         "parent": "L1a1"
       },
       {
+        "code": "L1c",
+        "label": "Multi-dimensional data",
+        "parent": "L1"
+      },
+      {
+        "code": "L1c1",
+        "label": "Raw data",
+        "parent": "L1c"
+      },
+      {
+        "code": "L1c1b",
+        "label": "Covariance, correlation",
+        "parent": "L1c1"
+      },
+      {
         "code": "L2",
         "label": "Data manipulation",
         "parent": "L"
@@ -25515,9 +25530,49 @@
         "parent": "L"
       },
       {
+        "code": "L5a",
+        "label": "Univariate",
+        "parent": "L5"
+      },
+      {
+        "code": "L5a1",
+        "label": "Cumulative distribution functions, probability density functions",
+        "parent": "L5a"
+      },
+      {
+        "code": "L5a1b",
+        "label": "Beta, binomial",
+        "parent": "L5a1"
+      },
+      {
+        "code": "L5a1n",
+        "label": "Negative binomial, normal",
+        "parent": "L5a1"
+      },
+      {
+        "code": "L5a1p",
+        "label": "Pareto, Poisson",
+        "parent": "L5a1"
+      },
+      {
+        "code": "L5a1t",
+        "label": "t distribution",
+        "parent": "L5a1"
+      },
+      {
         "code": "L6",
         "label": "Random number generation",
         "parent": "L"
+      },
+      {
+        "code": "L7",
+        "label": "Analysis of variance (including analysis of covariance)",
+        "parent": "L"
+      },
+      {
+        "code": "L7f",
+        "label": "Generate experimental designs",
+        "parent": "L7"
       },
       {
         "code": "L8",
@@ -25589,6 +25644,286 @@
           }
         ],
         "driver_id": "fstats-mean-checks"
+      },
+      {
+        "id": "fstats-median-quantile-conventions",
+        "package_id": "fstats",
+        "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+        "module": "fstats_descriptive_statistics",
+        "procedure": "median,quantile",
+        "gams_codes": [
+          "L1a1a"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "99 data sets n=1..33. Median and seven quantiles checked against independently sorted values with clamped (n+1)*q interpolation, with the mathematical convention stated explicitly rather than relying on method numbering. Nonfinite/empty inputs and other quantile conventions excluded.",
+        "driver_id": "fstats-median-quantile-conventions-reference",
+        "evidence": [
+          {
+            "path": "src/statistics/fstats_descriptive_statistics.f90",
+            "line": 227,
+            "sha256": "ec18e6e3c31f0d593ba311eccbc8f029640b01c0eeb88be269581551b0a61099"
+          },
+          {
+            "path": "src/statistics/fstats_descriptive_statistics.f90",
+            "line": 265,
+            "sha256": "ec18e6e3c31f0d593ba311eccbc8f029640b01c0eeb88be269581551b0a61099"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "tests/fstats_statistics_tests.f90",
+            "sha256": "b9984871b167b2b69c73705698a11d93461397e6fc406047ad3448ab86c1c9ea"
+          }
+        ]
+      },
+      {
+        "id": "fstats-trimmed-locations",
+        "package_id": "fstats",
+        "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+        "module": "fstats_descriptive_statistics",
+        "procedure": "trimmed_mean",
+        "gams_codes": [
+          "L1a1a"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "99 data sets n=1..33 and per-tail fractions 0,1/8,1/4. Explicit sorted-subset means and documented in-place sorting checked. Invalid fractions and missing data excluded.",
+        "driver_id": "fstats-trimmed-locations-reference",
+        "evidence": [
+          {
+            "path": "src/statistics/fstats_descriptive_statistics.f90",
+            "line": 323,
+            "sha256": "ec18e6e3c31f0d593ba311eccbc8f029640b01c0eeb88be269581551b0a61099"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "tests/fstats_statistics_tests.f90",
+            "sha256": "b9984871b167b2b69c73705698a11d93461397e6fc406047ad3448ab86c1c9ea"
+          }
+        ]
+      },
+      {
+        "id": "fstats-paired-covariances",
+        "package_id": "fstats",
+        "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+        "module": "fstats_descriptive_statistics",
+        "procedure": "covariance",
+        "gams_codes": [
+          "L1c1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "96 paired data sets n=2..33; explicit centered cross-products, argument symmetry and covariance of x with 2*x+1 checked. Sample normalization n-1 only; nonfinite and unequal-length inputs excluded.",
+        "driver_id": "fstats-paired-covariances-reference",
+        "evidence": [
+          {
+            "path": "src/statistics/fstats_descriptive_statistics.f90",
+            "line": 360,
+            "sha256": "ec18e6e3c31f0d593ba311eccbc8f029640b01c0eeb88be269581551b0a61099"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "tests/fstats_statistics_tests.f90",
+            "sha256": "b9984871b167b2b69c73705698a11d93461397e6fc406047ad3448ab86c1c9ea"
+          }
+        ]
+      },
+      {
+        "id": "fstats-raw-median-deviations",
+        "package_id": "fstats",
+        "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+        "module": "fstats_robust_statistics",
+        "procedure": "median_absolute_deviation",
+        "gams_codes": [
+          "L1a1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "99 data sets n=1..33. Raw, unscaled MAD checked by independently sorting absolute distances from the independently computed median. No normal-consistency multiplier, missing data or overflow-limit claim.",
+        "driver_id": "fstats-raw-median-deviations-reference",
+        "evidence": [
+          {
+            "path": "src/statistics/fstats_robust_statistics.f90",
+            "line": 45,
+            "sha256": "1b6bbaf92018e66b0f6d932d7bce889ec7ef30f88454d146d680f5899e4dcf89"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "tests/fstats_statistics_tests.f90",
+            "sha256": "b9984871b167b2b69c73705698a11d93461397e6fc406047ad3448ab86c1c9ea"
+          }
+        ]
+      },
+      {
+        "id": "fstats-pooled-group-variances",
+        "package_id": "fstats",
+        "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+        "module": "fstats_descriptive_statistics",
+        "procedure": "pooled_variance",
+        "gams_codes": [
+          "L1a1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "Fifteen summaries of 2..6 groups with three scaling choices. Pooled sample variance compared with explicit degrees-of-freedom weighted sums. Summary-variance overload only; raw array-container/column overloads and invalid group sizes excluded.",
+        "driver_id": "fstats-pooled-group-variances-reference",
+        "evidence": [
+          {
+            "path": "src/statistics/fstats_descriptive_statistics.f90",
+            "line": 411,
+            "sha256": "ec18e6e3c31f0d593ba311eccbc8f029640b01c0eeb88be269581551b0a61099"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "tests/fstats_statistics_tests.f90",
+            "sha256": "b9984871b167b2b69c73705698a11d93461397e6fc406047ad3448ab86c1c9ea"
+          }
+        ]
+      },
+      {
+        "id": "fstats-normal-tail-functions",
+        "package_id": "fstats",
+        "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+        "module": "fstats_normal_distribution",
+        "procedure": "normal_distribution%pdf, %cdf, %survival, %log_pdf",
+        "gams_codes": [
+          "L5a1n"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "66 REAL64 distribution inputs. Normal locations -1,0,1, scales 1/2,2 and standardized offsets -6..6. PDF/PMF, CDF, strict upper survival and finite log-density checked with independent 80/120 digit references. Probability relative tolerance 2e-9 with floor 1e-30; invalid parameters and infinite log values excluded.",
+        "driver_id": "fstats-normal-tail-functions-reference",
+        "evidence": [
+          {
+            "path": "src/distributions/fstats_normal_distribution.f90",
+            "line": 35,
+            "sha256": "5af445bfaf8d48d14128179ea1c68a24abcd6fe5b5ea708d9d7ae9e650b78eea"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "tests/fstats_distribution_tests.f90",
+            "sha256": "e0cb7b18e93c1933590b1b3a71b1ed46716628c71e153fa92ac2e06d82f71371"
+          }
+        ]
+      },
+      {
+        "id": "fstats-binomial-boundaries",
+        "package_id": "fstats",
+        "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+        "module": "fstats_binomial_distribution",
+        "procedure": "binomial_distribution%pdf, %cdf, %survival, %log_pdf",
+        "gams_codes": [
+          "L5a1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "165 REAL64 distribution inputs. Trials n=0,1,2,5,10; probabilities 0,1/8,1/2,7/8,1; every integer k=-1..n+1 including support and degenerate boundaries. PDF/PMF, CDF, strict upper survival and finite log-density checked with independent 80/120 digit references. Probability relative tolerance 2e-9 with floor 1e-30; invalid parameters and infinite log values excluded.",
+        "driver_id": "fstats-binomial-boundaries-reference",
+        "evidence": [
+          {
+            "path": "src/distributions/fstats_binomial_distribution.f90",
+            "line": 35,
+            "sha256": "11cb71c3279d1dccecf3e61a5b2d50498306e58de5e87876d869a77928f0dc0f"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "tests/fstats_distribution_tests.f90",
+            "sha256": "e0cb7b18e93c1933590b1b3a71b1ed46716628c71e153fa92ac2e06d82f71371"
+          }
+        ]
+      },
+      {
+        "id": "fstats-poisson-tail-functions",
+        "package_id": "fstats",
+        "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+        "module": "fstats_poisson_distribution",
+        "procedure": "poisson_distribution%pdf, %cdf, %survival, %log_pdf",
+        "gams_codes": [
+          "L5a1p"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "35 REAL64 distribution inputs. Rates 0,1/8,1/2,2,8; integer k=-1,0,1,2,4,8,12, with high precision finite PMF sums and independently retained tails. PDF/PMF, CDF, strict upper survival and finite log-density checked with independent 80/120 digit references. Probability relative tolerance 2e-9 with floor 1e-30; invalid parameters and infinite log values excluded.",
+        "driver_id": "fstats-poisson-tail-functions-reference",
+        "evidence": [
+          {
+            "path": "src/distributions/fstats_poisson_distribution.f90",
+            "line": 35,
+            "sha256": "1404bfffd6da7f29a4e695cb3ec57e8d704cb8578f75b028f7b72fd82ff55eb1"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "tests/fstats_distribution_tests.f90",
+            "sha256": "e0cb7b18e93c1933590b1b3a71b1ed46716628c71e153fa92ac2e06d82f71371"
+          }
+        ]
+      },
+      {
+        "id": "fstats-student-t-finite-values",
+        "package_id": "fstats",
+        "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+        "module": "fstats_t_distribution",
+        "procedure": "t_distribution%pdf, %cdf, %survival, %log_pdf",
+        "gams_codes": [
+          "L5a1t"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "44 REAL64 distribution inputs. Student t degrees 1,2,5,10 at eleven signed dyadic values -8..8. Only function evaluation; undefined low-degree moments are not requested. PDF/PMF, CDF, strict upper survival and finite log-density checked with independent 80/120 digit references. Probability relative tolerance 2e-9 with floor 1e-30; invalid parameters and infinite log values excluded.",
+        "driver_id": "fstats-student-t-finite-values-reference",
+        "evidence": [
+          {
+            "path": "src/distributions/fstats_t_distribution.f90",
+            "line": 35,
+            "sha256": "bafd5bffe33ae356678dc6e810478fd3630dbf6e78b3b504b1bd5a313aae4f2a"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "tests/fstats_distribution_tests.f90",
+            "sha256": "e0cb7b18e93c1933590b1b3a71b1ed46716628c71e153fa92ac2e06d82f71371"
+          }
+        ]
+      },
+      {
+        "id": "fstats-full-factorial-designs",
+        "package_id": "fstats",
+        "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+        "module": "fstats_doe_designs",
+        "procedure": "get_full_factorial_matrix_size,full_factorial",
+        "gams_codes": [
+          "L7f"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "Twelve full factorial designs with 1..4 factors and 1..4 levels. Independent dimensions, all legal levels, unique mixed-radix keys covering the full Cartesian product, and exact marginal/pairwise level balance checked. Row order not prescribed; huge designs and fractional factorials excluded.",
+        "driver_id": "fstats-full-factorial-designs-reference",
+        "evidence": [
+          {
+            "path": "src/design/fstats_doe_designs.f90",
+            "line": 44,
+            "sha256": "9fac123b26e792ad9fdccce1640af805b6b0e1c2d7a3ce002532417728e0b1e2"
+          },
+          {
+            "path": "src/design/fstats_doe_designs.f90",
+            "line": 76,
+            "sha256": "9fac123b26e792ad9fdccce1640af805b6b0e1c2d7a3ce002532417728e0b1e2"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "tests/fstats_experimental_design_tests.f90",
+            "sha256": "b7d6d5911a41ca6d8b35bf39c571dd56d8805bea147cafbb304e340e70a634b9"
+          }
+        ]
       }
     ],
     "stars_updated_at": "2026-10-28T10:57:46.582127+00:00"

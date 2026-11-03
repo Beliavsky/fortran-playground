@@ -394,7 +394,17 @@
       "status": "procedure-reviewed",
       "procedure_ids": [
         "fstats-variance",
-        "fstats-mean"
+        "fstats-mean",
+        "fstats-median-quantile-conventions",
+        "fstats-trimmed-locations",
+        "fstats-paired-covariances",
+        "fstats-raw-median-deviations",
+        "fstats-pooled-group-variances",
+        "fstats-normal-tail-functions",
+        "fstats-binomial-boundaries",
+        "fstats-poisson-tail-functions",
+        "fstats-student-t-finite-values",
+        "fstats-full-factorial-designs"
       ],
       "notes": "Public APIs and source evidence reviewed at the pinned revision. Other package capabilities remain discovery assignments; linked author examples/tests are candidates, not newly sandbox-verified drivers."
     },
