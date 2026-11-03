@@ -1976,6 +1976,7 @@ class GamsSiteTests(unittest.TestCase):
             owners = {p['repository']['owner'].lower() for p in self.feed['projects']}
             self.assertEqual(count, 2+len(tree)+len(self.feed['projects'])+len(owners))
             index = (destination/'index.html').read_text(encoding='utf-8')
+            self.assertIn('<h1>Fortran packages by GAMS classification</h1>', index)
             self.assertIn('catalog.css?v=abc123', index)
             self.assertIn('data-search=', index)
             self.assertIn('fortran-lapack', index)

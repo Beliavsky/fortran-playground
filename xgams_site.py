@@ -216,10 +216,10 @@ def generate_gams_site(destination, feed, *, asset_version=None):
         items = ''.join(f'<li>{link(prefix+c+"/", c+" — "+tree[c]["label"])} <span class="count">{len(by_class[c])}</span></li>' for c in codes)
         return f'<section class="class-section"><h2>{heading}</h2><ul class="class-list">{items}</ul></section>'
 
-    page('', 'Fortran software by GAMS classification',
+    page('', 'Fortran packages by GAMS classification',
          'Browse Fortran packages by mathematical problem, with reviewed procedure mappings and runnable examples.',
          '<section class="intro"><p class="eyebrow">BROWSE BY MATHEMATICAL PROBLEM</p>'
-         '<h1>Fortran software by GAMS classification</h1>'
+         '<h1>Fortran packages by GAMS classification</h1>'
          f'<p class="lede">Explore {len(projects)} selected packages, from linear algebra and optimization to statistics and software tools.</p>'
          '<p>Each package has a checked example in the FPM playground with GNU Fortran 16. '
          'Browse here without running code, then open a package to try it.</p></section>'

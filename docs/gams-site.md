@@ -1,4 +1,4 @@
-# Fortran software by GAMS classification
+# Fortran packages by GAMS classification
 
 The [GAMS catalog](https://beliavsky.github.io/fortran-playground/gams/) browses the selected precompiled packages independently of the FPM playground. It has an index of the 20 main classes, a page for every recorded class or subclass, and a detail page for every package.
 
