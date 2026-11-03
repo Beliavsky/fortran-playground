@@ -124,6 +124,7 @@ BANDED_PRODUCTS_TEN_REPORT = Path('docs/gams-banded-products-ten.md')
 FORLAB_STATISTICS_TEN_REPORT = Path('docs/gams-forlab-statistics-ten.md')
 NAFPACK_FACTORS_TEN_REPORT = Path('docs/gams-nafpack-factors-ten.md')
 FSTATS_SUMMARIES_TEN_REPORT = Path('docs/gams-fstats-summaries-ten.md')
+FSTATS_FITTING_TEN_REPORT = Path('docs/gams-fstats-fitting-ten.md')
 COVERAGE_REPORT = Path('docs/gams-coverage.md')
 EVIDENCE_REPORT = Path('docs/gams-mapping-evidence.md')
 GAMS_URL = 'https://gams.nist.gov/cgi-bin/serve.cgi'
@@ -11929,6 +11930,129 @@ def fstats_summaries_ten_review_text(root=ROOT):
     return '\n'.join(lines)
 
 
+def fstats_fitting_ten_review_text(root=ROOT):
+    root = Path(root)
+    data = gams_data(root)
+    drivers = [d for d in driver_data(root, data)
+               if driver_validation_path(d) == 'docs/gams-fstats-fitting-ten-validation.json']
+    records = {r['id']: r for r in data['procedure_mappings']}
+    packages = {p['id']: p for p in json.loads((root/'fpm_catalog.json').read_text(encoding='utf-8'))['packages']}
+    report = json.loads((root/'docs/gams-fstats-fitting-ten-validation.json').read_text(encoding='utf-8'))
+    results = {r['driver_id']: r for r in report['drivers']}
+    lines = ['# Ten checked Fstats probability, interpolation and regression drivers',
+     '',
+     'Ten independent REAL64 Fstats consumers passed GNU Fortran 16.2.0 and FPM 0.12.0 in the hosted sandbox, '
+     'reusing the existing library and compiling only main.f90 and playground-main. The [verification '
+     'report](gams-fstats-fitting-ten-validation.json) preserves normalized UTF-8/LF source hashes, pins, '
+     'timings and complete output. GAMS coverage remains unfinished.',
+     '',
+     '## Checked problems',
+     '',
+     '| Driver | GAMS | Independent checks |\n'
+     '| --- | --- | --- |\n'
+     '| Chi-squared positive tails | L5a1c | 30 inputs; five degrees and six positive values |\n'
+     '| F positive tails | L5a1f | 20 inputs; four degree pairs and five positive values |\n'
+     '| Lognormal observation scale | L5a1l | 42 inputs; log-mean/log-scale conventions and nonpositive support '
+     '|\n'
+     '| Bivariate normal densities | L5b1n | 150 points; explicit 2-by-2 determinant/inverse references |\n'
+     '| Piecewise linear values | E1a | 123 queries and 15 nodes on irregular grids |\n'
+     '| Polynomial interpolation | E1b | 164 queries, degrees 1..4 |\n'
+     '| Global Hermite values and derivatives | E1b | 165 queries, degrees 1..5, supplied first derivatives |\n'
+     '| Linear regression residuals | L8a1a1 | 138 noisy fits, with and without intercept |\n'
+     '| Quadratic regression projections | L8b1b1 | 15 quartic-contaminated fits; independent moment projection '
+     '|\n'
+     '| Experimental factor coding | L7g | 27 physical/coded coordinates and round trips |',
+     '',
+     '## Probability definitions',
+     '',
+     'The [reference tables](gams-fstats-fitting-ten-references.json) contain 92 parameter/value combinations '
+     'generated independently with mpmath 1.3.0 at 80 decimal digits and confirmed at 120 digits (absolute '
+     'differences below 1e-60). Inputs are exact dyadics; references are written with 18 significant digits. '
+     'Chi-squared uses its defining gamma density and lower/upper incomplete-gamma integrals. F uses its beta '
+     'normalization and complementary beta-integral definitions. Lognormal uses a Gaussian change of variables: '
+     'mean_value and standard_deviation describe log(X), while evaluation points are in observation space. Its '
+     'negative and zero inputs must have zero density/CDF and unit survival.',
+     '',
+     'Each univariate consumer checks PDF, CDF, strict upper survival P(X>x), and finite log density where the '
+     'reference density is positive. Probability error must be <=2e-9*max(abs(reference),1e-30), so zero '
+     'references are effectively exact. Other finite scalar/log comparisons use '
+     'abs(error)<=2e-10*max(1,abs(reference)). Invalid parameters, infinite log outputs, inverse functions, '
+     'extreme underflow and chi-squared/F support-boundary singularities are excluded.',
+     '',
+     'The bivariate driver uses covariances [[2,rho],[rho,1]] with rho=-1/2,0,1/2, two mean vectors, and 25 '
+     'dyadic offsets per case. Independent scalar determinants and explicit inverse quadratic forms supply PDF '
+     'and log-density references, rather than repeating the package Cholesky solve. CDFs, singular/invalid '
+     'covariances and higher dimensions are not verified.',
+     '',
+     '## Interpolation',
+     '',
+     'Piecewise-linear interpolation uses three irregular-grid data sets, independent segment weights, '
+     'scalar/vector routes and bounded extrapolation. Polynomial interpolation reproduces explicit polynomials '
+     'of degrees 1..4 at 41 points each, including bounded extrapolation. These checks do not establish '
+     'high-degree conditioning or behavior for duplicate/invalid knots.',
+     '',
+     'Global Hermite interpolation uses three irregular nodes with supplied function values and first '
+     'derivatives, and reproduces polynomials of degrees 1..5 at 33 points each, including derivative '
+     'evaluation. A fresh object is allocated and released for each polynomial. This is global Hermite '
+     'polynomial interpolation, not piecewise cubic Hermite. Reinitialization of an existing object failed in '
+     'the retained probe and is not claimed to work.',
+     '',
+     '## Regression and design coding',
+     '',
+     'The linear consumer uses sizes 3..25 and three dyadic noisy families, with and without an intercept (138 '
+     'fits). Independent centered-sum or through-origin formulas provide coefficients. It checks every fitted '
+     'value, the modeled-minus-actual residual convention, and residual orthogonality to the design columns.',
+     '',
+     'The quadratic consumer uses five symmetric grids of 5..13 points and three quadratic signals with a '
+     'quartic perturbation. An independent 2-by-2 even-moment projection supplies the fitted constant and '
+     'quadratic coefficient; symmetry supplies the linear coefficient. All 15 fits check coefficients, fitted '
+     'values, residuals and the three normal-equation orthogonality conditions. These bounded full-rank fits do '
+     'not verify inference, confidence intervals, weighting, rank-deficient data or high-degree stability.',
+     '',
+     'Experimental factor coding checks nine exact dyadic levels over each of three unequal physical ranges. '
+     'Both directions are compared with prescribed coordinates, including low/high/midpoint, and then '
+     'round-tripped. Equal/reversed ranges and invalid shapes are excluded. This is a service routine for '
+     'experimental designs, not an ANOVA solver.',
+     '',
+     '## Retained unsuccessful probes',
+     '',
+     'The [interpolation reproductions](gams-candidates/fstats-interpolation/README.md) preserve exact '
+     'consumers, hashes, pins and full hosted results. The clamped cubic spline failed an independent '
+     'irregular-grid cubic value check; it has no published checked driver. The initial Hermite consumer hit an '
+     'allocation error when reinitializing the same object. Fresh-object consumers passed all original numerical '
+     'assertions. No upstream numerical code was patched and tolerances were not relaxed.',
+     '',
+     '## Provenance',
+     '',
+     'Pinned implementations and linked author distribution, interpolation, regression and experimental-design '
+     'tests informed API usage. These are independent MIT consumers; no author test or implementation bodies '
+     'were copied. Classifications follow the [Netlib GAMS taxonomy](https://netlib.org/misc/gams.html). No '
+     'backend redeployment or package-library rebuild is needed.',
+     '',
+     '## Driver details',
+     '']
+    for d in drivers:
+        lines += ['### '+d['id']+' ('+d['gams_code']+')', '', d['modifications'], '']
+    lines += ['## Provenance and actual output', '']
+    for d in drivers:
+        record = records[d['procedure_id']]
+        evidence = record['evidence'][0]
+        base = f'https://github.com/{packages[d["package_id"]]["repository"]}/blob/{d["revision"]}/'
+        url = f'https://beliavsky.github.io/fortran-playground/fpm/?package={d["package_id"]}&example={d["name"]}'
+        output = next(s['stdout'] for s in results[d['id']]['stages'] if s['name'] == 'Run')
+        lines += ['### '+d['id'], '',
+                  f'[Load driver]({url}) / [Driver source](../{d["path"]}) / '
+                  f'[Pinned procedure]({base}{evidence["path"]}#L{evidence["line"]}) / ' +
+                  (f'[Author test]({base}{d["author_example"]})' if d["author_example"] else 'No pinned author example; API reviewed directly.'), '', '```text', '\n'.join(line.rstrip() for line in output.splitlines()), '```', '']
+    lines += ['## Maintenance', '', '```text',
+              'python xverify_gams_drivers.py --drivers '+' '.join(d['id'] for d in drivers),
+              'python xpackage_gams.py', 'python xfpm_examples.py', 'python xsite.py', '```', '',
+              'Verification requires Modal authentication and `.fpm-audit-cache/precompiled.json`. '
+              'No backend redeployment or package library rebuild is required. '
+              'The [coverage report](gams-coverage.md) lists remaining work.', '']
+    return '\n'.join(lines)
+
+
 def coverage_data(root=ROOT, data=None):
     """Count maintained assignments separately from class-specific checked demonstrations."""
     data = data or gams_data(root)
@@ -12128,6 +12252,7 @@ def main():
                          (FORLAB_STATISTICS_TEN_REPORT, forlab_statistics_ten_review_text()),
                          (NAFPACK_FACTORS_TEN_REPORT, nafpack_factors_ten_review_text()),
                          (FSTATS_SUMMARIES_TEN_REPORT, fstats_summaries_ten_review_text()),
+                         (FSTATS_FITTING_TEN_REPORT, fstats_fitting_ten_review_text()),
                          (EVIDENCE_REPORT, mapping_evidence_text()),
                          (COVERAGE_REPORT, coverage_review_text())):
         path = ROOT / report

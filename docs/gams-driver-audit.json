@@ -1,0 +1,2760 @@
+{
+  "schema": 1,
+  "reviewed_on": "2026-11-03",
+  "scope": "Planning judgments for the mapped selected-package procedures; not new compilation or numerical verification.",
+  "hash_normalization": "utf-8-lf",
+  "input_sha256": {
+    "fpm_catalog.json": "24aeb33fc6ccbfaf9f4893790c0b1e585e9612e8de789e04c0227ec92d32b194",
+    "fpm_catalog/gams.json": "5b9cbf312d17bb8e8a38006ce08b800f9f0535134afcba646ef810220419c721",
+    "fpm_catalog/gams-drivers.json": "380151ee466690163f2848ca59c454cb9b05b35237ed382242b5ffd9a4e17613",
+    "fpm_catalog/gams-driver-priorities.json": "c51efc9155c12aa3d5db2902a70db3dae29527675cafea451131d98ccc996ae6"
+  },
+  "counts": {
+    "procedure_records": 530,
+    "checked_drivers": 503,
+    "procedures_with_drivers": 503,
+    "procedures_without_drivers": 27,
+    "unchecked_packages": 19,
+    "additional_class_claims": 40,
+    "directly_mapped_classes": 167,
+    "classes_without_drivers": 1,
+    "unchecked_by_status": {
+      "graphics-promotion": 5,
+      "retained-failure": 17,
+      "sandbox-limit": 3,
+      "scope-review": 1,
+      "workflow-review": 1
+    }
+  },
+  "uncovered_classes": [
+    {
+      "code": "L13b",
+      "label": "Principal components analysis",
+      "procedure_ids": [
+        "forpca-pca",
+        "stdlib-pca"
+      ]
+    }
+  ],
+  "next_candidates": [
+    {
+      "rank": 1,
+      "procedure_id": "nonlin-bfgs",
+      "gams_code": "G1b1a",
+      "title": "BFGS without a supplied gradient",
+      "reason": "Existing driver supplies analytic derivatives; finite-difference fallback is a distinct unverified configuration.",
+      "oracle": "Use translated positive-definite quadratics and Rosenbrock problems with known minima; independently evaluate final objective and gradient and require successful solver status.",
+      "precautions": "Do not register the gradient callback. Reuse comparable problems from the analytic-gradient driver, with tolerances suitable for numerical differentiation; do not infer a speed ranking."
+    },
+    {
+      "rank": 2,
+      "procedure_id": "nonlin-least-squares",
+      "gams_code": "G1b1a",
+      "title": "Nonlinear least squares without a supplied Jacobian",
+      "reason": "Existing driver supplies the residual Jacobian; automatic differencing needs its own checked configuration.",
+      "oracle": "Reuse the independently checked exact exponential family and explicit step factor 1 from the analytic-Jacobian consumer, without supplying its Jacobian. Independently recompute parameters, residual norms and stationarity.",
+      "precautions": "Do not register the residual-Jacobian callback. Retained default-step and nonzero-residual probes already fail even with analytic Jacobians: see docs/gams-candidates/nonlin-least-squares/README.md. Do not broaden this candidate into a general noisy-fit claim or accept convergence status without a correct answer."
+    },
+    {
+      "rank": 3,
+      "procedure_id": "rpn-elementary",
+      "gams_code": "C2",
+      "title": "Signed real cube roots",
+      "reason": "The existing consumer checks sinc and sech, leaving this separately mapped procedure unchecked.",
+      "oracle": "Use signed exact dyadic cubes, zero, and independently generated high-precision noncube references over a bounded normal range; check finite values, signs and scaled reconstruction.",
+      "precautions": "Call the real cube-root API directly; establish the supported kind first. Exclude overflow and subnormals unless independently checked."
+    },
+    {
+      "rank": 4,
+      "procedure_id": "rpn-special",
+      "gams_code": "C10",
+      "source_path": "src/specfun/i0.f",
+      "title": "Modified Bessel I0",
+      "reason": "The existing special-function driver covers beta, not the separately mapped Bessel function.",
+      "oracle": "Compare besi0 with high-precision modified-Bessel references confirmed at two precisions; include zero, signed values, parity and arguments on both sides of implementation branch boundaries.",
+      "precautions": "Inspect the pinned fixed-form implementation for precision and valid range. Do not reuse the package beta implementation as a reference or claim unscaled overflow behavior."
+    },
+    {
+      "rank": 5,
+      "procedure_id": "fortranlib-numerics",
+      "gams_code": "H2",
+      "source_path": "src/lib_array.f90",
+      "title": "Integration of tabulated data",
+      "reason": "The checked procedure record currently has a quadratic-root driver; tabulated integration is a different public capability.",
+      "oracle": "Derive exact area from the documented piecewise interpolation rule; test affine data, irregular grids, partial intervals and the supported integration-limit conventions.",
+      "precautions": "Use the catalog's pinned upstream lib_array fixes. Review the actual integral convention before assigning a more specific H2 subclass; do not demand exact integration of arbitrary nonlinear data."
+    },
+    {
+      "rank": 6,
+      "procedure_id": "fortranlib-numerics",
+      "gams_code": "E1",
+      "source_path": "src/lib_array.f90",
+      "title": "Interpolation of tabulated data",
+      "reason": "A distinct mapped public API currently demonstrated only in the ordinary catalog main.",
+      "oracle": "Use irregular knots and independently computed segment weights, exact knot values and the documented endpoint/outside-range behavior.",
+      "precautions": "Confirm construction and evaluation semantics in the staged, upstream-patched source. Refine the GAMS subclass only after confirming the interpolant; avoid copying the existing ordinary smoke check alone."
+    }
+  ],
+  "unchecked_procedures": [
+    {
+      "procedure_id": "coretran-neighbor",
+      "package_id": "coretran",
+      "revision": "204c4707f6680b6d7d1e4da39077d0fd3acfe37e",
+      "module": "m_KdTree",
+      "procedure": "KdTree / KdTreeSearch%nearest",
+      "gams_codes": [
+        "P",
+        "N5"
+      ],
+      "notes": "Scientific utilities. The main sorts repeated and negative integers, builds a k-d tree for 20 deterministic 2D points and compares the nearest point with an independent direct search. The OpenMP metapackage is resolved explicitly and -fopenmp is enabled; the execution sandbox still uses one thread. No source edits. The broad library is compiled, but this driver does not validate all containers, random generators, mathematical utilities or parallel performance. A broader nearest-neighbor probe fails on a valid 31-point query; its source, hash and result are retained in docs/gams-candidates/coretran-nearest. This procedure has no checked GAMS driver.",
+      "sources": [
+        {
+          "url": "https://github.com/leonfoks/coretran/blob/204c4707f6680b6d7d1e4da39077d0fd3acfe37e/src/spatial/m_KdTree.f90#L1",
+          "path": "src/spatial/m_KdTree.f90",
+          "sha256": "97f1af49aaaf8e006831b7ff88460ca312c8f628e53d76524323fd300058edd5",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/leonfoks/coretran/blob/204c4707f6680b6d7d1e4da39077d0fd3acfe37e/test/m_tests.f90",
+          "path": "test/m_tests.f90",
+          "sha256": "bf13819d217fb1f35a35b20b5694b769cc97a4d865637d3ad526398c65705eb3"
+        }
+      ],
+      "retained_paths": [
+        "docs/gams-candidates/coretran-nearest"
+      ],
+      "drivers": [],
+      "status": "retained-failure",
+      "action": "Retain the valid 31-point failing query; repeat full brute-force nearest-neighbor checks after a repair rather than promote the small ordinary smoke test."
+    },
+    {
+      "procedure_id": "easy-plplot-png",
+      "package_id": "easy-plplot",
+      "revision": "77b0ac9b30d732196e99438064c35f4c1914eb7c",
+      "module": "easy_plplot_m",
+      "procedure": "setup / figure / subplot / plot / show",
+      "gams_codes": [
+        "Q"
+      ],
+      "notes": "The existing upstream FPM package is compiled against pinned PLplot native libraries and the Cairo file driver. The main plots sine and cosine over [0,2*pi] using the pngcairo device, checks that the output file exists and is nontrivial, and the restricted sandbox must return a valid PNG preview for browser display. GUI devices, animation, interactive windows and other plotting routines are outside verification scope. Q describes the tested graphics functionality.",
+      "sources": [
+        {
+          "url": "https://github.com/zoziha/easy_plplot/blob/77b0ac9b30d732196e99438064c35f4c1914eb7c/src/easy_plplot.f90#L1",
+          "path": "src/easy_plplot.f90",
+          "sha256": "8a2414379a97b340bf1f314a5fe051460092af4a44d8752bca51b15fc1d80f7e",
+          "line": 1
+        },
+        {
+          "url": "https://github.com/zoziha/easy_plplot/blob/77b0ac9b30d732196e99438064c35f4c1914eb7c/src/utilities.f90#L1",
+          "path": "src/utilities.f90",
+          "sha256": "f4b542085d7c2835f8fd0b8f176d8040f5514e73e6f3df78ff3f1f765a525c74",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/zoziha/easy_plplot/blob/77b0ac9b30d732196e99438064c35f4c1914eb7c/example/basic.f90",
+          "path": "example/basic.f90",
+          "sha256": "c1515a496d35ff9d193e2da5523c922ed2de728a48ab4021b8264ab8af52efa6"
+        },
+        {
+          "url": "https://github.com/zoziha/easy_plplot/blob/77b0ac9b30d732196e99438064c35f4c1914eb7c/example/logo.f90",
+          "path": "example/logo.f90",
+          "sha256": "8360fba9b1e32f1f17e35aa63882a4f214a1d06dabcdfbdfe31d246a2a031f01"
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [],
+      "status": "graphics-promotion",
+      "action": "Reuse the headless author-style plotting setup, then add independent source-data/axis checks and artifact validation. A nonempty PNG alone is not mathematical verification."
+    },
+    {
+      "procedure_id": "forlab-difference-cumsum",
+      "package_id": "forlab",
+      "revision": "416e5612167b6133100bef4cec116322890f66f7",
+      "module": "forlab",
+      "procedure": "diff,cumsum",
+      "gams_codes": [
+        "H1"
+      ],
+      "notes": "48 dyadic uniform-grid cubic samples, lengths 5..20 and h=1/8,1/4,1/2. First, second and third forward difference quotients checked with exact polynomial formulas; first-difference cumulative reconstruction checked. Not a general derivative-error estimator or integration quadrature. Combined probe failed cumulative reconstruction: 4.458984375 instead of 4.486328125. cumsum sorts before prefix summation; full probe retained. Not a checked cumsum API.",
+      "sources": [
+        {
+          "url": "https://github.com/zoziha/forlab/blob/416e5612167b6133100bef4cec116322890f66f7/src/forlab.F90#L2673",
+          "path": "src/forlab.F90",
+          "line": 2673,
+          "sha256": "4f9be44e66ad2fdb67841ee14d0156b7fa315b137f33333b84abb100f7e48246"
+        },
+        {
+          "url": "https://github.com/zoziha/forlab/blob/416e5612167b6133100bef4cec116322890f66f7/src/forlab.F90#L1902",
+          "path": "src/forlab.F90",
+          "line": 1902,
+          "sha256": "4f9be44e66ad2fdb67841ee14d0156b7fa315b137f33333b84abb100f7e48246"
+        }
+      ],
+      "author_examples": [],
+      "retained_paths": [
+        "docs/gams-candidates/forlab-statistics/README.md"
+      ],
+      "drivers": [],
+      "status": "retained-failure",
+      "action": "The difference-only API already has a checked driver. Resolve or clarify cumsum's sorting behavior before claiming ordered prefix sums; do not add another diff duplicate."
+    },
+    {
+      "procedure_id": "forlab-median-percentiles",
+      "package_id": "forlab",
+      "revision": "416e5612167b6133100bef4cec116322890f66f7",
+      "module": "forlab",
+      "procedure": "median,prctile",
+      "gams_codes": [
+        "L1a1a"
+      ],
+      "notes": "99 finite REAL32 data sets n=1..33. Median and seven scalar/vector percentiles checked against an independent sorted-data reference using plotting positions (i-1/2)/n and endpoint clamping. Integer percentile API only; other quantile conventions excluded. Built but crashed with SIGSEGV at the first median call for n=1; retained exact probe and output. No median or percentile driver published.",
+      "sources": [
+        {
+          "url": "https://github.com/zoziha/forlab/blob/416e5612167b6133100bef4cec116322890f66f7/src/forlab.F90#L6059",
+          "path": "src/forlab.F90",
+          "line": 6059,
+          "sha256": "4f9be44e66ad2fdb67841ee14d0156b7fa315b137f33333b84abb100f7e48246"
+        },
+        {
+          "url": "https://github.com/zoziha/forlab/blob/416e5612167b6133100bef4cec116322890f66f7/src/forlab.F90#L6617",
+          "path": "src/forlab.F90",
+          "line": 6617,
+          "sha256": "4f9be44e66ad2fdb67841ee14d0156b7fa315b137f33333b84abb100f7e48246"
+        },
+        {
+          "url": "https://github.com/zoziha/forlab/blob/416e5612167b6133100bef4cec116322890f66f7/src/forlab.F90#L6627",
+          "path": "src/forlab.F90",
+          "line": 6627,
+          "sha256": "4f9be44e66ad2fdb67841ee14d0156b7fa315b137f33333b84abb100f7e48246"
+        }
+      ],
+      "author_examples": [],
+      "retained_paths": [
+        "docs/gams-candidates/forlab-statistics/README.md"
+      ],
+      "drivers": [],
+      "status": "retained-failure",
+      "action": "Diagnose the first n=1 median crash. Percentile-only testing could be a separately reviewed consumer because the failed combined probe did not reach it."
+    },
+    {
+      "procedure_id": "forpca-pca",
+      "package_id": "forpca",
+      "revision": "d5d87badc4c25c647b3618f22560e712728d8165",
+      "module": "forpca",
+      "procedure": "tpca%pca (SVD mode)",
+      "gams_codes": [
+        "D6",
+        "L13b"
+      ],
+      "notes": "SVD-based principal directions and covariance analysis; D6 and L13b remain source-supported. A checked variance probe fails: covariance diag(10,3.5) produces latent [100,12.25] and incorrect explained percentages. The SVD branch squares covariance singular values again. See docs/gams-candidates/forpca/covariance-variances-result.json and docs/gams-sparse-integral.md. The ordinary catalog demo checks direction and an independently formed rank-one reconstruction only; no checked PCA variance driver is published.",
+      "sources": [
+        {
+          "url": "https://github.com/gha3mi/forpca/blob/d5d87badc4c25c647b3618f22560e712728d8165/src/forpca.f90#L29",
+          "path": "src/forpca.f90",
+          "sha256": "5e37ae9319dff32ec9447f4a6702a03425800d793475b701b3791600eae5fb2f",
+          "line": 29
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/gha3mi/forpca/blob/d5d87badc4c25c647b3618f22560e712728d8165/test/test1.f90",
+          "path": "test/test1.f90",
+          "sha256": "abecdc7baaa729877d748a765d74029c10fbf4fb8366d415c4da1502fd46ce46"
+        }
+      ],
+      "retained_paths": [
+        "docs/gams-candidates/forpca/covariance-variances-result.json",
+        "docs/gams-sparse-integral.md"
+      ],
+      "drivers": [],
+      "status": "retained-failure",
+      "action": "Keep the wrong-variance reproducer. Recheck an upstream repair or separately reviewed mode; do not reduce assertions to direction-only checks and call PCA variances verified."
+    },
+    {
+      "procedure_id": "fortran-lapack-eigh",
+      "package_id": "fortran-lapack",
+      "revision": "e5e45fdd5a38bfab06d1f703f12b787937aa33bb",
+      "module": "linear_algebra",
+      "procedure": "eigh (real symmetric overload)",
+      "gams_codes": [
+        "D4a1"
+      ],
+      "notes": "Standard real symmetric eigenproblem; complex Hermitian overload is not included in this record.",
+      "sources": [
+        {
+          "url": "https://github.com/perazz/fortran-lapack/blob/e5e45fdd5a38bfab06d1f703f12b787937aa33bb/src/la_eigs.f90#L209",
+          "path": "src/la_eigs.f90",
+          "sha256": "2fc9eb41ce23953ab667307bd3491e4df8f596d83434424e1e4c47bb7e2812fb",
+          "line": 209
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/perazz/fortran-lapack/blob/e5e45fdd5a38bfab06d1f703f12b787937aa33bb/test/test_la_eigs.f90",
+          "path": "test/test_la_eigs.f90",
+          "sha256": "0390b1bc8f2b50ced1ee058d553f6cdd3180c5599e62e5dfa90989ad4f3e8ebd"
+        }
+      ],
+      "retained_paths": [
+        "docs/gams-candidates/fortran-lapack/README.md"
+      ],
+      "drivers": [],
+      "status": "sandbox-limit",
+      "action": "Existing high-level eigensystem probes already fail at the hosted file-size linking limit. Investigate link footprint/selective linking before another attempt. The separately checked lower-level syev driver does not verify this high-level API."
+    },
+    {
+      "procedure_id": "fortran-lapack-svd",
+      "package_id": "fortran-lapack",
+      "revision": "e5e45fdd5a38bfab06d1f703f12b787937aa33bb",
+      "module": "linear_algebra",
+      "procedure": "svd",
+      "gams_codes": [
+        "D6"
+      ],
+      "notes": "Singular value decomposition.",
+      "sources": [
+        {
+          "url": "https://github.com/perazz/fortran-lapack/blob/e5e45fdd5a38bfab06d1f703f12b787937aa33bb/src/la_svd.f90#L47",
+          "path": "src/la_svd.f90",
+          "sha256": "29bb0e00f7c8ad36febc5d4f44f5f1b4f2e6da4df4c77a1d8e015664b28e95b8",
+          "line": 47
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/perazz/fortran-lapack/blob/e5e45fdd5a38bfab06d1f703f12b787937aa33bb/test/test_la_svd.f90",
+          "path": "test/test_la_svd.f90",
+          "sha256": "f7d8ab0da8c7badb0d8bdc43d30f5a7cd044c7afc4d7605111b44839ecdeb824"
+        }
+      ],
+      "retained_paths": [
+        "docs/gams-candidates/fortran-lapack/README.md"
+      ],
+      "drivers": [],
+      "status": "sandbox-limit",
+      "action": "Existing high-level SVD probes already fail at the hosted file-size linking limit. Investigate link footprint/selective linking before another attempt. The separately checked lower-level gesvd driver does not verify this high-level API."
+    },
+    {
+      "procedure_id": "fortran-simplify-perpendicular",
+      "package_id": "fortran-simplify",
+      "revision": "f546422216fb88eba97e2a0f4910935efbcdce83",
+      "module": "simplify",
+      "procedure": "perpendicular_distance",
+      "gams_codes": [
+        "P",
+        "K"
+      ],
+      "notes": "Polyline simplification. The main checks one call of perpendicular-distance reduction against endpoints and an independent interpolation bound, and plots the original and reduced curves. Separate GNU 16 probes confirm incorrect radial-distance filtering and lost endpoints on consecutive perpendicular-distance calls at this pin; see the retained reproducers. The single-call example does not fix those upstream limitations.",
+      "sources": [
+        {
+          "url": "https://github.com/jaiken17/fortran-simplify/blob/f546422216fb88eba97e2a0f4910935efbcdce83/src/simplify.f90#L559",
+          "path": "src/simplify.f90",
+          "sha256": "c8606e0e0ebdab544827ab7300489171adc02f9813143962e511f9702d1449b5",
+          "line": 559
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/jaiken17/fortran-simplify/blob/f546422216fb88eba97e2a0f4910935efbcdce83/example/simplify_example.f90",
+          "path": "example/simplify_example.f90",
+          "sha256": "678a13f8a2b533550465606c04f38db0f21aff9fbd82336857478cab5149365c"
+        }
+      ],
+      "retained_paths": [
+        "docs/fpm-candidates/fortran-simplify"
+      ],
+      "drivers": [],
+      "status": "retained-failure",
+      "action": "Preserve the repeated-call endpoint and radial-filter failures. Require an independently checked geometric error bound after a repair; the ordinary single-call example is not a general fix."
+    },
+    {
+      "procedure_id": "fortran-test-helper-create-r64-array",
+      "package_id": "fortran_test_helper",
+      "revision": "1557b1485d8a5b042862042552f1e1a34552ca5e",
+      "module": "fortran_test_helper",
+      "procedure": "create_random_array (real64 overload)",
+      "gams_codes": [
+        "L6a21"
+      ],
+      "notes": "Uniform real test arrays generated from RANDOM_NUMBER; assertion routines are separate software-testing tools. A retained GNU 16 bounds probe with xmin=0 and xmax=1 produces values above 1; see docs/gams-candidates/test-helper-bounds. The source uses 0.99*(low+(high+1-low)*draw). Requested-bound behavior remains unverified; no checked GAMS driver or source patch is published.",
+      "sources": [
+        {
+          "url": "https://github.com/jchristopherson/fortran_test_helper/blob/1557b1485d8a5b042862042552f1e1a34552ca5e/src/fth_arrays.f90#L102",
+          "path": "src/fth_arrays.f90",
+          "sha256": "88f10fd95539fb964a76bda9ca9fc086230f579b1084d641e66cd41d927d691d",
+          "line": 102
+        }
+      ],
+      "author_examples": [],
+      "retained_paths": [
+        "docs/gams-candidates/test-helper-bounds"
+      ],
+      "drivers": [],
+      "status": "retained-failure",
+      "action": "Retest requested bounds after an upstream change; do not accept the observed out-of-range values as a uniform [0,1) driver."
+    },
+    {
+      "procedure_id": "friction-fit",
+      "package_id": "friction",
+      "revision": "8e75dcac26f47417a439adfcbaa24834105d89fe",
+      "module": "friction_core",
+      "procedure": "friction_model%fit",
+      "gams_codes": [
+        "L8"
+      ],
+      "notes": "Parameter fitting remains unverified: the pinned Coulomb fit returned approximately 0.75 for noiseless observations with true coefficient 0.375 while reporting residual convergence. Source review finds fit_fcn returns model minus observed force, then passes observed force again as the least-squares target. Exact reproducer and cached GNU 16 result are retained in docs/gams-candidates/friction-double-subtraction. Ordinary algebraic force evaluation is separately checked; dynamic-state fitting remains unverified.",
+      "sources": [
+        {
+          "url": "https://github.com/jchristopherson/friction/blob/8e75dcac26f47417a439adfcbaa24834105d89fe/src/friction_core.f90#L315",
+          "path": "src/friction_core.f90",
+          "sha256": "6ad2be97b6ae8ecec8c50ba6e3a363f8a968f00233f5a4216d7edd85c69e9c82",
+          "line": 315
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/jchristopherson/friction/blob/8e75dcac26f47417a439adfcbaa24834105d89fe/test/friction_model_tests.f90",
+          "path": "test/friction_model_tests.f90",
+          "sha256": "b50c84375eb9a8909ff88d67bf199e146e24f71669aeef22b5bc8f860cb15e9f"
+        }
+      ],
+      "retained_paths": [
+        "docs/gams-candidates/friction-double-subtraction"
+      ],
+      "drivers": [],
+      "status": "retained-failure",
+      "action": "Resolve the retained double-subtraction diagnosis before repeating the same manufactured fit."
+    },
+    {
+      "procedure_id": "friction-internal-state",
+      "package_id": "friction",
+      "revision": "8e75dcac26f47417a439adfcbaa24834105d89fe",
+      "module": "friction_core",
+      "procedure": "internal_state_odes / internal_var_fit_fcn",
+      "gams_codes": [
+        "I1"
+      ],
+      "notes": "Constitutive friction models, with nonlinear parameter fitting and internal-state ODE integration in the reviewed source. The checked main covers algebraic Coulomb and Stribeck forces only; it does not validate parameter fitting or dynamic internal-state integration. Public LuGre state integration is now separately checked by friction-lugre-state; this does not verify the private interpolation/fitting callbacks recorded here.",
+      "sources": [
+        {
+          "url": "https://github.com/jchristopherson/friction/blob/8e75dcac26f47417a439adfcbaa24834105d89fe/src/friction_core.f90#L221",
+          "path": "src/friction_core.f90",
+          "sha256": "6ad2be97b6ae8ecec8c50ba6e3a363f8a968f00233f5a4216d7edd85c69e9c82",
+          "line": 221
+        }
+      ],
+      "author_examples": [],
+      "retained_paths": [],
+      "drivers": [],
+      "status": "scope-review",
+      "action": "This record names private interpolation/fitting callbacks. The public LuGre integration API already has a checked driver; review or split the mapping before designing another consumer."
+    },
+    {
+      "procedure_id": "gtk-fortran-demo-api",
+      "package_id": "gtk-fortran",
+      "revision": "6f731807228c55bcc0551d15f6d1f7f50bf1fe49",
+      "module": "cairo / gtk",
+      "procedure": "cairo_image_surface_create / cairo_curve_to / cairo_arc / cairo_surface_write_to_png",
+      "gams_codes": [
+        "Q"
+      ],
+      "notes": "The original gtk-fortran 4.8.0 FPM manifest is unchanged and builds the core bindings and high-level helper modules. GNU 16 compilation initially stopped in gtk-hl-dialog.f90 because f_c_string was resolved as a function rather than the legacy subroutine alias. Eleven checksum-guarded call-name replacements use the equivalent convert_f_string generic already provided by gtk_sup, matching current upstream spelling; arguments and implementations are unchanged. The unpatched diagnostic is retained. This release targets GTK 4.18.4/GLib 2.84.1 and is linked against pinned Debian GTK 4.18.6, with Cairo 1.18.4. The example adapts the author Cairo drawing API to an image surface, checks Cairo statuses and PNG signature/size, and draws curves, circles and text without gtk_init, a window or a display server. The returned browser preview is visually reviewed. Q covers graphics. Desktop widgets, events, interactive GUI sessions and the full upstream tests are not runtime-verified. GPL-3.0-or-later with GCC Runtime Library Exception 3.1 notices are retained.",
+      "sources": [
+        {
+          "url": "https://github.com/vmagnin/gtk-fortran/blob/6f731807228c55bcc0551d15f6d1f7f50bf1fe49/src/cairo-auto.f90#L1",
+          "path": "src/cairo-auto.f90",
+          "sha256": "baa4875fd7a70488f39b687ba01a75500aa6babb531a362ab35ea16eb18bfe81",
+          "line": 1
+        },
+        {
+          "url": "https://github.com/vmagnin/gtk-fortran/blob/6f731807228c55bcc0551d15f6d1f7f50bf1fe49/src/gtk.f90#L1",
+          "path": "src/gtk.f90",
+          "sha256": "ce4eda58abfd94229da86174c84d44412e428a6f3dc61773b8d043825ea710d7",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/vmagnin/gtk-fortran/blob/6f731807228c55bcc0551d15f6d1f7f50bf1fe49/examples/cairo-basics.f90",
+          "path": "examples/cairo-basics.f90",
+          "sha256": "ae78b90994cca1b3444e98b006a1936b7cbbad004305c27a5b744710d3f58f59",
+          "line": 1
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [],
+      "status": "graphics-promotion",
+      "action": "Keep Cairo image surfaces without GUI initialization; use known geometry and parsed output/status checks. Widgets and event loops remain outside the online sandbox scope."
+    },
+    {
+      "procedure_id": "heatflow-evolution",
+      "package_id": "heatflow",
+      "revision": "b0d930caad9160a15f0aeafa238c448f48f28d55",
+      "module": "evolution",
+      "procedure": "simulate",
+      "gams_codes": [
+        "I2"
+      ],
+      "notes": "Fourier/Cattaneo heat-transport code. The checked main applies its sparse BiCG solver to an independent backward-Euler discretization of the one-dimensional heat equation; it checks the discrete solution, continuous-solution error and independent matrix residuals. It does not exercise the complete evolution/Cattaneo application.",
+      "sources": [
+        {
+          "url": "https://github.com/ExeQuantCode/HeatFlow/blob/b0d930caad9160a15f0aeafa238c448f48f28d55/src/heatflow/mod_evolve.f90#L44",
+          "path": "src/heatflow/mod_evolve.f90",
+          "sha256": "1e4ff67f07501e24ac1bb3b58f6aac3862ac7f34e40f5edf72853cec871448b0",
+          "line": 44
+        }
+      ],
+      "author_examples": [],
+      "retained_paths": [],
+      "drivers": [],
+      "status": "workflow-review",
+      "action": "Inspect simulate and its file/output requirements, then test a bounded manufactured full evolution with profiles and conservation. The separately checked sparse-solver heat example does not verify this application."
+    },
+    {
+      "procedure_id": "m-draw-raster",
+      "package_id": "m_draw",
+      "revision": "a70c305f607cdc1b3e95d5c2ed3b723dcc803204",
+      "module": "M_draw",
+      "procedure": "voutput / vinit / ortho2 / move2 / draw2 / vexit",
+      "gams_codes": [
+        "Q"
+      ],
+      "notes": "Upstream mixed C/Fortran FPM library, with a checksum-guarded manifest edit adding its src/inc header directory. The X11 link dependency is retained but the checked main uses the PPM file driver, requiring no display server or Hershey font files. A 20-segment blue parabola is rendered with the PPM driver; the consumer checks P3 magic, image dimensions, color range, every pixel range and the presence of blue curve pixels. The ordinary image collector converts the generated PPM to a bounded PNG browser preview. The SVG driver aborted during font initialization when no Hershey fonts were supplied; no upstream driver code is patched, and the example uses PPM. Interactive drivers, all drawing primitives, software text/font setup and SVG output are not validated.",
+      "sources": [
+        {
+          "url": "https://github.com/urbanjost/M_draw/blob/a70c305f607cdc1b3e95d5c2ed3b723dcc803204/src/M_draw.F90#L1",
+          "path": "src/M_draw.F90",
+          "sha256": "3586514c7b68daef344244927c7bee30aa6e1cb7374aa112ac452984a9e057b7",
+          "line": 1
+        },
+        {
+          "url": "https://github.com/urbanjost/M_draw/blob/a70c305f607cdc1b3e95d5c2ed3b723dcc803204/src/drivers/C-ppm.c#L1",
+          "path": "src/drivers/C-ppm.c",
+          "sha256": "718e5ddbee0a0adb4706d2eb1919a6c501b2c1d8fb720b30e3a86f90e377ceed",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/urbanjost/M_draw/blob/a70c305f607cdc1b3e95d5c2ed3b723dcc803204/example/demo_arc.f90",
+          "path": "example/demo_arc.f90",
+          "sha256": "fe797b5c0f872f704029aa31d59ea364390132b58e626077828cf96ebb7ce7ef"
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [],
+      "status": "graphics-promotion",
+      "action": "Adapt the existing PPM example into a dedicated driver with parsed dimensions, complete pixel-range checks and independently predictable line/rectangle geometry. Headless output only; avoid unsupported font-dependent drivers."
+    },
+    {
+      "procedure_id": "ogpf-contour",
+      "package_id": "ogpf",
+      "revision": "bd18021949be028856957c9c03832742513d5c67",
+      "module": "ogpf / gpf",
+      "procedure": "options / contour",
+      "gams_codes": [
+        "Q"
+      ],
+      "notes": "The checked example computes a Gaussian grid and uses the upstream contour interface to generate a PNG. A checksum-guarded catalog patch selects the headless pngcairo terminal instead of the upstream window terminal; the numerical and plotting procedures are unchanged. GNUplot is pinned as a native build dependency. The sandbox must return a browser-viewable PNG, and its preview is reviewed. MIT licensing is stated in both LICENSE and the upstream FPM manifest. Q covers graphics.",
+      "sources": [
+        {
+          "url": "https://github.com/kookma/ogpf/blob/bd18021949be028856957c9c03832742513d5c67/src/ogpf.f90#L1",
+          "path": "src/ogpf.f90",
+          "sha256": "4a53cd4bcc233db46287925b2e6a956515bc899defe92bd62a89a440f2d2d9fd",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/kookma/ogpf/blob/bd18021949be028856957c9c03832742513d5c67/example/demo.f90",
+          "path": "example/demo.f90",
+          "sha256": "8d31c97a7b89a46620a6760a17d4daaa268c240daa28a68e55a988aee5cbbcaa"
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [],
+      "status": "graphics-promotion",
+      "action": "Adapt the Gaussian contour example with explicit expected grid samples and headless artifact checks. Do not infer contour accuracy from file existence alone."
+    },
+    {
+      "procedure_id": "orderpack-order-statistics",
+      "package_id": "orderpack",
+      "revision": "9696eee2670beae1601ae59e125ff9f10e6c88a7",
+      "module": "M_orderpack",
+      "procedure": "orderloc,orderval,orderval_special",
+      "gams_codes": [
+        "L1a1a"
+      ],
+      "notes": "Unsuccessful order-statistics probe: orderloc returns an incorrect third-order statistic for [-1.25,-2.75,1.5,0]. Expected 0, returned index 3/value 1.5. Original and diagnostic probes retained; orderval and orderval_special were not reached for that case and are not verified by this combined probe.",
+      "sources": [
+        {
+          "url": "https://github.com/urbanjost/orderpack/blob/9696eee2670beae1601ae59e125ff9f10e6c88a7/src/M_orderpack.f90#L1",
+          "path": "src/M_orderpack.f90",
+          "line": 1,
+          "sha256": "2413fc033ff4a130f83a26329057cc528159cdb80f3e7d17613263b820a66084"
+        },
+        {
+          "url": "https://github.com/urbanjost/orderpack/blob/9696eee2670beae1601ae59e125ff9f10e6c88a7/src/M_orderpack__indnth.f90#L8",
+          "path": "src/M_orderpack__indnth.f90",
+          "line": 8,
+          "sha256": "a1d0252b61114cef952685649bb752cefb19065593a6dff5abb68281f3e4373d"
+        },
+        {
+          "url": "https://github.com/urbanjost/orderpack/blob/9696eee2670beae1601ae59e125ff9f10e6c88a7/src/M_orderpack__valnth.f90#L8",
+          "path": "src/M_orderpack__valnth.f90",
+          "line": 8,
+          "sha256": "865fae5547c7bb0b3c474c689a933e910c679435091a63b9f8f7467648720c34"
+        },
+        {
+          "url": "https://github.com/urbanjost/orderpack/blob/9696eee2670beae1601ae59e125ff9f10e6c88a7/src/M_orderpack__fndnth.f90#L8",
+          "path": "src/M_orderpack__fndnth.f90",
+          "line": 8,
+          "sha256": "0c20bde14fed23839ed6c5c14a2e0e99d0d68006ea51849fb4bcd7369e0abc13"
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/urbanjost/orderpack/blob/9696eee2670beae1601ae59e125ff9f10e6c88a7/test/test_suite_M_orderpack.f90",
+          "path": "test/test_suite_M_orderpack.f90",
+          "sha256": "e4540d000b641137d161207aaf9b1def966dc3e4b670bea18d64d3d4a95a5708"
+        }
+      ],
+      "retained_paths": [
+        "docs/gams-candidates/orderpack-statistics/README.md"
+      ],
+      "drivers": [],
+      "status": "retained-failure",
+      "action": "Resolve the small-n orderloc counterexample first. orderval and orderval_special were not reached on that failing case; they may be reviewed and tested as separate APIs without claiming orderloc is fixed."
+    },
+    {
+      "procedure_id": "plplot-demo-api",
+      "package_id": "plplot",
+      "revision": "a28c702862ea466a4ee22faba1b676aade77dc4c",
+      "module": "plplot",
+      "procedure": "plinit / plenv / pllab / plline / plend",
+      "gams_codes": [
+        "Q"
+      ],
+      "notes": "The unmodified PLplot 5.15.0 modern Fortran binding modules are compiled with GNU Fortran 16 against Debian libplplot 5.15.0+dfsg2-15+b1. The author CMake precision template is configured with c_double to match the native double-precision C core; the generated include is checksum-locked. Original included parameter/interface sources and LGPL notices are retained. The checked main follows the author plinit/plenv/pllab/plline/plend API, checks finite sine samples and known extrema, requests the headless pngcairo driver at 800x500, and verifies the generated PNG signature and nontrivial size. The sandbox must return a browser-viewable PNG, which is visually reviewed. Q covers graphics. Native C/Cairo libraries and fonts are installed only in this package image; no precompiled Debian Fortran module files are used by the consumer. Interactive windows, other output drivers and the full upstream example/test suite are not verified.",
+      "sources": [
+        {
+          "url": "https://github.com/PLplot/PLplot/blob/a28c702862ea466a4ee22faba1b676aade77dc4c/bindings/fortran/plplot.f90#L1",
+          "path": "bindings/fortran/plplot.f90",
+          "sha256": "a6d9638c10f45bccb1831d2d97a109668e22a9fece4fb5cb2667dfcca403ac63",
+          "line": 1
+        },
+        {
+          "url": "https://github.com/PLplot/PLplot/blob/a28c702862ea466a4ee22faba1b676aade77dc4c/bindings/fortran/plplot_double.f90#L1",
+          "path": "bindings/fortran/plplot_double.f90",
+          "sha256": "b9134d1f3342ee08581248e7def1d539a426676026d1297e2c900e03488fa0ce",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/PLplot/PLplot/blob/a28c702862ea466a4ee22faba1b676aade77dc4c/examples/fortran/x01f.f90",
+          "path": "examples/fortran/x01f.f90",
+          "sha256": "ad2d00c59543140fdb871ef80f9c1b66965b9b0b7bfde891ae63387c44298bd6",
+          "line": 1
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [],
+      "status": "graphics-promotion",
+      "action": "Adapt the pinned author API with controlled geometry and output inspection, retaining native-library and device qualifications. Existing preview verification is ordinary-demo evidence, not a dedicated GAMS proof."
+    },
+    {
+      "procedure_id": "quadrature-fortran-2d-rectangles",
+      "package_id": "quadrature-fortran",
+      "revision": "1d208fc59569a97b1c2abf9c45f7c352dcc7b318",
+      "module": "quadrature_module",
+      "procedure": "integration_class_2d%initialize, integrate",
+      "gams_codes": [
+        "H2b1a1"
+      ],
+      "notes": "36 REAL64 2D polynomial integrals on three rectangular domains using 6/8/10-point adaptive Gaussian methods and monomial powers 0..3 in every coordinate. Product antiderivatives supply exact references; successful status, finite nonnegative error and positive callback counts required. Variable bounds, nonsmooth integrands and rigorous global error guarantees excluded. The exact hosted consumer compiled but segfaulted before numerical output; saved under docs/gams-candidates/quadrature-fortran-nested. No checked driver is assigned.",
+      "sources": [
+        {
+          "url": "https://github.com/jacobwilliams/quadrature-fortran/blob/1d208fc59569a97b1c2abf9c45f7c352dcc7b318/src/quadrature_module.F90#L295",
+          "path": "src/quadrature_module.F90",
+          "line": 295,
+          "sha256": "9c407f2553745d6d07ec30f4101199a644b0558cdc9d951602da59c5dfeb315f"
+        },
+        {
+          "url": "https://github.com/jacobwilliams/quadrature-fortran/blob/1d208fc59569a97b1c2abf9c45f7c352dcc7b318/src/quadrature_module.F90#L533",
+          "path": "src/quadrature_module.F90",
+          "line": 533,
+          "sha256": "9c407f2553745d6d07ec30f4101199a644b0558cdc9d951602da59c5dfeb315f"
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/jacobwilliams/quadrature-fortran/blob/1d208fc59569a97b1c2abf9c45f7c352dcc7b318/test/test.f90",
+          "path": "test/test.f90",
+          "sha256": "c654bec4a4141cfc48a1fca81f670f946d27532d68e0ac4c734dc4fbcad051e3"
+        }
+      ],
+      "retained_paths": [
+        "docs/gams-candidates/quadrature-fortran-nested"
+      ],
+      "drivers": [],
+      "status": "retained-failure",
+      "action": "Diagnose the retained nested-callback runtime crash before repeating the polynomial suite; distinguish callback/toolchain/sandbox behavior from numerical integration error."
+    },
+    {
+      "procedure_id": "quadrature-fortran-3d-rectangles",
+      "package_id": "quadrature-fortran",
+      "revision": "1d208fc59569a97b1c2abf9c45f7c352dcc7b318",
+      "module": "quadrature_module",
+      "procedure": "integration_class_3d%initialize, integrate",
+      "gams_codes": [
+        "H2b1a1"
+      ],
+      "notes": "36 REAL64 3D polynomial integrals on three rectangular domains using 6/8/10-point adaptive Gaussian methods and monomial powers 0..3 in every coordinate. Product antiderivatives supply exact references; successful status, finite nonnegative error and positive callback counts required. Variable bounds, nonsmooth integrands and rigorous global error guarantees excluded. The exact hosted consumer compiled but segfaulted before numerical output; saved under docs/gams-candidates/quadrature-fortran-nested. No checked driver is assigned.",
+      "sources": [
+        {
+          "url": "https://github.com/jacobwilliams/quadrature-fortran/blob/1d208fc59569a97b1c2abf9c45f7c352dcc7b318/src/quadrature_module.F90#L329",
+          "path": "src/quadrature_module.F90",
+          "line": 329,
+          "sha256": "9c407f2553745d6d07ec30f4101199a644b0558cdc9d951602da59c5dfeb315f"
+        },
+        {
+          "url": "https://github.com/jacobwilliams/quadrature-fortran/blob/1d208fc59569a97b1c2abf9c45f7c352dcc7b318/src/quadrature_module.F90#L573",
+          "path": "src/quadrature_module.F90",
+          "line": 573,
+          "sha256": "9c407f2553745d6d07ec30f4101199a644b0558cdc9d951602da59c5dfeb315f"
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/jacobwilliams/quadrature-fortran/blob/1d208fc59569a97b1c2abf9c45f7c352dcc7b318/test/test.f90",
+          "path": "test/test.f90",
+          "sha256": "c654bec4a4141cfc48a1fca81f670f946d27532d68e0ac4c734dc4fbcad051e3"
+        }
+      ],
+      "retained_paths": [
+        "docs/gams-candidates/quadrature-fortran-nested"
+      ],
+      "drivers": [],
+      "status": "retained-failure",
+      "action": "Diagnose the retained nested-callback runtime crash before repeating the polynomial suite; existing one-dimensional success does not validate nested integration."
+    },
+    {
+      "procedure_id": "roots-fortran-toms748-bracketed",
+      "package_id": "roots-fortran",
+      "revision": "85dc6b98404a61d49944939414f7f56c3f32edd1",
+      "module": "root_module",
+      "procedure": "toms748_solver%initialize, solve",
+      "gams_codes": [
+        "F1b"
+      ],
+      "notes": "85 manufactured roots across shifted cubic, exponential, sine, logarithmic and rational families; exact root, returned residual, independently reevaluated residual, bracket and status checked. Bisection fallback explicitly disabled. Smooth simple roots only; not a convergence or speed benchmark. Uses direct object API and a module callback; root_scalar convenience wrapper crashed in the hosted sandbox and is not verified. Direct-object probe also failed solver status with IEEE_OVERFLOW_FLAG; retained exact and diagnostic probes; no checked driver.",
+      "sources": [
+        {
+          "url": "https://github.com/jacobwilliams/roots-fortran/blob/85dc6b98404a61d49944939414f7f56c3f32edd1/src/root_module.F90#L335",
+          "path": "src/root_module.F90",
+          "line": 335,
+          "sha256": "a1e4d4337d643384167d963e87973c80b4e805e38869be2fca071876fd306ad2"
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/jacobwilliams/roots-fortran/blob/85dc6b98404a61d49944939414f7f56c3f32edd1/test/root_tests.f90",
+          "path": "test/root_tests.f90",
+          "sha256": "7b998aafc7eeb8f4d3a378a621ce62e40cfd6a5e17442bff46cd21f8ab184e06"
+        }
+      ],
+      "retained_paths": [
+        "docs/gams-candidates/roots-structured-api/README.md"
+      ],
+      "drivers": [],
+      "status": "retained-failure",
+      "action": "Investigate the direct-object status/overflow failure and convenience-wrapper crash separately; correct roots with failed status do not satisfy the checked-driver contract."
+    },
+    {
+      "procedure_id": "specfunc-fullerton-entire-hyperbolic-integral",
+      "package_id": "specfunc-fullerton",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "module": "specfunc_fullerton",
+      "procedure": "inverse_chi",
+      "gams_codes": [
+        "C4d"
+      ],
+      "notes": "21 signed Cinh integral values, x=-16..16 including zero and tiny dyadics. Public inverse_chi computes integral_0^x (cosh(t)-1)/t dt, an even entire integral, not an inverse function. Independent high precision references; complex continuation and extreme magnitudes excluded. Failed at x=-3: 2.7167096138 instead of 3.2845641412. This full-domain path has no checked driver; failure retained.",
+      "sources": [
+        {
+          "url": "https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_inv_ci.f90#L32",
+          "path": "src/fullerton_inv_ci.f90",
+          "line": 32,
+          "sha256": "ab0632d1cabd912d40dca118539ffa3b16d016b6a7519db1b11d2210bf3fd4b5"
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/test/inv_ci/test_inv_ci.f90",
+          "path": "test/inv_ci/test_inv_ci.f90",
+          "sha256": "6253405fe5caa2358eadf6ef53c164e6a502aff0a4a0f68c53c578262353fc74"
+        }
+      ],
+      "retained_paths": [
+        "docs/gams-candidates/fullerton-gamma-cinh/README.md"
+      ],
+      "drivers": [],
+      "status": "retained-failure",
+      "action": "Resolve the signed Cinh counterexample before claiming full-domain accuracy; the public inverse_chi name does not mean inverse-function evaluation."
+    },
+    {
+      "procedure_id": "specfunc-fullerton-upper-incomplete-gamma",
+      "package_id": "specfunc-fullerton",
+      "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+      "module": "specfunc_fullerton",
+      "procedure": "inc_gamma_compl",
+      "gams_codes": [
+        "C7e"
+      ],
+      "notes": "73 unnormalized upper incomplete gamma integrals: 49 positive-shape cases including x=0, plus 24 strictly positive-x cases with shape -2,-1,-1/2,0. Direct high precision tail-integral references. Undefined nonpositive-shape x=0 and near-pole noninteger shapes excluded. Failed at a=1/2,x=0: NaN instead of sqrt(pi); diagnostic retained. Only a separate strictly positive-x consumer can be promoted.",
+      "sources": [
+        {
+          "url": "https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_gamma.f90#L282",
+          "path": "src/fullerton_gamma.f90",
+          "line": 282,
+          "sha256": "7609fcd9f17f20a9b66a562a64e2244c48d92e6ef3474261b732c13e24397a05"
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/test/gamma/test_gamma.f90",
+          "path": "test/gamma/test_gamma.f90",
+          "sha256": "49a48e63b10b05c318c6696e7b050a808ba5f530117ad518a6b398348d66e1e1"
+        }
+      ],
+      "retained_paths": [
+        "docs/gams-candidates/fullerton-gamma-cinh/README.md",
+        "docs/gams-candidates/fullerton-upper-gamma"
+      ],
+      "drivers": [],
+      "status": "retained-failure",
+      "action": "The positive-x path already has a separate checked driver. Keep the full-domain x=0 failure and retest that boundary after a repair; do not add another positive-x duplicate."
+    },
+    {
+      "procedure_id": "stdlib-activation-gelu-gradient",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_specialfunctions",
+      "procedure": "gelu_grad (REAL64; retained failed derivative probe)",
+      "gams_codes": [
+        "C19"
+      ],
+      "notes": "Pinned gelu_grad API and implementation reviewed. The retained REAL64 probe fails at x=-6 against independently differentiated mpmath references, confirmed at 80/120 digits. For GELU=x*Phi(x), the derivative is Phi(x)+x*phi(x); the implementation uses x/sqrt(2) instead of x/sqrt(2*pi) for the exponential term. No checked gradient driver is published and no library source was patched. Exact source and full result: docs/gams-candidates/stdlib-activations/gelu-gradient-result.json.",
+      "sources": [
+        {
+          "url": "https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_specialfunctions.f90#L184",
+          "path": "src/stdlib_specialfunctions.f90",
+          "line": 184,
+          "sha256": "979978b0583c6413e89d871ac81c468f830e76de989993f7b96b2aeb04a869af"
+        },
+        {
+          "url": "https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_specialfunctions_activations.f90#L152",
+          "path": "src/stdlib_specialfunctions_activations.f90",
+          "line": 152,
+          "sha256": "36cb99bc0727eb67b368f8b69efebac5aba134317cbaef912fa7f073ff258c94"
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_specialfunctions_activations.f90",
+          "path": "test/test_specialfunctions_activations.f90",
+          "sha256": "2ccb657a1c278d394048d312b22e66fe4768461acc0b4b3038c8b614fba01155"
+        }
+      ],
+      "retained_paths": [
+        "docs/gams-candidates/stdlib-activations/gelu-gradient-result.json"
+      ],
+      "drivers": [],
+      "status": "retained-failure",
+      "action": "Retest the independent differentiated references after an upstream fix; value-only GELU drivers do not cover this derivative."
+    },
+    {
+      "procedure_id": "stdlib-activation-silu-gradient",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_specialfunctions",
+      "procedure": "silu_grad (REAL64; retained failed derivative probe)",
+      "gams_codes": [
+        "C19"
+      ],
+      "notes": "Pinned silu_grad API and implementation reviewed. The retained REAL64 probe fails at x=-6 against independently differentiated mpmath references, confirmed at 80/120 digits. For SiLU=x*sigmoid(x), the derivative is sigmoid(x)+x*sigmoid(x)*(1-sigmoid(x)); the pinned leading term is exp(x) instead of sigmoid(x). No checked gradient driver is published and no library source was patched. Exact source and full result: docs/gams-candidates/stdlib-activations/silu-gradient-result.json.",
+      "sources": [
+        {
+          "url": "https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_specialfunctions.f90#L312",
+          "path": "src/stdlib_specialfunctions.f90",
+          "line": 312,
+          "sha256": "979978b0583c6413e89d871ac81c468f830e76de989993f7b96b2aeb04a869af"
+        },
+        {
+          "url": "https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_specialfunctions_activations.f90#L275",
+          "path": "src/stdlib_specialfunctions_activations.f90",
+          "line": 275,
+          "sha256": "36cb99bc0727eb67b368f8b69efebac5aba134317cbaef912fa7f073ff258c94"
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_specialfunctions_activations.f90",
+          "path": "test/test_specialfunctions_activations.f90",
+          "sha256": "2ccb657a1c278d394048d312b22e66fe4768461acc0b4b3038c8b614fba01155"
+        }
+      ],
+      "retained_paths": [
+        "docs/gams-candidates/stdlib-activations/silu-gradient-result.json"
+      ],
+      "drivers": [],
+      "status": "retained-failure",
+      "action": "Retest the independent derivative references after an upstream fix; value-only SiLU drivers do not cover this derivative."
+    },
+    {
+      "procedure_id": "stdlib-complex-underdetermined-fits",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_linalg",
+      "procedure": "lstsq (COMPLEX128)",
+      "gams_codes": [
+        "D9a1"
+      ],
+      "notes": "Retained failed COMPLEX128 underdetermined LSTSQ consumer at shape 2x4. The API returns invalid problem size before producing numerical results. Exact original and diagnostic probes and full output: docs/gams-candidates/stdlib-underdetermined/README.md. Successful PINV-based solves do not verify this LSTSQ API.",
+      "sources": [
+        {
+          "url": "https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_linalg.f90#L1457",
+          "path": "src/stdlib_linalg.f90",
+          "line": 1457,
+          "sha256": "7b3f6f3274aa843a3308efe95594888feaa904648eff18041ff20988cc358811"
+        },
+        {
+          "url": "https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_linalg_least_squares.f90#L1",
+          "path": "src/stdlib_linalg_least_squares.f90",
+          "line": 1,
+          "sha256": "4b0813fe092a342f258c8f014fcdfb919e770900e22c8dddecab8f1ae8ca70b6"
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/example/example_lstsq1.f90",
+          "path": "example/example_lstsq1.f90",
+          "sha256": "aeb94a3308199023078fd6f77042eb590daedc71cc098b1ffc37a4988a8c0644"
+        }
+      ],
+      "retained_paths": [
+        "docs/gams-candidates/stdlib-underdetermined/README.md"
+      ],
+      "drivers": [],
+      "status": "retained-failure",
+      "action": "Retest the exact wide COMPLEX128 LSTSQ call after resolving the retained size error. A successful pseudoinverse solve is a separate API, not verification of LSTSQ."
+    },
+    {
+      "procedure_id": "stdlib-pca",
+      "package_id": "stdlib",
+      "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+      "module": "stdlib_stats",
+      "procedure": "pca, pca_transform, pca_inverse_transform (REAL64)",
+      "gams_codes": [
+        "L13b"
+      ],
+      "notes": "Pinned REAL64 pca, pca_transform and pca_inverse_transform APIs and author tests reviewed. An independent analytic PCA consumer compiles its main but fails linking at the hosted 16 MiB file-size limit. No numerical results were obtained, so no checked PCA driver is published. L13b remains source-supported. Exact source, pin, normalized hash and full result: docs/gams-candidates/stdlib-pca/analytic-pca-result.json. This is a sandbox limit, not a numerical failure.",
+      "sources": [
+        {
+          "url": "https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_stats.f90#L4074",
+          "path": "src/stdlib_stats.f90",
+          "line": 4074,
+          "sha256": "e15ce21ef7f4ae8f3c0df5d99675ad33a5a820167c7565c3b14d3fa2f0acba88"
+        },
+        {
+          "url": "https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_stats_pca.f90#L1",
+          "path": "src/stdlib_stats_pca.f90",
+          "line": 1,
+          "sha256": "6aac67bd80c7d474d6868c351c82ff7fd3f7bc978a1ffe693b4b06a5be6620d6"
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/test/test_pca.f90",
+          "path": "test/test_pca.f90",
+          "sha256": "c5a591cc28b1fc9dcf47bfe3f5e0e10e122fe9732ccbfca9b8b8140710a02114"
+        }
+      ],
+      "retained_paths": [
+        "docs/gams-candidates/stdlib-pca/analytic-pca-result.json"
+      ],
+      "drivers": [],
+      "status": "sandbox-limit",
+      "action": "Highest class-coverage payoff (L13b). Investigate whether a smaller selective link fits the existing file-size limit before another full driver attempt; the failed link established no numerical result."
+    },
+    {
+      "procedure_id": "twopnt-solve",
+      "package_id": "twopnt",
+      "revision": "4ce477215f84a88d879f0ca3937cab9bedfb7762",
+      "module": "twopnt_core",
+      "procedure": "TwoPntBVProblem%run",
+      "gams_codes": [
+        "I1b"
+      ],
+      "notes": "Adaptive boundary-value solution; retain I1b rather than infer linearity for all supported problems. A manufactured Poisson probe u_second_derivative=-2 with zero endpoints failed the full-profile/residual checks: the pinned solver reports success but returns the preceding iterate (the zero initial guess on the linear problem). The convergence exit occurs before v0=v1 in search. Failed source/output are retained under docs/gams-candidates/twopnt; this probe is not a verified driver and no library patch has been applied.",
+      "sources": [
+        {
+          "url": "https://github.com/perazz/twopnt/blob/4ce477215f84a88d879f0ca3937cab9bedfb7762/src/twopnt_core.f90#L357",
+          "path": "src/twopnt_core.f90",
+          "sha256": "830a05ba3f3a7c444645826d03dbac8f793652d3318c9cd7752ed6a152dc79fd",
+          "line": 357
+        }
+      ],
+      "author_examples": [],
+      "retained_paths": [
+        "docs/gams-candidates/twopnt"
+      ],
+      "drivers": [],
+      "status": "retained-failure",
+      "action": "Retest the manufactured full-profile and residual assertions after a source-supported upstream repair; solver success status alone is insufficient."
+    }
+  ],
+  "additional_class_claims": [
+    {
+      "procedure_id": "bstrith-operations",
+      "package_id": "bstrith",
+      "revision": "7ed7730e34c7e1f78f2be9426ccc170f9dcaf57e",
+      "module": "bstrith_arithmetic_basic_add / bstrith_bit_shift",
+      "procedure": "add / sub / shift_l / shift_r",
+      "gams_codes": [
+        "A1",
+        "N2"
+      ],
+      "notes": "Fixed-width binary-string addition, subtraction, shifts and logical operations. The driver checks every eight-bit value, including carry and wraparound. This is not unlimited arbitrary-precision arithmetic. Dedicated N2 driver: 5120 exact comparisons against independent native integer references: shifts/complement/XOR over all 8-bit values, 8-bit increment/decrement, and all ordered pairs of 4-bit addition/subtraction operands. This N2 driver does not mark the separate A1 mapping verified.",
+      "sources": [
+        {
+          "url": "https://github.com/degawa/bstrith/blob/7ed7730e34c7e1f78f2be9426ccc170f9dcaf57e/src/arithmetic/basic/add/add.f90#L1",
+          "path": "src/arithmetic/basic/add/add.f90",
+          "sha256": "541e826c31ecb31b980345f2853d396f6835a21d19c64b610e948ac84c6bf0a2",
+          "line": 1
+        },
+        {
+          "url": "https://github.com/degawa/bstrith/blob/7ed7730e34c7e1f78f2be9426ccc170f9dcaf57e/src/bit/shift/shift.f90#L20",
+          "path": "src/bit/shift/shift.f90",
+          "sha256": "38c84196392ebf938db8e1feedd119c0cf0e519351baab2f34605ec418071102",
+          "line": 20
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/degawa/bstrith/blob/7ed7730e34c7e1f78f2be9426ccc170f9dcaf57e/README.md",
+          "path": "README.md",
+          "sha256": "91f77aaee474e8a73b0b6ef1bb118974b484b473ba9dce335748c4eefc204f71"
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "bstrith-bit-reference",
+          "gams_code": "N2",
+          "path": "fpm_catalog/gams-drivers/bstrith-bit-reference.f90",
+          "review_path": "docs/gams-arithmetic.md"
+        }
+      ],
+      "unmatched_code": "A1",
+      "action": "The N2 consumer already contains independently checked additions/subtractions. Review the arithmetic scope of A1 before adding duplicate arithmetic assertions."
+    },
+    {
+      "procedure_id": "orbs-bitsets",
+      "package_id": "orbs",
+      "revision": "3cf7fcec19798367f6f5bd26bad861c510449265",
+      "module": "orbs",
+      "procedure": "operable_bitset / arithmetic and logical operators",
+      "gams_codes": [
+        "A1",
+        "N2"
+      ],
+      "notes": "Fixed-width bitset arithmetic and logical operations. The main computes an x neighbor for every cell of a two-dimensional 4-by-4 Morton grid, checking all sixteen results and wraparound against independent intrinsic integer operations.",
+      "sources": [
+        {
+          "url": "https://github.com/degawa/orbs/blob/3cf7fcec19798367f6f5bd26bad861c510449265/src/orbs.f90#L1",
+          "path": "src/orbs.f90",
+          "sha256": "cba32ebdc46fa9e4d313a48384a513c41520677916bea365098c43bd0807efb6",
+          "line": 1
+        }
+      ],
+      "author_examples": [],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "orbs-bitwise-reference",
+          "gams_code": "N2",
+          "path": "fpm_catalog/gams-drivers/orbs-bitwise-reference.f90",
+          "review_path": "docs/gams-unsigned-bitsets.md"
+        }
+      ],
+      "unmatched_code": "A1",
+      "action": "Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically."
+    },
+    {
+      "procedure_id": "strith-api",
+      "package_id": "strith",
+      "revision": "da2b1f489a178cb443f636e3f9c89aed6c8702b1",
+      "module": "strith_type_strint / strith_util_toString",
+      "procedure": "add / sub / to_string",
+      "gams_codes": [
+        "A1",
+        "A6"
+      ],
+      "notes": "Signed decimal-string integer addition and subtraction beyond 64-bit range, plus unsigned interpretation of an int64 bit pattern. This is fixed-capacity decimal representation, not unlimited arbitrary precision. Dedicated A1 driver checks 3362 signed small additions/subtractions against native integer results and five exact large-decimal identities beyond int64, including carry, borrow, ordering and cancellation. Fixed capacity and overflow are not validated.",
+      "sources": [
+        {
+          "url": "https://github.com/degawa/strith/blob/da2b1f489a178cb443f636e3f9c89aed6c8702b1/src/type/strint.f90#L172",
+          "path": "src/type/strint.f90",
+          "line": 172,
+          "sha256": "ce256be7c61235c255bf5ba095f41ec1215fa912f3bd82e16d324831a3a3f3f0"
+        },
+        {
+          "url": "https://github.com/degawa/strith/blob/da2b1f489a178cb443f636e3f9c89aed6c8702b1/src/util/toString/toString.f90#L125",
+          "path": "src/util/toString/toString.f90",
+          "line": 125,
+          "sha256": "8a7b90876386428a9303583e202bfcc49b5ec9acb8ce8eed9fb95b52945199b2"
+        }
+      ],
+      "author_examples": [],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "strith-integer-reference",
+          "gams_code": "A1",
+          "path": "fpm_catalog/gams-drivers/strith-integer-reference.f90",
+          "review_path": "docs/gams-arithmetic.md"
+        }
+      ],
+      "unmatched_code": "A6",
+      "action": "Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically."
+    },
+    {
+      "procedure_id": "rpn-elementary",
+      "package_id": "rpn-calculator-fortran",
+      "revision": "7708e4949f17511d81f4e7dd0271a500f0bc3631",
+      "module": "funcs / hyper",
+      "procedure": "cuberoot / sinc / sech",
+      "gams_codes": [
+        "C2",
+        "C4"
+      ],
+      "notes": "Numerical routines from the RPN calculator, called directly without its interactive interface. The checked main verifies a negative cube root, sinc and sech at zero, beta(2,3), modified Bessel I0 at zero, and integer gcd/lcm against known results. A checksum-guarded manifest correction sets source-form=default so .f and .f90 files use their respective forms. No numerical sources are changed. The tests do not establish accuracy over full argument ranges or validate the complete calculator. Dedicated C4 consumer verifies real sinc against a 64-term independent series and sech against a stable exponential formula for 133 real arguments, including zero and signed near-zero values. Finite values, symmetry, range and scalar/array agreement are checked. This driver does not verify the separate C2 cube-root mapping or complex overloads.",
+      "sources": [
+        {
+          "url": "https://github.com/scivision/rpn-calculator-fortran/blob/7708e4949f17511d81f4e7dd0271a500f0bc3631/src/funcs.f90#L1",
+          "path": "src/funcs.f90",
+          "sha256": "45efe8c3beb31e519578af744301ddf25d90a8942432fd4def62ba3cc08d7084",
+          "line": 1
+        },
+        {
+          "url": "https://github.com/scivision/rpn-calculator-fortran/blob/7708e4949f17511d81f4e7dd0271a500f0bc3631/src/hyper.f90#L1",
+          "path": "src/hyper.f90",
+          "sha256": "c6b8444228ccf8accf9d7cf842062d5cdbd6d4e9759c5c26f5c3cec65f2ea26c",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/scivision/rpn-calculator-fortran/blob/7708e4949f17511d81f4e7dd0271a500f0bc3631/test/test.f90",
+          "path": "test/test.f90",
+          "sha256": "e9475b7ba78c098109893540c4e515d2261d972ecf291745563ee64d67b4f2bc"
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "rpn-sinc-sech-reference",
+          "gams_code": "C4",
+          "path": "fpm_catalog/gams-drivers/rpn-sinc-sech-reference.f90",
+          "review_path": "docs/gams-circuits-beta.md"
+        }
+      ],
+      "unmatched_code": "C2",
+      "action": "Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically."
+    },
+    {
+      "procedure_id": "rpn-special",
+      "package_id": "rpn-calculator-fortran",
+      "revision": "7708e4949f17511d81f4e7dd0271a500f0bc3631",
+      "module": "fgamma / i0",
+      "procedure": "beta / besi0",
+      "gams_codes": [
+        "C7",
+        "C10"
+      ],
+      "notes": "Numerical routines from the RPN calculator, called directly without its interactive interface. The checked main verifies a negative cube root, sinc and sech at zero, beta(2,3), modified Bessel I0 at zero, and integer gcd/lcm against known results. A checksum-guarded manifest correction sets source-form=default so .f and .f90 files use their respective forms. No numerical sources are changed. The tests do not establish accuracy over full argument ranges or validate the complete calculator. Dedicated C7 consumer verifies 128 positive integer/half-integer beta pairs with independent factorial identities, plus symmetry and both one-step recurrences (512 evaluations). Finite positive values and relative error within 2e-13 are required. C10 Bessel functions, complex beta, poles, large arguments and overflow handling are outside this driver.",
+      "sources": [
+        {
+          "url": "https://github.com/scivision/rpn-calculator-fortran/blob/7708e4949f17511d81f4e7dd0271a500f0bc3631/src/specfun/gamma.f90#L1",
+          "path": "src/specfun/gamma.f90",
+          "sha256": "c556924514869ff8cd007f48d1a4cf256681a9ec358c030f54b27a1a29ca7344",
+          "line": 1
+        },
+        {
+          "url": "https://github.com/scivision/rpn-calculator-fortran/blob/7708e4949f17511d81f4e7dd0271a500f0bc3631/src/specfun/i0.f#L1",
+          "path": "src/specfun/i0.f",
+          "sha256": "b051aff4b48973d3e189f43e567aa2cc0c0484c4693cbf4c3266d79aa1c03a88",
+          "line": 1
+        }
+      ],
+      "author_examples": [],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "rpn-beta-reference",
+          "gams_code": "C7",
+          "path": "fpm_catalog/gams-drivers/rpn-beta-reference.f90",
+          "review_path": "docs/gams-circuits-beta.md"
+        }
+      ],
+      "unmatched_code": "C10",
+      "action": "Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically."
+    },
+    {
+      "procedure_id": "fortranlib-numerics",
+      "package_id": "fortranlib",
+      "revision": "60fd094d3e137137ce00ec120b085e9b23ebf68b",
+      "module": "lib_algebra / lib_array",
+      "procedure": "quadratic / linspace / integral / interp1d",
+      "gams_codes": [
+        "E1",
+        "F1",
+        "H2"
+      ],
+      "notes": "Selected base_types, lib_algebra and lib_array modules, using the pinned revision immediately before the upstream FPM test suite introduced source symlinks. Nine checksum-guarded edits bring lib_array exactly to upstream commit 844611933cba06d71490033e68b355f6f0ff704f, retaining its integration-limit, descending histogram-bin and precision fixes. The other selected modules are unchanged. The ordinary archive policy remains unchanged. A synthetic FPM wrapper uses the already generated Fortran sources, not the Python templates. The checked consumer integrates the affine function 2*x+1 on [0,1], checks linear interpolation at an interior off-grid point, and solves x**2-5*x+6 against the exact roots 2 and 3. Additional checks cover integration limits outside the tabulated range, descending histogram bins and bin-center precision; the expanded example fails with the older unpatched array module and passes with the upstream fixes. GAMS F1 denotes the quadratic solver, not a general iterative root finder. Random sampling, statistics, geometry, HDF5/FITS bindings and other modules are not selected; the example does not validate every routine in the included modules. Dedicated F1 consumer verifies 84 real64 quadratic calls from 21 distinct dyadic root pairs and four signed coefficient scales, comparing sorted roots, root sums/products and normalized residuals. Uses only the ordinary quadratic API, not Pascal/reduced variants. Repeated/complex roots, zero leading coefficient, severe cancellation and extreme scaling are not verified. The separate E1 interpolation and H2 integration mappings remain source-supported.",
+      "sources": [
+        {
+          "url": "https://github.com/astrofrog/fortranlib/blob/60fd094d3e137137ce00ec120b085e9b23ebf68b/src/lib_algebra.f90#L1",
+          "path": "src/lib_algebra.f90",
+          "sha256": "8d78426ce6f1dbd6af64139c64a9696c757204d334422827318c5b0e411f0e5c",
+          "line": 1
+        },
+        {
+          "url": "https://github.com/astrofrog/fortranlib/blob/60fd094d3e137137ce00ec120b085e9b23ebf68b/src/lib_array.f90#L1",
+          "path": "src/lib_array.f90",
+          "sha256": "d1c2f979d1498c0e505632c02df66ff5ad240a733d00fa71ab59725d71f458ac",
+          "line": 1
+        }
+      ],
+      "author_examples": [],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "fortranlib-quadratic-reference",
+          "gams_code": "F1",
+          "path": "fpm_catalog/gams-drivers/fortranlib-quadratic-reference.f90",
+          "review_path": "docs/gams-roots-splines-quadrature.md"
+        }
+      ],
+      "unmatched_code": "E1",
+      "action": "Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically."
+    },
+    {
+      "procedure_id": "lookup-interpolation",
+      "package_id": "lookup-table-fortran",
+      "revision": "b7dc72359e7c2cc105abfbf79b570c655a7f1d04",
+      "module": "m_lookup_table",
+      "procedure": "LT_create / LT_set_col / LT_set_col_data / LT_add_col / LT_get_loc / LT_get_col / LT_get_mcol / LT_get_col_at_loc / LT_get_mcol_at_loc",
+      "gams_codes": [
+        "E1a",
+        "E3"
+      ],
+      "notes": "Linear lookup tables. An operator-owned FPM manifest wraps the unchanged m_lookup_table.f90 file. The main checks exact interpolation of a linear function, the expected interpolation error for a quadratic, an exact grid value, and clamping below/above the endpoints. No mathematical source edits. The 2D interface, nonuniform spacing options, persistence and all boundary cases are not validated by this example. Linear grids only: independent two-stage interpolation references check 98 queries on original/copied and updated tables, three columns, four lookup routes, location coordinates, endpoint clamping and column resampling/addition. This E3 service driver does not verify the separate E1a mapping.",
+      "sources": [
+        {
+          "url": "https://github.com/jannisteunissen/lookup_table_fortran/blob/b7dc72359e7c2cc105abfbf79b570c655a7f1d04/m_lookup_table.f90#L1",
+          "path": "m_lookup_table.f90",
+          "sha256": "cb8cf06bf3032ed370ca0b9af97af4045ed665c8077cb4cf396f8c6e498e0443",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/jannisteunissen/lookup_table_fortran/blob/b7dc72359e7c2cc105abfbf79b570c655a7f1d04/usage_example.f90",
+          "path": "usage_example.f90",
+          "sha256": "27793b4c62a9c1de91b941b5fe4246fe2226e0d30cbae14e120c703babb4b2d3"
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "lookup-services-reference",
+          "gams_code": "E3",
+          "path": "fpm_catalog/gams-drivers/lookup-services-reference.f90",
+          "review_path": "docs/gams-lookup-fastmath.md"
+        }
+      ],
+      "unmatched_code": "E1a",
+      "action": "The E3 service consumer already checks interpolated values. A new E1a driver should demonstrate a distinct construction/interpolation problem; otherwise review cross-class presentation."
+    },
+    {
+      "procedure_id": "gslib-api",
+      "package_id": "gslib",
+      "revision": "5c021000eb3da8703ced3ee9be145d6c0ecb2608",
+      "module": "external GSLIB routines",
+      "procedure": "cova3 / ksol (ordinary-kriging driver)",
+      "gams_codes": [
+        "E2",
+        "L13"
+      ],
+      "notes": "The driver assembles an ordinary-kriging system from GSLIB covariance and linear-solver routines. It checks exponential covariances, closed-form weights, endpoint interpolation and independent system residuals. Broad interpolation/covariance classes only; no exhaustive spatial-statistics review. The L13 driver verifies spherical/exponential/Gaussian covariances, 21 two-observation ordinary kriging systems, closed-form weights and variances, constant-field reproduction and reflection symmetry. It separates real32 covariance error from real64 solver residuals, and does not verify the separate E2 mapping. GSLIB source-evidence hashes use UTF-8/LF normalization.",
+      "sources": [
+        {
+          "url": "https://github.com/exepulveda/gslib2.0/blob/5c021000eb3da8703ced3ee9be145d6c0ecb2608/src/legacy/gslib/cova3.f90#L1",
+          "path": "src/legacy/gslib/cova3.f90",
+          "sha256": "51394c56d3e67747f10ef8bffe8d499b7e7f1e6392f51552721371a8a745439c",
+          "line": 1
+        },
+        {
+          "url": "https://github.com/exepulveda/gslib2.0/blob/5c021000eb3da8703ced3ee9be145d6c0ecb2608/src/legacy/gslib/ksol.f90#L1",
+          "path": "src/legacy/gslib/ksol.f90",
+          "sha256": "e86a01d5faf662110b3fc917bf7fd5bc044f34ce2b00b3f3d36bf1ee1fc86d16",
+          "line": 1
+        }
+      ],
+      "author_examples": [],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "gslib-kriging-reference",
+          "gams_code": "L13",
+          "path": "fpm_catalog/gams-drivers/gslib-kriging-reference.f90",
+          "review_path": "docs/gams-kriging-network.md"
+        }
+      ],
+      "unmatched_code": "E2",
+      "action": "Existing L13 driver checks ordinary kriging systems and covariance. Review E2 interpolation scope and classification; a new driver should add a distinct spatial interpolation problem."
+    },
+    {
+      "procedure_id": "bspline-fortran-3d-mixed-partials",
+      "package_id": "bspline-fortran",
+      "revision": "047c724451aeee7f883c0d5acba3f7bd22a5de01",
+      "module": "bspline_module",
+      "procedure": "bspline_3d%initialize, evaluate",
+      "gams_codes": [
+        "E3a2",
+        "E2a"
+      ],
+      "notes": "1728 REAL64 cubic tensor value/derivative queries on a five-node-per-axis dyadic nonuniform grid. Every partial-order combination 0..2 per coordinate at 64 interior points; explicit cubic/cross-term input formulas and independent coefficient/falling-factorial derivatives. API statuses, finite scaled agreement within 1e-8 and data preservation required. Extrapolation, noisy data and derivative orders above two excluded.",
+      "sources": [
+        {
+          "url": "https://github.com/jacobwilliams/bspline-fortran/blob/047c724451aeee7f883c0d5acba3f7bd22a5de01/src/bspline_oo_module.f90#L1448",
+          "path": "src/bspline_oo_module.f90",
+          "line": 1448,
+          "sha256": "2b1bd0fb16092ccb4bb2bc4cf499249eb19252c888f582123f4c31c8de29772a"
+        },
+        {
+          "url": "https://github.com/jacobwilliams/bspline-fortran/blob/047c724451aeee7f883c0d5acba3f7bd22a5de01/src/bspline_oo_module.f90#L1610",
+          "path": "src/bspline_oo_module.f90",
+          "line": 1610,
+          "sha256": "2b1bd0fb16092ccb4bb2bc4cf499249eb19252c888f582123f4c31c8de29772a"
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/jacobwilliams/bspline-fortran/blob/047c724451aeee7f883c0d5acba3f7bd22a5de01/test/test_oo.f90",
+          "path": "test/test_oo.f90",
+          "sha256": "da44e4cc9de187984e10fade22525403a42847f79056e13dd154572af486afda"
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "bspline-fortran-3d-mixed-partials-reference",
+          "gams_code": "E3a2",
+          "path": "fpm_catalog/gams-drivers/bspline-fortran-3d-mixed-partials-reference.f90",
+          "review_path": "docs/gams-integrals-tensors-ten.md"
+        }
+      ],
+      "unmatched_code": "E2a",
+      "action": "Existing driver constructs the interpolant and checks values as well as derivatives. Review E2a versus E3a2 presentation before duplicating the same experiment."
+    },
+    {
+      "procedure_id": "bspline-fortran-4d-mixed-partials",
+      "package_id": "bspline-fortran",
+      "revision": "047c724451aeee7f883c0d5acba3f7bd22a5de01",
+      "module": "bspline_module",
+      "procedure": "bspline_4d%initialize, evaluate",
+      "gams_codes": [
+        "E3a2",
+        "E2a"
+      ],
+      "notes": "20736 REAL64 cubic tensor value/derivative queries on a five-node-per-axis dyadic nonuniform grid. Every partial-order combination 0..2 per coordinate at 256 interior points; explicit cubic/cross-term input formulas and independent coefficient/falling-factorial derivatives. API statuses, finite scaled agreement within 1e-8 and data preservation required. Extrapolation, noisy data and derivative orders above two excluded.",
+      "sources": [
+        {
+          "url": "https://github.com/jacobwilliams/bspline-fortran/blob/047c724451aeee7f883c0d5acba3f7bd22a5de01/src/bspline_oo_module.f90#L1751",
+          "path": "src/bspline_oo_module.f90",
+          "line": 1751,
+          "sha256": "2b1bd0fb16092ccb4bb2bc4cf499249eb19252c888f582123f4c31c8de29772a"
+        },
+        {
+          "url": "https://github.com/jacobwilliams/bspline-fortran/blob/047c724451aeee7f883c0d5acba3f7bd22a5de01/src/bspline_oo_module.f90#L1937",
+          "path": "src/bspline_oo_module.f90",
+          "line": 1937,
+          "sha256": "2b1bd0fb16092ccb4bb2bc4cf499249eb19252c888f582123f4c31c8de29772a"
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/jacobwilliams/bspline-fortran/blob/047c724451aeee7f883c0d5acba3f7bd22a5de01/test/test_oo.f90",
+          "path": "test/test_oo.f90",
+          "sha256": "da44e4cc9de187984e10fade22525403a42847f79056e13dd154572af486afda"
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "bspline-fortran-4d-mixed-partials-reference",
+          "gams_code": "E3a2",
+          "path": "fpm_catalog/gams-drivers/bspline-fortran-4d-mixed-partials-reference.f90",
+          "review_path": "docs/gams-integrals-tensors-ten.md"
+        }
+      ],
+      "unmatched_code": "E2a",
+      "action": "Existing driver constructs the interpolant and checks values as well as derivatives. Review E2a versus E3a2 presentation before duplicating the same experiment."
+    },
+    {
+      "procedure_id": "nonlin-bfgs",
+      "package_id": "nonlin",
+      "revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+      "module": "nonlin",
+      "procedure": "bfgs%solve",
+      "gams_codes": [
+        "G1b1a",
+        "G1b1b"
+      ],
+      "notes": "User gradients are registered with fcnnvar_helper%set_gradient_fcn. G1b1a applies to finite-difference mode; G1b1b applies when the user supplies the gradient/Jacobian. The driver, where present, identifies its selected configuration.",
+      "sources": [
+        {
+          "url": "https://github.com/jchristopherson/nonlin/blob/2133d067886ea6eca0552ebca9ed7bb8a262e5b8/src/nonlin_optimize.f90#L584",
+          "path": "src/nonlin_optimize.f90",
+          "line": 584,
+          "sha256": "51aca88be20946a42cf59c9ec833a481e3f15774eb13d19f5a3e859a41c3cb4d"
+        },
+        {
+          "url": "https://github.com/jchristopherson/nonlin/blob/2133d067886ea6eca0552ebca9ed7bb8a262e5b8/src/nonlin_multi_var.f90#L204",
+          "path": "src/nonlin_multi_var.f90",
+          "line": 204,
+          "sha256": "d7d000db98bbe779d13dc4e643085711fef6dd817b1127265c05afb50deb49c4"
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/jchristopherson/nonlin/blob/2133d067886ea6eca0552ebca9ed7bb8a262e5b8/examples/nonlin_bfgs_example.f90",
+          "path": "examples/nonlin_bfgs_example.f90",
+          "sha256": "d1f6750301ffc98d17659eee49729ac77e78df168036eeb76789229f00e71880"
+        },
+        {
+          "url": "https://github.com/jchristopherson/nonlin/blob/2133d067886ea6eca0552ebca9ed7bb8a262e5b8/examples/example_problems.f90",
+          "path": "examples/example_problems.f90",
+          "sha256": "22fdb9fbed34daccff775cea9211e0b398fa8aec792460c9a3e808d7dd4eaedb",
+          "line": 126
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "nonlin-rosenbrock-bfgs",
+          "gams_code": "G1b1b",
+          "path": "fpm_catalog/gams-drivers/nonlin-rosenbrock-bfgs.f90",
+          "review_path": null
+        }
+      ],
+      "unmatched_code": "G1b1a",
+      "action": "Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically."
+    },
+    {
+      "procedure_id": "nonlin-least-squares",
+      "package_id": "nonlin",
+      "revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+      "module": "nonlin",
+      "procedure": "least_squares_solver%solve",
+      "gams_codes": [
+        "G1b1a",
+        "G1b1b"
+      ],
+      "notes": "The unconstrained least_squares_solver is mapped; constrained_least_squares_solver is a distinct type. For smooth nonlinear least squares, the user residual Jacobian supplies first-derivative information for the squared-residual objective; this is not a general scalar-objective gradient interface. G1b1a applies to finite-difference mode; G1b1b applies when the user supplies the gradient/Jacobian. The driver, where present, identifies its selected configuration.",
+      "sources": [
+        {
+          "url": "https://github.com/jchristopherson/nonlin/blob/2133d067886ea6eca0552ebca9ed7bb8a262e5b8/src/nonlin_least_squares.f90#L141",
+          "path": "src/nonlin_least_squares.f90",
+          "line": 141,
+          "sha256": "cca74546680f2599f994d89415279792ca6b22a56ea5f4e6749bb72aa85b3cb5"
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/jchristopherson/nonlin/blob/2133d067886ea6eca0552ebca9ed7bb8a262e5b8/examples/nonlin_least_squares_example.f90",
+          "path": "examples/nonlin_least_squares_example.f90",
+          "sha256": "5b3c6e6e1a98864ddc12d1faca3132372f9a2958ba88cf340dc2af5dfcfc7d35"
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "nonlin-lsq-jacobian-reference",
+          "gams_code": "G1b1b",
+          "path": "fpm_catalog/gams-drivers/nonlin-lsq-jacobian-reference.f90",
+          "review_path": "docs/gams-jacobian-transforms.md"
+        }
+      ],
+      "unmatched_code": "G1b1a",
+      "action": "Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically."
+    },
+    {
+      "procedure_id": "formal-divergence",
+      "package_id": "formal",
+      "revision": "d28eee9b37b4b74abe7f21bb2ccbdfb5c17f3e8a",
+      "module": "formal_m / tensors_1D_m",
+      "procedure": "scalar_1D_t / vector_1D_t / .grad. / .div. / .SSS. / .SS.",
+      "gams_codes": [
+        "H1",
+        "H2",
+        "I2"
+      ],
+      "notes": "Mimetic vector-calculus library with pinned Julienne and Assert dependencies. A single-image coarray build is used. The checked consumer adapts the author's extended Gauss-divergence example to f=x**2/2 and v=x on a 64-cell unit interval. It checks the two volume integrals against 1/3 and 1/6, the boundary flux against 1/2, finiteness and the conservation residual using single-precision tolerances. The command-line parsing and shell display calls of the upstream example are omitted. Library numerical sources are unchanged. Other 2D/3D operators, time integration and convergence orders are not validated. Original Berkeley Lab license terms, including the enhancements clause, are retained; this is not labeled plain BSD-3-Clause.",
+      "sources": [
+        {
+          "url": "https://github.com/BerkeleyLab/formal/blob/d28eee9b37b4b74abe7f21bb2ccbdfb5c17f3e8a/src/formal/tensors_1D_m.F90#L1",
+          "path": "src/formal/tensors_1D_m.F90",
+          "sha256": "72a5b7ac831f0d496f5233a4e7c95d7717c8dbff12190fea5ecba62adb08cd05",
+          "line": 1
+        },
+        {
+          "url": "https://github.com/BerkeleyLab/formal/blob/d28eee9b37b4b74abe7f21bb2ccbdfb5c17f3e8a/src/formal/divergence_1D_s.F90#L1",
+          "path": "src/formal/divergence_1D_s.F90",
+          "sha256": "afe9749b011128b8b4420206aa534770fd67a082477cc030e5b58e7bb7622f44",
+          "line": 1
+        },
+        {
+          "url": "https://github.com/BerkeleyLab/formal/blob/d28eee9b37b4b74abe7f21bb2ccbdfb5c17f3e8a/src/formal/gradient_1D_s.F90#L1",
+          "path": "src/formal/gradient_1D_s.F90",
+          "sha256": "29416f62cfbadc6bf5c880697f585947ed18d299221e4e05aaf708a0debebc5c",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/BerkeleyLab/formal/blob/d28eee9b37b4b74abe7f21bb2ccbdfb5c17f3e8a/example/extended-gauss-divergence.F90",
+          "path": "example/extended-gauss-divergence.F90",
+          "sha256": "a48b8b57615c8b57e825dcd24acb940cf8bd456815b6ae8385ddc260632d20a7"
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "formal-polynomial-reference",
+          "gams_code": "H1",
+          "path": "fpm_catalog/gams-drivers/formal-polynomial-reference.f90",
+          "review_path": "docs/gams-periodic-calculus.md"
+        }
+      ],
+      "unmatched_code": "H2",
+      "action": "H1 divergence/gradient success is not a time-dependent PDE solution. Split volume-integration and PDE claims; I2 needs a real evolution/boundary problem, not relabeling the operator test."
+    },
+    {
+      "procedure_id": "fortranlib-numerics",
+      "package_id": "fortranlib",
+      "revision": "60fd094d3e137137ce00ec120b085e9b23ebf68b",
+      "module": "lib_algebra / lib_array",
+      "procedure": "quadratic / linspace / integral / interp1d",
+      "gams_codes": [
+        "E1",
+        "F1",
+        "H2"
+      ],
+      "notes": "Selected base_types, lib_algebra and lib_array modules, using the pinned revision immediately before the upstream FPM test suite introduced source symlinks. Nine checksum-guarded edits bring lib_array exactly to upstream commit 844611933cba06d71490033e68b355f6f0ff704f, retaining its integration-limit, descending histogram-bin and precision fixes. The other selected modules are unchanged. The ordinary archive policy remains unchanged. A synthetic FPM wrapper uses the already generated Fortran sources, not the Python templates. The checked consumer integrates the affine function 2*x+1 on [0,1], checks linear interpolation at an interior off-grid point, and solves x**2-5*x+6 against the exact roots 2 and 3. Additional checks cover integration limits outside the tabulated range, descending histogram bins and bin-center precision; the expanded example fails with the older unpatched array module and passes with the upstream fixes. GAMS F1 denotes the quadratic solver, not a general iterative root finder. Random sampling, statistics, geometry, HDF5/FITS bindings and other modules are not selected; the example does not validate every routine in the included modules. Dedicated F1 consumer verifies 84 real64 quadratic calls from 21 distinct dyadic root pairs and four signed coefficient scales, comparing sorted roots, root sums/products and normalized residuals. Uses only the ordinary quadratic API, not Pascal/reduced variants. Repeated/complex roots, zero leading coefficient, severe cancellation and extreme scaling are not verified. The separate E1 interpolation and H2 integration mappings remain source-supported.",
+      "sources": [
+        {
+          "url": "https://github.com/astrofrog/fortranlib/blob/60fd094d3e137137ce00ec120b085e9b23ebf68b/src/lib_algebra.f90#L1",
+          "path": "src/lib_algebra.f90",
+          "sha256": "8d78426ce6f1dbd6af64139c64a9696c757204d334422827318c5b0e411f0e5c",
+          "line": 1
+        },
+        {
+          "url": "https://github.com/astrofrog/fortranlib/blob/60fd094d3e137137ce00ec120b085e9b23ebf68b/src/lib_array.f90#L1",
+          "path": "src/lib_array.f90",
+          "sha256": "d1c2f979d1498c0e505632c02df66ff5ad240a733d00fa71ab59725d71f458ac",
+          "line": 1
+        }
+      ],
+      "author_examples": [],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "fortranlib-quadratic-reference",
+          "gams_code": "F1",
+          "path": "fpm_catalog/gams-drivers/fortranlib-quadratic-reference.f90",
+          "review_path": "docs/gams-roots-splines-quadrature.md"
+        }
+      ],
+      "unmatched_code": "H2",
+      "action": "Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically."
+    },
+    {
+      "procedure_id": "fmm2d-potentials",
+      "package_id": "fmm2d",
+      "revision": "7e7509ecd6ebe31b9292cb00825410b478f44808",
+      "module": "classic Fortran interface",
+      "procedure": "rfmm2d_t_c_p",
+      "gams_codes": [
+        "D1",
+        "I2"
+      ],
+      "notes": "Native Fortran FMM2D source set selected from the upstream makefile with optional C++ fast kernels disabled. OpenMP and portable -O2 are enabled; the visitor sandbox uses one execution thread and retains bounds checks. Checksum-guarded compatibility edits skip zero-point multipole/local evaluations and zero-source neighbor calls before passing one-past-end array elements. The inverse reorder helper declares its arrays with the actual n extent rather than the legacy dummy extent 1. Source and target branches receive matching guards; formulas are unchanged. The checked real Laplace driver evaluates 512 deterministic sources at 16 separate targets and compares with an independent charge-weighted log-distance sum. A separate source-and-target probe also checks all source potentials by direct summation with self-interactions excluded, exercising the source-side guards. The code is classified as a structured kernel-matrix application and Green-function evaluation related to PDEs, not as a complete boundary-value solver. Helmholtz, biharmonic/Stokes, dipoles, gradients/Hessians, every complex/vector interface and parallel speedups are not validated. The small accuracy check is not a performance benchmark.",
+      "sources": [
+        {
+          "url": "https://github.com/flatironinstitute/fmm2d/blob/7e7509ecd6ebe31b9292cb00825410b478f44808/src/laplace/rfmm2dwrap.f#L1",
+          "path": "src/laplace/rfmm2dwrap.f",
+          "sha256": "f7097a9bd31f6e30e3d8d2335d1093b0a2ba279fa5c7b871d51454dba00d4fe2",
+          "line": 1
+        },
+        {
+          "url": "https://github.com/flatironinstitute/fmm2d/blob/7e7509ecd6ebe31b9292cb00825410b478f44808/src/laplace/cfmm2d.f#L1",
+          "path": "src/laplace/cfmm2d.f",
+          "sha256": "b156bbf48a51ffdf05011920aadccf56bc0eccddfd728eabd7b837625f4d75c8",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/flatironinstitute/fmm2d/blob/7e7509ecd6ebe31b9292cb00825410b478f44808/test/laplace/test_rfmm2d.f",
+          "path": "test/laplace/test_rfmm2d.f",
+          "sha256": "338b1d924aa9bad5bd4d68ac6bcf8ee3bb0207c6c61cd129ccce5adf87a651fb"
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "fmm2d-laplace-reference",
+          "gams_code": "D1",
+          "path": "fpm_catalog/gams-drivers/fmm2d-laplace-reference.f90",
+          "review_path": "docs/gams-propack-fmm.md"
+        }
+      ],
+      "unmatched_code": "I2",
+      "action": "Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically."
+    },
+    {
+      "procedure_id": "formal-divergence",
+      "package_id": "formal",
+      "revision": "d28eee9b37b4b74abe7f21bb2ccbdfb5c17f3e8a",
+      "module": "formal_m / tensors_1D_m",
+      "procedure": "scalar_1D_t / vector_1D_t / .grad. / .div. / .SSS. / .SS.",
+      "gams_codes": [
+        "H1",
+        "H2",
+        "I2"
+      ],
+      "notes": "Mimetic vector-calculus library with pinned Julienne and Assert dependencies. A single-image coarray build is used. The checked consumer adapts the author's extended Gauss-divergence example to f=x**2/2 and v=x on a 64-cell unit interval. It checks the two volume integrals against 1/3 and 1/6, the boundary flux against 1/2, finiteness and the conservation residual using single-precision tolerances. The command-line parsing and shell display calls of the upstream example are omitted. Library numerical sources are unchanged. Other 2D/3D operators, time integration and convergence orders are not validated. Original Berkeley Lab license terms, including the enhancements clause, are retained; this is not labeled plain BSD-3-Clause.",
+      "sources": [
+        {
+          "url": "https://github.com/BerkeleyLab/formal/blob/d28eee9b37b4b74abe7f21bb2ccbdfb5c17f3e8a/src/formal/tensors_1D_m.F90#L1",
+          "path": "src/formal/tensors_1D_m.F90",
+          "sha256": "72a5b7ac831f0d496f5233a4e7c95d7717c8dbff12190fea5ecba62adb08cd05",
+          "line": 1
+        },
+        {
+          "url": "https://github.com/BerkeleyLab/formal/blob/d28eee9b37b4b74abe7f21bb2ccbdfb5c17f3e8a/src/formal/divergence_1D_s.F90#L1",
+          "path": "src/formal/divergence_1D_s.F90",
+          "sha256": "afe9749b011128b8b4420206aa534770fd67a082477cc030e5b58e7bb7622f44",
+          "line": 1
+        },
+        {
+          "url": "https://github.com/BerkeleyLab/formal/blob/d28eee9b37b4b74abe7f21bb2ccbdfb5c17f3e8a/src/formal/gradient_1D_s.F90#L1",
+          "path": "src/formal/gradient_1D_s.F90",
+          "sha256": "29416f62cfbadc6bf5c880697f585947ed18d299221e4e05aaf708a0debebc5c",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/BerkeleyLab/formal/blob/d28eee9b37b4b74abe7f21bb2ccbdfb5c17f3e8a/example/extended-gauss-divergence.F90",
+          "path": "example/extended-gauss-divergence.F90",
+          "sha256": "a48b8b57615c8b57e825dcd24acb940cf8bd456815b6ae8385ddc260632d20a7"
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "formal-polynomial-reference",
+          "gams_code": "H1",
+          "path": "fpm_catalog/gams-drivers/formal-polynomial-reference.f90",
+          "review_path": "docs/gams-periodic-calculus.md"
+        }
+      ],
+      "unmatched_code": "I2",
+      "action": "H1 divergence/gradient success is not a time-dependent PDE solution. Split volume-integration and PDE claims; I2 needs a real evolution/boundary problem, not relabeling the operator test."
+    },
+    {
+      "procedure_id": "rng-uniform",
+      "package_id": "rng-fortran",
+      "revision": "5ead95f436323d07fc82acc3613f66550947f256",
+      "module": "m_random",
+      "procedure": "rng_t%set_seed / unif_01",
+      "gams_codes": [
+        "L6a21",
+        "L6c"
+      ],
+      "notes": "Xoroshiro128+ pseudo-random generator. An FPM wrapper selects unchanged m_random.f90 and uses -fwrapv for its intentional signed-integer wraparound. Two fresh generators replay 10000 seeded uniform draws exactly; the main checks the implementation range [0,1), broad uniform/normal/Poisson(4) moment tolerances, nonnegative counts and unit circle/sphere norms. These are deterministic smoke checks, not statistical quality or cryptographic validation. OpenMP, jump independence, large Poisson rates and all distributions are not covered. A separate hosted reproducer confirms that set_seed does not clear the cached second normal after an odd normal() call; use a fresh generator to restart normal sequences. The selected replay uses fresh objects. Dedicated L6a21 driver checks 15 interleaved streams against unsigned-Python prefixes and rolling hashes, exact 52-bit integer/uniform conversion, seeded restarts and zero/default/two explicit jumps. Jump references use independent GF(2) transition-matrix exponentiation to 2**64. This establishes fixed bitstream and seed/jump API behavior, not statistical quality or thread independence; the cached-normal reseeding defect remains unresolved.",
+      "sources": [
+        {
+          "url": "https://github.com/jannisteunissen/rng_fortran/blob/5ead95f436323d07fc82acc3613f66550947f256/m_random.f90#L1",
+          "path": "m_random.f90",
+          "sha256": "6724a27e2cee58df03723071fd62dc5371b294a524c26f461002ffbe6fddf5ae",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/jannisteunissen/rng_fortran/blob/5ead95f436323d07fc82acc3613f66550947f256/example.f90",
+          "path": "example.f90",
+          "sha256": "aa79abd9d6ee57cac43006c7561efdb4e4a75ddf0a6c065652e449adeec1772e"
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "rng-xoroshiro-reference",
+          "gams_code": "L6a21",
+          "path": "fpm_catalog/gams-drivers/rng-xoroshiro-reference.f90",
+          "review_path": "docs/gams-helmholtz-streams.md"
+        }
+      ],
+      "unmatched_code": "L6c",
+      "action": "Existing golden-stream driver already checks seed/jump behavior. Review whether to expose that proof under L6c before writing a duplicate; cached-normal reseeding remains a separate retained failure."
+    },
+    {
+      "procedure_id": "m-cli-demo-api",
+      "package_id": "m_cli",
+      "revision": "45a7cbcdc12b71b828c482fb4c33498db7fb5618",
+      "module": "M_CLI",
+      "procedure": "commandline / check_commandline",
+      "gams_codes": [
+        "N1",
+        "N3"
+      ],
+      "notes": "The original M_CLI FPM library is unchanged. The checked consumer adapts the author example/demo3.f90, translating a prototype command into NAMELIST text and checking integer, real, logical, character and three-element real array defaults before using the scaled sum. No stdin or program arguments are required; the editable prototype supplies the defaults. Actual command-line overrides, help/error paths and interactive examples are not runtime-verified here. N1/N3 cover command input and character parsing; no numerical-method classification is inferred. Public-domain/Unlicense notices are retained. Checked driver: 32 generated default prototypes converted to native NAMELIST text. Exact integer, dyadic real, three-element real array, alternating logical and quoted label references; 224 values. Repeated calls exercise dictionary reinitialization. Actual CLI overrides, malformed input, help paths and all quoting rules unverified.",
+      "sources": [
+        {
+          "url": "https://github.com/urbanjost/M_CLI/blob/45a7cbcdc12b71b828c482fb4c33498db7fb5618/src/M_CLI.f90#L1",
+          "path": "src/M_CLI.f90",
+          "sha256": "33469b27731b15117ffe050d478ce00e4c05417cbb292ee11a6534c187c4e7a8",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/urbanjost/M_CLI/blob/45a7cbcdc12b71b828c482fb4c33498db7fb5618/example/demo3.f90",
+          "path": "example/demo3.f90",
+          "sha256": "03954d1c75dc0fa49cb89cfc83ef36b12371e6320df03f5a95b3a51c783c62c8",
+          "line": 1
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "cli-namelist-reference",
+          "gams_code": "N3",
+          "path": "fpm_catalog/gams-drivers/cli-namelist-reference.f90",
+          "review_path": "docs/gams-workflows-ten.md"
+        }
+      ],
+      "unmatched_code": "N1",
+      "action": "Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically."
+    },
+    {
+      "procedure_id": "m-history-demo-api",
+      "package_id": "m_history",
+      "revision": "fe7dd940a5d15792653233962d8df9cb3b5443f6",
+      "module": "M_history",
+      "procedure": "redo",
+      "gams_codes": [
+        "N1",
+        "N3"
+      ],
+      "notes": "The unmodified M_history redo editor records two commands in its scratch history file. The self-contained main supplies editing directives through the optional lun argument, recalls line 1, changes 290 to 300 and checks the result, then recalls line 2 and verifies that its original text remains unchanged. No shell command is executed and no interactive terminal is required. The main follows the author application in using a 1024-character buffer. An initial 120-character buffer triggered an upstream bounds error at cin(1:255); that diagnostic is retained separately, and shorter buffers are not verified/supported by this catalog example. N1/N3 cover command input and character editing; no numerical-method classification is inferred. MIT library notices and the public-domain author application notice are retained. Checked driver: 12 generated original history commands, each recalled and edited with a scripted numeric substitution, then recalled again to require the unchanged original. Uses supported 1024-character line buffers and scratch directive units; no shell command is executed. Short buffers, other editing directives, interactive terminals and malformed history commands unverified.",
+      "sources": [
+        {
+          "url": "https://github.com/urbanjost/M_history/blob/fe7dd940a5d15792653233962d8df9cb3b5443f6/src/M_history.f90#L1",
+          "path": "src/M_history.f90",
+          "sha256": "59dcb8f8c0ffea5641d8890fb5909dab2c4d1cb8da94dc6b15091d52c4c70f8e",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/urbanjost/M_history/blob/fe7dd940a5d15792653233962d8df9cb3b5443f6/app/redo.f90",
+          "path": "app/redo.f90",
+          "sha256": "b12efc0e63635c4af61a0b4d4a494e63d7a5b3817dee3cedd10941065aa062b3",
+          "line": 1
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "history-edit-reference",
+          "gams_code": "N3",
+          "path": "fpm_catalog/gams-drivers/history-edit-reference.f90",
+          "review_path": "docs/gams-workflows-ten.md"
+        }
+      ],
+      "unmatched_code": "N1",
+      "action": "Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically."
+    },
+    {
+      "procedure_id": "rojff-json",
+      "package_id": "rojff",
+      "revision": "9f68e5aa4c12b32720d4224f1ac279bfd7d77b93",
+      "module": "rojff_parser_m / rojff_json_value_m",
+      "procedure": "parse_json_from_string / json_value_t%to_compact_string",
+      "gams_codes": [
+        "N1",
+        "N3"
+      ],
+      "notes": "JSON parsing and serialization with explicit error values. The main checks numeric/string fields, missing-key reporting, compact serialization round trips and malformed-input rejection. It uses the original Erloff 2.2.0 API with a pinned compatible Strff 3.1.1 and ISO varying string 3.0.3; the Strff 4.0 dependency graph needs an unavailable GitHub mirror. No computational source is patched. Checked driver: 49 signed integer/dyadic REAL64/ASCII string objects checked before and after compact serialization against independent formulas; absent keys and two malformed inputs. Unicode, escaping, arrays and arbitrary malformed input unverified.",
+      "sources": [
+        {
+          "url": "https://github.com/everythingfunctional/rojff/blob/9f68e5aa4c12b32720d4224f1ac279bfd7d77b93/src/rojff/parser/parser_m.f90#L18",
+          "path": "src/rojff/parser/parser_m.f90",
+          "sha256": "45e104f8a23d863175fe364656d7979bd307ee158a2d9dd74cf34fb61f5e9364",
+          "line": 18
+        },
+        {
+          "url": "https://github.com/everythingfunctional/rojff/blob/9f68e5aa4c12b32720d4224f1ac279bfd7d77b93/src/rojff/json_types/value_m.f90#L1",
+          "path": "src/rojff/json_types/value_m.f90",
+          "sha256": "84492c4656ddc33a51d661bb9307215bee813458fe991ab446a07b3c27a69600",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/everythingfunctional/rojff/blob/9f68e5aa4c12b32720d4224f1ac279bfd7d77b93/example/get_value/main.f90",
+          "path": "example/get_value/main.f90",
+          "sha256": "713cecc42442652ca14dcd87578621074ba23ad098b0bbe8a1ac05c7b3634d68"
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "rojff-json-reference",
+          "gams_code": "N3",
+          "path": "fpm_catalog/gams-drivers/rojff-json-reference.f90",
+          "review_path": "docs/gams-interop-ten.md"
+        }
+      ],
+      "unmatched_code": "N1",
+      "action": "Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically."
+    },
+    {
+      "procedure_id": "yafyaml-configuration",
+      "package_id": "yafyaml",
+      "revision": "d6005c9f635c02d7be54d09b205b6f16c54f46b5",
+      "module": "yafyaml / fy_Parser / fy_BaseNode",
+      "procedure": "Parser / load / get / has",
+      "gams_codes": [
+        "N1",
+        "N3"
+      ],
+      "notes": "The upstream YAML library is wrapped for FPM with pinned gFTL and the selected gFTL-shared containers. The checked main writes a tiny local configuration, parses an integer, a boolean, a string and an integer sequence, checks every returned value and verifies that an absent key is reported missing. Input files are removed afterwards. N1 covers configuration input and N3 covers parsing character data. The upstream parser supports a subset of YAML; full YAML conformance, all schemas and malformed-input recovery are not claimed. Source-recipe-tagged immutable dependency exports retain compatible gFTL builds. Checked driver: 32 fresh core-schema YAML files with signed integer, alternating logical, quoted ASCII text and integer sequences of lengths 1..8. 240 independent value references and absent keys. Malformed inputs, anchors, nested mappings, duplicate keys and repeated loads into the same parser unverified.",
+      "sources": [
+        {
+          "url": "https://github.com/Goddard-Fortran-Ecosystem/yaFyaml/blob/d6005c9f635c02d7be54d09b205b6f16c54f46b5/src/Parser.F90#L1",
+          "path": "src/Parser.F90",
+          "sha256": "db7ea9d8706dcdd7146c140ef2abf99973d84d0af3581fa85b28e03faadd7a7f",
+          "line": 1
+        },
+        {
+          "url": "https://github.com/Goddard-Fortran-Ecosystem/yaFyaml/blob/d6005c9f635c02d7be54d09b205b6f16c54f46b5/src/Nodes/BaseNode.F90#L1",
+          "path": "src/Nodes/BaseNode.F90",
+          "sha256": "d391df8faef5de53018197ed7e6f306ada51943938455456fced307ecb0bbab0",
+          "line": 1
+        },
+        {
+          "url": "https://github.com/Goddard-Fortran-Ecosystem/yaFyaml/blob/d6005c9f635c02d7be54d09b205b6f16c54f46b5/src/Nodes/BaseNode_implementation.F90#L1",
+          "path": "src/Nodes/BaseNode_implementation.F90",
+          "sha256": "eae7016025b84eeb40238937c009839dc5bb91684cb01f40b90a44c98fba4da5",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/Goddard-Fortran-Ecosystem/yaFyaml/blob/d6005c9f635c02d7be54d09b205b6f16c54f46b5/Examples/Simple/simple.F90",
+          "path": "Examples/Simple/simple.F90",
+          "sha256": "c8bd98431c366fbdea0b7c104b2bf60fcbcf4380ddee11d1fda02653f26c2e02"
+        },
+        {
+          "url": "https://github.com/Goddard-Fortran-Ecosystem/yaFyaml/blob/d6005c9f635c02d7be54d09b205b6f16c54f46b5/Examples/Trivial/trivial.F90",
+          "path": "Examples/Trivial/trivial.F90",
+          "sha256": "e9d16a2a02c9e1cb62d0dfb957d38849b8894da9954a9ddf623d7bc8e6c654cd"
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "yaml-values-reference",
+          "gams_code": "N3",
+          "path": "fpm_catalog/gams-drivers/yaml-values-reference.f90",
+          "review_path": "docs/gams-interop-ten.md"
+        }
+      ],
+      "unmatched_code": "N1",
+      "action": "Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically."
+    },
+    {
+      "procedure_id": "configuration-values",
+      "package_id": "config-fortran",
+      "revision": "106354774b2e6138161952f434c69e7913fa2000",
+      "module": "m_config",
+      "procedure": "CFG_add / CFG_read_file / CFG_get / CFG_get_size",
+      "gams_codes": [
+        "N1",
+        "N3"
+      ],
+      "notes": "Documented configuration values. An FPM wrapper selects unchanged m_config.f90. The main creates its own tiny configuration file, overrides integer, logical, string and grouped real defaults, reads a dynamically sized real array, checks every value and clears the configuration. No uploaded data file or external service is required. Command-line parsing, invalid-file diagnostics and all string/array/grouping behavior are not validated. Dedicated N1 driver: Independent API consumer; pinned interfaces/implementations and available author examples reviewed without copying bodies. 24 fresh configuration objects/files with exact typed scalars, nested keys, dynamic arrays and retained defaults. Valid generated inputs only; malformed files, unknown keys, repeated reads and CLI inputs unverified.",
+      "sources": [
+        {
+          "url": "https://github.com/jannisteunissen/config_fortran/blob/106354774b2e6138161952f434c69e7913fa2000/m_config.f90#L1",
+          "path": "m_config.f90",
+          "sha256": "568f6e007b8c9ed2e911bfc99a850c79b7873e91afd7e9396ab0f4f80a8cf838",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/jannisteunissen/config_fortran/blob/106354774b2e6138161952f434c69e7913fa2000/example_1.f90",
+          "path": "example_1.f90",
+          "sha256": "538fb21b88402c16ce11dac9c171691b874af33efd88bc6a15be76a2a9072eb0"
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "config-file-reference",
+          "gams_code": "N1",
+          "path": "fpm_catalog/gams-drivers/config-file-reference.f90",
+          "review_path": "docs/gams-state-ten.md"
+        }
+      ],
+      "unmatched_code": "N3",
+      "action": "Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically."
+    },
+    {
+      "procedure_id": "fed-format",
+      "package_id": "fed",
+      "revision": "d735aa2b3bd6b20840bcc16ff569e8cfc0492267",
+      "module": "fed",
+      "procedure": "format / int / real / char",
+      "gams_codes": [
+        "N1",
+        "N3"
+      ],
+      "notes": "Programmatic Fortran edit descriptors. The main generates and applies integer, character and fixed-decimal real formats, checks exact aligned output, and verifies a zero-padded integer. The registry stdlib dependency is mapped to a pinned Git source and manifest version; compatible stdlib objects are reused. No Fortran source edits. Arrays, complex values, user-defined I/O and every descriptor/control mode are not covered. Dedicated N1 driver: Independent API consumer; pinned interfaces/implementations and available author examples reviewed without copying bodies. Generated integer and fixed-point edit descriptors compared with independently constructed native Fortran format strings, including overflow fields, minimum digits and concatenated columns. Other descriptor families, locale and cross-compiler rounding unverified. Reference accounts for reviewed FED normalization: zero minimum digits omit .m, and real widths increase to at least d+2. Retained native-format assumptions were consumer reference errors, not upstream defects.",
+      "sources": [
+        {
+          "url": "https://github.com/degawa/fed/blob/d735aa2b3bd6b20840bcc16ff569e8cfc0492267/src/fed.f90#L1",
+          "path": "src/fed.f90",
+          "sha256": "4e6dd0b6f338879e360c056d2d216dfd6416f1bd1bc18adc00e990c4022b4202",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/degawa/fed/blob/d735aa2b3bd6b20840bcc16ff569e8cfc0492267/example/integer.f90",
+          "path": "example/integer.f90",
+          "sha256": "cccc67d148438dc13476cdda9f6ccd8da92104c4c6abaaac436f83a7a8732353"
+        },
+        {
+          "url": "https://github.com/degawa/fed/blob/d735aa2b3bd6b20840bcc16ff569e8cfc0492267/example/real.f90",
+          "path": "example/real.f90",
+          "sha256": "44d449346997a358306038f533f4b23aa08774b6b72eed519ae657933a882bc5"
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "fed-format-reference",
+          "gams_code": "N1",
+          "path": "fpm_catalog/gams-drivers/fed-format-reference.f90",
+          "review_path": "docs/gams-state-ten.md"
+        }
+      ],
+      "unmatched_code": "N3",
+      "action": "Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically."
+    },
+    {
+      "procedure_id": "numerical-portability",
+      "package_id": "penf",
+      "revision": "65061235982495b158412b70c05b228af4320d94",
+      "module": "penf",
+      "procedure": "penf_init / str / strz / cton / byte_size / numerical kind and size constants",
+      "gams_codes": [
+        "R1",
+        "N3"
+      ],
+      "notes": "Portable numerical kinds, formats and number/string conversions. The latest archive is blocked by a symlink, so this entry uses exactly the older revision already verified as a BeFoR64 dependency. The checked main calls penf_init, verifies integer and real conversion round trips with status checks, zero-padded integer output, real byte size and formatted real output. Sources are unchanged; this adds an independent editable main for the pinned library. Every kind, character encoding, endian platform and invalid conversion is not validated. The R1 driver verifies ISO kind correspondence, six type widths, public size/max/normal-minimum constants, byte inquiries, byte order, repeated initialization and measured real32/real64 roundoff. It does not verify the separate N3 conversion mapping, quadruple precision or arbitrary platforms.",
+      "sources": [
+        {
+          "url": "https://github.com/szaghi/PENF/blob/65061235982495b158412b70c05b228af4320d94/src/lib/penf.F90#L1",
+          "path": "src/lib/penf.F90",
+          "sha256": "13e0e3c92bd79d03fbaa775307405f31bf8143c468874373bbe5b936e7cca209",
+          "line": 1
+        },
+        {
+          "url": "https://github.com/szaghi/PENF/blob/65061235982495b158412b70c05b228af4320d94/src/lib/penf_stringify.F90#L1",
+          "path": "src/lib/penf_stringify.F90",
+          "sha256": "c45429dcaf7e434c739a812f2425c0a15582680219d1ca25fb8211050f87e52b",
+          "line": 1
+        },
+        {
+          "url": "https://github.com/szaghi/PENF/blob/65061235982495b158412b70c05b228af4320d94/src/lib/penf_global_parameters_variables.F90#L39",
+          "path": "src/lib/penf_global_parameters_variables.F90",
+          "sha256": "7c2f4c7117beeabb8ca088b1fb87870589410c06faede466f8e0d8a9a2bc7fc3",
+          "line": 39
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/szaghi/PENF/blob/65061235982495b158412b70c05b228af4320d94/src/tests/penf/penf-doctest-3.f90",
+          "path": "src/tests/penf/penf-doctest-3.f90",
+          "sha256": "266bf91126ea85f9fa2660b1ddeb2657b0dd915a4191cae4cf5caa9fe4c75d70"
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "penf-machine-reference",
+          "gams_code": "R1",
+          "path": "fpm_catalog/gams-drivers/penf-machine-reference.f90",
+          "review_path": "docs/gams-data-kinds.md"
+        }
+      ],
+      "unmatched_code": "N3",
+      "action": "Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically."
+    },
+    {
+      "procedure_id": "fdict-dictionary",
+      "package_id": "fdict",
+      "revision": "6ac903d4c0c524d45b948281a18b9656936c0197",
+      "module": "dictionary / variable",
+      "procedure": ".kv. / concatenation / assign / delete",
+      "gams_codes": [
+        "N4",
+        "N5"
+      ],
+      "notes": "The current upstream Fypp templates produce fdict_types, variable and dictionary modules. Fypp 3.2 generates a checksum-locked asset with standard integer/real/complex/logical kinds, arrays through rank five, iso_fortran_env, optional extended kinds disabled and the upstream CMake default of non-pure interfaces. No CMake or Fypp runs in visitor preparation. The checked consumer stores and retrieves integer, real64, string and integer-array values, checks each returned value and frees the dictionary. N4 covers container storage and N5 covers key lookup. Earlier v0.7.1 preparation failed on missing generated includes; the current template generation resolves that blocker without downloading release assets or weakening archive checks. MPL-2.0 notices remain intact. Dedicated N4 driver: Independent API consumer; pinned interfaces/implementations and available author examples reviewed without copying bodies. Eight 49-key mixed integer/REAL64/text/array dictionaries with exact reverse lookups, input-array mutation to check ownership, deletion survivors and explicit destruction. Missing/type-mismatched lookup, duplicate-key policy, container copying and every hash collision unverified.",
+      "sources": [
+        {
+          "url": "https://github.com/zerothi/fdict/blob/6ac903d4c0c524d45b948281a18b9656936c0197/src/dictionary.fypp#L1",
+          "path": "src/dictionary.fypp",
+          "sha256": "9c468bd4e3887e551c1fa58c1e68a15c4c7474818eff22fee6bd61c5d3e4f5d3",
+          "line": 1
+        },
+        {
+          "url": "https://github.com/zerothi/fdict/blob/6ac903d4c0c524d45b948281a18b9656936c0197/src/variable.fypp#L1",
+          "path": "src/variable.fypp",
+          "sha256": "7ed4e87b6b2ddc865aa8e0101f046935226e9006c9bb81fe5d62f1785427b475",
+          "line": 1
+        },
+        {
+          "url": "https://github.com/zerothi/fdict/blob/6ac903d4c0c524d45b948281a18b9656936c0197/src/fdict_common.fypp#L1",
+          "path": "src/fdict_common.fypp",
+          "sha256": "947e9f3a924e3625a6130a857cac076d09a1464376686b7cc3ac4c37918f4689",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/zerothi/fdict/blob/6ac903d4c0c524d45b948281a18b9656936c0197/README.md",
+          "path": "README.md",
+          "sha256": "8657f78e4ea688cf44fb136f8d08eafa4d279f772f7a9f49f66d11af8fd3cd84"
+        },
+        {
+          "url": "https://github.com/zerothi/fdict/blob/6ac903d4c0c524d45b948281a18b9656936c0197/test/tst_dict_a_.f90",
+          "path": "test/tst_dict_a_.f90",
+          "sha256": "d93a4a1b25736a4b49d38c584ad7b0c4d38cd7f7a41e8869f1350712111c9a1b"
+        },
+        {
+          "url": "https://github.com/zerothi/fdict/blob/6ac903d4c0c524d45b948281a18b9656936c0197/test/tst_dict_multiple.f90",
+          "path": "test/tst_dict_multiple.f90",
+          "sha256": "a9a5afe209cfd485a37f558a7b67f183421184c987e2312c0417a9f30aa7d7a0"
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "fdict-values-reference",
+          "gams_code": "N4",
+          "path": "fpm_catalog/gams-drivers/fdict-values-reference.f90",
+          "review_path": "docs/gams-state-ten.md"
+        }
+      ],
+      "unmatched_code": "N5",
+      "action": "Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically."
+    },
+    {
+      "procedure_id": "flibcpp-sort-search",
+      "package_id": "flibcpp",
+      "revision": "334b2250230afbb419402ca2f1c0649c3b12a693",
+      "module": "flc_algorithm",
+      "procedure": "sort / binary_search",
+      "gams_codes": [
+        "N5",
+        "N6"
+      ],
+      "notes": "The upstream SWIG-generated Fortran modules and C++ wrappers are built together; SWIG is not run. The upstream CMake configuration supplies only a small version-definition source. FPM 0.12 ignores .cxx, so the catalog stages unchanged wrapper contents as .cpp and preserves all original source files. The checked consumer verifies a sorted seven-element array, an existing-key position and a missing-key result. N5 and N6 classify searching and sorting, while S identifies the interoperability utility. Upstream vector, map, set, string and random facilities are included but not exercised by this consumer. MIT notices and the Apache-2.0 CMake helper notice remain intact. Local exports need compatible C++ and Fortran compilers. Dedicated N6 driver: 780 original-pattern arrays of lengths 0..64 across INT32, large INT64 and dyadic REAL64. Independent insertion-sort references and exact present/absent membership checks. Duplicates require a valid matching index rather than first occurrence. NaNs, custom comparators and strided arrays unverified.",
+      "sources": [
+        {
+          "url": "https://github.com/swig-fortran/flibcpp/blob/334b2250230afbb419402ca2f1c0649c3b12a693/src/flc_algorithm.f90#L1",
+          "path": "src/flc_algorithm.f90",
+          "sha256": "60fa72366cca9f6d1e3a4610ff7e7973d7badcfacb4782108b84908ea5e461fb",
+          "line": 1
+        },
+        {
+          "url": "https://github.com/swig-fortran/flibcpp/blob/334b2250230afbb419402ca2f1c0649c3b12a693/src/flc_algorithmFORTRAN_wrap.cxx#L1",
+          "path": "src/flc_algorithmFORTRAN_wrap.cxx",
+          "sha256": "a98d6c82b6d3bc985e3e484f8701ef292ab63802568cca37fbad3416e62d04f8",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/swig-fortran/flibcpp/blob/334b2250230afbb419402ca2f1c0649c3b12a693/example/sort.f90",
+          "path": "example/sort.f90",
+          "sha256": "5d435568ad2a129e23bf71deb2ed76723e8b303222a9856d2ff23536d2bddc7b"
+        },
+        {
+          "url": "https://github.com/swig-fortran/flibcpp/blob/334b2250230afbb419402ca2f1c0649c3b12a693/test/test_algorithm.F90",
+          "path": "test/test_algorithm.F90",
+          "sha256": "47b1c910ebe10e315c21cac1b1f44f855be48653f6f9f3b5808b6ad26d47f9e7"
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "flibcpp-sort-search-reference",
+          "gams_code": "N6",
+          "path": "fpm_catalog/gams-drivers/flibcpp-sort-search-reference.f90",
+          "review_path": "docs/gams-data-ten.md"
+        }
+      ],
+      "unmatched_code": "N5",
+      "action": "Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically."
+    },
+    {
+      "procedure_id": "ftl-containers",
+      "package_id": "ftl",
+      "revision": "e6598dae7db68f68544dc1ca0e64f5bce3744c42",
+      "module": "ftlDynArrayIntModule / ftlHashMapStringIntModule",
+      "procedure": "New / PushBack / PopBack / Set / Get / Erase",
+      "gams_codes": [
+        "N4",
+        "N5"
+      ],
+      "notes": "Selected Fortran Template Library instantiations: integer dynamic arrays and ftlString-to-integer hash maps, plus their unmodified support modules. A checksum-guarded adapter adds CPP-disabled module/dependency declarations so FPM 0.12 can discover modules emitted by templates. Original and adapted compiler-preprocessed output match apart from blank lines. Implicit-external checking is left at the upstream convention to avoid a GNU diagnostic in a character-length specification expression. The checked main verifies array growth, contents and pop, map insertion/replacement, presence, lookup and erase, then explicitly deletes both containers. Sources otherwise remain unchanged, and template headers remain in the source archive. Other instantiations, general algorithms, regex and every ownership/finalization case are not offered or validated. Checked driver: Eight 128-step traces compare all dynamic-array values and 17 map membership/value slots against plain-array oracles. Growth, LIFO pops, replacement, conditional deletion, final drain and explicit destruction. Iterators, object copies, missing-key Get, clear/reuse and thread safety unverified.",
+      "sources": [
+        {
+          "url": "https://github.com/SCM-NV/ftl/blob/e6598dae7db68f68544dc1ca0e64f5bce3744c42/src/ftlDynArray.F90_template#L1",
+          "path": "src/ftlDynArray.F90_template",
+          "sha256": "b475cfab7238d2807333604b7c67c96ba435e36e9761f6a29367c1136accd105",
+          "line": 1
+        },
+        {
+          "url": "https://github.com/SCM-NV/ftl/blob/e6598dae7db68f68544dc1ca0e64f5bce3744c42/src/ftlHashMap.F90_template#L1",
+          "path": "src/ftlHashMap.F90_template",
+          "sha256": "1027ca703e870885410c7b7ae6809cc178d196a72170913a470cffeb6f2ef2ab",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/SCM-NV/ftl/blob/e6598dae7db68f68544dc1ca0e64f5bce3744c42/tests/ftlDynArrayTests.F90",
+          "path": "tests/ftlDynArrayTests.F90",
+          "sha256": "add3978b2f47be7d7da7b775506527cf39321d204e11593a8787760132eae67b"
+        },
+        {
+          "url": "https://github.com/SCM-NV/ftl/blob/e6598dae7db68f68544dc1ca0e64f5bce3744c42/tests/ftlHashMapTests.F90",
+          "path": "tests/ftlHashMapTests.F90",
+          "sha256": "5df81a943d5d0fa611a32cfc34b48a7c5e0fc3124fa00785720e5c32b650a327"
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "ftl-state-reference",
+          "gams_code": "N4",
+          "path": "fpm_catalog/gams-drivers/ftl-state-reference.f90",
+          "review_path": "docs/gams-interop-ten.md"
+        }
+      ],
+      "unmatched_code": "N5",
+      "action": "Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically."
+    },
+    {
+      "procedure_id": "fycollections-demo-api",
+      "package_id": "fycollections",
+      "revision": "f67b874669e63834f30cd83f2b96889072b4eec7",
+      "module": "type_intlist / type_stringlist",
+      "procedure": "IntList_init / StringList_init / append / insert / get / find / delete",
+      "gams_codes": [
+        "N4",
+        "N5"
+      ],
+      "notes": "The original FyCollections backend and author examples/list/type_intlist.fpp and type_stringlist.fpp are generated with Fypp 3.2 without changing their algorithms. Six generated Fortran files, checksums of all template/license inputs, and xgenerate_fycollections.py retain a reproducible recipe. The package supplies the author IntList and StringList specializations, not automatic runtime generation for arbitrary user types. Its operator FPM wrapper uses version 0.0.0 to identify no inferred upstream release; the source is pinned by commit. The checked main adapts the author integer/string list examples and checks append, insertion, retrieval, successful/missing searches, integer deletion and allocatable-list finalization. N4/N5 cover storage containers and searching. Pointer/array list specializations and the complete upstream tests are not verified. BSD-2-Clause notices are retained. Checked driver: Eight fresh integer/string list traces of 48 steps. Plain integer-array oracles follow append/middle insertion/deletion; every integer and string element and exact lookup index is checked in reverse after each step, plus absent searches and allocatable destruction. Generated author IntList/StringList specializations only; string insert/delete, negative indexing, list copies and other types unverified.",
+      "sources": [
+        {
+          "url": "https://github.com/aradi/fycollections/blob/f67b874669e63834f30cd83f2b96889072b4eec7/include/fycollections.fypp#L1",
+          "path": "include/fycollections.fypp",
+          "sha256": "0252f0b29d8fda911c9aefd4363e84d2134ff58e2dc9792a41b8f74b6d4a63f1",
+          "line": 1
+        },
+        {
+          "url": "https://github.com/aradi/fycollections/blob/f67b874669e63834f30cd83f2b96889072b4eec7/lib/ptrlist.fpp#L1",
+          "path": "lib/ptrlist.fpp",
+          "sha256": "aee8957500e62e5bf0275a1ef1733f3411e331326afb1cebc1c4d5a834a120cb",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/aradi/fycollections/blob/f67b874669e63834f30cd83f2b96889072b4eec7/examples/list/intlist_example.fpp",
+          "path": "examples/list/intlist_example.fpp",
+          "sha256": "454e61f7cdccbdf39b941a49c5da87032464873bfcc85073d4d520d7044b3eca",
+          "line": 1
+        },
+        {
+          "url": "https://github.com/aradi/fycollections/blob/f67b874669e63834f30cd83f2b96889072b4eec7/examples/list/stringlist_example.fpp",
+          "path": "examples/list/stringlist_example.fpp",
+          "sha256": "20648ca382bbaaff9efa5783c7cb0f1b07893136fb527c8fff9ecfae99c5811b",
+          "line": 1
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "fy-list-reference",
+          "gams_code": "N4",
+          "path": "fpm_catalog/gams-drivers/fy-list-reference.f90",
+          "review_path": "docs/gams-workflows-ten.md"
+        }
+      ],
+      "unmatched_code": "N5",
+      "action": "Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically."
+    },
+    {
+      "procedure_id": "gftl-shared-containers",
+      "package_id": "gftl-shared",
+      "revision": "8009755e846560fbb389c01d76e013ddf14a7f98",
+      "module": "gFTL1_Integer32Vector / gFTL1_Integer32Real64Map",
+      "procedure": "push_back / insert / at / size",
+      "gams_codes": [
+        "N4",
+        "N5"
+      ],
+      "notes": "The catalog builds an explicitly selected subset: v1 Integer32, Integer64, default Integer, Real64, String and Unlimited vectors; StringString and Integer32Real64 maps; and v2 Integer32, Real64, String and Unlimited vectors. The consumer inserts and retrieves eight vector elements and eight map entries and verifies their sum 204. Generated v2 vector wrappers apply the upstream CMake substitutions; the original templates and Apache-2.0 notices remain intact. N4 covers container storage and N5 covers key lookup. Other upstream instantiations, sets, queues and stacks are outside this selected build and test scope. Compatible dependencies are shared through immutable exports; a source-recipe fingerprint in the FPM preprocessing profile binds generated assets and source selection to the dependency identity. Checked driver: Twelve 64-insertion integer-vector/integer-to-REAL64-map traces. Every stored prefix is read in reverse and compared with independent key/value formulas: 49,920 references, including negative keys and signed dyadic values. Duplicate insertion, erase, iterators, clear/reuse, other instantiations and thread safety unverified.",
+      "sources": [
+        {
+          "url": "https://github.com/Goddard-Fortran-Ecosystem/gFTL-shared/blob/8009755e846560fbb389c01d76e013ddf14a7f98/src/v1/Integer32Vector.F90#L1",
+          "path": "src/v1/Integer32Vector.F90",
+          "sha256": "e7b9c1352112e36055ecf870bf01262a73c8656b30cc87e7afd2c89fb9974082",
+          "line": 1
+        },
+        {
+          "url": "https://github.com/Goddard-Fortran-Ecosystem/gFTL-shared/blob/8009755e846560fbb389c01d76e013ddf14a7f98/src/v1/Integer32Real64Map.F90#L1",
+          "path": "src/v1/Integer32Real64Map.F90",
+          "sha256": "37dcbb38c728f60a7997278100f94c9bf04ddf10cbe87162de450e592f1da79c",
+          "line": 1
+        },
+        {
+          "url": "https://github.com/Goddard-Fortran-Ecosystem/gFTL-shared/blob/8009755e846560fbb389c01d76e013ddf14a7f98/src/v2/vector-like/UnlimitedGeneric.F90.in#L1",
+          "path": "src/v2/vector-like/UnlimitedGeneric.F90.in",
+          "sha256": "4005e757d5ff34c94de13fd62bf89654c4e723c2a77bd6a2cb7a0cb61ee8870c",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/Goddard-Fortran-Ecosystem/gFTL-shared/blob/8009755e846560fbb389c01d76e013ddf14a7f98/src/v1/demo.F90",
+          "path": "src/v1/demo.F90",
+          "sha256": "45b5d1677647ed7b1cb01242aae77317c90a96c0daed2bacd5fc2687d77b9239"
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "gftl-container-reference",
+          "gams_code": "N4",
+          "path": "fpm_catalog/gams-drivers/gftl-container-reference.f90",
+          "review_path": "docs/gams-storage-ten.md"
+        }
+      ],
+      "unmatched_code": "N5",
+      "action": "Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically."
+    },
+    {
+      "procedure_id": "jeyemhex-regex-strings",
+      "package_id": "jeyemhex-regex",
+      "revision": "2ca0043837a86a4f77df494ddad2240c1b70e576",
+      "module": "regex",
+      "procedure": "re_match / re_match_str / re_split / re_replace",
+      "gams_codes": [
+        "N3",
+        "N5"
+      ],
+      "notes": "Pure Fortran regular expressions by Edward Higgins, distinct from perazz/fortran-regex already selected under fortran-regex. The main checks matching and nonmatching anchored decimal measurements, matched substring, comma/space splitting and replacement. No source edits or native regex library. Pattern whitespace is ignored unless escaped; the author documents missing capture references and other features, so PCRE compatibility and all patterns are not claimed. Checked driver: Exhaustive 340 strings of lengths 1..4 over 01a., each checked against decimal and identifier patterns using an independent character-state grammar: 680 comparisons. Empty strings, malformed patterns, captures, splitting/replacement and full regex compatibility unverified.",
+      "sources": [
+        {
+          "url": "https://github.com/jeyemhex/fortran-regex/blob/2ca0043837a86a4f77df494ddad2240c1b70e576/src/regex.f90#L1",
+          "path": "src/regex.f90",
+          "sha256": "0c4353791ee919da9418a127f43eb6fa3869e1539127edcc1dffb204b0392aa2",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/jeyemhex/fortran-regex/blob/2ca0043837a86a4f77df494ddad2240c1b70e576/example/re_example.f90",
+          "path": "example/re_example.f90",
+          "sha256": "510884d09fa7e656ffea00fc060127a51ace633697c00ad28aaa5ced6a0aa4b7"
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "regex-language-reference",
+          "gams_code": "N3",
+          "path": "fpm_catalog/gams-drivers/regex-language-reference.f90",
+          "review_path": "docs/gams-storage-ten.md"
+        }
+      ],
+      "unmatched_code": "N5",
+      "action": "Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically."
+    },
+    {
+      "procedure_id": "lmdb-transactions",
+      "package_id": "fortran-lmdb",
+      "revision": "34bb1dc10e11fd470e4643135fa31fccacef7cd7",
+      "module": "lmdb",
+      "procedure": "mdb_put / mdb_get / mdb_txn_commit / mdb_txn_abort",
+      "gams_codes": [
+        "N4",
+        "N5"
+      ],
+      "notes": "LMDB key-value database bindings with Debian LMDB 0.9.31. A checksum-guarded compatibility edit selects the existing signed-kind fallback rather than GNU unsigned extension kinds, which are unavailable without enabling nondefault unsigned support. The checked consumer creates a small sandbox-local database, inserts and updates a value, verifies committed reads and rollback after an aborted update, deletes the key and checks MDB_NOTFOUND, then closes and removes both database files. No persistent storage is provided. Large mappings, concurrent writers/readers, all cursor interfaces and other platforms are not validated. Checked driver: 64 fixed-width text keys/values: committed inserts, aborted replacement of every value, then committed updates and deletion of keys divisible by three. Reverse-order reads compare all 192 key states with independent integer formulas and MDB_NOTFOUND. Concurrent transactions, persistence across processes, cursors, duplicate keys and large maps unverified.",
+      "sources": [
+        {
+          "url": "https://github.com/interkosmos/fortran-lmdb/blob/34bb1dc10e11fd470e4643135fa31fccacef7cd7/src/lmdb.F90#L1",
+          "path": "src/lmdb.F90",
+          "sha256": "40301b4a9c67d0267ea6951542151c4c2b39ab137d3f83f3e0bf6ff38181a4ff",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/interkosmos/fortran-lmdb/blob/34bb1dc10e11fd470e4643135fa31fccacef7cd7/test/test_lmdb.f90",
+          "path": "test/test_lmdb.f90",
+          "sha256": "47b161c7c9d232f68993dd7f3c010569d4db88e9cba79db9f073d11392e0817d"
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "lmdb-rollback-reference",
+          "gams_code": "N4",
+          "path": "fpm_catalog/gams-drivers/lmdb-rollback-reference.f90",
+          "review_path": "docs/gams-storage-ten.md"
+        }
+      ],
+      "unmatched_code": "N5",
+      "action": "Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically."
+    },
+    {
+      "procedure_id": "qcontainers-storage",
+      "package_id": "qcontainers",
+      "revision": "bb1423dded02588898530c3ac7aa709e3f4eb5c3",
+      "module": "qvector_m / qhashtbl_m",
+      "procedure": "new / addlast / getat / toarray / put / get / clear",
+      "gams_codes": [
+        "N4",
+        "N5"
+      ],
+      "notes": "Explicitly selected C and Fortran library sources are wrapped for FPM. Checksum-guarded edits rename the library string conversion helper to qlibc_f_c_string and update its callers, avoiding the Fortran 2023 intrinsic name collision; container algorithms are unchanged. The unrelated qencode.c utility is excluded: its query parser refers to qstrtrim and qlisttbl routines absent from the archive. The library retains vector, list, set, hash-table and tree-table modules and their vendored C dependencies. The checked consumer exercises vector growth, indexing, replacement, array conversion, pop and clear, and string-keyed map insertion, replacement, lookup, missing-key lookup and clear. Block scope invokes finalizers. Integer payloads are used; general pointer ownership, all container methods and threading are not validated. Dedicated N4 driver: Independent plain-array/key-map oracle for eight C-backed integer traces: 51080 exact references for growth, index edits, FIFO pops, map updates and presence. Vector clear and map clear/reuse checked; vector append-after-clear resets C element size and has a retained failing probe. No library patch or successful vector-reuse claim. Object copying, iterators and thread safety unverified.",
+      "sources": [
+        {
+          "url": "https://github.com/darmar-lt/qcontainers/blob/bb1423dded02588898530c3ac7aa709e3f4eb5c3/qcontainers_f/qvector.F90#L1",
+          "path": "qcontainers_f/qvector.F90",
+          "sha256": "1bc22efc30a1665e7d1303bb97efa443544048d8b9e08f60f33b5c8d467f188b",
+          "line": 1
+        },
+        {
+          "url": "https://github.com/darmar-lt/qcontainers/blob/bb1423dded02588898530c3ac7aa709e3f4eb5c3/qcontainers_f/qhashtbl.F90#L1",
+          "path": "qcontainers_f/qhashtbl.F90",
+          "sha256": "917e03d3a9e8456b8c1d07255cac24293eca1a54167ceb0806c5ef54438e6da6",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/darmar-lt/qcontainers/blob/bb1423dded02588898530c3ac7aa709e3f4eb5c3/tests/test_vector.f90",
+          "path": "tests/test_vector.f90",
+          "sha256": "adef8f579021a3e5d16fcaa0986d6de9bfcbbd5320b058efefe1125bbc27bd83"
+        },
+        {
+          "url": "https://github.com/darmar-lt/qcontainers/blob/bb1423dded02588898530c3ac7aa709e3f4eb5c3/docs/tutorial_qhashtbl.f90",
+          "path": "docs/tutorial_qhashtbl.f90",
+          "sha256": "a8d76feb02340427844a234aea16fe99ac1662e9b97620f736adf9615bccf93a"
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "qcontainers-state-reference",
+          "gams_code": "N4",
+          "path": "fpm_catalog/gams-drivers/qcontainers-state-reference.f90",
+          "review_path": "docs/gams-state-ten.md"
+        }
+      ],
+      "unmatched_code": "N5",
+      "action": "Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically."
+    },
+    {
+      "procedure_id": "sqliteff-database",
+      "package_id": "sqliteff",
+      "revision": "9b377c976698a7da671536e5e2539146ab734ca6",
+      "module": "sqliteff",
+      "procedure": "sqliteff_open / sqliteff_exec / sqliteff_prepare / sqliteff_step",
+      "gams_codes": [
+        "N1",
+        "N5"
+      ],
+      "notes": "SQLite wrapper with bundled SQLite 3.30.1 C sources. The checked main opens an in-memory database, creates a table, inserts three values, verifies count and average, reaches SQLITE_DONE and closes resources. It does not cover persistent files, concurrent use, transactions or the complete SQLite API. Explicit GitLab-to-GitHub alias pins ISO varying string; no source edits. Dedicated N1 driver: Independent API consumer; pinned interfaces/implementations and available author examples reviewed without copying bodies. In-memory SQL consumer: 64 prepared/bound integer/dyadic-real inserts with reset; commit plus rolled-back update/insertion; five exact aggregates and 43 ordered row references after deletion. Disk persistence, concurrency, text/NULL and error recovery unverified.",
+      "sources": [
+        {
+          "url": "https://github.com/everythingfunctional/sqliteff/blob/9b377c976698a7da671536e5e2539146ab734ca6/src/sqliteff.f90#L1",
+          "path": "src/sqliteff.f90",
+          "sha256": "4f6be391fe0f69efeed3b520c7694c25ef55f87975f88032040a5441520d183a",
+          "line": 1
+        }
+      ],
+      "author_examples": [],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "sqlite-transactions-reference",
+          "gams_code": "N1",
+          "path": "fpm_catalog/gams-drivers/sqlite-transactions-reference.f90",
+          "review_path": "docs/gams-state-ten.md"
+        }
+      ],
+      "unmatched_code": "N5",
+      "action": "Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically."
+    },
+    {
+      "procedure_id": "utf8-strings",
+      "package_id": "string-utf-8",
+      "revision": "69751115936d5a89439555ddeb1d57537a562e64",
+      "module": "string_utf_8",
+      "procedure": "chars_array / chars / substr / indexof / str_replace_all",
+      "gams_codes": [
+        "N3",
+        "N5"
+      ],
+      "notes": "UTF-8 string handling using one array element per encoded Unicode code point. The main verifies a round trip, code point count, substring, search and replacement of accented text, and prints the results. No source edits. Combining marks remain separate code points; grapheme segmentation, normalization and malformed-input handling are not validated. Dedicated N3 driver: 33 valid UTF-8 fixtures encoded independently from integer code points. Exact round trips, positive substrings, single-code-point search, expanding replacement and deletion across one-to-four-byte sequences including combining marks. Malformed encoding, normalization, grapheme and multi-code-point search semantics unverified.",
+      "sources": [
+        {
+          "url": "https://github.com/guntherwillems/fortran-string-utf-8/blob/69751115936d5a89439555ddeb1d57537a562e64/src/string_utf_8.f90#L1",
+          "path": "src/string_utf_8.f90",
+          "sha256": "3aaf269cdfb147365f9b288005fdc719316a968846a2b43fa73d2b20b179a72f",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/guntherwillems/fortran-string-utf-8/blob/69751115936d5a89439555ddeb1d57537a562e64/app/example.f90",
+          "path": "app/example.f90",
+          "sha256": "6386ad113502fdce96e8a02ae5bffca704abd8b71991e79cd4da7590bb693345"
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "utf8-codepoints-reference",
+          "gams_code": "N3",
+          "path": "fpm_catalog/gams-drivers/utf8-codepoints-reference.f90",
+          "review_path": "docs/gams-data-ten.md"
+        }
+      ],
+      "unmatched_code": "N5",
+      "action": "Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically."
+    },
+    {
+      "procedure_id": "fortran-utils-splines",
+      "package_id": "fortran-utils",
+      "revision": "b43bd24cd421509a5bc6d3b9c3eeae8ce856ed88",
+      "module": "splines / mesh / sorting",
+      "procedure": "spline3ders / meshexp / sort",
+      "gams_codes": [
+        "E1",
+        "N6"
+      ],
+      "notes": "Selected unmodified modules types, utils, lapack, mesh, splines and sorting, wrapped for FPM and linked to compatible LP64 BLAS/LAPACK. HDF5, AMOS/special functions, optimization and other unselected modules are not included. The main reproduces a cubic polynomial with the consistent-boundary cubic spline and checks its value, first derivative and second derivative on a denser grid against exact formulas. It checks exponential-mesh endpoints, monotonicity and the requested last/first spacing ratio, then sorts repeated/negative integers against an exact answer. General nonpolynomial interpolation error, extrapolation, every boundary condition, other sorting interfaces and all utility routines are not validated. Dedicated E1 consumer checks exact degree-0..3 polynomial reproduction on three uniform grids and a nonuniform grid, including first/second derivatives at 65 queries. Optional outputs and reversed query order are compared independently. Uses the API default consistent-cubic endpoint conditions; extrapolation, nonpolynomial convergence, other boundary choices and the separate N6 sorting mapping are not verified.",
+      "sources": [
+        {
+          "url": "https://github.com/certik/fortran-utils/blob/b43bd24cd421509a5bc6d3b9c3eeae8ce856ed88/src/splines.f90#L1",
+          "path": "src/splines.f90",
+          "sha256": "63a2ebb10cbe8a6d382e6f7bb62e5add4207b0fb5d52706173477c6a109bcccf",
+          "line": 1
+        },
+        {
+          "url": "https://github.com/certik/fortran-utils/blob/b43bd24cd421509a5bc6d3b9c3eeae8ce856ed88/src/mesh.f90#L1",
+          "path": "src/mesh.f90",
+          "sha256": "a56ce1419437f4d240e0fcc696c8600a19b9398898058fcfa0fb3d03d0a059ce",
+          "line": 1
+        },
+        {
+          "url": "https://github.com/certik/fortran-utils/blob/b43bd24cd421509a5bc6d3b9c3eeae8ce856ed88/src/sorting.f90#L1",
+          "path": "src/sorting.f90",
+          "sha256": "295e6e65e8241e333a11da6a39a63650037d54a749bee39166f0646664287a13",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/certik/fortran-utils/blob/b43bd24cd421509a5bc6d3b9c3eeae8ce856ed88/tests/splines/test_splines.f90",
+          "path": "tests/splines/test_splines.f90",
+          "sha256": "5d73abffc21ee712d9148543495eff354b7cbe015379583d48cbfc21cc00b96b"
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "fortran-utils-spline-reference",
+          "gams_code": "E1",
+          "path": "fpm_catalog/gams-drivers/fortran-utils-spline-reference.f90",
+          "review_path": "docs/gams-roots-splines-quadrature.md"
+        }
+      ],
+      "unmatched_code": "N6",
+      "action": "Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically."
+    },
+    {
+      "procedure_id": "spatial-neighbors",
+      "package_id": "kdtree2",
+      "revision": "dc757acec3162948cb228c2e0457d10134ec1edc",
+      "module": "kdtree2_module",
+      "procedure": "kdtree2_create / kdtree2_n_nearest / kdtree2_r_nearest",
+      "gams_codes": [
+        "P",
+        "N5"
+      ],
+      "notes": "Nearest-neighbor and radius searches. An FPM wrapper selects unchanged src-f90/kdtree2.f90; the archived upstream single-precision setting is retained. The checked main builds a tree for 30 deterministic 2D points, compares four nearest indices and squared distances against an independent direct search, and checks radius-search count, membership, distances and uniqueness. The original Academic Free License 1.1 is retained. No source edits. The implementation has global search state and is not offered as thread-safe; the old interface, C++ code, every dimension and large-scale performance are not validated. The class-specific N5 driver additionally verifies 36 3D searches over 48 points against exhaustive real64 distances: k=1,5,48, radii squared 0/0.125/4 and both storage rearrangement modes. Tie ordering is not prescribed; complete radius sets and uniqueness are checked. This driver does not separately verify the broad P mapping.",
+      "sources": [
+        {
+          "url": "https://github.com/jmhodges/kdtree2/blob/dc757acec3162948cb228c2e0457d10134ec1edc/src-f90/kdtree2.f90#L1",
+          "path": "src-f90/kdtree2.f90",
+          "sha256": "fc83829b66600b0581728b33d43748bbf06ad41d278914c9558a36730b0e2bde",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/jmhodges/kdtree2/blob/dc757acec3162948cb228c2e0457d10134ec1edc/src-f90/kdtree2_test.f90",
+          "path": "src-f90/kdtree2_test.f90",
+          "sha256": "fb97b7e385bd6e6b6faf023922d05c4bc135770012056f03368658be58dc0432"
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "kdtree-neighbor-reference",
+          "gams_code": "N5",
+          "path": "fpm_catalog/gams-drivers/kdtree-neighbor-reference.f90",
+          "review_path": "docs/gams-spatial-nufft.md"
+        }
+      ],
+      "unmatched_code": "P",
+      "action": "The N5 consumer already compares 3D nearest/radius searches against brute force. Review P discovery classification versus demonstrated geometry before proposing the same search again."
+    },
+    {
+      "procedure_id": "assert-contracts",
+      "package_id": "berkeley-assert",
+      "revision": "eda03ce48da96c3118ec98d4498f4bd47c0b60ab",
+      "module": "assert_m",
+      "procedure": "assert",
+      "gams_codes": [
+        "S3",
+        "R2"
+      ],
+      "notes": "Runtime assertion checks in pure procedures, built with ASSERTIONS=1 so enforcement is enabled in the cached library. A checksum-guarded manifest edit adds the upstream include directory; library sources and headers are unchanged. The main checks preconditions and postconditions around a pure square-root function. A separate sandbox probe compiles successfully, intentionally calls assert(.false.), and verifies nonzero termination with the expected descriptive diagnostic and unchanged library artifacts, demonstrating that checks were not compiled away. Multi-image/coarray callbacks and every macro variant are not validated. Full current upstream license terms, including its enhancement-contribution provision, are retained under LicenseRef-Berkeley-Assert rather than labeling them as an unmodified standard BSD license. Checked driver: 65 bounded square evaluations inside pure pre/postcondition assertions, plus one deliberately false assertion in a self-invoked child. Parent requires nonzero exit and the specified diagnostic, proving enforcement in the existing enabled library. Child failure is expected and checked. Other macros, callbacks, multi-image behavior and disabled builds unverified. Upstream custom license terms remain unchanged.",
+      "sources": [
+        {
+          "url": "https://github.com/BerkeleyLab/assert/blob/eda03ce48da96c3118ec98d4498f4bd47c0b60ab/src/assert_m.F90#L1",
+          "path": "src/assert_m.F90",
+          "sha256": "0e78c62c92e8b0198772586a9cca3011f586c93c29b0d26b2b85ecfab4df8b50",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/BerkeleyLab/assert/blob/eda03ce48da96c3118ec98d4498f4bd47c0b60ab/example/simple-assertions.f90",
+          "path": "example/simple-assertions.f90",
+          "sha256": "d1d7504fb8961b24540ab1f30ea23724775daa1d2a046c8ae19e37f1b8a835a8"
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "assert-enforcement-reference",
+          "gams_code": "S3",
+          "path": "fpm_catalog/gams-drivers/assert-enforcement-reference.f90",
+          "review_path": "docs/gams-statistics-services-ten.md"
+        }
+      ],
+      "unmatched_code": "R2",
+      "action": "Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically."
+    },
+    {
+      "procedure_id": "assert-values",
+      "package_id": "fassert",
+      "revision": "678fa217df79af318cc537d3c69eab3b7cf68cb7",
+      "module": "fassert",
+      "procedure": "assert_equal / assert_approx_equal / expect_equal / expect_approx_equal",
+      "gams_codes": [
+        "S3",
+        "R2"
+      ],
+      "notes": "Assertions for integer scalars and arrays plus approximate real comparison with an explicit tolerance. The main captures an intentional failed comparison as a logical status and message, checks both, and continues successfully. No source edits; matches the existing Any dependency revision. Not a validation of every type, rank, tolerance convention, custom comparator or test-framework integration. The S3 driver checks three positive assertions and 13 captured scalar/vector comparisons, including failures, both exact tolerance boundaries and independently checked logical outcomes and diagnostic labels/status prefixes. The separate R2 mapping remains source-supported.",
+      "sources": [
+        {
+          "url": "https://github.com/degawa/fassert/blob/678fa217df79af318cc537d3c69eab3b7cf68cb7/src/fassert.f90#L1",
+          "path": "src/fassert.f90",
+          "sha256": "41a17434eb7360615fd4893901e7d2db704463374a46eeededa8545c4e0130ac",
+          "line": 1
+        },
+        {
+          "url": "https://github.com/degawa/fassert/blob/678fa217df79af318cc537d3c69eab3b7cf68cb7/src/approxEqual/assertApproxEqual.f90#L1",
+          "path": "src/approxEqual/assertApproxEqual.f90",
+          "sha256": "b857c0d82d8cfff4602fc1a6a17f49aa474d0634962f5039a8a2eecf032637e2",
+          "line": 1
+        },
+        {
+          "url": "https://github.com/degawa/fassert/blob/678fa217df79af318cc537d3c69eab3b7cf68cb7/src/approxEqual/expectApproxEqual.f90#L10",
+          "path": "src/approxEqual/expectApproxEqual.f90",
+          "sha256": "17b3aab7725a1d14e98dca6423a27ec237dccd12082f82c907fd8d3df6512f18",
+          "line": 10
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/degawa/fassert/blob/678fa217df79af318cc537d3c69eab3b7cf68cb7/example/collab/testdrive.f90",
+          "path": "example/collab/testdrive.f90",
+          "sha256": "b7307cf28fc71daf607d8477ac8026da89e7a3a4d2433ca816eda2d70eb58b48"
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "fassert-captured-reference",
+          "gams_code": "S3",
+          "path": "fpm_catalog/gams-drivers/fassert-captured-reference.f90",
+          "review_path": "docs/gams-products-status.md"
+        }
+      ],
+      "unmatched_code": "R2",
+      "action": "Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically."
+    },
+    {
+      "procedure_id": "julienne-diagnosis",
+      "package_id": "julienne",
+      "revision": "b2648cc10d8cdd0549d5c286b56d023a642e2a3e",
+      "module": "julienne_m / julienne_test_diagnosis_m",
+      "procedure": "test_diagnosis_t / .approximates. / .equalsExpected. / diagnostics_string",
+      "gams_codes": [
+        "S3",
+        "R2"
+      ],
+      "notes": "Standalone demonstration of the modern Julienne testing framework, with its pinned Assert dependency and single-image coarrays. The numerical source is unchanged. The checked consumer verifies an approximate real comparison and an exact integer sum, then deliberately creates a failed test_diagnosis_t, checks its failure flag and nonempty appended diagnostic and prints it while completing successfully. This demonstrates diagnosis construction and inspection rather than macro assertion termination. The full test harness, automatic test discovery, macro enforcement and multi-image behavior are not validated. Original Berkeley Lab/Sourcery Institute license terms and dependency notices are retained. Checked driver: 289 integer equality and 765 default-real absolute-tolerance outcomes, including exact boundary acceptance and zero tolerance. Inputs are exact dyadics and expected flags follow integer inequalities. One failed diagnosis retains an appended annotation. Relative/percentage tolerances, arrays, nonfinite inputs, macro termination and multi-image testing unverified.",
+      "sources": [
+        {
+          "url": "https://github.com/BerkeleyLab/julienne/blob/b2648cc10d8cdd0549d5c286b56d023a642e2a3e/src/julienne/julienne_test_diagnosis_m.F90#L1",
+          "path": "src/julienne/julienne_test_diagnosis_m.F90",
+          "sha256": "ad04cc86d819abc65d4dc021b7d243b8fa00a9c3d72849a46d79bac5cdac57f1",
+          "line": 1
+        },
+        {
+          "url": "https://github.com/BerkeleyLab/julienne/blob/b2648cc10d8cdd0549d5c286b56d023a642e2a3e/src/julienne/julienne_test_diagnosis_s.F90#L1",
+          "path": "src/julienne/julienne_test_diagnosis_s.F90",
+          "sha256": "ffb48c98bac55dd1e9be1aec3779fdf00897d4182cce72810d4e061a38c7c552",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/BerkeleyLab/julienne/blob/b2648cc10d8cdd0549d5c286b56d023a642e2a3e/test/modules/test_diagnosis_test_m.F90",
+          "path": "test/modules/test_diagnosis_test_m.F90",
+          "sha256": "29a187641e4903b16e92c7d9557cb4b5a8137897e9dbc19a59546215f10a0407"
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "julienne-diagnosis-reference",
+          "gams_code": "S3",
+          "path": "fpm_catalog/gams-drivers/julienne-diagnosis-reference.f90",
+          "review_path": "docs/gams-workflows-ten.md"
+        }
+      ],
+      "unmatched_code": "R2",
+      "action": "Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically."
+    },
+    {
+      "procedure_id": "error-validation",
+      "package_id": "fortran-error-handler",
+      "revision": "ab840882bb5036de00de8b2580e745fa5314d6fd",
+      "module": "ErrorCriteriaModule / ErrorHandlerModule",
+      "procedure": "limit / trigger / addToTrace",
+      "gams_codes": [
+        "R2",
+        "R3"
+      ],
+      "notes": "Structured error handling and validation. The upstream FPM library sources are unchanged; unlimited free-form line length accommodates existing long source lines. Adapted from the author example, the main checks a valid bounded integer in a Result object, rejects an out-of-range integer with expected code 105, checks two retained application trace entries, and triggers a custom noncritical warning while execution continues. The example uses fixed values rather than interactive input. All Result ranks/types, critical-error termination, all validation criteria and every trace-propagation path are not validated. Dedicated R2 consumer checks 102 integer/real32/real64 inclusive bound comparisons against native logical expressions, including one-sided/equal bounds and nearest representable values inside/outside both endpoints. All 30 expected rejections must retain code 105, a supplied custom message and one supplied trace entry. No error is triggered. Other criteria, reversed/missing bounds, NaNs, critical termination and the separate R3 handling mapping are not verified.",
+      "sources": [
+        {
+          "url": "https://github.com/samharrison7/fortran-error-handler/blob/ab840882bb5036de00de8b2580e745fa5314d6fd/src/ErrorCriteria.f90#L1",
+          "path": "src/ErrorCriteria.f90",
+          "sha256": "6b9e8265a18e15bb301435d06322d31467b220a93081cce403483da2229e2bd9",
+          "line": 1
+        },
+        {
+          "url": "https://github.com/samharrison7/fortran-error-handler/blob/ab840882bb5036de00de8b2580e745fa5314d6fd/src/ErrorInstance.f90#L1",
+          "path": "src/ErrorInstance.f90",
+          "sha256": "a270e72c6883ceab3a9306f241b3e7fe9470647b0c5defacbdcc05e94b7fd51e",
+          "line": 1
+        }
+      ],
+      "author_examples": [
+        {
+          "url": "https://github.com/samharrison7/fortran-error-handler/blob/ab840882bb5036de00de8b2580e745fa5314d6fd/example/example_usage.f90",
+          "path": "example/example_usage.f90",
+          "sha256": "9aeb703ccb8dbb6089225d0db3c7569ad951013a5cda7d48ed16279a78e2fbfc"
+        }
+      ],
+      "retained_paths": [],
+      "drivers": [
+        {
+          "id": "error-bounds-reference",
+          "gams_code": "R2",
+          "path": "fpm_catalog/gams-drivers/error-bounds-reference.f90",
+          "review_path": "docs/gams-io-bounds.md"
+        }
+      ],
+      "unmatched_code": "R3",
+      "action": "Review whether this is a distinct algorithm/configuration, a supporting capability already exercised, or an overly broad discovery claim. Do not duplicate or relabel a driver automatically."
+    }
+  ]
+}

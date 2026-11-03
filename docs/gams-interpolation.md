@@ -34,6 +34,9 @@ The B-spline driver separately interpolates `p(x)=1-2*x+0.5*x**2+x**3` with orde
 | [Load regridpack-polynomial-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=regridpack&example=gams-regridpack-polynomial-reference) · [Source](../fpm_catalog/gams-drivers/regridpack-polynomial-reference.f90) | [Procedure](https://github.com/jacobwilliams/regridpack/blob/e47346d9244ab93f70367f16364d73217fbc0451/src/regridpack_module.f90#L22) · Independent API consumer |
 | [Load fitpack-polynomial-values](https://beliavsky.github.io/fortran-playground/fpm/?package=fitpack&example=gams-fitpack-polynomial-values) · [Source](../fpm_catalog/gams-drivers/fitpack-polynomial-values.f90) | [Procedure](https://github.com/perazz/fitpack/blob/1907c7bad9f5c4557970e906bdd4909eb52b2d4c/src/fitpack_curves.f90#L54) · [Author example/test](https://github.com/perazz/fitpack/blob/1907c7bad9f5c4557970e906bdd4909eb52b2d4c/test/fitpack_curve_tests.f90) |
 | [Load pchip-cubic-boundaries-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=pchip&example=gams-pchip-cubic-boundaries-reference) · [Source](../fpm_catalog/gams-drivers/pchip-cubic-boundaries-reference.f90) | [Procedure](https://github.com/jacobwilliams/PCHIP/blob/8f5350565072622a2344dd0ec75193832b31eb10/src/pchip_module.f90#L2456) · [Author example/test](https://github.com/jacobwilliams/PCHIP/blob/8f5350565072622a2344dd0ec75193832b31eb10/test/pchip_test.f90) |
+| [Load fstats-piecewise-linear-values-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=fstats&example=gams-fstats-piecewise-linear-values-reference) · [Source](../fpm_catalog/gams-drivers/fstats-piecewise-linear-values-reference.f90) | [Procedure](https://github.com/jchristopherson/fstats/blob/5fdb86d1e7fa057d776d7d9477942fd6d387dd2f/src/interpolation/fstats_interp.f90#L464) · [Author example/test](https://github.com/jchristopherson/fstats/blob/5fdb86d1e7fa057d776d7d9477942fd6d387dd2f/tests/fstats_interp_tests.f90) |
+| [Load fstats-polynomial-interpolation-values-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=fstats&example=gams-fstats-polynomial-interpolation-values-reference) · [Source](../fpm_catalog/gams-drivers/fstats-polynomial-interpolation-values-reference.f90) | [Procedure](https://github.com/jchristopherson/fstats/blob/5fdb86d1e7fa057d776d7d9477942fd6d387dd2f/src/interpolation/fstats_interp.f90#L576) · [Author example/test](https://github.com/jchristopherson/fstats/blob/5fdb86d1e7fa057d776d7d9477942fd6d387dd2f/tests/fstats_interp_tests.f90) |
+| [Load fstats-hermite-values-derivatives-reference](https://beliavsky.github.io/fortran-playground/fpm/?package=fstats&example=gams-fstats-hermite-values-derivatives-reference) · [Source](../fpm_catalog/gams-drivers/fstats-hermite-values-derivatives-reference.f90) | [Procedure](https://github.com/jchristopherson/fstats/blob/5fdb86d1e7fa057d776d7d9477942fd6d387dd2f/src/interpolation/fstats_interp.f90#L979) · [Author example/test](https://github.com/jchristopherson/fstats/blob/5fdb86d1e7fa057d776d7d9477942fd6d387dd2f/tests/fstats_interp_tests.f90) |
 
 The three shape-comparison programs adapt author API patterns and retain the package license notices. They use shared deterministic data instead of the larger author test harnesses. The drivers appear in hosted and main local FPM example menus and downloaded projects. Loading a link selects source without submitting a job.
 
@@ -179,6 +182,27 @@ PASS fitpack-polynomial-values
 ```text
 Cubic spline values/derivatives: not-a-knot, first/second derivative boundaries: 225
 PASS pchip-cubic-boundaries-reference
+```
+
+### fstats-piecewise-linear-values-reference
+
+```text
+123 irregular-grid piecewise-linear queries and 15 nodes checked.
+PASS fstats-piecewise-linear-values-reference
+```
+
+### fstats-polynomial-interpolation-values-reference
+
+```text
+164 polynomial queries, degrees 1 through 4, checked.
+PASS fstats-polynomial-interpolation-values-reference
+```
+
+### fstats-hermite-values-derivatives-reference
+
+```text
+165 global Hermite values and first derivatives independently checked.
+PASS fstats-hermite-values-derivatives-reference
 ```
 
 ## Maintenance

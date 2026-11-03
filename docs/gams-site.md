@@ -354,3 +354,5 @@ Forlab statistics and matrices: [review and actual results](gams-forlab-statisti
 NAFPack factorizations and characteristic coefficients: [review and actual results](gams-nafpack-factors-ten.md).
 
 Fstats summaries, distributions and designs: [review and actual results](gams-fstats-summaries-ten.md).
+
+Fstats probabilities, interpolation and regression: [review and actual results](gams-fstats-fitting-ten.md).

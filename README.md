@@ -39,6 +39,8 @@ Selected packages can be filtered by **GAMS class** and its **Subclass**, alongs
 
 The [numerical package review](docs/gams-numerical.md) maps selected public APIs to more detailed GAMS classes, with pinned source evidence, author example/test references, and a queue of capabilities still needing procedure-level review. Source-reviewed mappings are distinguished from tested drivers.
 
+The [driver coverage audit and next priorities](docs/gams-driver-audit.md) groups mapped procedures without checked drivers by GAMS class, distinguishes retained failures from untried capabilities, and ranks useful next examples.
+
 A [versioned software catalog export](docs/catalog-export.md) makes descriptions, GitHub metadata, curated topics, GAMS classifications, and example references reusable outside the playground. Pages builds publish it automatically; a separate catalog can import updates while preserving its own entries and annotations, including non-FPM software. Generate a local snapshot with `python xcatalog_export.py`.
 
 The [Fortran software catalog by GAMS class](https://beliavsky.github.io/fortran-playground/gams/) provides standalone class and package pages, keyword search, pinned source evidence and links to run examples. [Repository owner pages](https://beliavsky.github.io/fortran-playground/gams/authors/) list packages by account, with public GitHub display names included in search. [Curated name attributions](docs/name-attributions.md) document manual account mappings and separate source-author credits with evidence. Pages builds generate the catalog from the same classifications as the FPM playground, with no backend redeployment. See [catalog maintenance and preview](docs/gams-site.md).

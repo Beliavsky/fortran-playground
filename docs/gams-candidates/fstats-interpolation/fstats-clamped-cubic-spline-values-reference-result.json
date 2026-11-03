@@ -1,0 +1,122 @@
+{
+  "driver": {
+    "id": "fstats-clamped-cubic-spline-values-reference",
+    "name": "gams-fstats-clamped-cubic-spline-values-reference",
+    "package_id": "fstats",
+    "procedure_id": "fstats-clamped-cubic-spline-values",
+    "gams_code": "E1a",
+    "problem_id": "fstats-clamped-cubic-spline-values-reference-independent-oracle",
+    "path": "fpm_catalog/gams-drivers/fstats-clamped-cubic-spline-values-reference.f90",
+    "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+    "author_example": "tests/fstats_interp_tests.f90",
+    "reuse": "independent",
+    "license": "MIT (driver only; upstream package terms remain separate)",
+    "license_files": [
+      "fpm_catalog/gams-drivers/licenses/fstats-fitting-ten-drivers-MIT.txt"
+    ],
+    "modifications": "Independent API consumer. Three cubic polynomials on five irregular knots, 33 interior queries and exact endpoint slopes. Clamped cubic reproduction, scalar/vector APIs. Other boundary conditions and extrapolation excluded.",
+    "validation_path": "docs/gams-fstats-fitting-ten-validation.json",
+    "review_path": "docs/gams-fstats-fitting-ten.md",
+    "checks": {
+      "scalar_kind": "REAL64",
+      "relative_tolerance": 2e-10,
+      "oracle": "independent sorted data, exact moments, Cartesian products or high precision distribution definitions"
+    }
+  },
+  "source_sha256": "6edfbafd20d0abdc24e9b2ee685628479ab3d64da2cf35fc8e44b990868a5f08",
+  "hash_normalization": "utf-8-lf",
+  "result": {
+    "ok": false,
+    "compiler": "GNU Fortran (GCC) 16.2.0",
+    "compiler_id": "gfortran",
+    "fpm": "0.12.0",
+    "stages": [
+      {
+        "name": "Build",
+        "command": [
+          "fpm",
+          "build",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 0.509,
+        "ok": true,
+        "exit_code": 0,
+        "error": "",
+        "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+        "stderr": ""
+      },
+      {
+        "name": "Run",
+        "command": [
+          "fpm",
+          "run",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 0.171,
+        "ok": false,
+        "exit_code": 1,
+        "error": "",
+        "stdout": " Actual, expected:  -2.9875673877949618       -2.9880371093750000     \n",
+        "stderr": "Project is up to date\nERROR STOP Independent reference\n\nError termination. Backtrace:\n#0  0x2b050cf3af83 in ???\n#1  0x2b050cf3bc39 in ???\n#2  0x2b050cf3d045 in ???\n#3  0x401d32 in check\n\tat app/main.f90:36\n#4  0x4019c2 in MAIN__\n\tat app/main.f90:25\n#5  0x401d6d in main\n\tat app/main.f90:4\n<ERROR> Execution for object \" playground-main \" returned exit code  1\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 1\n"
+      }
+    ],
+    "cache": {
+      "package": "fstats",
+      "compiler": "GNU Fortran 16.2.0",
+      "key": "b8da62c14f5eccc5b42d7224",
+      "library_reused": true,
+      "changed_artifacts": []
+    },
+    "packages": [
+      {
+        "repository": "jchristopherson/fstats",
+        "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+        "sha256": "cf6b7367fc2a0d74f46000dc80a4cbedd07fd554e29117144b695b3a9ffa6fef"
+      },
+      {
+        "repository": "jchristopherson/linalg",
+        "revision": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+        "sha256": "6210b8b167b50694941f48b20ad5d94bdacab026f1eb4720e2d55e8ddde0b59a"
+      },
+      {
+        "repository": "jchristopherson/collections",
+        "revision": "ce37c94e72b3ae5db2e2208489999260a7875f81",
+        "sha256": "5d53caf3c0b35e9e2a8bed49f8e96dca1b282434859c8c6f53fae3123528f265"
+      },
+      {
+        "repository": "jchristopherson/fstring",
+        "revision": "1bb1043a1ed34b8bd57f2687166463dd573bce3d",
+        "sha256": "0272f644a9217485fa2a3a18e41010c88f81ccc7398fc855c37518be2ac8eb3f"
+      }
+    ],
+    "build_ok": true,
+    "target_groups": {
+      "app": [
+        "playground-main"
+      ],
+      "example": [],
+      "test": []
+    },
+    "targets": [
+      "playground-main"
+    ],
+    "plots": [],
+    "plot_notes": []
+  }
+}

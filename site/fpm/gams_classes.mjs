@@ -1055,5 +1055,65 @@ export const gamsSubclasses = {
   "L7f": {
     "label": "Generate experimental designs",
     "parent": "L7"
+  },
+  "L5a1f": {
+    "label": "F distribution",
+    "parent": "L5a1"
+  },
+  "L5a1l": {
+    "label": "Lambda, logistic, lognormal",
+    "parent": "L5a1"
+  },
+  "L7g": {
+    "label": "Service routines",
+    "parent": "L7"
+  },
+  "E1b": {
+    "label": "Polynomials",
+    "parent": "E1"
+  },
+  "L8b": {
+    "label": "Polynomial (e.g., y = b_0 + b_1x + b_2 x^2)",
+    "parent": "L8"
+  },
+  "L8b1": {
+    "label": "Ordinary least squares",
+    "parent": "L8b"
+  },
+  "L8b1b": {
+    "label": "Parameter estimation",
+    "parent": "L8b1"
+  },
+  "L8b1b1": {
+    "label": "Not using orthogonal polynomials",
+    "parent": "L8b1b"
+  },
+  "L8a": {
+    "label": "Simple linear (i.e., y = b_0 + b_1x)",
+    "parent": "L8"
+  },
+  "L8a1": {
+    "label": "Ordinary least squares",
+    "parent": "L8a"
+  },
+  "L8a1a": {
+    "label": "Parameter estimation",
+    "parent": "L8a1"
+  },
+  "L8a1a1": {
+    "label": "Unweighted data",
+    "parent": "L8a1a"
+  },
+  "L5b": {
+    "label": "Multivariate",
+    "parent": "L5"
+  },
+  "L5b1": {
+    "label": "Cumulative multivariate distribution functions, probability density functions",
+    "parent": "L5b"
+  },
+  "L5b1n": {
+    "label": "Normal",
+    "parent": "L5b1"
   }
 };

@@ -25470,6 +25470,26 @@
     ],
     "gams": [
       {
+        "code": "E",
+        "label": "Interpolation",
+        "parent": null
+      },
+      {
+        "code": "E1",
+        "label": "Univariate data (curve fitting)",
+        "parent": "E"
+      },
+      {
+        "code": "E1a",
+        "label": "Polynomial splines (piecewise polynomials)",
+        "parent": "E1"
+      },
+      {
+        "code": "E1b",
+        "label": "Polynomials",
+        "parent": "E1"
+      },
+      {
         "code": "L",
         "label": "Statistics, probability",
         "parent": null
@@ -25545,6 +25565,21 @@
         "parent": "L5a1"
       },
       {
+        "code": "L5a1c",
+        "label": "Cauchy, chi-squared",
+        "parent": "L5a1"
+      },
+      {
+        "code": "L5a1f",
+        "label": "F distribution",
+        "parent": "L5a1"
+      },
+      {
+        "code": "L5a1l",
+        "label": "Lambda, logistic, lognormal",
+        "parent": "L5a1"
+      },
+      {
         "code": "L5a1n",
         "label": "Negative binomial, normal",
         "parent": "L5a1"
@@ -25558,6 +25593,21 @@
         "code": "L5a1t",
         "label": "t distribution",
         "parent": "L5a1"
+      },
+      {
+        "code": "L5b",
+        "label": "Multivariate",
+        "parent": "L5"
+      },
+      {
+        "code": "L5b1",
+        "label": "Cumulative multivariate distribution functions, probability density functions",
+        "parent": "L5b"
+      },
+      {
+        "code": "L5b1n",
+        "label": "Normal",
+        "parent": "L5b1"
       },
       {
         "code": "L6",
@@ -25575,9 +25625,54 @@
         "parent": "L7"
       },
       {
+        "code": "L7g",
+        "label": "Service routines",
+        "parent": "L7"
+      },
+      {
         "code": "L8",
         "label": "Regression",
         "parent": "L"
+      },
+      {
+        "code": "L8a",
+        "label": "Simple linear (i.e., y = b_0 + b_1x)",
+        "parent": "L8"
+      },
+      {
+        "code": "L8a1",
+        "label": "Ordinary least squares",
+        "parent": "L8a"
+      },
+      {
+        "code": "L8a1a",
+        "label": "Parameter estimation",
+        "parent": "L8a1"
+      },
+      {
+        "code": "L8a1a1",
+        "label": "Unweighted data",
+        "parent": "L8a1a"
+      },
+      {
+        "code": "L8b",
+        "label": "Polynomial (e.g., y = b_0 + b_1x + b_2 x^2)",
+        "parent": "L8"
+      },
+      {
+        "code": "L8b1",
+        "label": "Ordinary least squares",
+        "parent": "L8b"
+      },
+      {
+        "code": "L8b1b",
+        "label": "Parameter estimation",
+        "parent": "L8b1"
+      },
+      {
+        "code": "L8b1b1",
+        "label": "Not using orthogonal polynomials",
+        "parent": "L8b1b"
       },
       {
         "code": "M",
@@ -25922,6 +26017,296 @@
           {
             "path": "tests/fstats_experimental_design_tests.f90",
             "sha256": "b7d6d5911a41ca6d8b35bf39c571dd56d8805bea147cafbb304e340e70a634b9"
+          }
+        ]
+      },
+      {
+        "id": "fstats-chi-squared-positive-tails",
+        "package_id": "fstats",
+        "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+        "module": "fstats_chi_squared_distribution",
+        "procedure": "chi_squared_distribution%pdf, %cdf, %survival, %log_pdf",
+        "gams_codes": [
+          "L5a1c"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "30 REAL64 distribution inputs. Five positive degrees and six positive abscissae, with gamma-integral definitions. Support boundary x=0 and singular densities excluded. PDF/PMF, CDF, strict upper survival and finite log-density checked with independent 80/120 digit references. Probability relative tolerance 2e-9 with floor 1e-30; invalid parameters and infinite log values excluded.",
+        "driver_id": "fstats-chi-squared-positive-tails-reference",
+        "evidence": [
+          {
+            "path": "src/distributions/fstats_chi_squared_distribution.f90",
+            "line": 35,
+            "sha256": "fac4e5f9386ea41c7600f9dcc481d1046c9adf42ba0239296bb64828f3072ef6"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "tests/fstats_distribution_tests.f90",
+            "sha256": "e0cb7b18e93c1933590b1b3a71b1ed46716628c71e153fa92ac2e06d82f71371"
+          }
+        ]
+      },
+      {
+        "id": "fstats-f-positive-tails",
+        "package_id": "fstats",
+        "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+        "module": "fstats_f_distribution",
+        "procedure": "f_distribution%pdf, %cdf, %survival, %log_pdf",
+        "gams_codes": [
+          "L5a1f"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "20 REAL64 distribution inputs. Four degree pairs and five positive abscissae; independent beta-integral definitions. Moments and support boundary excluded. PDF/PMF, CDF, strict upper survival and finite log-density checked with independent 80/120 digit references. Probability relative tolerance 2e-9 with floor 1e-30; invalid parameters and infinite log values excluded.",
+        "driver_id": "fstats-f-positive-tails-reference",
+        "evidence": [
+          {
+            "path": "src/distributions/fstats_f_distribution.f90",
+            "line": 35,
+            "sha256": "85333a299abf7b08cd5155ca60daafa6cebc341efe0f2d943d9e01f2e4dbca87"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "tests/fstats_distribution_tests.f90",
+            "sha256": "e0cb7b18e93c1933590b1b3a71b1ed46716628c71e153fa92ac2e06d82f71371"
+          }
+        ]
+      },
+      {
+        "id": "fstats-lognormal-observation-scale",
+        "package_id": "fstats",
+        "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+        "module": "fstats_log_normal_distribution",
+        "procedure": "log_normal_distribution%pdf, %cdf, %survival, %log_pdf",
+        "gams_codes": [
+          "L5a1l"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "42 REAL64 distribution inputs. Log-mean -1,0,1 and log-standard-deviation 1/2,2; seven observation-scale values include negative and zero support checks. Positive values use Gaussian change of variables. PDF/PMF, CDF, strict upper survival and finite log-density checked with independent 80/120 digit references. Probability relative tolerance 2e-9 with floor 1e-30; invalid parameters and infinite log values excluded.",
+        "driver_id": "fstats-lognormal-observation-scale-reference",
+        "evidence": [
+          {
+            "path": "src/distributions/fstats_log_normal_distribution.f90",
+            "line": 35,
+            "sha256": "e00e55e504a2878a10f4a1c5b3972a9e6147584800f2639a9cabf84d291a5e72"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "tests/fstats_distribution_tests.f90",
+            "sha256": "e0cb7b18e93c1933590b1b3a71b1ed46716628c71e153fa92ac2e06d82f71371"
+          }
+        ]
+      },
+      {
+        "id": "fstats-piecewise-linear-values",
+        "package_id": "fstats",
+        "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+        "module": "fstats_interp",
+        "procedure": "linear_interpolator",
+        "gams_codes": [
+          "E1a"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "Three irregular-grid data sets, 41 queries each including extrapolation, scalar and vector APIs. Independent segment weights; exact nodes included. Increasing grids only, invalid/duplicate knots excluded.",
+        "driver_id": "fstats-piecewise-linear-values-reference",
+        "evidence": [
+          {
+            "path": "src/interpolation/fstats_interp.f90",
+            "line": 464,
+            "sha256": "d57d0cf70632336e810cf04429d1ca70c90527ac38472e3db4d06b70a54ef0ec"
+          },
+          {
+            "path": "src/interpolation/fstats_interp.f90",
+            "line": 479,
+            "sha256": "d57d0cf70632336e810cf04429d1ca70c90527ac38472e3db4d06b70a54ef0ec"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "tests/fstats_interp_tests.f90",
+            "sha256": "864cfffc27ab190be5e848270127a760612eb1ad0f64a9dc73663e216173fc70"
+          }
+        ]
+      },
+      {
+        "id": "fstats-polynomial-interpolation-values",
+        "package_id": "fstats",
+        "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+        "module": "fstats_interp",
+        "procedure": "polynomial_interpolator",
+        "gams_codes": [
+          "E1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "Degrees 1..4 on five irregular knots, 41 queries each including bounded extrapolation. Known polynomial reproduction and scalar/vector agreement; no ill-conditioned high-degree claim.",
+        "driver_id": "fstats-polynomial-interpolation-values-reference",
+        "evidence": [
+          {
+            "path": "src/interpolation/fstats_interp.f90",
+            "line": 576,
+            "sha256": "d57d0cf70632336e810cf04429d1ca70c90527ac38472e3db4d06b70a54ef0ec"
+          },
+          {
+            "path": "src/interpolation/fstats_interp.f90",
+            "line": 511,
+            "sha256": "d57d0cf70632336e810cf04429d1ca70c90527ac38472e3db4d06b70a54ef0ec"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "tests/fstats_interp_tests.f90",
+            "sha256": "864cfffc27ab190be5e848270127a760612eb1ad0f64a9dc73663e216173fc70"
+          }
+        ]
+      },
+      {
+        "id": "fstats-hermite-values-derivatives",
+        "package_id": "fstats",
+        "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+        "module": "fstats_interp",
+        "procedure": "hermite_interpolator",
+        "gams_codes": [
+          "E1b"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "Degree 1..5 global Hermite polynomials with values and supplied first derivatives at three irregular nodes; 33 queries each. Checks values and derivatives against explicit polynomial sums. This is global Hermite interpolation, not piecewise cubic; estimated derivatives excluded. Fresh object for each degree; reinitialization fails in retained probe docs/gams-candidates/fstats-interpolation/.",
+        "driver_id": "fstats-hermite-values-derivatives-reference",
+        "evidence": [
+          {
+            "path": "src/interpolation/fstats_interp.f90",
+            "line": 979,
+            "sha256": "d57d0cf70632336e810cf04429d1ca70c90527ac38472e3db4d06b70a54ef0ec"
+          },
+          {
+            "path": "src/interpolation/fstats_interp.f90",
+            "line": 1032,
+            "sha256": "d57d0cf70632336e810cf04429d1ca70c90527ac38472e3db4d06b70a54ef0ec"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "tests/fstats_interp_tests.f90",
+            "sha256": "864cfffc27ab190be5e848270127a760612eb1ad0f64a9dc73663e216173fc70"
+          }
+        ]
+      },
+      {
+        "id": "fstats-linear-regression-residuals",
+        "package_id": "fstats",
+        "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+        "module": "fstats_linear_regression",
+        "procedure": "linear_least_squares",
+        "gams_codes": [
+          "L8a1a1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "Sizes 3..25 and three noisy dyadic data sets, with and without intercept: 138 fits. Independent centered-sum or origin-constrained coefficients, fitted values, modeled-minus-actual residuals and normal-equation orthogonality checked. No confidence intervals, weighting or rank-deficient cases.",
+        "driver_id": "fstats-linear-regression-residuals-reference",
+        "evidence": [
+          {
+            "path": "src/regression/fstats_linear_regression.f90",
+            "line": 14,
+            "sha256": "0e2a040d1522d6986b059ed40e6750f83eacd2d8ff8dadfc70145f643de6e83c"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "tests/fstats_regression_tests.f90",
+            "sha256": "dd24652dd9e706b0cebc1406827c5a52ca07f914087be92aae08e63e2a5c20bd"
+          }
+        ]
+      },
+      {
+        "id": "fstats-quadratic-regression-projections",
+        "package_id": "fstats",
+        "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+        "module": "fstats_linear_regression",
+        "procedure": "linear_least_squares",
+        "gams_codes": [
+          "L8b1b1"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "Five symmetric grids (5..13 points), three quartic-contaminated quadratic families: 15 fits. Independent even-moment 2-by-2 projection gives coefficients, while odd symmetry supplies linear coefficient. Fitted values, residual convention and three orthogonality equations checked. Bounded full-rank quadratic fits only.",
+        "driver_id": "fstats-quadratic-regression-projections-reference",
+        "evidence": [
+          {
+            "path": "src/regression/fstats_linear_regression.f90",
+            "line": 14,
+            "sha256": "0e2a040d1522d6986b059ed40e6750f83eacd2d8ff8dadfc70145f643de6e83c"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "tests/fstats_regression_tests.f90",
+            "sha256": "dd24652dd9e706b0cebc1406827c5a52ca07f914087be92aae08e63e2a5c20bd"
+          }
+        ]
+      },
+      {
+        "id": "fstats-experimental-factor-coding",
+        "package_id": "fstats",
+        "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+        "module": "fstats_doe_coding",
+        "procedure": "encode_variables,decode_variables",
+        "gams_codes": [
+          "L7g"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "Three independent physical factor ranges at nine prescribed coded levels -1..1. Checks both affine directions against exact dyadic coordinates and round trips, with low/high/midpoint included. Equal/reversed ranges and invalid dimensions excluded.",
+        "driver_id": "fstats-experimental-factor-coding-reference",
+        "evidence": [
+          {
+            "path": "src/design/fstats_doe_coding.f90",
+            "line": 11,
+            "sha256": "c5add5fa41f9bf41f7105e5c00ba7c78b3ff2dabf6de8bc4b5006a275bf3edbd"
+          },
+          {
+            "path": "src/design/fstats_doe_coding.f90",
+            "line": 38,
+            "sha256": "c5add5fa41f9bf41f7105e5c00ba7c78b3ff2dabf6de8bc4b5006a275bf3edbd"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "tests/fstats_experimental_design_tests.f90",
+            "sha256": "b7d6d5911a41ca6d8b35bf39c571dd56d8805bea147cafbb304e340e70a634b9"
+          }
+        ]
+      },
+      {
+        "id": "fstats-bivariate-normal-densities",
+        "package_id": "fstats",
+        "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+        "module": "fstats_multivariate_normal_distribution",
+        "procedure": "multivariate_normal_distribution%initialize, %pdf, %log_pdf",
+        "gams_codes": [
+          "L5b1n"
+        ],
+        "review_level": "source-reviewed",
+        "derivatives": "not required",
+        "notes": "Three positive-definite 2-by-2 covariances (negative, zero and positive correlation), two means, 25 offsets each: 150 PDF and log-density checks. Independent scalar determinant and explicit 2-by-2 inverse quadratic form. Invalid covariances, CDFs and higher dimensions excluded.",
+        "driver_id": "fstats-bivariate-normal-densities-reference",
+        "evidence": [
+          {
+            "path": "src/distributions/fstats_multivariate_normal_distribution.f90",
+            "line": 58,
+            "sha256": "ae3b0d9b336d54c291e54cab77c97a719ad63e3d92de83342379b18ebca72301"
+          }
+        ],
+        "author_examples": [
+          {
+            "path": "tests/fstats_distribution_tests.f90",
+            "sha256": "e0cb7b18e93c1933590b1b3a71b1ed46716628c71e153fa92ac2e06d82f71371"
           }
         ]
       }

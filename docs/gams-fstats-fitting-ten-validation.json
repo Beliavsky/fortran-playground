@@ -1,0 +1,328 @@
+{
+  "schema": 1,
+  "environment": "Hosted FPM playground sandbox",
+  "hash_normalization": "utf-8-lf",
+  "drivers": [
+    {
+      "driver_id": "fstats-chi-squared-positive-tails-reference",
+      "source_revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "source_sha256": "895f3de51ab51d8e1b1f39e284a99f6312cb15037e4ccdd15ba1e0360240892d",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-03T01:05:20.809026+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.55,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Independent distribution reference cases: 30\nPASS fstats-chi-squared-positive-tails-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.164,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fstats-f-positive-tails-reference",
+      "source_revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "source_sha256": "a4fd8a3f73241280c481df5be2d040bd356abd8b8de02f8794bd4bc141ff87bc",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-03T01:05:24.504382+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.643,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Independent distribution reference cases: 20\nPASS fstats-f-positive-tails-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.173,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fstats-lognormal-observation-scale-reference",
+      "source_revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "source_sha256": "c037b31b0597b094a66290429478a9be1c32dc4e1ca21f8d030426c1a15feeb8",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-03T01:05:27.020603+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.402,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "Independent distribution reference cases: 42\nPASS fstats-lognormal-observation-scale-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.107,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fstats-piecewise-linear-values-reference",
+      "source_revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "source_sha256": "45059b8df4e4b8beb7d84fc1a08ee9fa3c4b09678933c7e2d618e5c93c98badb",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-03T01:05:29.919598+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.564,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "123 irregular-grid piecewise-linear queries and 15 nodes checked.\nPASS fstats-piecewise-linear-values-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.159,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fstats-polynomial-interpolation-values-reference",
+      "source_revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "source_sha256": "42bde3e3590dbbbaef97ec071b3ecebd2d7a0926fdbb5ddcd07b385b63890395",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-03T01:05:32.580989+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.555,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "164 polynomial queries, degrees 1 through 4, checked.\nPASS fstats-polynomial-interpolation-values-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.148,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fstats-linear-regression-residuals-reference",
+      "source_revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "source_sha256": "c5a815255b6043152c75b8eb209ddfff535929cc7fa3394e03dfd66e17f53f90",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-03T01:05:41.314003+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.63,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "138 noisy linear fits, coefficients, residuals and orthogonality checked.\nPASS fstats-linear-regression-residuals-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.165,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fstats-quadratic-regression-projections-reference",
+      "source_revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "source_sha256": "55aeb6174f3ab86e5c2329ca46caaec1ff844e969fe8e7910afb71b76835079c",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-03T01:05:43.833710+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.6,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "15 noisy quadratic projections and normal-equation residuals checked.\nPASS fstats-quadratic-regression-projections-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.147,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fstats-experimental-factor-coding-reference",
+      "source_revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "source_sha256": "74fb62f8e1aef2cd4c30dff0766a080894881378b6143ba8a197fdd7d94eaa26",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-03T01:05:46.224065+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.507,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "27 experimental factor coordinates: encoding, decoding and round trips checked.\nPASS fstats-experimental-factor-coding-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.142,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fstats-hermite-values-derivatives-reference",
+      "source_revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "source_sha256": "5c8ef96e0d6a6b234d15838d643ed831ddba8bd8791de0201eaaed40103b29cf",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-03T01:07:07.480304+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.619,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "165 global Hermite values and first derivatives independently checked.\nPASS fstats-hermite-values-derivatives-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.158,
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "driver_id": "fstats-bivariate-normal-densities-reference",
+      "source_revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "source_sha256": "cd7009eb84d6c3e0325c92d3c9664afa3f5ffc8d5b87b82e58c3e03fc2de2039",
+      "ok": true,
+      "compiler": "GNU Fortran (GCC) 16.2.0",
+      "fpm": "0.12.0",
+      "library_reused": true,
+      "compiled_targets": [
+        "main.f90",
+        "playground-main"
+      ],
+      "validated_at": "2026-11-03T01:07:10.724702+00:00",
+      "stages": [
+        {
+          "name": "Build",
+          "ok": true,
+          "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+          "stderr": "",
+          "seconds": 0.609,
+          "exit_code": 0
+        },
+        {
+          "name": "Run",
+          "ok": true,
+          "stdout": "150 bivariate normal PDF and log-density values independently checked.\nPASS fstats-bivariate-normal-densities-reference\n",
+          "stderr": "Project is up to date\n",
+          "seconds": 0.152,
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "validated_at": "2026-11-03T01:07:10.791729+00:00"
+}

@@ -1,0 +1,122 @@
+{
+  "driver": {
+    "id": "fstats-hermite-values-derivatives-reference",
+    "name": "gams-fstats-hermite-values-derivatives-reference",
+    "package_id": "fstats",
+    "procedure_id": "fstats-hermite-values-derivatives",
+    "gams_code": "E1b",
+    "problem_id": "fstats-hermite-values-derivatives-reference-independent-oracle",
+    "path": "fpm_catalog/gams-drivers/fstats-hermite-values-derivatives-reference.f90",
+    "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+    "author_example": "tests/fstats_interp_tests.f90",
+    "reuse": "independent",
+    "license": "MIT (driver only; upstream package terms remain separate)",
+    "license_files": [
+      "fpm_catalog/gams-drivers/licenses/fstats-fitting-ten-drivers-MIT.txt"
+    ],
+    "modifications": "Independent API consumer. Degree 1..5 global Hermite polynomials with values and supplied first derivatives at three irregular nodes; 33 queries each. Checks values and derivatives against explicit polynomial sums. This is global Hermite interpolation, not piecewise cubic; estimated derivatives excluded.",
+    "validation_path": "docs/gams-fstats-fitting-ten-validation.json",
+    "review_path": "docs/gams-fstats-fitting-ten.md",
+    "checks": {
+      "scalar_kind": "REAL64",
+      "relative_tolerance": 2e-10,
+      "oracle": "independent sorted data, exact moments, Cartesian products or high precision distribution definitions"
+    }
+  },
+  "source_sha256": "1a5a00077c914ffdc979e56ca86b17fb5d4ea0dbed0d008ddfd5990fc71658fc",
+  "hash_normalization": "utf-8-lf",
+  "result": {
+    "ok": false,
+    "compiler": "GNU Fortran (GCC) 16.2.0",
+    "compiler_id": "gfortran",
+    "fpm": "0.12.0",
+    "stages": [
+      {
+        "name": "Build",
+        "command": [
+          "fpm",
+          "build",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 0.572,
+        "ok": true,
+        "exit_code": 0,
+        "error": "",
+        "stdout": "[  0%]                       main.f90\n[ 50%]                       main.f90  done.\n[ 50%]                playground-main\n[100%]                playground-main  done.\n[100%] Project compiled successfully.\n",
+        "stderr": ""
+      },
+      {
+        "name": "Run",
+        "command": [
+          "fpm",
+          "run",
+          "--profile",
+          "debug",
+          "--compiler",
+          "gfortran",
+          "--c-compiler",
+          "gcc",
+          "--cxx-compiler",
+          "g++",
+          "--no-prune"
+        ],
+        "seconds": 0.159,
+        "ok": false,
+        "exit_code": 2,
+        "error": "",
+        "stdout": "",
+        "stderr": "Project is up to date\nAt line 954 of file ./././/../sources/bundle/packages/0/fstats-5fdb86d1e7fa057d776d7d9477942fd6d387dd2f/src/interpolation/fstats_interp.f90\nFortran runtime error: Attempting to allocate already allocated variable 'this'\n\nError termination. Backtrace:\n#0  0x2ab2b3e19f83 in ???\n#1  0x2ab2b3e1ac39 in ???\n#2  0x2ab2b3e1b21b in ???\n#3  0x409cfb in ???\n#4  0x409b8a in ???\n#5  0x401aeb in MAIN__\n\tat app/main.f90:21\n#6  0x402641 in main\n\tat app/main.f90:4\n<ERROR> Execution for object \" playground-main \" returned exit code  2\n<ERROR> *cmd_run*:stopping due to failed executions\nSTOP 2\n"
+      }
+    ],
+    "cache": {
+      "package": "fstats",
+      "compiler": "GNU Fortran 16.2.0",
+      "key": "b8da62c14f5eccc5b42d7224",
+      "library_reused": true,
+      "changed_artifacts": []
+    },
+    "packages": [
+      {
+        "repository": "jchristopherson/fstats",
+        "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+        "sha256": "cf6b7367fc2a0d74f46000dc80a4cbedd07fd554e29117144b695b3a9ffa6fef"
+      },
+      {
+        "repository": "jchristopherson/linalg",
+        "revision": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+        "sha256": "6210b8b167b50694941f48b20ad5d94bdacab026f1eb4720e2d55e8ddde0b59a"
+      },
+      {
+        "repository": "jchristopherson/collections",
+        "revision": "ce37c94e72b3ae5db2e2208489999260a7875f81",
+        "sha256": "5d53caf3c0b35e9e2a8bed49f8e96dca1b282434859c8c6f53fae3123528f265"
+      },
+      {
+        "repository": "jchristopherson/fstring",
+        "revision": "1bb1043a1ed34b8bd57f2687166463dd573bce3d",
+        "sha256": "0272f644a9217485fa2a3a18e41010c88f81ccc7398fc855c37518be2ac8eb3f"
+      }
+    ],
+    "build_ok": true,
+    "target_groups": {
+      "app": [
+        "playground-main"
+      ],
+      "example": [],
+      "test": []
+    },
+    "targets": [
+      "playground-main"
+    ],
+    "plots": [],
+    "plot_notes": []
+  }
+}

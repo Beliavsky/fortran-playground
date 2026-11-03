@@ -16161,6 +16161,255 @@
         "relative_tolerance": 2e-10,
         "oracle": "independent sorted data, exact moments, Cartesian products or high precision distribution definitions"
       }
+    },
+    {
+      "id": "fstats-chi-squared-positive-tails-reference",
+      "name": "gams-fstats-chi-squared-positive-tails-reference",
+      "package_id": "fstats",
+      "procedure_id": "fstats-chi-squared-positive-tails",
+      "gams_code": "L5a1c",
+      "problem_id": "fstats-chi-squared-positive-tails-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/fstats-chi-squared-positive-tails-reference.f90",
+      "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "author_example": "tests/fstats_distribution_tests.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fstats-fitting-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 30 REAL64 distribution inputs. Five positive degrees and six positive abscissae, with gamma-integral definitions. Support boundary x=0 and singular densities excluded. PDF/PMF, CDF, strict upper survival and finite log-density checked with independent 80/120 digit references. Probability relative tolerance 2e-9 with floor 1e-30; invalid parameters and infinite log values excluded.",
+      "validation_path": "docs/gams-fstats-fitting-ten-validation.json",
+      "review_path": "docs/gams-fstats-fitting-ten.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "relative_tolerance": 2e-10,
+        "oracle": "independent sorted data, exact moments, Cartesian products or high precision distribution definitions",
+        "probability_tolerance": 2e-09,
+        "probability_reference_floor": 1e-30,
+        "comparisons": 30
+      }
+    },
+    {
+      "id": "fstats-f-positive-tails-reference",
+      "name": "gams-fstats-f-positive-tails-reference",
+      "package_id": "fstats",
+      "procedure_id": "fstats-f-positive-tails",
+      "gams_code": "L5a1f",
+      "problem_id": "fstats-f-positive-tails-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/fstats-f-positive-tails-reference.f90",
+      "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "author_example": "tests/fstats_distribution_tests.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fstats-fitting-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 20 REAL64 distribution inputs. Four degree pairs and five positive abscissae; independent beta-integral definitions. Moments and support boundary excluded. PDF/PMF, CDF, strict upper survival and finite log-density checked with independent 80/120 digit references. Probability relative tolerance 2e-9 with floor 1e-30; invalid parameters and infinite log values excluded.",
+      "validation_path": "docs/gams-fstats-fitting-ten-validation.json",
+      "review_path": "docs/gams-fstats-fitting-ten.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "relative_tolerance": 2e-10,
+        "oracle": "independent sorted data, exact moments, Cartesian products or high precision distribution definitions",
+        "probability_tolerance": 2e-09,
+        "probability_reference_floor": 1e-30,
+        "comparisons": 20
+      }
+    },
+    {
+      "id": "fstats-lognormal-observation-scale-reference",
+      "name": "gams-fstats-lognormal-observation-scale-reference",
+      "package_id": "fstats",
+      "procedure_id": "fstats-lognormal-observation-scale",
+      "gams_code": "L5a1l",
+      "problem_id": "fstats-lognormal-observation-scale-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/fstats-lognormal-observation-scale-reference.f90",
+      "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "author_example": "tests/fstats_distribution_tests.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fstats-fitting-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. 42 REAL64 distribution inputs. Log-mean -1,0,1 and log-standard-deviation 1/2,2; seven observation-scale values include negative and zero support checks. Positive values use Gaussian change of variables. PDF/PMF, CDF, strict upper survival and finite log-density checked with independent 80/120 digit references. Probability relative tolerance 2e-9 with floor 1e-30; invalid parameters and infinite log values excluded.",
+      "validation_path": "docs/gams-fstats-fitting-ten-validation.json",
+      "review_path": "docs/gams-fstats-fitting-ten.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "relative_tolerance": 2e-10,
+        "oracle": "independent sorted data, exact moments, Cartesian products or high precision distribution definitions",
+        "probability_tolerance": 2e-09,
+        "probability_reference_floor": 1e-30,
+        "comparisons": 42
+      }
+    },
+    {
+      "id": "fstats-piecewise-linear-values-reference",
+      "name": "gams-fstats-piecewise-linear-values-reference",
+      "package_id": "fstats",
+      "procedure_id": "fstats-piecewise-linear-values",
+      "gams_code": "E1a",
+      "problem_id": "fstats-piecewise-linear-values-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/fstats-piecewise-linear-values-reference.f90",
+      "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "author_example": "tests/fstats_interp_tests.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fstats-fitting-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. Three irregular-grid data sets, 41 queries each including extrapolation, scalar and vector APIs. Independent segment weights; exact nodes included. Increasing grids only, invalid/duplicate knots excluded.",
+      "validation_path": "docs/gams-fstats-fitting-ten-validation.json",
+      "review_path": "docs/gams-fstats-fitting-ten.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "relative_tolerance": 2e-10,
+        "oracle": "independent sorted data, exact moments, Cartesian products or high precision distribution definitions"
+      }
+    },
+    {
+      "id": "fstats-polynomial-interpolation-values-reference",
+      "name": "gams-fstats-polynomial-interpolation-values-reference",
+      "package_id": "fstats",
+      "procedure_id": "fstats-polynomial-interpolation-values",
+      "gams_code": "E1b",
+      "problem_id": "fstats-polynomial-interpolation-values-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/fstats-polynomial-interpolation-values-reference.f90",
+      "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "author_example": "tests/fstats_interp_tests.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fstats-fitting-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. Degrees 1..4 on five irregular knots, 41 queries each including bounded extrapolation. Known polynomial reproduction and scalar/vector agreement; no ill-conditioned high-degree claim.",
+      "validation_path": "docs/gams-fstats-fitting-ten-validation.json",
+      "review_path": "docs/gams-fstats-fitting-ten.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "relative_tolerance": 2e-10,
+        "oracle": "independent sorted data, exact moments, Cartesian products or high precision distribution definitions"
+      }
+    },
+    {
+      "id": "fstats-hermite-values-derivatives-reference",
+      "name": "gams-fstats-hermite-values-derivatives-reference",
+      "package_id": "fstats",
+      "procedure_id": "fstats-hermite-values-derivatives",
+      "gams_code": "E1b",
+      "problem_id": "fstats-hermite-values-derivatives-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/fstats-hermite-values-derivatives-reference.f90",
+      "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "author_example": "tests/fstats_interp_tests.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fstats-fitting-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. Degree 1..5 global Hermite polynomials with values and supplied first derivatives at three irregular nodes; 33 queries each. Checks values and derivatives against explicit polynomial sums. This is global Hermite interpolation, not piecewise cubic; estimated derivatives excluded. Fresh object for each degree; reinitialization fails in retained probe docs/gams-candidates/fstats-interpolation/.",
+      "validation_path": "docs/gams-fstats-fitting-ten-validation.json",
+      "review_path": "docs/gams-fstats-fitting-ten.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "relative_tolerance": 2e-10,
+        "oracle": "independent sorted data, exact moments, Cartesian products or high precision distribution definitions"
+      }
+    },
+    {
+      "id": "fstats-linear-regression-residuals-reference",
+      "name": "gams-fstats-linear-regression-residuals-reference",
+      "package_id": "fstats",
+      "procedure_id": "fstats-linear-regression-residuals",
+      "gams_code": "L8a1a1",
+      "problem_id": "fstats-linear-regression-residuals-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/fstats-linear-regression-residuals-reference.f90",
+      "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "author_example": "tests/fstats_regression_tests.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fstats-fitting-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. Sizes 3..25 and three noisy dyadic data sets, with and without intercept: 138 fits. Independent centered-sum or origin-constrained coefficients, fitted values, modeled-minus-actual residuals and normal-equation orthogonality checked. No confidence intervals, weighting or rank-deficient cases.",
+      "validation_path": "docs/gams-fstats-fitting-ten-validation.json",
+      "review_path": "docs/gams-fstats-fitting-ten.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "relative_tolerance": 2e-10,
+        "oracle": "independent sorted data, exact moments, Cartesian products or high precision distribution definitions"
+      }
+    },
+    {
+      "id": "fstats-quadratic-regression-projections-reference",
+      "name": "gams-fstats-quadratic-regression-projections-reference",
+      "package_id": "fstats",
+      "procedure_id": "fstats-quadratic-regression-projections",
+      "gams_code": "L8b1b1",
+      "problem_id": "fstats-quadratic-regression-projections-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/fstats-quadratic-regression-projections-reference.f90",
+      "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "author_example": "tests/fstats_regression_tests.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fstats-fitting-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. Five symmetric grids (5..13 points), three quartic-contaminated quadratic families: 15 fits. Independent even-moment 2-by-2 projection gives coefficients, while odd symmetry supplies linear coefficient. Fitted values, residual convention and three orthogonality equations checked. Bounded full-rank quadratic fits only.",
+      "validation_path": "docs/gams-fstats-fitting-ten-validation.json",
+      "review_path": "docs/gams-fstats-fitting-ten.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "relative_tolerance": 2e-10,
+        "oracle": "independent sorted data, exact moments, Cartesian products or high precision distribution definitions"
+      }
+    },
+    {
+      "id": "fstats-experimental-factor-coding-reference",
+      "name": "gams-fstats-experimental-factor-coding-reference",
+      "package_id": "fstats",
+      "procedure_id": "fstats-experimental-factor-coding",
+      "gams_code": "L7g",
+      "problem_id": "fstats-experimental-factor-coding-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/fstats-experimental-factor-coding-reference.f90",
+      "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "author_example": "tests/fstats_experimental_design_tests.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fstats-fitting-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. Three independent physical factor ranges at nine prescribed coded levels -1..1. Checks both affine directions against exact dyadic coordinates and round trips, with low/high/midpoint included. Equal/reversed ranges and invalid dimensions excluded.",
+      "validation_path": "docs/gams-fstats-fitting-ten-validation.json",
+      "review_path": "docs/gams-fstats-fitting-ten.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "relative_tolerance": 2e-10,
+        "oracle": "independent sorted data, exact moments, Cartesian products or high precision distribution definitions"
+      }
+    },
+    {
+      "id": "fstats-bivariate-normal-densities-reference",
+      "name": "gams-fstats-bivariate-normal-densities-reference",
+      "package_id": "fstats",
+      "procedure_id": "fstats-bivariate-normal-densities",
+      "gams_code": "L5b1n",
+      "problem_id": "fstats-bivariate-normal-densities-reference-independent-oracle",
+      "path": "fpm_catalog/gams-drivers/fstats-bivariate-normal-densities-reference.f90",
+      "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+      "author_example": "tests/fstats_distribution_tests.f90",
+      "reuse": "independent",
+      "license": "MIT (driver only; upstream package terms remain separate)",
+      "license_files": [
+        "fpm_catalog/gams-drivers/licenses/fstats-fitting-ten-drivers-MIT.txt"
+      ],
+      "modifications": "Independent API consumer. Three positive-definite 2-by-2 covariances (negative, zero and positive correlation), two means, 25 offsets each: 150 PDF and log-density checks. Independent scalar determinant and explicit 2-by-2 inverse quadratic form. Invalid covariances, CDFs and higher dimensions excluded.",
+      "validation_path": "docs/gams-fstats-fitting-ten-validation.json",
+      "review_path": "docs/gams-fstats-fitting-ten.md",
+      "checks": {
+        "scalar_kind": "REAL64",
+        "relative_tolerance": 2e-10,
+        "oracle": "independent sorted data, exact moments, Cartesian products or high precision distribution definitions"
+      }
     }
   ]
 }
