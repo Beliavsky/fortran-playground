@@ -114,7 +114,7 @@ def generate_gams_site(destination, feed, *, asset_version=None):
         written.append(url)
 
     def class_links(codes, prefix):
-        return ' '.join(link(prefix + code + '/', code, title=tree[code]['label']) for code in codes)
+        return ' '.join(link(prefix + code + '/', code + ' — ' + tree[code]['label']) for code in codes)
 
     def card(project, prefix, code=None):
         curation = project['curation']
