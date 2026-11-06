@@ -113,8 +113,12 @@ def generate_gams_site(destination, feed, *, asset_version=None):
         written_paths.add(target)
         written.append(url)
 
-    def class_links(codes, prefix):
-        return ' '.join(link(prefix + code + '/', code + ' — ' + tree[code]['label']) for code in codes)
+    def class_label(code, *, hierarchy=False):
+        labels = (tree[c]['label'] for c in reversed(ancestors(tree, code))) if hierarchy else [tree[code]['label']]
+        return code + ' — ' + ' / '.join(labels)
+
+    def class_links(codes, prefix, *, hierarchy=False):
+        return ' '.join(link(prefix + code + '/', class_label(code, hierarchy=hierarchy)) for code in codes)
 
     def card(project, prefix, code=None):
         curation = project['curation']
@@ -283,7 +287,7 @@ def generate_gams_site(destination, feed, *, asset_version=None):
                  f'<section class="intro"><p class="owner">Repository owner: {link("../../"+owner_path(project["repository"]["owner"].lower()), owner_label(project["repository"]["owner"].lower()))}</p><h1>{e(project["name"])}</h1>'
                  f'<p class="lede">{e(project["description"])}</p><p class="actions">{" · ".join(actions)}</p></section>')
         codes = '<section><h2>GAMS classifications</h2><ul class="classification-list">' + ''.join(
-            '<li>'+link('../../'+code+'/', code+' — '+tree[code]['label'])+'</li>' for code in curation['gams_codes']) + '</ul></section>'
+            '<li>'+link('../../'+code+'/', class_label(code, hierarchy=True))+'</li>' for code in curation['gams_codes']) + '</ul></section>'
         topics = sorted(set(curation.get('topics', []) + project.get('github', {}).get('topics', [])))
         details = '<section><h2>About this package</h2><dl><dt>Category</dt><dd>'+e(', '.join(project.get('categories', [])))+'</dd><dt>License</dt><dd>'+e(project.get('license', {}).get('label') or 'See repository')+'</dd></dl>'
         if topics:
@@ -301,7 +305,7 @@ def generate_gams_site(destination, feed, *, asset_version=None):
                                         for c in record['gams_codes'])
             procedures += (f'<article class="procedure" id="{e(record["id"])}"><h3>{e(record["procedure"])}</h3>'
                            f'<p><span class="label">Module:</span> <code>{e(record["module"])}</code></p>'
-                           f'<p class="codes">{class_links(record["gams_codes"], "../../")}</p>'
+                           f'<p class="codes">{class_links(record["gams_codes"], "../../", hierarchy=True)}</p>'
                            f'<p class="mapping-evidence">{e(evidence_labels)}</p>'
                            f'<p><span class="label">Derivatives / callbacks:</span> {e(record["derivatives"])}</p>'
                            f'<p>{e(record["notes"])}</p><p><span class="label">Pinned source:</span> {" · ".join(sources)}</p>')
