@@ -2,7 +2,7 @@
   "schema_version": 1,
   "publisher": "fortran-gams-catalog-independent-reviews",
   "source_url": "https://beliavsky.github.io/fortran-gams-catalog/reviewed-metadata.json",
-  "source_snapshot_id": "sha256:2920254700a679c68c8b4b803239f31ebc2858c442155350292113ccdcdc51f9",
+  "source_snapshot_id": "sha256:6dc8eee4e7e421ad2eddc89ac7ddea8254a54e86ae9ba557df31d3ad77566348",
   "packages": {
     "fftpack": {
       "id": "github:fortran-lang/fftpack",
@@ -1610,6 +1610,147 @@
         }
       ]
     },
+    "fortran-primes": {
+      "id": "github:perazz/fortran-primes",
+      "repository": {
+        "owner": "perazz",
+        "name": "fortran-primes",
+        "url": "https://github.com/perazz/fortran-primes"
+      },
+      "license": {
+        "label": "MIT root notice; source references CC-BY-NC-4.0 components",
+        "spdx_expression": null,
+        "revision": "817abbf15c2565d2b92c35546d9e18152eb02e2c",
+        "reviewed_on": "2026-11-07",
+        "notes": "The root LICENSE is MIT, but both inspected source headers mention Primes.jl contributors and code from Michal Forisek published under CC BY-NC 4.0; README identifies that code as a source of the ports. Preserve this unresolved component-level restriction/provenance instead of asserting MIT-only licensing for the whole library.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/perazz/fortran-primes/blob/817abbf15c2565d2b92c35546d9e18152eb02e2c/LICENSE",
+            "sha256": "755d8156598caebdaddaa4a7d6b9c9c6bdbab634ec52d5f4c6f2c3d06d211038"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/perazz/fortran-primes/blob/817abbf15c2565d2b92c35546d9e18152eb02e2c/README.md",
+            "sha256": "6c90058efe1b59f58ebd82199c8bf9d2d0b043b6eb2137fd161e5d1354b77873"
+          },
+          {
+            "path": "src/prime_numbers.f90",
+            "url": "https://github.com/perazz/fortran-primes/blob/817abbf15c2565d2b92c35546d9e18152eb02e2c/src/prime_numbers.f90",
+            "sha256": "5086bda43361b5fdf5d523460d54a941f00e6d59b273d916d6127301623cb40d"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "B",
+          "level": "source-reviewed",
+          "revision": "817abbf15c2565d2b92c35546d9e18152eb02e2c",
+          "reviewed_on": "2026-11-07",
+          "notes": "The prime-number API offers value-bounded lists and integer-kind overloads for primality testing. List cutoffs must not be confused with ordinal prime indices. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/prime_numbers.f90",
+              "url": "https://github.com/perazz/fortran-primes/blob/817abbf15c2565d2b92c35546d9e18152eb02e2c/src/prime_numbers.f90",
+              "sha256": "5086bda43361b5fdf5d523460d54a941f00e6d59b273d916d6127301623cb40d"
+            },
+            {
+              "path": "src/prime_constants.f90",
+              "url": "https://github.com/perazz/fortran-primes/blob/817abbf15c2565d2b92c35546d9e18152eb02e2c/src/prime_constants.f90",
+              "sha256": "e9ddfc6036500b933278732a2fa1ec764405b7c73ba319ff215fb210aa7f4d24"
+            },
+            {
+              "path": "README.md",
+              "url": "https://github.com/perazz/fortran-primes/blob/817abbf15c2565d2b92c35546d9e18152eb02e2c/README.md",
+              "sha256": "6c90058efe1b59f58ebd82199c8bf9d2d0b043b6eb2137fd161e5d1354b77873"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "primes",
+              "role": "public-entry-point",
+              "module": "prime_numbers",
+              "summary": "Public generic PRIMES with one INTEGER(IP) upper bound returns an allocatable INTEGER(IP) list of prime VALUES in [1,LIMIT]. LIMIT is a value cutoff, not the count of the first LIMIT primes, despite an older nearby comment. IP is INT32 in PRIME_CONSTANTS. Empty ranges produce an empty list; generating a large range allocates sieve/storage proportional to that range. No status argument is exposed.",
+              "signature": "VALUE = primes(LIMIT)",
+              "path": "src/prime_numbers.f90",
+              "line_start": 92,
+              "line_end": 96,
+              "declarations": [
+                {
+                  "path": "src/prime_numbers.f90",
+                  "line_start": 93,
+                  "line_end": 94
+                },
+                {
+                  "path": "src/prime_numbers.f90",
+                  "line_start": 39,
+                  "line_end": 50
+                },
+                {
+                  "path": "src/prime_constants.f90",
+                  "line_start": 11,
+                  "line_end": 35
+                }
+              ]
+            },
+            {
+              "procedure": "primes",
+              "role": "public-entry-point",
+              "module": "prime_numbers",
+              "summary": "Two-argument PRIMES overload returns prime VALUES in inclusive [LO,HI], not primes indexed LO through HI. Both inputs and the allocatable result use INTEGER(IP)=INT32. LO>HI returns an empty array; numbers below two are excluded. Range size controls sieve memory, and no separate memory/status diagnostic is exposed.",
+              "signature": "VALUE = primes(LO,HI)",
+              "path": "src/prime_numbers.f90",
+              "line_start": 99,
+              "line_end": 144,
+              "declarations": [
+                {
+                  "path": "src/prime_numbers.f90",
+                  "line_start": 100,
+                  "line_end": 101
+                },
+                {
+                  "path": "src/prime_numbers.f90",
+                  "line_start": 39,
+                  "line_end": 50
+                },
+                {
+                  "path": "src/prime_constants.f90",
+                  "line_start": 11,
+                  "line_end": 35
+                }
+              ]
+            },
+            {
+              "procedure": "is_prime",
+              "role": "public-entry-point",
+              "module": "prime_numbers",
+              "summary": "INTEGER(WP)=INT64 overload of public generic IS_PRIME, returning default LOGICAL. The procedure is elemental, so conforming integer arrays are allowed. N<2 is false and 2 is true; larger values use lookup, trial factors and strong probable-prime witness tests. Import the exact integer kind from PRIME_CONSTANTS or use INT64 actuals. This interface review does not establish a new proof of the witness set or verify every 64-bit input. A separate INT32 overload also exists.",
+              "signature": "VALUE = is_prime(N)",
+              "path": "src/prime_numbers.f90",
+              "line_start": 152,
+              "line_end": 185,
+              "declarations": [
+                {
+                  "path": "src/prime_numbers.f90",
+                  "line_start": 153,
+                  "line_end": 153
+                },
+                {
+                  "path": "src/prime_numbers.f90",
+                  "line_start": 39,
+                  "line_end": 50
+                },
+                {
+                  "path": "src/prime_constants.f90",
+                  "line_start": 11,
+                  "line_end": 35
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "fmin": {
       "id": "github:jacobwilliams/fmin",
       "repository": {
@@ -2627,6 +2768,168 @@
         }
       ]
     },
+    "spectrum": {
+      "id": "github:jchristopherson/spectrum",
+      "repository": {
+        "owner": "jchristopherson",
+        "name": "spectrum",
+        "url": "https://github.com/jchristopherson/spectrum"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "5af0d5a85eccf971aa6e0fc72b1c7439c3cef536",
+        "reviewed_on": "2026-11-07",
+        "notes": "The repository LICENSE and inspected source headers supply MIT terms for Jason Christopherson contributions; FFTPACK and other dependencies retain separate notices.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jchristopherson/spectrum/blob/5af0d5a85eccf971aa6e0fc72b1c7439c3cef536/LICENSE",
+            "sha256": "1bf39c65ec480dfe78d849c8e2729868caa0d78e33506ef1115e04039f66b886"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jchristopherson/spectrum/blob/5af0d5a85eccf971aa6e0fc72b1c7439c3cef536/README.md",
+            "sha256": "a1b2f29003313bd441e0caca7b679404b42a63cc3a214b867a8c5c0c7b97ea33"
+          },
+          {
+            "path": "src/spectrum_fft.f90",
+            "url": "https://github.com/jchristopherson/spectrum/blob/5af0d5a85eccf971aa6e0fc72b1c7439c3cef536/src/spectrum_fft.f90",
+            "sha256": "d6b59a5c0e3e923eaa187863a48803564a8a1199d6ecccaedd7376da67099b1c"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "J2",
+          "level": "source-reviewed",
+          "revision": "5af0d5a85eccf971aa6e0fc72b1c7439c3cef536",
+          "reviewed_on": "2026-11-07",
+          "notes": "CONVOLVE uses FFT-based finite convolution with full or centered output selection. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/spectrum_fft.f90",
+              "url": "https://github.com/jchristopherson/spectrum/blob/5af0d5a85eccf971aa6e0fc72b1c7439c3cef536/src/spectrum_fft.f90",
+              "sha256": "d6b59a5c0e3e923eaa187863a48803564a8a1199d6ecccaedd7376da67099b1c"
+            },
+            {
+              "path": "src/spectrum_convolve.f90",
+              "url": "https://github.com/jchristopherson/spectrum/blob/5af0d5a85eccf971aa6e0fc72b1c7439c3cef536/src/spectrum_convolve.f90",
+              "sha256": "ebe3af6f2f764024d7a14931af15d248c9b1134d9813ee5e0f3e21d8c9a19995"
+            },
+            {
+              "path": "src/spectrum.f90",
+              "url": "https://github.com/jchristopherson/spectrum/blob/5af0d5a85eccf971aa6e0fc72b1c7439c3cef536/src/spectrum.f90",
+              "sha256": "4346f96ef166a52ae49c8b1a288dfe897c3f795c5f8d064e4b4495ad72dac24a"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "convolve",
+              "role": "public-entry-point",
+              "module": "spectrum",
+              "summary": "Convolution of nonempty rank-one REAL64 X/Y, returning an allocatable REAL64 vector. Optional INTEGER(INT32) METHOD is SPCTRM_FULL_CONVOLUTION (default) or SPCTRM_CENTRAL_CONVOLUTION. Full output has SIZE(X)+SIZE(Y)-1 elements; this pin centers to the longer input length MAX(SIZE(X),SIZE(Y)), which matters when the kernel is longer than the nominal signal. Unknown method codes revert to full output. Empty inputs return before allocating the result; there is no status/error estimate.",
+              "signature": "VALUE = convolve(X,Y,METHOD)",
+              "path": "src/spectrum_convolve.f90",
+              "line_start": 41,
+              "line_end": 93,
+              "declarations": [
+                {
+                  "path": "src/spectrum_convolve.f90",
+                  "line_start": 43,
+                  "line_end": 59
+                },
+                {
+                  "path": "src/spectrum_convolve.f90",
+                  "line_start": 23,
+                  "line_end": 35
+                },
+                {
+                  "path": "src/spectrum_convolve.f90",
+                  "line_start": 141,
+                  "line_end": 181
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "J1a1",
+          "level": "source-reviewed",
+          "revision": "5af0d5a85eccf971aa6e0fc72b1c7439c3cef536",
+          "reviewed_on": "2026-11-07",
+          "notes": "Real Fourier wrappers expose complex half-spectra, with implementation-specific inverse-length and normalization rules. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/spectrum_fft.f90",
+              "url": "https://github.com/jchristopherson/spectrum/blob/5af0d5a85eccf971aa6e0fc72b1c7439c3cef536/src/spectrum_fft.f90",
+              "sha256": "d6b59a5c0e3e923eaa187863a48803564a8a1199d6ecccaedd7376da67099b1c"
+            },
+            {
+              "path": "src/spectrum_convolve.f90",
+              "url": "https://github.com/jchristopherson/spectrum/blob/5af0d5a85eccf971aa6e0fc72b1c7439c3cef536/src/spectrum_convolve.f90",
+              "sha256": "ebe3af6f2f764024d7a14931af15d248c9b1134d9813ee5e0f3e21d8c9a19995"
+            },
+            {
+              "path": "src/spectrum.f90",
+              "url": "https://github.com/jchristopherson/spectrum/blob/5af0d5a85eccf971aa6e0fc72b1c7439c3cef536/src/spectrum.f90",
+              "sha256": "4346f96ef166a52ae49c8b1a288dfe897c3f795c5f8d064e4b4495ad72dac24a"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "rfft",
+              "role": "public-entry-point",
+              "module": "spectrum",
+              "summary": "Real forward Fourier transform of rank-one REAL64 X, returning the positive half-spectrum as an allocatable COMPLEX(REAL64) vector. Optional INTEGER(INT32) N sets the real input transform length, truncating/zero-padding X; use N>=1. The output has FLOOR(N/2)+1 bins, including DC. It calls an unnormalized FFTPACK forward transform. This is not the packed-real-vector RFFT interface exposed by some other libraries.",
+              "signature": "VALUE = rfft(X[,N])",
+              "path": "src/spectrum_fft.f90",
+              "line_start": 48,
+              "line_end": 86,
+              "declarations": [
+                {
+                  "path": "src/spectrum_fft.f90",
+                  "line_start": 51,
+                  "line_end": 58
+                },
+                {
+                  "path": "src/spectrum_fft.f90",
+                  "line_start": 23,
+                  "line_end": 32
+                }
+              ]
+            },
+            {
+              "procedure": "irfft",
+              "role": "public-entry-point",
+              "module": "spectrum",
+              "summary": "Inverse transform from a rank-one COMPLEX(REAL64) half-spectrum. In this pin optional N counts complex bins to retain/pad, not the desired real output length. With K effective bins, the wrapper returns 2*K-1 real samples when K is even, and 2*(K-1) when K is odd. Use K>=2. It does not divide the backward FFTPACK transform by the returned real length, so apply that normalization for a round trip. This inferred-length rule cannot reconstruct every original odd/even length; do not assume NumPy-style IRFFT semantics or arbitrary-length round-trip support. No status/error estimate is returned.",
+              "signature": "VALUE = irfft(X[,N])",
+              "path": "src/spectrum_fft.f90",
+              "line_start": 89,
+              "line_end": 145,
+              "declarations": [
+                {
+                  "path": "src/spectrum_fft.f90",
+                  "line_start": 91,
+                  "line_end": 98
+                },
+                {
+                  "path": "src/spectrum_fft.f90",
+                  "line_start": 23,
+                  "line_end": 32
+                },
+                {
+                  "path": "src/spectrum_fft.f90",
+                  "line_start": 104,
+                  "line_end": 144
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "lsmr": {
       "id": "github:jacobwilliams/lsmr",
       "repository": {
@@ -2835,6 +3138,100 @@
         }
       ]
     },
+    "geodesic-fortran": {
+      "id": "github:jacobwilliams/geodesic-fortran",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "geodesic-fortran",
+        "url": "https://github.com/jacobwilliams/geodesic-fortran"
+      },
+      "license": {
+        "label": "BSD-3-Clause modernization; original GeographicLib MIT notice",
+        "spdx_expression": null,
+        "revision": "b16eaf6622baabee7dfb75b99b78e42eaa878440",
+        "reviewed_on": "2026-11-07",
+        "notes": "LICENSE.txt separately retains BSD three-clause modernization terms and the original Charles Karney/GeographicLib MIT grant. Preserve both component attributions.",
+        "evidence": [
+          {
+            "path": "LICENSE.txt",
+            "url": "https://github.com/jacobwilliams/geodesic-fortran/blob/b16eaf6622baabee7dfb75b99b78e42eaa878440/LICENSE.txt",
+            "sha256": "4a8e343a5d6a289c754f74dc247016c15f2508c434f9d3d72c3f650cc5d9805c"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/geodesic-fortran/blob/b16eaf6622baabee7dfb75b99b78e42eaa878440/README.md",
+            "sha256": "ad652fd005c561e2bb0e6f0e836c3651ab219d5c01ebe62f19851ce3012574ed"
+          },
+          {
+            "path": "src/geodesic_module.F90",
+            "url": "https://github.com/jacobwilliams/geodesic-fortran/blob/b16eaf6622baabee7dfb75b99b78e42eaa878440/src/geodesic_module.F90",
+            "sha256": "147ba7ca6af754b10be54d10e96e051f1190d83c41cba408c491f2283a2e03d0"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "P",
+          "level": "source-reviewed",
+          "revision": "b16eaf6622baabee7dfb75b99b78e42eaa878440",
+          "reviewed_on": "2026-11-07",
+          "notes": "Karney-derived direct and inverse ellipsoidal geodesic interfaces use degree angles, explicit ellipsoid parameters and output masks. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/geodesic_module.F90",
+              "url": "https://github.com/jacobwilliams/geodesic-fortran/blob/b16eaf6622baabee7dfb75b99b78e42eaa878440/src/geodesic_module.F90",
+              "sha256": "147ba7ca6af754b10be54d10e96e051f1190d83c41cba408c491f2283a2e03d0"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "direct",
+              "role": "public-entry-point",
+              "module": "geodesic_module",
+              "summary": "Direct ellipsoidal geodesic: supply equatorial radius A, flattening F, initial LAT1/LON1/AZI1 in DEGREES and signed distance or arc S12A12. FLAGS bit 1 selects arc degrees instead of distance units, bit 2 longitude unrolling; zero selects distance and normal longitude wrapping. Distance units follow A (normally meters). LAT2/LON2/AZI2 are endpoint and forward azimuth. OUTMASK bits 1/2/4/8 select arc-or-distance companion, reduced length, scales MM12/MM21 and area SS12. Every formal output is required as an actual argument even when masked off; do not read unrequested quantities. Match GEODESIC_WP (REAL64 default). This is not the Vincenty interface or a radians interface, and no status code is returned.",
+              "signature": "CALL direct(A,F,LAT1,LON1,AZI1,S12A12,FLAGS,LAT2,LON2,AZI2,OUTMASK,A12S12,M12,MM12,MM21,SS12)",
+              "path": "src/geodesic_module.F90",
+              "line_start": 218,
+              "line_end": 536,
+              "declarations": [
+                {
+                  "path": "src/geodesic_module.F90",
+                  "line_start": 221,
+                  "line_end": 255
+                },
+                {
+                  "path": "src/geodesic_module.F90",
+                  "line_start": 131,
+                  "line_end": 141
+                }
+              ]
+            },
+            {
+              "procedure": "inverse",
+              "role": "public-entry-point",
+              "module": "geodesic_module",
+              "summary": "Inverse ellipsoidal geodesic from LAT1/LON1/LAT2/LON2 in DEGREES, radius A and flattening F. Return distance S12 and forward endpoint azimuths AZI1/AZI2; AZI2 is not the reverse bearing. OUTMASK bits 1/2/4/8 request auxiliary arc A12, reduced length M12, scales MM12/MM21 and area SS12. All outputs are mandatory actual arguments; use only masked auxiliary values. Match GEODESIC_WP and use a valid ellipsoid and latitudes in [-90,90]. Radius/distance units must be consistent; area has squared units. No status/error estimate is exposed.",
+              "signature": "CALL inverse(A,F,LAT1,LON1,LAT2,LON2,S12,AZI1,AZI2,OUTMASK,A12,M12,MM12,MM21,SS12)",
+              "path": "src/geodesic_module.F90",
+              "line_start": 556,
+              "line_end": 980,
+              "declarations": [
+                {
+                  "path": "src/geodesic_module.F90",
+                  "line_start": 559,
+                  "line_end": 582
+                },
+                {
+                  "path": "src/geodesic_module.F90",
+                  "line_start": 131,
+                  "line_end": 141
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "simulated-annealing": {
       "id": "github:jacobwilliams/simulated-annealing",
       "repository": {
@@ -2954,6 +3351,245 @@
                   "path": "src/simulated_annealing.F90",
                   "line_start": 179,
                   "line_end": 193
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "pointsets": {
+      "id": "github:arjenmarkus/pointsets",
+      "repository": {
+        "owner": "arjenmarkus",
+        "name": "pointsets",
+        "url": "https://github.com/arjenmarkus/pointsets"
+      },
+      "license": {
+        "label": "Declared MIT in manifest; no bundled license text reviewed",
+        "spdx_expression": null,
+        "revision": "a1c381777f893d656018366cfabfa4cc7531e4dd",
+        "reviewed_on": "2026-11-07",
+        "notes": "The pinned fpm.toml declares MIT and credits Arjen Markus. No standalone license text was found among the inspected repository files; retain the declaration as such rather than infer a broader component-level grant.",
+        "evidence": [
+          {
+            "path": "fpm.toml",
+            "url": "https://github.com/arjenmarkus/pointsets/blob/a1c381777f893d656018366cfabfa4cc7531e4dd/fpm.toml",
+            "sha256": "5e5fc2dfcc6c72c05e8f80026f652cca32f12a338fbb20d0e6f21e314ac787b8"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/arjenmarkus/pointsets/blob/a1c381777f893d656018366cfabfa4cc7531e4dd/README.md",
+            "sha256": "88da204441571a08f3094d4d56e0ceb3559d3409f44c22e408e6bf91eeaa7eef"
+          },
+          {
+            "path": "src/pointsets.f90",
+            "url": "https://github.com/arjenmarkus/pointsets/blob/a1c381777f893d656018366cfabfa4cc7531e4dd/src/pointsets.f90",
+            "sha256": "810138ff7cbc9f47e8d4bd3be04b7910914f46ff1ee04f3e8828350f4d57009c"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "R",
+          "level": "source-reviewed",
+          "revision": "a1c381777f893d656018366cfabfa4cc7531e4dd",
+          "reviewed_on": "2026-11-07",
+          "notes": "Arithmetic/geometric spacing routines construct grids in caller-provided arrays with explicit endpoint and spacing-ratio conventions. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/pointsets.f90",
+              "url": "https://github.com/arjenmarkus/pointsets/blob/a1c381777f893d656018366cfabfa4cc7531e4dd/src/pointsets.f90",
+              "sha256": "810138ff7cbc9f47e8d4bd3be04b7910914f46ff1ee04f3e8828350f4d57009c"
+            },
+            {
+              "path": "src/select_precision.f90",
+              "url": "https://github.com/arjenmarkus/pointsets/blob/a1c381777f893d656018366cfabfa4cc7531e4dd/src/select_precision.f90",
+              "sha256": "e7623bd6663b86f15898e8bf3bc78bd85e95a1f32582c140a4c8d39f40e47e5e"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/arjenmarkus/pointsets/blob/a1c381777f893d656018366cfabfa4cc7531e4dd/fpm.toml",
+              "sha256": "5e5fc2dfcc6c72c05e8f80026f652cca32f12a338fbb20d0e6f21e314ac787b8"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "arithmetic_spacing",
+              "role": "public-entry-point",
+              "module": "pointsets",
+              "summary": "Fill caller-owned X(:) of length at least two with an arithmetic grid from BEGIN to END, including endpoints up to rounding. Real actuals must use SELECT_PRECISION::WP, which this pin sets to KIND(1.0), not double precision. Arrays of length zero or one return unchanged, rather than assigning the endpoint. X is INOUT; no allocation, status or error estimate is provided.",
+              "signature": "CALL arithmetic_spacing(X,BEGIN,END)",
+              "path": "src/pointsets.f90",
+              "line_start": 26,
+              "line_end": 41,
+              "declarations": [
+                {
+                  "path": "src/pointsets.f90",
+                  "line_start": 27,
+                  "line_end": 29
+                },
+                {
+                  "path": "src/select_precision.f90",
+                  "line_start": 17,
+                  "line_end": 25
+                }
+              ]
+            },
+            {
+              "procedure": "geometric_spacing",
+              "role": "public-entry-point",
+              "module": "pointsets",
+              "summary": "Fill caller-owned X(:) with endpoints BEGIN/END and successive INTERVAL lengths in ratio RATIO, not coordinates in a geometric sequence. Use length>=2, positive RATIO different from one and matching SELECT_PRECISION::WP. RATIO<=0, RATIO=1 or undersized X returns unchanged without a status; use ARITHMETIC_SPACING explicitly for a uniform grid. Large powers can overflow.",
+              "signature": "CALL geometric_spacing(X,BEGIN,END,RATIO)",
+              "path": "src/pointsets.f90",
+              "line_start": 53,
+              "line_end": 76,
+              "declarations": [
+                {
+                  "path": "src/pointsets.f90",
+                  "line_start": 54,
+                  "line_end": 57
+                },
+                {
+                  "path": "src/select_precision.f90",
+                  "line_start": 17,
+                  "line_end": 25
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "L6",
+          "level": "source-reviewed",
+          "revision": "a1c381777f893d656018366cfabfa4cc7531e4dd",
+          "reviewed_on": "2026-11-07",
+          "notes": "RANDOM_SPACING constructs a randomly spaced ordered grid by normalized cumulative random increments. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/pointsets.f90",
+              "url": "https://github.com/arjenmarkus/pointsets/blob/a1c381777f893d656018366cfabfa4cc7531e4dd/src/pointsets.f90",
+              "sha256": "810138ff7cbc9f47e8d4bd3be04b7910914f46ff1ee04f3e8828350f4d57009c"
+            },
+            {
+              "path": "src/select_precision.f90",
+              "url": "https://github.com/arjenmarkus/pointsets/blob/a1c381777f893d656018366cfabfa4cc7531e4dd/src/select_precision.f90",
+              "sha256": "e7623bd6663b86f15898e8bf3bc78bd85e95a1f32582c140a4c8d39f40e47e5e"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/arjenmarkus/pointsets/blob/a1c381777f893d656018366cfabfa4cc7531e4dd/fpm.toml",
+              "sha256": "5e5fc2dfcc6c72c05e8f80026f652cca32f12a338fbb20d0e6f21e314ac787b8"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "random_spacing",
+              "role": "public-entry-point",
+              "module": "pointsets",
+              "summary": "Fill X(:) of length>=2 with a random ordered grid including the supplied interval endpoints. It draws RANDOM_NUMBER values, forms cumulative positive spacings, and rescales to BEGIN/END. This is not a sample of independently uniform interior points subsequently sorted. Match SELECT_PRECISION::WP; use BEGIN<END for a nondecreasing grid and RANDOM_SEED externally for reproducibility. Degenerate random sums and invalid controls have no separate status channel; undersized X is left unchanged.",
+              "signature": "CALL random_spacing(X,BEGIN,END)",
+              "path": "src/pointsets.f90",
+              "line_start": 88,
+              "line_end": 107,
+              "declarations": [
+                {
+                  "path": "src/pointsets.f90",
+                  "line_start": 89,
+                  "line_end": 91
+                },
+                {
+                  "path": "src/select_precision.f90",
+                  "line_start": 17,
+                  "line_end": 25
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "integrate_fortran": {
+      "id": "github:euler-37/integrate_fortran",
+      "repository": {
+        "owner": "Euler-37",
+        "name": "integrate_fortran",
+        "url": "https://github.com/Euler-37/integrate_fortran"
+      },
+      "license": {
+        "label": "License not resolved by inspected manifest/source",
+        "spdx_expression": null,
+        "revision": "5281426a7407aa8cef7f684ff8cf1f7e4a4df906",
+        "reviewed_on": "2026-11-07",
+        "notes": "The manifest has the placeholder value license=\"license\"; inspected source/README do not supply an explicit reuse grant. No standard SPDX expression is inferred from the public repository.",
+        "evidence": [
+          {
+            "path": "fpm.toml",
+            "url": "https://github.com/Euler-37/integrate_fortran/blob/5281426a7407aa8cef7f684ff8cf1f7e4a4df906/fpm.toml",
+            "sha256": "5dcc98b8812f84f9d4f37dcadad1bf0c1b8f0c7deb0aef5b871796798c6667a0"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/Euler-37/integrate_fortran/blob/5281426a7407aa8cef7f684ff8cf1f7e4a4df906/README.md",
+            "sha256": "c784c354bd2652d882daf8ada014578e4fdca4ef6b7c9fc0e21e8658f14bda98"
+          },
+          {
+            "path": "src/gauss_leg.f90",
+            "url": "https://github.com/Euler-37/integrate_fortran/blob/5281426a7407aa8cef7f684ff8cf1f7e4a4df906/src/gauss_leg.f90",
+            "sha256": "8e2d23d5dff50e3316b1f6364dd2a5e5e5c3fe190905185ab95d6520a148cbab"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "H2b1a2",
+          "level": "source-reviewed",
+          "revision": "5281426a7407aa8cef7f684ff8cf1f7e4a4df906",
+          "reviewed_on": "2026-11-07",
+          "notes": "GAUSS_LEG_ND composes a fixed six-node rule over coordinate-dependent nested integration bounds and user subdivision counts. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/gauss_leg.f90",
+              "url": "https://github.com/Euler-37/integrate_fortran/blob/5281426a7407aa8cef7f684ff8cf1f7e4a4df906/src/gauss_leg.f90",
+              "sha256": "8e2d23d5dff50e3316b1f6364dd2a5e5e5c3fe190905185ab95d6520a148cbab"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/Euler-37/integrate_fortran/blob/5281426a7407aa8cef7f684ff8cf1f7e4a4df906/fpm.toml",
+              "sha256": "5dcc98b8812f84f9d4f37dcadad1bf0c1b8f0c7deb0aef5b871796798c6667a0"
+            },
+            {
+              "path": "README.md",
+              "url": "https://github.com/Euler-37/integrate_fortran/blob/5281426a7407aa8cef7f684ff8cf1f7e4a4df906/README.md",
+              "sha256": "c784c354bd2652d882daf8ada014578e4fdca4ef6b7c9fc0e21e8658f14bda98"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "gauss_leg_nd",
+              "role": "public-entry-point",
+              "module": "gauss_leg_mod",
+              "summary": "Composite tensor-product six-point Gauss-Legendre quadrature. JS(:) is a nonempty default-integer vector of POSITIVE subinterval counts, one per dimension. Scalar integrand F(X) receives a REAL64 vector of coordinates. Bounds callback FD(X,J) returns REAL64 RES(2)=[lower,upper] for dimension J and may depend only on coordinates in previously established dimensions; other entries of X may be unset. The real result uses REAL64; matching callback INTENT/shape declarations are linked. This is a fixed composite rule, not an adaptive error-controlled interface: no tolerance, status or error-estimate argument is exposed. Work scales as a product of subinterval counts and quadrature nodes.",
+              "signature": "VALUE = gauss_leg_nd(JS,F,FD)",
+              "path": "src/gauss_leg.f90",
+              "line_start": 34,
+              "line_end": 85,
+              "declarations": [
+                {
+                  "path": "src/gauss_leg.f90",
+                  "line_start": 35,
+                  "line_end": 37
+                },
+                {
+                  "path": "src/gauss_leg.f90",
+                  "line_start": 1,
+                  "line_end": 5
+                },
+                {
+                  "path": "src/gauss_leg.f90",
+                  "line_start": 19,
+                  "line_end": 29
                 }
               ]
             }
@@ -3297,6 +3933,78 @@
         }
       ]
     },
+    "gaussjacobiquad": {
+      "id": "github:haozeke/gaussjacobiquad",
+      "repository": {
+        "owner": "HaoZeke",
+        "name": "GaussJacobiQuad",
+        "url": "https://github.com/HaoZeke/GaussJacobiQuad"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "ffb970c68eea0b39b140f80f788c8994547d8bfb",
+        "reviewed_on": "2026-11-07",
+        "notes": "The root LICENSE grants MIT terms to featom developers and the driver header credits Rohit Goswami under MIT. This scoped notice review does not audit all external numerical dependencies.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/HaoZeke/GaussJacobiQuad/blob/ffb970c68eea0b39b140f80f788c8994547d8bfb/LICENSE",
+            "sha256": "afad9c5ea13d08ed053f0016aa4fa3450e0e62f6067fb4642a0db9410e0bebeb"
+          },
+          {
+            "path": "src/GaussJacobiQuad.f90",
+            "url": "https://github.com/HaoZeke/GaussJacobiQuad/blob/ffb970c68eea0b39b140f80f788c8994547d8bfb/src/GaussJacobiQuad.f90",
+            "sha256": "1b181131642e42d83fe4ef7c0f236790827b1640a8bdfe46a4a986c5979d9ba2"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "H2c",
+          "level": "source-reviewed",
+          "revision": "ffb970c68eea0b39b140f80f788c8994547d8bfb",
+          "reviewed_on": "2026-11-07",
+          "notes": "The driver generates Gaussian nodes and weights for a prescribed Jacobi weight, selecting recurrence or Golub-Welsch implementation. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/GaussJacobiQuad.f90",
+              "url": "https://github.com/HaoZeke/GaussJacobiQuad/blob/ffb970c68eea0b39b140f80f788c8994547d8bfb/src/GaussJacobiQuad.f90",
+              "sha256": "1b181131642e42d83fe4ef7c0f236790827b1640a8bdfe46a4a986c5979d9ba2"
+            },
+            {
+              "path": "src/gjp_types.f90",
+              "url": "https://github.com/HaoZeke/GaussJacobiQuad/blob/ffb970c68eea0b39b140f80f788c8994547d8bfb/src/gjp_types.f90",
+              "sha256": "3c7e43d5876fd5e129f99f57a305c7ba93af205ecff7837bb13fdd79b8799a54"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "gauss_jacobi",
+              "role": "public-entry-point",
+              "module": "GaussJacobiQuad",
+              "summary": "Generate NPTS>0 Gauss-Jacobi nodes X(NPTS) and WTS(NPTS) for weight (1-X)**ALPHA*(1+X)**BETA on [-1,1], requiring ALPHA,BETA>-1. Real arguments use GJP_TYPES::DP=KIND(0.D0). METHOD is a required deferred-length ALLOCATABLE CHARACTER actual; allocate/assign a variable such as METHOD=\"gw\" rather than pass a string literal to this interface. Accepted values are gw and recurrence; the source warns of recurrence limitations for high beta. Invalid controls/method cause ERROR STOP. Use SUM(WTS*F(X)) with F excluding the Jacobi weight. No status or error estimate is returned.",
+              "signature": "CALL gauss_jacobi(NPTS,ALPHA,BETA,X,WTS,METHOD)",
+              "path": "src/GaussJacobiQuad.f90",
+              "line_start": 45,
+              "line_end": 74,
+              "declarations": [
+                {
+                  "path": "src/GaussJacobiQuad.f90",
+                  "line_start": 46,
+                  "line_end": 49
+                },
+                {
+                  "path": "src/gjp_types.f90",
+                  "line_start": 29,
+                  "line_end": 42
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "fjsample": {
       "id": "github:rjabi/fjsample",
       "repository": {
@@ -3446,6 +4154,262 @@
                   "path": "src/types.f90",
                   "line_start": 1,
                   "line_end": 15
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "interpolation": {
+      "id": "github:furstj/interpolation",
+      "repository": {
+        "owner": "furstj",
+        "name": "interpolation",
+        "url": "https://github.com/furstj/interpolation"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "bf6d22ad931855d510dcfb5bdd6870cce8924b22",
+        "reviewed_on": "2026-11-07",
+        "notes": "The root LICENSE supplies Jiri Furst MIT terms. This review covers the pinned interpolation interfaces and repository notice, not every numerical option or dependency.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/furstj/interpolation/blob/bf6d22ad931855d510dcfb5bdd6870cce8924b22/LICENSE",
+            "sha256": "ae5b23b3a0f40e2c62c86a1d62a371a53b70d74b5d59247972473f7a6706fa2a"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/furstj/interpolation/blob/bf6d22ad931855d510dcfb5bdd6870cce8924b22/README.md",
+            "sha256": "a5480a3e58f89fff8db07c0df9e5d7ace26f339dabb18761ee23793dd06677d6"
+          },
+          {
+            "path": "src/interpolation.f90",
+            "url": "https://github.com/furstj/interpolation/blob/bf6d22ad931855d510dcfb5bdd6870cce8924b22/src/interpolation.f90",
+            "sha256": "a276bfb926b71441695ec711ddf4bf8c45cd606960aa18ee768eae4b6ccd1422"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "E1a",
+          "level": "source-reviewed",
+          "revision": "bf6d22ad931855d510dcfb5bdd6870cce8924b22",
+          "reviewed_on": "2026-11-07",
+          "notes": "The scalar-valued data interpolation generic supports scalar/vector queries; default linear mode has explicit NaN-versus-extrapolation behavior. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/interpolation.f90",
+              "url": "https://github.com/furstj/interpolation/blob/bf6d22ad931855d510dcfb5bdd6870cce8924b22/src/interpolation.f90",
+              "sha256": "a276bfb926b71441695ec711ddf4bf8c45cd606960aa18ee768eae4b6ccd1422"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "interp1",
+              "role": "public-entry-point",
+              "module": "interpolation",
+              "summary": "Scalar-query generic INTERP1 for rank-one REAL64 X/Y and scalar XI. Require a strictly ascending X grid with at least two points and SIZE(Y)=SIZE(X). Optional METHOD defaults linear; optional EXTRAP defaults \"NaN\" for out-of-range queries, while \"extrap\" enables endpoint extrapolation. Character controls are ordinary assumed-length strings, unlike the allocatable METHOD argument of GaussJacobiQuad. The scalar result has no status channel; invalid method/extrapolation strings can ERROR STOP. This claim concerns the piecewise-linear mode.",
+              "signature": "VALUE = interp1(X,Y,XI[,METHOD,EXTRAP])",
+              "path": "src/interpolation.f90",
+              "line_start": 121,
+              "line_end": 132,
+              "declarations": [
+                {
+                  "path": "src/interpolation.f90",
+                  "line_start": 122,
+                  "line_end": 127
+                },
+                {
+                  "path": "src/interpolation.f90",
+                  "line_start": 9,
+                  "line_end": 50
+                }
+              ]
+            },
+            {
+              "procedure": "interp1",
+              "role": "public-entry-point",
+              "module": "interpolation",
+              "summary": "Vector-query INTERP1 overload for rank-one REAL64 X/Y and XI(:), returning a real vector of SIZE(XI). Grid, method and extrapolation contracts match the scalar-query overload. Input data are preserved. Optional pchip/cubic mode exists but is not newly numerically verified here; do not infer that every extrapolation or unsorted/duplicate-grid input is valid.",
+              "signature": "VALUE = interp1(X,Y,XI[,METHOD,EXTRAP])",
+              "path": "src/interpolation.f90",
+              "line_start": 135,
+              "line_end": 146,
+              "declarations": [
+                {
+                  "path": "src/interpolation.f90",
+                  "line_start": 136,
+                  "line_end": 141
+                },
+                {
+                  "path": "src/interpolation.f90",
+                  "line_start": 9,
+                  "line_end": 50
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fastmath": {
+      "id": "github:perazz/fastmath",
+      "repository": {
+        "owner": "perazz",
+        "name": "fastmath",
+        "url": "https://github.com/perazz/fastmath"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "ad0f14c455205c0e6c1b9300cd7f333fafb750e2",
+        "reviewed_on": "2026-11-07",
+        "notes": "The root LICENSE supplies Federico Perini MIT terms. The source documents the approximation references; this review does not certify speed, accuracy or all floating-point edge cases.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/perazz/fastmath/blob/ad0f14c455205c0e6c1b9300cd7f333fafb750e2/LICENSE",
+            "sha256": "a7834f71a17069edcd6daa85ab5e0b92619644ba7a2a35ab34be78eca3ed9b7c"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/perazz/fastmath/blob/ad0f14c455205c0e6c1b9300cd7f333fafb750e2/README.md",
+            "sha256": "b64a3166ceadf7a4ff04802cab27fa3a87b65e90de7dac575553edc153422053"
+          },
+          {
+            "path": "src/fast_exp.f90",
+            "url": "https://github.com/perazz/fastmath/blob/ad0f14c455205c0e6c1b9300cd7f333fafb750e2/src/fast_exp.f90",
+            "sha256": "0f54b553646fc0885190e544826a71556499f48be669e75985a074ef7fef07f0"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "C4b",
+          "level": "source-reviewed",
+          "revision": "ad0f14c455205c0e6c1b9300cd7f333fafb750e2",
+          "reviewed_on": "2026-11-07",
+          "notes": "FEXP and FLOG_QUINTIC are explicit approximate exponential/logarithm interfaces with binary floating-point assumptions. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/fast_exp.f90",
+              "url": "https://github.com/perazz/fastmath/blob/ad0f14c455205c0e6c1b9300cd7f333fafb750e2/src/fast_exp.f90",
+              "sha256": "0f54b553646fc0885190e544826a71556499f48be669e75985a074ef7fef07f0"
+            },
+            {
+              "path": "src/fast_log.f90",
+              "url": "https://github.com/perazz/fastmath/blob/ad0f14c455205c0e6c1b9300cd7f333fafb750e2/src/fast_log.f90",
+              "sha256": "9b1c57920eabce5105d5c01d17e16a2fcbe334aab7de629c42385a205c0a7570"
+            },
+            {
+              "path": "src/fast_rsqrt.f90",
+              "url": "https://github.com/perazz/fastmath/blob/ad0f14c455205c0e6c1b9300cd7f333fafb750e2/src/fast_rsqrt.f90",
+              "sha256": "54bf8c270c3fbd9bc30abf3d20b7ef953db6cd9459d1e56c5e97a73f3a03653b"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "fexp",
+              "role": "public-entry-point",
+              "module": "fast_exp",
+              "summary": "Public generic FEXP maps to this elemental REAL64 fifth-degree approximation. It accepts a scalar real argument (or arrays elementwise) and returns an approximate exponential using polynomial correction and binary floating-point bit construction. It does not expose a tolerance, error estimate or IEEE-exception/status argument. Use finite moderate inputs and independently establish acceptable approximation error; this interface is not a promise of correctly rounded intrinsic EXP behavior at overflow, underflow or nonfinite values.",
+              "signature": "VALUE = fexp(X)",
+              "path": "src/fast_exp.f90",
+              "line_start": 173,
+              "line_end": 176,
+              "declarations": [
+                {
+                  "path": "src/fast_exp.f90",
+                  "line_start": 174,
+                  "line_end": 174
+                },
+                {
+                  "path": "src/fast_exp.f90",
+                  "line_start": 49,
+                  "line_end": 49
+                },
+                {
+                  "path": "src/fast_exp.f90",
+                  "line_start": 76,
+                  "line_end": 78
+                },
+                {
+                  "path": "src/fast_exp.f90",
+                  "line_start": 198,
+                  "line_end": 219
+                }
+              ]
+            },
+            {
+              "procedure": "flog_quintic",
+              "role": "public-entry-point",
+              "module": "fast_log",
+              "summary": "Elemental REAL64 approximate natural logarithm. Supply positive finite normal floating-point inputs; the implementation splits binary exponent/mantissa and evaluates a quintic approximation. No domain/status/error estimate is supplied, and zero, negative, subnormal or nonfinite input behavior must not be inferred from intrinsic LOG. Arrays are evaluated elementwise. This is the explicitly named public FLOG_QUINTIC function, not the separate spline variant.",
+              "signature": "VALUE = flog_quintic(X)",
+              "path": "src/fast_log.f90",
+              "line_start": 144,
+              "line_end": 167,
+              "declarations": [
+                {
+                  "path": "src/fast_log.f90",
+                  "line_start": 145,
+                  "line_end": 145
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "C2",
+          "level": "source-reviewed",
+          "revision": "ad0f14c455205c0e6c1b9300cd7f333fafb750e2",
+          "reviewed_on": "2026-11-07",
+          "notes": "FRSQRT computes an approximate reciprocal square root, with a fixed refinement count. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/fast_exp.f90",
+              "url": "https://github.com/perazz/fastmath/blob/ad0f14c455205c0e6c1b9300cd7f333fafb750e2/src/fast_exp.f90",
+              "sha256": "0f54b553646fc0885190e544826a71556499f48be669e75985a074ef7fef07f0"
+            },
+            {
+              "path": "src/fast_log.f90",
+              "url": "https://github.com/perazz/fastmath/blob/ad0f14c455205c0e6c1b9300cd7f333fafb750e2/src/fast_log.f90",
+              "sha256": "9b1c57920eabce5105d5c01d17e16a2fcbe334aab7de629c42385a205c0a7570"
+            },
+            {
+              "path": "src/fast_rsqrt.f90",
+              "url": "https://github.com/perazz/fastmath/blob/ad0f14c455205c0e6c1b9300cd7f333fafb750e2/src/fast_rsqrt.f90",
+              "sha256": "54bf8c270c3fbd9bc30abf3d20b7ef953db6cd9459d1e56c5e97a73f3a03653b"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "frsqrt",
+              "role": "public-entry-point",
+              "module": "fast_rsqrt",
+              "summary": "Public generic FRSQRT maps to this elemental REAL64 approximation of 1/SQRT(X), using a bit-level initial guess and one Newton step. Supply positive finite normal inputs and independently check acceptable error. It returns the RECIPROCAL square root, not SQRT(X); there is no tolerance, status or error estimate. Do not assume intrinsic IEEE handling of zero, negative or nonfinite inputs.",
+              "signature": "VALUE = frsqrt(X)",
+              "path": "src/fast_rsqrt.f90",
+              "line_start": 112,
+              "line_end": 126,
+              "declarations": [
+                {
+                  "path": "src/fast_rsqrt.f90",
+                  "line_start": 113,
+                  "line_end": 113
+                },
+                {
+                  "path": "src/fast_rsqrt.f90",
+                  "line_start": 36,
+                  "line_end": 38
+                },
+                {
+                  "path": "src/fast_rsqrt.f90",
+                  "line_start": 55,
+                  "line_end": 57
                 }
               ]
             }
@@ -4671,6 +5635,399 @@
           ]
         }
       ]
+    },
+    "fortran-utils": {
+      "id": "github:certik/fortran-utils",
+      "repository": {
+        "owner": "certik",
+        "name": "fortran-utils",
+        "url": "https://github.com/certik/fortran-utils"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "b43bd24cd421509a5bc6d3b9c3eeae8ce856ed88",
+        "reviewed_on": "2026-11-07",
+        "notes": "The root LICENSE supplies Ondrej Certik MIT terms; inspected spline/sorting comments also retain John E. Pask/LLNL algorithm attribution. This finding does not cover external LAPACK licensing.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/certik/fortran-utils/blob/b43bd24cd421509a5bc6d3b9c3eeae8ce856ed88/LICENSE",
+            "sha256": "476e95efa6197b0c3b16e9740d215a3182526777106f77d312f7e47e2796beda"
+          },
+          {
+            "path": "src/splines.f90",
+            "url": "https://github.com/certik/fortran-utils/blob/b43bd24cd421509a5bc6d3b9c3eeae8ce856ed88/src/splines.f90",
+            "sha256": "63a2ebb10cbe8a6d382e6f7bb62e5add4207b0fb5d52706173477c6a109bcccf"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "E1",
+          "level": "source-reviewed",
+          "revision": "b43bd24cd421509a5bc6d3b9c3eeae8ce856ed88",
+          "reviewed_on": "2026-11-07",
+          "notes": "SPLINE3DERS fits consistent-boundary cubic splines and optionally returns interpolated values and derivatives. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/splines.f90",
+              "url": "https://github.com/certik/fortran-utils/blob/b43bd24cd421509a5bc6d3b9c3eeae8ce856ed88/src/splines.f90",
+              "sha256": "63a2ebb10cbe8a6d382e6f7bb62e5add4207b0fb5d52706173477c6a109bcccf"
+            },
+            {
+              "path": "src/mesh.f90",
+              "url": "https://github.com/certik/fortran-utils/blob/b43bd24cd421509a5bc6d3b9c3eeae8ce856ed88/src/mesh.f90",
+              "sha256": "a56ce1419437f4d240e0fcc696c8600a19b9398898058fcfa0fb3d03d0a059ce"
+            },
+            {
+              "path": "src/sorting.f90",
+              "url": "https://github.com/certik/fortran-utils/blob/b43bd24cd421509a5bc6d3b9c3eeae8ce856ed88/src/sorting.f90",
+              "sha256": "295e6e65e8241e333a11da6a39a63650037d54a749bee39166f0646664287a13"
+            },
+            {
+              "path": "src/types.f90",
+              "url": "https://github.com/certik/fortran-utils/blob/b43bd24cd421509a5bc6d3b9c3eeae8ce856ed88/src/types.f90",
+              "sha256": "2fde944243e09bf8f8f10fd5a3105fba1ddb84d94faa41291cdabe27f1c69d6e"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "spline3ders",
+              "role": "public-entry-point",
+              "module": "splines",
+              "summary": "High-level cubic spline interpolation with consistent endpoint second derivatives from endpoint cubic fits. X/Y are same-length real arrays, X strictly increasing, with at least four data points for the endpoint cubics. XNEW(:) holds query positions; optional YNEW/DYNEW/D2YNEW must be caller-owned arrays of SIZE(XNEW). Pass only the outputs needed, using keywords when skipping earlier ones. Real kind is TYPES::DP=KIND(0.D0). Keep query points within the data domain unless deliberately accepting endpoint-polynomial extrapolation. LAPACK is required; failures may terminate through STOP_ERROR rather than return a status.",
+              "signature": "CALL spline3ders(X,Y,XNEW[,YNEW,DYNEW,D2YNEW])",
+              "path": "src/splines.f90",
+              "line_start": 47,
+              "line_end": 62,
+              "declarations": [
+                {
+                  "path": "src/splines.f90",
+                  "line_start": 49,
+                  "line_end": 50
+                },
+                {
+                  "path": "src/types.f90",
+                  "line_start": 1,
+                  "line_end": 7
+                },
+                {
+                  "path": "src/splines.f90",
+                  "line_start": 64,
+                  "line_end": 85
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "R",
+          "level": "source-reviewed",
+          "revision": "b43bd24cd421509a5bc6d3b9c3eeae8ce856ed88",
+          "reviewed_on": "2026-11-07",
+          "notes": "MESHEXP is an exponential/uniform grid service with N intervals and N+1 points. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/splines.f90",
+              "url": "https://github.com/certik/fortran-utils/blob/b43bd24cd421509a5bc6d3b9c3eeae8ce856ed88/src/splines.f90",
+              "sha256": "63a2ebb10cbe8a6d382e6f7bb62e5add4207b0fb5d52706173477c6a109bcccf"
+            },
+            {
+              "path": "src/mesh.f90",
+              "url": "https://github.com/certik/fortran-utils/blob/b43bd24cd421509a5bc6d3b9c3eeae8ce856ed88/src/mesh.f90",
+              "sha256": "a56ce1419437f4d240e0fcc696c8600a19b9398898058fcfa0fb3d03d0a059ce"
+            },
+            {
+              "path": "src/sorting.f90",
+              "url": "https://github.com/certik/fortran-utils/blob/b43bd24cd421509a5bc6d3b9c3eeae8ce856ed88/src/sorting.f90",
+              "sha256": "295e6e65e8241e333a11da6a39a63650037d54a749bee39166f0646664287a13"
+            },
+            {
+              "path": "src/types.f90",
+              "url": "https://github.com/certik/fortran-utils/blob/b43bd24cd421509a5bc6d3b9c3eeae8ce856ed88/src/types.f90",
+              "sha256": "2fde944243e09bf8f8f10fd5a3105fba1ddb84d94faa41291cdabe27f1c69d6e"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "meshexp",
+              "role": "public-entry-point",
+              "module": "mesh",
+              "summary": "Generate an exponential grid from RMIN to RMAX with N INTERVALS, returning N+1 points including both endpoints. Require N>=1 and positive A; A is the rightmost-to-leftmost interval-length ratio, not the adjacent-point ratio. A=1 generates a uniform grid; N=1 returns the endpoints. Match TYPES::DP. Invalid/extreme parameters may stop or overflow, and no status/error estimate is returned. This is a mesh-construction service, not an interpolation routine.",
+              "signature": "VALUE = meshexp(RMIN,RMAX,A,N)",
+              "path": "src/mesh.f90",
+              "line_start": 14,
+              "line_end": 70,
+              "declarations": [
+                {
+                  "path": "src/mesh.f90",
+                  "line_start": 21,
+                  "line_end": 35
+                },
+                {
+                  "path": "src/types.f90",
+                  "line_start": 1,
+                  "line_end": 7
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "N6",
+          "level": "source-reviewed",
+          "revision": "b43bd24cd421509a5bc6d3b9c3eeae8ce856ed88",
+          "reviewed_on": "2026-11-07",
+          "notes": "The real SORT generic reorders a vector ascending in place. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/splines.f90",
+              "url": "https://github.com/certik/fortran-utils/blob/b43bd24cd421509a5bc6d3b9c3eeae8ce856ed88/src/splines.f90",
+              "sha256": "63a2ebb10cbe8a6d382e6f7bb62e5add4207b0fb5d52706173477c6a109bcccf"
+            },
+            {
+              "path": "src/mesh.f90",
+              "url": "https://github.com/certik/fortran-utils/blob/b43bd24cd421509a5bc6d3b9c3eeae8ce856ed88/src/mesh.f90",
+              "sha256": "a56ce1419437f4d240e0fcc696c8600a19b9398898058fcfa0fb3d03d0a059ce"
+            },
+            {
+              "path": "src/sorting.f90",
+              "url": "https://github.com/certik/fortran-utils/blob/b43bd24cd421509a5bc6d3b9c3eeae8ce856ed88/src/sorting.f90",
+              "sha256": "295e6e65e8241e333a11da6a39a63650037d54a749bee39166f0646664287a13"
+            },
+            {
+              "path": "src/types.f90",
+              "url": "https://github.com/certik/fortran-utils/blob/b43bd24cd421509a5bc6d3b9c3eeae8ce856ed88/src/types.f90",
+              "sha256": "2fde944243e09bf8f8f10fd5a3105fba1ddb84d94faa41291cdabe27f1c69d6e"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "sort",
+              "role": "public-entry-point",
+              "module": "sorting",
+              "summary": "Real-vector overload of public generic SORT. NUMS(:) is sorted ascending IN PLACE, using TYPES::DP. There is no index/permutation result in this call; the separate ARGSORT generic returns indices. Other SORT overloads take integers or vector wrappers and have different declarations. No status/error estimate is exposed.",
+              "signature": "CALL sort(NUMS)",
+              "path": "src/sorting.f90",
+              "line_start": 31,
+              "line_end": 35,
+              "declarations": [
+                {
+                  "path": "src/sorting.f90",
+                  "line_start": 33,
+                  "line_end": 33
+                },
+                {
+                  "path": "src/types.f90",
+                  "line_start": 1,
+                  "line_end": 7
+                },
+                {
+                  "path": "src/sorting.f90",
+                  "line_start": 10,
+                  "line_end": 20
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fortranlib": {
+      "id": "github:astrofrog/fortranlib",
+      "repository": {
+        "owner": "astrofrog",
+        "name": "fortranlib",
+        "url": "https://github.com/astrofrog/fortranlib"
+      },
+      "license": {
+        "label": "BSD-2-Clause",
+        "spdx_expression": "BSD-2-Clause",
+        "revision": "60fd094d3e137137ce00ec120b085e9b23ebf68b",
+        "reviewed_on": "2026-11-07",
+        "notes": "The root LICENSE grants Thomas P. Robitaille two-clause BSD terms. The inspected source retains that notice; optional I/O/external dependencies are outside this interface review.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/astrofrog/fortranlib/blob/60fd094d3e137137ce00ec120b085e9b23ebf68b/LICENSE",
+            "sha256": "15d97681b2867ef49481e7a7e94fa2a2584b6ca3078eeb853c75dbea12656151"
+          },
+          {
+            "path": "src/lib_array.f90",
+            "url": "https://github.com/astrofrog/fortranlib/blob/60fd094d3e137137ce00ec120b085e9b23ebf68b/src/lib_array.f90",
+            "sha256": "d1c2f979d1498c0e505632c02df66ff5ad240a733d00fa71ab59725d71f458ac"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "E1",
+          "level": "source-reviewed",
+          "revision": "60fd094d3e137137ce00ec120b085e9b23ebf68b",
+          "reviewed_on": "2026-11-07",
+          "notes": "The double-precision INTERP1D generic has separate scalar-query and array-query forms, with optional STOP-or-fill bounds behavior. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/lib_array.f90",
+              "url": "https://github.com/astrofrog/fortranlib/blob/60fd094d3e137137ce00ec120b085e9b23ebf68b/src/lib_array.f90",
+              "sha256": "d1c2f979d1498c0e505632c02df66ff5ad240a733d00fa71ab59725d71f458ac"
+            },
+            {
+              "path": "src/lib_algebra.f90",
+              "url": "https://github.com/astrofrog/fortranlib/blob/60fd094d3e137137ce00ec120b085e9b23ebf68b/src/lib_algebra.f90",
+              "sha256": "8d78426ce6f1dbd6af64139c64a9696c757204d334422827318c5b0e411f0e5c"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "interp1d",
+              "role": "public-entry-point",
+              "module": "lib_array",
+              "summary": "Double-precision scalar-query overload of generic INTERP1D. X/Y are same-length arrays on a strictly increasing grid with at least two points; XVAL and result are scalar. Match SELECTED_REAL_KIND(15,307). Optional BOUNDS_ERROR defaults true and out-of-range queries can print a diagnostic then STOP; with BOUNDS_ERROR=.FALSE., optional FILL_VALUE is returned instead (default zero). No extrapolation or status result is supplied. This is the piecewise-linear overload, distinct from the logarithmic interpolation variants.",
+              "signature": "VALUE = interp1d(X,Y,XVAL[,BOUNDS_ERROR,FILL_VALUE])",
+              "path": "src/lib_array.f90",
+              "line_start": 608,
+              "line_end": 615,
+              "declarations": [
+                {
+                  "path": "src/lib_array.f90",
+                  "line_start": 610,
+                  "line_end": 613
+                },
+                {
+                  "path": "src/lib_array.f90",
+                  "line_start": 31,
+                  "line_end": 40
+                },
+                {
+                  "path": "src/lib_array.f90",
+                  "line_start": 696,
+                  "line_end": 770
+                }
+              ]
+            },
+            {
+              "procedure": "interp1d",
+              "role": "public-entry-point",
+              "module": "lib_array",
+              "summary": "Array-query overload of generic INTERP1D. X/Y have the same grid contract as the scalar overload; XVAL(:) returns a real vector of SIZE(XVAL), using repeated scalar interpolation. BOUNDS_ERROR/FILL_VALUE have the same STOP-versus-fill behavior. Data and query arrays are not modified. This sequence describes the double-precision overload, not the single-precision counterpart.",
+              "signature": "VALUE = interp1d(X,Y,XVAL[,BOUNDS_ERROR,FILL_VALUE])",
+              "path": "src/lib_array.f90",
+              "line_start": 617,
+              "line_end": 628,
+              "declarations": [
+                {
+                  "path": "src/lib_array.f90",
+                  "line_start": 619,
+                  "line_end": 623
+                },
+                {
+                  "path": "src/lib_array.f90",
+                  "line_start": 31,
+                  "line_end": 40
+                },
+                {
+                  "path": "src/lib_array.f90",
+                  "line_start": 696,
+                  "line_end": 770
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "H2",
+          "level": "source-reviewed",
+          "revision": "60fd094d3e137137ce00ec120b085e9b23ebf68b",
+          "reviewed_on": "2026-11-07",
+          "notes": "The full-range INTEGRAL generic computes a tabulated composite trapezoid sum. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/lib_array.f90",
+              "url": "https://github.com/astrofrog/fortranlib/blob/60fd094d3e137137ce00ec120b085e9b23ebf68b/src/lib_array.f90",
+              "sha256": "d1c2f979d1498c0e505632c02df66ff5ad240a733d00fa71ab59725d71f458ac"
+            },
+            {
+              "path": "src/lib_algebra.f90",
+              "url": "https://github.com/astrofrog/fortranlib/blob/60fd094d3e137137ce00ec120b085e9b23ebf68b/src/lib_algebra.f90",
+              "sha256": "8d78426ce6f1dbd6af64139c64a9696c757204d334422827318c5b0e411f0e5c"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "integral",
+              "role": "public-entry-point",
+              "module": "lib_array",
+              "summary": "Generic INTEGRAL over tabulated X/Y arrays, using the double-precision full-range overload. It sums trapezoids across successive samples, so supply equal-length arrays and a valid ordered grid. The returned scalar uses SELECTED_REAL_KIND(15,307); input arrays are preserved. This integrates a piecewise-linear tabulation, not an arbitrary callback and not an adaptive rule. There is no status, tolerance or error-estimate argument. The four-argument subrange overload has a different signature.",
+              "signature": "VALUE = integral(X,Y)",
+              "path": "src/lib_array.f90",
+              "line_start": 316,
+              "line_end": 321,
+              "declarations": [
+                {
+                  "path": "src/lib_array.f90",
+                  "line_start": 319,
+                  "line_end": 319
+                },
+                {
+                  "path": "src/lib_array.f90",
+                  "line_start": 31,
+                  "line_end": 40
+                },
+                {
+                  "path": "src/lib_array.f90",
+                  "line_start": 413,
+                  "line_end": 429
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "F1",
+          "level": "source-reviewed",
+          "revision": "60fd094d3e137137ce00ec120b085e9b23ebf68b",
+          "reviewed_on": "2026-11-07",
+          "notes": "QUADRATIC returns two real roots only in its supported positive-discriminant branch, with sentinels for the other cases. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/lib_array.f90",
+              "url": "https://github.com/astrofrog/fortranlib/blob/60fd094d3e137137ce00ec120b085e9b23ebf68b/src/lib_array.f90",
+              "sha256": "d1c2f979d1498c0e505632c02df66ff5ad240a733d00fa71ab59725d71f458ac"
+            },
+            {
+              "path": "src/lib_algebra.f90",
+              "url": "https://github.com/astrofrog/fortranlib/blob/60fd094d3e137137ce00ec120b085e9b23ebf68b/src/lib_algebra.f90",
+              "sha256": "8d78426ce6f1dbd6af64139c64a9696c757204d334422827318c5b0e411f0e5c"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "quadratic",
+              "role": "public-entry-point",
+              "module": "lib_algebra",
+              "summary": "Double-precision generic QUADRATIC for A*X**2+B*X+C=0. Supply nonzero A and strictly positive discriminant for two real outputs X1/X2. This pin returns HUGE sentinels for discriminant<=0, including a repeated real root, and does not provide complex roots or a status flag. It uses the straightforward quadratic formula and is not protected against all overflow/cancellation cases. Match SELECTED_REAL_KIND(15,307) and independently check residuals; do not present this interface as a complete robust quadratic solver.",
+              "signature": "CALL quadratic(A,B,C,X1,X2)",
+              "path": "src/lib_algebra.f90",
+              "line_start": 107,
+              "line_end": 122,
+              "declarations": [
+                {
+                  "path": "src/lib_algebra.f90",
+                  "line_start": 109,
+                  "line_end": 110
+                },
+                {
+                  "path": "src/lib_algebra.f90",
+                  "line_start": 31,
+                  "line_end": 50
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   },
   "report": {
@@ -4684,6 +6041,7 @@
       "dop853",
       "minpack",
       "numdiff",
+      "fortran-primes",
       "fmin",
       "slsqp",
       "lbfgsb",
@@ -4692,13 +6050,20 @@
       "ddeabm",
       "powellopt",
       "fstats",
+      "spectrum",
       "lsmr",
       "polyroots-fortran",
+      "geodesic-fortran",
       "simulated-annealing",
+      "pointsets",
+      "integrate_fortran",
       "minres",
       "specfunc-fullerton",
       "lib_statistics",
+      "gaussjacobiquad",
       "fjsample",
+      "interpolation",
+      "fastmath",
       "fortsa",
       "kiss",
       "forinv",
@@ -4709,7 +6074,9 @@
       "fortran-bessels",
       "econ-toolchain",
       "fordot",
-      "formatmul"
+      "formatmul",
+      "fortran-utils",
+      "fortranlib"
     ],
     "revision_mismatches": [],
     "no_independent_review": [
@@ -4740,7 +6107,6 @@
       "jonquil",
       "orderpack",
       "fortran-shlex",
-      "fortran-primes",
       "fhash",
       "functional-fortran",
       "forwarddiff",
@@ -4765,7 +6131,6 @@
       "io-fortran-library",
       "collections",
       "peaks",
-      "spectrum",
       "nlesolver-fortran",
       "codata",
       "specialmatrices",
@@ -4774,13 +6139,10 @@
       "neural-fortran",
       "lightkrylov",
       "fortran-sqlite3",
-      "geodesic-fortran",
       "odrpack95",
-      "pointsets",
       "flint",
       "fortran-string-to-real",
       "ad_dnsvm",
-      "integrate_fortran",
       "rndgen-fortran",
       "blas-interface",
       "fsparse",
@@ -4798,7 +6160,6 @@
       "forimage",
       "ncio",
       "fastconv",
-      "gaussjacobiquad",
       "kissfft-f",
       "h5fortran",
       "metis-fpm",
@@ -4818,9 +6179,7 @@
       "diffeq",
       "conmin",
       "opti",
-      "interpolation",
       "fortran_huffman",
-      "fastmath",
       "fortran-flann",
       "fortran_stb_image",
       "cairo-fortran",
@@ -4923,12 +6282,10 @@
       "fortran-error-handler",
       "berkeley-assert",
       "fmm2d",
-      "fortran-utils",
       "formal",
       "dftatom",
       "m-system",
       "fortran-tcl86",
-      "fortranlib",
       "fiats",
       "julienne",
       "m-process",
