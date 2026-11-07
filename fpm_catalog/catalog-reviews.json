@@ -2,7 +2,7 @@
   "schema_version": 1,
   "publisher": "fortran-gams-catalog-independent-reviews",
   "source_url": "https://beliavsky.github.io/fortran-gams-catalog/reviewed-metadata.json",
-  "source_snapshot_id": "sha256:84e85b373aaf319f247c24563530aafda0a91a174b770785ad2109548209f12c",
+  "source_snapshot_id": "sha256:90c661afe18d3330dd19e755a76883bc2b445403a6bbf6ec943e86168dc353ea",
   "packages": {
     "fftpack": {
       "id": "github:fortran-lang/fftpack",
@@ -1172,6 +1172,319 @@
         }
       ]
     },
+    "fstats": {
+      "id": "github:jchristopherson/fstats",
+      "repository": {
+        "owner": "jchristopherson",
+        "name": "fstats",
+        "url": "https://github.com/jchristopherson/fstats"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+        "reviewed_on": "2026-11-07",
+        "notes": "The repository LICENSE and inspected source SPDX headers provide MIT terms for Jason Christopherson contributions. This review covers these public descriptive-statistics interfaces, not every dependency.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jchristopherson/fstats/blob/5fdb86d1e7fa057d776d7d9477942fd6d387dd2f/LICENSE",
+            "sha256": "412dc62718c15a0d3580119230ef6375a4fb4df82867ba2a7a3bd2d8b3d763bd"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jchristopherson/fstats/blob/5fdb86d1e7fa057d776d7d9477942fd6d387dd2f/README.md",
+            "sha256": "b72fa130afcfeb7c98a001757778fea7e77fa1da9b2b04f0fbe0ae94a4b22638"
+          },
+          {
+            "path": "src/statistics/fstats_descriptive_statistics.f90",
+            "url": "https://github.com/jchristopherson/fstats/blob/5fdb86d1e7fa057d776d7d9477942fd6d387dd2f/src/statistics/fstats_descriptive_statistics.f90",
+            "sha256": "ec18e6e3c31f0d593ba311eccbc8f029640b01c0eeb88be269581551b0a61099"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "L1a1a",
+          "level": "source-reviewed",
+          "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+          "reviewed_on": "2026-11-07",
+          "notes": "Generic real-array location statistics expose distinct input-mutation and quantile conventions. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/statistics/fstats_descriptive_statistics.f90",
+              "url": "https://github.com/jchristopherson/fstats/blob/5fdb86d1e7fa057d776d7d9477942fd6d387dd2f/src/statistics/fstats_descriptive_statistics.f90",
+              "sha256": "ec18e6e3c31f0d593ba311eccbc8f029640b01c0eeb88be269581551b0a61099"
+            },
+            {
+              "path": "src/fstats.f90",
+              "url": "https://github.com/jchristopherson/fstats/blob/5fdb86d1e7fa057d776d7d9477942fd6d387dd2f/src/fstats.f90",
+              "sha256": "1280e1224d04f686ff4a33e6d80b76d56aff93c02107c54e8f98a856dae9a34b"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "mean",
+              "role": "public-entry-point",
+              "module": "fstats",
+              "summary": "Rank-one REAL64 arithmetic mean through generic MEAN, reexported by FSTATS. Nonempty finite observations are required for a finite result; empty or nonfinite data return IEEE NaN. The implementation uses a scaled compensated sum. Input X is not modified; no status or error-estimate argument is exposed. This sequence describes the real-array overload, not the DATA_COLUMN overload.",
+              "signature": "VALUE = mean(X)",
+              "path": "src/statistics/fstats_descriptive_statistics.f90",
+              "line_start": 144,
+              "line_end": 177,
+              "declarations": [
+                {
+                  "path": "src/statistics/fstats_descriptive_statistics.f90",
+                  "line_start": 146,
+                  "line_end": 149
+                },
+                {
+                  "path": "src/statistics/fstats_descriptive_statistics.f90",
+                  "line_start": 26,
+                  "line_end": 83
+                },
+                {
+                  "path": "src/fstats.f90",
+                  "line_start": 26,
+                  "line_end": 36
+                }
+              ]
+            },
+            {
+              "procedure": "median",
+              "role": "public-entry-point",
+              "module": "fstats",
+              "summary": "Rank-one REAL64 sample median through generic MEDIAN. The source copies and sorts X internally, so the input is preserved; even sample sizes average the two middle observations. Empty or nonfinite data return IEEE NaN. The return is a scalar and there is no status output.",
+              "signature": "VALUE = median(X)",
+              "path": "src/statistics/fstats_descriptive_statistics.f90",
+              "line_start": 227,
+              "line_end": 259,
+              "declarations": [
+                {
+                  "path": "src/statistics/fstats_descriptive_statistics.f90",
+                  "line_start": 229,
+                  "line_end": 232
+                },
+                {
+                  "path": "src/statistics/fstats_descriptive_statistics.f90",
+                  "line_start": 26,
+                  "line_end": 83
+                },
+                {
+                  "path": "src/fstats.f90",
+                  "line_start": 26,
+                  "line_end": 36
+                }
+              ]
+            },
+            {
+              "procedure": "quantile",
+              "role": "public-entry-point",
+              "module": "fstats",
+              "summary": "Rank-one REAL64 sample quantile through generic QUANTILE, with REAL64 Q in [0,1]. The executable rule uses position (SIZE(X)+1)*Q, clamps positions beyond the extreme observations, and interpolates between adjacent sorted values. Match this rule rather than assuming another package or a method-number label uses the same convention. X is copied and preserved. Empty/nonfinite X or invalid/nonfinite Q return NaN.",
+              "signature": "VALUE = quantile(X,Q)",
+              "path": "src/statistics/fstats_descriptive_statistics.f90",
+              "line_start": 265,
+              "line_end": 320,
+              "declarations": [
+                {
+                  "path": "src/statistics/fstats_descriptive_statistics.f90",
+                  "line_start": 272,
+                  "line_end": 277
+                },
+                {
+                  "path": "src/statistics/fstats_descriptive_statistics.f90",
+                  "line_start": 26,
+                  "line_end": 83
+                },
+                {
+                  "path": "src/fstats.f90",
+                  "line_start": 26,
+                  "line_end": 36
+                }
+              ]
+            },
+            {
+              "procedure": "trimmed_mean",
+              "role": "public-entry-point",
+              "module": "fstats",
+              "summary": "REAL64 trimmed mean through generic TRIMMED_MEAN. Unlike MEAN/MEDIAN, X is INTENT(INOUT) and is sorted in place. Optional REAL64 P defaults to 0.05 and removes FLOOR(N*P) observations from each end; require finite 0<=P<0.5. Empty/nonfinite observations or invalid P return NaN. The scalar result uses the retained observations; P is a fraction, not an integer percentage.",
+              "signature": "VALUE = trimmed_mean(X[,P])",
+              "path": "src/statistics/fstats_descriptive_statistics.f90",
+              "line_start": 323,
+              "line_end": 357,
+              "declarations": [
+                {
+                  "path": "src/statistics/fstats_descriptive_statistics.f90",
+                  "line_start": 325,
+                  "line_end": 333
+                },
+                {
+                  "path": "src/statistics/fstats_descriptive_statistics.f90",
+                  "line_start": 26,
+                  "line_end": 83
+                },
+                {
+                  "path": "src/fstats.f90",
+                  "line_start": 26,
+                  "line_end": 36
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "L1a1b",
+          "level": "source-reviewed",
+          "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+          "reviewed_on": "2026-11-07",
+          "notes": "Sample variance, sample standard deviation and pooled group variance have distinct scaling and degrees-of-freedom contracts. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/statistics/fstats_descriptive_statistics.f90",
+              "url": "https://github.com/jchristopherson/fstats/blob/5fdb86d1e7fa057d776d7d9477942fd6d387dd2f/src/statistics/fstats_descriptive_statistics.f90",
+              "sha256": "ec18e6e3c31f0d593ba311eccbc8f029640b01c0eeb88be269581551b0a61099"
+            },
+            {
+              "path": "src/fstats.f90",
+              "url": "https://github.com/jchristopherson/fstats/blob/5fdb86d1e7fa057d776d7d9477942fd6d387dd2f/src/fstats.f90",
+              "sha256": "1280e1224d04f686ff4a33e6d80b76d56aff93c02107c54e8f98a856dae9a34b"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "variance",
+              "role": "public-entry-point",
+              "module": "fstats",
+              "summary": "Sample variance of rank-one REAL64 data with divisor N-1, through generic VARIANCE. Require at least two finite observations; otherwise the result is NaN. An unrepresentable result becomes positive infinity. Input data are preserved and no status argument is returned.",
+              "signature": "VALUE = variance(X)",
+              "path": "src/statistics/fstats_descriptive_statistics.f90",
+              "line_start": 191,
+              "line_end": 208,
+              "declarations": [
+                {
+                  "path": "src/statistics/fstats_descriptive_statistics.f90",
+                  "line_start": 196,
+                  "line_end": 201
+                },
+                {
+                  "path": "src/statistics/fstats_descriptive_statistics.f90",
+                  "line_start": 26,
+                  "line_end": 83
+                },
+                {
+                  "path": "src/fstats.f90",
+                  "line_start": 26,
+                  "line_end": 36
+                }
+              ]
+            },
+            {
+              "procedure": "standard_deviation",
+              "role": "public-entry-point",
+              "module": "fstats",
+              "summary": "Sample standard deviation of rank-one REAL64 data, through generic STANDARD_DEVIATION, using divisor N-1. Require at least two finite observations; invalid or undersized data return NaN. The scaled spread implementation can produce a finite standard deviation even when squaring it for VARIANCE would overflow. No status or error estimate is exposed.",
+              "signature": "VALUE = standard_deviation(X)",
+              "path": "src/statistics/fstats_descriptive_statistics.f90",
+              "line_start": 211,
+              "line_end": 224,
+              "declarations": [
+                {
+                  "path": "src/statistics/fstats_descriptive_statistics.f90",
+                  "line_start": 216,
+                  "line_end": 221
+                },
+                {
+                  "path": "src/statistics/fstats_descriptive_statistics.f90",
+                  "line_start": 26,
+                  "line_end": 83
+                },
+                {
+                  "path": "src/fstats.f90",
+                  "line_start": 26,
+                  "line_end": 36
+                }
+              ]
+            },
+            {
+              "procedure": "pooled_variance",
+              "role": "public-entry-point",
+              "module": "fstats",
+              "summary": "Pooled sample-variance estimate through generic POOLED_VARIANCE. Supply REAL64 SI(:) containing variances (not standard deviations) and same-length INTEGER(INT32) NI(:) containing group counts. Weights are NI-1 and the denominator is their sum, accumulated with INT64 degrees of freedom. Empty inputs, nonfinite/negative variances or any NI<2 return NaN. Other overloads accepting grouped data have different argument lists.",
+              "signature": "VALUE = pooled_variance(SI,NI)",
+              "path": "src/statistics/fstats_descriptive_statistics.f90",
+              "line_start": 411,
+              "line_end": 444,
+              "declarations": [
+                {
+                  "path": "src/statistics/fstats_descriptive_statistics.f90",
+                  "line_start": 413,
+                  "line_end": 421
+                },
+                {
+                  "path": "src/statistics/fstats_descriptive_statistics.f90",
+                  "line_start": 26,
+                  "line_end": 83
+                },
+                {
+                  "path": "src/fstats.f90",
+                  "line_start": 26,
+                  "line_end": 36
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "L1c1b",
+          "level": "source-reviewed",
+          "revision": "5fdb86d1e7fa057d776d7d9477942fd6d387dd2f",
+          "reviewed_on": "2026-11-07",
+          "notes": "The real-array covariance overload computes paired sample covariance. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/statistics/fstats_descriptive_statistics.f90",
+              "url": "https://github.com/jchristopherson/fstats/blob/5fdb86d1e7fa057d776d7d9477942fd6d387dd2f/src/statistics/fstats_descriptive_statistics.f90",
+              "sha256": "ec18e6e3c31f0d593ba311eccbc8f029640b01c0eeb88be269581551b0a61099"
+            },
+            {
+              "path": "src/fstats.f90",
+              "url": "https://github.com/jchristopherson/fstats/blob/5fdb86d1e7fa057d776d7d9477942fd6d387dd2f/src/fstats.f90",
+              "sha256": "1280e1224d04f686ff4a33e6d80b76d56aff93c02107c54e8f98a856dae9a34b"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "covariance",
+              "role": "public-entry-point",
+              "module": "fstats",
+              "summary": "Sample covariance of paired rank-one REAL64 X/Y with equal lengths and divisor N-1, through generic COVARIANCE. At least two finite paired observations are needed; otherwise the result is NaN. Overflow may return signed infinity. Inputs are not modified. The arrays must be paired observations, not independently sorted samples.",
+              "signature": "VALUE = covariance(X,Y)",
+              "path": "src/statistics/fstats_descriptive_statistics.f90",
+              "line_start": 360,
+              "line_end": 408,
+              "declarations": [
+                {
+                  "path": "src/statistics/fstats_descriptive_statistics.f90",
+                  "line_start": 366,
+                  "line_end": 372
+                },
+                {
+                  "path": "src/statistics/fstats_descriptive_statistics.f90",
+                  "line_start": 26,
+                  "line_end": 83
+                },
+                {
+                  "path": "src/fstats.f90",
+                  "line_start": 26,
+                  "line_end": 36
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "lsmr": {
       "id": "github:jacobwilliams/lsmr",
       "repository": {
@@ -1639,6 +1952,368 @@
         }
       ]
     },
+    "lib_statistics": {
+      "id": "github:sebastiandyrda/lib_statistics",
+      "repository": {
+        "owner": "sebastiandyrda",
+        "name": "lib_statistics",
+        "url": "https://github.com/sebastiandyrda/lib_statistics"
+      },
+      "license": {
+        "label": "License not documented in inspected repository files",
+        "spdx_expression": null,
+        "revision": "056740db259fc3599dca0d8858f04e94845a6769",
+        "reviewed_on": "2026-11-07",
+        "notes": "The pinned manifest has no license field; inspected source credits Alan Miller and supplies algorithm descriptions but no explicit reuse grant. No standard SPDX expression is inferred from authorship or public availability. This finding is limited to the pinned repository files inspected for this interface.",
+        "evidence": [
+          {
+            "path": "fpm.toml",
+            "url": "https://github.com/sebastiandyrda/lib_statistics/blob/056740db259fc3599dca0d8858f04e94845a6769/fpm.toml",
+            "sha256": "3d3406fe7cb619a3d490d525feaa5ac57443b61ea77851c8f3aaf8ae94c8cc63"
+          },
+          {
+            "path": "src/mod_logistic.f90",
+            "url": "https://github.com/sebastiandyrda/lib_statistics/blob/056740db259fc3599dca0d8858f04e94845a6769/src/mod_logistic.f90",
+            "sha256": "57fc0579f421b3b4815c81632aa875033483ce5d18b8d8b8b9729dcce2adbd88"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "L8",
+          "level": "source-reviewed",
+          "revision": "056740db259fc3599dca0d8858f04e94845a6769",
+          "reviewed_on": "2026-11-07",
+          "notes": "The public LOGISTIC routine fits a grouped-binomial logit model with an automatically included intercept and returns coefficient/fit diagnostics. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/mod_logistic.f90",
+              "url": "https://github.com/sebastiandyrda/lib_statistics/blob/056740db259fc3599dca0d8858f04e94845a6769/src/mod_logistic.f90",
+              "sha256": "57fc0579f421b3b4815c81632aa875033483ce5d18b8d8b8b9729dcce2adbd88"
+            },
+            {
+              "path": "src/mod_types.f90",
+              "url": "https://github.com/sebastiandyrda/lib_statistics/blob/056740db259fc3599dca0d8858f04e94845a6769/src/mod_types.f90",
+              "sha256": "2074e3985f98f4789cb9e4df6694aff1e54d69d01a35a7f26251222d46849c34"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/sebastiandyrda/lib_statistics/blob/056740db259fc3599dca0d8858f04e94845a6769/fpm.toml",
+              "sha256": "3d3406fe7cb619a3d490d525feaa5ac57443b61ea77851c8f3aaf8ae94c8cc63"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "logistic",
+              "role": "public-entry-point",
+              "module": "Logistic_Regression",
+              "summary": "Grouped-binomial logistic regression by iteratively reweighted least squares. X(NGROUPS,K) contains predictors without an intercept column; S/N are default-integer success/trial counts with 0<=S<=N. The routine fits the intercept itself. Supply REAL(DP) BETA(0:K), SE_BETA(0:K); optional COV_BETA(0:K,0:K), FIT(NGROUPS), STDRES(NGROUPS) have caller-provided storage. DP is REAL64 from MOD_TYPES. CHISQ/DEVNCE/NDF summarize fit; inspect mandatory IER (0 normal, 1..8 input, singularity, divergence or iteration-limit diagnostics). Require NGROUPS>=2 and nonnegative NGROUPS-K-1. Some zero-trial/boundary or separable data may be problematic beyond these checks. The 20-iteration limit is internal; no custom tolerance/budget argument is exposed. The source scales standard-error estimates using at least unit residual variance, so they need not match a pure-binomial convention.",
+              "signature": "CALL logistic(NGROUPS,X,K,S,N,CHISQ,DEVNCE,NDF,BETA,SE_BETA,IER[,COV_BETA,FIT,STDRES])",
+              "path": "src/mod_logistic.f90",
+              "line_start": 36,
+              "line_end": 277,
+              "declarations": [
+                {
+                  "path": "src/mod_logistic.f90",
+                  "line_start": 54,
+                  "line_end": 91
+                },
+                {
+                  "path": "src/mod_types.f90",
+                  "line_start": 6,
+                  "line_end": 12
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fjsample": {
+      "id": "github:rjabi/fjsample",
+      "repository": {
+        "owner": "RJaBi",
+        "name": "FJsample",
+        "url": "https://github.com/RJaBi/FJsample"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "8563d2653d1a9d80a355b2064f4b153559698915",
+        "reviewed_on": "2026-11-07",
+        "notes": "The pinned repository LICENSE supplies Ryan Bignell MIT terms. The inspected real jackknife interfaces retain the package WP precision convention.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/RJaBi/FJsample/blob/8563d2653d1a9d80a355b2064f4b153559698915/LICENSE",
+            "sha256": "4313df2c7c93dd89705e8fddec25d816c1d627b94db61442cf17fcd949d2d684"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/RJaBi/FJsample/blob/8563d2653d1a9d80a355b2064f4b153559698915/README.md",
+            "sha256": "d688974cf6c6ea450a48f3507ed84a85b6c25d5d642a327490f277fbb7f7ee13"
+          },
+          {
+            "path": "src/jack.f90",
+            "url": "https://github.com/RJaBi/FJsample/blob/8563d2653d1a9d80a355b2064f4b153559698915/src/jack.f90",
+            "sha256": "9796190eb7c77a7b7cf8d0341ba9362b8f9ac58d78d4f89334f1cbffc1600d8e"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "L4",
+          "level": "source-reviewed",
+          "revision": "8563d2653d1a9d80a355b2064f4b153559698915",
+          "reviewed_on": "2026-11-07",
+          "notes": "Real COMPLEMENT overloads generate full-sample/delete-one means, and JACKERROR summarizes supplied jackknife replicates. Array lower bounds and bias convention are explicit. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/jack.f90",
+              "url": "https://github.com/RJaBi/FJsample/blob/8563d2653d1a9d80a355b2064f4b153559698915/src/jack.f90",
+              "sha256": "9796190eb7c77a7b7cf8d0341ba9362b8f9ac58d78d4f89334f1cbffc1600d8e"
+            },
+            {
+              "path": "src/FJsample.f90",
+              "url": "https://github.com/RJaBi/FJsample/blob/8563d2653d1a9d80a355b2064f4b153559698915/src/FJsample.f90",
+              "sha256": "e550d54d3ed77c859303b5a9b05f0b910b7a15c44adb77fd90562937302d7846"
+            },
+            {
+              "path": "src/types.f90",
+              "url": "https://github.com/RJaBi/FJsample/blob/8563d2653d1a9d80a355b2064f4b153559698915/src/types.f90",
+              "sha256": "28acdac8a020779ea82985e14c0aef195a7c7409f25e7bac3fd3252b7876abe5"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "Complement",
+              "role": "public-entry-point",
+              "module": "FJsample",
+              "summary": "Real scalar mean overload of public generic COMPLEMENT, reexported by FJSAMPLE. DATA(:) is a nonempty REAL(WP) sample and CSET is a scalar output. This two-argument call computes the full-sample statistic; it does not produce a leave-one-out array. WP is the library C_DOUBLE kind. No status argument or empty-data guard is exposed.",
+              "signature": "CALL Complement(CSET,DATA)",
+              "path": "src/jack.f90",
+              "line_start": 28,
+              "line_end": 32,
+              "declarations": [
+                {
+                  "path": "src/jack.f90",
+                  "line_start": 29,
+                  "line_end": 30
+                },
+                {
+                  "path": "src/jack.f90",
+                  "line_start": 1,
+                  "line_end": 24
+                },
+                {
+                  "path": "src/FJsample.f90",
+                  "line_start": 1,
+                  "line_end": 10
+                },
+                {
+                  "path": "src/types.f90",
+                  "line_start": 1,
+                  "line_end": 15
+                }
+              ]
+            },
+            {
+              "procedure": "Complement",
+              "role": "public-entry-point",
+              "module": "FJsample",
+              "summary": "Real leave-one-out mean overload of public generic COMPLEMENT. Require NCON>1, DATA(NCON) input and CSET(NCON) output, all REAL(WP). Entry I is the mean after excluding DATA(I). The leading NCON argument distinguishes this overload from the full-sample scalar call. Call JACKERROR with a 0:NCON array whose element zero contains the full-sample statistic and remaining elements the leave-one-out statistics.",
+              "signature": "CALL Complement(NCON,CSET,DATA)",
+              "path": "src/jack.f90",
+              "line_start": 34,
+              "line_end": 39,
+              "declarations": [
+                {
+                  "path": "src/jack.f90",
+                  "line_start": 35,
+                  "line_end": 37
+                },
+                {
+                  "path": "src/jack.f90",
+                  "line_start": 1,
+                  "line_end": 24
+                },
+                {
+                  "path": "src/FJsample.f90",
+                  "line_start": 1,
+                  "line_end": 10
+                },
+                {
+                  "path": "src/types.f90",
+                  "line_start": 1,
+                  "line_end": 15
+                }
+              ]
+            },
+            {
+              "procedure": "jackError",
+              "role": "public-entry-point",
+              "module": "FJsample",
+              "summary": "Real jackknife standard-error calculation through public generic JACKERROR. NCON>1, REAL(WP) C(0:NCON), scalar ERR and optional scalar BIAS. C(0) is the full-sample statistic and C(1:NCON) the delete-one replicates; ERR uses their deviations with factor (NCON-1)/NCON. Optional BIAS is C(0)-MEAN(C(1:)), without multiplying by NCON-1; do not assume the convention of other jackknife libraries. This is the real overload; the complex overload has a different error interpretation. No status/error guard is returned.",
+              "signature": "CALL jackError(NCON,C,ERR[,BIAS])",
+              "path": "src/jack.f90",
+              "line_start": 58,
+              "line_end": 69,
+              "declarations": [
+                {
+                  "path": "src/jack.f90",
+                  "line_start": 61,
+                  "line_end": 65
+                },
+                {
+                  "path": "src/jack.f90",
+                  "line_start": 1,
+                  "line_end": 24
+                },
+                {
+                  "path": "src/FJsample.f90",
+                  "line_start": 1,
+                  "line_end": 10
+                },
+                {
+                  "path": "src/types.f90",
+                  "line_start": 1,
+                  "line_end": 15
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fortsa": {
+      "id": "github:zoziha/fortsa",
+      "repository": {
+        "owner": "zoziha",
+        "name": "fortsa",
+        "url": "https://github.com/zoziha/fortsa"
+      },
+      "license": {
+        "label": "BSD-3-Clause wrapper; vendored CTSA BSD declaration",
+        "spdx_expression": null,
+        "revision": "d31da12286617ab82e06e9fa0a6f20d11778581c",
+        "reviewed_on": "2026-11-07",
+        "notes": "The root LICENSE gives BSD three-clause wrapper terms; the vendored CTSA README separately declares BSD three-clause terms and refers to a COPYRIGHT file. This scoped record retains both provenance statements rather than treating the wrapper notice as a complete audit of the vendored C tree.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/zoziha/fortsa/blob/d31da12286617ab82e06e9fa0a6f20d11778581c/LICENSE",
+            "sha256": "8262c6a794f306c3d9552adb400e7c690cdfcf2e0329a1b2367739ad06efda65"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/zoziha/fortsa/blob/d31da12286617ab82e06e9fa0a6f20d11778581c/README.md",
+            "sha256": "553719a790b861e98b260870b47659bef9a8f02e20091077694ca0965bbf35e6"
+          },
+          {
+            "path": "src/fortsa_stats.f90",
+            "url": "https://github.com/zoziha/fortsa/blob/d31da12286617ab82e06e9fa0a6f20d11778581c/src/fortsa_stats.f90",
+            "sha256": "fce5c670872c3a7b1c92e9aabd7bb7c35a036d7be826b19a3569cd37c8b15c0a"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "L10a2a",
+          "level": "source-reviewed",
+          "revision": "d31da12286617ab82e06e9fa0a6f20d11778581c",
+          "reviewed_on": "2026-11-07",
+          "notes": "Fortran bindings dispatch to CTSA sample autocovariance and in-place autocorrelation normalization. The source establishes lag count, centering and divisor conventions. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/fortsa_stats.f90",
+              "url": "https://github.com/zoziha/fortsa/blob/d31da12286617ab82e06e9fa0a6f20d11778581c/src/fortsa_stats.f90",
+              "sha256": "fce5c670872c3a7b1c92e9aabd7bb7c35a036d7be826b19a3569cd37c8b15c0a"
+            },
+            {
+              "path": "ctsa/src/stats.c",
+              "url": "https://github.com/zoziha/fortsa/blob/d31da12286617ab82e06e9fa0a6f20d11778581c/ctsa/src/stats.c",
+              "sha256": "20127c6cb28a2b172f0397e7294aef3bf73cba582b7bfb9ed963523b9ae2daa9"
+            },
+            {
+              "path": "ctsa/src/ctsa.c",
+              "url": "https://github.com/zoziha/fortsa/blob/d31da12286617ab82e06e9fa0a6f20d11778581c/ctsa/src/ctsa.c",
+              "sha256": "1c3d83bdfa1ea80dfd044e8af7646ab95caeaa7436f09ade1543d30b4e6c5a12"
+            },
+            {
+              "path": "ctsa/README.md",
+              "url": "https://github.com/zoziha/fortsa/blob/d31da12286617ab82e06e9fa0a6f20d11778581c/ctsa/README.md",
+              "sha256": "ba7b2ef65a3f42b80491cdf6eb71ee11018bfb01f15148f869b32fad8ad3fabd"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "acvf",
+              "role": "public-entry-point",
+              "module": "fortsa_stats_m",
+              "summary": "Fortran ISO_C_BINDING interface to the vendored CTSA autocovariance routine. Supply contiguous REAL(C_DOUBLE) VEC storage of length N and PAR storage of length at least M, with INTEGER(C_INT) N/M passed by value through this interface. Use N>=1 and 1<=M<=N. PAR(1) is lag zero and PAR(M) lag M-1; M is the number of returned lag entries, not the maximum lag index. The C kernel centers by the sample mean and divides every lag sum by N, not N-lag. No status is returned; avoid out-of-range lags rather than relying on the C kernel printing/clamping controls.",
+              "signature": "CALL acvf(VEC,N,PAR,M)",
+              "path": "src/fortsa_stats.f90",
+              "line_start": 18,
+              "line_end": 23,
+              "declarations": [
+                {
+                  "path": "src/fortsa_stats.f90",
+                  "line_start": 19,
+                  "line_end": 22
+                },
+                {
+                  "path": "src/fortsa_stats.f90",
+                  "line_start": 6,
+                  "line_end": 15
+                },
+                {
+                  "path": "ctsa/src/stats.c",
+                  "line_start": 60,
+                  "line_end": 89
+                },
+                {
+                  "path": "ctsa/src/ctsa.c",
+                  "line_start": 4293,
+                  "line_end": 4329
+                }
+              ]
+            },
+            {
+              "procedure": "acvf2acf",
+              "role": "public-entry-point",
+              "module": "fortsa_stats_m",
+              "summary": "In-place conversion from autocovariances to autocorrelations through a C binding. Supply REAL(C_DOUBLE) ACF storage of length at least M, INTEGER(C_INT) M>=1, and a finite nonzero lag-zero value ACF(1). The C kernel saves that value, sets ACF(1)=1, then divides the remaining M-1 entries by it. Constant/zero-variance input needs caller handling; no status or zero-denominator guard is returned.",
+              "signature": "CALL acvf2acf(ACF,M)",
+              "path": "src/fortsa_stats.f90",
+              "line_start": 35,
+              "line_end": 39,
+              "declarations": [
+                {
+                  "path": "src/fortsa_stats.f90",
+                  "line_start": 36,
+                  "line_end": 38
+                },
+                {
+                  "path": "src/fortsa_stats.f90",
+                  "line_start": 6,
+                  "line_end": 15
+                },
+                {
+                  "path": "ctsa/src/stats.c",
+                  "line_start": 60,
+                  "line_end": 89
+                },
+                {
+                  "path": "ctsa/src/ctsa.c",
+                  "line_start": 4293,
+                  "line_end": 4329
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "kiss": {
       "id": "github:ivan-pi/kiss",
       "repository": {
@@ -1719,6 +2394,247 @@
                   "path": "src/kiss.F90",
                   "line_start": 64,
                   "line_end": 67
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "forinv": {
+      "id": "github:gha3mi/forinv",
+      "repository": {
+        "owner": "gha3mi",
+        "name": "forinv",
+        "url": "https://github.com/gha3mi/forinv"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "80b5dbed9709c001e4309382424276a2ceb984f3",
+        "reviewed_on": "2026-11-07",
+        "notes": "The repository LICENSE supplies BSD three-clause terms for Seyed Ali Ghasemi contributions. FORSVD/BLAS/LAPACK and other linked dependencies retain their separate notices.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/gha3mi/forinv/blob/80b5dbed9709c001e4309382424276a2ceb984f3/LICENSE",
+            "sha256": "2bed75d5b84af240b433822f9720fd7c2eb269cbc46a721c851df9ae94513210"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/gha3mi/forinv/blob/80b5dbed9709c001e4309382424276a2ceb984f3/README.md",
+            "sha256": "c76810c50a33686f61231db0242e994139e2bb30aeb3ca3629aab399f457d46d"
+          },
+          {
+            "path": "src/forinv.f90",
+            "url": "https://github.com/gha3mi/forinv/blob/80b5dbed9709c001e4309382424276a2ceb984f3/src/forinv.f90",
+            "sha256": "ed8b1df16072a0470f58151ab99390cce208c1214f5d9350492b78d638a9605d"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "D9c",
+          "level": "source-reviewed",
+          "revision": "80b5dbed9709c001e4309382424276a2ceb984f3",
+          "reviewed_on": "2026-11-07",
+          "notes": "The SVD branch of generic INV constructs a real rectangular Moore-Penrose-type pseudoinverse from retained singular values. The tolerance is an absolute cutoff and is not selected automatically. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/forinv.f90",
+              "url": "https://github.com/gha3mi/forinv/blob/80b5dbed9709c001e4309382424276a2ceb984f3/src/forinv.f90",
+              "sha256": "ed8b1df16072a0470f58151ab99390cce208c1214f5d9350492b78d638a9605d"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/gha3mi/forinv/blob/80b5dbed9709c001e4309382424276a2ceb984f3/fpm.toml",
+              "sha256": "58e1a98d4ed2027562b78f34190b0fd2c3d315f7c72139ba3cf359d9fa08b3de"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "inv",
+              "role": "public-entry-point",
+              "module": "forinv",
+              "summary": "Real rank-two pseudoinverse through public generic INV. A has shape (M,N); the returned array has shape (N,M). Real arguments use KINDS::RK; the SVD/LAPACK path requires a matching double-precision build. Optional METHOD is gesvd (default SVD), gesdd, or getrf. For the reviewed SVD mode, optional TOL is an absolute singular-value cutoff: rank=COUNT(S>TOL). If omitted, the implementation keeps all MIN(M,N) singular values, with no automatic relative cutoff; pass a nonnegative cutoff for rank-deficient data to avoid dividing by zero. No rank or INFO result is exposed. The getrf branch is a separate LU/normal-equation construction, not a general rank-deficient SVD replacement. The SVD wrapper forwards A to LAPACK despite its input declaration; use working storage when preservation matters.",
+              "signature": "VALUE = inv(A[,METHOD,TOL])",
+              "path": "src/forinv.f90",
+              "line_start": 26,
+              "line_end": 53,
+              "declarations": [
+                {
+                  "path": "src/forinv.f90",
+                  "line_start": 32,
+                  "line_end": 37
+                },
+                {
+                  "path": "src/forinv.f90",
+                  "line_start": 14,
+                  "line_end": 16
+                },
+                {
+                  "path": "src/forinv.f90",
+                  "line_start": 81,
+                  "line_end": 98
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "foreig": {
+      "id": "github:gha3mi/foreig",
+      "repository": {
+        "owner": "gha3mi",
+        "name": "foreig",
+        "url": "https://github.com/gha3mi/foreig"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "8fcfcab03e5d7cf5eda8c51c7a1e97fe52954c39",
+        "reviewed_on": "2026-11-07",
+        "notes": "The repository LICENSE supplies BSD three-clause terms for Seyed Ali Ghasemi contributions; linked LAPACK/BLAS licenses remain separate.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/gha3mi/foreig/blob/8fcfcab03e5d7cf5eda8c51c7a1e97fe52954c39/LICENSE",
+            "sha256": "2bed75d5b84af240b433822f9720fd7c2eb269cbc46a721c851df9ae94513210"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/gha3mi/foreig/blob/8fcfcab03e5d7cf5eda8c51c7a1e97fe52954c39/README.md",
+            "sha256": "24cf307f106c76ad8cb5ef3f7e8210bc57acf7732b4beaff19906235ba8d74cb"
+          },
+          {
+            "path": "src/foreig.f90",
+            "url": "https://github.com/gha3mi/foreig/blob/8fcfcab03e5d7cf5eda8c51c7a1e97fe52954c39/src/foreig.f90",
+            "sha256": "b28558499863dcd899744bfe6763e0c4a1f0ab05daade5a44ab24691afa54e4c"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "D4a1",
+          "level": "source-reviewed",
+          "revision": "8fcfcab03e5d7cf5eda8c51c7a1e97fe52954c39",
+          "reviewed_on": "2026-11-07",
+          "notes": "The explicitly selected SYEV branch of generic EIG solves a real symmetric dense eigenproblem and allocates vector/value outputs. Default and nonsymmetric branches are not covered by this claim. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/foreig.f90",
+              "url": "https://github.com/gha3mi/foreig/blob/8fcfcab03e5d7cf5eda8c51c7a1e97fe52954c39/src/foreig.f90",
+              "sha256": "b28558499863dcd899744bfe6763e0c4a1f0ab05daade5a44ab24691afa54e4c"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "eig",
+              "role": "public-entry-point",
+              "module": "foreig",
+              "summary": "Real symmetric eigensystem through generic EIG with METHOD=\"syev\" explicitly supplied. MATRIX must be real square symmetric; the kernel uses its upper triangle. EIG_VECR(:,:) and EIG_VAL(:) must be ALLOCATABLE actual arrays and are allocated on output, with eigenvectors in columns and ascending eigenvalues. Omit optional EIG_VECL in this mode and pass METHOD by keyword; the default method is geev, not syev. Match KINDS::RK to the double-precision DSYEV interface and link LAPACK. MATRIX is copied internally. The wrapper does not expose/check LAPACK INFO and its workspace query precedes allocation of EIG_VAL; numerical/error behavior outside existing checked fixtures is not certified by this interface review. Other method selectors are outside this symmetric mapping.",
+              "signature": "CALL eig(MATRIX,EIG_VECR,EIG_VAL[,EIG_VECL,METHOD])",
+              "path": "src/foreig.f90",
+              "line_start": 20,
+              "line_end": 42,
+              "declarations": [
+                {
+                  "path": "src/foreig.f90",
+                  "line_start": 21,
+                  "line_end": 25
+                },
+                {
+                  "path": "src/foreig.f90",
+                  "line_start": 8,
+                  "line_end": 13
+                },
+                {
+                  "path": "src/foreig.f90",
+                  "line_start": 48,
+                  "line_end": 85
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "forsvd": {
+      "id": "github:gha3mi/forsvd",
+      "repository": {
+        "owner": "gha3mi",
+        "name": "forsvd",
+        "url": "https://github.com/gha3mi/forsvd"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "f39bba7afcb048a21947a7a640bdf9a18337f8ac",
+        "reviewed_on": "2026-11-07",
+        "notes": "The repository LICENSE supplies BSD three-clause terms for Seyed Ali Ghasemi contributions; external LAPACK and BLAS retain separate licenses.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/gha3mi/forsvd/blob/f39bba7afcb048a21947a7a640bdf9a18337f8ac/LICENSE",
+            "sha256": "2bed75d5b84af240b433822f9720fd7c2eb269cbc46a721c851df9ae94513210"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/gha3mi/forsvd/blob/f39bba7afcb048a21947a7a640bdf9a18337f8ac/README.md",
+            "sha256": "7f382e1813c2afcd9321241c4f55472b2dd28de2523aa09a71829054f427e439"
+          },
+          {
+            "path": "src/forsvd.f90",
+            "url": "https://github.com/gha3mi/forsvd/blob/f39bba7afcb048a21947a7a640bdf9a18337f8ac/src/forsvd.f90",
+            "sha256": "c6aadd32de7e0da37b4764960e9fe87a9ecc4b04e2b4b8735b9d189d6103c512"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "D6",
+          "level": "source-reviewed",
+          "revision": "f39bba7afcb048a21947a7a640bdf9a18337f8ac",
+          "reviewed_on": "2026-11-07",
+          "notes": "Generic SVD dispatches to thin-factor DGESVD or DGESDD wrappers, using caller-owned arrays and fixed leading dimensions. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/forsvd.f90",
+              "url": "https://github.com/gha3mi/forsvd/blob/f39bba7afcb048a21947a7a640bdf9a18337f8ac/src/forsvd.f90",
+              "sha256": "c6aadd32de7e0da37b4764960e9fe87a9ecc4b04e2b4b8735b9d189d6103c512"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "svd",
+              "role": "public-entry-point",
+              "module": "forsvd",
+              "summary": "Real dense singular-value decomposition through generic SVD. A is (M,N), K=MIN(M,N). Caller supplies output storage: S(K), U(M,M) and VT(N,N) are safe full-sized buffers for the hard-coded leading dimensions M and N. Only U(:,1:K) and VT(1:K,:) are the computed thin factors; other full-buffer entries are not promised. S contains singular values and VT stores transposed right singular vectors. Optional METHOD selects gesvd (default) or gesdd, both using LAPACK job S. Match KINDS::RK to double precision and link LAPACK. There is no returned INFO/status; unsupported method text falls through without selecting a solver. LAPACK receives A directly despite the input declaration and may overwrite it: retain a separate original for reconstruction checks. This is not an automatically allocating or full-singular-basis interface.",
+              "signature": "CALL svd(A,U,S,VT[,METHOD])",
+              "path": "src/forsvd.f90",
+              "line_start": 57,
+              "line_end": 82,
+              "declarations": [
+                {
+                  "path": "src/forsvd.f90",
+                  "line_start": 60,
+                  "line_end": 67
+                },
+                {
+                  "path": "src/forsvd.f90",
+                  "line_start": 47,
+                  "line_end": 50
+                },
+                {
+                  "path": "src/forsvd.f90",
+                  "line_start": 117,
+                  "line_end": 129
+                },
+                {
+                  "path": "src/forsvd.f90",
+                  "line_start": 168,
+                  "line_end": 182
                 }
               ]
             }
@@ -2026,6 +2942,308 @@
           ]
         }
       ]
+    },
+    "econ-toolchain": {
+      "id": "github:renatomatz/econ-toolchain",
+      "repository": {
+        "owner": "renatomatz",
+        "name": "econ-toolchain",
+        "url": "https://github.com/renatomatz/econ-toolchain"
+      },
+      "license": {
+        "label": "License not documented in inspected repository files",
+        "spdx_expression": null,
+        "revision": "301d1659ba3d34973195985c552ca6fcfe2d9f29",
+        "reviewed_on": "2026-11-07",
+        "notes": "The pinned manifest and inspected distribution/shared modules contain no explicit repository reuse license. No SPDX grant is inferred from public GitHub availability. Separately declared dependency licenses do not establish this repository license.",
+        "evidence": [
+          {
+            "path": "fpm.toml",
+            "url": "https://github.com/renatomatz/econ-toolchain/blob/301d1659ba3d34973195985c552ca6fcfe2d9f29/fpm.toml",
+            "sha256": "e28abb3b6de8b0964b489a81d71a0e0c17e838cc3611f660946dd72f9aad6a74"
+          },
+          {
+            "path": "src/dist.f90",
+            "url": "https://github.com/renatomatz/econ-toolchain/blob/301d1659ba3d34973195985c552ca6fcfe2d9f29/src/dist.f90",
+            "sha256": "8d8a2905135114193fdef5b858fd1d40baf615f6b7e16330703194f613619b2b"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "M",
+          "level": "source-reviewed",
+          "revision": "301d1659ba3d34973195985c552ca6fcfe2d9f29",
+          "reviewed_on": "2026-11-07",
+          "notes": "TAUCHEN constructs a finite-state approximation to a Gaussian AR(1) process and MARKOV_STEADY_STATE iterates a supplied transition operator. Their probability-matrix orientations differ and require an explicit transpose when combined. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/dist.f90",
+              "url": "https://github.com/renatomatz/econ-toolchain/blob/301d1659ba3d34973195985c552ca6fcfe2d9f29/src/dist.f90",
+              "sha256": "8d8a2905135114193fdef5b858fd1d40baf615f6b7e16330703194f613619b2b"
+            },
+            {
+              "path": "src/shared.f90",
+              "url": "https://github.com/renatomatz/econ-toolchain/blob/301d1659ba3d34973195985c552ca6fcfe2d9f29/src/shared.f90",
+              "sha256": "3f837c329ac14d05a4b3107b1e65d0db5e743f38ad87e71f5ce41b9b5c3b6def"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/renatomatz/econ-toolchain/blob/301d1659ba3d34973195985c552ca6fcfe2d9f29/fpm.toml",
+              "sha256": "e28abb3b6de8b0964b489a81d71a0e0c17e838cc3611f660946dd72f9aad6a74"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "tauchen",
+              "role": "public-entry-point",
+              "module": "dist_mod",
+              "summary": "Discretize z(t+1)=(1-RHO)*MU+RHO*z(t)+epsilon with normal innovation standard deviation SIGMA. Use INTEGER N>=2, positive SIGMA/M and ABS(RHO)<1; real scalars/outputs use SHARED_MOD::WP (REAL64). Outputs Z(N) are nodes around the unconditional mean MU; ZPROB(N,N) is row-stochastic with rows as current states and columns as next states. M controls endpoint distance in stationary standard deviations. No status or domain validation is exposed, so callers must validate these controls. To use MARKOV_STEADY_STATE with a column probability vector, pass TRANSPOSE(ZPROB).",
+              "signature": "CALL tauchen(N,MU,RHO,SIGMA,M,Z,ZPROB)",
+              "path": "src/dist.f90",
+              "line_start": 9,
+              "line_end": 53,
+              "declarations": [
+                {
+                  "path": "src/dist.f90",
+                  "line_start": 15,
+                  "line_end": 28
+                },
+                {
+                  "path": "src/shared.f90",
+                  "line_start": 1,
+                  "line_end": 9
+                }
+              ]
+            },
+            {
+              "procedure": "markov_steady_state",
+              "role": "public-entry-point",
+              "module": "dist_mod",
+              "summary": "Power iteration for a stationary column probability vector. ADJ_MAT(:,:) must be square and column-stochastic; S_DIST(:) must match its size. Although S_DIST is declared INOUT, the iteration starts from a uniform internal vector and ignores its supplied initial values. Require positive TOL and MAX_ITER>=1. STAT=0 means the successive-iterate RMS difference met TOL; STAT=1 means the iteration budget was exhausted. Dimension mismatch causes ERROR STOP; stochasticity, uniqueness, periodicity and the final stationary residual are not checked. All real arguments use SHARED_MOD::WP=REAL64.",
+              "signature": "CALL markov_steady_state(ADJ_MAT,S_DIST,TOL,MAX_ITER,STAT)",
+              "path": "src/dist.f90",
+              "line_start": 62,
+              "line_end": 93,
+              "declarations": [
+                {
+                  "path": "src/dist.f90",
+                  "line_start": 64,
+                  "line_end": 69
+                },
+                {
+                  "path": "src/shared.f90",
+                  "line_start": 1,
+                  "line_end": 9
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fordot": {
+      "id": "github:gha3mi/fordot",
+      "repository": {
+        "owner": "gha3mi",
+        "name": "fordot",
+        "url": "https://github.com/gha3mi/fordot"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "3966625781a9c1dffe037e3032fa4a0b6f958760",
+        "reviewed_on": "2026-11-07",
+        "notes": "The pinned LICENSE grants BSD three-clause terms for this wrapper; external BLAS and kind-provider dependencies retain separate notices.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/gha3mi/fordot/blob/3966625781a9c1dffe037e3032fa4a0b6f958760/LICENSE",
+            "sha256": "2bed75d5b84af240b433822f9720fd7c2eb269cbc46a721c851df9ae94513210"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/gha3mi/fordot/blob/3966625781a9c1dffe037e3032fa4a0b6f958760/README.md",
+            "sha256": "3854431660ea0967871f080e8893768f3984af077d211adba72990440ea35219"
+          },
+          {
+            "path": "src/fordot.f90",
+            "url": "https://github.com/gha3mi/fordot/blob/3966625781a9c1dffe037e3032fa4a0b6f958760/src/fordot.f90",
+            "sha256": "f8acb8048235f6ff2eab6785560dd8676ec5917b778c1d8c6511c5a355e182d8"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "D1",
+          "level": "source-reviewed",
+          "revision": "3966625781a9c1dffe037e3032fa4a0b6f958760",
+          "reviewed_on": "2026-11-07",
+          "notes": "Real-vector generic DOT_PRODUCT supports local direct and block-grouped variants with a backend selector. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/fordot.f90",
+              "url": "https://github.com/gha3mi/fordot/blob/3966625781a9c1dffe037e3032fa4a0b6f958760/src/fordot.f90",
+              "sha256": "f8acb8048235f6ff2eab6785560dd8676ec5917b778c1d8c6511c5a355e182d8"
+            },
+            {
+              "path": "src/fordot_options.f90",
+              "url": "https://github.com/gha3mi/fordot/blob/3966625781a9c1dffe037e3032fa4a0b6f958760/src/fordot_options.f90",
+              "sha256": "fc2dbd5eb9dd5d3242c0353e7ca2c14586814f4fa87e462936625e93cc93a800"
+            },
+            {
+              "path": "src/external_interfaces.f90",
+              "url": "https://github.com/gha3mi/fordot/blob/3966625781a9c1dffe037e3032fa4a0b6f958760/src/external_interfaces.f90",
+              "sha256": "7c6825ed1fbb0febd679c3bfc7d52fd1744fb5a4f08d8dce9d616c725210c58b"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "dot_product",
+              "role": "public-entry-point",
+              "module": "fordot",
+              "summary": "Real rank-one dot product through generic DOT_PRODUCT. U and V must be contiguous equal-length arrays of KINDS::RK; the return has that same kind. Optional OPTION defaults to m2 (external BLAS), while m1 uses the intrinsic, m3 an explicit loop and m4 SUM(U*V). Unsupported option strings fall back to the intrinsic. No status or error estimate is returned, and summation order can vary among options. This interface describes local arrays, not the separate coarray overload.",
+              "signature": "VALUE = dot_product(U,V[,OPTION])",
+              "path": "src/fordot.f90",
+              "line_start": 20,
+              "line_end": 30,
+              "declarations": [
+                {
+                  "path": "src/fordot.f90",
+                  "line_start": 21,
+                  "line_end": 24
+                },
+                {
+                  "path": "src/fordot.f90",
+                  "line_start": 1,
+                  "line_end": 15
+                }
+              ]
+            },
+            {
+              "procedure": "dot_product",
+              "role": "public-entry-point",
+              "module": "fordot",
+              "summary": "Block-summed real dot product through the same generic DOT_PRODUCT. U/V have the same contiguous equal-length contract. NBLOCK is a required positive integer selecting this overload; OPTION is optional but precedes NBLOCK in the formal list. To omit OPTION, use NBLOCK=... by keyword. The source divides the vector into blocks and sums their dot products; NBLOCK changes summation grouping, not the mathematical operation. No status/error estimate is exposed; coarray execution is outside this review.",
+              "signature": "VALUE = dot_product(U,V,[OPTION],NBLOCK)",
+              "path": "src/fordot.f90",
+              "line_start": 35,
+              "line_end": 59,
+              "declarations": [
+                {
+                  "path": "src/fordot.f90",
+                  "line_start": 36,
+                  "line_end": 40
+                },
+                {
+                  "path": "src/fordot.f90",
+                  "line_start": 1,
+                  "line_end": 15
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "formatmul": {
+      "id": "github:gha3mi/formatmul",
+      "repository": {
+        "owner": "gha3mi",
+        "name": "formatmul",
+        "url": "https://github.com/gha3mi/formatmul"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "4b5747d49c27f0df92288e7a61d0e479e34ac78e",
+        "reviewed_on": "2026-11-07",
+        "notes": "The pinned LICENSE grants BSD three-clause terms for Seyed Ali Ghasemi contributions. Optional external BLAS/MKL and kind-provider dependencies are outside this scoped notice review.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/gha3mi/formatmul/blob/4b5747d49c27f0df92288e7a61d0e479e34ac78e/LICENSE",
+            "sha256": "2bed75d5b84af240b433822f9720fd7c2eb269cbc46a721c851df9ae94513210"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/gha3mi/formatmul/blob/4b5747d49c27f0df92288e7a61d0e479e34ac78e/README.md",
+            "sha256": "86f9a14fcb7cd70da5613c4be4740ffd9ad4fd68d5aefeee3aba0c5c4097ca97"
+          },
+          {
+            "path": "src/formatmul.f90",
+            "url": "https://github.com/gha3mi/formatmul/blob/4b5747d49c27f0df92288e7a61d0e479e34ac78e/src/formatmul.f90",
+            "sha256": "01e927ffd8dd4a00f59500dfd120a3f3eb42a152afc0793017102d4d3e865cf9"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "D1",
+          "level": "source-reviewed",
+          "revision": "4b5747d49c27f0df92288e7a61d0e479e34ac78e",
+          "reviewed_on": "2026-11-07",
+          "notes": "The local generic MATMUL overloads implement real matrix-matrix and matrix-vector products. Transposition changes both conformance requirements and result shape. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/formatmul.f90",
+              "url": "https://github.com/gha3mi/formatmul/blob/4b5747d49c27f0df92288e7a61d0e479e34ac78e/src/formatmul.f90",
+              "sha256": "01e927ffd8dd4a00f59500dfd120a3f3eb42a152afc0793017102d4d3e865cf9"
+            },
+            {
+              "path": "src/formatmul_opts.f90",
+              "url": "https://github.com/gha3mi/formatmul/blob/4b5747d49c27f0df92288e7a61d0e479e34ac78e/src/formatmul_opts.f90",
+              "sha256": "3860e32219e375f2204000e671caf4f6574592d40d38c22e21a9c59ed1654d0e"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "matmul",
+              "role": "public-entry-point",
+              "module": "formatmul",
+              "summary": "Real matrix-matrix product through generic MATMUL, returning an allocatable rank-two array of KINDS::RK. Inputs must be contiguous with conforming effective dimensions. Omit both transpose flags for A*B; when controlling transposition, supply both TRANSA and TRANSB explicitly, since the one-present-false branches in this pin select an unexpected transposed product. The result shape follows the effective operands. Optional OPTION selects an implementation backend; match the real kind to the linked backend. Input matrices are preserved; no status/error estimate is returned. Block and coarray overloads are separate and not described by this signature.",
+              "signature": "VALUE = matmul(A,B[,TRANSA,TRANSB,OPTION])",
+              "path": "src/formatmul.f90",
+              "line_start": 585,
+              "line_end": 636,
+              "declarations": [
+                {
+                  "path": "src/formatmul.f90",
+                  "line_start": 586,
+                  "line_end": 589
+                },
+                {
+                  "path": "src/formatmul.f90",
+                  "line_start": 1,
+                  "line_end": 21
+                }
+              ]
+            },
+            {
+              "procedure": "matmul",
+              "role": "public-entry-point",
+              "module": "formatmul",
+              "summary": "Real matrix-vector product through generic MATMUL, returning an allocatable rank-one array. A and V are contiguous KINDS::RK arrays. Optional TRANSA defaults to false: V length SIZE(A,2) gives a result of length SIZE(A,1); for true, V length SIZE(A,1) gives length SIZE(A,2). Optional OPTION selects the implementation backend. There is no status/error estimate; dimensions must conform. This is the local-array matrix-vector overload.",
+              "signature": "VALUE = matmul(A,V[,TRANSA,OPTION])",
+              "path": "src/formatmul.f90",
+              "line_start": 642,
+              "line_end": 664,
+              "declarations": [
+                {
+                  "path": "src/formatmul.f90",
+                  "line_start": 643,
+                  "line_end": 646
+                },
+                {
+                  "path": "src/formatmul.f90",
+                  "line_start": 1,
+                  "line_end": 21
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   },
   "report": {
@@ -2038,13 +3256,23 @@
       "lbfgsb",
       "specfun",
       "powellopt",
+      "fstats",
       "lsmr",
       "polyroots-fortran",
       "minres",
       "specfunc-fullerton",
+      "lib_statistics",
+      "fjsample",
+      "fortsa",
       "kiss",
+      "forinv",
+      "foreig",
+      "forsvd",
       "carlson-elliptic-integrals",
-      "fortran-bessels"
+      "fortran-bessels",
+      "econ-toolchain",
+      "fordot",
+      "formatmul"
     ],
     "revision_mismatches": [],
     "no_independent_review": [
@@ -2108,7 +3336,6 @@
       "io-fortran-library",
       "collections",
       "peaks",
-      "fstats",
       "spectrum",
       "nlesolver-fortran",
       "codata",
@@ -2132,7 +3359,6 @@
       "geompack",
       "fordiff",
       "twopnt",
-      "lib_statistics",
       "astro-fortran",
       "nlopt-f",
       "daskr",
@@ -2162,13 +3388,11 @@
       "paramcard",
       "strff",
       "diffeq",
-      "fjsample",
       "conmin",
       "opti",
       "interpolation",
       "fortran_huffman",
       "fastmath",
-      "fortsa",
       "fortran-flann",
       "fortran_stb_image",
       "cairo-fortran",
@@ -2184,11 +3408,9 @@
       "sparse_fortran",
       "psqp",
       "optgra",
-      "forinv",
       "forsolver",
       "dcuhre",
       "y12m",
-      "foreig",
       "rkf45",
       "forlab",
       "libdogleg-f",
@@ -2196,7 +3418,6 @@
       "fishpack",
       "dde_solver",
       "spherepack",
-      "forsvd",
       "qdutillib",
       "qdldl-fortran",
       "lusol",
@@ -2206,7 +3427,6 @@
       "seiscope-optimization",
       "gslib",
       "featom",
-      "econ-toolchain",
       "m_la",
       "fglm",
       "fortrandf",
@@ -2214,8 +3434,6 @@
       "list",
       "friction",
       "feq-parse",
-      "fordot",
-      "formatmul",
       "bstrith",
       "heatflow",
       "hrweno",
