@@ -162,6 +162,12 @@ def generate_gams_site(destination, feed, *, asset_version=None, reviews=None):
                     url += f'#L{declaration["line_start"]}-L{declaration["line_end"]}'
                     item += '<p>Usage (click for argument declarations):</p><pre><code>' + link(
                         url, procedure['signature']) + '</code></pre>'
+                    if detailed:
+                        for declaration in procedure['declarations'][1:]:
+                            url = repository + '/blob/' + claim['revision'] + '/' + quote(declaration['path'], safe='/')
+                            url += f'#L{declaration["line_start"]}-L{declaration["line_end"]}'
+                            item += '<p>' + link(url, 'Supporting declarations: ' + declaration['path']
+                                                + ':' + str(declaration['line_start'])) + '</p>'
                 item += '<p>Source reviewed ' + e(claim['reviewed_on']) + ' at ' + link(
                     repository + '/tree/' + claim['revision'], claim['revision'][:12]) + '.</p>'
                 if detailed:
@@ -171,8 +177,11 @@ def generate_gams_site(destination, feed, *, asset_version=None, reviews=None):
                             procedure['usage']) + '</code></pre><p>' + e(procedure.get('usage_notes', '')) + '</p>'
                 interfaces.append(item)
         if interfaces:
-            result += '<details><summary>Independent calling interfaces and source review</summary>'
-            result += ''.join(interfaces) + '</details>'
+            if detailed:
+                result += '<h2>Calling sequences</h2>' + ''.join(interfaces)
+            else:
+                result += '<details><summary>Independent calling interfaces and source review</summary>'
+                result += ''.join(interfaces) + '</details>'
         if not result:
             return ''
         return ('<section class="independent-review">' + result + '<p>' + link(origin, 'Independent review and license evidence')

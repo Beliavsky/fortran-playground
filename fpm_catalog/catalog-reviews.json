@@ -2,10 +2,108 @@
   "schema_version": 1,
   "publisher": "fortran-gams-catalog-independent-reviews",
   "source_url": "https://beliavsky.github.io/fortran-gams-catalog/reviewed-metadata.json",
-  "source_snapshot_id": "sha256:de68501aaacf914b89a54f0fea0c6561190b7337a1d949cf4f16c7fc0ccc2ef8",
-  "packages": {},
+  "source_snapshot_id": "sha256:d92583521ad0ff6fddadaf3ab51f2255154ae35c0c90c8dc9184424c22c11f36",
+  "packages": {
+    "powellopt": {
+      "id": "github:jacobwilliams/powellopt",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "PowellOpt",
+        "url": "https://github.com/jacobwilliams/PowellOpt"
+      },
+      "license": {
+        "label": "BSD-3-Clause modifications; original Powell unrestricted-use notices",
+        "spdx_expression": null,
+        "revision": "0987cd09d695cec968a3d02c8230d4ce5af33533",
+        "reviewed_on": "2026-11-07",
+        "notes": "LICENSE.md, not the outdated README link to LICENSE, contains the three-clause BSD conditions for Jacob Williams modifications and separate original Powell no-restriction/no-charge notices for the five algorithms. The BOBYQA source repeats its original no-restrictions/no-charges statement. This scoped record preserves both sets of notices instead of assigning a single SPDX expression to every historical component. No upstream numerical source is copied into the catalog.",
+        "evidence": [
+          {
+            "path": "LICENSE.md",
+            "url": "https://github.com/jacobwilliams/PowellOpt/blob/0987cd09d695cec968a3d02c8230d4ce5af33533/LICENSE.md",
+            "sha256": "8ea410783dfa9ebc44de1ddbc17fa8c989d6a68254e4ee495b20334afdc96c23"
+          },
+          {
+            "path": "src/bobyqa.f90",
+            "url": "https://github.com/jacobwilliams/PowellOpt/blob/0987cd09d695cec968a3d02c8230d4ce5af33533/src/bobyqa.f90",
+            "sha256": "6fe1483b9f0c45961289b2b8c9276293b5378d79771d0bb4a230460b71a2eebe"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/PowellOpt/blob/0987cd09d695cec968a3d02c8230d4ce5af33533/README.md",
+            "sha256": "90ed90ed85bab6888e6dad845216b67292a2c2bcc54af72ff6c14623402816fd"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "G2h1a1",
+          "level": "source-reviewed",
+          "revision": "0987cd09d695cec968a3d02c8230d4ce5af33533",
+          "reviewed_on": "2026-11-07",
+          "notes": "The public bobyqa_module::bobyqa minimizes a smooth real scalar function under lower/upper variable bounds without supplied derivatives. It builds quadratic interpolation models and uses a trust-region method, dispatching to private BOBYQB. The selected public interface has ten arguments: N,NPT,X,XL,XU,RHOBEG,RHOEND,IPRINT,MAXFUN,CALFUN; it allocates workspace internally. This differs from older external BOBYQA interfaces with a user workspace and from other forks with status/F outputs. N must be at least 2; N+2<=NPT<=(N+1)*(N+2)/2; NPT=2*N+1 is a suggested initial choice. Provide conforming REAL(wp) vectors X/XL/XU of length at least N. wp is REAL64 in the pinned kind_module. Require positive RHOEND<=RHOBEG and each bound interval at least 2*RHOBEG wide; scale variables appropriately. The wrapper can adjust the initial X away from bounds to construct its interpolation model. CALFUN(N,X,F) is a subroutine callback with default INTEGER N, assumed-shape REAL(wp) X(:) INTENT(IN), and scalar REAL(wp) F INTENT(OUT). X is overwritten by the best estimate; neither objective value nor convergence status is an output argument. Reevaluate the callback to obtain F and independently assess the result. Invalid NPT or insufficient bound spacing prints a diagnostic and returns; normal return alone is not a success certificate. IPRINT=0 suppresses ordinary iteration output but not those wrapper diagnostics. MAXFUN limits callback evaluations; there is no public counter/status result. This review inspects the public wrapper, callback declarations and precision selection, not every private interpolation/trust-region kernel. The illustrative calling program was not compiled or run for this independent review. The existing playground box-quadratic checked driver remains separately recorded and is not reclassified as a new independent numerical test.",
+          "evidence": [
+            {
+              "path": "src/bobyqa.f90",
+              "url": "https://github.com/jacobwilliams/PowellOpt/blob/0987cd09d695cec968a3d02c8230d4ce5af33533/src/bobyqa.f90",
+              "sha256": "6fe1483b9f0c45961289b2b8c9276293b5378d79771d0bb4a230460b71a2eebe"
+            },
+            {
+              "path": "src/kind_module.f90",
+              "url": "https://github.com/jacobwilliams/PowellOpt/blob/0987cd09d695cec968a3d02c8230d4ce5af33533/src/kind_module.f90",
+              "sha256": "6d24660f040200b6dbd7a6492bb7826d84ed61a7f5a1c33e08f56017a7c33af8"
+            },
+            {
+              "path": "README.md",
+              "url": "https://github.com/jacobwilliams/PowellOpt/blob/0987cd09d695cec968a3d02c8230d4ce5af33533/README.md",
+              "sha256": "90ed90ed85bab6888e6dad845216b67292a2c2bcc54af72ff6c14623402816fd"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/jacobwilliams/PowellOpt/blob/0987cd09d695cec968a3d02c8230d4ce5af33533/fpm.toml",
+              "sha256": "cb6dcab834bd370af2ff2b0726818c91036591db93df716fce40322a3512bb2d"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "bobyqa",
+              "role": "public-entry-point",
+              "module": "bobyqa_module",
+              "summary": "Public derivative-free box-constrained optimizer. Workspace is internal; X is updated, but no F, INFO or evaluation-count output is returned.",
+              "signature": "CALL bobyqa(N,NPT,X,XL,XU,RHOBEG,RHOEND,IPRINT,MAXFUN,CALFUN)",
+              "path": "src/bobyqa.f90",
+              "line_start": 77,
+              "line_end": 208,
+              "declarations": [
+                {
+                  "path": "src/bobyqa.f90",
+                  "line_start": 81,
+                  "line_end": 113
+                },
+                {
+                  "path": "src/bobyqa.f90",
+                  "line_start": 31,
+                  "line_end": 39
+                },
+                {
+                  "path": "src/kind_module.f90",
+                  "line_start": 14,
+                  "line_end": 18
+                }
+              ],
+              "usage": "program bounded_minimum\n  use kind_module, only: wp\n  use bobyqa_module, only: bobyqa\n  implicit none\n  integer, parameter :: n=2, npt=5\n  real(wp) :: x(n), xl(n), xu(n), f\n  x=[0.5_wp,0.5_wp]\n  xl=[0.0_wp,0.0_wp]\n  xu=[1.0_wp,1.0_wp]\n  call bobyqa(n,npt,x,xl,xu,0.2_wp,1.0e-8_wp,0,1000,objective)\n  call objective(n,x,f)\n  print *, x, f\ncontains\n  subroutine objective(n,x,f)\n    integer, intent(in) :: n\n    real(wp), intent(in) :: x(:)\n    real(wp), intent(out) :: f\n    f=(x(1)-2.0_wp)**2+(x(2)+1.0_wp)**2\n  end subroutine objective\nend program bounded_minimum",
+              "usage_notes": "Illustrative complete calling program only; not compiled or run for this independent review. Provide the callback as an internal or module subroutine so its assumed-shape interface is explicit. The mathematical reference solution for this particular [0,1]^2 quadratic is X=(1,0), F=2, but no output from this illustration is claimed. This is not the separately checked playground driver. See the pinned declaration links for all inputs and callback types. Bounds, interpolation geometry, scale, evaluation budget and absence of a returned success flag remain caller responsibilities.",
+              "usage_kind": "calling-sketch"
+            }
+          ]
+        }
+      ]
+    }
+  },
   "report": {
-    "matched": [],
+    "matched": [
+      "powellopt"
+    ],
     "revision_mismatches": [],
     "no_independent_review": [
       "fortran-lapack",
@@ -75,7 +173,6 @@
       "io-fortran-library",
       "collections",
       "peaks",
-      "powellopt",
       "fstats",
       "spectrum",
       "lsmr",

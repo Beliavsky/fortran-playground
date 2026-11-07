@@ -42,9 +42,11 @@ Cards show a matching reviewed license and expandable module-qualified calling
 interfaces. Package details also show review scope, limitations and explicitly
 unchecked calling sketches. Signatures link to pinned argument declarations.
 The broader catalog remains the source for these reviews; new reviews need to be
-recorded there before they can appear here. The initial saved snapshot has no
-matches: the broader catalog's existing selected-FPM records are playground
-imports, not independent reviews.
+recorded there before they can appear here. PowellOpt's BOBYQA interface is the
+first matching independent review. Package detail pages show calling sequences
+directly, with links to argument, callback and precision declarations; cards keep
+their interfaces expandable. Other selected packages need independent interface
+records before their calling sequences can be imported.
 
 For local corrections, create the optional
 `fpm_catalog/catalog-review-overrides.json`:

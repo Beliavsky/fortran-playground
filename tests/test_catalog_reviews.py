@@ -121,6 +121,7 @@ class ReviewImportTests(unittest.TestCase):
             with patch('urllib.request.urlopen', side_effect=AssertionError('Build must be offline')):
                 generate_gams_site(destination, exported, reviews={'stdlib': review})
             package = (destination/'packages/stdlib/index.html').read_text(encoding='utf-8')
+            self.assertIn('<h2>Calling sequences</h2>', package)
             self.assertIn('solver_mod::solve', package)
             self.assertIn('src/solver.f90#L11-L15', package)
             self.assertIn('MIT scoped review', package)
