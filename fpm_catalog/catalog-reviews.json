@@ -2,7 +2,7 @@
   "schema_version": 1,
   "publisher": "fortran-gams-catalog-independent-reviews",
   "source_url": "https://beliavsky.github.io/fortran-gams-catalog/reviewed-metadata.json",
-  "source_snapshot_id": "sha256:66d17926d81ad4dedec3f7af7d226bf2a18b8a9137c54a81c229fbb695355908",
+  "source_snapshot_id": "sha256:8261b32d6ecd844470cba48e947d80dd52597e27b0fb74f6b61705479385bbfb",
   "packages": {
     "test-drive": {
       "id": "github:fortran-lang/test-drive",
@@ -716,6 +716,163 @@
                   "path": "src/root_module.F90",
                   "line_start": 286,
                   "line_end": 295
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "m_strings": {
+      "id": "github:urbanjost/m_strings",
+      "repository": {
+        "owner": "urbanjost",
+        "name": "M_strings",
+        "url": "https://github.com/urbanjost/M_strings"
+      },
+      "license": {
+        "label": "Unlicense (root); CC0-1.0 (manifest)",
+        "spdx_expression": "Unlicense",
+        "revision": "928e1576d4b3e7cd41ef4117227a8a4d2d88871a",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE is the Unlicense; fpm.toml separately declares CC0-1.0 and procedure notices record public-domain provenance. Preserve that difference rather than silently replacing the root grant with the manifest label.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/urbanjost/M_strings/blob/928e1576d4b3e7cd41ef4117227a8a4d2d88871a/LICENSE",
+            "sha256": "f40d08f39a7fbaf627c062ede8033c31b58da5afc0cf0c13a756aeff6c5be721"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/urbanjost/M_strings/blob/928e1576d4b3e7cd41ef4117227a8a4d2d88871a/README.md",
+            "sha256": "ce44dd780e69ed7be32dbe67adfbf7d4338321d8c516c12a7c06c12225e1b7d0"
+          },
+          {
+            "path": "src/M_strings.F90",
+            "url": "https://github.com/urbanjost/M_strings/blob/928e1576d4b3e7cd41ef4117227a8a4d2d88871a/src/M_strings.F90",
+            "sha256": "938bfe2b353406cbbbde235b56aaa8061834209c524cc1151048ba349d886b60"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "928e1576d4b3e7cd41ef4117227a8a4d2d88871a",
+          "reviewed_on": "2026-11-07",
+          "notes": "SPLIT and JOIN tokenize and assemble default-character text with explicit delimiter/padding conventions. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/M_strings.F90",
+              "url": "https://github.com/urbanjost/M_strings/blob/928e1576d4b3e7cd41ef4117227a8a4d2d88871a/src/M_strings.F90",
+              "sha256": "938bfe2b353406cbbbde235b56aaa8061834209c524cc1151048ba349d886b60"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/urbanjost/M_strings/blob/928e1576d4b3e7cd41ef4117227a8a4d2d88871a/fpm.toml",
+              "sha256": "c2b32d3fd19e0555888c4b8be14fbe4464534e0c53fe16d7b1a17729926f2c4e"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "split",
+              "role": "public-entry-point",
+              "module": "M_strings",
+              "summary": "Tokenize INPUT_LINE into an allocatable deferred-length CHARACTER ARRAY(:). DELIMITERS is a SET of separator characters, not a multi-character delimiter or regular expression; quoting is not recognized. Default NULLS=\"ignore\" omits empty fields; \"return\" keeps them and \"ignoreend\" has its own end-field policy. Default ORDER=\"sequential\"; \"reverse\"/\"right\" reverse the tokens. Results share a common padded character length. This is not a CSV parser.",
+              "signature": "CALL split(INPUT_LINE,ARRAY,[DELIMITERS],[ORDER],[NULLS])",
+              "path": "src/M_strings.F90",
+              "line_start": 1407,
+              "line_end": 1465,
+              "declarations": [
+                {
+                  "path": "src/M_strings.F90",
+                  "line_start": 1419,
+                  "line_end": 1423
+                },
+                {
+                  "path": "src/M_strings.F90",
+                  "line_start": 379,
+                  "line_end": 393
+                },
+                {
+                  "path": "src/M_strings.F90",
+                  "line_start": 505,
+                  "line_end": 506
+                }
+              ]
+            },
+            {
+              "procedure": "join",
+              "role": "public-entry-point",
+              "module": "M_strings",
+              "summary": "Return allocatable CHARACTER from STR(:). Default SEP is empty and TRM=true trims trailing padding from each element. LEFT/RIGHT wrap each element, while START/END wrap the entire result. These are plain character affixes, not quote escaping or CSV encoding. For a zero-sized input the implementation still emits LEFT//RIGHT, then any START/END; callers expecting an empty identity should handle that case explicitly.",
+              "signature": "VALUE = join(STR,[SEP],[TRM],[LEFT],[RIGHT],[START],[END])",
+              "path": "src/M_strings.F90",
+              "line_start": 3995,
+              "line_end": 4029,
+              "declarations": [
+                {
+                  "path": "src/M_strings.F90",
+                  "line_start": 3999,
+                  "line_end": 4003
+                },
+                {
+                  "path": "src/M_strings.F90",
+                  "line_start": 379,
+                  "line_end": 393
+                },
+                {
+                  "path": "src/M_strings.F90",
+                  "line_start": 505,
+                  "line_end": 506
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "N5",
+          "level": "source-reviewed",
+          "revision": "928e1576d4b3e7cd41ef4117227a8a4d2d88871a",
+          "reviewed_on": "2026-11-07",
+          "notes": "GLOB compares a complete text string against a wildcard pattern without filesystem expansion. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/M_strings.F90",
+              "url": "https://github.com/urbanjost/M_strings/blob/928e1576d4b3e7cd41ef4117227a8a4d2d88871a/src/M_strings.F90",
+              "sha256": "938bfe2b353406cbbbde235b56aaa8061834209c524cc1151048ba349d886b60"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/urbanjost/M_strings/blob/928e1576d4b3e7cd41ef4117227a8a4d2d88871a/fpm.toml",
+              "sha256": "c2b32d3fd19e0555888c4b8be14fbe4464534e0c53fe16d7b1a17729926f2c4e"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "glob",
+              "role": "public-entry-point",
+              "module": "M_strings",
+              "summary": "Return LOGICAL for a case-sensitive wildcard match of TAME against WILD, with * matching a sequence and ? a single character. It matches text in memory, not filesystem names, and does not implement regular expressions or shell expansion. Pass TRIMmed strings when trailing fixed-length padding is not intended to participate in the match. Character positions are default-character units, not Unicode grapheme clusters.",
+              "signature": "VALUE = glob(TAME,WILD)",
+              "path": "src/M_strings.F90",
+              "line_start": 904,
+              "line_end": 997,
+              "declarations": [
+                {
+                  "path": "src/M_strings.F90",
+                  "line_start": 908,
+                  "line_end": 910
+                },
+                {
+                  "path": "src/M_strings.F90",
+                  "line_start": 379,
+                  "line_end": 393
+                },
+                {
+                  "path": "src/M_strings.F90",
+                  "line_start": 505,
+                  "line_end": 506
                 }
               ]
             }
@@ -3552,6 +3709,256 @@
         }
       ]
     },
+    "m_io": {
+      "id": "github:urbanjost/m_io",
+      "repository": {
+        "owner": "urbanjost",
+        "name": "M_io",
+        "url": "https://github.com/urbanjost/M_io"
+      },
+      "license": {
+        "label": "Unlicense (root); CC0-1.0 (manifest)",
+        "spdx_expression": "Unlicense",
+        "revision": "f7b53819ade14f3e53470929dac3e55bc695cf0e",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies the Unlicense, whereas the manifest labels the project CC0-1.0; retain the root grant and public-domain source notices.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/urbanjost/M_io/blob/f7b53819ade14f3e53470929dac3e55bc695cf0e/LICENSE",
+            "sha256": "f40d08f39a7fbaf627c062ede8033c31b58da5afc0cf0c13a756aeff6c5be721"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/urbanjost/M_io/blob/f7b53819ade14f3e53470929dac3e55bc695cf0e/README.md",
+            "sha256": "90094a9f67c664e11a162c9999035a84a71818d4b04d0d98f27fd5cbdb417710"
+          },
+          {
+            "path": "src/M_io.F90",
+            "url": "https://github.com/urbanjost/M_io/blob/f7b53819ade14f3e53470929dac3e55bc695cf0e/src/M_io.F90",
+            "sha256": "60bbd72d45e20fe51ca498a4678d4eca3b0774305d312273378ec26f2399309a"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N1",
+          "level": "source-reviewed",
+          "revision": "f7b53819ade14f3e53470929dac3e55bc695cf0e",
+          "reviewed_on": "2026-11-07",
+          "notes": "Numeric table loading, whole-file line input and dynamically sized record input expose separate status conventions. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/M_io.F90",
+              "url": "https://github.com/urbanjost/M_io/blob/f7b53819ade14f3e53470929dac3e55bc695cf0e/src/M_io.F90",
+              "sha256": "60bbd72d45e20fe51ca498a4678d4eca3b0774305d312273378ec26f2399309a"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/urbanjost/M_io/blob/f7b53819ade14f3e53470929dac3e55bc695cf0e/fpm.toml",
+              "sha256": "23b24471e52e550c922eefbebf72afbda0d4658853b7b16428ae8f1a08e7ac0e"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "read_table",
+              "role": "public-entry-point",
+              "module": "M_io",
+              "summary": "DOUBLE PRECISION overload of READ_TABLE returns allocatable DARRAY(rows,columns), with the first subscript indexing input rows. Use rectangular numeric text and check required IERR: -1 means file loading failed, while positive values count inconsistent row widths. COMMENT optionally marks a comment character. Cleaning discards nonnumeric material and is not strict CSV/Fortran syntax validation. Do not consume partially populated or inconsistent-width results as a valid table; the mismatched-row branch does not preserve all supplied values correctly. Empty numeric input can produce a 0-by-0 array with IERR=0.",
+              "signature": "CALL read_table(FILENAME,DARRAY,IERR,[COMMENT])",
+              "path": "src/M_io.F90",
+              "line_start": 717,
+              "line_end": 809,
+              "declarations": [
+                {
+                  "path": "src/M_io.F90",
+                  "line_start": 722,
+                  "line_end": 725
+                },
+                {
+                  "path": "src/M_io.F90",
+                  "line_start": 31,
+                  "line_end": 54
+                },
+                {
+                  "path": "src/M_io.F90",
+                  "line_start": 79,
+                  "line_end": 95
+                },
+                {
+                  "path": "src/M_io.F90",
+                  "line_start": 768,
+                  "line_end": 808
+                }
+              ]
+            },
+            {
+              "procedure": "fileread",
+              "role": "public-entry-point",
+              "module": "M_io",
+              "summary": "Read a local filename into allocatable deferred-length CHARACTER PAGEOUT(:), one padded element per line. FILENAME is CLASS(*) supporting a character filename or appropriate integer unit through the lower-level reader. There is no status actual: inspect ALLOCATED(PAGEOUT), and then SIZE, before use; a failure prints a diagnostic and can leave the output unallocated. The whole input is held in memory. This does not fetch a URL or bypass sandbox file restrictions.",
+              "signature": "CALL fileread(FILENAME,PAGEOUT)",
+              "path": "src/M_io.F90",
+              "line_start": 928,
+              "line_end": 999,
+              "declarations": [
+                {
+                  "path": "src/M_io.F90",
+                  "line_start": 930,
+                  "line_end": 931
+                },
+                {
+                  "path": "src/M_io.F90",
+                  "line_start": 31,
+                  "line_end": 54
+                },
+                {
+                  "path": "src/M_io.F90",
+                  "line_start": 79,
+                  "line_end": 95
+                }
+              ]
+            },
+            {
+              "procedure": "getline",
+              "role": "public-entry-point",
+              "module": "M_io",
+              "summary": "Read one logical record into allocatable CHARACTER LINE, using optional LUN (default standard input). The function returns default INTEGER IER: normal end-of-record is converted to zero, EOF/error remains nonzero. Optional IOSTAT reports the RAW read status, so a successful record can have IER=0 but an end-of-record IOSTAT. Check the function result for the loop condition; handle any partial final text deliberately. Nonadvancing formatted reads preserve trailing record characters and omit the record terminator.",
+              "signature": "VALUE = getline(LINE,[LUN],[IOSTAT])",
+              "path": "src/M_io.F90",
+              "line_start": 2584,
+              "line_end": 2625,
+              "declarations": [
+                {
+                  "path": "src/M_io.F90",
+                  "line_start": 2589,
+                  "line_end": 2592
+                },
+                {
+                  "path": "src/M_io.F90",
+                  "line_start": 31,
+                  "line_end": 54
+                },
+                {
+                  "path": "src/M_io.F90",
+                  "line_start": 79,
+                  "line_end": 95
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "m_time": {
+      "id": "github:urbanjost/m_time",
+      "repository": {
+        "owner": "urbanjost",
+        "name": "M_time",
+        "url": "https://github.com/urbanjost/M_time"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "e3e5dde125388c30dd54e225cbc14816984ab776",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies MIT terms. Preserve source algorithm and author attributions; current-host timezone behavior is independent of licensing.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/urbanjost/M_time/blob/e3e5dde125388c30dd54e225cbc14816984ab776/LICENSE",
+            "sha256": "0226207c0eb2a26f37b1005780dd9a85b921bbdf88f877ae5733f2e6e767f23e"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/urbanjost/M_time/blob/e3e5dde125388c30dd54e225cbc14816984ab776/README.md",
+            "sha256": "fbd574b3b5624eafb94a953818707067064fed990a5db1503e8cb7d7f9758956"
+          },
+          {
+            "path": "src/M_time.F90",
+            "url": "https://github.com/urbanjost/M_time/blob/e3e5dde125388c30dd54e225cbc14816984ab776/src/M_time.F90",
+            "sha256": "cbab116c20f87d307509e8d104b09c6e3501b3e7a06b154939ca623b45b5073e"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "R",
+          "level": "source-reviewed",
+          "revision": "e3e5dde125388c30dd54e225cbc14816984ab776",
+          "reviewed_on": "2026-11-07",
+          "notes": "Gregorian date-array and Julian-day conversion record noon-based days and distinct input/output zone handling. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/M_time.F90",
+              "url": "https://github.com/urbanjost/M_time/blob/e3e5dde125388c30dd54e225cbc14816984ab776/src/M_time.F90",
+              "sha256": "cbab116c20f87d307509e8d104b09c6e3501b3e7a06b154939ca623b45b5073e"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "date_to_julian",
+              "role": "public-entry-point",
+              "module": "M_time",
+              "summary": "Convert default INTEGER DAT(8), ordered like DATE_AND_TIME VALUES (year,month,day,UTC offset in MINUTES,hour,minute,second,millisecond), to REAL(REALTIME) Julian DAYS. REALTIME is KIND(0D0). Julian days begin at noon, and the input offset is subtracted to obtain the UTC instant. Inspect required IERR=0 before accepting JULIAN. This pin checks year zero/too-early years and a negative resulting Julian date but does NOT implement all month/day validity checks advertised by its declaration comment. Supply a validated modern Gregorian date; broad historical-calendar correctness is not established.",
+              "signature": "CALL date_to_julian(DAT,JULIAN,IERR)",
+              "path": "src/M_time.F90",
+              "line_start": 255,
+              "line_end": 304,
+              "declarations": [
+                {
+                  "path": "src/M_time.F90",
+                  "line_start": 264,
+                  "line_end": 267
+                },
+                {
+                  "path": "src/M_time.F90",
+                  "line_start": 50,
+                  "line_end": 61
+                },
+                {
+                  "path": "src/M_time.F90",
+                  "line_start": 105,
+                  "line_end": 110
+                }
+              ]
+            },
+            {
+              "procedure": "julian_to_date",
+              "role": "public-entry-point",
+              "module": "M_time",
+              "summary": "Convert nonnegative REAL(REALTIME) Julian days to default INTEGER DAT(8). IERR=1 rejects a negative input; only use DAT after IERR=0. Output uses GET_TIMEZONE() rather than retaining an input zone or necessarily producing UTC. That helper reads the host current offset and applies a legacy workaround to positive offsets (TZ=MOD(TZ,1440)-1440), so do not assume correct local-date round trips east of UTC. The zone field is minutes. No named-timezone/DST history lookup is performed. Use finite, representable modern dates; extreme ranges and historical calendars are not established by this interface review.",
+              "signature": "CALL julian_to_date(JULIAN,DAT,IERR)",
+              "path": "src/M_time.F90",
+              "line_start": 380,
+              "line_end": 453,
+              "declarations": [
+                {
+                  "path": "src/M_time.F90",
+                  "line_start": 384,
+                  "line_end": 386
+                },
+                {
+                  "path": "src/M_time.F90",
+                  "line_start": 50,
+                  "line_end": 61
+                },
+                {
+                  "path": "src/M_time.F90",
+                  "line_start": 105,
+                  "line_end": 110
+                },
+                {
+                  "path": "src/M_time.F90",
+                  "line_start": 4563,
+                  "line_end": 4573
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "m_sets": {
       "id": "github:urbanjost/m_sets",
       "repository": {
@@ -3838,6 +4245,360 @@
                   "path": "src/M_sort.F90",
                   "line_start": 132,
                   "line_end": 140
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "m_cli2": {
+      "id": "github:urbanjost/m_cli2",
+      "repository": {
+        "owner": "urbanjost",
+        "name": "M_CLI2",
+        "url": "https://github.com/urbanjost/M_CLI2"
+      },
+      "license": {
+        "label": "Unlicense (root); CC0-1.0 (manifest)",
+        "spdx_expression": "Unlicense",
+        "revision": "a6934890178377cd92444d290aa3d3198ba9954d",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies the Unlicense public-domain dedication; fpm.toml separately says CC0-1.0 and source notices say Public Domain. Preserve the recorded distinction.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/urbanjost/M_CLI2/blob/a6934890178377cd92444d290aa3d3198ba9954d/LICENSE",
+            "sha256": "f40d08f39a7fbaf627c062ede8033c31b58da5afc0cf0c13a756aeff6c5be721"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/urbanjost/M_CLI2/blob/a6934890178377cd92444d290aa3d3198ba9954d/README.md",
+            "sha256": "5509b598a17116990d31e6e74b912ab5e23c12a365d4759f9333a267317c0372"
+          },
+          {
+            "path": "src/M_CLI2.F90",
+            "url": "https://github.com/urbanjost/M_CLI2/blob/a6934890178377cd92444d290aa3d3198ba9954d/src/M_CLI2.F90",
+            "sha256": "3796924a45135049482f70ec8a6d06ce2e76fd9381d27bd99eba1f9ad2cbd2ce"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "R",
+          "level": "source-reviewed",
+          "revision": "a6934890178377cd92444d290aa3d3198ba9954d",
+          "reviewed_on": "2026-11-07",
+          "notes": "Prototype-driven option initialization, typed scalar retrieval and explicit-presence queries expose saved parser state. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/M_CLI2.F90",
+              "url": "https://github.com/urbanjost/M_CLI2/blob/a6934890178377cd92444d290aa3d3198ba9954d/src/M_CLI2.F90",
+              "sha256": "3796924a45135049482f70ec8a6d06ce2e76fd9381d27bd99eba1f9ad2cbd2ce"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/urbanjost/M_CLI2/blob/a6934890178377cd92444d290aa3d3198ba9954d/fpm.toml",
+              "sha256": "59b9457277a26139adb1f2d6051296d6cdd367feb11a504b003cde74d833b953"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "set_args",
+              "role": "public-entry-point",
+              "module": "M_CLI2",
+              "summary": "Initialize option defaults and parsing from the required PROTOTYPE. Optional STRING supplies command text instead of relying solely on the process command line; HELP_TEXT and VERSION_TEXT are character arrays, PREFIX a string. Request default INTEGER IERR and allocatable CHARACTER ERRMSG for diagnostics and check them before retrieving options. Help/version/usage handling and some parse/conversion paths can print or stop. Parser state is module-global; this is not an independent reentrant parser object. Reinitialization replaces the saved dictionary.",
+              "signature": "CALL set_args(PROTOTYPE,[HELP_TEXT],[VERSION_TEXT],[STRING],[PREFIX],[IERR],[ERRMSG])",
+              "path": "src/M_CLI2.F90",
+              "line_start": 986,
+              "line_end": 1055,
+              "declarations": [
+                {
+                  "path": "src/M_CLI2.F90",
+                  "line_start": 990,
+                  "line_end": 996
+                },
+                {
+                  "path": "src/M_CLI2.F90",
+                  "line_start": 214,
+                  "line_end": 234
+                },
+                {
+                  "path": "src/M_CLI2.F90",
+                  "line_start": 279,
+                  "line_end": 313
+                }
+              ]
+            },
+            {
+              "procedure": "get_args",
+              "role": "public-entry-point",
+              "module": "M_CLI2",
+              "summary": "DOUBLE PRECISION scalar overload of public GET_ARGS retrieves KEYWORD from the dictionary initialized by SET_ARGS. Supply the option name without leading command-line dashes, e.g. \"tolerance\". D is REAL(KIND(0D0)); the private kind alias DP need not be imported. This overload expects exactly one value and can terminate on wrong cardinality/conversion rather than returning IOSTAT. Use the array overload for list-valued options.",
+              "signature": "CALL get_args(KEYWORD,D)",
+              "path": "src/M_CLI2.F90",
+              "line_start": 3512,
+              "line_end": 3526,
+              "declarations": [
+                {
+                  "path": "src/M_CLI2.F90",
+                  "line_start": 3513,
+                  "line_end": 3514
+                },
+                {
+                  "path": "src/M_CLI2.F90",
+                  "line_start": 214,
+                  "line_end": 234
+                },
+                {
+                  "path": "src/M_CLI2.F90",
+                  "line_start": 279,
+                  "line_end": 313
+                }
+              ]
+            },
+            {
+              "procedure": "specified",
+              "role": "public-entry-point",
+              "module": "M_CLI2",
+              "summary": "After SET_ARGS, return LOGICAL indicating whether KEY was explicitly supplied, distinct from the presence of a prototype default. A missing/unknown key returns false. It does not retrieve or validate the value. Keys are the parser dictionary names without leading dashes; saved global state is shared with GET_ARGS.",
+              "signature": "VALUE = specified(KEY)",
+              "path": "src/M_CLI2.F90",
+              "line_start": 1702,
+              "line_end": 1712,
+              "declarations": [
+                {
+                  "path": "src/M_CLI2.F90",
+                  "line_start": 1703,
+                  "line_end": 1704
+                },
+                {
+                  "path": "src/M_CLI2.F90",
+                  "line_start": 214,
+                  "line_end": 234
+                },
+                {
+                  "path": "src/M_CLI2.F90",
+                  "line_start": 279,
+                  "line_end": 313
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "m_attr": {
+      "id": "github:urbanjost/m_attr",
+      "repository": {
+        "owner": "urbanjost",
+        "name": "M_attr",
+        "url": "https://github.com/urbanjost/M_attr"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "5a2b6332332530fe371481314a5013b070ebb798",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies MIT terms for M_attr; preserve embedded source notices and user-defined substitution provenance.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/urbanjost/M_attr/blob/5a2b6332332530fe371481314a5013b070ebb798/LICENSE",
+            "sha256": "a0416f67ece319452a77166a2ebedd9c5583a152539f38b0a63b1ca429635e0d"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/urbanjost/M_attr/blob/5a2b6332332530fe371481314a5013b070ebb798/README.md",
+            "sha256": "52dde5514c8222c091a73de338fd23a84dfb2cb92736f5a031d45bf8ed8a995c"
+          },
+          {
+            "path": "src/M_attr.F90",
+            "url": "https://github.com/urbanjost/M_attr/blob/5a2b6332332530fe371481314a5013b070ebb798/src/M_attr.F90",
+            "sha256": "d687744a9ab9d5a72e32e218a0e4f098034ea4dbad9dd1fd55c6ad9aca6107f9"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N1",
+          "level": "source-reviewed",
+          "revision": "5a2b6332332530fe371481314a5013b070ebb798",
+          "reviewed_on": "2026-11-07",
+          "notes": "Terminal-markup expansion and mode selection provide formatted text or plain captured output. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/M_attr.F90",
+              "url": "https://github.com/urbanjost/M_attr/blob/5a2b6332332530fe371481314a5013b070ebb798/src/M_attr.F90",
+              "sha256": "d687744a9ab9d5a72e32e218a0e4f098034ea4dbad9dd1fd55c6ad9aca6107f9"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "attr",
+              "role": "public-entry-point",
+              "module": "M_attr",
+              "summary": "Scalar overload of ATTR returns allocatable CHARACTER with markup tokens expanded under the current mode. Default mode is color (terminal escape sequences), not browser HTML. RESET defaults true and appends a terminal reset when escapes were generated; false permits styles to continue. This function returns text and does not itself print it. For plain program-output capture call ATTR_MODE(\"plain\") first; raw mode returns markup unchanged.",
+              "signature": "VALUE = attr(STRING,[RESET])",
+              "path": "src/M_attr.F90",
+              "line_start": 502,
+              "line_end": 569,
+              "declarations": [
+                {
+                  "path": "src/M_attr.F90",
+                  "line_start": 503,
+                  "line_end": 507
+                },
+                {
+                  "path": "src/M_attr.F90",
+                  "line_start": 167,
+                  "line_end": 195
+                }
+              ]
+            },
+            {
+              "procedure": "attr_mode",
+              "role": "public-entry-point",
+              "module": "M_attr",
+              "summary": "Select the module-wide markup policy: \"color\" for ANSI/VT102 sequences, \"plain\"/\"text\" for plain substitutions, \"raw\" for untouched markup. \"reload\" resets definitions and returns to color; \"dump\" prints the dictionary. Unknown modes print a message and select color. The setting affects later ATTR calls globally; it does not configure an isolated object or enable HTML styling in the browser.",
+              "signature": "CALL attr_mode(MANNER)",
+              "path": "src/M_attr.F90",
+              "line_start": 866,
+              "line_end": 894,
+              "declarations": [
+                {
+                  "path": "src/M_attr.F90",
+                  "line_start": 867,
+                  "line_end": 868
+                },
+                {
+                  "path": "src/M_attr.F90",
+                  "line_start": 167,
+                  "line_end": 195
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "jonquil": {
+      "id": "github:toml-f/jonquil",
+      "repository": {
+        "owner": "toml-f",
+        "name": "jonquil",
+        "url": "https://github.com/toml-f/jonquil"
+      },
+      "license": {
+        "label": "Apache-2.0 OR MIT",
+        "spdx_expression": "Apache-2.0 OR MIT",
+        "revision": "191b6d8e4007b2d15f428aed26fe9d9a32aca3ca",
+        "reviewed_on": "2026-11-07",
+        "notes": "README and manifest explicitly offer Apache-2.0 or MIT; both license files are supplied. The separately maintained TOML Fortran dependency retains its own notices.",
+        "evidence": [
+          {
+            "path": "LICENSE-MIT",
+            "url": "https://github.com/toml-f/jonquil/blob/191b6d8e4007b2d15f428aed26fe9d9a32aca3ca/LICENSE-MIT",
+            "sha256": "9693cda85401b57d709731599690e025e3e8b0fdf8fe71d39dee5ca40c784279"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/toml-f/jonquil/blob/191b6d8e4007b2d15f428aed26fe9d9a32aca3ca/README.md",
+            "sha256": "d29001560b1017d12e4c4939c7ceea202e79938a1766bd3433e893182ef8ce17"
+          },
+          {
+            "path": "src/jonquil/parser.f90",
+            "url": "https://github.com/toml-f/jonquil/blob/191b6d8e4007b2d15f428aed26fe9d9a32aca3ca/src/jonquil/parser.f90",
+            "sha256": "0779d02a81af9f7a1885d8260b794fa01a24feaacbb38a3919c78f007321644a"
+          },
+          {
+            "path": "LICENSE-Apache",
+            "url": "https://github.com/toml-f/jonquil/blob/191b6d8e4007b2d15f428aed26fe9d9a32aca3ca/LICENSE-Apache",
+            "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "191b6d8e4007b2d15f428aed26fe9d9a32aca3ca",
+          "reviewed_on": "2026-11-07",
+          "notes": "The public Jonquil aliases parse JSON root values and serialize them to in-memory text. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/jonquil/parser.f90",
+              "url": "https://github.com/toml-f/jonquil/blob/191b6d8e4007b2d15f428aed26fe9d9a32aca3ca/src/jonquil/parser.f90",
+              "sha256": "0779d02a81af9f7a1885d8260b794fa01a24feaacbb38a3919c78f007321644a"
+            },
+            {
+              "path": "src/jonquil/ser.f90",
+              "url": "https://github.com/toml-f/jonquil/blob/191b6d8e4007b2d15f428aed26fe9d9a32aca3ca/src/jonquil/ser.f90",
+              "sha256": "2061a30de65bf0ddc258bd6f040f46ba750f3263527d24e1fc9302e2bfa247fb"
+            },
+            {
+              "path": "src/jonquil.f90",
+              "url": "https://github.com/toml-f/jonquil/blob/191b6d8e4007b2d15f428aed26fe9d9a32aca3ca/src/jonquil.f90",
+              "sha256": "b73402f19f886d1c8518e1744ea038c3f9a47536218809fb2662d4ab1707bc7d"
+            },
+            {
+              "path": "LICENSE-MIT",
+              "url": "https://github.com/toml-f/jonquil/blob/191b6d8e4007b2d15f428aed26fe9d9a32aca3ca/LICENSE-MIT",
+              "sha256": "9693cda85401b57d709731599690e025e3e8b0fdf8fe71d39dee5ca40c784279"
+            },
+            {
+              "path": "LICENSE-Apache",
+              "url": "https://github.com/toml-f/jonquil/blob/191b6d8e4007b2d15f428aed26fe9d9a32aca3ca/LICENSE-Apache",
+              "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "json_loads",
+              "role": "public-entry-point",
+              "module": "jonquil",
+              "summary": "Public JSON_LOADS parses in-memory JSON into allocatable CLASS(JSON_VALUE) OBJECT. JSON_VALUE/JSON_ERROR/JSON_PARSER_CONFIG/JSON_CONTEXT are public aliases of TOML Fortran types. Request optional allocatable ERROR and inspect both ALLOCATED(ERROR) and ALLOCATED(OBJECT). The root can be an object, array or scalar; cast/check its dynamic type instead of assuming JSON_OBJECT. STRING has the TOML library character kind. Comments in the implementation refer to TOML, but this entry point uses a JSON lexer.",
+              "signature": "CALL json_loads(OBJECT,STRING,[CONFIG],[CONTEXT],[ERROR])",
+              "path": "src/jonquil/parser.f90",
+              "line_start": 131,
+              "line_end": 149,
+              "declarations": [
+                {
+                  "path": "src/jonquil/parser.f90",
+                  "line_start": 133,
+                  "line_end": 141
+                },
+                {
+                  "path": "src/jonquil.f90",
+                  "line_start": 49,
+                  "line_end": 64
+                },
+                {
+                  "path": "src/jonquil/parser.f90",
+                  "line_start": 55,
+                  "line_end": 67
+                }
+              ]
+            },
+            {
+              "procedure": "json_dumps",
+              "role": "public-entry-point",
+              "module": "jonquil",
+              "summary": "Public JSON_DUMPS accepts polymorphic JSON_VALUE VAL as INTENT(INOUT), returning allocatable CHARACTER STRING. ERROR is a required allocatable TYPE(JSON_ERROR) actual; CONFIG is optional TYPE(JSON_SER_CONFIG). Unlike a filename/unit dump, this produces text in memory. The inspected body visits the value and copies serializer output without assigning an error on a separate failure branch, so the presence of an ERROR argument is not evidence of comprehensive validation of arbitrary constructed values.",
+              "signature": "CALL json_dumps(VAL,STRING,ERROR,[CONFIG])",
+              "path": "src/jonquil/ser.f90",
+              "line_start": 139,
+              "line_end": 159,
+              "declarations": [
+                {
+                  "path": "src/jonquil/ser.f90",
+                  "line_start": 142,
+                  "line_end": 151
+                },
+                {
+                  "path": "src/jonquil.f90",
+                  "line_start": 49,
+                  "line_end": 64
                 }
               ]
             }
@@ -9959,6 +10720,365 @@
         }
       ]
     },
+    "utf8-f": {
+      "id": "github:st-maxwell/utf8-f",
+      "repository": {
+        "owner": "St-Maxwell",
+        "name": "utf8-f",
+        "url": "https://github.com/St-Maxwell/utf8-f"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "9e89210ba66191295f6565bee277de6e4f9f84de",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies St Maxwell MIT terms; the placeholder license field in fpm.toml does not override the actual grant.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/St-Maxwell/utf8-f/blob/9e89210ba66191295f6565bee277de6e4f9f84de/LICENSE",
+            "sha256": "58666b47f9ff44469ded62829b09c53a1a68cc51d01dd31fe66d94f748c8d355"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/St-Maxwell/utf8-f/blob/9e89210ba66191295f6565bee277de6e4f9f84de/README.md",
+            "sha256": "a4dfbd4ed33f5bc21d245abf42f5c136c682b0a763b2e61eb584fa69900fe4e7"
+          },
+          {
+            "path": "src/utf8-f_detail.f90",
+            "url": "https://github.com/St-Maxwell/utf8-f/blob/9e89210ba66191295f6565bee277de6e4f9f84de/src/utf8-f_detail.f90",
+            "sha256": "0c91138483251d61a3852f49693665fb435df090f8ad705fa48a0de749f79827"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "9e89210ba66191295f6565bee277de6e4f9f84de",
+          "reviewed_on": "2026-11-07",
+          "notes": "The public UTF8 facade exposes byte validation, explicit string construction and code-point counting. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/utf8-f_detail.f90",
+              "url": "https://github.com/St-Maxwell/utf8-f/blob/9e89210ba66191295f6565bee277de6e4f9f84de/src/utf8-f_detail.f90",
+              "sha256": "0c91138483251d61a3852f49693665fb435df090f8ad705fa48a0de749f79827"
+            },
+            {
+              "path": "src/utf8-f.f90",
+              "url": "https://github.com/St-Maxwell/utf8-f/blob/9e89210ba66191295f6565bee277de6e4f9f84de/src/utf8-f.f90",
+              "sha256": "f570bcc523fd519d55a31eaae3569ca26b064b1b1ceb06ba2f346b6c31b678f4"
+            },
+            {
+              "path": "src/utf8-f_const.f90",
+              "url": "https://github.com/St-Maxwell/utf8-f/blob/9e89210ba66191295f6565bee277de6e4f9f84de/src/utf8-f_const.f90",
+              "sha256": "50e717aa4196bf46cfe1d4c7254b7410c3d9c8c81659e27eb88dfcbeb9ec8bbe"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "construct_utf8_string",
+              "role": "public-entry-point",
+              "module": "utf8",
+              "summary": "Public CONSTRUCT_UTF8_STRING copies C_CHAR-kind text into TYPE(UTF8_STRING). Optional ESCAPE is advertised for Unicode escapes, but both branches in this pin copy STR unchanged: escape decoding is not implemented. Construction does not validate UTF-8. First call UTF8_IS_VALID on input bytes before code-point iteration; initialize the object before querying it. This is a subroutine, not a function constructor.",
+              "signature": "CALL construct_utf8_string(UTF8,STR,[ESCAPE])",
+              "path": "src/utf8-f_detail.f90",
+              "line_start": 38,
+              "line_end": 58,
+              "declarations": [
+                {
+                  "path": "src/utf8-f_detail.f90",
+                  "line_start": 39,
+                  "line_end": 42
+                },
+                {
+                  "path": "src/utf8-f.f90",
+                  "line_start": 1,
+                  "line_end": 17
+                },
+                {
+                  "path": "src/utf8-f_detail.f90",
+                  "line_start": 6,
+                  "line_end": 34
+                },
+                {
+                  "path": "src/utf8-f_const.f90",
+                  "line_start": 1,
+                  "line_end": 14
+                }
+              ]
+            },
+            {
+              "procedure": "utf8_len",
+              "role": "public-entry-point",
+              "module": "utf8",
+              "summary": "Return default INTEGER code-point count from an initialized, valid UTF8_STRING. This is not a byte count, display-column width or grapheme-cluster count; a combining sequence can count as multiple code points. The routine scans leading-byte lengths without validating input and has no error status. Use UTF8_IS_VALID first rather than treating successful construction as validation.",
+              "signature": "VALUE = utf8_len(UTF8)",
+              "path": "src/utf8-f_detail.f90",
+              "line_start": 81,
+              "line_end": 93,
+              "declarations": [
+                {
+                  "path": "src/utf8-f_detail.f90",
+                  "line_start": 82,
+                  "line_end": 84
+                },
+                {
+                  "path": "src/utf8-f.f90",
+                  "line_start": 1,
+                  "line_end": 17
+                },
+                {
+                  "path": "src/utf8-f_detail.f90",
+                  "line_start": 6,
+                  "line_end": 34
+                },
+                {
+                  "path": "src/utf8-f_const.f90",
+                  "line_start": 1,
+                  "line_end": 14
+                }
+              ]
+            },
+            {
+              "procedure": "utf8_is_valid",
+              "role": "public-entry-point",
+              "module": "utf8",
+              "summary": "Character overload of UTF8_IS_VALID returns LOGICAL after checking UTF-8 leading/continuation sequences and bounded scalar encoding ranges, including truncated sequences, surrogates and overlong encodings. STR is scalar CHARACTER(KIND=C_CHAR). Empty text is valid. This does not perform normalization, remove characters or promise a rendered grapheme/column count. Use before constructing or traversing untrusted byte strings.",
+              "signature": "VALUE = utf8_is_valid(STR)",
+              "path": "src/utf8-f_detail.f90",
+              "line_start": 301,
+              "line_end": 381,
+              "declarations": [
+                {
+                  "path": "src/utf8-f_detail.f90",
+                  "line_start": 302,
+                  "line_end": 305
+                },
+                {
+                  "path": "src/utf8-f.f90",
+                  "line_start": 1,
+                  "line_end": 17
+                },
+                {
+                  "path": "src/utf8-f_detail.f90",
+                  "line_start": 6,
+                  "line_end": 34
+                },
+                {
+                  "path": "src/utf8-f_const.f90",
+                  "line_start": 1,
+                  "line_end": 14
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "ryu_fortran": {
+      "id": "github:st-maxwell/ryu_fortran",
+      "repository": {
+        "owner": "St-Maxwell",
+        "name": "ryu_fortran",
+        "url": "https://github.com/St-Maxwell/ryu_fortran"
+      },
+      "license": {
+        "label": "No license identified",
+        "spdx_expression": null,
+        "revision": "6c508144398d58143618c5598d816f20c40ac053",
+        "reviewed_on": "2026-11-07",
+        "notes": "No project LICENSE/COPYING or explicit source/README grant was identified in the inspected pinned archive; fpm.toml contains only the placeholder license=\"license\". Do not infer this port license from the upstream algorithm name.",
+        "evidence": [
+          {
+            "path": "fpm.toml",
+            "url": "https://github.com/St-Maxwell/ryu_fortran/blob/6c508144398d58143618c5598d816f20c40ac053/fpm.toml",
+            "sha256": "9cf130aa58d5f376f692644eef7617aee86da40c688d554ce201cb86a27f6eb0"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/St-Maxwell/ryu_fortran/blob/6c508144398d58143618c5598d816f20c40ac053/README.md",
+            "sha256": "5d24d192844abd059eb6311e462984648833684dee6a59e2490ba73a2159fde0"
+          },
+          {
+            "path": "src/real64_to_shortest.f90",
+            "url": "https://github.com/St-Maxwell/ryu_fortran/blob/6c508144398d58143618c5598d816f20c40ac053/src/real64_to_shortest.f90",
+            "sha256": "984a49e1782e02c2786e40b6e1516956744c71303e881c0c7e3a367fb2dc6e9e"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "6c508144398d58143618c5598d816f20c40ac053",
+          "reviewed_on": "2026-11-07",
+          "notes": "The RYU facade exposes REAL64 shortest and fixed-decimal numeric formatting with distinct precision contracts. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/real64_to_shortest.f90",
+              "url": "https://github.com/St-Maxwell/ryu_fortran/blob/6c508144398d58143618c5598d816f20c40ac053/src/real64_to_shortest.f90",
+              "sha256": "984a49e1782e02c2786e40b6e1516956744c71303e881c0c7e3a367fb2dc6e9e"
+            },
+            {
+              "path": "src/real64_to_fixed.f90",
+              "url": "https://github.com/St-Maxwell/ryu_fortran/blob/6c508144398d58143618c5598d816f20c40ac053/src/real64_to_fixed.f90",
+              "sha256": "0ded0d3835b66134b243039091d7677735cc6f72e582232acb5a73eeb4a18e5c"
+            },
+            {
+              "path": "src/ryu.f90",
+              "url": "https://github.com/St-Maxwell/ryu_fortran/blob/6c508144398d58143618c5598d816f20c40ac053/src/ryu.f90",
+              "sha256": "ac74931a4cd6704e4d6e56e97d6c2470852528ff68e044d2d2e65e0134376d9d"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/St-Maxwell/ryu_fortran/blob/6c508144398d58143618c5598d816f20c40ac053/fpm.toml",
+              "sha256": "9cf130aa58d5f376f692644eef7617aee86da40c688d554ce201cb86a27f6eb0"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "d2shortest",
+              "role": "public-entry-point",
+              "module": "ryu",
+              "summary": "Return allocatable CHARACTER decimal text for a REAL64 scalar via the Ryu shortest-representation algorithm. The implementation assumes IEEE binary64 layout and fixed-width integer bit operations; the name is not a portable guarantee for arbitrary real models. NaN and infinities have explicit textual spellings. This chooses its own fixed/scientific display form; it does not accept a decimal-place or format argument. This source review does not newly verify exhaustive round trips.",
+              "signature": "VALUE = d2shortest(FN)",
+              "path": "src/real64_to_shortest.f90",
+              "line_start": 640,
+              "line_end": 918,
+              "declarations": [
+                {
+                  "path": "src/real64_to_shortest.f90",
+                  "line_start": 641,
+                  "line_end": 642
+                },
+                {
+                  "path": "src/ryu.f90",
+                  "line_start": 1,
+                  "line_end": 6
+                }
+              ]
+            },
+            {
+              "procedure": "d2fixed",
+              "role": "public-entry-point",
+              "module": "ryu",
+              "summary": "Return allocatable CHARACTER fixed-decimal text from REAL64 D and required INTEGER(INT32) PRECISION_, the number of digits after the decimal point. Supply a nonnegative modest precision; negative or unbounded requests are not validated and the general finite path uses a 2000-character local buffer. There is no IOSTAT/status argument. NaN/Infinity and signed zero have explicit branches. This rounds for display and is not a shortest or necessarily round-tripping representation.",
+              "signature": "VALUE = d2fixed(D,PRECISION_)",
+              "path": "src/real64_to_fixed.f90",
+              "line_start": 12,
+              "line_end": 234,
+              "declarations": [
+                {
+                  "path": "src/real64_to_fixed.f90",
+                  "line_start": 13,
+                  "line_end": 17
+                },
+                {
+                  "path": "src/ryu.f90",
+                  "line_start": 1,
+                  "line_end": 6
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "iso_varying_string": {
+      "id": "github:everythingfunctional/iso_varying_string",
+      "repository": {
+        "owner": "everythingfunctional",
+        "name": "iso_varying_string",
+        "url": "https://github.com/everythingfunctional/iso_varying_string"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "ba41caa79167835a40310b97bc7251ec689a9bfa",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Brad Richardson MIT terms. The source references the ISO varying-string specification; that reference is not a substitute for the implementation license.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/everythingfunctional/iso_varying_string/blob/ba41caa79167835a40310b97bc7251ec689a9bfa/LICENSE",
+            "sha256": "025cc3fb2fb5d66c727029255e390cee34c35c0355f36f2fa608548424206eac"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/everythingfunctional/iso_varying_string/blob/ba41caa79167835a40310b97bc7251ec689a9bfa/README.md",
+            "sha256": "cb50e0ac4196863d392c32487aebc8c7378160fa5818f5a0f30085036a6c91f4"
+          },
+          {
+            "path": "src/iso_varying_string.f90",
+            "url": "https://github.com/everythingfunctional/iso_varying_string/blob/ba41caa79167835a40310b97bc7251ec689a9bfa/src/iso_varying_string.f90",
+            "sha256": "89ee52c059609b9a49d567611856be4b39f5155032605f28ecc6b768961051a7"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "ba41caa79167835a40310b97bc7251ec689a9bfa",
+          "reviewed_on": "2026-11-07",
+          "notes": "VAR_STR/CHAR convert between a varying-string value and intrinsic default-character text. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/iso_varying_string.f90",
+              "url": "https://github.com/everythingfunctional/iso_varying_string/blob/ba41caa79167835a40310b97bc7251ec689a9bfa/src/iso_varying_string.f90",
+              "sha256": "89ee52c059609b9a49d567611856be4b39f5155032605f28ecc6b768961051a7"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "var_str",
+              "role": "public-entry-point",
+              "module": "iso_varying_string",
+              "summary": "Public VAR_STR constructs TYPE(VARYING_STRING) from a default-kind CHARACTER scalar, preserving its full length and trailing blanks. The type is not intrinsic deferred-length CHARACTER and this module does not implement Unicode code-point indexing. Import overloaded assignment/operators explicitly when using an ONLY list; they are distinct exports.",
+              "signature": "VALUE = var_str(CHAR)",
+              "path": "src/iso_varying_string.f90",
+              "line_start": 1845,
+              "line_end": 1851,
+              "declarations": [
+                {
+                  "path": "src/iso_varying_string.f90",
+                  "line_start": 1847,
+                  "line_end": 1848
+                },
+                {
+                  "path": "src/iso_varying_string.f90",
+                  "line_start": 1,
+                  "line_end": 61
+                }
+              ]
+            },
+            {
+              "procedure": "char",
+              "role": "public-entry-point",
+              "module": "iso_varying_string",
+              "summary": "No-length overload of CHAR converts TYPE(VARYING_STRING) into allocatable deferred-length default-kind CHARACTER. It copies the complete content; an uninitialized/empty varying string gives a zero-length result. This is an overload of the intrinsic name, not IACHAR/code-point conversion. A separate required-LENGTH overload pads/truncates and has a different result declaration.",
+              "signature": "VALUE = char(STRING)",
+              "path": "src/iso_varying_string.f90",
+              "line_start": 1410,
+              "line_end": 1420,
+              "declarations": [
+                {
+                  "path": "src/iso_varying_string.f90",
+                  "line_start": 1412,
+                  "line_end": 1413
+                },
+                {
+                  "path": "src/iso_varying_string.f90",
+                  "line_start": 1,
+                  "line_end": 61
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "forimage": {
       "id": "github:gha3mi/forimage",
       "repository": {
@@ -10727,6 +11847,142 @@
                   "path": "src/nonlin_single_var.f90",
                   "line_start": 65,
                   "line_end": 90
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "strff": {
+      "id": "github:everythingfunctional/strff",
+      "repository": {
+        "owner": "everythingfunctional",
+        "name": "strff",
+        "url": "https://github.com/everythingfunctional/strff"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "50e536cb087123f2c72140cb065c398a01fc5121",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Brad Richardson MIT terms; the ISO_VARYING_STRING dependency has its own license and exported type.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/everythingfunctional/strff/blob/50e536cb087123f2c72140cb065c398a01fc5121/LICENSE",
+            "sha256": "025cc3fb2fb5d66c727029255e390cee34c35c0355f36f2fa608548424206eac"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/everythingfunctional/strff/blob/50e536cb087123f2c72140cb065c398a01fc5121/README.md",
+            "sha256": "981b5385ab5593f3cbba50c777051c2be136a35dcc7011b2df51a235689139dd"
+          },
+          {
+            "path": "src/strff.f90",
+            "url": "https://github.com/everythingfunctional/strff/blob/50e536cb087123f2c72140cb065c398a01fc5121/src/strff.f90",
+            "sha256": "339b971cf628887f5dc9f13d8b5de00da0b4db1bc5935f5909a6357815738746"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "50e536cb087123f2c72140cb065c398a01fc5121",
+          "reviewed_on": "2026-11-07",
+          "notes": "STRFF splits and joins varying strings and formats a REAL64 scalar with explicit conversion semantics. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/strff.f90",
+              "url": "https://github.com/everythingfunctional/strff/blob/50e536cb087123f2c72140cb065c398a01fc5121/src/strff.f90",
+              "sha256": "339b971cf628887f5dc9f13d8b5de00da0b4db1bc5935f5909a6357815738746"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "split_at",
+              "role": "public-entry-point",
+              "module": "strff",
+              "summary": "Character/character overload of SPLIT_AT returns an allocatable array of ISO_VARYING_STRING::VARYING_STRING. SPLIT_CHARACTERS is a set of individual delimiter characters, not a substring pattern. Empty fields at leading, adjacent and trailing delimiters are retained; empty input/no delimiter yields one element holding the original string. This is not quoted CSV parsing. Use ISO_VARYING_STRING::CHAR to convert each result to intrinsic CHARACTER.",
+              "signature": "VALUE = split_at(STRING,SPLIT_CHARACTERS)",
+              "path": "src/strff.f90",
+              "line_start": 420,
+              "line_end": 458,
+              "declarations": [
+                {
+                  "path": "src/strff.f90",
+                  "line_start": 422,
+                  "line_end": 424
+                },
+                {
+                  "path": "src/strff.f90",
+                  "line_start": 1,
+                  "line_end": 36
+                },
+                {
+                  "path": "src/strff.f90",
+                  "line_start": 63,
+                  "line_end": 137
+                }
+              ]
+            },
+            {
+              "procedure": "join",
+              "role": "public-entry-point",
+              "module": "strff",
+              "summary": "Join a VARYING_STRING array using a required intrinsic CHARACTER SEPARATOR, returning TYPE(VARYING_STRING). An empty array produces an empty string; one item is returned unchanged. Element contents, including trailing blanks, are retained; the procedure does not trim or escape fields. Use CHAR(result) for intrinsic-character output and import the varying-string type/conversion from ISO_VARYING_STRING.",
+              "signature": "VALUE = join(STRINGS,SEPARATOR)",
+              "path": "src/strff.f90",
+              "line_start": 276,
+              "line_end": 282,
+              "declarations": [
+                {
+                  "path": "src/strff.f90",
+                  "line_start": 277,
+                  "line_end": 279
+                },
+                {
+                  "path": "src/strff.f90",
+                  "line_start": 1,
+                  "line_end": 36
+                },
+                {
+                  "path": "src/strff.f90",
+                  "line_start": 63,
+                  "line_end": 137
+                }
+              ]
+            },
+            {
+              "procedure": "to_string",
+              "role": "public-entry-point",
+              "module": "strff",
+              "summary": "REAL64 overload of TO_STRING returns TYPE(VARYING_STRING), not allocatable intrinsic CHARACTER. This overload delegates to 17-significant-digit formatting. It is not the shortest-round-trip Ryu algorithm; the delegated implementation maps magnitudes <=TINY(REAL64) to \"0.0\" and uses bounded internal character buffers. Use finite ordinary magnitudes and CHAR(result); exact bitwise round-trip guarantees for every IEEE value are not established by this review.",
+              "signature": "VALUE = to_string(NUMBER)",
+              "path": "src/strff.f90",
+              "line_start": 574,
+              "line_end": 579,
+              "declarations": [
+                {
+                  "path": "src/strff.f90",
+                  "line_start": 575,
+                  "line_end": 576
+                },
+                {
+                  "path": "src/strff.f90",
+                  "line_start": 1,
+                  "line_end": 36
+                },
+                {
+                  "path": "src/strff.f90",
+                  "line_start": 63,
+                  "line_end": 137
+                },
+                {
+                  "path": "src/strff.f90",
+                  "line_start": 650,
+                  "line_end": 714
                 }
               ]
             }
@@ -14048,6 +15304,7 @@
       "toml-f",
       "fftpack",
       "roots-fortran",
+      "m_strings",
       "bspline-fortran",
       "pchip",
       "finterp",
@@ -14066,8 +15323,13 @@
       "numdiff",
       "csv-fortran",
       "datetime-fortran",
+      "m_io",
+      "m_time",
       "m_sets",
       "m_sort",
+      "m_cli2",
+      "m_attr",
+      "jonquil",
       "orderpack",
       "fortran-shlex",
       "fortran-primes",
@@ -14116,12 +15378,16 @@
       "specfunc-fullerton",
       "lib_statistics",
       "nlopt-f",
+      "utf8-f",
+      "ryu_fortran",
+      "iso_varying_string",
       "forimage",
       "fastconv",
       "gaussjacobiquad",
       "iapws",
       "linalg",
       "nonlin",
+      "strff",
       "fjsample",
       "interpolation",
       "fastmath",
@@ -14153,13 +15419,7 @@
     "no_independent_review": [
       "fortran-lapack",
       "pyplot-fortran",
-      "m_strings",
       "stdlib",
-      "m_io",
-      "m_time",
-      "m_cli2",
-      "m_attr",
-      "jonquil",
       "fhash",
       "forwarddiff",
       "kinds",
@@ -14179,9 +15439,6 @@
       "astro-fortran",
       "daskr",
       "ffilesystem",
-      "utf8-f",
-      "ryu_fortran",
-      "iso_varying_string",
       "fortimize",
       "ncio",
       "kissfft-f",
@@ -14196,7 +15453,6 @@
       "rngff",
       "fortran-zstd",
       "paramcard",
-      "strff",
       "diffeq",
       "conmin",
       "opti",
