@@ -2,8 +2,346 @@
   "schema_version": 1,
   "publisher": "fortran-gams-catalog-independent-reviews",
   "source_url": "https://beliavsky.github.io/fortran-gams-catalog/reviewed-metadata.json",
-  "source_snapshot_id": "sha256:4f3cb50a8a9f8c01f33b17255663953055b427200b5be8ed389073e564b8c525",
+  "source_snapshot_id": "sha256:be9fdc8998e4523f386179581bcf5dc42796bc1660187b05c18f8bba761f2213",
   "packages": {
+    "json-fortran": {
+      "id": "github:jacobwilliams/json-fortran",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "json-fortran",
+        "url": "https://github.com/jacobwilliams/json-fortran"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "d9ed2e4ee53745f4ed98d7536e17bee5198aa3b0",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies BSD three-clause terms for JSON-Fortran. Source headers preserve the library/kind-configuration context.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jacobwilliams/json-fortran/blob/d9ed2e4ee53745f4ed98d7536e17bee5198aa3b0/LICENSE",
+            "sha256": "4a45bea218be842b44b74f86cfa108e0d4fa43f3c795f54c259c7d6436a50b80"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/json-fortran/blob/d9ed2e4ee53745f4ed98d7536e17bee5198aa3b0/README.md",
+            "sha256": "c932741e4e1ea00c62ac7c93d1a250b81ff06b9e30bcba0d2ba03d7694f143e3"
+          },
+          {
+            "path": "src/json_file_module.F90",
+            "url": "https://github.com/jacobwilliams/json-fortran/blob/d9ed2e4ee53745f4ed98d7536e17bee5198aa3b0/src/json_file_module.F90",
+            "sha256": "fe2cedbb23014645def18541724de826979791fe98b55b703405c44da7a87888"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "d9ed2e4ee53745f4ed98d7536e17bee5198aa3b0",
+          "reviewed_on": "2026-11-07",
+          "notes": "JSON_FILE deserializes text, reports parser/core errors, retrieves a typed scalar by path and destroys owned tree storage. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/json_file_module.F90",
+              "url": "https://github.com/jacobwilliams/json-fortran/blob/d9ed2e4ee53745f4ed98d7536e17bee5198aa3b0/src/json_file_module.F90",
+              "sha256": "fe2cedbb23014645def18541724de826979791fe98b55b703405c44da7a87888"
+            },
+            {
+              "path": "src/json_kinds.F90",
+              "url": "https://github.com/jacobwilliams/json-fortran/blob/d9ed2e4ee53745f4ed98d7536e17bee5198aa3b0/src/json_kinds.F90",
+              "sha256": "4082021175942885c8e633884efb9f429dc0416b70fb8412d64def9ef205441e"
+            },
+            {
+              "path": "src/json_module.F90",
+              "url": "https://github.com/jacobwilliams/json-fortran/blob/d9ed2e4ee53745f4ed98d7536e17bee5198aa3b0/src/json_module.F90",
+              "sha256": "76b73c5585d9aa643aa3b336267ddba8ffbbcd849155538ae2c7c2fd84f16173"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "deserialize",
+              "role": "public-entry-point",
+              "module": "json_file_module",
+              "derived_type": "json_file",
+              "summary": "Declare TYPE(json_file) :: solver from json_file_module. Deserialize an in-memory JSON string STR into the document. This binding does not interpret STR as a filename. Use JSON_KINDS::CK character kind (default character in the normal build; Unicode configurations have wrappers for default-kind inputs). Optional DESTROY_POINTER defaults true, freeing the previous document before replacement. Call CHECK_FOR_ERRORS before retrieving values. No status actual is accepted directly by DESERIALIZE. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%deserialize(STR,[DESTROY_POINTER])",
+              "path": "src/json_file_module.F90",
+              "line_start": 898,
+              "line_end": 914,
+              "declarations": [
+                {
+                  "path": "src/json_file_module.F90",
+                  "line_start": 902,
+                  "line_end": 905
+                },
+                {
+                  "path": "src/json_file_module.F90",
+                  "line_start": 80,
+                  "line_end": 112
+                },
+                {
+                  "path": "src/json_kinds.F90",
+                  "line_start": 69,
+                  "line_end": 148
+                },
+                {
+                  "path": "src/json_module.F90",
+                  "line_start": 1,
+                  "line_end": 104
+                }
+              ]
+            },
+            {
+              "procedure": "check_for_errors",
+              "role": "public-entry-point",
+              "module": "json_file_module",
+              "derived_type": "json_file",
+              "summary": "Declare TYPE(json_file) :: solver from json_file_module. Retrieve optional LOGICAL(LK) STATUS_OK (true means no recorded error) and/or allocatable CHARACTER(KIND=CK,LEN=:) ERROR_MSG. Check after parsing or retrieval. Request at least one diagnostic actual; the method inspects the core error state rather than reparsing the document. A missing-value search and a parser/type error should not be treated as interchangeable conditions. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%check_for_errors([STATUS_OK],[ERROR_MSG])",
+              "path": "src/json_file_module.F90",
+              "line_start": 448,
+              "line_end": 465,
+              "declarations": [
+                {
+                  "path": "src/json_file_module.F90",
+                  "line_start": 452,
+                  "line_end": 455
+                },
+                {
+                  "path": "src/json_file_module.F90",
+                  "line_start": 80,
+                  "line_end": 112
+                },
+                {
+                  "path": "src/json_kinds.F90",
+                  "line_start": 69,
+                  "line_end": 148
+                },
+                {
+                  "path": "src/json_module.F90",
+                  "line_start": 1,
+                  "line_end": 104
+                }
+              ]
+            },
+            {
+              "procedure": "get",
+              "role": "public-entry-point",
+              "module": "json_file_module",
+              "derived_type": "json_file",
+              "summary": "Declare TYPE(json_file) :: solver from json_file_module. INTEGER(IK) scalar overload of public GET retrieves PATH from a parsed document. IK defaults INT32 but is build configurable; match JSON_KINDS kinds for integer, character and logical actuals. Optional FOUND reports whether the lookup succeeded; DEFAULT supplies a fallback value when applicable. Use FOUND and CHECK_FOR_ERRORS before accepting VAL instead of interpreting a numeric zero as evidence that a key existed. Other GET overloads return arrays, reals, strings or document pointers. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%get(PATH,VAL,[FOUND],[DEFAULT])",
+              "path": "src/json_file_module.F90",
+              "line_start": 1466,
+              "line_end": 1478,
+              "declarations": [
+                {
+                  "path": "src/json_file_module.F90",
+                  "line_start": 1470,
+                  "line_end": 1474
+                },
+                {
+                  "path": "src/json_file_module.F90",
+                  "line_start": 80,
+                  "line_end": 112
+                },
+                {
+                  "path": "src/json_kinds.F90",
+                  "line_start": 69,
+                  "line_end": 148
+                },
+                {
+                  "path": "src/json_module.F90",
+                  "line_start": 1,
+                  "line_end": 104
+                }
+              ]
+            },
+            {
+              "procedure": "destroy",
+              "role": "public-entry-point",
+              "module": "json_file_module",
+              "derived_type": "json_file",
+              "summary": "Declare TYPE(json_file) :: solver from json_file_module. Destroy the document tree owned by this JSON_FILE. Optional DESTROY_CORE=true also destroys core state; otherwise parser configuration is retained. Any borrowed pointers into the destroyed tree must no longer be used. This is memory cleanup, not serialization or removal of a JSON file on disk. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%destroy([DESTROY_CORE])",
+              "path": "src/json_file_module.F90",
+              "line_start": 789,
+              "line_end": 803,
+              "declarations": [
+                {
+                  "path": "src/json_file_module.F90",
+                  "line_start": 793,
+                  "line_end": 795
+                },
+                {
+                  "path": "src/json_file_module.F90",
+                  "line_start": 80,
+                  "line_end": 112
+                },
+                {
+                  "path": "src/json_kinds.F90",
+                  "line_start": 69,
+                  "line_end": 148
+                },
+                {
+                  "path": "src/json_module.F90",
+                  "line_start": 1,
+                  "line_end": 104
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "toml-f": {
+      "id": "github:toml-f/toml-f",
+      "repository": {
+        "owner": "toml-f",
+        "name": "toml-f",
+        "url": "https://github.com/toml-f/toml-f"
+      },
+      "license": {
+        "label": "Apache-2.0 OR MIT",
+        "spdx_expression": "Apache-2.0 OR MIT",
+        "revision": "f9ff54793b2d1a3edca7d6890548d18d48c98e36",
+        "reviewed_on": "2026-11-07",
+        "notes": "The source explicitly offers Apache-2.0 or MIT, and both root license files are supplied; retain their notices.",
+        "evidence": [
+          {
+            "path": "LICENSE-MIT",
+            "url": "https://github.com/toml-f/toml-f/blob/f9ff54793b2d1a3edca7d6890548d18d48c98e36/LICENSE-MIT",
+            "sha256": "aae148780b8012a964c33894d1414ff183b0b67a76fcc63f8893d3f816909e39"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/toml-f/toml-f/blob/f9ff54793b2d1a3edca7d6890548d18d48c98e36/README.md",
+            "sha256": "17cf99d3695664c80818fa590c71d2037ffd607f0b7971211d6ccebdbfaef64a"
+          },
+          {
+            "path": "src/tomlf/de.f90",
+            "url": "https://github.com/toml-f/toml-f/blob/f9ff54793b2d1a3edca7d6890548d18d48c98e36/src/tomlf/de.f90",
+            "sha256": "389672f81a37e016001996ccd59a40778807d359f9da8e86d38c699af482869d"
+          },
+          {
+            "path": "LICENSE-Apache",
+            "url": "https://github.com/toml-f/toml-f/blob/f9ff54793b2d1a3edca7d6890548d18d48c98e36/LICENSE-Apache",
+            "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "f9ff54793b2d1a3edca7d6890548d18d48c98e36",
+          "reviewed_on": "2026-11-07",
+          "notes": "The TOMLF reexports parse TOML text, retrieve a string field with optional default insertion and serialize a table to text. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/tomlf/de.f90",
+              "url": "https://github.com/toml-f/toml-f/blob/f9ff54793b2d1a3edca7d6890548d18d48c98e36/src/tomlf/de.f90",
+              "sha256": "389672f81a37e016001996ccd59a40778807d359f9da8e86d38c699af482869d"
+            },
+            {
+              "path": "src/tomlf/build/table.f90",
+              "url": "https://github.com/toml-f/toml-f/blob/f9ff54793b2d1a3edca7d6890548d18d48c98e36/src/tomlf/build/table.f90",
+              "sha256": "f2cd1541696d0880641d47da9776091b955fee51b03729559a7fd97df025e685"
+            },
+            {
+              "path": "src/tomlf/ser.f90",
+              "url": "https://github.com/toml-f/toml-f/blob/f9ff54793b2d1a3edca7d6890548d18d48c98e36/src/tomlf/ser.f90",
+              "sha256": "b8448eef4df47c0f985e0cf8dd2558f3a5d455e258d0f9fd95bf4b7f8bc3bda9"
+            },
+            {
+              "path": "src/tomlf.f90",
+              "url": "https://github.com/toml-f/toml-f/blob/f9ff54793b2d1a3edca7d6890548d18d48c98e36/src/tomlf.f90",
+              "sha256": "4f5dda6675c78ddd7b0f8106c7645b0675c7f0855fb7f26876ae6175a0961188"
+            },
+            {
+              "path": "LICENSE-Apache",
+              "url": "https://github.com/toml-f/toml-f/blob/f9ff54793b2d1a3edca7d6890548d18d48c98e36/LICENSE-Apache",
+              "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+            },
+            {
+              "path": "LICENSE-MIT",
+              "url": "https://github.com/toml-f/toml-f/blob/f9ff54793b2d1a3edca7d6890548d18d48c98e36/LICENSE-MIT",
+              "sha256": "aae148780b8012a964c33894d1414ff183b0b67a76fcc63f8893d3f816909e39"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "toml_loads",
+              "role": "public-entry-point",
+              "module": "tomlf",
+              "summary": "String overload exposed as TOML_LOADS returns an allocatable TYPE(TOML_TABLE) TABLE. Supply optional allocatable TYPE(TOML_ERROR) ERROR and check ALLOCATED(ERROR) and ALLOCATED(TABLE) before using the document. CONFIG is TYPE(TOML_PARSER_CONFIG), CONTEXT TYPE(TOML_CONTEXT); both optional. The string is document contents, not a path. This is parsing, not executing any configuration code.",
+              "signature": "CALL toml_loads(TABLE,STRING,[CONFIG],[CONTEXT],[ERROR])",
+              "path": "src/tomlf/de.f90",
+              "line_start": 143,
+              "line_end": 159,
+              "declarations": [
+                {
+                  "path": "src/tomlf/de.f90",
+                  "line_start": 145,
+                  "line_end": 153
+                },
+                {
+                  "path": "src/tomlf.f90",
+                  "line_start": 47,
+                  "line_end": 59
+                }
+              ]
+            },
+            {
+              "procedure": "get_value",
+              "role": "public-entry-point",
+              "module": "tomlf",
+              "summary": "String-valued GET_VALUE overload: TABLE is TYPE(TOML_TABLE), KEY a key in that table, and VAL allocatable deferred-length character. Optional default string can CREATE/POPULATE a missing value, so this accessor is INOUT and is not always a read-only lookup. Supply optional STAT and check it against TOML_STAT%SUCCESS, along with ALLOCATED(VAL); absent/type-incompatible values require handling. A dotted path is a distinct API, not automatically this direct-key overload.",
+              "signature": "CALL get_value(TABLE,KEY,VAL,[DEFAULT],[STAT],[ORIGIN])",
+              "path": "src/tomlf/build/table.f90",
+              "line_start": 1135,
+              "line_end": 1174,
+              "declarations": [
+                {
+                  "path": "src/tomlf/build/table.f90",
+                  "line_start": 1138,
+                  "line_end": 1153
+                },
+                {
+                  "path": "src/tomlf.f90",
+                  "line_start": 47,
+                  "line_end": 59
+                }
+              ]
+            },
+            {
+              "procedure": "toml_dumps",
+              "role": "public-entry-point",
+              "module": "tomlf",
+              "summary": "Public TOML_DUMPS serializes a TOML_VALUE-derived object (including a table) into allocatable CHARACTER STRING. ERROR is a required allocatable TYPE(TOML_ERROR) actual in this overload, not optional; inspect it before using the output. CONFIG is an optional serializer configuration from TOMLF_SER. This produces text in memory rather than writing a file; the separate TOML_DUMP interface writes to a unit/path.",
+              "signature": "CALL toml_dumps(VAL,STRING,ERROR,[CONFIG])",
+              "path": "src/tomlf/ser.f90",
+              "line_start": 131,
+              "line_end": 150,
+              "declarations": [
+                {
+                  "path": "src/tomlf/ser.f90",
+                  "line_start": 134,
+                  "line_end": 143
+                },
+                {
+                  "path": "src/tomlf.f90",
+                  "line_start": 47,
+                  "line_end": 59
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "fftpack": {
       "id": "github:fortran-lang/fftpack",
       "repository": {
@@ -2463,6 +2801,422 @@
         }
       ]
     },
+    "csv-fortran": {
+      "id": "github:jacobwilliams/csv-fortran",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "csv-fortran",
+        "url": "https://github.com/jacobwilliams/csv-fortran"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "7c6c04a3df1c44083ba1a2a0a96d2c0ff18ebef2",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies BSD three-clause terms for the CSV library; the duplicate RTF notice is not needed for this text/source review.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jacobwilliams/csv-fortran/blob/7c6c04a3df1c44083ba1a2a0a96d2c0ff18ebef2/LICENSE",
+            "sha256": "4e1580fc7fc7165b636635495209584c4cbc3505bc7aa5edafb240a386df1c8d"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/csv-fortran/blob/7c6c04a3df1c44083ba1a2a0a96d2c0ff18ebef2/README.md",
+            "sha256": "338e1df92b92070411382a22ac9eb63469e1d8a08575dbe58350a70c4789ba11"
+          },
+          {
+            "path": "src/csv_module.F90",
+            "url": "https://github.com/jacobwilliams/csv-fortran/blob/7c6c04a3df1c44083ba1a2a0a96d2c0ff18ebef2/src/csv_module.F90",
+            "sha256": "80ca427c5b03f85c0e0a8cfe74a2887b6a50b215a4f90de350ecb99db0f1014d"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N1",
+          "level": "source-reviewed",
+          "revision": "7c6c04a3df1c44083ba1a2a0a96d2c0ff18ebef2",
+          "reviewed_on": "2026-11-07",
+          "notes": "CSV_FILE loads a rectangular text table and exposes header strings and typed real-column retrieval. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/csv_module.F90",
+              "url": "https://github.com/jacobwilliams/csv-fortran/blob/7c6c04a3df1c44083ba1a2a0a96d2c0ff18ebef2/src/csv_module.F90",
+              "sha256": "80ca427c5b03f85c0e0a8cfe74a2887b6a50b215a4f90de350ecb99db0f1014d"
+            },
+            {
+              "path": "src/csv_kinds.f90",
+              "url": "https://github.com/jacobwilliams/csv-fortran/blob/7c6c04a3df1c44083ba1a2a0a96d2c0ff18ebef2/src/csv_kinds.f90",
+              "sha256": "9358c24c4ddbb7a436e62221d1b891bd4c81536b3fb5c8f25f841b93729bf9d4"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "read",
+              "role": "public-entry-point",
+              "module": "csv_module",
+              "derived_type": "csv_file",
+              "summary": "Declare TYPE(csv_file) :: solver from csv_module. Read FILENAME into the object, assuming the same column count in each row. STATUS_OK is required after optional HEADER_ROW/SKIP_ROWS, so normally use STATUS_OK=ok by keyword. HEADER_ROW selects a header explicitly; SKIP_ROWS is an integer vector of rows to omit. Optional DELIMITER is one character, default comma. Check STATUS_OK before header/data retrieval. This reads a local file, not a URL, and has no automatic numeric-column conversion. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%read(FILENAME,[HEADER_ROW],[SKIP_ROWS],STATUS_OK,[DELIMITER])",
+              "path": "src/csv_module.F90",
+              "line_start": 204,
+              "line_end": 326,
+              "declarations": [
+                {
+                  "path": "src/csv_module.F90",
+                  "line_start": 208,
+                  "line_end": 214
+                },
+                {
+                  "path": "src/csv_module.F90",
+                  "line_start": 19,
+                  "line_end": 32
+                },
+                {
+                  "path": "src/csv_module.F90",
+                  "line_start": 76,
+                  "line_end": 108
+                },
+                {
+                  "path": "src/csv_kinds.f90",
+                  "line_start": 5,
+                  "line_end": 14
+                }
+              ]
+            },
+            {
+              "procedure": "get_header",
+              "role": "public-entry-point",
+              "module": "csv_module",
+              "derived_type": "csv_file",
+              "summary": "Declare TYPE(csv_file) :: solver from csv_module. After READ with a header row, return allocatable TYPE(CSV_STRING) HEADER(:) and required logical STATUS_OK. Header text is in HEADER(i)%STR, avoiding a caller-fixed string length. A file loaded without a header yields false status; inspect status/allocation before indexing. This is the CSV_STRING-array overload of generic GET_HEADER; a fixed-length character-array overload also exists. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%get_header(HEADER,STATUS_OK)",
+              "path": "src/csv_module.F90",
+              "line_start": 628,
+              "line_end": 651,
+              "declarations": [
+                {
+                  "path": "src/csv_module.F90",
+                  "line_start": 632,
+                  "line_end": 634
+                },
+                {
+                  "path": "src/csv_module.F90",
+                  "line_start": 19,
+                  "line_end": 32
+                },
+                {
+                  "path": "src/csv_module.F90",
+                  "line_start": 76,
+                  "line_end": 108
+                },
+                {
+                  "path": "src/csv_kinds.f90",
+                  "line_start": 5,
+                  "line_end": 14
+                }
+              ]
+            },
+            {
+              "procedure": "get",
+              "role": "public-entry-point",
+              "module": "csv_module",
+              "derived_type": "csv_file",
+              "summary": "Declare TYPE(csv_file) :: solver from csv_module. REAL(CSV_KINDS::WP)=REAL64 overload of generic GET returns allocatable column R(:) for one-based ICOL. It converts the stored strings, so use a valid column number and inspect required STATUS_OK for conversion failures before consuming the values. Rows omitted as headers/skips are not part of the returned data vector. This is the column-vector overload, not the scalar-cell GET overload. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%get(ICOL,R,STATUS_OK)",
+              "path": "src/csv_module.F90",
+              "line_start": 1092,
+              "line_end": 1109,
+              "declarations": [
+                {
+                  "path": "src/csv_module.F90",
+                  "line_start": 1096,
+                  "line_end": 1099
+                },
+                {
+                  "path": "src/csv_module.F90",
+                  "line_start": 19,
+                  "line_end": 32
+                },
+                {
+                  "path": "src/csv_module.F90",
+                  "line_start": 76,
+                  "line_end": 108
+                },
+                {
+                  "path": "src/csv_kinds.f90",
+                  "line_start": 5,
+                  "line_end": 14
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "datetime-fortran": {
+      "id": "github:wavebitscientific/datetime-fortran",
+      "repository": {
+        "owner": "wavebitscientific",
+        "name": "datetime-fortran",
+        "url": "https://github.com/wavebitscientific/datetime-fortran"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "c49fcfcc54364db8235130149c4480b2bd0a72a0",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies MIT terms for datetime-fortran contributors; C-runtime time-formatting bindings remain distinct from the reviewed pure field-based formatter.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/wavebitscientific/datetime-fortran/blob/c49fcfcc54364db8235130149c4480b2bd0a72a0/LICENSE",
+            "sha256": "19cc1f61fab27eae1742079de2ae6565921b9e5c73f848a50ab59dbb461352fe"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/wavebitscientific/datetime-fortran/blob/c49fcfcc54364db8235130149c4480b2bd0a72a0/README.md",
+            "sha256": "055843ae8ba0a0552c32a34e7f4a36e8aa64fc8c5538ee0316c39029c53a5ad2"
+          },
+          {
+            "path": "src/datetime_module.f90",
+            "url": "https://github.com/wavebitscientific/datetime-fortran/blob/c49fcfcc54364db8235130149c4480b2bd0a72a0/src/datetime_module.f90",
+            "sha256": "0a84dc889716e16647fa363b676261e1851ca0c046177add882b142f8abe0ca2"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "R",
+          "level": "source-reviewed",
+          "revision": "c49fcfcc54364db8235130149c4480b2bd0a72a0",
+          "reviewed_on": "2026-11-07",
+          "notes": "DATETIME construction and formatting expose fixed-offset calendar fields and a timestamp formatter without zone text. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/datetime_module.f90",
+              "url": "https://github.com/wavebitscientific/datetime-fortran/blob/c49fcfcc54364db8235130149c4480b2bd0a72a0/src/datetime_module.f90",
+              "sha256": "0a84dc889716e16647fa363b676261e1851ca0c046177add882b142f8abe0ca2"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "datetime",
+              "role": "public-entry-point",
+              "module": "datetime_module",
+              "summary": "Public DATETIME constructor returns TYPE(DATETIME). All arguments are optional: defaults are year/month/day 1, time/milliseconds zero, TZ=0. TZ is a REAL(REAL64) fixed offset in HOURS, not an IANA timezone name or seconds. Other fields are default INTEGER. The constructor copies fields without validation/normalization; use the object ISVALID method and conventional supported calendar ranges before arithmetic/formatting. It does not apply daylight-saving rules or fetch the current date.",
+              "signature": "VALUE = datetime([YEAR],[MONTH],[DAY],[HOUR],[MINUTE],[SECOND],[MILLISECOND],[TZ])",
+              "path": "src/datetime_module.f90",
+              "line_start": 246,
+              "line_end": 276,
+              "declarations": [
+                {
+                  "path": "src/datetime_module.f90",
+                  "line_start": 249,
+                  "line_end": 250
+                },
+                {
+                  "path": "src/datetime_module.f90",
+                  "line_start": 11,
+                  "line_end": 26
+                },
+                {
+                  "path": "src/datetime_module.f90",
+                  "line_start": 61,
+                  "line_end": 85
+                },
+                {
+                  "path": "src/datetime_module.f90",
+                  "line_start": 120,
+                  "line_end": 122
+                }
+              ]
+            },
+            {
+              "procedure": "isoformat",
+              "role": "public-entry-point",
+              "module": "datetime_module",
+              "derived_type": "datetime",
+              "summary": "Declare TYPE(datetime) :: solver from datetime_module. Return CHARACTER(LEN=23) YYYY-MM-DDTHH:MM:SS.mmm from the stored fields; optional one-character SEP replaces T. No timezone suffix is included and no UTC conversion occurs, even when the object has a nonzero TZ. Use valid fields and a four-digit representable year. This is formatting the stored calendar fields, not a round-trip serialization of the timezone offset. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%isoformat([SEP])",
+              "path": "src/datetime_module.f90",
+              "line_start": 445,
+              "line_end": 468,
+              "declarations": [
+                {
+                  "path": "src/datetime_module.f90",
+                  "line_start": 447,
+                  "line_end": 448
+                },
+                {
+                  "path": "src/datetime_module.f90",
+                  "line_start": 11,
+                  "line_end": 26
+                },
+                {
+                  "path": "src/datetime_module.f90",
+                  "line_start": 61,
+                  "line_end": 85
+                },
+                {
+                  "path": "src/datetime_module.f90",
+                  "line_start": 120,
+                  "line_end": 122
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "m_sets": {
+      "id": "github:urbanjost/m_sets",
+      "repository": {
+        "owner": "urbanjost",
+        "name": "M_sets",
+        "url": "https://github.com/urbanjost/M_sets"
+      },
+      "license": {
+        "label": "CC0-1.0",
+        "spdx_expression": "CC0-1.0",
+        "revision": "0c00adef65781ba0cd979236ed25eedab8fb48c4",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies CC0-1.0; preserve source author/algorithm attributions for the included set/ranking routines.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/urbanjost/M_sets/blob/0c00adef65781ba0cd979236ed25eedab8fb48c4/LICENSE",
+            "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/urbanjost/M_sets/blob/0c00adef65781ba0cd979236ed25eedab8fb48c4/README.md",
+            "sha256": "d2e3dee8d3e67b84a14742af9ff9217426e44a51914dd21c7435ade99270cf0f"
+          },
+          {
+            "path": "src/M_sets.F90",
+            "url": "https://github.com/urbanjost/M_sets/blob/0c00adef65781ba0cd979236ed25eedab8fb48c4/src/M_sets.F90",
+            "sha256": "81fd0a30a1fe64e0281ef752d88266c9bd46fc3dfbb55dcac5d649a2e3c1aacb"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N4",
+          "level": "source-reviewed",
+          "revision": "0c00adef65781ba0cd979236ed25eedab8fb48c4",
+          "reviewed_on": "2026-11-07",
+          "notes": "The INT32 unique/union overloads construct value sets with explicit sorted or stable ordering. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/M_sets.F90",
+              "url": "https://github.com/urbanjost/M_sets/blob/0c00adef65781ba0cd979236ed25eedab8fb48c4/src/M_sets.F90",
+              "sha256": "81fd0a30a1fe64e0281ef752d88266c9bd46fc3dfbb55dcac5d649a2e3c1aacb"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "unique",
+              "role": "public-entry-point",
+              "module": "M_sets",
+              "summary": "INTEGER(INT32) overload of UNIQUE returns allocatable values with repetitions removed. Optional SETORDER defaults \"sorted\"; \"stable\" retains original occurrence order. Other names trigger STOP; the implementation case-folds the selection. Input A(:) is preserved. This returns values rather than the indices of unique entries, and has no status output.",
+              "signature": "VALUE = unique(A,[SETORDER])",
+              "path": "src/M_sets.F90",
+              "line_start": 1346,
+              "line_end": 1373,
+              "declarations": [
+                {
+                  "path": "src/M_sets.F90",
+                  "line_start": 1348,
+                  "line_end": 1350
+                },
+                {
+                  "path": "src/M_sets.F90",
+                  "line_start": 221,
+                  "line_end": 232
+                },
+                {
+                  "path": "src/M_sets.F90",
+                  "line_start": 263,
+                  "line_end": 270
+                }
+              ]
+            },
+            {
+              "procedure": "union",
+              "role": "public-entry-point",
+              "module": "M_sets",
+              "summary": "INTEGER(INT32) overload of UNION returns the unique values in A followed by B before applying the requested ordering. Default SETORDER=\"sorted\" gives ascending output; \"stable\" keeps first-occurrence order from the concatenated inputs. The two vectors need not already be sorted. Inputs are preserved; no status output is exposed.",
+              "signature": "VALUE = union(A,B,[SETORDER])",
+              "path": "src/M_sets.F90",
+              "line_start": 1375,
+              "line_end": 1382,
+              "declarations": [
+                {
+                  "path": "src/M_sets.F90",
+                  "line_start": 1377,
+                  "line_end": 1380
+                },
+                {
+                  "path": "src/M_sets.F90",
+                  "line_start": 221,
+                  "line_end": 232
+                },
+                {
+                  "path": "src/M_sets.F90",
+                  "line_start": 263,
+                  "line_end": 270
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "N5",
+          "level": "source-reviewed",
+          "revision": "0c00adef65781ba0cd979236ed25eedab8fb48c4",
+          "reviewed_on": "2026-11-07",
+          "notes": "The membership overload searches for each input value and returns integer flags. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/M_sets.F90",
+              "url": "https://github.com/urbanjost/M_sets/blob/0c00adef65781ba0cd979236ed25eedab8fb48c4/src/M_sets.F90",
+              "sha256": "81fd0a30a1fe64e0281ef752d88266c9bd46fc3dfbb55dcac5d649a2e3c1aacb"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "ismember",
+              "role": "public-entry-point",
+              "module": "M_sets",
+              "summary": "INTEGER(INT32) membership overload returns an allocatable DEFAULT INTEGER array of SIZE(A), containing 1 where A(i) occurs in B and 0 otherwise. The result is not LOGICAL and is not an index into B. Repeated A values each receive a membership flag. Internal concatenation/ranking can use more memory than a simple scan; neither input is modified and no status is returned.",
+              "signature": "VALUE = ismember(A,B)",
+              "path": "src/M_sets.F90",
+              "line_start": 1414,
+              "line_end": 1434,
+              "declarations": [
+                {
+                  "path": "src/M_sets.F90",
+                  "line_start": 1416,
+                  "line_end": 1420
+                },
+                {
+                  "path": "src/M_sets.F90",
+                  "line_start": 221,
+                  "line_end": 232
+                },
+                {
+                  "path": "src/M_sets.F90",
+                  "line_start": 263,
+                  "line_end": 270
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "orderpack": {
       "id": "github:urbanjost/orderpack",
       "repository": {
@@ -2596,6 +3350,105 @@
                   "path": "src/M_orderpack__inspar.f90",
                   "line_start": 91,
                   "line_end": 95
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fortran-shlex": {
+      "id": "github:perazz/fortran-shlex",
+      "repository": {
+        "owner": "perazz",
+        "name": "fortran-shlex",
+        "url": "https://github.com/perazz/fortran-shlex"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "e20b6f86c82e33fae78b54b074bab5369efde6a3",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Federico Perini MIT terms for the tokenization library.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/perazz/fortran-shlex/blob/e20b6f86c82e33fae78b54b074bab5369efde6a3/LICENSE",
+            "sha256": "755d8156598caebdaddaa4a7d6b9c9c6bdbab634ec52d5f4c6f2c3d06d211038"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/perazz/fortran-shlex/blob/e20b6f86c82e33fae78b54b074bab5369efde6a3/README.md",
+            "sha256": "99036b2e9229b63ed4fe178fa8f083d6696caa77146d966f4828b65e82ab2065"
+          },
+          {
+            "path": "src/shlex_module.f90",
+            "url": "https://github.com/perazz/fortran-shlex/blob/e20b6f86c82e33fae78b54b074bab5369efde6a3/src/shlex_module.f90",
+            "sha256": "5dc9baf00c4a2b65cf747dd904f7deb70194398c745834551a51c7cd454941e0"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "e20b6f86c82e33fae78b54b074bab5369efde6a3",
+          "reviewed_on": "2026-11-07",
+          "notes": "The string-vector SPLIT/MS_SPLIT generics expose POSIX and Windows command-text tokenization with explicit success reporting. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/shlex_module.f90",
+              "url": "https://github.com/perazz/fortran-shlex/blob/e20b6f86c82e33fae78b54b074bab5369efde6a3/src/shlex_module.f90",
+              "sha256": "5dc9baf00c4a2b65cf747dd904f7deb70194398c745834551a51c7cd454941e0"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "split",
+              "role": "public-entry-point",
+              "module": "shlex_module",
+              "summary": "LOGICAL-success overload of SPLIT tokenizes a POSIX-style command string into an allocatable deferred-length CHARACTER(KIND=SCK) vector, respecting shell-like quoting/escaping. Request optional SUCCESS and check it before using tokens; failed parses may yield partial token data. SCK is the exported ASCII character kind. This only splits text: it does not execute a command, expand environment variables or perform shell substitution.",
+              "signature": "VALUE = split(PATTERN,[SUCCESS])",
+              "path": "src/shlex_module.f90",
+              "line_start": 264,
+              "line_end": 273,
+              "declarations": [
+                {
+                  "path": "src/shlex_module.f90",
+                  "line_start": 265,
+                  "line_end": 267
+                },
+                {
+                  "path": "src/shlex_module.f90",
+                  "line_start": 16,
+                  "line_end": 51
+                }
+              ]
+            },
+            {
+              "procedure": "ms_split",
+              "role": "public-entry-point",
+              "module": "shlex_module",
+              "summary": "Windows MS_SPLIT overload returns an allocatable CHARACTER(KIND=SCK) vector. Optional LIKE_CMD defaults true and enables cmd-style caret handling; UCRT chooses Windows runtime quote parsing, and optional SUCCESS reports errors. Select these conventions for the command source you actually have rather than assuming POSIX splitting. The function does not open files or invoke a shell; inspect SUCCESS before accepting the tokens.",
+              "signature": "VALUE = ms_split(PATTERN,[LIKE_CMD],[UCRT],[SUCCESS])",
+              "path": "src/shlex_module.f90",
+              "line_start": 289,
+              "line_end": 299,
+              "declarations": [
+                {
+                  "path": "src/shlex_module.f90",
+                  "line_start": 289,
+                  "line_end": 294
+                },
+                {
+                  "path": "src/shlex_module.f90",
+                  "line_start": 16,
+                  "line_end": 51
+                },
+                {
+                  "path": "src/shlex_module.f90",
+                  "line_start": 302,
+                  "line_end": 329
                 }
               ]
             }
@@ -2737,6 +3590,120 @@
                   "path": "src/prime_constants.f90",
                   "line_start": 11,
                   "line_end": 35
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "functional-fortran": {
+      "id": "github:wavebitscientific/functional-fortran",
+      "repository": {
+        "owner": "wavebitscientific",
+        "name": "functional-fortran",
+        "url": "https://github.com/wavebitscientific/functional-fortran"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "2457a66531b3b803db36928fec21d74a20434830",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies three-clause BSD terms for functional-fortran contributors.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/wavebitscientific/functional-fortran/blob/2457a66531b3b803db36928fec21d74a20434830/LICENSE",
+            "sha256": "8136a4b21f4769732bcfdb4b613068d9f3ccb3fbb3b62bdb1a216c2c24c458ce"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/wavebitscientific/functional-fortran/blob/2457a66531b3b803db36928fec21d74a20434830/README.md",
+            "sha256": "fec737e53289b4370845e7157f9de0690b9d6af05c9abb50d568d010892fadbd"
+          },
+          {
+            "path": "src/functional.f90",
+            "url": "https://github.com/wavebitscientific/functional-fortran/blob/2457a66531b3b803db36928fec21d74a20434830/src/functional.f90",
+            "sha256": "3332b8ba7e83b7eeebd3e1cbb18ed10806fc01b182e7e828f10233928a504bea"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N4",
+          "level": "source-reviewed",
+          "revision": "2457a66531b3b803db36928fec21d74a20434830",
+          "reviewed_on": "2026-11-07",
+          "notes": "The REAL64 MAP/FILTER generics transform or select array values through pure scalar callbacks. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/functional.f90",
+              "url": "https://github.com/wavebitscientific/functional-fortran/blob/2457a66531b3b803db36928fec21d74a20434830/src/functional.f90",
+              "sha256": "3332b8ba7e83b7eeebd3e1cbb18ed10806fc01b182e7e828f10233928a504bea"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "map",
+              "role": "public-entry-point",
+              "module": "functional",
+              "summary": "REAL(REAL64) overload of MAP applies a PURE scalar REAL64-to-REAL64 callback F to every element of X(:), returning a same-length real vector. Declare callback arguments with the linked INTENT(IN) interface. This is a sequential pure array transform; it does not promise parallel execution, vectorization or mutation of X. Match ISO_FORTRAN_ENV::REAL64 because the module kind alias R8 is private.",
+              "signature": "VALUE = map(F,X)",
+              "path": "src/functional.f90",
+              "line_start": 2893,
+              "line_end": 2902,
+              "declarations": [
+                {
+                  "path": "src/functional.f90",
+                  "line_start": 2897,
+                  "line_end": 2900
+                },
+                {
+                  "path": "src/functional.f90",
+                  "line_start": 1,
+                  "line_end": 12
+                },
+                {
+                  "path": "src/functional.f90",
+                  "line_start": 287,
+                  "line_end": 292
+                },
+                {
+                  "path": "src/functional.f90",
+                  "line_start": 477,
+                  "line_end": 482
+                }
+              ]
+            },
+            {
+              "procedure": "filter",
+              "role": "public-entry-point",
+              "module": "functional",
+              "summary": "REAL64 overload of FILTER calls a PURE scalar REAL64-to-LOGICAL predicate F and returns an allocatable vector of matching values in original order. The result may have length zero and is not a logical mask or vector of indices. Input X is preserved; callback purity and argument-kind compatibility are required.",
+              "signature": "VALUE = filter(F,X)",
+              "path": "src/functional.f90",
+              "line_start": 1224,
+              "line_end": 1233,
+              "declarations": [
+                {
+                  "path": "src/functional.f90",
+                  "line_start": 1228,
+                  "line_end": 1231
+                },
+                {
+                  "path": "src/functional.f90",
+                  "line_start": 1,
+                  "line_end": 12
+                },
+                {
+                  "path": "src/functional.f90",
+                  "line_start": 287,
+                  "line_end": 292
+                },
+                {
+                  "path": "src/functional.f90",
+                  "line_start": 477,
+                  "line_end": 482
                 }
               ]
             }
@@ -3620,6 +4587,138 @@
                   "path": "src/splpak.F90",
                   "line_start": 674,
                   "line_end": 686
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "forgex": {
+      "id": "github:shinobuamasaki/forgex",
+      "repository": {
+        "owner": "ShinobuAmasaki",
+        "name": "forgex",
+        "url": "https://github.com/ShinobuAmasaki/forgex"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "e79f4792a1ac776fb0b1612de560f7791795ea8e",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Amasaki Shinobu MIT terms; retain algorithm/source attributions in the regex implementation.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/ShinobuAmasaki/forgex/blob/e79f4792a1ac776fb0b1612de560f7791795ea8e/LICENSE",
+            "sha256": "76ba6215a77bc2d91f66df7a38fa21d47112addcb742ad62db1ede6b2111d647"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/ShinobuAmasaki/forgex/blob/e79f4792a1ac776fb0b1612de560f7791795ea8e/README.md",
+            "sha256": "57b607e00b146f3d3e4c1c5d5e62ea34ce4ecb438ce034916ee20a1ce9b58526"
+          },
+          {
+            "path": "src/forgex.F90",
+            "url": "https://github.com/ShinobuAmasaki/forgex/blob/e79f4792a1ac776fb0b1612de560f7791795ea8e/src/forgex.F90",
+            "sha256": "352f2f00b575f1181585c446595bf996362a3e50abe9d33b509164c14242b287"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "e79f4792a1ac776fb0b1612de560f7791795ea8e",
+          "reviewed_on": "2026-11-07",
+          "notes": "IS_VALID_REGEX checks pattern syntax through the public generic. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/forgex.F90",
+              "url": "https://github.com/ShinobuAmasaki/forgex/blob/e79f4792a1ac776fb0b1612de560f7791795ea8e/src/forgex.F90",
+              "sha256": "352f2f00b575f1181585c446595bf996362a3e50abe9d33b509164c14242b287"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "is_valid_regex",
+              "role": "public-entry-point",
+              "module": "forgex",
+              "summary": "Public IS_VALID_REGEX returns LOGICAL validity for a CHARACTER pattern, without searching text. The implementation trims trailing blanks from the pattern before building its syntax tree. A valid pattern is not evidence that it matches a particular string, and this function does not return an error message.",
+              "signature": "VALUE = is_valid_regex(PATTERN)",
+              "path": "src/forgex.F90",
+              "line_start": 58,
+              "line_end": 71,
+              "declarations": [
+                {
+                  "path": "src/forgex.F90",
+                  "line_start": 61,
+                  "line_end": 62
+                },
+                {
+                  "path": "src/forgex.F90",
+                  "line_start": 13,
+                  "line_end": 54
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "N5",
+          "level": "source-reviewed",
+          "revision": "e79f4792a1ac776fb0b1612de560f7791795ea8e",
+          "reviewed_on": "2026-11-07",
+          "notes": "REGEX and REGEX_F search text for a matching substring, with different diagnostic capabilities. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/forgex.F90",
+              "url": "https://github.com/ShinobuAmasaki/forgex/blob/e79f4792a1ac776fb0b1612de560f7791795ea8e/src/forgex.F90",
+              "sha256": "352f2f00b575f1181585c446595bf996362a3e50abe9d33b509164c14242b287"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "regex",
+              "role": "public-entry-point",
+              "module": "forgex",
+              "summary": "Public REGEX searches TEXT using PATTERN and writes allocatable deferred-length character RES. Optional LENGTH/FROM/TO/STATUS are INTEGER INOUT actuals; ERR_MSG is caller-sized CHARACTER, not an allocatable message result. The routine reports a matching substring and bounds usable with TEXT(FROM:TO). No match returns empty RES and zero bounds/length; invalid syntax also returns an empty result with its diagnostic status. STATUS describes pattern processing, so do not use it alone to decide whether a substring was found. Pass sufficiently long ERR_MSG storage and inspect bounds as well as status; empty matches require care.",
+              "signature": "CALL regex(PATTERN,TEXT,RES,[LENGTH],[FROM],[TO],[STATUS],[ERR_MSG])",
+              "path": "src/forgex.F90",
+              "line_start": 235,
+              "line_end": 347,
+              "declarations": [
+                {
+                  "path": "src/forgex.F90",
+                  "line_start": 239,
+                  "line_end": 242
+                },
+                {
+                  "path": "src/forgex.F90",
+                  "line_start": 13,
+                  "line_end": 54
+                }
+              ]
+            },
+            {
+              "procedure": "regex_f",
+              "role": "public-entry-point",
+              "module": "forgex",
+              "summary": "Convenience function REGEX_F returns an allocatable character matching substring from TEXT. It calls the subroutine search without diagnostic/bound outputs, so empty output cannot by itself distinguish invalid syntax, no match or an empty match. Validate the pattern first and prefer REGEX when diagnostics or exact positions are required. Trailing blanks in PATTERN are trimmed by the underlying search.",
+              "signature": "VALUE = regex_f(PATTERN,TEXT)",
+              "path": "src/forgex.F90",
+              "line_start": 351,
+              "line_end": 358,
+              "declarations": [
+                {
+                  "path": "src/forgex.F90",
+                  "line_start": 353,
+                  "line_end": 354
+                },
+                {
+                  "path": "src/forgex.F90",
+                  "line_start": 13,
+                  "line_end": 54
                 }
               ]
             }
@@ -6368,6 +7467,88 @@
                   "path": "src/select_precision.f90",
                   "line_start": 17,
                   "line_end": 25
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fortran-string-to-real": {
+      "id": "github:carltoffel/fortran-string-to-real",
+      "repository": {
+        "owner": "Carltoffel",
+        "name": "Fortran-String-to-Real",
+        "url": "https://github.com/Carltoffel/Fortran-String-to-Real"
+      },
+      "license": {
+        "label": "No license identified",
+        "spdx_expression": null,
+        "revision": "76fb9e4203c6ce73c31bed85b69af920893b033e",
+        "reviewed_on": "2026-11-07",
+        "notes": "The inspected root manifest, README and source provide no project license grant; no LICENSE/COPYING file is present in the pinned archive. Record unknown licensing rather than infer permission from public hosting.",
+        "evidence": [
+          {
+            "path": "fpm.toml",
+            "url": "https://github.com/Carltoffel/Fortran-String-to-Real/blob/76fb9e4203c6ce73c31bed85b69af920893b033e/fpm.toml",
+            "sha256": "147f9d6c90f168540efeb48eaae8baa498888e8eeb7322f947f42e9fdb6ec836"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/Carltoffel/Fortran-String-to-Real/blob/76fb9e4203c6ce73c31bed85b69af920893b033e/README.md",
+            "sha256": "21ccac5048654a68ba5714a32084be6fad447b3b66d80c95e4861b7acd717638"
+          },
+          {
+            "path": "src/str2real_m.f90",
+            "url": "https://github.com/Carltoffel/Fortran-String-to-Real/blob/76fb9e4203c6ce73c31bed85b69af920893b033e/src/str2real_m.f90",
+            "sha256": "51dc7413c4bbc0d7e7150eaf80bc602c78f9070e3b592e69e32a03e87c6b6968"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "76fb9e4203c6ce73c31bed85b69af920893b033e",
+          "reviewed_on": "2026-11-07",
+          "notes": "STR2REAL is a restricted short-string decimal conversion with fixed workspace and no error channel; its limitations are explicit. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/str2real_m.f90",
+              "url": "https://github.com/Carltoffel/Fortran-String-to-Real/blob/76fb9e4203c6ce73c31bed85b69af920893b033e/src/str2real_m.f90",
+              "sha256": "51dc7413c4bbc0d7e7150eaf80bc602c78f9070e3b592e69e32a03e87c6b6968"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/Carltoffel/Fortran-String-to-Real/blob/76fb9e4203c6ce73c31bed85b69af920893b033e/fpm.toml",
+              "sha256": "147f9d6c90f168540efeb48eaae8baa498888e8eeb7322f947f42e9fdb6ec836"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "str2real",
+              "role": "public-entry-point",
+              "module": "str2real_m",
+              "summary": "Convert a carefully prevalidated short decimal/scientific string to REAL(KIND(1D0)). There is no IOSTAT, validity check or consumed-length output. The implementation uses fixed 32-character/digit work arrays, a 16-place whole-number table and 24-place fractional table; E/e exponents are recognized, not a general Fortran input grammar. Keep total input length at most 30 and mantissa/exponent alignment inside those tables, with no blanks, separators or malformed text. Longer/misaligned strings can access work arrays out of bounds; non-digit masking is not input validation. Use a validated parser or internal READ for arbitrary untrusted text. This is an experimental restricted-format conversion API, not an arbitrary-length safe reader.",
+              "signature": "VALUE = str2real(S)",
+              "path": "src/str2real_m.f90",
+              "line_start": 27,
+              "line_end": 72,
+              "declarations": [
+                {
+                  "path": "src/str2real_m.f90",
+                  "line_start": 28,
+                  "line_end": 29
+                },
+                {
+                  "path": "src/str2real_m.f90",
+                  "line_start": 1,
+                  "line_end": 23
+                },
+                {
+                  "path": "src/str2real_m.f90",
+                  "line_start": 33,
+                  "line_end": 76
                 }
               ]
             }
@@ -10782,6 +11963,160 @@
         }
       ]
     },
+    "fortran-fast-float": {
+      "id": "github:perazz/fortran-fast-float",
+      "repository": {
+        "owner": "perazz",
+        "name": "fortran-fast-float",
+        "url": "https://github.com/perazz/fortran-fast-float"
+      },
+      "license": {
+        "label": "Apache-2.0 OR BSL-1.0 OR MIT",
+        "spdx_expression": "Apache-2.0 OR BSL-1.0 OR MIT",
+        "revision": "195e47d90874cb1ff38598d80a7e4919c49b89d8",
+        "reviewed_on": "2026-11-07",
+        "notes": "README explicitly offers Apache-2.0, Boost-1.0 or MIT and all three grant files are supplied, matching credited fast_float/ffc.h upstream provenance.",
+        "evidence": [
+          {
+            "path": "LICENSE-MIT",
+            "url": "https://github.com/perazz/fortran-fast-float/blob/195e47d90874cb1ff38598d80a7e4919c49b89d8/LICENSE-MIT",
+            "sha256": "7fbda7161c6734d4cffb163a03c26eb7c6affe7b3c6763643e2f7b1094a65678"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/perazz/fortran-fast-float/blob/195e47d90874cb1ff38598d80a7e4919c49b89d8/README.md",
+            "sha256": "b5aa9adb51323dce1934bf51c78c3f7afa1ee7218a9c6610b1af94fd664da6e2"
+          },
+          {
+            "path": "src/fast_float_module.F90",
+            "url": "https://github.com/perazz/fortran-fast-float/blob/195e47d90874cb1ff38598d80a7e4919c49b89d8/src/fast_float_module.F90",
+            "sha256": "1ea1f5ef985405a279fdc3e16b010dbe27973d70c2d446a44b5f79ff87d854a4"
+          },
+          {
+            "path": "LICENSE-APACHE",
+            "url": "https://github.com/perazz/fortran-fast-float/blob/195e47d90874cb1ff38598d80a7e4919c49b89d8/LICENSE-APACHE",
+            "sha256": "5c5f5f801f20abb4c67086ca9a251e4468164bf18a8fa33d0aa6da8afbce6b38"
+          },
+          {
+            "path": "LICENSE-BOOST",
+            "url": "https://github.com/perazz/fortran-fast-float/blob/195e47d90874cb1ff38598d80a7e4919c49b89d8/LICENSE-BOOST",
+            "sha256": "c9bff75738922193e67fa726fa225535870d2aa1059f91452c411736284ad566"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "195e47d90874cb1ff38598d80a7e4919c49b89d8",
+          "reviewed_on": "2026-11-07",
+          "notes": "The double-prefix and INT32 parsers expose structured outcomes and next-input positions, requiring caller checks for complete conversion. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/fast_float_module.F90",
+              "url": "https://github.com/perazz/fortran-fast-float/blob/195e47d90874cb1ff38598d80a7e4919c49b89d8/src/fast_float_module.F90",
+              "sha256": "1ea1f5ef985405a279fdc3e16b010dbe27973d70c2d446a44b5f79ff87d854a4"
+            },
+            {
+              "path": "LICENSE-APACHE",
+              "url": "https://github.com/perazz/fortran-fast-float/blob/195e47d90874cb1ff38598d80a7e4919c49b89d8/LICENSE-APACHE",
+              "sha256": "5c5f5f801f20abb4c67086ca9a251e4468164bf18a8fa33d0aa6da8afbce6b38"
+            },
+            {
+              "path": "LICENSE-BOOST",
+              "url": "https://github.com/perazz/fortran-fast-float/blob/195e47d90874cb1ff38598d80a7e4919c49b89d8/LICENSE-BOOST",
+              "sha256": "c9bff75738922193e67fa726fa225535870d2aa1059f91452c411736284ad566"
+            },
+            {
+              "path": "LICENSE-MIT",
+              "url": "https://github.com/perazz/fortran-fast-float/blob/195e47d90874cb1ff38598d80a7e4919c49b89d8/LICENSE-MIT",
+              "sha256": "7fbda7161c6734d4cffb163a03c26eb7c6affe7b3c6763643e2f7b1094a65678"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "parse_double_fast",
+              "role": "public-entry-point",
+              "module": "fast_float_module",
+              "summary": "Parse a REAL64 numeric prefix from STR, returning VAL, default INTEGER NREAD and TYPE(OUTCOME) STAT. Compare STAT to OUTCOMES%OK with the module comparison operators before accepting the value. NREAD is the NEXT input position in this pin, not the number of characters consumed: successful prefix parsing can leave trailing text at STR(NREAD:). Validate the remainder for whole-token conversion. Optional TYPE(PARSE_OPTIONS) O selects formats/decimal point; default general parsing and PRESET_FORTRAN differ, including leading-plus/Fortran syntax handling. OUT_OF_RANGE and INVALID_INPUT must be handled separately.",
+              "signature": "CALL parse_double_fast(STR,VAL,NREAD,STAT,[O])",
+              "path": "src/fast_float_module.F90",
+              "line_start": 2942,
+              "line_end": 3338,
+              "declarations": [
+                {
+                  "path": "src/fast_float_module.F90",
+                  "line_start": 2943,
+                  "line_end": 2947
+                },
+                {
+                  "path": "src/fast_float_module.F90",
+                  "line_start": 4,
+                  "line_end": 43
+                },
+                {
+                  "path": "src/fast_float_module.F90",
+                  "line_start": 45,
+                  "line_end": 93
+                },
+                {
+                  "path": "src/fast_float_module.F90",
+                  "line_start": 3938,
+                  "line_end": 3947
+                },
+                {
+                  "path": "src/fast_float_module.F90",
+                  "line_start": 3342,
+                  "line_end": 3355
+                }
+              ]
+            },
+            {
+              "procedure": "parse_i32",
+              "role": "public-entry-point",
+              "module": "fast_float_module",
+              "summary": "Function overload of PARSE_I32 returns INTEGER(INT32), with required BASE in 2..36 and required TYPE(PARSE_RESULT) RES; optional O is TYPE(PARSE_OPTIONS). Check RES%OUTCOME against OUTCOMES%OK, then check RES%POS (next input position) for unwanted trailing text. Invalid/out-of-range input is not a valid zero. Integer parsing skips whitespace/allows plus only when enabled through options; it does not inherit the double-parser defaults when O is absent.",
+              "signature": "VALUE = parse_i32(STR,BASE,RES,[O])",
+              "path": "src/fast_float_module.F90",
+              "line_start": 3930,
+              "line_end": 3936,
+              "declarations": [
+                {
+                  "path": "src/fast_float_module.F90",
+                  "line_start": 3931,
+                  "line_end": 3934
+                },
+                {
+                  "path": "src/fast_float_module.F90",
+                  "line_start": 4,
+                  "line_end": 43
+                },
+                {
+                  "path": "src/fast_float_module.F90",
+                  "line_start": 45,
+                  "line_end": 93
+                },
+                {
+                  "path": "src/fast_float_module.F90",
+                  "line_start": 3938,
+                  "line_end": 3947
+                },
+                {
+                  "path": "src/fast_float_module.F90",
+                  "line_start": 3787,
+                  "line_end": 3814
+                },
+                {
+                  "path": "src/fast_float_module.F90",
+                  "line_start": 3887,
+                  "line_end": 3902
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "kdtree2": {
       "id": "github:jmhodges/kdtree2",
       "repository": {
@@ -11448,6 +12783,8 @@
   },
   "report": {
     "matched": [
+      "json-fortran",
+      "toml-f",
       "fftpack",
       "roots-fortran",
       "bspline-fortran",
@@ -11463,8 +12800,13 @@
       "daglib",
       "fortran_function_parser",
       "numdiff",
+      "csv-fortran",
+      "datetime-fortran",
+      "m_sets",
       "orderpack",
+      "fortran-shlex",
       "fortran-primes",
+      "functional-fortran",
       "forcolormap",
       "rational_number",
       "fmin",
@@ -11473,6 +12815,7 @@
       "specfun",
       "regridpack",
       "splpak",
+      "forgex",
       "fitpack",
       "lsqr",
       "rklib",
@@ -11493,6 +12836,7 @@
       "simulated-annealing",
       "odrpack95",
       "pointsets",
+      "fortran-string-to-real",
       "integrate_fortran",
       "rndgen-fortran",
       "blas-interface",
@@ -11529,6 +12873,7 @@
       "formatmul",
       "lookup-table-fortran",
       "rng-fortran",
+      "fortran-fast-float",
       "kdtree2",
       "differentia",
       "fortran-utils",
@@ -11539,25 +12884,18 @@
       "fortran-lapack",
       "test-drive",
       "pyplot-fortran",
-      "json-fortran",
-      "toml-f",
       "m_strings",
       "stdlib",
       "flist",
       "argv-fortran",
       "popen-fortran",
-      "csv-fortran",
-      "datetime-fortran",
       "m_io",
       "m_time",
-      "m_sets",
       "m_sort",
       "m_cli2",
       "m_attr",
       "jonquil",
-      "fortran-shlex",
       "fhash",
-      "functional-fortran",
       "forwarddiff",
       "kinds",
       "fortran_test_helper",
@@ -11565,7 +12903,6 @@
       "m_list",
       "m_color",
       "fortran-astrodynamics-toolkit",
-      "forgex",
       "ferror",
       "m_framework",
       "mpfun2020-var1",
@@ -11576,7 +12913,6 @@
       "lightkrylov",
       "fortran-sqlite3",
       "flint",
-      "fortran-string-to-real",
       "ad_dnsvm",
       "twopnt",
       "astro-fortran",
@@ -11679,7 +13015,6 @@
       "errstat",
       "slinked-list",
       "enclose",
-      "fortran-fast-float",
       "config-fortran",
       "penf",
       "coretran",
