@@ -2,8 +2,249 @@
   "schema_version": 1,
   "publisher": "fortran-gams-catalog-independent-reviews",
   "source_url": "https://beliavsky.github.io/fortran-gams-catalog/reviewed-metadata.json",
-  "source_snapshot_id": "sha256:dcce0cb8d0cc16067553b0873499fcfef5a19eb7567ab81348c961316bf4f15e",
+  "source_snapshot_id": "sha256:84e85b373aaf319f247c24563530aafda0a91a174b770785ad2109548209f12c",
   "packages": {
+    "fftpack": {
+      "id": "github:fortran-lang/fftpack",
+      "repository": {
+        "owner": "fortran-lang",
+        "name": "fftpack",
+        "url": "https://github.com/fortran-lang/fftpack"
+      },
+      "license": {
+        "label": "MIT modifications; original FFTPACK public domain",
+        "spdx_expression": null,
+        "revision": "0fffe7c05a918363a7cc12ae138a695afd115f36",
+        "reviewed_on": "2026-11-07",
+        "notes": "LICENSE grants MIT terms for modifications and states that the original software is public domain. This scoped finding retains that component distinction.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/fortran-lang/fftpack/blob/0fffe7c05a918363a7cc12ae138a695afd115f36/LICENSE",
+            "sha256": "869f9003a4ce6a80faec8bcae8fc375187680745348c0444722f20794ee90ab4"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/fortran-lang/fftpack/blob/0fffe7c05a918363a7cc12ae138a695afd115f36/README.md",
+            "sha256": "9e67ebf07d85ee056be63404d3bb8e051d3166b56282d430f04a7e5e571f6e4e"
+          },
+          {
+            "path": "src/fftpack.f90",
+            "url": "https://github.com/fortran-lang/fftpack/blob/0fffe7c05a918363a7cc12ae138a695afd115f36/src/fftpack.f90",
+            "sha256": "8d8ab19d3ee948a764fdd6fcd47d8ad96e19e6384d84753cb7687f34ac8b9857"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "J1a2",
+          "level": "source-reviewed",
+          "revision": "0fffe7c05a918363a7cc12ae138a695afd115f36",
+          "reviewed_on": "2026-11-07",
+          "notes": "Generic FFT/IFFT dispatch to COMPLEX(rk) periodic forward/backward FFTPACK transforms. Both wrappers retain the unnormalized kernel convention. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/fftpack.f90",
+              "url": "https://github.com/fortran-lang/fftpack/blob/0fffe7c05a918363a7cc12ae138a695afd115f36/src/fftpack.f90",
+              "sha256": "8d8ab19d3ee948a764fdd6fcd47d8ad96e19e6384d84753cb7687f34ac8b9857"
+            },
+            {
+              "path": "src/fftpack_fft.f90",
+              "url": "https://github.com/fortran-lang/fftpack/blob/0fffe7c05a918363a7cc12ae138a695afd115f36/src/fftpack_fft.f90",
+              "sha256": "558a194efe1ae2de66642d9d12e4210093895e61c1dade214083fb23453f203b"
+            },
+            {
+              "path": "src/fftpack_ifft.f90",
+              "url": "https://github.com/fortran-lang/fftpack/blob/0fffe7c05a918363a7cc12ae138a695afd115f36/src/fftpack_ifft.f90",
+              "sha256": "578909f91ad46fb1a2ba921efed9523f938a8f18a9cf8cbea1d992f202e8d0dd"
+            },
+            {
+              "path": "src/rk.f90",
+              "url": "https://github.com/fortran-lang/fftpack/blob/0fffe7c05a918363a7cc12ae138a695afd115f36/src/rk.f90",
+              "sha256": "79c50b90238ee5e4fc9471fe224cd622c2ea6ae7915facd7b22266962d7784fc"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "fft",
+              "role": "public-entry-point",
+              "module": "fftpack",
+              "summary": "Complex rank-one transform returning an allocatable COMPLEX(rk) array. Import rk from fftpack; this pin defines rk=REAL64. Optional N defaults to SIZE(X), truncates if smaller and zero-pads if larger; use a positive transform length. FFT calls ZFFTF and IFFT calls ZFFTB, with no division by N in either wrapper: IFFT(FFT(X)) is N*X, so divide the inverse by N for a normalized round trip. X is not overwritten; work arrays are allocated internally. No status argument is exposed. The declarations are the generic public interface; separate submodules implement the functions.",
+              "signature": "VALUE = fft(X[,N])",
+              "path": "src/fftpack.f90",
+              "line_start": 223,
+              "line_end": 227,
+              "declarations": [
+                {
+                  "path": "src/fftpack.f90",
+                  "line_start": 223,
+                  "line_end": 227
+                },
+                {
+                  "path": "src/rk.f90",
+                  "line_start": 1,
+                  "line_end": 4
+                }
+              ]
+            },
+            {
+              "procedure": "ifft",
+              "role": "public-entry-point",
+              "module": "fftpack",
+              "summary": "Complex rank-one transform returning an allocatable COMPLEX(rk) array. Import rk from fftpack; this pin defines rk=REAL64. Optional N defaults to SIZE(X), truncates if smaller and zero-pads if larger; use a positive transform length. FFT calls ZFFTF and IFFT calls ZFFTB, with no division by N in either wrapper: IFFT(FFT(X)) is N*X, so divide the inverse by N for a normalized round trip. X is not overwritten; work arrays are allocated internally. No status argument is exposed. The declarations are the generic public interface; separate submodules implement the functions.",
+              "signature": "VALUE = ifft(X[,N])",
+              "path": "src/fftpack.f90",
+              "line_start": 235,
+              "line_end": 239,
+              "declarations": [
+                {
+                  "path": "src/fftpack.f90",
+                  "line_start": 235,
+                  "line_end": 239
+                },
+                {
+                  "path": "src/rk.f90",
+                  "line_start": 1,
+                  "line_end": 4
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "pchip": {
+      "id": "github:jacobwilliams/pchip",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "PCHIP",
+        "url": "https://github.com/jacobwilliams/PCHIP"
+      },
+      "license": {
+        "label": "BSD-3-Clause modernization; original SLATEC public-domain notice",
+        "spdx_expression": null,
+        "revision": "8f5350565072622a2344dd0ec75193832b31eb10",
+        "reviewed_on": "2026-11-07",
+        "notes": "LICENSE.txt gives BSD three-clause terms for the modernization and separately includes the original SLATEC public-domain notice. Preserve the distinction and supplied attributions.",
+        "evidence": [
+          {
+            "path": "LICENSE.txt",
+            "url": "https://github.com/jacobwilliams/PCHIP/blob/8f5350565072622a2344dd0ec75193832b31eb10/LICENSE.txt",
+            "sha256": "ef66e6debb7a3895d86686c2097eb8aa5e9733561426cb560b4a12b740b4fb63"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/PCHIP/blob/8f5350565072622a2344dd0ec75193832b31eb10/README.md",
+            "sha256": "8919bd304831ea783e7914ab8104901b8760259533acf3ec411a5e011a031d50"
+          },
+          {
+            "path": "src/pchip_module.f90",
+            "url": "https://github.com/jacobwilliams/PCHIP/blob/8f5350565072622a2344dd0ec75193832b31eb10/src/pchip_module.f90",
+            "sha256": "d92e5471b464d79b742256fd611c1f12ce294bffaac5d864d1d9163784d1fb32"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "E1a",
+          "level": "source-reviewed",
+          "revision": "8f5350565072622a2344dd0ec75193832b31eb10",
+          "reviewed_on": "2026-11-07",
+          "notes": "DPCHIM constructs monotone piecewise cubic Hermite derivatives and DPCHFE evaluates that interpolant. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/pchip_module.f90",
+              "url": "https://github.com/jacobwilliams/PCHIP/blob/8f5350565072622a2344dd0ec75193832b31eb10/src/pchip_module.f90",
+              "sha256": "d92e5471b464d79b742256fd611c1f12ce294bffaac5d864d1d9163784d1fb32"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "dpchim",
+              "role": "public-entry-point",
+              "module": "pchip_module",
+              "summary": "Construct shape-preserving Hermite nodal derivatives D from X and F. Require N>=2, strictly increasing X(N), INCFD>=1 and F/D storage with leading dimension INCFD and N columns; ordinary scalar data use INCFD=1. Only the first row of D is written. IERR=0 is normal, positive values count monotonicity direction switches rather than failure, and negative values report invalid N/stride/abscissae. All real arguments are REAL64. Call DPCHFE next to evaluate the constructed interpolant.",
+              "signature": "CALL dpchim(N,X,F,D,INCFD,IERR)",
+              "path": "src/pchip_module.f90",
+              "line_start": 2216,
+              "line_end": 2365,
+              "declarations": [
+                {
+                  "path": "src/pchip_module.f90",
+                  "line_start": 2218,
+                  "line_end": 2254
+                },
+                {
+                  "path": "src/pchip_module.f90",
+                  "line_start": 10,
+                  "line_end": 32
+                }
+              ]
+            },
+            {
+              "procedure": "dpchfe",
+              "role": "public-entry-point",
+              "module": "pchip_module",
+              "summary": "Evaluate a previously defined Hermite interpolant at XE(NE), returning FE(NE). Supply N/X/F/D/INCFD consistently with DPCHIM (or supplied Hermite derivatives), NE>=1, and REAL64 arrays. Initialize SKIP=.FALSE. for validation; it becomes .TRUE. on normal return. Reset it if the data/controls change. IERR>0 counts extrapolated evaluation points; negative values indicate invalid input. Extrapolation uses the nearest endpoint cubic and is not a bound on approximation error.",
+              "signature": "CALL dpchfe(N,X,F,D,INCFD,SKIP,NE,XE,FE,IERR)",
+              "path": "src/pchip_module.f90",
+              "line_start": 1446,
+              "line_end": 1635,
+              "declarations": [
+                {
+                  "path": "src/pchip_module.f90",
+                  "line_start": 1448,
+                  "line_end": 1494
+                },
+                {
+                  "path": "src/pchip_module.f90",
+                  "line_start": 10,
+                  "line_end": 32
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "E3a3",
+          "level": "source-reviewed",
+          "revision": "8f5350565072622a2344dd0ec75193832b31eb10",
+          "reviewed_on": "2026-11-07",
+          "notes": "DPCHIA analytically integrates the supplied piecewise cubic Hermite representation. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/pchip_module.f90",
+              "url": "https://github.com/jacobwilliams/PCHIP/blob/8f5350565072622a2344dd0ec75193832b31eb10/src/pchip_module.f90",
+              "sha256": "d92e5471b464d79b742256fd611c1f12ce294bffaac5d864d1d9163784d1fb32"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "dpchia",
+              "role": "public-entry-point",
+              "module": "pchip_module",
+              "summary": "Return the signed integral of the stored REAL64 cubic Hermite interpolant from A to B, using the same N/X/F/D/INCFD convention as DPCHIM/DPCHFE. Initialize SKIP=.FALSE. unless data have already been validated. IERR=0 is normal, 1/2/3 flag A/B/both endpoints outside the interpolation interval, and negative values signal input/internal errors. Extrapolated integrals may be unreliable. This integrates the fitted piecewise cubic, not an arbitrary function callback.",
+              "signature": "VALUE = dpchia(N,X,F,D,INCFD,SKIP,A,B,IERR)",
+              "path": "src/pchip_module.f90",
+              "line_start": 1652,
+              "line_end": 1806,
+              "declarations": [
+                {
+                  "path": "src/pchip_module.f90",
+                  "line_start": 1654,
+                  "line_end": 1698
+                },
+                {
+                  "path": "src/pchip_module.f90",
+                  "line_start": 10,
+                  "line_end": 32
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "quadpack": {
       "id": "github:jacobwilliams/quadpack",
       "repository": {
@@ -764,6 +1005,78 @@
         }
       ]
     },
+    "specfun": {
+      "id": "github:jacobwilliams/specfun",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "specfun",
+        "url": "https://github.com/jacobwilliams/specfun"
+      },
+      "license": {
+        "label": "BSD-3-Clause modernization; original Zhang/Jin permission notice",
+        "spdx_expression": null,
+        "revision": "e74d9c810d5c9248b5d8ffab4b766e7bb22ffd23",
+        "reviewed_on": "2026-11-07",
+        "notes": "LICENSE separates BSD three-clause modernization terms from the original Zhang/Jin statement: copyrighted, permission granted to use code in programs. It does not provide a fully resolved standard SPDX grant for that original component.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jacobwilliams/specfun/blob/e74d9c810d5c9248b5d8ffab4b766e7bb22ffd23/LICENSE",
+            "sha256": "4bb615136d47d5fc9344f29bad82774f0b160aa026b695045951fc05a142ad82"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/specfun/blob/e74d9c810d5c9248b5d8ffab4b766e7bb22ffd23/README.md",
+            "sha256": "79e76c2a645cc512eba7f8b79268eeb87dc48a1a27e8c6d7cd6c1cbb79bd6152"
+          },
+          {
+            "path": "src/specfun.F90",
+            "url": "https://github.com/jacobwilliams/specfun/blob/e74d9c810d5c9248b5d8ffab4b766e7bb22ffd23/src/specfun.F90",
+            "sha256": "26954173c4244ded68b347cda4a4af81fff8f9479c142658f9c6393a3dccdeab"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "C19",
+          "level": "source-reviewed",
+          "revision": "e74d9c810d5c9248b5d8ffab4b766e7bb22ffd23",
+          "reviewed_on": "2026-11-07",
+          "notes": "BERNOB computes the base and even Bernoulli numbers with explicit lower-bound-zero storage. The source leaves odd indices greater than one unwritten. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/specfun.F90",
+              "url": "https://github.com/jacobwilliams/specfun/blob/e74d9c810d5c9248b5d8ffab4b766e7bb22ffd23/src/specfun.F90",
+              "sha256": "26954173c4244ded68b347cda4a4af81fff8f9479c142658f9c6393a3dccdeab"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "bernob",
+              "role": "public-entry-point",
+              "module": "specfun_module",
+              "summary": "Produce Bernoulli values in BN(0:N), using real kind SPECFUN_WP (REAL64 by default, preprocessor selectable). Require N>=2 because the implementation unconditionally writes BN(0), BN(1), BN(2). The routine writes B1=-1/2 and even-index values, but does not initialize odd entries greater than 1; do not read those output entries as zero without assigning them separately. There is no status, user tolerance or iteration-budget argument; the internal sum has a fixed tolerance/cap. This source review does not promote the untouched odd output elements into a checked sequence.",
+              "signature": "CALL bernob(N,BN)",
+              "path": "src/specfun.F90",
+              "line_start": 776,
+              "line_end": 802,
+              "declarations": [
+                {
+                  "path": "src/specfun.F90",
+                  "line_start": 778,
+                  "line_end": 779
+                },
+                {
+                  "path": "src/specfun.F90",
+                  "line_start": 29,
+                  "line_end": 45
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "powellopt": {
       "id": "github:jacobwilliams/powellopt",
       "repository": {
@@ -858,15 +1171,880 @@
           ]
         }
       ]
+    },
+    "lsmr": {
+      "id": "github:jacobwilliams/lsmr",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "LSMR",
+        "url": "https://github.com/jacobwilliams/LSMR"
+      },
+      "license": {
+        "label": "Declared CPL or BSD for original LSMR; manifest says BSD",
+        "spdx_expression": null,
+        "revision": "12611e2299c5188441b097437695a66c85369e76",
+        "reviewed_on": "2026-11-07",
+        "notes": "The README states that original SOL/Stanford LSMR was offered under CPL or BSD and links those licenses; fpm.toml says BSD. This pin does not bundle a top-level license text resolving the exact BSD variant, so no precise repository-wide SPDX expression is asserted.",
+        "evidence": [
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/LSMR/blob/12611e2299c5188441b097437695a66c85369e76/README.md",
+            "sha256": "9aacb774e3c157b8255cac0d9026b616d6d0d8dc1dc466338ee540b9ef7672b5"
+          },
+          {
+            "path": "src/lsmrModule.f90",
+            "url": "https://github.com/jacobwilliams/LSMR/blob/12611e2299c5188441b097437695a66c85369e76/src/lsmrModule.f90",
+            "sha256": "6a1cb9be406e8e1a62350468a3b355509ca3240bc06543038ae6452a2dd9aeda"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "D9a1",
+          "level": "source-reviewed",
+          "revision": "12611e2299c5188441b097437695a66c85369e76",
+          "reviewed_on": "2026-11-07",
+          "notes": "LSMR accepts rectangular matrix operators and seeks real linear least-squares solutions, optionally damped. Callback accumulation and actual executable stopping codes are essential parts of the contract. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/lsmrModule.f90",
+              "url": "https://github.com/jacobwilliams/LSMR/blob/12611e2299c5188441b097437695a66c85369e76/src/lsmrModule.f90",
+              "sha256": "6a1cb9be406e8e1a62350468a3b355509ca3240bc06543038ae6452a2dd9aeda"
+            },
+            {
+              "path": "src/lsmrDataModule.F90",
+              "url": "https://github.com/jacobwilliams/LSMR/blob/12611e2299c5188441b097437695a66c85369e76/src/lsmrDataModule.F90",
+              "sha256": "1c5a998e722262126ab0c8923459840c89fa286c4981810a23a0379974bd139a"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/jacobwilliams/LSMR/blob/12611e2299c5188441b097437695a66c85369e76/fpm.toml",
+              "sha256": "b740d16f380b0ce389a6aaada8316c8c35fd309ffb285a39fd6b8cdfbfe94003"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "lsmr",
+              "role": "public-entry-point",
+              "module": "lsmrModule",
+              "summary": "Iterative real least squares with optional Tikhonov damping through mandatory DAMP (set zero for undamped). Aprod1(M,N,X,Y) must accumulate Y += A*X without altering X; Aprod2 must accumulate X += TRANSPOSE(A)*Y without altering Y. These callbacks add to, rather than replace, the output buffers. B(M) is input and X(N) output, not an initial guess. Match LSMR_WP and LSMR_IP from lsmrDataModule. ATOL/BTOL set matrix/RHS error tolerances; CONLIM controls the condition estimate, ITNLIM the budget, LOCALSIZE local reorthogonalization and NOUT<=0 suppresses logging. Inspect ISTOP and estimates NORMA/CONDA/NORMR/NORMAR/NORMX with ITN. The executable code uses 0 for zero solution, 1/2 residual/least-squares tests, 3 conditioning limit, 4/5 machine-precision tests, 6 machine conditioning and 7 iteration limit: some older declaration comments have different codes, so the linked executable termination tests are authoritative.",
+              "signature": "CALL lsmr(M,N,APROD1,APROD2,B,DAMP,ATOL,BTOL,CONLIM,ITNLIM,LOCALSIZE,NOUT,X,ISTOP,ITN,NORMA,CONDA,NORMR,NORMAR,NORMX)",
+              "path": "src/lsmrModule.f90",
+              "line_start": 175,
+              "line_end": 691,
+              "declarations": [
+                {
+                  "path": "src/lsmrModule.f90",
+                  "line_start": 179,
+                  "line_end": 276
+                },
+                {
+                  "path": "src/lsmrModule.f90",
+                  "line_start": 31,
+                  "line_end": 49
+                },
+                {
+                  "path": "src/lsmrDataModule.F90",
+                  "line_start": 8,
+                  "line_end": 26
+                },
+                {
+                  "path": "src/lsmrModule.f90",
+                  "line_start": 297,
+                  "line_end": 305
+                },
+                {
+                  "path": "src/lsmrModule.f90",
+                  "line_start": 543,
+                  "line_end": 558
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "polyroots-fortran": {
+      "id": "github:jacobwilliams/polyroots-fortran",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "polyroots-fortran",
+        "url": "https://github.com/jacobwilliams/polyroots-fortran"
+      },
+      "license": {
+        "label": "BSD-3-Clause modernization; additional component licenses",
+        "spdx_expression": null,
+        "revision": "165ed6fbec98cc23d9ed4784fbc4708adb5e0bcf",
+        "reviewed_on": "2026-11-07",
+        "notes": "LICENSE.md includes BSD three-clause modernization terms and the Apache-2.0 Skowron/Gould text; the large source collection also includes algorithm-specific LAPACK and Caltech notices. This scoped review does not flatten all components into a single SPDX expression or imply that every method has identical licensing.",
+        "evidence": [
+          {
+            "path": "LICENSE.md",
+            "url": "https://github.com/jacobwilliams/polyroots-fortran/blob/165ed6fbec98cc23d9ed4784fbc4708adb5e0bcf/LICENSE.md",
+            "sha256": "165e635123d349279b10c7e1e23648fe5e9f893bba23cbca97f9ce47f3e6e74d"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/polyroots-fortran/blob/165ed6fbec98cc23d9ed4784fbc4708adb5e0bcf/README.md",
+            "sha256": "011bbbf9e5354e592fbc4e5812a983d2185367829524ba478f74ba364b39e50a"
+          },
+          {
+            "path": "src/polyroots_module.F90",
+            "url": "https://github.com/jacobwilliams/polyroots-fortran/blob/165ed6fbec98cc23d9ed4784fbc4708adb5e0bcf/src/polyroots_module.F90",
+            "sha256": "3a43efae1e310cf185b1d79e04fe72be29794128b4058ea33d2f60a579b872fb"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "F1a",
+          "level": "source-reviewed",
+          "revision": "165ed6fbec98cc23d9ed4784fbc4708adb5e0bcf",
+          "reviewed_on": "2026-11-07",
+          "notes": "Real and complex polynomial root interfaces differ in algorithm, output layout and LAPACK/precision requirements. All take coefficients in descending powers. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/polyroots_module.F90",
+              "url": "https://github.com/jacobwilliams/polyroots-fortran/blob/165ed6fbec98cc23d9ed4784fbc4708adb5e0bcf/src/polyroots_module.F90",
+              "sha256": "3a43efae1e310cf185b1d79e04fe72be29794128b4058ea33d2f60a579b872fb"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "rpoly",
+              "role": "public-entry-point",
+              "module": "polyroots_module",
+              "summary": "Jenkins-Traub roots of a real polynomial. Supply DEGREE>=1, real OP(DEGREE+1) in descending-power order with nonzero leading coefficient, and real output ZEROR/ZEROI(DEGREE). ISTAT=0 is full success, -1 zero leading coefficient, -2 no roots found and positive values the count found on partial failure; do not use all output slots after partial failure. Use POLYROOTS_MODULE_RK (REAL64 default). Coefficients are not overwritten. Check polynomial residuals independently.",
+              "signature": "CALL rpoly(OP,DEGREE,ZEROR,ZEROI,ISTAT)",
+              "path": "src/polyroots_module.F90",
+              "line_start": 93,
+              "line_end": 846,
+              "declarations": [
+                {
+                  "path": "src/polyroots_module.F90",
+                  "line_start": 97,
+                  "line_end": 106
+                },
+                {
+                  "path": "src/polyroots_module.F90",
+                  "line_start": 30,
+                  "line_end": 40
+                }
+              ]
+            },
+            {
+              "procedure": "polyroots",
+              "role": "public-entry-point",
+              "module": "polyroots_module",
+              "summary": "Real-coefficient companion-matrix roots through LAPACK SGEEV/DGEEV. N>=1, P(N+1) in descending-power order with nonzero leading term, WR/WI(N) real output. INFO=0 is eigensolver convergence, -999 a zero leading coefficient; remaining diagnostics are LAPACK INFO. Use POLYROOTS_MODULE_RK. The REAL128 branch ERROR STOPs because no quad LAPACK solver is provided; matching real32/real64 LAPACK must be linked. Root order is not specified, and small eigenvalue residuals are not certified here.",
+              "signature": "CALL polyroots(N,P,WR,WI,INFO)",
+              "path": "src/polyroots_module.F90",
+              "line_start": 2676,
+              "line_end": 2746,
+              "declarations": [
+                {
+                  "path": "src/polyroots_module.F90",
+                  "line_start": 2680,
+                  "line_end": 2687
+                },
+                {
+                  "path": "src/polyroots_module.F90",
+                  "line_start": 30,
+                  "line_end": 40
+                }
+              ]
+            },
+            {
+              "procedure": "cpolyroots",
+              "role": "public-entry-point",
+              "module": "polyroots_module",
+              "summary": "Complex-coefficient companion-matrix roots through LAPACK CGEEV/ZGEEV. N>=1, COMPLEX(kind=POLYROOTS_MODULE_RK) P(N+1) in descending-power order and W(N) output. INFO=0 converged, -999 zero leading coefficient; other diagnostics come from LAPACK. REAL128 ERROR STOPs; real32/real64 requires matching LAPACK. Work arrays are internal. Results are unsorted and should be checked by residuals, particularly for ill-conditioned/multiple roots.",
+              "signature": "CALL cpolyroots(N,P,W,INFO)",
+              "path": "src/polyroots_module.F90",
+              "line_start": 2764,
+              "line_end": 2837,
+              "declarations": [
+                {
+                  "path": "src/polyroots_module.F90",
+                  "line_start": 2768,
+                  "line_end": 2774
+                },
+                {
+                  "path": "src/polyroots_module.F90",
+                  "line_start": 30,
+                  "line_end": 40
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "minres": {
+      "id": "github:willdickson/minres",
+      "repository": {
+        "owner": "willdickson",
+        "name": "minres",
+        "url": "https://github.com/willdickson/minres"
+      },
+      "license": {
+        "label": "MIT additions; original MINRES under CPL-1.0",
+        "spdx_expression": null,
+        "revision": "c7bb4c7a0ddf13729d3556878ccc688a208a052a",
+        "reviewed_on": "2026-11-07",
+        "notes": "README explicitly assigns src/minres to the Common Public License, whose text is retained in src/minres/MINRES_LICENSE.txt, and the remaining additions to MIT in LICENSE.txt. The original solver itself must not be described as MIT-only.",
+        "evidence": [
+          {
+            "path": "LICENSE.txt",
+            "url": "https://github.com/willdickson/minres/blob/c7bb4c7a0ddf13729d3556878ccc688a208a052a/LICENSE.txt",
+            "sha256": "95d047c87088b38ce568441019eff108253023b8b9049d5d9feb3851bcd543b5"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/willdickson/minres/blob/c7bb4c7a0ddf13729d3556878ccc688a208a052a/README.md",
+            "sha256": "8a5c1348d78159c512398fe27159df6b3b1536b2eb735b4c0cba30dd29d6b768"
+          },
+          {
+            "path": "src/minres/minres_mod.f90",
+            "url": "https://github.com/willdickson/minres/blob/c7bb4c7a0ddf13729d3556878ccc688a208a052a/src/minres/minres_mod.f90",
+            "sha256": "eb0c478c0cdc848be7759da199d29712d1679c36486b53ffd44a6b3d9665c03c"
+          },
+          {
+            "path": "src/minres/MINRES_LICENSE.txt",
+            "url": "https://github.com/willdickson/minres/blob/c7bb4c7a0ddf13729d3556878ccc688a208a052a/src/minres/MINRES_LICENSE.txt",
+            "sha256": "961a84b64143e03300b159e5cc3c95b7b5949ccbf86bc205684ed463840eb95b"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "D2b4",
+          "level": "source-reviewed",
+          "revision": "c7bb4c7a0ddf13729d3556878ccc688a208a052a",
+          "reviewed_on": "2026-11-07",
+          "notes": "MINRES_SOLVER implements a symmetric-indefinite matrix-operator iteration, with optional positive-definite preconditioning and a scalar shift. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/minres/minres_mod.f90",
+              "url": "https://github.com/willdickson/minres/blob/c7bb4c7a0ddf13729d3556878ccc688a208a052a/src/minres/minres_mod.f90",
+              "sha256": "eb0c478c0cdc848be7759da199d29712d1679c36486b53ffd44a6b3d9665c03c"
+            },
+            {
+              "path": "src/minres.f90",
+              "url": "https://github.com/willdickson/minres/blob/c7bb4c7a0ddf13729d3556878ccc688a208a052a/src/minres.f90",
+              "sha256": "4bd9b56b69bce564fdc229faf5741a8176e2fcb0ebeeafe8ba4986b8de6874c4"
+            },
+            {
+              "path": "src/minres/minres_data_mod.f90",
+              "url": "https://github.com/willdickson/minres/blob/c7bb4c7a0ddf13729d3556878ccc688a208a052a/src/minres/minres_data_mod.f90",
+              "sha256": "14d7a5d28f03df709c1f4eef22030f1182ba5a4f028c11a2a3a72e7929ccdd2e"
+            },
+            {
+              "path": "src/minres/MINRES_LICENSE.txt",
+              "url": "https://github.com/willdickson/minres/blob/c7bb4c7a0ddf13729d3556878ccc688a208a052a/src/minres/MINRES_LICENSE.txt",
+              "sha256": "961a84b64143e03300b159e5cc3c95b7b5949ccbf86bc205684ed463840eb95b"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "minres_solver",
+              "role": "public-entry-point",
+              "module": "minres",
+              "summary": "Solve a real symmetric (possibly indefinite) shifted system or its least-squares problem. Public module MINRES reexports MINRES_SOLVER from MINRES_MOD. APROD(N,X,Y) must replace Y by A*X (unlike LSMR accumulation callbacks). MSOLVE(N,X,Y) replaces Y by the solution of M*Y=X and is required as an actual procedure even when PRECON=.FALSE.; for PRECON=.TRUE., M must be symmetric positive definite. SHIFT implements A-SHIFT*I; CHECKA enables extra operator/preconditioner checks. B(N) input, X(N) output, REAL64 kind DP from MINRES_DATA_MOD. RTOL/ITNLIM control stopping and NOUT<=0 suppresses logging. ISTOP/ITN and norm/condition estimates must be inspected; termination is not a proof of small true residual or a minimum-length singular-system solution.",
+              "signature": "CALL minres_solver(N,APROD,MSOLVE,B,SHIFT,CHECKA,PRECON,X,ITNLIM,NOUT,RTOL,ISTOP,ITN,ANORM,ACOND,RNORM,ARNORM,YNORM)",
+              "path": "src/minres/minres_mod.f90",
+              "line_start": 40,
+              "line_end": 636,
+              "declarations": [
+                {
+                  "path": "src/minres/minres_mod.f90",
+                  "line_start": 44,
+                  "line_end": 50
+                },
+                {
+                  "path": "src/minres.f90",
+                  "line_start": 1,
+                  "line_end": 10
+                },
+                {
+                  "path": "src/minres/minres_mod.f90",
+                  "line_start": 52,
+                  "line_end": 66
+                },
+                {
+                  "path": "src/minres/minres_data_mod.f90",
+                  "line_start": 14,
+                  "line_end": 24
+                },
+                {
+                  "path": "src/minres/minres_mod.f90",
+                  "line_start": 210,
+                  "line_end": 260
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "specfunc-fullerton": {
+      "id": "github:arjenmarkus/specfunc-fullerton",
+      "repository": {
+        "owner": "arjenmarkus",
+        "name": "specfunc-fullerton",
+        "url": "https://github.com/arjenmarkus/specfunc-fullerton"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+        "reviewed_on": "2026-11-07",
+        "notes": "The repository LICENSE grants MIT terms for the supplied software. Source comments retain W. Fullerton/Los Alamos algorithm provenance; this is a scoped notice review, not a complete historical provenance audit.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/LICENSE",
+            "sha256": "bbd9d505e2e9500b52c7556c80f05f58aab83edc7461766a17f489a3b44c9d5a"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/README.md",
+            "sha256": "8c9a4f9619dd2ec1341cc5bb1dd0564ce745e56ca4255ad8c3f116be9f9e6ed4"
+          },
+          {
+            "path": "src/fullerton_gamma.f90",
+            "url": "https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_gamma.f90",
+            "sha256": "7609fcd9f17f20a9b66a562a64e2244c48d92e6ef3474261b732c13e24397a05"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "C7a",
+          "level": "source-reviewed",
+          "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+          "reviewed_on": "2026-11-07",
+          "notes": "Public generic FGAMMA and RECIPROCAL_GAMMA wrap default-REAL gamma and reciprocal-gamma implementations. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/fullerton_gamma.f90",
+              "url": "https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_gamma.f90",
+              "sha256": "7609fcd9f17f20a9b66a562a64e2244c48d92e6ef3474261b732c13e24397a05"
+            },
+            {
+              "path": "src/fullerton_gamma_aux.f90",
+              "url": "https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_gamma_aux.f90",
+              "sha256": "51e4ca416a86aacc382495140515a47270d8ec92bae3fea590f18b0eaea80d11"
+            },
+            {
+              "path": "src/fullerton_aux.f90",
+              "url": "https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_aux.f90",
+              "sha256": "d238467842c15d5b11bc42624fa0bf1dc2010503e0e48a3ee1af933f5d9eb648"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "fgamma",
+              "role": "public-entry-point",
+              "module": "fullerton_gamma",
+              "summary": "Evaluate the scalar gamma function through public generic FGAMMA, backed by private GAMMA. Arguments and results use default REAL, not REAL64. The implementation returns IEEE infinities at poles/overflow and zero in an underflow branch; there is no status output or error estimate. Use matching-kind literals and avoid interpreting the existence of an interface as full-domain accuracy verification.",
+              "signature": "VALUE = fgamma(X)",
+              "path": "src/fullerton_gamma.f90",
+              "line_start": 75,
+              "line_end": 197,
+              "declarations": [
+                {
+                  "path": "src/fullerton_gamma.f90",
+                  "line_start": 75,
+                  "line_end": 76
+                },
+                {
+                  "path": "src/fullerton_gamma.f90",
+                  "line_start": 4,
+                  "line_end": 44
+                }
+              ]
+            },
+            {
+              "procedure": "reciprocal_gamma",
+              "role": "public-entry-point",
+              "module": "fullerton_gamma",
+              "summary": "Evaluate reciprocal gamma through public generic RECIPROCAL_GAMMA, backed by GAMR. X and result are default REAL. The source returns zero at nonpositive integral X; other branches use gamma or log-gamma and sign internally. No status/error estimate is returned.",
+              "signature": "VALUE = reciprocal_gamma(X)",
+              "path": "src/fullerton_gamma.f90",
+              "line_start": 204,
+              "line_end": 223,
+              "declarations": [
+                {
+                  "path": "src/fullerton_gamma.f90",
+                  "line_start": 204,
+                  "line_end": 205
+                },
+                {
+                  "path": "src/fullerton_gamma.f90",
+                  "line_start": 4,
+                  "line_end": 44
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "C7c",
+          "level": "source-reviewed",
+          "revision": "498b486b8ca18f0289a2d35c6c5bc67eb10aefe3",
+          "reviewed_on": "2026-11-07",
+          "notes": "Public generic DIGAMMA dispatches to the default-REAL PSI implementation. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/fullerton_gamma.f90",
+              "url": "https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_gamma.f90",
+              "sha256": "7609fcd9f17f20a9b66a562a64e2244c48d92e6ef3474261b732c13e24397a05"
+            },
+            {
+              "path": "src/fullerton_gamma_aux.f90",
+              "url": "https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_gamma_aux.f90",
+              "sha256": "51e4ca416a86aacc382495140515a47270d8ec92bae3fea590f18b0eaea80d11"
+            },
+            {
+              "path": "src/fullerton_aux.f90",
+              "url": "https://github.com/arjenmarkus/specfunc-fullerton/blob/498b486b8ca18f0289a2d35c6c5bc67eb10aefe3/src/fullerton_aux.f90",
+              "sha256": "d238467842c15d5b11bc42624fa0bf1dc2010503e0e48a3ee1af933f5d9eb648"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "digamma",
+              "role": "public-entry-point",
+              "module": "fullerton_gamma",
+              "summary": "Evaluate digamma, the logarithmic derivative of gamma, through public generic DIGAMMA, backed by PSI. Scalar input/result are default REAL. Poles can produce IEEE infinity; no status or error estimate is exposed. Source constants/approximations do not imply double precision just because the routine is a special-function implementation.",
+              "signature": "VALUE = digamma(X)",
+              "path": "src/fullerton_gamma.f90",
+              "line_start": 497,
+              "line_end": 608,
+              "declarations": [
+                {
+                  "path": "src/fullerton_gamma.f90",
+                  "line_start": 497,
+                  "line_end": 498
+                },
+                {
+                  "path": "src/fullerton_gamma.f90",
+                  "line_start": 4,
+                  "line_end": 44
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "kiss": {
+      "id": "github:ivan-pi/kiss",
+      "repository": {
+        "owner": "ivan-pi",
+        "name": "kiss",
+        "url": "https://github.com/ivan-pi/kiss"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "55f0f7ccb1601a0628a17928b5b6b79f61da2892",
+        "reviewed_on": "2026-11-07",
+        "notes": "The pinned LICENSE grants BSD three-clause terms attributed to Ivan Pribec. This scoped review covers the inspected dense-CG entry point and repository notice, not optional external backends.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/ivan-pi/kiss/blob/55f0f7ccb1601a0628a17928b5b6b79f61da2892/LICENSE",
+            "sha256": "9805aa078e52a3453f253274d4c42461babe10961c4ebb8efaeb3d764a2df07e"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/ivan-pi/kiss/blob/55f0f7ccb1601a0628a17928b5b6b79f61da2892/README.md",
+            "sha256": "d093b052ad59514556a2f63a9c65d85a07afb4c24220c30d5ec908c91ec52e54"
+          },
+          {
+            "path": "src/kiss.F90",
+            "url": "https://github.com/ivan-pi/kiss/blob/55f0f7ccb1601a0628a17928b5b6b79f61da2892/src/kiss.F90",
+            "sha256": "2e6ac0f955f8ecd89bc387a95d54704baf56a4be4992cbcbc8d3d41295dc8584"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "D2b1b",
+          "level": "source-reviewed",
+          "revision": "55f0f7ccb1601a0628a17928b5b6b79f61da2892",
+          "reviewed_on": "2026-11-07",
+          "notes": "CG_DENSE applies dense matrix-vector products in conjugate gradients for symmetric positive-definite systems. The public interface and submodule implementation define the optional controls. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/kiss.F90",
+              "url": "https://github.com/ivan-pi/kiss/blob/55f0f7ccb1601a0628a17928b5b6b79f61da2892/src/kiss.F90",
+              "sha256": "2e6ac0f955f8ecd89bc387a95d54704baf56a4be4992cbcbc8d3d41295dc8584"
+            },
+            {
+              "path": "src/kiss@cg.F90",
+              "url": "https://github.com/ivan-pi/kiss/blob/55f0f7ccb1601a0628a17928b5b6b79f61da2892/src/kiss@cg.F90",
+              "sha256": "f0bbf1aa8e5c464bc05be0f33e37591818e54daaaae58a37a0265569b5ed5e73"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "cg_dense",
+              "role": "public-entry-point",
+              "module": "kiss",
+              "summary": "Dense conjugate gradients for a real symmetric positive-definite A(N,N), B(N), and input/output initial guess X(N). Import WP from KISS (double precision). Optional RTOL/ATOL set the residual threshold MAX(ATOL,RTOL*NORM2(B)); MAXITER defaults to 10*N. Optional CALLBACK(X) observes iterates and must match the linked interface. Request optional INFO: 0 signals the internal residual stopping test, positive values the iteration count on exhaustion; this does not certify a separately recomputed residual or validate positive definiteness. B=0 returns X=0. All controls after X are independently optional and may be passed by keyword.",
+              "signature": "CALL cg_dense(A,B,X[,RTOL,ATOL,MAXITER,CALLBACK,INFO])",
+              "path": "src/kiss@cg.F90",
+              "line_start": 52,
+              "line_end": 92,
+              "declarations": [
+                {
+                  "path": "src/kiss@cg.F90",
+                  "line_start": 53,
+                  "line_end": 59
+                },
+                {
+                  "path": "src/kiss.F90",
+                  "line_start": 147,
+                  "line_end": 155
+                },
+                {
+                  "path": "src/kiss.F90",
+                  "line_start": 83,
+                  "line_end": 89
+                },
+                {
+                  "path": "src/kiss.F90",
+                  "line_start": 64,
+                  "line_end": 67
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "carlson-elliptic-integrals": {
+      "id": "github:jacobwilliams/carlson-elliptic-integrals",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "carlson-elliptic-integrals",
+        "url": "https://github.com/jacobwilliams/carlson-elliptic-integrals"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "5f25a59a555b7029505aac71a8341d5851f8abed",
+        "reviewed_on": "2026-11-07",
+        "notes": "The pinned LICENSE supplies BSD three-clause terms for the modernization. Source comments identify the original SLATEC/Carlson routines; this records the supplied notice rather than a complete component-history audit.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jacobwilliams/carlson-elliptic-integrals/blob/5f25a59a555b7029505aac71a8341d5851f8abed/LICENSE",
+            "sha256": "0245cd9b88145afbc284ec9ed80938818badfc8a85acd77d8fd6cafa1e78410a"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/carlson-elliptic-integrals/blob/5f25a59a555b7029505aac71a8341d5851f8abed/README.md",
+            "sha256": "9b17720d765910d9c6722105b3c3dc3a06067db6bb2c04017d65673af8f672ce"
+          },
+          {
+            "path": "src/carlson_elliptic_module.F90",
+            "url": "https://github.com/jacobwilliams/carlson-elliptic-integrals/blob/5f25a59a555b7029505aac71a8341d5851f8abed/src/carlson_elliptic_module.F90",
+            "sha256": "a40da80250354bdbdee8a1eb30ca6a7ea8a6eae2ad0fc2ff9ef4f687c7c6cfa4"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "C14",
+          "level": "source-reviewed",
+          "revision": "5f25a59a555b7029505aac71a8341d5851f8abed",
+          "reviewed_on": "2026-11-07",
+          "notes": "The four public duplication-algorithm functions return Carlson symmetric elliptic forms with distinct real-domain restrictions and optional integer diagnostics. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/carlson_elliptic_module.F90",
+              "url": "https://github.com/jacobwilliams/carlson-elliptic-integrals/blob/5f25a59a555b7029505aac71a8341d5851f8abed/src/carlson_elliptic_module.F90",
+              "sha256": "a40da80250354bdbdee8a1eb30ca6a7ea8a6eae2ad0fc2ff9ef4f687c7c6cfa4"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "drc",
+              "role": "public-entry-point",
+              "module": "carlson_elliptic_module",
+              "summary": "Carlson RC(X,Y): require X>=0 and Y>0; this interface does not provide the negative-Y principal-value extension. Import CARLSON_ELLIPTIC_MODULE_WP to match the preprocessed real kind (REAL64 by default). Optional integer IER should be supplied: 0 is normal; positive values flag domain or machine-range limits. The mathematical sign restrictions alone are insufficient at extreme magnitudes; consult the linked LOLIM/UPLIM tests. The result is a scalar, with no caller workspace or tolerance argument. Invalid input initializes the result to zero, so zero alone cannot distinguish failure.",
+              "signature": "VALUE = drc(X,Y[,IER])",
+              "path": "src/carlson_elliptic_module.F90",
+              "line_start": 143,
+              "line_end": 249,
+              "declarations": [
+                {
+                  "path": "src/carlson_elliptic_module.F90",
+                  "line_start": 147,
+                  "line_end": 157
+                },
+                {
+                  "path": "src/carlson_elliptic_module.F90",
+                  "line_start": 20,
+                  "line_end": 29
+                }
+              ]
+            },
+            {
+              "procedure": "drd",
+              "role": "public-entry-point",
+              "module": "carlson_elliptic_module",
+              "summary": "Carlson RD(X,Y,Z): require X>=0, Y>=0, X+Y>0 and Z>0. Import CARLSON_ELLIPTIC_MODULE_WP to match the preprocessed real kind (REAL64 by default). Optional integer IER should be supplied: 0 is normal; positive values flag domain or machine-range limits. The mathematical sign restrictions alone are insufficient at extreme magnitudes; consult the linked LOLIM/UPLIM tests. The result is a scalar, with no caller workspace or tolerance argument. Invalid input initializes the result to zero, so zero alone cannot distinguish failure.",
+              "signature": "VALUE = drd(X,Y,Z[,IER])",
+              "path": "src/carlson_elliptic_module.F90",
+              "line_start": 369,
+              "line_end": 502,
+              "declarations": [
+                {
+                  "path": "src/carlson_elliptic_module.F90",
+                  "line_start": 373,
+                  "line_end": 387
+                },
+                {
+                  "path": "src/carlson_elliptic_module.F90",
+                  "line_start": 20,
+                  "line_end": 29
+                }
+              ]
+            },
+            {
+              "procedure": "drf",
+              "role": "public-entry-point",
+              "module": "carlson_elliptic_module",
+              "summary": "Carlson RF(X,Y,Z): require nonnegative arguments with no more than one zero. Import CARLSON_ELLIPTIC_MODULE_WP to match the preprocessed real kind (REAL64 by default). Optional integer IER should be supplied: 0 is normal; positive values flag domain or machine-range limits. The mathematical sign restrictions alone are insufficient at extreme magnitudes; consult the linked LOLIM/UPLIM tests. The result is a scalar, with no caller workspace or tolerance argument. Invalid input initializes the result to zero, so zero alone cannot distinguish failure.",
+              "signature": "VALUE = drf(X,Y,Z[,IER])",
+              "path": "src/carlson_elliptic_module.F90",
+              "line_start": 580,
+              "line_end": 701,
+              "declarations": [
+                {
+                  "path": "src/carlson_elliptic_module.F90",
+                  "line_start": 584,
+                  "line_end": 595
+                },
+                {
+                  "path": "src/carlson_elliptic_module.F90",
+                  "line_start": 20,
+                  "line_end": 29
+                }
+              ]
+            },
+            {
+              "procedure": "drj",
+              "role": "public-entry-point",
+              "module": "carlson_elliptic_module",
+              "summary": "Carlson RJ(X,Y,Z,P): require nonnegative X/Y/Z with no more than one zero and P>0; this pin does not accept negative P for principal values. Import CARLSON_ELLIPTIC_MODULE_WP to match the preprocessed real kind (REAL64 by default). Optional integer IER should be supplied: 0 is normal; positive values flag domain or machine-range limits. The mathematical sign restrictions alone are insufficient at extreme magnitudes; consult the linked LOLIM/UPLIM tests. The result is a scalar, with no caller workspace or tolerance argument. Invalid input initializes the result to zero, so zero alone cannot distinguish failure.",
+              "signature": "VALUE = drj(X,Y,Z,P[,IER])",
+              "path": "src/carlson_elliptic_module.F90",
+              "line_start": 825,
+              "line_end": 974,
+              "declarations": [
+                {
+                  "path": "src/carlson_elliptic_module.F90",
+                  "line_start": 829,
+                  "line_end": 844
+                },
+                {
+                  "path": "src/carlson_elliptic_module.F90",
+                  "line_start": 20,
+                  "line_end": 29
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fortran-bessels": {
+      "id": "github:perazz/fortran-bessels",
+      "repository": {
+        "owner": "perazz",
+        "name": "fortran-bessels",
+        "url": "https://github.com/perazz/fortran-bessels"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "7bf8d6b144b00d4201a782ca65f6ae14a84d49a1",
+        "reviewed_on": "2026-11-07",
+        "notes": "The pinned LICENSE grants MIT terms with Federico Perini and Bessels.jl contributor attributions; the inspected source repeats those attributions.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/perazz/fortran-bessels/blob/7bf8d6b144b00d4201a782ca65f6ae14a84d49a1/LICENSE",
+            "sha256": "20d518162b45dfe270daf7903e6c1c9eb3810a00f2db13b20f555ee8d1b0f28f"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/perazz/fortran-bessels/blob/7bf8d6b144b00d4201a782ca65f6ae14a84d49a1/README.md",
+            "sha256": "b2c79850f93384c61d8a1dd9d25f35038b267d317fe833d766e5767bec9bb2fb"
+          },
+          {
+            "path": "src/bessels.f90",
+            "url": "https://github.com/perazz/fortran-bessels/blob/7bf8d6b144b00d4201a782ca65f6ae14a84d49a1/src/bessels.f90",
+            "sha256": "859f5041eaf7b87320a016b2875857980d991f84bd864d37ee284d7bfcdc2932"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "C10b1",
+          "level": "source-reviewed",
+          "revision": "7bf8d6b144b00d4201a782ca65f6ae14a84d49a1",
+          "reviewed_on": "2026-11-07",
+          "notes": "The public elemental order-zero/order-one modified Bessel functions use fixed REAL64 kind BK and separate first/second-kind domain contracts. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/bessels.f90",
+              "url": "https://github.com/perazz/fortran-bessels/blob/7bf8d6b144b00d4201a782ca65f6ae14a84d49a1/src/bessels.f90",
+              "sha256": "859f5041eaf7b87320a016b2875857980d991f84bd864d37ee284d7bfcdc2932"
+            },
+            {
+              "path": "src/bessels_constants.f90",
+              "url": "https://github.com/perazz/fortran-bessels/blob/7bf8d6b144b00d4201a782ca65f6ae14a84d49a1/src/bessels_constants.f90",
+              "sha256": "eb2e0e78644c1297cbeb9cb2a09a4be6fafb6bc41519aea68d8e26509aaba558"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "besseli0",
+              "role": "public-entry-point",
+              "module": "bessels",
+              "summary": "Modified first-kind Bessel I0/I1 for real X, with even/odd parity respectively. These unscaled functions may overflow for large ABS(X). Elemental scalar interface: real argument and result use public kind BK=REAL64; arrays may be evaluated elementwise. No status/error estimate is returned. These four routines take X alone, not an order argument, and are distinct from the general-order or exponentially scaled entry points.",
+              "signature": "VALUE = besseli0(X)",
+              "path": "src/bessels.f90",
+              "line_start": 836,
+              "line_end": 850,
+              "declarations": [
+                {
+                  "path": "src/bessels.f90",
+                  "line_start": 836,
+                  "line_end": 837
+                },
+                {
+                  "path": "src/bessels.f90",
+                  "line_start": 17,
+                  "line_end": 35
+                },
+                {
+                  "path": "src/bessels_constants.f90",
+                  "line_start": 17,
+                  "line_end": 24
+                }
+              ]
+            },
+            {
+              "procedure": "besseli1",
+              "role": "public-entry-point",
+              "module": "bessels",
+              "summary": "Modified first-kind Bessel I0/I1 for real X, with even/odd parity respectively. These unscaled functions may overflow for large ABS(X). Elemental scalar interface: real argument and result use public kind BK=REAL64; arrays may be evaluated elementwise. No status/error estimate is returned. These four routines take X alone, not an order argument, and are distinct from the general-order or exponentially scaled entry points.",
+              "signature": "VALUE = besseli1(X)",
+              "path": "src/bessels.f90",
+              "line_start": 868,
+              "line_end": 890,
+              "declarations": [
+                {
+                  "path": "src/bessels.f90",
+                  "line_start": 868,
+                  "line_end": 869
+                },
+                {
+                  "path": "src/bessels.f90",
+                  "line_start": 17,
+                  "line_end": 35
+                },
+                {
+                  "path": "src/bessels_constants.f90",
+                  "line_start": 17,
+                  "line_end": 24
+                }
+              ]
+            },
+            {
+              "procedure": "besselk0",
+              "role": "public-entry-point",
+              "module": "bessels",
+              "summary": "Modified second-kind Bessel K0/K1 for X>0. This pin returns IEEE quiet NaN for X<=0, including X=0, rather than a separate singularity status. Large positive arguments may underflow. Elemental scalar interface: real argument and result use public kind BK=REAL64; arrays may be evaluated elementwise. No status/error estimate is returned. These four routines take X alone, not an order argument, and are distinct from the general-order or exponentially scaled entry points.",
+              "signature": "VALUE = besselk0(X)",
+              "path": "src/bessels.f90",
+              "line_start": 752,
+              "line_end": 778,
+              "declarations": [
+                {
+                  "path": "src/bessels.f90",
+                  "line_start": 752,
+                  "line_end": 753
+                },
+                {
+                  "path": "src/bessels.f90",
+                  "line_start": 17,
+                  "line_end": 35
+                },
+                {
+                  "path": "src/bessels_constants.f90",
+                  "line_start": 17,
+                  "line_end": 24
+                }
+              ]
+            },
+            {
+              "procedure": "besselk1",
+              "role": "public-entry-point",
+              "module": "bessels",
+              "summary": "Modified second-kind Bessel K0/K1 for X>0. This pin returns IEEE quiet NaN for X<=0, including X=0, rather than a separate singularity status. Large positive arguments may underflow. Elemental scalar interface: real argument and result use public kind BK=REAL64; arrays may be evaluated elementwise. No status/error estimate is returned. These four routines take X alone, not an order argument, and are distinct from the general-order or exponentially scaled entry points.",
+              "signature": "VALUE = besselk1(X)",
+              "path": "src/bessels.f90",
+              "line_start": 791,
+              "line_end": 820,
+              "declarations": [
+                {
+                  "path": "src/bessels.f90",
+                  "line_start": 791,
+                  "line_end": 792
+                },
+                {
+                  "path": "src/bessels.f90",
+                  "line_start": 17,
+                  "line_end": 35
+                },
+                {
+                  "path": "src/bessels_constants.f90",
+                  "line_start": 17,
+                  "line_end": 24
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   },
   "report": {
     "matched": [
+      "fftpack",
+      "pchip",
       "quadpack",
       "minpack",
       "fmin",
       "lbfgsb",
-      "powellopt"
+      "specfun",
+      "powellopt",
+      "lsmr",
+      "polyroots-fortran",
+      "minres",
+      "specfunc-fullerton",
+      "kiss",
+      "carlson-elliptic-integrals",
+      "fortran-bessels"
     ],
     "revision_mismatches": [],
     "no_independent_review": [
@@ -875,12 +2053,10 @@
       "pyplot-fortran",
       "json-fortran",
       "toml-f",
-      "fftpack",
       "roots-fortran",
       "m_strings",
       "stdlib",
       "bspline-fortran",
-      "pchip",
       "finterp",
       "quadrature-fortran",
       "dop853",
@@ -916,7 +2092,6 @@
       "m_list",
       "m_color",
       "slsqp",
-      "specfun",
       "regridpack",
       "splpak",
       "fortran-astrodynamics-toolkit",
@@ -935,7 +2110,6 @@
       "peaks",
       "fstats",
       "spectrum",
-      "lsmr",
       "nlesolver-fortran",
       "codata",
       "specialmatrices",
@@ -943,7 +2117,6 @@
       "forpca",
       "neural-fortran",
       "lightkrylov",
-      "polyroots-fortran",
       "fortran-sqlite3",
       "geodesic-fortran",
       "simulated-annealing",
@@ -957,10 +2130,8 @@
       "blas-interface",
       "fsparse",
       "geompack",
-      "minres",
       "fordiff",
       "twopnt",
-      "specfunc-fullerton",
       "lib_statistics",
       "astro-fortran",
       "nlopt-f",
@@ -1003,7 +2174,6 @@
       "cairo-fortran",
       "forsudoku",
       "odepack",
-      "kiss",
       "parff",
       "conmax",
       "graphstruc",
@@ -1030,8 +2200,6 @@
       "qdutillib",
       "qdldl-fortran",
       "lusol",
-      "carlson-elliptic-integrals",
-      "fortran-bessels",
       "dynamics",
       "diffstruc",
       "dnaoad-fpm",
