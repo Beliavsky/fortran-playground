@@ -2,7 +2,7 @@
   "schema_version": 1,
   "publisher": "fortran-gams-catalog-independent-reviews",
   "source_url": "https://beliavsky.github.io/fortran-gams-catalog/reviewed-metadata.json",
-  "source_snapshot_id": "sha256:1a4fa7ae40f0c879b4858b2ed9718295a41448a816d597caf12175a5c05aab31",
+  "source_snapshot_id": "sha256:4f3cb50a8a9f8c01f33b17255663953055b427200b5be8ed389073e564b8c525",
   "packages": {
     "fftpack": {
       "id": "github:fortran-lang/fftpack",
@@ -3627,6 +3627,150 @@
         }
       ]
     },
+    "fitpack": {
+      "id": "github:perazz/fitpack",
+      "repository": {
+        "owner": "perazz",
+        "name": "fitpack",
+        "url": "https://github.com/perazz/fitpack"
+      },
+      "license": {
+        "label": "BSD-3-Clause modernization; Dierckx/FITPACK provenance retained",
+        "spdx_expression": null,
+        "revision": "1907c7bad9f5c4557970e906bdd4909eb52b2d4c",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE.md supplies BSD three-clause modernization terms. FITPACK_CORE identifies the original Paul Dierckx/netlib implementation and scientific references; preserve the original provenance with the modernization grant rather than erase component distinctions.",
+        "evidence": [
+          {
+            "path": "LICENSE.md",
+            "url": "https://github.com/perazz/fitpack/blob/1907c7bad9f5c4557970e906bdd4909eb52b2d4c/LICENSE.md",
+            "sha256": "39fbeb302cce5182528712269832f82d356e684b9a3a11dc6949a79ef64781b8"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/perazz/fitpack/blob/1907c7bad9f5c4557970e906bdd4909eb52b2d4c/README.md",
+            "sha256": "2a8d27fcbbbee3b3d58e4ce22a696460bb6feb42dd497bdfb739876a975f7cdb"
+          },
+          {
+            "path": "src/fitpack_curves.f90",
+            "url": "https://github.com/perazz/fitpack/blob/1907c7bad9f5c4557970e906bdd4909eb52b2d4c/src/fitpack_curves.f90",
+            "sha256": "2b0617067286348f3b54cbb314450fffe778f479832122c1bb33b954efeee654"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "E1a",
+          "level": "source-reviewed",
+          "revision": "1907c7bad9f5c4557970e906bdd4909eb52b2d4c",
+          "reviewed_on": "2026-11-07",
+          "notes": "FITPACK_CURVE loads/sorts data, constructs an interpolating spline and evaluates a scalar with explicit status. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/fitpack_curves.f90",
+              "url": "https://github.com/perazz/fitpack/blob/1907c7bad9f5c4557970e906bdd4909eb52b2d4c/src/fitpack_curves.f90",
+              "sha256": "2b0617067286348f3b54cbb314450fffe778f479832122c1bb33b954efeee654"
+            },
+            {
+              "path": "src/fitpack_core.F90",
+              "url": "https://github.com/perazz/fitpack/blob/1907c7bad9f5c4557970e906bdd4909eb52b2d4c/src/fitpack_core.F90",
+              "sha256": "02e413063f7df855c45eed6119130f7ab7a07cfa3e2f6ac0e42b6f496df414ec"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "new_points",
+              "role": "public-entry-point",
+              "module": "fitpack_curves",
+              "derived_type": "fitpack_curve",
+              "summary": "Declare TYPE(fitpack_curve) :: solver from fitpack_curves. Copy data X(:), Y(:) of equal length into the curve, destroying its previous fit. Values use FP_REAL=C_DOUBLE. The wrapper sorts X and associated Y/optional positive W; supply finite, distinct abscissae and enough points for the intended degree. Default weights are one. This loads points and workspace but does not itself generate a fitted spline: call INTERPOLATE or FIT next. Empty data are invalid for its MINVAL/MAXVAL setup. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%new_points(X,Y,[W])",
+              "path": "src/fitpack_curves.f90",
+              "line_start": 215,
+              "line_end": 263,
+              "declarations": [
+                {
+                  "path": "src/fitpack_curves.f90",
+                  "line_start": 216,
+                  "line_end": 218
+                },
+                {
+                  "path": "src/fitpack_curves.f90",
+                  "line_start": 55,
+                  "line_end": 102
+                },
+                {
+                  "path": "src/fitpack_core.F90",
+                  "line_start": 20,
+                  "line_end": 33
+                }
+              ]
+            },
+            {
+              "procedure": "interpolate",
+              "role": "public-entry-point",
+              "module": "fitpack_curves",
+              "derived_type": "fitpack_curve",
+              "summary": "Declare TYPE(fitpack_curve) :: solver from fitpack_curves. After NEW_POINTS, construct an interpolating spline with zero smoothing. Optional ORDER is spline degree, not degree+1; default cubic is 3, with supported degrees 1..5 and number of data points greater than the degree. FP_SIZE/FP_FLAG are INT32-compatible kinds exported by FITPACK_CORE. Optional RESET_KNOTS defaults true. This is a function returning an integer FITPACK status, so use IERR=solver%interpolate(...), not CALL; inspect the status before evaluation. Interpolation normally returns -1, while positive flags require diagnostics. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%interpolate([ORDER],[RESET_KNOTS])",
+              "path": "src/fitpack_curves.f90",
+              "line_start": 396,
+              "line_end": 408,
+              "declarations": [
+                {
+                  "path": "src/fitpack_curves.f90",
+                  "line_start": 397,
+                  "line_end": 399
+                },
+                {
+                  "path": "src/fitpack_curves.f90",
+                  "line_start": 55,
+                  "line_end": 102
+                },
+                {
+                  "path": "src/fitpack_core.F90",
+                  "line_start": 20,
+                  "line_end": 33
+                }
+              ]
+            },
+            {
+              "procedure": "eval",
+              "role": "public-entry-point",
+              "module": "fitpack_curves",
+              "derived_type": "fitpack_curve",
+              "summary": "Declare TYPE(fitpack_curve) :: solver from fitpack_curves. Scalar overload of generic EVAL with an explicit required INTEGER(FP_FLAG) IERR actual. Return one REAL(FP_REAL) spline value at X after a successful fit. Despite the implementation comment saying optional, IERR is required for this overload; a separate no-error overload exists. Inspect IERR=0 before accepting the value. Boundary behavior follows the object BC field, initially OUTSIDE_NEAREST_BND (clamping); other policies can extrapolate, return zero or report an error. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%eval(X,IERR)",
+              "path": "src/fitpack_curves.f90",
+              "line_start": 273,
+              "line_end": 283,
+              "declarations": [
+                {
+                  "path": "src/fitpack_curves.f90",
+                  "line_start": 274,
+                  "line_end": 276
+                },
+                {
+                  "path": "src/fitpack_curves.f90",
+                  "line_start": 55,
+                  "line_end": 102
+                },
+                {
+                  "path": "src/fitpack_core.F90",
+                  "line_start": 20,
+                  "line_end": 33
+                },
+                {
+                  "path": "src/fitpack_curves.f90",
+                  "line_start": 304,
+                  "line_end": 346
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "lsqr": {
       "id": "github:jacobwilliams/lsqr",
       "repository": {
@@ -4036,6 +4180,127 @@
                   "path": "src/ddeabm_module.F90",
                   "line_start": 268,
                   "line_end": 294
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "dvode": {
+      "id": "github:jacobwilliams/dvode",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "dvode",
+        "url": "https://github.com/jacobwilliams/dvode"
+      },
+      "license": {
+        "label": "BSD-3-Clause modernization; public-domain VODE notice",
+        "spdx_expression": null,
+        "revision": "59d2eedd1410a4bd6c196c24d08f95a7c20565c0",
+        "reviewed_on": "2026-11-07",
+        "notes": "LICENSE.md gives BSD three-clause modernization terms and separately declares the original VODE package public domain under its LLNL release statement/disclaimer. Preserve both component notices.",
+        "evidence": [
+          {
+            "path": "LICENSE.md",
+            "url": "https://github.com/jacobwilliams/dvode/blob/59d2eedd1410a4bd6c196c24d08f95a7c20565c0/LICENSE.md",
+            "sha256": "13d032a62d49df4fba60ff2cb416f3cd319a7e4824d538febf6b09b273850d50"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/dvode/blob/59d2eedd1410a4bd6c196c24d08f95a7c20565c0/README.md",
+            "sha256": "16546533f7d00757543a85bf2f10a4cf322796f4eb66546ecfca5b4acbaa29c9"
+          },
+          {
+            "path": "src/dvode_module.F90",
+            "url": "https://github.com/jacobwilliams/dvode/blob/59d2eedd1410a4bd6c196c24d08f95a7c20565c0/src/dvode_module.F90",
+            "sha256": "b7eb8a828f2141ff513ab863a18b634f6c091b05236e6f2fb505140906e1b8fc"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "I1",
+          "level": "source-reviewed",
+          "revision": "59d2eedd1410a4bd6c196c24d08f95a7c20565c0",
+          "reviewed_on": "2026-11-07",
+          "notes": "DVODE_T registers object-aware callbacks and exposes retained-workspace Adams/BDF integration with explicit tolerances and continuation flags. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/dvode_module.F90",
+              "url": "https://github.com/jacobwilliams/dvode/blob/59d2eedd1410a4bd6c196c24d08f95a7c20565c0/src/dvode_module.F90",
+              "sha256": "b7eb8a828f2141ff513ab863a18b634f6c091b05236e6f2fb505140906e1b8fc"
+            },
+            {
+              "path": "src/dvode_kinds_module.F90",
+              "url": "https://github.com/jacobwilliams/dvode/blob/59d2eedd1410a4bd6c196c24d08f95a7c20565c0/src/dvode_kinds_module.F90",
+              "sha256": "c4605e81c0f51ad4687edeb323ec8787fac855b3a58a56a86a4e5010c6aba331"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "initialize",
+              "role": "public-entry-point",
+              "module": "dvode_module",
+              "derived_type": "dvode_t",
+              "summary": "Declare TYPE(dvode_t) :: solver from dvode_module. Register derivative callback F(ME,NEQ,T,Y,YDOT), whose ME is CLASS(DVODE_T); the linked explicit interface includes this object despite older prose showing a legacy callback without it. Match DVODE_WP (REAL64 default). Optional JAC follows F_JAC for supplied dense/banded Jacobians; methods using internal finite differences can omit it. Optional DEWSET/DVNORM replace error weights/norms. Retain callbacks while the solver stores their pointers. There is no initialization status output. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%initialize(F,[JAC],[DEWSET],[DVNORM])",
+              "path": "src/dvode_module.F90",
+              "line_start": 377,
+              "line_end": 505,
+              "declarations": [
+                {
+                  "path": "src/dvode_module.F90",
+                  "line_start": 381,
+                  "line_end": 465
+                },
+                {
+                  "path": "src/dvode_module.F90",
+                  "line_start": 251,
+                  "line_end": 277
+                },
+                {
+                  "path": "src/dvode_module.F90",
+                  "line_start": 317,
+                  "line_end": 333
+                },
+                {
+                  "path": "src/dvode_kinds_module.F90",
+                  "line_start": 1,
+                  "line_end": 40
+                }
+              ]
+            },
+            {
+              "procedure": "solve",
+              "role": "public-entry-point",
+              "module": "dvode_module",
+              "derived_type": "dvode_t",
+              "summary": "Declare TYPE(dvode_t) :: solver from dvode_module. Integrate after INITIALIZE, retaining this object and caller-owned RWORK/IWORK between continuation calls. Y(NEQ) and scalar T are INOUT; RTOL/ATOL are arrays, even for scalar tolerances, selected by ITOL=1..4. Set ISTATE=1 for a new problem, ITASK=1 to return at TOUT, IOPT=0 for default controls. ISTATE=2 is successful return; negative values require diagnostic handling, and T may be short of TOUT. For nonstiff Adams MF=10 use LRW>=20+16*NEQ and LIW>=30; stiff BDF with internal dense Jacobian MF=22 requires LRW>=22+9*NEQ+2*NEQ**2 and LIW>=30+NEQ. Other MF/workspace/band controls follow the linked declarations. Match DVODE_WP, use nonnegative tolerances giving positive error weights, and do not reset continuation workspace. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%solve(NEQ,Y,T,TOUT,ITOL,RTOL,ATOL,ITASK,ISTATE,IOPT,RWORK,LRW,IWORK,LIW,MF)",
+              "path": "src/dvode_module.F90",
+              "line_start": 604,
+              "line_end": 1725,
+              "declarations": [
+                {
+                  "path": "src/dvode_module.F90",
+                  "line_start": 607,
+                  "line_end": 999
+                },
+                {
+                  "path": "src/dvode_module.F90",
+                  "line_start": 251,
+                  "line_end": 277
+                },
+                {
+                  "path": "src/dvode_module.F90",
+                  "line_start": 317,
+                  "line_end": 333
+                },
+                {
+                  "path": "src/dvode_kinds_module.F90",
+                  "line_start": 1,
+                  "line_end": 40
                 }
               ]
             }
@@ -5834,6 +6099,130 @@
         }
       ]
     },
+    "odrpack95": {
+      "id": "github:hugomvale/odrpack95",
+      "repository": {
+        "owner": "HugoMVale",
+        "name": "odrpack95",
+        "url": "https://github.com/HugoMVale/odrpack95"
+      },
+      "license": {
+        "label": "MIT modernization; original ODRPACK provenance retained",
+        "spdx_expression": null,
+        "revision": "12597b20812a76a4b702f985f6adc82632a18f60",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies the Hugo Vale MIT grant. Driver source credits the original NIST ODRPACK authors and algorithm/user-guide references; retain that component provenance alongside the modernization terms.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/HugoMVale/odrpack95/blob/12597b20812a76a4b702f985f6adc82632a18f60/LICENSE",
+            "sha256": "a2695d7ea94c5e0f219176883214f6e55bc7d6afcbe3b1904ce8a1da747333af"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/HugoMVale/odrpack95/blob/12597b20812a76a4b702f985f6adc82632a18f60/README.md",
+            "sha256": "1b84d6a3a4bc4297580bb7d18f41953601d90f9432a75e03d9a704a968b95cdf"
+          },
+          {
+            "path": "src/odrpack.f90",
+            "url": "https://github.com/HugoMVale/odrpack95/blob/12597b20812a76a4b702f985f6adc82632a18f60/src/odrpack.f90",
+            "sha256": "13c77aae2c6a2069804031b554597a8835e05007cfd260b2052d8d1bbe725bb6"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "L8",
+          "level": "source-reviewed",
+          "revision": "12597b20812a76a4b702f985f6adc82632a18f60",
+          "reviewed_on": "2026-11-07",
+          "notes": "The public ODR driver and workspace-size helper expose model-based weighted regression with errors in explanatory variables. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/odrpack.f90",
+              "url": "https://github.com/HugoMVale/odrpack95/blob/12597b20812a76a4b702f985f6adc82632a18f60/src/odrpack.f90",
+              "sha256": "13c77aae2c6a2069804031b554597a8835e05007cfd260b2052d8d1bbe725bb6"
+            },
+            {
+              "path": "src/odrpack_core.f90",
+              "url": "https://github.com/HugoMVale/odrpack95/blob/12597b20812a76a4b702f985f6adc82632a18f60/src/odrpack_core.f90",
+              "sha256": "f6666ef649eb5ff1614c14504122254a235dab83434f953ce1c9321eb3cbc2e3"
+            },
+            {
+              "path": "src/odrpack_kinds.f90",
+              "url": "https://github.com/HugoMVale/odrpack95/blob/12597b20812a76a4b702f985f6adc82632a18f60/src/odrpack_kinds.f90",
+              "sha256": "f91400fb704f1de4286b49f4a3f567d63c76aad5abb35426c2b185448fec5032"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "odr",
+              "role": "public-entry-point",
+              "module": "odrpack",
+              "summary": "Weighted orthogonal-distance regression driver. MODEL is TYPE(ODRPACK_MODEL) with MODEL%FCN associated with the linked callback, not a bare procedure argument. Required N observations, M explanatory columns, Q responses and NP parameters correspond to REAL(DP) X(N,M), Y(N,Q), BETA(NP); BETA is initial guess and fitted output. Optional DELTA(N,M) holds estimated input corrections. Use matching ODRPACK_KINDS::DP. Pass INFO=... explicitly and inspect termination/residuals; do not infer convergence just because BETA changed. Callback IDEVAL selects values/derivatives and ISTOP must be set. JOB chooses ODR/OLS and finite-difference/analytic modes; weights, fixed-variable masks and bounds use the linked ranks, not scalar substitutes. Use keyword actuals for optional controls. Workspace is allocated internally when omitted; restart requests require preserved compatible work arrays.",
+              "signature": "CALL odr(MODEL,N,M,Q,NP,BETA,Y,X,[DELTA],[WE],[WD],[IFIXB],[IFIXX],[JOB],[NDIGIT],[TAUFAC],[SSTOL],[PARTOL],[MAXIT],[IPRINT],[LUNERR],[LUNRPT],[STPB],[STPD],[SCLB],[SCLD],[RWORK],[IWORK],[INFO],[LOWER],[UPPER])",
+              "path": "src/odrpack.f90",
+              "line_start": 15,
+              "line_end": 573,
+              "declarations": [
+                {
+                  "path": "src/odrpack.f90",
+                  "line_start": 74,
+                  "line_end": 146
+                },
+                {
+                  "path": "src/odrpack.f90",
+                  "line_start": 1,
+                  "line_end": 11
+                },
+                {
+                  "path": "src/odrpack_core.f90",
+                  "line_start": 8,
+                  "line_end": 55
+                },
+                {
+                  "path": "src/odrpack_kinds.f90",
+                  "line_start": 1,
+                  "line_end": 26
+                }
+              ]
+            },
+            {
+              "procedure": "workspace_dimensions",
+              "role": "public-entry-point",
+              "module": "odrpack",
+              "summary": "Compute default INTEGER LRWORK/LIWORK sizes from N,M,Q,NP and LOGICAL ISODR, true for orthogonal-distance regression or false for ordinary least squares. Allocate REAL(DP) RWORK(LRWORK) and INTEGER IWORK(LIWORK) when supplying workspace to ODR. Match ISODR to the driver JOB setting. This helper calculates storage only and neither evaluates the model nor fits parameters; invalid dimensions and integer overflow must be prevented by the caller.",
+              "signature": "CALL workspace_dimensions(N,M,Q,NP,ISODR,LRWORK,LIWORK)",
+              "path": "src/odrpack_core.f90",
+              "line_start": 5539,
+              "line_end": 5567,
+              "declarations": [
+                {
+                  "path": "src/odrpack_core.f90",
+                  "line_start": 5542,
+                  "line_end": 5555
+                },
+                {
+                  "path": "src/odrpack.f90",
+                  "line_start": 1,
+                  "line_end": 11
+                },
+                {
+                  "path": "src/odrpack_core.f90",
+                  "line_start": 8,
+                  "line_end": 55
+                },
+                {
+                  "path": "src/odrpack_kinds.f90",
+                  "line_start": 1,
+                  "line_end": 26
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "pointsets": {
       "id": "github:arjenmarkus/pointsets",
       "repository": {
@@ -6208,6 +6597,125 @@
                   "path": "src/rndgen.f90",
                   "line_start": 33,
                   "line_end": 94
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "blas-interface": {
+      "id": "github:awvwgk/blas-interface",
+      "repository": {
+        "owner": "awvwgk",
+        "name": "blas-interface",
+        "url": "https://github.com/awvwgk/blas-interface"
+      },
+      "license": {
+        "label": "Apache-2.0",
+        "spdx_expression": "Apache-2.0",
+        "revision": "552a2e6a41443843003216fedad6419af55f8e35",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE and wrapper source SPDX identifiers supply Apache-2.0 terms. The separately linked BLAS implementation has its own license and ABI requirements.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/awvwgk/blas-interface/blob/552a2e6a41443843003216fedad6419af55f8e35/LICENSE",
+            "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/awvwgk/blas-interface/blob/552a2e6a41443843003216fedad6419af55f8e35/README.md",
+            "sha256": "161aefec890cffb389fc8b58ceece1f7b027b34a30087ee5ad7f2c7cd8e353c7"
+          },
+          {
+            "path": "src/blas/level3.f90",
+            "url": "https://github.com/awvwgk/blas-interface/blob/552a2e6a41443843003216fedad6419af55f8e35/src/blas/level3.f90",
+            "sha256": "7cf3eb85c84eb4bc3b3594e67ce8a6b31233b3afb96aed96eca8b4ed7812d97b"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "D1",
+          "level": "source-reviewed",
+          "revision": "552a2e6a41443843003216fedad6419af55f8e35",
+          "reviewed_on": "2026-11-07",
+          "notes": "The assumed-shape double-precision BLAS generics expose matrix-matrix and matrix-vector products with optional scaling/transposes. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/blas/level3.f90",
+              "url": "https://github.com/awvwgk/blas-interface/blob/552a2e6a41443843003216fedad6419af55f8e35/src/blas/level3.f90",
+              "sha256": "7cf3eb85c84eb4bc3b3594e67ce8a6b31233b3afb96aed96eca8b4ed7812d97b"
+            },
+            {
+              "path": "src/blas/level2.f90",
+              "url": "https://github.com/awvwgk/blas-interface/blob/552a2e6a41443843003216fedad6419af55f8e35/src/blas/level2.f90",
+              "sha256": "780b0e3d41f7c0863564b9955a86516a2be3b3fcc430912a795a187b74522c74"
+            },
+            {
+              "path": "src/blas.f90",
+              "url": "https://github.com/awvwgk/blas-interface/blob/552a2e6a41443843003216fedad6419af55f8e35/src/blas.f90",
+              "sha256": "690cfe01833dfb7bea8f59966857bafe6bc45e82e27e99af3b434aed685bd14e"
+            },
+            {
+              "path": "src/blas/kinds.F90",
+              "url": "https://github.com/awvwgk/blas-interface/blob/552a2e6a41443843003216fedad6419af55f8e35/src/blas/kinds.F90",
+              "sha256": "2015ce59f5e4e2216eaa99fbde42425edb71bf7e167c892a4fc41d5d49979744"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "blas_gemm",
+              "role": "public-entry-point",
+              "module": "blas",
+              "summary": "Assumed-shape REAL(DP) overload of BLAS_GEMM computes CMAT=ALPHA*OP(AMAT)*OP(BMAT)+BETA*CMAT. Required arrays are contiguous; CMAT is caller-allocated INOUT. Defaults are no transposes, ALPHA=1 and BETA=0. Optional TRANSA/TRANSB are BLAS N/T/C character codes; validate conforming dimensions and use nonaliasing arrays. The wrapper derives leading dimensions, does not allocate CMAT and exposes no INFO/status. A matching native BLAS implementation and integer ABI are still required when linking locally.",
+              "signature": "CALL blas_gemm(AMAT,BMAT,CMAT,[TRANSA],[TRANSB],[ALPHA],[BETA])",
+              "path": "src/blas/level3.f90",
+              "line_start": 693,
+              "line_end": 726,
+              "declarations": [
+                {
+                  "path": "src/blas/level3.f90",
+                  "line_start": 694,
+                  "line_end": 701
+                },
+                {
+                  "path": "src/blas.f90",
+                  "line_start": 15,
+                  "line_end": 22
+                },
+                {
+                  "path": "src/blas/kinds.F90",
+                  "line_start": 20,
+                  "line_end": 38
+                }
+              ]
+            },
+            {
+              "procedure": "blas_gemv",
+              "role": "public-entry-point",
+              "module": "blas",
+              "summary": "Assumed-shape REAL(DP) overload of BLAS_GEMV computes YVEC=ALPHA*OP(AMAT)*XVEC+BETA*YVEC, with contiguous arrays and caller-owned output. Defaults ALPHA=1, BETA=0, TRANS=N; normal mode needs SIZE(XVEC)=columns and SIZE(YVEC)=rows, transposed mode reverses those dimensions. No leading-dimension/increment arguments are needed in this overload; the package also supplies lower-level BLAS interfaces. There is no public status or full shape validation.",
+              "signature": "CALL blas_gemv(AMAT,XVEC,YVEC,[ALPHA],[BETA],[TRANS])",
+              "path": "src/blas/level2.f90",
+              "line_start": 1391,
+              "line_end": 1414,
+              "declarations": [
+                {
+                  "path": "src/blas/level2.f90",
+                  "line_start": 1392,
+                  "line_end": 1398
+                },
+                {
+                  "path": "src/blas.f90",
+                  "line_start": 15,
+                  "line_end": 22
+                },
+                {
+                  "path": "src/blas/kinds.F90",
+                  "line_start": 20,
+                  "line_end": 38
                 }
               ]
             }
@@ -6920,6 +7428,212 @@
         }
       ]
     },
+    "nlopt-f": {
+      "id": "github:awvwgk/nlopt-f",
+      "repository": {
+        "owner": "awvwgk",
+        "name": "nlopt-f",
+        "url": "https://github.com/awvwgk/nlopt-f"
+      },
+      "license": {
+        "label": "Apache-2.0 OR MIT wrapper; native NLopt terms separate",
+        "spdx_expression": "Apache-2.0 OR MIT",
+        "revision": "83d21e7ebda9279a6dd4cc11fe6c735f48eb8689",
+        "reviewed_on": "2026-11-07",
+        "notes": "Wrapper headers explicitly offer Apache-2.0 or MIT and both license files are supplied. Native NLopt is a separate dependency with algorithm/component notices; the wrapper expression does not relicense the native library.",
+        "evidence": [
+          {
+            "path": "LICENSE-MIT",
+            "url": "https://github.com/awvwgk/nlopt-f/blob/83d21e7ebda9279a6dd4cc11fe6c735f48eb8689/LICENSE-MIT",
+            "sha256": "8cd042b0adb6470552e53342e6013d325688c4ca3f0b9d1b50c4e45d4ec73ab0"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/awvwgk/nlopt-f/blob/83d21e7ebda9279a6dd4cc11fe6c735f48eb8689/README.md",
+            "sha256": "49c19cb359640bfe973ff9c7f5343073e2fce200ccbdea4466ca66abfa7ae8ce"
+          },
+          {
+            "path": "src/nlopt_wrap.f90",
+            "url": "https://github.com/awvwgk/nlopt-f/blob/83d21e7ebda9279a6dd4cc11fe6c735f48eb8689/src/nlopt_wrap.f90",
+            "sha256": "d38f553f64581e984fd90150ec519177893db60880cb99a00b60fb347d893ba8"
+          },
+          {
+            "path": "LICENSE-Apache",
+            "url": "https://github.com/awvwgk/nlopt-f/blob/83d21e7ebda9279a6dd4cc11fe6c735f48eb8689/LICENSE-Apache",
+            "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "G1",
+          "level": "source-reviewed",
+          "revision": "83d21e7ebda9279a6dd4cc11fe6c735f48eb8689",
+          "reviewed_on": "2026-11-07",
+          "notes": "The wrapper initializes a native optimizer, registers a retained Fortran callback wrapper, configures stopping and runs local minimization. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/nlopt_wrap.f90",
+              "url": "https://github.com/awvwgk/nlopt-f/blob/83d21e7ebda9279a6dd4cc11fe6c735f48eb8689/src/nlopt_wrap.f90",
+              "sha256": "d38f553f64581e984fd90150ec519177893db60880cb99a00b60fb347d893ba8"
+            },
+            {
+              "path": "src/nlopt_callback.f90",
+              "url": "https://github.com/awvwgk/nlopt-f/blob/83d21e7ebda9279a6dd4cc11fe6c735f48eb8689/src/nlopt_callback.f90",
+              "sha256": "60489b7509225e5bbe8195be6c320ade0385ebc001754c513b25f2717d8d3741"
+            },
+            {
+              "path": "LICENSE-Apache",
+              "url": "https://github.com/awvwgk/nlopt-f/blob/83d21e7ebda9279a6dd4cc11fe6c735f48eb8689/LICENSE-Apache",
+              "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+            },
+            {
+              "path": "LICENSE-MIT",
+              "url": "https://github.com/awvwgk/nlopt-f/blob/83d21e7ebda9279a6dd4cc11fe6c735f48eb8689/LICENSE-MIT",
+              "sha256": "8cd042b0adb6470552e53342e6013d325688c4ca3f0b9d1b50c4e45d4ec73ab0"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "create",
+              "role": "public-entry-point",
+              "module": "nlopt_wrap",
+              "summary": "Initialize TYPE(NLOPT_OPT) SELF with a positive dimension N and algorithm code, e.g. NLOPT_ALGORITHM_ENUM%LN_NELDERMEAD for local derivative-free minimization. CREATE is a module subroutine: CALL CREATE(OPT,ALGORITHM,N), not OPT%CREATE. This routine has no status output or explicit null-handle check; subsequent setters/OPTIMIZE expose result status. The object owns a native NLopt handle and has automatic finalization; explicit DESTROY is also available.",
+              "signature": "CALL create(SELF,ALGORITHM,N)",
+              "path": "src/nlopt_wrap.f90",
+              "line_start": 232,
+              "line_end": 237,
+              "declarations": [
+                {
+                  "path": "src/nlopt_wrap.f90",
+                  "line_start": 233,
+                  "line_end": 235
+                },
+                {
+                  "path": "src/nlopt_wrap.f90",
+                  "line_start": 60,
+                  "line_end": 77
+                },
+                {
+                  "path": "src/nlopt_wrap.f90",
+                  "line_start": 131,
+                  "line_end": 151
+                },
+                {
+                  "path": "src/nlopt_callback.f90",
+                  "line_start": 45,
+                  "line_end": 82
+                }
+              ]
+            },
+            {
+              "procedure": "set_min_objective",
+              "role": "public-entry-point",
+              "module": "nlopt_wrap",
+              "derived_type": "nlopt_opt",
+              "summary": "Declare TYPE(nlopt_opt) :: solver from nlopt_wrap. Register a TARGET TYPE(NLOPT_FUNC) wrapper built from the user callback, rather than passing the callback directly. Callback signature is REAL(C_DOUBLE) FUNCTION F(X,GRADIENT,FUNC_DATA), with optional gradient(:) and optional CLASS(*) data. Fill GRADIENT when PRESENT for derivative-based algorithms. The optimizer retains the wrapper address; keep the TARGET wrapper, callback and any referenced data alive until optimization/destruction completes. Optional STAT reports native status; omission causes ERROR STOP on a negative result. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%set_min_objective(F,[STAT])",
+              "path": "src/nlopt_wrap.f90",
+              "line_start": 281,
+              "line_end": 290,
+              "declarations": [
+                {
+                  "path": "src/nlopt_wrap.f90",
+                  "line_start": 282,
+                  "line_end": 284
+                },
+                {
+                  "path": "src/nlopt_wrap.f90",
+                  "line_start": 60,
+                  "line_end": 77
+                },
+                {
+                  "path": "src/nlopt_wrap.f90",
+                  "line_start": 131,
+                  "line_end": 151
+                },
+                {
+                  "path": "src/nlopt_callback.f90",
+                  "line_start": 45,
+                  "line_end": 82
+                }
+              ]
+            },
+            {
+              "procedure": "set_ftol_rel",
+              "role": "public-entry-point",
+              "module": "nlopt_wrap",
+              "derived_type": "nlopt_opt",
+              "summary": "Declare TYPE(nlopt_opt) :: solver from nlopt_wrap. Set a positive double-precision relative function-change stopping tolerance. This is a stopping criterion, not a guaranteed error bound or proof of a global optimum. For objectives near zero, also consider absolute function/parameter tolerances; set an evaluation/time budget separately when needed. Optional default INTEGER STAT should be supplied to handle errors without the wrapper ERROR STOP behavior. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%set_ftol_rel(TOL,[STAT])",
+              "path": "src/nlopt_wrap.f90",
+              "line_start": 611,
+              "line_end": 620,
+              "declarations": [
+                {
+                  "path": "src/nlopt_wrap.f90",
+                  "line_start": 612,
+                  "line_end": 614
+                },
+                {
+                  "path": "src/nlopt_wrap.f90",
+                  "line_start": 60,
+                  "line_end": 77
+                },
+                {
+                  "path": "src/nlopt_wrap.f90",
+                  "line_start": 131,
+                  "line_end": 151
+                },
+                {
+                  "path": "src/nlopt_callback.f90",
+                  "line_start": 45,
+                  "line_end": 82
+                }
+              ]
+            },
+            {
+              "procedure": "optimize",
+              "role": "public-entry-point",
+              "module": "nlopt_wrap",
+              "derived_type": "nlopt_opt",
+              "summary": "Declare TYPE(nlopt_opt) :: solver from nlopt_wrap. After CREATE, objective registration and stopping/bound configuration, optimize double-precision X(:) of length N in place and return objective OPT_F (declared INOUT). Pass optional default INTEGER STAT explicitly: positive values describe native termination reasons, including evaluation/time limits, and negative values failures; a positive return alone is not a global-optimality or accuracy certificate. Without STAT, failures ERROR STOP. This scoped workflow uses local unconstrained minimization; other algorithms have distinct derivative, bound and constraint requirements. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%optimize(X,OPT_F,[STAT])",
+              "path": "src/nlopt_wrap.f90",
+              "line_start": 268,
+              "line_end": 278,
+              "declarations": [
+                {
+                  "path": "src/nlopt_wrap.f90",
+                  "line_start": 269,
+                  "line_end": 272
+                },
+                {
+                  "path": "src/nlopt_wrap.f90",
+                  "line_start": 60,
+                  "line_end": 77
+                },
+                {
+                  "path": "src/nlopt_wrap.f90",
+                  "line_start": 131,
+                  "line_end": 151
+                },
+                {
+                  "path": "src/nlopt_callback.f90",
+                  "line_start": 45,
+                  "line_end": 82
+                },
+                {
+                  "path": "src/nlopt_wrap.f90",
+                  "line_start": 254,
+                  "line_end": 264
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "forimage": {
       "id": "github:gha3mi/forimage",
       "repository": {
@@ -7410,6 +8124,284 @@
                   "path": "src/iapws_r797.f90",
                   "line_start": 523,
                   "line_end": 567
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "linalg": {
+      "id": "github:jchristopherson/linalg",
+      "repository": {
+        "owner": "jchristopherson",
+        "name": "linalg",
+        "url": "https://github.com/jchristopherson/linalg"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE and inspected source SPDX headers identify MIT terms for these wrappers. LAPACK, BLAS, ARPACK and other bundled/dependent code retain separate notices; this is not a blanket relicense of those components.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jchristopherson/linalg/blob/cb8fb7b1c67986591083cac516eb700f47d69b68/LICENSE",
+            "sha256": "1ff646226938bbe175d31336f63e96591cfec770f63e19776552e09621b3b8fb"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jchristopherson/linalg/blob/cb8fb7b1c67986591083cac516eb700f47d69b68/README.md",
+            "sha256": "241389ed62fd800b798ce1d5912c7e6d1cc6fbeadba0786f85bc422733afb22c"
+          },
+          {
+            "path": "src/linalg_lu.f90",
+            "url": "https://github.com/jchristopherson/linalg/blob/cb8fb7b1c67986591083cac516eb700f47d69b68/src/linalg_lu.f90",
+            "sha256": "94805cf6433a3b6da3ddc91f2650a3b6a018a7c5cf92cf0ea07259aec9e30219"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "D2",
+          "level": "source-reviewed",
+          "revision": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+          "reviewed_on": "2026-11-07",
+          "notes": "The square LU factorization and vector solve expose reusable packed factors, pivots and singular-factor handling. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/linalg_lu.f90",
+              "url": "https://github.com/jchristopherson/linalg/blob/cb8fb7b1c67986591083cac516eb700f47d69b68/src/linalg_lu.f90",
+              "sha256": "94805cf6433a3b6da3ddc91f2650a3b6a018a7c5cf92cf0ea07259aec9e30219"
+            },
+            {
+              "path": "src/linalg_svd.f90",
+              "url": "https://github.com/jchristopherson/linalg/blob/cb8fb7b1c67986591083cac516eb700f47d69b68/src/linalg_svd.f90",
+              "sha256": "988ab8f129c2edbf6b691c8c0f4c40b6aeb756d8a99f6e9a31414d04006e1ce9"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "lu_factor",
+              "role": "public-entry-point",
+              "module": "linalg_lu",
+              "summary": "REAL64 overload of generic LU_FACTOR requires square A(N,N), despite the opening M-by-N prose. The input is preserved. Optional IPVT is allocatable INTEGER(INT32); LU/L/U/P are allocatable REAL64 matrices. Request IPVT=... and LU=... by keyword for subsequent SOLVE_LU. On a singular matrix, requested real factor outputs become NaN and pivots zero; there is no public INFO argument. Nonsquare input ERROR STOPs. Pivot data encode LAPACK row interchanges, not a permutation vector to apply directly as A(IPVT,:).",
+              "signature": "CALL lu_factor(A,[IPVT],[LU],[L],[U],[P])",
+              "path": "src/linalg_lu.f90",
+              "line_start": 40,
+              "line_end": 140,
+              "declarations": [
+                {
+                  "path": "src/linalg_lu.f90",
+                  "line_start": 43,
+                  "line_end": 58
+                },
+                {
+                  "path": "src/linalg_lu.f90",
+                  "line_start": 3,
+                  "line_end": 39
+                }
+              ]
+            },
+            {
+              "procedure": "solve_lu",
+              "role": "public-entry-point",
+              "module": "linalg_lu",
+              "summary": "Vector-RHS overload of SOLVE_LU takes packed REAL64 LU factors A(N,N) and INTEGER(INT32) IPVT(N) from LU_FACTOR, plus REAL64 B(N), returning allocatable X(N). Pass factored storage, not the original coefficient matrix or a separately extracted L factor. Shapes are checked with ERROR STOP; singularity must be detected at factorization because this wrapper does not expose a status. The factors and RHS are preserved, so factors can be reused for multiple solves.",
+              "signature": "VALUE = solve_lu(A,IPVT,B)",
+              "path": "src/linalg_lu.f90",
+              "line_start": 612,
+              "line_end": 643,
+              "declarations": [
+                {
+                  "path": "src/linalg_lu.f90",
+                  "line_start": 614,
+                  "line_end": 621
+                },
+                {
+                  "path": "src/linalg_lu.f90",
+                  "line_start": 3,
+                  "line_end": 39
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "D6",
+          "level": "source-reviewed",
+          "revision": "cb8fb7b1c67986591083cac516eb700f47d69b68",
+          "reviewed_on": "2026-11-07",
+          "notes": "The dense REAL64 SVD wrapper returns optional full singular-vector matrices and descending singular values. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/linalg_lu.f90",
+              "url": "https://github.com/jchristopherson/linalg/blob/cb8fb7b1c67986591083cac516eb700f47d69b68/src/linalg_lu.f90",
+              "sha256": "94805cf6433a3b6da3ddc91f2650a3b6a018a7c5cf92cf0ea07259aec9e30219"
+            },
+            {
+              "path": "src/linalg_svd.f90",
+              "url": "https://github.com/jchristopherson/linalg/blob/cb8fb7b1c67986591083cac516eb700f47d69b68/src/linalg_svd.f90",
+              "sha256": "988ab8f129c2edbf6b691c8c0f4c40b6aeb756d8a99f6e9a31414d04006e1ce9"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "svd",
+              "role": "public-entry-point",
+              "module": "linalg_svd",
+              "summary": "REAL64 generic SVD overload preserves A(M,N) and allocates optional S(MIN(M,N)), full U(M,M) and VT(N,N). Request outputs by keyword as desired; S is descending, and VT contains transposed right singular vectors rather than V. The wrapper computes a dense LAPACK SVD, not a sparse partial SVD or economy-size output. Convergence failure ERROR STOPs; no INFO/status argument is exposed. Full singular-vector outputs can require substantial memory.",
+              "signature": "CALL svd(A,[S],[U],[VT])",
+              "path": "src/linalg_svd.f90",
+              "line_start": 18,
+              "line_end": 95,
+              "declarations": [
+                {
+                  "path": "src/linalg_svd.f90",
+                  "line_start": 23,
+                  "line_end": 35
+                },
+                {
+                  "path": "src/linalg_svd.f90",
+                  "line_start": 3,
+                  "line_end": 15
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "nonlin": {
+      "id": "github:jchristopherson/nonlin",
+      "repository": {
+        "owner": "jchristopherson",
+        "name": "nonlin",
+        "url": "https://github.com/jchristopherson/nonlin"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE and inspected helper/solver source headers supply MIT terms for the library; linear-algebra dependencies and referenced algorithms retain their own notices/provenance.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jchristopherson/nonlin/blob/2133d067886ea6eca0552ebca9ed7bb8a262e5b8/LICENSE",
+            "sha256": "1ff646226938bbe175d31336f63e96591cfec770f63e19776552e09621b3b8fb"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jchristopherson/nonlin/blob/2133d067886ea6eca0552ebca9ed7bb8a262e5b8/README.md",
+            "sha256": "39ed1a3e85675062f98fc8d163d04d5cc2f3b9baa59d245468bff69bf3734a2c"
+          },
+          {
+            "path": "src/nonlin_single_var.f90",
+            "url": "https://github.com/jchristopherson/nonlin/blob/2133d067886ea6eca0552ebca9ed7bb8a262e5b8/src/nonlin_single_var.f90",
+            "sha256": "2fdf9c0ed8429aa6a1875ecbb3a3dbd36ef609971cf9c9d10c4277d36a31ee08"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "F1b",
+          "level": "source-reviewed",
+          "revision": "2133d067886ea6eca0552ebca9ed7bb8a262e5b8",
+          "reviewed_on": "2026-11-07",
+          "notes": "The Brent workflow registers a pointer callback in FCN1VAR_HELPER and solves within caller-specified scalar limits. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/nonlin_single_var.f90",
+              "url": "https://github.com/jchristopherson/nonlin/blob/2133d067886ea6eca0552ebca9ed7bb8a262e5b8/src/nonlin_single_var.f90",
+              "sha256": "2fdf9c0ed8429aa6a1875ecbb3a3dbd36ef609971cf9c9d10c4277d36a31ee08"
+            },
+            {
+              "path": "src/nonlin_solve.f90",
+              "url": "https://github.com/jchristopherson/nonlin/blob/2133d067886ea6eca0552ebca9ed7bb8a262e5b8/src/nonlin_solve.f90",
+              "sha256": "62139eb882d355d4b3f34ee7fe9a261676623c793814b730ca8e7925976d4130"
+            },
+            {
+              "path": "src/nonlin_types.f90",
+              "url": "https://github.com/jchristopherson/nonlin/blob/2133d067886ea6eca0552ebca9ed7bb8a262e5b8/src/nonlin_types.f90",
+              "sha256": "5e2f7d8c33946aa02c7a3adc0a6ffa114053981596921d71ff38dec3e3233a8a"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "set_fcn",
+              "role": "public-entry-point",
+              "module": "nonlin_single_var",
+              "derived_type": "fcn1var_helper",
+              "summary": "Declare TYPE(fcn1var_helper) :: solver from nonlin_single_var. Register a PROCEDURE(FCN1VAR), POINTER actual with signature REAL64 function FCN(X,ARGS), where X is REAL64 and optional ARGS is CLASS(*), INTENT(INOUT). Declare/associate a procedure pointer before passing it; an ordinary procedure actual is not the declared POINTER dummy contract here. Keep the target alive while the helper stores it. The helper is passed to BRENT_SOLVER%SOLVE; it is not the solver object itself. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%set_fcn(FCN)",
+              "path": "src/nonlin_single_var.f90",
+              "line_start": 154,
+              "line_end": 162,
+              "declarations": [
+                {
+                  "path": "src/nonlin_single_var.f90",
+                  "line_start": 157,
+                  "line_end": 159
+                },
+                {
+                  "path": "src/nonlin_single_var.f90",
+                  "line_start": 28,
+                  "line_end": 63
+                },
+                {
+                  "path": "src/nonlin_single_var.f90",
+                  "line_start": 33,
+                  "line_end": 44
+                },
+                {
+                  "path": "src/nonlin_types.f90",
+                  "line_start": 30,
+                  "line_end": 59
+                }
+              ]
+            },
+            {
+              "procedure": "solve",
+              "role": "public-entry-point",
+              "module": "nonlin_solve",
+              "derived_type": "brent_solver",
+              "summary": "Declare TYPE(brent_solver) :: solver from nonlin_solve. Solve a continuous scalar root problem using an initialized FCN1VAR_HELPER and VALUE_PAIR limits LIM%X1/LIM%X2 bracketing a sign change. X is a REAL64 output-through-INOUT actual; its input guess is ignored. Optional F returns the residual, IB is TYPE(ITERATION_BEHAVIOR), and ARGS is forwarded to the callback. Inspect IB%CONVERGE_ON_FCN/CONVERGE_ON_CHNG and independently check residual/bracket requirements; a small change alone need not establish a small residual. Invalid helper/limits can ERROR STOP. Controls are inherited from EQUATION_SOLVER_1VAR; no derivative is required. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%solve(FCN,X,LIM,[F],[IB],[ARGS])",
+              "path": "src/nonlin_solve.f90",
+              "line_start": 693,
+              "line_end": 889,
+              "declarations": [
+                {
+                  "path": "src/nonlin_solve.f90",
+                  "line_start": 706,
+                  "line_end": 725
+                },
+                {
+                  "path": "src/nonlin_single_var.f90",
+                  "line_start": 28,
+                  "line_end": 63
+                },
+                {
+                  "path": "src/nonlin_single_var.f90",
+                  "line_start": 33,
+                  "line_end": 44
+                },
+                {
+                  "path": "src/nonlin_types.f90",
+                  "line_start": 30,
+                  "line_end": 59
+                },
+                {
+                  "path": "src/nonlin_solve.f90",
+                  "line_start": 92,
+                  "line_end": 99
+                },
+                {
+                  "path": "src/nonlin_single_var.f90",
+                  "line_start": 65,
+                  "line_end": 90
                 }
               ]
             }
@@ -8185,6 +9177,130 @@
                   "path": "src/cubatures.f90",
                   "line_start": 100,
                   "line_end": 130
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "stiff3": {
+      "id": "github:ivan-pi/stiff3",
+      "repository": {
+        "owner": "ivan-pi",
+        "name": "stiff3",
+        "url": "https://github.com/ivan-pi/stiff3"
+      },
+      "license": {
+        "label": "Apache-2.0",
+        "spdx_expression": "Apache-2.0",
+        "revision": "70ab5c86c2ac922ed148bbb1182345cca248e077",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE and source SPDX header identify Apache-2.0 modernization terms, while the source retains its Villadsen/Michelsen original-method reference.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/ivan-pi/stiff3/blob/70ab5c86c2ac922ed148bbb1182345cca248e077/LICENSE",
+            "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/ivan-pi/stiff3/blob/70ab5c86c2ac922ed148bbb1182345cca248e077/README.md",
+            "sha256": "a78237f8d4a4c441420b5d70976dddfa6c6d028b243514fc7c2d7c5c49e73108"
+          },
+          {
+            "path": "src/stiff3_solver.f90",
+            "url": "https://github.com/ivan-pi/stiff3/blob/70ab5c86c2ac922ed148bbb1182345cca248e077/src/stiff3_solver.f90",
+            "sha256": "ccdf1358450acc079ab1d338dfeff6cdd6415bf53717a85358bc546dec41a1fa"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "I1",
+          "level": "source-reviewed",
+          "revision": "70ab5c86c2ac922ed148bbb1182345cca248e077",
+          "reviewed_on": "2026-11-07",
+          "notes": "The STIFF3 generic provides allocating and caller-workspace semi-implicit third-order integration for autonomous systems. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/stiff3_solver.f90",
+              "url": "https://github.com/ivan-pi/stiff3/blob/70ab5c86c2ac922ed148bbb1182345cca248e077/src/stiff3_solver.f90",
+              "sha256": "ccdf1358450acc079ab1d338dfeff6cdd6415bf53717a85358bc546dec41a1fa"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "stiff3",
+              "role": "public-entry-point",
+              "module": "stiff3_solver",
+              "summary": "Automatically allocated-workspace STIFF3 overload for autonomous stiff ODEs. FUN(N,Y,F,IRES) has no time argument and JAC(N,Y,DF) supplies the full Jacobian; match STIFF3_WP. X/Y are INOUT, XEND is a forward endpoint, and positive H0 is an initial HALF-step magnitude, not a full step. Use EPS>0 and positive W(N); error scaling uses W(i)*ABS(error(i))/(1+ABS(Y(i))). IDID=0 succeeds, -1 reports LU failure, -2 callback interruption and -3 step underflow. Optional SOLOUT receives output/dense-output information; STATS(6) counts work. HMAX limits absolute HALF-step size and must be nonnegative. Inspect returned X and IDID before accepting Y as the endpoint state.",
+              "signature": "CALL stiff3(N,FUN,X,Y,XEND,JAC,H0,EPS,W,IDID,[SOLOUT],[STATS],[HMAX])",
+              "path": "src/stiff3_solver.f90",
+              "line_start": 89,
+              "line_end": 134,
+              "declarations": [
+                {
+                  "path": "src/stiff3_solver.f90",
+                  "line_start": 90,
+                  "line_end": 120
+                },
+                {
+                  "path": "src/stiff3_solver.f90",
+                  "line_start": 12,
+                  "line_end": 23
+                },
+                {
+                  "path": "src/stiff3_solver.f90",
+                  "line_start": 28,
+                  "line_end": 69
+                },
+                {
+                  "path": "src/stiff3_solver.f90",
+                  "line_start": 71,
+                  "line_end": 79
+                },
+                {
+                  "path": "src/stiff3_solver.f90",
+                  "line_start": 372,
+                  "line_end": 382
+                }
+              ]
+            },
+            {
+              "procedure": "stiff3",
+              "role": "public-entry-point",
+              "module": "stiff3_solver",
+              "summary": "Explicit-workspace STIFF3 overload uses the same autonomous FUN/JAC and half-step/tolerance conventions. Additionally provide REAL(STIFF3_WP) RWORK(N*(7+2*N)) and default INTEGER IWORK(N). These are scratch workspaces, not a multistep-history continuation handle. IDID/optional SOLOUT, STATS and HMAX follow the allocating overload; inspect IDID and returned X. Callback interruption returns current state and a suggested half-step through H0.",
+              "signature": "CALL stiff3(N,FUN,X,Y,XEND,JAC,H0,EPS,W,RWORK,IWORK,IDID,[SOLOUT],[STATS],[HMAX])",
+              "path": "src/stiff3_solver.f90",
+              "line_start": 139,
+              "line_end": 189,
+              "declarations": [
+                {
+                  "path": "src/stiff3_solver.f90",
+                  "line_start": 140,
+                  "line_end": 174
+                },
+                {
+                  "path": "src/stiff3_solver.f90",
+                  "line_start": 12,
+                  "line_end": 23
+                },
+                {
+                  "path": "src/stiff3_solver.f90",
+                  "line_start": 28,
+                  "line_end": 69
+                },
+                {
+                  "path": "src/stiff3_solver.f90",
+                  "line_start": 71,
+                  "line_end": 79
+                },
+                {
+                  "path": "src/stiff3_solver.f90",
+                  "line_start": 372,
+                  "line_end": 382
                 }
               ]
             }
@@ -9666,6 +10782,276 @@
         }
       ]
     },
+    "kdtree2": {
+      "id": "github:jmhodges/kdtree2",
+      "repository": {
+        "owner": "jmhodges",
+        "name": "kdtree2",
+        "url": "https://github.com/jmhodges/kdtree2"
+      },
+      "license": {
+        "label": "AFL-1.1 with additional citation provisions",
+        "spdx_expression": null,
+        "revision": "dc757acec3162948cb228c2e0457d10134ec1edc",
+        "reviewed_on": "2026-11-07",
+        "notes": "The source identifies Academic Free License version 1.1. Root LICENSE adds a Kennel citation provision and explains circumstances in which it is advisory rather than mandatory. Preserve the entire license/provisions rather than representing this as unqualified AFL-1.1.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jmhodges/kdtree2/blob/dc757acec3162948cb228c2e0457d10134ec1edc/LICENSE",
+            "sha256": "bed9a6b6028eeec1ae08dab6ac1d939183235d2da8d3a202dfad4b3f858d50ad"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jmhodges/kdtree2/blob/dc757acec3162948cb228c2e0457d10134ec1edc/README.md",
+            "sha256": "471ba31c909a0c9caee3a37200e62b4c7548e2c082685f144352677b98145c5f"
+          },
+          {
+            "path": "src-f90/kdtree2.f90",
+            "url": "https://github.com/jmhodges/kdtree2/blob/dc757acec3162948cb228c2e0457d10134ec1edc/src-f90/kdtree2.f90",
+            "sha256": "fc83829b66600b0581728b33d43748bbf06ad41d278914c9558a36730b0e2bde"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N5",
+          "level": "source-reviewed",
+          "revision": "dc757acec3162948cb228c2e0457d10134ec1edc",
+          "reviewed_on": "2026-11-07",
+          "notes": "The pointer-based k-d tree indexes column-oriented points, searches nearest neighbors and requires explicit lifetime management. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src-f90/kdtree2.f90",
+              "url": "https://github.com/jmhodges/kdtree2/blob/dc757acec3162948cb228c2e0457d10134ec1edc/src-f90/kdtree2.f90",
+              "sha256": "fc83829b66600b0581728b33d43748bbf06ad41d278914c9558a36730b0e2bde"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "kdtree2_create",
+              "role": "public-entry-point",
+              "module": "kdtree2_module",
+              "summary": "Create a pointer-owned tree from TARGET INPUT_DATA(D,N), one point per column. Declare TYPE(KDTREE2), POINTER :: TREE and assign with TREE=>KDTREE2_CREATE(...). Keep the input target allocated, unchanged and alive until destruction: the tree retains its pointer even when it also rearranges a copy. Match KDKIND (single precision in this upstream pin, not an assumed REAL64). Optional DIM searches only the first DIM coordinates; SORT defaults false and REARRANGE true. Use valid positive DIM<=D and N>=DIM; this implementation can STOP for an unsuitable shape.",
+              "signature": "TREE => kdtree2_create(INPUT_DATA,[DIM],[SORT],[REARRANGE])",
+              "path": "src-f90/kdtree2.f90",
+              "line_start": 607,
+              "line_end": 687,
+              "declarations": [
+                {
+                  "path": "src-f90/kdtree2.f90",
+                  "line_start": 631,
+                  "line_end": 637
+                },
+                {
+                  "path": "src-f90/kdtree2.f90",
+                  "line_start": 7,
+                  "line_end": 26
+                },
+                {
+                  "path": "src-f90/kdtree2.f90",
+                  "line_start": 34,
+                  "line_end": 40
+                },
+                {
+                  "path": "src-f90/kdtree2.f90",
+                  "line_start": 488,
+                  "line_end": 510
+                }
+              ]
+            },
+            {
+              "procedure": "kdtree2_n_nearest",
+              "role": "public-entry-point",
+              "module": "kdtree2_module",
+              "summary": "Query NN nearest neighbors to REAL(KDKIND) QV(:), whose length matches the tree search dimension. Supply 1<=NN<=number of points and a TARGET array of TYPE(KDTREE2_RESULT) with at least NN slots. Results contain one-based IDX values in the original input and DIS as squared Euclidean distance, not distance. Set SORT=true at construction if increasing-distance order is wanted. Shared module query state makes concurrent/reentrant searches unsafe; no per-query status argument is exposed and inadequate storage can STOP.",
+              "signature": "CALL kdtree2_n_nearest(TP,QV,NN,RESULTS)",
+              "path": "src-f90/kdtree2.f90",
+              "line_start": 1026,
+              "line_end": 1067,
+              "declarations": [
+                {
+                  "path": "src-f90/kdtree2.f90",
+                  "line_start": 1030,
+                  "line_end": 1033
+                },
+                {
+                  "path": "src-f90/kdtree2.f90",
+                  "line_start": 7,
+                  "line_end": 26
+                },
+                {
+                  "path": "src-f90/kdtree2.f90",
+                  "line_start": 34,
+                  "line_end": 40
+                },
+                {
+                  "path": "src-f90/kdtree2.f90",
+                  "line_start": 488,
+                  "line_end": 510
+                }
+              ]
+            },
+            {
+              "procedure": "kdtree2_destroy",
+              "role": "public-entry-point",
+              "module": "kdtree2_module",
+              "summary": "Destroy an associated TYPE(KDTREE2) pointer and its internal tree/index/rearranged storage. The original INPUT_DATA target is not deallocated. The pointer actual becomes disassociated through DEALLOCATE; other aliases to the destroyed tree or internal storage become invalid. Do not call this on an unassociated or already destroyed tree.",
+              "signature": "CALL kdtree2_destroy(TP)",
+              "path": "src-f90/kdtree2.f90",
+              "line_start": 984,
+              "line_end": 1024,
+              "declarations": [
+                {
+                  "path": "src-f90/kdtree2.f90",
+                  "line_start": 987,
+                  "line_end": 987
+                },
+                {
+                  "path": "src-f90/kdtree2.f90",
+                  "line_start": 7,
+                  "line_end": 26
+                },
+                {
+                  "path": "src-f90/kdtree2.f90",
+                  "line_start": 34,
+                  "line_end": 40
+                },
+                {
+                  "path": "src-f90/kdtree2.f90",
+                  "line_start": 488,
+                  "line_end": 510
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "differentia": {
+      "id": "github:nicholaswogan/differentia",
+      "repository": {
+        "owner": "Nicholaswogan",
+        "name": "Differentia",
+        "url": "https://github.com/Nicholaswogan/Differentia"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "2388e8ecf300a7bbc0904feab47023413464edf9",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies the Nicholas Wogan MIT grant for Differentia; the callback and dual-number source context is retained.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/Nicholaswogan/Differentia/blob/2388e8ecf300a7bbc0904feab47023413464edf9/LICENSE",
+            "sha256": "34ebcd4253215924b1805bbf39262bf8f38c349e0b2a1cd6e3628d1d5f3775db"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/Nicholaswogan/Differentia/blob/2388e8ecf300a7bbc0904feab47023413464edf9/README.md",
+            "sha256": "f31cb10a3491c31053be338f5583bde5d4b69df442d95bfc772cf906bf5cdb5d"
+          },
+          {
+            "path": "src/differentia_derivative.f90",
+            "url": "https://github.com/Nicholaswogan/Differentia/blob/2388e8ecf300a7bbc0904feab47023413464edf9/src/differentia_derivative.f90",
+            "sha256": "2e291639fc48df4b60e840153613ba3038fb04f7716abf1b692edbab1f248cc3"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "H1",
+          "level": "source-reviewed",
+          "revision": "2388e8ecf300a7bbc0904feab47023413464edf9",
+          "reviewed_on": "2026-11-07",
+          "notes": "The reexported scalar derivative and gradient wrappers seed dual values and evaluate user functions through overloaded arithmetic. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/differentia_derivative.f90",
+              "url": "https://github.com/Nicholaswogan/Differentia/blob/2388e8ecf300a7bbc0904feab47023413464edf9/src/differentia_derivative.f90",
+              "sha256": "2e291639fc48df4b60e840153613ba3038fb04f7716abf1b692edbab1f248cc3"
+            },
+            {
+              "path": "src/differentia.f90",
+              "url": "https://github.com/Nicholaswogan/Differentia/blob/2388e8ecf300a7bbc0904feab47023413464edf9/src/differentia.f90",
+              "sha256": "5013343acb458e930e924956075e70443620b53881f69297f367b2ad2c661ca5"
+            },
+            {
+              "path": "src/differentia_const.f90",
+              "url": "https://github.com/Nicholaswogan/Differentia/blob/2388e8ecf300a7bbc0904feab47023413464edf9/src/differentia_const.f90",
+              "sha256": "cb7df0614fb14fbe2494733b1f62242291938dc035221132f07372f1188503a6"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "derivative",
+              "role": "public-entry-point",
+              "module": "differentia",
+              "summary": "Forward automatic differentiation of a scalar function at REAL(WP) X, returning both scalar function F and derivative DFDX; WP is REAL64. Callback FCN takes and returns TYPE(DUAL), not REAL64. Import DIFFERENTIA in the callback so its supported overloaded arithmetic/intrinsics propagate derivative storage. This is not finite differences and has no step-size argument. The callback must preserve a seeded derivative component; the scalar wrapper exposes no status or shape-error channel. Nondifferentiable branches require problem-specific interpretation.",
+              "signature": "CALL derivative(FCN,X,F,DFDX)",
+              "path": "src/differentia_derivative.f90",
+              "line_start": 54,
+              "line_end": 63,
+              "declarations": [
+                {
+                  "path": "src/differentia_derivative.f90",
+                  "line_start": 55,
+                  "line_end": 58
+                },
+                {
+                  "path": "src/differentia.f90",
+                  "line_start": 1,
+                  "line_end": 7
+                },
+                {
+                  "path": "src/differentia_const.f90",
+                  "line_start": 1,
+                  "line_end": 4
+                },
+                {
+                  "path": "src/differentia_derivative.f90",
+                  "line_start": 21,
+                  "line_end": 47
+                }
+              ]
+            },
+            {
+              "procedure": "gradient",
+              "role": "public-entry-point",
+              "module": "differentia",
+              "summary": "Forward automatic differentiation of a vector-to-scalar callback. Supply REAL64 X(:), caller-sized DFDX(:) with SIZE(X), scalar F, and mandatory deferred-length allocatable CHARACTER ERR. A successful call leaves ERR unallocated; a shape error allocates a message and returns before establishing outputs. Callback FCN has TYPE(DUAL), TARGET, INTENT(IN) X(:) and returns one DUAL. It must propagate compatible derivative storage. Check ALLOCATED(ERR) before using F/DFDX; no numerical-error estimate is returned.",
+              "signature": "CALL gradient(FCN,X,F,DFDX,ERR)",
+              "path": "src/differentia_derivative.f90",
+              "line_start": 67,
+              "line_end": 103,
+              "declarations": [
+                {
+                  "path": "src/differentia_derivative.f90",
+                  "line_start": 68,
+                  "line_end": 73
+                },
+                {
+                  "path": "src/differentia.f90",
+                  "line_start": 1,
+                  "line_end": 7
+                },
+                {
+                  "path": "src/differentia_const.f90",
+                  "line_start": 1,
+                  "line_end": 4
+                },
+                {
+                  "path": "src/differentia_derivative.f90",
+                  "line_start": 21,
+                  "line_end": 47
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "fortran-utils": {
       "id": "github:certik/fortran-utils",
       "repository": {
@@ -10087,9 +11473,11 @@
       "specfun",
       "regridpack",
       "splpak",
+      "fitpack",
       "lsqr",
       "rklib",
       "ddeabm",
+      "dvode",
       "pikaia",
       "peaks",
       "powellopt",
@@ -10103,25 +11491,31 @@
       "polyroots-fortran",
       "geodesic-fortran",
       "simulated-annealing",
+      "odrpack95",
       "pointsets",
       "integrate_fortran",
       "rndgen-fortran",
+      "blas-interface",
       "fsparse",
       "geompack",
       "minres",
       "fordiff",
       "specfunc-fullerton",
       "lib_statistics",
+      "nlopt-f",
       "forimage",
       "fastconv",
       "gaussjacobiquad",
       "iapws",
+      "linalg",
+      "nonlin",
       "fjsample",
       "interpolation",
       "fastmath",
       "fortsa",
       "kiss",
       "fortran_cubatures",
+      "stiff3",
       "forinv",
       "dcuhre",
       "foreig",
@@ -10135,6 +11529,8 @@
       "formatmul",
       "lookup-table-fortran",
       "rng-fortran",
+      "kdtree2",
+      "differentia",
       "fortran-utils",
       "fortranlib"
     ],
@@ -10172,23 +11568,18 @@
       "forgex",
       "ferror",
       "m_framework",
-      "fitpack",
       "mpfun2020-var1",
-      "dvode",
       "io-fortran-library",
       "collections",
       "quaff",
       "neural-fortran",
       "lightkrylov",
       "fortran-sqlite3",
-      "odrpack95",
       "flint",
       "fortran-string-to-real",
       "ad_dnsvm",
-      "blas-interface",
       "twopnt",
       "astro-fortran",
-      "nlopt-f",
       "daskr",
       "ffilesystem",
       "utf8-f",
@@ -10202,8 +11593,6 @@
       "m_calculator",
       "befor64",
       "fortran-zlib",
-      "linalg",
-      "nonlin",
       "maptran3d",
       "fortran-pcre2",
       "ciaaw",
@@ -10225,7 +11614,6 @@
       "graphstruc",
       "fortran-messagepack",
       "fmmap",
-      "stiff3",
       "sparse_fortran",
       "psqp",
       "optgra",
@@ -10293,9 +11681,7 @@
       "enclose",
       "fortran-fast-float",
       "config-fortran",
-      "kdtree2",
       "penf",
-      "differentia",
       "coretran",
       "npy-for-fortran",
       "ftl",
