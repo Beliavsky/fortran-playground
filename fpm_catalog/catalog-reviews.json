@@ -2,8 +2,164 @@
   "schema_version": 1,
   "publisher": "fortran-gams-catalog-independent-reviews",
   "source_url": "https://beliavsky.github.io/fortran-gams-catalog/reviewed-metadata.json",
-  "source_snapshot_id": "sha256:be9fdc8998e4523f386179581bcf5dc42796bc1660187b05c18f8bba761f2213",
+  "source_snapshot_id": "sha256:66d17926d81ad4dedec3f7af7d226bf2a18b8a9137c54a81c229fbb695355908",
   "packages": {
+    "test-drive": {
+      "id": "github:fortran-lang/test-drive",
+      "repository": {
+        "owner": "fortran-lang",
+        "name": "test-drive",
+        "url": "https://github.com/fortran-lang/test-drive"
+      },
+      "license": {
+        "label": "Apache-2.0 OR MIT",
+        "spdx_expression": "Apache-2.0 OR MIT",
+        "revision": "791484a79a24cbc00be6f74e53c6e030cb75efe2",
+        "reviewed_on": "2026-11-07",
+        "notes": "README explicitly offers Apache-2.0 or MIT; both root licenses are included. These are source interface checks, not newly executed unit tests.",
+        "evidence": [
+          {
+            "path": "LICENSE-MIT",
+            "url": "https://github.com/fortran-lang/test-drive/blob/791484a79a24cbc00be6f74e53c6e030cb75efe2/LICENSE-MIT",
+            "sha256": "d34e0235cb56e251ea1c23f9c803857267d083459aeedcd06b538c0335d69e46"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/fortran-lang/test-drive/blob/791484a79a24cbc00be6f74e53c6e030cb75efe2/README.md",
+            "sha256": "002bbb43dd35f5d8e280694d2a52fe51199f442451641a02d0fc4cc50ae639af"
+          },
+          {
+            "path": "src/testdrive.F90",
+            "url": "https://github.com/fortran-lang/test-drive/blob/791484a79a24cbc00be6f74e53c6e030cb75efe2/src/testdrive.F90",
+            "sha256": "99c9c3b1a8a73631f681d4da4b306691ece6d4c3eba5a9fbae48767daeafe2f5"
+          },
+          {
+            "path": "LICENSE-Apache",
+            "url": "https://github.com/fortran-lang/test-drive/blob/791484a79a24cbc00be6f74e53c6e030cb75efe2/LICENSE-Apache",
+            "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "S3",
+          "level": "source-reviewed",
+          "revision": "791484a79a24cbc00be6f74e53c6e030cb75efe2",
+          "reviewed_on": "2026-11-07",
+          "notes": "Named test registration, scalar numeric checks and suite execution expose callback and failure-count contracts. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/testdrive.F90",
+              "url": "https://github.com/fortran-lang/test-drive/blob/791484a79a24cbc00be6f74e53c6e030cb75efe2/src/testdrive.F90",
+              "sha256": "99c9c3b1a8a73631f681d4da4b306691ece6d4c3eba5a9fbae48767daeafe2f5"
+            },
+            {
+              "path": "LICENSE-MIT",
+              "url": "https://github.com/fortran-lang/test-drive/blob/791484a79a24cbc00be6f74e53c6e030cb75efe2/LICENSE-MIT",
+              "sha256": "d34e0235cb56e251ea1c23f9c803857267d083459aeedcd06b538c0335d69e46"
+            },
+            {
+              "path": "LICENSE-Apache",
+              "url": "https://github.com/fortran-lang/test-drive/blob/791484a79a24cbc00be6f74e53c6e030cb75efe2/LICENSE-Apache",
+              "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "new_unittest",
+              "role": "public-entry-point",
+              "module": "testdrive",
+              "summary": "Return TYPE(UNITTEST_TYPE) with the supplied NAME and TEST procedure. TEST follows TEST_INTERFACE: an allocatable TYPE(ERROR_TYPE), INTENT(OUT) argument, unallocated on success. The object retains a procedure pointer, so the callback must remain callable when the suite runs. Optional SHOULD_FAIL registers an expected failure; it does not skip the test.",
+              "signature": "VALUE = new_unittest(NAME,TEST,[SHOULD_FAIL])",
+              "path": "src/testdrive.F90",
+              "line_start": 899,
+              "line_end": 917,
+              "declarations": [
+                {
+                  "path": "src/testdrive.F90",
+                  "line_start": 902,
+                  "line_end": 911
+                },
+                {
+                  "path": "src/testdrive.F90",
+                  "line_start": 121,
+                  "line_end": 135
+                },
+                {
+                  "path": "src/testdrive.F90",
+                  "line_start": 286,
+                  "line_end": 332
+                }
+              ]
+            },
+            {
+              "procedure": "check",
+              "role": "public-entry-point",
+              "module": "testdrive",
+              "summary": "Double-precision scalar overload of CHECK, using SELECTED_REAL_KIND(15). ERROR is allocatable TYPE(ERROR_TYPE), INTENT(OUT): allocated means failure. Default THR is EPSILON(EXPECTED); default REL is false (absolute error). REL=true divides by ABS(EXPECTED), so use a nonzero reference or a separate absolute check near zero. Return from a test after ALLOCATED(ERROR) instead of overwriting its failure with another check. Unhandled error objects have a fatal finalizer; let the test runner process them.",
+              "signature": "CALL check(ERROR,ACTUAL,EXPECTED,[MESSAGE],[MORE],[THR],[REL])",
+              "path": "src/testdrive.F90",
+              "line_start": 1012,
+              "line_end": 1079,
+              "declarations": [
+                {
+                  "path": "src/testdrive.F90",
+                  "line_start": 1015,
+                  "line_end": 1033
+                },
+                {
+                  "path": "src/testdrive.F90",
+                  "line_start": 121,
+                  "line_end": 135
+                },
+                {
+                  "path": "src/testdrive.F90",
+                  "line_start": 286,
+                  "line_end": 332
+                },
+                {
+                  "path": "src/testdrive.F90",
+                  "line_start": 169,
+                  "line_end": 199
+                },
+                {
+                  "path": "src/testdrive.F90",
+                  "line_start": 2700,
+                  "line_end": 2718
+                }
+              ]
+            },
+            {
+              "procedure": "run_testsuite",
+              "role": "public-entry-point",
+              "module": "testdrive",
+              "summary": "COLLECT must allocate TYPE(UNITTEST_TYPE) TESTSUITE(:) through COLLECT_INTERFACE. UNIT is a connected output unit. Initialize STAT=0 before the call; it is an INOUT failed-test count, not a newly assigned status. Optional PARALLEL defaults true, but actual parallel execution needs an OpenMP-enabled build; use PARALLEL=.false. for callbacks with shared mutable state. JUNIT is optional TYPE(JUNIT_OUTPUT). Check STAT and choose the process exit status in the main program.",
+              "signature": "CALL run_testsuite(COLLECT,UNIT,STAT,[PARALLEL],[JUNIT])",
+              "path": "src/testdrive.F90",
+              "line_start": 456,
+              "line_end": 499,
+              "declarations": [
+                {
+                  "path": "src/testdrive.F90",
+                  "line_start": 459,
+                  "line_end": 471
+                },
+                {
+                  "path": "src/testdrive.F90",
+                  "line_start": 121,
+                  "line_end": 135
+                },
+                {
+                  "path": "src/testdrive.F90",
+                  "line_start": 286,
+                  "line_end": 332
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "json-fortran": {
       "id": "github:jacobwilliams/json-fortran",
       "repository": {
@@ -2422,6 +2578,166 @@
         }
       ]
     },
+    "flist": {
+      "id": "github:jacobwilliams/flist",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "flist",
+        "url": "https://github.com/jacobwilliams/flist"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "84ced24bccf894921a36ccc56721e53420c744c4",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Jacob Williams BSD three-clause terms; retain key/list module provenance notices.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jacobwilliams/flist/blob/84ced24bccf894921a36ccc56721e53420c744c4/LICENSE",
+            "sha256": "b7ad178c8b11e8ab965d340232be5b244cdc8474bc620d7e2cc838849d2412f4"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/flist/blob/84ced24bccf894921a36ccc56721e53420c744c4/README.md",
+            "sha256": "3fd09e1a19732fc4d1043f30e4a3c428468d09f1758ebbddf0f9b53fbdf0f0cd"
+          },
+          {
+            "path": "src/linked_list_module.f90",
+            "url": "https://github.com/jacobwilliams/flist/blob/84ced24bccf894921a36ccc56721e53420c744c4/src/linked_list_module.f90",
+            "sha256": "827866c496483635ee37732105fa29fe2e7d5bbc29f49519911ba25a831d4488"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N4",
+          "level": "source-reviewed",
+          "revision": "84ced24bccf894921a36ccc56721e53420c744c4",
+          "reviewed_on": "2026-11-07",
+          "notes": "The polymorphic linked list clones owned values and destroys nodes under explicit ownership policies. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/linked_list_module.f90",
+              "url": "https://github.com/jacobwilliams/flist/blob/84ced24bccf894921a36ccc56721e53420c744c4/src/linked_list_module.f90",
+              "sha256": "827866c496483635ee37732105fa29fe2e7d5bbc29f49519911ba25a831d4488"
+            },
+            {
+              "path": "src/key_module.f90",
+              "url": "https://github.com/jacobwilliams/flist/blob/84ced24bccf894921a36ccc56721e53420c744c4/src/key_module.f90",
+              "sha256": "836b500df8a44f575b67003622a36968bd468d2d59e9cd966ae410771ee47df0"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "add_clone",
+              "role": "public-entry-point",
+              "module": "linked_list_module",
+              "derived_type": "list",
+              "summary": "Declare TYPE(list) :: solver from linked_list_module. Store a scalar polymorphic VALUE by sourced allocation under KEY, replacing an existing entry with the same key. Keys must be default INTEGER, nonblank character, or an extension of KEY_MODULE::KEY_CLASS; unsupported/blank keys ERROR STOP. A sourced copy is not a deep copy of pointer components. Prefer plain values or types with correctly managed ownership; cloned data is deallocated/finalized on removal or destruction. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%add_clone(KEY,VALUE)",
+              "path": "src/linked_list_module.f90",
+              "line_start": 534,
+              "line_end": 548,
+              "declarations": [
+                {
+                  "path": "src/linked_list_module.f90",
+                  "line_start": 538,
+                  "line_end": 540
+                },
+                {
+                  "path": "src/linked_list_module.f90",
+                  "line_start": 21,
+                  "line_end": 88
+                },
+                {
+                  "path": "src/linked_list_module.f90",
+                  "line_start": 447,
+                  "line_end": 490
+                }
+              ]
+            },
+            {
+              "procedure": "destroy",
+              "role": "public-entry-point",
+              "module": "linked_list_module",
+              "derived_type": "list",
+              "summary": "Declare TYPE(list) :: solver from linked_list_module. Destroy all nodes and reset the list. Cloned values and pointer entries whose DESTROY_ON_DELETE policy is true are deallocated/finalized. For entries added with that policy false, the caller retains cleanup responsibility. Borrowed node/value pointers must not be used after destruction. This type also has a finalizer; avoid unmanaged copies of list objects containing pointer-linked storage. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%destroy()",
+              "path": "src/linked_list_module.f90",
+              "line_start": 264,
+              "line_end": 277,
+              "declarations": [
+                {
+                  "path": "src/linked_list_module.f90",
+                  "line_start": 268,
+                  "line_end": 268
+                },
+                {
+                  "path": "src/linked_list_module.f90",
+                  "line_start": 21,
+                  "line_end": 88
+                },
+                {
+                  "path": "src/linked_list_module.f90",
+                  "line_start": 447,
+                  "line_end": 490
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "N5",
+          "level": "source-reviewed",
+          "revision": "84ced24bccf894921a36ccc56721e53420c744c4",
+          "reviewed_on": "2026-11-07",
+          "notes": "Key lookup returns a borrowed polymorphic pointer or a null pointer for a missing entry. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/linked_list_module.f90",
+              "url": "https://github.com/jacobwilliams/flist/blob/84ced24bccf894921a36ccc56721e53420c744c4/src/linked_list_module.f90",
+              "sha256": "827866c496483635ee37732105fa29fe2e7d5bbc29f49519911ba25a831d4488"
+            },
+            {
+              "path": "src/key_module.f90",
+              "url": "https://github.com/jacobwilliams/flist/blob/84ced24bccf894921a36ccc56721e53420c744c4/src/key_module.f90",
+              "sha256": "836b500df8a44f575b67003622a36968bd468d2d59e9cd966ae410771ee47df0"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "get",
+              "role": "public-entry-point",
+              "module": "linked_list_module",
+              "derived_type": "list",
+              "summary": "Declare TYPE(list) :: solver from linked_list_module. Return CLASS(*), POINTER VALUE associated with the stored object; missing KEY yields a null pointer. Check ASSOCIATED(VALUE), then SELECT TYPE before consuming it. This is a borrowed pointer, not a clone; replacement, removal or list destruction invalidates it. The key must have the same supported dynamic type as the stored key. Character keys are case-sensitive by default, configurable through the LIST constructor. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%get(KEY,VALUE)",
+              "path": "src/linked_list_module.f90",
+              "line_start": 387,
+              "line_end": 404,
+              "declarations": [
+                {
+                  "path": "src/linked_list_module.f90",
+                  "line_start": 391,
+                  "line_end": 393
+                },
+                {
+                  "path": "src/linked_list_module.f90",
+                  "line_start": 21,
+                  "line_end": 88
+                },
+                {
+                  "path": "src/linked_list_module.f90",
+                  "line_start": 447,
+                  "line_end": 490
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "daglib": {
       "id": "github:jacobwilliams/daglib",
       "repository": {
@@ -2549,6 +2865,172 @@
                   "path": "src/dag_module.F90",
                   "line_start": 78,
                   "line_end": 85
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "argv-fortran": {
+      "id": "github:jacobwilliams/argv-fortran",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "argv-fortran",
+        "url": "https://github.com/jacobwilliams/argv-fortran"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "8135f30876162714e7632d7665a30642f89d5ce1",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Jacob Williams BSD three-clause terms.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jacobwilliams/argv-fortran/blob/8135f30876162714e7632d7665a30642f89d5ce1/LICENSE",
+            "sha256": "dd06b27f44a5465c6563638851f509725e61ac9cebb8eef9c28fd6f7410252e3"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/argv-fortran/blob/8135f30876162714e7632d7665a30642f89d5ce1/README.md",
+            "sha256": "1301771eb79d372ee9771948c9fb0e9247ffa74a25b95142eb47af6d6e72c054"
+          },
+          {
+            "path": "src/argv_module.f90",
+            "url": "https://github.com/jacobwilliams/argv-fortran/blob/8135f30876162714e7632d7665a30642f89d5ce1/src/argv_module.f90",
+            "sha256": "078e7de2bc6bed0b6d3c31c963a27bd74dcb4bd36b0fe941bf98fed02ab630d6"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "R",
+          "level": "source-reviewed",
+          "revision": "8135f30876162714e7632d7665a30642f89d5ce1",
+          "reviewed_on": "2026-11-07",
+          "notes": "ARGV wraps command-argument retrieval with an automatically sized result. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/argv_module.f90",
+              "url": "https://github.com/jacobwilliams/argv-fortran/blob/8135f30876162714e7632d7665a30642f89d5ce1/src/argv_module.f90",
+              "sha256": "078e7de2bc6bed0b6d3c31c963a27bd74dcb4bd36b0fe941bf98fed02ab630d6"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "argv",
+              "role": "public-entry-point",
+              "module": "argv_module",
+              "summary": "Return the ARG_NUM command-line argument as allocatable deferred-length CHARACTER, with default INTEGER ARG_NUM>=0. Zero requests the command name; 1..COMMAND_ARGUMENT_COUNT() are program arguments. The routine sizes the result using GET_COMMAND_ARGUMENT then retrieves it. It exposes no STATUS; validate the index yourself and do not equate an empty result with a uniquely diagnosed error. This reads arguments already passed to the executable; it does not parse options or the program standard-input text.",
+              "signature": "VALUE = argv(ARG_NUM)",
+              "path": "src/argv_module.f90",
+              "line_start": 21,
+              "line_end": 32,
+              "declarations": [
+                {
+                  "path": "src/argv_module.f90",
+                  "line_start": 23,
+                  "line_end": 24
+                },
+                {
+                  "path": "src/argv_module.f90",
+                  "line_start": 6,
+                  "line_end": 12
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "popen-fortran": {
+      "id": "github:jacobwilliams/popen-fortran",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "popen-fortran",
+        "url": "https://github.com/jacobwilliams/popen-fortran"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "574076fff90dcfa9a16b2b2a21d92448ca6cd40b",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies BSD three-clause terms; POSIX C runtime availability is a separate platform prerequisite.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jacobwilliams/popen-fortran/blob/574076fff90dcfa9a16b2b2a21d92448ca6cd40b/LICENSE",
+            "sha256": "5ed3bdf774f81bc2488851d4820c251cf8018619f1aeefc04c54895456940340"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/popen-fortran/blob/574076fff90dcfa9a16b2b2a21d92448ca6cd40b/README.md",
+            "sha256": "4a67b8b19b8cd779b44fcffb106330b09779bf32329e0368ca9040076a7017b2"
+          },
+          {
+            "path": "src/popen_module.f90",
+            "url": "https://github.com/jacobwilliams/popen-fortran/blob/574076fff90dcfa9a16b2b2a21d92448ca6cd40b/src/popen_module.f90",
+            "sha256": "4b92783a24239612adf6b426ed0ac9ee7c5d778aecbe7d0d52da9ed17d5ddea8"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "R",
+          "level": "source-reviewed",
+          "revision": "574076fff90dcfa9a16b2b2a21d92448ca6cd40b",
+          "reviewed_on": "2026-11-07",
+          "notes": "The public POPEN wrapper captures subprocess stdout; C2F_STRING converts a scalar null-terminated buffer. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/popen_module.f90",
+              "url": "https://github.com/jacobwilliams/popen-fortran/blob/574076fff90dcfa9a16b2b2a21d92448ca6cd40b/src/popen_module.f90",
+              "sha256": "4b92783a24239612adf6b426ed0ac9ee7c5d778aecbe7d0d52da9ed17d5ddea8"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "get_command_as_string",
+              "role": "public-entry-point",
+              "module": "popen_module",
+              "summary": "Run COMMAND through the C/POSIX POPEN shell interface and return captured standard output as an allocatable string, preserving line endings. Standard error is not captured unless the command redirects it. Failure to open the pipe gives empty text, indistinguishable from a successful silent command; PCLOSE status is discarded. Requires a compatible popen C runtime (Windows usually uses a differently named API). This executes a subprocess, so playground process/filesystem limits still apply; it does not provide unrestricted hosted shell access.",
+              "signature": "VALUE = get_command_as_string(COMMAND)",
+              "path": "src/popen_module.f90",
+              "line_start": 76,
+              "line_end": 98,
+              "declarations": [
+                {
+                  "path": "src/popen_module.f90",
+                  "line_start": 78,
+                  "line_end": 79
+                },
+                {
+                  "path": "src/popen_module.f90",
+                  "line_start": 5,
+                  "line_end": 45
+                }
+              ]
+            },
+            {
+              "procedure": "c2f_string",
+              "role": "public-entry-point",
+              "module": "popen_module",
+              "summary": "Return an allocatable Fortran string cut before the first C_NULL_CHAR; if there is no null, copy the whole input. C is a scalar CHARACTER(LEN=*) actual, not TYPE(C_PTR) or a rank-one C-character array. Pass a valid Fortran character buffer rather than an arbitrary C address. This conversion does not execute commands or strip newline characters.",
+              "signature": "VALUE = c2f_string(C)",
+              "path": "src/popen_module.f90",
+              "line_start": 53,
+              "line_end": 70,
+              "declarations": [
+                {
+                  "path": "src/popen_module.f90",
+                  "line_start": 55,
+                  "line_end": 56
+                },
+                {
+                  "path": "src/popen_module.f90",
+                  "line_start": 5,
+                  "line_end": 45
                 }
               ]
             }
@@ -3210,6 +3692,152 @@
                   "path": "src/M_sets.F90",
                   "line_start": 263,
                   "line_end": 270
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "m_sort": {
+      "id": "github:urbanjost/m_sort",
+      "repository": {
+        "owner": "urbanjost",
+        "name": "M_sort",
+        "url": "https://github.com/urbanjost/M_sort"
+      },
+      "license": {
+        "label": "MIT; compact quicksort component CC-BY-3.0",
+        "spdx_expression": "MIT AND CC-BY-3.0",
+        "revision": "0a1dfd05a642590d4b02af9242fe0b03dfe9b3a5",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE is MIT; the reviewed compact-quicksort source explicitly retains a CC-BY-3.0 attribution notice from Modern Fortran in Practice. Preserve component terms rather than treating all routines as solely MIT.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/urbanjost/M_sort/blob/0a1dfd05a642590d4b02af9242fe0b03dfe9b3a5/LICENSE",
+            "sha256": "e79f1d3ce93cb14866fe8d5806c66c8fa23e0a09b74ec1ca4d789b4d88c2d318"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/urbanjost/M_sort/blob/0a1dfd05a642590d4b02af9242fe0b03dfe9b3a5/README.md",
+            "sha256": "efb53fc57a9134b64d9cb49766e2792729f04dfc8eed429dac51578bac50a91e"
+          },
+          {
+            "path": "src/M_sort.F90",
+            "url": "https://github.com/urbanjost/M_sort/blob/0a1dfd05a642590d4b02af9242fe0b03dfe9b3a5/src/M_sort.F90",
+            "sha256": "baeffdd339de3e00aa9fb052304fd2903f40464461d40e64545d0a97322bb4dc"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N6",
+          "level": "source-reviewed",
+          "revision": "0a1dfd05a642590d4b02af9242fe0b03dfe9b3a5",
+          "reviewed_on": "2026-11-07",
+          "notes": "Shell sorting, indexed REAL64 quicksort and compact descending INT32 quicksort expose distinct mutation/order contracts. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/M_sort.F90",
+              "url": "https://github.com/urbanjost/M_sort/blob/0a1dfd05a642590d4b02af9242fe0b03dfe9b3a5/src/M_sort.F90",
+              "sha256": "baeffdd339de3e00aa9fb052304fd2903f40464461d40e64545d0a97322bb4dc"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "sort_shell",
+              "role": "public-entry-point",
+              "module": "M_sort",
+              "summary": "Default INTEGER in-place overload of SORT_SHELL. ORDER is required: a leading a/A selects ascending order; other initial characters select descending order. Use a nonempty explicit string such as \"ascending\" or \"descending\". No permutation or status is returned and the routine does not promise stable ordering.",
+              "signature": "CALL sort_shell(IARRAY,ORDER)",
+              "path": "src/M_sort.F90",
+              "line_start": 559,
+              "line_end": 635,
+              "declarations": [
+                {
+                  "path": "src/M_sort.F90",
+                  "line_start": 563,
+                  "line_end": 564
+                },
+                {
+                  "path": "src/M_sort.F90",
+                  "line_start": 31,
+                  "line_end": 50
+                },
+                {
+                  "path": "src/M_sort.F90",
+                  "line_start": 61,
+                  "line_end": 93
+                },
+                {
+                  "path": "src/M_sort.F90",
+                  "line_start": 132,
+                  "line_end": 140
+                }
+              ]
+            },
+            {
+              "procedure": "sort_quick_rx",
+              "role": "public-entry-point",
+              "module": "M_sort",
+              "summary": "REAL64/INT32 overload returns a one-based ascending permutation INDX(:), leaving DATA(:) unchanged; read sorted values as DATA(INDX). Allocate INDX with SIZE(DATA). A shorter index array emits a message and sorts only the corresponding prefix rather than reporting an error status. Use finite data; equal-key stability and NaN ordering are not established. The implementation uses a fixed partition stack.",
+              "signature": "CALL sort_quick_rx(DATA,INDX)",
+              "path": "src/M_sort.F90",
+              "line_start": 1980,
+              "line_end": 2153,
+              "declarations": [
+                {
+                  "path": "src/M_sort.F90",
+                  "line_start": 1984,
+                  "line_end": 1985
+                },
+                {
+                  "path": "src/M_sort.F90",
+                  "line_start": 31,
+                  "line_end": 50
+                },
+                {
+                  "path": "src/M_sort.F90",
+                  "line_start": 61,
+                  "line_end": 93
+                },
+                {
+                  "path": "src/M_sort.F90",
+                  "line_start": 132,
+                  "line_end": 140
+                }
+              ]
+            },
+            {
+              "procedure": "sort_quick_compact",
+              "role": "public-entry-point",
+              "module": "M_sort",
+              "summary": "INT32 overload of SORT_QUICK_COMPACT returns a same-size INTEGER(INT32) array in DESCENDING order, preserving DATA. It recursively partitions values greater than the pivot before the pivot and smaller/equal values after it. The convenience function allocates temporary arrays and is not a stable or guaranteed bounded-memory sort. This component carries its own Creative Commons Attribution 3.0 notice in the source.",
+              "signature": "VALUE = sort_quick_compact(DATA)",
+              "path": "src/M_sort.F90",
+              "line_start": 4048,
+              "line_end": 4069,
+              "declarations": [
+                {
+                  "path": "src/M_sort.F90",
+                  "line_start": 4058,
+                  "line_end": 4059
+                },
+                {
+                  "path": "src/M_sort.F90",
+                  "line_start": 31,
+                  "line_end": 50
+                },
+                {
+                  "path": "src/M_sort.F90",
+                  "line_start": 61,
+                  "line_end": 93
+                },
+                {
+                  "path": "src/M_sort.F90",
+                  "line_start": 132,
+                  "line_end": 140
                 }
               ]
             }
@@ -3981,6 +4609,398 @@
         }
       ]
     },
+    "fortran_test_helper": {
+      "id": "github:jchristopherson/fortran_test_helper",
+      "repository": {
+        "owner": "jchristopherson",
+        "name": "fortran_test_helper",
+        "url": "https://github.com/jchristopherson/fortran_test_helper"
+      },
+      "license": {
+        "label": "GPL-3.0 (manifest); GNU GPL version 3 text",
+        "spdx_expression": "GPL-3.0-only",
+        "revision": "1557b1485d8a5b042862042552f1e1a34552ca5e",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE is GPL version 3 and fpm.toml declares GPL-3.0. No project-specific later-version election was identified in the reviewed files; retain the upstream notices.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jchristopherson/fortran_test_helper/blob/1557b1485d8a5b042862042552f1e1a34552ca5e/LICENSE",
+            "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jchristopherson/fortran_test_helper/blob/1557b1485d8a5b042862042552f1e1a34552ca5e/README.md",
+            "sha256": "c9f611794df9bade2f7b9d80242dfae0b6011b013ecbb48979d2e1ca7d8cc90b"
+          },
+          {
+            "path": "src/fth_asserts.f90",
+            "url": "https://github.com/jchristopherson/fortran_test_helper/blob/1557b1485d8a5b042862042552f1e1a34552ca5e/src/fth_asserts.f90",
+            "sha256": "f849146beb3603fc4f612bb071bbf0f2e81fcdcdca287afee0fef6ee24041757"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "R2",
+          "level": "source-reviewed",
+          "revision": "1557b1485d8a5b042862042552f1e1a34552ca5e",
+          "reviewed_on": "2026-11-07",
+          "notes": "Scalar/vector REAL64 assertion predicates expose absolute thresholds and an optional mismatch index. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/fth_asserts.f90",
+              "url": "https://github.com/jchristopherson/fortran_test_helper/blob/1557b1485d8a5b042862042552f1e1a34552ca5e/src/fth_asserts.f90",
+              "sha256": "f849146beb3603fc4f612bb071bbf0f2e81fcdcdca287afee0fef6ee24041757"
+            },
+            {
+              "path": "src/fortran_test_helper.f90",
+              "url": "https://github.com/jchristopherson/fortran_test_helper/blob/1557b1485d8a5b042862042552f1e1a34552ca5e/src/fortran_test_helper.f90",
+              "sha256": "3de0ea924f3dbc5a4658efdc5758d3d8d6e6c567e5794cbec2f24c869460a584"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/jchristopherson/fortran_test_helper/blob/1557b1485d8a5b042862042552f1e1a34552ca5e/fpm.toml",
+              "sha256": "0d01913268f432ddc5befffb5c387ca67e667549a6f3a9042478ba34d80391d2"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "assert",
+              "role": "public-entry-point",
+              "module": "fortran_test_helper",
+              "summary": "REAL64 scalar overload of ASSERT returns LOGICAL; it does not terminate or print an assertion failure. The comparison is ABS(X-Y)<TOL, with default SQRT(EPSILON(REAL64)). TOL is an absolute threshold, not a relative tolerance. Equality at the threshold fails this scalar overload. Supply finite inputs and a positive tolerance; no NaN/Infinity validation is performed. The public generic is declared in the parent module and implemented in this submodule.",
+              "signature": "VALUE = assert(X,Y,[TOL])",
+              "path": "src/fth_asserts.f90",
+              "line_start": 112,
+              "line_end": 128,
+              "declarations": [
+                {
+                  "path": "src/fth_asserts.f90",
+                  "line_start": 114,
+                  "line_end": 116
+                },
+                {
+                  "path": "src/fortran_test_helper.f90",
+                  "line_start": 2,
+                  "line_end": 13
+                },
+                {
+                  "path": "src/fortran_test_helper.f90",
+                  "line_start": 100,
+                  "line_end": 122
+                },
+                {
+                  "path": "src/fortran_test_helper.f90",
+                  "line_start": 145,
+                  "line_end": 156
+                }
+              ]
+            },
+            {
+              "procedure": "assert",
+              "role": "public-entry-point",
+              "module": "fortran_test_helper",
+              "summary": "REAL64 vector overload returns LOGICAL. Optional INT32 FLAG is zero on success, -1 for size mismatch, or the one-based first element whose absolute difference exceeds TOL. Unlike the scalar overload, equality at the tolerance is accepted here. Default tolerance is SQRT(EPSILON(REAL64)); it is absolute. Empty conformable vectors succeed. Nonfinite inputs need caller validation because a NaN difference can evade the greater-than test.",
+              "signature": "VALUE = assert(X,Y,[TOL],[FLAG])",
+              "path": "src/fth_asserts.f90",
+              "line_start": 131,
+              "line_end": 167,
+              "declarations": [
+                {
+                  "path": "src/fth_asserts.f90",
+                  "line_start": 133,
+                  "line_end": 136
+                },
+                {
+                  "path": "src/fortran_test_helper.f90",
+                  "line_start": 2,
+                  "line_end": 13
+                },
+                {
+                  "path": "src/fortran_test_helper.f90",
+                  "line_start": 100,
+                  "line_end": 122
+                },
+                {
+                  "path": "src/fortran_test_helper.f90",
+                  "line_start": 145,
+                  "line_end": 156
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "m_list": {
+      "id": "github:urbanjost/m_list",
+      "repository": {
+        "owner": "urbanjost",
+        "name": "M_list",
+        "url": "https://github.com/urbanjost/M_list"
+      },
+      "license": {
+        "label": "Unlicense",
+        "spdx_expression": "Unlicense",
+        "revision": "c7836531355f0aa95296bd668f0a3d60969ea5fc",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE is the Unlicense public-domain dedication with its warranty disclaimer; source procedure notices also mark public-domain provenance.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/urbanjost/M_list/blob/c7836531355f0aa95296bd668f0a3d60969ea5fc/LICENSE",
+            "sha256": "f40d08f39a7fbaf627c062ede8033c31b58da5afc0cf0c13a756aeff6c5be721"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/urbanjost/M_list/blob/c7836531355f0aa95296bd668f0a3d60969ea5fc/README.md",
+            "sha256": "b4de795486aa709fdb7374d455c3fecf87ebd8cb66575afb83113776c9e00646"
+          },
+          {
+            "path": "src/M_list.f90",
+            "url": "https://github.com/urbanjost/M_list/blob/c7836531355f0aa95296bd668f0a3d60969ea5fc/src/M_list.f90",
+            "sha256": "809f501121464b7c5d580314fe0de2d7fdf22e3856221d16c18cc4ee9e287781"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N5",
+          "level": "source-reviewed",
+          "revision": "c7836531355f0aa95296bd668f0a3d60969ea5fc",
+          "reviewed_on": "2026-11-07",
+          "notes": "Integer LOCATE searches a descending array and distinguishes existing values from insertion points. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/M_list.f90",
+              "url": "https://github.com/urbanjost/M_list/blob/c7836531355f0aa95296bd668f0a3d60969ea5fc/src/M_list.f90",
+              "sha256": "809f501121464b7c5d580314fe0de2d7fdf22e3856221d16c18cc4ee9e287781"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "locate",
+              "role": "public-entry-point",
+              "module": "M_list",
+              "summary": "Default INTEGER overload requires an allocatable LIST(:) sorted in DESCENDING order. PLACE>0 identifies a match; PLACE<0 gives the insertion position as -PLACE. An unallocated list is allocated empty, yielding -1. Optional IER reports detected errors (zero normal); without IER an error can STOP. ERRMSG is caller-sized character storage. The routine does not establish that every input is sorted; validate the ordering before lookup.",
+              "signature": "CALL locate(LIST,VALUE,PLACE,[IER],[ERRMSG])",
+              "path": "src/M_list.f90",
+              "line_start": 652,
+              "line_end": 731,
+              "declarations": [
+                {
+                  "path": "src/M_list.f90",
+                  "line_start": 660,
+                  "line_end": 664
+                },
+                {
+                  "path": "src/M_list.f90",
+                  "line_start": 230,
+                  "line_end": 273
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "N4",
+          "level": "source-reviewed",
+          "revision": "c7836531355f0aa95296bd668f0a3d60969ea5fc",
+          "reviewed_on": "2026-11-07",
+          "notes": "Integer INSERT/REMOVE grow or shrink an allocatable list at a caller-selected position. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/M_list.f90",
+              "url": "https://github.com/urbanjost/M_list/blob/c7836531355f0aa95296bd668f0a3d60969ea5fc/src/M_list.f90",
+              "sha256": "809f501121464b7c5d580314fe0de2d7fdf22e3856221d16c18cc4ee9e287781"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "insert",
+              "role": "public-entry-point",
+              "module": "M_list",
+              "summary": "Insert default INTEGER VALUE into allocatable LIST at positive PLACE, reallocating as necessary. Use ABS(PLACE) from a failed LOCATE call; do not insert again when LOCATE found an existing key unless duplicates are intended. An empty/unallocated list becomes [VALUE]; positions beyond the end append. This routine does not search or sort and has no status output.",
+              "signature": "CALL insert(LIST,VALUE,PLACE)",
+              "path": "src/M_list.f90",
+              "line_start": 1347,
+              "line_end": 1373,
+              "declarations": [
+                {
+                  "path": "src/M_list.f90",
+                  "line_start": 1351,
+                  "line_end": 1353
+                },
+                {
+                  "path": "src/M_list.f90",
+                  "line_start": 230,
+                  "line_end": 273
+                }
+              ]
+            },
+            {
+              "procedure": "remove",
+              "role": "public-entry-point",
+              "module": "M_list",
+              "summary": "Remove one element at positive, one-based PLACE from an allocatable default INTEGER LIST. An out-of-range position is ignored. Removal shrinks/reallocates the list, so old aliases must not be retained. The normal debug-off path turns an unallocated list into an empty list; allocate it explicitly before enabling module debug output, which evaluates SIZE(LIST) before that guard. This is deletion by position rather than by value.",
+              "signature": "CALL remove(LIST,PLACE)",
+              "path": "src/M_list.f90",
+              "line_start": 881,
+              "line_end": 901,
+              "declarations": [
+                {
+                  "path": "src/M_list.f90",
+                  "line_start": 884,
+                  "line_end": 885
+                },
+                {
+                  "path": "src/M_list.f90",
+                  "line_start": 230,
+                  "line_end": 273
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "m_color": {
+      "id": "github:urbanjost/m_color",
+      "repository": {
+        "owner": "urbanjost",
+        "name": "M_color",
+        "url": "https://github.com/urbanjost/M_color"
+      },
+      "license": {
+        "label": "Unlicense",
+        "spdx_expression": "Unlicense",
+        "revision": "2e52d6ee6fde8e94ac17ab2cc54cbc497c15962c",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies the Unlicense public-domain dedication; preserve source author and color-table provenance notices.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/urbanjost/M_color/blob/2e52d6ee6fde8e94ac17ab2cc54cbc497c15962c/LICENSE",
+            "sha256": "f40d08f39a7fbaf627c062ede8033c31b58da5afc0cf0c13a756aeff6c5be721"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/urbanjost/M_color/blob/2e52d6ee6fde8e94ac17ab2cc54cbc497c15962c/README.md",
+            "sha256": "334f52c19c0245add495c0521fea962eab70f2bd454658c069fa640d269000ea"
+          },
+          {
+            "path": "src/M_color.f90",
+            "url": "https://github.com/urbanjost/M_color/blob/2e52d6ee6fde8e94ac17ab2cc54cbc497c15962c/src/M_color.f90",
+            "sha256": "2468c0994199e8d0ddd33172627a34ae8cde19456a81244483ac4f8f9096ecd7"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "Q",
+          "level": "source-reviewed",
+          "revision": "2e52d6ee6fde8e94ac17ab2cc54cbc497c15962c",
+          "reviewed_on": "2026-11-07",
+          "notes": "The public color utilities convert component models, look up names and calculate weighted grayscale intensity. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/M_color.f90",
+              "url": "https://github.com/urbanjost/M_color/blob/2e52d6ee6fde8e94ac17ab2cc54cbc497c15962c/src/M_color.f90",
+              "sha256": "2468c0994199e8d0ddd33172627a34ae8cde19456a81244483ac4f8f9096ecd7"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "hue",
+              "role": "public-entry-point",
+              "module": "M_color",
+              "summary": "Convert default REAL color triples between RGB, CMY, HLS/HSL, HVS/HSV and YIQ. Most components use 0..100, hue uses degrees 0..360, and YIQ chroma uses its documented signed ranges. STATUS=0 is normal conversion; -1 is a trivial copy or component swap, not a failure. Positive codes identify invalid ranges or unknown models. Identical models are copied without range validation. This is a basic model conversion, not ICC color management or gamma-correct color science.",
+              "signature": "CALL hue(MODEI,CLR1I,CLR2I,CLR3I,MODEO,CLR1O,CLR2O,CLR3O,STATUS)",
+              "path": "src/M_color.f90",
+              "line_start": 372,
+              "line_end": 461,
+              "declarations": [
+                {
+                  "path": "src/M_color.f90",
+                  "line_start": 376,
+                  "line_end": 380
+                },
+                {
+                  "path": "src/M_color.f90",
+                  "line_start": 195,
+                  "line_end": 214
+                },
+                {
+                  "path": "src/M_color.f90",
+                  "line_start": 249,
+                  "line_end": 277
+                }
+              ]
+            },
+            {
+              "procedure": "color_name2rgb",
+              "role": "public-entry-point",
+              "module": "M_color",
+              "summary": "Look up a case-folded color NAME (or documented numeric-string alias), returning default REAL R/G/B in 0..100 rather than byte values. Request optional caller-sized ECHONAME (at least 20 characters) to detect \"Unknown\". Unknown input returns white, so white output alone cannot establish a successful lookup. The built-in name table is used; no X server or online color service is contacted.",
+              "signature": "CALL color_name2rgb(NAME,R,G,B,[ECHONAME])",
+              "path": "src/M_color.f90",
+              "line_start": 1360,
+              "line_end": 1941,
+              "declarations": [
+                {
+                  "path": "src/M_color.f90",
+                  "line_start": 1364,
+                  "line_end": 1366
+                },
+                {
+                  "path": "src/M_color.f90",
+                  "line_start": 195,
+                  "line_end": 214
+                },
+                {
+                  "path": "src/M_color.f90",
+                  "line_start": 249,
+                  "line_end": 277
+                },
+                {
+                  "path": "src/M_color.f90",
+                  "line_start": 1933,
+                  "line_end": 1940
+                }
+              ]
+            },
+            {
+              "procedure": "rgbmono",
+              "role": "public-entry-point",
+              "module": "M_color",
+              "summary": "Compute default REAL grayscale RI=0.30*RR+0.59*RG+0.11*RB for RGB components in 0..100. Required STATUS is zero for valid ranges and one for out-of-range values. RI is still computed on invalid input, so inspect STATUS before using it. This legacy weighted intensity is not a gamma-linearized perceptual luminance conversion.",
+              "signature": "CALL rgbmono(RR,RG,RB,RI,STATUS)",
+              "path": "src/M_color.f90",
+              "line_start": 879,
+              "line_end": 895,
+              "declarations": [
+                {
+                  "path": "src/M_color.f90",
+                  "line_start": 887,
+                  "line_end": 889
+                },
+                {
+                  "path": "src/M_color.f90",
+                  "line_start": 195,
+                  "line_end": 214
+                },
+                {
+                  "path": "src/M_color.f90",
+                  "line_start": 249,
+                  "line_end": 277
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "fmin": {
       "id": "github:jacobwilliams/fmin",
       "repository": {
@@ -4719,6 +5739,130 @@
                   "path": "src/forgex.F90",
                   "line_start": 13,
                   "line_end": 54
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "ferror": {
+      "id": "github:jchristopherson/ferror",
+      "repository": {
+        "owner": "jchristopherson",
+        "name": "ferror",
+        "url": "https://github.com/jchristopherson/ferror"
+      },
+      "license": {
+        "label": "GPL-3.0 (manifest); GNU GPL version 3 text",
+        "spdx_expression": "GPL-3.0-only",
+        "revision": "9d6c9750f5c14ef2c806104ea8dfdfc9ce91efed",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE is GNU GPL version 3 and the manifest declares GPL-3.0. No project-specific later-version election was identified in the reviewed files.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jchristopherson/ferror/blob/9d6c9750f5c14ef2c806104ea8dfdfc9ce91efed/LICENSE",
+            "sha256": "589ed823e9a84c56feb95ac58e7cf384626b9cbf4fda2a907bc36e103de1bad2"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jchristopherson/ferror/blob/9d6c9750f5c14ef2c806104ea8dfdfc9ce91efed/README.md",
+            "sha256": "15590d078d508249f25475036c8994cc34ebc0e98b3308d273edcc597acf810e"
+          },
+          {
+            "path": "src/ferror.f90",
+            "url": "https://github.com/jchristopherson/ferror/blob/9d6c9750f5c14ef2c806104ea8dfdfc9ce91efed/src/ferror.f90",
+            "sha256": "26769a1b5c90988ac4a9308150b0c74c2a6267a5bb4c943184a70861cb2b91a0"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "R3",
+          "level": "source-reviewed",
+          "revision": "9d6c9750f5c14ef2c806104ea8dfdfc9ce91efed",
+          "reviewed_on": "2026-11-07",
+          "notes": "ERRORS configures fatal/recoverable reporting, records an error and resets stored error state. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/ferror.f90",
+              "url": "https://github.com/jchristopherson/ferror/blob/9d6c9750f5c14ef2c806104ea8dfdfc9ce91efed/src/ferror.f90",
+              "sha256": "26769a1b5c90988ac4a9308150b0c74c2a6267a5bb4c943184a70861cb2b91a0"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/jchristopherson/ferror/blob/9d6c9750f5c14ef2c806104ea8dfdfc9ce91efed/fpm.toml",
+              "sha256": "dac0fdf4469e750728fa7208102fb9bf5b78dbb2e119d7901e1ba82454913ce4"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "set_exit_on_error",
+              "role": "public-entry-point",
+              "module": "ferror",
+              "derived_type": "errors",
+              "summary": "Declare TYPE(errors) :: solver from ferror. Set logical X=false before reporting recoverable errors. The default is true, so REPORT_ERROR normally terminates the process. Disabling exit does not suppress printing or logging, nor does it establish a returned numeric error code for the caller. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%set_exit_on_error(X)",
+              "path": "src/ferror.f90",
+              "line_start": 327,
+              "line_end": 336,
+              "declarations": [
+                {
+                  "path": "src/ferror.f90",
+                  "line_start": 330,
+                  "line_end": 334
+                },
+                {
+                  "path": "src/ferror.f90",
+                  "line_start": 2,
+                  "line_end": 44
+                }
+              ]
+            },
+            {
+              "procedure": "report_error",
+              "role": "public-entry-point",
+              "module": "ferror",
+              "derived_type": "errors",
+              "summary": "Declare TYPE(errors) :: solver from ferror. FCN and MSG are character strings; FLAG is INTEGER(INT32). Records the error, prints unless suppressed, appends to the configured log file, invokes any registered cleanup callback, and exits by default. Use SET_EXIT_ON_ERROR(.false.) beforehand for recovery. Optional CLASS(*) OBJ is passed to a registered cleanup callback; it is not itself a callback. Suppressing printing does not disable the log-file write. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%report_error(FCN,MSG,FLAG,[OBJ])",
+              "path": "src/ferror.f90",
+              "line_start": 87,
+              "line_end": 150,
+              "declarations": [
+                {
+                  "path": "src/ferror.f90",
+                  "line_start": 91,
+                  "line_end": 102
+                },
+                {
+                  "path": "src/ferror.f90",
+                  "line_start": 2,
+                  "line_end": 44
+                }
+              ]
+            },
+            {
+              "procedure": "reset_error_status",
+              "role": "public-entry-point",
+              "module": "ferror",
+              "derived_type": "errors",
+              "summary": "Declare TYPE(errors) :: solver from ferror. Clear the stored error flag and error-found state, and deallocate the error message/function name. It does not reset warning state, change the exit/printing policy, or erase the log file. No status actual is returned. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%reset_error_status()",
+              "path": "src/ferror.f90",
+              "line_start": 262,
+              "line_end": 271,
+              "declarations": [
+                {
+                  "path": "src/ferror.f90",
+                  "line_start": 265,
+                  "line_end": 266
+                },
+                {
+                  "path": "src/ferror.f90",
+                  "line_start": 2,
+                  "line_end": 44
                 }
               ]
             }
@@ -11645,6 +12789,122 @@
         }
       ]
     },
+    "fortime": {
+      "id": "github:gha3mi/fortime",
+      "repository": {
+        "owner": "gha3mi",
+        "name": "fortime",
+        "url": "https://github.com/gha3mi/fortime"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "5a31be5a47bf2c0bf49c4d0fb7b67415ccc0a1e7",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies BSD three-clause terms. This review covers the intrinsic wall clock only, not OpenMP/MPI deployment support.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/gha3mi/fortime/blob/5a31be5a47bf2c0bf49c4d0fb7b67415ccc0a1e7/LICENSE",
+            "sha256": "a2914220053cb78801bcccb5cf0cd0ec2862a5643f187ed6d1f109e8652f2368"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/gha3mi/fortime/blob/5a31be5a47bf2c0bf49c4d0fb7b67415ccc0a1e7/README.md",
+            "sha256": "47e044898d74a397cd0e20b52aa0375ea451469bf85625b6211b10baa277cad5"
+          },
+          {
+            "path": "src/fortime.F90",
+            "url": "https://github.com/gha3mi/fortime/blob/5a31be5a47bf2c0bf49c4d0fb7b67415ccc0a1e7/src/fortime.F90",
+            "sha256": "25c0130c5908356e253b94bd4bbc626e341545bf86d9ce3f2d16ea93e89dee72"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "S3",
+          "level": "source-reviewed",
+          "revision": "5a31be5a47bf2c0bf49c4d0fb7b67415ccc0a1e7",
+          "reviewed_on": "2026-11-07",
+          "notes": "The SYSTEM_CLOCK timing pair measures an explicit code interval with optional loop averaging and output control. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/fortime.F90",
+              "url": "https://github.com/gha3mi/fortime/blob/5a31be5a47bf2c0bf49c4d0fb7b67415ccc0a1e7/src/fortime.F90",
+              "sha256": "25c0130c5908356e253b94bd4bbc626e341545bf86d9ce3f2d16ea93e89dee72"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "timer_start",
+              "role": "public-entry-point",
+              "module": "fortime",
+              "derived_type": "timer",
+              "summary": "Declare TYPE(timer) :: solver from fortime. Start/reset the SYSTEM_CLOCK wall timer. Match with TIMER_STOP on the same object; CPU, OpenMP and MPI clocks have separate start/stop methods. The object stores INT64 ticks and REAL64 seconds. An unavailable clock writes an error and leaves the timer unstarted; no status argument is exposed. Starting again discards the previous start/pause interval. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%timer_start()",
+              "path": "src/fortime.F90",
+              "line_start": 288,
+              "line_end": 307,
+              "declarations": [
+                {
+                  "path": "src/fortime.F90",
+                  "line_start": 289,
+                  "line_end": 290
+                },
+                {
+                  "path": "src/fortime.F90",
+                  "line_start": 44,
+                  "line_end": 58
+                },
+                {
+                  "path": "src/fortime.F90",
+                  "line_start": 77,
+                  "line_end": 112
+                },
+                {
+                  "path": "src/fortime.F90",
+                  "line_start": 133,
+                  "line_end": 157
+                }
+              ]
+            },
+            {
+              "procedure": "timer_stop",
+              "role": "public-entry-point",
+              "module": "fortime",
+              "derived_type": "timer",
+              "summary": "Declare TYPE(timer) :: solver from fortime. Stop a running, unpaused SYSTEM_CLOCK timer and update solver%ELAPSED_TIME in seconds. Optional default-integer NLOOPS must be positive and divides elapsed time to give a per-loop average. PRINT defaults true; PRINT=.false. stores the result without normal timing output. MESSAGE, COLOR and RFMT control printed text. Invalid state/options report errors and may leave the previous result unchanged; there is no returned status. This result excludes remote compilation, network and queue time outside the measured Fortran region. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%timer_stop([NLOOPS],[MESSAGE],[PRINT],[COLOR],[RFMT])",
+              "path": "src/fortime.F90",
+              "line_start": 320,
+              "line_end": 375,
+              "declarations": [
+                {
+                  "path": "src/fortime.F90",
+                  "line_start": 321,
+                  "line_end": 332
+                },
+                {
+                  "path": "src/fortime.F90",
+                  "line_start": 44,
+                  "line_end": 58
+                },
+                {
+                  "path": "src/fortime.F90",
+                  "line_start": 77,
+                  "line_end": 112
+                },
+                {
+                  "path": "src/fortime.F90",
+                  "line_start": 133,
+                  "line_end": 157
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "lookup-table-fortran": {
       "id": "github:jannisteunissen/lookup_table_fortran",
       "repository": {
@@ -12783,6 +14043,7 @@
   },
   "report": {
     "matched": [
+      "test-drive",
       "json-fortran",
       "toml-f",
       "fftpack",
@@ -12797,18 +14058,25 @@
       "mersenne-twister-fortran",
       "fortran-search-and-sort",
       "stringsort",
+      "flist",
       "daglib",
+      "argv-fortran",
+      "popen-fortran",
       "fortran_function_parser",
       "numdiff",
       "csv-fortran",
       "datetime-fortran",
       "m_sets",
+      "m_sort",
       "orderpack",
       "fortran-shlex",
       "fortran-primes",
       "functional-fortran",
       "forcolormap",
       "rational_number",
+      "fortran_test_helper",
+      "m_list",
+      "m_color",
       "fmin",
       "slsqp",
       "lbfgsb",
@@ -12816,6 +14084,7 @@
       "regridpack",
       "splpak",
       "forgex",
+      "ferror",
       "fitpack",
       "lsqr",
       "rklib",
@@ -12871,6 +14140,7 @@
       "econ-toolchain",
       "fordot",
       "formatmul",
+      "fortime",
       "lookup-table-fortran",
       "rng-fortran",
       "fortran-fast-float",
@@ -12882,28 +14152,19 @@
     "revision_mismatches": [],
     "no_independent_review": [
       "fortran-lapack",
-      "test-drive",
       "pyplot-fortran",
       "m_strings",
       "stdlib",
-      "flist",
-      "argv-fortran",
-      "popen-fortran",
       "m_io",
       "m_time",
-      "m_sort",
       "m_cli2",
       "m_attr",
       "jonquil",
       "fhash",
       "forwarddiff",
       "kinds",
-      "fortran_test_helper",
       "m_match",
-      "m_list",
-      "m_color",
       "fortran-astrodynamics-toolkit",
-      "ferror",
       "m_framework",
       "mpfun2020-var1",
       "io-fortran-library",
@@ -13010,7 +14271,6 @@
       "for_fifo_queue",
       "jeyemhex-regex",
       "string-utf-8",
-      "fortime",
       "fassert",
       "errstat",
       "slinked-list",

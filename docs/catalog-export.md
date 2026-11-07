@@ -43,7 +43,7 @@ interfaces. Package details also show review scope, limitations and explicitly
 unchecked calling sketches. Signatures link to pinned argument declarations.
 The broader catalog remains the source for these reviews; new reviews need to be
 recorded there before they can appear here. Matching independent reviews currently
-cover 95 selected packages: PowellOpt, lbfgsb, fmin, minpack, quadpack, pchip,
+cover 105 selected packages: PowellOpt, lbfgsb, fmin, minpack, quadpack, pchip,
 fftpack, specfun, specfunc-fullerton, carlson-elliptic-integrals, fortran-bessels,
 polyroots-fortran, lsmr, minres, kiss, fstats, forinv, foreig, forsvd, fordot,
 formatmul, fjsample, fortsa, lib_statistics, econ-toolchain, roots-fortran,
@@ -58,8 +58,9 @@ stringsort, codata, fortran_cubatures, dcuhre, rkf45, geompack,
 rndgen-fortran, forcolormap, fsparse, iapws, rational_number, forimage,
 dvode, fitpack, nonlin, linalg, kdtree2, differentia, stiff3, blas-interface,
 odrpack95, nlopt-f, csv-fortran, json-fortran, toml-f, datetime-fortran, m_sets,
-functional-fortran, fortran-fast-float, fortran-string-to-real, fortran-shlex
-and forgex.
+functional-fortran, fortran-fast-float, fortran-string-to-real, fortran-shlex,
+forgex, test-drive, fortran_test_helper, ferror, fortime, argv-fortran,
+popen-fortran, m_sort, m_list, m_color and flist.
 Package detail pages show calling sequences
 directly, with links to argument, callback and precision declarations; cards keep
 their interfaces expandable. Each sequence links to matching checked examples
