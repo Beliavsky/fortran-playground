@@ -2,7 +2,7 @@
   "schema_version": 1,
   "publisher": "fortran-gams-catalog-independent-reviews",
   "source_url": "https://beliavsky.github.io/fortran-gams-catalog/reviewed-metadata.json",
-  "source_snapshot_id": "sha256:8261b32d6ecd844470cba48e947d80dd52597e27b0fb74f6b61705479385bbfb",
+  "source_snapshot_id": "sha256:1a10e9a3777e6bafc1c31728d9897f79f10cfe3bf220d03da2926e9f7c87339e",
   "packages": {
     "test-drive": {
       "id": "github:fortran-lang/test-drive",
@@ -4986,6 +4986,191 @@
         }
       ]
     },
+    "fhash": {
+      "id": "github:lkedward/fhash",
+      "repository": {
+        "owner": "LKedward",
+        "name": "fhash",
+        "url": "https://github.com/LKedward/fhash"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "3230739066bd828cd2aa49eca48327a607d57732",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Laurence Kedward MIT terms; key and data-container modules retain their implementation notices.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/LKedward/fhash/blob/3230739066bd828cd2aa49eca48327a607d57732/LICENSE",
+            "sha256": "0daa33b24df173c7e07b616966f468593c25a7c886ca95a705627cbc5c31ec7a"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/LKedward/fhash/blob/3230739066bd828cd2aa49eca48327a607d57732/README.md",
+            "sha256": "a1b9c169e767d2f48ad5340257f3031a06dcc9fd4228175c57bd110eadbc5b6b"
+          },
+          {
+            "path": "src/fhash_tbl.f90",
+            "url": "https://github.com/LKedward/fhash/blob/3230739066bd828cd2aa49eca48327a607d57732/src/fhash_tbl.f90",
+            "sha256": "06d10ecbbd8fd4f78369c240ba6b0ca21503ad9506ff8d9ddfa9a132192875b8"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N4",
+          "level": "source-reviewed",
+          "revision": "3230739066bd828cd2aa49eca48327a607d57732",
+          "reviewed_on": "2026-11-07",
+          "notes": "The hash table allocates buckets and stores polymorphic scalar values with copy/pointer policies. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/fhash_tbl.f90",
+              "url": "https://github.com/LKedward/fhash/blob/3230739066bd828cd2aa49eca48327a607d57732/src/fhash_tbl.f90",
+              "sha256": "06d10ecbbd8fd4f78369c240ba6b0ca21503ad9506ff8d9ddfa9a132192875b8"
+            },
+            {
+              "path": "src/fhash.f90",
+              "url": "https://github.com/LKedward/fhash/blob/3230739066bd828cd2aa49eca48327a607d57732/src/fhash.f90",
+              "sha256": "2f463890b9e8a1d57b0c7480b57db057b5577a40a2b55cc13c87c2ffff08a09e"
+            },
+            {
+              "path": "src/fhash_data_container.f90",
+              "url": "https://github.com/LKedward/fhash/blob/3230739066bd828cd2aa49eca48327a607d57732/src/fhash_data_container.f90",
+              "sha256": "dab8f36f011e8f831462374d3a7f792977f7d07b0112d624b6be2acc1ccea119"
+            },
+            {
+              "path": "src/fhash_sll.f90",
+              "url": "https://github.com/LKedward/fhash/blob/3230739066bd828cd2aa49eca48327a607d57732/src/fhash_sll.f90",
+              "sha256": "20d20e599e5f6e774109d9cc80e0b581b48761aedc37689ba925fa441a5678c6"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "allocate",
+              "role": "public-entry-point",
+              "module": "fhash",
+              "derived_type": "fhash_tbl_t",
+              "summary": "Declare TYPE(fhash_tbl_t) :: solver from fhash. Allocate the bucket array, optionally with positive default INTEGER SIZE; the default is 127 buckets. This is initial allocation, not resizing: calling again on an allocated table can fail. SET also allocates the default table lazily. The table has a finalizer and stores owned/pointer values according to its insertion policy. The passed object TBL is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%allocate([SIZE])",
+              "path": "src/fhash_tbl.f90",
+              "line_start": 72,
+              "line_end": 87,
+              "declarations": [
+                {
+                  "path": "src/fhash_tbl.f90",
+                  "line_start": 75,
+                  "line_end": 79
+                },
+                {
+                  "path": "src/fhash.f90",
+                  "line_start": 1,
+                  "line_end": 13
+                },
+                {
+                  "path": "src/fhash_tbl.f90",
+                  "line_start": 9,
+                  "line_end": 67
+                }
+              ]
+            },
+            {
+              "procedure": "set",
+              "role": "public-entry-point",
+              "module": "fhash",
+              "derived_type": "fhash_tbl_t",
+              "summary": "Declare TYPE(fhash_tbl_t) :: solver from fhash. Store/update a scalar VALUE under a CLASS(FHASH_KEY_T) key, usually constructed with FHASH_KEY(character/integer/array). The raw character key is not accepted directly by this binding. Default insertion copies the value; optional POINTER=true stores an association instead, so the original TARGET must outlive its use by the table. Derived-type pointer components are not automatically deep-copied. No status argument is exposed. The passed object TBL is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%set(KEY,VALUE,[POINTER])",
+              "path": "src/fhash_tbl.f90",
+              "line_start": 227,
+              "line_end": 249,
+              "declarations": [
+                {
+                  "path": "src/fhash_tbl.f90",
+                  "line_start": 230,
+                  "line_end": 239
+                },
+                {
+                  "path": "src/fhash.f90",
+                  "line_start": 1,
+                  "line_end": 13
+                },
+                {
+                  "path": "src/fhash_tbl.f90",
+                  "line_start": 9,
+                  "line_end": 67
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "N5",
+          "level": "source-reviewed",
+          "revision": "3230739066bd828cd2aa49eca48327a607d57732",
+          "reviewed_on": "2026-11-07",
+          "notes": "The REAL64 getter performs key lookup with explicit missing-key and type-mismatch status. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/fhash_tbl.f90",
+              "url": "https://github.com/LKedward/fhash/blob/3230739066bd828cd2aa49eca48327a607d57732/src/fhash_tbl.f90",
+              "sha256": "06d10ecbbd8fd4f78369c240ba6b0ca21503ad9506ff8d9ddfa9a132192875b8"
+            },
+            {
+              "path": "src/fhash.f90",
+              "url": "https://github.com/LKedward/fhash/blob/3230739066bd828cd2aa49eca48327a607d57732/src/fhash.f90",
+              "sha256": "2f463890b9e8a1d57b0c7480b57db057b5577a40a2b55cc13c87c2ffff08a09e"
+            },
+            {
+              "path": "src/fhash_data_container.f90",
+              "url": "https://github.com/LKedward/fhash/blob/3230739066bd828cd2aa49eca48327a607d57732/src/fhash_data_container.f90",
+              "sha256": "dab8f36f011e8f831462374d3a7f792977f7d07b0112d624b6be2acc1ccea119"
+            },
+            {
+              "path": "src/fhash_sll.f90",
+              "url": "https://github.com/LKedward/fhash/blob/3230739066bd828cd2aa49eca48327a607d57732/src/fhash_sll.f90",
+              "sha256": "20d20e599e5f6e774109d9cc80e0b581b48761aedc37689ba925fa441a5678c6"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "get",
+              "role": "public-entry-point",
+              "module": "fhash",
+              "derived_type": "fhash_tbl_t",
+              "summary": "Declare TYPE(fhash_tbl_t) :: solver from fhash. REAL64 scalar overload of GET copies a value from the key. Request optional default INTEGER STAT: zero means success; negative values distinguish an unallocated table, absent key and wrong stored type. Inspect STAT before consuming VALUE, which can remain undefined on failure. A numerically convertible REAL32/INTEGER value is not automatically a stored REAL64 value. This copies a scalar; GET_PTR is a distinct API with borrowed-storage rules. The passed object TBL is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%get(KEY,VALUE,[STAT])",
+              "path": "src/fhash_tbl.f90",
+              "line_start": 466,
+              "line_end": 474,
+              "declarations": [
+                {
+                  "path": "src/fhash_tbl.f90",
+                  "line_start": 467,
+                  "line_end": 470
+                },
+                {
+                  "path": "src/fhash.f90",
+                  "line_start": 1,
+                  "line_end": 13
+                },
+                {
+                  "path": "src/fhash_tbl.f90",
+                  "line_start": 9,
+                  "line_end": 67
+                },
+                {
+                  "path": "src/fhash_tbl.f90",
+                  "line_start": 314,
+                  "line_end": 368
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "functional-fortran": {
       "id": "github:wavebitscientific/functional-fortran",
       "repository": {
@@ -5093,6 +5278,135 @@
                   "path": "src/functional.f90",
                   "line_start": 477,
                   "line_end": 482
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "forwarddiff": {
+      "id": "github:nicholaswogan/forwarddiff",
+      "repository": {
+        "owner": "Nicholaswogan",
+        "name": "forwarddiff",
+        "url": "https://github.com/Nicholaswogan/forwarddiff"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "2388e8ecf300a7bbc0904feab47023413464edf9",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Nicholas Wogan MIT terms. This repository is reviewed independently of the differently pinned original Differentia package.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/Nicholaswogan/forwarddiff/blob/2388e8ecf300a7bbc0904feab47023413464edf9/LICENSE",
+            "sha256": "34ebcd4253215924b1805bbf39262bf8f38c349e0b2a1cd6e3628d1d5f3775db"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/Nicholaswogan/forwarddiff/blob/2388e8ecf300a7bbc0904feab47023413464edf9/README.md",
+            "sha256": "f31cb10a3491c31053be338f5583bde5d4b69df442d95bfc772cf906bf5cdb5d"
+          },
+          {
+            "path": "src/differentia_derivative.f90",
+            "url": "https://github.com/Nicholaswogan/forwarddiff/blob/2388e8ecf300a7bbc0904feab47023413464edf9/src/differentia_derivative.f90",
+            "sha256": "2e291639fc48df4b60e840153613ba3038fb04f7716abf1b692edbab1f248cc3"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "H1",
+          "level": "source-reviewed",
+          "revision": "2388e8ecf300a7bbc0904feab47023413464edf9",
+          "reviewed_on": "2026-11-07",
+          "notes": "The real64 derivative/gradient wrappers seed forward dual numbers through explicit scalar/vector callback interfaces. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/differentia_derivative.f90",
+              "url": "https://github.com/Nicholaswogan/forwarddiff/blob/2388e8ecf300a7bbc0904feab47023413464edf9/src/differentia_derivative.f90",
+              "sha256": "2e291639fc48df4b60e840153613ba3038fb04f7716abf1b692edbab1f248cc3"
+            },
+            {
+              "path": "src/differentia.f90",
+              "url": "https://github.com/Nicholaswogan/forwarddiff/blob/2388e8ecf300a7bbc0904feab47023413464edf9/src/differentia.f90",
+              "sha256": "5013343acb458e930e924956075e70443620b53881f69297f367b2ad2c661ca5"
+            },
+            {
+              "path": "src/differentia_const.f90",
+              "url": "https://github.com/Nicholaswogan/forwarddiff/blob/2388e8ecf300a7bbc0904feab47023413464edf9/src/differentia_const.f90",
+              "sha256": "cb7df0614fb14fbe2494733b1f62242291938dc035221132f07372f1188503a6"
+            },
+            {
+              "path": "src/differentia_dual.f90",
+              "url": "https://github.com/Nicholaswogan/forwarddiff/blob/2388e8ecf300a7bbc0904feab47023413464edf9/src/differentia_dual.f90",
+              "sha256": "7daa929cebe5774fa6250b345ed6e2cb756f9bda34bead7eb49e7a474fe5d83a"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "derivative",
+              "role": "public-entry-point",
+              "module": "differentia",
+              "summary": "Compute a scalar function value F and derivative DFDX at REAL(WP) X, where WP=REAL64. FCN must accept and return TYPE(DUAL) with DERIVATIVE_SIG, and use the library overloaded operations so derivative seeds propagate. An ordinary REAL-to-REAL callback is incompatible. Import the needed dual operations from DIFFERENTIA when using ONLY lists. This performs forward AD, not finite differencing, and has no error output for singular/nondifferentiable expressions.",
+              "signature": "CALL derivative(FCN,X,F,DFDX)",
+              "path": "src/differentia_derivative.f90",
+              "line_start": 54,
+              "line_end": 63,
+              "declarations": [
+                {
+                  "path": "src/differentia_derivative.f90",
+                  "line_start": 55,
+                  "line_end": 58
+                },
+                {
+                  "path": "src/differentia.f90",
+                  "line_start": 1,
+                  "line_end": 7
+                },
+                {
+                  "path": "src/differentia_const.f90",
+                  "line_start": 1,
+                  "line_end": 14
+                },
+                {
+                  "path": "src/differentia_derivative.f90",
+                  "line_start": 21,
+                  "line_end": 49
+                }
+              ]
+            },
+            {
+              "procedure": "gradient",
+              "role": "public-entry-point",
+              "module": "differentia",
+              "summary": "Compute a scalar function F and gradient DFDX(:) at REAL64 vector X(:). Preallocate DFDX with SIZE(X). FCN follows GRADIENT_SIG, including TYPE(DUAL), TARGET, INTENT(IN) X(:) and a dual scalar result. Required ERR is allocatable CHARACTER, INTENT(OUT), unallocated on normal completion; inspect ALLOCATED(ERR) before reading outputs. The implementation seeds an N-component derivative array for each input and is not a constant-memory reverse-mode gradient.",
+              "signature": "CALL gradient(FCN,X,F,DFDX,ERR)",
+              "path": "src/differentia_derivative.f90",
+              "line_start": 67,
+              "line_end": 103,
+              "declarations": [
+                {
+                  "path": "src/differentia_derivative.f90",
+                  "line_start": 68,
+                  "line_end": 73
+                },
+                {
+                  "path": "src/differentia.f90",
+                  "line_start": 1,
+                  "line_end": 7
+                },
+                {
+                  "path": "src/differentia_const.f90",
+                  "line_start": 1,
+                  "line_end": 14
+                },
+                {
+                  "path": "src/differentia_derivative.f90",
+                  "line_start": 21,
+                  "line_end": 49
                 }
               ]
             }
@@ -11462,6 +11776,134 @@
         }
       ]
     },
+    "kissfft-f": {
+      "id": "github:zoziha/kissfft-f",
+      "repository": {
+        "owner": "zoziha",
+        "name": "kissfft-f",
+        "url": "https://github.com/zoziha/kissfft-f"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "b89c5e1d0aff9993db79200fc94a467948ff3923",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE and source SPDX identifiers supply BSD three-clause terms. The bundled/native KISS FFT C implementation retains its own notices; this review does not establish every ABI/build configuration.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/zoziha/kissfft-f/blob/b89c5e1d0aff9993db79200fc94a467948ff3923/LICENSE",
+            "sha256": "2d8d7cdfc594e057ceae4fc96dac8cf058b6a0302f45d69694f29f1b5214819d"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/zoziha/kissfft-f/blob/b89c5e1d0aff9993db79200fc94a467948ff3923/README.md",
+            "sha256": "6d39791def7e13615930bc71eb280ccd185ab4203ffcbe7c791c6032c934a71c"
+          },
+          {
+            "path": "src/kissfft-f.f90",
+            "url": "https://github.com/zoziha/kissfft-f/blob/b89c5e1d0aff9993db79200fc94a467948ff3923/src/kissfft-f.f90",
+            "sha256": "b8284decd81fc5adc335c127c055f0280b941a6cba72945b86e8e4664bb48a26"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "J1",
+          "level": "source-reviewed",
+          "revision": "b89c5e1d0aff9993db79200fc94a467948ff3923",
+          "reviewed_on": "2026-11-07",
+          "notes": "The public FFT object initializes/executes a scalar-precision complex transform and FFTSHIFT reorders bins. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/kissfft-f.f90",
+              "url": "https://github.com/zoziha/kissfft-f/blob/b89c5e1d0aff9993db79200fc94a467948ff3923/src/kissfft-f.f90",
+              "sha256": "b8284decd81fc5adc335c127c055f0280b941a6cba72945b86e8e4664bb48a26"
+            },
+            {
+              "path": "src/kissfft-f_fftshift.f90",
+              "url": "https://github.com/zoziha/kissfft-f/blob/b89c5e1d0aff9993db79200fc94a467948ff3923/src/kissfft-f_fftshift.f90",
+              "sha256": "c0177594bcf40781112c0416024dccf291fb0b2c10a7a6117bc2e92baff9268b"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "init",
+              "role": "public-entry-point",
+              "module": "kissfft",
+              "derived_type": "fft",
+              "summary": "Declare TYPE(fft) :: solver from kissfft. Create a one-dimensional KISS FFT plan for positive INTEGER(C_INT) NFFT and required INTEGER(C_INT) INVERSE_FFT (0 for forward, 1 for inverse). Call once before execution and before the object is finalized; the stored C pointer is not initialized to null by default. There is no returned allocation status: inspect C_ASSOCIATED(solver%KISS_FFT_CFG) before use. Reinitialization does not free an old plan; copying this pointer-owning object can cause duplicate frees. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%init(NFFT,INVERSE_FFT)",
+              "path": "src/kissfft-f.f90",
+              "line_start": 62,
+              "line_end": 67,
+              "declarations": [
+                {
+                  "path": "src/kissfft-f.f90",
+                  "line_start": 63,
+                  "line_end": 65
+                },
+                {
+                  "path": "src/kissfft-f.f90",
+                  "line_start": 3,
+                  "line_end": 17
+                }
+              ]
+            },
+            {
+              "procedure": "perform",
+              "role": "public-entry-point",
+              "module": "kissfft",
+              "derived_type": "fft",
+              "summary": "Declare TYPE(fft) :: solver from kissfft. Execute the initialized one-dimensional plan with FIN(:) and FOUT(:), arrays of TYPE(KISS_FFT_CPX), not intrinsic COMPLEX. Components RE/IM are REAL(C_FLOAT). Supply contiguous arrays at least NFFT long with storage appropriate to the plan; the wrapper does not check lengths or plan association. Both arguments are declared INOUT and this wrapper applies no output normalization. Do not substitute a multidimensional plan into this method; use PERFORM_ND for INIT_ND. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%perform(FIN,FOUT)",
+              "path": "src/kissfft-f.f90",
+              "line_start": 77,
+              "line_end": 81,
+              "declarations": [
+                {
+                  "path": "src/kissfft-f.f90",
+                  "line_start": 78,
+                  "line_end": 79
+                },
+                {
+                  "path": "src/kissfft-f.f90",
+                  "line_start": 3,
+                  "line_end": 17
+                }
+              ]
+            },
+            {
+              "procedure": "fftshift",
+              "role": "public-entry-point",
+              "module": "kissfft",
+              "summary": "Circularly reorder a one-dimensional TYPE(KISS_FFT_CPX) array, returning a same-size array and preserving the input. The implementation uses CSHIFT with -FLOOR(SIZE(X)/2), moving a conventional unshifted FFT zero-frequency bin to the middle. This is data reordering, not a Fourier transform or scaling operation; IFFTSHIFT differs for odd lengths.",
+              "signature": "VALUE = fftshift(X)",
+              "path": "src/kissfft-f.f90",
+              "line_start": 51,
+              "line_end": 54,
+              "declarations": [
+                {
+                  "path": "src/kissfft-f.f90",
+                  "line_start": 52,
+                  "line_end": 53
+                },
+                {
+                  "path": "src/kissfft-f.f90",
+                  "line_start": 3,
+                  "line_end": 17
+                },
+                {
+                  "path": "src/kissfft-f_fftshift.f90",
+                  "line_start": 1,
+                  "line_end": 9
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "iapws": {
       "id": "github:milanskocic/iapws",
       "repository": {
@@ -11847,6 +12289,147 @@
                   "path": "src/nonlin_single_var.f90",
                   "line_start": 65,
                   "line_end": 90
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "maptran3d": {
+      "id": "github:geospace-code/maptran3d",
+      "repository": {
+        "owner": "geospace-code",
+        "name": "maptran3d",
+        "url": "https://github.com/geospace-code/maptran3d"
+      },
+      "license": {
+        "label": "BSD-2-Clause",
+        "spdx_expression": "BSD-2-Clause",
+        "revision": "4ccc2479ae79a58b34d8e491013cfa2f60f65867",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Michael Hirsch BSD two-clause terms; source algorithm citations and translated-coordinate provenance remain relevant notices.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/geospace-code/maptran3d/blob/4ccc2479ae79a58b34d8e491013cfa2f60f65867/LICENSE",
+            "sha256": "39ff6f65513577e550f032df224ce33e28db19f29dd7d7dbfa4ced13e1d348fd"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/geospace-code/maptran3d/blob/4ccc2479ae79a58b34d8e491013cfa2f60f65867/README.md",
+            "sha256": "01e7c0072d891fc938c95b5eb1bd500b0c29f253a64094ed60bdfeb86b3d3622"
+          },
+          {
+            "path": "src/maptran.f90",
+            "url": "https://github.com/geospace-code/maptran3d/blob/4ccc2479ae79a58b34d8e491013cfa2f60f65867/src/maptran.f90",
+            "sha256": "8ad1b664213d08f9c6cb20493771e6cbd510ab6d051359ffce7c85c324279418"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "P",
+          "level": "source-reviewed",
+          "revision": "4ccc2479ae79a58b34d8e491013cfa2f60f65867",
+          "reviewed_on": "2026-11-07",
+          "notes": "Geodetic/ECEF and local ENU coordinate transformations expose explicit angle units and reference-ellipsoid conventions. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/maptran.f90",
+              "url": "https://github.com/geospace-code/maptran3d/blob/4ccc2479ae79a58b34d8e491013cfa2f60f65867/src/maptran.f90",
+              "sha256": "8ad1b664213d08f9c6cb20493771e6cbd510ab6d051359ffce7c85c324279418"
+            },
+            {
+              "path": "src/ecef.f90",
+              "url": "https://github.com/geospace-code/maptran3d/blob/4ccc2479ae79a58b34d8e491013cfa2f60f65867/src/ecef.f90",
+              "sha256": "e5a93638df2f5e7a7d335d3632f78ace4d010cf0c70546077efe472fd6321408"
+            },
+            {
+              "path": "src/enu.f90",
+              "url": "https://github.com/geospace-code/maptran3d/blob/4ccc2479ae79a58b34d8e491013cfa2f60f65867/src/enu.f90",
+              "sha256": "4ab262f44d15ff5431c15fbb950062835dfcf8ae414963bf65056e2919ec6af6"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "geodetic2ecef",
+              "role": "public-entry-point",
+              "module": "maptran",
+              "summary": "Convert geodetic latitude LLAT, longitude LLON and ellipsoidal ALT to Earth-centered Cartesian X/Y/Z. All real arguments are default REAL; distances and output positions are meters with the default WGS84 ellipsoid. Optional DEG defaults true (degrees); false uses radians. Optional SPHEROID is TYPE(ELLIPSOID), with self-consistent axis/flattening fields. This is not a map projection or geoid-height conversion and has no status argument. Use finite physical inputs.",
+              "signature": "CALL geodetic2ecef(LLAT,LLON,ALT,X,Y,Z,[SPHEROID],[DEG])",
+              "path": "src/maptran.f90",
+              "line_start": 65,
+              "line_end": 70,
+              "declarations": [
+                {
+                  "path": "src/maptran.f90",
+                  "line_start": 66,
+                  "line_end": 70
+                },
+                {
+                  "path": "src/maptran.f90",
+                  "line_start": 1,
+                  "line_end": 22
+                },
+                {
+                  "path": "src/ecef.f90",
+                  "line_start": 79,
+                  "line_end": 140
+                }
+              ]
+            },
+            {
+              "procedure": "ecef2geodetic",
+              "role": "public-entry-point",
+              "module": "maptran",
+              "summary": "Inverse conversion from default REAL Cartesian meters to geodetic LAT/LON, optionally ALT. DEG defaults true and SPHEROID defaults to WGS84. ALT is OPTIONAL even though it occurs before SPHEROID/DEG in the argument list; use keywords when skipping it. Heights are signed relative to the ellipsoid. No convergence/error status is exposed; the center and other singular/invalid inputs require caller handling. The source uses default-real arithmetic, not an implicit REAL64 overload.",
+              "signature": "CALL ecef2geodetic(X,Y,Z,LAT,LON,[ALT],[SPHEROID],[DEG])",
+              "path": "src/maptran.f90",
+              "line_start": 57,
+              "line_end": 63,
+              "declarations": [
+                {
+                  "path": "src/maptran.f90",
+                  "line_start": 58,
+                  "line_end": 63
+                },
+                {
+                  "path": "src/maptran.f90",
+                  "line_start": 1,
+                  "line_end": 22
+                },
+                {
+                  "path": "src/ecef.f90",
+                  "line_start": 7,
+                  "line_end": 77
+                }
+              ]
+            },
+            {
+              "procedure": "geodetic2enu",
+              "role": "public-entry-point",
+              "module": "maptran",
+              "summary": "Convert a geodetic point to EAST/NORTH/UP meters relative to LAT0/LON0/ALT0. The point and reference angles share DEG (default degrees), and both use the same optional ellipsoid. The routine converts both positions to ECEF then rotates their difference; it does not accept an already local displacement as LAT/LON/ALT. Elemental default-real interfaces allow conformable array actuals but do not change precision or validate units.",
+              "signature": "CALL geodetic2enu(LAT,LON,ALT,LAT0,LON0,ALT0,EAST,NORTH,UP,[SPHEROID],[DEG])",
+              "path": "src/maptran.f90",
+              "line_start": 97,
+              "line_end": 102,
+              "declarations": [
+                {
+                  "path": "src/maptran.f90",
+                  "line_start": 98,
+                  "line_end": 102
+                },
+                {
+                  "path": "src/maptran.f90",
+                  "line_start": 1,
+                  "line_end": 22
+                },
+                {
+                  "path": "src/enu.f90",
+                  "line_start": 7,
+                  "line_end": 32
                 }
               ]
             }
@@ -13743,6 +14326,130 @@
         }
       ]
     },
+    "dnaoad-fpm": {
+      "id": "github:fpenunuri/dnaoad-fpm",
+      "repository": {
+        "owner": "fpenunuri",
+        "name": "DNAOAD-FPM",
+        "url": "https://github.com/fpenunuri/DNAOAD-FPM"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "f7f328e89b208a99797d64f4a41e97ba91b85962",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies F. Peñuñuri MIT terms. Precision and maximum derivative order are compile-time configuration, not runtime guarantees for every expression.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/fpenunuri/DNAOAD-FPM/blob/f7f328e89b208a99797d64f4a41e97ba91b85962/LICENSE",
+            "sha256": "f5bf26d1d85825be4daa893d0fa3b5c01a973a0426c56ddd3edc7257ad450b0e"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/fpenunuri/DNAOAD-FPM/blob/f7f328e89b208a99797d64f4a41e97ba91b85962/README.md",
+            "sha256": "4fa1988bf5b89f67dd24b7e5c7901e8cbd36f759b4018e998378e18a6895d339"
+          },
+          {
+            "path": "src/diff_mod.f90",
+            "url": "https://github.com/fpenunuri/DNAOAD-FPM/blob/f7f328e89b208a99797d64f4a41e97ba91b85962/src/diff_mod.f90",
+            "sha256": "2f44d8930f84cdbf38b270f1df3f2a24dd66d4424baa2cba897262fbd26838a7"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "H1",
+          "level": "source-reviewed",
+          "revision": "f7f328e89b208a99797d64f4a41e97ba91b85962",
+          "reviewed_on": "2026-11-07",
+          "notes": "Dualzn scalar-function gradient and Hessian entry points expose complex precision, callback and derivative-order contracts. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/diff_mod.f90",
+              "url": "https://github.com/fpenunuri/DNAOAD-FPM/blob/f7f328e89b208a99797d64f4a41e97ba91b85962/src/diff_mod.f90",
+              "sha256": "2f44d8930f84cdbf38b270f1df3f2a24dd66d4424baa2cba897262fbd26838a7"
+            },
+            {
+              "path": "src/config_mod.F90",
+              "url": "https://github.com/fpenunuri/DNAOAD-FPM/blob/f7f328e89b208a99797d64f4a41e97ba91b85962/src/config_mod.F90",
+              "sha256": "75fd3977d6765371de9809ed4caa36df593765aa997fbd01045c7f7224da9a6a"
+            },
+            {
+              "path": "src/dualzn_mod.f90",
+              "url": "https://github.com/fpenunuri/DNAOAD-FPM/blob/f7f328e89b208a99797d64f4a41e97ba91b85962/src/dualzn_mod.f90",
+              "sha256": "90106eb7645f094511f5a0410917c42721b6475e180b09cad1f22d351b0a2c24"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "Gradient",
+              "role": "public-entry-point",
+              "module": "diff_mod",
+              "summary": "Return COMPLEX(PREC) gradient at complex vector Q. FSD must accept TYPE(DUALZN) XD(:), INTENT(IN), and return a scalar DUALZN, matching FSDUAL. PREC defaults REAL64 but can be built as REAL128; import CONFIG_MOD::PREC to match the package. The routine repeats first directional AD along coordinate axes and returns derivatives, not the primal value. Real problems can use zero-imaginary inputs with compatible dual arithmetic. It is not the complex-step finite-difference method.",
+              "signature": "VALUE = Gradient(FSD,Q)",
+              "path": "src/diff_mod.f90",
+              "line_start": 137,
+              "line_end": 149,
+              "declarations": [
+                {
+                  "path": "src/diff_mod.f90",
+                  "line_start": 138,
+                  "line_end": 141
+                },
+                {
+                  "path": "src/diff_mod.f90",
+                  "line_start": 2,
+                  "line_end": 32
+                },
+                {
+                  "path": "src/config_mod.F90",
+                  "line_start": 2,
+                  "line_end": 25
+                },
+                {
+                  "path": "src/dualzn_mod.f90",
+                  "line_start": 14,
+                  "line_end": 25
+                }
+              ]
+            },
+            {
+              "procedure": "Hessian",
+              "role": "public-entry-point",
+              "module": "diff_mod",
+              "summary": "Return a COMPLEX(PREC) square Hessian for QCMPLX(:), through the same dual-valued scalar callback FSD. The implementation combines coordinate and summed-direction second derivatives; it requires compiled MAX_ORDER_DUALZN>=2. No explicit workspace/status argument is returned. For complex functions this is formal analytic dual arithmetic, not automatically a real Hessian in independent real/imaginary coordinates; nonsmooth/conjugating operations need separate mathematical treatment.",
+              "signature": "VALUE = Hessian(FSD,QCMPLX)",
+              "path": "src/diff_mod.f90",
+              "line_start": 37,
+              "line_end": 69,
+              "declarations": [
+                {
+                  "path": "src/diff_mod.f90",
+                  "line_start": 38,
+                  "line_end": 40
+                },
+                {
+                  "path": "src/diff_mod.f90",
+                  "line_start": 2,
+                  "line_end": 32
+                },
+                {
+                  "path": "src/config_mod.F90",
+                  "line_start": 2,
+                  "line_end": 25
+                },
+                {
+                  "path": "src/dualzn_mod.f90",
+                  "line_start": 14,
+                  "line_end": 25
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "econ-toolchain": {
       "id": "github:renatomatz/econ-toolchain",
       "repository": {
@@ -13835,6 +14542,248 @@
                   "path": "src/shared.f90",
                   "line_start": 1,
                   "line_end": 9
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "m_la": {
+      "id": "github:urbanjost/m_la",
+      "repository": {
+        "owner": "urbanjost",
+        "name": "M_LA",
+        "url": "https://github.com/urbanjost/M_LA"
+      },
+      "license": {
+        "label": "Unlicense (root); embedded MIT component notices",
+        "spdx_expression": "Unlicense AND MIT",
+        "revision": "db59eeab0deab7e84eadf2542ad49c1c719dfb94",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies the Unlicense while fpm.toml labels CC0-1.0; the combined source also retains MIT notices for other components. The scoped review covers these three entry points, not every historical linear-algebra routine in the file.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/urbanjost/M_LA/blob/db59eeab0deab7e84eadf2542ad49c1c719dfb94/LICENSE",
+            "sha256": "08545fc081dff33847b16ae512a5722e1327f7d93a85c128cb0003c7354b8734"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/urbanjost/M_LA/blob/db59eeab0deab7e84eadf2542ad49c1c719dfb94/README.md",
+            "sha256": "46ef895c5c20fa9bf14176a51cb3d12e3d690332524a98abd90d9b5d194ad4e1"
+          },
+          {
+            "path": "src/M_LA.f90",
+            "url": "https://github.com/urbanjost/M_LA/blob/db59eeab0deab7e84eadf2542ad49c1c719dfb94/src/M_LA.f90",
+            "sha256": "5c15fc609dd2c8222df65e6a005f0704b379f51fa44d73d476be299432c7555a"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "D",
+          "level": "source-reviewed",
+          "revision": "db59eeab0deab7e84eadf2542ad49c1c719dfb94",
+          "reviewed_on": "2026-11-07",
+          "notes": "Special test-matrix generation and split-complex row reduction expose storage and tolerance requirements. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/M_LA.f90",
+              "url": "https://github.com/urbanjost/M_LA/blob/db59eeab0deab7e84eadf2542ad49c1c719dfb94/src/M_LA.f90",
+              "sha256": "5c15fc609dd2c8222df65e6a005f0704b379f51fa44d73d476be299432c7555a"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/urbanjost/M_LA/blob/db59eeab0deab7e84eadf2542ad49c1c719dfb94/fpm.toml",
+              "sha256": "e610a032278c4522c1f004a1639d9c64921adefd70bbc56ea3609d3ee0b1c236"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "mat_inverse_hilbert",
+              "role": "public-entry-point",
+              "module": "M_LA",
+              "summary": "Generate the analytic inverse of the N-by-N Hilbert matrix into DOUBLE PRECISION A(LDA,N), with LDA>=N and positive N. This constructs a special matrix; it does not invert a user-supplied matrix. Entries grow rapidly and the routine returns no accuracy/overflow status; use modest orders and validate any numerical experiment separately. Only the leading N rows are assigned.",
+              "signature": "CALL mat_inverse_hilbert(A,LDA,N)",
+              "path": "src/M_LA.f90",
+              "line_start": 1403,
+              "line_end": 1435,
+              "declarations": [
+                {
+                  "path": "src/M_LA.f90",
+                  "line_start": 1409,
+                  "line_end": 1412
+                },
+                {
+                  "path": "src/M_LA.f90",
+                  "line_start": 1,
+                  "line_end": 14
+                }
+              ]
+            },
+            {
+              "procedure": "mat_magic",
+              "role": "public-entry-point",
+              "module": "M_LA",
+              "summary": "Fill a DOUBLE PRECISION array A(ROWS,N) with an order-N magic square, requiring ROWS>=N and N>2. N and ROWS are default INTEGER; extra leading-dimension rows are not the square. This produces a test matrix, not random samples, and has no status channel or general shape validation. Large orders can encounter default-integer arithmetic limits even though the output array is double precision.",
+              "signature": "CALL mat_magic(A,ROWS,N)",
+              "path": "src/M_LA.f90",
+              "line_start": 1561,
+              "line_end": 1645,
+              "declarations": [
+                {
+                  "path": "src/M_LA.f90",
+                  "line_start": 1565,
+                  "line_end": 1568
+                },
+                {
+                  "path": "src/M_LA.f90",
+                  "line_start": 1,
+                  "line_end": 14
+                }
+              ]
+            },
+            {
+              "procedure": "mat_rref",
+              "role": "public-entry-point",
+              "module": "M_LA",
+              "summary": "Overwrite a split-complex M-by-N matrix with a reduced row-echelon form: AR and AI are DOUBLE PRECISION arrays with leading dimension LDA>=M. EPS is the caller-supplied nonnegative tolerance factor; the implementation scales it by 2*MAX(M,N) and a matrix column norm before pivot tests. Set AI=0 for a real matrix. No pivot list, rank or status is returned; this is not a full-pivoted rank-revealing factorization or a substitute for conditioning diagnostics.",
+              "signature": "CALL mat_rref(AR,AI,LDA,M,N,EPS)",
+              "path": "src/M_LA.f90",
+              "line_start": 1649,
+              "line_end": 1692,
+              "declarations": [
+                {
+                  "path": "src/M_LA.f90",
+                  "line_start": 1650,
+                  "line_end": 1657
+                },
+                {
+                  "path": "src/M_LA.f90",
+                  "line_start": 1,
+                  "line_end": 14
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fglm": {
+      "id": "github:jordan4ibanez/fglm",
+      "repository": {
+        "owner": "jordan4ibanez",
+        "name": "fglm",
+        "url": "https://github.com/jordan4ibanez/fglm"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "e1b6a5404b3e7a266da33173a07166970c16dd86",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE and src/joml.license both supply MIT terms with distinct authorship notices; the matrix source explicitly attributes translated JOML methods.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jordan4ibanez/fglm/blob/e1b6a5404b3e7a266da33173a07166970c16dd86/LICENSE",
+            "sha256": "deb98dc8cc9bc84532c67294ce4ad0cccb8473840c0085c19fa4faa799ca90d9"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jordan4ibanez/fglm/blob/e1b6a5404b3e7a266da33173a07166970c16dd86/README.md",
+            "sha256": "1211f41578e47e1999df0ac2944b7149be876d394c4b443455344eb0c6f7173d"
+          },
+          {
+            "path": "src/matrix_4f.f90",
+            "url": "https://github.com/jordan4ibanez/fglm/blob/e1b6a5404b3e7a266da33173a07166970c16dd86/src/matrix_4f.f90",
+            "sha256": "70efb588350accfa3b63dfda3f3913a145f5ba2e46fdd720ebf2928dfa512fd9"
+          },
+          {
+            "path": "src/joml.license",
+            "url": "https://github.com/jordan4ibanez/fglm/blob/e1b6a5404b3e7a266da33173a07166970c16dd86/src/joml.license",
+            "sha256": "7650193f8d9bd05bf07131fcfdc732cc47201b4b9b401c348d4ebf4b83d88899"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "P",
+          "level": "source-reviewed",
+          "revision": "e1b6a5404b3e7a266da33173a07166970c16dd86",
+          "reviewed_on": "2026-11-07",
+          "notes": "The MAT4F graphics-transform object resets identity and composes a three-dimensional translation. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/matrix_4f.f90",
+              "url": "https://github.com/jordan4ibanez/fglm/blob/e1b6a5404b3e7a266da33173a07166970c16dd86/src/matrix_4f.f90",
+              "sha256": "70efb588350accfa3b63dfda3f3913a145f5ba2e46fdd720ebf2928dfa512fd9"
+            },
+            {
+              "path": "src/math_helpers.f90",
+              "url": "https://github.com/jordan4ibanez/fglm/blob/e1b6a5404b3e7a266da33173a07166970c16dd86/src/math_helpers.f90",
+              "sha256": "38381e9f17a04733c871c17c169f8d489c9810334442817150e55eab239a93af"
+            },
+            {
+              "path": "src/joml.license",
+              "url": "https://github.com/jordan4ibanez/fglm/blob/e1b6a5404b3e7a266da33173a07166970c16dd86/src/joml.license",
+              "sha256": "7650193f8d9bd05bf07131fcfdc732cc47201b4b9b401c348d4ebf4b83d88899"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "identity",
+              "role": "public-entry-point",
+              "module": "matrix_4f",
+              "derived_type": "mat4f",
+              "summary": "Declare TYPE(mat4f) :: solver from matrix_4f. Reset the flat REAL(C_FLOAT) DATA(16) storage to a 4-by-4 identity. This is the MAT4F graphics transform type from MATRIX_4F, not a rank-two intrinsic array. Existing transform contents are discarded. No OpenGL context is required merely to construct or modify this numeric value. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%identity()",
+              "path": "src/matrix_4f.f90",
+              "line_start": 138,
+              "line_end": 149,
+              "declarations": [
+                {
+                  "path": "src/matrix_4f.f90",
+                  "line_start": 141,
+                  "line_end": 141
+                },
+                {
+                  "path": "src/matrix_4f.f90",
+                  "line_start": 1,
+                  "line_end": 22
+                },
+                {
+                  "path": "src/matrix_4f.f90",
+                  "line_start": 54,
+                  "line_end": 84
+                }
+              ]
+            },
+            {
+              "procedure": "translate",
+              "role": "public-entry-point",
+              "module": "matrix_4f",
+              "derived_type": "mat4f",
+              "summary": "Declare TYPE(mat4f) :: solver from matrix_4f. Compose an X/Y/Z translation into the current flat 4-by-4 transform; arguments are REAL(C_FLOAT), not REAL64. The implementation updates the last four stored entries from the current basis and translation, so this is composition rather than simply overwriting three coordinates. Call IDENTITY first for a pure translation. Use this type layout and the library conventions when exporting DATA; it is not directly a native Fortran 4-by-4 MATMUL operand. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%translate(X,Y,Z)",
+              "path": "src/matrix_4f.f90",
+              "line_start": 267,
+              "line_end": 285,
+              "declarations": [
+                {
+                  "path": "src/matrix_4f.f90",
+                  "line_start": 271,
+                  "line_end": 272
+                },
+                {
+                  "path": "src/matrix_4f.f90",
+                  "line_start": 1,
+                  "line_end": 22
+                },
+                {
+                  "path": "src/matrix_4f.f90",
+                  "line_start": 54,
+                  "line_end": 84
                 }
               ]
             }
@@ -14038,6 +14987,330 @@
                   "path": "src/formatmul.f90",
                   "line_start": 1,
                   "line_end": 21
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fortran-simplify": {
+      "id": "github:jaiken17/fortran-simplify",
+      "repository": {
+        "owner": "jaiken17",
+        "name": "fortran-simplify",
+        "url": "https://github.com/jaiken17/fortran-simplify"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "f546422216fb88eba97e2a0f4910935efbcdce83",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Joshua Aiken BSD three-clause terms; the manifest placeholder is not the license grant. The stdlib precision dependency has separate notices.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jaiken17/fortran-simplify/blob/f546422216fb88eba97e2a0f4910935efbcdce83/LICENSE",
+            "sha256": "7dd0769d2caeb9786c80cd26e75ab10fe1cb0a2292f39203d4a2e90b14d4bbd1"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jaiken17/fortran-simplify/blob/f546422216fb88eba97e2a0f4910935efbcdce83/README.md",
+            "sha256": "6d86ee04b10f114106de9da8698a13c4602dd80dc0908fb80b8da392d20df56c"
+          },
+          {
+            "path": "src/simplify.f90",
+            "url": "https://github.com/jaiken17/fortran-simplify/blob/f546422216fb88eba97e2a0f4910935efbcdce83/src/simplify.f90",
+            "sha256": "c8606e0e0ebdab544827ab7300489171adc02f9813143962e511f9702d1449b5"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "P",
+          "level": "source-reviewed",
+          "revision": "f546422216fb88eba97e2a0f4910935efbcdce83",
+          "reviewed_on": "2026-11-07",
+          "notes": "Polyline subsampling and radial-distance reduction expose point orientation and distinct selection criteria. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/simplify.f90",
+              "url": "https://github.com/jaiken17/fortran-simplify/blob/f546422216fb88eba97e2a0f4910935efbcdce83/src/simplify.f90",
+              "sha256": "c8606e0e0ebdab544827ab7300489171adc02f9813143962e511f9702d1449b5"
+            },
+            {
+              "path": "src/precision.f90",
+              "url": "https://github.com/jaiken17/fortran-simplify/blob/f546422216fb88eba97e2a0f4910935efbcdce83/src/precision.f90",
+              "sha256": "0981bfea148f1a71df1fee4aedf4be1c88c0956243a381f638a9b7b057e42b9c"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "nth_point",
+              "role": "public-entry-point",
+              "module": "simplify",
+              "summary": "Rank-two NTH_POINT overload returns an allocatable REAL(DP) polyline with points in ROWS and coordinate components in columns. It retains endpoints and samples interior points using integer N. At least two points and N>=1 are required; invalid inputs STOP. The source counter convention is not a general resampling/interpolation guarantee, and N=1 does not behave as a promised identity operation in this pin. DP comes from SMPL_PRECISION/stdlib_kinds.",
+              "signature": "VALUE = nth_point(CURVE,N)",
+              "path": "src/simplify.f90",
+              "line_start": 139,
+              "line_end": 178,
+              "declarations": [
+                {
+                  "path": "src/simplify.f90",
+                  "line_start": 141,
+                  "line_end": 143
+                },
+                {
+                  "path": "src/simplify.f90",
+                  "line_start": 9,
+                  "line_end": 43
+                },
+                {
+                  "path": "src/precision.f90",
+                  "line_start": 8,
+                  "line_end": 15
+                }
+              ]
+            },
+            {
+              "procedure": "radial_distance",
+              "role": "public-entry-point",
+              "module": "simplify",
+              "summary": "Rank-two RADIAL_DISTANCE overload returns an allocatable REAL(DP) point array, retaining endpoints and keeping an interior point when its Euclidean distance from the last retained point exceeds positive TOLERANCE. Points occupy rows; tolerance uses the same units as their coordinates. At least two rows are required and invalid inputs STOP. This threshold is not a bound on perpendicular segment error and the method is not Douglas-Peucker simplification.",
+              "signature": "VALUE = radial_distance(CURVE,TOLERANCE)",
+              "path": "src/simplify.f90",
+              "line_start": 323,
+              "line_end": 373,
+              "declarations": [
+                {
+                  "path": "src/simplify.f90",
+                  "line_start": 324,
+                  "line_end": 326
+                },
+                {
+                  "path": "src/simplify.f90",
+                  "line_start": 9,
+                  "line_end": 43
+                },
+                {
+                  "path": "src/precision.f90",
+                  "line_start": 8,
+                  "line_end": 15
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "rearrayfx": {
+      "id": "github:aradi/rearrayfx",
+      "repository": {
+        "owner": "aradi",
+        "name": "rearrayfx",
+        "url": "https://github.com/aradi/rearrayfx"
+      },
+      "license": {
+        "label": "BSD-2-Clause-Patent",
+        "spdx_expression": "BSD-2-Clause-Patent",
+        "revision": "be1a7b08e43b358c8ed27fa80db7896767eb9f6d",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE includes two redistribution clauses plus an explicit patent grant; preserve it as BSD-2-Clause-Patent rather than ordinary BSD-2-Clause.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/aradi/rearrayfx/blob/be1a7b08e43b358c8ed27fa80db7896767eb9f6d/LICENSE",
+            "sha256": "a5845b046e0c2d5113762304e03be112c881a909d2afa0bb72522b1c4e8c7c64"
+          },
+          {
+            "path": "src/rearrayfx.f90",
+            "url": "https://github.com/aradi/rearrayfx/blob/be1a7b08e43b358c8ed27fa80db7896767eb9f6d/src/rearrayfx.f90",
+            "sha256": "4dc832f9a2bf2ef9d2a31b6a790b9cb3e01afd78021c8665764a02e2dd53b76d"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N4",
+          "level": "source-reviewed",
+          "revision": "be1a7b08e43b358c8ed27fa80db7896767eb9f6d",
+          "reviewed_on": "2026-11-07",
+          "notes": "The reallocatable REAL64 matrix container exposes capacity-backed resize and intrinsic-array assignment. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/rearrayfx.f90",
+              "url": "https://github.com/aradi/rearrayfx/blob/be1a7b08e43b358c8ed27fa80db7896767eb9f6d/src/rearrayfx.f90",
+              "sha256": "4dc832f9a2bf2ef9d2a31b6a790b9cb3e01afd78021c8665764a02e2dd53b76d"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "allocate",
+              "role": "public-entry-point",
+              "module": "rearrayfx",
+              "derived_type": "rearray_real64_r2",
+              "summary": "Declare TYPE(rearray_real64_r2) :: solver from rearrayfx. Resize a two-dimensional REAL64 view to NEWSHAPE, a default INTEGER vector with exactly two nonnegative extents. Public OVERPROV is a capacity multiplier; keep it >=1 to provide enough storage. The backing buffer is reused when large enough; growth reallocates, copies its linear prefix and prints a debug allocation message. This is not guaranteed shape-preserving matrix resize semantics. External aliases into VIEW become invalid after growth; there is no returned allocation status. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%allocate(NEWSHAPE)",
+              "path": "src/rearrayfx.f90",
+              "line_start": 29,
+              "line_end": 54,
+              "declarations": [
+                {
+                  "path": "src/rearrayfx.f90",
+                  "line_start": 30,
+                  "line_end": 31
+                },
+                {
+                  "path": "src/rearrayfx.f90",
+                  "line_start": 6,
+                  "line_end": 24
+                }
+              ]
+            },
+            {
+              "procedure": "assign_array",
+              "role": "public-entry-point",
+              "module": "rearrayfx",
+              "derived_type": "rearray_real64_r2",
+              "summary": "Declare TYPE(rearray_real64_r2) :: solver from rearrayfx. Assign a REAL64 rank-two ARRAY, resizing storage and setting VIEW to the values. This public binding also implements overloaded assignment from an intrinsic array. VIEW is a borrowed pointer to object-owned storage, freed by the finalizer. Avoid ordinary copies between container objects: the pointer-based representation does not provide an independent deep-copy ownership policy. Keep the owner alive and reacquire views after resizing. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%assign_array(ARRAY)",
+              "path": "src/rearrayfx.f90",
+              "line_start": 65,
+              "line_end": 72,
+              "declarations": [
+                {
+                  "path": "src/rearrayfx.f90",
+                  "line_start": 66,
+                  "line_end": 67
+                },
+                {
+                  "path": "src/rearrayfx.f90",
+                  "line_start": 6,
+                  "line_end": 24
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fortran_vector": {
+      "id": "github:euler-37/fortran_vector",
+      "repository": {
+        "owner": "Euler-37",
+        "name": "fortran_vector",
+        "url": "https://github.com/Euler-37/fortran_vector"
+      },
+      "license": {
+        "label": "No license identified",
+        "spdx_expression": null,
+        "revision": "95469e2ce1162b0ede3ca3435ebd94ec6b6fee79",
+        "reviewed_on": "2026-11-07",
+        "notes": "No LICENSE/COPYING or explicit source/README grant was identified in the pinned archive; the manifest license field is a placeholder. Public hosting alone is not treated as a license grant.",
+        "evidence": [
+          {
+            "path": "fpm.toml",
+            "url": "https://github.com/Euler-37/fortran_vector/blob/95469e2ce1162b0ede3ca3435ebd94ec6b6fee79/fpm.toml",
+            "sha256": "ebb85f826764b364b6f23b7a80e19e049e70d877f45e89848fba56ec0d57b8c7"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/Euler-37/fortran_vector/blob/95469e2ce1162b0ede3ca3435ebd94ec6b6fee79/README.md",
+            "sha256": "93d32392637cad61395aa204fc2de17a96ecb8c435de76379a23f4a4ff1fafbf"
+          },
+          {
+            "path": "src/fortran_vector.f90",
+            "url": "https://github.com/Euler-37/fortran_vector/blob/95469e2ce1162b0ede3ca3435ebd94ec6b6fee79/src/fortran_vector.f90",
+            "sha256": "0ee8dc6b054a18b3154952430a29577527edf494e7416385a4656446cd083833"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N4",
+          "level": "source-reviewed",
+          "revision": "95469e2ce1162b0ede3ca3435ebd94ec6b6fee79",
+          "reviewed_on": "2026-11-07",
+          "notes": "VECTOR_INT initializes, grows and indexes a logical integer sequence within separately sized backing storage. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/fortran_vector.f90",
+              "url": "https://github.com/Euler-37/fortran_vector/blob/95469e2ce1162b0ede3ca3435ebd94ec6b6fee79/src/fortran_vector.f90",
+              "sha256": "0ee8dc6b054a18b3154952430a29577527edf494e7416385a4656446cd083833"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/Euler-37/fortran_vector/blob/95469e2ce1162b0ede3ca3435ebd94ec6b6fee79/fpm.toml",
+              "sha256": "ebb85f826764b364b6f23b7a80e19e049e70d877f45e89848fba56ec0d57b8c7"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "init",
+              "role": "public-entry-point",
+              "module": "fortran_vector",
+              "derived_type": "vector_int",
+              "summary": "Declare TYPE(vector_int) :: solver from fortran_vector. Initialize a fresh VECTOR_INT with optional nonnegative default INTEGER CAPACITY_ (default 100). Logical length is set to zero and backing storage is allocated. The scalar fields are not initialized by default, so call INIT before append/get/size. Calling INIT again while X_ is allocated can fail; this is not an automatic reset routine. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%init([CAPACITY_])",
+              "path": "src/fortran_vector.f90",
+              "line_start": 63,
+              "line_end": 70,
+              "declarations": [
+                {
+                  "path": "src/fortran_vector.f90",
+                  "line_start": 65,
+                  "line_end": 66
+                },
+                {
+                  "path": "src/fortran_vector.f90",
+                  "line_start": 1,
+                  "line_end": 28
+                }
+              ]
+            },
+            {
+              "procedure": "append",
+              "role": "public-entry-point",
+              "module": "fortran_vector",
+              "derived_type": "vector_int",
+              "summary": "Declare TYPE(vector_int) :: solver from fortran_vector. Array overload of APPEND adds default INTEGER A_(:) after the logical end, growing backing capacity when needed. Call INIT first. Logical length and capacity are different; SIZE from this module reports logical length, while the public X_ backing array may contain unused elements. Avoid aliases into X_ across a growth operation. No status argument is exposed. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%append(A_)",
+              "path": "src/fortran_vector.f90",
+              "line_start": 96,
+              "line_end": 107,
+              "declarations": [
+                {
+                  "path": "src/fortran_vector.f90",
+                  "line_start": 98,
+                  "line_end": 99
+                },
+                {
+                  "path": "src/fortran_vector.f90",
+                  "line_start": 1,
+                  "line_end": 28
+                }
+              ]
+            },
+            {
+              "procedure": "get",
+              "role": "public-entry-point",
+              "module": "fortran_vector",
+              "derived_type": "vector_int",
+              "summary": "Declare TYPE(vector_int) :: solver from fortran_vector. Return the default INTEGER at one-based IDX. The implementation directly indexes X_ without checking logical length, so require 1<=IDX<=SIZE(solver) using the module SIZE overload. Reading an allocated spare-capacity slot is not a valid logical element. The function returns a copy and does not remove the element. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%get(IDX)",
+              "path": "src/fortran_vector.f90",
+              "line_start": 124,
+              "line_end": 129,
+              "declarations": [
+                {
+                  "path": "src/fortran_vector.f90",
+                  "line_start": 126,
+                  "line_end": 127
+                },
+                {
+                  "path": "src/fortran_vector.f90",
+                  "line_start": 1,
+                  "line_end": 28
                 }
               ]
             }
@@ -15333,7 +16606,9 @@
       "orderpack",
       "fortran-shlex",
       "fortran-primes",
+      "fhash",
       "functional-fortran",
+      "forwarddiff",
       "forcolormap",
       "rational_number",
       "fortran_test_helper",
@@ -15384,9 +16659,11 @@
       "forimage",
       "fastconv",
       "gaussjacobiquad",
+      "kissfft-f",
       "iapws",
       "linalg",
       "nonlin",
+      "maptran3d",
       "strff",
       "fjsample",
       "interpolation",
@@ -15403,9 +16680,15 @@
       "qdldl-fortran",
       "carlson-elliptic-integrals",
       "fortran-bessels",
+      "dnaoad-fpm",
       "econ-toolchain",
+      "m_la",
+      "fglm",
       "fordot",
       "formatmul",
+      "fortran-simplify",
+      "rearrayfx",
+      "fortran_vector",
       "fortime",
       "lookup-table-fortran",
       "rng-fortran",
@@ -15420,8 +16703,6 @@
       "fortran-lapack",
       "pyplot-fortran",
       "stdlib",
-      "fhash",
-      "forwarddiff",
       "kinds",
       "m_match",
       "fortran-astrodynamics-toolkit",
@@ -15441,13 +16722,11 @@
       "ffilesystem",
       "fortimize",
       "ncio",
-      "kissfft-f",
       "h5fortran",
       "metis-fpm",
       "m_calculator",
       "befor64",
       "fortran-zlib",
-      "maptran3d",
       "fortran-pcre2",
       "ciaaw",
       "rngff",
@@ -15482,12 +16761,9 @@
       "lusol",
       "dynamics",
       "diffstruc",
-      "dnaoad-fpm",
       "seiscope-optimization",
       "gslib",
       "featom",
-      "m_la",
-      "fglm",
       "fortrandf",
       "strith",
       "list",
@@ -15496,14 +16772,11 @@
       "bstrith",
       "heatflow",
       "hrweno",
-      "fortran-simplify",
       "ecx",
       "athena",
       "orbs",
-      "rearrayfx",
       "amosf90",
       "linalg_fortran",
-      "fortran_vector",
       "scanner",
       "rojff",
       "argparse-f",
