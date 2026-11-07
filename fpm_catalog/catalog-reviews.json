@@ -2,7 +2,7 @@
   "schema_version": 1,
   "publisher": "fortran-gams-catalog-independent-reviews",
   "source_url": "https://beliavsky.github.io/fortran-gams-catalog/reviewed-metadata.json",
-  "source_snapshot_id": "sha256:ab602874f9fe3f2deb19e9f756d88f4c7641dba1d872e22c7b678f091bc2cc63",
+  "source_snapshot_id": "sha256:1a4fa7ae40f0c879b4858b2ed9718295a41448a816d597caf12175a5c05aab31",
   "packages": {
     "fftpack": {
       "id": "github:fortran-lang/fftpack",
@@ -2737,6 +2737,276 @@
                   "path": "src/prime_constants.f90",
                   "line_start": 11,
                   "line_end": 35
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "forcolormap": {
+      "id": "github:vmagnin/forcolormap",
+      "repository": {
+        "owner": "vmagnin",
+        "name": "forcolormap",
+        "url": "https://github.com/vmagnin/forcolormap"
+      },
+      "license": {
+        "label": "MIT library; separate palette notices",
+        "spdx_expression": null,
+        "revision": "e720711cbe941e1c586da567315464cb344859c4",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE is MIT. Scientific-colormap source retains Fabio Crameri MIT attribution; Matplotlib palette source separately retains a CC0/public-domain dedication for the original color data and MIT translation terms. Preserve those component notices.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/vmagnin/forcolormap/blob/e720711cbe941e1c586da567315464cb344859c4/LICENSE",
+            "sha256": "25bb402ba6d0dfc92bddb8082db101bf92eeea9546eb56d51c83a3c855e56623"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/vmagnin/forcolormap/blob/e720711cbe941e1c586da567315464cb344859c4/README.md",
+            "sha256": "d9d035d909678e25e85f8bfed9b8849e0d7bbc205a5331daa6ba7ef2c2d20815"
+          },
+          {
+            "path": "src/forcolormap.f90",
+            "url": "https://github.com/vmagnin/forcolormap/blob/e720711cbe941e1c586da567315464cb344859c4/src/forcolormap.f90",
+            "sha256": "c3d6a183dd91a6c9410d7e223098de5d82de209d516a0348a4cf2851a8917c82"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "Q",
+          "level": "source-reviewed",
+          "revision": "e720711cbe941e1c586da567315464cb344859c4",
+          "reviewed_on": "2026-11-07",
+          "notes": "The colormap object initializes palettes and maps values or zero-based palette levels to RGB channels. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/forcolormap.f90",
+              "url": "https://github.com/vmagnin/forcolormap/blob/e720711cbe941e1c586da567315464cb344859c4/src/forcolormap.f90",
+              "sha256": "c3d6a183dd91a6c9410d7e223098de5d82de209d516a0348a4cf2851a8917c82"
+            },
+            {
+              "path": "src/forcolormap_parameters.f90",
+              "url": "https://github.com/vmagnin/forcolormap/blob/e720711cbe941e1c586da567315464cb344859c4/src/forcolormap_parameters.f90",
+              "sha256": "0b04c7eb379345ffc19d8ca666e7f4915bb92d956a27a8447a5c80beaf87ea21"
+            },
+            {
+              "path": "src/forcolormap_cm_scientific.f90",
+              "url": "https://github.com/vmagnin/forcolormap/blob/e720711cbe941e1c586da567315464cb344859c4/src/forcolormap_cm_scientific.f90",
+              "sha256": "74c736a2bcfad83faef50d82a94600c1cd2c35174a0943c39ef8a7e70e61ab7d"
+            },
+            {
+              "path": "src/forcolormap_cm_matplotlib.f90",
+              "url": "https://github.com/vmagnin/forcolormap/blob/e720711cbe941e1c586da567315464cb344859c4/src/forcolormap_cm_matplotlib.f90",
+              "sha256": "6a88c65d196a2fab881ec9d86cc2de5044a61e52bf02f6f35748fba5d9aaf105"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "set",
+              "role": "public-entry-point",
+              "module": "forcolormap",
+              "derived_type": "Colormap",
+              "summary": "Declare TYPE(Colormap) :: solver from forcolormap. Initialize a named palette such as \"viridis\" over finite REAL(WP) ZMIN<ZMAX; WP is REAL64. Optional LEVELS is honored only by palettes that support variable lengths. Optional REVERSE reverses the palette, VARARGS configures selected generators, and SANITIZE defaults true to repair invalid names/bounds/levels. No status output is returned; with sanitization, a bad name can be replaced by grayC rather than rejected. Use a known palette and valid bounds for predictable results. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%set(NAME,ZMIN,ZMAX,[LEVELS],[VARARGS],[REVERSE],[SANITIZE])",
+              "path": "src/forcolormap.f90",
+              "line_start": 123,
+              "line_end": 642,
+              "declarations": [
+                {
+                  "path": "src/forcolormap.f90",
+                  "line_start": 124,
+                  "line_end": 130
+                },
+                {
+                  "path": "src/forcolormap.f90",
+                  "line_start": 28,
+                  "line_end": 77
+                },
+                {
+                  "path": "src/forcolormap_parameters.f90",
+                  "line_start": 1,
+                  "line_end": 8
+                }
+              ]
+            },
+            {
+              "procedure": "compute_RGB",
+              "role": "public-entry-point",
+              "module": "forcolormap",
+              "derived_type": "Colormap",
+              "summary": "Declare TYPE(Colormap) :: solver from forcolormap. After SET, map scalar REAL(WP) Z to default INTEGER RED/GREEN/BLUE channel values (normally 0..255). Finite out-of-range Z is clamped to the initialized bounds. The palette is discretized into levels; this routine chooses a level instead of linearly interpolating RGB channels. It returns numeric channels, not a displayed image or file. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%compute_RGB(Z,RED,GREEN,BLUE)",
+              "path": "src/forcolormap.f90",
+              "line_start": 813,
+              "line_end": 833,
+              "declarations": [
+                {
+                  "path": "src/forcolormap.f90",
+                  "line_start": 814,
+                  "line_end": 816
+                },
+                {
+                  "path": "src/forcolormap.f90",
+                  "line_start": 28,
+                  "line_end": 77
+                },
+                {
+                  "path": "src/forcolormap_parameters.f90",
+                  "line_start": 1,
+                  "line_end": 8
+                }
+              ]
+            },
+            {
+              "procedure": "get_RGB",
+              "role": "public-entry-point",
+              "module": "forcolormap",
+              "derived_type": "Colormap",
+              "summary": "Declare TYPE(Colormap) :: solver from forcolormap. Retrieve RGB channels directly by zero-based LEVEL, requiring 0<=LEVEL<solver%get_levels(). This differs from one-based Fortran array indexing in user arrays. There is no clamping/status in GET_RGB, so initialize first and validate LEVEL. Use COMPUTE_RGB for mapping a scalar physical value to a palette level. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%get_RGB(LEVEL,RED,GREEN,BLUE)",
+              "path": "src/forcolormap.f90",
+              "line_start": 836,
+              "line_end": 844,
+              "declarations": [
+                {
+                  "path": "src/forcolormap.f90",
+                  "line_start": 837,
+                  "line_end": 839
+                },
+                {
+                  "path": "src/forcolormap.f90",
+                  "line_start": 28,
+                  "line_end": 77
+                },
+                {
+                  "path": "src/forcolormap_parameters.f90",
+                  "line_start": 1,
+                  "line_end": 8
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "rational_number": {
+      "id": "github:art-rasa/rational_number",
+      "repository": {
+        "owner": "art-rasa",
+        "name": "rational_number",
+        "url": "https://github.com/art-rasa/rational_number"
+      },
+      "license": {
+        "label": "MIT declared in manifest; no bundled license grant reviewed",
+        "spdx_expression": null,
+        "revision": "b6ff702a0f51b950798f2a31c5bd81ae0c15385a",
+        "reviewed_on": "2026-11-07",
+        "notes": "The pinned root manifest declares MIT, but the inspected archive has no LICENSE/COPYING grant and the README has no license text. Record the declaration with incomplete evidence rather than a resolved SPDX license. The separately fetched math dependency retains its own provenance.",
+        "evidence": [
+          {
+            "path": "fpm.toml",
+            "url": "https://github.com/art-rasa/rational_number/blob/b6ff702a0f51b950798f2a31c5bd81ae0c15385a/fpm.toml",
+            "sha256": "b414ab370223ede45ab263de913c78f76daef6fdbf938291b4bf33ff5d4a35fc"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/art-rasa/rational_number/blob/b6ff702a0f51b950798f2a31c5bd81ae0c15385a/README.md",
+            "sha256": "8595bafcb050ba6475686de6a091bccee99b1832483ad46d26fdb0880045da1b"
+          },
+          {
+            "path": "src/rational_number.f90",
+            "url": "https://github.com/art-rasa/rational_number/blob/b6ff702a0f51b950798f2a31c5bd81ae0c15385a/src/rational_number.f90",
+            "sha256": "4b80095ae97ad0932d4c31174b645345d964d4f955883f8dabac1a5e0d90d59d"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "A2",
+          "level": "source-reviewed",
+          "revision": "b6ff702a0f51b950798f2a31c5bd81ae0c15385a",
+          "reviewed_on": "2026-11-07",
+          "notes": "The rational-number module constructs bounded-integer fractions, adds them with optional reduction and formats their values. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/rational_number.f90",
+              "url": "https://github.com/art-rasa/rational_number/blob/b6ff702a0f51b950798f2a31c5bd81ae0c15385a/src/rational_number.f90",
+              "sha256": "4b80095ae97ad0932d4c31174b645345d964d4f955883f8dabac1a5e0d90d59d"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/art-rasa/rational_number/blob/b6ff702a0f51b950798f2a31c5bd81ae0c15385a/fpm.toml",
+              "sha256": "b414ab370223ede45ab263de913c78f76daef6fdbf938291b4bf33ff5d4a35fc"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "ratNumInit",
+              "role": "public-entry-point",
+              "module": "rational_number",
+              "summary": "Construct TYPE(RATIONALNUMBER_T) from default INTEGER NUM and nonzero DEN. Negative denominators are sign-normalized; the fraction is not automatically reduced. DEN=0 leaves the result components undefined rather than returning a status, so validate before calling. Arithmetic is bounded by default INTEGER range; this is not arbitrary-precision rational arithmetic.",
+              "signature": "VALUE = ratNumInit(NUM,DEN)",
+              "path": "src/rational_number.f90",
+              "line_start": 19,
+              "line_end": 38,
+              "declarations": [
+                {
+                  "path": "src/rational_number.f90",
+                  "line_start": 20,
+                  "line_end": 24
+                },
+                {
+                  "path": "src/rational_number.f90",
+                  "line_start": 1,
+                  "line_end": 8
+                }
+              ]
+            },
+            {
+              "procedure": "ratNumAdd",
+              "role": "public-entry-point",
+              "module": "rational_number",
+              "summary": "Add two valid RATIONALNUMBER_T values, returning another fraction without modifying the inputs. Optional logical SIMPLIFY defaults to no reduction; true reduces inputs and result through the dependency gcd routine. Cross-products/common-denominator arithmetic can overflow default INTEGER before simplification; keep intermediate values representable. No status or overflow detection is provided.",
+              "signature": "VALUE = ratNumAdd(R1,R2[,SIMPLIFY])",
+              "path": "src/rational_number.f90",
+              "line_start": 144,
+              "line_end": 169,
+              "declarations": [
+                {
+                  "path": "src/rational_number.f90",
+                  "line_start": 145,
+                  "line_end": 148
+                },
+                {
+                  "path": "src/rational_number.f90",
+                  "line_start": 1,
+                  "line_end": 8
+                }
+              ]
+            },
+            {
+              "procedure": "ratNumToStr",
+              "role": "public-entry-point",
+              "module": "rational_number",
+              "summary": "Return a deferred-length allocatable CHARACTER representation of a valid RATIONALNUMBER_T. The form is numerator/denominator except denominator one or numerator zero, which prints only the numerator. This does not simplify first: call RATNUMSIMPLIFY explicitly when reduced textual form is required. Internal integer formatting uses fixed 20-character buffers at this pin.",
+              "signature": "VALUE = ratNumToStr(RNUM)",
+              "path": "src/rational_number.f90",
+              "line_start": 71,
+              "line_end": 85,
+              "declarations": [
+                {
+                  "path": "src/rational_number.f90",
+                  "line_start": 72,
+                  "line_end": 75
+                },
+                {
+                  "path": "src/rational_number.f90",
+                  "line_start": 1,
+                  "line_end": 8
                 }
               ]
             }
@@ -5803,6 +6073,423 @@
         }
       ]
     },
+    "rndgen-fortran": {
+      "id": "github:wcota/rndgen-fortran",
+      "repository": {
+        "owner": "wcota",
+        "name": "rndgen-fortran",
+        "url": "https://github.com/wcota/rndgen-fortran"
+      },
+      "license": {
+        "label": "GPL-3.0-or-later",
+        "spdx_expression": "GPL-3.0-or-later",
+        "revision": "3fa553608324913eed6cb178b398e7f661e4f63a",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies GPL version 3 and the inspected source explicitly elects version 3 or later, crediting Wesley Cota and adapted Thomas Vojta KISS routines.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/wcota/rndgen-fortran/blob/3fa553608324913eed6cb178b398e7f661e4f63a/LICENSE",
+            "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/wcota/rndgen-fortran/blob/3fa553608324913eed6cb178b398e7f661e4f63a/README.md",
+            "sha256": "759b1f0ac34b08d1ea4ce1e51f6ead4a632ab5038d2f03efef30e81e41196f9a"
+          },
+          {
+            "path": "src/rndgen.f90",
+            "url": "https://github.com/wcota/rndgen-fortran/blob/3fa553608324913eed6cb178b398e7f661e4f63a/src/rndgen.f90",
+            "sha256": "30663beef8311da766de70db3453626aaa1deecd944127a100c2daa4eb52e5a5"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "L6",
+          "level": "source-reviewed",
+          "revision": "3fa553608324913eed6cb178b398e7f661e4f63a",
+          "reviewed_on": "2026-11-07",
+          "notes": "The KISS object exposes scalar seed initialization, real/integer draws and a reset to its recorded starting seed. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/rndgen.f90",
+              "url": "https://github.com/wcota/rndgen-fortran/blob/3fa553608324913eed6cb178b398e7f661e4f63a/src/rndgen.f90",
+              "sha256": "30663beef8311da766de70db3453626aaa1deecd944127a100c2daa4eb52e5a5"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "init",
+              "role": "public-entry-point",
+              "module": "rndgen_mod",
+              "derived_type": "rndgen",
+              "summary": "Declare TYPE(rndgen) :: solver from rndgen_mod. Initialize the KISS generator from a scalar INTEGER(INT32) ISEED. Use a positive representable seed and avoid the most-negative integer whose ABS is not representable. Seeding records O_ISEED, expands the state and consumes a warm-up draw. State arithmetic intentionally wraps fixed-width integers; build settings must support that convention. There is no status output and the integer-representation check can STOP. This is simulation randomness, not cryptographic randomness. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%init(ISEED)",
+              "path": "src/rndgen.f90",
+              "line_start": 153,
+              "line_end": 213,
+              "declarations": [
+                {
+                  "path": "src/rndgen.f90",
+                  "line_start": 156,
+                  "line_end": 160
+                },
+                {
+                  "path": "src/rndgen.f90",
+                  "line_start": 33,
+                  "line_end": 94
+                }
+              ]
+            },
+            {
+              "procedure": "rnd",
+              "role": "public-entry-point",
+              "module": "rndgen_mod",
+              "derived_type": "rndgen",
+              "summary": "Declare TYPE(rndgen) :: solver from rndgen_mod. Return a scalar REAL(REAL64) uniform draw on [0,1), advancing this object state. Call INIT before the first draw: the seed components are not initialized by the type declaration. There is no seed argument or status result here. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%rnd()",
+              "path": "src/rndgen.f90",
+              "line_start": 98,
+              "line_end": 114,
+              "declarations": [
+                {
+                  "path": "src/rndgen.f90",
+                  "line_start": 101,
+                  "line_end": 103
+                },
+                {
+                  "path": "src/rndgen.f90",
+                  "line_start": 33,
+                  "line_end": 94
+                }
+              ]
+            },
+            {
+              "procedure": "int",
+              "role": "public-entry-point",
+              "module": "rndgen_mod",
+              "derived_type": "rndgen",
+              "summary": "Declare TYPE(rndgen) :: solver from rndgen_mod. Return a scalar INTEGER(INT32) sample in inclusive [I1,I2] using scaling of a real uniform draw. Supply I1<=I2 and bounds for which I2+1-I1 and the subsequent integer arithmetic remain representable. The implementation is not rejection-based unbiased integer sampling over arbitrary ranges, and no validation/status is exposed. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%int(I1,I2)",
+              "path": "src/rndgen.f90",
+              "line_start": 126,
+              "line_end": 132,
+              "declarations": [
+                {
+                  "path": "src/rndgen.f90",
+                  "line_start": 127,
+                  "line_end": 129
+                },
+                {
+                  "path": "src/rndgen.f90",
+                  "line_start": 33,
+                  "line_end": 94
+                }
+              ]
+            },
+            {
+              "procedure": "reset",
+              "role": "public-entry-point",
+              "module": "rndgen_mod",
+              "derived_type": "rndgen",
+              "summary": "Declare TYPE(rndgen) :: solver from rndgen_mod. Restart the object by calling INIT with its recorded original seed. Call INIT at least once before RESET; this replays the post-warm-up sequence rather than restoring an arbitrary saved midstream state. SAVE_SEED/READ_SEED are separate interfaces for that purpose. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%reset()",
+              "path": "src/rndgen.f90",
+              "line_start": 216,
+              "line_end": 220,
+              "declarations": [
+                {
+                  "path": "src/rndgen.f90",
+                  "line_start": 217,
+                  "line_end": 217
+                },
+                {
+                  "path": "src/rndgen.f90",
+                  "line_start": 33,
+                  "line_end": 94
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fsparse": {
+      "id": "github:jalvesz/fsparse",
+      "repository": {
+        "owner": "jalvesz",
+        "name": "FSPARSE",
+        "url": "https://github.com/jalvesz/FSPARSE"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "fa8233420ab0110bb688d565879164386521a8fc",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE.md and inspected matrix-gallery source identify MIT terms for Transvalor/Jose R. Alves Z. contributions.",
+        "evidence": [
+          {
+            "path": "LICENSE.md",
+            "url": "https://github.com/jalvesz/FSPARSE/blob/fa8233420ab0110bb688d565879164386521a8fc/LICENSE.md",
+            "sha256": "544eedee5597670a8eef03f188ac91eca4acaadebe639003c40fc6d39379d9c4"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jalvesz/FSPARSE/blob/fa8233420ab0110bb688d565879164386521a8fc/README.md",
+            "sha256": "740b459421d664310d577e915142fb042fe024e17e7c56c6e9af93d23182b193"
+          },
+          {
+            "path": "src/conversion/fsparse_conversions.f90",
+            "url": "https://github.com/jalvesz/FSPARSE/blob/fa8233420ab0110bb688d565879164386521a8fc/src/conversion/fsparse_conversions.f90",
+            "sha256": "eedaa24f37fb1dca8e86361921abad3ebde355ab8855f92350fdc3d54eea650d"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "D1",
+          "level": "source-reviewed",
+          "revision": "fa8233420ab0110bb688d565879164386521a8fc",
+          "reviewed_on": "2026-11-07",
+          "notes": "The REAL(DP) conversion generics move between dense arrays and coordinate sparse storage with explicit initialization and uniqueness requirements. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/conversion/fsparse_conversions.f90",
+              "url": "https://github.com/jalvesz/FSPARSE/blob/fa8233420ab0110bb688d565879164386521a8fc/src/conversion/fsparse_conversions.f90",
+              "sha256": "eedaa24f37fb1dca8e86361921abad3ebde355ab8855f92350fdc3d54eea650d"
+            },
+            {
+              "path": "src/fsparse_constants.f90",
+              "url": "https://github.com/jalvesz/FSPARSE/blob/fa8233420ab0110bb688d565879164386521a8fc/src/fsparse_constants.f90",
+              "sha256": "2b35744ad503711c1ba05be0724dc0fb74aa83f86c4d151907b267a25207fc82"
+            },
+            {
+              "path": "src/fsparse_matrix_gallery.f90",
+              "url": "https://github.com/jalvesz/FSPARSE/blob/fa8233420ab0110bb688d565879164386521a8fc/src/fsparse_matrix_gallery.f90",
+              "sha256": "6cece8010d75e01554b65930e16fb20e49cb92e1e2e9d6e71142787c7427a57e"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "dense2coo",
+              "role": "public-entry-point",
+              "module": "fsparse_conversions",
+              "summary": "REAL(DP) overload of DENSE2COO fills TYPE(COO_DP) from a dense matrix, allocating index/data storage through its MALLOC binding. Use DP from FSPARSE_CONSTANTS (selected double precision); indices are one-based. The pin counts ABS(value)>TINY but stores values unless ABS(value)<TINY, so entries exactly equal to TINY in magnitude can overrun the counted storage; avoid that boundary value and nonfinite data. Reusing previously allocated COO storage with changed NNZ also follows MALLOC source-shape assumptions; prefer a fresh COO object. No status is exposed.",
+              "signature": "CALL dense2coo(DENSE,COO)",
+              "path": "src/conversion/fsparse_conversions.f90",
+              "line_start": 109,
+              "line_end": 133,
+              "declarations": [
+                {
+                  "path": "src/conversion/fsparse_conversions.f90",
+                  "line_start": 111,
+                  "line_end": 112
+                },
+                {
+                  "path": "src/conversion/fsparse_conversions.f90",
+                  "line_start": 7,
+                  "line_end": 36
+                },
+                {
+                  "path": "src/fsparse_constants.f90",
+                  "line_start": 1,
+                  "line_end": 14
+                },
+                {
+                  "path": "src/fsparse_matrix_gallery.f90",
+                  "line_start": 58,
+                  "line_end": 75
+                },
+                {
+                  "path": "src/fsparse_matrix_gallery.f90",
+                  "line_start": 216,
+                  "line_end": 255
+                }
+              ]
+            },
+            {
+              "procedure": "coo2dense",
+              "role": "public-entry-point",
+              "module": "fsparse_conversions",
+              "summary": "REAL(DP) overload of COO2DENSE writes stored COO_DP entries into caller-allocated DENSE(:,:). Allocate the correct (NROWS,NCOLS) shape and set the whole destination to zero first: this routine does not clear unstored entries. Use unique one-based valid COO indices and full storage (no implicit symmetry expansion). Duplicate coordinates are assigned, not summed, and violate independent-iteration assumptions of DO CONCURRENT. There is no status output or bounds validation.",
+              "signature": "CALL coo2dense(COO,DENSE)",
+              "path": "src/conversion/fsparse_conversions.f90",
+              "line_start": 248,
+              "line_end": 257,
+              "declarations": [
+                {
+                  "path": "src/conversion/fsparse_conversions.f90",
+                  "line_start": 250,
+                  "line_end": 251
+                },
+                {
+                  "path": "src/conversion/fsparse_conversions.f90",
+                  "line_start": 7,
+                  "line_end": 36
+                },
+                {
+                  "path": "src/fsparse_constants.f90",
+                  "line_start": 1,
+                  "line_end": 14
+                },
+                {
+                  "path": "src/fsparse_matrix_gallery.f90",
+                  "line_start": 58,
+                  "line_end": 75
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "geompack": {
+      "id": "github:jchristopherson/geompack",
+      "repository": {
+        "owner": "jchristopherson",
+        "name": "geompack",
+        "url": "https://github.com/jchristopherson/geompack"
+      },
+      "license": {
+        "label": "GPL-3.0 declared; legacy GEOMPACK provenance retained",
+        "spdx_expression": null,
+        "revision": "b7a327ca3a13507859c42dd6fba50af0bb5d5c6a",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root manifest declares GPL-3.0 and LICENSE supplies GPL version 3. The original geometry source credits Barry Joe and the John Burkardt Fortran 90 translation; retain that component provenance. An only/or-later project election was not identified in the inspected interface/README.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jchristopherson/geompack/blob/b7a327ca3a13507859c42dd6fba50af0bb5d5c6a/LICENSE",
+            "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jchristopherson/geompack/blob/b7a327ca3a13507859c42dd6fba50af0bb5d5c6a/README.md",
+            "sha256": "3abe7768754228bd7d9ec192d97ca856a91bc353a02bc50fa49107e9a72981ec"
+          },
+          {
+            "path": "src/geompack.f90",
+            "url": "https://github.com/jchristopherson/geompack/blob/b7a327ca3a13507859c42dd6fba50af0bb5d5c6a/src/geompack.f90",
+            "sha256": "fd78259d7e41e0a6f50b88a17d1c34e3f1ff9e2bb154bb5e72da65cfab1aab43"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "P",
+          "level": "source-reviewed",
+          "revision": "b7a327ca3a13507859c42dd6fba50af0bb5d5c6a",
+          "reviewed_on": "2026-11-07",
+          "notes": "The public interface module exposes planar convex hulls, Delaunay connectivity and triangle circumcenters with caller-owned arrays. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/geompack.f90",
+              "url": "https://github.com/jchristopherson/geompack/blob/b7a327ca3a13507859c42dd6fba50af0bb5d5c6a/src/geompack.f90",
+              "sha256": "fd78259d7e41e0a6f50b88a17d1c34e3f1ff9e2bb154bb5e72da65cfab1aab43"
+            },
+            {
+              "path": "src/points_hull_2d.f90",
+              "url": "https://github.com/jchristopherson/geompack/blob/b7a327ca3a13507859c42dd6fba50af0bb5d5c6a/src/points_hull_2d.f90",
+              "sha256": "97ab1b447b22c9b11fa93630e32baabb2f5d8791acf00b398f3522f72f8fa7a9"
+            },
+            {
+              "path": "src/r8tris2.f90",
+              "url": "https://github.com/jchristopherson/geompack/blob/b7a327ca3a13507859c42dd6fba50af0bb5d5c6a/src/r8tris2.f90",
+              "sha256": "666b6632d06df0c5aff082caf53caa78078b90d45bcc30657a5cb2521d553a74"
+            },
+            {
+              "path": "src/triangle_circumcenter_2d.f90",
+              "url": "https://github.com/jchristopherson/geompack/blob/b7a327ca3a13507859c42dd6fba50af0bb5d5c6a/src/triangle_circumcenter_2d.f90",
+              "sha256": "e17656904f1064ebc77dc77e77edf7f51d70c624e5ec08ea54e550ce694f6fc0"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/jchristopherson/geompack/blob/b7a327ca3a13507859c42dd6fba50af0bb5d5c6a/fpm.toml",
+              "sha256": "57bacd852d515373551f1d26b6a1cef5233c2c23a97aa93e3d2b3c148a040177"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "points_hull_2d",
+              "role": "public-entry-point",
+              "module": "geompack",
+              "summary": "Compute the convex hull of NODE_NUM planar points in REAL(REAL64) NODE_XY(2,NODE_NUM). INTEGER(INT32) HULL(NODE_NUM) is caller-allocated; only entries 1:HULL_NUM are the ordered hull vertex indices. The closing start vertex is not an additional caller slot. There is no status argument; invalid/degenerate inputs can stop within the implementation. Validate finite coordinates and a suitable nonempty point set.",
+              "signature": "CALL points_hull_2d(NODE_NUM,NODE_XY,HULL_NUM,HULL)",
+              "path": "src/geompack.f90",
+              "line_start": 184,
+              "line_end": 201,
+              "declarations": [
+                {
+                  "path": "src/geompack.f90",
+                  "line_start": 192,
+                  "line_end": 200
+                },
+                {
+                  "path": "src/geompack.f90",
+                  "line_start": 1,
+                  "line_end": 6
+                },
+                {
+                  "path": "src/points_hull_2d.f90",
+                  "line_start": 1,
+                  "line_end": 65
+                }
+              ]
+            },
+            {
+              "procedure": "r8tris2",
+              "role": "public-entry-point",
+              "module": "geompack",
+              "summary": "Incremental 2D Delaunay triangulation: NODE_XY is REAL64 (2,NODE_NUM), integer counts and connectivity INT32. Allocate TRIANGLE_NODE/TRIANGLE_NEIGHBOR(3,2*NODE_NUM); use only the first TRIANGLE_NUM columns. Despite the interface comment, successful implementation remaps triangle indices and restores original point order after its internal sort. Error early returns can leave partial/reordered data; no public error flag is exposed. Require at least three reasonably distinct, noncollinear finite points. Positive neighbor entries index triangles; negative values encode boundary links, not ordinary negative neighbors.",
+              "signature": "CALL r8tris2(NODE_NUM,NODE_XY,TRIANGLE_NUM,TRIANGLE_NODE,TRIANGLE_NEIGHBOR)",
+              "path": "src/geompack.f90",
+              "line_start": 221,
+              "line_end": 251,
+              "declarations": [
+                {
+                  "path": "src/geompack.f90",
+                  "line_start": 232,
+                  "line_end": 250
+                },
+                {
+                  "path": "src/geompack.f90",
+                  "line_start": 1,
+                  "line_end": 6
+                },
+                {
+                  "path": "src/r8tris2.f90",
+                  "line_start": 308,
+                  "line_end": 323
+                }
+              ]
+            },
+            {
+              "procedure": "triangle_circumcenter_2d",
+              "role": "public-entry-point",
+              "module": "geompack",
+              "summary": "Supply REAL64 T(2,3), one triangle vertex per column, and receive REAL64 CENTER(2). Vertices must define a nondegenerate triangle: the implementation divides by the oriented determinant without a status check. The center can lie outside an obtuse triangle. No radius or error estimate is returned by this binding.",
+              "signature": "CALL triangle_circumcenter_2d(T,CENTER)",
+              "path": "src/geompack.f90",
+              "line_start": 253,
+              "line_end": 275,
+              "declarations": [
+                {
+                  "path": "src/geompack.f90",
+                  "line_start": 273,
+                  "line_end": 274
+                },
+                {
+                  "path": "src/geompack.f90",
+                  "line_start": 1,
+                  "line_end": 6
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "minres": {
       "id": "github:willdickson/minres",
       "repository": {
@@ -6233,6 +6920,181 @@
         }
       ]
     },
+    "forimage": {
+      "id": "github:gha3mi/forimage",
+      "repository": {
+        "owner": "gha3mi",
+        "name": "forimage",
+        "url": "https://github.com/gha3mi/forimage"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "65f53ce6a53c3a3ee38f05e6a065505bc3fa0dfb",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE and PNM source comments identify BSD three-clause terms for the image library. Referenced color tables and dependencies retain their separate source context.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/gha3mi/forimage/blob/65f53ce6a53c3a3ee38f05e6a065505bc3fa0dfb/LICENSE",
+            "sha256": "cb4909871bff5acfa56c8bd19d1d55a5e31e10d4bac8685e8a1279a4cefdaf96"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/gha3mi/forimage/blob/65f53ce6a53c3a3ee38f05e6a065505bc3fa0dfb/README.md",
+            "sha256": "4be514c0141041fe8445056ed592283841da50f329bf53988caddf9ca63b1a71"
+          },
+          {
+            "path": "src/pnm.F90",
+            "url": "https://github.com/gha3mi/forimage/blob/65f53ce6a53c3a3ee38f05e6a065505bc3fa0dfb/src/pnm.F90",
+            "sha256": "77835eaba81e5efc6537edf4888744de4a6f5e9397f7d01337f3025df76cb298"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "Q",
+          "level": "source-reviewed",
+          "revision": "65f53ce6a53c3a3ee38f05e6a065505bc3fa0dfb",
+          "reviewed_on": "2026-11-07",
+          "notes": "FORMAT_PNM initializes pixel storage and applies an in-place negative-image transform. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/pnm.F90",
+              "url": "https://github.com/gha3mi/forimage/blob/65f53ce6a53c3a3ee38f05e6a065505bc3fa0dfb/src/pnm.F90",
+              "sha256": "77835eaba81e5efc6537edf4888744de4a6f5e9397f7d01337f3025df76cb298"
+            },
+            {
+              "path": "src/forimage_parameters.f90",
+              "url": "https://github.com/gha3mi/forimage/blob/65f53ce6a53c3a3ee38f05e6a065505bc3fa0dfb/src/forimage_parameters.f90",
+              "sha256": "2efcb45129f7f6a8f97e5eff8a86164a37db552811334e1817f334d70c253b10"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "set_pnm",
+              "role": "public-entry-point",
+              "module": "pnm",
+              "derived_type": "format_pnm",
+              "summary": "Declare TYPE(format_pnm) :: solver from pnm. Initialize FORMAT_PNM with positive default INTEGER WIDTH/HEIGHT and INTEGER(IK) PIXELS(:,:), IK=INT32. FILE_FORMAT is exactly \"pbm\", \"pgm\" or \"ppm\"; ENCODING is \"ascii\"/\"plain\" or \"binary\"/\"raw\". COMMENT is required even when empty. MAX_COLOR is optional before required COMMENT/PIXELS, so use keywords when omitting it; pass MAX_COLOR=255 explicitly for an 8-bit PGM/PPM example. Pixel shape is (HEIGHT,WIDTH) for PBM/PGM or (HEIGHT,3*WIDTH) with interleaved RGB values for PPM, not a rank-three array. Supply values within the format range. Invalid controls can ERROR STOP; no status is returned. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%set_pnm(ENCODING,FILE_FORMAT,WIDTH,HEIGHT,[MAX_COLOR],COMMENT,PIXELS)",
+              "path": "src/pnm.F90",
+              "line_start": 772,
+              "line_end": 816,
+              "declarations": [
+                {
+                  "path": "src/pnm.F90",
+                  "line_start": 773,
+                  "line_end": 780
+                },
+                {
+                  "path": "src/pnm.F90",
+                  "line_start": 7,
+                  "line_end": 63
+                },
+                {
+                  "path": "src/forimage_parameters.f90",
+                  "line_start": 1,
+                  "line_end": 8
+                },
+                {
+                  "path": "src/pnm.F90",
+                  "line_start": 824,
+                  "line_end": 842
+                },
+                {
+                  "path": "src/pnm.F90",
+                  "line_start": 957,
+                  "line_end": 964
+                }
+              ]
+            },
+            {
+              "procedure": "negative",
+              "role": "public-entry-point",
+              "module": "pnm",
+              "derived_type": "format_pnm",
+              "summary": "Declare TYPE(format_pnm) :: solver from pnm. Invert an initialized image in place using MAX_COLOR-PIXELS, retaining dimensions and format. Initialize pixel values and a suitable maximum first; this does not allocate a separate output image or display one. The operation runs through the package pixel-range check and has no status result. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%negative()",
+              "path": "src/pnm.F90",
+              "line_start": 576,
+              "line_end": 580,
+              "declarations": [
+                {
+                  "path": "src/pnm.F90",
+                  "line_start": 577,
+                  "line_end": 578
+                },
+                {
+                  "path": "src/pnm.F90",
+                  "line_start": 7,
+                  "line_end": 63
+                },
+                {
+                  "path": "src/forimage_parameters.f90",
+                  "line_start": 1,
+                  "line_end": 8
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "N1",
+          "level": "source-reviewed",
+          "revision": "65f53ce6a53c3a3ee38f05e6a065505bc3fa0dfb",
+          "reviewed_on": "2026-11-07",
+          "notes": "The public exporter writes stored PNM pixel data with explicit filename/encoding conventions. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/pnm.F90",
+              "url": "https://github.com/gha3mi/forimage/blob/65f53ce6a53c3a3ee38f05e6a065505bc3fa0dfb/src/pnm.F90",
+              "sha256": "77835eaba81e5efc6537edf4888744de4a6f5e9397f7d01337f3025df76cb298"
+            },
+            {
+              "path": "src/forimage_parameters.f90",
+              "url": "https://github.com/gha3mi/forimage/blob/65f53ce6a53c3a3ee38f05e6a065505bc3fa0dfb/src/forimage_parameters.f90",
+              "sha256": "2efcb45129f7f6a8f97e5eff8a86164a37db552811334e1817f334d70c253b10"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "export_pnm",
+              "role": "public-entry-point",
+              "module": "pnm",
+              "derived_type": "format_pnm",
+              "summary": "Declare TYPE(format_pnm) :: solver from pnm. Write the initialized image to FILE_NAME plus the stored extension, e.g. FILE_NAME=\"picture\" creates picture.ppm; do not include .ppm twice. Optional ENCODING changes the output encoding and object magic number. Existing files are replaced. The method creates a PNM file, not a browser display command; preview/conversion is provided separately by the playground. I/O failures can ERROR STOP and there is no status argument. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%export_pnm(FILE_NAME,[ENCODING])",
+              "path": "src/pnm.F90",
+              "line_start": 997,
+              "line_end": 1089,
+              "declarations": [
+                {
+                  "path": "src/pnm.F90",
+                  "line_start": 998,
+                  "line_end": 1000
+                },
+                {
+                  "path": "src/pnm.F90",
+                  "line_start": 7,
+                  "line_end": 63
+                },
+                {
+                  "path": "src/forimage_parameters.f90",
+                  "line_start": 1,
+                  "line_end": 8
+                },
+                {
+                  "path": "src/pnm.F90",
+                  "line_start": 1037,
+                  "line_end": 1047
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "fastconv": {
       "id": "github:gronki/fastconv",
       "repository": {
@@ -6434,6 +7296,120 @@
                   "path": "src/gjp_types.f90",
                   "line_start": 29,
                   "line_end": 42
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "iapws": {
+      "id": "github:milanskocic/iapws",
+      "repository": {
+        "owner": "MilanSkocic",
+        "name": "iapws",
+        "url": "https://github.com/MilanSkocic/iapws"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "ce3820c011737bcc3a37a02b9ccfeff28616019f",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root COPYING and source SPDX headers identify MIT terms. IAPWS formulation names, constants and source references retain their scientific attribution.",
+        "evidence": [
+          {
+            "path": "COPYING",
+            "url": "https://github.com/MilanSkocic/iapws/blob/ce3820c011737bcc3a37a02b9ccfeff28616019f/COPYING",
+            "sha256": "0a60149c474dfba44d80084b0bf35d8a57be29edea7947ecf2f705de59e16065"
+          },
+          {
+            "path": "src/iapws.f90",
+            "url": "https://github.com/MilanSkocic/iapws/blob/ce3820c011737bcc3a37a02b9ccfeff28616019f/src/iapws.f90",
+            "sha256": "ad4d9c974848a42a638cd38d0e56fb99c23471a24398b087a5c9fb8095b439f8"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "Z",
+          "level": "source-reviewed",
+          "revision": "ce3820c011737bcc3a37a02b9ccfeff28616019f",
+          "reviewed_on": "2026-11-07",
+          "notes": "The public saturation-curve wrappers evaluate ordinary-water saturation pressure or temperature using explicitly documented array units and bounds. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/iapws.f90",
+              "url": "https://github.com/MilanSkocic/iapws/blob/ce3820c011737bcc3a37a02b9ccfeff28616019f/src/iapws.f90",
+              "sha256": "ad4d9c974848a42a638cd38d0e56fb99c23471a24398b087a5c9fb8095b439f8"
+            },
+            {
+              "path": "src/iapws_r797.f90",
+              "url": "https://github.com/MilanSkocic/iapws/blob/ce3820c011737bcc3a37a02b9ccfeff28616019f/src/iapws_r797.f90",
+              "sha256": "c9f659c51cc9dd73fe2a3798c1a1cca942449a5da731d23f346380e9f68b6cea"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "psat",
+              "role": "public-entry-point",
+              "module": "iapws",
+              "summary": "Compute ordinary-water saturation pressure for contiguous rank-one double-precision TS(:) in kelvin, filling preallocated same-length PS(:) in MPa. These are arrays even for a single value; pass a one-element array rather than a scalar. The implementation bounds are 273.15<=T<=647.096 K, despite a 273.13 K comment typo. Out-of-range entries return quiet NaN; there is no status array. This is the saturation curve, not arbitrary single-phase pressure evaluation.",
+              "signature": "CALL psat(TS,PS)",
+              "path": "src/iapws.f90",
+              "line_start": 224,
+              "line_end": 229,
+              "declarations": [
+                {
+                  "path": "src/iapws.f90",
+                  "line_start": 226,
+                  "line_end": 227
+                },
+                {
+                  "path": "src/iapws.f90",
+                  "line_start": 6,
+                  "line_end": 34
+                },
+                {
+                  "path": "src/iapws_r797.f90",
+                  "line_start": 100,
+                  "line_end": 107
+                },
+                {
+                  "path": "src/iapws_r797.f90",
+                  "line_start": 523,
+                  "line_end": 567
+                }
+              ]
+            },
+            {
+              "procedure": "Tsat",
+              "role": "public-entry-point",
+              "module": "iapws",
+              "summary": "Inverse saturation curve: contiguous double-precision PS(:) is in MPa, not pascals; return same-length preallocated TS(:) in kelvin. Valid pressure range is 611.213e-6 through 22.064 MPa. Out-of-range entries become quiet NaN. This interface does not accept scalar actual arguments, a phase selector or a pressure/temperature pair for general water properties.",
+              "signature": "CALL Tsat(PS,TS)",
+              "path": "src/iapws.f90",
+              "line_start": 248,
+              "line_end": 253,
+              "declarations": [
+                {
+                  "path": "src/iapws.f90",
+                  "line_start": 250,
+                  "line_end": 251
+                },
+                {
+                  "path": "src/iapws.f90",
+                  "line_start": 6,
+                  "line_end": 34
+                },
+                {
+                  "path": "src/iapws_r797.f90",
+                  "line_start": 100,
+                  "line_end": 107
+                },
+                {
+                  "path": "src/iapws_r797.f90",
+                  "line_start": 523,
+                  "line_end": 567
                 }
               ]
             }
@@ -7069,6 +8045,153 @@
         }
       ]
     },
+    "fortran_cubatures": {
+      "id": "github:willklausler/fortran_cubatures",
+      "repository": {
+        "owner": "willklausler",
+        "name": "fortran_cubatures",
+        "url": "https://github.com/willklausler/fortran_cubatures"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "aca04975d09aed329fd4210defd7052926dc01c1",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE and source SPDX header identify MIT terms for the library; retain the documented quadrature-rule references.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/willklausler/fortran_cubatures/blob/aca04975d09aed329fd4210defd7052926dc01c1/LICENSE",
+            "sha256": "0cdecb84231b00a4ddd2b74e62eccf41fb1ca32593269f135e03c68dc6c1c294"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/willklausler/fortran_cubatures/blob/aca04975d09aed329fd4210defd7052926dc01c1/README.md",
+            "sha256": "41d9abd4460937d518fddd53ce5168aaa948ff5a61be89a96435a73ed5bc4ff8"
+          },
+          {
+            "path": "src/cubatures.f90",
+            "url": "https://github.com/willklausler/fortran_cubatures/blob/aca04975d09aed329fd4210defd7052926dc01c1/src/cubatures.f90",
+            "sha256": "6d53402e15c1fead86546723ec195f9e4658ee4b641d535fe8f8a11338257b6d"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "H2",
+          "level": "source-reviewed",
+          "revision": "aca04975d09aed329fd4210defd7052926dc01c1",
+          "reviewed_on": "2026-11-07",
+          "notes": "The public constructor builds reference-element quadrature/cubature rules with scalar or per-direction polynomial degrees. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/cubatures.f90",
+              "url": "https://github.com/willklausler/fortran_cubatures/blob/aca04975d09aed329fd4210defd7052926dc01c1/src/cubatures.f90",
+              "sha256": "6d53402e15c1fead86546723ec195f9e4658ee4b641d535fe8f8a11338257b6d"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "cubature",
+              "role": "public-entry-point",
+              "module": "cubatures",
+              "summary": "Scalar-degree overload of the public CUBATURE constructor returns TYPE(CUBATURE). ELM is one of CUB_LIN/TRI/QUA/TET/HEX/WED; DEGREE is a nonnegative polynomial degree of exactness, not a point count. The object holds REAL(REAL64) ABSCISSAE(DIM,NPOINTS) and WEIGHTS(NPOINTS). Integrate by summing weights times function values on the documented reference element; physical-element mapping and Jacobian factors are the caller responsibility. Invalid input ERROR STOPs.",
+              "signature": "VALUE = cubature(ELM,DEGREE)",
+              "path": "src/cubatures.f90",
+              "line_start": 138,
+              "line_end": 147,
+              "declarations": [
+                {
+                  "path": "src/cubatures.f90",
+                  "line_start": 141,
+                  "line_end": 143
+                },
+                {
+                  "path": "src/cubatures.f90",
+                  "line_start": 11,
+                  "line_end": 40
+                },
+                {
+                  "path": "src/cubatures.f90",
+                  "line_start": 73,
+                  "line_end": 89
+                },
+                {
+                  "path": "src/cubatures.f90",
+                  "line_start": 100,
+                  "line_end": 130
+                }
+              ]
+            },
+            {
+              "procedure": "cubature",
+              "role": "public-entry-point",
+              "module": "cubatures",
+              "summary": "Vector-degree overload of CUBATURE accepts DEGREE(:) of length one or the number of independent directions: 1 for line/triangle/tetrahedron, 2 for quadrilateral/wedge, 3 for hexahedron. For a wedge, the entries are triangle total degree and axial degree. Tensor-product entries specify per-coordinate degrees. All degrees must be nonnegative. Output coordinates and weights refer to the documented reference domains; weights already include their reference measure.",
+              "signature": "VALUE = cubature(ELM,DEGREE)",
+              "path": "src/cubatures.f90",
+              "line_start": 149,
+              "line_end": 158,
+              "declarations": [
+                {
+                  "path": "src/cubatures.f90",
+                  "line_start": 152,
+                  "line_end": 154
+                },
+                {
+                  "path": "src/cubatures.f90",
+                  "line_start": 11,
+                  "line_end": 40
+                },
+                {
+                  "path": "src/cubatures.f90",
+                  "line_start": 73,
+                  "line_end": 89
+                },
+                {
+                  "path": "src/cubatures.f90",
+                  "line_start": 100,
+                  "line_end": 130
+                }
+              ]
+            },
+            {
+              "procedure": "is_valid",
+              "role": "public-entry-point",
+              "module": "cubatures",
+              "derived_type": "cubature",
+              "summary": "Declare TYPE(cubature) :: solver from cubatures. Return LOGICAL true when arrays are allocated, NPOINTS>0, and their shapes match the stored dimension/count. This is an object-storage consistency check, not a proof of requested polynomial exactness, accuracy for a nonpolynomial integrand, or validity of a physical-element mapping. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%is_valid()",
+              "path": "src/cubatures.f90",
+              "line_start": 223,
+              "line_end": 235,
+              "declarations": [
+                {
+                  "path": "src/cubatures.f90",
+                  "line_start": 226,
+                  "line_end": 227
+                },
+                {
+                  "path": "src/cubatures.f90",
+                  "line_start": 11,
+                  "line_end": 40
+                },
+                {
+                  "path": "src/cubatures.f90",
+                  "line_start": 73,
+                  "line_end": 89
+                },
+                {
+                  "path": "src/cubatures.f90",
+                  "line_start": 100,
+                  "line_end": 130
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "forinv": {
       "id": "github:gha3mi/forinv",
       "repository": {
@@ -7151,6 +8274,77 @@
         }
       ]
     },
+    "dcuhre": {
+      "id": "github:zaneham/dcuhre",
+      "repository": {
+        "owner": "Zaneham",
+        "name": "dcuhre",
+        "url": "https://github.com/Zaneham/dcuhre"
+      },
+      "license": {
+        "label": "Custom ACM noncommercial software terms",
+        "spdx_expression": null,
+        "revision": "da8becb7f5313c1d7387066ef2106be9e156e20c",
+        "reviewed_on": "2026-11-07",
+        "notes": "The pinned LICENSE identifies CALGO Algorithm 698, original ACM authors/copyright, and permission for noncommercial use, copying, modification and redistribution. It explicitly applies the same terms to the derivative. Preserve that restriction and the linked ACM notice rather than substitute a permissive SPDX label.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/Zaneham/dcuhre/blob/da8becb7f5313c1d7387066ef2106be9e156e20c/LICENSE",
+            "sha256": "65fce46ccc2460a631a0617da1927b5d4b8d8ce311c07d709a857248eb766e1e"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/Zaneham/dcuhre/blob/da8becb7f5313c1d7387066ef2106be9e156e20c/README.md",
+            "sha256": "6c216c5e830d4d70ba894b28793e7011530aa3fe885e84589e6db336d22c1b18"
+          },
+          {
+            "path": "src/dcuhre.f",
+            "url": "https://github.com/Zaneham/dcuhre/blob/da8becb7f5313c1d7387066ef2106be9e156e20c/src/dcuhre.f",
+            "sha256": "81a7c80b32794447c47f8ec1c7c2d159e811c0864d7c9c515bf4583d37cb627a"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "H2b1a1",
+          "level": "source-reviewed",
+          "revision": "da8becb7f5313c1d7387066ef2106be9e156e20c",
+          "reviewed_on": "2026-11-07",
+          "notes": "DCUHRE adaptively integrates vector-valued functions over finite hyperrectangles with caller-owned workspace and estimated errors. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/dcuhre.f",
+              "url": "https://github.com/Zaneham/dcuhre/blob/da8becb7f5313c1d7387066ef2106be9e156e20c/src/dcuhre.f",
+              "sha256": "81a7c80b32794447c47f8ec1c7c2d159e811c0864d7c9c515bf4583d37cb627a"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "DCUHRE",
+              "role": "public-entry-point",
+              "summary": "External fixed-form entry point, not a module procedure. All real arguments and callback arrays are DOUBLE PRECISION; control/status scalars are default INTEGER. Use 2<=NDIM<=15, NUMFUN>=1, bounds A/B(NDIM), RESULT/ABSERR(NUMFUN), and callback FUNSUB(NDIM,X,NUMFUN,FUNVLS) returning all components. Start with RESTAR=0 and normally KEY=0. WORK has caller-supplied length NW; with rule cost NUM, MAXSUB=(MAXPTS-NUM)/(2*NUM)+1 and default serial MDIV=1, require NW>=MAXSUB*(2*NDIM+2*NUMFUN+2)+17*NUMFUN+1 and MAXPTS>=3*NUM. Rule costs and restart restrictions are linked. IFAIL=0 meets estimated componentwise absolute-or-relative tolerances, 1 exhausts the evaluation budget, and other codes reject controls. NEVAL counts evaluations; ABSERR is an estimate, not a certified bound. Retain WORK for a permitted RESTAR=1 continuation and declare the external procedures in callers that disable implicit externals.",
+              "signature": "CALL DCUHRE(NDIM,NUMFUN,A,B,MINPTS,MAXPTS,FUNSUB,EPSABS,EPSREL,KEY,NW,RESTAR,RESULT,ABSERR,NEVAL,IFAIL,WORK)",
+              "path": "src/dcuhre.f",
+              "line_start": 1,
+              "line_end": 426,
+              "declarations": [
+                {
+                  "path": "src/dcuhre.f",
+                  "line_start": 328,
+                  "line_end": 332
+                },
+                {
+                  "path": "src/dcuhre.f",
+                  "line_start": 82,
+                  "line_end": 197
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "foreig": {
       "id": "github:gha3mi/foreig",
       "repository": {
@@ -7221,6 +8415,88 @@
                   "path": "src/foreig.f90",
                   "line_start": 48,
                   "line_end": 85
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "rkf45": {
+      "id": "github:zoziha/rkf45",
+      "repository": {
+        "owner": "zoziha",
+        "name": "rkf45",
+        "url": "https://github.com/zoziha/rkf45"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "93cd129369357ee08e34be7868256b21a500cc98",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies MIT terms, crediting the modernization and Watts/Shampine original work. Preserve all supplied attributions.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/zoziha/rkf45/blob/93cd129369357ee08e34be7868256b21a500cc98/LICENSE",
+            "sha256": "39c32cc22062045188ba2a4225a0ab694fb93a1bc039ec7202c3d2a55cddf31f"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/zoziha/rkf45/blob/93cd129369357ee08e34be7868256b21a500cc98/README.md",
+            "sha256": "17ad0aad4d677f5d602ea2457ac25be39c61cfb5baaf7b92a64371b9e3e85c7c"
+          },
+          {
+            "path": "src/rkf45.F90",
+            "url": "https://github.com/zoziha/rkf45/blob/93cd129369357ee08e34be7868256b21a500cc98/src/rkf45.F90",
+            "sha256": "b9d84e241f910f8cad01b182d765b1f29ecd30b9ddf443f7cf74fbd0cbc06a99"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "I1a1a",
+          "level": "source-reviewed",
+          "revision": "93cd129369357ee08e34be7868256b21a500cc98",
+          "reviewed_on": "2026-11-07",
+          "notes": "The public RKF45 routine integrates an ODE state with retained workspace, local tolerances and explicit continuation flags. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/rkf45.F90",
+              "url": "https://github.com/zoziha/rkf45/blob/93cd129369357ee08e34be7868256b21a500cc98/src/rkf45.F90",
+              "sha256": "b9d84e241f910f8cad01b182d765b1f29ecd30b9ddf443f7cf74fbd0cbc06a99"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "rkf45",
+              "role": "public-entry-point",
+              "module": "rkf45_module",
+              "summary": "Adaptive Fehlberg 4/5 ODE interface. Import RK from RKF45_MODULE: it defaults REAL32 unless built with REAL64. Callback F(T,Y,YP) takes matching-kind scalar T and assumed-shape state/derivative vectors of length NEQN. Y(NEQN), T and RELERR are INOUT; TOUT/ABSERR inputs. Allocate real WORK(3+6*NEQN) and integer IWORK(5), and retain both for continuation. Set IFLAG=1 for a new interval problem; return 2 means TOUT reached, -2 is a single-step return, 3 increases an overly small RELERR, 4..8 require diagnostic handling. Check returned T as well as IFLAG; do not treat any return as a completed endpoint. Tolerances are nonnegative and pure absolute control is not supported. The method targets nonstiff/mildly stiff problems, without dense output or a global-error guarantee.",
+              "signature": "CALL rkf45(F,NEQN,Y,T,TOUT,RELERR,ABSERR,IFLAG,WORK,IWORK)",
+              "path": "src/rkf45.F90",
+              "line_start": 57,
+              "line_end": 257,
+              "declarations": [
+                {
+                  "path": "src/rkf45.F90",
+                  "line_start": 225,
+                  "line_end": 233
+                },
+                {
+                  "path": "src/rkf45.F90",
+                  "line_start": 2,
+                  "line_end": 24
+                },
+                {
+                  "path": "src/rkf45.F90",
+                  "line_start": 100,
+                  "line_end": 112
+                },
+                {
+                  "path": "src/rkf45.F90",
+                  "line_start": 141,
+                  "line_end": 181
                 }
               ]
             }
@@ -8803,6 +10079,8 @@
       "numdiff",
       "orderpack",
       "fortran-primes",
+      "forcolormap",
+      "rational_number",
       "fmin",
       "slsqp",
       "lbfgsb",
@@ -8827,19 +10105,27 @@
       "simulated-annealing",
       "pointsets",
       "integrate_fortran",
+      "rndgen-fortran",
+      "fsparse",
+      "geompack",
       "minres",
       "fordiff",
       "specfunc-fullerton",
       "lib_statistics",
+      "forimage",
       "fastconv",
       "gaussjacobiquad",
+      "iapws",
       "fjsample",
       "interpolation",
       "fastmath",
       "fortsa",
       "kiss",
+      "fortran_cubatures",
       "forinv",
+      "dcuhre",
       "foreig",
+      "rkf45",
       "forsvd",
       "qdldl-fortran",
       "carlson-elliptic-integrals",
@@ -8878,8 +10164,6 @@
       "functional-fortran",
       "forwarddiff",
       "kinds",
-      "forcolormap",
-      "rational_number",
       "fortran_test_helper",
       "m_match",
       "m_list",
@@ -8901,10 +10185,7 @@
       "flint",
       "fortran-string-to-real",
       "ad_dnsvm",
-      "rndgen-fortran",
       "blas-interface",
-      "fsparse",
-      "geompack",
       "twopnt",
       "astro-fortran",
       "nlopt-f",
@@ -8914,7 +10195,6 @@
       "ryu_fortran",
       "iso_varying_string",
       "fortimize",
-      "forimage",
       "ncio",
       "kissfft-f",
       "h5fortran",
@@ -8922,7 +10202,6 @@
       "m_calculator",
       "befor64",
       "fortran-zlib",
-      "iapws",
       "linalg",
       "nonlin",
       "maptran3d",
@@ -8946,15 +10225,12 @@
       "graphstruc",
       "fortran-messagepack",
       "fmmap",
-      "fortran_cubatures",
       "stiff3",
       "sparse_fortran",
       "psqp",
       "optgra",
       "forsolver",
-      "dcuhre",
       "y12m",
-      "rkf45",
       "forlab",
       "libdogleg-f",
       "nafpack",
