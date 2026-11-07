@@ -175,6 +175,12 @@ def generate_gams_site(destination, feed, *, asset_version=None, reviews=None):
                     if procedure.get('usage'):
                         item += '<p>Calling sketch (not a checked playground driver):</p><pre><code>' + e(
                             procedure['usage']) + '</code></pre><p>' + e(procedure.get('usage_notes', '')) + '</p>'
+                native_ids = {p['id'] for p in project['curation'].get('procedures', [])
+                              if (p['module'] + '::' + p['procedure']).casefold() == name.casefold()}
+                for demo in demos:
+                    if (demo['procedure_id'] in native_ids and claim['code'] in tree
+                            and claim['code'] in ancestors(tree, demo['gams_code'])):
+                        item += '<p>' + link(demo['url'], 'Open checked example in playground: ' + demo['name']) + '</p>'
                 interfaces.append(item)
         if interfaces:
             if detailed:

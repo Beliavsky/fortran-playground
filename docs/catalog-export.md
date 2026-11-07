@@ -42,10 +42,11 @@ Cards show a matching reviewed license and expandable module-qualified calling
 interfaces. Package details also show review scope, limitations and explicitly
 unchecked calling sketches. Signatures link to pinned argument declarations.
 The broader catalog remains the source for these reviews; new reviews need to be
-recorded there before they can appear here. PowellOpt's BOBYQA interface is the
-first matching independent review. Package detail pages show calling sequences
+recorded there before they can appear here. Matching independent reviews currently cover
+PowellOpt, lbfgsb, fmin, minpack and quadpack. Package detail pages show calling sequences
 directly, with links to argument, callback and precision declarations; cards keep
-their interfaces expandable. Other selected packages need independent interface
+their interfaces expandable. Each sequence links to matching checked examples
+when available. Other selected packages need independent interface
 records before their calling sequences can be imported.
 
 For local corrections, create the optional

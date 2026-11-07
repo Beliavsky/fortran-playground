@@ -131,6 +131,22 @@ class ReviewImportTests(unittest.TestCase):
             self.assertIn('solver_mod::solve', matching)
             self.assertIn('solver_mod::solve', matching.split('data-search="', 1)[1].split('"', 1)[0])
             self.assertNotIn('solver_mod::solve', other)
+            # Link only an existing checked example for this interface and scope.
+            native = project['curation']['procedures'][0]
+            native.update(module='solver_mod', procedure='solve', gams_codes=['D2a1'])
+            template = build_export()['demonstrations'][0]
+            selected = {**template, 'id': 'test-matching', 'name': 'test-matching',
+                        'package_id': 'stdlib', 'procedure_id': native['id'],
+                        'gams_code': 'D2a1', 'url': 'https://example.org/matching'}
+            unrelated = {**selected, 'id': 'test-other', 'name': 'test-other',
+                         'gams_code': 'G1b1b', 'url': 'https://example.org/other'}
+            exported['demonstrations'] = [selected, unrelated]
+            generate_gams_site(destination, exported, reviews={'stdlib': review})
+            package = (destination/'packages/stdlib/index.html').read_text(encoding='utf-8')
+            calls = package.split('<h2>Calling sequences</h2>', 1)[1].split('</section>', 1)[0]
+            self.assertIn('Open checked example in playground: test-matching', calls)
+            self.assertIn('https://example.org/matching', calls)
+            self.assertNotIn('https://example.org/other', calls)
 
 
 if __name__ == '__main__':

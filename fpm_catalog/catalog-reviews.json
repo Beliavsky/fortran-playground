@@ -2,8 +2,768 @@
   "schema_version": 1,
   "publisher": "fortran-gams-catalog-independent-reviews",
   "source_url": "https://beliavsky.github.io/fortran-gams-catalog/reviewed-metadata.json",
-  "source_snapshot_id": "sha256:d92583521ad0ff6fddadaf3ab51f2255154ae35c0c90c8dc9184424c22c11f36",
+  "source_snapshot_id": "sha256:dcce0cb8d0cc16067553b0873499fcfef5a19eb7567ab81348c961316bf4f15e",
   "packages": {
+    "quadpack": {
+      "id": "github:jacobwilliams/quadpack",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "quadpack",
+        "url": "https://github.com/jacobwilliams/quadpack"
+      },
+      "license": {
+        "label": "BSD-3-Clause modernization; original QUADPACK public-domain notice",
+        "spdx_expression": null,
+        "revision": "ab42d50794280a8e7996f2ee4cda1f8753dfde5b",
+        "reviewed_on": "2026-11-07",
+        "notes": "The pinned LICENSE states BSD three-clause terms for Jacob Williams modernization and separately identifies the original SLATEC/QUADPACK work as public domain. Preserve that component distinction rather than flatten every source contribution into a single SPDX expression. External dependencies and all historical provenance are outside this scoped notice review.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jacobwilliams/quadpack/blob/ab42d50794280a8e7996f2ee4cda1f8753dfde5b/LICENSE",
+            "sha256": "f38966793afb5b11d5cc07398324bf866fff4fb88bb41c26c5b1f896b7a69be9"
+          },
+          {
+            "path": "src/quadpack_generic.F90",
+            "url": "https://github.com/jacobwilliams/quadpack/blob/ab42d50794280a8e7996f2ee4cda1f8753dfde5b/src/quadpack_generic.F90",
+            "sha256": "c99ab78b9639e4c66c82ae3acd56efcd53a50026d3b8993ce4737fbaa91e88e8"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/quadpack/blob/ab42d50794280a8e7996f2ee4cda1f8753dfde5b/README.md",
+            "sha256": "57a6a7643e9fda85f8c0fc5c7021f7a8117e07d09006349f4c8fd147cf5ed314"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "H2a1a1",
+          "level": "source-reviewed",
+          "revision": "ab42d50794280a8e7996f2ee4cda1f8753dfde5b",
+          "reviewed_on": "2026-11-07",
+          "notes": "DQAG is the general adaptive finite-interval callback integrator; KEY selects its Gauss-Kronrod rule. The public declarations expose workspace/control arguments rather than automatic allocation. This independent review records the public interfaces, dispatch and caller contracts, not a new numerical execution check or audit of every dependency/kernel. The existing problem-specific hosted drivers remain separate. No upstream numerical source is bundled.",
+          "evidence": [
+            {
+              "path": "src/quadpack_generic.F90",
+              "url": "https://github.com/jacobwilliams/quadpack/blob/ab42d50794280a8e7996f2ee4cda1f8753dfde5b/src/quadpack_generic.F90",
+              "sha256": "c99ab78b9639e4c66c82ae3acd56efcd53a50026d3b8993ce4737fbaa91e88e8"
+            },
+            {
+              "path": "src/quadpack.F90",
+              "url": "https://github.com/jacobwilliams/quadpack/blob/ab42d50794280a8e7996f2ee4cda1f8753dfde5b/src/quadpack.F90",
+              "sha256": "dcc28dbacb0dc0030b52eba6d8adcc01b27ee063a49d600faaf2f7062f1f5654"
+            },
+            {
+              "path": "src/quadpack_double.F90",
+              "url": "https://github.com/jacobwilliams/quadpack/blob/ab42d50794280a8e7996f2ee4cda1f8753dfde5b/src/quadpack_double.F90",
+              "sha256": "5c01c420405b15aa3dac881671644b62857a33353b4d0f18cc9d6fb948b1d10d"
+            },
+            {
+              "path": "README.md",
+              "url": "https://github.com/jacobwilliams/quadpack/blob/ab42d50794280a8e7996f2ee4cda1f8753dfde5b/README.md",
+              "sha256": "57a6a7643e9fda85f8c0fc5c7021f7a8117e07d09006349f4c8fd147cf5ed314"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/jacobwilliams/quadpack/blob/ab42d50794280a8e7996f2ee4cda1f8753dfde5b/fpm.toml",
+              "sha256": "81b23187d80deb15818adfde03ba72aa9f124f189d0f87f483ef61a04ef62cbc"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "dqag",
+              "role": "public-entry-point",
+              "module": "quadpack",
+              "summary": "General finite-interval adaptive Gauss-Kronrod integration. KEY chooses a 15/21/31/41/51/61-point rule pair (out-of-range values are clamped to the endpoint choices). Require LIMIT>=1, IWORK(LIMIT), LENW>=4*LIMIT and WORK(LENW). Supply absolute/relative tolerances; invalid tolerance combinations give IER=6. The integrand callback supplies the full ordinary integrand. The public quadpack module reexports these REAL64 DQ routines from quadpack_double, which preprocesses quadpack_generic.F90. F(X) is a scalar REAL64 function with REAL64 INTENT(IN) X. RESULT is the integral estimate, ABSERR an estimated absolute error, NEVAL a call count and LAST the partition count. IER=0 is normal algorithmic termination; nonzero values need routine-specific interpretation (invalid controls, exhausted subdivision or numerical difficulty), not unconditional acceptance. Error estimates are not certified bounds. Match default INTEGER and REAL64 types and provide finite callback values on the sampling domain.",
+              "signature": "CALL dqag(F,A,B,EPSABS,EPSREL,KEY,RESULT,ABSERR,NEVAL,IER,LIMIT,LENW,LAST,IWORK,WORK)",
+              "path": "src/quadpack_generic.F90",
+              "line_start": 96,
+              "line_end": 220,
+              "declarations": [
+                {
+                  "path": "src/quadpack_generic.F90",
+                  "line_start": 101,
+                  "line_end": 193
+                },
+                {
+                  "path": "src/quadpack_generic.F90",
+                  "line_start": 47,
+                  "line_end": 54
+                },
+                {
+                  "path": "src/quadpack_double.F90",
+                  "line_start": 1,
+                  "line_end": 8
+                },
+                {
+                  "path": "src/quadpack.F90",
+                  "line_start": 24,
+                  "line_end": 24
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "H2a2a1",
+          "level": "source-reviewed",
+          "revision": "ab42d50794280a8e7996f2ee4cda1f8753dfde5b",
+          "reviewed_on": "2026-11-07",
+          "notes": "These separate interfaces handle special finite-interval problems: DQAGS singularity-oriented extrapolation, DQAGP prescribed interior breakpoints, DQAWC Cauchy principal values, DQAWO sine/cosine weights and DQAWS algebraic/logarithmic endpoint weights. Callback meaning and work-array sizing differ; their signatures must not be substituted for one another. This independent review records the public interfaces, dispatch and caller contracts, not a new numerical execution check or audit of every dependency/kernel. The existing problem-specific hosted drivers remain separate. No upstream numerical source is bundled.",
+          "evidence": [
+            {
+              "path": "src/quadpack_generic.F90",
+              "url": "https://github.com/jacobwilliams/quadpack/blob/ab42d50794280a8e7996f2ee4cda1f8753dfde5b/src/quadpack_generic.F90",
+              "sha256": "c99ab78b9639e4c66c82ae3acd56efcd53a50026d3b8993ce4737fbaa91e88e8"
+            },
+            {
+              "path": "src/quadpack.F90",
+              "url": "https://github.com/jacobwilliams/quadpack/blob/ab42d50794280a8e7996f2ee4cda1f8753dfde5b/src/quadpack.F90",
+              "sha256": "dcc28dbacb0dc0030b52eba6d8adcc01b27ee063a49d600faaf2f7062f1f5654"
+            },
+            {
+              "path": "src/quadpack_double.F90",
+              "url": "https://github.com/jacobwilliams/quadpack/blob/ab42d50794280a8e7996f2ee4cda1f8753dfde5b/src/quadpack_double.F90",
+              "sha256": "5c01c420405b15aa3dac881671644b62857a33353b4d0f18cc9d6fb948b1d10d"
+            },
+            {
+              "path": "README.md",
+              "url": "https://github.com/jacobwilliams/quadpack/blob/ab42d50794280a8e7996f2ee4cda1f8753dfde5b/README.md",
+              "sha256": "57a6a7643e9fda85f8c0fc5c7021f7a8117e07d09006349f4c8fd147cf5ed314"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/jacobwilliams/quadpack/blob/ab42d50794280a8e7996f2ee4cda1f8753dfde5b/fpm.toml",
+              "sha256": "81b23187d80deb15818adfde03ba72aa9f124f189d0f87f483ef61a04ef62cbc"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "dqags",
+              "role": "public-entry-point",
+              "module": "quadpack",
+              "summary": "Finite-interval adaptive integration with subdivision and extrapolation, suited to integrable singularities. There is no KEY argument. Require LIMIT>=1, IWORK(LIMIT), LENW>=4*LIMIT and WORK(LENW); provide EPSABS/EPSREL. The callback supplies the full integrand. A singular endpoint formula must only be evaluated where valid; this is not a Cauchy principal-value or automatically weighted interface. The public quadpack module reexports these REAL64 DQ routines from quadpack_double, which preprocesses quadpack_generic.F90. F(X) is a scalar REAL64 function with REAL64 INTENT(IN) X. RESULT is the integral estimate, ABSERR an estimated absolute error, NEVAL a call count and LAST the partition count. IER=0 is normal algorithmic termination; nonzero values need routine-specific interpretation (invalid controls, exhausted subdivision or numerical difficulty), not unconditional acceptance. Error estimates are not certified bounds. Match default INTEGER and REAL64 types and provide finite callback values on the sampling domain.",
+              "signature": "CALL dqags(F,A,B,EPSABS,EPSREL,RESULT,ABSERR,NEVAL,IER,LIMIT,LENW,LAST,IWORK,WORK)",
+              "path": "src/quadpack_generic.F90",
+              "line_start": 1711,
+              "line_end": 1838,
+              "declarations": [
+                {
+                  "path": "src/quadpack_generic.F90",
+                  "line_start": 1715,
+                  "line_end": 1811
+                },
+                {
+                  "path": "src/quadpack_generic.F90",
+                  "line_start": 47,
+                  "line_end": 54
+                },
+                {
+                  "path": "src/quadpack_double.F90",
+                  "line_start": 1,
+                  "line_end": 8
+                },
+                {
+                  "path": "src/quadpack.F90",
+                  "line_start": 24,
+                  "line_end": 24
+                }
+              ]
+            },
+            {
+              "procedure": "dqagp",
+              "role": "public-entry-point",
+              "module": "quadpack",
+              "summary": "Finite-interval integration with specified interior difficulties. NPTS2 is the number of supplied interior breakpoints plus two; POINTS(NPTS2) has the breakpoints in its first NPTS2-2 elements and reserves two extra slots. Require NPTS2>=2, LENIW>=3*NPTS2-2, IWORK(LENIW), LENW>=2*LENIW-NPTS2 and WORK(LENW). The effective subdivision limit is (LENIW-NPTS2)/2. This wrapper sorts the breakpoint partition internally. The callback supplies the full integrand; isolated singular-point conventions need problem-specific care. The public quadpack module reexports these REAL64 DQ routines from quadpack_double, which preprocesses quadpack_generic.F90. F(X) is a scalar REAL64 function with REAL64 INTENT(IN) X. RESULT is the integral estimate, ABSERR an estimated absolute error, NEVAL a call count and LAST the partition count. IER=0 is normal algorithmic termination; nonzero values need routine-specific interpretation (invalid controls, exhausted subdivision or numerical difficulty), not unconditional acceptance. Error estimates are not certified bounds. Match default INTEGER and REAL64 types and provide finite callback values on the sampling domain.",
+              "signature": "CALL dqagp(F,A,B,NPTS2,POINTS,EPSABS,EPSREL,RESULT,ABSERR,NEVAL,IER,LENIW,LENW,LAST,IWORK,WORK)",
+              "path": "src/quadpack_generic.F90",
+              "line_start": 1058,
+              "line_end": 1216,
+              "declarations": [
+                {
+                  "path": "src/quadpack_generic.F90",
+                  "line_start": 1062,
+                  "line_end": 1187
+                },
+                {
+                  "path": "src/quadpack_generic.F90",
+                  "line_start": 47,
+                  "line_end": 54
+                },
+                {
+                  "path": "src/quadpack_double.F90",
+                  "line_start": 1,
+                  "line_end": 8
+                },
+                {
+                  "path": "src/quadpack.F90",
+                  "line_start": 24,
+                  "line_end": 24
+                }
+              ]
+            },
+            {
+              "procedure": "dqawc",
+              "role": "public-entry-point",
+              "module": "quadpack",
+              "summary": "Cauchy principal-value integration of F(X)/(X-C) over a finite interval. The callback supplies the smooth numerator F(X), not the divided expression. C must differ from both endpoints; an interior C selects the principal-value case. Require LIMIT>=1, IWORK(LIMIT), LENW>=4*LIMIT and WORK(LENW), with tolerances. Use A<B and C strictly inside that interval for this principal-value mapping; endpoint poles are invalid. Reversed-interval support is delegated to DQAWCE; this is not an arbitrary improper-integral prescription. The public quadpack module reexports these REAL64 DQ routines from quadpack_double, which preprocesses quadpack_generic.F90. F(X) is a scalar REAL64 function with REAL64 INTENT(IN) X. RESULT is the integral estimate, ABSERR an estimated absolute error, NEVAL a call count and LAST the partition count. IER=0 is normal algorithmic termination; nonzero values need routine-specific interpretation (invalid controls, exhausted subdivision or numerical difficulty), not unconditional acceptance. Error estimates are not certified bounds. Match default INTEGER and REAL64 types and provide finite callback values on the sampling domain.",
+              "signature": "CALL dqawc(F,A,B,C,EPSABS,EPSREL,RESULT,ABSERR,NEVAL,IER,LIMIT,LENW,LAST,IWORK,WORK)",
+              "path": "src/quadpack_generic.F90",
+              "line_start": 2233,
+              "line_end": 2345,
+              "declarations": [
+                {
+                  "path": "src/quadpack_generic.F90",
+                  "line_start": 2237,
+                  "line_end": 2320
+                },
+                {
+                  "path": "src/quadpack_generic.F90",
+                  "line_start": 47,
+                  "line_end": 54
+                },
+                {
+                  "path": "src/quadpack_double.F90",
+                  "line_start": 1,
+                  "line_end": 8
+                },
+                {
+                  "path": "src/quadpack.F90",
+                  "line_start": 24,
+                  "line_end": 24
+                }
+              ]
+            },
+            {
+              "procedure": "dqawo",
+              "role": "public-entry-point",
+              "module": "quadpack",
+              "summary": "Finite-interval oscillatory-weight integration. INTEGR=1 selects cosine and INTEGR=2 sine of OMEGA*X; the callback supplies only the nonoscillatory factor F(X). Require LENIW>=2, IWORK(LENIW), MAXP1>=1, LENW>=2*LENIW+25*MAXP1 and WORK(LENW). LENIW/2 sets the subdivision capacity. This high-level wrapper initializes moment storage, rather than exposing the reusable-state ICALL/MOMCOM API. LAST may be zero when the first estimate is accepted; inspect NEVAL/status/error instead of requiring a positive partition count. The public quadpack module reexports these REAL64 DQ routines from quadpack_double, which preprocesses quadpack_generic.F90. F(X) is a scalar REAL64 function with REAL64 INTENT(IN) X. RESULT is the integral estimate, ABSERR an estimated absolute error, NEVAL a call count and LAST the partition count. IER=0 is normal algorithmic termination; nonzero values need routine-specific interpretation (invalid controls, exhausted subdivision or numerical difficulty), not unconditional acceptance. Error estimates are not certified bounds. Match default INTEGER and REAL64 types and provide finite callback values on the sampling domain.",
+              "signature": "CALL dqawo(F,A,B,OMEGA,INTEGR,EPSABS,EPSREL,RESULT,ABSERR,NEVAL,IER,LENIW,MAXP1,LENW,LAST,IWORK,WORK)",
+              "path": "src/quadpack_generic.F90",
+              "line_start": 3107,
+              "line_end": 3263,
+              "declarations": [
+                {
+                  "path": "src/quadpack_generic.F90",
+                  "line_start": 3111,
+                  "line_end": 3236
+                },
+                {
+                  "path": "src/quadpack_generic.F90",
+                  "line_start": 47,
+                  "line_end": 54
+                },
+                {
+                  "path": "src/quadpack_double.F90",
+                  "line_start": 1,
+                  "line_end": 8
+                },
+                {
+                  "path": "src/quadpack.F90",
+                  "line_start": 24,
+                  "line_end": 24
+                }
+              ]
+            },
+            {
+              "procedure": "dqaws",
+              "role": "public-entry-point",
+              "module": "quadpack",
+              "summary": "Finite-interval endpoint-weighted integration. For A<B and ALFA,BETA>-1, the weight contains (X-A)**ALFA*(B-X)**BETA; INTEGR=1/2/3/4 selects no logarithm, LOG(X-A), LOG(B-X), or both logarithms. The callback supplies only the remaining smooth factor F(X), without multiplying by the weight. Require LIMIT>=2, IWORK(LIMIT), LENW>=4*LIMIT and WORK(LENW). Invalid exponent/mode/bound/tolerance/workspace controls produce IER=6; nonintegrable endpoint powers are outside the contract. The public quadpack module reexports these REAL64 DQ routines from quadpack_double, which preprocesses quadpack_generic.F90. F(X) is a scalar REAL64 function with REAL64 INTENT(IN) X. RESULT is the integral estimate, ABSERR an estimated absolute error, NEVAL a call count and LAST the partition count. IER=0 is normal algorithmic termination; nonzero values need routine-specific interpretation (invalid controls, exhausted subdivision or numerical difficulty), not unconditional acceptance. Error estimates are not certified bounds. Match default INTEGER and REAL64 types and provide finite callback values on the sampling domain.",
+              "signature": "CALL dqaws(F,A,B,ALFA,BETA,INTEGR,EPSABS,EPSREL,RESULT,ABSERR,NEVAL,IER,LIMIT,LENW,LAST,IWORK,WORK)",
+              "path": "src/quadpack_generic.F90",
+              "line_start": 3757,
+              "line_end": 3889,
+              "declarations": [
+                {
+                  "path": "src/quadpack_generic.F90",
+                  "line_start": 3761,
+                  "line_end": 3862
+                },
+                {
+                  "path": "src/quadpack_generic.F90",
+                  "line_start": 47,
+                  "line_end": 54
+                },
+                {
+                  "path": "src/quadpack_double.F90",
+                  "line_start": 1,
+                  "line_end": 8
+                },
+                {
+                  "path": "src/quadpack.F90",
+                  "line_start": 24,
+                  "line_end": 24
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "H2a3a1",
+          "level": "source-reviewed",
+          "revision": "ab42d50794280a8e7996f2ee4cda1f8753dfde5b",
+          "reviewed_on": "2026-11-07",
+          "notes": "DQAGI transforms improper half-line integrals and adaptively subdivides the transformed interval. INF chooses the direction; whole-line support is visible in the interface but is not a new hosted check in this review. This independent review records the public interfaces, dispatch and caller contracts, not a new numerical execution check or audit of every dependency/kernel. The existing problem-specific hosted drivers remain separate. No upstream numerical source is bundled.",
+          "evidence": [
+            {
+              "path": "src/quadpack_generic.F90",
+              "url": "https://github.com/jacobwilliams/quadpack/blob/ab42d50794280a8e7996f2ee4cda1f8753dfde5b/src/quadpack_generic.F90",
+              "sha256": "c99ab78b9639e4c66c82ae3acd56efcd53a50026d3b8993ce4737fbaa91e88e8"
+            },
+            {
+              "path": "src/quadpack.F90",
+              "url": "https://github.com/jacobwilliams/quadpack/blob/ab42d50794280a8e7996f2ee4cda1f8753dfde5b/src/quadpack.F90",
+              "sha256": "dcc28dbacb0dc0030b52eba6d8adcc01b27ee063a49d600faaf2f7062f1f5654"
+            },
+            {
+              "path": "src/quadpack_double.F90",
+              "url": "https://github.com/jacobwilliams/quadpack/blob/ab42d50794280a8e7996f2ee4cda1f8753dfde5b/src/quadpack_double.F90",
+              "sha256": "5c01c420405b15aa3dac881671644b62857a33353b4d0f18cc9d6fb948b1d10d"
+            },
+            {
+              "path": "README.md",
+              "url": "https://github.com/jacobwilliams/quadpack/blob/ab42d50794280a8e7996f2ee4cda1f8753dfde5b/README.md",
+              "sha256": "57a6a7643e9fda85f8c0fc5c7021f7a8117e07d09006349f4c8fd147cf5ed314"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/jacobwilliams/quadpack/blob/ab42d50794280a8e7996f2ee4cda1f8753dfde5b/fpm.toml",
+              "sha256": "81b23187d80deb15818adfde03ba72aa9f124f189d0f87f483ef61a04ef62cbc"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "dqagi",
+              "role": "public-entry-point",
+              "module": "quadpack",
+              "summary": "Improper integration: INF=1 selects (BOUND,+infinity), INF=-1 selects (-infinity,BOUND); the interface also supports INF=2 over the whole real line, with BOUND unused. The mapped checked configurations are the half-lines; no whole-line verification is imported here. Require LIMIT>=1, IWORK(LIMIT), LENW>=4*LIMIT and WORK(LENW). Supply the ordinary integrand and tolerances; convergent tails are a caller responsibility. The public quadpack module reexports these REAL64 DQ routines from quadpack_double, which preprocesses quadpack_generic.F90. F(X) is a scalar REAL64 function with REAL64 INTENT(IN) X. RESULT is the integral estimate, ABSERR an estimated absolute error, NEVAL a call count and LAST the partition count. IER=0 is normal algorithmic termination; nonzero values need routine-specific interpretation (invalid controls, exhausted subdivision or numerical difficulty), not unconditional acceptance. Error estimates are not certified bounds. Match default INTEGER and REAL64 types and provide finite callback values on the sampling domain.",
+              "signature": "CALL dqagi(F,BOUND,INF,EPSABS,EPSREL,RESULT,ABSERR,NEVAL,IER,LIMIT,LENW,LAST,IWORK,WORK)",
+              "path": "src/quadpack_generic.F90",
+              "line_start": 514,
+              "line_end": 643,
+              "declarations": [
+                {
+                  "path": "src/quadpack_generic.F90",
+                  "line_start": 518,
+                  "line_end": 616
+                },
+                {
+                  "path": "src/quadpack_generic.F90",
+                  "line_start": 47,
+                  "line_end": 54
+                },
+                {
+                  "path": "src/quadpack_double.F90",
+                  "line_start": 1,
+                  "line_end": 8
+                },
+                {
+                  "path": "src/quadpack.F90",
+                  "line_start": 24,
+                  "line_end": 24
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "minpack": {
+      "id": "github:jacobwilliams/minpack",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "minpack",
+        "url": "https://github.com/jacobwilliams/minpack"
+      },
+      "license": {
+        "label": "MIT modifications plus original MINPACK attribution/disclaimer terms",
+        "spdx_expression": null,
+        "revision": "c0b5aea9fcd2b83865af921a7a7e881904f8d3c2",
+        "reviewed_on": "2026-11-07",
+        "notes": "LICENSE.txt contains an MIT grant for 2022 contributors followed by the 1999 University of Chicago MINPACK notice, including its acknowledgment clause, warranty disclaimer and limitation of liability. Preserve both sets of component terms; a single MIT label does not describe the whole supplied notice.",
+        "evidence": [
+          {
+            "path": "LICENSE.txt",
+            "url": "https://github.com/jacobwilliams/minpack/blob/c0b5aea9fcd2b83865af921a7a7e881904f8d3c2/LICENSE.txt",
+            "sha256": "8e51afb625ad0e8c069ed844c7c95eafe88cbecd4462971a03c3799e2de9ed18"
+          },
+          {
+            "path": "src/minpack.f90",
+            "url": "https://github.com/jacobwilliams/minpack/blob/c0b5aea9fcd2b83865af921a7a7e881904f8d3c2/src/minpack.f90",
+            "sha256": "44ff6b6482af824875c3af49feb4bfe9b63933cd3cf5ecf05159f931353cbe27"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/minpack/blob/c0b5aea9fcd2b83865af921a7a7e881904f8d3c2/README.md",
+            "sha256": "6f7cf13990461e4bb664f0b89292e47993fa468434b0ea26dfdaf7f817cc4c71"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "G1b1a",
+          "level": "source-reviewed",
+          "revision": "c0b5aea9fcd2b83865af921a7a7e881904f8d3c2",
+          "reviewed_on": "2026-11-07",
+          "notes": "LMDIF1 minimizes a sum of squared nonlinear residuals using values supplied by the caller and a finite-difference Jacobian. This derivative-free-user interface is a specialized least-squares optimizer, not a general arbitrary scalar-objective algorithm. This independent review records the public interfaces, dispatch and caller contracts, not a new numerical execution check or audit of every dependency/kernel. The existing problem-specific hosted drivers remain separate. No upstream numerical source is bundled.",
+          "evidence": [
+            {
+              "path": "src/minpack.f90",
+              "url": "https://github.com/jacobwilliams/minpack/blob/c0b5aea9fcd2b83865af921a7a7e881904f8d3c2/src/minpack.f90",
+              "sha256": "44ff6b6482af824875c3af49feb4bfe9b63933cd3cf5ecf05159f931353cbe27"
+            },
+            {
+              "path": "README.md",
+              "url": "https://github.com/jacobwilliams/minpack/blob/c0b5aea9fcd2b83865af921a7a7e881904f8d3c2/README.md",
+              "sha256": "6f7cf13990461e4bb664f0b89292e47993fa468434b0ea26dfdaf7f817cc4c71"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/jacobwilliams/minpack/blob/c0b5aea9fcd2b83865af921a7a7e881904f8d3c2/fpm.toml",
+              "sha256": "c35f3dfb94773f4d890bea4efdfce6d5ac533eb6a7ef3cd6d0e0d105bc7de6af"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "lmdif1",
+              "role": "public-entry-point",
+              "module": "minpack_module",
+              "summary": "Simplified Levenberg-Marquardt nonlinear least squares with M residuals, N variables and a forward-difference residual Jacobian. Require M>=N>0, TOL>=0, FVEC(M), IWA(N) and real WA(LWA) with LWA>=M*N+5*N+M. X(N) is input/output. FCN(M,N,X,FVEC,IFLAG) returns residual values for finite-difference calls, and may abort by setting IFLAG<0. INFO=0 signals invalid controls, negative values callback cancellation, 1..4 the documented reduction/step/orthogonality conditions, 5 evaluation exhaustion, 6..7 too-small tolerance; these are not a certificate of a zero residual or global minimum. The simplified wrapper fixes the budget to 200*(N+1), with no public counter output. All real arrays use REAL64 in this pinned module.",
+              "signature": "CALL lmdif1(FCN,M,N,X,FVEC,TOL,INFO,IWA,WA,LWA)",
+              "path": "src/minpack.f90",
+              "line_start": 2331,
+              "line_end": 2401,
+              "declarations": [
+                {
+                  "path": "src/minpack.f90",
+                  "line_start": 2334,
+                  "line_end": 2372
+                },
+                {
+                  "path": "src/minpack.f90",
+                  "line_start": 35,
+                  "line_end": 46
+                },
+                {
+                  "path": "src/minpack.f90",
+                  "line_start": 10,
+                  "line_end": 20
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "G1b1b",
+          "level": "source-reviewed",
+          "revision": "c0b5aea9fcd2b83865af921a7a7e881904f8d3c2",
+          "reviewed_on": "2026-11-07",
+          "notes": "LMDER1 minimizes the squared norm of caller residuals using an analytic residual Jacobian. That Jacobian provides first-derivative information for this particular scalar sum-of-squares objective; it is not a callback returning an arbitrary scalar objective gradient. This independent review records the public interfaces, dispatch and caller contracts, not a new numerical execution check or audit of every dependency/kernel. The existing problem-specific hosted drivers remain separate. No upstream numerical source is bundled.",
+          "evidence": [
+            {
+              "path": "src/minpack.f90",
+              "url": "https://github.com/jacobwilliams/minpack/blob/c0b5aea9fcd2b83865af921a7a7e881904f8d3c2/src/minpack.f90",
+              "sha256": "44ff6b6482af824875c3af49feb4bfe9b63933cd3cf5ecf05159f931353cbe27"
+            },
+            {
+              "path": "README.md",
+              "url": "https://github.com/jacobwilliams/minpack/blob/c0b5aea9fcd2b83865af921a7a7e881904f8d3c2/README.md",
+              "sha256": "6f7cf13990461e4bb664f0b89292e47993fa468434b0ea26dfdaf7f817cc4c71"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/jacobwilliams/minpack/blob/c0b5aea9fcd2b83865af921a7a7e881904f8d3c2/fpm.toml",
+              "sha256": "c35f3dfb94773f4d890bea4efdfce6d5ac533eb6a7ef3cd6d0e0d105bc7de6af"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "lmder1",
+              "role": "public-entry-point",
+              "module": "minpack_module",
+              "summary": "Simplified nonlinear least squares with an analytic residual Jacobian. Require M>=N>0, LDFJAC>=M, FVEC(M), FJAC(LDFJAC,N), IPVT(N), WA(LWA) and LWA>=5*N+M. FCN(M,N,X,FVEC,FJAC,LDFJAC,IFLAG) fills residuals for IFLAG=1 and Jacobian for IFLAG=2 without altering the other buffer; negative IFLAG cancels. X is input/output. On return FJAC contains QR-factorization information and IPVT a column permutation, not an untouched Jacobian. INFO=1..4 records distinct stopping tests, 0 invalid input, negative callback cancellation, 5 exhaustion and 6..7 restrictive tolerance. Budget is fixed at 100*(N+1) residual calls. Check actual residuals/fit independently; this is not a general scalar-objective gradient interface. REAL64 is fixed by the module.",
+              "signature": "CALL lmder1(FCN,M,N,X,FVEC,FJAC,LDFJAC,TOL,INFO,IPVT,WA,LWA)",
+              "path": "src/minpack.f90",
+              "line_start": 1846,
+              "line_end": 1931,
+              "declarations": [
+                {
+                  "path": "src/minpack.f90",
+                  "line_start": 1849,
+                  "line_end": 1905
+                },
+                {
+                  "path": "src/minpack.f90",
+                  "line_start": 67,
+                  "line_end": 85
+                },
+                {
+                  "path": "src/minpack.f90",
+                  "line_start": 10,
+                  "line_end": 20
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "F2",
+          "level": "source-reviewed",
+          "revision": "c0b5aea9fcd2b83865af921a7a7e881904f8d3c2",
+          "reviewed_on": "2026-11-07",
+          "notes": "HYBRD1 and HYBRJ1 solve square nonlinear systems using finite-difference or supplied Jacobians respectively. Both simplified wrappers fix internal scaling, budget and printing controls. Their INFO fields describe algorithmic stopping and failures rather than a proof that the returned residual is small. This independent review records the public interfaces, dispatch and caller contracts, not a new numerical execution check or audit of every dependency/kernel. The existing problem-specific hosted drivers remain separate. No upstream numerical source is bundled.",
+          "evidence": [
+            {
+              "path": "src/minpack.f90",
+              "url": "https://github.com/jacobwilliams/minpack/blob/c0b5aea9fcd2b83865af921a7a7e881904f8d3c2/src/minpack.f90",
+              "sha256": "44ff6b6482af824875c3af49feb4bfe9b63933cd3cf5ecf05159f931353cbe27"
+            },
+            {
+              "path": "README.md",
+              "url": "https://github.com/jacobwilliams/minpack/blob/c0b5aea9fcd2b83865af921a7a7e881904f8d3c2/README.md",
+              "sha256": "6f7cf13990461e4bb664f0b89292e47993fa468434b0ea26dfdaf7f817cc4c71"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/jacobwilliams/minpack/blob/c0b5aea9fcd2b83865af921a7a7e881904f8d3c2/fpm.toml",
+              "sha256": "c35f3dfb94773f4d890bea4efdfce6d5ac533eb6a7ef3cd6d0e0d105bc7de6af"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "hybrd1",
+              "role": "public-entry-point",
+              "module": "minpack_module",
+              "summary": "Simplified Powell hybrid solver for N equations in N unknowns, using a forward-difference Jacobian. FCN(N,X,FVEC,IFLAG) computes FVEC(N); negative IFLAG cancels. Require N>0, TOL>=0, X/FVEC(N), WA(LWA) and LWA>=N*(3*N+13)/2. X is input/output. INFO=1 is the step/relative-error termination test, 0 invalid input, 2 budget exhaustion, 3 too-small tolerance, 4 lack of progress, or negative callback termination. The wrapper fixes the budget at 200*(N+1) and maps an internal stagnation status into INFO=4. Verify residuals independently; step termination alone is not a root certificate. REAL64 inputs/callback types must match the pinned module.",
+              "signature": "CALL hybrd1(FCN,N,X,FVEC,TOL,INFO,WA,LWA)",
+              "path": "src/minpack.f90",
+              "line_start": 959,
+              "line_end": 1020,
+              "declarations": [
+                {
+                  "path": "src/minpack.f90",
+                  "line_start": 963,
+                  "line_end": 989
+                },
+                {
+                  "path": "src/minpack.f90",
+                  "line_start": 25,
+                  "line_end": 33
+                },
+                {
+                  "path": "src/minpack.f90",
+                  "line_start": 10,
+                  "line_end": 20
+                }
+              ]
+            },
+            {
+              "procedure": "hybrj1",
+              "role": "public-entry-point",
+              "module": "minpack_module",
+              "summary": "Simplified Powell hybrid solver with user analytic Jacobian. FCN(N,X,FVEC,FJAC,LDFJAC,IFLAG) fills residuals for IFLAG=1 and Jacobian for IFLAG=2, preserving the other buffer; negative IFLAG cancels. Require N>0, LDFJAC>=N, TOL>=0, X/FVEC(N), FJAC(LDFJAC,N), WA(LWA) and LWA>=N*(N+13)/2. X is updated; FJAC returns the orthogonal Q factor rather than the original Jacobian. INFO meanings follow the documented simplified hybrid stopping/failure cases; the fixed residual-call budget is 100*(N+1). Check residuals independently and do not treat every positive INFO as convergence. All real arguments/callback arrays are REAL64.",
+              "signature": "CALL hybrj1(FCN,N,X,FVEC,FJAC,LDFJAC,TOL,INFO,WA,LWA)",
+              "path": "src/minpack.f90",
+              "line_start": 1401,
+              "line_end": 1464,
+              "declarations": [
+                {
+                  "path": "src/minpack.f90",
+                  "line_start": 1405,
+                  "line_end": 1437
+                },
+                {
+                  "path": "src/minpack.f90",
+                  "line_start": 48,
+                  "line_end": 65
+                },
+                {
+                  "path": "src/minpack.f90",
+                  "line_start": 10,
+                  "line_end": 20
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fmin": {
+      "id": "github:jacobwilliams/fmin",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "fmin",
+        "url": "https://github.com/jacobwilliams/fmin"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "3d094fba0e9b98d132414f8442c7c76d32da1d30",
+        "reviewed_on": "2026-11-07",
+        "notes": "The pinned LICENSE provides Jacob Williams BSD three-clause grant. The source cites the original Netlib FMM routine and Brent reference; this record describes the supplied repository notice, not every historical external source or linked dependency.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jacobwilliams/fmin/blob/3d094fba0e9b98d132414f8442c7c76d32da1d30/LICENSE",
+            "sha256": "e43c1058c2f25f3ca5e7dac011f87f1b147b67ea9693d53a4b51248fa6546e4e"
+          },
+          {
+            "path": "src/fmin_module.F90",
+            "url": "https://github.com/jacobwilliams/fmin/blob/3d094fba0e9b98d132414f8442c7c76d32da1d30/src/fmin_module.F90",
+            "sha256": "d63cd59c63c3be05d2f73bdacbf53acef42a70ecef893da770b6a3d087d32182"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/fmin/blob/3d094fba0e9b98d132414f8442c7c76d32da1d30/README.md",
+            "sha256": "71245e1d75087143160ae600a3baa831e284f1537b2cf435c84e586d2a578207"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "G1a1a",
+          "level": "source-reviewed",
+          "revision": "3d094fba0e9b98d132414f8442c7c76d32da1d30",
+          "reviewed_on": "2026-11-07",
+          "notes": "The public FMIN function performs smooth scalar minimization without user derivatives over an initial interval. It uses safeguarded parabolic interpolation with golden-section fallback and a stopping scale SQRT(EPSILON)*ABS(X)+TOL/3. This modern package places F before AX/BX, unlike some textbook interfaces of the same name. The return is only a minimizer estimate; no convergence/status output or evaluation budget is exposed. This independent review records the public interfaces, dispatch and caller contracts, not a new numerical execution check or audit of every dependency/kernel. The existing problem-specific hosted drivers remain separate. No upstream numerical source is bundled.",
+          "evidence": [
+            {
+              "path": "src/fmin_module.F90",
+              "url": "https://github.com/jacobwilliams/fmin/blob/3d094fba0e9b98d132414f8442c7c76d32da1d30/src/fmin_module.F90",
+              "sha256": "d63cd59c63c3be05d2f73bdacbf53acef42a70ecef893da770b6a3d087d32182"
+            },
+            {
+              "path": "README.md",
+              "url": "https://github.com/jacobwilliams/fmin/blob/3d094fba0e9b98d132414f8442c7c76d32da1d30/README.md",
+              "sha256": "71245e1d75087143160ae600a3baa831e284f1537b2cf435c84e586d2a578207"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/jacobwilliams/fmin/blob/3d094fba0e9b98d132414f8442c7c76d32da1d30/fpm.toml",
+              "sha256": "0fc6e8548df9f34b66d1246744582d234d57b9f27f7e19798463ca8d55955272"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "fmin",
+              "role": "public-entry-point",
+              "module": "fmin_module",
+              "summary": "Scalar derivative-free minimizer combining golden-section and parabolic steps. The objective function F(X) is the first argument, followed by ordered interval endpoints AX/BX and nonnegative TOL; the result XMIN is an abscissa, not the minimum function value. Reevaluate F(XMIN) if its value is needed. Import fmin_rk to match the preprocessed real kind (REAL64 by default); callback argument and result have that kind. The source has no status, iteration-count or maximum-evaluation argument; its unbounded loop exits on an interval/machine-precision condition. Finite objective values and a suitable unimodal interval are caller responsibilities; multimodal, invalid-input and nontermination behavior are not certified by this review. The upstream source filename is case-sensitive fmin_module.F90.",
+              "signature": "XMIN = fmin(F,AX,BX,TOL)",
+              "path": "src/fmin_module.F90",
+              "line_start": 85,
+              "line_end": 225,
+              "declarations": [
+                {
+                  "path": "src/fmin_module.F90",
+                  "line_start": 89,
+                  "line_end": 95
+                },
+                {
+                  "path": "src/fmin_module.F90",
+                  "line_start": 41,
+                  "line_end": 49
+                },
+                {
+                  "path": "src/fmin_module.F90",
+                  "line_start": 29,
+                  "line_end": 39
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "lbfgsb": {
+      "id": "github:jacobwilliams/lbfgsb",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "lbfgsb",
+        "url": "https://github.com/jacobwilliams/lbfgsb"
+      },
+      "license": {
+        "label": "Declared BSD-3-Clause; distributed license template has placeholders",
+        "spdx_expression": null,
+        "revision": "ce1a9322016d6f31b652393e000a914b63af6fef",
+        "reviewed_on": "2026-11-07",
+        "notes": "The source header explicitly declares New/Modified BSD three-clause licensing and points to License.txt. That file includes explanatory material and a BSD three-clause template with unresolved year/copyright-holder placeholders. Preserve this attribution limitation rather than assign a fully resolved repository-wide SPDX expression; this is not a complete component/license audit.",
+        "evidence": [
+          {
+            "path": "License.txt",
+            "url": "https://github.com/jacobwilliams/lbfgsb/blob/ce1a9322016d6f31b652393e000a914b63af6fef/License.txt",
+            "sha256": "919e78c1c48cc7d179efe63075590cfb5942e6ae1da2bf373dd754fe795139b5"
+          },
+          {
+            "path": "src/lbfgsb.f90",
+            "url": "https://github.com/jacobwilliams/lbfgsb/blob/ce1a9322016d6f31b652393e000a914b63af6fef/src/lbfgsb.f90",
+            "sha256": "8562cf29648293f653355e2ebbbab58559b60bce4ad976076e48ebe73a23981e"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/lbfgsb/blob/ce1a9322016d6f31b652393e000a914b63af6fef/README.md",
+            "sha256": "4e25d914ee548e51155413920ae34f09dc6ccdcb72ca3aec8a990cb5389cdaa7"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "G2h1a2",
+          "level": "source-reviewed",
+          "revision": "ce1a9322016d6f31b652393e000a914b63af6fef",
+          "reviewed_on": "2026-11-07",
+          "notes": "The public SETULB wrapper partitions workspace and calls MAINLB for smooth bound-constrained limited-memory BFGS using user objective gradients through reverse communication. The mapping requires real finite objective/gradient values and consistent bounds. It is not a derivative-free or callback-taking entry point. The character task state, workspace lengths, optional output-file argument and preprocessed kind selection are specific to this pinned modernized interface. This independent review records the public interfaces, dispatch and caller contracts, not a new numerical execution check or audit of every dependency/kernel. The existing problem-specific hosted drivers remain separate. No upstream numerical source is bundled.",
+          "evidence": [
+            {
+              "path": "src/lbfgsb.f90",
+              "url": "https://github.com/jacobwilliams/lbfgsb/blob/ce1a9322016d6f31b652393e000a914b63af6fef/src/lbfgsb.f90",
+              "sha256": "8562cf29648293f653355e2ebbbab58559b60bce4ad976076e48ebe73a23981e"
+            },
+            {
+              "path": "src/lbfgsb_kinds_module.F90",
+              "url": "https://github.com/jacobwilliams/lbfgsb/blob/ce1a9322016d6f31b652393e000a914b63af6fef/src/lbfgsb_kinds_module.F90",
+              "sha256": "518418b9947c4e99e99491d6e8e480d58555a6fdf25182f316bdfbd439aa638b"
+            },
+            {
+              "path": "README.md",
+              "url": "https://github.com/jacobwilliams/lbfgsb/blob/ce1a9322016d6f31b652393e000a914b63af6fef/README.md",
+              "sha256": "4e25d914ee548e51155413920ae34f09dc6ccdcb72ca3aec8a990cb5389cdaa7"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/jacobwilliams/lbfgsb/blob/ce1a9322016d6f31b652393e000a914b63af6fef/fpm.toml",
+              "sha256": "f759254aa366a7b8aecb309730e20a895083c6a9d0a5abd02319d5e012a85d9a"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "setulb",
+              "role": "public-entry-point",
+              "module": "lbfgsb_module",
+              "summary": "Reverse-communication bound-constrained minimization. Set TASK=START, preserve WA(2*M*N+5*N+11*M*M+8*M), IWA(3*N), CSAVE(60 characters), LSAVE(4), ISAVE(44), DSAVE(29), and all state across calls. When TASK begins FG, compute scalar F and gradient G(N) at returned X; NEW_X permits monitoring/continuation. CONV denotes a termination test, ABNO abnormal termination and ERROR invalid input; inspect the full TASK message and independently check the result. NBD values 0/1/2/3 mean unbounded/lower-only/both/upper-only; X/L/U/G are real arrays of length N, M is correction-history size. FACTR scales a relative objective-reduction tolerance by machine epsilon; PGTOL controls projected-gradient stopping. IPRINT<0 suppresses printing. The last ITERATION_FILE string is optional. No objective callback is passed to SETULB. Import lbfgsb_kinds_module::lbfgsb_wp to match the preprocessed library real kind (REAL64 by default); do not assume another fork has this optional argument or the same task representation.",
+              "signature": "CALL setulb(N,M,X,L,U,NBD,F,G,FACTR,PGTOL,WA,IWA,TASK,IPRINT,CSAVE,LSAVE,ISAVE,DSAVE[,ITERATION_FILE])",
+              "path": "src/lbfgsb.f90",
+              "line_start": 88,
+              "line_end": 286,
+              "declarations": [
+                {
+                  "path": "src/lbfgsb.f90",
+                  "line_start": 92,
+                  "line_end": 244
+                },
+                {
+                  "path": "src/lbfgsb_kinds_module.F90",
+                  "line_start": 29,
+                  "line_end": 37
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "powellopt": {
       "id": "github:jacobwilliams/powellopt",
       "repository": {
@@ -102,6 +862,10 @@
   },
   "report": {
     "matched": [
+      "quadpack",
+      "minpack",
+      "fmin",
+      "lbfgsb",
       "powellopt"
     ],
     "revision_mismatches": [],
@@ -118,10 +882,8 @@
       "bspline-fortran",
       "pchip",
       "finterp",
-      "quadpack",
       "quadrature-fortran",
       "dop853",
-      "minpack",
       "mersenne-twister-fortran",
       "fortran-search-and-sort",
       "stringsort",
@@ -153,9 +915,7 @@
       "m_match",
       "m_list",
       "m_color",
-      "fmin",
       "slsqp",
-      "lbfgsb",
       "specfun",
       "regridpack",
       "splpak",
