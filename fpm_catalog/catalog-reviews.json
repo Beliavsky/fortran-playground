@@ -2,7 +2,7 @@
   "schema_version": 1,
   "publisher": "fortran-gams-catalog-independent-reviews",
   "source_url": "https://beliavsky.github.io/fortran-gams-catalog/reviewed-metadata.json",
-  "source_snapshot_id": "sha256:6dc8eee4e7e421ad2eddc89ac7ddea8254a54e86ae9ba557df31d3ad77566348",
+  "source_snapshot_id": "sha256:7415ea78465346c2f589e4398f7a0fad9a10e17044625d3f3c603f3220c376f9",
   "packages": {
     "fftpack": {
       "id": "github:fortran-lang/fftpack",
@@ -572,6 +572,184 @@
                   "path": "src/pchip_module.f90",
                   "line_start": 10,
                   "line_end": 32
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "finterp": {
+      "id": "github:jacobwilliams/finterp",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "finterp",
+        "url": "https://github.com/jacobwilliams/finterp"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "95aaceaf86f5d4d49328b783c5dff9b006b0bfc9",
+        "reviewed_on": "2026-11-07",
+        "notes": "The pinned LICENSE supplies BSD three-clause terms for this library.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jacobwilliams/finterp/blob/95aaceaf86f5d4d49328b783c5dff9b006b0bfc9/LICENSE",
+            "sha256": "2f55357b92e9dc4fff91a80d3b81695f48707b51fd80cfd94a80a72f5f9133e2"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/finterp/blob/95aaceaf86f5d4d49328b783c5dff9b006b0bfc9/README.md",
+            "sha256": "e9772096742ed42c00845887de9c9c600682e9726c800afba1bb69c63643893b"
+          },
+          {
+            "path": "src/linear_interpolation_module.F90",
+            "url": "https://github.com/jacobwilliams/finterp/blob/95aaceaf86f5d4d49328b783c5dff9b006b0bfc9/src/linear_interpolation_module.F90",
+            "sha256": "ce7c98c39bacbf0b72e5c5c0c9a6e4e55b0bec297b105974263e3554eb038238"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "E1a",
+          "level": "source-reviewed",
+          "revision": "95aaceaf86f5d4d49328b783c5dff9b006b0bfc9",
+          "reviewed_on": "2026-11-07",
+          "notes": "The 1D type copies data and evaluates a piecewise linear interpolant with boundary-interval extrapolation. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/linear_interpolation_module.F90",
+              "url": "https://github.com/jacobwilliams/finterp/blob/95aaceaf86f5d4d49328b783c5dff9b006b0bfc9/src/linear_interpolation_module.F90",
+              "sha256": "ce7c98c39bacbf0b72e5c5c0c9a6e4e55b0bec297b105974263e3554eb038238"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "initialize",
+              "role": "public-entry-point",
+              "module": "linear_interpolation_module",
+              "derived_type": "linear_interp_1d",
+              "summary": "Declare TYPE(linear_interp_1d) :: solver from linear_interpolation_module. Copy strictly increasing X(:) and matching F(:), with at least two points. Match FINTERP_RK (REAL64 default). Required ISTAT=0 means success; dimension, monotonicity and insufficient-point errors must be checked before evaluation. Reinitialization destroys previous data. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%initialize(X,F,ISTAT)",
+              "path": "src/linear_interpolation_module.F90",
+              "line_start": 446,
+              "line_end": 473,
+              "declarations": [
+                {
+                  "path": "src/linear_interpolation_module.F90",
+                  "line_start": 450,
+                  "line_end": 456
+                },
+                {
+                  "path": "src/linear_interpolation_module.F90",
+                  "line_start": 34,
+                  "line_end": 44
+                },
+                {
+                  "path": "src/linear_interpolation_module.F90",
+                  "line_start": 69,
+                  "line_end": 94
+                }
+              ]
+            },
+            {
+              "procedure": "evaluate",
+              "role": "public-entry-point",
+              "module": "linear_interpolation_module",
+              "derived_type": "linear_interp_1d",
+              "summary": "Declare TYPE(linear_interp_1d) :: solver from linear_interpolation_module. Evaluate piecewise linear interpolation at scalar X, returning F. Optional ISTAT=-1 means uninitialized (F is set to zero), 0 means initialized evaluation. There is no separate out-of-range status: endpoint intervals are used for linear extrapolation. Supply an in-range query when interpolation alone is wanted. Match FINTERP_RK. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%evaluate(X,F,[ISTAT])",
+              "path": "src/linear_interpolation_module.F90",
+              "line_start": 725,
+              "line_end": 757,
+              "declarations": [
+                {
+                  "path": "src/linear_interpolation_module.F90",
+                  "line_start": 729,
+                  "line_end": 733
+                },
+                {
+                  "path": "src/linear_interpolation_module.F90",
+                  "line_start": 34,
+                  "line_end": 44
+                },
+                {
+                  "path": "src/linear_interpolation_module.F90",
+                  "line_start": 69,
+                  "line_end": 94
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "E2a",
+          "level": "source-reviewed",
+          "revision": "95aaceaf86f5d4d49328b783c5dff9b006b0bfc9",
+          "reviewed_on": "2026-11-07",
+          "notes": "The 2D type performs bilinear interpolation on a rectangular grid. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/linear_interpolation_module.F90",
+              "url": "https://github.com/jacobwilliams/finterp/blob/95aaceaf86f5d4d49328b783c5dff9b006b0bfc9/src/linear_interpolation_module.F90",
+              "sha256": "ce7c98c39bacbf0b72e5c5c0c9a6e4e55b0bec297b105974263e3554eb038238"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "initialize",
+              "role": "public-entry-point",
+              "module": "linear_interpolation_module",
+              "derived_type": "linear_interp_2d",
+              "summary": "Declare TYPE(linear_interp_2d) :: solver from linear_interpolation_module. Copy a rectangular grid with strictly increasing X(:), Y(:), at least two points per axis, and F(SIZE(X),SIZE(Y)) in that axis order. Match FINTERP_RK. Check required ISTAT=0; this is not an interface for scattered points. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%initialize(X,Y,F,ISTAT)",
+              "path": "src/linear_interpolation_module.F90",
+              "line_start": 480,
+              "line_end": 512,
+              "declarations": [
+                {
+                  "path": "src/linear_interpolation_module.F90",
+                  "line_start": 484,
+                  "line_end": 493
+                },
+                {
+                  "path": "src/linear_interpolation_module.F90",
+                  "line_start": 34,
+                  "line_end": 44
+                },
+                {
+                  "path": "src/linear_interpolation_module.F90",
+                  "line_start": 69,
+                  "line_end": 94
+                }
+              ]
+            },
+            {
+              "procedure": "evaluate",
+              "role": "public-entry-point",
+              "module": "linear_interpolation_module",
+              "derived_type": "linear_interp_2d",
+              "summary": "Declare TYPE(linear_interp_2d) :: solver from linear_interpolation_module. Evaluate bilinear interpolation at scalar X/Y. Required F is the scalar output; optional ISTAT is 0 for an initialized object or -1 otherwise. The interval search allows extrapolation using boundary cells without reporting a bounds error; restrict queries to the initialized grid for interpolation. Match FINTERP_RK. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%evaluate(X,Y,F,[ISTAT])",
+              "path": "src/linear_interpolation_module.F90",
+              "line_start": 764,
+              "line_end": 804,
+              "declarations": [
+                {
+                  "path": "src/linear_interpolation_module.F90",
+                  "line_start": 768,
+                  "line_end": 773
+                },
+                {
+                  "path": "src/linear_interpolation_module.F90",
+                  "line_start": 34,
+                  "line_end": 44
+                },
+                {
+                  "path": "src/linear_interpolation_module.F90",
+                  "line_start": 69,
+                  "line_end": 94
                 }
               ]
             }
@@ -1499,6 +1677,380 @@
         }
       ]
     },
+    "mersenne-twister-fortran": {
+      "id": "github:jacobwilliams/mersenne-twister-fortran",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "mersenne-twister-fortran",
+        "url": "https://github.com/jacobwilliams/mersenne-twister-fortran"
+      },
+      "license": {
+        "label": "BSD-3-Clause modernization and original MT19937-64 notices",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "1e3e364f4c022eab3fcd5d07b10a2c2be77a822b",
+        "reviewed_on": "2026-11-07",
+        "notes": "LICENSE includes BSD three-clause modernization terms and original Matsumoto/Nishimura terms, with Fortran translation attribution to Remi Piatek. Retain all attributions.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jacobwilliams/mersenne-twister-fortran/blob/1e3e364f4c022eab3fcd5d07b10a2c2be77a822b/LICENSE",
+            "sha256": "3d4ed32ffe15b3db694c800b4d8b316441a2e3ee424f73b8002fa266f5aebf1d"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/mersenne-twister-fortran/blob/1e3e364f4c022eab3fcd5d07b10a2c2be77a822b/README.md",
+            "sha256": "1f2e02e430a3ab55f6a46de07281d06add865847f5d4bd33ced843dea8f3e13c"
+          },
+          {
+            "path": "src/mt19937-64.f90",
+            "url": "https://github.com/jacobwilliams/mersenne-twister-fortran/blob/1e3e364f4c022eab3fcd5d07b10a2c2be77a822b/src/mt19937-64.f90",
+            "sha256": "e41634731fde9378f0f363079311b45d81c85edd5678b226b8de50e30a1fc047"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "L6a21",
+          "level": "source-reviewed",
+          "revision": "1e3e364f4c022eab3fcd5d07b10a2c2be77a822b",
+          "reviewed_on": "2026-11-07",
+          "notes": "MT19937-64 offers explicit per-object seeding and real uniform draws with documented endpoint conventions. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/mt19937-64.f90",
+              "url": "https://github.com/jacobwilliams/mersenne-twister-fortran/blob/1e3e364f4c022eab3fcd5d07b10a2c2be77a822b/src/mt19937-64.f90",
+              "sha256": "e41634731fde9378f0f363079311b45d81c85edd5678b226b8de50e30a1fc047"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "initialize",
+              "role": "public-entry-point",
+              "module": "mt19937_64",
+              "derived_type": "mt19937",
+              "summary": "Declare TYPE(mt19937) :: solver from mt19937_64. Scalar INTEGER(INT64) overload of public generic INITIALIZE seeds the per-object MT19937-64 state. Import INT64 from ISO_FORTRAN_ENV; an INT32 scalar and INT64 seed-array overload also exist. The algorithm uses fixed-width integer wraparound arithmetic; compiler overflow settings matter. This is a reproducible simulation generator, not a cryptographic generator. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%initialize(SEED)",
+              "path": "src/mt19937-64.f90",
+              "line_start": 86,
+              "line_end": 102,
+              "declarations": [
+                {
+                  "path": "src/mt19937-64.f90",
+                  "line_start": 90,
+                  "line_end": 91
+                },
+                {
+                  "path": "src/mt19937-64.f90",
+                  "line_start": 19,
+                  "line_end": 42
+                },
+                {
+                  "path": "src/mt19937-64.f90",
+                  "line_start": 55,
+                  "line_end": 67
+                }
+              ]
+            },
+            {
+              "procedure": "genrand64_real2",
+              "role": "public-entry-point",
+              "module": "mt19937_64",
+              "derived_type": "mt19937",
+              "summary": "Declare TYPE(mt19937) :: solver from mt19937_64. Return one REAL(REAL64) pseudorandom value on [0,1), advancing this object state. No seed argument is passed here; initialize explicitly for reproducibility. The integer generator installs seed 5489 if the object has not been seeded. REAL1/REAL3 have different endpoint conventions. No status output is exposed. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%genrand64_real2()",
+              "path": "src/mt19937-64.f90",
+              "line_start": 208,
+              "line_end": 215,
+              "declarations": [
+                {
+                  "path": "src/mt19937-64.f90",
+                  "line_start": 208,
+                  "line_end": 211
+                },
+                {
+                  "path": "src/mt19937-64.f90",
+                  "line_start": 19,
+                  "line_end": 42
+                },
+                {
+                  "path": "src/mt19937-64.f90",
+                  "line_start": 55,
+                  "line_end": 67
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "daglib": {
+      "id": "github:jacobwilliams/daglib",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "daglib",
+        "url": "https://github.com/jacobwilliams/daglib"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "68fa83ebfd33fd6521327918b1d8e5084250a8ff",
+        "reviewed_on": "2026-11-07",
+        "notes": "Pinned LICENSE supplies BSD three-clause terms for the library.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jacobwilliams/daglib/blob/68fa83ebfd33fd6521327918b1d8e5084250a8ff/LICENSE",
+            "sha256": "88d23e31f1e595f8a6ffb526f2291804414991eec90149e85797ef135855bbf1"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/daglib/blob/68fa83ebfd33fd6521327918b1d8e5084250a8ff/README.md",
+            "sha256": "e918368779d5a19033ebd5ba056542ed3d0602d563913d1b77403d2884640ea6"
+          },
+          {
+            "path": "src/dag_module.F90",
+            "url": "https://github.com/jacobwilliams/daglib/blob/68fa83ebfd33fd6521327918b1d8e5084250a8ff/src/dag_module.F90",
+            "sha256": "5795942a4dc3d495dde47b78dd8367948821d277187ed13092b4650043157ae3"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "P",
+          "level": "source-reviewed",
+          "revision": "68fa83ebfd33fd6521327918b1d8e5084250a8ff",
+          "reviewed_on": "2026-11-07",
+          "notes": "The directed-graph object builds indexed dependency edges and performs depth-first topological ordering with cycle detection. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/dag_module.F90",
+              "url": "https://github.com/jacobwilliams/daglib/blob/68fa83ebfd33fd6521327918b1d8e5084250a8ff/src/dag_module.F90",
+              "sha256": "5795942a4dc3d495dde47b78dd8367948821d277187ed13092b4650043157ae3"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "set_vertices",
+              "role": "public-entry-point",
+              "module": "dag_module",
+              "derived_type": "dag",
+              "summary": "Declare TYPE(dag) :: solver from dag_module. Create NVERTICES>=1 vertices, numbered 1..NVERTICES; this replaces previous vertices/edges. Match DAGLIB_IP (INT32 default). Optional LABELS has NVERTICES character elements; ATTRIBUTES and polymorphic METADATA are copied to vertices. NVERTICES<=0 causes ERROR STOP, not a status return. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%set_vertices(NVERTICES,[LABELS],[ATTRIBUTES],[METADATA])",
+              "path": "src/dag_module.F90",
+              "line_start": 337,
+              "line_end": 370,
+              "declarations": [
+                {
+                  "path": "src/dag_module.F90",
+                  "line_start": 339,
+                  "line_end": 344
+                },
+                {
+                  "path": "src/dag_module.F90",
+                  "line_start": 13,
+                  "line_end": 24
+                },
+                {
+                  "path": "src/dag_module.F90",
+                  "line_start": 78,
+                  "line_end": 85
+                }
+              ]
+            },
+            {
+              "procedure": "add_edge",
+              "role": "public-entry-point",
+              "module": "dag_module",
+              "derived_type": "dag",
+              "summary": "Declare TYPE(dag) :: solver from dag_module. Add an edge from IVERTEX to IEDGE after SET_VERTICES. Both indices must be in 1..NVERTICES and use DAGLIB_IP; this wrapper directly indexes storage without a status check. For dependency ordering, IVERTEX depends on IEDGE: TOPOSORT visits the destination before the source. Optional LABEL/ATTRIBUTES/METADATA describe the edge. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%add_edge(IVERTEX,IEDGE,[LABEL],[ATTRIBUTES],[METADATA])",
+              "path": "src/dag_module.F90",
+              "line_start": 495,
+              "line_end": 510,
+              "declarations": [
+                {
+                  "path": "src/dag_module.F90",
+                  "line_start": 497,
+                  "line_end": 503
+                },
+                {
+                  "path": "src/dag_module.F90",
+                  "line_start": 13,
+                  "line_end": 24
+                },
+                {
+                  "path": "src/dag_module.F90",
+                  "line_start": 78,
+                  "line_end": 85
+                }
+              ]
+            },
+            {
+              "procedure": "toposort",
+              "role": "public-entry-point",
+              "module": "dag_module",
+              "derived_type": "dag",
+              "summary": "Declare TYPE(dag) :: solver from dag_module. Return allocatable INTEGER(DAGLIB_IP) ORDER(:) and mandatory ISTAT: 0 success, -1 cycle with ORDER unallocated. Initialize a nonempty graph first; the zero-vertex early return does not establish ISTAT. For each edge IVERTEX->IEDGE, IEDGE precedes IVERTEX in returned dependency order. Check ISTAT and ALLOCATED(ORDER) before use. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%toposort(ORDER,ISTAT)",
+              "path": "src/dag_module.F90",
+              "line_start": 583,
+              "line_end": 643,
+              "declarations": [
+                {
+                  "path": "src/dag_module.F90",
+                  "line_start": 585,
+                  "line_end": 591
+                },
+                {
+                  "path": "src/dag_module.F90",
+                  "line_start": 13,
+                  "line_end": 24
+                },
+                {
+                  "path": "src/dag_module.F90",
+                  "line_start": 78,
+                  "line_end": 85
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fortran_function_parser": {
+      "id": "github:jacobwilliams/fortran_function_parser",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "fortran_function_parser",
+        "url": "https://github.com/jacobwilliams/fortran_function_parser"
+      },
+      "license": {
+        "label": "BSD-3-Clause modernization and original FPARSER notices",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "4c977c925506bea3fb1ee44aac08114c5fa68a71",
+        "reviewed_on": "2026-11-07",
+        "notes": "LICENSE separately retains Jacob Williams modernization terms and Roland Schmehl original FPARSER BSD three-clause terms. Preserve both notices.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jacobwilliams/fortran_function_parser/blob/4c977c925506bea3fb1ee44aac08114c5fa68a71/LICENSE",
+            "sha256": "b5eba48050e81f96b5c7d1fbea113392774eb1999a3c900a635b918aae329bd0"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/fortran_function_parser/blob/4c977c925506bea3fb1ee44aac08114c5fa68a71/README.md",
+            "sha256": "d3d6630ba1e901f35b9ae1ad5d5f14dd247d24242530a542dd63fb572f42d76b"
+          },
+          {
+            "path": "src/function_parser.F90",
+            "url": "https://github.com/jacobwilliams/fortran_function_parser/blob/4c977c925506bea3fb1ee44aac08114c5fa68a71/src/function_parser.F90",
+            "sha256": "e66c9eeb438265c3a3137236036120965ea50d079004e2150c278108a2c56202"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "4c977c925506bea3fb1ee44aac08114c5fa68a71",
+          "reviewed_on": "2026-11-07",
+          "notes": "The scalar parser compiles an expression, evaluates ordered variable values, and exposes stored-error status. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/function_parser.F90",
+              "url": "https://github.com/jacobwilliams/fortran_function_parser/blob/4c977c925506bea3fb1ee44aac08114c5fa68a71/src/function_parser.F90",
+              "sha256": "e66c9eeb438265c3a3137236036120965ea50d079004e2150c278108a2c56202"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "parse",
+              "role": "public-entry-point",
+              "module": "function_parser",
+              "derived_type": "fparser",
+              "summary": "Declare TYPE(fparser) :: solver from function_parser. Compile scalar expression FUNCSTR using CHARACTER array VAR as the ordered variable-name list. Optional CASE_SENSITIVE defaults false. PARSE resets previous parser state; inspect solver%error() before evaluation and use solver%print_errors() for diagnostics. There is no parse status argument in this binding. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%parse(FUNCSTR,VAR,[CASE_SENSITIVE])",
+              "path": "src/function_parser.F90",
+              "line_start": 454,
+              "line_end": 506,
+              "declarations": [
+                {
+                  "path": "src/function_parser.F90",
+                  "line_start": 458,
+                  "line_end": 462
+                },
+                {
+                  "path": "src/function_parser.F90",
+                  "line_start": 48,
+                  "line_end": 56
+                },
+                {
+                  "path": "src/function_parser.F90",
+                  "line_start": 239,
+                  "line_end": 244
+                }
+              ]
+            },
+            {
+              "procedure": "evaluate",
+              "role": "public-entry-point",
+              "module": "function_parser",
+              "derived_type": "fparser",
+              "summary": "Declare TYPE(fparser) :: solver from function_parser. After successful PARSE, supply REAL(FPARSER_RK) VAL(:) values in exactly the same order as VAR and receive scalar RES. FPARSER_RK defaults REAL64. The bytecode accesses VAL by stored indices, so the caller must supply enough values. Inspect solver%error() after evaluation: an evaluation error can return RES=0, which must not be confused with a valid zero. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%evaluate(VAL,RES)",
+              "path": "src/function_parser.F90",
+              "line_start": 513,
+              "line_end": 543,
+              "declarations": [
+                {
+                  "path": "src/function_parser.F90",
+                  "line_start": 517,
+                  "line_end": 519
+                },
+                {
+                  "path": "src/function_parser.F90",
+                  "line_start": 48,
+                  "line_end": 56
+                },
+                {
+                  "path": "src/function_parser.F90",
+                  "line_start": 239,
+                  "line_end": 244
+                }
+              ]
+            },
+            {
+              "procedure": "error",
+              "role": "public-entry-point",
+              "module": "function_parser",
+              "derived_type": "fparser",
+              "summary": "Declare TYPE(fparser) :: solver from function_parser. Return LOGICAL true when the parser has recorded errors. Check after PARSE and EVALUATE before accepting results; this function reports stored diagnostics, not a fresh evaluation. PRINT_ERRORS displays the messages, while CLEAR_ERRORS clears them. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%error()",
+              "path": "src/function_parser.F90",
+              "line_start": 298,
+              "line_end": 307,
+              "declarations": [
+                {
+                  "path": "src/function_parser.F90",
+                  "line_start": 302,
+                  "line_end": 303
+                },
+                {
+                  "path": "src/function_parser.F90",
+                  "line_start": 48,
+                  "line_end": 56
+                },
+                {
+                  "path": "src/function_parser.F90",
+                  "line_start": 239,
+                  "line_end": 244
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "numdiff": {
       "id": "github:jacobwilliams/numdiff",
       "repository": {
@@ -1603,6 +2155,146 @@
                   "path": "src/kinds_module.F90",
                   "line_start": 18,
                   "line_end": 35
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "orderpack": {
+      "id": "github:urbanjost/orderpack",
+      "repository": {
+        "owner": "urbanjost",
+        "name": "orderpack",
+        "url": "https://github.com/urbanjost/orderpack"
+      },
+      "license": {
+        "label": "CC0-1.0",
+        "spdx_expression": "CC0-1.0",
+        "revision": "9696eee2670beae1601ae59e125ff9f10e6c88a7",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE and both inspected implementation headers identify CC0-1.0; original author and maintainer credits are retained.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/urbanjost/orderpack/blob/9696eee2670beae1601ae59e125ff9f10e6c88a7/LICENSE",
+            "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/urbanjost/orderpack/blob/9696eee2670beae1601ae59e125ff9f10e6c88a7/README.md",
+            "sha256": "1a58c81fcebeada9ce6561e95cfc5a10ee778642411fd1c2ca19eece704e0ff5"
+          },
+          {
+            "path": "src/M_orderpack__mrgrnk.f90",
+            "url": "https://github.com/urbanjost/orderpack/blob/9696eee2670beae1601ae59e125ff9f10e6c88a7/src/M_orderpack__mrgrnk.f90",
+            "sha256": "d13b034127e3727a8ba08327598b0c10ef74698cdd7f30c4c5df5f5d0c0ad174"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N6",
+          "level": "source-reviewed",
+          "revision": "9696eee2670beae1601ae59e125ff9f10e6c88a7",
+          "reviewed_on": "2026-11-07",
+          "notes": "The RANK generic exposes a REAL64 merge-ranking overload through the M_ORDERPACK reexport. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/M_orderpack__mrgrnk.f90",
+              "url": "https://github.com/urbanjost/orderpack/blob/9696eee2670beae1601ae59e125ff9f10e6c88a7/src/M_orderpack__mrgrnk.f90",
+              "sha256": "d13b034127e3727a8ba08327598b0c10ef74698cdd7f30c4c5df5f5d0c0ad174"
+            },
+            {
+              "path": "src/M_orderpack__inspar.f90",
+              "url": "https://github.com/urbanjost/orderpack/blob/9696eee2670beae1601ae59e125ff9f10e6c88a7/src/M_orderpack__inspar.f90",
+              "sha256": "c8bf919e558e657afad22fe01af70b2a822434584802f883dbd556b15efbf593"
+            },
+            {
+              "path": "src/M_orderpack.f90",
+              "url": "https://github.com/urbanjost/orderpack/blob/9696eee2670beae1601ae59e125ff9f10e6c88a7/src/M_orderpack.f90",
+              "sha256": "2413fc033ff4a130f83a26329057cc528159cdb80f3e7d17613263b820a66084"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "rank",
+              "role": "public-entry-point",
+              "module": "M_orderpack",
+              "summary": "REAL64 overload of public RANK returns default INTEGER indices for ascending order without modifying INVALS. Allocate IRNGT with SIZE(INVALS) for a full permutation. This pin processes only MIN(SIZE(INVALS),SIZE(IRNGT)) input values when lengths differ; a short output is not the indices of the globally smallest elements of the full input. No status or NaN ordering contract is exposed.",
+              "signature": "CALL rank(INVALS,IRNGT)",
+              "path": "src/M_orderpack__mrgrnk.f90",
+              "line_start": 130,
+              "line_end": 323,
+              "declarations": [
+                {
+                  "path": "src/M_orderpack__mrgrnk.f90",
+                  "line_start": 132,
+                  "line_end": 133
+                },
+                {
+                  "path": "src/M_orderpack.f90",
+                  "line_start": 1,
+                  "line_end": 10
+                },
+                {
+                  "path": "src/M_orderpack__mrgrnk.f90",
+                  "line_start": 124,
+                  "line_end": 128
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "N6a2b",
+          "level": "source-reviewed",
+          "revision": "9696eee2670beae1601ae59e125ff9f10e6c88a7",
+          "reviewed_on": "2026-11-07",
+          "notes": "PSORT exposes partial in-place insertion sorting with a caller-validated requested order count. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/M_orderpack__mrgrnk.f90",
+              "url": "https://github.com/urbanjost/orderpack/blob/9696eee2670beae1601ae59e125ff9f10e6c88a7/src/M_orderpack__mrgrnk.f90",
+              "sha256": "d13b034127e3727a8ba08327598b0c10ef74698cdd7f30c4c5df5f5d0c0ad174"
+            },
+            {
+              "path": "src/M_orderpack__inspar.f90",
+              "url": "https://github.com/urbanjost/orderpack/blob/9696eee2670beae1601ae59e125ff9f10e6c88a7/src/M_orderpack__inspar.f90",
+              "sha256": "c8bf919e558e657afad22fe01af70b2a822434584802f883dbd556b15efbf593"
+            },
+            {
+              "path": "src/M_orderpack.f90",
+              "url": "https://github.com/urbanjost/orderpack/blob/9696eee2670beae1601ae59e125ff9f10e6c88a7/src/M_orderpack.f90",
+              "sha256": "2413fc033ff4a130f83a26329057cc528159cdb80f3e7d17613263b820a66084"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "psort",
+              "role": "public-entry-point",
+              "module": "M_orderpack",
+              "summary": "REAL64 overload of public PSORT places the NORD smallest values at the front in ascending order, modifying INOUTVALS in place; the remaining values need not be sorted. Require 1<=NORD<=SIZE(INOUTVALS). NORD=0 is unsafe in this implementation because it reads INOUTVALS(NORD). This is value sorting rather than index ranking; there is no status output.",
+              "signature": "CALL psort(INOUTVALS,NORD)",
+              "path": "src/M_orderpack__inspar.f90",
+              "line_start": 97,
+              "line_end": 127,
+              "declarations": [
+                {
+                  "path": "src/M_orderpack__inspar.f90",
+                  "line_start": 98,
+                  "line_end": 99
+                },
+                {
+                  "path": "src/M_orderpack.f90",
+                  "line_start": 1,
+                  "line_end": 10
+                },
+                {
+                  "path": "src/M_orderpack__inspar.f90",
+                  "line_start": 91,
+                  "line_end": 95
                 }
               ]
             }
@@ -2118,6 +2810,252 @@
         }
       ]
     },
+    "regridpack": {
+      "id": "github:jacobwilliams/regridpack",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "regridpack",
+        "url": "https://github.com/jacobwilliams/regridpack"
+      },
+      "license": {
+        "label": "BSD-3-Clause modernization; original NCAR attribution",
+        "spdx_expression": null,
+        "revision": "e47346d9244ab93f70367f16364d73217fbc0451",
+        "reviewed_on": "2026-11-07",
+        "notes": "LICENSE.txt supplies BSD three-clause modernization terms and identifies the original John C. Adams/NCAR implementation. Preserve original provenance rather than assign a blanket SPDX expression to every contribution.",
+        "evidence": [
+          {
+            "path": "LICENSE.txt",
+            "url": "https://github.com/jacobwilliams/regridpack/blob/e47346d9244ab93f70367f16364d73217fbc0451/LICENSE.txt",
+            "sha256": "6b14008f6de56bc7d549479d30a6475384e7af4af5b531429eb27001aaa6a1c6"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/regridpack/blob/e47346d9244ab93f70367f16364d73217fbc0451/README.md",
+            "sha256": "0c907301621a7e3d953b1b087291ae75e32585e008c508d050a33aca886f7867"
+          },
+          {
+            "path": "src/regridpack_module.f90",
+            "url": "https://github.com/jacobwilliams/regridpack/blob/e47346d9244ab93f70367f16364d73217fbc0451/src/regridpack_module.f90",
+            "sha256": "9a9eef003903a44312bd2a97cf22677fbbd34ec7e60cc5721c197fce125a138c"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "E1a",
+          "level": "source-reviewed",
+          "revision": "e47346d9244ab93f70367f16364d73217fbc0451",
+          "reviewed_on": "2026-11-07",
+          "notes": "The 1D public generic wrapper regrids with linear or cubic interpolation and internal workspace allocation. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/regridpack_module.f90",
+              "url": "https://github.com/jacobwilliams/regridpack/blob/e47346d9244ab93f70367f16364d73217fbc0451/src/regridpack_module.f90",
+              "sha256": "9a9eef003903a44312bd2a97cf22677fbbd34ec7e60cc5721c197fce125a138c"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "regrid",
+              "role": "public-entry-point",
+              "module": "regridpack_module",
+              "summary": "Allocating-workspace 1D overload of generic REGRID. Supply REAL64 X/P of equal length and preallocated Q of SIZE(XX). X must be strictly increasing; XX nondecreasing and contained in X. INTPOL=1 requires at least two X samples; INTPOL=3 requires four. IER=0 means success, 10 incompatible shapes, 100 workspace allocation failure; other codes are linked. Extrapolation is rejected.",
+              "signature": "CALL regrid(X,P,XX,Q,INTPOL,IER)",
+              "path": "src/regridpack_module.f90",
+              "line_start": 40,
+              "line_end": 106,
+              "declarations": [
+                {
+                  "path": "src/regridpack_module.f90",
+                  "line_start": 44,
+                  "line_end": 54
+                },
+                {
+                  "path": "src/regridpack_module.f90",
+                  "line_start": 14,
+                  "line_end": 31
+                },
+                {
+                  "path": "src/regridpack_module.f90",
+                  "line_start": 490,
+                  "line_end": 507
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "E2a",
+          "level": "source-reviewed",
+          "revision": "e47346d9244ab93f70367f16364d73217fbc0451",
+          "reviewed_on": "2026-11-07",
+          "notes": "The 2D public generic wrapper regrids a rectangular product grid with separate interpolation choices per axis. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/regridpack_module.f90",
+              "url": "https://github.com/jacobwilliams/regridpack/blob/e47346d9244ab93f70367f16364d73217fbc0451/src/regridpack_module.f90",
+              "sha256": "9a9eef003903a44312bd2a97cf22677fbbd34ec7e60cc5721c197fce125a138c"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "regrid",
+              "role": "public-entry-point",
+              "module": "regridpack_module",
+              "summary": "Allocating-workspace rectangular-grid overload of generic REGRID: P(SIZE(X),SIZE(Y)), preallocated Q(SIZE(XX),SIZE(YY)), all REAL64. INTPOL is INTEGER(2), one 1=linear or 3=cubic selector per axis; each original axis needs respectively two or four samples, strictly increasing. Each target axis must be nondecreasing and contained in its original axis. Check IER=0 before using Q; 10 reports shape mismatch and 100 allocation failure. This is not scattered-data interpolation.",
+              "signature": "CALL regrid(X,Y,P,XX,YY,Q,INTPOL,IER)",
+              "path": "src/regridpack_module.f90",
+              "line_start": 113,
+              "line_end": 199,
+              "declarations": [
+                {
+                  "path": "src/regridpack_module.f90",
+                  "line_start": 117,
+                  "line_end": 127
+                },
+                {
+                  "path": "src/regridpack_module.f90",
+                  "line_start": 14,
+                  "line_end": 31
+                },
+                {
+                  "path": "src/regridpack_module.f90",
+                  "line_start": 490,
+                  "line_end": 507
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "splpak": {
+      "id": "github:jacobwilliams/splpak",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "splpak",
+        "url": "https://github.com/jacobwilliams/splpak"
+      },
+      "license": {
+        "label": "Apache-2.0 root; UCAR source notice",
+        "spdx_expression": "Apache-2.0",
+        "revision": "35340cb2d193c7aa44f03978db21660df8297cc0",
+        "reviewed_on": "2026-11-07",
+        "notes": "The root LICENSE supplies the UCAR Apache-2.0 grant. The inspected source retains its historical UCAR copyright/license-agreement notice; preserve source attribution with the root grant.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jacobwilliams/splpak/blob/35340cb2d193c7aa44f03978db21660df8297cc0/LICENSE",
+            "sha256": "f60a43cd897b40977a363d44e22fbcbc2b46898a524d3ba8da9323e98c31df06"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/splpak/blob/35340cb2d193c7aa44f03978db21660df8297cc0/README.md",
+            "sha256": "13e5c25b2463fa0a8eba1edf41ae4656ed4945bb64871911642b779f93168b2d"
+          },
+          {
+            "path": "src/splpak.F90",
+            "url": "https://github.com/jacobwilliams/splpak/blob/35340cb2d193c7aa44f03978db21660df8297cc0/src/splpak.F90",
+            "sha256": "0425b4114c6d9917cefee8b7320987bd74e1f31d6c55dd85bc1cd603ad9ec54d"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "K1",
+          "level": "source-reviewed",
+          "revision": "35340cb2d193c7aa44f03978db21660df8297cc0",
+          "reviewed_on": "2026-11-07",
+          "notes": "The object fits a multidimensional least-squares spline and exposes value evaluation; the pinned evaluator has an explicitly recorded coefficient INTENT defect. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/splpak.F90",
+              "url": "https://github.com/jacobwilliams/splpak/blob/35340cb2d193c7aa44f03978db21660df8297cc0/src/splpak.F90",
+              "sha256": "0425b4114c6d9917cefee8b7320987bd74e1f31d6c55dd85bc1cd603ad9ec54d"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "initialize",
+              "role": "public-entry-point",
+              "module": "splpak_module",
+              "derived_type": "splpak_type",
+              "summary": "Declare TYPE(splpak_type) :: solver from splpak_module. Unweighted least-squares spline initializer, not exact interpolation. Use 1<=NDIM<=4, L1XDAT>=NDIM, XDATA(L1XDAT,NDATA), YDATA(NDATA), increasing domain corners XMIN/XMAX and NODES(:)>=4. With NCOL=PRODUCT(NODES), allocate NCF>=NCOL coefficients and NWRK>=NCOL*(NCOL+1) workspace. Match SPLPAK_WP (REAL64 default). XTRAP controls extra derivative constraints in data-sparse regions. Check IERROR=0; keep COEF and all grid descriptors for evaluation. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%initialize(NDIM,XDATA,L1XDAT,YDATA,NDATA,XMIN,XMAX,NODES,XTRAP,COEF,NCF,WORK,NWRK,IERROR)",
+              "path": "src/splpak.F90",
+              "line_start": 421,
+              "line_end": 446,
+              "declarations": [
+                {
+                  "path": "src/splpak.F90",
+                  "line_start": 424,
+                  "line_end": 438
+                },
+                {
+                  "path": "src/splpak.F90",
+                  "line_start": 33,
+                  "line_end": 43
+                },
+                {
+                  "path": "src/splpak.F90",
+                  "line_start": 117,
+                  "line_end": 123
+                },
+                {
+                  "path": "src/splpak.F90",
+                  "line_start": 516,
+                  "line_end": 535
+                },
+                {
+                  "path": "src/splpak.F90",
+                  "line_start": 674,
+                  "line_end": 686
+                }
+              ]
+            },
+            {
+              "procedure": "evaluate",
+              "role": "public-entry-point",
+              "module": "splpak_module",
+              "derived_type": "splpak_type",
+              "summary": "Declare TYPE(splpak_type) :: solver from splpak_module. Function-value overload of EVALUATE uses the fitted COEF and original grid descriptors, with X(NDIM) and required IERROR. Match SPLPAK_WP. Important pinned-source defect: COEF is declared INTENT(OUT) here and in SPLDE although the implementation reads the supplied coefficients; entry therefore makes their values undefined under Fortran semantics. This calling sequence records the public API and defect, not a portability guarantee. Preserve the initialized data and obtain an upstream correction before relying on standards-conforming reuse. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%evaluate(NDIM,X,COEF,XMIN,XMAX,NODES,IERROR)",
+              "path": "src/splpak.F90",
+              "line_start": 1258,
+              "line_end": 1275,
+              "declarations": [
+                {
+                  "path": "src/splpak.F90",
+                  "line_start": 1260,
+                  "line_end": 1268
+                },
+                {
+                  "path": "src/splpak.F90",
+                  "line_start": 33,
+                  "line_end": 43
+                },
+                {
+                  "path": "src/splpak.F90",
+                  "line_start": 117,
+                  "line_end": 123
+                },
+                {
+                  "path": "src/splpak.F90",
+                  "line_start": 516,
+                  "line_end": 535
+                },
+                {
+                  "path": "src/splpak.F90",
+                  "line_start": 674,
+                  "line_end": 686
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "lsqr": {
       "id": "github:jacobwilliams/lsqr",
       "repository": {
@@ -2244,6 +3182,180 @@
         }
       ]
     },
+    "rklib": {
+      "id": "github:jacobwilliams/rklib",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "rklib",
+        "url": "https://github.com/jacobwilliams/rklib"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "e3d51f9e8a2e6756612e8e53687ab2d4b67dfb76",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE gives BSD three-clause terms for rklib; the root-finding dependency and referenced algorithms retain their own provenance.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jacobwilliams/rklib/blob/e3d51f9e8a2e6756612e8e53687ab2d4b67dfb76/LICENSE",
+            "sha256": "d60b03fb8a7faa997d48d0c83f239e2de038d3f72c1482a27c6a4a16ff8a00f7"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/rklib/blob/e3d51f9e8a2e6756612e8e53687ab2d4b67dfb76/README.md",
+            "sha256": "e6503cc66419387de992a586e11c399e385cb54e7dc0fadb2c5e16739c5266a9"
+          },
+          {
+            "path": "src/rklib_module.F90",
+            "url": "https://github.com/jacobwilliams/rklib/blob/e3d51f9e8a2e6756612e8e53687ab2d4b67dfb76/src/rklib_module.F90",
+            "sha256": "eed26f08272bf49149c1412a19c6beadd446dde74c144c084d7ffb3d8d0ce587"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "I1a1a",
+          "level": "source-reviewed",
+          "revision": "e3d51f9e8a2e6756612e8e53687ab2d4b67dfb76",
+          "reviewed_on": "2026-11-07",
+          "notes": "The concrete classic RK4 type inherits fixed-step initialization/integration and separate status reporting; no adaptive-error-control claim is made. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/rklib_module.F90",
+              "url": "https://github.com/jacobwilliams/rklib/blob/e3d51f9e8a2e6756612e8e53687ab2d4b67dfb76/src/rklib_module.F90",
+              "sha256": "eed26f08272bf49149c1412a19c6beadd446dde74c144c084d7ffb3d8d0ce587"
+            },
+            {
+              "path": "src/rklib_fixed_classes.inc",
+              "url": "https://github.com/jacobwilliams/rklib/blob/e3d51f9e8a2e6756612e8e53687ab2d4b67dfb76/src/rklib_fixed_classes.inc",
+              "sha256": "539c8d5029ddd5a6e669a655c759ce328e49d0e88f26b829d91e717cd9f9b067"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "initialize",
+              "role": "public-entry-point",
+              "module": "rklib_module",
+              "derived_type": "rk4_class",
+              "summary": "Declare TYPE(rk4_class) :: solver from rklib_module. Initialize the concrete classic RK4 object with N and derivative callback F(ME,T,X,XDOT), where ME is CLASS(RK_CLASS), not CLASS(RK4_CLASS), and state arrays have length N. Match RK_MODULE_RK (REAL64 default). Optional REPORT/G callbacks, step budget and report rate follow linked declarations. STOP_ON_ERRORS defaults false; enabling it can terminate the process. Keep callbacks alive. These controls do not turn RK4 into adaptive integration. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%initialize(N,F,[REPORT],[G],[STOP_ON_ERRORS],[MAX_NUMBER_OF_STEPS],[REPORT_RATE],[SOLVER])",
+              "path": "src/rklib_module.F90",
+              "line_start": 1013,
+              "line_end": 1038,
+              "declarations": [
+                {
+                  "path": "src/rklib_module.F90",
+                  "line_start": 1019,
+                  "line_end": 1033
+                },
+                {
+                  "path": "src/rklib_module.F90",
+                  "line_start": 28,
+                  "line_end": 38
+                },
+                {
+                  "path": "src/rklib_fixed_classes.inc",
+                  "line_start": 52,
+                  "line_end": 57
+                },
+                {
+                  "path": "src/rklib_module.F90",
+                  "line_start": 267,
+                  "line_end": 284
+                },
+                {
+                  "path": "src/rklib_module.F90",
+                  "line_start": 360,
+                  "line_end": 368
+                }
+              ]
+            },
+            {
+              "procedure": "integrate",
+              "role": "public-entry-point",
+              "module": "rklib_module",
+              "derived_type": "rk4_class",
+              "summary": "Declare TYPE(rk4_class) :: solver from rklib_module. Advance from T0/X0(:) to TF, returning caller-allocated XF(:), both vectors of length N. Supply H as a positive nonzero step magnitude; the wrapper chooses direction and shortens the final step to reach TF. There is no tolerance or error-estimate argument for this fixed-step RK4 workflow. Call solver%status afterwards: error/stop returns can leave XF without a completed endpoint solution. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%integrate(T0,X0,H,TF,XF)",
+              "path": "src/rklib_module.F90",
+              "line_start": 1045,
+              "line_end": 1104,
+              "declarations": [
+                {
+                  "path": "src/rklib_module.F90",
+                  "line_start": 1049,
+                  "line_end": 1054
+                },
+                {
+                  "path": "src/rklib_module.F90",
+                  "line_start": 28,
+                  "line_end": 38
+                },
+                {
+                  "path": "src/rklib_fixed_classes.inc",
+                  "line_start": 52,
+                  "line_end": 57
+                },
+                {
+                  "path": "src/rklib_module.F90",
+                  "line_start": 267,
+                  "line_end": 284
+                },
+                {
+                  "path": "src/rklib_module.F90",
+                  "line_start": 360,
+                  "line_end": 368
+                }
+              ]
+            },
+            {
+              "procedure": "status",
+              "role": "public-entry-point",
+              "module": "rklib_module",
+              "derived_type": "rk4_class",
+              "summary": "Declare TYPE(rk4_class) :: solver from rklib_module. Query inherited status after integration: optional ISTATUS=0 means no recorded error and negative values identify failure. Optional MESSAGE is allocatable deferred-length CHARACTER. A zero status is not an accuracy estimate; use problem-specific step refinement. This sequence uses the concrete RK4 type while the implementation accepts its RK_CLASS parent. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%status([ISTATUS],[MESSAGE])",
+              "path": "src/rklib_module.F90",
+              "line_start": 522,
+              "line_end": 528,
+              "declarations": [
+                {
+                  "path": "src/rklib_module.F90",
+                  "line_start": 523,
+                  "line_end": 525
+                },
+                {
+                  "path": "src/rklib_module.F90",
+                  "line_start": 28,
+                  "line_end": 38
+                },
+                {
+                  "path": "src/rklib_fixed_classes.inc",
+                  "line_start": 52,
+                  "line_end": 57
+                },
+                {
+                  "path": "src/rklib_module.F90",
+                  "line_start": 267,
+                  "line_end": 284
+                },
+                {
+                  "path": "src/rklib_module.F90",
+                  "line_start": 360,
+                  "line_end": 368
+                },
+                {
+                  "path": "src/rklib_module.F90",
+                  "line_start": 46,
+                  "line_end": 62
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "ddeabm": {
       "id": "github:jacobwilliams/ddeabm",
       "repository": {
@@ -2353,6 +3465,122 @@
                   "path": "src/ddeabm_module.F90",
                   "line_start": 268,
                   "line_end": 294
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "pikaia": {
+      "id": "github:jacobwilliams/pikaia",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "pikaia",
+        "url": "https://github.com/jacobwilliams/pikaia"
+      },
+      "license": {
+        "label": "BSD-3-Clause modernization; public-domain original and MT19937 notices",
+        "spdx_expression": null,
+        "revision": "c080c4004896243bf9b8bbb4577e402c9e31c5e3",
+        "reviewed_on": "2026-11-07",
+        "notes": "LICENSE combines modernization BSD three-clause terms, a public-domain statement for original PIKAIA and separate MT19937-64 notices. Preserve the component distinctions and attributions.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jacobwilliams/pikaia/blob/c080c4004896243bf9b8bbb4577e402c9e31c5e3/LICENSE",
+            "sha256": "9bc7dc47c7116298ddf7764b48bfb7389b11848b79958de0732ec86508b8c1de"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/pikaia/blob/c080c4004896243bf9b8bbb4577e402c9e31c5e3/README.md",
+            "sha256": "e9f010488ab0cbbdd32e7349ae1cf12c573e9cfc7d50ae1a3a6ed3c97768b861"
+          },
+          {
+            "path": "src/pikaia_module.f90",
+            "url": "https://github.com/jacobwilliams/pikaia/blob/c080c4004896243bf9b8bbb4577e402c9e31c5e3/src/pikaia_module.f90",
+            "sha256": "e3a8545bb8d88372ac5019ab32ff52685beab689c403626b6dbee54f2f450b71"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "G2i",
+          "level": "source-reviewed",
+          "revision": "c080c4004896243bf9b8bbb4577e402c9e31c5e3",
+          "reviewed_on": "2026-11-07",
+          "notes": "The genetic-search object initializes bounded fitness maximization and returns a candidate solution with status. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/pikaia_module.f90",
+              "url": "https://github.com/jacobwilliams/pikaia/blob/c080c4004896243bf9b8bbb4577e402c9e31c5e3/src/pikaia_module.f90",
+              "sha256": "e3a8545bb8d88372ac5019ab32ff52685beab689c403626b6dbee54f2f450b71"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "init",
+              "role": "public-entry-point",
+              "module": "pikaia_module",
+              "derived_type": "pikaia_class",
+              "summary": "Declare TYPE(pikaia_class) :: solver from pikaia_module. Initialize N variables with REAL64 XL(N)/XU(N) bounds and fitness callback F(ME,X,FITNESS), whose ME is CLASS(PIKAIA_CLASS). The method MAXIMIZES fitness; negate or transform a minimization objective. Bounds are physical coordinates; internal normalization is handled by the wrapper. Inspect required STATUS=0. Optional population, generation, mutation, reporting, convergence and positive ISEED controls are linked. Keep callback procedures alive. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%init(N,XL,XU,F,STATUS,[ITER_F],[NP],[NGEN],[ND],[PCROSS],[PMUTMN],[PMUTMX],[PMUT],[IMUT],[FDIF],[IREP],[IELITE],[IVRB],[CONVERGENCE_TOL],[CONVERGENCE_WINDOW],[INITIAL_GUESS_FRAC],[ISEED])",
+              "path": "src/pikaia_module.f90",
+              "line_start": 173,
+              "line_end": 386,
+              "declarations": [
+                {
+                  "path": "src/pikaia_module.f90",
+                  "line_start": 183,
+                  "line_end": 237
+                },
+                {
+                  "path": "src/pikaia_module.f90",
+                  "line_start": 62,
+                  "line_end": 65
+                },
+                {
+                  "path": "src/pikaia_module.f90",
+                  "line_start": 109,
+                  "line_end": 110
+                },
+                {
+                  "path": "src/pikaia_module.f90",
+                  "line_start": 134,
+                  "line_end": 154
+                }
+              ]
+            },
+            {
+              "procedure": "solve",
+              "role": "public-entry-point",
+              "module": "pikaia_module",
+              "derived_type": "pikaia_class",
+              "summary": "Declare TYPE(pikaia_class) :: solver from pikaia_module. After successful INIT, supply REAL64 X(:) of length N as an initial candidate within XL/XU. It is overwritten by the best candidate in physical coordinates, and scalar F returns its fitness. Inspect STATUS; an uninitialized object reports -1. Stochastic population convergence is not a certificate of global optimality. The initial candidate seeds a configurable fraction of the population. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%solve(X,F,STATUS)",
+              "path": "src/pikaia_module.f90",
+              "line_start": 635,
+              "line_end": 662,
+              "declarations": [
+                {
+                  "path": "src/pikaia_module.f90",
+                  "line_start": 639,
+                  "line_end": 642
+                },
+                {
+                  "path": "src/pikaia_module.f90",
+                  "line_start": 62,
+                  "line_end": 65
+                },
+                {
+                  "path": "src/pikaia_module.f90",
+                  "line_start": 109,
+                  "line_end": 110
+                },
+                {
+                  "path": "src/pikaia_module.f90",
+                  "line_start": 134,
+                  "line_end": 154
                 }
               ]
             }
@@ -3015,6 +4243,137 @@
                   "path": "src/lsmrModule.f90",
                   "line_start": 543,
                   "line_end": 558
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "nlesolver-fortran": {
+      "id": "github:jacobwilliams/nlesolver-fortran",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "nlesolver-fortran",
+        "url": "https://github.com/jacobwilliams/nlesolver-fortran"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "60f38870a25e6b448dd552f184aa2f8616fc8cb0",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies BSD three-clause terms for nlesolver; separately fetched solver dependencies retain their own licenses.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jacobwilliams/nlesolver-fortran/blob/60f38870a25e6b448dd552f184aa2f8616fc8cb0/LICENSE",
+            "sha256": "e572869c0a7d87b2e7b791b2525db5cbb7d1a0cef97f41b9cdc7594f86050775"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/nlesolver-fortran/blob/60f38870a25e6b448dd552f184aa2f8616fc8cb0/README.md",
+            "sha256": "2db7dc5c99f4b0cf791a9b77c7cbcccfaa9bd42bf82457e03545f17d255c099e"
+          },
+          {
+            "path": "src/nlesolver_module.F90",
+            "url": "https://github.com/jacobwilliams/nlesolver-fortran/blob/60f38870a25e6b448dd552f184aa2f8616fc8cb0/src/nlesolver_module.F90",
+            "sha256": "cf83bbe3291cb03e9ae1e435b469bdfef6d6b22c362b2f09c67d2b9f84e195a0"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "F2",
+          "level": "source-reviewed",
+          "revision": "60f38870a25e6b448dd552f184aa2f8616fc8cb0",
+          "reviewed_on": "2026-11-07",
+          "notes": "The reviewed dense nonlinear-system workflow uses user residual/Jacobian callbacks and a separate object-status query. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/nlesolver_module.F90",
+              "url": "https://github.com/jacobwilliams/nlesolver-fortran/blob/60f38870a25e6b448dd552f184aa2f8616fc8cb0/src/nlesolver_module.F90",
+              "sha256": "cf83bbe3291cb03e9ae1e435b469bdfef6d6b22c362b2f09c67d2b9f84e195a0"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "solve",
+              "role": "public-entry-point",
+              "module": "nlesolver_module",
+              "derived_type": "nlesolver_type",
+              "summary": "Declare TYPE(nlesolver_type) :: solver from nlesolver_module. Solve after INITIALIZE with N, M, MAX_ITER, TOL and FUNC(ME,X,F), plus GRAD(ME,X,G) for dense mode (SPARSITY_MODE=1). Use keyword actuals for the many optional initialization controls linked below. Dense G has shape (M,N), F length M, and ME is CLASS(NLESOLVER_TYPE). REAL(NLESOLVER_RK) X(:) of length N is an initial guess and is overwritten; the default kind is REAL64. SOLVE has no status argument: call solver%status afterwards and check the residual independently. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%solve(X)",
+              "path": "src/nlesolver_module.F90",
+              "line_start": 705,
+              "line_end": 1048,
+              "declarations": [
+                {
+                  "path": "src/nlesolver_module.F90",
+                  "line_start": 709,
+                  "line_end": 710
+                },
+                {
+                  "path": "src/nlesolver_module.F90",
+                  "line_start": 52,
+                  "line_end": 74
+                },
+                {
+                  "path": "src/nlesolver_module.F90",
+                  "line_start": 207,
+                  "line_end": 210
+                },
+                {
+                  "path": "src/nlesolver_module.F90",
+                  "line_start": 238,
+                  "line_end": 254
+                },
+                {
+                  "path": "src/nlesolver_module.F90",
+                  "line_start": 436,
+                  "line_end": 520
+                }
+              ]
+            },
+            {
+              "procedure": "status",
+              "role": "public-entry-point",
+              "module": "nlesolver_module",
+              "derived_type": "nlesolver_type",
+              "summary": "Declare TYPE(nlesolver_type) :: solver from nlesolver_module. Retrieve optional ISTAT and/or allocatable deferred-length CHARACTER MESSAGE after initialization or SOLVE. Status 1 means requested function accuracy achieved; 2 means no improvement, 3 iteration limit, 4 user stop and 5 too many uphill steps. These positive codes are not interchangeable convergence certificates. Negative statuses report errors; inspect the message and residual before using X. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%status([ISTAT],[MESSAGE])",
+              "path": "src/nlesolver_module.F90",
+              "line_start": 411,
+              "line_end": 429,
+              "declarations": [
+                {
+                  "path": "src/nlesolver_module.F90",
+                  "line_start": 415,
+                  "line_end": 417
+                },
+                {
+                  "path": "src/nlesolver_module.F90",
+                  "line_start": 52,
+                  "line_end": 74
+                },
+                {
+                  "path": "src/nlesolver_module.F90",
+                  "line_start": 207,
+                  "line_end": 210
+                },
+                {
+                  "path": "src/nlesolver_module.F90",
+                  "line_start": 238,
+                  "line_end": 254
+                },
+                {
+                  "path": "src/nlesolver_module.F90",
+                  "line_start": 436,
+                  "line_end": 520
+                },
+                {
+                  "path": "src/nlesolver_module.F90",
+                  "line_start": 995,
+                  "line_end": 1017
                 }
               ]
             }
@@ -6036,22 +7395,32 @@
       "roots-fortran",
       "bspline-fortran",
       "pchip",
+      "finterp",
       "quadpack",
       "quadrature-fortran",
       "dop853",
       "minpack",
+      "mersenne-twister-fortran",
+      "daglib",
+      "fortran_function_parser",
       "numdiff",
+      "orderpack",
       "fortran-primes",
       "fmin",
       "slsqp",
       "lbfgsb",
       "specfun",
+      "regridpack",
+      "splpak",
       "lsqr",
+      "rklib",
       "ddeabm",
+      "pikaia",
       "powellopt",
       "fstats",
       "spectrum",
       "lsmr",
+      "nlesolver-fortran",
       "polyroots-fortran",
       "geodesic-fortran",
       "simulated-annealing",
@@ -6087,15 +7456,11 @@
       "toml-f",
       "m_strings",
       "stdlib",
-      "finterp",
-      "mersenne-twister-fortran",
       "fortran-search-and-sort",
       "stringsort",
       "flist",
-      "daglib",
       "argv-fortran",
       "popen-fortran",
-      "fortran_function_parser",
       "csv-fortran",
       "datetime-fortran",
       "m_io",
@@ -6105,7 +7470,6 @@
       "m_cli2",
       "m_attr",
       "jonquil",
-      "orderpack",
       "fortran-shlex",
       "fhash",
       "functional-fortran",
@@ -6117,21 +7481,16 @@
       "m_match",
       "m_list",
       "m_color",
-      "regridpack",
-      "splpak",
       "fortran-astrodynamics-toolkit",
       "forgex",
       "ferror",
       "m_framework",
       "fitpack",
       "mpfun2020-var1",
-      "rklib",
       "dvode",
-      "pikaia",
       "io-fortran-library",
       "collections",
       "peaks",
-      "nlesolver-fortran",
       "codata",
       "specialmatrices",
       "quaff",
