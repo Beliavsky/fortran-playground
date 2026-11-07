@@ -2,7 +2,7 @@
   "schema_version": 1,
   "publisher": "fortran-gams-catalog-independent-reviews",
   "source_url": "https://beliavsky.github.io/fortran-gams-catalog/reviewed-metadata.json",
-  "source_snapshot_id": "sha256:7415ea78465346c2f589e4398f7a0fad9a10e17044625d3f3c603f3220c376f9",
+  "source_snapshot_id": "sha256:ab602874f9fe3f2deb19e9f756d88f4c7641dba1d872e22c7b678f091bc2cc63",
   "packages": {
     "fftpack": {
       "id": "github:fortran-lang/fftpack",
@@ -1776,6 +1776,307 @@
                   "path": "src/mt19937-64.f90",
                   "line_start": 55,
                   "line_end": 67
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fortran-search-and-sort": {
+      "id": "github:jacobwilliams/fortran-search-and-sort",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "fortran-search-and-sort",
+        "url": "https://github.com/jacobwilliams/fortran-search-and-sort"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "f5a62cece0291ee553b1354bc22de28bbc134478",
+        "reviewed_on": "2026-11-07",
+        "notes": "The root LICENSE supplies BSD three-clause terms for the library; included implementation fragments retain their original source context.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jacobwilliams/fortran-search-and-sort/blob/f5a62cece0291ee553b1354bc22de28bbc134478/LICENSE",
+            "sha256": "867b1fc776222d6c9598ce72a0071dc4af1519557b7b6e63c19ab9d6d45baf1a"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/fortran-search-and-sort/blob/f5a62cece0291ee553b1354bc22de28bbc134478/README.md",
+            "sha256": "b4ed214544658a74a9f33270ed5c547c7addd8d3c0315469daaa7b8776d76ffe"
+          },
+          {
+            "path": "src/real64_routines.inc",
+            "url": "https://github.com/jacobwilliams/fortran-search-and-sort/blob/f5a62cece0291ee553b1354bc22de28bbc134478/src/real64_routines.inc",
+            "sha256": "706bd99d6f3a2a9e4054033c26d1f8dc88f0d4e08cd3bec4533a8007556724a0"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N6",
+          "level": "source-reviewed",
+          "revision": "f5a62cece0291ee553b1354bc22de28bbc134478",
+          "reviewed_on": "2026-11-07",
+          "notes": "The public ascending/descending generics sort REAL64 arrays in place. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/real64_routines.inc",
+              "url": "https://github.com/jacobwilliams/fortran-search-and-sort/blob/f5a62cece0291ee553b1354bc22de28bbc134478/src/real64_routines.inc",
+              "sha256": "706bd99d6f3a2a9e4054033c26d1f8dc88f0d4e08cd3bec4533a8007556724a0"
+            },
+            {
+              "path": "src/sorting_module.f90",
+              "url": "https://github.com/jacobwilliams/fortran-search-and-sort/blob/f5a62cece0291ee553b1354bc22de28bbc134478/src/sorting_module.f90",
+              "sha256": "9ed32731218621ae144e12d8c7cf3222f1b1de51c44479f8a0021f45884c1d6b"
+            },
+            {
+              "path": "src/sort_ascending.inc",
+              "url": "https://github.com/jacobwilliams/fortran-search-and-sort/blob/f5a62cece0291ee553b1354bc22de28bbc134478/src/sort_ascending.inc",
+              "sha256": "61fa223ab55930c7c330eb7ffbe740cb74dce49840e2a2bfa9345499c60ad0a9"
+            },
+            {
+              "path": "src/sort_descending.inc",
+              "url": "https://github.com/jacobwilliams/fortran-search-and-sort/blob/f5a62cece0291ee553b1354bc22de28bbc134478/src/sort_descending.inc",
+              "sha256": "a35f1c69e5156695f20927fca69449990bacd1cbe77ac6f3f167e8eab16e3e1a"
+            },
+            {
+              "path": "src/binary_search.inc",
+              "url": "https://github.com/jacobwilliams/fortran-search-and-sort/blob/f5a62cece0291ee553b1354bc22de28bbc134478/src/binary_search.inc",
+              "sha256": "92184bc252f66d5293cc3c5c93044f8462aeeb875fad99a4648823c69cfa91d4"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "sort_ascending",
+              "role": "public-entry-point",
+              "module": "sorting_module",
+              "summary": "REAL64 overload of generic SORT_ASCENDING sorts VEC(:) in place into increasing order. The implementation uses recursive quicksort with insertion sort for small partitions; no permutation output or stable-sort guarantee is exposed. Use finite values with an ordinary ordering; NaN behavior is not specified. There is no status argument.",
+              "signature": "CALL sort_ascending(VEC)",
+              "path": "src/real64_routines.inc",
+              "line_start": 24,
+              "line_end": 28,
+              "declarations": [
+                {
+                  "path": "src/real64_routines.inc",
+                  "line_start": 26,
+                  "line_end": 26
+                },
+                {
+                  "path": "src/sorting_module.f90",
+                  "line_start": 77,
+                  "line_end": 115
+                },
+                {
+                  "path": "src/sort_ascending.inc",
+                  "line_start": 1,
+                  "line_end": 12
+                }
+              ]
+            },
+            {
+              "procedure": "sort_descending",
+              "role": "public-entry-point",
+              "module": "sorting_module",
+              "summary": "REAL64 overload of generic SORT_DESCENDING replaces VEC(:) with decreasing order. This is a value sort rather than an index-ranking operation; no status, ordering of NaNs or stability contract is provided.",
+              "signature": "CALL sort_descending(VEC)",
+              "path": "src/real64_routines.inc",
+              "line_start": 30,
+              "line_end": 34,
+              "declarations": [
+                {
+                  "path": "src/real64_routines.inc",
+                  "line_start": 32,
+                  "line_end": 32
+                },
+                {
+                  "path": "src/sorting_module.f90",
+                  "line_start": 77,
+                  "line_end": 115
+                },
+                {
+                  "path": "src/sort_descending.inc",
+                  "line_start": 1,
+                  "line_end": 12
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "N5",
+          "level": "source-reviewed",
+          "revision": "f5a62cece0291ee553b1354bc22de28bbc134478",
+          "reviewed_on": "2026-11-07",
+          "notes": "The public binary-search generic returns an exact-match index or zero, requiring ascending input. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/real64_routines.inc",
+              "url": "https://github.com/jacobwilliams/fortran-search-and-sort/blob/f5a62cece0291ee553b1354bc22de28bbc134478/src/real64_routines.inc",
+              "sha256": "706bd99d6f3a2a9e4054033c26d1f8dc88f0d4e08cd3bec4533a8007556724a0"
+            },
+            {
+              "path": "src/sorting_module.f90",
+              "url": "https://github.com/jacobwilliams/fortran-search-and-sort/blob/f5a62cece0291ee553b1354bc22de28bbc134478/src/sorting_module.f90",
+              "sha256": "9ed32731218621ae144e12d8c7cf3222f1b1de51c44479f8a0021f45884c1d6b"
+            },
+            {
+              "path": "src/sort_ascending.inc",
+              "url": "https://github.com/jacobwilliams/fortran-search-and-sort/blob/f5a62cece0291ee553b1354bc22de28bbc134478/src/sort_ascending.inc",
+              "sha256": "61fa223ab55930c7c330eb7ffbe740cb74dce49840e2a2bfa9345499c60ad0a9"
+            },
+            {
+              "path": "src/sort_descending.inc",
+              "url": "https://github.com/jacobwilliams/fortran-search-and-sort/blob/f5a62cece0291ee553b1354bc22de28bbc134478/src/sort_descending.inc",
+              "sha256": "a35f1c69e5156695f20927fca69449990bacd1cbe77ac6f3f167e8eab16e3e1a"
+            },
+            {
+              "path": "src/binary_search.inc",
+              "url": "https://github.com/jacobwilliams/fortran-search-and-sort/blob/f5a62cece0291ee553b1354bc22de28bbc134478/src/binary_search.inc",
+              "sha256": "92184bc252f66d5293cc3c5c93044f8462aeeb875fad99a4648823c69cfa91d4"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "binary_search",
+              "role": "public-entry-point",
+              "module": "sorting_module",
+              "summary": "REAL64 overload of BINARY_SEARCH requires VEC(:) already in ascending order and scalar matching-kind VAL. Return default INTEGER index on exact equality, or zero if not found. Small arrays use sequential search; larger arrays return the first match encountered by the binary search, not necessarily the lowest index among duplicates despite the nearby include comment. This is not approximate/tolerance-based floating-point search.",
+              "signature": "VALUE = binary_search(VAL,VEC)",
+              "path": "src/real64_routines.inc",
+              "line_start": 1,
+              "line_end": 6,
+              "declarations": [
+                {
+                  "path": "src/real64_routines.inc",
+                  "line_start": 3,
+                  "line_end": 4
+                },
+                {
+                  "path": "src/sorting_module.f90",
+                  "line_start": 77,
+                  "line_end": 115
+                },
+                {
+                  "path": "src/binary_search.inc",
+                  "line_start": 1,
+                  "line_end": 51
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "stringsort": {
+      "id": "github:jacobwilliams/stringsort",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "stringsort",
+        "url": "https://github.com/jacobwilliams/stringsort"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "4b074d4930f6d7dcb402609085e7c301437d8699",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE gives BSD three-clause terms; source header retains the library author/license attribution.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jacobwilliams/stringsort/blob/4b074d4930f6d7dcb402609085e7c301437d8699/LICENSE",
+            "sha256": "981df1f3017885c5f1397bcfb7cdbeceff565edfac55f44bd143d2503b37ed98"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/stringsort/blob/4b074d4930f6d7dcb402609085e7c301437d8699/README.md",
+            "sha256": "ce578d1e87fcd02220ee860716704fa7f1904421041399e6e2c3e1434959dc79"
+          },
+          {
+            "path": "src/stringsort.f90",
+            "url": "https://github.com/jacobwilliams/stringsort/blob/4b074d4930f6d7dcb402609085e7c301437d8699/src/stringsort.f90",
+            "sha256": "fa746e2baf69f894d8d8bc393bfee64aef148a9ef6f1e4accdc2997cc554589b"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N6",
+          "level": "source-reviewed",
+          "revision": "4b074d4930f6d7dcb402609085e7c301437d8699",
+          "reviewed_on": "2026-11-07",
+          "notes": "Public string sorts offer lexical and numeric-run natural ordering, with explicit case and integer-range constraints. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/stringsort.f90",
+              "url": "https://github.com/jacobwilliams/stringsort/blob/4b074d4930f6d7dcb402609085e7c301437d8699/src/stringsort.f90",
+              "sha256": "fa746e2baf69f894d8d8bc393bfee64aef148a9ef6f1e4accdc2997cc554589b"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "lexical_sort_nonrecursive",
+              "role": "public-entry-point",
+              "module": "string_sort_module",
+              "summary": "Sort a rank-one fixed-length CHARACTER array STR in place into lexical increasing order. Required CASE_SENSITIVE selects literal case-sensitive comparison or ASCII letter case folding. This nonrecursive implementation uses a fixed internal partition stack; it does not expose status, an index permutation or stable ordering. This is character-code lexical ordering, not locale/Unicode collation.",
+              "signature": "CALL lexical_sort_nonrecursive(STR,CASE_SENSITIVE)",
+              "path": "src/stringsort.f90",
+              "line_start": 482,
+              "line_end": 592,
+              "declarations": [
+                {
+                  "path": "src/stringsort.f90",
+                  "line_start": 486,
+                  "line_end": 489
+                },
+                {
+                  "path": "src/stringsort.f90",
+                  "line_start": 7,
+                  "line_end": 13
+                },
+                {
+                  "path": "src/stringsort.f90",
+                  "line_start": 50,
+                  "line_end": 53
+                }
+              ]
+            },
+            {
+              "procedure": "lexical_sort_natural_recursive",
+              "role": "public-entry-point",
+              "module": "string_sort_module",
+              "summary": "Sort STR(:) in place using numeric runs as integer values: e.g. item2 precedes item10. Required CASE_SENSITIVE controls ASCII case folding. Digit runs are converted to INTEGER(INT32), so restrict their magnitude to representable values; overflowing runs are not arbitrary-precision natural numbers. No stable tie order or status is exposed. This binding differs from ordinary lexical sorting.",
+              "signature": "CALL lexical_sort_natural_recursive(STR,CASE_SENSITIVE)",
+              "path": "src/stringsort.f90",
+              "line_start": 689,
+              "line_end": 777,
+              "declarations": [
+                {
+                  "path": "src/stringsort.f90",
+                  "line_start": 693,
+                  "line_end": 694
+                },
+                {
+                  "path": "src/stringsort.f90",
+                  "line_start": 7,
+                  "line_end": 13
+                },
+                {
+                  "path": "src/stringsort.f90",
+                  "line_start": 50,
+                  "line_end": 53
+                },
+                {
+                  "path": "src/stringsort.f90",
+                  "line_start": 86,
+                  "line_end": 123
+                },
+                {
+                  "path": "src/stringsort.f90",
+                  "line_start": 220,
+                  "line_end": 245
                 }
               ]
             }
@@ -3588,6 +3889,78 @@
         }
       ]
     },
+    "peaks": {
+      "id": "github:jchristopherson/peaks",
+      "repository": {
+        "owner": "jchristopherson",
+        "name": "peaks",
+        "url": "https://github.com/jchristopherson/peaks"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "5bd81dc18ddd629ecf3daa08769ff2440def3682",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE and inspected source carry the Jason Christopherson MIT grant; retain the referenced original algorithm attribution.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jchristopherson/peaks/blob/5bd81dc18ddd629ecf3daa08769ff2440def3682/LICENSE",
+            "sha256": "e0be6836679c15b09d3a9db22b490f77945e3654569b7b96b75bff9ada3c3bbe"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jchristopherson/peaks/blob/5bd81dc18ddd629ecf3daa08769ff2440def3682/README.md",
+            "sha256": "29b1fa6760b0d0912325772bbf9e8ad8f34425d0ac541c641f4de41e14b5154c"
+          },
+          {
+            "path": "src/peaks.f90",
+            "url": "https://github.com/jchristopherson/peaks/blob/5bd81dc18ddd629ecf3daa08769ff2440def3682/src/peaks.f90",
+            "sha256": "a49d395fb2654f393a7303a7e5a1ae82640cc6d44192b017bbba8663954e241b"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N5",
+          "level": "source-reviewed",
+          "revision": "5bd81dc18ddd629ecf3daa08769ff2440def3682",
+          "reviewed_on": "2026-11-07",
+          "notes": "The scalar-signal detector searches for threshold-confirmed alternating extrema and returns indices and amplitudes. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/peaks.f90",
+              "url": "https://github.com/jchristopherson/peaks/blob/5bd81dc18ddd629ecf3daa08769ff2440def3682/src/peaks.f90",
+              "sha256": "a49d395fb2654f393a7303a7e5a1ae82640cc6d44192b017bbba8663954e241b"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "peak_detect",
+              "role": "public-entry-point",
+              "module": "peaks",
+              "summary": "REAL64 overload of generic PEAK_DETECT analyzes samples X(:), using positive scalar DELTA as the amplitude reversal threshold. All four outputs are mandatory allocatable arrays: MAXIND/MININD are INTEGER(INT32) sample indices and MAXVALS/MINVALS are REAL64 sample values, not physical x-coordinates. Extrema are confirmed by a subsequent reversal greater than DELTA; an unconfirmed trailing extremum is not emitted. Outputs can have different lengths or zero length. No threshold validation or status output is provided; avoid nonpositive DELTA and NaNs.",
+              "signature": "CALL peak_detect(X,DELTA,MAXIND,MAXVALS,MININD,MINVALS)",
+              "path": "src/peaks.f90",
+              "line_start": 123,
+              "line_end": 200,
+              "declarations": [
+                {
+                  "path": "src/peaks.f90",
+                  "line_start": 125,
+                  "line_end": 141
+                },
+                {
+                  "path": "src/peaks.f90",
+                  "line_start": 25,
+                  "line_end": 39
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "powellopt": {
       "id": "github:jacobwilliams/powellopt",
       "repository": {
@@ -4381,6 +4754,480 @@
         }
       ]
     },
+    "codata": {
+      "id": "github:milanskocic/codata",
+      "repository": {
+        "owner": "MilanSkocic",
+        "name": "codata",
+        "url": "https://github.com/MilanSkocic/codata"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "d0c9b1552f0fa483a364de4a69e82c5e23344caf",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root COPYING and inspected lookup/quantity module SPDX headers identify MIT terms. Numerical constants retain their named CODATA/NIST provenance.",
+        "evidence": [
+          {
+            "path": "COPYING",
+            "url": "https://github.com/MilanSkocic/codata/blob/d0c9b1552f0fa483a364de4a69e82c5e23344caf/COPYING",
+            "sha256": "465f31332aa8322e64d40d0b907169779c6db91f815d4b0c1cf50b4ff892a6fe"
+          },
+          {
+            "path": "src/codata_lookup.f90",
+            "url": "https://github.com/MilanSkocic/codata/blob/d0c9b1552f0fa483a364de4a69e82c5e23344caf/src/codata_lookup.f90",
+            "sha256": "c4ff49b6340628794b8a69b78eb46d29eedf73721cf0f6a34d94c6e8920b0475"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "Z",
+          "level": "source-reviewed",
+          "revision": "d0c9b1552f0fa483a364de4a69e82c5e23344caf",
+          "reviewed_on": "2026-11-07",
+          "notes": "Runtime CODATA lookup selects published physical constants, stored uncertainties and unit text by explicit adjustment and quantity key. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/codata_lookup.f90",
+              "url": "https://github.com/MilanSkocic/codata/blob/d0c9b1552f0fa483a364de4a69e82c5e23344caf/src/codata_lookup.f90",
+              "sha256": "c4ff49b6340628794b8a69b78eb46d29eedf73721cf0f6a34d94c6e8920b0475"
+            },
+            {
+              "path": "src/codata.f90",
+              "url": "https://github.com/MilanSkocic/codata/blob/d0c9b1552f0fa483a364de4a69e82c5e23344caf/src/codata.f90",
+              "sha256": "649bd908864c2de9c0c0092e0ca4b8ab51283852341a009a659f6edd6202edc8"
+            },
+            {
+              "path": "src/codata_quantity.f90",
+              "url": "https://github.com/MilanSkocic/codata/blob/d0c9b1552f0fa483a364de4a69e82c5e23344caf/src/codata_quantity.f90",
+              "sha256": "f70ae5c51027518f9d1c2abc3aea88cddffa7613ed565c8975265d0fe678815d"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "codata_value",
+              "role": "public-entry-point",
+              "module": "codata",
+              "summary": "Return scalar REAL(DP) value of quantity Q in adjustment DS. Import public CODATA_2010/2014/2018/2022 and Q_* keys through CODATA; both arguments are INTEGER(INT32), DP is double precision. An unknown adjustment/quantity or an absent quantity returns quiet NaN. This is table lookup, not recomputation of constants; specify the adjustment explicitly instead of assuming all published constants are exact.",
+              "signature": "VALUE = codata_value(DS,Q)",
+              "path": "src/codata_lookup.f90",
+              "line_start": 636,
+              "line_end": 649,
+              "declarations": [
+                {
+                  "path": "src/codata_lookup.f90",
+                  "line_start": 639,
+                  "line_end": 641
+                },
+                {
+                  "path": "src/codata.f90",
+                  "line_start": 7,
+                  "line_end": 26
+                },
+                {
+                  "path": "src/codata_lookup.f90",
+                  "line_start": 7,
+                  "line_end": 45
+                },
+                {
+                  "path": "src/codata_quantity.f90",
+                  "line_start": 7,
+                  "line_end": 16
+                }
+              ]
+            },
+            {
+              "procedure": "codata_uncertainty",
+              "role": "public-entry-point",
+              "module": "codata",
+              "summary": "Return scalar REAL(DP) stored uncertainty for INTEGER(INT32) DS/Q, using the same dataset/quantity keys as CODATA_VALUE. Missing quantities return quiet NaN. The uncertainty is a separate value, not a relative percentage or automatic error propagation; interpret it with the corresponding value and unit.",
+              "signature": "VALUE = codata_uncertainty(DS,Q)",
+              "path": "src/codata_lookup.f90",
+              "line_start": 651,
+              "line_end": 663,
+              "declarations": [
+                {
+                  "path": "src/codata_lookup.f90",
+                  "line_start": 653,
+                  "line_end": 655
+                },
+                {
+                  "path": "src/codata.f90",
+                  "line_start": 7,
+                  "line_end": 26
+                },
+                {
+                  "path": "src/codata_lookup.f90",
+                  "line_start": 7,
+                  "line_end": 45
+                },
+                {
+                  "path": "src/codata_quantity.f90",
+                  "line_start": 7,
+                  "line_end": 16
+                }
+              ]
+            },
+            {
+              "procedure": "codata_unit",
+              "role": "public-entry-point",
+              "module": "codata",
+              "summary": "Return fixed-length CHARACTER(LEN=32) unit string for the chosen INTEGER(INT32) adjustment/quantity. Missing entries return blank, but some dimensionless quantities can also have blank unit text; use CODATA_DEFINED(DS,Q) to distinguish absence. TRIM the result for display. No unit conversion is performed.",
+              "signature": "VALUE = codata_unit(DS,Q)",
+              "path": "src/codata_lookup.f90",
+              "line_start": 665,
+              "line_end": 677,
+              "declarations": [
+                {
+                  "path": "src/codata_lookup.f90",
+                  "line_start": 667,
+                  "line_end": 669
+                },
+                {
+                  "path": "src/codata.f90",
+                  "line_start": 7,
+                  "line_end": 26
+                },
+                {
+                  "path": "src/codata_lookup.f90",
+                  "line_start": 7,
+                  "line_end": 45
+                },
+                {
+                  "path": "src/codata_quantity.f90",
+                  "line_start": 7,
+                  "line_end": 16
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "specialmatrices": {
+      "id": "github:loiseaujc/specialmatrices",
+      "repository": {
+        "owner": "loiseaujc",
+        "name": "SpecialMatrices",
+        "url": "https://github.com/loiseaujc/SpecialMatrices"
+      },
+      "license": {
+        "label": "BSD-3-Clause claimed by README; no root grant text reviewed",
+        "spdx_expression": null,
+        "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+        "reviewed_on": "2026-11-07",
+        "notes": "README displays a BSD three-clause badge. The pinned root manifest contains the placeholder license=\"license\" and the inspected archive has no root LICENSE/COPYING grant. Record the claim and incomplete evidence without asserting a resolved SPDX license for redistribution; dependencies retain their own notices.",
+        "evidence": [
+          {
+            "path": "README.md",
+            "url": "https://github.com/loiseaujc/SpecialMatrices/blob/2f53a4b51afbeb2efd2b60eb379283f978359d2f/README.md",
+            "sha256": "94e3bf96074092a1f679b945102abf5cd80c1ac38cde583637b61af1a57b3c3b"
+          },
+          {
+            "path": "src/Tridiagonal/specialmatrices_tridiagonal.f90",
+            "url": "https://github.com/loiseaujc/SpecialMatrices/blob/2f53a4b51afbeb2efd2b60eb379283f978359d2f/src/Tridiagonal/specialmatrices_tridiagonal.f90",
+            "sha256": "9408854c30e2efa422c7ed0d8676ddeb2a506785482f7f5cc5b82ab9f8104407"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "D1",
+          "level": "source-reviewed",
+          "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+          "reviewed_on": "2026-11-07",
+          "notes": "The tridiagonal constructor and dense conversion expose structured storage and its dense representation. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/Tridiagonal/specialmatrices_tridiagonal.f90",
+              "url": "https://github.com/loiseaujc/SpecialMatrices/blob/2f53a4b51afbeb2efd2b60eb379283f978359d2f/src/Tridiagonal/specialmatrices_tridiagonal.f90",
+              "sha256": "9408854c30e2efa422c7ed0d8676ddeb2a506785482f7f5cc5b82ab9f8104407"
+            },
+            {
+              "path": "src/Tridiagonal/constructors.f90",
+              "url": "https://github.com/loiseaujc/SpecialMatrices/blob/2f53a4b51afbeb2efd2b60eb379283f978359d2f/src/Tridiagonal/constructors.f90",
+              "sha256": "8fb8b5108ab0b4f368f85aeddd87b10bd2f025aec8b8411dbaebc829ac0c0b29"
+            },
+            {
+              "path": "src/Tridiagonal/solve.f90",
+              "url": "https://github.com/loiseaujc/SpecialMatrices/blob/2f53a4b51afbeb2efd2b60eb379283f978359d2f/src/Tridiagonal/solve.f90",
+              "sha256": "17fc4d6232dfae92cc99b7cf1d90f050a27fa758eb04c749236f63cc623921fe"
+            },
+            {
+              "path": "src/SpecialMatrices.f90",
+              "url": "https://github.com/loiseaujc/SpecialMatrices/blob/2f53a4b51afbeb2efd2b60eb379283f978359d2f/src/SpecialMatrices.f90",
+              "sha256": "26c8a7c038925074f2d929434e81fcf07b3d3f31b256270ff5f5aa79fc280632"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/loiseaujc/SpecialMatrices/blob/2f53a4b51afbeb2efd2b60eb379283f978359d2f/fpm.toml",
+              "sha256": "ffa17274882e18edbf1a7df3231dfb2a901e59e2105c4f0c5a38a95e503afab1"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "Tridiagonal",
+              "role": "public-entry-point",
+              "module": "specialmatrices_tridiagonal",
+              "summary": "Array constructor of public TRIDIAGONAL: DV contains N main-diagonal values, DL/DU N-1 lower/upper values. These REAL(DP) vectors are copied without shape checks; the adjacent type comment incorrectly describes DV as N-1. Use DP from STDLIB_LINALG_CONSTANTS, normally REAL64. The result is TYPE(TRIDIAGONAL), storing three vectors rather than a dense matrix. Match the required lengths explicitly.",
+              "signature": "VALUE = Tridiagonal(DL,DV,DU)",
+              "path": "src/Tridiagonal/specialmatrices_tridiagonal.f90",
+              "line_start": 102,
+              "line_end": 110,
+              "declarations": [
+                {
+                  "path": "src/Tridiagonal/specialmatrices_tridiagonal.f90",
+                  "line_start": 106,
+                  "line_end": 109
+                },
+                {
+                  "path": "src/Tridiagonal/specialmatrices_tridiagonal.f90",
+                  "line_start": 1,
+                  "line_end": 34
+                },
+                {
+                  "path": "src/SpecialMatrices.f90",
+                  "line_start": 1,
+                  "line_end": 26
+                },
+                {
+                  "path": "src/Tridiagonal/constructors.f90",
+                  "line_start": 9,
+                  "line_end": 13
+                }
+              ]
+            },
+            {
+              "procedure": "dense",
+              "role": "public-entry-point",
+              "module": "specialmatrices_tridiagonal",
+              "summary": "Convert TYPE(TRIDIAGONAL) A to an allocatable REAL(DP) rank-two N-by-N array. This allocates dense storage proportional to N squared; keep the structured representation for larger problems. The result can be used to check a structured solve residual; no status argument is exposed.",
+              "signature": "VALUE = dense(A)",
+              "path": "src/Tridiagonal/specialmatrices_tridiagonal.f90",
+              "line_start": 467,
+              "line_end": 475,
+              "declarations": [
+                {
+                  "path": "src/Tridiagonal/specialmatrices_tridiagonal.f90",
+                  "line_start": 471,
+                  "line_end": 474
+                },
+                {
+                  "path": "src/Tridiagonal/specialmatrices_tridiagonal.f90",
+                  "line_start": 1,
+                  "line_end": 34
+                },
+                {
+                  "path": "src/SpecialMatrices.f90",
+                  "line_start": 1,
+                  "line_end": 26
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "D2",
+          "level": "source-reviewed",
+          "revision": "2f53a4b51afbeb2efd2b60eb379283f978359d2f",
+          "reviewed_on": "2026-11-07",
+          "notes": "The single-RHS tridiagonal LU solve has optional refinement but no public status channel. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/Tridiagonal/specialmatrices_tridiagonal.f90",
+              "url": "https://github.com/loiseaujc/SpecialMatrices/blob/2f53a4b51afbeb2efd2b60eb379283f978359d2f/src/Tridiagonal/specialmatrices_tridiagonal.f90",
+              "sha256": "9408854c30e2efa422c7ed0d8676ddeb2a506785482f7f5cc5b82ab9f8104407"
+            },
+            {
+              "path": "src/Tridiagonal/constructors.f90",
+              "url": "https://github.com/loiseaujc/SpecialMatrices/blob/2f53a4b51afbeb2efd2b60eb379283f978359d2f/src/Tridiagonal/constructors.f90",
+              "sha256": "8fb8b5108ab0b4f368f85aeddd87b10bd2f025aec8b8411dbaebc829ac0c0b29"
+            },
+            {
+              "path": "src/Tridiagonal/solve.f90",
+              "url": "https://github.com/loiseaujc/SpecialMatrices/blob/2f53a4b51afbeb2efd2b60eb379283f978359d2f/src/Tridiagonal/solve.f90",
+              "sha256": "17fc4d6232dfae92cc99b7cf1d90f050a27fa758eb04c749236f63cc623921fe"
+            },
+            {
+              "path": "src/SpecialMatrices.f90",
+              "url": "https://github.com/loiseaujc/SpecialMatrices/blob/2f53a4b51afbeb2efd2b60eb379283f978359d2f/src/SpecialMatrices.f90",
+              "sha256": "26c8a7c038925074f2d929434e81fcf07b3d3f31b256270ff5f5aa79fc280632"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/loiseaujc/SpecialMatrices/blob/2f53a4b51afbeb2efd2b60eb379283f978359d2f/fpm.toml",
+              "sha256": "ffa17274882e18edbf1a7df3231dfb2a901e59e2105c4f0c5a38a95e503afab1"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "solve",
+              "role": "public-entry-point",
+              "module": "specialmatrices_tridiagonal",
+              "summary": "Rank-one RHS overload of SOLVE returns allocatable REAL(DP) X(:) for A*X=B. A is TYPE(TRIDIAGONAL); B has length N and N should be at least two for the reviewed LU workspace path. Optional LOGICAL(LK) REFINE defaults false; the implementation uses LAPACK GTTRF/GTTRS and optionally GTRFS. No public INFO/status is returned: internal errors are stored in a local state object and are not propagated by this wrapper. Require a nonsingular well-formed matrix and independently check the residual.",
+              "signature": "VALUE = solve(A,B[,REFINE])",
+              "path": "src/Tridiagonal/specialmatrices_tridiagonal.f90",
+              "line_start": 197,
+              "line_end": 210,
+              "declarations": [
+                {
+                  "path": "src/Tridiagonal/specialmatrices_tridiagonal.f90",
+                  "line_start": 202,
+                  "line_end": 209
+                },
+                {
+                  "path": "src/Tridiagonal/specialmatrices_tridiagonal.f90",
+                  "line_start": 1,
+                  "line_end": 34
+                },
+                {
+                  "path": "src/SpecialMatrices.f90",
+                  "line_start": 1,
+                  "line_end": 26
+                },
+                {
+                  "path": "src/Tridiagonal/solve.f90",
+                  "line_start": 125,
+                  "line_end": 181
+                },
+                {
+                  "path": "src/Tridiagonal/solve.f90",
+                  "line_start": 183,
+                  "line_end": 190
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "forpca": {
+      "id": "github:gha3mi/forpca",
+      "repository": {
+        "owner": "gha3mi",
+        "name": "forpca",
+        "url": "https://github.com/gha3mi/forpca"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "d5d87badc4c25c647b3618f22560e712728d8165",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies BSD three-clause terms; the KINDS and linear-algebra dependencies have separate notices.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/gha3mi/forpca/blob/d5d87badc4c25c647b3618f22560e712728d8165/LICENSE",
+            "sha256": "2bed75d5b84af240b433822f9720fd7c2eb269cbc46a721c851df9ae94513210"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/gha3mi/forpca/blob/d5d87badc4c25c647b3618f22560e712728d8165/README.md",
+            "sha256": "c1b2d7a35071bedabd1dd7dcd8adc1da4e9f007f7460b11d208e43f76d291181"
+          },
+          {
+            "path": "src/forpca.f90",
+            "url": "https://github.com/gha3mi/forpca/blob/d5d87badc4c25c647b3618f22560e712728d8165/src/forpca.f90",
+            "sha256": "5e37ae9319dff32ec9447f4a6702a03425800d793475b701b3791600eae5fb2f"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "L13",
+          "level": "source-reviewed",
+          "revision": "d5d87badc4c25c647b3618f22560e712728d8165",
+          "reviewed_on": "2026-11-07",
+          "notes": "TPCA performs centered covariance-based principal-component analysis; variance, reconstruction and object-reuse limitations of the pin are recorded explicitly. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/forpca.f90",
+              "url": "https://github.com/gha3mi/forpca/blob/d5d87badc4c25c647b3618f22560e712728d8165/src/forpca.f90",
+              "sha256": "5e37ae9319dff32ec9447f4a6702a03425800d793475b701b3791600eae5fb2f"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "pca",
+              "role": "public-entry-point",
+              "module": "forpca",
+              "derived_type": "tpca",
+              "summary": "Declare TYPE(tpca) :: solver from forpca. One-call PCA interface: rows of MATRIX are observations, columns variables; use at least two rows, at least two columns and 1<=NPC<=number of columns. Match KINDS::RK from the dependency. COEFF is a required allocatable output after optional NPC/METHOD, so use COEFF=... and METHOD=... keywords. Prefer METHOD=\"eig\" for covariance eigenvalues: the default \"svd\" branch instead squares covariance singular values and divides by NCOL-1, which is not the usual PCA variance convention. SCORE is allocated with NCOL columns but only the first NPC are filled. EXPLAINED is percent normalized by the first NPC eigenvalues, not automatically total variance. MATRIX_APP uses inconsistent centering in this pin; omit it when relying on this interface. No status output is provided. Use a fresh TPCA object for each fit. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%pca(MATRIX,[NPC],[METHOD],COEFF,[SCORE],[LATENT],[EXPLAINED],[MATRIX_APP])",
+              "path": "src/forpca.f90",
+              "line_start": 251,
+              "line_end": 290,
+              "declarations": [
+                {
+                  "path": "src/forpca.f90",
+                  "line_start": 255,
+                  "line_end": 263
+                },
+                {
+                  "path": "src/forpca.f90",
+                  "line_start": 1,
+                  "line_end": 31
+                },
+                {
+                  "path": "src/forpca.f90",
+                  "line_start": 99,
+                  "line_end": 156
+                },
+                {
+                  "path": "src/forpca.f90",
+                  "line_start": 169,
+                  "line_end": 193
+                },
+                {
+                  "path": "src/forpca.f90",
+                  "line_start": 228,
+                  "line_end": 244
+                }
+              ]
+            },
+            {
+              "procedure": "finalize",
+              "role": "public-entry-point",
+              "module": "forpca",
+              "derived_type": "tpca",
+              "summary": "Declare TYPE(tpca) :: solver from forpca. Release several internal arrays through the public FINALIZE binding. This is not a complete reusable-object reset in the pinned source: LATENT and EXPLAINED_VARIANCE remain allocated. Calling PCA again after this binding alone can therefore fail on allocation. A fresh scoped TPCA object for each independent fit avoids that reuse assumption; allocated components are released when the object leaves scope. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%finalize()",
+              "path": "src/forpca.f90",
+              "line_start": 296,
+              "line_end": 305,
+              "declarations": [
+                {
+                  "path": "src/forpca.f90",
+                  "line_start": 297,
+                  "line_end": 297
+                },
+                {
+                  "path": "src/forpca.f90",
+                  "line_start": 1,
+                  "line_end": 31
+                },
+                {
+                  "path": "src/forpca.f90",
+                  "line_start": 99,
+                  "line_end": 156
+                },
+                {
+                  "path": "src/forpca.f90",
+                  "line_start": 169,
+                  "line_end": 193
+                },
+                {
+                  "path": "src/forpca.f90",
+                  "line_start": 228,
+                  "line_end": 244
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "polyroots-fortran": {
       "id": "github:jacobwilliams/polyroots-fortran",
       "repository": {
@@ -5063,6 +5910,100 @@
         }
       ]
     },
+    "fordiff": {
+      "id": "github:gha3mi/fordiff",
+      "repository": {
+        "owner": "gha3mi",
+        "name": "fordiff",
+        "url": "https://github.com/gha3mi/fordiff"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "f1a1099a590107645314f1388c432624ff97b9bc",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE and module header identify BSD three-clause terms for this library.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/gha3mi/fordiff/blob/f1a1099a590107645314f1388c432624ff97b9bc/LICENSE",
+            "sha256": "2bed75d5b84af240b433822f9720fd7c2eb269cbc46a721c851df9ae94513210"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/gha3mi/fordiff/blob/f1a1099a590107645314f1388c432624ff97b9bc/README.md",
+            "sha256": "d88274bbff732e578274e9bec0305a25d9515a85083fd9013a82e9082924961b"
+          },
+          {
+            "path": "src/fordiff.F90",
+            "url": "https://github.com/gha3mi/fordiff/blob/f1a1099a590107645314f1388c432624ff97b9bc/src/fordiff.F90",
+            "sha256": "373006ca8ab63222f88daa82344d8da12c8895f316801da4dc63f8116121f5b7"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "H1",
+          "level": "source-reviewed",
+          "revision": "f1a1099a590107645314f1388c432624ff97b9bc",
+          "reviewed_on": "2026-11-07",
+          "notes": "The scalar DERIVATIVE generic selects complex-step or real finite differences from the callback type and method arguments. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/fordiff.F90",
+              "url": "https://github.com/gha3mi/fordiff/blob/f1a1099a590107645314f1388c432624ff97b9bc/src/fordiff.F90",
+              "sha256": "373006ca8ab63222f88daa82344d8da12c8895f316801da4dc63f8116121f5b7"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "derivative",
+              "role": "public-entry-point",
+              "module": "fordiff",
+              "summary": "Scalar complex-step overload of DERIVATIVE returns REAL(RK) AIMAG(F(CMPLX(X,H,RK)))/H. F is a scalar COMPLEX(RK)-to-COMPLEX(RK) callback with the linked interface; X/H are REAL(RK), default double precision. Use an analytic complex extension near real X, without operations that discard the imaginary perturbation. H is required and nonzero; a sub-tiny step triggers ERROR STOP. No error estimate/status is returned.",
+              "signature": "VALUE = derivative(F,X,H)",
+              "path": "src/fordiff.F90",
+              "line_start": 43,
+              "line_end": 63,
+              "declarations": [
+                {
+                  "path": "src/fordiff.F90",
+                  "line_start": 44,
+                  "line_end": 56
+                },
+                {
+                  "path": "src/fordiff.F90",
+                  "line_start": 9,
+                  "line_end": 34
+                }
+              ]
+            },
+            {
+              "procedure": "derivative",
+              "role": "public-entry-point",
+              "module": "fordiff",
+              "summary": "Scalar real finite-difference overload of DERIVATIVE: F is a REAL(RK)-to-REAL(RK) callback, X/H scalar reals, and METHOD a required exact lowercase string \"forward\", \"backward\" or \"central\". H is required and nonzero. Unknown METHOD has no default error branch and leaves the result undefined in this pin; validate it before calling. Step size trades truncation against cancellation, and no error estimate/status is supplied. This four-argument overload is distinct from the three-argument complex callback overload.",
+              "signature": "VALUE = derivative(F,X,H,METHOD)",
+              "path": "src/fordiff.F90",
+              "line_start": 139,
+              "line_end": 166,
+              "declarations": [
+                {
+                  "path": "src/fordiff.F90",
+                  "line_start": 140,
+                  "line_end": 153
+                },
+                {
+                  "path": "src/fordiff.F90",
+                  "line_start": 9,
+                  "line_end": 34
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "specfunc-fullerton": {
       "id": "github:arjenmarkus/specfunc-fullerton",
       "repository": {
@@ -5285,6 +6226,142 @@
                   "path": "src/mod_types.f90",
                   "line_start": 6,
                   "line_end": 12
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fastconv": {
+      "id": "github:gronki/fastconv",
+      "repository": {
+        "owner": "gronki",
+        "name": "fastconv",
+        "url": "https://github.com/gronki/fastconv"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "3aaa2432a291df07a10fc5dade0dcd66d7a06dd0",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies BSD three-clause terms for Dominik Gronkiewicz contributions.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/gronki/fastconv/blob/3aaa2432a291df07a10fc5dade0dcd66d7a06dd0/LICENSE",
+            "sha256": "ef8463e28f2bf3237b5dc058f5cafe463a4eef9d44344f64c65526eccf509b37"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/gronki/fastconv/blob/3aaa2432a291df07a10fc5dade0dcd66d7a06dd0/README.md",
+            "sha256": "27dd00bc602f1db0715102b65c860d6a2cc3096cf930a9cb3112319c9031f6be"
+          },
+          {
+            "path": "src/conv1d/ref.F90",
+            "url": "https://github.com/gronki/fastconv/blob/3aaa2432a291df07a10fc5dade0dcd66d7a06dd0/src/conv1d/ref.F90",
+            "sha256": "2e22c3ce1ce83117adf422e55316b4749d1906fea0f3a1d721c272ab7ac45869"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "J2",
+          "level": "source-reviewed",
+          "revision": "3aaa2432a291df07a10fc5dade0dcd66d7a06dd0",
+          "reviewed_on": "2026-11-07",
+          "notes": "The reference 1D object reverses the supplied kernel and exposes an allocating valid-convolution operation. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/conv1d/ref.F90",
+              "url": "https://github.com/gronki/fastconv/blob/3aaa2432a291df07a10fc5dade0dcd66d7a06dd0/src/conv1d/ref.F90",
+              "sha256": "2e22c3ce1ce83117adf422e55316b4749d1906fea0f3a1d721c272ab7ac45869"
+            },
+            {
+              "path": "src/conv1d/conv1d.f90",
+              "url": "https://github.com/gronki/fastconv/blob/3aaa2432a291df07a10fc5dade0dcd66d7a06dd0/src/conv1d/conv1d.f90",
+              "sha256": "e3a02572cd64c091e84449265336082eb56a5ccff0f51049fc178c8e2249308d"
+            },
+            {
+              "path": "src/conv1d/procedural.F90",
+              "url": "https://github.com/gronki/fastconv/blob/3aaa2432a291df07a10fc5dade0dcd66d7a06dd0/src/conv1d/procedural.F90",
+              "sha256": "510358bc1c8f9089535c2f285d6ceab5ba3ba7a3cf12919092ddc9816743ea77"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "set_kernel",
+              "role": "public-entry-point",
+              "module": "conv1d_m",
+              "derived_type": "conv1d_ref_t",
+              "summary": "Declare TYPE(conv1d_ref_t) :: solver from conv1d_m. Set a nonempty REAL(REAL32) kernel K(:) for the reference 1D implementation. The wrapper copies and reverses K internally, so pass the kernel in its normal convolution order. This precision is fixed to REAL32 by CONV1D_M, not REAL64. Keep the inherited PRESERVE_SHAPE component false for the valid-convolution path reviewed here. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%set_kernel(K)",
+              "path": "src/conv1d/ref.F90",
+              "line_start": 8,
+              "line_end": 14,
+              "declarations": [
+                {
+                  "path": "src/conv1d/ref.F90",
+                  "line_start": 9,
+                  "line_end": 10
+                },
+                {
+                  "path": "src/conv1d/conv1d.f90",
+                  "line_start": 1,
+                  "line_end": 4
+                },
+                {
+                  "path": "src/conv1d/conv1d.f90",
+                  "line_start": 40,
+                  "line_end": 47
+                },
+                {
+                  "path": "src/conv1d/conv1d.f90",
+                  "line_start": 75,
+                  "line_end": 102
+                }
+              ]
+            },
+            {
+              "procedure": "apply",
+              "role": "public-entry-point",
+              "module": "conv1d_m",
+              "derived_type": "conv1d_ref_t",
+              "summary": "Declare TYPE(conv1d_ref_t) :: solver from conv1d_m. After SET_KERNEL, convolve contiguous REAL32 X(:) with the stored kernel, returning an allocatable REAL32 vector. For PRESERVE_SHAPE=false and 1<=kernel length<=SIZE(X), output length is SIZE(X)-kernel length+1 (valid convolution). This is not full zero-padded convolution. The inherited method allocates the result using OUTPUT_SIZE and dispatches CONV. PRESERVE_SHAPE=true is not a defined boundary-padding policy in this reference path: only the interior is written, leaving edge elements uninitialized. Invalid initialization/shapes can ERROR STOP in debug builds; there is no status output. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%apply(X)",
+              "path": "src/conv1d/conv1d.f90",
+              "line_start": 146,
+              "line_end": 157,
+              "declarations": [
+                {
+                  "path": "src/conv1d/conv1d.f90",
+                  "line_start": 147,
+                  "line_end": 150
+                },
+                {
+                  "path": "src/conv1d/conv1d.f90",
+                  "line_start": 1,
+                  "line_end": 4
+                },
+                {
+                  "path": "src/conv1d/conv1d.f90",
+                  "line_start": 40,
+                  "line_end": 47
+                },
+                {
+                  "path": "src/conv1d/conv1d.f90",
+                  "line_start": 75,
+                  "line_end": 102
+                },
+                {
+                  "path": "src/conv1d/ref.F90",
+                  "line_start": 17,
+                  "line_end": 31
+                },
+                {
+                  "path": "src/conv1d/ref.F90",
+                  "line_start": 34,
+                  "line_end": 67
                 }
               ]
             }
@@ -6995,6 +8072,324 @@
         }
       ]
     },
+    "lookup-table-fortran": {
+      "id": "github:jannisteunissen/lookup_table_fortran",
+      "repository": {
+        "owner": "jannisteunissen",
+        "name": "lookup_table_fortran",
+        "url": "https://github.com/jannisteunissen/lookup_table_fortran"
+      },
+      "license": {
+        "label": "GPL-3.0 text; version election unspecified",
+        "spdx_expression": null,
+        "revision": "b7dc72359e7c2cc105abfbf79b570c655a7f1d04",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE contains GPL version 3. No project-specific only/or-later election was identified in the inspected README/source, so retain the supplied notice without asserting a more specific SPDX expression.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jannisteunissen/lookup_table_fortran/blob/b7dc72359e7c2cc105abfbf79b570c655a7f1d04/LICENSE",
+            "sha256": "589ed823e9a84c56feb95ac58e7cf384626b9cbf4fda2a907bc36e103de1bad2"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jannisteunissen/lookup_table_fortran/blob/b7dc72359e7c2cc105abfbf79b570c655a7f1d04/README.md",
+            "sha256": "1bd4d350e91f04ea12b331dad87ded9d49118660d726b052ea522416f6311e48"
+          },
+          {
+            "path": "m_lookup_table.f90",
+            "url": "https://github.com/jannisteunissen/lookup_table_fortran/blob/b7dc72359e7c2cc105abfbf79b570c655a7f1d04/m_lookup_table.f90",
+            "sha256": "cb8cf06bf3032ed370ca0b9af97af4045ed665c8077cb4cf396f8c6e498e0443"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "E1a",
+          "level": "source-reviewed",
+          "revision": "b7dc72359e7c2cc105abfbf79b570c655a7f1d04",
+          "reviewed_on": "2026-11-07",
+          "notes": "The table constructor, direct column setter and query function expose piecewise linear lookup with explicit spacing and boundary conventions. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "m_lookup_table.f90",
+              "url": "https://github.com/jannisteunissen/lookup_table_fortran/blob/b7dc72359e7c2cc105abfbf79b570c655a7f1d04/m_lookup_table.f90",
+              "sha256": "cb8cf06bf3032ed370ca0b9af97af4045ed665c8077cb4cf396f8c6e498e0443"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "LT_create",
+              "role": "public-entry-point",
+              "module": "m_lookup_table",
+              "summary": "Construct TYPE(LT_T) with N_POINTS>1, N_COLS>=1 and X_MAX>X_MIN, using REAL(KIND(1D0)) limits. Optional XSPACING selects LT_XSPACING_LINEAR (default), QUADRATIC or CUBIC; optional EXTRAPOLATE_ABOVE defaults false. The function allocates and zeroes all data columns. Invalid limits/row count ERROR STOP; there is no status output. Below-range lookup always clamps, and above-range lookup clamps unless extrapolation is enabled.",
+              "signature": "VALUE = LT_create(X_MIN,X_MAX,N_POINTS,N_COLS[,XSPACING,EXTRAPOLATE_ABOVE])",
+              "path": "m_lookup_table.f90",
+              "line_start": 187,
+              "line_end": 217,
+              "declarations": [
+                {
+                  "path": "m_lookup_table.f90",
+                  "line_start": 189,
+                  "line_end": 196
+                },
+                {
+                  "path": "m_lookup_table.f90",
+                  "line_start": 5,
+                  "line_end": 36
+                },
+                {
+                  "path": "m_lookup_table.f90",
+                  "line_start": 78,
+                  "line_end": 86
+                }
+              ]
+            },
+            {
+              "procedure": "LT_set_col_data",
+              "role": "public-entry-point",
+              "module": "m_lookup_table",
+              "summary": "Fill column COL_IX of an existing LT_T directly from Y(:), whose length must equal the table row count. Use 1<=COL_IX<=N_COLS; the pinned guard uses COL_IX<0 and incorrectly fails to reject zero, so caller validation matters. Optional ADD defaults false; true adds to the existing column instead of replacing it. Match KIND(1D0). This routine maintains both internal table layouts.",
+              "signature": "CALL LT_set_col_data(MY_LT,COL_IX,Y[,ADD])",
+              "path": "m_lookup_table.f90",
+              "line_start": 282,
+              "line_end": 302,
+              "declarations": [
+                {
+                  "path": "m_lookup_table.f90",
+                  "line_start": 283,
+                  "line_end": 286
+                },
+                {
+                  "path": "m_lookup_table.f90",
+                  "line_start": 5,
+                  "line_end": 36
+                },
+                {
+                  "path": "m_lookup_table.f90",
+                  "line_start": 78,
+                  "line_end": 86
+                }
+              ]
+            },
+            {
+              "procedure": "LT_get_col",
+              "role": "public-entry-point",
+              "module": "m_lookup_table",
+              "summary": "Interpolate one scalar column value from an initialized, populated LT_T at scalar REAL(KIND(1D0)) X. COL_IX must be 1..N_COLS. Values clamp at the endpoints by default; EXTRAPOLATE_ABOVE=true at creation permits upper linear extrapolation, while lower queries still clamp. There is no status result. The elemental function can also accept conforming arrays of query coordinates.",
+              "signature": "VALUE = LT_get_col(MY_LT,COL_IX,X)",
+              "path": "m_lookup_table.f90",
+              "line_start": 397,
+              "line_end": 406,
+              "declarations": [
+                {
+                  "path": "m_lookup_table.f90",
+                  "line_start": 398,
+                  "line_end": 402
+                },
+                {
+                  "path": "m_lookup_table.f90",
+                  "line_start": 5,
+                  "line_end": 36
+                },
+                {
+                  "path": "m_lookup_table.f90",
+                  "line_start": 78,
+                  "line_end": 86
+                },
+                {
+                  "path": "m_lookup_table.f90",
+                  "line_start": 351,
+                  "line_end": 383
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "rng-fortran": {
+      "id": "github:jannisteunissen/rng_fortran",
+      "repository": {
+        "owner": "jannisteunissen",
+        "name": "rng_fortran",
+        "url": "https://github.com/jannisteunissen/rng_fortran"
+      },
+      "license": {
+        "label": "GPL-3.0 text; separate xoroshiro public-domain notice",
+        "spdx_expression": null,
+        "revision": "5ead95f436323d07fc82acc3613f66550947f256",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE contains GPL version 3; no project-specific only/or-later election was identified in the inspected README/source. LICENSE_XOROSHIRO128PLUS retains a separate public-domain dedication/permission notice. The Poisson rejection routine credits a NumPy translation; preserve that provenance rather than flatten component notices.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jannisteunissen/rng_fortran/blob/5ead95f436323d07fc82acc3613f66550947f256/LICENSE",
+            "sha256": "589ed823e9a84c56feb95ac58e7cf384626b9cbf4fda2a907bc36e103de1bad2"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jannisteunissen/rng_fortran/blob/5ead95f436323d07fc82acc3613f66550947f256/README.md",
+            "sha256": "3c17daf1b099dae63b40652f804dfd0bef42391045b4f3d7a1d0738ad153d0ec"
+          },
+          {
+            "path": "m_random.f90",
+            "url": "https://github.com/jannisteunissen/rng_fortran/blob/5ead95f436323d07fc82acc3613f66550947f256/m_random.f90",
+            "sha256": "6724a27e2cee58df03723071fd62dc5371b294a524c26f461002ffbe6fddf5ae"
+          },
+          {
+            "path": "LICENSE_XOROSHIRO128PLUS",
+            "url": "https://github.com/jannisteunissen/rng_fortran/blob/5ead95f436323d07fc82acc3613f66550947f256/LICENSE_XOROSHIRO128PLUS",
+            "sha256": "2639ae52548c0796a205c70c60ef1521aa9c5cf025414316615ed7cc87d949ed"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "L6",
+          "level": "source-reviewed",
+          "revision": "5ead95f436323d07fc82acc3613f66550947f256",
+          "reviewed_on": "2026-11-07",
+          "notes": "The stateful xoroshiro128+ object exposes deterministic seeding and uniform, standard-normal and Poisson draws. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "m_random.f90",
+              "url": "https://github.com/jannisteunissen/rng_fortran/blob/5ead95f436323d07fc82acc3613f66550947f256/m_random.f90",
+              "sha256": "6724a27e2cee58df03723071fd62dc5371b294a524c26f461002ffbe6fddf5ae"
+            },
+            {
+              "path": "LICENSE_XOROSHIRO128PLUS",
+              "url": "https://github.com/jannisteunissen/rng_fortran/blob/5ead95f436323d07fc82acc3613f66550947f256/LICENSE_XOROSHIRO128PLUS",
+              "sha256": "2639ae52548c0796a205c70c60ef1521aa9c5cf025414316615ed7cc87d949ed"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "set_seed",
+              "role": "public-entry-point",
+              "module": "m_random",
+              "derived_type": "rng_t",
+              "summary": "Declare TYPE(rng_t) :: solver from m_random. Seed the xoroshiro128+ object using INTEGER(INT64) THE_SEED(2), not both zero. Optional DO_JUMP defaults true and applies the jump transform to the supplied state. Fixed-width integer wraparound is intentional; the hosted recipe uses -fwrapv. This initializer does not clear a cached second normal variate: for a reproducible restart of NORMAL draws use a fresh RNG_T object rather than reseeding a previously used one. This is not a cryptographic generator. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%set_seed(THE_SEED,[DO_JUMP])",
+              "path": "m_random.f90",
+              "line_start": 88,
+              "line_end": 102,
+              "declarations": [
+                {
+                  "path": "m_random.f90",
+                  "line_start": 89,
+                  "line_end": 91
+                },
+                {
+                  "path": "m_random.f90",
+                  "line_start": 3,
+                  "line_end": 38
+                },
+                {
+                  "path": "m_random.f90",
+                  "line_start": 88,
+                  "line_end": 102
+                }
+              ]
+            },
+            {
+              "procedure": "unif_01",
+              "role": "public-entry-point",
+              "module": "m_random",
+              "derived_type": "rng_t",
+              "summary": "Declare TYPE(rng_t) :: solver from m_random. Return one scalar REAL(REAL64) uniform draw and advance object state. The implementation constructs a binary64 mantissa and subtracts one, giving [0,1), despite the binding/README comment saying (0,1]. Explicitly seed the object first for reproducibility. No status output is exposed. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%unif_01()",
+              "path": "m_random.f90",
+              "line_start": 140,
+              "line_end": 148,
+              "declarations": [
+                {
+                  "path": "m_random.f90",
+                  "line_start": 140,
+                  "line_end": 143
+                },
+                {
+                  "path": "m_random.f90",
+                  "line_start": 3,
+                  "line_end": 38
+                },
+                {
+                  "path": "m_random.f90",
+                  "line_start": 88,
+                  "line_end": 102
+                }
+              ]
+            },
+            {
+              "procedure": "normal",
+              "role": "public-entry-point",
+              "module": "m_random",
+              "derived_type": "rng_t",
+              "summary": "Declare TYPE(rng_t) :: solver from m_random. Return one scalar REAL(REAL64) standard-normal draw using Marsaglia polar pairs. Alternate calls use a stored second variate; SET_SEED does not clear that cache in this pin. Use a new object with the same seed to replay a sequence after an odd number of normal draws. No mean or variance arguments are accepted; scale/shift externally. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%normal()",
+              "path": "m_random.f90",
+              "line_start": 151,
+              "line_end": 164,
+              "declarations": [
+                {
+                  "path": "m_random.f90",
+                  "line_start": 151,
+                  "line_end": 153
+                },
+                {
+                  "path": "m_random.f90",
+                  "line_start": 3,
+                  "line_end": 38
+                },
+                {
+                  "path": "m_random.f90",
+                  "line_start": 88,
+                  "line_end": 102
+                },
+                {
+                  "path": "m_random.f90",
+                  "line_start": 168,
+                  "line_end": 179
+                }
+              ]
+            },
+            {
+              "procedure": "poisson",
+              "role": "public-entry-point",
+              "module": "m_random",
+              "derived_type": "rng_t",
+              "summary": "Declare TYPE(rng_t) :: solver from m_random. Return a scalar INTEGER(INT32) Poisson count for REAL(REAL64) LAMBDA. Use finite nonnegative LAMBDA within an application-appropriate range; there is no validation/status output. Rates below 10 use the product method and larger rates a transformed-rejection method. Large rates risk INT32 result/intermediate limits; this source review does not extend the existing small-rate numerical checks. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%poisson(LAMBDA)",
+              "path": "m_random.f90",
+              "line_start": 290,
+              "line_end": 302,
+              "declarations": [
+                {
+                  "path": "m_random.f90",
+                  "line_start": 291,
+                  "line_end": 293
+                },
+                {
+                  "path": "m_random.f90",
+                  "line_start": 3,
+                  "line_end": 38
+                },
+                {
+                  "path": "m_random.f90",
+                  "line_start": 88,
+                  "line_end": 102
+                },
+                {
+                  "path": "m_random.f90",
+                  "line_start": 236,
+                  "line_end": 302
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "fortran-utils": {
       "id": "github:certik/fortran-utils",
       "repository": {
@@ -7401,6 +8796,8 @@
       "dop853",
       "minpack",
       "mersenne-twister-fortran",
+      "fortran-search-and-sort",
+      "stringsort",
       "daglib",
       "fortran_function_parser",
       "numdiff",
@@ -7416,19 +8813,25 @@
       "rklib",
       "ddeabm",
       "pikaia",
+      "peaks",
       "powellopt",
       "fstats",
       "spectrum",
       "lsmr",
       "nlesolver-fortran",
+      "codata",
+      "specialmatrices",
+      "forpca",
       "polyroots-fortran",
       "geodesic-fortran",
       "simulated-annealing",
       "pointsets",
       "integrate_fortran",
       "minres",
+      "fordiff",
       "specfunc-fullerton",
       "lib_statistics",
+      "fastconv",
       "gaussjacobiquad",
       "fjsample",
       "interpolation",
@@ -7444,6 +8847,8 @@
       "econ-toolchain",
       "fordot",
       "formatmul",
+      "lookup-table-fortran",
+      "rng-fortran",
       "fortran-utils",
       "fortranlib"
     ],
@@ -7456,8 +8861,6 @@
       "toml-f",
       "m_strings",
       "stdlib",
-      "fortran-search-and-sort",
-      "stringsort",
       "flist",
       "argv-fortran",
       "popen-fortran",
@@ -7490,11 +8893,7 @@
       "dvode",
       "io-fortran-library",
       "collections",
-      "peaks",
-      "codata",
-      "specialmatrices",
       "quaff",
-      "forpca",
       "neural-fortran",
       "lightkrylov",
       "fortran-sqlite3",
@@ -7506,7 +8905,6 @@
       "blas-interface",
       "fsparse",
       "geompack",
-      "fordiff",
       "twopnt",
       "astro-fortran",
       "nlopt-f",
@@ -7518,7 +8916,6 @@
       "fortimize",
       "forimage",
       "ncio",
-      "fastconv",
       "kissfft-f",
       "h5fortran",
       "metis-fpm",
@@ -7618,8 +9015,6 @@
       "errstat",
       "slinked-list",
       "enclose",
-      "lookup-table-fortran",
-      "rng-fortran",
       "fortran-fast-float",
       "config-fortran",
       "kdtree2",
