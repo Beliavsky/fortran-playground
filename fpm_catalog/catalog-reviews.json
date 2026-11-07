@@ -2,7 +2,7 @@
   "schema_version": 1,
   "publisher": "fortran-gams-catalog-independent-reviews",
   "source_url": "https://beliavsky.github.io/fortran-gams-catalog/reviewed-metadata.json",
-  "source_snapshot_id": "sha256:90c661afe18d3330dd19e755a76883bc2b445403a6bbf6ec943e86168dc353ea",
+  "source_snapshot_id": "sha256:2920254700a679c68c8b4b803239f31ebc2858c442155350292113ccdcdc51f9",
   "packages": {
     "fftpack": {
       "id": "github:fortran-lang/fftpack",
@@ -106,6 +106,340 @@
                   "path": "src/rk.f90",
                   "line_start": 1,
                   "line_end": 4
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "roots-fortran": {
+      "id": "github:jacobwilliams/roots-fortran",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "roots-fortran",
+        "url": "https://github.com/jacobwilliams/roots-fortran"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "85dc6b98404a61d49944939414f7f56c3f32edd1",
+        "reviewed_on": "2026-11-07",
+        "notes": "The pinned LICENSE.md supplies BSD three-clause terms for Jacob Williams contributions. Source/algorithm references remain recorded; this is a scoped notice review for these public interfaces.",
+        "evidence": [
+          {
+            "path": "LICENSE.md",
+            "url": "https://github.com/jacobwilliams/roots-fortran/blob/85dc6b98404a61d49944939414f7f56c3f32edd1/LICENSE.md",
+            "sha256": "89856aa35eaa6fba488633aca10d20c0463ca7f9f04bfd5aeeb5df4aa2bed316"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/roots-fortran/blob/85dc6b98404a61d49944939414f7f56c3f32edd1/README.md",
+            "sha256": "8f3cfa6361cdeb65379c061d6d4be177b696b04782c504b47e5b5c13aae9c18f"
+          },
+          {
+            "path": "src/root_module.F90",
+            "url": "https://github.com/jacobwilliams/roots-fortran/blob/85dc6b98404a61d49944939414f7f56c3f32edd1/src/root_module.F90",
+            "sha256": "a1e4d4337d643384167d963e87973c80b4e805e38869be2fca071876fd306ad2"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "F1b",
+          "level": "source-reviewed",
+          "revision": "85dc6b98404a61d49944939414f7f56c3f32edd1",
+          "reviewed_on": "2026-11-07",
+          "notes": "The Brent solver inherits initialization and a bracket-checking solve wrapper from ROOT_SOLVER and binds its Brent kernel. Its callback is polymorphic in the abstract parent. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/root_module.F90",
+              "url": "https://github.com/jacobwilliams/roots-fortran/blob/85dc6b98404a61d49944939414f7f56c3f32edd1/src/root_module.F90",
+              "sha256": "a1e4d4337d643384167d963e87973c80b4e805e38869be2fca071876fd306ad2"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "initialize",
+              "role": "public-entry-point",
+              "module": "root_module",
+              "derived_type": "brent_solver",
+              "summary": "Declare TYPE(brent_solver) :: solver from root_module. Register F(ME,X), a scalar real callback whose first argument is CLASS(ROOT_SOLVER), not CLASS(BRENT_SOLVER). Keep the callback valid while the solver stores its procedure pointer. Match ROOT_MODULE_RK (REAL64 default, preprocessor selectable). Optional FTOL/RTOL/ATOL are function/abscissa tolerances and MAXITER the iteration budget; omitted values use the parent type defaults. Call this initializer before SOLVE. The passed object ME in the linked implementation is supplied implicitly by solver%; do not pass it again.",
+              "signature": "CALL solver%initialize(F[,FTOL,RTOL,ATOL,MAXITER])",
+              "path": "src/root_module.F90",
+              "line_start": 335,
+              "line_end": 352,
+              "declarations": [
+                {
+                  "path": "src/root_module.F90",
+                  "line_start": 339,
+                  "line_end": 344
+                },
+                {
+                  "path": "src/root_module.F90",
+                  "line_start": 31,
+                  "line_end": 43
+                },
+                {
+                  "path": "src/root_module.F90",
+                  "line_start": 97,
+                  "line_end": 124
+                },
+                {
+                  "path": "src/root_module.F90",
+                  "line_start": 286,
+                  "line_end": 295
+                }
+              ]
+            },
+            {
+              "procedure": "solve",
+              "role": "public-entry-point",
+              "module": "root_module",
+              "derived_type": "brent_solver",
+              "summary": "Declare TYPE(brent_solver) :: solver from root_module. After INITIALIZE, supply distinct finite AX/BX bracketing a sign change, or an endpoint already satisfying the root test. XZERO/FZERO return an abscissa and function value; inspect mandatory IFLAG before using them. IFLAG=0 is normal, -1 rejects a same-sign bracket and -4 equal endpoints; other method diagnostics are retained. Optional FAX/FBX avoid reevaluating known endpoint values and must correspond to the supplied endpoints. Optional BISECT_ON_FAILURE requests a fallback with additional evaluations; BISECT_USED reports that fallback. A converged bracket is not a guarantee for a discontinuous callback. This review annotates the Brent type workflow, not every concrete root method. The passed object ME in the linked implementation is supplied implicitly by solver%; do not pass it again.",
+              "signature": "CALL solver%solve(AX,BX,XZERO,FZERO,IFLAG[,FAX,FBX,BISECT_ON_FAILURE,BISECT_USED])",
+              "path": "src/root_module.F90",
+              "line_start": 511,
+              "line_end": 602,
+              "declarations": [
+                {
+                  "path": "src/root_module.F90",
+                  "line_start": 515,
+                  "line_end": 527
+                },
+                {
+                  "path": "src/root_module.F90",
+                  "line_start": 31,
+                  "line_end": 43
+                },
+                {
+                  "path": "src/root_module.F90",
+                  "line_start": 97,
+                  "line_end": 124
+                },
+                {
+                  "path": "src/root_module.F90",
+                  "line_start": 286,
+                  "line_end": 295
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "bspline-fortran": {
+      "id": "github:jacobwilliams/bspline-fortran",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "bspline-fortran",
+        "url": "https://github.com/jacobwilliams/bspline-fortran"
+      },
+      "license": {
+        "label": "BSD-3-Clause modernization; NIST/CMLIB and SLATEC notices",
+        "spdx_expression": null,
+        "revision": "047c724451aeee7f883c0d5acba3f7bd22a5de01",
+        "reviewed_on": "2026-11-07",
+        "notes": "The pinned LICENSE contains BSD three-clause modernization terms, a NIST/CMLIB use/redistribution notice and SLATEC public-domain attribution. Retain those notices rather than assign one simplified SPDX expression to all components.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jacobwilliams/bspline-fortran/blob/047c724451aeee7f883c0d5acba3f7bd22a5de01/LICENSE",
+            "sha256": "2314e17f315a9850b0bb7fdc2e6f0c7850c38879f00d23eb9d70f9f22cc33c10"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/bspline-fortran/blob/047c724451aeee7f883c0d5acba3f7bd22a5de01/README.md",
+            "sha256": "4563ff2acf9eebf9567433d5e0baeb7a1960c874fd2edd3a7b8f6e7778bb265c"
+          },
+          {
+            "path": "src/bspline_oo_module.f90",
+            "url": "https://github.com/jacobwilliams/bspline-fortran/blob/047c724451aeee7f883c0d5acba3f7bd22a5de01/src/bspline_oo_module.f90",
+            "sha256": "2b1bd0fb16092ccb4bb2bc4cf499249eb19252c888f582123f4c31c8de29772a"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "E1a",
+          "level": "source-reviewed",
+          "revision": "047c724451aeee7f883c0d5acba3f7bd22a5de01",
+          "reviewed_on": "2026-11-07",
+          "notes": "BSPLINE_1D generic auto-knot initialization and evaluation build and query a univariate interpolating spline. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/bspline_oo_module.f90",
+              "url": "https://github.com/jacobwilliams/bspline-fortran/blob/047c724451aeee7f883c0d5acba3f7bd22a5de01/src/bspline_oo_module.f90",
+              "sha256": "2b1bd0fb16092ccb4bb2bc4cf499249eb19252c888f582123f4c31c8de29772a"
+            },
+            {
+              "path": "src/bspline_module.f90",
+              "url": "https://github.com/jacobwilliams/bspline-fortran/blob/047c724451aeee7f883c0d5acba3f7bd22a5de01/src/bspline_module.f90",
+              "sha256": "8f08fdd1b4e00133e60031ce597f7e6dc89cdccfad6257f4c151b24d400bce59"
+            },
+            {
+              "path": "src/bspline_kinds_module.F90",
+              "url": "https://github.com/jacobwilliams/bspline-fortran/blob/047c724451aeee7f883c0d5acba3f7bd22a5de01/src/bspline_kinds_module.F90",
+              "sha256": "02a71c051073b6e4935c0afb12444a41f8e374aeef5bb54aa1577f9ef4b378cb"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "initialize",
+              "role": "public-entry-point",
+              "module": "bspline_module",
+              "derived_type": "bspline_1d",
+              "summary": "Declare TYPE(bspline_1d) :: solver from bspline_module. Auto-knot generic INITIALIZE overload: X(:) must be strictly increasing and FCN(:) have the same length NX. KX is spline order (degree+1); use the documented 2<=KX<NX range. Match BSPLINE_KINDS_MODULE WP/IP (default REAL64/INT32); BSPLINE_MODULE reexports the real kind as BSPLINE_WP. IFLAG=0 initializes the object; check other codes before evaluating. Optional EXTRAP defaults false. This input-data overload is different from the explicitly supplied-knot overload. The passed object ME in the linked implementation is supplied implicitly by solver%; do not pass it again.",
+              "signature": "CALL solver%initialize(X,FCN,KX,IFLAG[,EXTRAP])",
+              "path": "src/bspline_oo_module.f90",
+              "line_start": 934,
+              "line_end": 974,
+              "declarations": [
+                {
+                  "path": "src/bspline_oo_module.f90",
+                  "line_start": 938,
+                  "line_end": 947
+                },
+                {
+                  "path": "src/bspline_module.f90",
+                  "line_start": 10,
+                  "line_end": 19
+                },
+                {
+                  "path": "src/bspline_kinds_module.F90",
+                  "line_start": 8,
+                  "line_end": 37
+                },
+                {
+                  "path": "src/bspline_oo_module.f90",
+                  "line_start": 63,
+                  "line_end": 106
+                }
+              ]
+            },
+            {
+              "procedure": "evaluate",
+              "role": "public-entry-point",
+              "module": "bspline_module",
+              "derived_type": "bspline_1d",
+              "summary": "Declare TYPE(bspline_1d) :: solver from bspline_module. Evaluate an initialized spline at XVAL: IDX=0 requests the value and positive IDX a derivative order. F and IFLAG are mandatory scalar outputs. Match real/integer kinds to the library. Check IFLAG=0 before using F; an uninitialized object returns IFLAG=1 without establishing a valid F. Extrapolation behavior follows the initialization flag. The object updates interval/work state even though the mathematical operation is evaluation. The passed object ME in the linked implementation is supplied implicitly by solver%; do not pass it again.",
+              "signature": "CALL solver%evaluate(XVAL,IDX,F,IFLAG)",
+              "path": "src/bspline_oo_module.f90",
+              "line_start": 1035,
+              "line_end": 1053,
+              "declarations": [
+                {
+                  "path": "src/bspline_oo_module.f90",
+                  "line_start": 1039,
+                  "line_end": 1043
+                },
+                {
+                  "path": "src/bspline_module.f90",
+                  "line_start": 10,
+                  "line_end": 19
+                },
+                {
+                  "path": "src/bspline_kinds_module.F90",
+                  "line_start": 8,
+                  "line_end": 37
+                },
+                {
+                  "path": "src/bspline_oo_module.f90",
+                  "line_start": 63,
+                  "line_end": 106
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "E2a",
+          "level": "source-reviewed",
+          "revision": "047c724451aeee7f883c0d5acba3f7bd22a5de01",
+          "reviewed_on": "2026-11-07",
+          "notes": "BSPLINE_2D builds a tensor-product interpolant from a rectangular grid and evaluates values or partial derivatives. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/bspline_oo_module.f90",
+              "url": "https://github.com/jacobwilliams/bspline-fortran/blob/047c724451aeee7f883c0d5acba3f7bd22a5de01/src/bspline_oo_module.f90",
+              "sha256": "2b1bd0fb16092ccb4bb2bc4cf499249eb19252c888f582123f4c31c8de29772a"
+            },
+            {
+              "path": "src/bspline_module.f90",
+              "url": "https://github.com/jacobwilliams/bspline-fortran/blob/047c724451aeee7f883c0d5acba3f7bd22a5de01/src/bspline_module.f90",
+              "sha256": "8f08fdd1b4e00133e60031ce597f7e6dc89cdccfad6257f4c151b24d400bce59"
+            },
+            {
+              "path": "src/bspline_kinds_module.F90",
+              "url": "https://github.com/jacobwilliams/bspline-fortran/blob/047c724451aeee7f883c0d5acba3f7bd22a5de01/src/bspline_kinds_module.F90",
+              "sha256": "02a71c051073b6e4935c0afb12444a41f8e374aeef5bb54aa1577f9ef4b378cb"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "initialize",
+              "role": "public-entry-point",
+              "module": "bspline_module",
+              "derived_type": "bspline_2d",
+              "summary": "Declare TYPE(bspline_2d) :: solver from bspline_module. Auto-knot tensor-product initialization on strictly increasing X(NX), Y(NY), with FCN(NX,NY) storing values in that axis order. KX/KY are spline orders, not degrees; use 2<=KX<NX and 2<=KY<NY. Required IFLAG=0 signals initialization success; optional EXTRAP defaults false. Real/index kinds follow BSPLINE_KINDS_MODULE WP/IP. This is interpolation on a rectangular grid, not scattered-data fitting. The passed object ME in the linked implementation is supplied implicitly by solver%; do not pass it again.",
+              "signature": "CALL solver%initialize(X,Y,FCN,KX,KY,IFLAG[,EXTRAP])",
+              "path": "src/bspline_oo_module.f90",
+              "line_start": 1193,
+              "line_end": 1244,
+              "declarations": [
+                {
+                  "path": "src/bspline_oo_module.f90",
+                  "line_start": 1197,
+                  "line_end": 1211
+                },
+                {
+                  "path": "src/bspline_module.f90",
+                  "line_start": 10,
+                  "line_end": 19
+                },
+                {
+                  "path": "src/bspline_kinds_module.F90",
+                  "line_start": 8,
+                  "line_end": 37
+                },
+                {
+                  "path": "src/bspline_oo_module.f90",
+                  "line_start": 63,
+                  "line_end": 106
+                }
+              ]
+            },
+            {
+              "procedure": "evaluate",
+              "role": "public-entry-point",
+              "module": "bspline_module",
+              "derived_type": "bspline_2d",
+              "summary": "Declare TYPE(bspline_2d) :: solver from bspline_module. Evaluate the tensor-product spline at XVAL/YVAL with derivative orders IDX/IDY. (0,0) requests the value; positive orders request corresponding partial derivatives. F/IFLAG are mandatory; use F only on a successful status. Initialization and extrapolation settings must already be established, and real/integer actual kinds must match the package. This review covers the 2D type interface, not the higher-dimensional classes. The passed object ME in the linked implementation is supplied implicitly by solver%; do not pass it again.",
+              "signature": "CALL solver%evaluate(XVAL,YVAL,IDX,IDY,F,IFLAG)",
+              "path": "src/bspline_oo_module.f90",
+              "line_start": 1322,
+              "line_end": 1350,
+              "declarations": [
+                {
+                  "path": "src/bspline_oo_module.f90",
+                  "line_start": 1326,
+                  "line_end": 1332
+                },
+                {
+                  "path": "src/bspline_module.f90",
+                  "line_start": 10,
+                  "line_end": 19
+                },
+                {
+                  "path": "src/bspline_kinds_module.F90",
+                  "line_start": 8,
+                  "line_end": 37
+                },
+                {
+                  "path": "src/bspline_oo_module.f90",
+                  "line_start": 63,
+                  "line_end": 106
                 }
               ]
             }
@@ -611,6 +945,340 @@
         }
       ]
     },
+    "quadrature-fortran": {
+      "id": "github:jacobwilliams/quadrature-fortran",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "quadrature-fortran",
+        "url": "https://github.com/jacobwilliams/quadrature-fortran"
+      },
+      "license": {
+        "label": "BSD-3-Clause modernization; SLATEC public-domain components",
+        "spdx_expression": null,
+        "revision": "1d208fc59569a97b1c2abf9c45f7c352dcc7b318",
+        "reviewed_on": "2026-11-07",
+        "notes": "LICENSE gives BSD three-clause modernization terms and identifies included SLATEC code as public domain. Preserve the component distinction and supplied attribution.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jacobwilliams/quadrature-fortran/blob/1d208fc59569a97b1c2abf9c45f7c352dcc7b318/LICENSE",
+            "sha256": "d3f3442e3b84998b9b4bdbb8427fe67043bc3b7a5a377e871a59676e82fec63f"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/quadrature-fortran/blob/1d208fc59569a97b1c2abf9c45f7c352dcc7b318/README.md",
+            "sha256": "e4bef6b0dc2779d008b9c96fd3d029780a845a7f24a314d44171e7652a90c243"
+          },
+          {
+            "path": "src/quadrature_module.F90",
+            "url": "https://github.com/jacobwilliams/quadrature-fortran/blob/1d208fc59569a97b1c2abf9c45f7c352dcc7b318/src/quadrature_module.F90",
+            "sha256": "1fca59cfb80b12df093d9735ae49820b76d5eb9e9a5e55d37ecae61bd45fa162"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "H2a1a1",
+          "level": "source-reviewed",
+          "revision": "1d208fc59569a97b1c2abf9c45f7c352dcc7b318",
+          "reviewed_on": "2026-11-07",
+          "notes": "The 1D object performs adaptive finite-interval Legendre-Gauss callback integration with explicit initialization and status/error outputs. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/quadrature_module.F90",
+              "url": "https://github.com/jacobwilliams/quadrature-fortran/blob/1d208fc59569a97b1c2abf9c45f7c352dcc7b318/src/quadrature_module.F90",
+              "sha256": "1fca59cfb80b12df093d9735ae49820b76d5eb9e9a5e55d37ecae61bd45fa162"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "initialize",
+              "role": "public-entry-point",
+              "module": "quadrature_module",
+              "derived_type": "integration_class_1d",
+              "summary": "Declare TYPE(integration_class_1d) :: solver from quadrature_module. Configure the 1D scalar callback FX(ME,X), finite limits XL/XU, pseudorelative tolerance TOLX and integer METHODX. METHODX must be 6,8,10,12 or 14 (the quadrature point count); an invalid method causes ERROR STOP. It is an integer code, not a QUADRATURE_METHOD object. Callback ME is CLASS(INTEGRATION_CLASS_1D); match QUADRATURE_WP (REAL64 default). All controls shown are required. The callback pointer must remain valid for subsequent INTEGRATE calls. The passed object ME in the linked implementation is supplied implicitly by solver%; do not pass it again.",
+              "signature": "CALL solver%initialize(FX,XL,XU,TOLX,METHODX)",
+              "path": "src/quadrature_module.F90",
+              "line_start": 259,
+              "line_end": 287,
+              "declarations": [
+                {
+                  "path": "src/quadrature_module.F90",
+                  "line_start": 264,
+                  "line_end": 269
+                },
+                {
+                  "path": "src/quadrature_module.F90",
+                  "line_start": 28,
+                  "line_end": 39
+                },
+                {
+                  "path": "src/quadrature_module.F90",
+                  "line_start": 72,
+                  "line_end": 108
+                },
+                {
+                  "path": "src/quadrature_module.F90",
+                  "line_start": 170,
+                  "line_end": 187
+                },
+                {
+                  "path": "src/quadrature_module.F90",
+                  "line_start": 839,
+                  "line_end": 866
+                }
+              ]
+            },
+            {
+              "procedure": "integrate",
+              "role": "public-entry-point",
+              "module": "quadrature_module",
+              "derived_type": "integration_class_1d",
+              "summary": "Declare TYPE(integration_class_1d) :: solver from quadrature_module. Integrate after successful initialization, returning scalar ANS, integer IERR and scalar ERR, all required outputs. IERR=1 is normal (including zero-width intervals), -1 flags nearly coincident limits, and 2 indicates likely insufficient accuracy. ERR is an estimated absolute error, not a certified bound or correction to add to ANS. The requested tolerance is pseudorelative to an integral of the absolute integrand; it is not a simple relative-error guarantee for a strongly cancelling integral. The passed object ME in the linked implementation is supplied implicitly by solver%; do not pass it again.",
+              "signature": "CALL solver%integrate(ANS,IERR,ERR)",
+              "path": "src/quadrature_module.F90",
+              "line_start": 514,
+              "line_end": 526,
+              "declarations": [
+                {
+                  "path": "src/quadrature_module.F90",
+                  "line_start": 518,
+                  "line_end": 521
+                },
+                {
+                  "path": "src/quadrature_module.F90",
+                  "line_start": 28,
+                  "line_end": 39
+                },
+                {
+                  "path": "src/quadrature_module.F90",
+                  "line_start": 72,
+                  "line_end": 108
+                },
+                {
+                  "path": "src/quadrature_module.F90",
+                  "line_start": 170,
+                  "line_end": 187
+                },
+                {
+                  "path": "src/quadrature_module.F90",
+                  "line_start": 839,
+                  "line_end": 866
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "H2b1a1",
+          "level": "source-reviewed",
+          "revision": "1d208fc59569a97b1c2abf9c45f7c352dcc7b318",
+          "reviewed_on": "2026-11-07",
+          "notes": "The 2D object nests the 1D rules over a rectangular domain; callback and error-accounting contracts differ from a variable-bound multidimensional integrator. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/quadrature_module.F90",
+              "url": "https://github.com/jacobwilliams/quadrature-fortran/blob/1d208fc59569a97b1c2abf9c45f7c352dcc7b318/src/quadrature_module.F90",
+              "sha256": "1fca59cfb80b12df093d9735ae49820b76d5eb9e9a5e55d37ecae61bd45fa162"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "initialize",
+              "role": "public-entry-point",
+              "module": "quadrature_module",
+              "derived_type": "integration_class_2d",
+              "summary": "Declare TYPE(integration_class_2d) :: solver from quadrature_module. Configure rectangular integration with FXY(ME,X,Y), separate XL/XU and YL/YU limits, required TOLX/TOLY and integer METHODX/METHODY in {6,8,10,12,14}. Callback ME is CLASS(INTEGRATION_CLASS_2D), and real arguments/results use QUADRATURE_WP. No variable integration-limit callbacks are accepted by this interface; it describes a rectangular domain. Keep the registered callback alive. Invalid quadrature codes cause ERROR STOP. The passed object ME in the linked implementation is supplied implicitly by solver%; do not pass it again.",
+              "signature": "CALL solver%initialize(FXY,XL,XU,YL,YU,TOLX,TOLY,METHODX,METHODY)",
+              "path": "src/quadrature_module.F90",
+              "line_start": 295,
+              "line_end": 321,
+              "declarations": [
+                {
+                  "path": "src/quadrature_module.F90",
+                  "line_start": 302,
+                  "line_end": 311
+                },
+                {
+                  "path": "src/quadrature_module.F90",
+                  "line_start": 28,
+                  "line_end": 39
+                },
+                {
+                  "path": "src/quadrature_module.F90",
+                  "line_start": 72,
+                  "line_end": 108
+                },
+                {
+                  "path": "src/quadrature_module.F90",
+                  "line_start": 170,
+                  "line_end": 187
+                },
+                {
+                  "path": "src/quadrature_module.F90",
+                  "line_start": 839,
+                  "line_end": 866
+                }
+              ]
+            },
+            {
+              "procedure": "integrate",
+              "role": "public-entry-point",
+              "module": "quadrature_module",
+              "derived_type": "integration_class_2d",
+              "summary": "Declare TYPE(integration_class_2d) :: solver from quadrature_module. Run the nested rectangular integrators after INITIALIZE and return ANS/IERR/ERR. These outputs are all required. The outer integrator returns its diagnostic and error estimate; the wrappers also reuse status/error variables during inner integrations. Consequently ERR is not a rigorous accumulated 2D error bound, and the final IERR must not be interpreted as a complete independent certificate for every inner solve. Check the result with problem-appropriate convergence tests. The passed object ME in the linked implementation is supplied implicitly by solver%; do not pass it again.",
+              "signature": "CALL solver%integrate(ANS,IERR,ERR)",
+              "path": "src/quadrature_module.F90",
+              "line_start": 533,
+              "line_end": 566,
+              "declarations": [
+                {
+                  "path": "src/quadrature_module.F90",
+                  "line_start": 537,
+                  "line_end": 540
+                },
+                {
+                  "path": "src/quadrature_module.F90",
+                  "line_start": 28,
+                  "line_end": 39
+                },
+                {
+                  "path": "src/quadrature_module.F90",
+                  "line_start": 72,
+                  "line_end": 108
+                },
+                {
+                  "path": "src/quadrature_module.F90",
+                  "line_start": 170,
+                  "line_end": 187
+                },
+                {
+                  "path": "src/quadrature_module.F90",
+                  "line_start": 839,
+                  "line_end": 866
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "dop853": {
+      "id": "github:jacobwilliams/dop853",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "dop853",
+        "url": "https://github.com/jacobwilliams/dop853"
+      },
+      "license": {
+        "label": "BSD-3-Clause modernization; Hairer BSD-2-Clause original",
+        "spdx_expression": null,
+        "revision": "1e9d0dbf4dcbc692ca557c0467629112dd1f0ce6",
+        "reviewed_on": "2026-11-07",
+        "notes": "LICENSE separately supplies BSD three-clause modernization terms and Ernst Hairer original two-clause terms. Preserve both attributions and component scopes.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jacobwilliams/dop853/blob/1e9d0dbf4dcbc692ca557c0467629112dd1f0ce6/LICENSE",
+            "sha256": "54dba93ef0acd562b4856903652e833dc7bb3e25c7cd8f8290d876151833b1bc"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/dop853/blob/1e9d0dbf4dcbc692ca557c0467629112dd1f0ce6/README.md",
+            "sha256": "acdf0b49bc7f8f7322378f749553e3284406ec9facdf749504ced6f6e409e060"
+          },
+          {
+            "path": "src/dop853_module.F90",
+            "url": "https://github.com/jacobwilliams/dop853/blob/1e9d0dbf4dcbc692ca557c0467629112dd1f0ce6/src/dop853_module.F90",
+            "sha256": "ca33da0a609e8ddf7aea4bbc312d958935428d5389187e9d92a7d3f73b1b9321"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "I1a1a",
+          "level": "source-reviewed",
+          "revision": "1e9d0dbf4dcbc692ca557c0467629112dd1f0ce6",
+          "reviewed_on": "2026-11-07",
+          "notes": "DOP853_CLASS initializes callback-driven explicit Runge-Kutta integration and advances a real state with array-valued tolerance arguments. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/dop853_module.F90",
+              "url": "https://github.com/jacobwilliams/dop853/blob/1e9d0dbf4dcbc692ca557c0467629112dd1f0ce6/src/dop853_module.F90",
+              "sha256": "ca33da0a609e8ddf7aea4bbc312d958935428d5389187e9d92a7d3f73b1b9321"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "initialize",
+              "role": "public-entry-point",
+              "module": "dop853_module",
+              "derived_type": "dop853_class",
+              "summary": "Declare TYPE(dop853_class) :: solver from dop853_module. Set N and derivative callback FCN(ME,X,Y,F), whose ME is CLASS(DOP853_CLASS) and state/derivative arguments are assumed-shape arrays of length N. Use DOP853_WP (REAL64 default). STATUS_OK is a required logical output after optional arguments: normally supply STATUS_OK=ok by keyword and inspect it. Optional SOLOUT follows the linked reporting callback declaration; use IOUT=0 in INTEGRATE when no reporting callback is supplied. Remaining controls include maximum steps, initial/maximum step size, stiffness-test interval and dense-output components. Keep callbacks alive while the object retains them. The passed object ME in the linked implementation is supplied implicitly by solver%; do not pass it again.",
+              "signature": "CALL solver%initialize(N,FCN,[SOLOUT],[IPRINT],[NSTIFF],[NMAX],[HINITIAL],[HMAX],[SAFE],[FAC1],[FAC2],[BETA],[ICOMP],STATUS_OK)",
+              "path": "src/dop853_module.F90",
+              "line_start": 370,
+              "line_end": 474,
+              "declarations": [
+                {
+                  "path": "src/dop853_module.F90",
+                  "line_start": 375,
+                  "line_end": 405
+                },
+                {
+                  "path": "src/dop853_module.F90",
+                  "line_start": 34,
+                  "line_end": 46
+                },
+                {
+                  "path": "src/dop853_module.F90",
+                  "line_start": 270,
+                  "line_end": 275
+                },
+                {
+                  "path": "src/dop853_module.F90",
+                  "line_start": 283,
+                  "line_end": 313
+                }
+              ]
+            },
+            {
+              "procedure": "integrate",
+              "role": "public-entry-point",
+              "module": "dop853_module",
+              "derived_type": "dop853_class",
+              "summary": "Declare TYPE(dop853_class) :: solver from dop853_module. Integrate a nonstiff IVP after initialization. X and Y(N) are input/output, XEND the requested endpoint, IOUT the reporting selector, and IDID a mandatory status output. RTOL/ATOL are rank-one arrays: use one-element arrays for common tolerances or both arrays of length N for component tolerances; do not pass bare real scalars to this wrapper. ATOL should be positive. IOUT=0 disables SOLOUT. IDID=1 completes integration, 2 is interruption by the output callback, and negative values report invalid input, exhausted step budget, tiny step or suspected stiffness. Check X before assuming an interrupted run reached XEND. The passed object ME in the linked implementation is supplied implicitly by solver%; do not pass it again.",
+              "signature": "CALL solver%integrate(X,Y,XEND,RTOL,ATOL,IOUT,IDID)",
+              "path": "src/dop853_module.F90",
+              "line_start": 500,
+              "line_end": 637,
+              "declarations": [
+                {
+                  "path": "src/dop853_module.F90",
+                  "line_start": 504,
+                  "line_end": 531
+                },
+                {
+                  "path": "src/dop853_module.F90",
+                  "line_start": 34,
+                  "line_end": 46
+                },
+                {
+                  "path": "src/dop853_module.F90",
+                  "line_start": 270,
+                  "line_end": 275
+                },
+                {
+                  "path": "src/dop853_module.F90",
+                  "line_start": 283,
+                  "line_end": 313
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "minpack": {
       "id": "github:jacobwilliams/minpack",
       "repository": {
@@ -831,6 +1499,117 @@
         }
       ]
     },
+    "numdiff": {
+      "id": "github:jacobwilliams/numdiff",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "NumDiff",
+        "url": "https://github.com/jacobwilliams/NumDiff"
+      },
+      "license": {
+        "label": "BSD-3-Clause modernization; MINPACK component notice",
+        "spdx_expression": null,
+        "revision": "687157df8d2dec072b5484974bab71f7b14b0e9f",
+        "reviewed_on": "2026-11-07",
+        "notes": "LICENSE gives BSD three-clause modernization terms and separately retains the University of Chicago MINPACK notice, including its acknowledgment condition. This is a scoped notice review, not a license audit of every numerical differentiation method.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jacobwilliams/NumDiff/blob/687157df8d2dec072b5484974bab71f7b14b0e9f/LICENSE",
+            "sha256": "5e2556b2612a7a164f129357a17819aa9fd7d09653a2497406278890a28306a2"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/NumDiff/blob/687157df8d2dec072b5484974bab71f7b14b0e9f/README.md",
+            "sha256": "469201946977195700085ca093a41142fa68e15ee4ace02588d3af0695f0b341"
+          },
+          {
+            "path": "src/diff_module.f90",
+            "url": "https://github.com/jacobwilliams/NumDiff/blob/687157df8d2dec072b5484974bab71f7b14b0e9f/src/diff_module.f90",
+            "sha256": "78ad89f405de2f82618332a131085deceed4312bb5c2cd8c2ff8a92a41b34557"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "H1",
+          "level": "source-reviewed",
+          "revision": "687157df8d2dec072b5484974bab71f7b14b0e9f",
+          "reviewed_on": "2026-11-07",
+          "notes": "DIFF_FUNC registers a scalar callback and estimates derivatives of orders one through three with a supplied validity interval and error model. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/diff_module.f90",
+              "url": "https://github.com/jacobwilliams/NumDiff/blob/687157df8d2dec072b5484974bab71f7b14b0e9f/src/diff_module.f90",
+              "sha256": "78ad89f405de2f82618332a131085deceed4312bb5c2cd8c2ff8a92a41b34557"
+            },
+            {
+              "path": "src/kinds_module.F90",
+              "url": "https://github.com/jacobwilliams/NumDiff/blob/687157df8d2dec072b5484974bab71f7b14b0e9f/src/kinds_module.F90",
+              "sha256": "be8c7ddd73b45a05ab954f7395ff551a6237991513479612421212eb7e704955"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "set_function",
+              "role": "public-entry-point",
+              "module": "diff_module",
+              "derived_type": "diff_func",
+              "summary": "Declare TYPE(diff_func) :: solver from diff_module. Register scalar function F(ME,X) using CLASS(DIFF_FUNC) ME and matching NUMDIFF_KINDS_MODULE::WP (REAL64 default). The object keeps a procedure pointer, so the callback must remain valid during differentiation. This is a registration method; COMPUTE_DERIVATIVE performs the numerical calculation. The passed object ME in the linked implementation is supplied implicitly by solver%; do not pass it again.",
+              "signature": "CALL solver%set_function(F)",
+              "path": "src/diff_module.f90",
+              "line_start": 58,
+              "line_end": 67,
+              "declarations": [
+                {
+                  "path": "src/diff_module.f90",
+                  "line_start": 62,
+                  "line_end": 63
+                },
+                {
+                  "path": "src/diff_module.f90",
+                  "line_start": 24,
+                  "line_end": 45
+                },
+                {
+                  "path": "src/kinds_module.F90",
+                  "line_start": 18,
+                  "line_end": 35
+                }
+              ]
+            },
+            {
+              "procedure": "compute_derivative",
+              "role": "public-entry-point",
+              "module": "diff_module",
+              "derived_type": "diff_func",
+              "summary": "Declare TYPE(diff_func) :: solver from diff_module. Compute a scalar first/second/third derivative: IORD is 1..3, XMIN<XMAX bounds the interval of valid smooth callback evaluations and must contain X0. EPS>0 requests absolute accuracy, EPS<0 relative accuracy, and EPS=0 seeks minimum estimated error. ACCR similarly estimates absolute/relative function-evaluation error (zero if unknown). DERIV/ERROR/IFAIL are required outputs. IFAIL=0 is normal, 1 means requested accuracy was not met, 2 invalid data, 3 too-small interval, and -1 user stop. Inspect ERROR; DERIV/ERROR can be undefined on invalid-input/interval returns. This is finite-difference estimation, not symbolic or automatic differentiation. The passed object ME in the linked implementation is supplied implicitly by solver%; do not pass it again.",
+              "signature": "CALL solver%compute_derivative(IORD,X0,XMIN,XMAX,EPS,ACCR,DERIV,ERROR,IFAIL)",
+              "path": "src/diff_module.f90",
+              "line_start": 98,
+              "line_end": 792,
+              "declarations": [
+                {
+                  "path": "src/diff_module.f90",
+                  "line_start": 102,
+                  "line_end": 134
+                },
+                {
+                  "path": "src/diff_module.f90",
+                  "line_start": 24,
+                  "line_end": 45
+                },
+                {
+                  "path": "src/kinds_module.F90",
+                  "line_start": 18,
+                  "line_end": 35
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "fmin": {
       "id": "github:jacobwilliams/fmin",
       "repository": {
@@ -911,6 +1690,127 @@
                   "path": "src/fmin_module.F90",
                   "line_start": 29,
                   "line_end": 39
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "slsqp": {
+      "id": "github:jacobwilliams/slsqp",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "slsqp",
+        "url": "https://github.com/jacobwilliams/slsqp"
+      },
+      "license": {
+        "label": "BSD-3-Clause modernization; original Kraft/ACM permission notice",
+        "spdx_expression": null,
+        "revision": "e28b14fc48189fd4fce5f359327164fca55b52be",
+        "reviewed_on": "2026-11-07",
+        "notes": "LICENSE gives BSD three-clause modernization terms and the original Kraft/ACM permission-and-disclaimer notice. Preserve the separate original notice rather than flatten all contributions into a single SPDX expression.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jacobwilliams/slsqp/blob/e28b14fc48189fd4fce5f359327164fca55b52be/LICENSE",
+            "sha256": "ec67e3b03b5f2b786bd4719327e948fe2842fca32b3907376ae97e432ba781ea"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/slsqp/blob/e28b14fc48189fd4fce5f359327164fca55b52be/README.md",
+            "sha256": "c82d3276c785ace4e3f96e456a555505765768c6142347a9b36fb451b73322e5"
+          },
+          {
+            "path": "src/slsqp_module.f90",
+            "url": "https://github.com/jacobwilliams/slsqp/blob/e28b14fc48189fd4fce5f359327164fca55b52be/src/slsqp_module.f90",
+            "sha256": "0417f69540016ec21c42ac09f353b3cb9ca7e2ed7dc02b94026a04d599d4c51f"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "G2h3b1b",
+          "level": "source-reviewed",
+          "revision": "e28b14fc48189fd4fce5f359327164fca55b52be",
+          "reviewed_on": "2026-11-07",
+          "notes": "The SLSQP object solves smooth constrained optimization with objective/constraint callbacks and, in the reviewed default gradient mode, supplied first derivatives. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/slsqp_module.f90",
+              "url": "https://github.com/jacobwilliams/slsqp/blob/e28b14fc48189fd4fce5f359327164fca55b52be/src/slsqp_module.f90",
+              "sha256": "0417f69540016ec21c42ac09f353b3cb9ca7e2ed7dc02b94026a04d599d4c51f"
+            },
+            {
+              "path": "src/slsqp_kinds.F90",
+              "url": "https://github.com/jacobwilliams/slsqp/blob/e28b14fc48189fd4fce5f359327164fca55b52be/src/slsqp_kinds.F90",
+              "sha256": "1a2d5acb5a6b770fe592b1a77a83ba39a9979dfb73eca9a9845138324737ca35"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "initialize",
+              "role": "public-entry-point",
+              "module": "slsqp_module",
+              "derived_type": "slsqp_solver",
+              "summary": "Declare TYPE(slsqp_solver) :: solver from slsqp_module. Configure N variables, M total constraints, MEQ equality constraints, iteration/accuracy controls, objective/constraint callback F and gradient callback G. Callback F(ME,X,F,C) returns objective and constraints with equalities first; remaining inequalities use C>=0. G(ME,X,G,A) returns objective gradient G(N) and constraint Jacobian A(M,N), with CLASS(SLSQP_SOLVER) ME. XL/XU are real bound arrays of length N; match SLSQP_KINDS::SLSQP_RK (REAL64 default). Inspect required logical STATUS_OK. G is a required actual callback even when selecting finite-difference GRADIENT_MODE; modes 1..3 use absolute perturbations that do not respect bounds. Other optional controls/report callbacks are documented in linked declarations. Retain callbacks for optimization. The passed object ME in the linked implementation is supplied implicitly by solver%; do not pass it again.",
+              "signature": "CALL solver%initialize(N,M,MEQ,MAX_ITER,ACC,F,G,XL,XU,STATUS_OK[,LINESEARCH_MODE,IPRINT,REPORT,ALPHAMIN,ALPHAMAX,GRADIENT_MODE,GRADIENT_DELTA,TOLF,TOLDF,TOLDX,MAX_ITER_LS,NNLS_MODE,INFINITE_BOUND,REPORT_MSG])",
+              "path": "src/slsqp_module.f90",
+              "line_start": 161,
+              "line_end": 330,
+              "declarations": [
+                {
+                  "path": "src/slsqp_module.f90",
+                  "line_start": 168,
+                  "line_end": 212
+                },
+                {
+                  "path": "src/slsqp_module.f90",
+                  "line_start": 92,
+                  "line_end": 99
+                },
+                {
+                  "path": "src/slsqp_module.f90",
+                  "line_start": 102,
+                  "line_end": 137
+                },
+                {
+                  "path": "src/slsqp_kinds.F90",
+                  "line_start": 21,
+                  "line_end": 42
+                }
+              ]
+            },
+            {
+              "procedure": "optimize",
+              "role": "public-entry-point",
+              "module": "slsqp_module",
+              "derived_type": "slsqp_solver",
+              "summary": "Declare TYPE(slsqp_solver) :: solver from slsqp_module. Optimize after successful initialization. X(:) of length N holds the initial guess and is overwritten by the candidate solution. Mandatory ISTAT=0 denotes normal termination; other statuses require inspection, not treatment as convergence. Optional ITERATIONS returns a count, and optional STATUS_MESSAGE must be a deferred-length allocatable character actual. Solver termination alone does not certify a global optimum, gradient correctness or constraint feasibility; check the final objective/constraint residuals. The passed object ME in the linked implementation is supplied implicitly by solver%; do not pass it again.",
+              "signature": "CALL solver%optimize(X,ISTAT[,ITERATIONS,STATUS_MESSAGE])",
+              "path": "src/slsqp_module.f90",
+              "line_start": 350,
+              "line_end": 535,
+              "declarations": [
+                {
+                  "path": "src/slsqp_module.f90",
+                  "line_start": 354,
+                  "line_end": 361
+                },
+                {
+                  "path": "src/slsqp_module.f90",
+                  "line_start": 92,
+                  "line_end": 99
+                },
+                {
+                  "path": "src/slsqp_module.f90",
+                  "line_start": 102,
+                  "line_end": 137
+                },
+                {
+                  "path": "src/slsqp_kinds.F90",
+                  "line_start": 21,
+                  "line_end": 42
                 }
               ]
             }
@@ -1070,6 +1970,248 @@
                   "path": "src/specfun.F90",
                   "line_start": 29,
                   "line_end": 45
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "lsqr": {
+      "id": "github:jacobwilliams/lsqr",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "LSQR",
+        "url": "https://github.com/jacobwilliams/LSQR"
+      },
+      "license": {
+        "label": "BSD modernization; original LSQR CPL and LAPACK notices",
+        "spdx_expression": null,
+        "revision": "4df2ce600ca26a9f7e80dc01bfd0859d538547b3",
+        "reviewed_on": "2026-11-07",
+        "notes": "LICENSE.txt separates the BSD three-clause modernization, original SOL/Stanford LSQR CPL terms and included LAPACK notices. The original solver must not be labeled as uniformly BSD-only.",
+        "evidence": [
+          {
+            "path": "LICENSE.txt",
+            "url": "https://github.com/jacobwilliams/LSQR/blob/4df2ce600ca26a9f7e80dc01bfd0859d538547b3/LICENSE.txt",
+            "sha256": "602afba2de350419d0bdbb9c03bd4f05606333ff1f1d712e2f797490bba66751"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/LSQR/blob/4df2ce600ca26a9f7e80dc01bfd0859d538547b3/README.md",
+            "sha256": "c107d23e3df0b7e4f6bea759b9921a097d5dda9e466356a8933f86539eb563e3"
+          },
+          {
+            "path": "src/lsqr.f90",
+            "url": "https://github.com/jacobwilliams/LSQR/blob/4df2ce600ca26a9f7e80dc01bfd0859d538547b3/src/lsqr.f90",
+            "sha256": "8959e24c95e6292221e22cef94009077882dd8dde2eb8beb17917ea71388fa15"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "D9a1",
+          "level": "source-reviewed",
+          "revision": "4df2ce600ca26a9f7e80dc01bfd0859d538547b3",
+          "reviewed_on": "2026-11-07",
+          "notes": "LSQR_SOLVER_EZ stores sparse coordinate data and supplies the operator products for an iterative real least-squares/damped least-squares solve. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/lsqr.f90",
+              "url": "https://github.com/jacobwilliams/LSQR/blob/4df2ce600ca26a9f7e80dc01bfd0859d538547b3/src/lsqr.f90",
+              "sha256": "8959e24c95e6292221e22cef94009077882dd8dde2eb8beb17917ea71388fa15"
+            },
+            {
+              "path": "src/lsqr_kinds.F90",
+              "url": "https://github.com/jacobwilliams/LSQR/blob/4df2ce600ca26a9f7e80dc01bfd0859d538547b3/src/lsqr_kinds.F90",
+              "sha256": "c6b80bf58259ea8b810d2afd72ec7e052bc4c564ee35f45297e6754a1342a3ae"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "initialize",
+              "role": "public-entry-point",
+              "module": "lsqr_module",
+              "derived_type": "lsqr_solver_ez",
+              "summary": "Declare TYPE(lsqr_solver_ez) :: solver from lsqr_module. Initialize the convenience sparse-matrix solver with M rows, N columns, nonzero values A(:), and same-length default-integer IROW/ICOL containing 1-based indices. Require all row/column indices to lie within their valid ranges; the source checks upper limits but does not establish lower-index safety. Values use LSQR_KINDS::WP (REAL64 default). Optional ATOL/BTOL are data-error estimates, CONLIM a condition limit, ITNLIM a budget and NOUT a logging unit. The matrix is copied into the object, and duplicate coordinate entries are accumulated by its matrix products. This overload supplies products internally, so no APROD callback is required. The passed object ME in the linked implementation is supplied implicitly by solver%; do not pass it again.",
+              "signature": "CALL solver%initialize(M,N,A,IROW,ICOL[,ATOL,BTOL,CONLIM,ITNLIM,NOUT])",
+              "path": "src/lsqr.f90",
+              "line_start": 91,
+              "line_end": 127,
+              "declarations": [
+                {
+                  "path": "src/lsqr.f90",
+                  "line_start": 95,
+                  "line_end": 106
+                },
+                {
+                  "path": "src/lsqr.f90",
+                  "line_start": 32,
+                  "line_end": 65
+                },
+                {
+                  "path": "src/lsqr_kinds.F90",
+                  "line_start": 8,
+                  "line_end": 25
+                }
+              ]
+            },
+            {
+              "procedure": "solve",
+              "role": "public-entry-point",
+              "module": "lsqr_module",
+              "derived_type": "lsqr_solver_ez",
+              "summary": "Declare TYPE(lsqr_solver_ez) :: solver from lsqr_module. Solve rectangular real least squares, optionally damped, after INITIALIZE. B(M) input is preserved, DAMP is required (zero for undamped), X(N) is an output rather than an initial guess, and ISTOP is mandatory. Optional outputs include SE(N), ITN, ANORM, ACOND, RNORM, ARNORM and XNORM. This pin uses ISTOP 0 for the zero solution, 1 compatible residual, 2 least-squares stopping, 3 damped least-squares stopping, 4 conditioning and 5 iteration limit; do not substitute LSMR status numbers. SE is the algorithm standard-error estimate, not an independently validated confidence interval. Inspect residuals and conditioning for the actual application. The passed object ME in the linked implementation is supplied implicitly by solver%; do not pass it again.",
+              "signature": "CALL solver%solve(B,DAMP,X,ISTOP[,SE,ITN,ANORM,ACOND,RNORM,ARNORM,XNORM])",
+              "path": "src/lsqr.f90",
+              "line_start": 207,
+              "line_end": 259,
+              "declarations": [
+                {
+                  "path": "src/lsqr.f90",
+                  "line_start": 212,
+                  "line_end": 223
+                },
+                {
+                  "path": "src/lsqr.f90",
+                  "line_start": 32,
+                  "line_end": 65
+                },
+                {
+                  "path": "src/lsqr_kinds.F90",
+                  "line_start": 8,
+                  "line_end": 25
+                },
+                {
+                  "path": "src/lsqr.f90",
+                  "line_start": 520,
+                  "line_end": 544
+                },
+                {
+                  "path": "src/lsqr.f90",
+                  "line_start": 797,
+                  "line_end": 810
+                },
+                {
+                  "path": "src/lsqr.f90",
+                  "line_start": 869,
+                  "line_end": 873
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "ddeabm": {
+      "id": "github:jacobwilliams/ddeabm",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "ddeabm",
+        "url": "https://github.com/jacobwilliams/ddeabm"
+      },
+      "license": {
+        "label": "BSD-3-Clause modernization; SLATEC public-domain components",
+        "spdx_expression": null,
+        "revision": "dba70c8c65388638662df2694339c5ba7feaf12a",
+        "reviewed_on": "2026-11-07",
+        "notes": "LICENSE supplies BSD three-clause modernization terms and separately identifies SLATEC public-domain components. This scoped review preserves both provenance statements.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jacobwilliams/ddeabm/blob/dba70c8c65388638662df2694339c5ba7feaf12a/LICENSE",
+            "sha256": "61c4bbaa32472cd652283619567d0b50dd09a483e61fcc5b4735c0b365cdd0f0"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/ddeabm/blob/dba70c8c65388638662df2694339c5ba7feaf12a/README.md",
+            "sha256": "92eebe87a3ca80c5f74db32351a7008946044724d846de793cd9a2ebc2229e54"
+          },
+          {
+            "path": "src/ddeabm_module.F90",
+            "url": "https://github.com/jacobwilliams/ddeabm/blob/dba70c8c65388638662df2694339c5ba7feaf12a/src/ddeabm_module.F90",
+            "sha256": "d2a2492a5bf5c2c7bb4d91752b8d4dd684a985342087cf21b745f79cc9025d95"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "I1a1b",
+          "level": "source-reviewed",
+          "revision": "dba70c8c65388638662df2694339c5ba7feaf12a",
+          "reviewed_on": "2026-11-07",
+          "notes": "DDEABM_CLASS exposes a variable-step/order Adams predictor-corrector workflow with retained object history and callback/reporting modes. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/ddeabm_module.F90",
+              "url": "https://github.com/jacobwilliams/ddeabm/blob/dba70c8c65388638662df2694339c5ba7feaf12a/src/ddeabm_module.F90",
+              "sha256": "d2a2492a5bf5c2c7bb4d91752b8d4dd684a985342087cf21b745f79cc9025d95"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "initialize",
+              "role": "public-entry-point",
+              "module": "ddeabm_module",
+              "derived_type": "ddeabm_class",
+              "summary": "Declare TYPE(ddeabm_class) :: solver from ddeabm_module. Configure NEQ, maximum allowed steps MAXNUM and derivative callback DF(ME,T,X,XDOT), with CLASS(DDEABM_CLASS) ME and state arrays of length NEQ. RTOL/ATOL are required rank-one arrays, either one element each or both length NEQ; use matching DDEABM_RK (REAL64 default). Optional REPORT is needed for reporting integration mode. Optional initial-step controls select an estimator or positive user step size. Initialization stores callbacks and multistep history; retain the object between continuation calls and reinitialize for a new problem. The initializer exposes no success-status argument, so caller dimensions/controls must be consistent. The passed object ME in the linked implementation is supplied implicitly by solver%; do not pass it again.",
+              "signature": "CALL solver%initialize(NEQ,MAXNUM,DF,RTOL,ATOL[,REPORT,INITIAL_STEP_MODE,INITIAL_STEP_SIZE])",
+              "path": "src/ddeabm_module.F90",
+              "line_start": 410,
+              "line_end": 528,
+              "declarations": [
+                {
+                  "path": "src/ddeabm_module.F90",
+                  "line_start": 414,
+                  "line_end": 426
+                },
+                {
+                  "path": "src/ddeabm_module.F90",
+                  "line_start": 44,
+                  "line_end": 54
+                },
+                {
+                  "path": "src/ddeabm_module.F90",
+                  "line_start": 177,
+                  "line_end": 182
+                },
+                {
+                  "path": "src/ddeabm_module.F90",
+                  "line_start": 268,
+                  "line_end": 294
+                }
+              ]
+            },
+            {
+              "procedure": "integrate",
+              "role": "public-entry-point",
+              "module": "ddeabm_module",
+              "derived_type": "ddeabm_class",
+              "summary": "Declare TYPE(ddeabm_class) :: solver from ddeabm_module. Advance T/Y(NEQ) toward TOUT after INITIALIZE, inspecting mandatory IDID. Optional TSTOP precedes IDID in the formal list: when omitting TSTOP, pass IDID=... by keyword. INTEGRATION_MODE defaults 1; mode 2 requires a registered REPORT callback and may use optional TSTEP for fixed report spacing (not a fixed internal numerical step). Positive IDID values describe permitted step/endpoint returns; negative values indicate errors and need interpretation from the integrator. Inspect returned T as well as IDID. Retain solver history for continuation. Optional TSTOP restricts overshooting a forbidden time; inconsistent modes/report callbacks return -33. The passed object ME in the linked implementation is supplied implicitly by solver%; do not pass it again.",
+              "signature": "CALL solver%integrate(T,Y,TOUT,[TSTOP],IDID,[INTEGRATION_MODE],[TSTEP])",
+              "path": "src/ddeabm_module.F90",
+              "line_start": 680,
+              "line_end": 831,
+              "declarations": [
+                {
+                  "path": "src/ddeabm_module.F90",
+                  "line_start": 684,
+                  "line_end": 703
+                },
+                {
+                  "path": "src/ddeabm_module.F90",
+                  "line_start": 44,
+                  "line_end": 54
+                },
+                {
+                  "path": "src/ddeabm_module.F90",
+                  "line_start": 177,
+                  "line_end": 182
+                },
+                {
+                  "path": "src/ddeabm_module.F90",
+                  "line_start": 268,
+                  "line_end": 294
                 }
               ]
             }
@@ -1686,6 +2828,132 @@
                   "path": "src/polyroots_module.F90",
                   "line_start": 30,
                   "line_end": 40
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "simulated-annealing": {
+      "id": "github:jacobwilliams/simulated-annealing",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "simulated-annealing",
+        "url": "https://github.com/jacobwilliams/simulated-annealing"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "a2fa094d1ee39525c7e081cfd67866975e9e1dc5",
+        "reviewed_on": "2026-11-07",
+        "notes": "The pinned LICENSE.txt supplies BSD three-clause terms for Jacob Williams modernization. This review concerns the supplied notice and the inspected annealing interfaces.",
+        "evidence": [
+          {
+            "path": "LICENSE.txt",
+            "url": "https://github.com/jacobwilliams/simulated-annealing/blob/a2fa094d1ee39525c7e081cfd67866975e9e1dc5/LICENSE.txt",
+            "sha256": "32d94f6ac7b6b6f980bd4b989e29a69d1f730bcdf4a1bc10edced6371529ca85"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/simulated-annealing/blob/a2fa094d1ee39525c7e081cfd67866975e9e1dc5/README.md",
+            "sha256": "0549244b3a7f4971e4d85de4280df2fd993c38d388e7a0e3b2a71f92e9ba42c2"
+          },
+          {
+            "path": "src/simulated_annealing.F90",
+            "url": "https://github.com/jacobwilliams/simulated-annealing/blob/a2fa094d1ee39525c7e081cfd67866975e9e1dc5/src/simulated_annealing.F90",
+            "sha256": "6d95fe0704e9700a79fa37a23e5caadbb3f033a437d26ef0642b12bc7c61cb74"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "G2i",
+          "level": "source-reviewed",
+          "revision": "a2fa094d1ee39525c7e081cfd67866975e9e1dc5",
+          "reviewed_on": "2026-11-07",
+          "notes": "The object implements bounded derivative-free simulated annealing with explicit stochastic controls, callback evaluation statuses and a best-point output. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/simulated_annealing.F90",
+              "url": "https://github.com/jacobwilliams/simulated-annealing/blob/a2fa094d1ee39525c7e081cfd67866975e9e1dc5/src/simulated_annealing.F90",
+              "sha256": "6d95fe0704e9700a79fa37a23e5caadbb3f033a437d26ef0642b12bc7c61cb74"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "initialize",
+              "role": "public-entry-point",
+              "module": "simulated_annealing_module",
+              "derived_type": "simulated_annealing_type",
+              "summary": "Declare TYPE(simulated_annealing_type) :: solver from simulated_annealing_module. Register FCN(ME,X,F,ISTAT) and N, LB(N), UB(N), matching SIMANN_WP (REAL64 default). The callback takes CLASS(SIMULATED_ANNEALING_TYPE), returns scalar F and status 0 valid, -1 reject this trial, or -2 stop. The default objective direction is minimization; optional MAXIMIZE changes it. Bounds must be consistent or initialization ERROR STOPs. Optional controls include adaptation, evaluation budget, two random seeds and repeated resets. There is no initializer status output. Keep the registered callback alive. This is stochastic search, not a guarantee of finding a global optimum. The passed object ME in the linked implementation is supplied implicitly by solver%; do not pass it again.",
+              "signature": "CALL solver%initialize(FCN,N,LB,UB[,C,MAXIMIZE,EPS,NS,NT,NEPS,MAXEVL,IPRINT,ISEED1,ISEED2,STEP_MODE,VMS,IUNIT,USE_INITIAL_GUESS,N_RESETS,OPTIMAL_F_SPECIFIED,OPTIMAL_F,OPTIMAL_F_TOL])",
+              "path": "src/simulated_annealing.F90",
+              "line_start": 222,
+              "line_end": 294,
+              "declarations": [
+                {
+                  "path": "src/simulated_annealing.F90",
+                  "line_start": 230,
+                  "line_end": 255
+                },
+                {
+                  "path": "src/simulated_annealing.F90",
+                  "line_start": 47,
+                  "line_end": 56
+                },
+                {
+                  "path": "src/simulated_annealing.F90",
+                  "line_start": 59,
+                  "line_end": 90
+                },
+                {
+                  "path": "src/simulated_annealing.F90",
+                  "line_start": 167,
+                  "line_end": 168
+                },
+                {
+                  "path": "src/simulated_annealing.F90",
+                  "line_start": 179,
+                  "line_end": 193
+                }
+              ]
+            },
+            {
+              "procedure": "optimize",
+              "role": "public-entry-point",
+              "module": "simulated_annealing_module",
+              "derived_type": "simulated_annealing_type",
+              "summary": "Declare TYPE(simulated_annealing_type) :: solver from simulated_annealing_module. Run the configured search with X(N) initial/final point, temperature reduction factor RT, positive initial temperature T, and adaptive step vector VM(N). T/VM are input/output and can be changed by the run. XOPT(N)/FOPT return the best candidate; NACC/NFCNEV count accepted/total evaluations. Inspect required IER: 0 stopping criteria, 1 evaluation budget, 3 invalid initial temperature, 4 user stop. Set sensible RT/T/VM and use seed controls when comparing runs. Normal termination is not a numerical proof of global optimality. The passed object ME in the linked implementation is supplied implicitly by solver%; do not pass it again.",
+              "signature": "CALL solver%optimize(X,RT,T,VM,XOPT,FOPT,NACC,NFCNEV,IER)",
+              "path": "src/simulated_annealing.F90",
+              "line_start": 370,
+              "line_end": 689,
+              "declarations": [
+                {
+                  "path": "src/simulated_annealing.F90",
+                  "line_start": 374,
+                  "line_end": 402
+                },
+                {
+                  "path": "src/simulated_annealing.F90",
+                  "line_start": 47,
+                  "line_end": 56
+                },
+                {
+                  "path": "src/simulated_annealing.F90",
+                  "line_start": 59,
+                  "line_end": 90
+                },
+                {
+                  "path": "src/simulated_annealing.F90",
+                  "line_start": 167,
+                  "line_end": 168
+                },
+                {
+                  "path": "src/simulated_annealing.F90",
+                  "line_start": 179,
+                  "line_end": 193
                 }
               ]
             }
@@ -2642,6 +3910,165 @@
         }
       ]
     },
+    "qdldl-fortran": {
+      "id": "github:jacobwilliams/qdldl-fortran",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "qdldl-fortran",
+        "url": "https://github.com/jacobwilliams/qdldl-fortran"
+      },
+      "license": {
+        "label": "Apache-2.0 library; BSD-3-Clause AMD component",
+        "spdx_expression": null,
+        "revision": "8ebdd7fa1075bfb89115d0955806b0996b6b29d5",
+        "reviewed_on": "2026-11-07",
+        "notes": "README identifies the library and upstream QDLDL as Apache-2.0 and its modernized SuiteSparse AMD component as BSD-3-Clause. LICENSE supplies Apache terms; preserve component notices rather than flatten the AMD contribution into Apache-only licensing.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jacobwilliams/qdldl-fortran/blob/8ebdd7fa1075bfb89115d0955806b0996b6b29d5/LICENSE",
+            "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/qdldl-fortran/blob/8ebdd7fa1075bfb89115d0955806b0996b6b29d5/README.md",
+            "sha256": "308878a48de8075ab41561744d4e1e1b8aed17c2ac7857998545e627a141ef2e"
+          },
+          {
+            "path": "src/qdldl_module.f90",
+            "url": "https://github.com/jacobwilliams/qdldl-fortran/blob/8ebdd7fa1075bfb89115d0955806b0996b6b29d5/src/qdldl_module.f90",
+            "sha256": "afbd0beefc25c5998522cd2ba8f86fbb96b40848edcf0132d5784ac697df75b9"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "D2b4",
+          "level": "source-reviewed",
+          "revision": "8ebdd7fa1075bfb89115d0955806b0996b6b29d5",
+          "reviewed_on": "2026-11-07",
+          "notes": "The QDLDL object separates symmetric sparse analysis, nonpivoted LDLT factorization and in-place solve. Quasi-definite and pivot-safety limitations are explicit. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/qdldl_module.f90",
+              "url": "https://github.com/jacobwilliams/qdldl-fortran/blob/8ebdd7fa1075bfb89115d0955806b0996b6b29d5/src/qdldl_module.f90",
+              "sha256": "afbd0beefc25c5998522cd2ba8f86fbb96b40848edcf0132d5784ac697df75b9"
+            },
+            {
+              "path": "src/qdldl_kinds.F90",
+              "url": "https://github.com/jacobwilliams/qdldl-fortran/blob/8ebdd7fa1075bfb89115d0955806b0996b6b29d5/src/qdldl_kinds.F90",
+              "sha256": "32d1f54e4377d7c8e126aae2909b86633771651a60832ac3fd6bfb06adbc1002"
+            },
+            {
+              "path": "README.md",
+              "url": "https://github.com/jacobwilliams/qdldl-fortran/blob/8ebdd7fa1075bfb89115d0955806b0996b6b29d5/README.md",
+              "sha256": "308878a48de8075ab41561744d4e1e1b8aed17c2ac7857998545e627a141ef2e"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "analyze",
+              "role": "public-entry-point",
+              "module": "qdldl_module",
+              "derived_type": "qdldl_type",
+              "summary": "Declare TYPE(qdldl_type) :: solver from qdldl_module. Analyze a symmetric sparse pattern once, using INTEGER(QDLDL_IP) N and equal-length 1-based IROW/ICOL arrays. Entries may use either triangle; each off-diagonal entry represents its symmetric pair and duplicates are summed. Supplying both triangles with full values doubles off-diagonals; supply one value per symmetric entry (or zeros for the redundant triangle). Required default-integer ISTAT should equal QDLDL_SUCCESS before FACTOR. Optional PERM is a permutation of 1..N and selects user ordering; ORDERING chooses a public QDLDL_ORDER_* constant otherwise. Structural analysis and workspace allocation are stored in the object. The passed object ME in the linked implementation is supplied implicitly by solver%; do not pass it again.",
+              "signature": "CALL solver%analyze(N,IROW,ICOL,ISTAT[,PERM,ORDERING])",
+              "path": "src/qdldl_module.f90",
+              "line_start": 221,
+              "line_end": 275,
+              "declarations": [
+                {
+                  "path": "src/qdldl_module.f90",
+                  "line_start": 223,
+                  "line_end": 230
+                },
+                {
+                  "path": "src/qdldl_module.f90",
+                  "line_start": 45,
+                  "line_end": 55
+                },
+                {
+                  "path": "src/qdldl_module.f90",
+                  "line_start": 157,
+                  "line_end": 171
+                },
+                {
+                  "path": "src/qdldl_kinds.F90",
+                  "line_start": 10,
+                  "line_end": 34
+                }
+              ]
+            },
+            {
+              "procedure": "factor",
+              "role": "public-entry-point",
+              "module": "qdldl_module",
+              "derived_type": "qdldl_type",
+              "summary": "Declare TYPE(qdldl_type) :: solver from qdldl_module. Numerically factor after successful ANALYZE. VAL(:) must follow the original IROW/ICOL order and length and use QDLDL_WP (REAL64 default). Duplicate values are summed into the symmetric matrix. A new value array with the same pattern can reuse analysis. Mandatory ISTAT reports success, missing analysis, invalid sizes, nonfinite entries or a zero pivot. This LDLT implementation does not pivot; its robust intended scope is quasi-definite systems, not arbitrary symmetric-indefinite matrices. Optional regularization is configured by object components and may alter the factored matrix. The passed object ME in the linked implementation is supplied implicitly by solver%; do not pass it again.",
+              "signature": "CALL solver%factor(VAL,ISTAT)",
+              "path": "src/qdldl_module.f90",
+              "line_start": 592,
+              "line_end": 713,
+              "declarations": [
+                {
+                  "path": "src/qdldl_module.f90",
+                  "line_start": 594,
+                  "line_end": 599
+                },
+                {
+                  "path": "src/qdldl_module.f90",
+                  "line_start": 45,
+                  "line_end": 55
+                },
+                {
+                  "path": "src/qdldl_module.f90",
+                  "line_start": 157,
+                  "line_end": 171
+                },
+                {
+                  "path": "src/qdldl_kinds.F90",
+                  "line_start": 10,
+                  "line_end": 34
+                }
+              ]
+            },
+            {
+              "procedure": "solve",
+              "role": "public-entry-point",
+              "module": "qdldl_module",
+              "derived_type": "qdldl_type",
+              "summary": "Declare TYPE(qdldl_type) :: solver from qdldl_module. Solve after a successful FACTOR, replacing B(N) in place by X. B and the returned solution use the original matrix ordering; permutations are applied internally. Match QDLDL_WP and inspect mandatory ISTAT, including not-factored, wrong-size and nonfinite-data diagnostics. Optional integer REFINE limits refinement steps (otherwise object default MAX_REFINE applies). Preserve a copy of the right-hand side for an independent residual check; a successful return is not a bound on forward error. The passed object ME in the linked implementation is supplied implicitly by solver%; do not pass it again.",
+              "signature": "CALL solver%solve(B,ISTAT[,REFINE])",
+              "path": "src/qdldl_module.f90",
+              "line_start": 724,
+              "line_end": 818,
+              "declarations": [
+                {
+                  "path": "src/qdldl_module.f90",
+                  "line_start": 726,
+                  "line_end": 732
+                },
+                {
+                  "path": "src/qdldl_module.f90",
+                  "line_start": 45,
+                  "line_end": 55
+                },
+                {
+                  "path": "src/qdldl_module.f90",
+                  "line_start": 157,
+                  "line_end": 171
+                },
+                {
+                  "path": "src/qdldl_kinds.F90",
+                  "line_start": 10,
+                  "line_end": 34
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "carlson-elliptic-integrals": {
       "id": "github:jacobwilliams/carlson-elliptic-integrals",
       "repository": {
@@ -3249,16 +4676,25 @@
   "report": {
     "matched": [
       "fftpack",
+      "roots-fortran",
+      "bspline-fortran",
       "pchip",
       "quadpack",
+      "quadrature-fortran",
+      "dop853",
       "minpack",
+      "numdiff",
       "fmin",
+      "slsqp",
       "lbfgsb",
       "specfun",
+      "lsqr",
+      "ddeabm",
       "powellopt",
       "fstats",
       "lsmr",
       "polyroots-fortran",
+      "simulated-annealing",
       "minres",
       "specfunc-fullerton",
       "lib_statistics",
@@ -3268,6 +4704,7 @@
       "forinv",
       "foreig",
       "forsvd",
+      "qdldl-fortran",
       "carlson-elliptic-integrals",
       "fortran-bessels",
       "econ-toolchain",
@@ -3281,13 +4718,9 @@
       "pyplot-fortran",
       "json-fortran",
       "toml-f",
-      "roots-fortran",
       "m_strings",
       "stdlib",
-      "bspline-fortran",
       "finterp",
-      "quadrature-fortran",
-      "dop853",
       "mersenne-twister-fortran",
       "fortran-search-and-sort",
       "stringsort",
@@ -3296,7 +4729,6 @@
       "argv-fortran",
       "popen-fortran",
       "fortran_function_parser",
-      "numdiff",
       "csv-fortran",
       "datetime-fortran",
       "m_io",
@@ -3319,7 +4751,6 @@
       "m_match",
       "m_list",
       "m_color",
-      "slsqp",
       "regridpack",
       "splpak",
       "fortran-astrodynamics-toolkit",
@@ -3327,10 +4758,8 @@
       "ferror",
       "m_framework",
       "fitpack",
-      "lsqr",
       "mpfun2020-var1",
       "rklib",
-      "ddeabm",
       "dvode",
       "pikaia",
       "io-fortran-library",
@@ -3346,7 +4775,6 @@
       "lightkrylov",
       "fortran-sqlite3",
       "geodesic-fortran",
-      "simulated-annealing",
       "odrpack95",
       "pointsets",
       "flint",
@@ -3419,7 +4847,6 @@
       "dde_solver",
       "spherepack",
       "qdutillib",
-      "qdldl-fortran",
       "lusol",
       "dynamics",
       "diffstruc",
