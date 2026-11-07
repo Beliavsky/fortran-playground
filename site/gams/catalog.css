@@ -40,6 +40,8 @@ button { cursor: pointer; }
 .owner { margin-top: 0; }
 .codes { display: flex; gap: 8px; flex-wrap: wrap; }
 .codes a { background: var(--bg); padding: 1px 8px; border: 1px solid var(--line); border-radius: 4px; font-size: .85rem; text-decoration: none; }
+.independent-review { overflow-wrap: anywhere; }
+.independent-review pre { white-space: pre-wrap; overflow-wrap: anywhere; }
 .actions { font-size: .92rem; }
 .label { font-weight: 650; }
 .procedures { font-size: .92rem; }

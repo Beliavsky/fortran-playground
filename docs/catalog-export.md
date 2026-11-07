@@ -1,5 +1,65 @@
 # Reusable Fortran software catalog
 
+## Independent review imports
+
+The broader catalog publishes `reviewed-metadata.json` at its site root on every
+build. It exports only its independently maintained local review layer, excluding
+playground imports, private helpers, hosted checks and local-driver verification
+records. Uncompiled calling sketches retain that label. Each feed has a
+deterministic SHA-256 snapshot identifier; reviews retain commit pins, dates,
+source file hashes and argument-declaration ranges.
+
+Refresh selected-package metadata from the published feed:
+
+```sh
+python xcatalog_reviews.py
+```
+
+Or use a freshly built local broader catalog:
+
+```sh
+python xcatalog_reviews.py --feed ../fortran-gams-catalog/_site/reviewed-metadata.json
+```
+
+The command validates the full feed, matches canonical GitHub repository names
+and **exact pinned commits**, and atomically replaces
+`fpm_catalog/catalog-reviews.json`. It imports only repositories already selected
+in `fpm_catalog.json`; it does not add packages, classifications, checked examples
+or compiler support. License and procedure reviews are matched independently by
+revision. The saved report lists matches, mismatched revisions (including partial
+matches), and packages without an independent review. An error leaves the prior
+snapshot intact. HTTPS redirects cannot downgrade to HTTP, and feeds are limited
+to 32 MiB. The command requires no third-party Python packages.
+
+Commit the refreshed snapshot and push to publish the static pages. Site builds
+read it offline and recheck pins: a later package revision change automatically
+hides stale review records until a matching refresh. The original portable
+playground export stays separate, so imported reviews cannot circulate back as
+new independently authored evidence. This metadata does not change execution,
+precompiled artifacts, verification labels, or the public FPM application.
+
+Cards show a matching reviewed license and expandable module-qualified calling
+interfaces. Package details also show review scope, limitations and explicitly
+unchecked calling sketches. Signatures link to pinned argument declarations.
+The broader catalog remains the source for these reviews; new reviews need to be
+recorded there before they can appear here. The initial saved snapshot has no
+matches: the broader catalog's existing selected-FPM records are playground
+imports, not independent reviews.
+
+For local corrections, create the optional
+`fpm_catalog/catalog-review-overrides.json`:
+
+```json
+{"schema_version": 1, "packages": {"package-id-to-hide": null}}
+```
+
+A null value hides that package's imported review. A full validated project
+record replaces it; use the structure in the saved feed (canonical repository,
+license and source-reviewed classifications with pinned evidence). Overrides are
+applied after the snapshot, remain subject to exact revision matching, and are
+never overwritten by refresh. These are corrections to the imported metadata,
+not new numerical verification claims.
+
 The playground publishes a portable metadata feed covering its selected packages. A receiving catalog can add GitHub projects using any build system, including projects without FPM manifests or playground support.
 
 The [standalone GAMS browsing site](https://beliavsky.github.io/fortran-playground/gams/) uses this same feed. The feed and importer also support a separate, broader catalog; see [GAMS site maintenance](gams-site.md).

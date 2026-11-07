@@ -43,6 +43,15 @@ The [driver coverage audit and next priorities](docs/gams-driver-audit.md) group
 
 A [versioned software catalog export](docs/catalog-export.md) makes descriptions, GitHub metadata, curated topics, GAMS classifications, and example references reusable outside the playground. Pages builds publish it automatically; a separate catalog can import updates while preserving its own entries and annotations, including non-FPM software. Generate a local snapshot with `python xcatalog_export.py`.
 
+The GAMS package pages can also display independently maintained licenses and
+calling interfaces from the broader catalog. Refresh that saved metadata with
+`python xcatalog_reviews.py`, then commit `fpm_catalog/catalog-reviews.json` and
+push to publish it. This requires no Modal redeployment or package rebuild.
+For a local catalog checkout, use
+`python xcatalog_reviews.py --feed ../fortran-gams-catalog/_site/reviewed-metadata.json`
+after running `python xbuild.py` in that checkout. Normal site builds remain
+offline. See [the review import policy](docs/catalog-export.md#independent-review-imports).
+
 The [Fortran software catalog by GAMS class](https://beliavsky.github.io/fortran-playground/gams/) provides standalone class and package pages, keyword search, pinned source evidence and links to run examples. [Repository owner pages](https://beliavsky.github.io/fortran-playground/gams/authors/) list packages by account, with public GitHub display names included in search. [Curated name attributions](docs/name-attributions.md) document manual account mappings and separate source-author credits with evidence. Pages builds generate the catalog from the same classifications as the FPM playground, with no backend redeployment. See [catalog maintenance and preview](docs/gams-site.md).
 
 The [combined GitHub/name mapping table](docs/github-name-mappings.md) lists all selected repository owners, their catalog display names, evidence and review status, with links to their packages.

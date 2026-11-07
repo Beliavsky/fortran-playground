@@ -6,6 +6,7 @@ from xml.sax.saxutils import escape as xml_escape
 
 from catalog_export import BASE_URL, ROOT, owner_display_name
 from xpackage_gams import ancestors, class_order, class_evidence
+from catalog_reviews import load_reviews, matching_review
 
 
 def e(value):
@@ -17,10 +18,17 @@ def link(url, label, **attrs):
     return f'<a href="{e(url)}"{attributes}>{e(label)}</a>'
 
 
-def generate_gams_site(destination, feed, *, asset_version=None):
+def qualified_procedure(procedure):
+    return ((procedure.get('module', '') + '::' if procedure.get('module') else '')
+            + (procedure.get('derived_type', '') + '%' if procedure.get('derived_type') else '')
+            + procedure['procedure'])
+
+
+def generate_gams_site(destination, feed, *, asset_version=None, reviews=None):
     """Render the already validated feed; no service calls or package builds."""
     destination = Path(destination)
     tree = feed['taxonomies']['gams']['classes']
+    reviews = load_reviews() if reviews is None else reviews
     projects = sorted(feed['projects'], key=lambda p: p['name'].casefold())
     by_id = {p['id']: p for p in projects}
     used_by = {}
@@ -120,17 +128,72 @@ def generate_gams_site(destination, feed, *, asset_version=None):
     def class_links(codes, prefix, *, hierarchy=False):
         return ' '.join(link(prefix + code + '/', class_label(code, hierarchy=hierarchy)) for code in codes)
 
+    def independent_review(project, code=None, *, detailed=False):
+        review = matching_review(project, reviews)
+        if not review:
+            return ''
+        repository = review['repository']['url']
+        origin = 'https://beliavsky.github.io/fortran-gams-catalog/projects/' + project['id'][7:] + '/'
+        result = ''
+        license_data = review.get('license')
+        if license_data:
+            result += '<p><span class="label">Reviewed license:</span> ' + link(
+                license_data['evidence'][0]['url'], license_data['label']) + '</p>'
+            if detailed:
+                result += '<p>' + e(license_data['notes']) + '</p>'
+        claims = [c for c in review['classifications'] if code is None or
+                  (c['code'] in tree and code in ancestors(tree, c['code']))]
+        interfaces = []
+        for claim in claims:
+            for procedure in claim['procedures']:
+                name = qualified_procedure(procedure)
+                source = repository + '/blob/' + claim['revision'] + '/' + quote(procedure['path'], safe='/')
+                item = '<p><strong>' + e(name) + '</strong> &mdash; ' + link(
+                    source + f'#L{procedure["line_start"]}-L{procedure["line_end"]}',
+                    procedure['path'] + ':' + str(procedure['line_start'])) + '</p>'
+                if procedure.get('summary'):
+                    item += '<p>' + e(procedure['summary']) + '</p>'
+                if detailed:
+                    scope = class_label(claim['code'], hierarchy=True) if claim['code'] in tree else claim['code']
+                    item += '<p><span class="label">Review scope:</span> ' + e(scope) + '</p>'
+                if procedure.get('signature'):
+                    declaration = procedure['declarations'][0]
+                    url = repository + '/blob/' + claim['revision'] + '/' + quote(declaration['path'], safe='/')
+                    url += f'#L{declaration["line_start"]}-L{declaration["line_end"]}'
+                    item += '<p>Usage (click for argument declarations):</p><pre><code>' + link(
+                        url, procedure['signature']) + '</code></pre>'
+                item += '<p>Source reviewed ' + e(claim['reviewed_on']) + ' at ' + link(
+                    repository + '/tree/' + claim['revision'], claim['revision'][:12]) + '.</p>'
+                if detailed:
+                    item += '<p>' + e(claim['notes']) + '</p>'
+                    if procedure.get('usage'):
+                        item += '<p>Calling sketch (not a checked playground driver):</p><pre><code>' + e(
+                            procedure['usage']) + '</code></pre><p>' + e(procedure.get('usage_notes', '')) + '</p>'
+                interfaces.append(item)
+        if interfaces:
+            result += '<details><summary>Independent calling interfaces and source review</summary>'
+            result += ''.join(interfaces) + '</details>'
+        if not result:
+            return ''
+        return ('<section class="independent-review">' + result + '<p>' + link(origin, 'Independent review and license evidence')
+                + ' &middot; Source inspection is separate from the playground\'s checked drivers.</p></section>')
+
     def card(project, prefix, code=None):
         curation = project['curation']
         owner = project['repository']['owner'].lower()
         records = curation.get('procedures', [])
         matched = [p for p in records if code is None or any(code in ancestors(tree, c) for c in p['gams_codes'])]
+        independent = matching_review(project, reviews) or {}
+        extra_search = [(independent.get('license') or {}).get('label', '')]
+        for claim in independent.get('classifications', []):
+            if code is None or (claim['code'] in tree and code in ancestors(tree, claim['code'])):
+                extra_search.extend(qualified_procedure(p) for p in claim['procedures'])
         search = ' '.join([project['name'], owner_label(owner), project['repository']['owner'], project['repository']['name'],
                            owners.get(owner, {}).get('display_name') or '', *credit_names([project]),
                            project['description'], *project.get('categories', []),
                            *project.get('github', {}).get('topics', []), *curation.get('topics', []),
                            *[code+' '+tree[code]['label'] for code in curation['gams_codes']],
-                           *[p['module']+' '+p['procedure'] for p in records]])
+                           *[p['module']+' '+p['procedure'] for p in records], *extra_search])
         procedures = ''
         if code and matched:
             procedures = '<p class="procedures"><span class="label">Matching APIs:</span> ' + e('; '.join(p['procedure'] for p in matched)) + '</p>'
@@ -164,7 +227,7 @@ def generate_gams_site(destination, feed, *, asset_version=None):
 <h3>{link(prefix+package_path(project), project['name'])}</h3>
 <p class="owner">{link(prefix+owner_path(owner), owner_label(owner), title='Repository owner')} / {e(project['repository']['name'])}</p>
 {credit}
-<p>{e(project['description'])}</p>{procedures}{assessment}
+<p>{e(project['description'])}</p>{procedures}{assessment}{independent_review(project, code)}
 <p class="codes">{class_links(curation['gams_codes'], prefix)}</p>
 <p class="actions">{' · '.join(actions)}</p>{checked_drivers}</article>'''
 
@@ -318,7 +381,7 @@ def generate_gams_site(destination, feed, *, asset_version=None):
             procedures += '<p>Uncertain: no procedure-level mapping is recorded yet. These discovery classifications need source review.</p>'
         procedures += '</section>'
         page(package_path(project), project['name'], project['description'],
-             intro+name_attribution(project['repository']['owner'].lower(), [project])+codes+details+dependency_section(project)+procedures, depth=2)
+             intro+name_attribution(project['repository']['owner'].lower(), [project])+codes+details+independent_review(project, detailed=True)+dependency_section(project)+procedures, depth=2)
 
     sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
     sitemap += ''.join('<url><loc>'+xml_escape(url)+'</loc></url>\n' for url in written) + '</urlset>\n'
