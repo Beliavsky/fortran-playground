@@ -2,7 +2,7 @@
   "schema_version": 1,
   "publisher": "fortran-gams-catalog-independent-reviews",
   "source_url": "https://beliavsky.github.io/fortran-gams-catalog/reviewed-metadata.json",
-  "source_snapshot_id": "sha256:d783baabb185bcb3ff7d83c428ec198e62f8559d3f49ae311ae0e252cdc44023",
+  "source_snapshot_id": "sha256:f88a6aa956be04e256aef6020fe49b6689b0a259e5d8da82df34826522a9debb",
   "packages": {
     "test-drive": {
       "id": "github:fortran-lang/test-drive",
@@ -14219,6 +14219,94 @@
         }
       ]
     },
+    "conmin": {
+      "id": "github:jacobwilliams/conmin",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "conmin",
+        "url": "https://github.com/jacobwilliams/conmin"
+      },
+      "license": {
+        "label": "BSD-3-Clause; public-domain predecessor",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "201f3b29f023baf7bef13ad8f49b906ffb1c7757",
+        "reviewed_on": "2026-11-07",
+        "notes": "LICENSE.md records the public-domain US Government original and Alan Miller conversion, followed by Jacob Williams BSD three-clause terms for the modern implementation.",
+        "evidence": [
+          {
+            "path": "LICENSE.md",
+            "url": "https://github.com/jacobwilliams/conmin/blob/201f3b29f023baf7bef13ad8f49b906ffb1c7757/LICENSE.md",
+            "sha256": "ae5a501d05249ba7ee4193f58d30f8d047625e3f340de15f058055b3ebbf4dcf"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/conmin/blob/201f3b29f023baf7bef13ad8f49b906ffb1c7757/README.md",
+            "sha256": "ae0144c7ba91ecfeff964ffc449a7c572722d7ebc9f422c40bc7f588c154260f"
+          },
+          {
+            "path": "src/conmin.F90",
+            "url": "https://github.com/jacobwilliams/conmin/blob/201f3b29f023baf7bef13ad8f49b906ffb1c7757/src/conmin.F90",
+            "sha256": "c15c117b0afcd10355f7abf8c9d3e123edc5d3a8fed8a94f90de6ec8c21214a0"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "G2",
+          "level": "source-reviewed",
+          "revision": "201f3b29f023baf7bef13ad8f49b906ffb1c7757",
+          "reviewed_on": "2026-11-07",
+          "notes": "The constrained minimizer requires reverse communication, object controls and dimensioned caller-owned workspaces. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/conmin.F90",
+              "url": "https://github.com/jacobwilliams/conmin/blob/201f3b29f023baf7bef13ad8f49b906ffb1c7757/src/conmin.F90",
+              "sha256": "c15c117b0afcd10355f7abf8c9d3e123edc5d3a8fed8a94f90de6ec8c21214a0"
+            },
+            {
+              "path": "test/EXAMPLE1.F90",
+              "url": "https://github.com/jacobwilliams/conmin/blob/201f3b29f023baf7bef13ad8f49b906ffb1c7757/test/EXAMPLE1.F90",
+              "sha256": "9e6e7544e81c58d52e81988b2177ccd9a57d150948276b55aa9fb14ea05df7cb"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "solve",
+              "role": "public-entry-point",
+              "module": "conmin_module",
+              "derived_type": "conmin_class",
+              "summary": "Declare TYPE(conmin_class) :: solver from conmin_module. Reverse-communication minimization, not a one-call callback wrapper. Initialize NDV/NCON/NSIDE/NFDG/NSCAL and required controls, set IGOTO=0, supply initial X/work arrays, and reenter while honoring INFO/INFOG requests for objective, constraints and gradients. Store objective in the OBJ field; feasible constraints are nonpositive. N1=NDV+2,N2=NCON+2*NDV,N3=NACMX1,N4=MAX(N3,NDV),N5=2*N4. X contains work entries beyond NDV physical variables. Use REAL(CONMIN_WP) and default INTEGER workspaces. An optional report callback is a component, not a SOLVE argument. IGOTO=0 means termination, not an optimality certificate; inspect feasibility/diagnostics. Follow the pinned supplied driver initialization. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%solve(X,VLB,VUB,G,SCAL,DF,A,S,G1,G2,B,C,ISC,IC,MS1,N1,N2,N3,N4,N5)",
+              "path": "src/conmin.F90",
+              "line_start": 275,
+              "line_end": 1266,
+              "declarations": [
+                {
+                  "path": "src/conmin.F90",
+                  "line_start": 286,
+                  "line_end": 359
+                },
+                {
+                  "path": "src/conmin.F90",
+                  "line_start": 26,
+                  "line_end": 44
+                },
+                {
+                  "path": "src/conmin.F90",
+                  "line_start": 46,
+                  "line_end": 259
+                },
+                {
+                  "path": "test/EXAMPLE1.F90",
+                  "line_start": 1,
+                  "line_end": 71
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "opti": {
       "id": "github:konrad1991/opti",
       "repository": {
@@ -14706,6 +14794,125 @@
                   "path": "ctsa/src/ctsa.c",
                   "line_start": 4293,
                   "line_end": 4329
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "odepack": {
+      "id": "github:nicholaswogan/odepack",
+      "repository": {
+        "owner": "Nicholaswogan",
+        "name": "odepack",
+        "url": "https://github.com/Nicholaswogan/odepack"
+      },
+      "license": {
+        "label": "Public-domain declaration (ODEPACK)",
+        "spdx_expression": null,
+        "revision": "d5db96093dc14fff54e10575cc586fa85392b078",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE declares ODEPACK public domain with the UC/LLNL notice/disclaimer. No separate SPDX grant for the modern wrapper was identified in the inspected files. Bundled LAPACK sources retain their own notices.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/Nicholaswogan/odepack/blob/d5db96093dc14fff54e10575cc586fa85392b078/LICENSE",
+            "sha256": "77997f5f91ed2f116926ce6d583ee5a3b7b6458ee95e5361e31366f3987e6956"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/Nicholaswogan/odepack/blob/d5db96093dc14fff54e10575cc586fa85392b078/README.md",
+            "sha256": "ac3cd07bc5f2bb264ddbae10cda72bc8e8158ab1402ccc9464818be762c448f2"
+          },
+          {
+            "path": "src/odepack_mod.f90",
+            "url": "https://github.com/Nicholaswogan/odepack/blob/d5db96093dc14fff54e10575cc586fa85392b078/src/odepack_mod.f90",
+            "sha256": "9d2d19c4a9f6392a9ca6589d3b4e25b032bec4f9481e38bcf3102697ad6b3e8e"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "I1",
+          "level": "source-reviewed",
+          "revision": "d5db96093dc14fff54e10575cc586fa85392b078",
+          "reviewed_on": "2026-11-07",
+          "notes": "LSODA object initialization, integration and diagnostics expose callback state, tolerance ranks and continuation status. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/odepack_mod.f90",
+              "url": "https://github.com/Nicholaswogan/odepack/blob/d5db96093dc14fff54e10575cc586fa85392b078/src/odepack_mod.f90",
+              "sha256": "9d2d19c4a9f6392a9ca6589d3b4e25b032bec4f9481e38bcf3102697ad6b3e8e"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "initialize",
+              "role": "public-entry-point",
+              "module": "odepack_mod",
+              "derived_type": "lsoda_class",
+              "summary": "Declare TYPE(lsoda_class) :: solver from odepack_mod. Initialize NEQ first-order ODEs, retaining callback F(SELF,NEQ,T,Y,YDOT,IERR) with REAL(DP) state/derivatives and IERR>=0 for success; negative requests halt. Callback lifetime must span integration. Required ISTATE follows many optional controls, so use ISTATE= when omitting them. Default JT=2 internally differences a dense Jacobian; banded/user/root options need matching inputs. Check ISTATE>0 and ERROR_MESSAGE. Use a fresh object when changing callback/root configuration; not every saved pointer is reset on reinitialization. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%initialize(F,NEQ,[H0],[HMAX],[HMIN],[IPRINT],[IXPR],[MXSTEP],[MXHNIL],[MXORDN],[MXORDS],[JAC],[JT],[G],[NG],[ML],[MU],ISTATE)",
+              "path": "src/odepack_mod.f90",
+              "line_start": 124,
+              "line_end": 319,
+              "declarations": [
+                {
+                  "path": "src/odepack_mod.f90",
+                  "line_start": 128,
+                  "line_end": 181
+                },
+                {
+                  "path": "src/odepack_mod.f90",
+                  "line_start": 1,
+                  "line_end": 63
+                }
+              ]
+            },
+            {
+              "procedure": "integrate",
+              "role": "public-entry-point",
+              "module": "odepack_mod",
+              "derived_type": "lsoda_class",
+              "summary": "Declare TYPE(lsoda_class) :: solver from odepack_mod. Advance REAL(DP) Y(NEQ) and T toward TOUT, retaining internal integration state. RTOL is scalar; ATOL is a rank-one array of length 1 or NEQ. ITASK=1 is normal endpoint output. Start ISTATE=1 and retain/check returned status under the continuation protocol; negative means failure, and a root return may precede TOUT. ERROR_MESSAGE is exposed, but some internal failures still STOP. This usage scope is ordinary no-root LSODA, not verification of every Jacobian/root variant. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%integrate(Y,T,TOUT,RTOL,ATOL,ITASK,ISTATE)",
+              "path": "src/odepack_mod.f90",
+              "line_start": 322,
+              "line_end": 580,
+              "declarations": [
+                {
+                  "path": "src/odepack_mod.f90",
+                  "line_start": 323,
+                  "line_end": 479
+                },
+                {
+                  "path": "src/odepack_mod.f90",
+                  "line_start": 1,
+                  "line_end": 63
+                }
+              ]
+            },
+            {
+              "procedure": "info",
+              "role": "public-entry-point",
+              "module": "odepack_mod",
+              "derived_type": "lsoda_class",
+              "summary": "Declare TYPE(lsoda_class) :: solver from odepack_mod. Read selected optional diagnostics after valid initialized integration: NST/NFE/NJE counters, H/TCUR, order NQ and method METH (Adams/BDF). Use keywords, e.g. NST=, when requesting a subset. TCUR is internal step time and may differ from output T due to interpolation. TOLSF/IMXER are meaningful under the linked error conditions. This neither advances integration nor replaces ISTATE checks. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%info([H],[TCUR],[TOLSF],[TSW],[NST],[NFE],[NJE],[NQ],[IMXER],[METH])",
+              "path": "src/odepack_mod.f90",
+              "line_start": 583,
+              "line_end": 646,
+              "declarations": [
+                {
+                  "path": "src/odepack_mod.f90",
+                  "line_start": 585,
+                  "line_end": 612
+                },
+                {
+                  "path": "src/odepack_mod.f90",
+                  "line_start": 1,
+                  "line_end": 63
                 }
               ]
             }
@@ -15664,6 +15871,303 @@
         }
       ]
     },
+    "forlab": {
+      "id": "github:zoziha/forlab",
+      "repository": {
+        "owner": "zoziha",
+        "name": "forlab",
+        "url": "https://github.com/zoziha/forlab"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "416e5612167b6133100bef4cec116322890f66f7",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Keurfon Luu MIT terms. Real/integer kinds are compile-time module parameters and must match the library build.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/zoziha/forlab/blob/416e5612167b6133100bef4cec116322890f66f7/LICENSE",
+            "sha256": "72e7fdc971dc0eb447901de708a948a5c364d9aa46880517d9cd58c78facd48e"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/zoziha/forlab/blob/416e5612167b6133100bef4cec116322890f66f7/README.md",
+            "sha256": "c6ae437830636b17f1b39482c64cd4fd209dc249b5f27abfca810b355723c04c"
+          },
+          {
+            "path": "src/forlab.F90",
+            "url": "https://github.com/zoziha/forlab/blob/416e5612167b6133100bef4cec116322890f66f7/src/forlab.F90",
+            "sha256": "4f9be44e66ad2fdb67841ee14d0156b7fa315b137f33333b84abb100f7e48246"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N4",
+          "level": "source-reviewed",
+          "revision": "416e5612167b6133100bef4cec116322890f66f7",
+          "reviewed_on": "2026-11-07",
+          "notes": "Evenly spaced vector construction records endpoint/result precision and minimum count. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/forlab.F90",
+              "url": "https://github.com/zoziha/forlab/blob/416e5612167b6133100bef4cec116322890f66f7/src/forlab.F90",
+              "sha256": "4f9be44e66ad2fdb67841ee14d0156b7fa315b137f33333b84abb100f7e48246"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "linspace",
+              "role": "public-entry-point",
+              "module": "forlab",
+              "summary": "REAL(kind=8) endpoint overload returns allocatable REAL(RPRE) vector of N evenly spaced points including FIRST/LAST. N is INTEGER(IPRE), requiring N>=2 because of division by N-1. RPRE/IPRE are build parameters (both 4 at this pin): double endpoints do not imply a double result. No count/status validation.",
+              "signature": "VALUE = linspace(FIRST,LAST,N)",
+              "path": "src/forlab.F90",
+              "line_start": 5043,
+              "line_end": 5054,
+              "declarations": [
+                {
+                  "path": "src/forlab.F90",
+                  "line_start": 5044,
+                  "line_end": 5046
+                },
+                {
+                  "path": "src/forlab.F90",
+                  "line_start": 18,
+                  "line_end": 53
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "L1",
+          "level": "source-reviewed",
+          "revision": "416e5612167b6133100bef4cec116322890f66f7",
+          "reviewed_on": "2026-11-07",
+          "notes": "The one-vector covariance generic exposes sample/population variance normalization. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/forlab.F90",
+              "url": "https://github.com/zoziha/forlab/blob/416e5612167b6133100bef4cec116322890f66f7/src/forlab.F90",
+              "sha256": "4f9be44e66ad2fdb67841ee14d0156b7fa315b137f33333b84abb100f7e48246"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "cov",
+              "role": "public-entry-point",
+              "module": "forlab",
+              "summary": "One-vector COV returns variance of REAL(RPRE) X(:), not a covariance matrix. Optional INTEGER(IPRE) W=0 (default) divides centered squared deviations by N-1; W=1 divides by N. Require N>1 for W=0 and N>0 for W=1. Other W values leave no defined result branch. No weights array, missing-data policy or status argument.",
+              "signature": "VALUE = cov(X,[W])",
+              "path": "src/forlab.F90",
+              "line_start": 1809,
+              "line_end": 1826,
+              "declarations": [
+                {
+                  "path": "src/forlab.F90",
+                  "line_start": 1810,
+                  "line_end": 1813
+                },
+                {
+                  "path": "src/forlab.F90",
+                  "line_start": 18,
+                  "line_end": 53
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "D2",
+          "level": "source-reviewed",
+          "revision": "416e5612167b6133100bef4cec116322890f66f7",
+          "reviewed_on": "2026-11-07",
+          "notes": "Dense Cholesky factor construction records the eigenvalue precheck and stopping interface. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/forlab.F90",
+              "url": "https://github.com/zoziha/forlab/blob/416e5612167b6133100bef4cec116322890f66f7/src/forlab.F90",
+              "sha256": "4f9be44e66ad2fdb67841ee14d0156b7fa315b137f33333b84abb100f7e48246"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "chol",
+              "role": "public-entry-point",
+              "module": "forlab",
+              "summary": "Return allocatable REAL(RPRE) lower-triangular factor from nonempty square positive-definite A(:,:), preserving A. This implementation first invokes its eigensolver to test positivity before forming the factor; it is not a direct POTRF wrapper. Nonpositive eigenvalues STOP. No INFO, condition estimate or convergence flag; check L*TRANSPOSE(L) against A independently.",
+              "signature": "VALUE = chol(A)",
+              "path": "src/forlab.F90",
+              "line_start": 1595,
+              "line_end": 1633,
+              "declarations": [
+                {
+                  "path": "src/forlab.F90",
+                  "line_start": 1596,
+                  "line_end": 1601
+                },
+                {
+                  "path": "src/forlab.F90",
+                  "line_start": 18,
+                  "line_end": 53
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "nafpack": {
+      "id": "github:minard-jules/nafpack",
+      "repository": {
+        "owner": "Minard-Jules",
+        "name": "NAFPack",
+        "url": "https://github.com/Minard-Jules/NAFPack"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE.md supplies Minard Jules MIT terms; this scope covers direct DFT rather than FFTW/native integrations.",
+        "evidence": [
+          {
+            "path": "LICENSE.md",
+            "url": "https://github.com/Minard-Jules/NAFPack/blob/9b1e9a98f8c28853a48e152605f84c994c271f45/LICENSE.md",
+            "sha256": "5c3d7d6972f3b37b5bcad39afe7f121a692d088f21cd058b94cb3d40eee700b3"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/Minard-Jules/NAFPack/blob/9b1e9a98f8c28853a48e152605f84c994c271f45/README.md",
+            "sha256": "a45fc711b111e6230138d674ae92568b1e1f0040bc12926ecb5d79e819528676"
+          },
+          {
+            "path": "src/Fourier_Transform/dft/NAFPack_Fourier_Transform_dft.f90",
+            "url": "https://github.com/Minard-Jules/NAFPack/blob/9b1e9a98f8c28853a48e152605f84c994c271f45/src/Fourier_Transform/dft/NAFPack_Fourier_Transform_dft.f90",
+            "sha256": "da56cc6b9a395fb87091acd683b203fc7e373b5b67ef63c332d0577314f192d5"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "J1",
+          "level": "source-reviewed",
+          "revision": "9b1e9a98f8c28853a48e152605f84c994c271f45",
+          "reviewed_on": "2026-11-07",
+          "notes": "The direct complex double-precision transform pair records sign, ordering, inverse scaling and loop selection. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/Fourier_Transform/dft/NAFPack_Fourier_Transform_dft.f90",
+              "url": "https://github.com/Minard-Jules/NAFPack/blob/9b1e9a98f8c28853a48e152605f84c994c271f45/src/Fourier_Transform/dft/NAFPack_Fourier_Transform_dft.f90",
+              "sha256": "da56cc6b9a395fb87091acd683b203fc7e373b5b67ef63c332d0577314f192d5"
+            },
+            {
+              "path": "src/Fourier_Transform/NAFPack_Fourier_Transform.f90",
+              "url": "https://github.com/Minard-Jules/NAFPack/blob/9b1e9a98f8c28853a48e152605f84c994c271f45/src/Fourier_Transform/NAFPack_Fourier_Transform.f90",
+              "sha256": "8b6dc2a1d24d1dd2fe212f7e79c4d4699a1953674bdd33f78a932988ac12d889"
+            },
+            {
+              "path": "src/Fourier_Transform/dft/NAFPack_Fourier_Transform_dft_compute.f90",
+              "url": "https://github.com/Minard-Jules/NAFPack/blob/9b1e9a98f8c28853a48e152605f84c994c271f45/src/Fourier_Transform/dft/NAFPack_Fourier_Transform_dft_compute.f90",
+              "sha256": "88d76448dd182b013be0d77558d9aa94157cd7cccb68562de0a37885dd78d35f"
+            },
+            {
+              "path": "src/NAFPack_kinds.f90",
+              "url": "https://github.com/Minard-Jules/NAFPack/blob/9b1e9a98f8c28853a48e152605f84c994c271f45/src/NAFPack_kinds.f90",
+              "sha256": "e9b4e510a33b8bb089510233a97087a50b418d4503852b9b604c6e2d7d721468"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "dft",
+              "role": "public-entry-point",
+              "module": "NAFPack_Fourier_Transform",
+              "summary": "Complex REAL64 DFT returns an allocated vector of positive length N. The forward kernel uses EXP(-2*pi*i/N), frequency k=0 at result(1), and no 1/N scaling. Optional TYPE(LOOPMETHOD) selects a supported loop strategy; omission uses the library default. This path is a direct O(N**2) transform, not the planned FFT interface. No separate status/error estimate.",
+              "signature": "VALUE = dft(SIGNAL,[LOOP_METHOD])",
+              "path": "src/Fourier_Transform/dft/NAFPack_Fourier_Transform_dft.f90",
+              "line_start": 65,
+              "line_end": 83,
+              "declarations": [
+                {
+                  "path": "src/Fourier_Transform/dft/NAFPack_Fourier_Transform_dft.f90",
+                  "line_start": 66,
+                  "line_end": 68
+                },
+                {
+                  "path": "src/Fourier_Transform/NAFPack_Fourier_Transform.f90",
+                  "line_start": 19,
+                  "line_end": 23
+                },
+                {
+                  "path": "src/Fourier_Transform/NAFPack_Fourier_Transform.f90",
+                  "line_start": 67,
+                  "line_end": 75
+                },
+                {
+                  "path": "src/Fourier_Transform/NAFPack_Fourier_Transform.f90",
+                  "line_start": 137,
+                  "line_end": 141
+                },
+                {
+                  "path": "src/NAFPack_kinds.f90",
+                  "line_start": 1,
+                  "line_end": 23
+                },
+                {
+                  "path": "src/Fourier_Transform/dft/NAFPack_Fourier_Transform_dft_compute.f90",
+                  "line_start": 107,
+                  "line_end": 148
+                }
+              ]
+            },
+            {
+              "procedure": "idft",
+              "role": "public-entry-point",
+              "module": "NAFPack_Fourier_Transform",
+              "summary": "Complex REAL64 IDFT computes CONJG(DFT(CONJG(F_SIGNAL)))/N and returns an allocated vector. Require positive N with the same natural ordering as DFT. Only the inverse divides by N. Optional LOOP_METHOD follows the forward implementation. This complex overload does not impose real-output symmetry or return a status channel.",
+              "signature": "VALUE = idft(F_SIGNAL,[LOOP_METHOD])",
+              "path": "src/Fourier_Transform/dft/NAFPack_Fourier_Transform_dft.f90",
+              "line_start": 85,
+              "line_end": 94,
+              "declarations": [
+                {
+                  "path": "src/Fourier_Transform/dft/NAFPack_Fourier_Transform_dft.f90",
+                  "line_start": 86,
+                  "line_end": 88
+                },
+                {
+                  "path": "src/Fourier_Transform/NAFPack_Fourier_Transform.f90",
+                  "line_start": 19,
+                  "line_end": 23
+                },
+                {
+                  "path": "src/Fourier_Transform/NAFPack_Fourier_Transform.f90",
+                  "line_start": 67,
+                  "line_end": 75
+                },
+                {
+                  "path": "src/Fourier_Transform/NAFPack_Fourier_Transform.f90",
+                  "line_start": 137,
+                  "line_end": 141
+                },
+                {
+                  "path": "src/NAFPack_kinds.f90",
+                  "line_start": 1,
+                  "line_end": 23
+                },
+                {
+                  "path": "src/Fourier_Transform/dft/NAFPack_Fourier_Transform_dft_compute.f90",
+                  "line_start": 107,
+                  "line_end": 148
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "forsvd": {
       "id": "github:gha3mi/forsvd",
       "repository": {
@@ -15739,6 +16243,178 @@
                   "path": "src/forsvd.f90",
                   "line_start": 168,
                   "line_end": 182
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "qdutillib": {
+      "id": "github:lauvergn/qdutillib",
+      "repository": {
+        "owner": "lauvergn",
+        "name": "QDUtilLib",
+        "url": "https://github.com/lauvergn/QDUtilLib"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "8a1fa9ca7cf52683c98cc4bcb40f21dc41df6ed5",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE and inspected source headers supply David Lauvergnat MIT terms. Precision depends on the pinned build configuration.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/lauvergn/QDUtilLib/blob/8a1fa9ca7cf52683c98cc4bcb40f21dc41df6ed5/LICENSE",
+            "sha256": "17a6617f50fd9802b998b106f50ac3d16dcaf943cbc34c903d2f08add36438b1"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/lauvergn/QDUtilLib/blob/8a1fa9ca7cf52683c98cc4bcb40f21dc41df6ed5/README.md",
+            "sha256": "822e504edefd6e654b30f2c6f93c00614fa2005947d42e75e9f42562bfb0a0bd"
+          },
+          {
+            "path": "SRC/Quadrature/LegendreP_m.f90",
+            "url": "https://github.com/lauvergn/QDUtilLib/blob/8a1fa9ca7cf52683c98cc4bcb40f21dc41df6ed5/SRC/Quadrature/LegendreP_m.f90",
+            "sha256": "645a05f45eea7e3a456f0c9036a485b2a6ce32d934580289435b72a28c82528f"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "C9",
+          "level": "source-reviewed",
+          "revision": "8a1fa9ca7cf52683c98cc4bcb40f21dc41df6ed5",
+          "reviewed_on": "2026-11-07",
+          "notes": "Legendre tabulation and its coordinate-multiplication operator record normalization and array layout. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "SRC/Quadrature/LegendreP_m.f90",
+              "url": "https://github.com/lauvergn/QDUtilLib/blob/8a1fa9ca7cf52683c98cc4bcb40f21dc41df6ed5/SRC/Quadrature/LegendreP_m.f90",
+              "sha256": "645a05f45eea7e3a456f0c9036a485b2a6ce32d934580289435b72a28c82528f"
+            },
+            {
+              "path": "SRC/Quadrature/HermiteH_m.f90",
+              "url": "https://github.com/lauvergn/QDUtilLib/blob/8a1fa9ca7cf52683c98cc4bcb40f21dc41df6ed5/SRC/Quadrature/HermiteH_m.f90",
+              "sha256": "b3478bbdf395c4042b2ba7b1955d6d6b0bc7873a0d699b0a8d7925ca1b1b704d"
+            },
+            {
+              "path": "SRC/NumParameters/NumParameters_m.f90",
+              "url": "https://github.com/lauvergn/QDUtilLib/blob/8a1fa9ca7cf52683c98cc4bcb40f21dc41df6ed5/SRC/NumParameters/NumParameters_m.f90",
+              "sha256": "37634c900a1eccd5a6b42eb7fa544d1ca89d6935bd642fbb39faad44ee6faebd"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "TabGB_LegendreP",
+              "role": "public-entry-point",
+              "module": "QDUtil_LegendreP_m",
+              "summary": "Fill caller-owned REAL(RKIND) D0GB(points,basis) with Legendre degrees 0..basis-1 at X(points). Required RENORM=true multiplies column ib by SQRT(ib-1/2), normalizing on [-1,1]; false keeps ordinary P_n. Require positive basis extent and matching point counts; invalid sizes STOP. No derivatives or quadrature weights. Import RKIND from QDUTIL_NUMPARAMETERS_M to match the build.",
+              "signature": "CALL TabGB_LegendreP(D0GB,X,RENORM)",
+              "path": "SRC/Quadrature/LegendreP_m.f90",
+              "line_start": 52,
+              "line_end": 81,
+              "declarations": [
+                {
+                  "path": "SRC/Quadrature/LegendreP_m.f90",
+                  "line_start": 55,
+                  "line_end": 57
+                },
+                {
+                  "path": "SRC/NumParameters/NumParameters_m.f90",
+                  "line_start": 29,
+                  "line_end": 65
+                },
+                {
+                  "path": "SRC/Quadrature/LegendreP_m.f90",
+                  "line_start": 29,
+                  "line_end": 48
+                }
+              ]
+            },
+            {
+              "procedure": "X_LegendreP",
+              "role": "public-entry-point",
+              "module": "QDUtil_LegendreP_m",
+              "summary": "Fill a preallocated square REAL(RKIND) matrix with the coordinate-multiplication Jacobi operator for normalized Legendre polynomials. It zeroes the matrix and sets symmetric adjacent entries ib/SQRT(4*ib**2-1). This constructs the operator, not eigenvalues/nodes/weights. Require positive square extent: only the first dimension sets loop bounds and rectangular inputs are not checked.",
+              "signature": "CALL X_LegendreP(X)",
+              "path": "SRC/Quadrature/LegendreP_m.f90",
+              "line_start": 116,
+              "line_end": 136,
+              "declarations": [
+                {
+                  "path": "SRC/Quadrature/LegendreP_m.f90",
+                  "line_start": 118,
+                  "line_end": 118
+                },
+                {
+                  "path": "SRC/NumParameters/NumParameters_m.f90",
+                  "line_start": 29,
+                  "line_end": 65
+                },
+                {
+                  "path": "SRC/Quadrature/LegendreP_m.f90",
+                  "line_start": 29,
+                  "line_end": 48
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "C3a",
+          "level": "source-reviewed",
+          "revision": "8a1fa9ca7cf52683c98cc4bcb40f21dc41df6ed5",
+          "reviewed_on": "2026-11-07",
+          "notes": "Hermite basis tabulation records the physicists convention and Gaussian weighting controlled by required logical arguments. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "SRC/Quadrature/LegendreP_m.f90",
+              "url": "https://github.com/lauvergn/QDUtilLib/blob/8a1fa9ca7cf52683c98cc4bcb40f21dc41df6ed5/SRC/Quadrature/LegendreP_m.f90",
+              "sha256": "645a05f45eea7e3a456f0c9036a485b2a6ce32d934580289435b72a28c82528f"
+            },
+            {
+              "path": "SRC/Quadrature/HermiteH_m.f90",
+              "url": "https://github.com/lauvergn/QDUtilLib/blob/8a1fa9ca7cf52683c98cc4bcb40f21dc41df6ed5/SRC/Quadrature/HermiteH_m.f90",
+              "sha256": "b3478bbdf395c4042b2ba7b1955d6d6b0bc7873a0d699b0a8d7925ca1b1b704d"
+            },
+            {
+              "path": "SRC/NumParameters/NumParameters_m.f90",
+              "url": "https://github.com/lauvergn/QDUtilLib/blob/8a1fa9ca7cf52683c98cc4bcb40f21dc41df6ed5/SRC/NumParameters/NumParameters_m.f90",
+              "sha256": "37634c900a1eccd5a6b42eb7fa544d1ca89d6935bd642fbb39faad44ee6faebd"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "TabGB_HermiteH",
+              "role": "public-entry-point",
+              "module": "QDUtil_HermiteH_m",
+              "summary": "Fill REAL(RKIND) D0GB(points,basis) with physicists Hermite polynomials H_n(X), starting H_0=1,H_1=2X. Required RENORM divides by SQRT(SQRT(pi)*2**n*n!); required GAUSS additionally multiplies by EXP(-X**2/2), yielding normalized oscillator functions when both true. Positive basis extent and matching points are required; validation can STOP. No quadrature integration or derivative is returned.",
+              "signature": "CALL TabGB_HermiteH(D0GB,X,GAUSS,RENORM)",
+              "path": "SRC/Quadrature/HermiteH_m.f90",
+              "line_start": 108,
+              "line_end": 139,
+              "declarations": [
+                {
+                  "path": "SRC/Quadrature/HermiteH_m.f90",
+                  "line_start": 111,
+                  "line_end": 114
+                },
+                {
+                  "path": "SRC/Quadrature/HermiteH_m.f90",
+                  "line_start": 29,
+                  "line_end": 56
+                },
+                {
+                  "path": "SRC/Quadrature/HermiteH_m.f90",
+                  "line_start": 141,
+                  "line_end": 176
+                },
+                {
+                  "path": "SRC/NumParameters/NumParameters_m.f90",
+                  "line_start": 29,
+                  "line_end": 65
                 }
               ]
             }
@@ -16206,6 +16882,100 @@
         }
       ]
     },
+    "dynamics": {
+      "id": "github:jchristopherson/dynamics",
+      "repository": {
+        "owner": "jchristopherson",
+        "name": "dynamics",
+        "url": "https://github.com/jchristopherson/dynamics"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "580d04859a25126d3261e44b3fbec5111835e3a4",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Jason Christopherson MIT terms. linalg and other dependencies retain their own licenses and precision/ABI requirements.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jchristopherson/dynamics/blob/580d04859a25126d3261e44b3fbec5111835e3a4/LICENSE",
+            "sha256": "412dc62718c15a0d3580119230ef6375a4fb4df82867ba2a7a3bd2d8b3d763bd"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jchristopherson/dynamics/blob/580d04859a25126d3261e44b3fbec5111835e3a4/README.md",
+            "sha256": "234748a8563770294391e42b359e5ee52c3d57e119999c56cbde2f0ca6288c77"
+          },
+          {
+            "path": "src/frequency/dynamics_modal_analysis.f90",
+            "url": "https://github.com/jchristopherson/dynamics/blob/580d04859a25126d3261e44b3fbec5111835e3a4/src/frequency/dynamics_modal_analysis.f90",
+            "sha256": "c6cadaba6a2a7ab880bdb73fa43b2df87e78fd49a743504f2d1255d9dc0e1087"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "D4",
+          "level": "source-reviewed",
+          "revision": "580d04859a25126d3261e44b3fbec5111835e3a4",
+          "reviewed_on": "2026-11-07",
+          "notes": "Dense structural generalized eigenmode extraction and column normalization expose units, ownership and validation limits. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/frequency/dynamics_modal_analysis.f90",
+              "url": "https://github.com/jchristopherson/dynamics/blob/580d04859a25126d3261e44b3fbec5111835e3a4/src/frequency/dynamics_modal_analysis.f90",
+              "sha256": "c6cadaba6a2a7ab880bdb73fa43b2df87e78fd49a743504f2d1255d9dc0e1087"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "modal_response",
+              "role": "public-entry-point",
+              "module": "dynamics_modal_analysis",
+              "summary": "Dense MODAL_RESPONSE accepts nonempty same-order REAL64 symmetric MASS/STIFF matrices; it allocates FREQS and optionally MODESHAPES with eigenvectors in columns. Solves STIFF*v=lambda*MASS*v, sorts, then returns SQRT(REAL(lambda)): angular frequency, not cycles per time unit. Shape/symmetry/nonpositive eigenvalues ERROR STOP; rigid-body zero modes are not accepted. No public INFO: check residuals and do not infer mass normalization.",
+              "signature": "CALL modal_response(MASS,STIFF,FREQS,[MODESHAPES])",
+              "path": "src/frequency/dynamics_modal_analysis.f90",
+              "line_start": 58,
+              "line_end": 112,
+              "declarations": [
+                {
+                  "path": "src/frequency/dynamics_modal_analysis.f90",
+                  "line_start": 64,
+                  "line_end": 74
+                },
+                {
+                  "path": "src/frequency/dynamics_modal_analysis.f90",
+                  "line_start": 14,
+                  "line_end": 28
+                }
+              ]
+            },
+            {
+              "procedure": "normalize_mode_shapes",
+              "role": "public-entry-point",
+              "module": "dynamics_modal_analysis",
+              "summary": "Divide each REAL64 column of X by its signed largest-magnitude entry, making that entry +1. This is component normalization, not unit Euclidean length or mass normalization. Require nonempty, nonzero columns: division by zero is not guarded. X is modified in place; no status is returned.",
+              "signature": "CALL normalize_mode_shapes(X)",
+              "path": "src/frequency/dynamics_modal_analysis.f90",
+              "line_start": 195,
+              "line_end": 215,
+              "declarations": [
+                {
+                  "path": "src/frequency/dynamics_modal_analysis.f90",
+                  "line_start": 202,
+                  "line_end": 202
+                },
+                {
+                  "path": "src/frequency/dynamics_modal_analysis.f90",
+                  "line_start": 14,
+                  "line_end": 28
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "dnaoad-fpm": {
       "id": "github:fpenunuri/dnaoad-fpm",
       "repository": {
@@ -16664,6 +17434,130 @@
                   "path": "src/matrix_4f.f90",
                   "line_start": 54,
                   "line_end": 84
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "friction": {
+      "id": "github:jchristopherson/friction",
+      "repository": {
+        "owner": "jchristopherson",
+        "name": "friction",
+        "url": "https://github.com/jchristopherson/friction"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "8e75dcac26f47417a439adfcbaa24834105d89fe",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE and source headers supply Jason Christopherson MIT terms. Other models and embedded fitpack retain separate scopes/notices.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jchristopherson/friction/blob/8e75dcac26f47417a439adfcbaa24834105d89fe/LICENSE",
+            "sha256": "bb34bb0a702943f28be6255090fbf456caee6f8e6bb5fd861f287c01ca1558ee"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jchristopherson/friction/blob/8e75dcac26f47417a439adfcbaa24834105d89fe/README.md",
+            "sha256": "53246fc3e720e97e97f600c1f132b5b6873cf2ef48b24c4f21bdd11838572ebd"
+          },
+          {
+            "path": "src/models/friction_coulomb.f90",
+            "url": "https://github.com/jchristopherson/friction/blob/8e75dcac26f47417a439adfcbaa24834105d89fe/src/models/friction_coulomb.f90",
+            "sha256": "c2fe8a3b5b3d3cf1a68bd3dbd68adb4ea20afcce3ee7a221f4f8bf856b95b5e0"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "M1",
+          "level": "source-reviewed",
+          "revision": "8e75dcac26f47417a439adfcbaa24834105d89fe",
+          "reviewed_on": "2026-11-07",
+          "notes": "Memoryless friction-model evaluations and parameter packing are scoped building blocks for deterministic simulations. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/models/friction_coulomb.f90",
+              "url": "https://github.com/jchristopherson/friction/blob/8e75dcac26f47417a439adfcbaa24834105d89fe/src/models/friction_coulomb.f90",
+              "sha256": "c2fe8a3b5b3d3cf1a68bd3dbd68adb4ea20afcce3ee7a221f4f8bf856b95b5e0"
+            },
+            {
+              "path": "src/models/friction_stribeck.f90",
+              "url": "https://github.com/jchristopherson/friction/blob/8e75dcac26f47417a439adfcbaa24834105d89fe/src/models/friction_stribeck.f90",
+              "sha256": "41b6726bd1e3923ca737a72d9013e78fb5e859fd0c70823960ec00373b3b0c90"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "evaluate",
+              "role": "public-entry-point",
+              "module": "friction_coulomb",
+              "derived_type": "coulomb_model",
+              "summary": "Declare TYPE(coulomb_model) :: solver from friction_coulomb. Algebraic Coulomb evaluation takes REAL64 T,X,DXDT,NRM and optional SVARS(:). Set FRICTION_COEFFICIENT first (no default). T/X/SVARS are unused. Nonzero velocity returns mu*NRM*SIGN(1,DXDT); exactly zero returns zero, not a static-friction force interval. Apply the implemented sign convention consistently in the surrounding dynamics. No unit conversion, validation or time integration. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%evaluate(T,X,DXDT,NRM,[SVARS])",
+              "path": "src/models/friction_coulomb.f90",
+              "line_start": 60,
+              "line_end": 86,
+              "declarations": [
+                {
+                  "path": "src/models/friction_coulomb.f90",
+                  "line_start": 62,
+                  "line_end": 79
+                },
+                {
+                  "path": "src/models/friction_coulomb.f90",
+                  "line_start": 22,
+                  "line_end": 56
+                }
+              ]
+            },
+            {
+              "procedure": "evaluate",
+              "role": "public-entry-point",
+              "module": "friction_stribeck",
+              "derived_type": "stribeck_model",
+              "summary": "Declare TYPE(stribeck_model) :: solver from friction_stribeck. Set STATIC_FRICTION_COEFFICIENT, COULOMB_FRICTION_COEFFICIENT, STRIBECK_VELOCITY and VISCOUS_DAMPING first: none has a default/validation. Require nonzero STRIBECK_VELOCITY for nonzero velocity. Dry force uses exp(-abs(DXDT/vs)**2), then velocity sign and a viscous_damping*DXDT term. Exactly zero velocity returns zero. T/X/optional SVARS are unused. This memoryless algebraic evaluation is not an ODE solve. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%evaluate(T,X,DXDT,NRM,[SVARS])",
+              "path": "src/models/friction_stribeck.f90",
+              "line_start": 70,
+              "line_end": 102,
+              "declarations": [
+                {
+                  "path": "src/models/friction_stribeck.f90",
+                  "line_start": 72,
+                  "line_end": 89
+                },
+                {
+                  "path": "src/models/friction_stribeck.f90",
+                  "line_start": 22,
+                  "line_end": 66
+                }
+              ]
+            },
+            {
+              "procedure": "to_array",
+              "role": "public-entry-point",
+              "module": "friction_coulomb",
+              "derived_type": "coulomb_model",
+              "summary": "Declare TYPE(coulomb_model) :: solver from friction_coulomb. Pack initialized FRICTION_COEFFICIENT into caller-owned REAL64 X(:) of length one. Required size is PARAMETER_COUNT(); mismatch ERROR STOPs. It does not allocate X or serialize a complete simulation. FROM_ARRAY performs the inverse parameter update. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%to_array(X)",
+              "path": "src/models/friction_coulomb.f90",
+              "line_start": 126,
+              "line_end": 135,
+              "declarations": [
+                {
+                  "path": "src/models/friction_coulomb.f90",
+                  "line_start": 128,
+                  "line_end": 132
+                },
+                {
+                  "path": "src/models/friction_coulomb.f90",
+                  "line_start": 22,
+                  "line_end": 56
                 }
               ]
             }
@@ -20760,6 +21654,311 @@
           ]
         }
       ]
+    },
+    "nufft1d": {
+      "id": "github:zgimbutas/nufft1d",
+      "repository": {
+        "owner": "zgimbutas",
+        "name": "nufft1d",
+        "url": "https://github.com/zgimbutas/nufft1d"
+      },
+      "license": {
+        "label": "BSD-2-Clause",
+        "spdx_expression": "BSD-2-Clause",
+        "revision": "42a04333f882f474b0674936cae049899784f56e",
+        "reviewed_on": "2026-11-07",
+        "notes": "COPYING supplies the two-clause BSD grant for Leslie Greengard, June-Yub Lee and Zydrunas Gimbutas. These upstream external sources are adapted into the hosted FPM library; no module namespace is invented.",
+        "evidence": [
+          {
+            "path": "COPYING",
+            "url": "https://github.com/zgimbutas/nufft1d/blob/42a04333f882f474b0674936cae049899784f56e/COPYING",
+            "sha256": "50de067f9ddd57547e2ffe68544df163ba6c238160756e55099a55cf80a6c50d"
+          },
+          {
+            "path": "nufft1df90.f",
+            "url": "https://github.com/zgimbutas/nufft1d/blob/42a04333f882f474b0674936cae049899784f56e/nufft1df90.f",
+            "sha256": "2154f18f1d8bbc51e5ed6da22c459a70e7cd6486383403be853aee8b13da684a"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "J1",
+          "level": "source-reviewed",
+          "revision": "42a04333f882f474b0674936cae049899784f56e",
+          "reviewed_on": "2026-11-07",
+          "notes": "The one-dimensional type-1/type-2/type-3 interfaces distinguish centered modes, arbitrary frequencies and unequal normalization. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "nufft1df90.f",
+              "url": "https://github.com/zgimbutas/nufft1d/blob/42a04333f882f474b0674936cae049899784f56e/nufft1df90.f",
+              "sha256": "2154f18f1d8bbc51e5ed6da22c459a70e7cd6486383403be853aee8b13da684a"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "nufft1d1f90",
+              "role": "public-entry-point",
+              "summary": "Type 1 one-dimensional maps CJ(NJ) sources at XJ (angles in [-pi,pi]) to centered modes FK(-MS/2:(MS-1)/2). This legacy implementation divides the sum by NJ. IFLAG>=0 selects positive exponential sign; negative selects negative. EPS accepts [1e-33,1e-1] as a request, not an accuracy guarantee beyond double precision. IER=0 means normal return,1 invalid EPS. External procedure, not a module binding. Match the linked default INTEGER, REAL*8 and COMPLEX*16 declarations (star-size spellings are compiler extensions). Validate positive counts and inspect IER before using output. No new execution check is asserted.",
+              "signature": "CALL nufft1d1f90(NJ,XJ,CJ,IFLAG,EPS,MS,FK,IER)",
+              "path": "nufft1df90.f",
+              "line_start": 27,
+              "line_end": 287,
+              "declarations": [
+                {
+                  "path": "nufft1df90.f",
+                  "line_start": 29,
+                  "line_end": 36
+                }
+              ]
+            },
+            {
+              "procedure": "nufft1d2f90",
+              "role": "public-entry-point",
+              "summary": "Type 2 one-dimensional takes centered modes FK(-MS/2:(MS-1)/2) and writes CJ(NJ) at XJ. Unlike type 1, there is no 1/NJ normalization. Argument order still places output CJ before input FK. IFLAG selects the same sign convention; opposite signs alone do not make arbitrary nonuniform transforms inverse matrices. Use matching centered storage and angles in [-pi,pi]. IER=0 normal,1 invalid EPS. External procedure, not a module binding. Match the linked default INTEGER, REAL*8 and COMPLEX*16 declarations (star-size spellings are compiler extensions). Validate positive counts and inspect IER before using output. No new execution check is asserted.",
+              "signature": "CALL nufft1d2f90(NJ,XJ,CJ,IFLAG,EPS,MS,FK,IER)",
+              "path": "nufft1df90.f",
+              "line_start": 294,
+              "line_end": 481,
+              "declarations": [
+                {
+                  "path": "nufft1df90.f",
+                  "line_start": 296,
+                  "line_end": 304
+                }
+              ]
+            },
+            {
+              "procedure": "nufft1d3f90",
+              "role": "public-entry-point",
+              "summary": "Type 3 one-dimensional takes NJ sources at XJ and writes unnormalized FK(NK) at arbitrary real frequencies SK(NK), with sign selected by IFLAG. Require nonzero coordinate/frequency spans in each transformed direction: this pin rescales using spans and has division-by-zero paths for collapsed sets. Type-1 angle limits and centered integer-mode storage do not describe this operation. EPS/IER follow the source contract; workspace grows with spatial-frequency extent. External procedure, not a module binding. Match the linked default INTEGER, REAL*8 and COMPLEX*16 declarations (star-size spellings are compiler extensions). Validate positive counts and inspect IER before using output. No new execution check is asserted.",
+              "signature": "CALL nufft1d3f90(NJ,XJ,CJ,IFLAG,EPS,NK,SK,FK,IER)",
+              "path": "nufft1df90.f",
+              "line_start": 489,
+              "line_end": 754,
+              "declarations": [
+                {
+                  "path": "nufft1df90.f",
+                  "line_start": 491,
+                  "line_end": 501
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "nufft2d": {
+      "id": "github:zgimbutas/nufft2d",
+      "repository": {
+        "owner": "zgimbutas",
+        "name": "nufft2d",
+        "url": "https://github.com/zgimbutas/nufft2d"
+      },
+      "license": {
+        "label": "BSD-2-Clause",
+        "spdx_expression": "BSD-2-Clause",
+        "revision": "8353c5fb20cd0a8fe6821fae18355e303ed23ed3",
+        "reviewed_on": "2026-11-07",
+        "notes": "COPYING supplies the two-clause BSD grant for Leslie Greengard, June-Yub Lee and Zydrunas Gimbutas. These upstream external sources are adapted into the hosted FPM library; no module namespace is invented.",
+        "evidence": [
+          {
+            "path": "COPYING",
+            "url": "https://github.com/zgimbutas/nufft2d/blob/8353c5fb20cd0a8fe6821fae18355e303ed23ed3/COPYING",
+            "sha256": "50de067f9ddd57547e2ffe68544df163ba6c238160756e55099a55cf80a6c50d"
+          },
+          {
+            "path": "nufft2df90.f",
+            "url": "https://github.com/zgimbutas/nufft2d/blob/8353c5fb20cd0a8fe6821fae18355e303ed23ed3/nufft2df90.f",
+            "sha256": "4565753328752aaed934c31986d84e963e1b853a46c8ddf1147edffef0dea1e2"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "J1",
+          "level": "source-reviewed",
+          "revision": "8353c5fb20cd0a8fe6821fae18355e303ed23ed3",
+          "reviewed_on": "2026-11-07",
+          "notes": "The two-dimensional type-1/type-2/type-3 interfaces distinguish centered modes, arbitrary frequencies and unequal normalization. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "nufft2df90.f",
+              "url": "https://github.com/zgimbutas/nufft2d/blob/8353c5fb20cd0a8fe6821fae18355e303ed23ed3/nufft2df90.f",
+              "sha256": "4565753328752aaed934c31986d84e963e1b853a46c8ddf1147edffef0dea1e2"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "nufft2d1f90",
+              "role": "public-entry-point",
+              "summary": "Type 1 two-dimensional maps CJ(NJ) sources at XJ/YJ (angles in [-pi,pi]) to centered modes FK(-MS/2:(MS-1)/2,-MT/2:(MT-1)/2). This legacy implementation divides the sum by NJ. IFLAG>=0 selects positive exponential sign; negative selects negative. EPS accepts [1e-33,1e-1] as a request, not an accuracy guarantee beyond double precision. IER=0 means normal return,1 invalid EPS. External procedure, not a module binding. Match the linked default INTEGER, REAL*8 and COMPLEX*16 declarations (star-size spellings are compiler extensions). Validate positive counts and inspect IER before using output. No new execution check is asserted.",
+              "signature": "CALL nufft2d1f90(NJ,XJ,YJ,CJ,IFLAG,EPS,MS,MT,FK,IER)",
+              "path": "nufft2df90.f",
+              "line_start": 27,
+              "line_end": 361,
+              "declarations": [
+                {
+                  "path": "nufft2df90.f",
+                  "line_start": 29,
+                  "line_end": 39
+                }
+              ]
+            },
+            {
+              "procedure": "nufft2d2f90",
+              "role": "public-entry-point",
+              "summary": "Type 2 two-dimensional takes centered modes FK(-MS/2:(MS-1)/2,-MT/2:(MT-1)/2) and writes CJ(NJ) at XJ/YJ. Unlike type 1, there is no 1/NJ normalization. Argument order still places output CJ before input FK. IFLAG selects the same sign convention; opposite signs alone do not make arbitrary nonuniform transforms inverse matrices. Use matching centered storage and angles in [-pi,pi]. IER=0 normal,1 invalid EPS. External procedure, not a module binding. Match the linked default INTEGER, REAL*8 and COMPLEX*16 declarations (star-size spellings are compiler extensions). Validate positive counts and inspect IER before using output. No new execution check is asserted.",
+              "signature": "CALL nufft2d2f90(NJ,XJ,YJ,CJ,IFLAG,EPS,MS,MT,FK,IER)",
+              "path": "nufft2df90.f",
+              "line_start": 368,
+              "line_end": 633,
+              "declarations": [
+                {
+                  "path": "nufft2df90.f",
+                  "line_start": 370,
+                  "line_end": 378
+                }
+              ]
+            },
+            {
+              "procedure": "nufft2d3f90",
+              "role": "public-entry-point",
+              "summary": "Type 3 two-dimensional takes NJ sources at XJ/YJ and writes unnormalized FK(NK) at arbitrary real frequencies SK(NK),TK(NK), with sign selected by IFLAG. Require nonzero coordinate/frequency spans in each transformed direction: this pin rescales using spans and has division-by-zero paths for collapsed sets. Type-1 angle limits and centered integer-mode storage do not describe this operation. EPS/IER follow the source contract; workspace grows with spatial-frequency extent. External procedure, not a module binding. Match the linked default INTEGER, REAL*8 and COMPLEX*16 declarations (star-size spellings are compiler extensions). Validate positive counts and inspect IER before using output. No new execution check is asserted.",
+              "signature": "CALL nufft2d3f90(NJ,XJ,YJ,CJ,IFLAG,EPS,NK,SK,TK,FK,IER)",
+              "path": "nufft2df90.f",
+              "line_start": 640,
+              "line_end": 1024,
+              "declarations": [
+                {
+                  "path": "nufft2df90.f",
+                  "line_start": 642,
+                  "line_end": 654
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "scifortran": {
+      "id": "github:scifortran/scifortran",
+      "repository": {
+        "owner": "SciFortran",
+        "name": "SciFortran",
+        "url": "https://github.com/SciFortran/SciFortran"
+      },
+      "license": {
+        "label": "LGPL-3.0-or-later",
+        "spdx_expression": "LGPL-3.0-or-later",
+        "revision": "ca4a55f49cfdf7a94e388bc3475a5db574d5de99",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root license is LGPL version 3 and README explicitly permits version 3 or later. Embedded numerical sources retain separate notices. Upstream is repackaged as the hosted integration subset.",
+        "evidence": [
+          {
+            "path": "LICENSE.md",
+            "url": "https://github.com/SciFortran/SciFortran/blob/ca4a55f49cfdf7a94e388bc3475a5db574d5de99/LICENSE.md",
+            "sha256": "da7eabb7bafdf7d3ae5e9f223aa5bdc1eece45ac569dc21b3b037520b4464768"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/SciFortran/SciFortran/blob/ca4a55f49cfdf7a94e388bc3475a5db574d5de99/README.md",
+            "sha256": "9e8eb06bb9933bb5c8bdf99cdc1ed5ad1da2f8184b66012f90f06110772d647b"
+          },
+          {
+            "path": "src/SF_INTEGRATE/integrate_sample_1d.f90",
+            "url": "https://github.com/SciFortran/SciFortran/blob/ca4a55f49cfdf7a94e388bc3475a5db574d5de99/src/SF_INTEGRATE/integrate_sample_1d.f90",
+            "sha256": "02ea04872226cd79de58c61ba1e608463ed0530153eb56c3e5d4ff590d638733"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "H2",
+          "level": "source-reviewed",
+          "revision": "ca4a55f49cfdf7a94e388bc3475a5db574d5de99",
+          "reviewed_on": "2026-11-07",
+          "notes": "Real sampled trapezoidal and uniform Simpson interfaces expose ordering, spacing and minimum-size requirements. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/SF_INTEGRATE/integrate_sample_1d.f90",
+              "url": "https://github.com/SciFortran/SciFortran/blob/ca4a55f49cfdf7a94e388bc3475a5db574d5de99/src/SF_INTEGRATE/integrate_sample_1d.f90",
+              "sha256": "02ea04872226cd79de58c61ba1e608463ed0530153eb56c3e5d4ff590d638733"
+            },
+            {
+              "path": "src/SF_INTEGRATE/SF_INTEGRATE.f90",
+              "url": "https://github.com/SciFortran/SciFortran/blob/ca4a55f49cfdf7a94e388bc3475a5db574d5de99/src/SF_INTEGRATE/SF_INTEGRATE.f90",
+              "sha256": "61d482f37170575a8e7af1b75aea6208eb7dbf64d4cc937d13b3fb6b8edf2a13"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "trapz",
+              "role": "public-entry-point",
+              "module": "SF_INTEGRATE",
+              "summary": "Real sampled-data TRAPZ returns REAL(8) from F(:) and matching REAL(8) X(SIZE(F)). It sums adjacent trapezoids in supplied order; it does not sort X or use MINVAL/MAXVAL as interval bounds. Use at least two finite samples and an ordered grid for an ordinary integral. Reversed X changes sign. No error estimate, monotonicity check or status output is provided.",
+              "signature": "VALUE = trapz(F,X)",
+              "path": "src/SF_INTEGRATE/integrate_sample_1d.f90",
+              "line_start": 65,
+              "line_end": 79,
+              "declarations": [
+                {
+                  "path": "src/SF_INTEGRATE/integrate_sample_1d.f90",
+                  "line_start": 66,
+                  "line_end": 69
+                },
+                {
+                  "path": "src/SF_INTEGRATE/SF_INTEGRATE.f90",
+                  "line_start": 37,
+                  "line_end": 61
+                },
+                {
+                  "path": "src/SF_INTEGRATE/SF_INTEGRATE.f90",
+                  "line_start": 83,
+                  "line_end": 108
+                },
+                {
+                  "path": "src/SF_INTEGRATE/SF_INTEGRATE.f90",
+                  "line_start": 158,
+                  "line_end": 194
+                }
+              ]
+            },
+            {
+              "procedure": "simps",
+              "role": "public-entry-point",
+              "module": "SF_INTEGRATE",
+              "summary": "Uniform sampled-data SIMPS takes REAL(8) F(:) and scalar spacing DH. Odd sample count uses composite Simpson 1/3; even N>=4 closes with a 3/8 rule. Require N>=3: although N=1 returns zero, N=2 reaches invalid F(N-3) indexing. No adaptive sampling, error estimate or status output. The hosted package exposes an integration subset rather than all upstream modules.",
+              "signature": "VALUE = simps(F,DH)",
+              "path": "src/SF_INTEGRATE/integrate_sample_1d.f90",
+              "line_start": 134,
+              "line_end": 168,
+              "declarations": [
+                {
+                  "path": "src/SF_INTEGRATE/integrate_sample_1d.f90",
+                  "line_start": 135,
+                  "line_end": 138
+                },
+                {
+                  "path": "src/SF_INTEGRATE/SF_INTEGRATE.f90",
+                  "line_start": 37,
+                  "line_end": 61
+                },
+                {
+                  "path": "src/SF_INTEGRATE/SF_INTEGRATE.f90",
+                  "line_start": 83,
+                  "line_end": 108
+                },
+                {
+                  "path": "src/SF_INTEGRATE/SF_INTEGRATE.f90",
+                  "line_start": 158,
+                  "line_end": 194
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   },
   "report": {
@@ -20869,10 +22068,12 @@
       "strff",
       "diffeq",
       "fjsample",
+      "conmin",
       "opti",
       "interpolation",
       "fastmath",
       "fortsa",
+      "odepack",
       "kiss",
       "fortran_cubatures",
       "stiff3",
@@ -20882,14 +22083,19 @@
       "dcuhre",
       "foreig",
       "rkf45",
+      "forlab",
+      "nafpack",
       "forsvd",
+      "qdutillib",
       "qdldl-fortran",
       "carlson-elliptic-integrals",
       "fortran-bessels",
+      "dynamics",
       "dnaoad-fpm",
       "econ-toolchain",
       "m_la",
       "fglm",
+      "friction",
       "feq-parse",
       "fordot",
       "formatmul",
@@ -20918,7 +22124,10 @@
       "differentia",
       "npy-for-fortran",
       "fortran-utils",
-      "fortranlib"
+      "fortranlib",
+      "nufft1d",
+      "nufft2d",
+      "scifortran"
     ],
     "revision_mismatches": [],
     "no_independent_review": [
@@ -20944,13 +22153,11 @@
       "m_calculator",
       "befor64",
       "ciaaw",
-      "conmin",
       "fortran_huffman",
       "fortran-flann",
       "fortran_stb_image",
       "cairo-fortran",
       "forsudoku",
-      "odepack",
       "parff",
       "conmax",
       "graphstruc",
@@ -20959,15 +22166,11 @@
       "psqp",
       "optgra",
       "y12m",
-      "forlab",
       "libdogleg-f",
-      "nafpack",
       "fishpack",
       "dde_solver",
       "spherepack",
-      "qdutillib",
       "lusol",
-      "dynamics",
       "diffstruc",
       "seiscope-optimization",
       "gslib",
@@ -20975,7 +22178,6 @@
       "fortrandf",
       "strith",
       "list",
-      "friction",
       "bstrith",
       "heatflow",
       "ecx",
@@ -21021,8 +22223,6 @@
       "fiats",
       "julienne",
       "m-process",
-      "nufft1d",
-      "nufft2d",
       "aotus",
       "propack",
       "qcontainers",
@@ -21030,7 +22230,6 @@
       "m_draw",
       "fortran-lua53",
       "netcdf-fortran",
-      "scifortran",
       "forpy",
       "fkb",
       "ntpoly",
