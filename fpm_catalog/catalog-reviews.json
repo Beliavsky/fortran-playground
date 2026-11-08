@@ -2,7 +2,7 @@
   "schema_version": 1,
   "publisher": "fortran-gams-catalog-independent-reviews",
   "source_url": "https://beliavsky.github.io/fortran-gams-catalog/reviewed-metadata.json",
-  "source_snapshot_id": "sha256:59907216f11913a81b29f4a6423465314398b4771134ed1a8f0d3797a03e3f4e",
+  "source_snapshot_id": "sha256:58d1683e02493ae278224ba64488fb731b7f4bc673bee616a2592eba5a29f3d7",
   "packages": {
     "test-drive": {
       "id": "github:fortran-lang/test-drive",
@@ -10424,6 +10424,218 @@
         }
       ]
     },
+    "flint": {
+      "id": "github:princemahajan/flint",
+      "repository": {
+        "owner": "princemahajan",
+        "name": "FLINT",
+        "url": "https://github.com/princemahajan/FLINT"
+      },
+      "license": {
+        "label": "Apache-2.0",
+        "spdx_expression": "Apache-2.0",
+        "revision": "b6322037cb751b11fa64ea66cf23173ae572fff6",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE and selected source headers identify Apache License 2.0. The scoped interface includes the retained caller problem object and does not establish every event/stiffness mode.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/princemahajan/FLINT/blob/b6322037cb751b11fa64ea66cf23173ae572fff6/LICENSE",
+            "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/princemahajan/FLINT/blob/b6322037cb751b11fa64ea66cf23173ae572fff6/README.md",
+            "sha256": "0b84008c0d7cd333b72f69a6bdca36b3a9f5f6e9df2626d7ae8f3addaef60dbc"
+          },
+          {
+            "path": "src/ERK.f90",
+            "url": "https://github.com/princemahajan/FLINT/blob/b6322037cb751b11fa64ea66cf23173ae572fff6/src/ERK.f90",
+            "sha256": "b96fedc7a2758d98d94deea967dbf03c45713d2ee13a4915e7a44b5fbe61e8ea"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "I1a1a",
+          "level": "source-reviewed",
+          "revision": "b6322037cb751b11fa64ea66cf23173ae572fff6",
+          "reviewed_on": "2026-11-08",
+          "notes": "Explicit Runge-Kutta problem initialization, propagation, dense interpolation and status inspection document callback lifetime and required tolerance actuals in this pin. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/ERK.f90",
+              "url": "https://github.com/princemahajan/FLINT/blob/b6322037cb751b11fa64ea66cf23173ae572fff6/src/ERK.f90",
+              "sha256": "b96fedc7a2758d98d94deea967dbf03c45713d2ee13a4915e7a44b5fbe61e8ea"
+            },
+            {
+              "path": "src/FLINT.f90",
+              "url": "https://github.com/princemahajan/FLINT/blob/b6322037cb751b11fa64ea66cf23173ae572fff6/src/FLINT.f90",
+              "sha256": "2ebf98ad7a7466054c652f882c70e6278b6e46ff1448794bfd9f0f893b19666b"
+            },
+            {
+              "path": "src/FLINT_base.f90",
+              "url": "https://github.com/princemahajan/FLINT/blob/b6322037cb751b11fa64ea66cf23173ae572fff6/src/FLINT_base.f90",
+              "sha256": "3fe973cd0762ff512a1ceeacd827e44fd89c8508577e42aa637d2a4286913d01"
+            },
+            {
+              "path": "src/ERKInit.f90",
+              "url": "https://github.com/princemahajan/FLINT/blob/b6322037cb751b11fa64ea66cf23173ae572fff6/src/ERKInit.f90",
+              "sha256": "f7886a8b14a21285207ce22ab3c6438e8db0ef37279f47bb57c14efbc78caa21"
+            },
+            {
+              "path": "src/ERKInterp.f90",
+              "url": "https://github.com/princemahajan/FLINT/blob/b6322037cb751b11fa64ea66cf23173ae572fff6/src/ERKInterp.f90",
+              "sha256": "7185e91da3f70fe6123450558c2943fc3f71a1bb654a90ce4e399ee86cf0265e"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "Init",
+              "role": "public-entry-point",
+              "module": "FLINT",
+              "derived_type": "ERK_class",
+              "summary": "Declare TYPE(ERK_class) :: solver from FLINT. Initialize an explicit Runge-Kutta solver with a concrete extension of abstract DiffEqSys implementing F(me,X,Y,params), returning REAL(FLINT_WP) derivatives. Set the problem dimension n and retain the actual DE with TARGET and a lifetime spanning all solver uses: INIT stores a pointer to it. MaxSteps must be positive. Supply BOTH ATol and RTol arrays of length one or n, despite their OPTIONAL declarations: this pin calls SIZE on them unconditionally. Configure InterpOn before integration for dense output; events need the separate event callback/configuration and are outside this basic scope. Inspect INFO after setup before integrating. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%Init(DE,MAXSTEPS,[METHOD],[ATOL],[RTOL],[INTERPON],[INTERPSTATES],[MINSTEPSIZE],[MAXSTEPSIZE],[STEPSZPARAMS],[EVENTSON],[EVENTSTEPSZ],[EVENTOPTIONS],[EVENTTOL])",
+              "path": "src/ERK.f90",
+              "line_start": 123,
+              "line_end": 145,
+              "declarations": [
+                {
+                  "path": "src/ERK.f90",
+                  "line_start": 129,
+                  "line_end": 143
+                },
+                {
+                  "path": "src/ERK.f90",
+                  "line_start": 72,
+                  "line_end": 112
+                },
+                {
+                  "path": "src/FLINT_base.f90",
+                  "line_start": 220,
+                  "line_end": 250
+                },
+                {
+                  "path": "src/FLINT.f90",
+                  "line_start": 84,
+                  "line_end": 92
+                },
+                {
+                  "path": "src/ERKInit.f90",
+                  "line_start": 57,
+                  "line_end": 88
+                }
+              ]
+            },
+            {
+              "procedure": "Integrate",
+              "role": "public-entry-point",
+              "module": "FLINT",
+              "derived_type": "ERK_class",
+              "summary": "Declare TYPE(ERK_class) :: solver from FLINT. Integrate from X0 and Y0(n) with an initialized live problem. Xf and StepSz are INOUT variables, not literal actuals; Yf has size n. Use REAL(FLINT_WP), initialize the requested endpoint and step-size control, and check INFO plus the returned endpoint before claiming the requested interval was reached. Optional internal/event histories are allocatable output arrays. Dense output must have been enabled in INIT; requesting output here does not retroactively enable it. Events, single-step and constant-step modes have additional semantics beyond this basic adaptive solve. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%Integrate(X0,Y0,XF,YF,STEPSZ,[USECONSTSTEPSZ],[STEPADVANCE],[INTSTEPSON],[XINT],[YINT],[EVENTMASK],[EVENTSTATES],[STIFFTEST],[PARAMS])",
+              "path": "src/ERK.f90",
+              "line_start": 148,
+              "line_end": 170,
+              "declarations": [
+                {
+                  "path": "src/ERK.f90",
+                  "line_start": 153,
+                  "line_end": 168
+                },
+                {
+                  "path": "src/ERK.f90",
+                  "line_start": 72,
+                  "line_end": 112
+                },
+                {
+                  "path": "src/FLINT_base.f90",
+                  "line_start": 220,
+                  "line_end": 250
+                },
+                {
+                  "path": "src/FLINT.f90",
+                  "line_start": 84,
+                  "line_end": 92
+                }
+              ]
+            },
+            {
+              "procedure": "Interpolate",
+              "role": "public-entry-point",
+              "module": "FLINT",
+              "derived_type": "ERK_class",
+              "summary": "Declare TYPE(ERK_class) :: solver from FLINT. Evaluate retained dense-output coefficients after integration with InterpOn enabled. Xarr is a strictly monotone vector, ordered in the integration direction without repeated times, within the retained integrated interval; Yarr has shape (number of configured InterpStates,SIZE(Xarr)). Use INFO/InterpReady and the operation status rather than treating arbitrary extrapolation as valid. SaveInterpCoeffs controls retaining coefficients for subsequent interpolation calls; explicitly request retention when repeated evaluation is needed. This is delayed interpolation of an existing solve, not a new RHS integration. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%Interpolate(XARR,YARR,[SAVEINTERPCOEFFS])",
+              "path": "src/ERK.f90",
+              "line_start": 174,
+              "line_end": 185,
+              "declarations": [
+                {
+                  "path": "src/ERK.f90",
+                  "line_start": 178,
+                  "line_end": 182
+                },
+                {
+                  "path": "src/ERK.f90",
+                  "line_start": 72,
+                  "line_end": 112
+                },
+                {
+                  "path": "src/FLINT_base.f90",
+                  "line_start": 220,
+                  "line_end": 250
+                },
+                {
+                  "path": "src/FLINT.f90",
+                  "line_start": 84,
+                  "line_end": 92
+                },
+                {
+                  "path": "src/ERKInterp.f90",
+                  "line_start": 44,
+                  "line_end": 80
+                }
+              ]
+            },
+            {
+              "procedure": "Info",
+              "role": "public-entry-point",
+              "module": "FLINT",
+              "derived_type": "ERK_class",
+              "summary": "Declare TYPE(ERK_class) :: solver from FLINT. Obtain required LastStatus and optional allocatable StatusMsg, step/function counters and InterpReady. Use the exported FLINT status constants after INIT, INTEGRATE and INTERPOLATE. Optional state-vector outputs are caller arrays of the problem dimension; they are not allocatable resize requests. A status query reports solver state, not an independently checked error bound or a convergence certificate for an arbitrary problem. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%Info(LASTSTATUS,[STATUSMSG],[NSTEPS],[NACCEPT],[NREJECT],[NFCALLS],[INTERPREADY],[H0],[X0],[Y0],[HF],[XF],[YF])",
+              "path": "src/ERK.f90",
+              "line_start": 188,
+              "line_end": 206,
+              "declarations": [
+                {
+                  "path": "src/ERK.f90",
+                  "line_start": 191,
+                  "line_end": 204
+                },
+                {
+                  "path": "src/ERK.f90",
+                  "line_start": 72,
+                  "line_end": 112
+                },
+                {
+                  "path": "src/FLINT_base.f90",
+                  "line_start": 220,
+                  "line_end": 250
+                },
+                {
+                  "path": "src/FLINT.f90",
+                  "line_start": 84,
+                  "line_end": 92
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "fortran-string-to-real": {
       "id": "github:carltoffel/fortran-string-to-real",
       "repository": {
@@ -11330,6 +11542,145 @@
         }
       ]
     },
+    "twopnt": {
+      "id": "github:perazz/twopnt",
+      "repository": {
+        "owner": "perazz",
+        "name": "twopnt",
+        "url": "https://github.com/perazz/twopnt"
+      },
+      "license": {
+        "label": "MIT identified by source header and manifest",
+        "spdx_expression": "MIT",
+        "revision": "4ce477215f84a88d879f0ca3937cab9bedfb7762",
+        "reviewed_on": "2026-11-08",
+        "notes": "Selected source header and fpm.toml identify MIT for the modern Federico Perini port and credit Joseph Grcar/Sandia original TWOPNT. No standalone full MIT license text was found at this pin; retain the original notices and verify redistribution terms if needed.",
+        "evidence": [
+          {
+            "path": "src/twopnt_core.f90",
+            "url": "https://github.com/perazz/twopnt/blob/4ce477215f84a88d879f0ca3937cab9bedfb7762/src/twopnt_core.f90",
+            "sha256": "830a05ba3f3a7c444645826d03dbac8f793652d3318c9cd7752ed6a152dc79fd"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/perazz/twopnt/blob/4ce477215f84a88d879f0ca3937cab9bedfb7762/README.md",
+            "sha256": "394293ccffe69adfef3755ef8cadf846a7e5e0c0b635ef91a4fdb8fe8c63da3a"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "I1b",
+          "level": "source-reviewed",
+          "revision": "4ce477215f84a88d879f0ca3937cab9bedfb7762",
+          "reviewed_on": "2026-11-08",
+          "notes": "Object-oriented boundary-value setup, domain construction and run entry document abstract problem callbacks and output/status contracts. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/twopnt_core.f90",
+              "url": "https://github.com/perazz/twopnt/blob/4ce477215f84a88d879f0ca3937cab9bedfb7762/src/twopnt_core.f90",
+              "sha256": "830a05ba3f3a7c444645826d03dbac8f793652d3318c9cd7752ed6a152dc79fd"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/perazz/twopnt/blob/4ce477215f84a88d879f0ca3937cab9bedfb7762/fpm.toml",
+              "sha256": "f5de06f5727fe9646f31111abe1dd47df4aa80b88b721af1500d61de1b20cecd"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "init",
+              "role": "public-entry-point",
+              "module": "twopnt_core",
+              "derived_type": "TwoPntSolverSetup",
+              "summary": "Declare TYPE(TwoPntSolverSetup) :: solver from twopnt_core. Initialize setup controls to the pinned defaults, including steady mode and disabled grid adaptation, before configuring a problem. This initializes TYPE(TwoPntSolverSetup) only; it neither constructs a domain nor solves residual equations. Change controls deliberately after INIT and before the problem RUN. REAL(RK) is the module real64 kind. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%init()",
+              "path": "src/twopnt_core.f90",
+              "line_start": 1015,
+              "line_end": 1048,
+              "declarations": [
+                {
+                  "path": "src/twopnt_core.f90",
+                  "line_start": 1016,
+                  "line_end": 1016
+                },
+                {
+                  "path": "src/twopnt_core.f90",
+                  "line_start": 229,
+                  "line_end": 270
+                },
+                {
+                  "path": "src/twopnt_core.f90",
+                  "line_start": 332,
+                  "line_end": 416
+                }
+              ]
+            },
+            {
+              "procedure": "new",
+              "role": "public-entry-point",
+              "module": "twopnt_core",
+              "derived_type": "TwoPntBVPDomain",
+              "summary": "Declare TYPE(TwoPntBVPDomain) :: solver from twopnt_core. Scalar-NAME overload of the domain NEW generic. Specify GROUPA/COMPS/GROUPB unknown counts, initial POINTS and maximum PMAX, with ABOVE/BELOW vectors of length domain%NVAR(). For a positive grid point count provide XRANGE(2); the implementation rejects a missing range. Check logical ERROR before preparing an initial solution. TEXT is an output unit, zero suppresses diagnostics. This constructs grid/bounds/names, not the problem residual callback or nonlinear solution; the array-NAMES overload is separate. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%new(ERROR,TEXT,GROUPA,COMPS,POINTS,PMAX,GROUPB,ABOVE,BELOW,NAME,[XRANGE],[ACTIVE])",
+              "path": "src/twopnt_core.f90",
+              "line_start": 666,
+              "line_end": 689,
+              "declarations": [
+                {
+                  "path": "src/twopnt_core.f90",
+                  "line_start": 667,
+                  "line_end": 674
+                },
+                {
+                  "path": "src/twopnt_core.f90",
+                  "line_start": 229,
+                  "line_end": 270
+                },
+                {
+                  "path": "src/twopnt_core.f90",
+                  "line_start": 332,
+                  "line_end": 416
+                },
+                {
+                  "path": "src/twopnt_core.f90",
+                  "line_start": 609,
+                  "line_end": 663
+                }
+              ]
+            },
+            {
+              "procedure": "run",
+              "role": "public-entry-point",
+              "module": "twopnt_core",
+              "derived_type": "TwoPntBVProblem",
+              "summary": "Declare solver as a concrete extension of abstract TwoPntBVProblem from twopnt_core; the abstract base cannot itself be instantiated. Implement all deferred callbacks FUN, SAVE_SOL and UPDATE_GRID using the linked abstract interfaces. Initialize solver%setup%init(), construct solver%domain%new(...) and check its ERROR, then supply REAL(RK) U with capacity solver%domain%NMAX() and a valid initial approximation. RUN updates U and returns logical ERROR and character REPORT; inspect both. TEXT controls diagnostic output. This is a stateful boundary-value residual solver, not a direct call accepting an arbitrary RHS function; grid adaptation and callback buffer layout require the domain conventions. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%run(ERROR,TEXT,REPORT,U)",
+              "path": "src/twopnt_core.f90",
+              "line_start": 3351,
+              "line_end": 3645,
+              "declarations": [
+                {
+                  "path": "src/twopnt_core.f90",
+                  "line_start": 3352,
+                  "line_end": 3356
+                },
+                {
+                  "path": "src/twopnt_core.f90",
+                  "line_start": 229,
+                  "line_end": 270
+                },
+                {
+                  "path": "src/twopnt_core.f90",
+                  "line_start": 332,
+                  "line_end": 416
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "specfunc-fullerton": {
       "id": "github:arjenmarkus/specfunc-fullerton",
       "repository": {
@@ -11758,6 +12109,87 @@
                   "path": "src/nlopt_wrap.f90",
                   "line_start": 254,
                   "line_end": 264
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "daskr": {
+      "id": "github:davidpfister/daskr",
+      "repository": {
+        "owner": "davidpfister",
+        "name": "daskr",
+        "url": "https://github.com/davidpfister/daskr"
+      },
+      "license": {
+        "label": "UC/LLNL BSD three-clause terms with additional notice",
+        "spdx_expression": null,
+        "revision": "b43533edc5d6900088a846d802e3a86d0f9a06ad",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies a three-clause redistribution grant plus an Additional BSD Notice required under the DOE contract. Record and preserve both rather than discard the additional terms by assigning an unqualified SPDX label.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/davidpfister/daskr/blob/b43533edc5d6900088a846d802e3a86d0f9a06ad/LICENSE",
+            "sha256": "25d6d87e1e8cf6248924a23087e2bc680c885a13c56d5497bf78bfe389efc03c"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/davidpfister/daskr/blob/b43533edc5d6900088a846d802e3a86d0f9a06ad/README.md",
+            "sha256": "a0b4798cdd89d5b1c80107ed5b43f3a311afd57ff85153ed8299fb650f6b46d8"
+          },
+          {
+            "path": "src/ddaskr.f",
+            "url": "https://github.com/davidpfister/daskr/blob/b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f",
+            "sha256": "ec35cf263c50fa87c5a2b97805f1700af58fc32eb7005bc97f8c9282a12b96ca"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "I1a2",
+          "level": "source-reviewed",
+          "revision": "b43533edc5d6900088a846d802e3a86d0f9a06ad",
+          "reviewed_on": "2026-11-08",
+          "notes": "Residual-form DAE entry documents the basic dense direct path, required callback slots, workspace bounds and continuation checks. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/ddaskr.f",
+              "url": "https://github.com/davidpfister/daskr/blob/b43533edc5d6900088a846d802e3a86d0f9a06ad/src/ddaskr.f",
+              "sha256": "ec35cf263c50fa87c5a2b97805f1700af58fc32eb7005bc97f8c9282a12b96ca"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "DDASKR",
+              "role": "public-entry-point",
+              "summary": "External double-precision DAE solver for RES(T,Y,YPRIME,CJ,DELTA,IRES,RPAR,IPAR), which fills residual G(t,y,yprime) and an error flag. For the basic dense direct finite-difference case use INFO(20)=0 initially, NRT=0 and consistent starting Y/YPRIME; allocate RWORK at least 60+9*NEQ+NEQ**2 and IWORK at least 40+NEQ under these default options. RTOL/ATOL are arrays (length one in scalar-tolerance mode). JAC, PSOL and RT remain required procedure argument slots even when the selected options do not call them. Check IDID and returned T; a positive return can represent an intermediate step/root rather than the requested endpoint. Preserve work arrays and follow the INFO continuation protocol; changing Krylov, banded, root or initial-consistency options changes callback/workspace requirements.",
+              "signature": "CALL DDASKR(RES,NEQ,T,Y,YPRIME,TOUT,INFO,RTOL,ATOL,IDID,RWORK,LRW,IWORK,LIW,RPAR,IPAR,JAC,PSOL,RT,NRT,JROOT)",
+              "path": "src/ddaskr.f",
+              "line_start": 1,
+              "line_end": 2493,
+              "declarations": [
+                {
+                  "path": "src/ddaskr.f",
+                  "line_start": 1402,
+                  "line_end": 1410
+                },
+                {
+                  "path": "src/ddaskr.f",
+                  "line_start": 180,
+                  "line_end": 245
+                },
+                {
+                  "path": "src/ddaskr.f",
+                  "line_start": 688,
+                  "line_end": 751
+                },
+                {
+                  "path": "src/ddaskr.f",
+                  "line_start": 1070,
+                  "line_end": 1195
                 }
               ]
             }
@@ -18693,6 +19125,166 @@
                   "path": "src/centered_cartesian_helmholtz_solver_3d.f90",
                   "line_start": 39,
                   "line_end": 321
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "dde_solver": {
+      "id": "github:warrenweckesser/dde_solver",
+      "repository": {
+        "owner": "WarrenWeckesser",
+        "name": "dde_solver",
+        "url": "https://github.com/WarrenWeckesser/dde_solver"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "90d3389ce5d5733ab2b6e7ed7d2dad273b4d0c6b",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE.txt supplies the Shampine/Thompson BSD three-clause terms. This calling review scopes constant delays and constant history rather than every neutral/state-dependent/event mode.",
+        "evidence": [
+          {
+            "path": "LICENSE.txt",
+            "url": "https://github.com/WarrenWeckesser/dde_solver/blob/90d3389ce5d5733ab2b6e7ed7d2dad273b4d0c6b/LICENSE.txt",
+            "sha256": "6019e3d3a012c117fa4ee6e0b31216dc1cf73d5af0baae9c3c382fce63f48d44"
+          },
+          {
+            "path": "dde_solver_m.f90",
+            "url": "https://github.com/WarrenWeckesser/dde_solver/blob/90d3389ce5d5733ab2b6e7ed7d2dad273b4d0c6b/dde_solver_m.f90",
+            "sha256": "068d219497dbf4c4454ab3ad04dd9a3ba27ac76b89c720481fcbb6c0d8ebe5f4"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "I",
+          "level": "source-reviewed",
+          "revision": "90d3389ce5d5733ab2b6e7ed7d2dad273b4d0c6b",
+          "reviewed_on": "2026-11-08",
+          "notes": "Delay-equation option construction, constant-delay solve, interpolation and both cleanup calls document vector problem sizes and pointer-owned results. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "dde_solver_m.f90",
+              "url": "https://github.com/WarrenWeckesser/dde_solver/blob/90d3389ce5d5733ab2b6e7ed7d2dad273b4d0c6b/dde_solver_m.f90",
+              "sha256": "068d219497dbf4c4454ab3ad04dd9a3ba27ac76b89c720481fcbb6c0d8ebe5f4"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "DDE_SET",
+              "role": "public-entry-point",
+              "module": "DDE_SOLVER_M",
+              "summary": "Create TYPE(DDE_OPTS) using keyword controls; INTERPOLATION=.TRUE. is needed for later DDE_VAL calls. RE/AE are scalar tolerances and RE_VECTOR/AE_VECTOR are per-component alternatives. Do not supply MOVING_AVERAGE at this pin: merely presenting that optional argument prints a message and STOPs. This options constructor also sets module state; it does not establish independently reentrant solver objects. Keep the initialized options for cleanup after the solve.",
+              "signature": "VALUE = DDE_SET([RE],[RE_VECTOR],[AE],[AE_VECTOR],[HINIT],[HMAX],[ISTERMINAL],[DIRECTION],[JUMPS],[NEUTRAL],[TRACK_DISCONTINUITIES],[TRACKING_LEVEL],[INTERPOLATION],[THIT_EXACTLY],[MAX_EVENTS],[MAX_STEPS],[MOVING_AVERAGE],[MAX_DELAY],[TRIM_FREQUENCY])",
+              "path": "dde_solver_m.f90",
+              "line_start": 2497,
+              "line_end": 2697,
+              "declarations": [
+                {
+                  "path": "dde_solver_m.f90",
+                  "line_start": 2503,
+                  "line_end": 2515
+                },
+                {
+                  "path": "dde_solver_m.f90",
+                  "line_start": 376,
+                  "line_end": 417
+                }
+              ]
+            },
+            {
+              "procedure": "DDE_SOLVER",
+              "role": "public-entry-point",
+              "module": "DDE_SOLVER_M",
+              "summary": "Constant-delay, constant-history overload returning TYPE(DDE_SOL). NVAR is an integer vector [NEQN,NLAGS], not a scalar; DELAYS(NLAGS) supplies positive lags and HISTORY(NEQN) the constant history. TSPAN starts at initial time and ends at final time (intermediate requested times are supported). DDES(T,Y,Z,DY) fills derivatives: Y/DY have length NEQN and Z has shape (NEQN,NLAGS). Check SOL%FLAG, SOL%NPTS and reached times before using SOL%T and SOL%Y(NPTS,NEQN). Optional event/change/output callbacks have distinct linked interfaces. Solution/option types contain owned pointers: avoid shallow copies and call RELEASE_ARRAYS after use.",
+              "signature": "VALUE = DDE_SOLVER(NVAR,DDES,DELAYS,HISTORY,TSPAN,[OPTIONS],[EVENT_FCN],[CHANGE_FCN],[OUT_FCN],[USER_TRIM_GET])",
+              "path": "dde_solver_m.f90",
+              "line_start": 1528,
+              "line_end": 1854,
+              "declarations": [
+                {
+                  "path": "dde_solver_m.f90",
+                  "line_start": 1534,
+                  "line_end": 1588
+                },
+                {
+                  "path": "dde_solver_m.f90",
+                  "line_start": 376,
+                  "line_end": 417
+                },
+                {
+                  "path": "dde_solver_m.f90",
+                  "line_start": 149,
+                  "line_end": 185
+                }
+              ]
+            },
+            {
+              "procedure": "DDE_VAL",
+              "role": "public-entry-point",
+              "module": "DDE_SOLVER_M",
+              "summary": "Interpolate a completed solution created with INTERPOLATION enabled; supply a vector T inside the computed interval, optionally selecting component indices or derivatives. The function returns TYPE(DDE_INT), not a raw real array. Its YT array is organized with requested time first and component second; DT contains requested derivatives. Use RELEASE_INT on the returned interpolation object after reading it. Do not extrapolate or use a solution whose required history has already been released.",
+              "signature": "VALUE = DDE_VAL(T,SOL,[COMPONENTS],[DERIVATIVES])",
+              "path": "dde_solver_m.f90",
+              "line_start": 2726,
+              "line_end": 3019,
+              "declarations": [
+                {
+                  "path": "dde_solver_m.f90",
+                  "line_start": 2768,
+                  "line_end": 2779
+                },
+                {
+                  "path": "dde_solver_m.f90",
+                  "line_start": 376,
+                  "line_end": 417
+                }
+              ]
+            },
+            {
+              "procedure": "RELEASE_ARRAYS",
+              "role": "public-entry-point",
+              "module": "DDE_SOLVER_M",
+              "summary": "Explicitly release the pointer arrays of a returned DDE_SOL and its initialized DDE_OPTS; BOTH SOL and OPTS are required, while VERBOSE is optional. Use after the solver has returned and all interpolation is finished. The implementation reads solution bookkeeping, so an arbitrary uninitialized object is not a valid cleanup actual. Avoid shallow aliases and repeated cleanup; this is separate from releasing an allocated DDE_INT interpolation result.",
+              "signature": "CALL RELEASE_ARRAYS(SOL,OPTS,[VERBOSE])",
+              "path": "dde_solver_m.f90",
+              "line_start": 9237,
+              "line_end": 9423,
+              "declarations": [
+                {
+                  "path": "dde_solver_m.f90",
+                  "line_start": 9258,
+                  "line_end": 9261
+                },
+                {
+                  "path": "dde_solver_m.f90",
+                  "line_start": 376,
+                  "line_end": 417
+                }
+              ]
+            },
+            {
+              "procedure": "RELEASE_INT",
+              "role": "public-entry-point",
+              "module": "DDE_SOLVER_M",
+              "summary": "Release pointer arrays of a valid TYPE(DDE_INT) returned by DDE_VAL after its output is no longer needed. Do not pass a bare uninitialized structure, repeat cleanup through aliases, or assume this also frees the original DDE_SOL/OPTS. Those require RELEASE_ARRAYS separately.",
+              "signature": "CALL RELEASE_INT(YINT,[VERBOSE])",
+              "path": "dde_solver_m.f90",
+              "line_start": 9426,
+              "line_end": 9486,
+              "declarations": [
+                {
+                  "path": "dde_solver_m.f90",
+                  "line_start": 9439,
+                  "line_end": 9441
+                },
+                {
+                  "path": "dde_solver_m.f90",
+                  "line_start": 376,
+                  "line_end": 417
                 }
               ]
             }
@@ -27362,6 +27954,352 @@
         }
       ]
     },
+    "fortran-lua54": {
+      "id": "github:interkosmos/fortran-lua54",
+      "repository": {
+        "owner": "interkosmos",
+        "name": "fortran-lua54",
+        "url": "https://github.com/interkosmos/fortran-lua54"
+      },
+      "license": {
+        "label": "ISC",
+        "spdx_expression": "ISC",
+        "revision": "b3582591bc82d003ef3933d0772c131509667f49",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENCE supplies Philipp Engel ISC terms for the Fortran bindings. Native Lua 5.4 retains its separate license and ABI requirements.",
+        "evidence": [
+          {
+            "path": "LICENCE",
+            "url": "https://github.com/interkosmos/fortran-lua54/blob/b3582591bc82d003ef3933d0772c131509667f49/LICENCE",
+            "sha256": "542beb99a85339bd5ca2c8c576a261403cd9a980ffcdfe77a6d05914c4a37c12"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/interkosmos/fortran-lua54/blob/b3582591bc82d003ef3933d0772c131509667f49/README.md",
+            "sha256": "b7101c06af5d11de8205d7d0c389b31a221625553d53ec519528d6bbe2ff1174"
+          },
+          {
+            "path": "src/lua.f90",
+            "url": "https://github.com/interkosmos/fortran-lua54/blob/b3582591bc82d003ef3933d0772c131509667f49/src/lua.f90",
+            "sha256": "8383ef197fdb18e8c11a7982545c3210fdb9cca5f2c8c97f943ad1c60982208d"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "S",
+          "level": "source-reviewed",
+          "revision": "b3582591bc82d003ef3933d0772c131509667f49",
+          "reviewed_on": "2026-11-08",
+          "notes": "Lua interpreter creation, protected source execution, checked numeric stack conversion and cleanup document native pointer ownership. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/lua.f90",
+              "url": "https://github.com/interkosmos/fortran-lua54/blob/b3582591bc82d003ef3933d0772c131509667f49/src/lua.f90",
+              "sha256": "8383ef197fdb18e8c11a7982545c3210fdb9cca5f2c8c97f943ad1c60982208d"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "lual_newstate",
+              "role": "public-entry-point",
+              "module": "lua",
+              "summary": "Create a Lua 5.4 state as TYPE(C_PTR); test C_ASSOCIATED before use and retain a single owner until LUA_CLOSE. The state does not automatically open Lua standard libraries; call LUAL_OPENLIBS explicitly if expressions require math or other libraries. Simple returned arithmetic needs no library initialization. This allocates a native interpreter, not a Fortran object with automatic finalization.",
+              "signature": "VALUE = lual_newstate()",
+              "path": "src/lua.f90",
+              "line_start": 472,
+              "line_end": 476,
+              "declarations": [
+                {
+                  "path": "src/lua.f90",
+                  "line_start": 473,
+                  "line_end": 475
+                },
+                {
+                  "path": "src/lua.f90",
+                  "line_start": 1,
+                  "line_end": 35
+                }
+              ]
+            },
+            {
+              "procedure": "lual_dostring",
+              "role": "public-entry-point",
+              "module": "lua",
+              "summary": "Load and execute CHARACTER Lua source on a valid state. This wrapper appends the required terminator through its load helper and returns integer status: zero is success; failure leaves an error object on the Lua stack. Use a Lua return statement to leave expression results on the stack; values are not returned through this integer status. Repeated calls require deliberate stack cleanup. Full native Lua execution remains subject to the hosting sandbox and is not a separate permission boundary.",
+              "signature": "VALUE = lual_dostring(L,STR)",
+              "path": "src/lua.f90",
+              "line_start": 965,
+              "line_end": 973,
+              "declarations": [
+                {
+                  "path": "src/lua.f90",
+                  "line_start": 967,
+                  "line_end": 969
+                },
+                {
+                  "path": "src/lua.f90",
+                  "line_start": 1,
+                  "line_end": 35
+                }
+              ]
+            },
+            {
+              "procedure": "lua_tonumberx",
+              "role": "public-entry-point",
+              "module": "lua",
+              "summary": "Convert stack position IDX to REAL(LUA_NUMBER) and check conversion separately: supply INTEGER(C_INT) IDX (for example -1_C_INT for the top) and ISNUM=C_LOC(flag) where flag is INTEGER(C_INT),TARGET. ISNUM is a TYPE(C_PTR),VALUE native pointer slot, not a Fortran logical actual. A nonzero flag indicates conversion success; a numeric zero alone cannot distinguish failure from a valid result. The stack and its state must still be live.",
+              "signature": "VALUE = lua_tonumberx(L,IDX,ISNUM)",
+              "path": "src/lua.f90",
+              "line_start": 348,
+              "line_end": 355,
+              "declarations": [
+                {
+                  "path": "src/lua.f90",
+                  "line_start": 349,
+                  "line_end": 354
+                },
+                {
+                  "path": "src/lua.f90",
+                  "line_start": 1,
+                  "line_end": 35
+                }
+              ]
+            },
+            {
+              "procedure": "lua_close",
+              "role": "public-entry-point",
+              "module": "lua",
+              "summary": "Close a valid owning Lua state once after all evaluations/stack access end. The native binding takes TYPE(C_PTR),VALUE and does not nullify the caller handle. Set the caller variable to C_NULL_PTR afterward if retained; avoid copied owners and double close.",
+              "signature": "CALL lua_close(L)",
+              "path": "src/lua.f90",
+              "line_start": 498,
+              "line_end": 502,
+              "declarations": [
+                {
+                  "path": "src/lua.f90",
+                  "line_start": 499,
+                  "line_end": 501
+                },
+                {
+                  "path": "src/lua.f90",
+                  "line_start": 1,
+                  "line_end": 35
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fortran-unix": {
+      "id": "github:interkosmos/fortran-unix",
+      "repository": {
+        "owner": "interkosmos",
+        "name": "fortran-unix",
+        "url": "https://github.com/interkosmos/fortran-unix"
+      },
+      "license": {
+        "label": "ISC",
+        "spdx_expression": "ISC",
+        "revision": "50dc6df511c1cf5a245a4ab14cd4f705d4e66c2f",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENCE supplies Philipp Engel ISC terms. Selected C-interoperable types depend on platform preprocessing; the scoped POSIX calls do not establish universal Windows availability.",
+        "evidence": [
+          {
+            "path": "LICENCE",
+            "url": "https://github.com/interkosmos/fortran-unix/blob/50dc6df511c1cf5a245a4ab14cd4f705d4e66c2f/LICENCE",
+            "sha256": "0bfadaddcce38eea34951ebe5eb038e158ad6d828088b8f4b2f78f06f5f7fdc9"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/interkosmos/fortran-unix/blob/50dc6df511c1cf5a245a4ab14cd4f705d4e66c2f/README.md",
+            "sha256": "ff55ec6c36720d4f973bc8a3908c9c313808d52fa6190cebe629757ba2b3fb6b"
+          },
+          {
+            "path": "src/unix_stat.F90",
+            "url": "https://github.com/interkosmos/fortran-unix/blob/50dc6df511c1cf5a245a4ab14cd4f705d4e66c2f/src/unix_stat.F90",
+            "sha256": "da5bcef29b53c88e244b3d412768e5367aa64e66aa55442188efa6252075ad22"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N1",
+          "level": "source-reviewed",
+          "revision": "50dc6df511c1cf5a245a4ab14cd4f705d4e66c2f",
+          "reviewed_on": "2026-11-08",
+          "notes": "POSIX directory creation, directory change and path checks document raw C strings, kind requirements and status conventions. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/unix_stat.F90",
+              "url": "https://github.com/interkosmos/fortran-unix/blob/50dc6df511c1cf5a245a4ab14cd4f705d4e66c2f/src/unix_stat.F90",
+              "sha256": "da5bcef29b53c88e244b3d412768e5367aa64e66aa55442188efa6252075ad22"
+            },
+            {
+              "path": "src/unix_unistd.F90",
+              "url": "https://github.com/interkosmos/fortran-unix/blob/50dc6df511c1cf5a245a4ab14cd4f705d4e66c2f/src/unix_unistd.F90",
+              "sha256": "13ed7333a7fb2d78740011016ebc50d000d0bdda705d30201698679f44478c67"
+            },
+            {
+              "path": "src/unix_types.F90",
+              "url": "https://github.com/interkosmos/fortran-unix/blob/50dc6df511c1cf5a245a4ab14cd4f705d4e66c2f/src/unix_types.F90",
+              "sha256": "0256bbe838c9d5fd099c5086cb35079140474e058ef37ee2b517924f63020283"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "c_mkdir",
+              "role": "public-entry-point",
+              "module": "unix_stat",
+              "summary": "Native POSIX mkdir binding: provide a C-terminated path (append C_NULL_CHAR explicitly) and INTEGER(C_MODE_T) MODE by value. It creates one directory level; parents must already exist. The effective mode is modified by the process umask. INTEGER(C_INT) result zero means success, -1 failure; inspect errno immediately for details. The binding does not trim/terminate ordinary Fortran strings or create directories recursively.",
+              "signature": "VALUE = c_mkdir(PATH,MODE)",
+              "path": "src/unix_stat.F90",
+              "line_start": 165,
+              "line_end": 171,
+              "declarations": [
+                {
+                  "path": "src/unix_stat.F90",
+                  "line_start": 166,
+                  "line_end": 170
+                },
+                {
+                  "path": "src/unix_types.F90",
+                  "line_start": 1,
+                  "line_end": 120
+                }
+              ]
+            },
+            {
+              "procedure": "c_chdir",
+              "role": "public-entry-point",
+              "module": "unix_unistd",
+              "summary": "Change the process working directory to a C-terminated path. The returned INTEGER(C_INT) is zero on success or -1 on failure; preserve/check it and errno before another native call overwrites error state. The effect is process-wide, not scoped to a solver object or this procedure; restore the original directory explicitly when appropriate. No Fortran-string termination wrapper is applied here.",
+              "signature": "VALUE = c_chdir(PATH)",
+              "path": "src/unix_unistd.F90",
+              "line_start": 47,
+              "line_end": 52,
+              "declarations": [
+                {
+                  "path": "src/unix_unistd.F90",
+                  "line_start": 48,
+                  "line_end": 51
+                },
+                {
+                  "path": "src/unix_types.F90",
+                  "line_start": 1,
+                  "line_end": 120
+                }
+              ]
+            },
+            {
+              "procedure": "c_access",
+              "role": "public-entry-point",
+              "module": "unix_unistd",
+              "summary": "Check POSIX path accessibility using a C-terminated path and INTEGER(C_INT),VALUE mode such as F_OK or appropriate access bits. Zero means the requested check succeeds and -1 failure; this does not return a file handle. A later open can still fail or race, so do not use ACCESS as a security/atomic-open guarantee. Native platform declarations and sandbox filesystem permissions apply.",
+              "signature": "VALUE = c_access(PATH,MODE)",
+              "path": "src/unix_unistd.F90",
+              "line_start": 38,
+              "line_end": 44,
+              "declarations": [
+                {
+                  "path": "src/unix_unistd.F90",
+                  "line_start": 39,
+                  "line_end": 43
+                },
+                {
+                  "path": "src/unix_types.F90",
+                  "line_start": 1,
+                  "line_end": 120
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fatode": {
+      "id": "github:computationalsciencelaboratory/fatode",
+      "repository": {
+        "owner": "ComputationalScienceLaboratory",
+        "name": "FATODE",
+        "url": "https://github.com/ComputationalScienceLaboratory/FATODE"
+      },
+      "license": {
+        "label": "GPL-3.0-only software notice; bundled text discrepancy",
+        "spdx_expression": "GPL-3.0-only",
+        "revision": "3f237c49bd377644a597c2a49ae5a83f090bfab5",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE expressly grants software use under GPL version 3, but the text appended below that notice is GNU Free Documentation License 1.3 rather than GPL text. Record the explicit software grant and discrepancy; do not relabel as GPL-or-later or treat all bundled text as the software grant.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/ComputationalScienceLaboratory/FATODE/blob/3f237c49bd377644a597c2a49ae5a83f090bfab5/LICENSE",
+            "sha256": "ccb3f8bda3ad7f3d790299deda6bccb070a5116d1f25f29de4c2d75485bc4d78"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/ComputationalScienceLaboratory/FATODE/blob/3f237c49bd377644a597c2a49ae5a83f090bfab5/README.md",
+            "sha256": "b38863a25c481d15654c49877be650765c9acf7ced53b58960cda3a0a3d9923f"
+          },
+          {
+            "path": "TLM/ERK_TLM/ERK_TLM_f90_Integrator.F90",
+            "url": "https://github.com/ComputationalScienceLaboratory/FATODE/blob/3f237c49bd377644a597c2a49ae5a83f090bfab5/TLM/ERK_TLM/ERK_TLM_f90_Integrator.F90",
+            "sha256": "c7132f0b28c5b6ca17803828470d7facf82f707d4990d772e0ba27f12b2dcde4"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "I1",
+          "level": "source-reviewed",
+          "revision": "3f237c49bd377644a597c2a49ae5a83f090bfab5",
+          "reviewed_on": "2026-11-08",
+          "notes": "Service-selected explicit Runge-Kutta tangent-linear propagation documents state/tangent layouts, callback slots and controls. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "TLM/ERK_TLM/ERK_TLM_f90_Integrator.F90",
+              "url": "https://github.com/ComputationalScienceLaboratory/FATODE/blob/3f237c49bd377644a597c2a49ae5a83f090bfab5/TLM/ERK_TLM/ERK_TLM_f90_Integrator.F90",
+              "sha256": "c7132f0b28c5b6ca17803828470d7facf82f707d4990d772e0ba27f12b2dcde4"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "INTEGRATE_TLM",
+              "role": "public-entry-point",
+              "module": "ERK_TLM_f90_Integrator",
+              "summary": "Explicit Runge-Kutta propagation of a state and tangent-linear columns. VAR(NVAR), VAR_TLM(NVAR,NTLM) and tangent tolerance arrays have INOUT semantics; state ATOL/RTOL are NVAR vectors. FUN(NVAR,T,Y,P) fills derivatives, and JAC(NVAR,T,Y,J) fills the full analytic Jacobian when ICNTRL_U(5)=1; a JAC procedure slot is required even in finite-difference mode. Initialize tangent columns for the intended initial-state perturbations, supply 20-element controls/statistics where used and request IERR_U for status checking. Only positive supplied control entries override defaults in this wrapper. The service-selected source is this ERK_TLM module, not the separate implicit/adjoint integrators elsewhere in FATODE; tangent sensitivities do not automatically mean arbitrary parameter sensitivities.",
+              "signature": "CALL INTEGRATE_TLM(TIN,TOUT,NVAR,NTLM,VAR,VAR_TLM,ATOL_TLM,RTOL_TLM,ATOL,RTOL,FUN,JAC,[ICNTRL_U],[RCNTRL_U],[ISTATUS_U],[RSTATUS_U],[IERR_U])",
+              "path": "TLM/ERK_TLM/ERK_TLM_f90_Integrator.F90",
+              "line_start": 28,
+              "line_end": 95,
+              "declarations": [
+                {
+                  "path": "TLM/ERK_TLM/ERK_TLM_f90_Integrator.F90",
+                  "line_start": 34,
+                  "line_end": 53
+                },
+                {
+                  "path": "TLM/ERK_TLM/ERK_TLM_f90_Integrator.F90",
+                  "line_start": 55,
+                  "line_end": 88
+                },
+                {
+                  "path": "TLM/ERK_TLM/ERK_TLM_f90_Integrator.F90",
+                  "line_start": 137,
+                  "line_end": 149
+                },
+                {
+                  "path": "TLM/ERK_TLM/ERK_TLM_f90_Integrator.F90",
+                  "line_start": 450,
+                  "line_end": 478
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "arpack-ng": {
       "id": "github:opencollab/arpack-ng",
       "repository": {
@@ -27650,6 +28588,144 @@
                   "path": "src/sorting.f90",
                   "line_start": 10,
                   "line_end": 20
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fortran-tcl86": {
+      "id": "github:interkosmos/fortran-tcl86",
+      "repository": {
+        "owner": "interkosmos",
+        "name": "fortran-tcl86",
+        "url": "https://github.com/interkosmos/fortran-tcl86"
+      },
+      "license": {
+        "label": "ISC",
+        "spdx_expression": "ISC",
+        "revision": "5d5cc9dbf39679d75d2a58d149112aedde2567d6",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENCE supplies Philipp Engel ISC terms for the Fortran bindings. Native Tcl 8.6/Tk and other optional libraries retain separate terms; this scope uses the core Tcl interpreter only.",
+        "evidence": [
+          {
+            "path": "LICENCE",
+            "url": "https://github.com/interkosmos/fortran-tcl86/blob/5d5cc9dbf39679d75d2a58d149112aedde2567d6/LICENCE",
+            "sha256": "f640cb2d26cf43723a1d31fac7568408a8bf4386ab6b2499aae6765235e2a015"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/interkosmos/fortran-tcl86/blob/5d5cc9dbf39679d75d2a58d149112aedde2567d6/README.md",
+            "sha256": "9d1a8ec34a93fa10f8cc0830700c6bf4783fdaee891cebe0085737bc27716282"
+          },
+          {
+            "path": "src/tcl.f90",
+            "url": "https://github.com/interkosmos/fortran-tcl86/blob/5d5cc9dbf39679d75d2a58d149112aedde2567d6/src/tcl.f90",
+            "sha256": "e3c5a9c5a1be842adaac0d1ca9adabe40bedb548fa30d3b817f03316b2947074"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "S",
+          "level": "source-reviewed",
+          "revision": "5d5cc9dbf39679d75d2a58d149112aedde2567d6",
+          "reviewed_on": "2026-11-08",
+          "notes": "Tcl interpreter creation, real expression evaluation, result-text copying and deletion document value/status separation and native lifetime. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/tcl.f90",
+              "url": "https://github.com/interkosmos/fortran-tcl86/blob/5d5cc9dbf39679d75d2a58d149112aedde2567d6/src/tcl.f90",
+              "sha256": "e3c5a9c5a1be842adaac0d1ca9adabe40bedb548fa30d3b817f03316b2947074"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "tcl_create_interp",
+              "role": "public-entry-point",
+              "module": "tcl",
+              "summary": "Create a native Tcl 8.6 interpreter as TYPE(C_PTR), test C_ASSOCIATED before use and eventually delete it once. Basic core expression evaluation can use this state; loading the full Tcl library/environment is a separate initialization operation. This is not a Tk window or automatic GUI setup. Native resources are not released by ordinary Fortran scope exit.",
+              "signature": "VALUE = tcl_create_interp()",
+              "path": "src/tcl.f90",
+              "line_start": 597,
+              "line_end": 601,
+              "declarations": [
+                {
+                  "path": "src/tcl.f90",
+                  "line_start": 598,
+                  "line_end": 600
+                },
+                {
+                  "path": "src/tcl.f90",
+                  "line_start": 1,
+                  "line_end": 30
+                }
+              ]
+            },
+            {
+              "procedure": "tcl_expr_double",
+              "role": "public-entry-point",
+              "module": "tcl",
+              "summary": "Evaluate a CHARACTER expression using Tcl expression syntax and return the value through REAL(r8) DOUBLE plus integer status. The convenience wrapper adds the C terminator. Read DOUBLE only on TCL_OK; on failure obtain diagnostic text with TCL_GET_STRING_RESULT. The integer result is a status, not the expression value. The live interpreter supplies variable/command state; this is not a Fortran-expression parser.",
+              "signature": "VALUE = tcl_expr_double(INTERP,EXPR,DOUBLE)",
+              "path": "src/tcl.f90",
+              "line_start": 2422,
+              "line_end": 2429,
+              "declarations": [
+                {
+                  "path": "src/tcl.f90",
+                  "line_start": 2423,
+                  "line_end": 2426
+                },
+                {
+                  "path": "src/tcl.f90",
+                  "line_start": 1,
+                  "line_end": 30
+                }
+              ]
+            },
+            {
+              "procedure": "tcl_get_string_result",
+              "role": "public-entry-point",
+              "module": "tcl",
+              "summary": "Copy the current interpreter result/error message into allocatable CHARACTER. This wrapper converts the native borrowed string into Fortran-owned text; do not free the Fortran result with TCL_FREE. Obtain it before a subsequent interpreter operation replaces the native result. It supplies text, not a separate success flag; check the status from the operation that produced it.",
+              "signature": "VALUE = tcl_get_string_result(INTERP)",
+              "path": "src/tcl.f90",
+              "line_start": 2675,
+              "line_end": 2683,
+              "declarations": [
+                {
+                  "path": "src/tcl.f90",
+                  "line_start": 2676,
+                  "line_end": 2678
+                },
+                {
+                  "path": "src/tcl.f90",
+                  "line_start": 1,
+                  "line_end": 30
+                }
+              ]
+            },
+            {
+              "procedure": "tcl_delete_interp",
+              "role": "public-entry-point",
+              "module": "tcl",
+              "summary": "Delete one owning live interpreter after all result/command uses have ended. The native TYPE(C_PTR),VALUE argument does not nullify the caller handle. Set that variable to C_NULL_PTR if retained and do not delete again through copied aliases. This is independent of native toolkit/library resource setup outside this scoped core interpreter use.",
+              "signature": "CALL tcl_delete_interp(INTERP)",
+              "path": "src/tcl.f90",
+              "line_start": 2027,
+              "line_end": 2031,
+              "declarations": [
+                {
+                  "path": "src/tcl.f90",
+                  "line_start": 2028,
+                  "line_end": 2030
+                },
+                {
+                  "path": "src/tcl.f90",
+                  "line_start": 1,
+                  "line_end": 30
                 }
               ]
             }
@@ -28223,6 +29299,339 @@
                   "path": "double/dlansvd.F",
                   "line_start": 10,
                   "line_end": 85
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "stdlib-os": {
+      "id": "github:mardiehl/stdlib_os",
+      "repository": {
+        "owner": "MarDiehl",
+        "name": "stdlib_os",
+        "url": "https://github.com/MarDiehl/stdlib_os"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "60768243de9325d9b57b2e825e7312d70b1e538a",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies Martin Diehl MIT terms. Selected module OS wraps platform C calls; this scope describes the pinned standalone stdlib-os package rather than all Fortran stdlib facilities.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/MarDiehl/stdlib_os/blob/60768243de9325d9b57b2e825e7312d70b1e538a/LICENSE",
+            "sha256": "faad438962cdcd31728b0027f919387635b5400e4487012e91bdbc7b9be0670c"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/MarDiehl/stdlib_os/blob/60768243de9325d9b57b2e825e7312d70b1e538a/README.md",
+            "sha256": "a0ba6fe91230d0f4f2ebcc8781a84d5e903d5771969f7cc4b73b2eaa1bde2c8a"
+          },
+          {
+            "path": "src/os.F90",
+            "url": "https://github.com/MarDiehl/stdlib_os/blob/60768243de9325d9b57b2e825e7312d70b1e538a/src/os.F90",
+            "sha256": "8842d3d66329772abd9e3a58ab69be679a2ca6f25f73c45bb1fda289f5a41678"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N1",
+          "level": "source-reviewed",
+          "revision": "60768243de9325d9b57b2e825e7312d70b1e538a",
+          "reviewed_on": "2026-11-08",
+          "notes": "Fortran-string directory change/query/creation wrappers document optional status handling, process-wide state and nonrecursive behavior. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/os.F90",
+              "url": "https://github.com/MarDiehl/stdlib_os/blob/60768243de9325d9b57b2e825e7312d70b1e538a/src/os.F90",
+              "sha256": "8842d3d66329772abd9e3a58ab69be679a2ca6f25f73c45bb1fda289f5a41678"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "chdir",
+              "role": "public-entry-point",
+              "module": "os",
+              "summary": "Change the process working directory using an ordinary Fortran CHARACTER path. This convenience wrapper converts to a terminated C string. Supply STAT to receive zero/nonzero native status; omitting STAT on failure causes ERROR STOP. The change is process-wide, not local to a derived object or procedure; restore the previous path deliberately if needed.",
+              "signature": "CALL chdir(PATH,[STAT])",
+              "path": "src/os.F90",
+              "line_start": 53,
+              "line_end": 68,
+              "declarations": [
+                {
+                  "path": "src/os.F90",
+                  "line_start": 55,
+                  "line_end": 56
+                },
+                {
+                  "path": "src/os.F90",
+                  "line_start": 1,
+                  "line_end": 49
+                }
+              ]
+            },
+            {
+              "procedure": "getcwd",
+              "role": "public-entry-point",
+              "module": "os",
+              "summary": "Return the current working directory as allocatable CHARACTER. There is no optional STAT argument in this pin: native failure triggers ERROR STOP. The wrapper uses a PATH_MAX-sized native buffer, not an unbounded-query protocol. Returned text is owned by the Fortran allocatable and needs no native free. This queries the sandbox/local process directory, not the browser filesystem.",
+              "signature": "VALUE = getcwd()",
+              "path": "src/os.F90",
+              "line_start": 71,
+              "line_end": 91,
+              "declarations": [
+                {
+                  "path": "src/os.F90",
+                  "line_start": 73,
+                  "line_end": 73
+                },
+                {
+                  "path": "src/os.F90",
+                  "line_start": 1,
+                  "line_end": 49
+                }
+              ]
+            },
+            {
+              "procedure": "mkdir",
+              "role": "public-entry-point",
+              "module": "os",
+              "summary": "Create one directory using an ordinary Fortran CHARACTER path; no recursive parent creation is implemented. Optional MODE is a default integer, defaulting to octal 777 before the process umask is applied. Supply STAT to handle native failure as a zero/nonzero status; without it failure causes ERROR STOP. This package is the standalone module OS and should not be confused with a similarly named future stdlib API.",
+              "signature": "CALL mkdir(PATH,[MODE],[STAT])",
+              "path": "src/os.F90",
+              "line_start": 95,
+              "line_end": 117,
+              "declarations": [
+                {
+                  "path": "src/os.F90",
+                  "line_start": 97,
+                  "line_end": 99
+                },
+                {
+                  "path": "src/os.F90",
+                  "line_start": 1,
+                  "line_end": 49
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "netcdf-fortran": {
+      "id": "github:unidata/netcdf-fortran",
+      "repository": {
+        "owner": "Unidata",
+        "name": "netcdf-fortran",
+        "url": "https://github.com/Unidata/netcdf-fortran"
+      },
+      "license": {
+        "label": "UCAR/Unidata netCDF terms; Apache-2.0 F2003 component",
+        "spdx_expression": null,
+        "revision": "48d67b73cb2a671d6d27075eb7e53085d5f9538a",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root COPYRIGHT supplies UCAR/Unidata permissive terms and explicitly distinguishes Richard Weed Fortran 2003 Apache-2.0 code, also documented in F03Interfaces_LICENSE. Do not label the complete binding uniformly Apache-2.0; native netCDF-C and dependencies retain separate notices.",
+        "evidence": [
+          {
+            "path": "COPYRIGHT",
+            "url": "https://github.com/Unidata/netcdf-fortran/blob/48d67b73cb2a671d6d27075eb7e53085d5f9538a/COPYRIGHT",
+            "sha256": "453cdb3cb8b47ceeafdfa29894f2ad2949ec409d3c364b1c1fbdc260484ef000"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/Unidata/netcdf-fortran/blob/48d67b73cb2a671d6d27075eb7e53085d5f9538a/README.md",
+            "sha256": "d3fdcebc2745fb2273a92564df4e1880d98d8c3f0d6275ab14f7b6f53edb6d24"
+          },
+          {
+            "path": "fortran/netcdf3_file.F90",
+            "url": "https://github.com/Unidata/netcdf-fortran/blob/48d67b73cb2a671d6d27075eb7e53085d5f9538a/fortran/netcdf3_file.F90",
+            "sha256": "a60e454a135a4bb9baae03a3c3669877603c71201263d177f0e83784b1d1e42f"
+          },
+          {
+            "path": "F03Interfaces_LICENSE",
+            "url": "https://github.com/Unidata/netcdf-fortran/blob/48d67b73cb2a671d6d27075eb7e53085d5f9538a/F03Interfaces_LICENSE",
+            "sha256": "d6f27cde9e87bc60cbf8377249e15a280debac2f513279d9d03eb4c798e22b2c"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N1",
+          "level": "source-reviewed",
+          "revision": "48d67b73cb2a671d6d27075eb7e53085d5f9538a",
+          "reviewed_on": "2026-11-08",
+          "notes": "Classic netCDF create/define/write/close sequence documents status-returning functions, scalar dimension overload and one-based array starts. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "fortran/netcdf3_file.F90",
+              "url": "https://github.com/Unidata/netcdf-fortran/blob/48d67b73cb2a671d6d27075eb7e53085d5f9538a/fortran/netcdf3_file.F90",
+              "sha256": "a60e454a135a4bb9baae03a3c3669877603c71201263d177f0e83784b1d1e42f"
+            },
+            {
+              "path": "fortran/netcdf_dims.F90",
+              "url": "https://github.com/Unidata/netcdf-fortran/blob/48d67b73cb2a671d6d27075eb7e53085d5f9538a/fortran/netcdf_dims.F90",
+              "sha256": "f28a465cbd9f8dd336c4ad8ba042e1fd272582769bd41878b6b371a25e1e1eb1"
+            },
+            {
+              "path": "fortran/netcdf_variables.F90",
+              "url": "https://github.com/Unidata/netcdf-fortran/blob/48d67b73cb2a671d6d27075eb7e53085d5f9538a/fortran/netcdf_variables.F90",
+              "sha256": "fb97706fc395a2c2fcb1dcdd6701ff010a744a7dd90ee554cc695624eb5697e1"
+            },
+            {
+              "path": "fortran/netcdf_file.F90",
+              "url": "https://github.com/Unidata/netcdf-fortran/blob/48d67b73cb2a671d6d27075eb7e53085d5f9538a/fortran/netcdf_file.F90",
+              "sha256": "eb2f6eec6966a50d0db30287aea437ac3f0afed4cc786f8e6ccbb3f19bf0de66"
+            },
+            {
+              "path": "fortran/netcdf_expanded.F90",
+              "url": "https://github.com/Unidata/netcdf-fortran/blob/48d67b73cb2a671d6d27075eb7e53085d5f9538a/fortran/netcdf_expanded.F90",
+              "sha256": "14b8f6cbaf767c3175195975aab35f580a0252021480f9dc9bafef9efe63d605"
+            },
+            {
+              "path": "fortran/netcdf_overloads.F90",
+              "url": "https://github.com/Unidata/netcdf-fortran/blob/48d67b73cb2a671d6d27075eb7e53085d5f9538a/fortran/netcdf_overloads.F90",
+              "sha256": "d42e2fe330e69799adf7fa3ebd1c2f2c279987ca488d243c69d64902dbe4b18a"
+            },
+            {
+              "path": "F03Interfaces_LICENSE",
+              "url": "https://github.com/Unidata/netcdf-fortran/blob/48d67b73cb2a671d6d27075eb7e53085d5f9538a/F03Interfaces_LICENSE",
+              "sha256": "d6f27cde9e87bc60cbf8377249e15a280debac2f513279d9d03eb4c798e22b2c"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "nf90_create",
+              "role": "public-entry-point",
+              "module": "netcdf",
+              "summary": "Create a classic netCDF file and receive default-integer NCID plus integer function status. Use NF90_NOCLOBBER when replacement is not intended; NF90_CLOBBER can overwrite an existing file. Check NF90_NOERR after EVERY operation before using IDs. Creation enters define mode for dimensions/variables. Optional CHUNKSIZE is INOUT and must be a variable if supplied. This documents the classic-file interface, not every netCDF-4/MPI creation extension.",
+              "signature": "VALUE = nf90_create(PATH,CMODE,NCID,[INITIALSIZE],[CHUNKSIZE])",
+              "path": "fortran/netcdf3_file.F90",
+              "line_start": 22,
+              "line_end": 43,
+              "declarations": [
+                {
+                  "path": "fortran/netcdf3_file.F90",
+                  "line_start": 23,
+                  "line_end": 28
+                },
+                {
+                  "path": "fortran/netcdf_overloads.F90",
+                  "line_start": 1,
+                  "line_end": 40
+                }
+              ]
+            },
+            {
+              "procedure": "nf90_def_dim",
+              "role": "public-entry-point",
+              "module": "netcdf",
+              "summary": "Define a named dimension while the file is in define mode. LEN is a default-integer length (or NF90_UNLIMITED for a record dimension), DIMID an output ID and the integer function value a status. Check NF90_NOERR before passing DIMID to variable definition. The output is metadata only; no data array is written by this call.",
+              "signature": "VALUE = nf90_def_dim(NCID,NAME,LEN,DIMID)",
+              "path": "fortran/netcdf_dims.F90",
+              "line_start": 5,
+              "line_end": 13,
+              "declarations": [
+                {
+                  "path": "fortran/netcdf_dims.F90",
+                  "line_start": 6,
+                  "line_end": 10
+                },
+                {
+                  "path": "fortran/netcdf_overloads.F90",
+                  "line_start": 1,
+                  "line_end": 40
+                }
+              ]
+            },
+            {
+              "procedure": "nf90_def_var",
+              "role": "public-entry-point",
+              "module": "netcdf",
+              "summary": "One-dimensional NF90_DEF_VAR overload: DIMIDS is a SCALAR default-integer dimension ID, not a vector in this overload. Use a type selector such as NF90_DOUBLE, receive VARID and check integer function status. Higher-rank/vector-dimension overloads are distinct. Call while defining metadata, then leave define mode with NF90_ENDDEF before writing classic data.",
+              "signature": "VALUE = nf90_def_var(NCID,NAME,XTYPE,DIMIDS,VARID)",
+              "path": "fortran/netcdf_variables.F90",
+              "line_start": 17,
+              "line_end": 28,
+              "declarations": [
+                {
+                  "path": "fortran/netcdf_variables.F90",
+                  "line_start": 18,
+                  "line_end": 23
+                },
+                {
+                  "path": "fortran/netcdf_overloads.F90",
+                  "line_start": 1,
+                  "line_end": 40
+                }
+              ]
+            },
+            {
+              "procedure": "nf90_enddef",
+              "role": "public-entry-point",
+              "module": "netcdf",
+              "summary": "Finish definition of dimensions/variables and enter data mode on a live file. Check the integer return against NF90_NOERR before writing. Optional integer padding/alignment controls concern file layout; omit them for the basic classic example. This is a status-returning FUNCTION, not a CALL subroutine.",
+              "signature": "VALUE = nf90_enddef(NCID,[H_MINFREE],[V_ALIGN],[V_MINFREE],[R_ALIGN])",
+              "path": "fortran/netcdf_file.F90",
+              "line_start": 73,
+              "line_end": 93,
+              "declarations": [
+                {
+                  "path": "fortran/netcdf_file.F90",
+                  "line_start": 74,
+                  "line_end": 76
+                },
+                {
+                  "path": "fortran/netcdf_overloads.F90",
+                  "line_start": 1,
+                  "line_end": 40
+                }
+              ]
+            },
+            {
+              "procedure": "nf90_put_var",
+              "role": "public-entry-point",
+              "module": "netcdf",
+              "summary": "Rank-one EightByteReal overload of NF90_PUT_VAR writes VALUES(:) to a defined variable in data mode. Use the matching real kind and bounds/counts consistent with the variable extent; optional START/COUNT/STRIDE/MAP are integer vectors with Fortran one-based starts. Defaults write the supplied array from the first element. Do not substitute C zero-based indices or assume rank/layout conversion from an arbitrary array. Check integer NF90_NOERR status; this call does not close/flush ownership automatically.",
+              "signature": "VALUE = nf90_put_var(NCID,VARID,VALUES,[START],[COUNT],[STRIDE],[MAP])",
+              "path": "fortran/netcdf_expanded.F90",
+              "line_start": 1145,
+              "line_end": 1177,
+              "declarations": [
+                {
+                  "path": "fortran/netcdf_expanded.F90",
+                  "line_start": 1146,
+                  "line_end": 1150
+                },
+                {
+                  "path": "fortran/netcdf_overloads.F90",
+                  "line_start": 1,
+                  "line_end": 40
+                }
+              ]
+            },
+            {
+              "procedure": "nf90_close",
+              "role": "public-entry-point",
+              "module": "netcdf",
+              "summary": "Close a valid open NCID and check returned status, including errors flushing pending data. After successful close the ID is invalid; do not keep writing through an alias or assume scope exit closes the native file. Cleanup is needed after failed intermediate operations too, with error handling chosen to preserve the original failure.",
+              "signature": "VALUE = nf90_close(NCID)",
+              "path": "fortran/netcdf_file.F90",
+              "line_start": 109,
+              "line_end": 114,
+              "declarations": [
+                {
+                  "path": "fortran/netcdf_file.F90",
+                  "line_start": 110,
+                  "line_end": 111
+                },
+                {
+                  "path": "fortran/netcdf_overloads.F90",
+                  "line_start": 1,
+                  "line_end": 40
                 }
               ]
             }
@@ -29397,6 +30806,7 @@
       "simulated-annealing",
       "odrpack95",
       "pointsets",
+      "flint",
       "fortran-string-to-real",
       "integrate_fortran",
       "rndgen-fortran",
@@ -29405,9 +30815,11 @@
       "geompack",
       "minres",
       "fordiff",
+      "twopnt",
       "specfunc-fullerton",
       "lib_statistics",
       "nlopt-f",
+      "daskr",
       "ffilesystem",
       "utf8-f",
       "ryu_fortran",
@@ -29462,6 +30874,7 @@
       "libdogleg-f",
       "nafpack",
       "fishpack",
+      "dde_solver",
       "spherepack",
       "forsvd",
       "qdutillib",
@@ -29523,13 +30936,19 @@
       "qnstop",
       "poisfft",
       "fortran-lmdb",
+      "fortran-lua54",
+      "fortran-unix",
+      "fatode",
       "arpack-ng",
       "fortran-utils",
+      "fortran-tcl86",
       "fortranlib",
       "m-process",
       "nufft1d",
       "nufft2d",
       "propack",
+      "stdlib-os",
+      "netcdf-fortran",
       "scifortran",
       "fgsl",
       "fdict",
@@ -29549,17 +30968,13 @@
       "quaff",
       "neural-fortran",
       "lightkrylov",
-      "flint",
       "ad_dnsvm",
-      "twopnt",
       "astro-fortran",
-      "daskr",
       "ciaaw",
       "cairo-fortran",
       "forsudoku",
       "parff",
       "graphstruc",
-      "dde_solver",
       "diffstruc",
       "gslib",
       "featom",
@@ -29575,10 +30990,7 @@
       "fassert",
       "coretran",
       "ftl",
-      "fortran-lua54",
-      "fortran-unix",
       "vtmop",
-      "fatode",
       "slicot",
       "fortran-error-handler",
       "berkeley-assert",
@@ -29586,15 +30998,12 @@
       "formal",
       "dftatom",
       "m-system",
-      "fortran-tcl86",
       "fiats",
       "julienne",
       "aotus",
       "qcontainers",
-      "stdlib-os",
       "m_draw",
       "fortran-lua53",
-      "netcdf-fortran",
       "forpy",
       "fkb",
       "ntpoly",

@@ -43,7 +43,7 @@ interfaces. Package details also show review scope, limitations and explicitly
 unchecked calling sketches. Signatures link to pinned argument declarations.
 The broader catalog remains the source for these reviews; new reviews need to be
 recorded there before they can appear here. Matching independent reviews currently
-cover 215 selected packages: PowellOpt, lbfgsb, fmin, minpack, quadpack, pchip,
+cover 225 selected packages: PowellOpt, lbfgsb, fmin, minpack, quadpack, pchip,
 fftpack, specfun, specfunc-fullerton, carlson-elliptic-integrals, fortran-bessels,
 polyroots-fortran, lsmr, minres, kiss, fstats, forinv, foreig, forsvd, fordot,
 formatmul, fjsample, fortsa, lib_statistics, econ-toolchain, roots-fortran,
@@ -75,7 +75,8 @@ slinked-list, string-utf-8, jeyemhex-regex, conmax, psqp, optgra, y12m, lusol,
 strith, bstrith, list, penf, orbs, fishpack, spherepack, qnstop, delaunaysparse,
 fortran-flann, metis-fpm, m_calculator, fortran-modbus, m-process, m_cli,
 poisfft, seiscope-optimization, arpack-ng, propack, libdogleg-f, fgsl,
-fortran-lmdb, fortran-curl, fdict and flibcpp.
+fortran-lmdb, fortran-curl, fdict, flibcpp, flint, twopnt, daskr, dde_solver,
+fatode, fortran-lua54, fortran-unix, netcdf-fortran, fortran-tcl86 and stdlib-os.
 Package detail pages show calling sequences
 directly, with links to argument, callback and precision declarations; cards keep
 their interfaces expandable. Each sequence links to matching checked examples
