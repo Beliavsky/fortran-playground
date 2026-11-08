@@ -2,7 +2,7 @@
   "schema_version": 1,
   "publisher": "fortran-gams-catalog-independent-reviews",
   "source_url": "https://beliavsky.github.io/fortran-gams-catalog/reviewed-metadata.json",
-  "source_snapshot_id": "sha256:078e789ea262ebc174bedf89e27cffe63aefd58455cf8cfd63647ff80103f74d",
+  "source_snapshot_id": "sha256:d783baabb185bcb3ff7d83c428ec198e62f8559d3f49ae311ae0e252cdc44023",
   "packages": {
     "test-drive": {
       "id": "github:fortran-lang/test-drive",
@@ -7875,6 +7875,125 @@
                   "path": "src/pikaia_module.f90",
                   "line_start": 134,
                   "line_end": 154
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "collections": {
+      "id": "github:jchristopherson/collections",
+      "repository": {
+        "owner": "jchristopherson",
+        "name": "collections",
+        "url": "https://github.com/jchristopherson/collections"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "ce37c94e72b3ae5db2e2208489999260a7875f81",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE and source supply Jason Christopherson MIT terms. Pointer ownership notes describe the reviewed implementation, not a new runtime check.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jchristopherson/collections/blob/ce37c94e72b3ae5db2e2208489999260a7875f81/LICENSE",
+            "sha256": "412dc62718c15a0d3580119230ef6375a4fb4df82867ba2a7a3bd2d8b3d763bd"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jchristopherson/collections/blob/ce37c94e72b3ae5db2e2208489999260a7875f81/README.md",
+            "sha256": "b91e43151ee5e76c2c05d573174dbdd2f78dfa2aa68f75d7e560eb2d22706fea"
+          },
+          {
+            "path": "src/collections.f90",
+            "url": "https://github.com/jchristopherson/collections/blob/ce37c94e72b3ae5db2e2208489999260a7875f81/src/collections.f90",
+            "sha256": "f3925b23cd3da7a5126fb75c22d718f1388d110d1a5a8f21c9f726662969fa8c"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N4",
+          "level": "source-reviewed",
+          "revision": "ce37c94e72b3ae5db2e2208489999260a7875f81",
+          "reviewed_on": "2026-11-07",
+          "notes": "Polymorphic dynamic-list append, borrowed retrieval and cleanup expose copy/association ownership. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/collections.f90",
+              "url": "https://github.com/jchristopherson/collections/blob/ce37c94e72b3ae5db2e2208489999260a7875f81/src/collections.f90",
+              "sha256": "f3925b23cd3da7a5126fb75c22d718f1388d110d1a5a8f21c9f726662969fa8c"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "push",
+              "role": "public-entry-point",
+              "module": "collections",
+              "derived_type": "list",
+              "summary": "Declare TYPE(list) :: solver from collections. Append scalar unlimited-polymorphic TARGET X to the dynamically growing list. Optional MANAGE defaults true: ALLOCATE(SOURCE=X) creates an owned copy. This copies a derived object according to normal Fortran rules; pointer components are not recursively cloned. With MANAGE=.FALSE., the list retains an association to the supplied target, whose lifetime must exceed storage/use. There is no status dummy. Capacity grows automatically; do not copy list objects as a substitute for an explicitly defined deep copy. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%push(X,[MANAGE])",
+              "path": "src/collections.f90",
+              "line_start": 235,
+              "line_end": 270,
+              "declarations": [
+                {
+                  "path": "src/collections.f90",
+                  "line_start": 237,
+                  "line_end": 250
+                },
+                {
+                  "path": "src/collections.f90",
+                  "line_start": 22,
+                  "line_end": 82
+                }
+              ]
+            },
+            {
+              "procedure": "get",
+              "role": "public-entry-point",
+              "module": "collections",
+              "derived_type": "list",
+              "summary": "Declare TYPE(list) :: solver from collections. Return CLASS(*), POINTER to the stored item at one-based INTEGER(INT32) I, not an allocatable independent copy. Use SELECT TYPE before typed access and validate 1<=I<=COUNT(); invalid indices ERROR STOP. Do not deallocate a borrowed result. Removing/replacing/clearing owned entries invalidates such pointers; unmanaged targets are governed by their external lifetime. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%get(I)",
+              "path": "src/collections.f90",
+              "line_start": 288,
+              "line_end": 307,
+              "declarations": [
+                {
+                  "path": "src/collections.f90",
+                  "line_start": 290,
+                  "line_end": 295
+                },
+                {
+                  "path": "src/collections.f90",
+                  "line_start": 22,
+                  "line_end": 82
+                }
+              ]
+            },
+            {
+              "procedure": "clear",
+              "role": "public-entry-point",
+              "module": "collections",
+              "derived_type": "list",
+              "summary": "Declare TYPE(list) :: solver from collections. Release all stored container entries and reset COUNT() to zero while retaining backing capacity. Owned values are deallocated; unmanaged external targets are not freed. Previously obtained pointers to owned entries must no longer be used. This operates on the whole list, unlike POP which removes only the last entry. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%clear()",
+              "path": "src/collections.f90",
+              "line_start": 438,
+              "line_end": 452,
+              "declarations": [
+                {
+                  "path": "src/collections.f90",
+                  "line_start": 440,
+                  "line_end": 441
+                },
+                {
+                  "path": "src/collections.f90",
+                  "line_start": 22,
+                  "line_end": 82
                 }
               ]
             }
@@ -17654,6 +17773,746 @@
         }
       ]
     },
+    "scanner": {
+      "id": "github:freevryheid/scanner",
+      "repository": {
+        "owner": "freevryheid",
+        "name": "scanner",
+        "url": "https://github.com/freevryheid/scanner"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "b0026498c171b615bb3dcfca55a0f20b133e22dc",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Andre Smit MIT terms; stdlib is a separately pinned dependency.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/freevryheid/scanner/blob/b0026498c171b615bb3dcfca55a0f20b133e22dc/LICENSE",
+            "sha256": "03a8d5419b390a2187f16a8d904a3e90c608708d473cd6adbbdd75d1309ec596"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/freevryheid/scanner/blob/b0026498c171b615bb3dcfca55a0f20b133e22dc/README.md",
+            "sha256": "8e06344686d501fe3983c1a89d959278b0d13b4ab1e329366cfba867122c53f5"
+          },
+          {
+            "path": "src/scanner.f90",
+            "url": "https://github.com/freevryheid/scanner/blob/b0026498c171b615bb3dcfca55a0f20b133e22dc/src/scanner.f90",
+            "sha256": "611e90e368cb66ac7d2f29128d4e7d968e27ec1bb74b989d2af5898137116a26"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "b0026498c171b615bb3dcfca55a0f20b133e22dc",
+          "reviewed_on": "2026-11-07",
+          "notes": "Character-scanner initialization and current/next access record cursor and end-sentinel semantics. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/scanner.f90",
+              "url": "https://github.com/freevryheid/scanner/blob/b0026498c171b615bb3dcfca55a0f20b133e22dc/src/scanner.f90",
+              "sha256": "611e90e368cb66ac7d2f29128d4e7d968e27ec1bb74b989d2af5898137116a26"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "new",
+              "role": "public-entry-point",
+              "module": "scanner",
+              "derived_type": "textscanner",
+              "summary": "Declare TYPE(textscanner) :: solver from scanner. Initialize/reinitialize a TEXTSCANNER from stdlib TYPE(STRING_TYPE) INPUT, not a raw CHARACTER dummy. Import STDLib string assignment/construction as needed. It saves the text, sets ILEN=LEN(INPUT) and positions POS=1. Call before navigation; default ILEN/POS are uninitialized. Use nonempty input before CURRENT, since that routine has no empty-input guard. Character codes follow ICHAR, not Unicode code-point decoding. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%new(INPUT)",
+              "path": "src/scanner.f90",
+              "line_start": 41,
+              "line_end": 48,
+              "declarations": [
+                {
+                  "path": "src/scanner.f90",
+                  "line_start": 43,
+                  "line_end": 44
+                },
+                {
+                  "path": "src/scanner.f90",
+                  "line_start": 1,
+                  "line_end": 37
+                }
+              ]
+            },
+            {
+              "procedure": "current",
+              "role": "public-entry-point",
+              "module": "scanner",
+              "derived_type": "textscanner",
+              "summary": "Declare TYPE(textscanner) :: solver from scanner. Read the character at current POS and return its default-INTEGER ICHAR code without moving. Requires NEW and a valid position in a nonempty string. There is no -1 sentinel or bounds validation in this routine; unlike NEXT it directly calls stdlib CHAR(INPUT,POS). The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%current()",
+              "path": "src/scanner.f90",
+              "line_start": 205,
+              "line_end": 212,
+              "declarations": [
+                {
+                  "path": "src/scanner.f90",
+                  "line_start": 207,
+                  "line_end": 209
+                },
+                {
+                  "path": "src/scanner.f90",
+                  "line_start": 1,
+                  "line_end": 37
+                }
+              ]
+            },
+            {
+              "procedure": "next",
+              "role": "public-entry-point",
+              "module": "scanner",
+              "derived_type": "textscanner",
+              "summary": "Declare TYPE(textscanner) :: solver from scanner. Advance POS by one, then return the ICHAR code there. After NEW the current position is already 1: call CURRENT for the first character, not NEXT. At the end it returns -1 and leaves position unchanged. This reads characters rather than tokens; no automatic whitespace skipping or UTF-8 decoding occurs. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%next()",
+              "path": "src/scanner.f90",
+              "line_start": 123,
+              "line_end": 136,
+              "declarations": [
+                {
+                  "path": "src/scanner.f90",
+                  "line_start": 126,
+                  "line_end": 128
+                },
+                {
+                  "path": "src/scanner.f90",
+                  "line_start": 1,
+                  "line_end": 37
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "uint-fortran": {
+      "id": "github:shinobuamasaki/uint-fortran",
+      "repository": {
+        "owner": "ShinobuAmasaki",
+        "name": "uint-fortran",
+        "url": "https://github.com/ShinobuAmasaki/uint-fortran"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "487f806c76a5d107c5a8982198bafb295065eba7",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies the Amasaki Shinobu MIT grant. Reviews are restricted to the UINT32 conversion overloads; arithmetic, narrowing and UINT64 edge cases are not claimed verified.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/ShinobuAmasaki/uint-fortran/blob/487f806c76a5d107c5a8982198bafb295065eba7/LICENSE",
+            "sha256": "072dddca3cccb5eca067c55cd65eb7a774fe2620658bf6f833e3a3d6a09dbbfd"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/ShinobuAmasaki/uint-fortran/blob/487f806c76a5d107c5a8982198bafb295065eba7/README.md",
+            "sha256": "f414c12298c7969cb890416346c65b54081fb9fb9d98f05ad9af12bd805013fe"
+          },
+          {
+            "path": "src/intrinsic_functions_overload/int_m.f90",
+            "url": "https://github.com/ShinobuAmasaki/uint-fortran/blob/487f806c76a5d107c5a8982198bafb295065eba7/src/intrinsic_functions_overload/int_m.f90",
+            "sha256": "8bbfcd149ac96e31657f0d5ba7c2ef4763f12fa14a550770ac415600c0a750b5"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "A1",
+          "level": "source-reviewed",
+          "revision": "487f806c76a5d107c5a8982198bafb295065eba7",
+          "reviewed_on": "2026-11-07",
+          "notes": "Unsigned 32-bit widening and real-conversion interfaces document result kinds and precision limits. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/intrinsic_functions_overload/int_m.f90",
+              "url": "https://github.com/ShinobuAmasaki/uint-fortran/blob/487f806c76a5d107c5a8982198bafb295065eba7/src/intrinsic_functions_overload/int_m.f90",
+              "sha256": "8bbfcd149ac96e31657f0d5ba7c2ef4763f12fa14a550770ac415600c0a750b5"
+            },
+            {
+              "path": "src/intrinsic_functions_overload/dble_m.f90",
+              "url": "https://github.com/ShinobuAmasaki/uint-fortran/blob/487f806c76a5d107c5a8982198bafb295065eba7/src/intrinsic_functions_overload/dble_m.f90",
+              "sha256": "4bf497a79e897047e5da7cc44d88403c50b7ef533522e5f597c48143feb989d7"
+            },
+            {
+              "path": "src/intrinsic_functions_overload/real_m.f90",
+              "url": "https://github.com/ShinobuAmasaki/uint-fortran/blob/487f806c76a5d107c5a8982198bafb295065eba7/src/intrinsic_functions_overload/real_m.f90",
+              "sha256": "6134800fb8a2ec385df5629c1c956d8320a9fbce75e24abc54b73300c17ab4bb"
+            },
+            {
+              "path": "src/uint32_m.f90",
+              "url": "https://github.com/ShinobuAmasaki/uint-fortran/blob/487f806c76a5d107c5a8982198bafb295065eba7/src/uint32_m.f90",
+              "sha256": "0bda6d1e6bc05975e37634c056c95dcd100a5d0c7399857dbab372b42573b0c8"
+            },
+            {
+              "path": "src/types/uint32_t.f90",
+              "url": "https://github.com/ShinobuAmasaki/uint-fortran/blob/487f806c76a5d107c5a8982198bafb295065eba7/src/types/uint32_t.f90",
+              "sha256": "2762ad640ff97116e6c97cfe3f1c082b35644d0c8ae346dce4f1471f1a3cf4f9"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "int",
+              "role": "public-entry-point",
+              "module": "int_m",
+              "summary": "INT_M::INT overload maps TYPE(UINT32) UA to a nonnegative INTEGER(INT64) result, interpreting the signed 32-bit storage as the unsigned range 0..4294967295. This generic takes only UA: there is no intrinsic-style KIND argument. Import INT from INT_M explicitly; UINT32_M itself reexports INT2/INT4 but not INT. Widening preserves the unsigned value, unlike narrower conversions that may be out of range.",
+              "signature": "VALUE = int(UA)",
+              "path": "src/intrinsic_functions_overload/int_m.f90",
+              "line_start": 87,
+              "line_end": 93,
+              "declarations": [
+                {
+                  "path": "src/intrinsic_functions_overload/int_m.f90",
+                  "line_start": 89,
+                  "line_end": 90
+                },
+                {
+                  "path": "src/types/uint32_t.f90",
+                  "line_start": 1,
+                  "line_end": 39
+                },
+                {
+                  "path": "src/intrinsic_functions_overload/int_m.f90",
+                  "line_start": 10,
+                  "line_end": 29
+                }
+              ]
+            },
+            {
+              "procedure": "dble",
+              "role": "public-entry-point",
+              "module": "uint32_m",
+              "summary": "DBLE overload returns REAL(REAL64) from TYPE(UINT32). It first widens through the unsigned INT overload; every 32-bit unsigned integer is exactly representable in the usual IEEE binary64 model. Select the UINT32 actual type and import DBLE from DBLE_M or UINT32_M; this wrapper does not accept a KIND argument. This source review does not establish properties of UINT64 conversions.",
+              "signature": "VALUE = dble(UA)",
+              "path": "src/intrinsic_functions_overload/dble_m.f90",
+              "line_start": 38,
+              "line_end": 44,
+              "declarations": [
+                {
+                  "path": "src/intrinsic_functions_overload/dble_m.f90",
+                  "line_start": 40,
+                  "line_end": 41
+                },
+                {
+                  "path": "src/types/uint32_t.f90",
+                  "line_start": 1,
+                  "line_end": 39
+                },
+                {
+                  "path": "src/intrinsic_functions_overload/dble_m.f90",
+                  "line_start": 11,
+                  "line_end": 17
+                },
+                {
+                  "path": "src/uint32_m.f90",
+                  "line_start": 1,
+                  "line_end": 19
+                }
+              ]
+            },
+            {
+              "procedure": "real",
+              "role": "public-entry-point",
+              "module": "uint32_m",
+              "summary": "REAL overload converts TYPE(UINT32) through a widened signed integer to REAL(REAL32). On IEEE binary32 large unsigned integers can round; use DBLE when exact conversion of the full UINT32 range is required. This generic takes only UA, not intrinsic REAL(UA,KIND=...). Import REAL from REAL_M or UINT32_M and use ISO_FORTRAN_ENV for the result declaration.",
+              "signature": "VALUE = real(UA)",
+              "path": "src/intrinsic_functions_overload/real_m.f90",
+              "line_start": 38,
+              "line_end": 44,
+              "declarations": [
+                {
+                  "path": "src/intrinsic_functions_overload/real_m.f90",
+                  "line_start": 40,
+                  "line_end": 41
+                },
+                {
+                  "path": "src/types/uint32_t.f90",
+                  "line_start": 1,
+                  "line_end": 39
+                },
+                {
+                  "path": "src/intrinsic_functions_overload/real_m.f90",
+                  "line_start": 9,
+                  "line_end": 17
+                },
+                {
+                  "path": "src/uint32_m.f90",
+                  "line_start": 1,
+                  "line_end": 19
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fortran-tokenizer": {
+      "id": "github:14ngiestas/fortran-tokenizer",
+      "repository": {
+        "owner": "14NGiestas",
+        "name": "fortran-tokenizer",
+        "url": "https://github.com/14NGiestas/fortran-tokenizer"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "11ad73ea6102f86593bf2b372d56bf9fbedaebc7",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Ian Giestas Pauli MIT terms.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/14NGiestas/fortran-tokenizer/blob/11ad73ea6102f86593bf2b372d56bf9fbedaebc7/LICENSE",
+            "sha256": "36e1be55ff34f27d5d7970cce125bdfb02c07b67e51969b4173ba104da7ae19e"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/14NGiestas/fortran-tokenizer/blob/11ad73ea6102f86593bf2b372d56bf9fbedaebc7/README.md",
+            "sha256": "7a5077c9f9375ba513684f6faffc23bf24540d455f60511ca91d61081ff87e03"
+          },
+          {
+            "path": "src/tokenizer.f90",
+            "url": "https://github.com/14NGiestas/fortran-tokenizer/blob/11ad73ea6102f86593bf2b372d56bf9fbedaebc7/src/tokenizer.f90",
+            "sha256": "b7eb5490b37a5f64f82752969fa05d7535f2375da76be1dc06fb547135634008"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "11ad73ea6102f86593bf2b372d56bf9fbedaebc7",
+          "reviewed_on": "2026-11-07",
+          "notes": "Greedy tokenization exposes validation/ignore callback precedence and returned token fields. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/tokenizer.f90",
+              "url": "https://github.com/14NGiestas/fortran-tokenizer/blob/11ad73ea6102f86593bf2b372d56bf9fbedaebc7/src/tokenizer.f90",
+              "sha256": "b7eb5490b37a5f64f82752969fa05d7535f2375da76be1dc06fb547135634008"
+            },
+            {
+              "path": "src/token_list.f90",
+              "url": "https://github.com/14NGiestas/fortran-tokenizer/blob/11ad73ea6102f86593bf2b372d56bf9fbedaebc7/src/token_list.f90",
+              "sha256": "280ca2e98b539db7430b2ef3ee45ab70df831c9f9edfb01050fc492acdb11e19"
+            },
+            {
+              "path": "src/token_type.f90",
+              "url": "https://github.com/14NGiestas/fortran-tokenizer/blob/11ad73ea6102f86593bf2b372d56bf9fbedaebc7/src/token_type.f90",
+              "sha256": "4d24c9a3bea38d076fe227d69de7edf9364651c3cf3c814fb3d65918e3353bf3"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "tokenize",
+              "role": "public-entry-point",
+              "module": "fortran_tokenizer",
+              "derived_type": "tokenizer_t",
+              "summary": "Declare TYPE(tokenizer_t) :: solver from fortran_tokenizer. Return TYPE(TOKEN_LIST) by greedily extending valid substrings of CHARACTER INPUT. Optional VALIDATE/IGNORE are LOGICAL functions of CHARACTER(*) TOKEN; they override saved procedure pointers, which override built-in policies. Default validation rejects the literal blank only (not every whitespace character), and default ignore keeps valid tokens. Only TOKEN_T%STRING is populated here; TYPE/OBJECT remain unset. These are lexical callbacks, not Fortran-language parsing. Saved callbacks must remain alive. Call CLEAR on the result when done; pointer-backed lists have no finalizer. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%tokenize(INPUT,[VALIDATE],[IGNORE])",
+              "path": "src/tokenizer.f90",
+              "line_start": 37,
+              "line_end": 89,
+              "declarations": [
+                {
+                  "path": "src/tokenizer.f90",
+                  "line_start": 39,
+                  "line_end": 46
+                },
+                {
+                  "path": "src/tokenizer.f90",
+                  "line_start": 1,
+                  "line_end": 21
+                },
+                {
+                  "path": "src/token_type.f90",
+                  "line_start": 1,
+                  "line_end": 14
+                },
+                {
+                  "path": "src/token_list.f90",
+                  "line_start": 14,
+                  "line_end": 32
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "N4",
+          "level": "source-reviewed",
+          "revision": "11ad73ea6102f86593bf2b372d56bf9fbedaebc7",
+          "reviewed_on": "2026-11-07",
+          "notes": "Token-list retrieval and cleanup record index/status limitations and pointer ownership. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/tokenizer.f90",
+              "url": "https://github.com/14NGiestas/fortran-tokenizer/blob/11ad73ea6102f86593bf2b372d56bf9fbedaebc7/src/tokenizer.f90",
+              "sha256": "b7eb5490b37a5f64f82752969fa05d7535f2375da76be1dc06fb547135634008"
+            },
+            {
+              "path": "src/token_list.f90",
+              "url": "https://github.com/14NGiestas/fortran-tokenizer/blob/11ad73ea6102f86593bf2b372d56bf9fbedaebc7/src/token_list.f90",
+              "sha256": "280ca2e98b539db7430b2ef3ee45ab70df831c9f9edfb01050fc492acdb11e19"
+            },
+            {
+              "path": "src/token_type.f90",
+              "url": "https://github.com/14NGiestas/fortran-tokenizer/blob/11ad73ea6102f86593bf2b372d56bf9fbedaebc7/src/token_type.f90",
+              "sha256": "4d24c9a3bea38d076fe227d69de7edf9364651c3cf3c814fb3d65918e3353bf3"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "get",
+              "role": "public-entry-point",
+              "module": "fortran_tokenizer",
+              "derived_type": "token_list",
+              "summary": "Declare TYPE(token_list) :: solver from fortran_tokenizer. Retrieve a TYPE(TOKEN_T) value at one-based default-INTEGER IDX without removing it. Supply optional INFO to receive -1 for an empty list instead of ERROR STOP. Validate 1<=IDX<=SIZE(list) yourself: INFO only checks emptiness, and an out-of-range index in a nonempty list can leave the result uninitialized while INFO is zero. This is a token value result, not the internal node pointer. Use token%STRING for the text. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%get(IDX,[INFO])",
+              "path": "src/token_list.f90",
+              "line_start": 58,
+              "line_end": 76,
+              "declarations": [
+                {
+                  "path": "src/token_list.f90",
+                  "line_start": 59,
+                  "line_end": 62
+                },
+                {
+                  "path": "src/tokenizer.f90",
+                  "line_start": 1,
+                  "line_end": 21
+                },
+                {
+                  "path": "src/token_type.f90",
+                  "line_start": 1,
+                  "line_end": 14
+                },
+                {
+                  "path": "src/token_list.f90",
+                  "line_start": 14,
+                  "line_end": 32
+                }
+              ]
+            },
+            {
+              "procedure": "clear",
+              "role": "public-entry-point",
+              "module": "fortran_tokenizer",
+              "derived_type": "token_list",
+              "summary": "Declare TYPE(token_list) :: solver from fortran_tokenizer. Traverse nodes, deallocate token payloads and nodes, then nullify HEAD/TAIL and reset size to zero. Use explicit cleanup for lists returned by TOKENIZE because this type has no finalizer. Avoid intrinsic assignment between owning lists: pointer components are shallow-copied, so clearing either copy invalidates the other. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%clear()",
+              "path": "src/token_list.f90",
+              "line_start": 113,
+              "line_end": 131,
+              "declarations": [
+                {
+                  "path": "src/token_list.f90",
+                  "line_start": 114,
+                  "line_end": 115
+                },
+                {
+                  "path": "src/tokenizer.f90",
+                  "line_start": 1,
+                  "line_end": 21
+                },
+                {
+                  "path": "src/token_type.f90",
+                  "line_start": 1,
+                  "line_end": 14
+                },
+                {
+                  "path": "src/token_list.f90",
+                  "line_start": 14,
+                  "line_end": 32
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "integer_set": {
+      "id": "github:jordan4ibanez/integer_set",
+      "repository": {
+        "owner": "jordan4ibanez",
+        "name": "integer_set",
+        "url": "https://github.com/jordan4ibanez/integer_set"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "85d336319d6593f9768c599835342912ce0b7bb8",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies the MIT grant credited to jordan4ibanez. The separately pinned constants_f90 dependency retains its own notices.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jordan4ibanez/integer_set/blob/85d336319d6593f9768c599835342912ce0b7bb8/LICENSE",
+            "sha256": "deb98dc8cc9bc84532c67294ce4ad0cccb8473840c0085c19fa4faa799ca90d9"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jordan4ibanez/integer_set/blob/85d336319d6593f9768c599835342912ce0b7bb8/README.md",
+            "sha256": "3b599c81ab1622c2a6ab9e655c9920068703eafbd5b59d5134d46b9f66b2eb80"
+          },
+          {
+            "path": "src/integer32_set.f90",
+            "url": "https://github.com/jordan4ibanez/integer_set/blob/85d336319d6593f9768c599835342912ce0b7bb8/src/integer32_set.f90",
+            "sha256": "a4a3fdfee506038548995f7f4a88dc4d0fb0df8946a47ece05f4ecf3fdecc2b1"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N4",
+          "level": "source-reviewed",
+          "revision": "85d336319d6593f9768c599835342912ce0b7bb8",
+          "reviewed_on": "2026-11-07",
+          "notes": "The INTEGER(C_INT32_T) set constructor, unique insertion and explicit destruction document pointer ownership. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/integer32_set.f90",
+              "url": "https://github.com/jordan4ibanez/integer_set/blob/85d336319d6593f9768c599835342912ce0b7bb8/src/integer32_set.f90",
+              "sha256": "a4a3fdfee506038548995f7f4a88dc4d0fb0df8946a47ece05f4ecf3fdecc2b1"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "new_int32_set",
+              "role": "public-entry-point",
+              "module": "integer32_set",
+              "summary": "Construct an INT32_SET with allocated zero-length pointer storage and SIZE=0. Use this constructor before PUSH: a default-declared object has a null DATA pointer, while PUSH deallocates the previous DATA allocation. This is pointer-backed storage with no finalizer/deep-copy assignment; avoid copying owning objects and explicitly DESTROY once when done.",
+              "signature": "VALUE = new_int32_set()",
+              "path": "src/integer32_set.f90",
+              "line_start": 30,
+              "line_end": 37,
+              "declarations": [
+                {
+                  "path": "src/integer32_set.f90",
+                  "line_start": 31,
+                  "line_end": 35
+                },
+                {
+                  "path": "src/integer32_set.f90",
+                  "line_start": 1,
+                  "line_end": 24
+                }
+              ]
+            },
+            {
+              "procedure": "push",
+              "role": "public-entry-point",
+              "module": "integer32_set",
+              "derived_type": "int32_set",
+              "summary": "Declare TYPE(int32_set) :: solver from integer32_set. Insert scalar INTEGER(C_INT32_T) NEW_VALUE if absent; duplicates leave the set unchanged. A linear membership scan precedes allocation/copy on a new insertion. Public DATA and SIZE hold the elements/count; do not alter those invariants. Call NEW_INT32_SET first. No insertion/failure status is returned; this is not a hash set or amortized constant-time append. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%push(NEW_VALUE)",
+              "path": "src/integer32_set.f90",
+              "line_start": 40,
+              "line_end": 76,
+              "declarations": [
+                {
+                  "path": "src/integer32_set.f90",
+                  "line_start": 43,
+                  "line_end": 44
+                },
+                {
+                  "path": "src/integer32_set.f90",
+                  "line_start": 1,
+                  "line_end": 24
+                }
+              ]
+            },
+            {
+              "procedure": "destroy",
+              "role": "public-entry-point",
+              "module": "integer32_set",
+              "derived_type": "int32_set",
+              "summary": "Declare TYPE(int32_set) :: solver from integer32_set. Deallocate the initialized DATA target and mark SIZE=-1. There is no finalizer, null-association guard or second-destroy protection. Destroy exactly once after use, and do not reuse or independently destroy shallow copies sharing the same allocation. CLEAR, unlike DESTROY, leaves an allocated empty set that can accept more insertions. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%destroy()",
+              "path": "src/integer32_set.f90",
+              "line_start": 180,
+              "line_end": 187,
+              "declarations": [
+                {
+                  "path": "src/integer32_set.f90",
+                  "line_start": 183,
+                  "line_end": 183
+                },
+                {
+                  "path": "src/integer32_set.f90",
+                  "line_start": 1,
+                  "line_end": 24
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "array_range": {
+      "id": "github:degawa/array_range",
+      "repository": {
+        "owner": "degawa",
+        "name": "array_range",
+        "url": "https://github.com/degawa/array_range"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "cd21ccb982e23de9c2df44c12edab44dd84562dc",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Tomohiro Degawa MIT terms.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/degawa/array_range/blob/cd21ccb982e23de9c2df44c12edab44dd84562dc/LICENSE",
+            "sha256": "ddf07337708257df1dc613f24c304a14b5164c0436f1d887b289b3d4b568c141"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/degawa/array_range/blob/cd21ccb982e23de9c2df44c12edab44dd84562dc/README.md",
+            "sha256": "cdbc53013a7a8d2886af6ee772c08e587322c68fe3a92379ddc332078eed40f8"
+          },
+          {
+            "path": "src/type/array2d_range_type.f90",
+            "url": "https://github.com/degawa/array_range/blob/cd21ccb982e23de9c2df44c12edab44dd84562dc/src/type/array2d_range_type.f90",
+            "sha256": "71e6df2a70c3a6c3943e8e15bf8ee2a45e81d61df125cd9dad4642fcf4e3d6af"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N4",
+          "level": "source-reviewed",
+          "revision": "cd21ccb982e23de9c2df44c12edab44dd84562dc",
+          "reviewed_on": "2026-11-07",
+          "notes": "Two-dimensional array/vector bounds constructors and extraction expose storage metadata layout. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/type/array2d_range_type.f90",
+              "url": "https://github.com/degawa/array_range/blob/cd21ccb982e23de9c2df44c12edab44dd84562dc/src/type/array2d_range_type.f90",
+              "sha256": "71e6df2a70c3a6c3943e8e15bf8ee2a45e81d61df125cd9dad4642fcf4e3d6af"
+            },
+            {
+              "path": "src/array_range.f90",
+              "url": "https://github.com/degawa/array_range/blob/cd21ccb982e23de9c2df44c12edab44dd84562dc/src/array_range.f90",
+              "sha256": "d1818b980475dabf11c1907c9296ab45ae3d9d58c3d55ebf29e825da864d7172"
+            },
+            {
+              "path": "src/type/array_range_type.f90",
+              "url": "https://github.com/degawa/array_range/blob/cd21ccb982e23de9c2df44c12edab44dd84562dc/src/type/array_range_type.f90",
+              "sha256": "e9dc5f6e930a6a503e2c3b3ae5854a0e0d7e0e82c38e81cc56d2b52b4c5fec43"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "to_array2d_range",
+              "role": "public-entry-point",
+              "module": "array_range",
+              "summary": "Return TYPE(ARRAY2D_RANGE_TYPE) storing INTEGER(INT32) BOUNDS(4) ordered [lower1,lower2,upper1,upper2]. This matches [LBOUND(A),UBOUND(A)] when kind-compatible. It copies metadata only: it neither allocates the underlying array nor checks bounds ordering, extent overflow or correspondence with another array.",
+              "signature": "VALUE = to_array2d_range(BOUNDS)",
+              "path": "src/type/array2d_range_type.f90",
+              "line_start": 103,
+              "line_end": 121,
+              "declarations": [
+                {
+                  "path": "src/type/array2d_range_type.f90",
+                  "line_start": 105,
+                  "line_end": 115
+                },
+                {
+                  "path": "src/array_range.f90",
+                  "line_start": 1,
+                  "line_end": 30
+                },
+                {
+                  "path": "src/type/array2d_range_type.f90",
+                  "line_start": 13,
+                  "line_end": 63
+                },
+                {
+                  "path": "src/type/array_range_type.f90",
+                  "line_start": 1,
+                  "line_end": 15
+                }
+              ]
+            },
+            {
+              "procedure": "to_array",
+              "role": "public-entry-point",
+              "module": "array_range",
+              "derived_type": "array2d_range_type",
+              "summary": "Declare TYPE(array2d_range_type) :: solver from array_range. Return INTEGER(INT32) length four in order [lower1,lower2,upper1,upper2] from the stored rank components. This is a value result, not a pointer to array data, and does not change the object. Use the public generic TO_ARRAY; the owning object describes bounds, not actual storage. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%to_array()",
+              "path": "src/type/array2d_range_type.f90",
+              "line_start": 84,
+              "line_end": 99,
+              "declarations": [
+                {
+                  "path": "src/type/array2d_range_type.f90",
+                  "line_start": 86,
+                  "line_end": 93
+                },
+                {
+                  "path": "src/array_range.f90",
+                  "line_start": 1,
+                  "line_end": 30
+                },
+                {
+                  "path": "src/type/array2d_range_type.f90",
+                  "line_start": 13,
+                  "line_end": 63
+                },
+                {
+                  "path": "src/type/array_range_type.f90",
+                  "line_start": 1,
+                  "line_end": 15
+                }
+              ]
+            },
+            {
+              "procedure": "to_vector2d_range",
+              "role": "public-entry-point",
+              "module": "array_range",
+              "summary": "Two-argument TO_VECTOR2D_RANGE overload returns TYPE(VECTOR2D_RANGE_TYPE) with separate x/y component bounds. X_BOUNDS(4) and Y_BOUNDS(4) are INTEGER(INT32), each ordered [lower1,lower2,upper1,upper2]. They may differ, e.g. for staggered grids. No vector values or mesh allocations are created and no consistency checks are performed.",
+              "signature": "VALUE = to_vector2d_range(X_BOUNDS,Y_BOUNDS)",
+              "path": "src/type/array2d_range_type.f90",
+              "line_start": 171,
+              "line_end": 199,
+              "declarations": [
+                {
+                  "path": "src/type/array2d_range_type.f90",
+                  "line_start": 173,
+                  "line_end": 191
+                },
+                {
+                  "path": "src/array_range.f90",
+                  "line_start": 1,
+                  "line_end": 30
+                },
+                {
+                  "path": "src/type/array2d_range_type.f90",
+                  "line_start": 13,
+                  "line_end": 63
+                },
+                {
+                  "path": "src/type/array_range_type.f90",
+                  "line_start": 1,
+                  "line_end": 15
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "fortran-regex": {
       "id": "github:perazz/fortran-regex",
       "repository": {
@@ -17774,6 +18633,343 @@
         }
       ]
     },
+    "fed": {
+      "id": "github:degawa/fed",
+      "repository": {
+        "owner": "degawa",
+        "name": "fed",
+        "url": "https://github.com/degawa/fed"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "d735aa2b3bd6b20840bcc16ff569e8cfc0492267",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Tomohiro Degawa MIT terms; stdlib, enclose and enumul dependencies retain their own notices.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/degawa/fed/blob/d735aa2b3bd6b20840bcc16ff569e8cfc0492267/LICENSE",
+            "sha256": "9706c35a393c4902687c90ce2055c8130df6ce757bbc9174514e6fa6ab3c4f00"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/degawa/fed/blob/d735aa2b3bd6b20840bcc16ff569e8cfc0492267/README.md",
+            "sha256": "736022979bb0711cd1229a94bad071387fa8c60f28ae86b46f3c22face9ea0f5"
+          },
+          {
+            "path": "src/editDescriptor/data/integer/decimal.f90",
+            "url": "https://github.com/degawa/fed/blob/d735aa2b3bd6b20840bcc16ff569e8cfc0492267/src/editDescriptor/data/integer/decimal.f90",
+            "sha256": "1003f2f9b7933304de8ae72abad635881530e0dbab2edb30abca723e3d13f29f"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N1",
+          "level": "source-reviewed",
+          "revision": "d735aa2b3bd6b20840bcc16ff569e8cfc0492267",
+          "reviewed_on": "2026-11-07",
+          "notes": "Integer/real descriptor constructors and parenthesized FORMAT generation expose actual output-format construction. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/editDescriptor/data/integer/decimal.f90",
+              "url": "https://github.com/degawa/fed/blob/d735aa2b3bd6b20840bcc16ff569e8cfc0492267/src/editDescriptor/data/integer/decimal.f90",
+              "sha256": "1003f2f9b7933304de8ae72abad635881530e0dbab2edb30abca723e3d13f29f"
+            },
+            {
+              "path": "src/editDescriptor/data/real/standard.f90",
+              "url": "https://github.com/degawa/fed/blob/d735aa2b3bd6b20840bcc16ff569e8cfc0492267/src/editDescriptor/data/real/standard.f90",
+              "sha256": "06e4f184e32fff69443e6559530bd549682f3bffef618013a2bd3c2480067141"
+            },
+            {
+              "path": "src/format/format.f90",
+              "url": "https://github.com/degawa/fed/blob/d735aa2b3bd6b20840bcc16ff569e8cfc0492267/src/format/format.f90",
+              "sha256": "dbfb980c39e8a760ea44bd934e3fd2f9115f3fb409f3a26baa6dd03c50bdecb4"
+            },
+            {
+              "path": "src/fed.f90",
+              "url": "https://github.com/degawa/fed/blob/d735aa2b3bd6b20840bcc16ff569e8cfc0492267/src/fed.f90",
+              "sha256": "4e6dd0b6f338879e360c056d2d216dfd6416f1bd1bc18adc00e990c4022b4202"
+            },
+            {
+              "path": "src/editDescriptor/data/integer/integer.f90",
+              "url": "https://github.com/degawa/fed/blob/d735aa2b3bd6b20840bcc16ff569e8cfc0492267/src/editDescriptor/data/integer/integer.f90",
+              "sha256": "fdf022813daf0f329fc342a7a4ad5cbc55986acad81b933acc7e9a8267cdbd9a"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "int",
+              "role": "public-entry-point",
+              "module": "fed",
+              "summary": "Two-argument INT overload returns a decimal integer edit-descriptor object (not an integer conversion). WIDTH and ZERO_PADDING_DIGIT are INTEGER(INT32). The shared INT_SPEC helper clamps negative values to zero and padding to WIDTH; a nonzero padding emits Iw.m, otherwise Iw. Import with an alias, e.g. USE FED, ONLY: INT_FMT=>INT, FORMAT, to avoid confusing it with intrinsic INT. Convert the descriptor to a usable parenthesized format using FORMAT.",
+              "signature": "VALUE = int(WIDTH,ZERO_PADDING_DIGIT)",
+              "path": "src/editDescriptor/data/integer/decimal.f90",
+              "line_start": 24,
+              "line_end": 35,
+              "declarations": [
+                {
+                  "path": "src/editDescriptor/data/integer/decimal.f90",
+                  "line_start": 26,
+                  "line_end": 31
+                },
+                {
+                  "path": "src/fed.f90",
+                  "line_start": 1,
+                  "line_end": 74
+                },
+                {
+                  "path": "src/editDescriptor/data/integer/integer.f90",
+                  "line_start": 20,
+                  "line_end": 45
+                }
+              ]
+            },
+            {
+              "procedure": "real",
+              "role": "public-entry-point",
+              "module": "fed",
+              "summary": "Two-argument REAL overload creates a real edit-descriptor object, not a numeric conversion. INTEGER(INT32) WIDTH/DECIMAL_PLACE_DIGITS request Fw.d. WIDTH<=0 falls back to G0; negative digits use the library default, and too-small positive width is raised to d+2. Thus the returned specification can differ from the requested width. Alias REAL on import if desired and call FORMAT on the descriptor before formatted I/O.",
+              "signature": "VALUE = real(WIDTH,DECIMAL_PLACE_DIGITS)",
+              "path": "src/editDescriptor/data/real/standard.f90",
+              "line_start": 24,
+              "line_end": 53,
+              "declarations": [
+                {
+                  "path": "src/editDescriptor/data/real/standard.f90",
+                  "line_start": 27,
+                  "line_end": 32
+                },
+                {
+                  "path": "src/fed.f90",
+                  "line_start": 1,
+                  "line_end": 74
+                }
+              ]
+            },
+            {
+              "procedure": "format",
+              "role": "public-entry-point",
+              "module": "fed",
+              "summary": "Single-descriptor FORMAT overload accepts CLASS(EDIT_DESCRIPTOR_TYPE) and returns allocatable CHARACTER containing parentheses, suitable as the format expression in WRITE. A descriptor from FED::INT or FED::REAL selects this overload. It constructs text only and performs no I/O or IOSTAT handling; separate overloads accept item sequences with optional separators.",
+              "signature": "VALUE = format(EDIT_DESCRIPTOR)",
+              "path": "src/format/format.f90",
+              "line_start": 62,
+              "line_end": 71,
+              "declarations": [
+                {
+                  "path": "src/format/format.f90",
+                  "line_start": 65,
+                  "line_end": 68
+                },
+                {
+                  "path": "src/fed.f90",
+                  "line_start": 1,
+                  "line_end": 74
+                },
+                {
+                  "path": "src/format/format.f90",
+                  "line_start": 8,
+                  "line_end": 13
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "for_fifo_queue": {
+      "id": "github:jordan4ibanez/for_fifo_queue",
+      "repository": {
+        "owner": "jordan4ibanez",
+        "name": "for_fifo_queue",
+        "url": "https://github.com/jordan4ibanez/for_fifo_queue"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "b04b536589af8cf041b8e5e53484e57147fc746f",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies the MIT grant credited to jordan4ibanez. The pinned C implementation is included as evidence for byte-copy and allocation/cleanup semantics.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jordan4ibanez/for_fifo_queue/blob/b04b536589af8cf041b8e5e53484e57147fc746f/LICENSE",
+            "sha256": "deb98dc8cc9bc84532c67294ce4ad0cccb8473840c0085c19fa4faa799ca90d9"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jordan4ibanez/for_fifo_queue/blob/b04b536589af8cf041b8e5e53484e57147fc746f/README.md",
+            "sha256": "ae2411b426b1fbfc36ad38ed2c7fef5179ba6b1d4603feb7a71801cafe38fc96"
+          },
+          {
+            "path": "src/fifo_queue.f90",
+            "url": "https://github.com/jordan4ibanez/for_fifo_queue/blob/b04b536589af8cf041b8e5e53484e57147fc746f/src/fifo_queue.f90",
+            "sha256": "4a316e13281710c0467460c906029613d057996cf781eda942d879242396ec2c"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N4",
+          "level": "source-reviewed",
+          "revision": "b04b536589af8cf041b8e5e53484e57147fc746f",
+          "reviewed_on": "2026-11-07",
+          "notes": "Fixed-width FIFO construction, byte-copy insertion, ownership-transferring removal and explicit destruction expose C allocation rules. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/fifo_queue.f90",
+              "url": "https://github.com/jordan4ibanez/for_fifo_queue/blob/b04b536589af8cf041b8e5e53484e57147fc746f/src/fifo_queue.f90",
+              "sha256": "4a316e13281710c0467460c906029613d057996cf781eda942d879242396ec2c"
+            },
+            {
+              "path": "src/fifo_queue_bindings.f90",
+              "url": "https://github.com/jordan4ibanez/for_fifo_queue/blob/b04b536589af8cf041b8e5e53484e57147fc746f/src/fifo_queue_bindings.f90",
+              "sha256": "ac2b5f269f883d15c9096399f1df18041d77ec80d51b1dedfed09d3f315184c3"
+            },
+            {
+              "path": "src/fifo_queue.c",
+              "url": "https://github.com/jordan4ibanez/for_fifo_queue/blob/b04b536589af8cf041b8e5e53484e57147fc746f/src/fifo_queue.c",
+              "sha256": "7b30bb7afe4cc5cd12e5f79181f405bb52db33e94d53f01138a940958bfcefa9"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "new_fifo_queue",
+              "role": "public-entry-point",
+              "module": "fifo_queue",
+              "summary": "Construct TYPE(FIFO) for fixed DATA_SIZE bytes per element, using INTEGER(C_SIZE_T). Prefer C_SIZEOF of a suitable interoperable scalar to a hard-coded width. Keep all pushed values at that representation/size; the implementation does not store dynamic type metadata or validate each payload. The C backend allocates a control block and nodes. No automatic finalizer or safe deep-copy assignment exists; treat the object as a single owner.",
+              "signature": "VALUE = new_fifo_queue(DATA_SIZE)",
+              "path": "src/fifo_queue.f90",
+              "line_start": 31,
+              "line_end": 38,
+              "declarations": [
+                {
+                  "path": "src/fifo_queue.f90",
+                  "line_start": 34,
+                  "line_end": 35
+                },
+                {
+                  "path": "src/fifo_queue.f90",
+                  "line_start": 1,
+                  "line_end": 25
+                },
+                {
+                  "path": "src/fifo_queue_bindings.f90",
+                  "line_start": 5,
+                  "line_end": 52
+                },
+                {
+                  "path": "src/fifo_queue.c",
+                  "line_start": 41,
+                  "line_end": 56
+                }
+              ]
+            },
+            {
+              "procedure": "push",
+              "role": "public-entry-point",
+              "module": "fifo_queue",
+              "derived_type": "fifo",
+              "summary": "Declare TYPE(fifo) :: solver from fifo_queue. Append TARGET scalar GENERIC by copying the configured number of raw bytes through C MEMCPY. The generic CLASS(*) declaration does not make arbitrary allocatable/pointer-rich values safe to copy: use fixed-size representations and manage any pointed-to resources yourself. GNU LOC is used here, so this wrapper is not a claim of compiler-independent standard Fortran portability. Call NEW_FIFO_QUEUE first; no allocation/status channel is exposed. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%push(GENERIC)",
+              "path": "src/fifo_queue.f90",
+              "line_start": 42,
+              "line_end": 52,
+              "declarations": [
+                {
+                  "path": "src/fifo_queue.f90",
+                  "line_start": 45,
+                  "line_end": 46
+                },
+                {
+                  "path": "src/fifo_queue.f90",
+                  "line_start": 1,
+                  "line_end": 25
+                },
+                {
+                  "path": "src/fifo_queue_bindings.f90",
+                  "line_start": 5,
+                  "line_end": 52
+                },
+                {
+                  "path": "src/fifo_queue.c",
+                  "line_start": 61,
+                  "line_end": 92
+                }
+              ]
+            },
+            {
+              "procedure": "pop",
+              "role": "public-entry-point",
+              "module": "fifo_queue",
+              "derived_type": "fifo",
+              "summary": "Declare TYPE(fifo) :: solver from fifo_queue. Remove the oldest element and return LOGICAL(C_BOOL); RAW_C_PTR is TYPE(C_PTR), INOUT and receives a C_NULL_PTR when empty. On success ownership of a malloc allocation transfers to the caller. Interpret it only as the configured compatible type using C_F_POINTER and release it with a matching C allocator/free strategy; do not assume standard Fortran DEALLOCATE is portable for malloc memory. Queue destruction does not reclaim a previously popped allocation. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%pop(RAW_C_PTR)",
+              "path": "src/fifo_queue.f90",
+              "line_start": 57,
+              "line_end": 67,
+              "declarations": [
+                {
+                  "path": "src/fifo_queue.f90",
+                  "line_start": 60,
+                  "line_end": 62
+                },
+                {
+                  "path": "src/fifo_queue.f90",
+                  "line_start": 1,
+                  "line_end": 25
+                },
+                {
+                  "path": "src/fifo_queue_bindings.f90",
+                  "line_start": 5,
+                  "line_end": 52
+                },
+                {
+                  "path": "src/fifo_queue.c",
+                  "line_start": 99,
+                  "line_end": 126
+                }
+              ]
+            },
+            {
+              "procedure": "destroy",
+              "role": "public-entry-point",
+              "module": "fifo_queue",
+              "derived_type": "fifo",
+              "summary": "Declare TYPE(fifo) :: solver from fifo_queue. Free only the native queue control block. Pop and release every remaining element first: the C routine does not traverse/free queued nodes or nested resources. The Fortran handle is INTENT(IN) and is not reset after this call, so do not call twice, reuse it, or destroy a shallow copy. No automatic garbage collection or finalizer is provided. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%destroy()",
+              "path": "src/fifo_queue.f90",
+              "line_start": 72,
+              "line_end": 78,
+              "declarations": [
+                {
+                  "path": "src/fifo_queue.f90",
+                  "line_start": 75,
+                  "line_end": 75
+                },
+                {
+                  "path": "src/fifo_queue.f90",
+                  "line_start": 1,
+                  "line_end": 25
+                },
+                {
+                  "path": "src/fifo_queue_bindings.f90",
+                  "line_start": 5,
+                  "line_end": 52
+                },
+                {
+                  "path": "src/fifo_queue.c",
+                  "line_start": 128,
+                  "line_end": 135
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "fortime": {
       "id": "github:gha3mi/fortime",
       "repository": {
@@ -17883,6 +19079,281 @@
                   "path": "src/fortime.F90",
                   "line_start": 133,
                   "line_end": 157
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "errstat": {
+      "id": "github:degawa/errstat",
+      "repository": {
+        "owner": "degawa",
+        "name": "errstat",
+        "url": "https://github.com/degawa/errstat"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "336ee374c82a4525d87444c767a1f23f059d5723",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Tomohiro Degawa MIT terms.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/degawa/errstat/blob/336ee374c82a4525d87444c767a1f23f059d5723/LICENSE",
+            "sha256": "ddf07337708257df1dc613f24c304a14b5164c0436f1d887b289b3d4b568c141"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/degawa/errstat/blob/336ee374c82a4525d87444c767a1f23f059d5723/README.md",
+            "sha256": "a2cd893d64cefc851fef613944864aa36afc9d01a6b5e5ba8387595eb13f1927"
+          },
+          {
+            "path": "src/type/errorStat/errorStat.f90",
+            "url": "https://github.com/degawa/errstat/blob/336ee374c82a4525d87444c767a1f23f059d5723/src/type/errorStat/errorStat.f90",
+            "sha256": "db08663cdbfd2710a2eb8bcea502202f898c5f774d952407580d283e1cd30624"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "R3",
+          "level": "source-reviewed",
+          "revision": "336ee374c82a4525d87444c767a1f23f059d5723",
+          "reviewed_on": "2026-11-07",
+          "notes": "Structured status/message mutation, inspection and reset expose success-code and message ownership. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/type/errorStat/errorStat.f90",
+              "url": "https://github.com/degawa/errstat/blob/336ee374c82a4525d87444c767a1f23f059d5723/src/type/errorStat/errorStat.f90",
+              "sha256": "db08663cdbfd2710a2eb8bcea502202f898c5f774d952407580d283e1cd30624"
+            },
+            {
+              "path": "src/errstat.f90",
+              "url": "https://github.com/degawa/errstat/blob/336ee374c82a4525d87444c767a1f23f059d5723/src/errstat.f90",
+              "sha256": "b8bc5eff47dfeadb22e18893f95d5cf8bad98f315dcc73551e9bbfa3aa0463ea"
+            },
+            {
+              "path": "src/constant/status.f90",
+              "url": "https://github.com/degawa/errstat/blob/336ee374c82a4525d87444c767a1f23f059d5723/src/constant/status.f90",
+              "sha256": "7e0aa3347dbc69b9e673818bec13b3d97319ee26dceb3b56793ae4992a1c4408"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "set_status_and_message",
+              "role": "public-entry-point",
+              "module": "errstat",
+              "derived_type": "error_stat_type",
+              "summary": "Declare TYPE(error_stat_type) :: solver from errstat. Set INTEGER(INT32) STAT and CHARACTER MSG on ERROR_STAT_TYPE, replacing the previous status/message. This stores whatever code is supplied; non-success means error but no exception, stop or validation is triggered. Use the exported SUCCESS_STATUS_CODE for success comparisons; this pin defines it as zero. Use INITIALIZE to clear both fields rather than merely storing a success code with an old message. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%set_status_and_message(STAT,MSG)",
+              "path": "src/type/errorStat/errorStat.f90",
+              "line_start": 56,
+              "line_end": 67,
+              "declarations": [
+                {
+                  "path": "src/type/errorStat/errorStat.f90",
+                  "line_start": 58,
+                  "line_end": 63
+                },
+                {
+                  "path": "src/errstat.f90",
+                  "line_start": 7,
+                  "line_end": 36
+                },
+                {
+                  "path": "src/type/errorStat/errorStat.f90",
+                  "line_start": 31,
+                  "line_end": 52
+                },
+                {
+                  "path": "src/constant/status.f90",
+                  "line_start": 1,
+                  "line_end": 26
+                }
+              ]
+            },
+            {
+              "procedure": "get_message",
+              "role": "public-entry-point",
+              "module": "errstat",
+              "derived_type": "error_stat_type",
+              "summary": "Declare TYPE(error_stat_type) :: solver from errstat. Return an allocatable CHARACTER copy of the stored message, or an empty string if unallocated. It does not clear status/message. Empty text is not evidence of success: inspect GET_STATUS() or ERROR_OCCURRED() separately. The result is a value, not a borrowed pointer into the object. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%get_message()",
+              "path": "src/type/errorStat/errorStat.f90",
+              "line_start": 92,
+              "line_end": 101,
+              "declarations": [
+                {
+                  "path": "src/type/errorStat/errorStat.f90",
+                  "line_start": 94,
+                  "line_end": 97
+                },
+                {
+                  "path": "src/errstat.f90",
+                  "line_start": 7,
+                  "line_end": 36
+                },
+                {
+                  "path": "src/type/errorStat/errorStat.f90",
+                  "line_start": 31,
+                  "line_end": 52
+                },
+                {
+                  "path": "src/constant/status.f90",
+                  "line_start": 1,
+                  "line_end": 26
+                }
+              ]
+            },
+            {
+              "procedure": "initialize",
+              "role": "public-entry-point",
+              "module": "errstat",
+              "derived_type": "error_stat_type",
+              "summary": "Declare TYPE(error_stat_type) :: solver from errstat. Reset the status to SUCCESS_STATUS_CODE and deallocate any message, so the object can be reused. A newly declared object already has a success-code initializer, but this method explicitly clears previous state. It does not perform logging, I/O or process termination. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%initialize()",
+              "path": "src/type/errorStat/errorStat.f90",
+              "line_start": 120,
+              "line_end": 127,
+              "declarations": [
+                {
+                  "path": "src/type/errorStat/errorStat.f90",
+                  "line_start": 122,
+                  "line_end": 123
+                },
+                {
+                  "path": "src/errstat.f90",
+                  "line_start": 7,
+                  "line_end": 36
+                },
+                {
+                  "path": "src/type/errorStat/errorStat.f90",
+                  "line_start": 31,
+                  "line_end": 52
+                },
+                {
+                  "path": "src/constant/status.f90",
+                  "line_start": 1,
+                  "line_end": 26
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "enclose": {
+      "id": "github:degawa/enclose",
+      "repository": {
+        "owner": "degawa",
+        "name": "enclose",
+        "url": "https://github.com/degawa/enclose"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "d3ea2ea989296bf855f4cb07ea8db601020805f2",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Tomohiro Degawa MIT terms.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/degawa/enclose/blob/d3ea2ea989296bf855f4cb07ea8db601020805f2/LICENSE",
+            "sha256": "ddf07337708257df1dc613f24c304a14b5164c0436f1d887b289b3d4b568c141"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/degawa/enclose/blob/d3ea2ea989296bf855f4cb07ea8db601020805f2/README.md",
+            "sha256": "a4fe0a1e143370e69f5f35a1d04e2727129ffdf07b92f80932a6609cb731ad74"
+          },
+          {
+            "path": "src/enclose.f90",
+            "url": "https://github.com/degawa/enclose/blob/d3ea2ea989296bf855f4cb07ea8db601020805f2/src/enclose.f90",
+            "sha256": "435eb8146ce3632f9aee8f9d87cdf711aea201b831d6550824e0ea56711eeb9f"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "d3ea2ea989296bf855f4cb07ea8db601020805f2",
+          "reviewed_on": "2026-11-07",
+          "notes": "Explicit and paired enclosure plus closing-suffix generation record reversal and preservation rules. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/enclose.f90",
+              "url": "https://github.com/degawa/enclose/blob/d3ea2ea989296bf855f4cb07ea8db601020805f2/src/enclose.f90",
+              "sha256": "435eb8146ce3632f9aee8f9d87cdf711aea201b831d6550824e0ea56711eeb9f"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "enclose",
+              "role": "public-entry-point",
+              "module": "strings_enclose",
+              "summary": "Three-character-argument ENCLOSE overload returns allocatable CHARACTER equal to OPEN//STR//CLOSE. OPEN/CLOSE can be arbitrary multi-character strings and need not match. It preserves the input characters, including trailing blanks; this is concatenation, not quotation escaping or validation. Use CLOSE= to disambiguate this overload from the logical AUTOCLOSE overload.",
+              "signature": "VALUE = enclose(STR,OPEN,CLOSE)",
+              "path": "src/enclose.f90",
+              "line_start": 29,
+              "line_end": 43,
+              "declarations": [
+                {
+                  "path": "src/enclose.f90",
+                  "line_start": 32,
+                  "line_end": 40
+                },
+                {
+                  "path": "src/enclose.f90",
+                  "line_start": 1,
+                  "line_end": 20
+                }
+              ]
+            },
+            {
+              "procedure": "enclose",
+              "role": "public-entry-point",
+              "module": "strings_enclose",
+              "summary": "ENCLOSE(STR,BRACKET,[AUTOCLOSE]) returns allocatable CHARACTER. AUTOCLOSE defaults true: map each recognized bracket to its pair and reverse the bracket sequence for closing, so \"([\" closes as \"])\". Unrecognized characters pair with themselves and are also reversed. With AUTOCLOSE=.FALSE. the same BRACKET string is used on both sides. This does not escape quotes already in STR.",
+              "signature": "VALUE = enclose(STR,BRACKET,[AUTOCLOSE])",
+              "path": "src/enclose.f90",
+              "line_start": 77,
+              "line_end": 104,
+              "declarations": [
+                {
+                  "path": "src/enclose.f90",
+                  "line_start": 80,
+                  "line_end": 89
+                },
+                {
+                  "path": "src/enclose.f90",
+                  "line_start": 1,
+                  "line_end": 20
+                }
+              ]
+            },
+            {
+              "procedure": "get_closing_brackets",
+              "role": "public-entry-point",
+              "module": "strings_enclose",
+              "summary": "Return a CHARACTER allocation of LEN(OPENING_BRACKETS), mapping () <> [] {} in both directions and reversing the order. Other characters map to themselves. Empty input yields an empty allocation. It does not parse nested syntax in arbitrary text or identify unmatched delimiters; it constructs a suffix from the supplied opening sequence.",
+              "signature": "VALUE = get_closing_brackets(OPENING_BRACKETS)",
+              "path": "src/enclose.f90",
+              "line_start": 114,
+              "line_end": 139,
+              "declarations": [
+                {
+                  "path": "src/enclose.f90",
+                  "line_start": 116,
+                  "line_end": 119
+                },
+                {
+                  "path": "src/enclose.f90",
+                  "line_start": 1,
+                  "line_end": 20
                 }
               ]
             }
@@ -19350,6 +20821,7 @@
       "ddeabm",
       "dvode",
       "pikaia",
+      "collections",
       "peaks",
       "powellopt",
       "fstats",
@@ -19427,8 +20899,17 @@
       "amosf90",
       "linalg_fortran",
       "fortran_vector",
+      "scanner",
+      "uint-fortran",
+      "fortran-tokenizer",
+      "integer_set",
+      "array_range",
       "fortran-regex",
+      "fed",
+      "for_fifo_queue",
       "fortime",
+      "errstat",
+      "enclose",
       "lookup-table-fortran",
       "rng-fortran",
       "fortran-fast-float",
@@ -19449,7 +20930,6 @@
       "m_framework",
       "mpfun2020-var1",
       "io-fortran-library",
-      "collections",
       "quaff",
       "neural-fortran",
       "lightkrylov",
@@ -19501,32 +20981,23 @@
       "ecx",
       "athena",
       "orbs",
-      "scanner",
       "rojff",
       "argparse-f",
       "io_utilities",
-      "uint-fortran",
       "veggies",
       "shunting-yard-fortran",
       "sqliteff",
       "erloff",
-      "fortran-tokenizer",
-      "integer_set",
       "smart-pointers",
       "rpn-calculator-fortran",
       "nc4fortran",
       "fundamental_constants",
-      "array_range",
       "kronrod",
-      "fed",
       "any",
-      "for_fifo_queue",
       "jeyemhex-regex",
       "string-utf-8",
       "fassert",
-      "errstat",
       "slinked-list",
-      "enclose",
       "penf",
       "coretran",
       "ftl",
