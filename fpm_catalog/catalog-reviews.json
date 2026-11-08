@@ -2,7 +2,7 @@
   "schema_version": 1,
   "publisher": "fortran-gams-catalog-independent-reviews",
   "source_url": "https://beliavsky.github.io/fortran-gams-catalog/reviewed-metadata.json",
-  "source_snapshot_id": "sha256:25b91ef0a67a2848d80a2284c3b521d201a84a7e8d9b67f66bde3fe8587aae9d",
+  "source_snapshot_id": "sha256:fe5798bbbc59de74f6df7cf4152ac8b8d4af28e6ff894faf643dbcfff19ef3bb",
   "packages": {
     "test-drive": {
       "id": "github:fortran-lang/test-drive",
@@ -9912,6 +9912,205 @@
                   "path": "src/forpca.f90",
                   "line_start": 228,
                   "line_end": 244
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "neural-fortran": {
+      "id": "github:modern-fortran/neural-fortran",
+      "repository": {
+        "owner": "modern-fortran",
+        "name": "neural-fortran",
+        "url": "https://github.com/modern-fortran/neural-fortran"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "b2073fa542c8dcdf9466d1a192d2888b628a5df3",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies neural-fortran contributors MIT terms. Source reviews target the pinned dense/inference API rather than promise every training/parallel/optional I/O feature is included in the hosted build.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/modern-fortran/neural-fortran/blob/b2073fa542c8dcdf9466d1a192d2888b628a5df3/LICENSE",
+            "sha256": "e31b85fc7ad55cc23045951eda81869d053641e17ceb8e9f234be40529cef86d"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/modern-fortran/neural-fortran/blob/b2073fa542c8dcdf9466d1a192d2888b628a5df3/README.md",
+            "sha256": "0859387d9e883c120c143b045e4c4007e5eaa16988f9d0b400a63e196a9761cf"
+          },
+          {
+            "path": "src/nf/nf_layer_constructors.f90",
+            "url": "https://github.com/modern-fortran/neural-fortran/blob/b2073fa542c8dcdf9466d1a192d2888b628a5df3/src/nf/nf_layer_constructors.f90",
+            "sha256": "c3723798700e513b50b26c2ad7a229f09a8e410cf13f8c324592f4f9da4807ea"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "K",
+          "level": "source-reviewed",
+          "revision": "b2073fa542c8dcdf9466d1a192d2888b628a5df3",
+          "reviewed_on": "2026-11-08",
+          "notes": "Dense default-real network layer construction, architecture initialization and rank-one inference document untrained parameters and training-mode side effects. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/nf/nf_layer_constructors.f90",
+              "url": "https://github.com/modern-fortran/neural-fortran/blob/b2073fa542c8dcdf9466d1a192d2888b628a5df3/src/nf/nf_layer_constructors.f90",
+              "sha256": "c3723798700e513b50b26c2ad7a229f09a8e410cf13f8c324592f4f9da4807ea"
+            },
+            {
+              "path": "src/nf/nf_network.f90",
+              "url": "https://github.com/modern-fortran/neural-fortran/blob/b2073fa542c8dcdf9466d1a192d2888b628a5df3/src/nf/nf_network.f90",
+              "sha256": "52a5650685f3b959be16e6fdc458c48889adde993374b2f727053162dab71b68"
+            },
+            {
+              "path": "src/nf/nf_network_submodule.f90",
+              "url": "https://github.com/modern-fortran/neural-fortran/blob/b2073fa542c8dcdf9466d1a192d2888b628a5df3/src/nf/nf_network_submodule.f90",
+              "sha256": "dd9a175a466549de3365c05e99c0c84930f3ef87aa617f21911e773fa25012c7"
+            },
+            {
+              "path": "src/nf.f90",
+              "url": "https://github.com/modern-fortran/neural-fortran/blob/b2073fa542c8dcdf9466d1a192d2888b628a5df3/src/nf.f90",
+              "sha256": "3d56e69f440319c6fed3b99570bbf3d05f06f181b39a600b65cc60b07f3a206e"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "input",
+              "role": "public-entry-point",
+              "module": "nf",
+              "summary": "Scalar-size overload of INPUT returns TYPE(LAYER) for a positive one-dimensional input width. It must be first in the NETWORK layer array and this scoped architecture follows it with dense layers. Inputs/outputs use default REAL, not automatically REAL64. Construction does not load data, train or select a batch dimension.",
+              "signature": "VALUE = input(LAYER_SIZE)",
+              "path": "src/nf/nf_layer_constructors.f90",
+              "line_start": 27,
+              "line_end": 48,
+              "declarations": [
+                {
+                  "path": "src/nf/nf_layer_constructors.f90",
+                  "line_start": 44,
+                  "line_end": 46
+                },
+                {
+                  "path": "src/nf.f90",
+                  "line_start": 1,
+                  "line_end": 28
+                },
+                {
+                  "path": "src/nf/nf_layer_constructors.f90",
+                  "line_start": 1,
+                  "line_end": 26
+                },
+                {
+                  "path": "src/nf/nf_network.f90",
+                  "line_start": 15,
+                  "line_end": 59
+                }
+              ]
+            },
+            {
+              "procedure": "dense",
+              "role": "public-entry-point",
+              "module": "nf",
+              "summary": "Construct a dense TYPE(LAYER) with a positive number of neurons and optional polymorphic ACTIVATION, for example a compatible RELU() instance. The default activation is sigmoid. A dense layer must follow an input/other compatible layer and cannot be the first network layer. This describes the default-real dense constructor only, not convolution/attention shapes or a trained predictor.",
+              "signature": "VALUE = dense(LAYER_SIZE,[ACTIVATION])",
+              "path": "src/nf/nf_layer_constructors.f90",
+              "line_start": 263,
+              "line_end": 284,
+              "declarations": [
+                {
+                  "path": "src/nf/nf_layer_constructors.f90",
+                  "line_start": 278,
+                  "line_end": 283
+                },
+                {
+                  "path": "src/nf.f90",
+                  "line_start": 1,
+                  "line_end": 28
+                },
+                {
+                  "path": "src/nf/nf_layer_constructors.f90",
+                  "line_start": 1,
+                  "line_end": 26
+                },
+                {
+                  "path": "src/nf/nf_network.f90",
+                  "line_start": 15,
+                  "line_end": 59
+                }
+              ]
+            },
+            {
+              "procedure": "network",
+              "role": "public-entry-point",
+              "module": "nf",
+              "summary": "Construct TYPE(NETWORK) from an array of compatible TYPE(LAYER) values, beginning with INPUT, for example NETWORK([INPUT(nin),DENSE(nout)]). Building a network initializes its parameters/architecture; it does not make random/default weights a meaningful trained model. Load/set/train parameters separately when a reproducible predictor is intended. Kind/shape assumptions must match the dense layer interfaces.",
+              "signature": "VALUE = network(LAYERS)",
+              "path": "src/nf/nf_network.f90",
+              "line_start": 52,
+              "line_end": 59,
+              "declarations": [
+                {
+                  "path": "src/nf/nf_network.f90",
+                  "line_start": 54,
+                  "line_end": 58
+                },
+                {
+                  "path": "src/nf.f90",
+                  "line_start": 1,
+                  "line_end": 28
+                },
+                {
+                  "path": "src/nf/nf_layer_constructors.f90",
+                  "line_start": 1,
+                  "line_end": 26
+                },
+                {
+                  "path": "src/nf/nf_network.f90",
+                  "line_start": 15,
+                  "line_end": 59
+                }
+              ]
+            },
+            {
+              "procedure": "predict",
+              "role": "public-entry-point",
+              "module": "nf",
+              "derived_type": "network",
+              "summary": "Declare TYPE(network) :: solver from nf. Default-real rank-one inference overload returns an allocatable real vector for an initialized compatible network and matching input width. This pin switches training mode off for inference then sets it TRUE afterward; it does not restore an arbitrary prior mode. Supported rank-one output-layer dispatch is limited to the linked implementation and can ERROR STOP for unsupported output types. PREDICT changes internal state and exposes no recoverable status/error estimate. This scope documents inference, not training convergence or prediction quality. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%predict(INPUT)",
+              "path": "src/nf/nf_network.f90",
+              "line_start": 136,
+              "line_end": 144,
+              "declarations": [
+                {
+                  "path": "src/nf/nf_network.f90",
+                  "line_start": 138,
+                  "line_end": 143
+                },
+                {
+                  "path": "src/nf.f90",
+                  "line_start": 1,
+                  "line_end": 28
+                },
+                {
+                  "path": "src/nf/nf_layer_constructors.f90",
+                  "line_start": 1,
+                  "line_end": 26
+                },
+                {
+                  "path": "src/nf/nf_network.f90",
+                  "line_start": 15,
+                  "line_end": 59
+                },
+                {
+                  "path": "src/nf/nf_network_submodule.f90",
+                  "line_start": 297,
+                  "line_end": 327
                 }
               ]
             }
@@ -22331,6 +22530,213 @@
         }
       ]
     },
+    "fortrandf": {
+      "id": "github:jaiken17/fortrandf",
+      "repository": {
+        "owner": "jaiken17",
+        "name": "fortranDF",
+        "url": "https://github.com/jaiken17/fortranDF"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "58300f8ae39d463e729960e960939fb53e2c7de4",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies Joshua Aiken BSD three-clause terms. This calling review scopes the current DF_FORTRANDF module and selected real-column overloads, not the separately retained old implementation.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jaiken17/fortranDF/blob/58300f8ae39d463e729960e960939fb53e2c7de4/LICENSE",
+            "sha256": "8d1638d422ba8e3c6e5efba19ce4e8d5f7027429c6cbd87d0f990553881902c6"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jaiken17/fortranDF/blob/58300f8ae39d463e729960e960939fb53e2c7de4/README.md",
+            "sha256": "01318377d2e1c0e428059200bbc4069721df67ed109dce819e0f11476d82354d"
+          },
+          {
+            "path": "src/df_fortranDF.f90",
+            "url": "https://github.com/jaiken17/fortranDF/blob/58300f8ae39d463e729960e960939fb53e2c7de4/src/df_fortranDF.f90",
+            "sha256": "999a80f08dd318d897ee3f322663f8cf8b6dc0787723468bff9d4afef69dad77"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N4",
+          "level": "source-reviewed",
+          "revision": "58300f8ae39d463e729960e960939fb53e2c7de4",
+          "reviewed_on": "2026-11-08",
+          "notes": "Frame initialization, real column append, named retrieval and explicit destruction document header/length rules and copied results. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/df_fortranDF.f90",
+              "url": "https://github.com/jaiken17/fortranDF/blob/58300f8ae39d463e729960e960939fb53e2c7de4/src/df_fortranDF.f90",
+              "sha256": "999a80f08dd318d897ee3f322663f8cf8b6dc0787723468bff9d4afef69dad77"
+            },
+            {
+              "path": "src/df_precision.f90",
+              "url": "https://github.com/jaiken17/fortranDF/blob/58300f8ae39d463e729960e960939fb53e2c7de4/src/df_precision.f90",
+              "sha256": "518da73547f6c4265d45688d3bfa6a8be28ed29a46c4aec0dd906cc9b5d23899"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "new",
+              "role": "public-entry-point",
+              "module": "df_fortranDF",
+              "derived_type": "data_frame",
+              "summary": "Declare TYPE(data_frame) :: solver from df_fortranDF. Initialize a frame before appending/retrieving columns. ENFORCE_LENGTH defaults true and CHAR_LEN defaults 100; a repeated NEW destroys prior owned data. Column append operations require consistent header usage and, under default settings, equal lengths. This is storage setup with no status or statistical model fitting. RK from DF_PRECISION is REAL64 for this pin. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%new([ENFORCE_LENGTH],[CHAR_LEN])",
+              "path": "src/df_fortranDF.f90",
+              "line_start": 279,
+              "line_end": 312,
+              "declarations": [
+                {
+                  "path": "src/df_fortranDF.f90",
+                  "line_start": 280,
+                  "line_end": 282
+                },
+                {
+                  "path": "src/df_fortranDF.f90",
+                  "line_start": 39,
+                  "line_end": 51
+                },
+                {
+                  "path": "src/df_fortranDF.f90",
+                  "line_start": 80,
+                  "line_end": 87
+                },
+                {
+                  "path": "src/df_fortranDF.f90",
+                  "line_start": 180,
+                  "line_end": 189
+                },
+                {
+                  "path": "src/df_precision.f90",
+                  "line_start": 1,
+                  "line_end": 8
+                }
+              ]
+            },
+            {
+              "procedure": "append",
+              "role": "public-entry-point",
+              "module": "df_fortranDF",
+              "derived_type": "data_frame",
+              "summary": "Declare TYPE(data_frame) :: solver from df_fortranDF. REAL(RK) vector overload of APPEND stores a column, optionally naming it with HEADER. When ENFORCE_LENGTH is true, mismatched row counts ERROR STOP instead of returning a status. Decide whether to use headers from the first append and supply them consistently; do not assume duplicate/truncated headers or heterogeneous column kinds automatically convert. This copies input values into frame storage, not a borrowed pointer column. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%append(COL,[HEADER])",
+              "path": "src/df_fortranDF.f90",
+              "line_start": 765,
+              "line_end": 811,
+              "declarations": [
+                {
+                  "path": "src/df_fortranDF.f90",
+                  "line_start": 766,
+                  "line_end": 768
+                },
+                {
+                  "path": "src/df_fortranDF.f90",
+                  "line_start": 39,
+                  "line_end": 51
+                },
+                {
+                  "path": "src/df_fortranDF.f90",
+                  "line_start": 80,
+                  "line_end": 87
+                },
+                {
+                  "path": "src/df_fortranDF.f90",
+                  "line_start": 180,
+                  "line_end": 189
+                },
+                {
+                  "path": "src/df_precision.f90",
+                  "line_start": 1,
+                  "line_end": 8
+                }
+              ]
+            },
+            {
+              "procedure": "getr",
+              "role": "public-entry-point",
+              "module": "df_fortranDF",
+              "derived_type": "data_frame",
+              "summary": "Declare TYPE(data_frame) :: solver from df_fortranDF. Named real-column overload of GETR returns an allocatable REAL(RK) vector copy. The frame must have headers and the requested header must exist and identify a real column; missing or wrong-type columns ERROR STOP. FULL optionally returns the full real storage length rather than the recorded column length for unequal-column frames. Mutating the returned copy does not update the stored column automatically. Other kinds use GETI/GETL/GETCH/GETC rather than result-type generic resolution. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%getr(HEADER,[FULL])",
+              "path": "src/df_fortranDF.f90",
+              "line_start": 1803,
+              "line_end": 1836,
+              "declarations": [
+                {
+                  "path": "src/df_fortranDF.f90",
+                  "line_start": 1804,
+                  "line_end": 1807
+                },
+                {
+                  "path": "src/df_fortranDF.f90",
+                  "line_start": 39,
+                  "line_end": 51
+                },
+                {
+                  "path": "src/df_fortranDF.f90",
+                  "line_start": 80,
+                  "line_end": 87
+                },
+                {
+                  "path": "src/df_fortranDF.f90",
+                  "line_start": 180,
+                  "line_end": 189
+                },
+                {
+                  "path": "src/df_precision.f90",
+                  "line_start": 1,
+                  "line_end": 8
+                }
+              ]
+            },
+            {
+              "procedure": "destroy",
+              "role": "public-entry-point",
+              "module": "df_fortranDF",
+              "derived_type": "data_frame",
+              "summary": "Declare TYPE(data_frame) :: solver from df_fortranDF. Explicitly deallocate frame arrays/header metadata and mark the frame uninitialized. Reinitialize with NEW before further append/read operations. This resets the owning frame rather than invalidating independent allocatable copies already returned by GETR. This is a public DESTROY binding, not a statistical cleanup or an implicit claim that every access checks initialization. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%destroy()",
+              "path": "src/df_fortranDF.f90",
+              "line_start": 317,
+              "line_end": 348,
+              "declarations": [
+                {
+                  "path": "src/df_fortranDF.f90",
+                  "line_start": 318,
+                  "line_end": 318
+                },
+                {
+                  "path": "src/df_fortranDF.f90",
+                  "line_start": 39,
+                  "line_end": 51
+                },
+                {
+                  "path": "src/df_fortranDF.f90",
+                  "line_start": 80,
+                  "line_end": 87
+                },
+                {
+                  "path": "src/df_fortranDF.f90",
+                  "line_start": 180,
+                  "line_end": 189
+                },
+                {
+                  "path": "src/df_precision.f90",
+                  "line_start": 1,
+                  "line_end": 8
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "strith": {
       "id": "github:degawa/strith",
       "repository": {
@@ -30751,6 +31157,152 @@
         }
       ]
     },
+    "dftatom": {
+      "id": "github:certik/dftatom",
+      "repository": {
+        "owner": "certik",
+        "name": "dftatom",
+        "url": "https://github.com/certik/dftatom"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "e49b3042de6e2471afe5eea992c9ba50dac08f95",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies Ondrej Certik, Jiri Vackar and John Pask MIT terms. This review scopes unchanged selected native mesh/eigenproblem interfaces, not optional bindings or every relativistic/self-consistent algorithm.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/certik/dftatom/blob/e49b3042de6e2471afe5eea992c9ba50dac08f95/LICENSE",
+            "sha256": "c340964aaa41af30c41bc570ed1817e98b21505b1fa15836be0e16103e11b9fc"
+          },
+          {
+            "path": "src/mesh.f90",
+            "url": "https://github.com/certik/dftatom/blob/e49b3042de6e2471afe5eea992c9ba50dac08f95/src/mesh.f90",
+            "sha256": "4c73d4044eddae207e168113371c689d15c06cb1461d00e4d575f52374f0df9a"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "I1b",
+          "level": "source-reviewed",
+          "revision": "e49b3042de6e2471afe5eea992c9ba50dac08f95",
+          "reviewed_on": "2026-11-08",
+          "notes": "Radial exponential-mesh construction, mapping derivative and bound-state shooting entry document N+1 storage, atomic units and integer convergence status. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/mesh.f90",
+              "url": "https://github.com/certik/dftatom/blob/e49b3042de6e2471afe5eea992c9ba50dac08f95/src/mesh.f90",
+              "sha256": "4c73d4044eddae207e168113371c689d15c06cb1461d00e4d575f52374f0df9a"
+            },
+            {
+              "path": "src/reigen.f90",
+              "url": "https://github.com/certik/dftatom/blob/e49b3042de6e2471afe5eea992c9ba50dac08f95/src/reigen.f90",
+              "sha256": "23ec32c1dbee0246c9b55502e4edc08340f7298e8dbb6d53d22e65ced86842f9"
+            },
+            {
+              "path": "src/dftatom.f90",
+              "url": "https://github.com/certik/dftatom/blob/e49b3042de6e2471afe5eea992c9ba50dac08f95/src/dftatom.f90",
+              "sha256": "d695bf09169f072a471a30c8a14e8e02e213b93f88cbeef01fca21b4ce515ff2"
+            },
+            {
+              "path": "src/types.f90",
+              "url": "https://github.com/certik/dftatom/blob/e49b3042de6e2471afe5eea992c9ba50dac08f95/src/types.f90",
+              "sha256": "72a50ddd96c260ce8a3674b2b1de386ba5dfb2921c549f18fe4cdca9ea9e24ee"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "mesh_exp",
+              "role": "public-entry-point",
+              "module": "dftatom",
+              "summary": "Construct REAL(DP) radial coordinates on [R_MIN,R_MAX] with N elements and N+1 points, using DP from DFTATOM. A is the ratio of last to first element widths, not a simple adjacent-point ratio. Use increasing endpoints, positive A and positive N; for the paired mesh derivative reviewed here require N>1 and A different from one. The uniform A=1 mesh branch exists, but the companion derivative rejects it. Invalid cases can stop rather than return a status.",
+              "signature": "VALUE = mesh_exp(R_MIN,R_MAX,A,N)",
+              "path": "src/mesh.f90",
+              "line_start": 16,
+              "line_end": 72,
+              "declarations": [
+                {
+                  "path": "src/mesh.f90",
+                  "line_start": 23,
+                  "line_end": 37
+                },
+                {
+                  "path": "src/dftatom.f90",
+                  "line_start": 1,
+                  "line_end": 26
+                },
+                {
+                  "path": "src/types.f90",
+                  "line_start": 1,
+                  "line_end": 8
+                }
+              ]
+            },
+            {
+              "procedure": "mesh_exp_deriv",
+              "role": "public-entry-point",
+              "module": "dftatom",
+              "summary": "Return REAL(DP) Rp(N+1)=dR/dt for the same exponential-mesh parameters, with computational coordinate t=1,...,N+1 and unit index spacing. Use N>1 and A>0, A/=1: the pinned implementation STOPs at A=1 even though MESH_EXP can generate a uniform mesh. This is an analytic mapping derivative, not finite differences of R and not a physical wavefunction derivative. Preserve correspondence between R and Rp for the eigenproblem call.",
+              "signature": "VALUE = mesh_exp_deriv(R_MIN,R_MAX,A,N)",
+              "path": "src/mesh.f90",
+              "line_start": 74,
+              "line_end": 107,
+              "declarations": [
+                {
+                  "path": "src/mesh.f90",
+                  "line_start": 84,
+                  "line_end": 88
+                },
+                {
+                  "path": "src/dftatom.f90",
+                  "line_start": 1,
+                  "line_end": 26
+                },
+                {
+                  "path": "src/types.f90",
+                  "line_start": 1,
+                  "line_end": 8
+                }
+              ]
+            },
+            {
+              "procedure": "solve_radial_eigenproblem",
+              "role": "public-entry-point",
+              "module": "dftatom",
+              "summary": "Solve a radial bound-state eigenproblem with REAL(DP) R/Rp/V on the same mesh and P/Q output arrays of matching extent. Supply n>0, 0<=l<n, energy guess EIN, positive EPS/MAX_ITER and a valid energy bracket EMIN_INIT/EMAX_INIT. The scoped nonrelativistic path uses RELAT=0, atomic-unit potential/energies and integer Coulomb Z; C is the speed of light in atomic units for relativistic paths. CONVERGED is an INTEGER status, with zero success, not a logical. On failure do not interpret E or partial P/Q as a converged state. PERTURB assumes suitable Coulomb asymptotics; the alternative is bracket bisection. This is a radial boundary-value/shooting eigenproblem, not a full self-consistent atomic DFT calculation.",
+              "signature": "CALL solve_radial_eigenproblem(N,L,EIN,EPS,MAX_ITER,R,RP,V,Z,C,RELAT,PERTURB,EMIN_INIT,EMAX_INIT,CONVERGED,E,P,Q)",
+              "path": "src/reigen.f90",
+              "line_start": 118,
+              "line_end": 341,
+              "declarations": [
+                {
+                  "path": "src/reigen.f90",
+                  "line_start": 155,
+                  "line_end": 160
+                },
+                {
+                  "path": "src/dftatom.f90",
+                  "line_start": 1,
+                  "line_end": 26
+                },
+                {
+                  "path": "src/types.f90",
+                  "line_start": 1,
+                  "line_end": 8
+                },
+                {
+                  "path": "src/reigen.f90",
+                  "line_start": 118,
+                  "line_end": 148
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "fortran-tcl86": {
       "id": "github:interkosmos/fortran-tcl86",
       "repository": {
@@ -31861,6 +32413,216 @@
         }
       ]
     },
+    "fortran-lua53": {
+      "id": "github:interkosmos/fortran-lua53",
+      "repository": {
+        "owner": "interkosmos",
+        "name": "fortran-lua53",
+        "url": "https://github.com/interkosmos/fortran-lua53"
+      },
+      "license": {
+        "label": "ISC",
+        "spdx_expression": "ISC",
+        "revision": "d0d684978e922bbc8c2f7e4be0cc901f80c29de6",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENCE supplies Philipp Engel ISC terms for the binding. Native Lua 5.3 retains its separate terms; the service manifest link-name adjustment does not change these public routines.",
+        "evidence": [
+          {
+            "path": "LICENCE",
+            "url": "https://github.com/interkosmos/fortran-lua53/blob/d0d684978e922bbc8c2f7e4be0cc901f80c29de6/LICENCE",
+            "sha256": "0bfadaddcce38eea34951ebe5eb038e158ad6d828088b8f4b2f78f06f5f7fdc9"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/interkosmos/fortran-lua53/blob/d0d684978e922bbc8c2f7e4be0cc901f80c29de6/README.md",
+            "sha256": "e7190fb8e1aa74384cbf628a5194f23bf4a630fc37678cf7e950e7cfd35030f5"
+          },
+          {
+            "path": "src/lua.f90",
+            "url": "https://github.com/interkosmos/fortran-lua53/blob/d0d684978e922bbc8c2f7e4be0cc901f80c29de6/src/lua.f90",
+            "sha256": "cd7d3bec69de1d04a2e425edff3160393efaf67ad6839b7949df81360a52b5f3"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "S",
+          "level": "source-reviewed",
+          "revision": "d0d684978e922bbc8c2f7e4be0cc901f80c29de6",
+          "reviewed_on": "2026-11-08",
+          "notes": "Lua 5.3 interpreter allocation, source loading, protected execution, checked numeric conversion and close document ABI and explicit stack lifetime. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/lua.f90",
+              "url": "https://github.com/interkosmos/fortran-lua53/blob/d0d684978e922bbc8c2f7e4be0cc901f80c29de6/src/lua.f90",
+              "sha256": "cd7d3bec69de1d04a2e425edff3160393efaf67ad6839b7949df81360a52b5f3"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "lual_newstate",
+              "role": "public-entry-point",
+              "module": "lua",
+              "summary": "Allocate a Lua 5.3 interpreter as TYPE(C_PTR), checking C_ASSOCIATED before use. This does not open standard libraries; call LUAL_OPENLIBS separately when a script needs them. Core returned arithmetic can use the new state directly. The native library ABI must match Lua 5.3; do not link this interface to an arbitrary Lua version. Eventually close the single owning state.",
+              "signature": "VALUE = lual_newstate()",
+              "path": "src/lua.f90",
+              "line_start": 454,
+              "line_end": 458,
+              "declarations": [
+                {
+                  "path": "src/lua.f90",
+                  "line_start": 455,
+                  "line_end": 457
+                },
+                {
+                  "path": "src/lua.f90",
+                  "line_start": 1,
+                  "line_end": 22
+                },
+                {
+                  "path": "src/lua.f90",
+                  "line_start": 96,
+                  "line_end": 110
+                },
+                {
+                  "path": "src/lua.f90",
+                  "line_start": 135,
+                  "line_end": 148
+                }
+              ]
+            },
+            {
+              "procedure": "lual_loadstring",
+              "role": "public-entry-point",
+              "module": "lua",
+              "summary": "Load/compile CHARACTER source onto the Lua stack; this convenience wrapper appends C_NULL_CHAR. Integer return zero means the chunk loaded, not that it has executed. Run the loaded chunk with LUA_PCALL; on loading failure inspect/clear the error object instead of calling it. The stack state is explicit and persists across operations.",
+              "signature": "VALUE = lual_loadstring(L,S)",
+              "path": "src/lua.f90",
+              "line_start": 850,
+              "line_end": 858,
+              "declarations": [
+                {
+                  "path": "src/lua.f90",
+                  "line_start": 853,
+                  "line_end": 855
+                },
+                {
+                  "path": "src/lua.f90",
+                  "line_start": 1,
+                  "line_end": 22
+                },
+                {
+                  "path": "src/lua.f90",
+                  "line_start": 96,
+                  "line_end": 110
+                },
+                {
+                  "path": "src/lua.f90",
+                  "line_start": 135,
+                  "line_end": 148
+                }
+              ]
+            },
+            {
+              "procedure": "lua_pcall",
+              "role": "public-entry-point",
+              "module": "lua",
+              "summary": "Execute the function/chunk already on the Lua stack using required default-integer NARGS/NRESULTS/MSGH. For a freshly loaded zero-argument chunk requesting one returned value use 0,1,0, and check integer status zero before reading the result. Argument/result values are stack entries, not Fortran output dummies; MSGH=0 selects no custom message handler. A failed call leaves an error object. Remove results/errors deliberately before repeated calls and keep the interpreter live.",
+              "signature": "VALUE = lua_pcall(L,NARGS,NRESULTS,MSGH)",
+              "path": "src/lua.f90",
+              "line_start": 762,
+              "line_end": 771,
+              "declarations": [
+                {
+                  "path": "src/lua.f90",
+                  "line_start": 764,
+                  "line_end": 768
+                },
+                {
+                  "path": "src/lua.f90",
+                  "line_start": 1,
+                  "line_end": 22
+                },
+                {
+                  "path": "src/lua.f90",
+                  "line_start": 96,
+                  "line_end": 110
+                },
+                {
+                  "path": "src/lua.f90",
+                  "line_start": 135,
+                  "line_end": 148
+                }
+              ]
+            },
+            {
+              "procedure": "lua_tonumberx",
+              "role": "public-entry-point",
+              "module": "lua",
+              "summary": "Convert stack index IDX to REAL(LUA_NUMBER) and check the separate numeric-conversion flag. Pass INTEGER(C_INT) IDX, for example -1_C_INT, and ISNUM=C_LOC(flag) where flag is INTEGER(C_INT),TARGET. ISNUM is a TYPE(C_PTR),VALUE native pointer, not a logical output actual. A numeric zero alone does not establish conversion success. This reads a live stack slot; it does not pop it.",
+              "signature": "VALUE = lua_tonumberx(L,IDX,ISNUM)",
+              "path": "src/lua.f90",
+              "line_start": 338,
+              "line_end": 345,
+              "declarations": [
+                {
+                  "path": "src/lua.f90",
+                  "line_start": 339,
+                  "line_end": 344
+                },
+                {
+                  "path": "src/lua.f90",
+                  "line_start": 1,
+                  "line_end": 22
+                },
+                {
+                  "path": "src/lua.f90",
+                  "line_start": 96,
+                  "line_end": 110
+                },
+                {
+                  "path": "src/lua.f90",
+                  "line_start": 135,
+                  "line_end": 148
+                }
+              ]
+            },
+            {
+              "procedure": "lua_close",
+              "role": "public-entry-point",
+              "module": "lua",
+              "summary": "Close one owning interpreter after every stack/borrowed-value use ends. The C_PTR actual is passed by VALUE, so this binding does not nullify the caller handle. Set that variable to C_NULL_PTR if retained and avoid double close through aliases. This is not automatic Fortran finalization or a stack-only reset.",
+              "signature": "CALL lua_close(L)",
+              "path": "src/lua.f90",
+              "line_start": 480,
+              "line_end": 484,
+              "declarations": [
+                {
+                  "path": "src/lua.f90",
+                  "line_start": 481,
+                  "line_end": 483
+                },
+                {
+                  "path": "src/lua.f90",
+                  "line_start": 1,
+                  "line_end": 22
+                },
+                {
+                  "path": "src/lua.f90",
+                  "line_start": 96,
+                  "line_end": 110
+                },
+                {
+                  "path": "src/lua.f90",
+                  "line_start": 135,
+                  "line_end": 148
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "netcdf-fortran": {
       "id": "github:unidata/netcdf-fortran",
       "repository": {
@@ -32747,6 +33509,434 @@
         }
       ]
     },
+    "easy-plplot": {
+      "id": "github:zoziha/easy_plplot",
+      "repository": {
+        "owner": "zoziha",
+        "name": "easy_plplot",
+        "url": "https://github.com/zoziha/easy_plplot"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "77b0ac9b30d732196e99438064c35f4c1914eb7c",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies ZUO Zhihua and Kyle Horne three-clause BSD terms. Native PLplot and selected device libraries retain their own terms; only the scoped file-driver lifecycle is described here.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/zoziha/easy_plplot/blob/77b0ac9b30d732196e99438064c35f4c1914eb7c/LICENSE",
+            "sha256": "9271b0d8c1e321e536d188ce9d3c41088867cb82518acf66cab150d6580d8133"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/zoziha/easy_plplot/blob/77b0ac9b30d732196e99438064c35f4c1914eb7c/README.md",
+            "sha256": "2531ed8e4a05fb0acaaabcd24b528342609bda2876df7109f97e6d9e2ac02baf"
+          },
+          {
+            "path": "src/easy_plplot.f90",
+            "url": "https://github.com/zoziha/easy_plplot/blob/77b0ac9b30d732196e99438064c35f4c1914eb7c/src/easy_plplot.f90",
+            "sha256": "8a2414379a97b340bf1f314a5fe051460092af4a44d8752bca51b15fc1d80f7e"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "Q",
+          "level": "source-reviewed",
+          "revision": "77b0ac9b30d732196e99438064c35f4c1914eb7c",
+          "reviewed_on": "2026-11-08",
+          "notes": "Headless PLplot setup, page creation, real-vector plotting and finalization document global session state and artifact output. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/easy_plplot.f90",
+              "url": "https://github.com/zoziha/easy_plplot/blob/77b0ac9b30d732196e99438064c35f4c1914eb7c/src/easy_plplot.f90",
+              "sha256": "8a2414379a97b340bf1f314a5fe051460092af4a44d8752bca51b15fc1d80f7e"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "setup",
+              "role": "public-entry-point",
+              "module": "easy_plplot_m",
+              "summary": "Initialize the native PLplot session before creating/drawing figures. All arguments are optional; for headless output explicitly choose DEVICE=\"pngcairo\" and a suitable FILENAME, with optional integer FIGSIZE(2). The upstream default is qtwidget, not a browser/headless device. WP is REAL64. This module maintains shared session/reporting state rather than independent figure objects and exposes no native status output.",
+              "signature": "CALL setup([DEVICE],[FILENAME],[FONTSCALING],[WHITEONBLACK],[TRANSPARENT],[COLORMAP],[FIGSIZE])",
+              "path": "src/easy_plplot.f90",
+              "line_start": 1345,
+              "line_end": 1403,
+              "declarations": [
+                {
+                  "path": "src/easy_plplot.f90",
+                  "line_start": 1346,
+                  "line_end": 1359
+                },
+                {
+                  "path": "src/easy_plplot.f90",
+                  "line_start": 1,
+                  "line_end": 48
+                }
+              ]
+            },
+            {
+              "procedure": "figure",
+              "role": "public-entry-point",
+              "module": "easy_plplot_m",
+              "summary": "Begin a figure/page after SETUP, advancing from the previous page when needed and resetting pen state. Set axes/ranges with the public SUBPLOT/XYLIM/XLIM/YLIM facilities before drawing in the intended coordinates. This no-argument subroutine uses saved module/procedure state and does not return an independently owned figure handle.",
+              "signature": "CALL figure()",
+              "path": "src/easy_plplot.f90",
+              "line_start": 118,
+              "line_end": 131,
+              "declarations": [
+                {
+                  "path": "src/easy_plplot.f90",
+                  "line_start": 118,
+                  "line_end": 118
+                }
+              ]
+            },
+            {
+              "procedure": "plot",
+              "role": "public-entry-point",
+              "module": "easy_plplot_m",
+              "summary": "Draw rank-one REAL(WP) X/Y data with equal lengths, after session/figure and axis setup. Optional CHARACTER line/marker names and REAL(WP) widths/sizes control styling; this is not Matplotlib Python syntax. Drawing uses the current global PLplot stream, does not start a new session, and does not itself finalize a PNG file or return a status. Call SHOW after plotting to finish output.",
+              "signature": "CALL plot(X,Y,[LINECOLOR],[LINESTYLE],[LINEWIDTH],[MARKCOLOR],[MARKSTYLE],[MARKSIZE])",
+              "path": "src/easy_plplot.f90",
+              "line_start": 715,
+              "line_end": 753,
+              "declarations": [
+                {
+                  "path": "src/easy_plplot.f90",
+                  "line_start": 716,
+                  "line_end": 723
+                },
+                {
+                  "path": "src/easy_plplot.f90",
+                  "line_start": 1,
+                  "line_end": 48
+                }
+              ]
+            },
+            {
+              "procedure": "show",
+              "role": "public-entry-point",
+              "module": "easy_plplot_m",
+              "summary": "Finalize the PLplot session with PLEND once, flushing file output. For a file driver this writes/finishes the artifact; it does not itself display a browser image. The pinned module records DIDSHOW and FIGURE has saved first-page state, so repeated independent setup/show sessions in one process are not established by this scoped lifecycle. No status is returned.",
+              "signature": "CALL show()",
+              "path": "src/easy_plplot.f90",
+              "line_start": 1406,
+              "line_end": 1411,
+              "declarations": [
+                {
+                  "path": "src/easy_plplot.f90",
+                  "line_start": 1406,
+                  "line_end": 1406
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "flook": {
+      "id": "github:electronicstructurelibrary/flook",
+      "repository": {
+        "owner": "ElectronicStructureLibrary",
+        "name": "flook",
+        "url": "https://github.com/ElectronicStructureLibrary/flook"
+      },
+      "license": {
+        "label": "MPL-2.0",
+        "spdx_expression": "MPL-2.0",
+        "revision": "7b644a2ace47e43772006764a58166b6635e8941",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies Mozilla Public License 2.0 and the selected FLOOK source identifies MPL-2.0. Bundled Aotus/Lua retain their own notices and version context. The separate F2003 interface is excluded from the hosted recipe and this scoped review.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/ElectronicStructureLibrary/flook/blob/7b644a2ace47e43772006764a58166b6635e8941/LICENSE",
+            "sha256": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/ElectronicStructureLibrary/flook/blob/7b644a2ace47e43772006764a58166b6635e8941/README.md",
+            "sha256": "e7cf023a1a4899fc342308df0cf7edad789073c3a36fca9ace9d3258af3f96df"
+          },
+          {
+            "path": "src/flook.F90",
+            "url": "https://github.com/ElectronicStructureLibrary/flook/blob/7b644a2ace47e43772006764a58166b6635e8941/src/flook.F90",
+            "sha256": "838d821801c2e179f7ce1b4b9e88ade414e38bbfd2c51fcbe851f39a6a59fdb0"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "S",
+          "level": "source-reviewed",
+          "revision": "7b644a2ace47e43772006764a58166b6635e8941",
+          "reviewed_on": "2026-11-08",
+          "notes": "Procedural bundled-Lua state initialization, file/code execution and close document reset behavior and ordered optional inputs. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/flook.F90",
+              "url": "https://github.com/ElectronicStructureLibrary/flook/blob/7b644a2ace47e43772006764a58166b6635e8941/src/flook.F90",
+              "sha256": "838d821801c2e179f7ce1b4b9e88ade414e38bbfd2c51fcbe851f39a6a59fdb0"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "lua_init",
+              "role": "public-entry-point",
+              "module": "flook",
+              "summary": "Initialize a TYPE(LUASTATE) through the procedural LUA_INIT generic. On an already initialized state this first closes its old interpreter, invalidating associated table/function handles, then allocates a new one. No status actual is returned here. This is the service-selected procedural interface, not the separate FLOOK_F03 type-bound alternative. Use the bundled Lua/Aotus build context rather than assuming a separately installed Lua ABI matches.",
+              "signature": "CALL lua_init(LUA)",
+              "path": "src/flook.F90",
+              "line_start": 715,
+              "line_end": 720,
+              "declarations": [
+                {
+                  "path": "src/flook.F90",
+                  "line_start": 716,
+                  "line_end": 716
+                },
+                {
+                  "path": "src/flook.F90",
+                  "line_start": 26,
+                  "line_end": 48
+                },
+                {
+                  "path": "src/flook.F90",
+                  "line_start": 86,
+                  "line_end": 110
+                },
+                {
+                  "path": "src/flook.F90",
+                  "line_start": 124,
+                  "line_end": 133
+                }
+              ]
+            },
+            {
+              "procedure": "lua_run",
+              "role": "public-entry-point",
+              "module": "flook",
+              "summary": "Run Lua using an initialized state and keyword FILE or CODE. Both are formally optional: neither performs work, while supplying both executes the file and then code, in that order, rather than selecting only one. For unambiguous recoverable diagnostics use one input per call and request ERROR/MESSAGE; the underlying Aotus path can stop when neither diagnostic output is supplied. These are Lua scripts with side effects subject to the host sandbox, not inert configuration data or a pure Fortran expression evaluator.",
+              "signature": "CALL lua_run(LUA,[FILE],[CODE],[ERROR],[MESSAGE])",
+              "path": "src/flook.F90",
+              "line_start": 749,
+              "line_end": 761,
+              "declarations": [
+                {
+                  "path": "src/flook.F90",
+                  "line_start": 750,
+                  "line_end": 753
+                },
+                {
+                  "path": "src/flook.F90",
+                  "line_start": 26,
+                  "line_end": 48
+                },
+                {
+                  "path": "src/flook.F90",
+                  "line_start": 86,
+                  "line_end": 110
+                },
+                {
+                  "path": "src/flook.F90",
+                  "line_start": 124,
+                  "line_end": 133
+                }
+              ]
+            },
+            {
+              "procedure": "lua_close",
+              "role": "public-entry-point",
+              "module": "flook",
+              "summary": "Close an initialized procedural LUASTATE and mark its initialized flag false. All Lua-backed table/borrowed handles must be finished first; copying LUASTATE does not establish independent ownership. This routine closes the interpreter, not just a table or stack frame, and is separate from ordinary Fortran scope exit. No status is returned.",
+              "signature": "CALL lua_close(LUA)",
+              "path": "src/flook.F90",
+              "line_start": 765,
+              "line_end": 769,
+              "declarations": [
+                {
+                  "path": "src/flook.F90",
+                  "line_start": 766,
+                  "line_end": 766
+                },
+                {
+                  "path": "src/flook.F90",
+                  "line_start": 26,
+                  "line_end": 48
+                },
+                {
+                  "path": "src/flook.F90",
+                  "line_start": 86,
+                  "line_end": 110
+                },
+                {
+                  "path": "src/flook.F90",
+                  "line_start": 124,
+                  "line_end": 133
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "ogpf": {
+      "id": "github:kookma/ogpf",
+      "repository": {
+        "owner": "kookma",
+        "name": "ogpf",
+        "url": "https://github.com/kookma/ogpf"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "bd18021949be028856957c9c03832742513d5c67",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies Mohammad Rahmani MIT terms, consistent with source/manifest identification. Native Gnuplot is a separate dependency. Hosted headless-terminal selection is a recipe patch rather than an upstream default.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/kookma/ogpf/blob/bd18021949be028856957c9c03832742513d5c67/LICENSE",
+            "sha256": "15e888e011894731a974fb4d718687cc40d29a59c77c5ef1a8f028bf0305ec0c"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/kookma/ogpf/blob/bd18021949be028856957c9c03832742513d5c67/README.md",
+            "sha256": "fd7f1b1a7f0d3b6d8d73c9e7b950ecbbc4ec48becaa620a420690ab7387eaa3c"
+          },
+          {
+            "path": "src/ogpf.f90",
+            "url": "https://github.com/kookma/ogpf/blob/bd18021949be028856957c9c03832742513d5c67/src/ogpf.f90",
+            "sha256": "0b298ed076a7482cef8fff0d86cc0853fd81351301084db110d45148ca54e4ab"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "Q",
+          "level": "source-reviewed",
+          "revision": "bd18021949be028856957c9c03832742513d5c67",
+          "reviewed_on": "2026-11-08",
+          "notes": "Gnuplot script naming, command options and rank-two contour plotting distinguish script paths, image output and native process execution. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/ogpf.f90",
+              "url": "https://github.com/kookma/ogpf/blob/bd18021949be028856957c9c03832742513d5c67/src/ogpf.f90",
+              "sha256": "0b298ed076a7482cef8fff0d86cc0853fd81351301084db110d45148ca54e4ab"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "filename",
+              "role": "public-entry-point",
+              "module": "ogpf",
+              "derived_type": "gpf",
+              "summary": "Declare TYPE(gpf) :: solver from ogpf. Set the filename of the generated Gnuplot SCRIPT. This is not the PNG output path; set a Gnuplot output command separately through OPTIONS. Choose a safe simple script filename because the later launch concatenates it into a shell command without comprehensive shell quoting. No file is rendered or status returned merely by selecting this name. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%filename(STRING)",
+              "path": "src/ogpf.f90",
+              "line_start": 335,
+              "line_end": 347,
+              "declarations": [
+                {
+                  "path": "src/ogpf.f90",
+                  "line_start": 341,
+                  "line_end": 342
+                },
+                {
+                  "path": "src/ogpf.f90",
+                  "line_start": 135,
+                  "line_end": 168
+                },
+                {
+                  "path": "src/ogpf.f90",
+                  "line_start": 192,
+                  "line_end": 209
+                },
+                {
+                  "path": "src/ogpf.f90",
+                  "line_start": 272,
+                  "line_end": 299
+                }
+              ]
+            },
+            {
+              "procedure": "options",
+              "role": "public-entry-point",
+              "module": "ogpf",
+              "derived_type": "gpf",
+              "summary": "Declare TYPE(gpf) :: solver from ogpf. Append Gnuplot commands as text for the next plot, for example headless terminal/output options. This is executable Gnuplot configuration, not validated Fortran keyword options, and it can change external process/file behavior within sandbox limits. Upstream defaults select the wxt terminal; the hosted recipe selects pngcairo separately. OPTIONS alone does not launch a plot. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%options(STROPT)",
+              "path": "src/ogpf.f90",
+              "line_start": 350,
+              "line_end": 369,
+              "declarations": [
+                {
+                  "path": "src/ogpf.f90",
+                  "line_start": 356,
+                  "line_end": 357
+                },
+                {
+                  "path": "src/ogpf.f90",
+                  "line_start": 135,
+                  "line_end": 168
+                },
+                {
+                  "path": "src/ogpf.f90",
+                  "line_start": 192,
+                  "line_end": 209
+                },
+                {
+                  "path": "src/ogpf.f90",
+                  "line_start": 272,
+                  "line_end": 299
+                }
+              ]
+            },
+            {
+              "procedure": "contour",
+              "role": "public-entry-point",
+              "module": "ogpf",
+              "derived_type": "gpf",
+              "summary": "Declare TYPE(gpf) :: solver from ogpf. Generate and execute a Gnuplot contour script. This signature takes rank-two REAL(WP) arrays: in the explicit-coordinate path supply all X/Y/Z with the same shape; X alone selects a height-grid path. Supplying Y without Z prints an error and returns, and this routine has no success/status dummy. WP is the exported double kind. Select a headless terminal and output path before plotting for browser artifacts; the method runs native Gnuplot rather than returning an image array or opening a browser. Check the resulting file/process diagnostics. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%contour(X,[Y],[Z],[LSPEC],[PALETTE])",
+              "path": "src/ogpf.f90",
+              "line_start": 1218,
+              "line_end": 1327,
+              "declarations": [
+                {
+                  "path": "src/ogpf.f90",
+                  "line_start": 1224,
+                  "line_end": 1230
+                },
+                {
+                  "path": "src/ogpf.f90",
+                  "line_start": 135,
+                  "line_end": 168
+                },
+                {
+                  "path": "src/ogpf.f90",
+                  "line_start": 192,
+                  "line_end": 209
+                },
+                {
+                  "path": "src/ogpf.f90",
+                  "line_start": 272,
+                  "line_end": 299
+                },
+                {
+                  "path": "src/ogpf.f90",
+                  "line_start": 1244,
+                  "line_end": 1263
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "fgsl": {
       "id": "github:reinh-bader/fgsl",
       "repository": {
@@ -33228,6 +34418,181 @@
                   "path": "test/test_algorithm.F90",
                   "line_start": 188,
                   "line_end": 198
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "ftorch": {
+      "id": "github:cambridge-iccs/ftorch",
+      "repository": {
+        "owner": "Cambridge-ICCS",
+        "name": "FTorch",
+        "url": "https://github.com/Cambridge-ICCS/FTorch"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "b1b1bb3b9138642ac51d55608e7f3af9070c43f1",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies Cambridge ICCS MIT terms for FTorch. Native LibTorch and dependencies retain their terms and ABI requirements. Source links use the pinned generated tensor F90 used by the service; no GPU or training verification is inferred.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/Cambridge-ICCS/FTorch/blob/b1b1bb3b9138642ac51d55608e7f3af9070c43f1/LICENSE",
+            "sha256": "b5b6b1a50c51c19bae800818d57ba06a6fad992d3a133958ab46ff8fd8cd9688"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/Cambridge-ICCS/FTorch/blob/b1b1bb3b9138642ac51d55608e7f3af9070c43f1/README.md",
+            "sha256": "590025053e3c17a8e7fc43d6ca9da7c617554908c19bad3d0461b70b6c58f100"
+          },
+          {
+            "path": "src/ftorch_model.f90",
+            "url": "https://github.com/Cambridge-ICCS/FTorch/blob/b1b1bb3b9138642ac51d55608e7f3af9070c43f1/src/ftorch_model.f90",
+            "sha256": "3f8e098312c6b33add610a1563c3f323683bc9e23ca313222a4b177e0753f04b"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "K",
+          "level": "source-reviewed",
+          "revision": "b1b1bb3b9138642ac51d55608e7f3af9070c43f1",
+          "reviewed_on": "2026-11-08",
+          "notes": "CPU TorchScript model/tensor construction, forward evaluation and cleanup document native ABI, pointer actuals and externally owned storage. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/ftorch_model.f90",
+              "url": "https://github.com/Cambridge-ICCS/FTorch/blob/b1b1bb3b9138642ac51d55608e7f3af9070c43f1/src/ftorch_model.f90",
+              "sha256": "3f8e098312c6b33add610a1563c3f323683bc9e23ca313222a4b177e0753f04b"
+            },
+            {
+              "path": "src/ftorch_tensor.f90",
+              "url": "https://github.com/Cambridge-ICCS/FTorch/blob/b1b1bb3b9138642ac51d55608e7f3af9070c43f1/src/ftorch_tensor.f90",
+              "sha256": "92c1869eb86d508f7053347e9f6c9e29d28c628f7de8b8d56fb378e6b487bba0"
+            },
+            {
+              "path": "src/ftorch.f90",
+              "url": "https://github.com/Cambridge-ICCS/FTorch/blob/b1b1bb3b9138642ac51d55608e7f3af9070c43f1/src/ftorch.f90",
+              "sha256": "fc42451656ae2632fa461d60dee675259af3c9c34eb100a1d65e74639afe3da0"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "torch_model_load",
+              "role": "public-entry-point",
+              "module": "ftorch",
+              "summary": "Load an existing TorchScript model file into TYPE(TORCH_MODEL), using INTEGER(C_INT) DEVICE_TYPE such as TORCH_KCPU from FTORCH. The wrapper trims/terminates the Fortran path. Optional REQUIRES_GRAD and IS_TRAINING default false; the CPU hosted inference path does not establish GPU/training support. No Fortran status dummy is returned: invalid files/ABI/model errors use native handling. Loading an arbitrary Python source file or an ordinary state-dict is not the same as loading TorchScript. Delete the owning model after all runs.",
+              "signature": "CALL torch_model_load(MODEL,FILENAME,DEVICE_TYPE,[DEVICE_INDEX],[REQUIRES_GRAD],[IS_TRAINING])",
+              "path": "src/ftorch_model.f90",
+              "line_start": 32,
+              "line_end": 88,
+              "declarations": [
+                {
+                  "path": "src/ftorch_model.f90",
+                  "line_start": 35,
+                  "line_end": 43
+                },
+                {
+                  "path": "src/ftorch.f90",
+                  "line_start": 7,
+                  "line_end": 65
+                }
+              ]
+            },
+            {
+              "procedure": "torch_tensor_from_array",
+              "role": "public-entry-point",
+              "module": "ftorch",
+              "summary": "Rank-one REAL(REAL64) overload of TORCH_TENSOR_FROM_ARRAY. DATA_IN is a CONTIGUOUS Fortran POINTER actual associated with live storage, not a temporary expression; the CPU tensor wraps that storage through FROM_BLOB. Keep the target allocated/associated and unmoved through all tensor/model uses; later target changes are visible. DEVICE_TYPE is INTEGER(C_INT); optional DEVICE_INDEX is default integer here, and PERMUTE_DIMS(1) is INTEGER(INT32), unlike the model-load index declaration. No status is exposed. This is not a general deep-copy ownership guarantee or a GPU lifetime review.",
+              "signature": "CALL torch_tensor_from_array(TENSOR,DATA_IN,DEVICE_TYPE,[DEVICE_INDEX],[PERMUTE_DIMS],[REQUIRES_GRAD])",
+              "path": "src/ftorch_tensor.f90",
+              "line_start": 2679,
+              "line_end": 2763,
+              "declarations": [
+                {
+                  "path": "src/ftorch_tensor.f90",
+                  "line_start": 2686,
+                  "line_end": 2704
+                },
+                {
+                  "path": "src/ftorch.f90",
+                  "line_start": 7,
+                  "line_end": 65
+                },
+                {
+                  "path": "src/ftorch_tensor.f90",
+                  "line_start": 2753,
+                  "line_end": 2763
+                }
+              ]
+            },
+            {
+              "procedure": "torch_model_forward",
+              "role": "public-entry-point",
+              "module": "ftorch",
+              "summary": "Run a loaded model using rank-one ARRAYS of TORCH_TENSOR handles for INPUT_TENSORS and OUTPUT_TENSORS. Output handles must already refer to appropriately sized/dtyped allocated or wrapped tensors; the native layer fills their storage even though the Fortran handle arrays are INTENT(IN). Match the model forward schema and tensor shapes, and preserve all backing buffers. Optional REQUIRES_GRAD defaults false. This subroutine supplies no recoverable Fortran error status, performs no model training and does not automatically destroy any handles.",
+              "signature": "CALL torch_model_forward(MODEL,INPUT_TENSORS,OUTPUT_TENSORS,[REQUIRES_GRAD])",
+              "path": "src/ftorch_model.f90",
+              "line_start": 119,
+              "line_end": 171,
+              "declarations": [
+                {
+                  "path": "src/ftorch_model.f90",
+                  "line_start": 121,
+                  "line_end": 126
+                },
+                {
+                  "path": "src/ftorch.f90",
+                  "line_start": 7,
+                  "line_end": 65
+                }
+              ]
+            },
+            {
+              "procedure": "torch_tensor_delete",
+              "role": "public-entry-point",
+              "module": "ftorch",
+              "summary": "Release an owned tensor handle and set this actual internal pointer to C_NULL_PTR. The impure elemental subroutine also accepts arrays of handles. CPU FROM_BLOB tensors do not thereby free caller-owned Fortran backing arrays; release tensor references before deallocating those arrays. Copied raw aliases are not independently owned and are not nullified by deleting this actual.",
+              "signature": "CALL torch_tensor_delete(TENSOR)",
+              "path": "src/ftorch_tensor.f90",
+              "line_start": 4923,
+              "line_end": 4941,
+              "declarations": [
+                {
+                  "path": "src/ftorch_tensor.f90",
+                  "line_start": 4925,
+                  "line_end": 4925
+                },
+                {
+                  "path": "src/ftorch.f90",
+                  "line_start": 7,
+                  "line_end": 65
+                }
+              ]
+            },
+            {
+              "procedure": "torch_model_delete",
+              "role": "public-entry-point",
+              "module": "ftorch",
+              "summary": "Delete the owning model handle after all inference/parameter uses finish, nullifying this actual native pointer. A null pointer is checked locally, but aliases do not become safe owners or get invalidated automatically. Tensor handles have separate TORCH_TENSOR_DELETE cleanup; this is not process-wide LibTorch shutdown or a Fortran automatic FINAL routine.",
+              "signature": "CALL torch_model_delete(MODEL)",
+              "path": "src/ftorch_model.f90",
+              "line_start": 258,
+              "line_end": 276,
+              "declarations": [
+                {
+                  "path": "src/ftorch_model.f90",
+                  "line_start": 260,
+                  "line_end": 260
+                },
+                {
+                  "path": "src/ftorch.f90",
+                  "line_start": 7,
+                  "line_end": 65
                 }
               ]
             }
@@ -33858,6 +35223,383 @@
           ]
         }
       ]
+    },
+    "fycollections": {
+      "id": "github:aradi/fycollections",
+      "repository": {
+        "owner": "aradi",
+        "name": "fycollections",
+        "url": "https://github.com/aradi/fycollections"
+      },
+      "license": {
+        "label": "BSD-2-Clause",
+        "spdx_expression": "BSD-2-Clause",
+        "revision": "f67b874669e63834f30cd83f2b96889072b4eec7",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE.rst supplies Balint Aradi two-clause BSD terms and explicitly excludes bundled external components from that grant. Preserve applicable external notices. Source links refer to upstream Fypp templates and the exact author integer-list instantiation selected by the service.",
+        "evidence": [
+          {
+            "path": "LICENSE.rst",
+            "url": "https://github.com/aradi/fycollections/blob/f67b874669e63834f30cd83f2b96889072b4eec7/LICENSE.rst",
+            "sha256": "69a5c16581b0e80a187f22b00740edd9623ed7a7a803d3e1e1df2e3e51dbfdbe"
+          },
+          {
+            "path": "include/fycollections.fypp",
+            "url": "https://github.com/aradi/fycollections/blob/f67b874669e63834f30cd83f2b96889072b4eec7/include/fycollections.fypp",
+            "sha256": "0252f0b29d8fda911c9aefd4363e84d2134ff58e2dc9792a41b8f74b6d4a63f1"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N4",
+          "level": "source-reviewed",
+          "revision": "f67b874669e63834f30cd83f2b96889072b4eec7",
+          "reviewed_on": "2026-11-08",
+          "notes": "Author default-integer list initialization, copied append and indexed retrieval document template expansion and owner lifetime. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "include/fycollections.fypp",
+              "url": "https://github.com/aradi/fycollections/blob/f67b874669e63834f30cd83f2b96889072b4eec7/include/fycollections.fypp",
+              "sha256": "0252f0b29d8fda911c9aefd4363e84d2134ff58e2dc9792a41b8f74b6d4a63f1"
+            },
+            {
+              "path": "examples/list/type_intlist.fpp",
+              "url": "https://github.com/aradi/fycollections/blob/f67b874669e63834f30cd83f2b96889072b4eec7/examples/list/type_intlist.fpp",
+              "sha256": "49b9fc4d4f9972b8cbd4e314b92d5a0ef2ce8a73f298540fb0842f8002269a65"
+            },
+            {
+              "path": "lib/ptrlist.fpp",
+              "url": "https://github.com/aradi/fycollections/blob/f67b874669e63834f30cd83f2b96889072b4eec7/lib/ptrlist.fpp",
+              "sha256": "aee8957500e62e5bf0275a1ef1733f3411e331326afb1cebc1c4d5a834a120cb"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "IntList_init",
+              "role": "public-entry-point",
+              "module": "type_intlist",
+              "summary": "Initialize TYPE(INTLIST) via the public free subroutine INTLIST_INIT from TYPE_INTLIST. THIS is the required list actual, not an implicit bound object; this is not CALL list%INIT(). The upstream example instantiates this template for default INTEGER values and value-copy semantics. These are template source links with TYPE_NAME/ITEM_TYPE placeholders; the hosted package supplies the author IntList/StringList specializations, not arbitrary runtime template generation. Initialize before using methods.",
+              "signature": "CALL IntList_init(THIS)",
+              "path": "include/fycollections.fypp",
+              "line_start": 66,
+              "line_end": 82,
+              "declarations": [
+                {
+                  "path": "include/fycollections.fypp",
+                  "line_start": 67,
+                  "line_end": 67
+                },
+                {
+                  "path": "examples/list/type_intlist.fpp",
+                  "line_start": 1,
+                  "line_end": 13
+                },
+                {
+                  "path": "include/fycollections.fypp",
+                  "line_start": 37,
+                  "line_end": 63
+                }
+              ]
+            },
+            {
+              "procedure": "append",
+              "role": "public-entry-point",
+              "module": "type_intlist",
+              "derived_type": "IntList",
+              "summary": "Declare TYPE(IntList) :: solver from type_intlist. Append a default INTEGER value to an initialized INTLIST. This author specialization allocates a wrapper and stores a value copy; pointer/array specializations have different ownership contracts and are outside scope. Native backend allocatable-list finalization releases the wrappers at owner scope exit. No allocation/status dummy is provided. Source placeholders resolve through the linked TYPE_INTLIST instantiation. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%append(ITEM)",
+              "path": "include/fycollections.fypp",
+              "line_start": 103,
+              "line_end": 113,
+              "declarations": [
+                {
+                  "path": "include/fycollections.fypp",
+                  "line_start": 104,
+                  "line_end": 105
+                },
+                {
+                  "path": "examples/list/type_intlist.fpp",
+                  "line_start": 1,
+                  "line_end": 13
+                },
+                {
+                  "path": "include/fycollections.fypp",
+                  "line_start": 37,
+                  "line_end": 63
+                }
+              ]
+            },
+            {
+              "procedure": "get",
+              "role": "public-entry-point",
+              "module": "type_intlist",
+              "derived_type": "IntList",
+              "summary": "Declare TYPE(IntList) :: solver from type_intlist. Return a default INTEGER value for an existing list index. This scope uses one-based positive indices 1:SIZE(list); backend folded-index alternatives are not needed for this call. An empty/out-of-range access is not a safe missing-value lookup and returns no success flag. The value is copied from the stored wrapper, so changing the result does not mutate the list element. Avoid unmanaged copies of pointer-backed owners. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%get(IND)",
+              "path": "include/fycollections.fypp",
+              "line_start": 140,
+              "line_end": 150,
+              "declarations": [
+                {
+                  "path": "include/fycollections.fypp",
+                  "line_start": 141,
+                  "line_end": 143
+                },
+                {
+                  "path": "examples/list/type_intlist.fpp",
+                  "line_start": 1,
+                  "line_end": 13
+                },
+                {
+                  "path": "include/fycollections.fypp",
+                  "line_start": 37,
+                  "line_end": 63
+                },
+                {
+                  "path": "lib/ptrlist.fpp",
+                  "line_start": 142,
+                  "line_end": 153
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "N5",
+          "level": "source-reviewed",
+          "revision": "f67b874669e63834f30cd83f2b96889072b4eec7",
+          "reviewed_on": "2026-11-08",
+          "notes": "Integer list search documents one-based first-match positions and the zero missing sentinel. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "include/fycollections.fypp",
+              "url": "https://github.com/aradi/fycollections/blob/f67b874669e63834f30cd83f2b96889072b4eec7/include/fycollections.fypp",
+              "sha256": "0252f0b29d8fda911c9aefd4363e84d2134ff58e2dc9792a41b8f74b6d4a63f1"
+            },
+            {
+              "path": "examples/list/type_intlist.fpp",
+              "url": "https://github.com/aradi/fycollections/blob/f67b874669e63834f30cd83f2b96889072b4eec7/examples/list/type_intlist.fpp",
+              "sha256": "49b9fc4d4f9972b8cbd4e314b92d5a0ef2ce8a73f298540fb0842f8002269a65"
+            },
+            {
+              "path": "lib/ptrlist.fpp",
+              "url": "https://github.com/aradi/fycollections/blob/f67b874669e63834f30cd83f2b96889072b4eec7/lib/ptrlist.fpp",
+              "sha256": "aee8957500e62e5bf0275a1ef1733f3411e331326afb1cebc1c4d5a834a120cb"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "find",
+              "role": "public-entry-point",
+              "module": "type_intlist",
+              "derived_type": "IntList",
+              "summary": "Declare TYPE(IntList) :: solver from type_intlist. Find a default INTEGER value using the generated value comparator. Return the first one-based matching position, or ZERO when no item matches; check zero before passing the result to GET/DELETE. This method exists because this specialization enables comparison. The temporary search wrapper is released by the routine; pointer-association-comparison variants are a separate contract. This is a linear scan, not an ordered binary search. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%find(ITEM)",
+              "path": "include/fycollections.fypp",
+              "line_start": 179,
+              "line_end": 191,
+              "declarations": [
+                {
+                  "path": "include/fycollections.fypp",
+                  "line_start": 180,
+                  "line_end": 183
+                },
+                {
+                  "path": "examples/list/type_intlist.fpp",
+                  "line_start": 1,
+                  "line_end": 13
+                },
+                {
+                  "path": "include/fycollections.fypp",
+                  "line_start": 37,
+                  "line_end": 63
+                },
+                {
+                  "path": "lib/ptrlist.fpp",
+                  "line_start": 189,
+                  "line_end": 208
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fortran-sdl2": {
+      "id": "github:interkosmos/fortran-sdl2",
+      "repository": {
+        "owner": "interkosmos",
+        "name": "fortran-sdl2",
+        "url": "https://github.com/interkosmos/fortran-sdl2"
+      },
+      "license": {
+        "label": "ISC",
+        "spdx_expression": "ISC",
+        "revision": "cac974790420ba757c17f88678e66b01500319e7",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENCE supplies Philipp Engel ISC terms for the bindings. SDL2 and companion native libraries retain separate notices. These scoped calls are headless software/image operations; window/render/audio functionality is not newly verified.",
+        "evidence": [
+          {
+            "path": "LICENCE",
+            "url": "https://github.com/interkosmos/fortran-sdl2/blob/cac974790420ba757c17f88678e66b01500319e7/LICENCE",
+            "sha256": "d0c3addfc4b0f5bcc52820aaf4667de404177d9498da81a98fd1566f5a7e3a35"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/interkosmos/fortran-sdl2/blob/cac974790420ba757c17f88678e66b01500319e7/README.md",
+            "sha256": "a06d455a45fd89349c749eeaa05a0a0c75eade0c6becbe81caab751fc6272b09"
+          },
+          {
+            "path": "src/sdl2.f90",
+            "url": "https://github.com/interkosmos/fortran-sdl2/blob/cac974790420ba757c17f88678e66b01500319e7/src/sdl2.f90",
+            "sha256": "c212c12495387ffe3f10f70ab58770bbb381cc0bf34cc02894478db9df1128ef"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "Q",
+          "level": "source-reviewed",
+          "revision": "cac974790420ba757c17f88678e66b01500319e7",
+          "reviewed_on": "2026-11-08",
+          "notes": "Software surface creation, pixel packing, rectangle filling, image loading and cleanup document typed pointers, kinds and terminated paths. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/sdl2.f90",
+              "url": "https://github.com/interkosmos/fortran-sdl2/blob/cac974790420ba757c17f88678e66b01500319e7/src/sdl2.f90",
+              "sha256": "c212c12495387ffe3f10f70ab58770bbb381cc0bf34cc02894478db9df1128ef"
+            },
+            {
+              "path": "src/sdl2/sdl2_surface.f90",
+              "url": "https://github.com/interkosmos/fortran-sdl2/blob/cac974790420ba757c17f88678e66b01500319e7/src/sdl2/sdl2_surface.f90",
+              "sha256": "fe868a5b9bca473bb1dc1f1c908cad583c14c79246a515e1b91c0697952525f3"
+            },
+            {
+              "path": "src/sdl2_image.f90",
+              "url": "https://github.com/interkosmos/fortran-sdl2/blob/cac974790420ba757c17f88678e66b01500319e7/src/sdl2_image.f90",
+              "sha256": "ba3f73acde2757df3717aabfd2584775acda55ef2b49e4909ef0d46ea11ecea5"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "sdl_create_rgb_surface",
+              "role": "public-entry-point",
+              "module": "sdl2",
+              "summary": "Create a headless software surface; FLAGS/WIDTH/HEIGHT/DEPTH are default integers and color masks are INTEGER(I8), the package 64-bit kind. The Fortran function returns TYPE(SDL_SURFACE),POINTER: use pointer association and check ASSOCIATED before access. Suitable masks/depth define storage format; surface allocation does not need a video window, event loop or renderer. Free the associated surface with SDL_FREE_SURFACE, not DEALLOCATE. This wrapper is different from the underscore native C_PTR binding.",
+              "signature": "VALUE => sdl_create_rgb_surface(FLAGS,WIDTH,HEIGHT,DEPTH,R_MASK,G_MASK,B_MASK,A_MASK)",
+              "path": "src/sdl2.f90",
+              "line_start": 214,
+              "line_end": 239,
+              "declarations": [
+                {
+                  "path": "src/sdl2.f90",
+                  "line_start": 217,
+                  "line_end": 226
+                },
+                {
+                  "path": "src/sdl2/sdl2_surface.f90",
+                  "line_start": 8,
+                  "line_end": 43
+                }
+              ]
+            },
+            {
+              "procedure": "sdl_map_rgb",
+              "role": "public-entry-point",
+              "module": "sdl2",
+              "summary": "Convert default-integer RGB components in 0:255 to a packed pixel value for a live TYPE(SDL_PIXEL_FORMAT). Obtain the format by C_F_POINTER from an associated surface FORMAT pointer; do not pass that C_PTR directly to this typed wrapper. Pixel packing follows the supplied format rather than a fixed byte order. The integer value is color data, not a success status, and the wrapper converts components to native unsigned bytes.",
+              "signature": "VALUE = sdl_map_rgb(FORMAT,R,G,B)",
+              "path": "src/sdl2.f90",
+              "line_start": 435,
+              "line_end": 444,
+              "declarations": [
+                {
+                  "path": "src/sdl2.f90",
+                  "line_start": 437,
+                  "line_end": 441
+                },
+                {
+                  "path": "src/sdl2/sdl2_surface.f90",
+                  "line_start": 8,
+                  "line_end": 43
+                }
+              ]
+            },
+            {
+              "procedure": "sdl_fill_rect",
+              "role": "public-entry-point",
+              "module": "sdl2_surface",
+              "summary": "Fill a software surface rectangle using the mapped packed color and check INTEGER(C_INT) status zero. DST is TYPE(SDL_SURFACE) passed by reference and RECT is an actual TYPE(SDL_RECT), not C_NULL_PTR in this binding, despite the native C API permitting a null rectangle. For a whole-surface fill provide an explicit full rectangle. COLOR uses the package C_UINT32_T kind. This operates on pixels without opening a window or writing a PNG.",
+              "signature": "VALUE = sdl_fill_rect(DST,RECT,COLOR)",
+              "path": "src/sdl2/sdl2_surface.f90",
+              "line_start": 87,
+              "line_end": 93,
+              "declarations": [
+                {
+                  "path": "src/sdl2/sdl2_surface.f90",
+                  "line_start": 88,
+                  "line_end": 92
+                },
+                {
+                  "path": "src/sdl2/sdl2_surface.f90",
+                  "line_start": 8,
+                  "line_end": 43
+                }
+              ]
+            },
+            {
+              "procedure": "img_load",
+              "role": "public-entry-point",
+              "module": "sdl2_image",
+              "summary": "Load a supported local image through SDL2_image, returning TYPE(SDL_SURFACE),POINTER; use pointer association and check ASSOCIATED before reading dimensions/pixels. This pin forwards FILE_NAME to IMG_LOAD_ without appending a terminator, so provide a C-terminated path explicitly, for example filename//C_NULL_CHAR. The loaded surface is independently owned and needs SDL_FREE_SURFACE. This is file loading, not downloading a URL or browser display; a codec/runtime must be present.",
+              "signature": "VALUE => img_load(FILE_NAME)",
+              "path": "src/sdl2_image.f90",
+              "line_start": 61,
+              "line_end": 70,
+              "declarations": [
+                {
+                  "path": "src/sdl2_image.f90",
+                  "line_start": 62,
+                  "line_end": 64
+                },
+                {
+                  "path": "src/sdl2/sdl2_surface.f90",
+                  "line_start": 8,
+                  "line_end": 43
+                },
+                {
+                  "path": "src/sdl2_image.f90",
+                  "line_start": 33,
+                  "line_end": 39
+                }
+              ]
+            },
+            {
+              "procedure": "sdl_free_surface",
+              "role": "public-entry-point",
+              "module": "sdl2_surface",
+              "summary": "Free one owning associated TYPE(SDL_SURFACE) returned by creation/image loading. The binding accepts the referenced surface object, not its C_PTR, and does not nullify Fortran pointer aliases. NULLIFY the caller pointer after release and do not dereference/free aliases again. Borrowed FORMAT/PIXELS pointers also become invalid. SDL surface cleanup does not finalize unrelated video/audio/native subsystems.",
+              "signature": "CALL sdl_free_surface(SURFACE)",
+              "path": "src/sdl2/sdl2_surface.f90",
+              "line_start": 160,
+              "line_end": 163,
+              "declarations": [
+                {
+                  "path": "src/sdl2/sdl2_surface.f90",
+                  "line_start": 161,
+                  "line_end": 162
+                },
+                {
+                  "path": "src/sdl2/sdl2_surface.f90",
+                  "line_start": 8,
+                  "line_end": 43
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   },
   "report": {
@@ -33933,6 +35675,7 @@
       "codata",
       "specialmatrices",
       "forpca",
+      "neural-fortran",
       "polyroots-fortran",
       "fortran-sqlite3",
       "geodesic-fortran",
@@ -34026,6 +35769,7 @@
       "econ-toolchain",
       "m_la",
       "fglm",
+      "fortrandf",
       "strith",
       "list",
       "friction",
@@ -34086,6 +35830,7 @@
       "berkeley-assert",
       "fmm2d",
       "fortran-utils",
+      "dftatom",
       "fortran-tcl86",
       "fortranlib",
       "m-process",
@@ -34095,18 +35840,25 @@
       "propack",
       "qcontainers",
       "stdlib-os",
+      "fortran-lua53",
       "netcdf-fortran",
       "scifortran",
       "forpy",
       "mpifx",
       "scalapackfx",
+      "easy-plplot",
+      "flook",
+      "ogpf",
       "fgsl",
       "fdict",
       "flibcpp",
+      "ftorch",
       "tsunami",
       "fortran-curl",
       "m_cli",
-      "fortran-modbus"
+      "fortran-modbus",
+      "fycollections",
+      "fortran-sdl2"
     ],
     "revision_mismatches": [],
     "no_independent_review": [
@@ -34115,14 +35867,12 @@
       "kinds",
       "mpfun2020-var1",
       "quaff",
-      "neural-fortran",
       "lightkrylov",
       "parff",
       "graphstruc",
       "diffstruc",
       "gslib",
       "featom",
-      "fortrandf",
       "heatflow",
       "athena",
       "veggies",
@@ -34133,21 +35883,16 @@
       "vtmop",
       "slicot",
       "formal",
-      "dftatom",
       "m-system",
       "fiats",
       "julienne",
       "m_draw",
-      "fortran-lua53",
       "fkb",
       "ntpoly",
-      "easy-plplot",
       "gftl",
       "gftl-shared",
       "yafyaml",
       "pflogger",
-      "flook",
-      "ogpf",
       "libmbd",
       "dtfft",
       "dbcsr",
@@ -34155,14 +35900,11 @@
       "ennuf",
       "ddpcm",
       "dftd4",
-      "ftorch",
       "pfunit",
       "raffle",
       "m_history",
       "plplot",
-      "gtk-fortran",
-      "fycollections",
-      "fortran-sdl2"
+      "gtk-fortran"
     ]
   }
 }

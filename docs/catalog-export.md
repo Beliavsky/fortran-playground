@@ -43,7 +43,7 @@ interfaces. Package details also show review scope, limitations and explicitly
 unchecked calling sketches. Signatures link to pinned argument declarations.
 The broader catalog remains the source for these reviews; new reviews need to be
 recorded there before they can appear here. Matching independent reviews currently
-cover 245 selected packages: PowellOpt, lbfgsb, fmin, minpack, quadpack, pchip,
+cover 255 selected packages: PowellOpt, lbfgsb, fmin, minpack, quadpack, pchip,
 fftpack, specfun, specfunc-fullerton, carlson-elliptic-integrals, fortran-bessels,
 polyroots-fortran, lsmr, minres, kiss, fstats, forinv, foreig, forsvd, fordot,
 formatmul, fjsample, fortsa, lib_statistics, econ-toolchain, roots-fortran,
@@ -80,7 +80,8 @@ fatode, fortran-lua54, fortran-unix, netcdf-fortran, fortran-tcl86, stdlib-os,
 ciaaw, ecx, forsudoku, rpn-calculator-fortran, ad_dnsvm, shunting-yard-fortran,
 fassert, fortran-error-handler, berkeley-assert, m_framework, astro-fortran,
 fortran-astrodynamics-toolkit, tsunami, fmm2d, mpifx, scalapackfx, aotus,
-cairo-fortran, forpy and qcontainers.
+cairo-fortran, forpy, qcontainers, dftatom, fortran-lua53, ogpf, easy-plplot,
+fortrandf, neural-fortran, ftorch, fortran-sdl2, fycollections and flook.
 Package detail pages show calling sequences
 directly, with links to argument, callback and precision declarations; cards keep
 their interfaces expandable. Each sequence links to matching checked examples
